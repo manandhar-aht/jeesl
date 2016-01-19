@@ -1,6 +1,10 @@
 package net.sf.ahtutils.web.mbean.util;
 
 import java.io.Serializable;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
@@ -12,9 +16,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
 		implements Serializable
@@ -147,6 +148,15 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
         sb.append(": ").append(t.toString());
         return sb.toString();
 	 }
+	 
+	 public static <T extends EjbWithId> String reorder(Class<T> c, List<T> list)
+	 {
+	        StringBuffer sb = new StringBuffer();
+	        sb.append("Reordering ");
+	        sb.append(" ").append(c.getSimpleName());
+	        if(list!=null){sb.append(" ").append(list.size()).append(" elements");}
+	        return sb.toString();
+		 }
 	 
 	 //Toggle
 	 public static <T extends EjbWithId> String toggle(T t)

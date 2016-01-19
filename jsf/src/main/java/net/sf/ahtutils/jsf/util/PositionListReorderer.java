@@ -14,14 +14,14 @@ public class PositionListReorderer
 {
 	final static Logger logger = LoggerFactory.getLogger(PositionListReorderer.class);
 	
-	public static <T extends EjbWithPosition> void reorder(UtilsFacade fUtils, List<T> list) throws UtilsConstraintViolationException, UtilsLockingException
+	public static <T extends EjbWithPosition> void reorder(UtilsFacade facade, List<T> list) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info("updateOrder "+list.size());
 		int i=1;
 		for(T t : list)
 		{
 			t.setPosition(i);
-			fUtils.update(t);
+			facade.update(t);
 			i++;
 		}
 	}

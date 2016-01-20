@@ -60,7 +60,7 @@ public class OfxQaNfrResultTableFactory extends AbstractUtilsOfxDocumentationFac
 			Table table = new Table();
 			if(langs.length>1){logger.warn("Incorrect Assignment");}
 			Lang lCaption = StatusXpath.getLang(translations, "auTableCaptionQaTestResults", langs[0]);
-			table.setTitle(XmlTitleFactory.build(lCaption.getTranslation()));
+			table.setTitle(XmlTitleFactory.build(lCaption.getTranslation()+" "+section.getDescription().getValue()));
 			
 			table.setSpecification(createTableSpecifications(section));
 			table.setContent(createTableContent(section,mapAnswers,staffs));

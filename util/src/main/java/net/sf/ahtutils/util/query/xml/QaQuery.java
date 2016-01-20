@@ -136,6 +136,7 @@ public class QaQuery
 		Test test = new Test();
 		test.setCode("");
 		test.setName("");
+		test.setVisible(true);
 		test.setDuration(0);
 		test.setGroups(groups);
 		

@@ -5,13 +5,17 @@ import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
 import org.openfuxml.content.ofx.Comment;
+import org.openfuxml.content.ofx.Highlight;
+import org.openfuxml.content.ofx.Marginalia;
 import org.openfuxml.content.ofx.Paragraph;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
+import org.openfuxml.factory.xml.ofx.XmlHighlightFactory;
 import org.openfuxml.factory.xml.ofx.content.XmlCommentFactory;
 import org.openfuxml.factory.xml.ofx.content.structure.XmlParagraphFactory;
 import org.openfuxml.factory.xml.ofx.content.structure.XmlSectionFactory;
 import org.openfuxml.factory.xml.ofx.content.text.XmlTitleFactory;
+import org.openfuxml.factory.xml.ofx.editorial.XmlMarginaliaFactory;
 import org.openfuxml.util.OfxCommentBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,18 +80,24 @@ public class OfxQaFrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 		Section section = XmlSectionFactory.build();
 		section.getContent().add(XmlTitleFactory.build(test.getName()));
 		
+		Paragraph p = XmlParagraphFactory.build();
+		if(test.isSetInfo() && test.getInfo().isSetStatus()){p.getContent().add(marginalia(test.getInfo()));}
 		if(test.isSetDescription() && test.getDescription().isSetValue())
 		{
-			Paragraph p = XmlParagraphFactory.build();
-			p.getContent().add(test.getDescription().getValue());
-			section.getContent().add(p);
+			p.getContent().add(test.getDescription().getValue());	
 		}
-
+		if(p.getContent().size()>0){section.getContent().add(p);}
+		
 		section.getContent().add(fOfxTableTest.buildTableTestDetails(test));
-		
-		
 		if(test.isSetExpected()){section.getContent().addAll(expectedParagraph(test.getExpected()));}
-		if(test.isSetInfo()){section.getContent().addAll(infoParagraph(test.getInfo()));}
+		if(test.isSetInfo())
+		{
+			Info info = test.getInfo();
+			if(info.isSetComment() && info.getComment().isSetValue() && info.getComment().getValue().length()>0)
+			{
+				section.getContent().add(testInfo(test.getInfo()));
+			}
+		}
 		
 		if(test.isSetResults() && test.getResults().isSetResult())
 		{
@@ -106,7 +116,7 @@ public class OfxQaFrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 		return list;
 	}
 	
-	private List<Paragraph> infoParagraph(Info info)
+	private Marginalia marginalia(Info info)
 	{
 		String condition = null;
 		if(conditions!=null)
@@ -120,17 +130,16 @@ public class OfxQaFrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 		catch (ExlpXpathNotUniqueException e) {}
 		if(conditions==null){condition = info.getStatus().getCode();}
 		
-		List<Paragraph> list = new ArrayList<Paragraph>();
-		Paragraph p1 = XmlParagraphFactory.build();
-		p1.getContent().add("The development status of this test is currently: "+condition);
-		list.add(p1);
+		Paragraph p1 = XmlParagraphFactory.text("Test Status: ");
+		Paragraph p2 = XmlParagraphFactory.text(condition);
 		
-		if(info.isSetComment() && info.getComment().isSetValue() && info.getComment().getValue().length()>0)
-		{
-			Paragraph p2 = XmlParagraphFactory.build();
-			p2.getContent().add(info.getComment().getValue());
-			list.add(p2);
-		}
-		return list;
+		return XmlMarginaliaFactory.build(p1,p2);
+	}
+	
+	private Highlight testInfo(Info info)
+	{
+		Highlight highlight = XmlHighlightFactory.build();
+		highlight.getContent().add(XmlParagraphFactory.text(info.getComment().getValue()));
+		return highlight;
 	}
 }

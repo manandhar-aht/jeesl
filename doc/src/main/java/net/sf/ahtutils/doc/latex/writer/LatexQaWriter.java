@@ -106,7 +106,6 @@ public class LatexQaWriter
 	
 	public void writeQaStatusResult(Aht aht, String id, String file) throws OfxAuthoringException, UtilsConfigurationException, IOException
 	{
-		
 		ofStatus.renderColumn(Code.icon, true);
 		ofStatus.renderColumn(Code.name, true,OfxColumnFactory.build(XmlAlignmentFactory.Horizontal.left));
 		
@@ -129,9 +128,9 @@ public class LatexQaWriter
 		ofxMlw.section(2, "qa/groups",ofGroup.build(qa.getGroups()));
 	}
 	
-	public void durations(Qa qa,Qa qaGroups) throws OfxAuthoringException, IOException, OfxConfigurationException, UtilsConfigurationException
+	public void durations(Qa durations,Qa qaGroups) throws OfxAuthoringException, IOException, OfxConfigurationException, UtilsConfigurationException
 	{
-		ofxMlw.section(1, "qa/durations",ofDuration.build(qa.getCategory(),qaGroups.getGroups()));
+		ofxMlw.section(1, "qa/durations",ofDuration.build(durations.getCategory(),qaGroups.getGroups()));
 		ofxMlw.section(1, "qa/schedule",ofSchedule.build(qaGroups.getGroups()));
 	}
 	

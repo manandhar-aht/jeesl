@@ -133,7 +133,7 @@ public class OfxQaDurationGroupTable extends AbstractUtilsOfxDocumentationFactor
 		{
 			for(Test t : c.getTest())
 			{
-				if(t.isSetGroups())
+				if(t.isVisible() && t.isSetGroups())
 				{
 					for(Group g : t.getGroups().getGroup())
 					{

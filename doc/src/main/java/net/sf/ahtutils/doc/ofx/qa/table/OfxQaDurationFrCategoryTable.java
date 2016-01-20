@@ -101,7 +101,10 @@ public class OfxQaDurationFrCategoryTable extends AbstractUtilsOfxDocumentationF
 		Body body = new Body();
 		for(Test t : category.getTest())
 		{
-			body.getRow().add(createRow(t));
+			if(t.isVisible())
+			{
+				body.getRow().add(createRow(t));
+			}
 		}
 		
 		Content content = new Content();

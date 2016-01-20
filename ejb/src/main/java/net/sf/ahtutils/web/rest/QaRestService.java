@@ -34,8 +34,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.util.query.xml.QaQuery;
+import net.sf.ahtutils.xml.qa.Category;
 import net.sf.ahtutils.xml.qa.Group;
 import net.sf.ahtutils.xml.qa.Qa;
+import net.sf.ahtutils.xml.qa.Test;
 import net.sf.ahtutils.xml.security.Staff;
 
 public class QaRestService <L extends UtilsLang,
@@ -207,7 +209,17 @@ public class QaRestService <L extends UtilsLang,
 			
 			for(QAC category : eQa.getCategories())
 			{
-				qa.getCategory().add(xfFrDuration.build(category));
+				Category c = xfFrDuration.build(category);
+				if(logger.isTraceEnabled())
+				{
+//					logger.info(StringUtil.stars());
+					for(Test t : c.getTest())
+					{
+						logger.info("\tVisible?"+t.isSetVisible());
+					}
+				}
+				
+				qa.getCategory().add(c);
 			}
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}	

@@ -129,7 +129,10 @@ public class OfxQaDurationFrSummaryTable extends AbstractUtilsOfxDocumentationFa
 		int total=0;
 		for(Test t : category.getTest())
 		{
-			total=total+t.getDuration();
+			if(t.isVisible())
+			{
+				total=total+t.getDuration();
+			}
 		}
 		return total;
 	}

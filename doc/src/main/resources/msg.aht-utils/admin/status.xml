@@ -49,6 +49,13 @@
     		<s:lang key="fr" translation="Unit"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupStatusImageResource">
+    	<s:langs>
+    		<s:lang key="de" translation="Graphik"/>
+    		<s:lang key="en" translation="Image"/>
+    		<s:lang key="fr" translation="Image"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupCriteria2">
     	<s:langs>
     		<s:lang key="de" translation="Kriterien"/>

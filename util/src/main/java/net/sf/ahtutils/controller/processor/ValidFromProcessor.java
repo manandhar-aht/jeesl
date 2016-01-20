@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sf.ahtutils.model.interfaces.with.EjbWithValidFrom;
+import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
 import net.sf.ahtutils.msgbundle.TranslationFactory;
 
 import org.joda.time.DateTime;

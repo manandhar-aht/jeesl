@@ -43,6 +43,9 @@
 				<p:selectOneMenu rendered="#{not empty cc.attrs.bean.parents}" value="#{cc.attrs.bean.parentId}" effect="fade" >
 					<f:selectItems value="#{cc.attrs.bean.parents}" var="p" itemLabel="#{p.name[userBean.localeCode].lang}" itemValue="#{p.id}"/>
 				</p:selectOneMenu>
+				
+				<p:outputLabel rendered="#{cc.attrs.bean.hasDeveloperAction}" value="#{msg.aupStatusImageResource}" />
+				<p:inputText rendered="#{cc.attrs.bean.hasDeveloperAction}" value="#{cc.attrs.bean.status.image}" />
 
 			</p:panelGrid>
 			<aht:tabTranslationEditor value="#{cc.attrs.bean.status}" keys="#{cc.attrs.langKeys}" withDescription="true"/>

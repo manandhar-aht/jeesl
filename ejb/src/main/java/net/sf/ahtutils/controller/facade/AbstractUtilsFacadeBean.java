@@ -20,6 +20,7 @@ import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbMergeable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
+import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
 import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
@@ -44,7 +45,6 @@ import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
-import net.sf.ahtutils.model.interfaces.with.EjbWithValidFrom;
 
 public class AbstractUtilsFacadeBean implements UtilsFacade
 {

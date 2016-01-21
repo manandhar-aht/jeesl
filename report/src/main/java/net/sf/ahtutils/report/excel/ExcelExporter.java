@@ -25,6 +25,9 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
+import net.sf.ahtutils.xml.status.Lang;
+import net.sf.ahtutils.xml.status.Langs;
+import net.sf.ahtutils.xml.xpath.StatusXpath;
 
 public class ExcelExporter
 {
@@ -51,7 +54,7 @@ public class ExcelExporter
 	
     final static Logger logger = LoggerFactory.getLogger(ExcelExporter.class);
 
-    public ExcelExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String listDefinition) throws Exception
+    public ExcelExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String listDefinition, String languageKey) throws Exception
     {
 		// Get all info
         this.query      = listDefinition;
@@ -87,9 +90,26 @@ public class ExcelExporter
         }
 
         // Now lets create the sheets and export the data
+		int i = 1;
         for (XlsSheet sheet : workbook.getXlsSheet())
         {
-                exportSheet(sheet, sheet.getLangs().getLang().get(0).getTranslation());
+			// First check for an existing name given in the definition
+			String sheetName = "sheet" +i;
+			
+			if (sheet.isSetLangs())
+			{
+				if (sheet.getLangs().isSetLang())
+				{
+					Langs langs = sheet.getLangs();
+					Lang  lang  = StatusXpath.getLang(langs, languageKey);
+					if (lang != null)
+					{
+						sheetName = lang.getTranslation();
+					}
+				}
+			}
+            exportSheet(sheet, sheetName);
+			i++;
         }
     }
 

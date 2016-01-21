@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<r:xlsColumn xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report" column="A" required="true" label="myLabel" example="myExample">
+<r:xlsColumn xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report" column="A" required="true" label="myLabel" example="myExample" autoWidth="false" width="2">
     <s:langs/>
     <s:descriptions/>
     <r:xlsTransformation dataClass="myDataClass" formatPattern="myPattern" beanProperty="myBeanProperty"/>

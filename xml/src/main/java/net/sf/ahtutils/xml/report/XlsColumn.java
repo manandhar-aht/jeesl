@@ -30,6 +30,8 @@ import net.sf.ahtutils.xml.status.Langs;
  *       &lt;attribute name="required" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="label" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="example" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="autoWidth" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="width" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -63,6 +65,10 @@ public class XlsColumn
     protected String label;
     @XmlAttribute(name = "example")
     protected String example;
+    @XmlAttribute(name = "autoWidth")
+    protected Boolean autoWidth;
+    @XmlAttribute(name = "width")
+    protected Integer width;
 
     /**
      * Gets the value of the langs property.
@@ -262,6 +268,70 @@ public class XlsColumn
 
     public boolean isSetExample() {
         return (this.example!= null);
+    }
+
+    /**
+     * Gets the value of the autoWidth property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isAutoWidth() {
+        return autoWidth;
+    }
+
+    /**
+     * Sets the value of the autoWidth property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setAutoWidth(boolean value) {
+        this.autoWidth = value;
+    }
+
+    public boolean isSetAutoWidth() {
+        return (this.autoWidth!= null);
+    }
+
+    public void unsetAutoWidth() {
+        this.autoWidth = null;
+    }
+
+    /**
+     * Gets the value of the width property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * Sets the value of the width property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setWidth(int value) {
+        this.width = value;
+    }
+
+    public boolean isSetWidth() {
+        return (this.width!= null);
+    }
+
+    public void unsetWidth() {
+        this.width = null;
     }
 
 }

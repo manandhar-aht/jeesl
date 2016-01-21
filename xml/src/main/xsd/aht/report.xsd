@@ -308,6 +308,8 @@
             <xsd:attribute name="required" type="xsd:boolean"/>
             <xsd:attribute name="label" type="xsd:string"/>
             <xsd:attribute name="example" type="xsd:string"/>
+            <xsd:attribute name="autoWidth" type="xsd:boolean"/>
+            <xsd:attribute name="width" type="xsd:int"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="xlsTransformation">

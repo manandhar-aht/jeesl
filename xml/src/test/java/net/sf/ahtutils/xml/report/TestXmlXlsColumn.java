@@ -34,6 +34,8 @@ public class TestXmlXlsColumn extends AbstractXmlReportTest
     	xml.setLabel("myLabel");
     	xml.setRequired(true);
     	xml.setExample("myExample");
+    	xml.setAutoWidth(false);
+    	xml.setWidth(2);
     	
     	if(withChildren)
     	{

@@ -8,6 +8,7 @@ import java.util.Map;
 import net.sf.ahtutils.xml.audit.Change;
 import net.sf.ahtutils.xml.audit.Revision;
 import net.sf.ahtutils.xml.audit.Scope;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AuditScopeProcessor
 {
@@ -21,11 +22,14 @@ public class AuditScopeProcessor
         List<Scope> scopes = new ArrayList<Scope>();
         LinkedHashMap<String,Scope> tmp = new LinkedHashMap<String,Scope>();
 
-        for (Change change : changes) {
+        for (Change change : changes)
+        {
+        	JaxbUtil.trace(change);
             tmp.put(change.getScope().getId() + "/" + change.getScope().getClazz(), change.getScope());
         }
 
-        for(Map.Entry<String, Scope> me : tmp.entrySet()) {
+        for(Map.Entry<String, Scope> me : tmp.entrySet())
+        {
             modificationWithChanges(changes, me, "Change");
             scopes.add(me.getValue());
         }

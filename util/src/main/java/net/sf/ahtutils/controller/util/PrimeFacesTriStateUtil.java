@@ -14,7 +14,8 @@ public class PrimeFacesTriStateUtil
 	
 	public static Boolean triToBoolean(String tri)
 	{
-		if(tri.equals("1")){return true;}
+		if(tri==null){return null;}
+		else if(tri.equals("1")){return true;}
 		else if(tri.equals("2")){return false;}
 		else {return null;}
 	}

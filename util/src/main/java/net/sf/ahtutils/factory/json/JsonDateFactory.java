@@ -8,9 +8,9 @@ import org.joda.time.DateTime;
 
 import net.sf.ahtutils.interfaces.model.date.EntityWithYearMonthQuarter;
 
-public class JsonYearMonthQuarterFactory
+public class JsonDateFactory
 {
-	public static void apply(EntityWithYearMonthQuarter json, Date date)
+	public static void apply(EntityWithYearMonthQuarter json, Date date) 
 	{
 		DateTime dt = new DateTime(date);
 		Calendar cal = Calendar.getInstance(Locale.US);

@@ -107,7 +107,8 @@ public interface UtilsFacade extends UtilsIdFacade
 	<T extends EjbWithId, P extends EjbWithId, OR1 extends EjbWithId, OR2 extends EjbWithId> List<T> fGrandParents(Class<T> queryClass, Class<P> parentClass, String parentName, List<ParentPredicate<OR1>> lpOr1, List<ParentPredicate<OR2>> lpOr2);
 	
 	//Record
-	<T extends EjbWithRecord,I extends EjbWithId> List<T> allOrderedParentRecordBetween(Class<T> cl, boolean ascending,String p1Name, I p1,Date from, Date to);
+	<T extends EjbWithRecord, P extends EjbWithId> List<T> allOrderedParentRecordBetween(Class<T> c, boolean ascending,String p1Name, P p1, Date from, Date to);
+	<T extends EjbWithRecord, P extends EjbWithId> List<T> allOrderedParentsRecordBetween(Class<T> c, boolean ascending,String p1Name, List<P> parents, Date from, Date to);
 	<T extends EjbWithRecord> List<T> inInterval(Class<T> clRecord, Date from, Date to);
 	<T extends EjbWithRecord> T fFirst(Class<T> clRecord);
 	<T extends EjbWithRecord> T fLast(Class<T> clRecord);

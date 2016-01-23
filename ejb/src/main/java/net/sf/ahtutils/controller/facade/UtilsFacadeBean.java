@@ -388,7 +388,7 @@ public class UtilsFacadeBean implements UtilsFacade
 		
 		return em.createQuery(select).getResultList();
 	}
-	
+		
 	@Override public <T extends EjbWithRecord, I extends EjbWithId> List<T> allOrderedParentRecordBetween(Class<T> cl, boolean ascending, String p1Name, I p1,Date fromRecord, Date toRecord)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
@@ -404,6 +404,30 @@ public class UtilsFacadeBean implements UtilsFacade
 		select.where(cB.equal(p1Path, p1.getId()),
 				cB.lessThanOrEqualTo(eRecord, toRecord),
 				cB.greaterThanOrEqualTo(eRecord, fromRecord));
+		
+		return em.createQuery(select).getResultList();
+	}
+	
+	@Override
+	public <T extends EjbWithRecord, P extends EjbWithId> List<T> allOrderedParentsRecordBetween(Class<T> c, boolean ascending, String parentName, List<P> parents, Date from, Date to)
+	{
+		if(parents==null || parents.size()==0){return new ArrayList<T>();}
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<T> cQ = cB.createQuery(c);
+		Root<T> root = cQ.from(c);
+		
+		Path<Object> pParent = root.get(parentName);
+		Expression<Date> eRecord = root.get("record");
+		
+		predicates.add(pParent.in(parents));
+		predicates.add(cB.greaterThanOrEqualTo(eRecord, from));
+		predicates.add(cB.lessThanOrEqualTo(eRecord, to));
+
+		CriteriaQuery<T> select = cQ.select(root);
+		if(ascending){select.orderBy(cB.asc(eRecord));}else{select.orderBy(cB.desc(eRecord));}
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		
 		return em.createQuery(select).getResultList();
 	}

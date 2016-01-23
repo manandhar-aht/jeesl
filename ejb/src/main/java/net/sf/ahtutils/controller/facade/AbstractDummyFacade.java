@@ -482,4 +482,11 @@ public class AbstractDummyFacade implements UtilsFacade
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public <T extends EjbWithRecord, P extends EjbWithId> List<T> allOrderedParentsRecordBetween(Class<T> cl,
+			boolean ascending, String p1Name, List<P> parents, Date from, Date to) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

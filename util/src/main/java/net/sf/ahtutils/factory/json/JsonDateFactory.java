@@ -48,6 +48,5 @@ public class JsonDateFactory
 		}
 		if((json instanceof EntityWithWeek)){((EntityWithWeek) json).setWeek(dt.getWeekOfWeekyear());}
 		if((json instanceof EntityWithDay)){((EntityWithDay) json).setDay(dt.getDayOfMonth());}
-		
 	}
 }

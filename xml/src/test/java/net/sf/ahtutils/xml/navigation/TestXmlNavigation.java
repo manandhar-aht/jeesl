@@ -1,35 +1,18 @@
 package net.sf.ahtutils.xml.navigation;
 
-import java.io.FileNotFoundException;
-
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
-import net.sf.exlp.util.xml.JaxbUtil;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlNavigation extends AbstractXmlNavigationTest
+import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
+
+public class TestXmlNavigation extends AbstractXmlNavigationTest<Navigation>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlNavigation.class);
-	
-	@BeforeClass
-	public static void initFiles()
-	{
-		setXmlFile(dirSuffix, "xnavigation");
-	}
+
+	public TestXmlNavigation(){super(Navigation.class);}
+	public static Navigation create(boolean withChildren){return (new TestXmlNavigation()).build(withChildren);}
     
-    @Test
-    public void xml() throws FileNotFoundException
-    {
-    	Navigation actual = create();
-    	Navigation expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Navigation.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    private static Navigation create() {return create(true);}
-    public static Navigation create(boolean withChilds)
+    public Navigation build(boolean withChilds)
     {
     	Navigation xml = new Navigation();
     	xml.setCode("myCode");
@@ -43,16 +26,11 @@ public class TestXmlNavigation extends AbstractXmlNavigationTest
     	
     	return xml;
     }
-    
-    public void save() {save(create(),fXml);}
 	
 	public static void main(String[] args)
     {
 		UtilsXmlTestBootstrap.init();
-			
-		TestXmlNavigation.initJaxb();
-		TestXmlNavigation.initFiles();	
 		TestXmlNavigation test = new TestXmlNavigation();
-		test.save();
+		test.saveReferenceXml();
     }
 }

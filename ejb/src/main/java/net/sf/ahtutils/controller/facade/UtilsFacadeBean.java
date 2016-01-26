@@ -50,6 +50,7 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionType;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionTypeVisible;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisibleParent;
 import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
@@ -468,32 +469,40 @@ public class UtilsFacadeBean implements UtilsFacade
 	@Override
 	public <T extends EjbWithPositionVisible> List<T> allOrderedPositionVisible(Class<T> cl)
 	{
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = cb.createQuery(cl);
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = cB.createQuery(cl);
 		Root<T> from = criteriaQuery.from(cl);
 		Path<Object> pathVisible = from.get("visible");
 		
 		Expression<Date> eOrder = from.get("position");
 		
 		CriteriaQuery<T> select = criteriaQuery.select(from);
-		select.orderBy(cb.asc(eOrder));
-		select.where(cb.equal(pathVisible, true));
+		select.orderBy(cB.asc(eOrder));
+		select.where(cB.equal(pathVisible, true));
 		
 		return em.createQuery(select).getResultList();
 	}
 	
-	@Override public <T extends EjbWithPositionVisible, P extends EjbWithId> List<T> allOrderedPositionVisibleParent(Class<T> cl, P parent)
+	@Override public <T extends EjbWithPositionVisibleParent, P extends EjbWithId> List<T> allOrderedPositionVisibleParent(Class<T> cl, P parent)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<T> cQ = cB.createQuery(cl);
 		Root<T> from = cQ.from(cl);
 		
-		Path<Object> p1Path = from.get("parent");
-		Expression<Date> eOrder = from.get("position");
-		
 		CriteriaQuery<T> select = cQ.select(from);
+		
+		Path<Object> pathVisible = from.get("visible");
+		Expression<Date> eOrder = from.get("position");
 		select.orderBy(cB.asc(eOrder));
-		select.where(cB.equal(p1Path, parent.getId()));
+		
+		try
+		{
+			T prototype = cl.newInstance();
+			Path<Object> p1Path = from.get(prototype.resolveParentAttribute());
+			select.where(cB.and(cB.equal(p1Path, parent.getId()),cB.equal(pathVisible, true)));
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return em.createQuery(select).getResultList();
 	}
@@ -505,7 +514,6 @@ public class UtilsFacadeBean implements UtilsFacade
 		Root<T> from = cQ.from(cl);
 		
 		CriteriaQuery<T> select = cQ.select(from);
-		
 		
 		Expression<Date> eOrder = from.get("position");
 		select.orderBy(cB.asc(eOrder));

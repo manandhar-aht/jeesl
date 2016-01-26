@@ -41,6 +41,7 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionType;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionTypeVisible;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisibleParent;
 import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
@@ -106,7 +107,7 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	@Override public <T extends EjbWithPositionTypeVisible, E extends Enum<E>> List<T> allOrderedPositionVisible(Class<T> type,E enu) {return fUtils.allOrderedPositionVisible(type,enu);}
 	public <T extends EjbWithPositionVisible> List<T> allOrderedPositionVisible(Class<T> cl) {return fUtils.allOrderedPositionVisible(cl);}
 	@Override public <T extends EjbWithPositionParent, P extends EjbWithId> List<T> allOrderedPositionParent(Class<T> cl, P parent) {return fUtils.allOrderedPositionParent(cl,parent);}
-	@Override public <T extends EjbWithPositionVisible, P extends EjbWithId> List<T> allOrderedPositionVisibleParent(Class<T> cl, P parent) {return fUtils.allOrderedPositionVisibleParent(cl,parent);}
+	@Override public <T extends EjbWithPositionVisibleParent, P extends EjbWithId> List<T> allOrderedPositionVisibleParent(Class<T> cl, P parent) {return fUtils.allOrderedPositionVisibleParent(cl,parent);}
 	@Override public <T extends EjbWithCode> List<T> allOrderedCode(Class<T> cl) {return fUtils.allOrderedCode(cl);}
 	public <T extends Object> List<T> allOrdered(Class<T> cl, String by, boolean ascending) {return fUtils.allOrdered(cl, by, ascending);}
 	public <T extends EjbWithRecord> List<T> allOrderedRecord(Class<T> type, boolean ascending) {return fUtils.allOrderedRecord(type,ascending);}

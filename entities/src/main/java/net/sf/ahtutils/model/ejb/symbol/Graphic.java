@@ -11,13 +11,12 @@ import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Graphic",category="symbol",subset="sld")
-public class DefaultGeoJsfGraphic implements EjbRemoveable,Serializable,EjbPersistable,
-								UtilsGraphic<AhtUtilsLang,AhtUtilsDescription,DefaultGeoJsfGraphicType,DefaultGeoJsfGraphicStyle>
+@EjbErNode(name="Graphic",category="symbol",subset="symbol")
+public class Graphic implements EjbRemoveable,Serializable,EjbPersistable,
+								UtilsGraphic<AhtUtilsLang,AhtUtilsDescription,GraphicType,GraphicStyle>
 {
 	public static final long serialVersionUID=1;
 
-	
 	public static String[] defaultLangs = {"fr","en","de"};
 	
 	private long id;
@@ -25,14 +24,14 @@ public class DefaultGeoJsfGraphic implements EjbRemoveable,Serializable,EjbPersi
 	@Override  public void setId(long id) {this.id = id;}
 	
 	@ManyToOne
-	private DefaultGeoJsfGraphicType type;
-	public DefaultGeoJsfGraphicType getType() {return type;}
-	public void setType(DefaultGeoJsfGraphicType type) {this.type = type;}
+	private GraphicType type;
+	public GraphicType getType() {return type;}
+	public void setType(GraphicType type) {this.type = type;}
 
 	@ManyToOne
-	private DefaultGeoJsfGraphicStyle style;
-	public DefaultGeoJsfGraphicStyle getStyle() {return style;}
-	public void setStyle(DefaultGeoJsfGraphicStyle style) {this.style = style;}
+	private GraphicStyle style;
+	public GraphicStyle getStyle() {return style;}
+	public void setStyle(GraphicStyle style) {this.style = style;}
 	
 	private byte[] data;
     @Override public byte[] getData() {return data;}

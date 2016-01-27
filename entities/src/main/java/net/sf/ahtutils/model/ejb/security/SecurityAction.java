@@ -30,10 +30,10 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames = {"code"}))
-@EjbErNode(name="Action",category="security")
+@EjbErNode(name="Action",category="security",subset="security")
 
-public class AhtUtilsSecurityAction implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-	UtilsSecurityAction<AhtUtilsLang,AhtUtilsDescription,AhtUtilsSecurityCategory,AhtUtilsSecurityRole,AhtUtilsSecurityView,AhtUtilsSecurityUsecase,AhtUtilsSecurityAction,AhtUtilsUser>
+public class SecurityAction implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
+	UtilsSecurityAction<AhtUtilsLang,AhtUtilsDescription,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
 {
 	public static final long serialVersionUID=1;
 
@@ -45,9 +45,9 @@ public class AhtUtilsSecurityAction implements EjbWithCode,Serializable,EjbRemov
 	public void setId(long id) {this.id = id;}
 	
 	@NotNull @ManyToOne
-	private AhtUtilsSecurityView view;
-	public AhtUtilsSecurityView getView() {return view;}
-	public void setView(AhtUtilsSecurityView view) {this.view = view;}
+	private SecurityView view;
+	public SecurityView getView() {return view;}
+	public void setView(SecurityView view) {this.view = view;}
 		
 	@NotNull
 	private String code;
@@ -81,20 +81,20 @@ public class AhtUtilsSecurityAction implements EjbWithCode,Serializable,EjbRemov
 	@Override public void setDescription(Map<String, AhtUtilsDescription> description) {this.description = description;}
 	
 	@ManyToMany(fetch=FetchType.LAZY)
-	private List<AhtUtilsSecurityRole> roles;
-	@Override public List<AhtUtilsSecurityRole> getRoles() {if(roles==null){roles = new ArrayList<AhtUtilsSecurityRole>();}return roles;}
-	@Override public void setRoles(List<AhtUtilsSecurityRole> roles) {this.roles = roles;}
+	private List<SecurityRole> roles;
+	@Override public List<SecurityRole> getRoles() {if(roles==null){roles = new ArrayList<SecurityRole>();}return roles;}
+	@Override public void setRoles(List<SecurityRole> roles) {this.roles = roles;}
 	
 	@ManyToMany(fetch=FetchType.LAZY)
-	private List<AhtUtilsSecurityUsecase> usecases;
-	@Override public List<AhtUtilsSecurityUsecase> getUsecases() {if(usecases==null){usecases = new ArrayList<AhtUtilsSecurityUsecase>();}return usecases;}
-	@Override public void setUsecases(List<AhtUtilsSecurityUsecase> usecases) {this.usecases = usecases;}
+	private List<SecurityUsecase> usecases;
+	@Override public List<SecurityUsecase> getUsecases() {if(usecases==null){usecases = new ArrayList<SecurityUsecase>();}return usecases;}
+	@Override public void setUsecases(List<SecurityUsecase> usecases) {this.usecases = usecases;}
 
 	
 	public boolean equals(Object object)
 	{
-        return (object instanceof AhtUtilsSecurityAction)
-             ? id == ((AhtUtilsSecurityAction) object).getId()
+        return (object instanceof SecurityAction)
+             ? id == ((SecurityAction) object).getId()
              : (object == this);
     }
 }

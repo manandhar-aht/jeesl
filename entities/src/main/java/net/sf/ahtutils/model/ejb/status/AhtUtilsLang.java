@@ -13,36 +13,31 @@ import javax.validation.constraints.NotNull;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(name = "UtilsLang")
+@EjbErNode(name="Language",category="status",subset="status",level=3)
 public class AhtUtilsLang implements UtilsLang,EjbRemoveable,Serializable
 {
 	public static final long serialVersionUID=1;
 	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>Fields<<<<<<<<<<<<<<<<<<<<<<<<<<<	
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	
-	@NotNull
-	private String lkey;
-	
-	@NotNull
-	private String lang;
-	
-	// >>>>>>>>>>>>>>>>>>>>>Getters and Setters<<<<<<<<<<<<<<<<<<<
-	
 	public long getId() {return id;}
 	public void setId(long id) {this.id = id;}
 	
+	@NotNull
+	private String lkey;
 	public String getLkey() {return lkey;}
 	public void setLkey(String lkey) {this.lkey = lkey;}
 	
+	@NotNull
+	private String lang;
 	public String getLang() {return lang;}
 	public void setLang(String name) {this.lang = name;}
 	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>Methods<<<<<<<<<<<<<<<<<<<<<<<<<
 	
 	public String toString()
 	{

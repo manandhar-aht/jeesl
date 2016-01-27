@@ -13,9 +13,11 @@ import javax.validation.constraints.NotNull;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(name = "UtilsLang")
+@EjbErNode(name="Description",category="status",subset="status",level=3)
 public class AhtUtilsDescription implements UtilsDescription,EjbRemoveable,Serializable
 {
 	public static final long serialVersionUID=1;

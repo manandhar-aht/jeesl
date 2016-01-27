@@ -20,8 +20,8 @@ public class AhtUtilsBootstrap
 	public static Configuration init(String configFile)
 	{
 		LoggerInit loggerInit = new LoggerInit("log4j.xml");
-			loggerInit.addAltPath("ahtutils-util");
-			loggerInit.init();
+		loggerInit.addAltPath("ahtutils-util");
+		loggerInit.init();
 						
 		ConfigLoader.add(configFile);
 		Configuration config = ConfigLoader.init();					

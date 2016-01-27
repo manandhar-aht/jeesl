@@ -1,65 +1,43 @@
 package net.sf.ahtutils.doc.er;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import net.sf.ahtutils.test.AhtUtilsDocBootstrap;
-import net.sf.exlp.util.xml.JaxbUtil;
-
-import org.metachart.processor.graph.Graph2DotConverter;
-import org.metachart.xml.graph.Graph;
-import org.metachart.xml.graph.Node;
+import org.apache.batik.transcoder.TranscoderException;
+import org.apache.commons.configuration.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CliErDiagram
+import net.sf.ahtutils.AhtUtilsBootstrap;
+
+public class CliErDiagram extends AbstractErDiagram
 {
 	final static Logger logger = LoggerFactory.getLogger(CliErDiagram.class);
 	
-	private Graph2DotConverter gdc;
-	
-	public CliErDiagram()
+	public CliErDiagram(Configuration config)
 	{
-		gdc = new Graph2DotConverter("b");
+		super(config,null);
+		logger.warn("MLW is null");
+		fDot = new File(fTmp,"er.dot");
+		fSrc = new File("../entities/src/main/java");
+		fSvg = new File("../doc/src/main/resources/aht-utils/svg/admin/development/er");
+		
+		packages = "net/sf/ahtutils/model/ejb";
+		colorScheme = "aht-utils/listing/development/er/colorScheme.xml";
 	}
 	
-	public void withColorScheme() throws FileNotFoundException
+	public void create() throws IOException, ClassNotFoundException, TranscoderException
 	{
-		Node xml = JaxbUtil.loadJAXB("../doc/src/main/resources/listing.aht-utils/administration/security/colorScheme.xml", Node.class);
-		JaxbUtil.info(xml);
-		gdc.setColorScheme(xml);
+//		create("security");
+//		create("status");
+//		create("symbol");
+		create("ts");
 	}
 	
-	public void create() throws IOException, ClassNotFoundException
-	{
-		File fSrc = new File("../ejb/src/main/java");
-		File fDot = new File("../doc/src/main/resources/listing.aht-utils/administration/security/security-er.dot");
-		File fSvg = new File("../doc/src/main/resources/svg.aht-utils/administration/security/security-er.svg");
-		
-		ErGraphProcessor erGraph = new ErGraphProcessor(fSrc);
-		erGraph.addPackages("net/sf/ahtutils/model/ejb");
-		
-		Graph g = erGraph.create();
-		JaxbUtil.info(g);
-		
-		gdc.setOverlap(false);
-		gdc.setRatio(0.9);
-		gdc.setRanksep(0.2);
-		
-		gdc.convert(g);
-		gdc.save(fDot);
-		
-		ErImageWriter w = new ErImageWriter("dot");
-		w.svg(fDot, fSvg);
-	}
-
 	public static void main(String args[]) throws Exception
 	{
-		AhtUtilsDocBootstrap.init();
-		logger.info(System.getProperty("java.version"));
-		CliErDiagram er = new CliErDiagram();
-		er.withColorScheme();
+		Configuration config = AhtUtilsBootstrap.init();
+		CliErDiagram er = new CliErDiagram(config);
 		er.create();
 	}
 }

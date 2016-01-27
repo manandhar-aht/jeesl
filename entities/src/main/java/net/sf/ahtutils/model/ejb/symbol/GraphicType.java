@@ -11,9 +11,9 @@ import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Style",category="symbol",subset="sld",level=3)
-public class DefaultGeoJsfGraphicStyle implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsStatus<DefaultGeoJsfGraphicStyle,AhtUtilsLang,AhtUtilsDescription>
+@EjbErNode(name="Type",category="symbol",subset="symbol",level=3)
+public class GraphicType implements Serializable,EjbRemoveable,EjbPersistable,
+								UtilsStatus<GraphicType,AhtUtilsLang,AhtUtilsDescription>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;
@@ -56,7 +56,7 @@ public class DefaultGeoJsfGraphicStyle implements Serializable,EjbRemoveable,Ejb
 	
 	public boolean equals(Object object)
 	{
-        return (object instanceof DefaultGeoJsfGraphicStyle) ? id == ((DefaultGeoJsfGraphicStyle) object).getId() : (object == this);
+        return (object instanceof GraphicType) ? id == ((GraphicType) object).getId() : (object == this);
     }
 	
 	public String toString()

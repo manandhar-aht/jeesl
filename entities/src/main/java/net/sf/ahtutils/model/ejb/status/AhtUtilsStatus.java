@@ -23,12 +23,14 @@ import javax.persistence.UniqueConstraint;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
+import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type")
 @DiscriminatorValue("generic")
 @Table(name = "UtilsStatus", uniqueConstraints = @UniqueConstraint(columnNames = {"type","code"}))
+@EjbErNode(name="Status",category="status",subset="status")
 public class AhtUtilsStatus implements UtilsStatus<AhtUtilsStatus,AhtUtilsLang,AhtUtilsDescription>,EjbRemoveable,Serializable
 {
 	private static final long serialVersionUID = 1;
@@ -37,16 +39,24 @@ public class AhtUtilsStatus implements UtilsStatus<AhtUtilsStatus,AhtUtilsLang,A
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected long id;
+	public void setId(long id) {this.id = id;}
+	public long getId() {return id;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
 	protected Map<String, AhtUtilsLang> name;
+	public Map<String, AhtUtilsLang> getName(){if(name==null){name = new Hashtable<String, AhtUtilsLang>();}return name;}
+	public void setName(Map<String, AhtUtilsLang> name) {this.name = name;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
 	protected Map<String, AhtUtilsDescription> description;
+	public Map<String, AhtUtilsDescription> getDescription() {if(description==null){description = new Hashtable<String, AhtUtilsDescription>();}return description;}
+	public void setDescription(Map<String, AhtUtilsDescription> description) {this.description = description;}
 		
 	protected String code;
+	public String getCode() {return code;}
+	public void setCode(String code) {this.code = code;}
 	
 	private String symbol;
 	@Override public String getSymbol(){return symbol;}
@@ -60,19 +70,14 @@ public class AhtUtilsStatus implements UtilsStatus<AhtUtilsStatus,AhtUtilsLang,A
 
 	protected int position;
 
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>Getters and Setters<<<<<<<<<<<<<<<<<
 	
-	public void setId(long id) {this.id = id;}
-	public long getId() {return id;}
+
 	
-	public Map<String, AhtUtilsLang> getName(){if(name==null){name = new Hashtable<String, AhtUtilsLang>();}return name;}
-	public void setName(Map<String, AhtUtilsLang> name) {this.name = name;}
+
 	
-	public Map<String, AhtUtilsDescription> getDescription() {if(description==null){description = new Hashtable<String, AhtUtilsDescription>();}return description;}
-	public void setDescription(Map<String, AhtUtilsDescription> description) {this.description = description;}
+
 	
-	public String getCode() {return code;}
-	public void setCode(String code) {this.code = code;}
+
 	
 	public boolean isVisible() {return visible;}
 	public void setVisible(boolean visible) {this.visible = visible;}

@@ -1,15 +1,13 @@
 package net.sf.ahtutils.util.comparator.primitive;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.Map.Entry;
 
-/**
- * Created by roblick on 24.11.2015.
- */
+
 public class HashCodeComparator
 {
-	private Map<String,String> hash;
+	private Map<String,String> hash;	//1. String = filepath & 2. String = Arguments
 	private File startDir;
 
 	public HashCodeComparator(File startDir)
@@ -18,36 +16,96 @@ public class HashCodeComparator
 		this.hash = new HashMap<String, String>();
 	}
 
-	void searchForHashCodeBuilder(File start)
+	Map<String,String> searchForHashCodeBuilder()
 	{
-		for(File f :start.listFiles())
+		fileloop:
+		for(File f :startDir.listFiles())
 		{
 			if(f.isDirectory())
 			{
-				searchForHashCodeBuilder(f);
+				startDir = f;
+				searchForHashCodeBuilder();
 			}
-			else
+			else if (f.getName().endsWith(".java"))
 			{
-				String hcb = "HashCodeBuilder";
 				try
 				{
 					BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
 					String input = br.readLine();
 					while(input != null)
 					{
-						if(input.contains(hcb))
+						if(input.contains("new HashCodeBuilder"))
 						{
-							//do sth!!
+							String temp = input.substring(input.indexOf("HashCodeBuilder("),input.indexOf("HashCodeBuilder(")+22);
+							hash.put(f.getName(), temp.substring(temp.indexOf("(")+1, temp.indexOf("(")+6));
+							continue fileloop;
+						}
+						input = br.readLine();
+					}
+				}
+				catch(IOException e){e.printStackTrace();}
+			}
+		}
+		return hash;
+	}
+
+	Map<String, String> compareCode()
+	{
+		Map<String, String> fileList = new HashMap<String, String>();
+		for(Map.Entry<String, String> entry : hash.entrySet())
+		{
+			String temp = entry.getValue();
+			compare:
+			for(Map.Entry<String, String> entry2 : hash.entrySet())
+			{
+				if(temp.equals(entry2.getValue()) && !entry.getKey().equals(entry2.getKey()))
+				{
+					if(fileList.size() >0)
+					{
+						for (Map.Entry<String, String> file : fileList.entrySet())
+						{
+							if(file.getKey().equals(entry2.getKey())){continue compare;}
 						}
 					}
-				} catch(FileNotFoundException e)
-				{
-					e.printStackTrace();
-				} catch(IOException e)
-				{
-					e.printStackTrace();
+					fileList.put(entry2.getKey(),temp);
 				}
 			}
 		}
+		return sortByComparator(fileList, true);
+	}
+
+	private static Map<String, String> sortByComparator(Map<String, String> unsortMap, final boolean order)
+	{
+
+		List<Entry<String, String>> list = new LinkedList<Entry<String, String>>(unsortMap.entrySet());
+
+		// Sorting the list based on values
+		Collections.sort(list, new Comparator<Entry<String, String>>()
+		{
+			public int compare(Entry<String, String> o1, Entry<String, String> o2)
+			{
+				if (order){return o1.getValue().compareTo(o2.getValue());}
+				else{return o2.getValue().compareTo(o1.getValue());	}
+			}
+		});
+
+		Map<String, String> sortedMap = new LinkedHashMap<String, String>();
+		for (Entry<String, String> entry : list){sortedMap.put(entry.getKey(), entry.getValue());}
+
+		return sortedMap;
+	}
+
+
+	public Map<String, String> getHash(){return hash;}
+
+	public static void main(String[] args)
+	{
+		File f = new File("..\\meis\\entities");
+		HashCodeComparator hcc = new HashCodeComparator(f);
+		hcc.searchForHashCodeBuilder();
+		Map<String, String> testList = hcc.compareCode();
+		for(Map.Entry<String, String> entry : testList.entrySet())
+			System.out.println(entry);
+
 	}
 }

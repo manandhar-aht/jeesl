@@ -1,14 +1,16 @@
 package net.sf.ahtutils.xml.navigation;
 
-import net.sf.ahtutils.test.AbstractXmlTest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractXmlNavigationTest extends AbstractXmlTest
+import net.sf.ahtutils.test.AbstractXmlTest;
+
+public abstract class AbstractXmlNavigationTest <T extends Object> extends AbstractXmlTest<T> 
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractXmlNavigationTest.class);
 	
-	protected static final String dirSuffix = "navigation";
-	protected static final String rootDir = "src/test/resources/data/xml/navigation";
+	public AbstractXmlNavigationTest(Class<T> cXml)
+	{
+		super(cXml,"navigation");
+	}
 }

@@ -32,7 +32,8 @@ public class CssGridBuilder extends AbstractFreemarkerFileFactory
 				buildCss(slot, gutter);
 			}
 		}
-		buildCss(54, 5);
+		buildCss(54, 5); //erp
+		buildCss(73, 5); //lis
 	}
 	
 	public void buildVcsTestFile(File vcsFile)

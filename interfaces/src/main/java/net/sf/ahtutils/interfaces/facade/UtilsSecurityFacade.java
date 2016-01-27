@@ -37,7 +37,6 @@ public interface UtilsSecurityFacade <L extends UtilsLang,
 	List<R> rolesForAction(Class<A> cAction, A action);
 	List<R> rolesForAction(Class<A> cAction, Class<USER> cUser, A action, USER user);
 	
-	
 	List<A> allActionsForUser(Class<USER> clUser, USER user);
 	
 	void grantRole(Class<USER> clUser, Class<R> clRole, USER user, R role, boolean grant);
@@ -56,6 +55,4 @@ public interface UtilsSecurityFacade <L extends UtilsLang,
 	<S extends UtilsStaff<L,D,C,R,V,U,A,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> clStaff, R role, DOMAIN domain);
 	
 	<S extends UtilsStaff<L,D,C,R,V,U,A,USER,DOMAIN>, DOMAIN extends EjbWithId> List<DOMAIN> fDomains(Class<V> cView, Class<S> cStaff, USER user, V view);
-
-	
 }

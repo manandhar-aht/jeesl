@@ -54,7 +54,35 @@ public class PrototypeConstraintsBean implements Serializable,ConstraintsBean
 				}
 			}
 		}
+		logger.info(AbstractLogMessage.postConstruct(ptt)+" with Constraints:"+constraints.size());
+    }
+    
+    public void init2(String artifact) throws FileNotFoundException
+    {
+		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
 
+		constraints = new Hashtable<String,Constraint>();
+		scopes = new Hashtable<String,ConstraintScope>();
+		
+		Constraints index = JaxbUtil.loadJAXB(artifact+"/constraints/index.xml", Constraints.class);
+		for(ConstraintScope scopeCategory : index.getConstraintScope())
+		{
+			Constraints c = JaxbUtil.loadJAXB(artifact+"/constraints/"+scopeCategory.getCategory()+".xml", Constraints.class);
+			for(ConstraintScope scope : c.getConstraintScope())
+			{
+				String scopeCode = scopeCategory.getCategory()+"-"+scope.getCode();
+				scopes.put(scopeCode, scope);
+				for(Constraint constraint : scope.getConstraint())
+				{
+					if(constraint.isSetCode())
+					{
+						String key = scopeCode+"-"+constraint.getCode();
+						logger.info("Adding "+key);
+						constraints.put(key, constraint);
+					}
+				}
+			}
+		}
 		logger.info(AbstractLogMessage.postConstruct(ptt)+" with Constraints:"+constraints.size());
     }
     

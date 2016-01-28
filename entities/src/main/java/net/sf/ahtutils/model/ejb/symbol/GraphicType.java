@@ -7,13 +7,13 @@ import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
+import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Type",category="symbol",subset="symbol",level=3)
 public class GraphicType implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsStatus<GraphicType,AhtUtilsLang,AhtUtilsDescription>
+								UtilsStatus<GraphicType,AhtUtilsLang,Description>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;
@@ -38,8 +38,8 @@ public class GraphicType implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public Map<String, AhtUtilsLang> getName() {return null;}
 	@Override public void setName(Map<String, AhtUtilsLang> name) {}
 	
-	@Override public Map<String, AhtUtilsDescription> getDescription() {return null;}
-	@Override public void setDescription(Map<String, AhtUtilsDescription> description) {}
+	@Override public Map<String, Description> getDescription() {return null;}
+	@Override public void setDescription(Map<String, Description> description) {}
 	
 	@Override public String getStyle() {return null;}
 	@Override public void setStyle(String style) {}

@@ -23,7 +23,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
+import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
 import net.sf.ahtutils.model.ejb.user.AhtUtilsUser;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
@@ -33,7 +33,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @EjbErNode(name="Action",category="security",subset="security")
 
 public class SecurityAction implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-	UtilsSecurityAction<AhtUtilsLang,AhtUtilsDescription,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
+	UtilsSecurityAction<AhtUtilsLang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
 {
 	public static final long serialVersionUID=1;
 
@@ -76,9 +76,9 @@ public class SecurityAction implements EjbWithCode,Serializable,EjbRemoveable,Ej
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
-	private Map<String, AhtUtilsDescription> description;
-	@Override public Map<String, AhtUtilsDescription> getDescription() {return description;}
-	@Override public void setDescription(Map<String, AhtUtilsDescription> description) {this.description = description;}
+	private Map<String, Description> description;
+	@Override public Map<String, Description> getDescription() {return description;}
+	@Override public void setDescription(Map<String, Description> description) {this.description = description;}
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	private List<SecurityRole> roles;

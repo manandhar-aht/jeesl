@@ -9,11 +9,10 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
+import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsStatus;
 import net.sf.ahtutils.test.AbstractAhtUtilTest;
-import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
@@ -24,13 +23,13 @@ public class TestUtilsStatusEjbFactory extends AbstractAhtUtilTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestUtilsStatusEjbFactory.class);
 	
-	private EjbStatusFactory<AhtUtilsStatus,AhtUtilsLang,AhtUtilsDescription> facStatus;
+	private EjbStatusFactory<AhtUtilsStatus,AhtUtilsLang,Description> facStatus;
 	private Status status;
 	
 	@Before
 	public void init()
 	{
-		facStatus = EjbStatusFactory.createFactory(AhtUtilsStatus.class, AhtUtilsLang.class,AhtUtilsDescription.class);
+		facStatus = EjbStatusFactory.createFactory(AhtUtilsStatus.class, AhtUtilsLang.class,Description.class);
 		status = createStatus();
 	}
     
@@ -67,7 +66,7 @@ public class TestUtilsStatusEjbFactory extends AbstractAhtUtilTest
     public void testTranslationValue() throws InstantiationException, IllegalAccessException, UtilsConstraintViolationException
     {
     	Lang lang = status.getLangs().getLang().get(0);
-    	Description desc = status.getDescriptions().getDescription().get(0);
+    	net.sf.ahtutils.xml.status.Description desc = status.getDescriptions().getDescription().get(0);
     	AhtUtilsStatus ejb = (AhtUtilsStatus)facStatus.create(status);
     	Assert.assertEquals(lang.getTranslation(), ejb.getName().get(lang.getKey()).getLang());
     	Assert.assertEquals(desc.getValue(), ejb.getDescription().get(lang.getKey()).getLang());
@@ -123,8 +122,8 @@ public class TestUtilsStatusEjbFactory extends AbstractAhtUtilTest
     private Descriptions getDescriptions()
     {
     	Descriptions descriptions = new Descriptions();
-    	Description d1 = new Description();d1.setKey("en");d1.setValue("v1");descriptions.getDescription().add(d1);
-    	Description d2 = new Description();d2.setKey("de");d2.setValue("v2");descriptions.getDescription().add(d2);
+    	net.sf.ahtutils.xml.status.Description d1 = new net.sf.ahtutils.xml.status.Description();d1.setKey("en");d1.setValue("v1");descriptions.getDescription().add(d1);
+    	net.sf.ahtutils.xml.status.Description d2 = new net.sf.ahtutils.xml.status.Description();d2.setKey("de");d2.setValue("v2");descriptions.getDescription().add(d2);
     	return descriptions;
     }
 	

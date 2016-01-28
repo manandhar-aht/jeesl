@@ -20,7 +20,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
+import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
 import net.sf.ahtutils.model.ejb.user.AhtUtilsUser;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
@@ -29,7 +29,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"type","code"}))
 @EjbErNode(name="Category",category="security",subset="security")
 public class SecurityCategory implements Serializable, EjbWithCode,EjbRemoveable,EjbPersistable,
-	UtilsSecurityCategory<AhtUtilsLang,AhtUtilsDescription,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
+	UtilsSecurityCategory<AhtUtilsLang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
 {
 	public static final long serialVersionUID=2;
 	
@@ -71,9 +71,9 @@ public class SecurityCategory implements Serializable, EjbWithCode,EjbRemoveable
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
-	private Map<String, AhtUtilsDescription> description;
-	public Map<String, AhtUtilsDescription> getDescription() {return description;}
-	public void setDescription(Map<String, AhtUtilsDescription> description) {this.description = description;}
+	private Map<String, Description> description;
+	public Map<String, Description> getDescription() {return description;}
+	public void setDescription(Map<String, Description> description) {this.description = description;}
 	
 	
 	public String toString()

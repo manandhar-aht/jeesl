@@ -31,7 +31,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @DiscriminatorValue("generic")
 @Table(name = "UtilsStatus", uniqueConstraints = @UniqueConstraint(columnNames = {"type","code"}))
 @EjbErNode(name="Status",category="status",subset="status")
-public class AhtUtilsStatus implements UtilsStatus<AhtUtilsStatus,AhtUtilsLang,AhtUtilsDescription>,EjbRemoveable,Serializable
+public class AhtUtilsStatus implements UtilsStatus<AhtUtilsStatus,AhtUtilsLang,Description>,EjbRemoveable,Serializable
 {
 	private static final long serialVersionUID = 1;
 	
@@ -50,9 +50,9 @@ public class AhtUtilsStatus implements UtilsStatus<AhtUtilsStatus,AhtUtilsLang,A
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
-	protected Map<String, AhtUtilsDescription> description;
-	public Map<String, AhtUtilsDescription> getDescription() {if(description==null){description = new Hashtable<String, AhtUtilsDescription>();}return description;}
-	public void setDescription(Map<String, AhtUtilsDescription> description) {this.description = description;}
+	protected Map<String, Description> description;
+	public Map<String, Description> getDescription() {if(description==null){description = new Hashtable<String, Description>();}return description;}
+	public void setDescription(Map<String, Description> description) {this.description = description;}
 		
 	protected String code;
 	public String getCode() {return code;}

@@ -12,13 +12,13 @@ import javax.validation.constraints.NotNull;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.ts.UtilsTsData;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
+import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Data",category="ts",subset="ts",level=2)
 public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsTsData<AhtUtilsLang,AhtUtilsDescription,TsCategory,TsUnit,TimeSeries,TsEntity,TsInterval,TsData>
+								UtilsTsData<AhtUtilsLang,Description,TsCategory,TsUnit,TimeSeries,TsEntity,TsInterval,TsData>
 {
 	public static final long serialVersionUID=1;
 	

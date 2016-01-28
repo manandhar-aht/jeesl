@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.factory.ejb.ts.EjbTimeSeriesCategoryFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
+import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -18,6 +20,7 @@ import net.sf.ahtutils.interfaces.model.ts.UtilsTsCategory;
 import net.sf.ahtutils.interfaces.model.ts.UtilsTsData;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminTsCategoryBean <L extends UtilsLang,
@@ -28,32 +31,40 @@ public class AbstractAdminTsCategoryBean <L extends UtilsLang,
 											ENTITY extends EjbWithId,
 											INT extends UtilsStatus<INT,L,D>,
 											DATA extends UtilsTsData<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>>
+					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsCategoryBean.class);
 	
-	protected String[] langs;
-	protected UtilsFacade fTs;
+	protected UtilsTsFacade<L,D,CAT,UNIT,TS,ENTITY,INT,DATA> fTs;
+		
+	private EjbTimeSeriesCategoryFactory<L,D,CAT,UNIT,TS,ENTITY,INT,DATA> efCategory;
 	
 	protected Class<CAT> cCategory;
+	protected Class<UNIT> cUnit;
 
+	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
 	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
+	
 	protected CAT category; public void setCategory(CAT category) {this.category = category;} public CAT getCategory() {return category;}
 		
-	
-	public void initSuper(String[] langs, Class<CAT> cCategory)
+	protected void initSuper(String[] langs, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<UNIT> cUnit)
 	{
-		this.langs=langs;
+		super.initAdmin(langs, cLang, cDescription);
 		this.cCategory=cCategory;
+		this.cUnit=cUnit;
 		
-//		efLang = new EjbLangFactory<L>(cLang);
-//		efDescription = new EjbDescriptionFactory<D>(cDescription);
+		efCategory = EjbTimeSeriesCategoryFactory.factory(cCategory);
 		
+		allowSave = true;
+		showInvisibleCategories = true;
+		
+		units = fTs.all(cUnit);
 		reloadCategories();
 	}
 	
-	protected void reloadCategories()
+	public void reloadCategories()
 	{
 		logger.info("reloadCategories");
 		categories = fTs.all(cCategory);
@@ -61,21 +72,44 @@ public class AbstractAdminTsCategoryBean <L extends UtilsLang,
 //		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
 	}
 	
-	protected void addCategory() throws UtilsNotFoundException
+	public void add() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.addEntity(cCategory));
-//		category = efLang.persistMissingLangs(fSecurity,langs,category);
-//		category = efDescription.persistMissingLangs(fSecurity,langs,category);
+		category = efCategory.build(null);
+		category.setName(efLang.createEmpty(langs));
+		category.setDescription(efDescription.createEmpty(langs));
 	}
 	
-	protected void selectCategory() throws UtilsNotFoundException
+	public void select() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(category));
-//		category = efLang.persistMissingLangs(fSecurity,langs,category);
-//		category = efDescription.persistMissingLangs(fSecurity,langs,category);
+		category = efLang.persistMissingLangs(fTs,langs,category);
+		category = efDescription.persistMissingLangs(fTs,langs,category);
 	}
 	
-	protected void reorderCategories() throws UtilsConstraintViolationException, UtilsLockingException
+	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.saveEntity(category));
+		category.setUnit(fTs.find(cUnit, category.getUnit()));
+		category = fTs.save(category);
+		reloadCategories();
+		updatePerformed();
+	}
+	
+	public void rm() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.rmEntity(category));
+		fTs.rm(category);
+		category=null;
+		reloadCategories();
+	}
+	
+	public void cancel()
+	{
+		category = null;
+	}
+	
+	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info("updateOrder "+categories.size());
 /*		int i=1;
@@ -89,8 +123,9 @@ public class AbstractAdminTsCategoryBean <L extends UtilsLang,
 	
 	protected void updatePerformed(){}
 	
-	//Handling for Invisible entries
+	//Security Handling for Invisible entries
 	private boolean showInvisibleCategories; public boolean isShowInvisibleCategories() {return showInvisibleCategories;}
+	private boolean allowSave; public boolean getAllowSave() {return allowSave;}
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{

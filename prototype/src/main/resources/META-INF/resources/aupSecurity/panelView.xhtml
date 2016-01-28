@@ -19,7 +19,7 @@
 			<f:facet name="actions">
 				<aht:icon type="save" listener="#{adminSecurityViewsBean.saveView()}" update="#{cc.attrs.update}" tooltip="#{msg.ttSave}"/>
 			</f:facet>
-			<h:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
+			<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 				<p:outputLabel value="#{msg.aupSecurityCategory}"/>
 				<p:selectOneMenu value="#{adminSecurityViewsBean.view.category}" effect="fade" >
 					<f:selectItems value="#{adminSecurityViewsBean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
@@ -34,8 +34,8 @@
 				
 				<p:outputLabel rendered="#{cc.attrs.bean.showDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
 				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showDocumentation}" value="#{cc.attrs.bean.view.documentation}"/>
-			</h:panelGrid>
-			<h:panelGrid rendered="#{cc.attrs.bean.showDeveloper}" columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
+			</p:panelGrid>
+			<p:panelGrid rendered="#{cc.attrs.bean.showDeveloper}" columns="2" columnClasses="auPwg30,auPwg70">
 				<p:outputLabel value="#{msg.aupSecurityAccessPublic}"/>
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.view.accessPublic}"/>
 				<p:outputLabel value="#{msg.aupSecurityAccessLogin}"/>
@@ -48,7 +48,7 @@
 				<h:inputText value="#{cc.attrs.bean.view.urlMapping}"/>
 				<p:outputLabel value="#{msg.aupSecurityViewUrlBase}"/>
 				<h:inputText value="#{cc.attrs.bean.view.urlBase}"/>
-			</h:panelGrid>
+			</p:panelGrid>
 			<aht:tabTranslationEditor value="#{adminSecurityViewsBean.view}"
 					labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
        				keys="#{translationBean.langKeys}" withDescription="true"/>

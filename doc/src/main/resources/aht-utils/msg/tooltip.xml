@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+    <s:translation key="ttNew">
+    	<s:langs>
+    		<s:lang key="en" translation="Create a new item!"/>
+    		<s:lang key="fr" translation="Create a new item!"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="ttSave">
+    	<s:langs>
+    		<s:lang key="en" translation="Save this item!"/>
+    		<s:lang key="fr" translation="Save this item!"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="ttDelete">
+    	<s:langs>
+    		<s:lang key="en" translation="Delete this item!"/>
+    		<s:lang key="fr" translation="Delete this item!"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="ttRemove">
+		<s:langs>
+			<s:lang key="en" translation="Remove this item from the table!"/>
+			<s:lang key="fr" translation="Remove this item from the table!"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="ttAdd">
+        <s:langs>
+            <s:lang key="en" translation="Add an item!"/>
+            <s:lang key="fr" translation="Add an item!"/>
+        </s:langs>
+    </s:translation>
+	<s:translation key="ttCancel">
+    	<s:langs>
+    		<s:lang key="en" translation="Cancel editing!"/>
+    		<s:lang key="fr" translation="Cancel editing!"/>
+    	</s:langs>
+	</s:translation>
+	<s:translation key="ttEdit">
+        <s:langs>
+            <s:lang key="en" translation="Edit"/>
+            <s:lang key="fr" translation="Edit"/>
+        </s:langs>
+    </s:translation>
+     <s:translation key="ttRevision">
+        <s:langs>
+            <s:lang key="en" translation="Latest Change"/>
+            <s:lang key="fr" translation="Latest Change"/>
+        </s:langs>
+    </s:translation>
+    <s:translation key="ttRevAdd">
+        <s:langs>
+            <s:lang key="en" translation="Item added"/>
+            <s:lang key="fr" translation="Item added"/>
+        </s:langs>
+    </s:translation>
+    <s:translation key="ttRevMod">
+        <s:langs>
+            <s:lang key="en" translation="Item modified"/>
+            <s:lang key="fr" translation="Item modified"/>
+        </s:langs>
+    </s:translation>
+    <s:translation key="ttRevRm">
+        <s:langs>
+            <s:lang key="en" translation="Item removed"/>
+            <s:lang key="fr" translation="Item removed"/>
+        </s:langs>
+    </s:translation>
+</s:translations>

@@ -21,7 +21,7 @@
 			selection="#{cc.attrs.bean.usecase}" selectionMode="single" rowKey="#{u.id}">
 			<f:facet name="header">
 				<aht:pfDataTableHeader title="#{msg.aupSecurityUsecases}">
-					<aht:icon type="add" listener="#{cc.attrs.bean.addUsecase()}" update="#{cc.attrs.update}" tooltip="#{cc.attrs.tooltip}"/>
+					<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addUsecase()}" update="#{cc.attrs.update}" tooltip="#{cc.attrs.tooltip}"/>
 				</aht:pfDataTableHeader>
 			</f:facet>
 			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.selectUsecase}"/>

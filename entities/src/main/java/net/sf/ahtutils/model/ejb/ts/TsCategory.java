@@ -26,6 +26,11 @@ public class TsCategory implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 	
+	@NotNull
+	private String code;
+	@Override public String getCode() {return code;}
+	@Override public void setCode(String code) {this.code = code;}
+	
 	@NotNull @ManyToOne
 	private TsUnit unit;
 	@Override public TsUnit getUnit() {return unit;}

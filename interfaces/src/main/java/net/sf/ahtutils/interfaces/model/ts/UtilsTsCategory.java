@@ -15,6 +15,9 @@ public interface UtilsTsCategory <L extends UtilsLang,
 									DATA extends UtilsTsData<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>>
 		extends EjbWithId
 {
+	String getCode();
+	void setCode(String code);
+	
 	UNIT getUnit();
 	void setUnit(UNIT unit);
 }

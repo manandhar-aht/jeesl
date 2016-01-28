@@ -19,26 +19,26 @@ import javax.validation.constraints.NotNull;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.model.ejb.security.AhtUtilsSecurityAction;
-import net.sf.ahtutils.model.ejb.security.AhtUtilsSecurityCategory;
-import net.sf.ahtutils.model.ejb.security.AhtUtilsSecurityRole;
-import net.sf.ahtutils.model.ejb.security.AhtUtilsSecurityUsecase;
-import net.sf.ahtutils.model.ejb.security.AhtUtilsSecurityView;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
+import net.sf.ahtutils.model.ejb.security.SecurityAction;
+import net.sf.ahtutils.model.ejb.security.SecurityCategory;
+import net.sf.ahtutils.model.ejb.security.SecurityRole;
+import net.sf.ahtutils.model.ejb.security.SecurityUsecase;
+import net.sf.ahtutils.model.ejb.security.SecurityView;
+import net.sf.ahtutils.model.ejb.status.Description;
+import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(name="UtilsMeis", uniqueConstraints={@UniqueConstraint(name="unique-email", columnNames = {"email"})})
-@EjbErNode(name="User",category="user")
+@EjbErNode(name="User",category="user",subset="security")
 @NamedQueries
 ({	
 	@NamedQuery(name="fUserByEmail",query="SELECT u FROM MeisUser u WHERE u.email = :email")
 })
 public class AhtUtilsUser implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,
-									UtilsUser<AhtUtilsLang,AhtUtilsDescription,AhtUtilsSecurityCategory,AhtUtilsSecurityRole,AhtUtilsSecurityView,AhtUtilsSecurityUsecase,AhtUtilsSecurityAction,AhtUtilsUser>
+									UtilsUser<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
 {
 	public static final long serialVersionUID=1;
 	
@@ -71,9 +71,9 @@ public class AhtUtilsUser implements Serializable,EjbWithId,EjbPersistable,EjbRe
     public void setLang(String lang) {this.lang = lang;}
 	
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy="users")
-	private List<AhtUtilsSecurityRole> roles;
-    public List<AhtUtilsSecurityRole> getRoles() {if(roles==null){roles = new ArrayList<AhtUtilsSecurityRole>();};return roles;}
-    public void setRoles(List<AhtUtilsSecurityRole> roles) {this.roles = roles;}
+	private List<SecurityRole> roles;
+    public List<SecurityRole> getRoles() {if(roles==null){roles = new ArrayList<SecurityRole>();};return roles;}
+    public void setRoles(List<SecurityRole> roles) {this.roles = roles;}
 
 	// >>>>>>>>>>>>>>>>>>>>Methods<<<<<<<<<<<<<<<
 	

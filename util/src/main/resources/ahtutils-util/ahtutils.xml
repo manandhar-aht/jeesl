@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <config>
+	<dir>
+		<tmp>/Volumes/ramdisk</tmp>
+	</dir>
 	<net>
 		<jboss host="localhost" port="1099" context=""/>
 		<rest host="http://localhost:8080" context="erp"/>

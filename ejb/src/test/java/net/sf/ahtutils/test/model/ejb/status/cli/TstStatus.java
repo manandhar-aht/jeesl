@@ -2,7 +2,7 @@ package net.sf.ahtutils.test.model.ejb.status.cli;
 
 import java.util.Random;
 
-import net.sf.ahtutils.model.ejb.status.AhtUtilsStatus;
+import net.sf.ahtutils.model.ejb.status.Status;
 import net.sf.ahtutils.test.AhtUtilsEjbTestBootstrap;
 import net.sf.ahtutils.test.model.ejb.status.TestStatus;
 
@@ -22,7 +22,7 @@ public class TstStatus
 	
 	public void create()
 	{
-		AhtUtilsStatus status = TestStatus.create(rnd, "code");
+		Status status = TestStatus.create(rnd, "code");
 		logger.debug(status.toString());
 	}
 	

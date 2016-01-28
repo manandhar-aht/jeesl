@@ -20,16 +20,16 @@ import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
+import net.sf.ahtutils.model.ejb.status.Description;
+import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.user.AhtUtilsUser;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"type","code"}))
-@EjbErNode(name="Category",category="security")
-public class AhtUtilsSecurityCategory implements Serializable, EjbWithCode,EjbRemoveable,EjbPersistable,
-	UtilsSecurityCategory<AhtUtilsLang,AhtUtilsDescription,AhtUtilsSecurityCategory,AhtUtilsSecurityRole,AhtUtilsSecurityView,AhtUtilsSecurityUsecase,AhtUtilsSecurityAction,AhtUtilsUser>
+@EjbErNode(name="Category",category="security",subset="security")
+public class SecurityCategory implements Serializable, EjbWithCode,EjbRemoveable,EjbPersistable,
+	UtilsSecurityCategory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
 {
 	public static final long serialVersionUID=2;
 	
@@ -65,15 +65,15 @@ public class AhtUtilsSecurityCategory implements Serializable, EjbWithCode,EjbRe
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
-	private Map<String, AhtUtilsLang> name;
-	public Map<String, AhtUtilsLang> getName() {return name;}
-	public void setName(Map<String, AhtUtilsLang> name) {this.name = name;}
+	private Map<String, Lang> name;
+	public Map<String, Lang> getName() {return name;}
+	public void setName(Map<String, Lang> name) {this.name = name;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
-	private Map<String, AhtUtilsDescription> description;
-	public Map<String, AhtUtilsDescription> getDescription() {return description;}
-	public void setDescription(Map<String, AhtUtilsDescription> description) {this.description = description;}
+	private Map<String, Description> description;
+	public Map<String, Description> getDescription() {return description;}
+	public void setDescription(Map<String, Description> description) {this.description = description;}
 	
 	
 	public String toString()
@@ -85,6 +85,6 @@ public class AhtUtilsSecurityCategory implements Serializable, EjbWithCode,EjbRe
 	
 	public boolean equals(Object object)
 	{
-        return (object instanceof AhtUtilsSecurityCategory) ? id == ((AhtUtilsSecurityCategory) object).getId() : (object == this);
+        return (object instanceof SecurityCategory) ? id == ((SecurityCategory) object).getId() : (object == this);
     }
 }

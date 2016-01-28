@@ -2,8 +2,8 @@ package net.sf.ahtutils.test.model.ejb.status;
 
 import java.util.Random;
 
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsStatus;
+import net.sf.ahtutils.model.ejb.status.Lang;
+import net.sf.ahtutils.model.ejb.status.Status;
 import net.sf.ahtutils.test.model.ejb.status.cli.TstStatus;
 
 import org.jboss.arquillian.junit.Arquillian;
@@ -39,14 +39,14 @@ public class TestStatus
 	
     public void addStatus()
     {
-    	AhtUtilsStatus ejb = create(rnd,code);
+    	Status ejb = create(rnd,code);
  //   	ejb = fUtil.persist(ejb);
  //   	Assert.assertTrue(ejb.getId()>0);
     }
     
-    public static AhtUtilsStatus create(Random rnd, String code)
+    public static Status create(Random rnd, String code)
     {
-    	AhtUtilsStatus ejb = new AhtUtilsStatus();
+    	Status ejb = new Status();
     	ejb.setCode(code);
     	ejb.setVisible(true);
     	ejb.getName().put("en", create("en", "en"+rnd.nextInt(10000)));
@@ -54,9 +54,9 @@ public class TestStatus
     	return ejb;
     }
     
-    public static AhtUtilsLang create(String key, String lang)
+    public static Lang create(String key, String lang)
     {
-    	AhtUtilsLang ejb = new AhtUtilsLang();
+    	Lang ejb = new Lang();
     	ejb.setLang(lang);
     	ejb.setLkey(key);
     	return ejb;

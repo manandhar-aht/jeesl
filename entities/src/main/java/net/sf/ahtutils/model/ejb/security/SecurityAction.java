@@ -23,17 +23,17 @@ import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
+import net.sf.ahtutils.model.ejb.status.Description;
+import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.user.AhtUtilsUser;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames = {"code"}))
-@EjbErNode(name="Action",category="security")
+@EjbErNode(name="Action",category="security",subset="security")
 
-public class AhtUtilsSecurityAction implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-	UtilsSecurityAction<AhtUtilsLang,AhtUtilsDescription,AhtUtilsSecurityCategory,AhtUtilsSecurityRole,AhtUtilsSecurityView,AhtUtilsSecurityUsecase,AhtUtilsSecurityAction,AhtUtilsUser>
+public class SecurityAction implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
+	UtilsSecurityAction<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
 {
 	public static final long serialVersionUID=1;
 
@@ -45,9 +45,9 @@ public class AhtUtilsSecurityAction implements EjbWithCode,Serializable,EjbRemov
 	public void setId(long id) {this.id = id;}
 	
 	@NotNull @ManyToOne
-	private AhtUtilsSecurityView view;
-	public AhtUtilsSecurityView getView() {return view;}
-	public void setView(AhtUtilsSecurityView view) {this.view = view;}
+	private SecurityView view;
+	public SecurityView getView() {return view;}
+	public void setView(SecurityView view) {this.view = view;}
 		
 	@NotNull
 	private String code;
@@ -70,31 +70,31 @@ public class AhtUtilsSecurityAction implements EjbWithCode,Serializable,EjbRemov
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
-	private Map<String, AhtUtilsLang> name;
-	@Override public Map<String, AhtUtilsLang> getName() {return name;}
-	@Override public void setName(Map<String, AhtUtilsLang> name) {this.name = name;}
+	private Map<String, Lang> name;
+	@Override public Map<String, Lang> getName() {return name;}
+	@Override public void setName(Map<String, Lang> name) {this.name = name;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
-	private Map<String, AhtUtilsDescription> description;
-	@Override public Map<String, AhtUtilsDescription> getDescription() {return description;}
-	@Override public void setDescription(Map<String, AhtUtilsDescription> description) {this.description = description;}
+	private Map<String, Description> description;
+	@Override public Map<String, Description> getDescription() {return description;}
+	@Override public void setDescription(Map<String, Description> description) {this.description = description;}
 	
 	@ManyToMany(fetch=FetchType.LAZY)
-	private List<AhtUtilsSecurityRole> roles;
-	@Override public List<AhtUtilsSecurityRole> getRoles() {if(roles==null){roles = new ArrayList<AhtUtilsSecurityRole>();}return roles;}
-	@Override public void setRoles(List<AhtUtilsSecurityRole> roles) {this.roles = roles;}
+	private List<SecurityRole> roles;
+	@Override public List<SecurityRole> getRoles() {if(roles==null){roles = new ArrayList<SecurityRole>();}return roles;}
+	@Override public void setRoles(List<SecurityRole> roles) {this.roles = roles;}
 	
 	@ManyToMany(fetch=FetchType.LAZY)
-	private List<AhtUtilsSecurityUsecase> usecases;
-	@Override public List<AhtUtilsSecurityUsecase> getUsecases() {if(usecases==null){usecases = new ArrayList<AhtUtilsSecurityUsecase>();}return usecases;}
-	@Override public void setUsecases(List<AhtUtilsSecurityUsecase> usecases) {this.usecases = usecases;}
+	private List<SecurityUsecase> usecases;
+	@Override public List<SecurityUsecase> getUsecases() {if(usecases==null){usecases = new ArrayList<SecurityUsecase>();}return usecases;}
+	@Override public void setUsecases(List<SecurityUsecase> usecases) {this.usecases = usecases;}
 
 	
 	public boolean equals(Object object)
 	{
-        return (object instanceof AhtUtilsSecurityAction)
-             ? id == ((AhtUtilsSecurityAction) object).getId()
+        return (object instanceof SecurityAction)
+             ? id == ((SecurityAction) object).getId()
              : (object == this);
     }
 }

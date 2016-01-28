@@ -28,6 +28,7 @@ public class UtilsMsgBuilder
 	public static final String srcAmount = "msg.aht-utils/finance/amount.xml";
 	public static final String srcDate = "msg.aht-utils/date.xml";
 	
+	public static final String tooltip = "aht-utils/msg/tooltip.xml";
 	public static final String srcMonitoring = "msg.aht-utils/monitoring.xml";
 	public static final String srcWizard = "msg.aht-utils/wizard.xml";
 	public static final String srcAdminAuditLog = "msg.aht-utils/admin/system/auditLog.xml";

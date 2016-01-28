@@ -19,10 +19,10 @@
 				<aht:icon type="delete" listener="#{adminSecurityViewsBean.rmAction()}" update="#{cc.attrs.update}" tooltip="#{msg.ttDelete}"/>
 				<aht:icon type="save" listener="#{adminSecurityViewsBean.saveAction()}" update="#{cc.attrs.update}" tooltip="#{msg.ttSave}"/>
 			</f:facet>
-			<h:panelGrid columns="2" columnClasses="col1,col2" styleClass="auCleanPanelGrid">
+			<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 				<p:outputLabel value="#{msg.aupSecurityCode}"/>
 				<h:inputText value="#{adminSecurityViewsBean.action.code}"/>
-			</h:panelGrid>
+			</p:panelGrid>
 			<aht:tabTranslationEditor value="#{adminSecurityViewsBean.action}"
 					labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
        				keys="#{translationBean.langKeys}" withDescription="true"/>

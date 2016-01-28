@@ -12,18 +12,18 @@ import org.openfuxml.media.transcode.Svg2PngTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
-import net.sf.ahtutils.model.ejb.symbol.DefaultGeoJsfGraphic;
-import net.sf.ahtutils.model.ejb.symbol.DefaultGeoJsfGraphicStyle;
-import net.sf.ahtutils.model.ejb.symbol.DefaultGeoJsfGraphicType;
+import net.sf.ahtutils.model.ejb.status.Description;
+import net.sf.ahtutils.model.ejb.status.Lang;
+import net.sf.ahtutils.model.ejb.symbol.Graphic;
+import net.sf.ahtutils.model.ejb.symbol.GraphicStyle;
+import net.sf.ahtutils.model.ejb.symbol.GraphicType;
 import net.sf.ahtutils.test.AhtUtilsTestBootstrap;
 
 public class TestSvgSymbolFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(TestSvgSymbolFactory.class);
 
-	private SvgSymbolFactory<AhtUtilsLang,AhtUtilsDescription,DefaultGeoJsfGraphic,DefaultGeoJsfGraphicType,DefaultGeoJsfGraphicStyle> svgF;
+	private SvgSymbolFactory<Lang,Description,Graphic,GraphicType,GraphicStyle> svgF;
 	
 	public TestSvgSymbolFactory()
 	{
@@ -32,7 +32,7 @@ public class TestSvgSymbolFactory
 	
 	public void test() throws IOException, TranscoderException
 	{
-		DefaultGeoJsfGraphic rule = new DefaultGeoJsfGraphic();
+		Graphic rule = new Graphic();
 		for(int i=0;i<=12;i++)
 		{
 			rule.setSize(i);

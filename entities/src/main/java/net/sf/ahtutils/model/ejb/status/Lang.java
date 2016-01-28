@@ -13,36 +13,31 @@ import javax.validation.constraints.NotNull;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(name = "UtilsLang")
-public class AhtUtilsLang implements UtilsLang,EjbRemoveable,Serializable
+@EjbErNode(name="Language",category="status",subset="status",level=3)
+public class Lang implements UtilsLang,EjbRemoveable,Serializable
 {
 	public static final long serialVersionUID=1;
 	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>Fields<<<<<<<<<<<<<<<<<<<<<<<<<<<	
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	
-	@NotNull
-	private String lkey;
-	
-	@NotNull
-	private String lang;
-	
-	// >>>>>>>>>>>>>>>>>>>>>Getters and Setters<<<<<<<<<<<<<<<<<<<
-	
 	public long getId() {return id;}
 	public void setId(long id) {this.id = id;}
 	
+	@NotNull
+	private String lkey;
 	public String getLkey() {return lkey;}
 	public void setLkey(String lkey) {this.lkey = lkey;}
 	
+	@NotNull
+	private String lang;
 	public String getLang() {return lang;}
 	public void setLang(String name) {this.lang = name;}
 	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>Methods<<<<<<<<<<<<<<<<<<<<<<<<<
 	
 	public String toString()
 	{
@@ -53,19 +48,19 @@ public class AhtUtilsLang implements UtilsLang,EjbRemoveable,Serializable
 		return sb.toString();
 	}
 	
-	public synchronized static Map<String,AhtUtilsLang> createMap(AhtUtilsLang... languages)
+	public synchronized static Map<String,Lang> createMap(Lang... languages)
 	{
-		Map<String,AhtUtilsLang> langMap = new Hashtable<String, AhtUtilsLang>();
-		for(AhtUtilsLang lang : languages)
+		Map<String,Lang> langMap = new Hashtable<String, Lang>();
+		for(Lang lang : languages)
 		{
 			langMap.put(lang.getLkey(), lang);
 		}
 		return langMap;
 	}
 	
-	public synchronized static AhtUtilsLang create(String key, String lang)
+	public synchronized static Lang create(String key, String lang)
 	{
-		AhtUtilsLang pl = new AhtUtilsLang();
+		Lang pl = new Lang();
 		pl.setLkey(key);
 		pl.setLang(lang);
 		return pl;

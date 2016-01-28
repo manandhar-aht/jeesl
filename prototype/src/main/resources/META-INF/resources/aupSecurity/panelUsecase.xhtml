@@ -21,7 +21,7 @@
 			<f:facet name="actions">
 				<aht:icon type="save" listener="#{cc.attrs.bean.saveUsecase()}" update="#{cc.attrs.update}" tooltip="#{cc.attrs.tooltip}"/>
 			</f:facet>
-			<h:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
+			<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 			
 				<p:outputLabel value="#{msg.aupSecurityCategory}"/>
 				<p:selectOneMenu value="#{cc.attrs.bean.usecase.category}" effect="fade" >
@@ -35,7 +35,7 @@
 				
 				<p:outputLabel rendered="#{cc.attrs.bean.showDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
 				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showDocumentation}" value="#{cc.attrs.bean.usecase.documentation}"/>
-			</h:panelGrid>
+			</p:panelGrid>
 			<aht:tabTranslationEditor value="#{cc.attrs.bean.usecase}"
 					labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
        				keys="#{translationBean.langKeys}" withDescription="true"/>

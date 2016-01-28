@@ -19,7 +19,7 @@
 			selection="#{adminSecurityViewsBean.action}" selectionMode="single" rowKey="#{a.id}">
 			<f:facet name="header">
 				<aht:pfDataTableHeader title="#{msg.aupSecurityActions}">
-					<aht:icon type="add" listener="#{adminSecurityViewsBean.addAction()}" update="#{cc.attrs.update}" tooltip="#{msg.ttNew}"/>
+					<aht:icon type="aupAdd" listener="#{adminSecurityViewsBean.addAction()}" update="#{cc.attrs.update}" tooltip="#{msg.ttNew}"/>
 				</aht:pfDataTableHeader>
 			</f:facet>
 			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>

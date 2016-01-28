@@ -31,7 +31,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @DiscriminatorValue("generic")
 @Table(name = "UtilsStatus", uniqueConstraints = @UniqueConstraint(columnNames = {"type","code"}))
 @EjbErNode(name="Status",category="status",subset="status")
-public class AhtUtilsStatus implements UtilsStatus<AhtUtilsStatus,Lang,Description>,EjbRemoveable,Serializable
+public class Status implements UtilsStatus<Status,Lang,Description>,EjbRemoveable,Serializable
 {
 	private static final long serialVersionUID = 1;
 	
@@ -105,7 +105,7 @@ public class AhtUtilsStatus implements UtilsStatus<AhtUtilsStatus,Lang,Descripti
 	}
 	
 	@ManyToOne
-	protected AhtUtilsStatus parent;
+	protected Status parent;
 	public <P extends EjbWithCode> P getParent() {return (P)parent;}
-	public <P extends EjbWithCode> void setParent(P parent) {this.parent=(AhtUtilsStatus)parent;}
+	public <P extends EjbWithCode> void setParent(P parent) {this.parent=(Status)parent;}
 }

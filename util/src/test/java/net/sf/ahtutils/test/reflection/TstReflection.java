@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import net.sf.ahtutils.model.ejb.status.AhtUtilsStatus;
+import net.sf.ahtutils.model.ejb.status.Status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ public class TstReflection
     {
        try
        {
-          Class<?> c = Class.forName(AhtUtilsStatus.class.getName());
+          Class<?> c = Class.forName(Status.class.getName());
           
           Annotation a[] = c.getAnnotations();
           for (int i = 0; i < a.length; i++)

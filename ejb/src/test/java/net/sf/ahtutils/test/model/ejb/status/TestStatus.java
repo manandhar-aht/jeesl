@@ -2,7 +2,7 @@ package net.sf.ahtutils.test.model.ejb.status;
 
 import java.util.Random;
 
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
+import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsStatus;
 import net.sf.ahtutils.test.model.ejb.status.cli.TstStatus;
 
@@ -54,9 +54,9 @@ public class TestStatus
     	return ejb;
     }
     
-    public static AhtUtilsLang create(String key, String lang)
+    public static Lang create(String key, String lang)
     {
-    	AhtUtilsLang ejb = new AhtUtilsLang();
+    	Lang ejb = new Lang();
     	ejb.setLang(lang);
     	ejb.setLkey(key);
     	return ejb;

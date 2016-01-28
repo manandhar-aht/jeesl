@@ -10,11 +10,10 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.model.ejb.status.Description;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
+import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsStatus;
 import net.sf.ahtutils.test.AbstractAhtUtilTest;
 import net.sf.ahtutils.xml.status.Descriptions;
-import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.exlp.util.io.LoggerInit;
@@ -23,13 +22,13 @@ public class TestUtilsStatusEjbFactory extends AbstractAhtUtilTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestUtilsStatusEjbFactory.class);
 	
-	private EjbStatusFactory<AhtUtilsStatus,AhtUtilsLang,Description> facStatus;
+	private EjbStatusFactory<AhtUtilsStatus,Lang,Description> facStatus;
 	private Status status;
 	
 	@Before
 	public void init()
 	{
-		facStatus = EjbStatusFactory.createFactory(AhtUtilsStatus.class, AhtUtilsLang.class,Description.class);
+		facStatus = EjbStatusFactory.createFactory(AhtUtilsStatus.class, Lang.class,Description.class);
 		status = createStatus();
 	}
     
@@ -65,7 +64,7 @@ public class TestUtilsStatusEjbFactory extends AbstractAhtUtilTest
     @Test
     public void testTranslationValue() throws InstantiationException, IllegalAccessException, UtilsConstraintViolationException
     {
-    	Lang lang = status.getLangs().getLang().get(0);
+    	net.sf.ahtutils.xml.status.Lang lang = status.getLangs().getLang().get(0);
     	net.sf.ahtutils.xml.status.Description desc = status.getDescriptions().getDescription().get(0);
     	AhtUtilsStatus ejb = (AhtUtilsStatus)facStatus.create(status);
     	Assert.assertEquals(lang.getTranslation(), ejb.getName().get(lang.getKey()).getLang());
@@ -114,8 +113,8 @@ public class TestUtilsStatusEjbFactory extends AbstractAhtUtilTest
     private Langs getLangs()
     {
     	Langs langs = new Langs();
-    	Lang l1 = new Lang();l1.setKey("en");l1.setTranslation("t1");langs.getLang().add(l1);
-    	Lang l2 = new Lang();l2.setKey("de");l2.setTranslation("t2");langs.getLang().add(l2);
+    	net.sf.ahtutils.xml.status.Lang l1 = new net.sf.ahtutils.xml.status.Lang();l1.setKey("en");l1.setTranslation("t1");langs.getLang().add(l1);
+    	net.sf.ahtutils.xml.status.Lang l2 = new net.sf.ahtutils.xml.status.Lang();l2.setKey("de");l2.setTranslation("t2");langs.getLang().add(l2);
     	return langs;
     }
     

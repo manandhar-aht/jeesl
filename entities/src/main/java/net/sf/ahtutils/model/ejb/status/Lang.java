@@ -18,7 +18,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Entity
 @Table(name = "UtilsLang")
 @EjbErNode(name="Language",category="status",subset="status",level=3)
-public class AhtUtilsLang implements UtilsLang,EjbRemoveable,Serializable
+public class Lang implements UtilsLang,EjbRemoveable,Serializable
 {
 	public static final long serialVersionUID=1;
 	
@@ -48,19 +48,19 @@ public class AhtUtilsLang implements UtilsLang,EjbRemoveable,Serializable
 		return sb.toString();
 	}
 	
-	public synchronized static Map<String,AhtUtilsLang> createMap(AhtUtilsLang... languages)
+	public synchronized static Map<String,Lang> createMap(Lang... languages)
 	{
-		Map<String,AhtUtilsLang> langMap = new Hashtable<String, AhtUtilsLang>();
-		for(AhtUtilsLang lang : languages)
+		Map<String,Lang> langMap = new Hashtable<String, Lang>();
+		for(Lang lang : languages)
 		{
 			langMap.put(lang.getLkey(), lang);
 		}
 		return langMap;
 	}
 	
-	public synchronized static AhtUtilsLang create(String key, String lang)
+	public synchronized static Lang create(String key, String lang)
 	{
-		AhtUtilsLang pl = new AhtUtilsLang();
+		Lang pl = new Lang();
 		pl.setLkey(key);
 		pl.setLang(lang);
 		return pl;

@@ -25,7 +25,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.model.ejb.status.Description;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
+import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.user.AhtUtilsUser;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
@@ -34,7 +34,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @EjbErNode(name="Usecase",category="security",subset="security")
 
 public class SecurityUsecase implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-			UtilsSecurityUsecase<AhtUtilsLang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
+			UtilsSecurityUsecase<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
 {
 	public static final long serialVersionUID=1;
 	
@@ -71,9 +71,9 @@ public class SecurityUsecase implements EjbWithCode,Serializable,EjbRemoveable,E
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
-	private Map<String, AhtUtilsLang> name;
-	public Map<String, AhtUtilsLang> getName() {return name;}
-	public void setName(Map<String, AhtUtilsLang> name) {this.name = name;}
+	private Map<String, Lang> name;
+	public Map<String, Lang> getName() {return name;}
+	public void setName(Map<String, Lang> name) {this.name = name;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")

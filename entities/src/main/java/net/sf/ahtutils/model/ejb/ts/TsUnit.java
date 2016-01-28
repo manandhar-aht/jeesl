@@ -8,12 +8,12 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.model.ejb.status.Description;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
+import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Unit",category="ts",subset="ts",level=4)
 public class TsUnit implements Serializable,EjbRemoveable,EjbPersistable,
-							UtilsStatus<TsUnit,AhtUtilsLang,Description>
+							UtilsStatus<TsUnit,Lang,Description>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;
@@ -35,8 +35,8 @@ public class TsUnit implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public boolean isVisible() {return false;}
 	@Override public void setVisible(boolean visible) {}
 	
-	@Override public Map<String, AhtUtilsLang> getName() {return null;}
-	@Override public void setName(Map<String, AhtUtilsLang> name) {}
+	@Override public Map<String, Lang> getName() {return null;}
+	@Override public void setName(Map<String, Lang> name) {}
 	
 	@Override public Map<String, Description> getDescription() {return null;}
 	@Override public void setDescription(Map<String, Description> description) {}

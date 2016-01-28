@@ -12,12 +12,12 @@ import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.ts.UtilsTimeSeries;
 import net.sf.ahtutils.model.ejb.status.Description;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
+import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Time Series",category="ts",subset="ts")
 public class TimeSeries implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsTimeSeries<AhtUtilsLang,Description,TsCategory,TsUnit,TimeSeries,TsEntity,TsInterval,TsData>
+								UtilsTimeSeries<Lang,Description,TsCategory,TsUnit,TimeSeries,TsEntity,TsInterval,TsData>
 {
 	public static final long serialVersionUID=1;
 	

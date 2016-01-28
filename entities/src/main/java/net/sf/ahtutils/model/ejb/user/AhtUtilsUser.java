@@ -25,7 +25,7 @@ import net.sf.ahtutils.model.ejb.security.SecurityRole;
 import net.sf.ahtutils.model.ejb.security.SecurityUsecase;
 import net.sf.ahtutils.model.ejb.security.SecurityView;
 import net.sf.ahtutils.model.ejb.status.Description;
-import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
+import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
@@ -38,7 +38,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 	@NamedQuery(name="fUserByEmail",query="SELECT u FROM MeisUser u WHERE u.email = :email")
 })
 public class AhtUtilsUser implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,
-									UtilsUser<AhtUtilsLang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
+									UtilsUser<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
 {
 	public static final long serialVersionUID=1;
 	

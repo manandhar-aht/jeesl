@@ -17,6 +17,9 @@ public interface UtilsDbShell
 	public static final String cfgBinDrop = "db.bin.drop";
 	
 	public static final String hostRestore = "db.restore.host";
+	public static final String restoreUser = "db.restore.user.name";
+	public static final String restorePwd = "db.restore.user.password";
+	
 	
 	public static final String cfgDbDrop = "db.tables.drop";
 	public static final String cfgDbDropTable = "db.tables.drop.table";

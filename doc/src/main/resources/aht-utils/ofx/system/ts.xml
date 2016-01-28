@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			 xmlns:l="http://www.openfuxml.org/list"
+			 xmlns:text="http://www.openfuxml.org/text"
+			 xmlns:media="http://www.openfuxml.org/media"
+			 xmlns:layout="http://www.openfuxml.org/layout"
+			 id="section.developer.ts">
+	
+	<ofx:title lang="en">Time Series</ofx:title>
+	
+	<l:list id="section.developer.ts.list">
+	    <l:type description="true"/>
+	    
+	    <l:item name="Category" lang="en" version="1">
+	    	<ofx:paragraph>
+				A category, e.g. rainfall or temperature data.
+			</ofx:paragraph>
+	    </l:item>
+	    <l:item name="Category" lang="fr" version="1">
+	    	<ofx:paragraph>
+				TBD
+			</ofx:paragraph>
+	    </l:item>
+	    
+		<l:item name="Time Series" lang="en" version="1">
+	    	<ofx:paragraph>
+				A time series bound to a category, interval and entity.
+			</ofx:paragraph>
+	    </l:item>
+		<l:item name="Entity" lang="en" version="1">
+	    	<ofx:paragraph>
+				A entity where this time series belongs to, this may be any available entity like a measurement station or a country.
+			</ofx:paragraph>
+	    </l:item>
+		<l:item name="Data" lang="en" version="1">
+	    	<ofx:paragraph>
+				The of a time series itself containing a date/time and a value.
+			</ofx:paragraph>
+	    </l:item>
+		<l:item name="Interval" lang="en" version="1">
+	    	<ofx:paragraph>
+				The expected interval, e.g. yearly, monthly or daily.
+			</ofx:paragraph>
+	    </l:item> 
+	    <l:item name="Unit" lang="en" version="1">
+	    	<ofx:paragraph>
+				The measurement unit.
+			</ofx:paragraph>
+	    </l:item> 
+	</l:list>
+
+	<ofx:paragraph lang="en">
+		The combination of a timeseries with entity-interval-categery will be unique.
+	</ofx:paragraph>
+
+	
+	<ofx:paragraph lang="en">
+		The entity relationship diagram for managing time series data is shown in Figure
+		<ofx:reference target="image.developer.ts.er"/>.
+	</ofx:paragraph>
+	
+	<media:image id="image.developer.ts.er">
+	    <ofx:title>Entity Relationship Diagram of Time Series</ofx:title>
+	    <layout:alignment horizontal="center"/>
+	    <layout:width unit="cm">6</layout:width>
+	    <media:media src="aht-utils/svg/admin/development/er/ts.svg" dst="admin/development/er/ts"/>
+	</media:image>
+	
+</ofx:section>

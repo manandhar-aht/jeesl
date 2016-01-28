@@ -5,7 +5,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface UtilsTimeSeries <L extends UtilsLang,
+public interface UtilsTsCategory <L extends UtilsLang,
 									D extends UtilsDescription,
 									CAT extends UtilsTsCategory<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
@@ -15,12 +15,6 @@ public interface UtilsTimeSeries <L extends UtilsLang,
 									DATA extends UtilsTsData<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>>
 		extends EjbWithId
 {
-	CAT getCategory();
-	void setCategory(CAT category);
-	
-	INT getInterval();
-	void setInterval(INT interval);
-	
-	ENTITY getEntity();
-	void setEntity(ENTITY entity);
+	UNIT getUnit();
+	void setUnit(UNIT unit);
 }

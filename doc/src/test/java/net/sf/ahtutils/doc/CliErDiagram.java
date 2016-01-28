@@ -1,4 +1,4 @@
-package net.sf.ahtutils.doc.er;
+package net.sf.ahtutils.doc;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.AhtUtilsBootstrap;
+import net.sf.ahtutils.doc.er.AbstractErDiagram;
 
 public class CliErDiagram extends AbstractErDiagram
 {

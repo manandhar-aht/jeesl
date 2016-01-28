@@ -10,4 +10,13 @@
             database server FR
         </ofx:paragraph>
     </ed:term>
+	<ed:term code="c28">
+        <text:text classifier="name">VI</text:text>
+        <ofx:paragraph lang="en">
+            Terminal based text editor.
+        </ofx:paragraph>
+        <ofx:paragraph lang="fr">
+            VI FR
+        </ofx:paragraph>
+    </ed:term>
 </ed:glossary>

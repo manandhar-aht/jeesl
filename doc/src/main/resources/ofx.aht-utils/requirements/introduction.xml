@@ -3,9 +3,8 @@
 			xmlns:t="http://www.openfuxml.org/table"
 			xmlns:layout="http://www.openfuxml.org/layout"
 			xmlns:l="http://www.openfuxml.org/list"
-			id="section.admin.requirements.introduction"
-			lang="en">
-    <!--<ofx:titel lang="en" version="1">Reqiurements</ofx:titel>-->
+			id="section.admin.requirements.introduction">
+    
     <ofx:paragraph lang="en">
         In order to have a safe and secure system that performs well, some requirements need to be fulfilled.
         These requirement does not only include the hardware, but also the software environment that the application
@@ -15,5 +14,7 @@
         The fulfillment of all requirements is a critical success factor
         for the sustainable and safe operation of the system.
     </ofx:paragraph>
+    <ofx:paragraph lang="fr">
+        TBD
+    </ofx:paragraph>
 </ofx:section>
-

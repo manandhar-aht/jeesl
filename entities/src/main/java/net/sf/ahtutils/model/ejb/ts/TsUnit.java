@@ -11,9 +11,9 @@ import net.sf.ahtutils.model.ejb.status.AhtUtilsDescription;
 import net.sf.ahtutils.model.ejb.status.AhtUtilsLang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Interval",category="ts",subset="ts",level=4)
-public class TsInterval implements Serializable,EjbRemoveable,EjbPersistable,
-							UtilsStatus<TsInterval,AhtUtilsLang,AhtUtilsDescription>
+@EjbErNode(name="Unit",category="ts",subset="ts",level=4)
+public class TsUnit implements Serializable,EjbRemoveable,EjbPersistable,
+							UtilsStatus<TsUnit,AhtUtilsLang,AhtUtilsDescription>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;

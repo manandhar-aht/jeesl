@@ -8,11 +8,17 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface UtilsTsData <L extends UtilsLang,
 								D extends UtilsDescription,
-								CAT extends UtilsStatus<CAT,L,D>,
+								CAT extends UtilsTsCategory<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+								UNIT extends UtilsStatus<UNIT,L,D>,
+								TS extends UtilsTimeSeries<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+								ENTITY extends EjbWithId,
 								INT extends UtilsStatus<INT,L,D>,
-								TS extends UtilsTimeSeries<L,D,CAT,INT,TS,DATA>,
-								DATA extends UtilsTsData<L,D,CAT,INT,TS,DATA>>
+								DATA extends UtilsTsData<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>>
 		extends EjbWithId, EjbWithRecord
 {
-
+	TS getTimeSeries();
+	void setTimeSeries(TS timeSeries);
+	
+	Double getValue();
+	void setValue(Double value);
 }

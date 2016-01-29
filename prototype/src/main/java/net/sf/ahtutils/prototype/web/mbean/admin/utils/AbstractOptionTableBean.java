@@ -11,12 +11,19 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
 import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
+import net.sf.ahtutils.factory.ejb.symbol.EjbGraphicFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.symbol.UtilsGraphic;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.exlp.util.io.StringUtil;
 
-public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescription>
+public class AbstractOptionTableBean <L extends UtilsLang,
+										D extends UtilsDescription,
+										G extends UtilsGraphic<L,D,GT,GS>,
+										GT extends UtilsStatus<GT,L,D>,
+										GS extends UtilsStatus<GS,L,D>>
 										implements Serializable
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractOptionTableBean.class);
@@ -36,6 +43,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	protected EjbLangFactory<L> efLang;
 	protected EjbDescriptionFactory<D> efDescription;
+	protected EjbGraphicFactory<L,D,G,GT,GS> efGraphic;
 	
 	public AbstractOptionTableBean()
 	{
@@ -52,10 +60,11 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		allowAdditionalElements = new Hashtable<Long,Boolean>();
 	}
 	
-	protected void initUtils(Class<L> cL, Class<D> cD)
+	protected void initUtils(Class<L> cL, Class<D> cD, Class<G> cG, Class<GT> cGT, Class<GS> cGS)
 	{
 		efLang = EjbLangFactory.createFactory(cL);
 		efDescription = EjbDescriptionFactory.createFactory(cD);
+		efGraphic = EjbGraphicFactory.factory(cG);
 	}
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)

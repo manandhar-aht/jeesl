@@ -1,16 +1,22 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.utils;
 
 import java.io.Serializable;
+import java.util.Hashtable;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
+import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.exlp.util.io.StringUtil;
 
-public class AbstractOptionTableBean //<S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription>
+public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescription>
 										implements Serializable
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractOptionTableBean.class);
@@ -25,8 +31,16 @@ public class AbstractOptionTableBean //<S extends UtilsStatus<S,L,D>, L extends 
 	protected boolean hasDeveloperAction;public boolean isHasDeveloperAction() {return hasDeveloperAction;}
 	protected boolean hasAdministratorAction,hasTranslatorAction;
 	
+	protected long index;
+	protected Map<Long,Boolean> allowAdditionalElements; public Map<Long, Boolean> getAllowAdditionalElements(){return allowAdditionalElements;}
+	
+	protected EjbLangFactory<L> efLang;
+	protected EjbDescriptionFactory<D> efDescription;
+	
 	public AbstractOptionTableBean()
 	{
+		index=1;
+		
 		hasDeveloperAction = false;
 		hasAdministratorAction = true;
 		hasTranslatorAction = true;
@@ -34,6 +48,14 @@ public class AbstractOptionTableBean //<S extends UtilsStatus<S,L,D>, L extends 
 		allowStatusReorder = true;
 		allowSave = true;
 		allowRemove = true;
+		
+		allowAdditionalElements = new Hashtable<Long,Boolean>();
+	}
+	
+	protected void initUtils(Class<L> cL, Class<D> cD)
+	{
+		efLang = EjbLangFactory.createFactory(cL);
+		efDescription = EjbDescriptionFactory.createFactory(cD);
 	}
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
@@ -77,7 +99,5 @@ public class AbstractOptionTableBean //<S extends UtilsStatus<S,L,D>, L extends 
 	}
 	
 	// Parents
-	protected long parentId;
-	public long getParentId(){return parentId;}
-	public void setParentId(long parentId){this.parentId = parentId;}
+	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
 }

@@ -26,6 +26,10 @@
                     <f:facet name="header">#{msg.StatusParent}</f:facet>
                     <h:outputText value="#{s.parent.name[userBean.localeCode].lang}" />
                </p:column>
+               <p:column rendered="#{cc.attrs.bean.supportsSymbol}">
+	             <f:facet name="header">#{msg.aupOptionSymbol}</f:facet>  
+	             <h:outputText value="#{s.symbol}" />
+	          </p:column>
 	          <p:column>
 	             <f:facet name="header">#{msg.aupOptionCode}</f:facet>  
 	             <h:outputText value="#{s.code}" />

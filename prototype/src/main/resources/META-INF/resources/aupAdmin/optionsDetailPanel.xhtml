@@ -31,7 +31,7 @@
 				<h:outputText rendered="#{not cc.attrs.bean.allowCodeChange}" value="#{cc.attrs.bean.status.code}"/>
 
 				<p:outputLabel rendered="#{cc.attrs.bean.supportsSymbol}" for="sSymbol" value="#{msg.aupOptionSymbol}"/>
-				<p:inputText rendered="#{cc.attrs.bean.supportsSymbol}" id="sSymbol" value="#{adminTableBean.status.style}"/>
+				<p:inputText rendered="#{cc.attrs.bean.supportsSymbol}" id="sSymbol" value="#{cc.attrs.bean.status.style}"/>
 
 				<p:outputLabel rendered="#{cc.attrs.bean.allowStatusReorder}" value="#{msg.aupOptionPosition}"/>
 				<p:inputText rendered="#{cc.attrs.bean.allowStatusReorder}" value="#{cc.attrs.bean.status.position}"/>

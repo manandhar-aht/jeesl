@@ -16,6 +16,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.symbol.UtilsGraphic;
+import net.sf.ahtutils.interfaces.model.symbol.UtilsSymbol;
+import net.sf.ahtutils.interfaces.model.with.UtilsWithGraphic;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.exlp.util.io.StringUtil;
 
@@ -34,12 +36,21 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	protected boolean allowCodeChange;public boolean isAllowCodeChange() {return allowCodeChange;}
 	protected boolean allowSave; public boolean isAllowSave() {return allowSave;}
 	protected boolean allowRemove; public boolean isAllowRemove() {return allowRemove;}
+	protected boolean allowSvg; public boolean isAllowSvg() {return allowSvg;}
+	
+	protected boolean supportsGraphic; public boolean getSupportsGraphic() {return supportsGraphic;}
+	protected boolean supportsSymbol; public boolean getSupportsSymbol(){return supportsSymbol;}
 	
 	protected boolean hasDeveloperAction;public boolean isHasDeveloperAction() {return hasDeveloperAction;}
 	protected boolean hasAdministratorAction,hasTranslatorAction;
 	
 	protected long index;
 	protected Map<Long,Boolean> allowAdditionalElements; public Map<Long, Boolean> getAllowAdditionalElements(){return allowAdditionalElements;}
+	
+	@SuppressWarnings("rawtypes")
+	protected Class cl;
+	
+	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
 	
 	protected EjbLangFactory<L> efLang;
 	protected EjbDescriptionFactory<D> efDescription;
@@ -83,17 +94,37 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		
 		if(logger.isInfoEnabled())
 		{
-			logger.info(StringUtil.stars());
-			logger.info("Actions");
-			logger.info("\t"+hasDeveloperAction+" hasDeveloperAction "+actionDeveloper);
-			logger.info("\t"+hasAdministratorAction+" hasAdministratorAction "+actionAdministrator);
-			logger.info("\t"+hasTranslatorAction+" hasTranslatorAction "+actionTranslator);
+			
 		}
+	}
+	
+	protected void updateUiForCategory()
+	{
+		supportsGraphic = UtilsWithGraphic.class.isAssignableFrom(cl);
+		supportsSymbol = UtilsSymbol.class.isAssignableFrom(cl);		
+		
+		if(logger.isInfoEnabled())
+		{
+			logger.info("Graphic? "+supportsGraphic);
+			logger.info("Symbol? "+supportsGraphic);
+		} 
 	}
 	
 	public void reorder() throws UtilsConstraintViolationException, UtilsLockingException {}
 	
-	public void debug(boolean debug)
+	public void debugSecurity(boolean debug)
+	{
+		if(debug)
+		{
+			logger.info(StringUtil.stars());
+			logger.info("Security");
+			logger.info("\t"+hasDeveloperAction+" hasDeveloperAction");
+			logger.info("\t"+hasAdministratorAction+" hasAdministratorAction");
+			logger.info("\t"+hasTranslatorAction+" hasTranslatorAction");
+		}
+	}
+	
+	public void debugUi(boolean debug)
 	{
 		if(debug)
 		{
@@ -106,7 +137,4 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			logger.info("\t"+allowRemove+" allowRemove");
 		}
 	}
-	
-	// Parents
-	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
 }

@@ -12,12 +12,12 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
 import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.factory.ejb.symbol.EjbGraphicFactory;
+import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
+import net.sf.ahtutils.interfaces.model.graphic.UtilsWithGraphic;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.symbol.UtilsGraphic;
-import net.sf.ahtutils.interfaces.model.symbol.UtilsSymbol;
-import net.sf.ahtutils.interfaces.model.with.UtilsWithGraphic;
+import net.sf.ahtutils.interfaces.model.with.UtilsWithSymbol;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.exlp.util.io.StringUtil;
 
@@ -38,8 +38,8 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	protected boolean allowRemove; public boolean isAllowRemove() {return allowRemove;}
 	protected boolean allowSvg; public boolean isAllowSvg() {return allowSvg;}
 	
-	protected boolean supportsGraphic; public boolean getSupportsGraphic() {return supportsGraphic;}
 	protected boolean supportsSymbol; public boolean getSupportsSymbol(){return supportsSymbol;}
+	protected boolean supportsGraphic; public boolean getSupportsGraphic() {return supportsGraphic;}
 	
 	protected boolean hasDeveloperAction;public boolean isHasDeveloperAction() {return hasDeveloperAction;}
 	protected boolean hasAdministratorAction,hasTranslatorAction;
@@ -91,22 +91,17 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		allowStatusReorder = hasDeveloperAction || hasAdministratorAction;
 		allowSave = hasDeveloperAction || hasAdministratorAction || hasTranslatorAction;
 		allowRemove = hasDeveloperAction || hasAdministratorAction;
-		
-		if(logger.isInfoEnabled())
-		{
-			
-		}
 	}
 	
 	protected void updateUiForCategory()
 	{
 		supportsGraphic = UtilsWithGraphic.class.isAssignableFrom(cl);
-		supportsSymbol = UtilsSymbol.class.isAssignableFrom(cl);		
+		supportsSymbol = UtilsWithSymbol.class.isAssignableFrom(cl);		
 		
 		if(logger.isInfoEnabled())
 		{
 			logger.info("Graphic? "+supportsGraphic);
-			logger.info("Symbol? "+supportsGraphic);
+			logger.info("Symbol? "+supportsSymbol);
 		} 
 	}
 	

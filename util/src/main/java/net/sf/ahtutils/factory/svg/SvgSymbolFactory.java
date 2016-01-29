@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.svg.SVGDocument;
 
+import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
+import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphicStyle;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.symbol.UtilsGraphic;
-import net.sf.ahtutils.interfaces.model.symbol.UtilsGraphicStyle;
 import net.sf.ahtutils.xml.symbol.Symbol;
 
 public class SvgSymbolFactory<L extends UtilsLang,

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.symbol;
+package net.sf.ahtutils.interfaces.model.graphic;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

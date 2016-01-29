@@ -1,9 +1,8 @@
-package net.sf.ahtutils.interfaces.model.with;
+package net.sf.ahtutils.interfaces.model.graphic;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.symbol.UtilsGraphic;
 
 public interface UtilsWithGraphic<L extends UtilsLang,
 								D extends UtilsDescription,

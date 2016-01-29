@@ -15,25 +15,29 @@
 	<composite:implementation>
 		<p:dataTable var="s" value="#{cc.attrs.bean.items}" draggableRows="#{cc.attrs.bean.allowStatusReorder}"
 	          selection="#{cc.attrs.bean.status}" selectionMode="single" rowKey="#{s.id}">
-	          <f:facet name="header">
+			<f:facet name="header">
 	          	<aht:pfDataTableHeader title="#{msg[cc.attrs.bean.category.code]}">
 	          		<aht:icon rendered="#{cc.attrs.bean.allowStatusAdd}" type="add" listener="#{cc.attrs.bean.add()}" update="#{cc.attrs.update}" tooltip="#{msg.ttNew}"/>
 	          	</aht:pfDataTableHeader>
-	          </f:facet>
-	          <p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form #{cc.attrs.update}"/>
-	          <p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectStatus}" update="#{cc.attrs.update}"/>
-               <p:column rendered="#{not empty cc.attrs.bean.parents}">
+			</f:facet>
+			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form #{cc.attrs.update}"/>
+			<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectStatus}" update="#{cc.attrs.update}"/>
+			<p:column rendered="#{not empty cc.attrs.bean.parents}">
                     <f:facet name="header">#{msg.StatusParent}</f:facet>
                     <h:outputText value="#{s.parent.name[userBean.localeCode].lang}" />
-               </p:column>
-	          <p:column>
+			</p:column>
+			<p:column>
 	             <f:facet name="header">#{msg.aupOptionCode}</f:facet>  
 	             <h:outputText value="#{s.code}" />
-	          </p:column>
-	          <p:column>  
+			</p:column>
+			<p:column>  
 	             <f:facet name="header">#{msg.aupTranslation}</f:facet>  
 	             <h:outputText value="#{s.name[userBean.localeCode].lang}" />  
-	          </p:column>
-	       </p:dataTable>
+			</p:column>
+			<p:column rendered="#{cc.attrs.bean.supportsSymbol}">
+				<f:facet name="header">#{msg.aupOptionSymbol}</f:facet>  
+				<h:outputText value="#{s.symbol}" />
+			</p:column>
+		</p:dataTable>
 	</composite:implementation>
 </html>

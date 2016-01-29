@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.symbol;
+package net.sf.ahtutils.interfaces.model.graphic;
 
 public interface UtilsGraphicType
 {

@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;attribute name="class" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="handledBy" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="validatedBy" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -39,6 +40,8 @@ public class DataHandler
     protected String clazz;
     @XmlAttribute(name = "handledBy")
     protected String handledBy;
+    @XmlAttribute(name = "validatedBy")
+    protected String validatedBy;
 
     /**
      * Gets the value of the clazz property.
@@ -94,6 +97,34 @@ public class DataHandler
 
     public boolean isSetHandledBy() {
         return (this.handledBy!= null);
+    }
+
+    /**
+     * Gets the value of the validatedBy property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getValidatedBy() {
+        return validatedBy;
+    }
+
+    /**
+     * Sets the value of the validatedBy property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setValidatedBy(String value) {
+        this.validatedBy = value;
+    }
+
+    public boolean isSetValidatedBy() {
+        return (this.validatedBy!= null);
     }
 
 }

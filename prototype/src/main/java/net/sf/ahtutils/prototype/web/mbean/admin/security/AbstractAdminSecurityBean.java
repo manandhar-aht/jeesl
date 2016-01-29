@@ -66,16 +66,11 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	private SecurityActionComparator<L,D,C,R,V,U,A,USER> cfAction;
 		
 	//Category
-	protected List<C> categories;
-	public List<C> getCategories() {return categories;}
-	
-	protected C category;
-	public void setCategory(C category) {this.category = category;}
-	public C getCategory() {return category;}
+	protected List<C> categories; public List<C> getCategories() {return categories;}
+	protected C category;public void setCategory(C category) {this.category = category;}public C getCategory() {return category;}
 	
 	//OP Views
-	protected List<V> opViews;
-	public List<V> getOpViews(){return opViews;}
+	protected List<V> opViews; public List<V> getOpViews(){return opViews;}
 	
 	private List<V> opFvViews;
 	public List<V> getOpFvViews(){return opFvViews;}

@@ -89,11 +89,11 @@
 								<aht:pfDataTableHeader id="dth" title="#{msg.aupTsIntervals}">
 									<h:graphicImage id="giViewAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['aupAdd']}"/>
 			                        <p:tooltip for="giViewAdd" value="Add an item!" />
-			                        <aht:icon rendered="#{not empty cc.attrs.bean.tbInterval}" type="aupRm" mayDisappear="true" listener="#{cc.attrs.bean.opRmInterval()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttRemove}"/>
+			                        <aht:icon rendered="#{not empty cc.attrs.bean.tbInterval}" type="aupRm" mayDisappear="true" listener="#{cc.attrs.bean.opRmInterval()}" update=":#{cc.id}:fIntervals" tooltip="#{msg.ttRemove}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fIntervals" listener="#{cc.attrs.bean.selectTbInterval()}"/>
-							<p:column headerText="#{msg.aupSecurityCategory}">
+							<p:column headerText="#{msg.aupTsInterval}">
 								<h:outputText value="#{v.name[userBean.localeCode].lang}" />
 							</p:column>
 						</p:dataTable>				  
@@ -101,10 +101,37 @@
 							<p:dataTable id="dtOpSector" var="v" value="#{cc.attrs.bean.opIntervals}" rowKey="#{v.id}"
 				                         selection="#{cc.attrs.bean.opInterval}" selectionMode="single">
 								<p:ajax event="rowSelect" update=":#{cc.id}:fIntervals" listener="#{cc.attrs.bean.opAddInterval()}" oncomplete="PF('wvOpViewSelection').hide();"/>
-								<p:column headerText="#{msg.aupSecurityView}"
+								<p:column headerText="#{msg.aupTsInterval}"
 											sortBy="#{v.name[userBean.localeCode].lang}"
 											filterBy="#{v.name[userBean.localeCode].lang}" filterMatchMode="contains">
 									<h:outputText value="#{v.name[userBean.localeCode].lang}" />
+								</p:column>
+							</p:dataTable>
+						</p:overlayPanel>
+					</h:form>
+					<h:form id="fClasses" rendered="#{(not empty cc.attrs.bean.scope) and (cc.attrs.bean.scope.id gt 0)}">
+						<p:dataTable id="dtClasses" var="c" value="#{cc.attrs.bean.scope.classes}"
+						 selection="#{cc.attrs.bean.tbClass}" selectionMode="single" rowKey="#{c.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader id="dth" title="#{msg.aupTsClasses}">
+									<h:graphicImage id="giAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['aupAdd']}"/>
+			                        <p:tooltip for="giAdd" value="Add an item!" />
+			                        <aht:icon rendered="#{not empty cc.attrs.bean.tbClass}" type="aupRm" mayDisappear="true" listener="#{cc.attrs.bean.opRmClass()}" update=":#{cc.id}:fClasses" tooltip="#{msg.ttRemove}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowSelect" update=":#{cc.id}:fClasses" listener="#{cc.attrs.bean.selectTbClass()}"/>
+							<p:column headerText="#{msg.aupTsClass}">
+								<h:outputText value="#{c.name[userBean.localeCode].lang}" />
+							</p:column>
+						</p:dataTable>				  
+						<p:overlayPanel for="dtClasses:dth:giAdd" widgetVar="wvOpClassSelection" appendToBody="false">
+							<p:dataTable id="dtOpSector" var="c" value="#{cc.attrs.bean.opClasses}" rowKey="#{c.id}"
+				                         selection="#{cc.attrs.bean.opClass}" selectionMode="single">
+								<p:ajax event="rowSelect" update=":#{cc.id}:fClasses" listener="#{cc.attrs.bean.opAddClass()}" oncomplete="PF('wvOpClassSelection').hide();"/>
+								<p:column headerText="#{msg.aupTsClass}"
+											sortBy="#{c.name[userBean.localeCode].lang}"
+											filterBy="#{c.name[userBean.localeCode].lang}" filterMatchMode="contains">
+									<h:outputText value="#{c.name[userBean.localeCode].lang}" />
 								</p:column>
 							</p:dataTable>
 						</p:overlayPanel>

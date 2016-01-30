@@ -49,21 +49,27 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected Class<SCOPE> cScope;
 	protected Class<UNIT> cUnit;
 	protected Class<INT> cInt;
+	protected Class<EC> cEc;
 	
 	protected List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
 	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
 	protected List<INT> opIntervals; public List<INT> getOpIntervals() {return opIntervals;}
+	protected List<EC> opClasses; public List<EC> getOpClasses() {return opClasses;}
 	
 	protected SCOPE scope; public void setScope(SCOPE scope) {this.scope = scope;} public SCOPE getScope() {return scope;}
 	protected INT opInterval;public INT getOpInterval(){return opInterval;}public void setOpInterval(INT opInterval){this.opInterval = opInterval;}
 	protected INT tbInterval;public INT getTbInterval(){return tbInterval;}public void setTbInterval(INT tbInterval){this.tbInterval = tbInterval;}	
 	
-	protected void initSuper(String[] langs, final Class<L> cLang, final Class<D> cDescription, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<INT> cInt, Class<CAT> cCategory)
+	protected EC opClass;public EC getOpClass() {return opClass;}public void setOpClass(EC opClass) {this.opClass = opClass;}
+	protected EC tbClass;public EC getTbClass() {return tbClass;}public void setTbClass(EC tbClass) {this.tbClass = tbClass;}
+	
+	protected void initSuper(String[] langs, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
 	{
 		super.initAdmin(langs, cLang, cDescription);
 		this.cScope=cScope;
 		this.cUnit=cUnit;
+		this.cEc=cEc;
 		this.cInt=cInt;
 		this.cCategory=cCategory;
 		
@@ -80,6 +86,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		units = fTs.all(cUnit);
 		categories = fTs.all(cCategory);
 		opIntervals = fTs.all(cInt);
+		opClasses = fTs.all(cEc);
 	}
 	
 	public void reloadCategories()
@@ -131,7 +138,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, scopes);}
 	protected void updatePerformed(){}
 	
-	//OverlayPanel
+	//OverlayPanel Interval
 	public void opAddInterval() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectOverlayPanel(opInterval));}
@@ -157,6 +164,34 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	public void selectTbInterval()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(tbInterval));}
+	}
+	
+	//OverlayPanel Class
+	public void opAddClass() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectOverlayPanel(opClass));}
+		
+		if(!scope.getClasses().contains(opClass))
+		{
+			scope.getClasses().add(opClass);
+			scope = fTs.save(scope);
+			opInterval = null;
+			select();
+		}
+	}
+	public void opRmClass() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		if(tbClass!=null && scope.getClasses().contains(tbClass))
+		{
+			scope.getClasses().remove(tbClass);
+			scope = fTs.save(scope);
+			tbClass = null;
+			select();
+		}
+	}
+	public void selectTbClass()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(tbClass));}
 	}
 	
 	//Security Handling for Invisible entries

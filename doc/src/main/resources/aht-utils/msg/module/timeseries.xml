@@ -36,11 +36,32 @@
     		<s:lang key="fr" translation="Unit"/>
     	</s:langs>
     </s:translation>
-    	<s:translation key="aupTsIntervals">
+	<s:translation key="aupTsInterval">
+    	<s:langs>
+    		<s:lang key="de" translation="Intervall"/>
+    		<s:lang key="en" translation="Interval"/>
+    		<s:lang key="fr" translation="Interval"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsIntervals">
     	<s:langs>
     		<s:lang key="de" translation="Intervalle"/>
     		<s:lang key="en" translation="Intervals"/>
     		<s:lang key="fr" translation="Intervals"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsClasses">
+    	<s:langs>
+    		<s:lang key="de" translation="Klassen"/>
+    		<s:lang key="en" translation="Classes"/>
+    		<s:lang key="fr" translation="Classes"/>
+    	</s:langs>
+    </s:translation>
+    	<s:translation key="aupTsClass">
+    	<s:langs>
+    		<s:lang key="de" translation="Klasse"/>
+    		<s:lang key="en" translation="Class"/>
+    		<s:lang key="fr" translation="Class"/>
     	</s:langs>
     </s:translation>
 </s:translations>

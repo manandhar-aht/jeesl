@@ -26,21 +26,22 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 public class AbstractAdminTsCategoryBean <L extends UtilsLang,
 											D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
-											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
+											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
+											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
 											ENTITY extends EjbWithId,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>>
+											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
+											WS extends UtilsStatus<WS,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsCategoryBean.class);
 	
-	protected UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA> fTs;
+	protected UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS> fTs;
 		
-	private EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA> efCategory;
+	private EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS> efCategory;
 	
 	protected Class<SCOPE> cCategory;
 	protected Class<UNIT> cUnit;

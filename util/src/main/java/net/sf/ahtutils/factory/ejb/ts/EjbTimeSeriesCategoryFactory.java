@@ -14,12 +14,13 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 											D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
-											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
+											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
+											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
 											ENTITY extends EjbWithId,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>>
+											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
+											WS extends UtilsStatus<WS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbTimeSeriesCategoryFactory.class);
 	
@@ -33,15 +34,16 @@ public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 	public static <L extends UtilsLang,
 					D extends UtilsDescription,
 					CAT extends UtilsStatus<CAT,L,D>,
-					SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
+					SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
-					TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
+					TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
 					ENTITY extends EjbWithId,
 					INT extends UtilsStatus<INT,L,D>,
-					DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>>
-	EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA> factory(final Class<SCOPE> cScope)
+					DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
+					WS extends UtilsStatus<WS,L,D>>
+	EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS> factory(final Class<SCOPE> cScope)
 	{
-		return new EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>(cScope);
+		return new EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>(cScope);
 	}
     
 	public SCOPE build(UNIT unit)

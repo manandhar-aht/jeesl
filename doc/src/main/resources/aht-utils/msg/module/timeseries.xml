@@ -36,4 +36,11 @@
     		<s:lang key="fr" translation="Unit"/>
     	</s:langs>
     </s:translation>
+    	<s:translation key="aupTsIntervals">
+    	<s:langs>
+    		<s:lang key="de" translation="Intervalle"/>
+    		<s:lang key="en" translation="Intervals"/>
+    		<s:lang key="fr" translation="Intervals"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

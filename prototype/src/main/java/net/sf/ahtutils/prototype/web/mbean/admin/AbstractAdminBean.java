@@ -16,6 +16,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminBean.class);
 	
+	protected boolean debugOnInfo;
 	protected String[] langs;
 	
 	protected EjbLangFactory<L> efLang;
@@ -26,5 +27,6 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		this.langs=langs;
 		efLang = new EjbLangFactory<L>(cLang);
 		efDescription = new EjbDescriptionFactory<D>(cDescription);
+		debugOnInfo = false;
 	}
 }

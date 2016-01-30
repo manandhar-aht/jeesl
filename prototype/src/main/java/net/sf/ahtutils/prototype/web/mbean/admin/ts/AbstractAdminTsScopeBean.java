@@ -101,6 +101,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	public void select() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(scope));
+		scope = fTs.find(cScope, scope);
 		scope = efLang.persistMissingLangs(fTs,langs,scope);
 		scope = efDescription.persistMissingLangs(fTs,langs,scope);
 	}
@@ -133,6 +134,8 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	//OverlayPanel
 	public void opAddInterval() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectOverlayPanel(opInterval));}
+		
 		if(!scope.getIntervals().contains(opInterval))
 		{
 			scope.getIntervals().add(opInterval);
@@ -150,6 +153,10 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 			tbInterval = null;
 			select();
 		}
+	}
+	public void selectTbInterval()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(tbInterval));}
 	}
 	
 	//Security Handling for Invisible entries

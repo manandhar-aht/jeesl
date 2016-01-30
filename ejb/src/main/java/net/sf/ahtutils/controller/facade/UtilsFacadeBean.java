@@ -31,13 +31,6 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
 import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.util.UtilsProperty;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.interfaces.model.with.EjbWithNr;
@@ -51,7 +44,6 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionType;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionTypeVisible;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisibleParent;
-import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
@@ -1055,26 +1047,4 @@ public class UtilsFacadeBean implements UtilsFacade
 		try	{return q.getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+type.getSimpleName()+" for "+parentName+".id="+p.getId()+" year="+year);}
 	}
-	
-	//User
-	@Override
-	public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsSecurityCategory<L, D, C, R, V, U, A, USER>, R extends UtilsSecurityRole<L, D, C, R, V, U, A, USER>, V extends UtilsSecurityView<L, D, C, R, V, U, A, USER>, U extends UtilsSecurityUsecase<L, D, C, R, V, U, A, USER>, A extends UtilsSecurityAction<L, D, C, R, V, U, A, USER>, USER extends UtilsUser<L, D, C, R, V, U, A, USER>> List<USER> likeNameFirstLast(Class<USER> c, String query)
-	{
-		CriteriaBuilder cB = em.getCriteriaBuilder();
-	    CriteriaQuery<USER> criteriaQuery = cB.createQuery(c);
-	    
-	    Root<USER> fromType = criteriaQuery.from(c);
-	    
-	    Expression<String> literal = cB.upper(cB.literal("%"+query+"%"));
-	    Expression<String> eFirst = fromType.get("firstName");
-	    Expression<String> eLast = fromType.get("lastName");
-	    
-	    CriteriaQuery<USER> select = criteriaQuery.select(fromType);
-	    select.where(cB.or(cB.like(cB.upper(eFirst),literal),cB.like(cB.upper(eLast),literal)));
-	    
-	    TypedQuery<USER> q = em.createQuery(select);
-		return q.getResultList();
-	}
-
-	
 }

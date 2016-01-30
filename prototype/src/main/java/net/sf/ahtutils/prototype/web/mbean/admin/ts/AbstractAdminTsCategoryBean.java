@@ -10,14 +10,13 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.ts.EjbTimeSeriesCategoryFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.ts.UtilsTimeSeries;
-import net.sf.ahtutils.interfaces.model.ts.UtilsTsScope;
 import net.sf.ahtutils.interfaces.model.ts.UtilsTsData;
+import net.sf.ahtutils.interfaces.model.ts.UtilsTsScope;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
@@ -26,22 +25,23 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 public class AbstractAdminTsCategoryBean <L extends UtilsLang,
 											D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
-											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
+											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
+											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
 											ENTITY extends EjbWithId,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
-											WS extends UtilsStatus<WS,L,D>>
+											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
+											WS extends UtilsStatus<WS,L,D>,
+											QAF extends UtilsStatus<QAF,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsCategoryBean.class);
 	
-	protected UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS> fTs;
+	protected UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF> fTs;
 		
-	private EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS> efCategory;
+	private EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF> efCategory;
 	
 	protected Class<SCOPE> cCategory;
 	protected Class<UNIT> cUnit;

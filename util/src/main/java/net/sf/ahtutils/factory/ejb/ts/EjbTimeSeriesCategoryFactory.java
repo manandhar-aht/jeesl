@@ -14,13 +14,14 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 											D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
-											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
+											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
+											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
 											ENTITY extends EjbWithId,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
-											WS extends UtilsStatus<WS,L,D>>
+											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
+											WS extends UtilsStatus<WS,L,D>,
+											QAF extends UtilsStatus<QAF,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbTimeSeriesCategoryFactory.class);
 	
@@ -34,16 +35,17 @@ public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 	public static <L extends UtilsLang,
 					D extends UtilsDescription,
 					CAT extends UtilsStatus<CAT,L,D>,
-					SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
+					SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
-					TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
+					TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
 					ENTITY extends EjbWithId,
 					INT extends UtilsStatus<INT,L,D>,
-					DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>,
-					WS extends UtilsStatus<WS,L,D>>
-	EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS> factory(final Class<SCOPE> cScope)
+					DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
+					WS extends UtilsStatus<WS,L,D>,
+					QAF extends UtilsStatus<QAF,L,D>>
+	EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF> factory(final Class<SCOPE> cScope)
 	{
-		return new EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS>(cScope);
+		return new EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>(cScope);
 	}
     
 	public SCOPE build(UNIT unit)

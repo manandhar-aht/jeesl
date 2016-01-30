@@ -18,7 +18,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Data",category="ts",subset="ts",level=2)
 public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsTsData<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsEntity,TsInterval,TsData,TsWorkspace>
+								UtilsTsData<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsEntity,TsInterval,TsData,TsWorkspace,TsQaFlag>
 {
 	public static final long serialVersionUID=1;
 	

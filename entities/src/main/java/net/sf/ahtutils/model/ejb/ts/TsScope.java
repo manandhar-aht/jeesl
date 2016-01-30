@@ -76,4 +76,10 @@ public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
 	private List<TsInterval> intervals;
 	public List<TsInterval> getIntervals() {if(intervals==null){intervals = new ArrayList<TsInterval>();}return intervals;}
 	public void setIntervals(List<TsInterval> intervals) {this.intervals = intervals;}
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="TsScope_Class",joinColumns={@JoinColumn(name="scope")},inverseJoinColumns={@JoinColumn(name="class")})
+	private List<TsEntityClass> classes;
+	public List<TsEntityClass> getClasses() {if(classes==null){classes = new ArrayList<TsEntityClass>();}return classes;}
+	public void setClasses(List<TsEntityClass> classes) {this.classes = classes;}
 }

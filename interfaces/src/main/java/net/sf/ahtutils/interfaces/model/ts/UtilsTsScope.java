@@ -39,4 +39,7 @@ public interface UtilsTsScope <L extends UtilsLang,
 	
 	List<INT> getIntervals();
 	void setIntervals(List<INT> intervals);
+	
+	List<EC> getClasses();
+	void setClasses(List<EC> classes);
 }

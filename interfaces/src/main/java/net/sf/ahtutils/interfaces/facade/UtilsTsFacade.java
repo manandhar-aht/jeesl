@@ -4,9 +4,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.ts.UtilsTimeSeries;
-import net.sf.ahtutils.interfaces.model.ts.UtilsTsScope;
 import net.sf.ahtutils.interfaces.model.ts.UtilsTsData;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.interfaces.model.ts.UtilsTsEntity;
+import net.sf.ahtutils.interfaces.model.ts.UtilsTsScope;
 
 public interface UtilsTsFacade <L extends UtilsLang,
 								D extends UtilsDescription,
@@ -14,7 +14,7 @@ public interface UtilsTsFacade <L extends UtilsLang,
 								SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 								UNIT extends UtilsStatus<UNIT,L,D>,
 								TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
-								ENTITY extends EjbWithId,
+								ENTITY extends UtilsTsEntity<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 								EC extends UtilsStatus<EC,L,D>,
 								INT extends UtilsStatus<INT,L,D>,
 								DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,

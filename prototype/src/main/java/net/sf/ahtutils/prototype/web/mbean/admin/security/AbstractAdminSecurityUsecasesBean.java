@@ -35,12 +35,9 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityUsecasesBean.class);
 	
-	private List<U> usecases;
-	public List<U> getUsecases() {return usecases;}
+	private List<U> usecases; public List<U> getUsecases() {return usecases;}
 	
-	private U usecase;
-	public U getUsecase(){return usecase;}
-	public void setUsecase(U usecase){this.usecase = usecase;}
+	private U usecase; public U getUsecase(){return usecase;} public void setUsecase(U usecase){this.usecase = usecase;}
 	
 	public void initSuper(String[] langs,final Class<L> cLang,final Class<D> cDescription, final Class<C> cCategory,final Class<R> cRole,final Class<V> cView,final Class<U> cUsecase, final Class<A> cAction,final Class<USER> cUser)
 	{

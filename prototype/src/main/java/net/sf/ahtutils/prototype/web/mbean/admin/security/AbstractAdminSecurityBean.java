@@ -74,13 +74,8 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	public List<V> getOpFvViews(){return opFvViews;}
 	public void setOpFvViews(List<V> opFvViews){this.opFvViews = opFvViews;}
 
-	protected V opView;
-	public V getOpView(){return opView;}
-	public void setOpView(V opView){this.opView = opView;}
-	
-	protected V tblView;
-	public V getTblView(){return tblView;}
-	public void setTblView(V tblView){this.tblView = tblView;}
+	protected V opView;public V getOpView(){return opView;}public void setOpView(V opView){this.opView = opView;}
+	protected V tblView;public V getTblView(){return tblView;}public void setTblView(V tblView){this.tblView = tblView;}
 	
 	//OP Actions
 	protected List<A> opActions; public List<A> getOpActions(){return opActions;}

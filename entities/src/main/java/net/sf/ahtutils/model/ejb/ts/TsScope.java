@@ -1,6 +1,8 @@
 package net.sf.ahtutils.model.ejb.ts;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -8,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
@@ -22,7 +27,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Scope",category="ts",subset="ts")
 public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsTsScope<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsEntity,TsInterval,TsData,TsWorkspace,TsQaFlag>
+								UtilsTsScope<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsEntity,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
 {
 	public static final long serialVersionUID=1;
 	
@@ -65,4 +70,10 @@ public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
 	private Map<String,Description> description;
 	public Map<String,Description> getDescription() {return description;}
 	public void setDescription(Map<String,Description> description) {this.description = description;}
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="TsScope_Interval",joinColumns={@JoinColumn(name="scope")},inverseJoinColumns={@JoinColumn(name="interval")})
+	private List<TsInterval> intervals;
+	public List<TsInterval> getIntervals() {if(intervals==null){intervals = new ArrayList<TsInterval>();}return intervals;}
+	public void setIntervals(List<TsInterval> intervals) {this.intervals = intervals;}
 }

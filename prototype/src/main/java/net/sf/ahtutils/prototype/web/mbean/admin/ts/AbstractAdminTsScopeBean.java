@@ -26,12 +26,13 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 public class AbstractAdminTsScopeBean <L extends UtilsLang,
 											D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
-											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
+											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
+											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											ENTITY extends EjbWithId,
+											EC extends UtilsStatus<EC,L,D>,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
+											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											WS extends UtilsStatus<WS,L,D>,
 											QAF extends UtilsStatus<QAF,L,D>>
 					extends AbstractAdminBean<L,D>
@@ -40,25 +41,30 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsScopeBean.class);
 	
-	protected UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF> fTs;
+	protected UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs;
 		
-	private EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF> efCategory;
+	private EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efCategory;
 	
+	protected Class<CAT> cCategory;
 	protected Class<SCOPE> cScope;
 	protected Class<UNIT> cUnit;
-	protected Class<CAT> cCategory;
-
+	protected Class<INT> cInt;
+	
 	protected List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
 	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
+	protected List<INT> opIntervals; public List<INT> getOpIntervals() {return opIntervals;}
 	
 	protected SCOPE scope; public void setScope(SCOPE scope) {this.scope = scope;} public SCOPE getScope() {return scope;}
-		
-	protected void initSuper(String[] langs, final Class<L> cLang, final Class<D> cDescription, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<CAT> cCategory)
+	protected INT opInterval;public INT getOpInterval(){return opInterval;}public void setOpInterval(INT opInterval){this.opInterval = opInterval;}
+	protected INT tbInterval;public INT getTbInterval(){return tbInterval;}public void setTbInterval(INT tbInterval){this.tbInterval = tbInterval;}	
+	
+	protected void initSuper(String[] langs, final Class<L> cLang, final Class<D> cDescription, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<INT> cInt, Class<CAT> cCategory)
 	{
 		super.initAdmin(langs, cLang, cDescription);
 		this.cScope=cScope;
 		this.cUnit=cUnit;
+		this.cInt=cInt;
 		this.cCategory=cCategory;
 		
 		efCategory = EjbTimeSeriesCategoryFactory.factory(cScope);
@@ -73,6 +79,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	{
 		units = fTs.all(cUnit);
 		categories = fTs.all(cCategory);
+		opIntervals = fTs.all(cInt);
 	}
 	
 	public void reloadCategories()
@@ -122,6 +129,28 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	
 	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, scopes);}
 	protected void updatePerformed(){}
+	
+	//OverlayPanel
+	public void opAddInterval() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		if(!scope.getIntervals().contains(opInterval))
+		{
+			scope.getIntervals().add(opInterval);
+			scope = fTs.save(scope);
+			opInterval = null;
+			select();
+		}
+	}
+	public void opRmInterval() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		if(tbInterval!=null && scope.getIntervals().contains(tbInterval))
+		{
+			scope.getIntervals().remove(tbInterval);
+			scope = fTs.save(scope);
+			tbInterval = null;
+			select();
+		}
+	}
 	
 	//Security Handling for Invisible entries
 	private boolean showInvisibleScopes; public boolean isShowInvisibleScopes() {return showInvisibleScopes;}

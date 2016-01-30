@@ -1,5 +1,7 @@
 package net.sf.ahtutils.interfaces.model.ts;
 
+import java.util.List;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -13,12 +15,13 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 public interface UtilsTsScope <L extends UtilsLang,
 									D extends UtilsDescription,
 									CAT extends UtilsStatus<CAT,L,D>,
-									SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
+									SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
-									TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
+									TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 									ENTITY extends EjbWithId,
+									EC extends UtilsStatus<EC,L,D>,
 									INT extends UtilsStatus<INT,L,D>,
-									DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA,WS,QAF>,
+									DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 									WS extends UtilsStatus<WS,L,D>,
 									QAF extends UtilsStatus<QAF,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
@@ -33,4 +36,7 @@ public interface UtilsTsScope <L extends UtilsLang,
 	
 	String getCode();
 	void setCode(String code);
+	
+	List<INT> getIntervals();
+	void setIntervals(List<INT> intervals);
 }

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.factory.ejb.security.EjbStaffFactory;
+import net.sf.ahtutils.interfaces.bean.op.user.OpUserBean;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.facade.UtilsUserFacade;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
@@ -21,6 +22,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.prototype.controller.handler.op.user.OverlayUserSelectionHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
@@ -33,7 +35,7 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 												USER extends UtilsUser<L,D,C,R,V,U,A,USER>,
 												STAFF extends UtilsStaff<L,D,C,R,V,U,A,USER,DOMAIN>,
 												DOMAIN extends EjbWithId>
-		implements Serializable
+		implements Serializable,OpUserBean<L,D,C,R,V,U,A,USER>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityDomainBean.class);
@@ -52,6 +54,9 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	
 	protected List<STAFF> staffs; public List<STAFF> getStaffs(){return staffs;}
 	
+	private OverlayUserSelectionHandler<L,D,C,R,V,U,A,USER> opContactHandler;
+	@Override public OverlayUserSelectionHandler<L,D,C,R,V,U,A,USER> getOpUserHandler() {return opContactHandler;}
+	
 	protected void initSuper(UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity, UtilsUserFacade<L,D,C,R,V,U,A,USER> fUser, Class<R> cRole, Class<USER> cUser, Class<STAFF> cStaff)
 	{
 		this.fSecurity=fSecurity;
@@ -61,6 +66,8 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 		this.cStaff=cStaff;
 		
 		efStaff = EjbStaffFactory.factory(cStaff);
+		
+		opContactHandler = new OverlayUserSelectionHandler<L,D,C,R,V,U,A,USER>(this);
 	}
 	
 	public void selectDomain()
@@ -134,5 +141,12 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	{
 		staff.setUser(fUser.find(cUser,staff.getUser()));
 		logger.info(AbstractLogMessage.autoCompleteSelect(staff.getUser()));
+	}
+	
+	@Override
+	public void selectOpUser(USER user) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.selectEntity(user));
+		staff.setUser(fUser.find(cUser,user));
 	}
 }

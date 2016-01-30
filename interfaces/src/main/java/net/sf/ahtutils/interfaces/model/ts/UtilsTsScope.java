@@ -10,9 +10,9 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface UtilsTsCategory <L extends UtilsLang,
+public interface UtilsTsScope <L extends UtilsLang,
 									D extends UtilsDescription,
-									CAT extends UtilsTsCategory<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+									CAT extends UtilsTsScope<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
 									TS extends UtilsTimeSeries<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
 									ENTITY extends EjbWithId,

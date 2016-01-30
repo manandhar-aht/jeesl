@@ -7,13 +7,13 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.ts.UtilsTimeSeries;
-import net.sf.ahtutils.interfaces.model.ts.UtilsTsCategory;
+import net.sf.ahtutils.interfaces.model.ts.UtilsTsScope;
 import net.sf.ahtutils.interfaces.model.ts.UtilsTsData;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 											D extends UtilsDescription,
-											CAT extends UtilsTsCategory<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+											CAT extends UtilsTsScope<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
 											TS extends UtilsTimeSeries<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
 											ENTITY extends EjbWithId,
@@ -31,7 +31,7 @@ public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 	
 	public static <L extends UtilsLang,
 					D extends UtilsDescription,
-					CAT extends UtilsTsCategory<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+					CAT extends UtilsTsScope<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
 					TS extends UtilsTimeSeries<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
 					ENTITY extends EjbWithId,

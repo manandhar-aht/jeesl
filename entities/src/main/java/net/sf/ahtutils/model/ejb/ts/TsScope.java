@@ -15,14 +15,14 @@ import javax.validation.constraints.NotNull;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.ts.UtilsTsCategory;
+import net.sf.ahtutils.interfaces.model.ts.UtilsTsScope;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Category",category="ts",subset="ts")
-public class TsCategory implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsTsCategory<Lang,Description,TsCategory,TsUnit,TimeSeries,TsEntity,TsInterval,TsData>
+@EjbErNode(name="Scope",category="ts",subset="ts")
+public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
+								UtilsTsScope<Lang,Description,TsScope,TsUnit,TimeSeries,TsEntity,TsInterval,TsData>
 {
 	public static final long serialVersionUID=1;
 	

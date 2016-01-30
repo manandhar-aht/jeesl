@@ -21,5 +21,6 @@ public interface UtilsUserFacade <L extends UtilsLang,
 										USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
 	extends UtilsFacade
 {	
+	USER load(Class<USER> cUser, USER user);
 	List<USER> likeNameFirstLast(Class<USER> cUser, String query);
 }

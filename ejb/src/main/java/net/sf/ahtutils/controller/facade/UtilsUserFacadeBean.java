@@ -34,8 +34,14 @@ public class UtilsUserFacadeBean<L extends UtilsLang,
 	{
 		super(em);
 	}
+	
+	@Override public USER load(Class<USER> cUser, USER user)
+	{
+		user = em.find(cUser, user.getId());
+		user.getRoles().size();
+		return user;
+	}
 
-	//User
 	@Override public  List<USER> likeNameFirstLast(Class<USER> cUser, String query)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();

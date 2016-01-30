@@ -15,7 +15,21 @@
     		<s:lang key="fr" translation="Category"/>
     	</s:langs>
     </s:translation>
-	    <s:translation key="aupTsUnit">
+	<s:translation key="aupTsScopes">
+    	<s:langs>
+    		<s:lang key="de" translation="Bereiche"/>
+    		<s:lang key="en" translation="Scopes"/>
+    		<s:lang key="fr" translation="Scopes"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupTsScope">
+    	<s:langs>
+    		<s:lang key="de" translation="Bereich"/>
+    		<s:lang key="en" translation="Scope"/>
+    		<s:lang key="fr" translation="Scope"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsUnit">
     	<s:langs>
     		<s:lang key="de" translation="Einheit"/>
     		<s:lang key="en" translation="Unit"/>

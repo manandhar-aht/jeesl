@@ -12,61 +12,72 @@
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
-		<composite:attribute name="bean" required="false" default="#{adminTsCategoryBean}"/>
+		<composite:attribute name="bean" required="false" default="#{adminTsScopeBean}"/>
 	</composite:interface>
 	
 	<composite:implementation>
 		<aup:grid>
 			<aht:row>
-				<aht:slot id="sCategories" width="7">
+				<aht:slot id="sCategories" width="8">
 					<h:form id="fCategories">
-						<p:dataTable var="c" value="#{adminTsCategoryBean.categories}" draggableRows="true"
-							selection="#{adminTsCategoryBean.category}" selectionMode="single" rowKey="#{c.id}">
+						<p:dataTable var="s" value="#{cc.attrs.bean.scopes}" draggableRows="true"
+							selection="#{cc.attrs.bean.scope}" selectionMode="single" rowKey="#{s.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.aupTsCategories}">
+								<aht:pfDataTableHeader title="#{msg.aupTsScopes}">
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sCategory" listener="#{cc.attrs.bean.select()}"/>
-							<p:column>  
-								<h:outputText value="#{c.position}"/>
+							<p:column rendered="#{cc.attrs.bean.showInvisibleScopes}">  
+								<h:graphicImage rendered="#{s.visible}" name="#{iconBean.icon12['aupSecurityVisible']}" library="gfx"/>
+				                <h:graphicImage rendered="#{not s.visible}" name="#{iconBean.icon12['aupSecurityInvisible']}" library="gfx"/>
 				            </p:column>
-				             <p:column headerText="#{msg.aupCode}">  
-								<h:outputText value="#{c.code}"/>  
+							<p:column rendered="false">  
+								<h:outputText value="#{s.position}"/>
+				            </p:column>
+				            <p:column rendered="false" headerText="#{msg.aupCode}">  
+								<h:outputText value="#{s.code}"/>  
 				            </p:column>
 				            <p:column headerText="#{msg.aupTsCategory}">  
-								<h:outputText value="#{c.name[userBean.localeCode].lang}"/>
+								<h:outputText value="#{s.category.name[userBean.localeCode].lang}"/>
 				            </p:column>
-				            <p:column rendered="#{cc.attrs.bean.showInvisibleCategories}">  
-								<h:graphicImage rendered="#{c.visible}" name="#{iconBean.icon12['aupSecurityVisible']}" library="gfx"/>
-				                <h:graphicImage rendered="#{not c.visible}" name="#{iconBean.icon12['aupSecurityInvisible']}" library="gfx"/>
+				            <p:column headerText="#{msg.aupTsScope}">  
+								<h:outputText value="#{s.name[userBean.localeCode].lang}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.aupTsUnit}">  
+								<h:outputText value="#{s.unit.symbol}"/>
 				            </p:column>
 				       	</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sCategory" width="5">
+				<aht:slot id="sCategory" width="4">
 					<h:form id="fCategory">
-						<p:panel id="pLang" header="#{msg.aupTsCategory}"
-								 rendered="#{not empty cc.attrs.bean.category}" styleClass="auPanelWithGrid">
+						<p:panel id="pLang" header="#{msg.aupTsScope}"
+								 rendered="#{not empty cc.attrs.bean.scope}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancel()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttCancel}"/>
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.allowSave}" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.category.id gt 0}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttDelete}"/>
+								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.scope.id gt 0}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupCode}"/>
-								<h:inputText autocomplete="off" value="#{cc.attrs.bean.category.code}"/>
+								<h:inputText autocomplete="off" value="#{cc.attrs.bean.scope.code}"/>
 								
-								<p:outputLabel rendered="#{cc.attrs.bean.showInvisibleCategories}" value="#{msg.aupSecurityVisible}"/>
-								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showInvisibleCategories}" value="#{cc.attrs.bean.category.visible}"/>
+								<p:outputLabel rendered="#{cc.attrs.bean.showInvisibleScopes}" value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showInvisibleScopes}" value="#{cc.attrs.bean.scope.visible}"/>
 							
+								<p:outputLabel value="#{msg.aupTsCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.scope.category}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.categories}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
+								</p:selectOneMenu>
+								
 								<p:outputLabel value="#{msg.aupTsUnit}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.category.unit}" effect="fade" >
+								<p:selectOneMenu value="#{cc.attrs.bean.scope.unit}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.units}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.category}"
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.scope}"
 													labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
        												keys="#{translationBean.langKeys}" withDescription="true"/>
 						</p:panel>

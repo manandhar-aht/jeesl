@@ -32,7 +32,7 @@ public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 	public static enum RequirementsClassifier {reqHardware,reqAdmin,reqDeveloper,reqNetwork}
 	
 	public static enum ToolsCode {toolsOsticket,toolsApache}
-	public static enum SystemCode {systemWs,systemTs}
+	public static enum SystemCode {systemWs,systemTsStructure}
 		
 	public UtilsLatexAdminDocumentationBuilder(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm,DefaultSettingsManager dsm)
 	{
@@ -86,7 +86,9 @@ public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 		
 		//System
 		addConfig(SystemCode.systemWs.toString(),"ofx.aht-utils/administration/system/webservice.xml","admin/system/webservice/introduction");
-		addConfig(SystemCode.systemTs.toString(),"aht-utils/ofx/system/ts.xml","system/ts");
+		
+		//TimeSeries
+		addConfig(SystemCode.systemTsStructure.toString(),"aht-utils/ofx/system/ts/structure.xml","system/ts/structure");
 	}
 	
 	@Deprecated

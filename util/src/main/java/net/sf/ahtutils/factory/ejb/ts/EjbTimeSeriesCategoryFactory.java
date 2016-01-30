@@ -13,12 +13,13 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 											D extends UtilsDescription,
-											SCOPE extends UtilsTsScope<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
+											CAT extends UtilsStatus<CAT,L,D>,
+											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends UtilsTimeSeries<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
+											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
 											ENTITY extends EjbWithId,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends UtilsTsData<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>>
+											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbTimeSeriesCategoryFactory.class);
 	
@@ -31,15 +32,16 @@ public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 	
 	public static <L extends UtilsLang,
 					D extends UtilsDescription,
-					SCOPE extends UtilsTsScope<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
+					CAT extends UtilsStatus<CAT,L,D>,
+					SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
-					TS extends UtilsTimeSeries<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
+					TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
 					ENTITY extends EjbWithId,
 					INT extends UtilsStatus<INT,L,D>,
-					DATA extends UtilsTsData<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>>
-	EjbTimeSeriesCategoryFactory<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA> factory(final Class<SCOPE> cScope)
+					DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>>
+	EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA> factory(final Class<SCOPE> cScope)
 	{
-		return new EjbTimeSeriesCategoryFactory<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>(cScope);
+		return new EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,INT,DATA>(cScope);
 	}
     
 	public SCOPE build(UNIT unit)

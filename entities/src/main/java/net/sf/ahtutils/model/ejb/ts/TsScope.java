@@ -22,7 +22,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Scope",category="ts",subset="ts")
 public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsTsScope<Lang,Description,TsScope,TsUnit,TimeSeries,TsEntity,TsInterval,TsData>
+								UtilsTsScope<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsEntity,TsInterval,TsData>
 {
 	public static final long serialVersionUID=1;
 	

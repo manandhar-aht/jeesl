@@ -36,6 +36,16 @@ public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public String getCode() {return code;}
 	@Override public void setCode(String code) {this.code = code;}
 	
+	@NotNull @ManyToOne
+	private TsCategory category;
+	public TsCategory getCategory() {return category;}
+	public void setCategory(TsCategory category) {this.category = category;}
+	
+	@NotNull @ManyToOne
+	private TsUnit unit;
+	@Override public TsUnit getUnit() {return unit;}
+	@Override public void setUnit(TsUnit unit) {this.unit = unit;}
+
 	private int position;
 	@Override public int getPosition() {return position;}
 	@Override public void setPosition(int position) {this.position = position;}
@@ -43,11 +53,6 @@ public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
 	private boolean visible;
 	@Override public boolean isVisible() {return visible;}
 	@Override public void setVisible(boolean visible) {this.visible = visible;}
-	
-	@NotNull @ManyToOne
-	private TsUnit unit;
-	@Override public TsUnit getUnit() {return unit;}
-	@Override public void setUnit(TsUnit unit) {this.unit = unit;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")

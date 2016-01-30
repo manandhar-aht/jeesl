@@ -23,9 +23,12 @@ public interface UtilsTsScope <L extends UtilsLang,
 				EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
-	String getCode();
-	void setCode(String code);
+	CAT getCategory();
+	void setCategory(CAT category);
 	
 	UNIT getUnit();
 	void setUnit(UNIT unit);
+	
+	String getCode();
+	void setCode(String code);
 }

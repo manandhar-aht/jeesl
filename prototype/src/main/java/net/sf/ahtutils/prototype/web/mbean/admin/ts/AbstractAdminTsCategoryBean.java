@@ -25,31 +25,31 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminTsCategoryBean <L extends UtilsLang,
 											D extends UtilsDescription,
-											CAT extends UtilsTsScope<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+											SCOPE extends UtilsTsScope<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends UtilsTimeSeries<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+											TS extends UtilsTimeSeries<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
 											ENTITY extends EjbWithId,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends UtilsTsData<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>>
+											DATA extends UtilsTsData<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsCategoryBean.class);
 	
-	protected UtilsTsFacade<L,D,CAT,UNIT,TS,ENTITY,INT,DATA> fTs;
+	protected UtilsTsFacade<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA> fTs;
 		
-	private EjbTimeSeriesCategoryFactory<L,D,CAT,UNIT,TS,ENTITY,INT,DATA> efCategory;
+	private EjbTimeSeriesCategoryFactory<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA> efCategory;
 	
-	protected Class<CAT> cCategory;
+	protected Class<SCOPE> cCategory;
 	protected Class<UNIT> cUnit;
 
 	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
-	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
+	protected List<SCOPE> categories; public List<SCOPE> getCategories() {return categories;}
 	
-	protected CAT category; public void setCategory(CAT category) {this.category = category;} public CAT getCategory() {return category;}
+	protected SCOPE category; public void setCategory(SCOPE category) {this.category = category;} public SCOPE getCategory() {return category;}
 		
-	protected void initSuper(String[] langs, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<UNIT> cUnit)
+	protected void initSuper(String[] langs, final Class<L> cLang, final Class<D> cDescription, Class<SCOPE> cCategory, Class<UNIT> cUnit)
 	{
 		super.initAdmin(langs, cLang, cDescription);
 		this.cCategory=cCategory;

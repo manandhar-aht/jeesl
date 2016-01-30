@@ -27,9 +27,9 @@ public class TimeSeries implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public void setId(long id) {this.id = id;}
 	
 	@NotNull @ManyToOne
-	private TsScope category;
-	@Override public TsScope getCategory() {return category;}
-	@Override public void setCategory(TsScope category) {this.category = category;}
+	private TsScope scope;
+	@Override public TsScope getScope() {return scope;}
+	@Override public void setScope(TsScope scope) {this.scope = scope;}
 	
 	@NotNull @ManyToOne
 	private TsInterval interval;

@@ -13,41 +13,41 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 											D extends UtilsDescription,
-											CAT extends UtilsTsScope<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+											SCOPE extends UtilsTsScope<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends UtilsTimeSeries<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+											TS extends UtilsTimeSeries<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
 											ENTITY extends EjbWithId,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends UtilsTsData<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>>
+											DATA extends UtilsTsData<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbTimeSeriesCategoryFactory.class);
 	
-	final Class<CAT> cCat;
+	final Class<SCOPE> cScope;
     
-	public EjbTimeSeriesCategoryFactory(final Class<CAT> cCat)
+	public EjbTimeSeriesCategoryFactory(final Class<SCOPE> cScope)
 	{       
-        this.cCat = cCat;
+        this.cScope = cScope;
 	}
 	
 	public static <L extends UtilsLang,
 					D extends UtilsDescription,
-					CAT extends UtilsTsScope<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+					SCOPE extends UtilsTsScope<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
-					TS extends UtilsTimeSeries<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+					TS extends UtilsTimeSeries<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>,
 					ENTITY extends EjbWithId,
 					INT extends UtilsStatus<INT,L,D>,
-					DATA extends UtilsTsData<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>>
-	EjbTimeSeriesCategoryFactory<L,D,CAT,UNIT,TS,ENTITY,INT,DATA> factory(final Class<CAT> cCat)
+					DATA extends UtilsTsData<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>>
+	EjbTimeSeriesCategoryFactory<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA> factory(final Class<SCOPE> cScope)
 	{
-		return new EjbTimeSeriesCategoryFactory<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>(cCat);
+		return new EjbTimeSeriesCategoryFactory<L,D,SCOPE,UNIT,TS,ENTITY,INT,DATA>(cScope);
 	}
     
-	public CAT build(UNIT unit)
+	public SCOPE build(UNIT unit)
 	{
-		CAT ejb = null;
+		SCOPE ejb = null;
 		try
 		{
-			ejb = cCat.newInstance();
+			ejb = cScope.newInstance();
 			ejb.setPosition(0);
 			ejb.setVisible(true);
 			ejb.setUnit(unit);

@@ -8,5 +8,5 @@
 	<node category="user" code="greens7" id="5"/>
 	<node category="symbol" code="reds7" id="4"/>
 	<node category="status" code="reds7" id="4"/>
-	<node category="ts" code="reds7" id="4"/>
+	<node category="ts" code="blues7" id="4"/>
 </node>

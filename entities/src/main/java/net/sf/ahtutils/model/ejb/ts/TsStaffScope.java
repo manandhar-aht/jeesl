@@ -28,9 +28,9 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(name = "StaffWorkspace",uniqueConstraints = @UniqueConstraint(columnNames = {"domain_id","role_id","user_id"}))
-@EjbErNode(name="Staff",subset="ts")
-public class TsWorkspaceStaff implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,EjbSaveable,
-					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser,TsWorkspace>
+@EjbErNode(name="Staff",subset="ts",category="ts",level=2)
+public class TsStaffScope implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,EjbSaveable,
+					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser,TsScope>
 {
 	public static final long serialVersionUID=1;
 
@@ -41,9 +41,9 @@ public class TsWorkspaceStaff implements Serializable,EjbWithId,EjbPersistable,E
 	@Override public void setId(long id){this.id = id;}
 	
 	@NotNull @ManyToOne
-	private TsWorkspace domain;
-	public TsWorkspace getDomain() {return domain;}
-	public void setDomain(TsWorkspace domain) {this.domain = domain;}
+	private TsScope domain;
+	public TsScope getDomain() {return domain;}
+	public void setDomain(TsScope domain) {this.domain = domain;}
 		
 	@NotNull @ManyToOne
 	private SecurityRole role;
@@ -68,5 +68,5 @@ public class TsWorkspaceStaff implements Serializable,EjbWithId,EjbPersistable,E
 		return sb.toString();
 	}
 	
-	@Override public boolean equals(Object object) {return (object instanceof TsWorkspaceStaff) ? id == ((TsWorkspaceStaff) object).getId() : (object == this);}
+	@Override public boolean equals(Object object) {return (object instanceof TsStaffScope) ? id == ((TsStaffScope) object).getId() : (object == this);}
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aupSec="http://ahtutils.sourceforge.net/prototype/security"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="bean" required="false" default="#{adminTsImportBean}"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<aup:grid>
+			<aht:row>
+				<aht:slot id="sCategories" width="4">
+					<h:form id="fCategories">
+						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupTsCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.category}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeCategory()}" update="@form"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.aupTsScope}" rendered="#{not empty cc.attrs.bean.scope}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.scope}" effect="fade" rendered="#{not empty cc.attrs.bean.scope}">
+									<f:selectItems value="#{cc.attrs.bean.scopes}" var="s" itemLabel="#{s.name[userBean.localeCode].lang}" itemValue="#{s}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeScope()}" update="@form"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.aupTsClass}" rendered="#{not empty cc.attrs.bean.clas}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.clas}" effect="fade" rendered="#{not empty cc.attrs.bean.clas}">
+									<f:selectItems value="#{cc.attrs.bean.classes}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeClass()}" update="@form"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.aupTsInterval}" rendered="#{not empty cc.attrs.bean.interval}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.interval}" effect="fade" rendered="#{not empty cc.attrs.bean.interval}">
+									<f:selectItems value="#{cc.attrs.bean.intervals}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeInterval()}" update="@form"/>
+								</p:selectOneMenu>
+							</p:panelGrid>
+						</p:panel>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sCategories" width="4">
+					<h:form id="fRandom" rendered=#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval)}>
+						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
+							button and generate random data
+						</p:panel>
+					</h:form>
+				</aht:slot>
+			</aht:row>
+	    </aup:grid>
+	</composite:implementation>
+</html>

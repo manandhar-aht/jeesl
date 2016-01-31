@@ -51,9 +51,9 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected Class<INT> cInt;
 	protected Class<EC> cEc;
 	
+	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
 	protected List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
-	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
 	protected List<INT> opIntervals; public List<INT> getOpIntervals() {return opIntervals;}
 	protected List<EC> opClasses; public List<EC> getOpClasses() {return opClasses;}
 	

@@ -78,4 +78,11 @@
     		<s:lang key="fr" translation="Workspace"/>
     	</s:langs>
     </s:translation>
+ 	<s:translation key="aupTsImport">
+    	<s:langs>
+    		<s:lang key="de" translation="Einlesen von Zeitserien"/>
+    		<s:lang key="en" translation="Import of Timeseries"/>
+    		<s:lang key="fr" translation="Import of Timeseries"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

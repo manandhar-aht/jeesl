@@ -36,15 +36,17 @@ public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 	
-	@NotNull
-	private String code;
-	@Override public String getCode() {return code;}
-	@Override public void setCode(String code) {this.code = code;}
+	@Override public String resolveParentAttribute() {return "category";}
 	
 	@NotNull @ManyToOne
 	private TsCategory category;
 	public TsCategory getCategory() {return category;}
 	public void setCategory(TsCategory category) {this.category = category;}
+	
+	@NotNull
+	private String code;
+	@Override public String getCode() {return code;}
+	@Override public void setCode(String code) {this.code = code;}
 	
 	@NotNull @ManyToOne
 	private TsUnit unit;

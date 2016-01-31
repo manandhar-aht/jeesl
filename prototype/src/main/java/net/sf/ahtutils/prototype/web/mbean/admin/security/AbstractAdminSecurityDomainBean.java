@@ -1,6 +1,7 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.security;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.security.EjbStaffFactory;
 import net.sf.ahtutils.interfaces.bean.op.user.OpUserBean;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
@@ -43,24 +45,30 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	protected UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity;
 	protected UtilsUserFacade<L,D,C,R,V,U,A,USER> fUser;
 	
+	protected Class<C> cCategory;
 	protected Class<R> cRole;
 	protected Class<USER> cUser;
 	protected Class<STAFF> cStaff;
 	
-	protected EjbStaffFactory<L,D,C,R,V,U,A,USER,STAFF,DOMAIN> efStaff;
+	protected List<R> roles; public List<R> getRoles(){return roles;}
+	protected List<DOMAIN> domains; public List<DOMAIN> getDomains(){return domains;}
+	protected List<STAFF> staffs; public List<STAFF> getStaffs(){return staffs;}
+	
 	
 	protected DOMAIN domain; public DOMAIN getDomain(){return domain;} public void setDomain(DOMAIN domain){this.domain = domain;}
 	protected STAFF staff; public STAFF getStaff(){return staff;} public void setStaff(STAFF staff) {this.staff = staff;}
 	
-	protected List<STAFF> staffs; public List<STAFF> getStaffs(){return staffs;}
+	protected EjbStaffFactory<L,D,C,R,V,U,A,USER,STAFF,DOMAIN> efStaff;
 	
 	private OverlayUserSelectionHandler<L,D,C,R,V,U,A,USER> opContactHandler;
 	@Override public OverlayUserSelectionHandler<L,D,C,R,V,U,A,USER> getOpUserHandler() {return opContactHandler;}
 	
-	protected void initSuper(UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity, UtilsUserFacade<L,D,C,R,V,U,A,USER> fUser, Class<R> cRole, Class<USER> cUser, Class<STAFF> cStaff)
+	protected void initSuper(UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity, UtilsUserFacade<L,D,C,R,V,U,A,USER> fUser, Class<C> cCategory, Class<R> cRole, Class<USER> cUser, Class<STAFF> cStaff)
 	{
 		this.fSecurity=fSecurity;
 		this.fUser=fUser;
+		
+		this.cCategory=cCategory;
 		this.cRole=cRole;
 		this.cUser=cUser;
 		this.cStaff=cStaff;
@@ -68,6 +76,22 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 		efStaff = EjbStaffFactory.factory(cStaff);
 		
 		opContactHandler = new OverlayUserSelectionHandler<L,D,C,R,V,U,A,USER>(this);
+	}
+	
+	protected void loadRoles(String category)
+	{
+		roles = new ArrayList<R>();
+		try
+		{
+			for(R r : fSecurity.allForCategory(cRole, cCategory, category))
+			{
+				if(r.isVisible())
+				{
+					roles.add(r);
+				}
+			}
+		}
+		catch (UtilsNotFoundException e){logger.warn(e.getMessage());}
 	}
 	
 	public void selectDomain()

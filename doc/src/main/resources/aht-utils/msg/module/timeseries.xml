@@ -57,11 +57,25 @@
     		<s:lang key="fr" translation="Classes"/>
     	</s:langs>
     </s:translation>
-    	<s:translation key="aupTsClass">
+	<s:translation key="aupTsClass">
     	<s:langs>
     		<s:lang key="de" translation="Klasse"/>
     		<s:lang key="en" translation="Class"/>
     		<s:lang key="fr" translation="Class"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsWorkspaces">
+    	<s:langs>
+    		<s:lang key="de" translation="Arbeitsbereiche"/>
+    		<s:lang key="en" translation="Workspaces"/>
+    		<s:lang key="fr" translation="Workspaces"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupTsWorkspace">
+    	<s:langs>
+    		<s:lang key="de" translation="Arbeitsbereich"/>
+    		<s:lang key="en" translation="Workspace"/>
+    		<s:lang key="fr" translation="Workspace"/>
     	</s:langs>
     </s:translation>
 </s:translations>

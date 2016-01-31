@@ -32,7 +32,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(name="UtilsMeis", uniqueConstraints={@UniqueConstraint(name="unique-email", columnNames = {"email"})})
-@EjbErNode(name="User",category="user",subset="security")
+@EjbErNode(name="User",category="user",subset="security,ts")
 @NamedQueries
 ({	
 	@NamedQuery(name="fUserByEmail",query="SELECT u FROM MeisUser u WHERE u.email = :email")
@@ -41,8 +41,6 @@ public class AhtUtilsUser implements Serializable,EjbWithId,EjbPersistable,EjbRe
 									UtilsUser<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
 {
 	public static final long serialVersionUID=1;
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>Fields<<<<<<<<<<<<<<<<<<<<
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
@@ -75,8 +73,7 @@ public class AhtUtilsUser implements Serializable,EjbWithId,EjbPersistable,EjbRe
     public List<SecurityRole> getRoles() {if(roles==null){roles = new ArrayList<SecurityRole>();};return roles;}
     public void setRoles(List<SecurityRole> roles) {this.roles = roles;}
 
-	// >>>>>>>>>>>>>>>>>>>>Methods<<<<<<<<<<<<<<<
-	
+
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

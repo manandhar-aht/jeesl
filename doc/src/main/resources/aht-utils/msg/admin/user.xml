@@ -49,4 +49,10 @@
 			<s:lang key="en" translation="Person"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="aupContact">
+		<s:langs>
+			<s:lang key="fr" translation="Contact"/>
+			<s:lang key="en" translation="Contact"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

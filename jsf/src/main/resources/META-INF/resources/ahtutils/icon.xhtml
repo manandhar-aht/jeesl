@@ -13,6 +13,7 @@
 		<composite:attribute name="disabled" required="false" default="false"/>
 		<composite:attribute name="oncomplete" required="false"/>
 		<composite:attribute name="onstart" required="false"/>
+		<composite:attribute name="process" required="false" default=""/>
 		<composite:attribute name="blocks" required="false" type="java.lang.Boolean"/>
 		<composite:attribute name="mayDisappear" required="false" type="java.lang.Boolean" default="false"/>
 		<composite:attribute name="type" required="true"/>
@@ -25,7 +26,7 @@
 			<p:commandLink id="link" 
 				   update="#{cc.attrs.update}"
 				   actionListener="#{cc.listener}"
-				   process="@form" 
+				   process="#{cc.attrs.process}" 
 				   onstart="#{cc.attrs.onstart};document.getElementById('#{cc.clientId}:image').style.visibility='hidden';"
 				   oncomplete="#{cc.attrs.oncomplete};document.getElementById('#{cc.clientId}:image').style.visibility='visible';">
 				<h:graphicImage id="image"
@@ -41,7 +42,7 @@
 				<p:commandLink id="link" 
 					   update="#{cc.attrs.update}"
 					   actionListener="#{cc.listener}"
-					   process="@form" 
+					   process="#{cc.attrs.process}" 
 					   onstart="#{cc.attrs.onstart}"
 					   oncomplete="#{cc.attrs.oncomplete}">
 				<h:graphicImage id="image2"
@@ -56,7 +57,7 @@
 				<p:commandLink id="link" 
 					   update="#{cc.attrs.update}"
 					   actionListener="#{cc.listener}"
-					   process="@form" 
+					   process="#{cc.attrs.process}" 
 					   onstart="#{cc.attrs.onstart}"
 					   oncomplete="#{cc.attrs.oncomplete} PF('wvTtDisappear').hide()">
 				<h:graphicImage id="image2"

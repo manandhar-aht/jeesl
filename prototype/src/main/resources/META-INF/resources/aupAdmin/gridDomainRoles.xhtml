@@ -16,8 +16,8 @@
 		<composite:attribute name="domains" required="false"/>
 		
 		<composite:attribute name="staffTableHeader" required="false" default="#{msg.aupSecurityStaffs}"/>
+		<composite:attribute name="linkAddContact" required="false"/>
 		
-		<composite:facet name="domainColumns" required="true"/>
 		<composite:facet name="domainDetail" required="true"/>
 	</composite:interface>
 	
@@ -60,6 +60,8 @@
 	                        	<aht:icon type="aupCancel" mayDisappear="true" process="@this" listener="#{cc.attrs.bean.cancel()}" update=":#{cc.id}:sUser" tooltip="#{msg.ttCancel}"/>
 	                        	<aht:icon type="aupSave" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
 	                        	<aht:icon type="aupDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmStaff()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
+	                        	<h:graphicImage id="giContactSelection" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['aupAddressBook']}"/>
+                            	<p:tooltip for="giContactSelection" value="#{msg.ttAddressBook}"/>
 	                        </f:facet>
 	                        <composite:renderFacet name="domainDetail"/>
 	                        <p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
@@ -85,6 +87,7 @@
 	                        </p:panelGrid>
 	                        <p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 	                    </p:panel>
+	                    <aup:opUserSelection for=":#{cc.id}:fUser:giContactSelection" update=":#{cc.id}:sUser" contactHandler="#{cc.attrs.bean.opUserHandler}" linkAddContact="#{cc.attrs.linkAddContact}"/>
 		            </h:form>
 		        </aht:slot>
 	        </aht:row>

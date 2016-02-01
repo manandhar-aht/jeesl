@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.factory.ejb.security;
+package net.sf.ahtutils.factory.ejb.security;
 
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.factory.ejb.security;
+package net.sf.ahtutils.factory.ejb.security;
 
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
@@ -12,7 +12,7 @@ import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbSecurityUsecaseFactory <L extends UtilsLang,
+public class EjbSecurityCategoryFactory <L extends UtilsLang,
 										 D extends UtilsDescription,
 										 C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
 										 R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
@@ -21,7 +21,7 @@ public class EjbSecurityUsecaseFactory <L extends UtilsLang,
 										 A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
 										 USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSecurityUsecaseFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSecurityCategoryFactory.class);
 	
     final Class<L> clLang;
     final Class<D> clDescription;
@@ -40,12 +40,12 @@ public class EjbSecurityUsecaseFactory <L extends UtilsLang,
 	 			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
 	 			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
 	 			   USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
-    	EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,USER> factory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
+    	EjbSecurityCategoryFactory<L,D,C,R,V,U,A,USER> factory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction, final Class<USER> clUser)
     {
-        return new EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,USER>(clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
+        return new EjbSecurityCategoryFactory<L,D,C,R,V,U,A,USER>(clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
     }
     
-    public EjbSecurityUsecaseFactory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
+    public EjbSecurityCategoryFactory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
     {
         this.clLang = clLang;
         this.clDescription = clDescription;
@@ -57,15 +57,15 @@ public class EjbSecurityUsecaseFactory <L extends UtilsLang,
         this.clUser = clUser;
     } 
     
-    public U create(C category, String code)
+    public C create(String code, String type)
     {
-    	U ejb = null;
+    	C ejb = null;
     	
     	try
     	{
-			ejb = clUsecase.newInstance();
-			ejb.setCategory(category);
+			ejb = clCategory.newInstance();
 			ejb.setCode(code);
+			ejb.setType(type);
 			ejb.setPosition(1);
 			ejb.setVisible(true);
 		}

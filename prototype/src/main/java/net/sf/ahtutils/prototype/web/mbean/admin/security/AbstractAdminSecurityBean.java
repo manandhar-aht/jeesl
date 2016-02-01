@@ -7,13 +7,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.controller.factory.ejb.security.EjbSecurityActionFactory;
-import net.sf.ahtutils.controller.factory.ejb.security.EjbSecurityCategoryFactory;
-import net.sf.ahtutils.controller.factory.ejb.security.EjbSecurityRoleFactory;
-import net.sf.ahtutils.controller.factory.ejb.security.EjbSecurityUsecaseFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.factory.ejb.security.EjbSecurityActionFactory;
+import net.sf.ahtutils.factory.ejb.security.EjbSecurityCategoryFactory;
+import net.sf.ahtutils.factory.ejb.security.EjbSecurityRoleFactory;
+import net.sf.ahtutils.factory.ejb.security.EjbSecurityUsecaseFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
@@ -66,24 +66,19 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 		
 	//Category
 	protected List<C> categories; public List<C> getCategories() {return categories;}
+	protected List<V> opViews; public List<V> getOpViews(){return opViews;}
+	protected List<A> opActions; public List<A> getOpActions(){return opActions;}
+	
+	private List<V> opFvActions; public List<V> getOpFvActions(){return opFvActions;} public void setOpFvActions(List<V> opFvActions){this.opFvActions = opFvActions;}
+	private List<V> opFvViews;public List<V> getOpFvViews(){return opFvViews;}public void setOpFvViews(List<V> opFvViews){this.opFvViews = opFvViews;}
+	
 	protected C category;public void setCategory(C category) {this.category = category;}public C getCategory() {return category;}
 	
-	//OP Views
-	protected List<V> opViews; public List<V> getOpViews(){return opViews;}
 	
-	private List<V> opFvViews;
-	public List<V> getOpFvViews(){return opFvViews;}
-	public void setOpFvViews(List<V> opFvViews){this.opFvViews = opFvViews;}
-
 	protected V opView;public V getOpView(){return opView;}public void setOpView(V opView){this.opView = opView;}
 	protected V tblView;public V getTblView(){return tblView;}public void setTblView(V tblView){this.tblView = tblView;}
 	
 	//OP Actions
-	protected List<A> opActions; public List<A> getOpActions(){return opActions;}
-	
-	private List<V> opFvActions;
-	public List<V> getOpFvActions(){return opFvActions;}
-	public void setOpFvActions(List<V> opFvActions){this.opFvActions = opFvActions;}
 
 	protected A opAction;public A getOpAction(){return opAction;}public void setOpAction(A opAction){this.opAction = opAction;}
 	

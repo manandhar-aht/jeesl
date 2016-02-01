@@ -1,4 +1,7 @@
-package net.sf.ahtutils.controller.factory.ejb.security;
+package net.sf.ahtutils.factory.ejb.security;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
@@ -9,10 +12,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class EjbSecurityActionFactory <L extends UtilsLang,
+public class EjbSecurityUserFactory <L extends UtilsLang,
 										 D extends UtilsDescription,
 										 C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
 										 R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
@@ -21,16 +21,9 @@ public class EjbSecurityActionFactory <L extends UtilsLang,
 										 A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
 										 USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSecurityActionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSecurityUserFactory.class);
 	
-    final Class<L> clLang;
-    final Class<D> clDescription;
-    final Class<C> clCategory;
-    final Class<R> clRole;
-    final Class<V> clView;
-    final Class<U> clUsecase;
-    final Class<A> clAction;
-    final Class<USER> clUser;
+    final Class<USER> cUser;
 	
     public static <L extends UtilsLang,
 	 			   D extends UtilsDescription,
@@ -40,37 +33,27 @@ public class EjbSecurityActionFactory <L extends UtilsLang,
 	 			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
 	 			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
 	 			   USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
-    	EjbSecurityActionFactory<L,D,C,R,V,U,A,USER> factory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
+    	EjbSecurityUserFactory<L,D,C,R,V,U,A,USER> factory(final Class<USER> cUser)
     {
-        return new EjbSecurityActionFactory<L,D,C,R,V,U,A,USER>(clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
+        return new EjbSecurityUserFactory<L,D,C,R,V,U,A,USER>(cUser);
     }
     
-    public EjbSecurityActionFactory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
+    public EjbSecurityUserFactory(final Class<USER> cUser)
     {
-        this.clLang = clLang;
-        this.clDescription = clDescription;
-        this.clCategory = clCategory;
-        this.clRole = clRole;
-        this.clView = clView;
-        this.clUsecase = clUsecase;
-        this.clAction = clAction;
-        this.clUser = clUser;
+        this.cUser = cUser;
     } 
     
-    public A create(V view, String code)
-    {
-    	A ejb = null;
+	public USER build()
+	{
+		USER ejb = null;
     	
     	try
     	{
-			ejb = clAction.newInstance();
-			ejb.setPosition(1);
-			ejb.setView(view);
-			ejb.setCode(code);
+			ejb = cUser.newInstance();
 		}
     	catch (InstantiationException e) {e.printStackTrace();}
     	catch (IllegalAccessException e) {e.printStackTrace();}
     	
     	return ejb;
-    }
+	}
 }

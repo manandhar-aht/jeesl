@@ -101,6 +101,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	{		
 		user = fUtilsUser.load(cUser,user);
 		mapRoles.clear();
+		if(debugOnInfo){logger.info("Settings roles: "+user.getRoles().size());}
 		for(R r : user.getRoles()){mapRoles.put(r.getId(), true);}
 	}
 	
@@ -118,7 +119,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 			user = fUtilsUser.saveTransaction(user);
 			reloadUser();
 			bUtilsMessage.growlSuccessSaved();
-			revision.pageFlowPrimarySave(user);
+			if(revision!=null){revision.pageFlowPrimarySave(user);}
 			userChangePerformed();
 		}
 		catch (UtilsConstraintViolationException e) {constraintViolationOnSave();}
@@ -132,7 +133,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 			fUtilsUser.rm(myUser);
 			user = null;
 			bUtilsMessage.growlSuccessRemoved();
-			revision.pageFlowPrimaryCancel();
+			if(revision!=null){revision.pageFlowPrimaryCancel();}
 			userChangePerformed();
 		}
 		catch (UtilsConstraintViolationException e){constraintViolationOnRemove();}
@@ -170,7 +171,8 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	protected void userChangePerformed() {}
 	protected void constraintViolationOnSave() {}
 	protected void constraintViolationOnRemove() {}
-	
+
+	/*
 	public void addRole(R role) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info("Add Role");}
@@ -184,10 +186,11 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		fUtilsSecurity.grantRole(cUser,cRole,user,role,false);
 		reloadUser();
 	}
+	*/
 	
 	public void grantRole(R role, boolean grant) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(debugOnInfo){logger.info("Grant: "+role.toString()+" "+grant);}
+		if(debugOnInfo){logger.info("Grant ("+grant+") "+role.toString());}
 		fUtilsSecurity.grantRole(cUser,cRole,user,role,grant);
 		reloadUser();
 	}

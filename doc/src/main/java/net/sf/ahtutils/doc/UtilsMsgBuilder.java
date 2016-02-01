@@ -44,7 +44,7 @@ public class UtilsMsgBuilder
 	public static final String srcAdminStatus = "msg.aht-utils/admin/status.xml";
 	public static final String srcRevision = "msg.aht-utils/system/revision.xml";
 	public static final String srcConstraint = "msg.aht-utils/system/constraint.xml";
-	public static final String srcFacesMessages = "msg.aht-utils/facesMessages.xml";
+	public static final String facesMessages = "aht-utils/msg/facesMessages.xml";
 	
 	public static final String srcSurvey = "msg.aht-utils/survey.xml";
 	public static final String devQa = "msg.aht-utils/development/qa.xml";

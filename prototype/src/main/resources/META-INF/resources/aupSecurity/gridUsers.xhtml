@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aupSec="http://ahtutils.sourceforge.net/prototype/security"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="withEmail" required="false" default="false"/>
+		<composite:attribute name="withPwd" required="false" default="false"/>
+		<composite:attribute name="withPermit" required="false" default="false"/>
+		
+		<composite:facet name="userDetail" required="false"/>
+		<composite:facet name="revisions" required="false"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<aup:grid id="grid">
+			<aht:row id="row1">
+				<aht:slot id="sCategories" width="6">
+					<h:form id="fUsers">
+						<p:dataTable id="userTable" var="u" value="#{cc.attrs.bean.users}" rowKey="#{u.id}"
+								filteredValue="#{cc.attrs.bean.fvUsers}" sortBy="#{u.lastName}"
+								selection="#{cc.attrs.bean.user}" selectionMode="single" 
+								paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="#{appSettingsBean.paginatorTemplate}" rowsPerPageTemplate="#{appSettingsBean.rowsPerPageTemplate}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.aupUsers}">
+									<aht:icon type="add" listener="#{cc.attrs.bean.addUser()}" update=":#{cc.id}:sDetail"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sDetail" listener="#{cc.attrs.bean.selectUser}"/>
+							<p:column headerText="#{msg.aupFirstName}"
+									sortBy="#{u.firstName}"
+									filterBy="#{u.firstName}" filterMatchMode="contains">
+								<h:outputText value="#{u.firstName}" />
+		                    </p:column>
+		                    <p:column headerText="#{msg.aupLastName}"
+		                              sortBy="#{u.lastName}"
+		                              filterBy="#{u.lastName}"
+		                              filterMatchMode="contains">
+		                        <h:outputText value="#{u.lastName}" />
+		                    </p:column>
+		                    <p:column headerText="#{msg.aupEmail}"
+		                              sortBy="#{u.email}"
+		                              filterBy="#{u.email}" filterMatchMode="contains">
+		                        <h:outputText value="#{u.email}" />
+		                    </p:column>
+		                </p:dataTable>
+		            </h:form>
+				</aht:slot>
+				<aht:slot id="sDetail" width="6" renderChildrenIfEjb="#{cc.attrs.bean.user}">
+					<h:form id="fUser">
+						<p:panel header="User Details" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								  <aht:icon type="save" listener="#{cc.attrs.bean.saveUser()}" update=":#{cc.id}:grid"/>
+								  <aht:icon type="rm" listener="#{cc.attrs.bean.rm(cc.attrs.bean.user)}" tooltip="delete user" update=":#{cc.id}:grid"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" >
+								<p:outputLabel for="itFirstName" value="#{msg.aupFirstName}" />
+								<p:inputText id="itFirstName" required="true" value="#{cc.attrs.bean.user.firstName}" />
+								<p:outputLabel for="itLastName" value="#{msg.aupLastName}" />
+								<p:inputText id="itLastName" required="true" value="#{cc.attrs.bean.user.lastName}" />			
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.withEmail}">
+								<p:outputLabel for="itEmail" value="#{msg.aupEmail}" />
+								<p:inputText id="itEmail" required="true" value="#{cc.attrs.bean.user.email}" />
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.withPwd}">
+								<p:outputLabel value="#{msg.aupPasswordNew}" />
+								<p:password value="#{cc.attrs.bean.pwd1}" autocomplete="off"/>
+								<p:outputLabel value="#{msg.aupPasswordConfirm}" />
+								<p:password value="#{cc.attrs.bean.pwd2}" autocomplete="off"/>
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.withLogin}">
+								<p:outputLabel for="cbLogin" value="#{msg.aupPermitLogin}" />
+								<p:selectBooleanCheckbox id="cbLogin" value="#{cc.attrs.bean.user.permitLogin}" />
+							</p:panelGrid>
+							<c:if test="#{not empty cc.facets.userDetail}">
+								<composite:renderFacet name="userDetail"/>
+				            </c:if>
+							<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+							<f:facet name="footer">
+								<aup:revisionPanelFooter revision="#{cc.attrs.bean.revision}" updateToggle=":#{cc.id}:rowRevisions" listener="#{cc.attrs.bean.revision.toggleRevisions()}"/>
+							</f:facet>
+						</p:panel>
+					</h:form>
+					<h:form id="fRole">
+						<p:dataTable var="r" value="#{cc.attrs.bean.roles}" rendered="#{cc.attrs.bean.user.id gt 0}">
+								<p:column headerText="#{msg.aupSecurityCategory}">
+									<h:outputText value="#{r.category.name[userBean.localeCode].lang}" />
+								</p:column>
+								<p:column headerText="#{msg.aupSecurityRole}">
+	                                <h:outputText value="#{r.name[userBean.localeCode].lang}" />
+	                            </p:column>
+	                            <p:column>
+	                                <h:graphicImage rendered="#{cc.attrs.bean.mapRoles[r.id]}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx">
+	                                    <p:ajax update=":#{cc.id}:fRole" event="click" listener="#{cc.attrs.bean.grantRole(r,false)}"/>
+	                                </h:graphicImage>
+	                                <h:graphicImage rendered="#{!cc.attrs.bean.mapRoles[r.id]}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx">
+	                                    <p:ajax update=":#{cc.id}:fRole" event="click" listener="#{cc.attrs.bean.grantRole(r,true)}"/>
+	                                </h:graphicImage>
+	                            </p:column>
+	                        </p:dataTable>
+	                    </h:form>
+	                </aht:slot>
+	            </aht:row>
+	            <c:if test="#{not empty cc.facets.userDetail}">
+	            	<aht:row id="rowRevisions"><aht:slot><composite:renderFacet name="userDetail"/></aht:slot></aht:row>		
+				</c:if>
+		</aup:grid>
+	</composite:implementation>
+</html>

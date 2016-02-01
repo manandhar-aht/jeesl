@@ -1,10 +1,5 @@
-package net.sf.ahtutils.model.interfaces.idm;
+package net.sf.ahtutils.interfaces.model.security;
 
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 

@@ -15,7 +15,7 @@ import net.sf.ahtutils.interfaces.model.security.UtilsUser;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
-public class SecurityViewComparator<L extends UtilsLang,
+public class SecurityRoleComparator<L extends UtilsLang,
 									D extends UtilsDescription,
 									C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
 									R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
@@ -24,19 +24,19 @@ public class SecurityViewComparator<L extends UtilsLang,
 									A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
 									USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
 {
-	final static Logger logger = LoggerFactory.getLogger(SecurityViewComparator.class);
+	final static Logger logger = LoggerFactory.getLogger(SecurityRoleComparator.class);
 
     public enum Type {position};
 
-    public SecurityViewComparator()
+    public SecurityRoleComparator()
     {
     	
     }
     
-    public Comparator<V> factory(Type type)
+    public Comparator<R> factory(Type type)
     {
-        Comparator<V> c = null;
-        SecurityViewComparator<L,D,C,R,V,U,A,USER> factory = new SecurityViewComparator<L,D,C,R,V,U,A,USER>();
+        Comparator<R> c = null;
+        SecurityRoleComparator<L,D,C,R,V,U,A,USER> factory = new SecurityRoleComparator<L,D,C,R,V,U,A,USER>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;
@@ -45,9 +45,9 @@ public class SecurityViewComparator<L extends UtilsLang,
         return c;
     }
 
-    private class PositionCodeComparator implements Comparator<V>
+    private class PositionCodeComparator implements Comparator<R>
     {
-        public int compare(V a, V b)
+        public int compare(R a, R b)
         {
 			  CompareToBuilder ctb = new CompareToBuilder();
 			  ctb.append(a.getCategory().getPosition(), b.getCategory().getPosition());

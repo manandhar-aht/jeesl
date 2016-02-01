@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 
 public interface UtilsSecurityWithActions<L extends UtilsLang,
 						 		   D extends UtilsDescription, 

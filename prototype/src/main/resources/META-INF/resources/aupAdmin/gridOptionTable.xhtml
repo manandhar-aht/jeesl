@@ -20,7 +20,7 @@
 			<aht:row>
 				<aht:slot id="sCategories" width="2">
 					<h:form id="fProperties">
-						<aupAdm:optionsCategoryTable bean="#{adminTsTableBean}" update=":#{cc.id}:sCategory :#{cc.id}:sLang"/>
+						<aupAdm:optionsCategoryTable bean="#{cc.attrs.bean}" update=":#{cc.id}:sCategory :#{cc.id}:sLang"/>
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sCategory" width="6">

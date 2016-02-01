@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
+import net.sf.ahtutils.interfaces.model.security.UtilsUser;
 import net.sf.ahtutils.model.ejb.security.SecurityAction;
 import net.sf.ahtutils.model.ejb.security.SecurityCategory;
 import net.sf.ahtutils.model.ejb.security.SecurityRole;
@@ -26,7 +27,6 @@ import net.sf.ahtutils.model.ejb.security.SecurityUsecase;
 import net.sf.ahtutils.model.ejb.security.SecurityView;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
-import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
@@ -63,6 +63,10 @@ public class AhtUtilsUser implements Serializable,EjbWithId,EjbPersistable,EjbRe
     protected String lastName;
     public String getLastName() {return lastName;}
     public void setLastName(String lastName) {this.lastName = lastName;}
+    
+	private Boolean permitLogin;
+	public Boolean getPermitLogin() {return permitLogin;}
+	public void setPermitLogin(Boolean permitLogin) {this.permitLogin = permitLogin;}
 	
 	private String lang;
     public String getLang() {return lang;}

@@ -22,11 +22,16 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	protected EjbLangFactory<L> efLang;
 	protected EjbDescriptionFactory<D> efDescription;
 	
+	public AbstractAdminBean()
+	{
+		debugOnInfo = false;
+	}
+	
 	public void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription)
 	{	
 		this.langs=langs;
 		efLang = new EjbLangFactory<L>(cLang);
 		efDescription = new EjbDescriptionFactory<D>(cDescription);
-		debugOnInfo = false;
+		
 	}
 }

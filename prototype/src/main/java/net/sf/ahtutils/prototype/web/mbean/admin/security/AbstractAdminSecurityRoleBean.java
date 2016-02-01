@@ -2,6 +2,7 @@ package net.sf.ahtutils.prototype.web.mbean.admin.security;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -12,10 +13,11 @@ import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityView;
+import net.sf.ahtutils.interfaces.model.security.UtilsUser;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
-import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
+import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.exlp.util.io.StringUtil;
 
@@ -48,6 +50,8 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		initSecuritySuper(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser,langs);
 		
 		opViews = fSecurity.all(cView);
+		Collections.sort(opViews, comparatorView);
+		
 		opActions = new ArrayList<A>();
 		opUsecases = fSecurity.all(cUsecase);
 		
@@ -62,6 +66,20 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		role=null;
 	}
 	
+	private void reloadRoles() throws UtilsNotFoundException
+	{
+		roles.clear();
+		logger.trace(StringUtil.stars());
+		for(R r : fSecurity.allForCategory(cRole,cCategory,category.getCode()))
+		{
+			logger.trace("Role "+r.toString());
+			if(r.isVisible() | showInvisibleRecords){roles.add(r);}
+		}
+		Collections.sort(roles, comparatorRole);
+		
+		logger.info("Reloaded "+roles.size()+" (invisibleRecords:"+showInvisibleRecords+")");
+	}
+	
 	public void selectRole()
 	{
 		logger.trace(AbstractLogMessage.selectEntity(role));
@@ -70,10 +88,13 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		role = fSecurity.load(cRole,role);
 		reloadActions();
 		
+		Collections.sort(role.getViews(),comparatorView);
+		Collections.sort(role.getActions(),comparatorAction);
+		Collections.sort(role.getUsecases(),comparatorUsecase);
+		
 		tblView=null;
 		tblAction=null;
 		tblUsecase=null;
-		
 		
 		denyRemove = false;
 		if(role instanceof UtilsStatusFixedCode)
@@ -86,18 +107,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 	}
 	
 	//RELOAD
-	private void reloadRoles() throws UtilsNotFoundException
-	{
-		roles.clear();
-		logger.trace(StringUtil.stars());
-		for(R r : fSecurity.allForCategory(cRole,cCategory,category.getCode()))
-		{
-			logger.trace("Role "+r.toString());
-			if(r.isVisible() | showInvisibleRecords){roles.add(r);}
-		}
-		
-		logger.info("Reloaded "+roles.size()+" (invisibleRecords:"+showInvisibleRecords+")");
-	}
+
 	private void reloadActions()
 	{
 		opActions.clear();
@@ -210,15 +220,5 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 	}
 	
 	//Order
-	protected void reorderRoles() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info("updateOrder "+roles.size());
-		int i=1;
-		for(R r : roles)
-		{
-			r.setPosition(i);
-			fSecurity.update(r);
-			i++;
-		}
-	}
+	protected void reorderRoles() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, roles);}
 }

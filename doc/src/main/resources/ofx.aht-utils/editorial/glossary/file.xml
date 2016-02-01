@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ed:glossary xmlns:text="http://www.openfuxml.org/text" xmlns:ofx="http://www.openfuxml.org" xmlns:layout="http://www.openfuxml.org/layout" xmlns:media="http://www.openfuxml.org/media" xmlns:ed="http://www.openfuxml.org/editorial" xmlns:wiki="http://www.openfuxml.org/wiki" xmlns:l="http://www.openfuxml.org/list" xmlns:table="http://www.openfuxml.org/table">
-    <ed:term code="c8">
+    <ed:term code="excel">
         <text:text classifier="name">Microsoft Excel</text:text>
         <ofx:paragraph lang="en">
             A special programme offered by Microsoft for creating and working with simple and complex tables.
@@ -9,7 +9,7 @@
             Microsoft Excel FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c9">
+    <ed:term code="pdf">
         <text:text classifier="name">PDF</text:text>
         <ofx:paragraph lang="en">
             Portable Document Format (PDF) was first introduced by Adobe System and can be opened with all systems independent of the original format.
@@ -18,7 +18,7 @@
             PDF FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c10">
+    <ed:term code="xls">
         <text:text classifier="name">XLS</text:text>
         <ofx:paragraph lang="en">
             Excel Binary File Format introduced by Microsoft is a file format used by Microsoft Excel.

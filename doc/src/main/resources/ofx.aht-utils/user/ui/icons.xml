@@ -3,6 +3,7 @@
 			 xmlns:media="http://www.openfuxml.org/media"
 			 xmlns:table="http://www.openfuxml.org/table"
 			 xmlns:layout="http://www.openfuxml.org/layout"
+             xmlns:ed="http://www.openfuxml.org/editorial"
 			 xmlns:text="http://www.openfuxml.org/text"
 			 xmlns:l="http://www.openfuxml.org/list"
 		id="section.user.ui.icons">
@@ -51,7 +52,7 @@
 	                    <ofx:paragraph>Info</ofx:paragraph>
 	                </table:cell>
 	                <table:cell>
-	                    <ofx:paragraph>Shows \gls{c6}s and useful pieces of advice</ofx:paragraph>
+	                    <ofx:paragraph>Shows <ed:glossary code="tooltip"/>s and useful pieces of advice</ofx:paragraph>
 	                </table:cell>
 	            </table:row>
 	            <table:row>
@@ -179,7 +180,7 @@
 	                    <ofx:paragraph>Help</ofx:paragraph>
 	                </table:cell>
 	                <table:cell>
-	                    <ofx:paragraph>The user is forwarded to the \gls{c7}</ofx:paragraph>
+	                    <ofx:paragraph>The user is forwarded to the <ed:glossary code="hd"/> </ofx:paragraph>
 	                </table:cell>
 	            </table:row>
 <!--	            <table:row>

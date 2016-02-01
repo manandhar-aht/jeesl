@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ofx:section xmlns:ofx="http://www.openfuxml.org"
 	xmlns:text="http://www.openfuxml.org/text"
+    xmlns:ed="http://www.openfuxml.org/editorial"
 	id="section.developer.latex">
 	
 	<ofx:title lang="en">Latex</ofx:title>
@@ -60,7 +61,7 @@
         <ofx:paragraph lang="en" version="1">
             In Software development, in most cases a lot of tasks need to be fulfilled in order to create a software package from all the source code, image files and more. To automate this, built systems are available, of which Apache Maven is the most commonly used in Java development. It is able to be customized arbitrarily because it supports self-written plugins.
             In the context of DynamicHandbooks, Maven is preparing everything and finally calls all the LaTex steps to produce our high-quality PDF file.
-            For the \gls{c13}, it is just calling one command and all the magic in the background is executed:
+            For the <ed:glossary code="user"/>, it is just calling one command and all the magic in the background is executed:
             <text:emphasis style="bold" allignment="center">mvn clean latex:latex</text:emphasis>
 
             This deletes all formally produced documents and then launches the production process.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ed:glossary xmlns:text="http://www.openfuxml.org/text" xmlns:ofx="http://www.openfuxml.org" xmlns:layout="http://www.openfuxml.org/layout" xmlns:media="http://www.openfuxml.org/media" xmlns:ed="http://www.openfuxml.org/editorial" xmlns:wiki="http://www.openfuxml.org/wiki" xmlns:l="http://www.openfuxml.org/list" xmlns:table="http://www.openfuxml.org/table">
-	<ed:term code="c22">
+	<ed:term code="entity">
         <text:text classifier="name">Entity</text:text>
         <text:text classifier="text">entity</text:text>
         <ofx:paragraph lang="en">
@@ -10,7 +10,7 @@
             entity FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c21">
+    <ed:term code="erd">
         <text:text classifier="name">Entity Relationship Diagram</text:text>
         <text:text classifier="text">entity relationship diagram</text:text>
         <ofx:paragraph lang="en">
@@ -20,7 +20,7 @@
             entity relationship diagrams FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c18">
+    <ed:term code="business logic">
         <text:text classifier="name">Business Logic</text:text>
         <text:text classifier="text">business logic</text:text>
         <ofx:paragraph lang="en">
@@ -30,7 +30,7 @@
             business logic FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c14">
+    <ed:term code="constraint">
     	<text:text classifier="name">Constraint</text:text>
         <text:text classifier="text">constraint</text:text>
         <ofx:paragraph lang="en">

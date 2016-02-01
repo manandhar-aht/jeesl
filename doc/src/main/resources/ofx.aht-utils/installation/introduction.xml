@@ -60,11 +60,11 @@
 	   		</l:item>
 	   		
 	   		<l:item>
-	    		<ofx:paragraph lang="en"><text:emphasis bold="true">PostgreSQL</text:emphasis> as database with <text:emphasis bold="true">PostGIS</text:emphasis> extension to store <ed:glossary code="c23"/> data</ofx:paragraph>
+	    		<ofx:paragraph lang="en"><text:emphasis bold="true">PostgreSQL</text:emphasis> as database with <text:emphasis bold="true">PostGIS</text:emphasis> extension to store <ed:glossary code="geospatial"/> data</ofx:paragraph>
 	   		</l:item>
 	   		
 	   		<l:item>
-	    		<ofx:paragraph lang="en"><text:emphasis bold="true">GeoServer</text:emphasis> to serve and process \gls{c23} data</ofx:paragraph>
+	    		<ofx:paragraph lang="en"><text:emphasis bold="true">GeoServer</text:emphasis> to serve and process <ed:glossary code="geospatial"/> data</ofx:paragraph>
 	   		</l:item>
 	   		
 			<l:item>

@@ -3,6 +3,7 @@
 			 xmlns:media="http://www.openfuxml.org/media"
 			 xmlns:table="http://www.openfuxml.org/table"
 			 xmlns:layout="http://www.openfuxml.org/layout"
+             xmlns:ed="http://www.openfuxml.org/editorial"
 			 xmlns:text="http://www.openfuxml.org/text"
 			 xmlns:l="http://www.openfuxml.org/list"
 		id="section.user.ui.interface">
@@ -11,9 +12,9 @@
         This chapter is essential if you are to understand how to use \product\ as it explains the key components that make up the system.
         This chapter begins by providing an overview of \product, including a quick tour through the screen and the log in.
         Then, we will look at the different navigation types, the symbols used and the wizard. Finally, we will explain how filters are applied and how the status bar works.
-        \product\ is largely web-based so you will use it through a \gls{c2}.
+        \product\ is largely web-based so you will use it through a <ed:glossary code="browser"/>.
         Nevertheless, the use of \product\ is quite different to that of standard web pages. It is a
-        <text:emphasis italic="true">\gls{c3}</text:emphasis>, which is an application that is similar to a standard desktop application.
+        <text:emphasis italic="true"><ed:glossary code="ria"/></text:emphasis>, which is an application that is similar to a standard desktop application.
         Therefore, \product\ looks more like <text:emphasis bold="true">Google Mail</text:emphasis> than the web pages of a newspaper.
     </ofx:paragraph>
     <ofx:highlight>

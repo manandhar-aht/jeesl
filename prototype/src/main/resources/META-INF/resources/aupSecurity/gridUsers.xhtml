@@ -13,6 +13,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="users" required="false" default="#{cc.attrs.bean.users}"/>
 		<composite:attribute name="withEmail" required="false" default="false"/>
 		<composite:attribute name="withPwd" required="false" default="false"/>
 		<composite:attribute name="withPermit" required="false" default="false"/>
@@ -26,7 +27,7 @@
 			<aht:row id="row1">
 				<aht:slot id="sCategories" width="6">
 					<h:form id="fUsers">
-						<p:dataTable id="userTable" var="u" value="#{cc.attrs.bean.users}" rowKey="#{u.id}"
+						<p:dataTable id="userTable" var="u" value="#{cc.attrs.users}" rowKey="#{u.id}"
 								filteredValue="#{cc.attrs.bean.fvUsers}" sortBy="#{u.lastName}"
 								selection="#{cc.attrs.bean.user}" selectionMode="single" 
 								paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="#{appSettingsBean.paginatorTemplate}" rowsPerPageTemplate="#{appSettingsBean.rowsPerPageTemplate}">
@@ -103,7 +104,7 @@
 	                                <h:graphicImage rendered="#{cc.attrs.bean.mapRoles[r.id]}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx">
 	                                    <p:ajax update=":#{cc.id}:fRole" event="click" listener="#{cc.attrs.bean.grantRole(r,false)}"/>
 	                                </h:graphicImage>
-	                                <h:graphicImage rendered="#{!cc.attrs.bean.mapRoles[r.id]}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx">
+	                                <h:graphicImage rendered="#{not cc.attrs.bean.mapRoles[r.id]}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx">
 	                                    <p:ajax update=":#{cc.id}:fRole" event="click" listener="#{cc.attrs.bean.grantRole(r,true)}"/>
 	                                </h:graphicImage>
 	                            </p:column>
@@ -111,8 +112,8 @@
 	                    </h:form>
 	                </aht:slot>
 	            </aht:row>
-	            <c:if test="#{not empty cc.facets.userDetail}">
-	            	<aht:row id="rowRevisions"><aht:slot><composite:renderFacet name="userDetail"/></aht:slot></aht:row>		
+	            <c:if test="#{not empty cc.facets.revisions}">
+	            	<aht:row id="rowRevisions"><aht:slot><composite:renderFacet name="revisions"/></aht:slot></aht:row>		
 				</c:if>
 		</aup:grid>
 	</composite:implementation>

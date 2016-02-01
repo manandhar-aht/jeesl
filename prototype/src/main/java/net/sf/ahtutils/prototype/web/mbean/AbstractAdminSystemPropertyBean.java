@@ -18,19 +18,15 @@ public class AbstractAdminSystemPropertyBean <P extends UtilsProperty>
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSystemPropertyBean.class);
 	
-	protected UtilsFacade fUtils;
-	
-	protected P property;
-	public P getProperty() {return property;}
-	public void setProperty(P property) {this.property = property;}
-
-	protected List<P> properties;
-	public List<P> getProperties() {return properties;}
+	private UtilsFacade fUtils;
 	
 	private Class<P> cProperty;
+	protected List<P> properties; public List<P> getProperties() {return properties;}
+	protected P property;public P getProperty() {return property;}public void setProperty(P property) {this.property = property;}
 	
-	public void initSuper(final Class<P> cProperty)
+	public void initSuper(UtilsFacade fUtils, final Class<P> cProperty)
 	{
+		this.fUtils=fUtils;
 		this.cProperty=cProperty;
 	}
 	

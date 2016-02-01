@@ -49,4 +49,22 @@
 			<s:lang key="en" translation="Person"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="aupContacts">
+		<s:langs>
+			<s:lang key="fr" translation="Contacts"/>
+			<s:lang key="en" translation="Contacts"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="aupContact">
+		<s:langs>
+			<s:lang key="fr" translation="Contact"/>
+			<s:lang key="en" translation="Contact"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="aupAddressBookAddContactPage">
+		<s:langs>
+			<s:lang key="fr" translation="(Add a new contact on this page!)"/>
+			<s:lang key="en" translation="(Add a new contact on this page!)"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

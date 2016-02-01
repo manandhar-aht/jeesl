@@ -7,16 +7,20 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface UtilsTimeSeries <L extends UtilsLang,
 									D extends UtilsDescription,
-									CAT extends UtilsTsCategory<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
+									CAT extends UtilsStatus<CAT,L,D>,
+									SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
-									TS extends UtilsTimeSeries<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>,
-									ENTITY extends EjbWithId,
+									TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+									ENTITY extends UtilsTsEntity<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+									EC extends UtilsStatus<EC,L,D>,
 									INT extends UtilsStatus<INT,L,D>,
-									DATA extends UtilsTsData<L,D,CAT,UNIT,TS,ENTITY,INT,DATA>>
+									DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+									WS extends UtilsStatus<WS,L,D>,
+									QAF extends UtilsStatus<QAF,L,D>>
 		extends EjbWithId
 {
-	CAT getCategory();
-	void setCategory(CAT category);
+	SCOPE getScope();
+	void setScope(SCOPE scope);
 	
 	INT getInterval();
 	void setInterval(INT interval);

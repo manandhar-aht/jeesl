@@ -18,7 +18,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Data",category="ts",subset="ts",level=2)
 public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsTsData<Lang,Description,TsCategory,TsUnit,TimeSeries,TsEntity,TsInterval,TsData>
+								UtilsTsData<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsEntity,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
 {
 	public static final long serialVersionUID=1;
 	
@@ -31,6 +31,11 @@ public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
 	private TimeSeries timeSeries;
 	@Override public TimeSeries getTimeSeries() {return timeSeries;}
 	@Override public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
+	
+	@NotNull @ManyToOne
+	private TsWorkspace workspace;
+	@Override public TsWorkspace getWorkspace() {return workspace;}
+	@Override public void setWorkspace(TsWorkspace workspace) {this.workspace = workspace;}
 
 	private Date record;
 	@Override public Date getRecord() {return record;}
@@ -39,4 +44,9 @@ public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
 	private Double value;
 	@Override public Double getValue() {return value;}
 	@Override public void setValue(Double value) {this.value = value;}
+	
+	@ManyToOne
+	private TsQaFlag flag;
+	public TsQaFlag getFlag() {return flag;}
+	public void setFlag(TsQaFlag flag) {this.flag = flag;}
 }

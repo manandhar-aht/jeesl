@@ -15,6 +15,74 @@
     		<s:lang key="fr" translation="Category"/>
     	</s:langs>
     </s:translation>
-	
-	
+	<s:translation key="aupTsScopes">
+    	<s:langs>
+    		<s:lang key="de" translation="Bereiche"/>
+    		<s:lang key="en" translation="Scopes"/>
+    		<s:lang key="fr" translation="Scopes"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupTsScope">
+    	<s:langs>
+    		<s:lang key="de" translation="Bereich"/>
+    		<s:lang key="en" translation="Scope"/>
+    		<s:lang key="fr" translation="Scope"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsUnit">
+    	<s:langs>
+    		<s:lang key="de" translation="Einheit"/>
+    		<s:lang key="en" translation="Unit"/>
+    		<s:lang key="fr" translation="Unit"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsInterval">
+    	<s:langs>
+    		<s:lang key="de" translation="Intervall"/>
+    		<s:lang key="en" translation="Interval"/>
+    		<s:lang key="fr" translation="Interval"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsIntervals">
+    	<s:langs>
+    		<s:lang key="de" translation="Intervalle"/>
+    		<s:lang key="en" translation="Intervals"/>
+    		<s:lang key="fr" translation="Intervals"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsClasses">
+    	<s:langs>
+    		<s:lang key="de" translation="Klassen"/>
+    		<s:lang key="en" translation="Classes"/>
+    		<s:lang key="fr" translation="Classes"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsClass">
+    	<s:langs>
+    		<s:lang key="de" translation="Klasse"/>
+    		<s:lang key="en" translation="Class"/>
+    		<s:lang key="fr" translation="Class"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsWorkspaces">
+    	<s:langs>
+    		<s:lang key="de" translation="Arbeitsbereiche"/>
+    		<s:lang key="en" translation="Workspaces"/>
+    		<s:lang key="fr" translation="Workspaces"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupTsWorkspace">
+    	<s:langs>
+    		<s:lang key="de" translation="Arbeitsbereich"/>
+    		<s:lang key="en" translation="Workspace"/>
+    		<s:lang key="fr" translation="Workspace"/>
+    	</s:langs>
+    </s:translation>
+ 	<s:translation key="aupTsImport">
+    	<s:langs>
+    		<s:lang key="de" translation="Einlesen von Zeitserien"/>
+    		<s:lang key="en" translation="Import of Timeseries"/>
+    		<s:lang key="fr" translation="Import of Timeseries"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

@@ -22,13 +22,6 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
 import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.util.UtilsProperty;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.interfaces.model.with.EjbWithNr;
@@ -42,7 +35,6 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionType;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionTypeVisible;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisibleParent;
-import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
@@ -155,8 +147,6 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	
 	//Year
 	public <T extends EjbWithYear, P extends EjbWithId> T fByYear(Class<T> type, String p1Name, P p, int year) throws UtilsNotFoundException {return fUtils.fByYear(type, p1Name, p, year);}
-	@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsSecurityCategory<L, D, C, R, V, U, A, USER>, R extends UtilsSecurityRole<L, D, C, R, V, U, A, USER>, V extends UtilsSecurityView<L, D, C, R, V, U, A, USER>, U extends UtilsSecurityUsecase<L, D, C, R, V, U, A, USER>, A extends UtilsSecurityAction<L, D, C, R, V, U, A, USER>, USER extends UtilsUser<L, D, C, R, V, U, A, USER>> List<USER> likeNameFirstLast(Class<USER> c, String query) {return fUtils.likeNameFirstLast(c,query);}
 
-
-
+	//@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsSecurityCategory<L, D, C, R, V, U, A, USER>, R extends UtilsSecurityRole<L, D, C, R, V, U, A, USER>, V extends UtilsSecurityView<L, D, C, R, V, U, A, USER>, U extends UtilsSecurityUsecase<L, D, C, R, V, U, A, USER>, A extends UtilsSecurityAction<L, D, C, R, V, U, A, USER>, USER extends UtilsUser<L, D, C, R, V, U, A, USER>> List<USER> likeNameFirstLast(Class<USER> c, String query) {return fUtils.likeNameFirstLast(c,query);}
 }

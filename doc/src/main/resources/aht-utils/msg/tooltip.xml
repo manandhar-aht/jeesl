@@ -66,4 +66,10 @@
             <s:lang key="fr" translation="Item removed"/>
         </s:langs>
     </s:translation>
+	<s:translation key="ttAddressBook">
+        <s:langs>
+            <s:lang key="en" translation="Address Book"/>
+            <s:lang key="fr" translation="Address Book"/>
+        </s:langs>
+    </s:translation>
 </s:translations>

@@ -27,10 +27,10 @@
 			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCategories()}" update="@form"/>
 			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.selectCategory}"/>  
             <p:column>  
-				<h:outputText value="#{c.position}" />  
+				<h:outputText value="#{c.position}"/>
             </p:column>
             <p:column headerText="#{msg.aupSecurityCategory}">  
-				<h:outputText value="#{c.name[userBean.localeCode].lang}" />  
+				<h:outputText value="#{c.name[userBean.localeCode].lang}"/>
             </p:column>
             <p:column rendered="#{cc.attrs.bean.showInvisibleCategories}">  
 				<h:graphicImage rendered="#{c.visible}" name="#{iconBean.icon12['aupSecurityVisible']}" library="gfx"/>

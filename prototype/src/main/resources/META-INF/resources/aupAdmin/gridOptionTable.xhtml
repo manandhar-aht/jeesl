@@ -24,17 +24,26 @@
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sCategory" width="6">
-					<h:form id="fCategory" rendered="#{not empty adminTsTableBean.category}">
-			            <aupAdm:optionsStatusTable bean="#{adminTsTableBean}" update=":#{cc.id}:sLang"/>
+					<h:form id="fCategory" rendered="#{not empty cc.attrs.bean.category}">
+			            <aupAdm:optionsStatusTable bean="#{cc.attrs.bean}" update=":#{cc.id}:sLang"/>
 			    	</h:form>
 				</aht:slot>
 				<aht:slot id="sLang" width="4">
 					<h:form id="fLang">
-						<aupAdm:optionsDetailPanel id="auOdp" bean="#{adminTsTableBean}" update=":#{cc.id}:sCategory :#{cc.id}:sLang"/>
+						<aupAdm:optionsDetailPanel id="auOdp" bean="#{cc.attrs.bean}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" updateUpload=":#{cc.id}:fUpload"/>
 					</h:form>
-					<h:form enctype="multipart/form-data" rendered="false">
-						<p:fileUpload fileUploadListener="#{adminTsTableBean.handleFileUpload}" mode="advanced" dragDropSupport="false"
-			                             update=":sLang" sizeLimit="10000000" fileLimit="1" allowTypes="/(\.|\/)(svg)$/" />
+					<p:panel header="#{msg.aupGraphicPreview}"
+				 			rendered="#{(not empty cc.attrs.bean.status) and (cc.attrs.bean.supportsGraphic)}" styleClass="auPanelWithGrid">
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+							<p:outputLabel value="12px"/>
+							<aht:statusSymbolizer value="#{cc.attrs.bean.status}"/>
+						</p:panelGrid>
+					</p:panel>
+					
+					<h:form id="fUpload" enctype="multipart/form-data" >
+						<p:fileUpload rendered="#{(cc.attrs.bean.supportsGraphic) and (cc.attrs.bean.status.graphic.type.code eq 'svg')}"
+							fileUploadListener="#{cc.attrs.bean.handleFileUpload}" mode="advanced" dragDropSupport="false"
+			                update=":#{cc.id}:sLang" sizeLimit="10000000" fileLimit="1" allowTypes="/(\.|\/)(svg)$/" />
 			           </h:form>
 				</aht:slot>
 			</aht:row>

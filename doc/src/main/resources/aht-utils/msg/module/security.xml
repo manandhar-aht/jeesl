@@ -144,4 +144,19 @@
     		<s:lang key="fr" translation="Base URL"/>
     	</s:langs>
     </s:translation>
+    
+	<s:translation key="aupSecurityDomains">
+    	<s:langs>
+    		<s:lang key="de" translation="Domänen"/>
+    		<s:lang key="en" translation="Domains"/>
+    		<s:lang key="fr" translation="Domains"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupSecurityStaffs">
+    	<s:langs>
+    		<s:lang key="de" translation="Mitarbeiter"/>
+    		<s:lang key="en" translation="Staff"/>
+    		<s:lang key="fr" translation="Staff"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

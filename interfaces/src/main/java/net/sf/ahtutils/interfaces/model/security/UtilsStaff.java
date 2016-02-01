@@ -1,5 +1,7 @@
 package net.sf.ahtutils.interfaces.model.security;
 
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
@@ -14,7 +16,7 @@ public interface UtilsStaff<L extends UtilsLang,
 								   A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
 								   USER extends UtilsUser<L,D,C,R,V,U,A,USER>,
 								   DOMAIN extends EjbWithId>
-			extends EjbWithId
+			extends EjbWithId,EjbSaveable,EjbRemoveable
 {
 	R getRole();
 	void setRole(R role);

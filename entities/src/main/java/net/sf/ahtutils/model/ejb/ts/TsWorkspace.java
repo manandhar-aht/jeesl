@@ -11,7 +11,7 @@ import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Workspace",category="ts",subset="ts",level=4)
+@EjbErNode(name="Workspace",category="ts",subset="ts")
 public class TsWorkspace implements Serializable,EjbRemoveable,EjbPersistable,
 							UtilsStatus<TsWorkspace,Lang,Description>
 {

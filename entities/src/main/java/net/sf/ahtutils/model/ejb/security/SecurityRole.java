@@ -32,7 +32,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"code"}))
-@EjbErNode(name="Role",category="security",subset="security")
+@EjbErNode(name="Role",category="security",subset="security,ts")
 
 public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
 	UtilsSecurityRole<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
@@ -85,38 +85,25 @@ public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<SecurityView> views;
+	public List<SecurityView> getViews() {if(views==null){views = new ArrayList<SecurityView>();}return views;}
+	public void setViews(List<SecurityView> views) {this.views = views;}
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<SecurityAction> actions;
+	public List<SecurityAction> getActions() {if(actions==null){actions = new ArrayList<SecurityAction>();}return actions;}
+	public void setActions(List<SecurityAction> actions) {this.actions = actions;}
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<SecurityUsecase> usecases;
+	public List<SecurityUsecase> getUsecases() {if(usecases==null){usecases = new ArrayList<SecurityUsecase>();}return usecases;}
+	public void setUsecases(List<SecurityUsecase> usecases) {this.usecases = usecases;}
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "User_SecurityRole")
 	private List<AhtUtilsUser> users;
-	
-	//******************************************************************************
-	
-
-	
-
-	
-
-		
-	public List<SecurityView> getViews() {if(views==null){views = new ArrayList<SecurityView>();}return views;}
-	public void setViews(List<SecurityView> views) {this.views = views;}
-	
-	public List<SecurityAction> getActions() {if(actions==null){actions = new ArrayList<SecurityAction>();}return actions;}
-	public void setActions(List<SecurityAction> actions) {this.actions = actions;}
-	
-	public List<SecurityUsecase> getUsecases() {if(usecases==null){usecases = new ArrayList<SecurityUsecase>();}return usecases;}
-	public void setUsecases(List<SecurityUsecase> usecases) {this.usecases = usecases;}
-	
 	public List<AhtUtilsUser> getUsers() {return users;}
 	public void setUsers(List<AhtUtilsUser> users) {this.users = users;}
-	
-	//******************************************************************************
+		
 	
 	public boolean equals(Object object)
 	{
@@ -138,11 +125,11 @@ public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(SecurityRole.class.getSimpleName());
-			sb.append("-").append(id);
-			sb.append(" ").append(code);
-			sb.append("]");
+		sb.append("[");
+		sb.append(SecurityRole.class.getSimpleName());
+		sb.append("-").append(id);
+		sb.append(" ").append(code);
+		sb.append("]");
 		return sb.toString();
 	}
 }

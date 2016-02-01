@@ -36,12 +36,9 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityRoleBean.class);
 			
-	private List<R> roles;
-	public List<R> getRoles(){return roles;}
+	private List<R> roles; public List<R> getRoles(){return roles;}
 
-	private R role;
-	public R getRole(){return role;}
-	public void setRole(R role) {this.role = role;}
+	private R role; public R getRole(){return role;} public void setRole(R role) {this.role = role;}
 	
 	private boolean denyRemove; public boolean isDenyRemove(){return denyRemove;}
 	

@@ -34,8 +34,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 public class Status implements UtilsStatus<Status,Lang,Description>,EjbRemoveable,Serializable
 {
 	private static final long serialVersionUID = 1;
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>Fields<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected long id;
@@ -63,49 +62,38 @@ public class Status implements UtilsStatus<Status,Lang,Description>,EjbRemoveabl
 	@Override public void setSymbol(String symbol){this.symbol = symbol;}
 
 	protected boolean visible;
-	
-	protected String image,imageAlt;
-	
-	protected String style;
-
-	protected int position;
-
-	
-
-	
-
-	
-
-	
-
-	
 	public boolean isVisible() {return visible;}
 	public void setVisible(boolean visible) {this.visible = visible;}
 	
+	protected String image;
 	public String getImage() {return image;}
 	public void setImage(String image) {this.image = image;}
 	
+	protected String imageAlt;
 	@Override public String getImageAlt() {return imageAlt;}
 	@Override public void setImageAlt(String imageAlt) {this.imageAlt=imageAlt;}
 	
-	public int getPosition() {return position;}
-	public void setPosition(int position) {this.position = position;}
-	
+	protected String style;
 	public String getStyle() {return style;}
 	public void setStyle(String style) {this.style = style;}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>Methods<<<<<<<<<<<<<<<<<<<<<<<<<<<	
+
+	protected int position;
+	public int getPosition() {return position;}
+	public void setPosition(int position) {this.position = position;}
+
+
 	
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-			sb.append(id);
-			sb.append(" code="+code);
+		sb.append(id);
+		sb.append(" code="+code);
 		return sb.toString();
 	}
 	
 	@ManyToOne
 	protected Status parent;
+	@SuppressWarnings("unchecked")
 	public <P extends EjbWithCode> P getParent() {return (P)parent;}
 	public <P extends EjbWithCode> void setParent(P parent) {this.parent=(Status)parent;}
 }

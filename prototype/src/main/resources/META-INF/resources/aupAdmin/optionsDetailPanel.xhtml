@@ -10,6 +10,8 @@
 	<composite:interface>
 		<composite:attribute name="bean" required="true" />
 		<composite:attribute name="update" required="false" default=":sCategory :sLang"/>
+		<composite:attribute name="updateUpload" required="false" default=""/>
+		
 		<composite:attribute name="langKeys" required="false" default="#{translationBean.langKeys}"/>
 		
 		<composite:attribute name="graphicTypes" required="false" default="#{appUtilsBean.graphicTypes}"/>
@@ -31,7 +33,7 @@
 				<h:outputText rendered="#{not cc.attrs.bean.allowCodeChange}" value="#{cc.attrs.bean.status.code}"/>
 
 				<p:outputLabel rendered="#{cc.attrs.bean.supportsSymbol}" for="sSymbol" value="#{msg.aupOptionSymbol}"/>
-				<p:inputText rendered="#{cc.attrs.bean.supportsSymbol}" id="sSymbol" value="#{cc.attrs.bean.status.style}"/>
+				<p:inputText rendered="#{cc.attrs.bean.supportsSymbol}" id="sSymbol" value="#{cc.attrs.bean.status.symbol}"/>
 
 				<p:outputLabel rendered="#{cc.attrs.bean.allowStatusReorder}" value="#{msg.aupOptionPosition}"/>
 				<p:inputText rendered="#{cc.attrs.bean.allowStatusReorder}" value="#{cc.attrs.bean.status.position}"/>
@@ -44,19 +46,34 @@
 					<f:selectItems value="#{cc.attrs.bean.parents}" var="p" itemLabel="#{p.name[userBean.localeCode].lang}" itemValue="#{p.id}"/>
 				</p:selectOneMenu>
 				
-				<p:outputLabel rendered="#{cc.attrs.bean.hasDeveloperAction}" value="#{msg.aupStatusImageResource}" />
-				<p:inputText rendered="#{cc.attrs.bean.hasDeveloperAction}" value="#{cc.attrs.bean.status.image}" />
+				<p:outputLabel value="#{msg.aupStatusImageResource}" rendered="#{(cc.attrs.bean.supportsImage) and (cc.attrs.bean.hasDeveloperAction)}"/>
+				<p:inputText value="#{cc.attrs.bean.status.image}" rendered="#{(cc.attrs.bean.supportsImage) and (cc.attrs.bean.hasDeveloperAction)}"/>
 
 			</p:panelGrid>
 			<aht:tabTranslationEditor value="#{cc.attrs.bean.status}" keys="#{cc.attrs.langKeys}" withDescription="true"/>
-			<aht:graphicStatus id="auGs"
-							rendered="#{cc.attrs.bean.supportsGraphic}"
-							bean="#{cc.attrs.bean}"
-							types="#{cc.attrs.graphicTypes}"
-							styles="#{cc.attrs.graphicStyles}"/>
-			<h:messages/>
+						
+			<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{(cc.attrs.bean.supportsGraphic) and (cc.attrs.bean.status.graphic.type.code eq 'symbol')}">
+				<p:outputLabel value="#{msg.aupGraphicStyle}"/>
+				<p:selectOneMenu styleClass="w100" value="#{cc.attrs.bean.status.graphic.style}" effect="fade">
+					<f:selectItems value="#{cc.attrs.graphicStyles}" var="s" itemLabel="#{s.name[userBean.localeCode].lang}" itemValue="#{s}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="#{msg.aupGraphicSize}"/>
+				<p:spinner id="sSize" value="#{cc.attrs.bean.status.graphic.size}" min="0" max="100" />
+				
+				<p:outputLabel value="#{msg.aupGraphicColor}"/>
+				<p:colorPicker value="#{cc.attrs.bean.status.graphic.color}" />
+			</p:panelGrid>
+			
+			<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.bean.supportsGraphic}">
+				<p:outputLabel value="#{msg.aupGraphicType}"/>
+				<p:selectOneMenu styleClass="w100" value="#{cc.attrs.bean.status.graphic.type}" effect="fade">
+					<f:selectItems value="#{cc.attrs.graphicTypes}" var="type" itemLabel="#{type.name[userBean.localeCode].lang}" itemValue="#{type}"/>
+					<p:ajax event="change" listener="#{cc.attrs.bean.changeGraphicType()}" update="@form #{cc.attrs.updateUpload}"/>
+				</p:selectOneMenu>
+			</p:panelGrid>
+			
+			<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 		</p:panel>
-		
-		
 	</composite:implementation>
 </html>

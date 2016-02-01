@@ -17,7 +17,8 @@ import net.sf.ahtutils.interfaces.model.graphic.UtilsWithGraphic;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.UtilsWithSymbol;
+import net.sf.ahtutils.interfaces.model.status.UtilsWithImage;
+import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.exlp.util.io.StringUtil;
 
@@ -39,6 +40,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	protected boolean allowSvg; public boolean isAllowSvg() {return allowSvg;}
 	
 	protected boolean supportsSymbol; public boolean getSupportsSymbol(){return supportsSymbol;}
+	protected boolean supportsImage; public boolean getSupportsImage() {return supportsImage;}
 	protected boolean supportsGraphic; public boolean getSupportsGraphic() {return supportsGraphic;}
 	
 	protected boolean hasDeveloperAction;public boolean isHasDeveloperAction() {return hasDeveloperAction;}
@@ -95,11 +97,13 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	
 	protected void updateUiForCategory()
 	{
+		supportsImage = UtilsWithImage.class.isAssignableFrom(cl);
 		supportsGraphic = UtilsWithGraphic.class.isAssignableFrom(cl);
 		supportsSymbol = UtilsWithSymbol.class.isAssignableFrom(cl);		
 		
 		if(logger.isInfoEnabled())
 		{
+			logger.info("Image? "+supportsImage);
 			logger.info("Graphic? "+supportsGraphic);
 			logger.info("Symbol? "+supportsSymbol);
 		} 

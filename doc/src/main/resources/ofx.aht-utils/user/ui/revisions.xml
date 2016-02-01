@@ -3,13 +3,14 @@
 			 xmlns:media="http://www.openfuxml.org/media"
 			 xmlns:table="http://www.openfuxml.org/table"
 			 xmlns:layout="http://www.openfuxml.org/layout"
+             xmlns:ed="http://www.openfuxml.org/editorial"
 			 xmlns:text="http://www.openfuxml.org/text"
 			 xmlns:l="http://www.openfuxml.org/list"
 		id="section.user.ui.revisions">
 	<ofx:title lang="en">Revisions</ofx:title>
 	
 	<ofx:paragraph lang="en">
-        Revisions are changes to data items in the system.
+        <ed:index code="Revisions"/> are changes to data items in the system.
         This includes the <text:emphasis italic="true">creation</text:emphasis>,
         <text:emphasis italic="true">modification</text:emphasis>
         and <text:emphasis italic="true">deletion</text:emphasis> of items.

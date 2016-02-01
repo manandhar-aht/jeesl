@@ -10,7 +10,7 @@
 	<ofx:title lang="en">Symbols and Meanings</ofx:title>
 	
 	<ofx:paragraph lang="en">
-		Icons are used as an instrument for user interaction with the system.
+		<ed:index code="Icons"/> are used as an instrument for user interaction with the system.
 		These symbols and their meaning will now be explained.
         For most of the icons, you can move your mouse over the icon and if you leave the
         mouse pointer for a second, information about the meaning of the icon will appear.

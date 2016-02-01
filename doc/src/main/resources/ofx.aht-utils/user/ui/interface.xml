@@ -20,9 +20,9 @@
     <ofx:highlight>
         <ofx:paragraph>
             <ofx:marginalia><ofx:paragraph><text:symbol code="faExclamationTriangle"/></ofx:paragraph></ofx:marginalia>
-            Please note that the browser will exchange data with the server because of its web-based nature.
+            Please note that the <ed:index code="browser"/> will exchange data with the server because of its web-based nature.
             For example, if you save a project the data of the project will not be stored locally on your computer but sent to the server to be stored in the central database.
-            <text:emphasis bold="true">Please avoid <text:emphasis italic="true">Button Mashing</text:emphasis>!</text:emphasis>
+            <text:emphasis bold="true">Please avoid <text:emphasis italic="true"><ed:index code="Button Mashing"/></text:emphasis>!</text:emphasis>
             Please do not press a button multiple times while waiting for a system response.
             Hitting the button once will trigger this function. If the system does not respond immediately it is most likely due to network problems.
         </ofx:paragraph>

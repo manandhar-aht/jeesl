@@ -10,7 +10,7 @@
 	<ofx:title lang="en">File Export</ofx:title>
 	
 	<ofx:paragraph lang="en">
-        In some situations, \product\ shows you an XLS or PDF icon which allow you to export data to <text:emphasis bold="true"><ed:glossary code="excel"/></text:emphasis> and generate a <ed:glossary code="pdf"/> report respectively.
+        In some situations, \product\ shows you an XLS or PDF icon which allow you to <ed:index code="export"/> data to <text:emphasis bold="true"><ed:glossary code="excel"/></text:emphasis> and generate a <ed:glossary code="pdf"/> report respectively.
         You must simply click on the icon and your
         browser will ask you whether you would like to open or save the file. Alternatively, it chooses an option itself depending on
         your browser settings.

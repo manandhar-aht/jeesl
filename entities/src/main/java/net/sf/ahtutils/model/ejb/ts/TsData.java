@@ -44,4 +44,9 @@ public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
 	private Double value;
 	@Override public Double getValue() {return value;}
 	@Override public void setValue(Double value) {this.value = value;}
+	
+	@ManyToOne
+	private TsQaFlag flag;
+	public TsQaFlag getFlag() {return flag;}
+	public void setFlag(TsQaFlag flag) {this.flag = flag;}
 }

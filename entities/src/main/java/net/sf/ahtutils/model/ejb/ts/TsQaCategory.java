@@ -11,9 +11,9 @@ import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Flag",category="tsQa",subset="ts,tsQa")
-public class TsQaFlag implements Serializable,EjbRemoveable,EjbPersistable,
-							UtilsStatus<TsQaFlag,Lang,Description>
+@EjbErNode(name="QA Category",category="tsQa",subset="tsQa",level=4)
+public class TsQaCategory implements Serializable,EjbRemoveable,EjbPersistable,
+							UtilsStatus<TsQaCategory,Lang,Description>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;

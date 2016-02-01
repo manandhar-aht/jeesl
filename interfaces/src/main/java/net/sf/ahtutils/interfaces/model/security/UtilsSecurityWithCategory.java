@@ -4,7 +4,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisibleParent;
-import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface UtilsSecurityWithCategory<L extends UtilsLang,

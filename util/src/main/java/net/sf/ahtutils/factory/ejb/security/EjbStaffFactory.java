@@ -6,9 +6,9 @@ import net.sf.ahtutils.interfaces.model.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.security.UtilsStaff;
+import net.sf.ahtutils.interfaces.model.security.UtilsUser;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 import org.slf4j.Logger;

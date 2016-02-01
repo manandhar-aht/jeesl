@@ -7,7 +7,6 @@ import net.sf.ahtutils.interfaces.model.with.code.EjbWithTypeCode;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionType;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionTypeVisible;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
-import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;

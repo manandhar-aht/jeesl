@@ -8,9 +8,9 @@ import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.security.UtilsSecurityView;
+import net.sf.ahtutils.interfaces.model.security.UtilsUser;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 
 public class EjbSecurityUserFactory <L extends UtilsLang,
 										 D extends UtilsDescription,
@@ -50,6 +50,7 @@ public class EjbSecurityUserFactory <L extends UtilsLang,
     	try
     	{
 			ejb = cUser.newInstance();
+			ejb.setPermitLogin(false);
 		}
     	catch (InstantiationException e) {e.printStackTrace();}
     	catch (IllegalAccessException e) {e.printStackTrace();}

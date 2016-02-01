@@ -2,7 +2,6 @@ package net.sf.ahtutils.interfaces.model.security;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface UtilsStaffPool<L extends UtilsLang,

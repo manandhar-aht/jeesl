@@ -21,12 +21,15 @@
 						 selection="#{cc.attrs.bean.tblUsecase}" selectionMode="single" rowKey="#{u.id}">
 				<f:facet name="header">
 					<aht:pfDataTableHeader id="dth" title="#{msg.aupSecurityUsecases}">
-						<h:graphicImage id="giUsecaseAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['new']}"/>
+						<h:graphicImage id="giUsecaseAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['aupAdd']}"/>
                         <p:tooltip for="giUsecaseAdd" value="#{msg.ttAdd}"/>
-						<aht:icon rendered="#{cc.attrs.withRemove and (not empty cc.attrs.bean.tblUsecase)}" type="remove" listener="#{cc.attrs.bean.opRmUsecase()}" update="#{cc.attrs.update}" tooltip="#{msg.ttRemove}"/>
+						<aht:icon rendered="#{cc.attrs.withRemove and (not empty cc.attrs.bean.tblUsecase)}" type="aupRm" mayDisappear="true" listener="#{cc.attrs.bean.opRmUsecase()}" update="#{cc.attrs.update}" tooltip="#{msg.ttRemove}"/>
 					</aht:pfDataTableHeader>
 				</f:facet>
 				<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.selectTblUsecase}"/>
+				<p:column>
+					<h:outputText value="#{u.category.position}.#{u.position}"/>
+				</p:column>
 				<p:column headerText="#{msg.aupSecurityCategory}">
 					<h:outputText value="#{u.category.name[userBean.localeCode].lang}" />
 				</p:column>
@@ -43,6 +46,9 @@
                          filteredValue="#{cc.attrs.bean.opFvUsecases}"
                          rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 				<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.opAddUsecase}" oncomplete="PF('wvOpUsecaseSelection').hide();"/>
+				<p:column>
+					<h:outputText value="#{u.category.position}.#{u.position}"/>
+				</p:column>
 				<p:column headerText="#{msg.aupSecurityCategory}" sortBy="#{u.category.name[userBean.localeCode].lang}" filterBy="#{u.category.name[userBean.localeCode].lang}" filterMatchMode="contains">
 					<h:outputText value="#{u.category.name[userBean.localeCode].lang}" />
 				</p:column>

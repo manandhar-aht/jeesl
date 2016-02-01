@@ -43,7 +43,10 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	{
 		categoryType = UtilsSecurityCategory.Type.usecase;
 		initSecuritySuper(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser,langs);
+		
 		opViews = fSecurity.all(cView);
+		Collections.sort(opViews, comparatorView);
+		
 		opActions = new ArrayList<A>();
 	}
 	

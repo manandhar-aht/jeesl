@@ -21,9 +21,9 @@
 						 selection="#{cc.attrs.bean.tblView}" selectionMode="single" rowKey="#{v.id}">
 				<f:facet name="header">
 					<aht:pfDataTableHeader id="dth" title="#{msg.aupSecurityViews}">
-						<h:graphicImage id="giViewAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['new']}"/>
-                        <p:tooltip for="giViewAdd" value="Add an item!" />
-                        <aht:icon rendered="#{cc.attrs.withRemove and (not empty cc.attrs.bean.tblView)}" type="remove" listener="#{cc.attrs.bean.opRmView()}" update="#{cc.attrs.update}"/>
+						<h:graphicImage id="giViewAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['aupAdd']}"/>
+                        <p:tooltip for="giViewAdd" value="#{msg.ttAdd}" />
+                        <aht:icon rendered="#{cc.attrs.withRemove and (not empty cc.attrs.bean.tblView)}" type="aupRm" mayDisappear="true" listener="#{cc.attrs.bean.opRmView()}" update="#{cc.attrs.update}" tooltip="#{msg.ttRemove}"/>
 					</aht:pfDataTableHeader>
 				</f:facet>
 				<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.selectTblView}"/>
@@ -46,6 +46,9 @@
                          filteredValue="#{cc.attrs.bean.opFvViews}"
                          rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 				<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.opAddView}" oncomplete="PF('wvOpViewSelection').hide();"/>
+				<p:column>
+					<h:outputText value="#{v.category.position}.#{v.position}"/>
+				</p:column>
 				<p:column headerText="#{msg.aupSecurityCategory}" sortBy="#{v.category.name[userBean.localeCode].lang}" filterBy="#{v.category.name[userBean.localeCode].lang}" filterMatchMode="contains">
 					<h:outputText value="#{v.category.name[userBean.localeCode].lang}" />
 				</p:column>

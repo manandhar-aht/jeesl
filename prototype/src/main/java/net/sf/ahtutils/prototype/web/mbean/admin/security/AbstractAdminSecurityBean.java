@@ -26,6 +26,8 @@ import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.model.interfaces.idm.UtilsUser;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
+import net.sf.ahtutils.util.comparator.ejb.security.SecurityRoleComparator;
+import net.sf.ahtutils.util.comparator.ejb.security.SecurityUsecaseComparator;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityViewComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
@@ -57,11 +59,10 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	protected Class<U> cUsecase;
 	protected Class<A> cAction;
 	
+	protected Comparator<R> comparatorRole;
 	protected Comparator<V> comparatorView;
+	protected Comparator<U> comparatorUsecase;
 	protected Comparator<A> comparatorAction;
-	
-	private SecurityViewComparator<L,D,C,R,V,U,A,USER> cfView;
-	private SecurityActionComparator<L,D,C,R,V,U,A,USER> cfAction;
 		
 	//Category
 	protected List<C> categories; public List<C> getCategories() {return categories;}
@@ -97,13 +98,8 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	public List<U> getOpFvUsecases(){return opFvUsecases;}
 	public void setOpFvUsecases(List<U> opFvUsecases){this.opFvUsecases = opFvUsecases;}
 
-	protected U opUsecase;
-	public U getOpUsecase(){return opUsecase;}
-	public void setOpUsecase(U opUsecase){this.opUsecase = opUsecase;}
-	
-	protected U tblUsecase;
-	public U getTblUsecase(){return tblUsecase;}
-	public void setTblUsecase(U tblUsecase){this.tblUsecase = tblUsecase;}
+	protected U opUsecase;public U getOpUsecase(){return opUsecase;}public void setOpUsecase(U opUsecase){this.opUsecase = opUsecase;}
+	protected U tblUsecase;public U getTblUsecase(){return tblUsecase;}public void setTblUsecase(U tblUsecase){this.tblUsecase = tblUsecase;}
 	
 	protected String[] langs;
 	
@@ -126,10 +122,14 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 		efUsecase = EjbSecurityUsecaseFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efAction = EjbSecurityActionFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		
-		cfView = new SecurityViewComparator<L,D,C,R,V,U,A,USER>();
-		cfAction = new SecurityActionComparator<L,D,C,R,V,U,A,USER>();
+		SecurityRoleComparator<L,D,C,R,V,U,A,USER> cfRole = new SecurityRoleComparator<L,D,C,R,V,U,A,USER>();
+		SecurityViewComparator<L,D,C,R,V,U,A,USER> cfView = new SecurityViewComparator<L,D,C,R,V,U,A,USER>();
+		SecurityUsecaseComparator<L,D,C,R,V,U,A,USER> cfUsecase = new SecurityUsecaseComparator<L,D,C,R,V,U,A,USER>();
+		SecurityActionComparator<L,D,C,R,V,U,A,USER> cfAction = new SecurityActionComparator<L,D,C,R,V,U,A,USER>();
 		
+		comparatorRole = cfRole.factory(SecurityRoleComparator.Type.position);
 		comparatorView = cfView.factory(SecurityViewComparator.Type.position);
+		comparatorUsecase = cfUsecase.factory(SecurityUsecaseComparator.Type.position); 
 		comparatorAction = cfAction.factory(SecurityActionComparator.Type.position); 
 		
 		reloadCategories();

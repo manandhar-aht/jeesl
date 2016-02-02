@@ -64,6 +64,20 @@
     		<s:lang key="fr" translation="Class"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupTsClassXpath">
+    	<s:langs>
+    		<s:lang key="de" translation="XPath"/>
+    		<s:lang key="en" translation="XPath"/>
+    		<s:lang key="fr" translation="XPath"/>
+    	</s:langs>
+    </s:translation>
+    	<s:translation key="aupTsClassAttribute">
+    	<s:langs>
+    		<s:lang key="de" translation="Attribute"/>
+    		<s:lang key="en" translation="Attribute"/>
+    		<s:lang key="fr" translation="Attribute"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupTsWorkspaces">
     	<s:langs>
     		<s:lang key="de" translation="Arbeitsbereiche"/>

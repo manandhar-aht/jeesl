@@ -49,8 +49,8 @@
 						</p:panel>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sCategories" width="4">
-					<h:form id="fRandom" rendered=#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval)}>
+				<aht:slot id="sImport" width="4">
+					<h:form id="fRandom" rendered="#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval)}">
 						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
 							button and generate random data
 						</p:panel>

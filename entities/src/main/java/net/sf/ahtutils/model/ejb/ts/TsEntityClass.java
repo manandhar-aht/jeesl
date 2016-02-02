@@ -26,6 +26,18 @@ public class TsEntityClass implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 	
+	private String code;
+	public String getCode() {return code;}
+	public void setCode(String code) {this.code = code;}
+
+	private String xpath;
+	public String getXpath() {return xpath;}
+	public void setXpath(String xpath) {this.xpath = xpath;}
+	
+	private String attribute;
+	public String getAttribute() {return attribute;}
+	public void setAttribute(String attribute) {this.attribute = attribute;}
+
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
 	private Map<String, Lang> name;
@@ -37,6 +49,8 @@ public class TsEntityClass implements Serializable,EjbRemoveable,EjbPersistable,
 	private Map<String,Description> description;
 	public Map<String,Description> getDescription() {return description;}
 	public void setDescription(Map<String,Description> description) {this.description = description;}
+	
+	
 	
 	
 	public boolean equals(Object object)

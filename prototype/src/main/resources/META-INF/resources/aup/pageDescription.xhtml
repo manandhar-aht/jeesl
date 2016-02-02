@@ -9,12 +9,15 @@
     
 	<composite:interface>
 		<composite:attribute name="view" required="true" />
+		<composite:attribute name="withMenu" required="false" default="true"/>
 	</composite:interface>
 
 	<composite:implementation>
         #{cc.attrs.view.description[userBean.localeCode].lang}
-        <br/>
-        <br/>
-        <i>Please choose an option from the menu on the right <h:outputText value="    &#8674;" escape="false"/></i>
+        <c:if test="#{cc.attrs.withMenu}">
+	        <br/>
+	        <br/>
+	        <i>Please choose an option from the menu on the right <h:outputText value="    &#8674;" escape="false"/></i>
+        </c:if>
 	</composite:implementation>
 </html>

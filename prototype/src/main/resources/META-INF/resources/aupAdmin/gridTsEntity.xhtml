@@ -18,7 +18,7 @@
 	<composite:implementation>
 		<aup:grid>
 			<aht:row>
-				<aht:slot id="sCategories" width="8">
+				<aht:slot id="sCategories" width="5">
 					<h:form id="fCategories">
 						<p:dataTable var="s" value="#{cc.attrs.bean.classes}" draggableRows="true"
 							selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{s.id}">
@@ -35,7 +35,7 @@
 				       	</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sCategory" width="4">
+				<aht:slot id="sCategory" width="7">
 					<h:form id="fCategory">
 						<p:panel id="pLang" header="#{msg.aupTsClass}"
 								 rendered="#{not empty cc.attrs.bean.entity}" styleClass="auPanelWithGrid">
@@ -45,10 +45,14 @@
 								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.entity.id gt 0}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
-
+								<p:outputLabel value="#{msg.aupCode}"/>
+								<p:inputText value="#{cc.attrs.bean.entity.code}"/>
+								<p:outputLabel value="#{msg.aupTsClassXpath}"/>
+								<p:inputText value="#{cc.attrs.bean.entity.xpath}"/>
+								<p:outputLabel value="#{msg.aupTsClassAttribute}"/>
+								<p:inputText value="#{cc.attrs.bean.entity.attribute}"/>
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.entity}"
-													labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.entity}" labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
        												keys="#{translationBean.langKeys}" withDescription="true"/>
 						</p:panel>
 					</h:form>

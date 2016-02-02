@@ -18,17 +18,17 @@ public class HashCodeComparator
 
 	Map<String,String> searchForHashCodeBuilder()
 	{
-		if(startDir.listFiles() != null)
+		File [] files = startDir.listFiles();
+		if(files != null)
 		{
 			fileloop:
-			for(File f :startDir.listFiles())
+			for(File f : files)
 			{
 				if(f.isDirectory())
 				{
 					startDir = f;
 					searchForHashCodeBuilder();
-				}
-				else if (f.getName().endsWith(".java"))
+				} else if(f.getName().endsWith(".java"))
 				{
 					try
 					{
@@ -38,15 +38,15 @@ public class HashCodeComparator
 						{
 							if(input.contains("new HashCodeBuilder"))
 							{
-								String temp = input.substring(input.indexOf("HashCodeBuilder("),input.indexOf("HashCodeBuilder(")+22);
-								temp = temp.substring(temp.indexOf("(")+1, temp.indexOf("(")+7).replaceAll("\\s","").replaceAll("[^(\\d{0,2},\\d{0,2})]{1,}","").replaceAll("\\)","");
-								hash.put(f.getName(),temp);
+								hash.put(f.getName(), input.replaceAll("((?=[^,])\\D*)", ""));
 								continue fileloop;
 							}
 							input = br.readLine();
 						}
+					} catch(IOException e)
+					{
+						e.printStackTrace();
 					}
-					catch(IOException e){e.printStackTrace();}
 				}
 			}
 		}

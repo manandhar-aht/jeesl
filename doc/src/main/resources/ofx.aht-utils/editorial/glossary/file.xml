@@ -9,7 +9,7 @@
             Microsoft Excel FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="pdf">
+    <ed:term code="Document Format">
         <text:text classifier="name">PDF</text:text>
         <ofx:paragraph lang="en">
             Portable Document Format (PDF) was first introduced by Adobe System and can be opened with all systems independent of the original format.
@@ -18,7 +18,7 @@
             PDF FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="xls">
+    <ed:term code="File Format">
         <text:text classifier="name">XLS</text:text>
         <ofx:paragraph lang="en">
             Excel Binary File Format introduced by Microsoft is a file format used by Microsoft Excel.

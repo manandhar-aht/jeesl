@@ -6,22 +6,17 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
+import net.sf.ahtutils.report.util.DataUtil;
+import static net.sf.ahtutils.report.util.DataUtil.getStringValue;
 import net.sf.ahtutils.util.reflection.ReflectionsUtil;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -35,8 +30,9 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	protected File                       excelFile;
 	protected XSSFWorkbook               workbook;
 	protected Sheet                      activeSheet;
-	public  UtilsFacade                facade;
-	protected Map<String, Class>   handler;
+	public  UtilsFacade                 facade;
+	protected Map<String, Class>        handler;
+        protected Map<String, Class>        validators;
 	protected short                      primaryKey;
 	protected Hashtable<String, C>       entities          = new Hashtable<String, C>();
 	protected Hashtable<String, Object>  tempPropertyStore = new Hashtable<String, Object>();
@@ -56,21 +52,10 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		this.workbook       = new XSSFWorkbook(fis);
 	}
 	
-	public void setFacade(UtilsFacade facade)
-	{
-		this.facade = facade;
-	}
-	
-	public void setPrimaryKey(Integer columnNumber)
-	{
-		this.primaryKey    = columnNumber.shortValue();
-		this.hasPrimaryKey = true;
-	}
-	
-	public void setHandler(Map<String, Class> strategies)
-	{
-		this.handler = strategies;
-	}
+	public void setFacade(UtilsFacade facade){this.facade = facade;}
+	public void setPrimaryKey(Integer columnNumber){this.primaryKey    = columnNumber.shortValue();this.hasPrimaryKey = true;}
+	public void setHandler(Map<String, Class> strategies){this.handler = strategies;}
+        public void setValidators(Map<String, Class> validators){this.validators = validators;}
 	
 	public void selectSheetByName(String name)
 	{
@@ -84,15 +69,8 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		activeSheet         = workbook.getSheetAt(0);
 	}
 	
-	public void debugHeader()
-	{
-		debugRow(0);
-	}
-	
-	public void debugFirstRow()
-	{
-		debugRow(1);
-	}
+	public void debugHeader()       {debugRow(0);}
+	public void debugFirstRow()     {debugRow(1);}
 	
 	public void debugRow(Integer rowIndex)
 	{
@@ -108,7 +86,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		{
 			Cell cell = firstRow.getCell(i);
 			// Get the Cell Value as Object
-			Object object = getCellValue(cell);
+			Object object = DataUtil.getCellValue(cell);
 			
 			// Get a String representation of the value
 			String cellValue = getStringValue(object);
@@ -122,81 +100,6 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	}
 	
 		
-	public Object getCellValue(Cell cell)
-	{
-		Object value = new Object();
-		
-		// Prevent a NullPointerException
-		if (cell != null)
-		{
-			if (cell.getHyperlink()!=null)
-						{
-							FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
-							Hyperlink link = cell.getHyperlink();
-							String address = link.getAddress();
-							if(logger.isTraceEnabled()){logger.trace("Found a Hyperlink to " +cell.getHyperlink().getAddress() +" in cell " +cell.getRowIndex() +"," +cell.getColumnIndex());}
-							cell = evaluator.evaluateInCell(cell);
-						}
-			// Depending on the cell type, the value is read using Apache POI methods
-			switch (cell.getCellType()) {
-			
-				// String are easy to handle
-				case Cell.CELL_TYPE_STRING : 
-					logger.trace("Found string " +cell.getStringCellValue());
-					value = cell.getStringCellValue();
-					break;
-					
-				// Since date formatted cells are also of the numeric type, this needs to be processed
-				case Cell.CELL_TYPE_NUMERIC:
-					if (DateUtil.isCellDateFormatted(cell))
-					{
-						Date date = cell.getDateCellValue();
-						DateFormat df = SimpleDateFormat.getDateInstance();
-						logger.trace("Found date " +df.format(date));
-						value = date;
-					}
-					else
-					{
-						logger.trace("Found general number " +cell.getNumericCellValue());
-						value = cell.getNumericCellValue();
-					}
-					break;
-			}
-		}
-		else
-		{
-			logger.trace("Found cell with NULL value");
-		}
-		return value;
-	}
-	
-	public String getStringValue(Object object)
-	{
-		// Since a simple "toString()" is not sufficient because the value can also be null, 
-		// a more complex method has been chosen here to get a String representation of a cell value 
-		String value = "";
-		if (object.getClass().equals(String.class))
-		{
-			value = (String) object;
-		}
-		else if (object.getClass().equals(Date.class))
-		{
-			Date date = (Date) object;
-			DateFormat df = SimpleDateFormat.getDateInstance();
-			value = df.format(date);
-		}
-		else if (object.getClass().equals(Double.class))
-		{
-			Double doubleValue = (Double) object;
-			value = doubleValue.toString();
-		}
-		else
-		{
-			value = "CELL IS NULL";
-		}
-		return value;
-	}
-	
 	public ArrayList<C> createEntitiesFromData(Map<Short, String> associationTable, Boolean skipTitle, Class<C> entityObject) throws Exception
 	{
 		// Create a list to hold the Entity classes to be created
@@ -214,7 +117,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			Row row = activeSheet.getRow(i);
 			
 			// See if there is already an instance created for this key, otherwise create a new one
-			String entityKey = getStringValue(getCellValue(row.getCell(primaryKey)));
+			String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
 			C entity = entityObject.newInstance();
 			if (hasPrimaryKey)
 			{
@@ -230,7 +133,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				Cell cell = row.getCell(j);
 				
 				// Get the Cell Value as Object
-				Object object = getCellValue(cell);
+				Object object = DataUtil.getCellValue(cell);
 				
 				// Read the name of the property that should be filled with the data from this column
 				String propertyName = associationTable.get(j);
@@ -258,14 +161,88 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		return importedEntities;
 		
 	}
+        
+        public Map<C,ArrayList<String>> createValidatedEntitiesFromData(Map<Short, String> associationTable, Boolean skipTitle, Class<C> entityObject) throws Exception
+	{
+		// Create a list to hold the Entity classes to be created
+		Hashtable<C,ArrayList<String>> importedEntities = new Hashtable<C,ArrayList<String>>();
+                
+                
+		
+		// Define the rows to begin with and to end with, whether with or without first row
+		Integer end   = activeSheet.getLastRowNum();
+		Integer start = activeSheet.getFirstRowNum();
+		if (skipTitle) {start++;}
+		
+		// Iterate through all given rows
+		for (int i = start; i < end+1; i++)
+		{
+			// Get the next row
+			Row row = activeSheet.getRow(i);
+			
+			// See if there is already an instance created for this key, otherwise create a new one
+			String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
+			C entity = entityObject.newInstance();
+                        
+                        // Create a list of properties that falied the validation
+                        ArrayList<String> failedValidations = new ArrayList<String>();
+                        
+			if (hasPrimaryKey)
+			{
+				if ( this.entities.containsKey(entityKey))
+				{
+					entity = this.entities.get(entityKey);
+				}
+			}
+			
+			// Iterate through the columns and assign data as given in the association table
+			for (short j = row.getFirstCellNum() ; j < row.getLastCellNum() ; j++)
+			{
+				Cell cell = row.getCell(j);
+				
+				// Get the Cell Value as Object
+				Object object = DataUtil.getCellValue(cell);
+				
+				// Read the name of the property that should be filled with the data from this column
+				String propertyName = associationTable.get(j);
+			
+			    // Assign the data to the entity using the setter
+				logger.trace("Cell " +row.getRowNum() +"," +j);
+				if (propertyName!=null && !object.getClass().getCanonicalName().endsWith("java.lang.Object"))
+				{
+					String property = propertyName;
+					if(logger.isTraceEnabled()){logger.trace("Setting " +property + " to " +object.toString() +" type: " +object.getClass().getCanonicalName() +")");}
+					tempPropertyStore.put(property, object.toString());
+					Boolean validated = invokeSetter(property,
+							      new Object[] { object },
+							      entity.getClass(),
+							      entity);
+                                        if (!validated)
+                                        {
+                                            failedValidations.add(property);
+                                        }
+				}
+			}
+                        
+			//facade.save(entity);
+			importedEntities.put(entity, failedValidations);
+			if (hasPrimaryKey)
+			{
+				entities.put(entityKey, entity);
+			}
+		}
+		return importedEntities;
+		
+	}
 	
 	
 		
-	 protected void invokeSetter(String   property, 
+	 protected Boolean invokeSetter(String   property, 
 			 							Object[] parameters,
 			 							Class    targetClass,
 			 							Object   target)        throws Exception
 	 {
+                Boolean validated = false;
 		String methodName = "set" +property;
 	 	logger.trace("Invoking " +methodName);
 	 	
@@ -303,17 +280,25 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
         	if (!(parameterClass.equals("java.lang.Double") || parameterClass.equals("double") || parameterClass.equals("long") || parameterClass.equals("java.util.Date") || parameterClass.equals("java.lang.String")))
             {
             	logger.trace("Loading import strategy for " +parameterClass +": " +handler.get(parameterClass) +".");
-            	// Instantiate new strategy to handle import
+            	
+                // Instantiate new strategy to handle import
             	ImportStrategy strategy = (ImportStrategy) handler.get(parameterClass).newInstance();
             	
+                // Instantiate new strategy to handle import
+            	ValidationStrategy validator = (ValidationStrategy) validators.get(parameterClass).newInstance();
+            	
+                
             	// Pass database connection and current set of temporary properties
 				
             	strategy.setFacade(facade);
             	strategy.setTempPropertyStore(tempPropertyStore);
             	
             	// Process import step
-				Object value  = strategy.handleObject(parameters[0], parameterClass, property);
+                Object value  = strategy.handleObject(parameters[0], parameterClass, property);
             	parameters[0] =  value;
+                
+                // Validate the loaded value
+                validated = validator.validate(value, parameterClass, property);
             	
             	// Sync new temporary properties if any added
             	tempPropertyStore = strategy.getTempPropertyStore();
@@ -368,7 +353,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
         	logger.trace("Entity does not have the method " +methodName +". Initiating special treatment.");
         	
         }
-        
+        return validated;
 	 }
 	 
 	 public Boolean validate(String code, String property, String entityType)

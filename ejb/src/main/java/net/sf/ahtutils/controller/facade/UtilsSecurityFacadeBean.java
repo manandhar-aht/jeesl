@@ -211,7 +211,7 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 	
 	@Override public void grantRole(Class<USER> clUser, Class<R> clRole, USER user, R role, boolean grant)
 	{
-		logger.trace("grantRole u:"+user.toString()+" r:"+role.toString()+" grand:"+grant);
+		logger.info("grantRole u:"+user.toString()+" r:"+role.toString()+" grant:"+grant);
 		user = em.find(clUser,user.getId());
 		role = em.find(clRole,role.getId());
 		if(grant){addRole(clUser,clRole,user, role);}
@@ -219,17 +219,19 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 		em.merge(user);
 	}
 	
-	private 
-	void addRole(Class<USER> clUser, Class<R> clRole, USER user, R role)
+	private void addRole(Class<USER> clUser, Class<R> clRole, USER user, R role)
 	{
-		logger.trace("addRole u:"+user.toString()+" r:"+role.toString());
-		if(!user.getRoles().contains(role)){user.getRoles().add(role);}
+		logger.info("addRole u:"+user.toString()+" r:"+role.toString());
+		if(!user.getRoles().contains(role))
+		{
+			logger.info("Role does not exist for user, adding.");
+			user.getRoles().add(role);
+		}
 //		if(!role.getUsers().contains(user)){role.getUsers().add(user);}
 		user = em.merge(user);
 	}
 	
-	private 
-	void rmRole(Class<USER> clUser, Class<R> clRole, USER user, R role)
+	private void rmRole(Class<USER> clUser, Class<R> clRole, USER user, R role)
 	{
 		if(user.getRoles().contains(role)){user.getRoles().remove(role);}
 		if(role.getUsers().contains(user)){role.getUsers().remove(user);}

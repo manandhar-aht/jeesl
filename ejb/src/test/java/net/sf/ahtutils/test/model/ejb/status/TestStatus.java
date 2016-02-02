@@ -6,6 +6,7 @@ import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.status.Status;
 import net.sf.ahtutils.test.model.ejb.status.cli.TstStatus;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.After;
 import org.junit.Before;
@@ -61,4 +62,5 @@ public class TestStatus
     	ejb.setLkey(key);
     	return ejb;
     }
+	public int hashCode(){return new HashCodeBuilder(17, 43).toHashCode();}
 }

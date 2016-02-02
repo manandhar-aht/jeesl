@@ -1,22 +1,22 @@
-package net.sf.ahtutils.util.comparator.primitive;
+package net.sf.ahtutils.model;
 
 import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 
 
-public class HashCodeComparator
+public class DuplicateHashCodeFinder
 {
 	private Map<String,String> hash;	//1. String = filepath & 2. String = Arguments
 	private File startDir;
 
-	public HashCodeComparator(File startDir)
+	public DuplicateHashCodeFinder(File startDir)
 	{
 		this.startDir = startDir;
 		this.hash = new HashMap<String, String>();
 	}
 
-	Map<String,String> searchForHashCodeBuilder()
+	public Map<String,String> searchForHashCodeBuilder()
 	{
 		File [] files = startDir.listFiles();
 		if(files != null)
@@ -53,7 +53,7 @@ public class HashCodeComparator
 		return hash;
 	}
 
-	Map<String, String> compareCode()
+	public Map<String, String> compareCode()
 	{
 		Map<String, String> fileList = new HashMap<String, String>();
 		compare:

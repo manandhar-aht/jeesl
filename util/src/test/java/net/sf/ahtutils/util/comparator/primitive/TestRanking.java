@@ -119,8 +119,4 @@ public class TestRanking extends AbstractAhtUtilTest
     	Assert.assertEquals("b1="+b.getScore()+" b2="+list.get(0).getScore(), b, list.get(0));
     	Assert.assertEquals(a, list.get(1));
     }
-	public int hashCode()
-	{
-		return new HashCodeBuilder(17, 43).toHashCode();
-	}
 }

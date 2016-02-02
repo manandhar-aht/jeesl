@@ -1,5 +1,6 @@
-package net.sf.ahtutils.util.comparator.primitive;
+package net.sf.ahtutils.test.model;
 
+import net.sf.ahtutils.model.DuplicateHashCodeFinder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,15 +10,15 @@ import java.io.File;
 import java.util.Map;
 
 
-public class TestHashCodeComparator
+public class TestHashCodeFinder
 {
-	HashCodeComparator hcc;
+	DuplicateHashCodeFinder hcc;
 
 	@Before
 	public void init()
 	{
-		File f = new File("..\\util\\src\\test\\java\\net\\sf\\ahtutils\\util\\comparator\\primitive");
-		hcc = new HashCodeComparator(f);
+		File f = new File("..\\ejb\\src\\test\\java\\net\\sf\\ahtutils\\test\\model");
+		hcc = new DuplicateHashCodeFinder(f);
 		hcc.searchForHashCodeBuilder();
 	}
 
@@ -33,9 +34,10 @@ public class TestHashCodeComparator
 	}
 
 	public int hashCode(){return new HashCodeBuilder(17, 43).toHashCode();}
+
 	public static void main(String[] args)
 	{
-		TestHashCodeComparator test = new TestHashCodeComparator();
+		TestHashCodeFinder test = new TestHashCodeFinder();
 		test.init();test.test();
 	}
 }

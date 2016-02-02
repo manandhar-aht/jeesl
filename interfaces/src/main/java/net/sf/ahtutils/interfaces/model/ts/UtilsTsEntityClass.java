@@ -5,6 +5,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
@@ -22,7 +23,12 @@ public interface UtilsTsEntityClass <L extends UtilsLang,
 										WS extends UtilsStatus<WS,L,D>,
 										QAF extends UtilsStatus<QAF,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
+				EjbWithCode,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
-
+	String getAttribute();
+	void setAttribute(String attribute);
+	
+	String getXpath();
+	void setXpath(String xpath);
 }

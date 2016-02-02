@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -118,4 +119,8 @@ public class TestRanking extends AbstractAhtUtilTest
     	Assert.assertEquals("b1="+b.getScore()+" b2="+list.get(0).getScore(), b, list.get(0));
     	Assert.assertEquals(a, list.get(1));
     }
+	public int hashCode()
+	{
+		return new HashCodeBuilder(17, 43).toHashCode();
+	}
 }

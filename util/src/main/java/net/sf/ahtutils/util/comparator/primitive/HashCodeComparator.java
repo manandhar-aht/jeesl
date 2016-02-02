@@ -18,32 +18,36 @@ public class HashCodeComparator
 
 	Map<String,String> searchForHashCodeBuilder()
 	{
-		fileloop:
-		for(File f :startDir.listFiles())
+		if(startDir.listFiles() != null)
 		{
-			if(f.isDirectory())
+			fileloop:
+			for(File f :startDir.listFiles())
 			{
-				startDir = f;
-				searchForHashCodeBuilder();
-			}
-			else if (f.getName().endsWith(".java"))
-			{
-				try
+				if(f.isDirectory())
 				{
-					BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
-					String input = br.readLine();
-					while(input != null)
-					{
-						if(input.contains("new HashCodeBuilder"))
-						{
-							String temp = input.substring(input.indexOf("HashCodeBuilder("),input.indexOf("HashCodeBuilder(")+22);
-							hash.put(f.getName(), temp.substring(temp.indexOf("(")+1, temp.indexOf("(")+6));
-							continue fileloop;
-						}
-						input = br.readLine();
-					}
+					startDir = f;
+					searchForHashCodeBuilder();
 				}
-				catch(IOException e){e.printStackTrace();}
+				else if (f.getName().endsWith(".java"))
+				{
+					try
+					{
+						BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+						String input = br.readLine();
+						while(input != null)
+						{
+							if(input.contains("new HashCodeBuilder"))
+							{
+								String temp = input.substring(input.indexOf("HashCodeBuilder("),input.indexOf("HashCodeBuilder(")+22);
+								temp = temp.substring(temp.indexOf("(")+1, temp.indexOf("(")+7).replaceAll("\\s","").replaceAll("[^(\\d{0,2},\\d{0,2})]{1,}","").replaceAll("\\)","");
+								hash.put(f.getName(),temp);
+								continue fileloop;
+							}
+							input = br.readLine();
+						}
+					}
+					catch(IOException e){e.printStackTrace();}
+				}
 			}
 		}
 		return hash;
@@ -52,15 +56,16 @@ public class HashCodeComparator
 	Map<String, String> compareCode()
 	{
 		Map<String, String> fileList = new HashMap<String, String>();
+		compare:
 		for(Map.Entry<String, String> entry : hash.entrySet())
 		{
+			enterEmptyArgs(entry,fileList);
 			String temp = entry.getValue();
-			compare:
 			for(Map.Entry<String, String> entry2 : hash.entrySet())
 			{
-				if(temp.equals(entry2.getValue()) && !entry.getKey().equals(entry2.getKey()))
+				if(temp.equals(entry2.getValue())&& !entry.getKey().equals(entry2.getKey()))
 				{
-					if(fileList.size() >0)
+					if(fileList.size() >1)
 					{
 						for (Map.Entry<String, String> file : fileList.entrySet())
 						{
@@ -95,6 +100,7 @@ public class HashCodeComparator
 		return sortedMap;
 	}
 
+	private void enterEmptyArgs(Map.Entry<String, String> me, Map<String, String> fileList) {if(me.getValue().isEmpty()){fileList.put(me.getKey(),me.getValue());}}
 
 	public Map<String, String> getHash(){return hash;}
 
@@ -106,6 +112,6 @@ public class HashCodeComparator
 		Map<String, String> testList = hcc.compareCode();
 		for(Map.Entry<String, String> entry : testList.entrySet())
 			System.out.println(entry);
-
+		System.out.println(testList.size());
 	}
 }

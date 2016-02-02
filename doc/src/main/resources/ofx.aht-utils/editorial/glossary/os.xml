@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ed:glossary xmlns:text="http://www.openfuxml.org/text" xmlns:ofx="http://www.openfuxml.org" xmlns:layout="http://www.openfuxml.org/layout" xmlns:media="http://www.openfuxml.org/media" xmlns:ed="http://www.openfuxml.org/editorial" xmlns:wiki="http://www.openfuxml.org/wiki" xmlns:l="http://www.openfuxml.org/list" xmlns:table="http://www.openfuxml.org/table">
-    <ed:term code="c27">
+    <ed:term code="cron">
         <text:text classifier="name">Cron Daemon</text:text>
         <text:text classifier="text">cron daemon</text:text>
         <ofx:paragraph lang="en">
@@ -10,7 +10,7 @@
             database server FR
         </ofx:paragraph>
     </ed:term>
-	<ed:term code="c28">
+	<ed:term code="vi">
         <text:text classifier="name">VI</text:text>
         <ofx:paragraph lang="en">
             Terminal based text editor.

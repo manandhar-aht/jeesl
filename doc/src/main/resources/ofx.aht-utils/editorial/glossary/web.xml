@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ed:glossary xmlns:text="http://www.openfuxml.org/text" xmlns:ofx="http://www.openfuxml.org" xmlns:layout="http://www.openfuxml.org/layout" xmlns:media="http://www.openfuxml.org/media" xmlns:ed="http://www.openfuxml.org/editorial" xmlns:wiki="http://www.openfuxml.org/wiki" xmlns:l="http://www.openfuxml.org/list" xmlns:table="http://www.openfuxml.org/table">
-    <ed:term code="c1">
+    <ed:term code="cookie">
     	<text:text classifier="name">Cookie</text:text>
     	<ofx:paragraph lang="en">
     		Cookies are little pieces of information, that can be stored on your computer by websites.
@@ -10,7 +10,7 @@
     		Cookies FR
     	</ofx:paragraph>
 	</ed:term>
-	<ed:term code="c2">
+	<ed:term code="browser">
         <text:text classifier="name">web browser</text:text>
         <ofx:paragraph lang="en">
             Web browser is a programme used to display websites and interact with them.
@@ -19,7 +19,7 @@
             web browser FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c3">
+    <ed:term code="ria">
         <text:text classifier="name">Rich Internet Application</text:text>
         <ofx:paragraph lang="en">
             This is a programme to use with a web browser. The aim is to looks like a web page, but when using it, for it to feel like a desktop application.
@@ -28,7 +28,7 @@
             Rich Internet Application FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c4">
+    <ed:term code="login">
         <text:text classifier="name">Login</text:text>
         <text:text classifier="text">login</text:text>
         <ofx:paragraph lang="en">
@@ -39,7 +39,7 @@
             Login FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c5">
+    <ed:term code="landing">
         <text:text classifier="name">Landing Page</text:text>
         <text:text classifier="text">landing page</text:text>
         <ofx:paragraph lang="en">
@@ -49,7 +49,7 @@
             Landing page FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c6">
+    <ed:term code="tooltip">
         <text:text classifier="name">Tooltip</text:text>
         <text:text classifier="text">tooltip</text:text>
         <ofx:paragraph lang="en">

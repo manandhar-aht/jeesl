@@ -324,7 +324,7 @@ fi</ofx:raw>
 			
 			<ofx:paragraph lang="en" version="1">
                             The next step is to configure the service with the shown script below. 
-                            Copy this script to your clipboard and past it into the <ed:glossary code="c28"/>
+                            Copy this script to your clipboard and past it into the <ed:glossary code="vi"/>
                             terminal (or similar editor) and save your configuration.
                             Verify your installation with of the JBoss Application Server by starting and stopping it
                             (monitor this events with the log terminal).

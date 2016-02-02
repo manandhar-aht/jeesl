@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ed:glossary xmlns:text="http://www.openfuxml.org/text" xmlns:ofx="http://www.openfuxml.org" xmlns:layout="http://www.openfuxml.org/layout" xmlns:media="http://www.openfuxml.org/media" xmlns:ed="http://www.openfuxml.org/editorial" xmlns:wiki="http://www.openfuxml.org/wiki" xmlns:l="http://www.openfuxml.org/list" xmlns:table="http://www.openfuxml.org/table">
-    <ed:term code="c26">
+    <ed:term code="database server">
         <text:text classifier="name">Database Server</text:text>
         <text:text classifier="text">database server</text:text>
         <ofx:paragraph lang="en">
@@ -10,7 +10,7 @@
             database server FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c15">
+    <ed:term code="database">
         <text:text classifier="name">Database</text:text>
         <text:text classifier="text">database</text:text>
         <ofx:paragraph lang="en">
@@ -20,7 +20,7 @@
             database FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c16">
+    <ed:term code="data integrity">
     	<text:text classifier="name">Data Integrity</text:text>
         <text:text classifier="text">data integrity</text:text>
         <ofx:paragraph lang="en">
@@ -30,7 +30,7 @@
             data integrity FR
         </ofx:paragraph>
     </ed:term>
-    <ed:term code="c17">
+    <ed:term code="rdi">
         <text:text classifier="name">Referential Data Integrity</text:text>
         <text:text classifier="text">referential data integrity</text:text>
         <ofx:paragraph lang="en">

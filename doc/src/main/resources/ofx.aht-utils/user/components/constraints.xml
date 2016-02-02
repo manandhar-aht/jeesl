@@ -26,14 +26,14 @@
 	    
 	    <l:item>
 	    	<ofx:paragraph lang="en">
-				Most of the <ed:glossary code="c16"/> <ed:glossary code="c14"/> are located at database level and enforce the <ed:glossary code="c17"/>.
+				Most of the <ed:glossary code="data integrity"/> <ed:glossary code="constraint"/> are located at database level and enforce the <ed:glossary code="rdi"/>.
                 E.g. deleting an object that is used somewhere else is not allowed.
 			</ofx:paragraph>
 	    </l:item>
 	    <l:item>
 	    	<ofx:paragraph lang="en">
-				The <text:emphasis italic="true">Data type constraints</text:emphasis> are in the <ed:glossary code="c18"/> and ensure that the entered data types are correct.
-				The system checks that an amount is a decimal number and not a <ed:glossary code="c19"/>.
+				The <text:emphasis italic="true">Data type constraints</text:emphasis> are in the <ed:glossary code="business logic"/> and ensure that the entered data types are correct.
+				The system checks that an amount is a decimal number and not a <ed:glossary code="string"/>.
 			</ofx:paragraph>
 	    </l:item>
 	    <l:item>
@@ -46,7 +46,7 @@
 	</l:list>
 	
 	<ofx:paragraph lang="en">
-		In all cases, the user interface will inform the <ed:glossary code="c13"/> when plausibility checks fail or constraints are violated.
+		In all cases, the user interface will inform the <ed:glossary code="user"/> when plausibility checks fail or constraints are violated.
 		Constraints are documented in this manual to enhance the understanding of the user of the internal processes of the system.
 		All of these constraints result in a set of different constraint types relevant for the user. The different types are summarised
 		in Table <ofx:reference target="table.status.system.constraints.type"/>.

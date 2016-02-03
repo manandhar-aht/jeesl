@@ -18,6 +18,7 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
+import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
@@ -52,6 +53,8 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 		efView = EjbRevisionViewFactory.factory(cView);
 		
 		reloadViews();
+		
+		allowSave = true;
 	}
 
 	public void reloadViews()
@@ -66,16 +69,16 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	{
 		logger.info(AbstractLogMessage.addEntity(cView));
 		rv = efView.build();
-//		cView.setName(efLang.createEmpty(langs));
-//		cView.setDescription(efDescription.createEmpty(langs));
+		rv.setName(efLang.createEmpty(langs));
+		rv.setDescription(efDescription.createEmpty(langs));
 	}
 	
 	public void select() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(rv));
 		rv = fRevision.find(cView, rv);
-//		scope = efLang.persistMissingLangs(fTs,langs,scope);
-//		scope = efDescription.persistMissingLangs(fTs,langs,scope);
+		rv = efLang.persistMissingLangs(fRevision,langs,rv);
+		rv = efDescription.persistMissingLangs(fRevision,langs,rv);
 	}
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -102,4 +105,17 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	
 	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, views);}
 	protected void updatePerformed(){}	
+	
+	//Security Handling for Invisible entries
+	private boolean allowSave; public boolean getAllowSave() {return allowSave;}
+	
+	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
+	{
+		allowSave = jsfSecurityHandler.allow(actionDeveloper);
+
+		if(logger.isTraceEnabled())
+		{
+			logger.info(allowSave+" allowSave ("+actionDeveloper+")");
+		}
+	}
 }

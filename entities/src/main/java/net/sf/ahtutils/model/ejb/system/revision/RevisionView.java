@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -29,7 +30,7 @@ public class RevisionView implements Serializable,EjbRemoveable,EjbPersistable,
 {
 	public static final long serialVersionUID=1;
 
-	public static enum Code {login}
+	public static enum Code {user,project}
 	
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -37,11 +38,18 @@ public class RevisionView implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="view")
-	@OrderBy("position")
-	private List<RevisionMapping> maps;
-	@Override public List<RevisionMapping> getMaps() {if(maps==null){maps=new ArrayList<RevisionMapping>();}return maps;}
-	@Override public void setMaps(List<RevisionMapping> maps) {this.maps=maps;}
+	@NotNull
+	protected String code;
+	@Override public String getCode() {return code;}
+	@Override public void setCode(String code) {this.code = code;}
+	
+	private int position;
+	@Override public int getPosition() {return position;}
+	@Override public void setPosition(int position) {this.position = position;}
+	
+	private boolean visible;
+	@Override public boolean isVisible() {return visible;}
+	@Override public void setVisible(boolean visible) {this.visible = visible;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
@@ -55,13 +63,11 @@ public class RevisionView implements Serializable,EjbRemoveable,EjbPersistable,
 	public Map<String,Description> getDescription() {return description;}
 	public void setDescription(Map<String,Description> description) {this.description = description;}
 	
-	private int position;
-	@Override public int getPosition() {return position;}
-	@Override public void setPosition(int position) {this.position = position;}
-	
-	private boolean visible;
-	@Override public boolean isVisible() {return visible;}
-	@Override public void setVisible(boolean visible) {this.visible = visible;}
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="view")
+	@OrderBy("position")
+	private List<RevisionMapping> maps;
+	@Override public List<RevisionMapping> getMaps() {if(maps==null){maps=new ArrayList<RevisionMapping>();}return maps;}
+	@Override public void setMaps(List<RevisionMapping> maps) {this.maps=maps;}
 	
 	
 	@Override public String toString()

@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -20,6 +22,7 @@ import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
+@Table(name="RevisionScope", uniqueConstraints=@UniqueConstraint(columnNames={"code"}))
 @EjbErNode(name="Scope",category="revision",subset="revision")
 public class RevisionScope implements Serializable,EjbRemoveable,EjbPersistable,
 								UtilsRevisionScope<Lang,Description,RevisionView,RevisionMapping,RevisionScope,RevisionEntity,RevisionAttribute>

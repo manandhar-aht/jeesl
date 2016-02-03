@@ -6,6 +6,7 @@ import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
@@ -18,7 +19,7 @@ public interface UtilsRevisionView<L extends UtilsLang,D extends UtilsDescriptio
 									RE extends UtilsRevisionEntity<L,D,RV,RM,RS,RE,RA>,
 									RA extends UtilsRevisionAttribute<L,D,RV,RM,RS,RE,RA>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
-				EjbWithPositionVisible,
+				EjbWithCode,EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>
 {					
 	List<RM> getMaps();

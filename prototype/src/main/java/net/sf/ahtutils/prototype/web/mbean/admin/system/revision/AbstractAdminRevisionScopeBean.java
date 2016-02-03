@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean.admin.system;
+package net.sf.ahtutils.prototype.web.mbean.admin.system.revision;
 
 import java.io.Serializable;
 import java.util.List;

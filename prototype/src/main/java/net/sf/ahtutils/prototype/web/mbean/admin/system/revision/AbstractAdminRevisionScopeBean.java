@@ -33,7 +33,6 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionScopeBean.class);
 	
-	private List<RS> scopes; public List<RS> getScopes() {return scopes;}
 	private RS scope; public RS getScope() {return scope;} public void setScope(RS scope) {this.scope = scope;}
 
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView,Class<RM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<RA> cAttribute)
@@ -44,8 +43,8 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 
 	public void reloadViews()
 	{
-		logger.info("reloadCategories");
 		scopes = fRevision.all(cScope);
+		logger.info(AbstractLogMessage.reloaded(cScope,scopes));
 //		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
 //		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
 	}
@@ -54,8 +53,8 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 	{
 		logger.info(AbstractLogMessage.addEntity(cScope));
 		scope = efScope.build();
-//		cView.setName(efLang.createEmpty(langs));
-//		cView.setDescription(efDescription.createEmpty(langs));
+		scope.setName(efLang.createEmpty(langs));
+		scope.setDescription(efDescription.createEmpty(langs));
 	}
 	
 	public void select() throws UtilsNotFoundException

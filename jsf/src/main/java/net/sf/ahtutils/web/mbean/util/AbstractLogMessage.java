@@ -210,6 +210,15 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 		return sb.toString();
 	}
 	
+	public static <T extends EjbWithId> String reloaded(Class<T> c, List<T> list)
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("Reloaded List ");
+		sb.append(c.getSimpleName());
+		sb.append(" with ").append(list.size()).append(" elements");
+		return sb.toString();
+	}
+	
 	public static String time(String msg, ProcessingTimeTracker ptt)
 	{
 		ptt.stop();

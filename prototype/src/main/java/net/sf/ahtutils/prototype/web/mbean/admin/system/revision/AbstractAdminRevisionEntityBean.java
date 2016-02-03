@@ -40,21 +40,22 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView,Class<RM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<RA> cAttribute)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cView,cMapping,cScope,cEntity,cAttribute);
-		reloadViews();
+		reload();
+		scopes = fRevision.all(cScope);
 	}
 
-	public void reloadViews()
+	public void reload()
 	{
-		logger.info("reloadEntities");
 		entities = fRevision.all(cEntity);
+		logger.info(AbstractLogMessage.reloaded(cEntity,entities));
 //		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
 //		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
 	}
 	
 	public void add() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(cView));
-		entity = efEntity.build();
+		logger.info(AbstractLogMessage.addEntity(cEntity));
+		entity = efEntity.build(null);
 		entity.setName(efLang.createEmpty(langs));
 		entity.setDescription(efDescription.createEmpty(langs));
 	}
@@ -70,8 +71,9 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(entity));
+		entity.setScope(fRevision.find(cScope, entity.getScope()));
 		entity = fRevision.save(entity);
-		reloadViews();
+		reload();
 		bMessage.growlSuccessSaved();
 		updatePerformed();
 	}
@@ -82,7 +84,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		fRevision.rm(entity);
 		entity=null;
 		bMessage.growlSuccessRemoved();
-		reloadViews();
+		reload();
 		updatePerformed();
 	}
 	

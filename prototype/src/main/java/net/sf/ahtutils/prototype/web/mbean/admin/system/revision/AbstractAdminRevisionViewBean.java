@@ -40,13 +40,13 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView,Class<RM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<RA> cAttribute)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cView,cMapping,cScope,cEntity,cAttribute);		
-		reloadViews();
+		reload();
 	}
 
-	public void reloadViews()
+	public void reload()
 	{
-		logger.info("reloadCategories");
 		views = fRevision.all(cView);
+		logger.info(AbstractLogMessage.reloaded(cView,views));
 //		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
 //		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
 	}
@@ -72,7 +72,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 		logger.info(AbstractLogMessage.saveEntity(rv));
 		rv = fRevision.save(rv);
 		bMessage.growlSuccessSaved();
-		reloadViews();
+		reload();
 		updatePerformed();
 	}
 	
@@ -82,7 +82,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 		fRevision.rm(rv);
 		bMessage.growlSuccessRemoved();
 		rv=null;
-		reloadViews();
+		reload();
 		updatePerformed();
 	}
 	

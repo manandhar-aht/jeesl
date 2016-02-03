@@ -45,6 +45,11 @@
 								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.entity.id gt 0}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupRevisionScope}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.entity.scope}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.scopes}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
+								</p:selectOneMenu>
+							
 								<p:outputLabel value="#{msg.aupCode}"/>
 								<p:inputText value="#{cc.attrs.bean.entity.code}"/>
 								<p:outputLabel value="#{msg.aupTsClassXpath}"/>

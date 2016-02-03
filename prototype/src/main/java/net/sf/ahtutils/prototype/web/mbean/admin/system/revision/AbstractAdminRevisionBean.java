@@ -1,6 +1,7 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.system.revision;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,8 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected EjbRevisionMappingFactory<L,D,RV,RM,RS,RE,RA> efMapping;
 	protected EjbRevisionScopeFactory<L,D,RV,RM,RS,RE,RA> efScope;
 	protected EjbRevisionEntityFactory<L,D,RV,RM,RS,RE,RA> efEntity;
+	
+	protected List<RS> scopes; public List<RS> getScopes() {return scopes;}
 	
 	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView, Class<RM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<RA> cAttribute)
 	{

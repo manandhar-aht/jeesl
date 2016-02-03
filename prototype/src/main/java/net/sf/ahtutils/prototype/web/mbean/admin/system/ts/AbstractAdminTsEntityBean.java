@@ -10,6 +10,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.ts.EjbTimeSeriesClassFactory;
+import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -51,9 +52,9 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	
 	protected EC entity; public void setEntity(EC entityClass) {this.entity = entityClass;} public EC getEntity() {return entity;}
 
-	protected void initSuper(String[] langs, final Class<L> cLang, final Class<D> cDescription, Class<EC> cEc)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<EC> cEc)
 	{
-		super.initAdmin(langs, cLang, cDescription);
+		super.initAdmin(langs,cLang,cDescription,bMessage);
 		allowSave=true;
 		this.cEc=cEc;
 		

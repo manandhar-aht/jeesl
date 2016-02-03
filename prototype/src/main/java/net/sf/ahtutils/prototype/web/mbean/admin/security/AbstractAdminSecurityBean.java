@@ -14,6 +14,7 @@ import net.sf.ahtutils.factory.ejb.security.EjbSecurityActionFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityCategoryFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityRoleFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityUsecaseFactory;
+import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -98,9 +99,9 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	
 	protected String[] langs;
 	
-	public void initSecuritySuper(final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<USER> cUser, String[] langs)
+	public void initSecuritySuper(FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<USER> cUser, String[] langs)
 	{
-		super.initAdmin(langs, cLang, cDescription);
+		super.initAdmin(langs,cLang,cDescription,bMessage);
 		showInvisibleCategories = true;
 		showInvisibleRecords = true;
 		showDocumentation = true;

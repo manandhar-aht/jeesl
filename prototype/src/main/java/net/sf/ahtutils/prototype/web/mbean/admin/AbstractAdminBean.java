@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
 import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
+import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
@@ -15,6 +16,8 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminBean.class);
+	
+	protected FacesMessageBean bMessage;
 	
 	protected boolean debugOnInfo;
 	protected String[] langs;
@@ -27,11 +30,12 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		debugOnInfo = false;
 	}
 	
-	public void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription)
+	public void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription, FacesMessageBean bMessage)
 	{	
 		this.langs=langs;
+		this.bMessage=bMessage;
+		
 		efLang = new EjbLangFactory<L>(cLang);
 		efDescription = new EjbDescriptionFactory<D>(cDescription);
-		
 	}
 }

@@ -10,6 +10,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionViewFactory;
+import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -43,9 +44,9 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 
 	private EjbRevisionViewFactory<L,D,RV,RM,RS,RE,RA> efView;
 	
-	protected void initSuper(String[] langs, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView)
 	{
-		super.initAdmin(langs, cLang, cDescription);
+		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fRevision=fRevision;
 		this.cView=cView;
 				

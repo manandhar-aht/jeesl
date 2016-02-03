@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			 xmlns:media="http://www.openfuxml.org/media"
+			 xmlns:table="http://www.openfuxml.org/table"
+			 xmlns:layout="http://www.openfuxml.org/layout"
+			 xmlns:text="http://www.openfuxml.org/text"
+			 xmlns:l="http://www.openfuxml.org/list"
+		container="true" classifier="osx">	
+
+	<ofx:section container="true" >
+		<ofx:title>OSX Yosemite</ofx:title>
+		<ofx:listing>
+			<ofx:raw>brew install mysql</ofx:raw>
+		</ofx:listing>
+			
+		<ofx:listing>
+			<ofx:raw>ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist</ofx:raw>
+		</ofx:listing>
+			
+	</ofx:section>
+	
+	
+	<ofx:section container="true" classifier="debianJessie">
+		<ofx:title>Linux (Debian Jessie)</ofx:title>
+		
+		<ofx:paragraph lang="de">
+			MySQL wird unter Debian mit folgendem Befehl installiert:
+		</ofx:paragraph>
+		<ofx:paragraph lang="en">
+			The following command installs the MySQL Database Server 5.5 on a Debian (Jessie) system:
+		</ofx:paragraph>
+		
+		<ofx:listing>
+			<ofx:raw>apt-get install mysql-server</ofx:raw>
+		</ofx:listing>
+		
+		<ofx:paragraph lang="de">
+			Anschließend wird das Kennwort für den Datenbankadministrator festgelegt.
+		</ofx:paragraph>
+		<ofx:paragraph lang="en">
+			Then the password for the database administrator has to be entered.
+		</ofx:paragraph>
+	</ofx:section>
+	
+</ofx:section>

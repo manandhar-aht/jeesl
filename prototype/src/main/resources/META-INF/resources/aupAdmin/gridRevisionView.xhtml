@@ -20,8 +20,8 @@
 			<aht:row>
 				<aht:slot id="sCategories" width="8">
 					<h:form id="fCategories">
-						<p:dataTable var="s" value="#{cc.attrs.bean.views}" draggableRows="true"
-							selection="#{cc.attrs.bean.rv}" selectionMode="single" rowKey="#{s.id}">
+						<p:dataTable var="v" value="#{cc.attrs.bean.views}" draggableRows="true"
+							selection="#{cc.attrs.bean.rv}" selectionMode="single" rowKey="#{v.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.aupRevisionViews}">
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sView" tooltip="#{msg.ttNew}"/>
@@ -30,13 +30,13 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sView" listener="#{cc.attrs.bean.select()}"/>
 							<p:column rendered="false">  
-								<h:outputText value="#{s.position}"/>
+								<h:outputText value="#{v.position}"/>
 				            </p:column>
 				            <p:column rendered="false" headerText="#{msg.aupCode}">  
-								<h:outputText value="#{s.code}"/>  
+								<h:outputText value="#{v.code}"/>  
 				            </p:column>
 				            <p:column headerText="#{msg.aupRevisionView}">  
-								<h:outputText value="#{s.category.name[userBean.localeCode].lang}"/>
+								<h:outputText value="#{v.name[userBean.localeCode].lang}"/>
 				            </p:column>
 				       	</p:dataTable>
 					</h:form>

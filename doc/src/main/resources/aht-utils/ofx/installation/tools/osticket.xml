@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			 xmlns:media="http://www.openfuxml.org/media"
+			 xmlns:table="http://www.openfuxml.org/table"
+			 xmlns:layout="http://www.openfuxml.org/layout"
+			 xmlns:text="http://www.openfuxml.org/text"
+			 xmlns:l="http://www.openfuxml.org/list"
+		id="section.admin.installation.osticket">
+		
+	<ofx:title lang="en">OS Ticket</ofx:title>
+	
+	<ofx:paragraph lang="en" version="1">
+		OS Ticket is an open source support ticket system with as many features and tools as most of the commercial support ticket systems.
+	</ofx:paragraph>
+		
+	<ofx:paragraph lang="en" version="1">
+		After your Debian base and MySQL installation, osticket needs some requirements:
+		First of all, you need to update the system files
+		In addition to the MySql Server and Client, we need a Plug-In for PHP5.
+		Finally we need to install PHP5.
+	</ofx:paragraph>
+		
+	<ofx:listing>
+		<ofx:raw>apt-get update
+apt-get install mysql-client
+apt-get install php5
+apt-get install php5-mysqlnd</ofx:raw>
+	</ofx:listing>
+	
+	<ofx:paragraph lang="en" version="1">
+				In addition to the pre-requirements, osticket needs some pre-configuration before the installation:
+				
+				Go to your osticket installation destination and execute the following lines.
+				
+				
+				After these steps, osticket is available and ready for the installation under following address:
+								
+	</ofx:paragraph>
+			
+		<ofx:listing>
+			<ofx:raw>cp /include/ost-sampleconfig.php /include/ost-config.php
+chmod 0666 /include/ost-config.php
+ln -s var/www/osticket x.x.x/upload var/www/tickets</ofx:raw>
+		</ofx:listing>
+		
+		<ofx:paragraph lang="en" version="1">
+				Configuration of osticket... URL xxx.xxx.xxx.xxx/tickets
+				XXX
+		</ofx:paragraph>
+	
+</ofx:section>

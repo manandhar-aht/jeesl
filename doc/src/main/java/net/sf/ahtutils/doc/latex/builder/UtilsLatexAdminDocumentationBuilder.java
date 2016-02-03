@@ -70,7 +70,7 @@ public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 		addConfig(InstallationCode.instJava.toString(),"ofx.aht-utils/installation/java.xml","admin/installation/java");
 		addConfig(InstallationCode.instJboss.toString(),"ofx.aht-utils/installation/jboss/jboss.xml","admin/installation/jboss");
 		addConfig(InstallationCode.instPostGis.toString(),"ofx.aht-utils/installation/postgres/postgres.xml","admin/installation/postgres");
-		addConfig(InstallationCode.instMySql.toString(),"ofx.aht-utils/installation/mysql.xml","admin/installation/mysql");
+		addConfig(InstallationCode.instMySql.toString(),"aht-utils/ofx/installation/db/mysql/mysql.xml","admin/installation/mysql");
 		addConfig(InstallationCode.instMaven.toString(),"ofx.aht-utils/installation/maven.xml","admin/installation/maven");
 //		addConfig(InstallationCode.instGeoserver.toString(),"ofx.aht-utils/installation/geoserver.xml","admin/installation/geoserver");
 		
@@ -81,7 +81,7 @@ public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 		addConfig(RequirementsCode.reqDeveloper.toString(),"ofx.aht-utils/requirements/developer.xml","admin/requirements/developer");
 		
 		//Tools
-		addConfig(ToolsCode.toolsOsticket.toString(),"ofx.aht-utils/installation/tools/osticket.xml","admin/installation/tools/osticket");
+		addConfig(ToolsCode.toolsOsticket.toString(),"aht-utils/ofx/installation/tools/osticket.xml","admin/installation/tools/osticket");
 		addConfig(ToolsCode.toolsApache.toString(),"ofx.aht-utils/installation/tools/apache.xml","admin/installation/tools/apache");
 		
 		//System

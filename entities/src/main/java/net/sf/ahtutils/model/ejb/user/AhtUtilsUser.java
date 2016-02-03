@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.security.UtilsUser;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.model.ejb.security.SecurityAction;
 import net.sf.ahtutils.model.ejb.security.SecurityCategory;
 import net.sf.ahtutils.model.ejb.security.SecurityRole;

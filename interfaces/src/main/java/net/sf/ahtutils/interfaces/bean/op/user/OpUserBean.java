@@ -3,14 +3,14 @@ package net.sf.ahtutils.interfaces.bean.op.user;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.controller.handler.op.user.OpUserSelectionHandler;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.security.UtilsUser;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 
 public interface OpUserBean <L extends UtilsLang,
 							D extends UtilsDescription,

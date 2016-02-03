@@ -10,14 +10,14 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 
 import net.sf.ahtutils.interfaces.facade.UtilsUserFacade;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.security.UtilsUser;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 
 public class UtilsUserFacadeBean<L extends UtilsLang,
 									D extends UtilsDescription,

@@ -12,14 +12,14 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.security.UtilsUser;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
 
 public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,

@@ -7,7 +7,7 @@ import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.model.interfaces.mail.UtilsMailTracker;
+import net.sf.ahtutils.interfaces.model.system.mail.UtilsMailTracker;
 import net.sf.ahtutils.model.interfaces.tracker.UtilsTracker;
 import net.sf.ahtutils.model.interfaces.tracker.UtilsTrackerLog;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;

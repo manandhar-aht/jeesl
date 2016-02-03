@@ -38,7 +38,7 @@
 				<f:facet name="header">#{msg.aupOptionSymbol}</f:facet>  
 				<h:outputText value="#{s.symbol}" />
 			</p:column>
-			<p:column rendered="#{cc.attrs.bean.supportsGraphic}">  
+			<p:column rendered="#{cc.attrs.bean.supportsGraphic}">
 				<aht:statusSymbolizer value="#{s}"/>
 			</p:column>
 		</p:dataTable>

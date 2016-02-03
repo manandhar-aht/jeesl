@@ -3,11 +3,11 @@ package net.sf.ahtutils.interfaces.facade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.ts.UtilsTimeSeries;
-import net.sf.ahtutils.interfaces.model.ts.UtilsTsData;
-import net.sf.ahtutils.interfaces.model.ts.UtilsTsEntity;
-import net.sf.ahtutils.interfaces.model.ts.UtilsTsEntityClass;
-import net.sf.ahtutils.interfaces.model.ts.UtilsTsScope;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTimeSeries;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntity;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
 public interface UtilsTsFacade <L extends UtilsLang,
 								D extends UtilsDescription,

@@ -5,7 +5,7 @@ import java.util.Date;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.model.interfaces.mail.UtilsMailTracker;
+import net.sf.ahtutils.interfaces.model.system.mail.UtilsMailTracker;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 import org.slf4j.Logger;

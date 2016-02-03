@@ -1,9 +1,9 @@
 package net.sf.ahtutils.controller.factory.ejb.mail;
 
-import net.sf.ahtutils.model.interfaces.mail.UtilsMailAddress;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.interfaces.model.system.mail.UtilsMailAddress;
 
 public class EjbMailFactory<M extends UtilsMailAddress>
 {

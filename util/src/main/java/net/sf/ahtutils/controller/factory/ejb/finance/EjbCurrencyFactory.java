@@ -2,8 +2,8 @@ package net.sf.ahtutils.controller.factory.ejb.finance;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
+import net.sf.ahtutils.interfaces.model.finance.UtilsCurrency;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.model.interfaces.finance.UtilsCurrency;
 import net.sf.ahtutils.xml.finance.Currency;
 import net.sf.exlp.util.xml.JaxbUtil;
 

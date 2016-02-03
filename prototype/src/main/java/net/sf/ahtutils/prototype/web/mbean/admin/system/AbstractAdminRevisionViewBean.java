@@ -22,7 +22,7 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsDescription,
 											RV extends UtilsRevisionView<L,D,RV,RM,RS,RE,RA>,
 											RM extends UtilsRevisionMapping<L,D,RV,RM,RS,RE,RA>,
 											RS extends UtilsRevisionScope<L,D,RV,RM,RS,RE,RA>,
@@ -32,7 +32,7 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionScopeBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionViewBean.class);
 	
 	private UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision;
 	

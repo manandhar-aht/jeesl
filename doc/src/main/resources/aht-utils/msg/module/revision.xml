@@ -21,11 +21,26 @@
     		<s:lang key="fr" translation="Revision Number"/>
     	</s:langs>
     </s:translation>
-    	<s:translation key="aupRevisionNumberShort">
+	<s:translation key="aupRevisionNumberShort">
     	<s:langs>
     		<s:lang key="de" translation="Rev."/>
     		<s:lang key="en" translation="Rev."/>
     		<s:lang key="fr" translation="Rev."/>
+    	</s:langs>
+    </s:translation>
+    
+    <s:translation key="aupRevisionViews">
+    	<s:langs>
+    		<s:lang key="de" translation="Perspektiven"/>
+    		<s:lang key="en" translation="Views"/>
+    		<s:lang key="fr" translation="Views"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupRevisionView">
+    	<s:langs>
+    		<s:lang key="de" translation="Perspektive"/>
+    		<s:lang key="en" translation="View"/>
+    		<s:lang key="fr" translation="View"/>
     	</s:langs>
     </s:translation>
 </s:translations>

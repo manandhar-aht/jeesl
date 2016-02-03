@@ -11,7 +11,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface UtilsRevisionScope<L extends UtilsLang,D extends UtilsDescription,
 									RV extends UtilsRevisionView<L,D,RV,RM,RS,RE,RA>,
-									RM extends UtilsRevisionMap<L,D,RV,RM,RS,RE,RA>,
+									RM extends UtilsRevisionMapping<L,D,RV,RM,RS,RE,RA>,
 									RS extends UtilsRevisionScope<L,D,RV,RM,RS,RE,RA>,
 									RE extends UtilsRevisionEntity<L,D,RV,RM,RS,RE,RA>,
 									RA extends UtilsRevisionAttribute<L,D,RV,RM,RS,RE,RA>>

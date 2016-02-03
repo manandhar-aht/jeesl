@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model.ejb.ts;
+package net.sf.ahtutils.model.ejb.system.ts;
 
 import java.io.Serializable;
 import java.util.Date;

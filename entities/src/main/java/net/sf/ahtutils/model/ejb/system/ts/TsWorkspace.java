@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model.ejb.ts;
+package net.sf.ahtutils.model.ejb.system.ts;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -11,9 +11,9 @@ import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="QA Category",category="tsQa",subset="tsQa",level=4)
-public class TsQaCategory implements Serializable,EjbRemoveable,EjbPersistable,
-							UtilsStatus<TsQaCategory,Lang,Description>
+@EjbErNode(name="Workspace",category="ts",subset="ts")
+public class TsWorkspace implements Serializable,EjbRemoveable,EjbPersistable,
+							UtilsStatus<TsWorkspace,Lang,Description>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;
@@ -54,10 +54,7 @@ public class TsQaCategory implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public <P extends EjbWithCode> void setParent(P parent) {}
 	
 	
-	public boolean equals(Object object)
-	{
-        return (object instanceof TsData) ? id == ((TsData) object).getId() : (object == this);
-    }
+	public boolean equals(Object object){return (object instanceof TsData) ? id == ((TsData) object).getId() : (object == this);}
 	
 	public String toString()
 	{

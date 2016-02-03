@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model.ejb.ts;
+package net.sf.ahtutils.model.ejb.system.ts;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -11,9 +11,9 @@ import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Category",category="ts",subset="ts",level=4)
-public class TsCategory implements Serializable,EjbRemoveable,EjbPersistable,
-							UtilsStatus<TsCategory,Lang,Description>
+@EjbErNode(name="QA Category",category="tsQa",subset="tsQa",level=4)
+public class TsQaCategory implements Serializable,EjbRemoveable,EjbPersistable,
+							UtilsStatus<TsQaCategory,Lang,Description>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;

@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionViewFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -20,7 +19,6 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
-import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends UtilsDescription,
@@ -29,78 +27,69 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 											RS extends UtilsRevisionScope<L,D,RV,RM,RS,RE,RA>,
 											RE extends UtilsRevisionEntity<L,D,RV,RM,RS,RE,RA>,
 											RA extends UtilsRevisionAttribute<L,D,RV,RM,RS,RE,RA>>
-																extends AbstractAdminBean<L,D>
+					extends AbstractAdminRevisionBean<L,D,RV,RM,RS,RE,RA>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionScopeBean.class);
 	
-	private UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision;
-	
-	protected Class<RV> cView;
-	
-	private List<RV> views; public List<RV> getViews() {return views;}
-	private RV rv; public RV getRv() {return rv;} public void setRv(RV rv) {this.rv = rv;}
+	private List<RS> scopes; public List<RS> getScopes() {return scopes;}
+	private RS scope; public RS getScope() {return scope;} public void setScope(RS scope) {this.scope = scope;}
 
-	private EjbRevisionViewFactory<L,D,RV,RM,RS,RE,RA> efView;
-	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView,Class<RM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<RA> cAttribute)
 	{
-		super.initAdmin(langs,cLang,cDescription,bMessage);
-		this.fRevision=fRevision;
-		this.cView=cView;
-				
-		efView = EjbRevisionViewFactory.factory(cView);
-		
+		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cView,cMapping,cScope,cEntity,cAttribute);	
 		reloadViews();
 	}
 
 	public void reloadViews()
 	{
 		logger.info("reloadCategories");
-		views = fRevision.all(cView);
+		scopes = fRevision.all(cScope);
 //		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
 //		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
 	}
 	
 	public void add() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(cView));
-		rv = efView.build();
+		logger.info(AbstractLogMessage.addEntity(cScope));
+		scope = efScope.build();
 //		cView.setName(efLang.createEmpty(langs));
 //		cView.setDescription(efDescription.createEmpty(langs));
 	}
 	
 	public void select() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.selectEntity(rv));
-		rv = fRevision.find(cView, rv);
-//		scope = efLang.persistMissingLangs(fTs,langs,scope);
-//		scope = efDescription.persistMissingLangs(fTs,langs,scope);
+		logger.info(AbstractLogMessage.selectEntity(scope));
+		scope = fRevision.find(cScope,scope);
+		scope = efLang.persistMissingLangs(fRevision,langs,scope);
+		scope = efDescription.persistMissingLangs(fRevision,langs,scope);
 	}
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.saveEntity(rv));
-		rv = fRevision.save(rv);
+		logger.info(AbstractLogMessage.saveEntity(scope));
+		scope = fRevision.save(scope);
+		bMessage.growlSuccessSaved();
 		reloadViews();
 		updatePerformed();
 	}
 	
 	public void rm() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.rmEntity(rv));
-		fRevision.rm(rv);
-		rv=null;
+		logger.info(AbstractLogMessage.rmEntity(scope));
+		fRevision.rm(scope);
+		bMessage.growlSuccessRemoved();
+		scope=null;
 		reloadViews();
 		updatePerformed();
 	}
 	
 	public void cancel()
 	{
-		rv = null;
+		scope = null;
 	}
 	
-	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, views);}
+	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, scopes);}
 	protected void updatePerformed(){}	
 }

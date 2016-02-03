@@ -14,9 +14,11 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.factory.xml.sync.XmlMapperFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.xml.sync.Mapper;
 
 public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends UtilsDescription,GT extends UtilsStatus<GT,L,D>,GS extends UtilsStatus<GS,L,D>>
 	extends HttpServlet
@@ -25,36 +27,34 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends Util
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractGraphicSymbolizerServlet.class);
 	
-	protected long id;
-	protected int size;
 	
 	public void initSuper()
 	{
 		
 	}
 	
-	protected boolean getPathInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected Mapper getPathInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		boolean error = false;
 		if (request.getPathInfo() == null)
 		{
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-			error=true;
+			return null;
 		}
 
         String path = URLDecoder.decode(request.getPathInfo(), "UTF-8");
         if(path.length()<1)
         {
         	response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        	error=true;
+        	return null;
         }
         
         String[] pathElements = path.split("/");
-        size = new Integer(pathElements[1]);
-        id = new Long(pathElements[2]);
+        Integer size = new Integer(pathElements[1]);
+        Long id = new Long(pathElements[2]);
         
         logger.info("Requested size " +size+" id:"+id);
-		return error;
+        
+        return XmlMapperFactory.build(size, id);
 	}
 	
 	protected void respond(HttpServletRequest request, HttpServletResponse response,byte[] bytes) throws ServletException, IOException

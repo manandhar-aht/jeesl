@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionViewFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -21,7 +20,6 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
-import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsDescription,
@@ -30,32 +28,19 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 											RS extends UtilsRevisionScope<L,D,RV,RM,RS,RE,RA>,
 											RE extends UtilsRevisionEntity<L,D,RV,RM,RS,RE,RA>,
 											RA extends UtilsRevisionAttribute<L,D,RV,RM,RS,RE,RA>>
-																extends AbstractAdminBean<L,D>
+					extends AbstractAdminRevisionBean<L,D,RV,RM,RS,RE,RA>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionViewBean.class);
 	
-	private UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision;
-	
-	protected Class<RV> cView;
-	
 	private List<RV> views; public List<RV> getViews() {return views;}
 	private RV rv; public RV getRv() {return rv;} public void setRv(RV rv) {this.rv = rv;}
-
-	private EjbRevisionViewFactory<L,D,RV,RM,RS,RE,RA> efView;
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView,Class<RM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<RA> cAttribute)
 	{
-		super.initAdmin(langs,cLang,cDescription,bMessage);
-		this.fRevision=fRevision;
-		this.cView=cView;
-				
-		efView = EjbRevisionViewFactory.factory(cView);
-		
+		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cView,cMapping,cScope,cEntity,cAttribute);		
 		reloadViews();
-		
-		allowSave = true;
 	}
 
 	public void reloadViews()
@@ -86,6 +71,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	{
 		logger.info(AbstractLogMessage.saveEntity(rv));
 		rv = fRevision.save(rv);
+		bMessage.growlSuccessSaved();
 		reloadViews();
 		updatePerformed();
 	}
@@ -94,6 +80,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	{
 		logger.info(AbstractLogMessage.rmEntity(rv));
 		fRevision.rm(rv);
+		bMessage.growlSuccessRemoved();
 		rv=null;
 		reloadViews();
 		updatePerformed();
@@ -107,8 +94,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, views);}
 	protected void updatePerformed(){}	
 	
-	//Security Handling for Invisible entries
-	private boolean allowSave; public boolean getAllowSave() {return allowSave;}
+	
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{

@@ -12,7 +12,7 @@
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
-		<composite:attribute name="bean" required="false" default="#{adminRevisionEntityBean}"/>
+		<composite:attribute name="bean" required="false" default="#{adminRevisionScopeBean}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -20,7 +20,7 @@
 			<aht:row>
 				<aht:slot id="sCategories" width="3">
 					<h:form id="fCategories">
-						<p:dataTable var="v" value="#{cc.attrs.bean.entities}" draggableRows="true"
+						<p:dataTable var="v" value="#{cc.attrs.bean.scopes}" draggableRows="true"
 							selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{v.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.aupRevisionViews}">

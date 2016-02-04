@@ -15,6 +15,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
+import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
@@ -23,12 +24,13 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends UtilsDescription,
-											RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,RA>,
-											RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,RA>,
-											RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,RA>,
-											RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,RA>,
-											RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,RA>>
-					extends AbstractAdminRevisionBean<L,D,RV,RVM,RS,RE,RA>
+											RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,REM,RA>,
+											RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,REM,RA>,
+											RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,REM,RA>,
+											RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,REM,RA>,
+											REM extends UtilsRevisionEntityMapping<L,D,RV,RVM,RS,RE,REM,RA>,
+											RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,REM,RA>>
+					extends AbstractAdminRevisionBean<L,D,RV,RVM,RS,RE,REM,RA>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -40,9 +42,9 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	private RE entity; public RE getEntity() {return entity;} public void setEntity(RE entity) {this.entity = entity;}
 	private RA attribute; public RA getAttribute() {return attribute;}public void setAttribute(RA attribute) {this.attribute = attribute;}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RVM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<RA> cAttribute)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RVM,RS,RE,REM,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute)
 	{
-		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cView,cMapping,cScope,cEntity,cAttribute);
+		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute);
 		scopes = fRevision.all(cScope);
 		reloadEntities();
 	}

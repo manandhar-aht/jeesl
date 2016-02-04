@@ -26,7 +26,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="View",category="revision",subset="revision")
 public class RevisionView implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsRevisionView<Lang,Description,RevisionView,RevisionMapping,RevisionScope,RevisionEntity,RevisionAttribute>
+								UtilsRevisionView<Lang,Description,RevisionView,RevisionViewMapping,RevisionScope,RevisionEntity,RevisionEntityMapping,RevisionAttribute>
 {
 	public static final long serialVersionUID=1;
 
@@ -65,9 +65,9 @@ public class RevisionView implements Serializable,EjbRemoveable,EjbPersistable,
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="view")
 	@OrderBy("position")
-	private List<RevisionMapping> maps;
-	@Override public List<RevisionMapping> getMaps() {if(maps==null){maps=new ArrayList<RevisionMapping>();}return maps;}
-	@Override public void setMaps(List<RevisionMapping> maps) {this.maps=maps;}
+	private List<RevisionViewMapping> maps;
+	@Override public List<RevisionViewMapping> getMaps() {if(maps==null){maps=new ArrayList<RevisionViewMapping>();}return maps;}
+	@Override public void setMaps(List<RevisionViewMapping> maps) {this.maps=maps;}
 	
 	
 	@Override public String toString()

@@ -10,11 +10,12 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface UtilsRevisionAttribute<L extends UtilsLang,D extends UtilsDescription,
-										RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,RA>,
-										RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,RA>,
-										RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,RA>,
-										RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,RA>,
-										RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,RA>>
+										RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,REM,RA>,
+										RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,REM,RA>,
+										RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,REM,RA>,
+										RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,REM,RA>,
+										REM extends UtilsRevisionEntityMapping<L,D,RV,RVM,RS,RE,REM,RA>,
+										RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,REM,RA>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>

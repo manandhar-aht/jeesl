@@ -13,14 +13,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Mapping",category="revision",subset="revision")
-public class RevisionMapping implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsRevisionViewMapping<Lang,Description,RevisionView,RevisionMapping,RevisionScope,RevisionEntity,RevisionAttribute>
+@EjbErNode(name="Entity Mapping",category="revision",subset="revision")
+public class RevisionEntityMapping implements Serializable,EjbRemoveable,EjbPersistable,
+									UtilsRevisionEntityMapping<Lang,Description,RevisionView,RevisionViewMapping,RevisionScope,RevisionEntity,RevisionEntityMapping,RevisionAttribute>
 {
 	public static final long serialVersionUID=1;
 
@@ -63,6 +63,6 @@ public class RevisionMapping implements Serializable,EjbRemoveable,EjbPersistabl
 		return sb.toString();
 	}
 	
-	@Override public boolean equals(Object object){return (object instanceof RevisionMapping) ? id == ((RevisionMapping) object).getId() : (object == this);}
+	@Override public boolean equals(Object object){return (object instanceof RevisionEntityMapping) ? id == ((RevisionEntityMapping) object).getId() : (object == this);}
 	@Override public int hashCode() {return new HashCodeBuilder(17,53).append(id).toHashCode();}
 }

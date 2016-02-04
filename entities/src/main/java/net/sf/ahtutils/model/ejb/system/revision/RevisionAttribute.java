@@ -24,7 +24,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Attribute",category="revision",subset="revision")
 public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsRevisionAttribute<Lang,Description,RevisionView,RevisionMapping,RevisionScope,RevisionEntity,RevisionAttribute>
+								UtilsRevisionAttribute<Lang,Description,RevisionView,RevisionViewMapping,RevisionScope,RevisionEntity,RevisionEntityMapping,RevisionAttribute>
 {
 	public static final long serialVersionUID=1;
 

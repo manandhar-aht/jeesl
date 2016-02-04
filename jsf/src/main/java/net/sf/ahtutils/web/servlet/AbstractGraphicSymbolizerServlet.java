@@ -13,18 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.commons.io.IOUtils;
+import org.openfuxml.content.media.Image;
+import org.openfuxml.factory.xml.media.XmlImageFactory;
 import org.openfuxml.media.transcode.Svg2PngTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.factory.svg.SvgSymbolFactory;
-import net.sf.ahtutils.factory.xml.sync.XmlMapperFactory;
 import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
 import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphicType;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.sync.Mapper;
 
 public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends UtilsDescription, G extends UtilsGraphic<L,D,GT,GS>, GT extends UtilsStatus<GT,L,D>,GS extends UtilsStatus<GS,L,D>>
 	extends HttpServlet
@@ -40,8 +40,7 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends Util
 		svgF = SvgSymbolFactory.factory();
 	}
 	
-	
-	protected Mapper getPathInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected Image getPathInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		if (request.getPathInfo() == null)
 		{
@@ -65,15 +64,15 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends Util
         	logger.trace("Requested size " +size+" id:"+id);
         }
         
-        return XmlMapperFactory.build(size, id);
+        return XmlImageFactory.idHeight(id,size);
 	}
 	
-	protected void process(HttpServletRequest request, HttpServletResponse response, G graphic, Mapper mapper) throws ServletException, IOException, TranscoderException
+	protected void process(HttpServletRequest request, HttpServletResponse response, G graphic, Image image) throws ServletException, IOException, TranscoderException
     {
 		byte[] bytes = null;
     	
-		long id = mapper.getNewId();
-		int size = (int) mapper.getOldId();
+		String id = image.getId();
+		int size = (int) image.getHeight().getValue();
 		
     	if(graphic.getType().getCode().equals(UtilsGraphicType.Code.symbol.toString()))
 		{

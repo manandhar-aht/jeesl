@@ -43,4 +43,32 @@
     		<s:lang key="fr" translation="View"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupRevisionScopes">
+    	<s:langs>
+    		<s:lang key="de" translation="Bereiche"/>
+    		<s:lang key="en" translation="Scopes"/>
+    		<s:lang key="fr" translation="Scopes"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupRevisionScope">
+    	<s:langs>
+    		<s:lang key="de" translation="Bereich"/>
+    		<s:lang key="en" translation="Scope"/>
+    		<s:lang key="fr" translation="Scope"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupRevisionEntities">
+    	<s:langs>
+    		<s:lang key="de" translation="Enitäten"/>
+    		<s:lang key="en" translation="Entities"/>
+    		<s:lang key="fr" translation="Entities"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupRevisionEntity">
+    	<s:langs>
+    		<s:lang key="de" translation="Enität"/>
+    		<s:lang key="en" translation="Entity"/>
+    		<s:lang key="fr" translation="Entity"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

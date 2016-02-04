@@ -29,13 +29,13 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sView" listener="#{cc.attrs.bean.select()}"/>
-							<p:column rendered="false">  
+							<p:column rendered="true">  
 								<h:outputText value="#{v.position}"/>
 				            </p:column>
 				            <p:column rendered="false" headerText="#{msg.aupCode}">  
 								<h:outputText value="#{v.code}"/>  
 				            </p:column>
-				            <p:column headerText="#{msg.aupRevisionView}">  
+				            <p:column headerText="#{msg.aupRevisionScope}">  
 								<h:outputText value="#{v.name[userBean.localeCode].lang}"/>
 				            </p:column>
 				       	</p:dataTable>

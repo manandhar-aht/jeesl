@@ -27,11 +27,18 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		super(em);
 	}
 
-	@Override
-	public RE load(Class<RE> cEntity, RE entity)
+	@Override public RE load(Class<RE> cEntity, RE entity)
 	{
 		entity = em.find(cEntity, entity.getId());
 		entity.getAttributes().size();
+		entity.getMaps().size();
 		return entity;
+	}
+	
+	@Override public RV load(Class<RV> cView, RV view)
+	{
+		view = em.find(cView, view.getId());
+		view.getMaps().size();
+		return view;
 	}
 }

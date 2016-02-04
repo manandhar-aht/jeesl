@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			 xmlns:l="http://www.openfuxml.org/list"
+			 xmlns:text="http://www.openfuxml.org/text"
+			 xmlns:media="http://www.openfuxml.org/media"
+			 xmlns:layout="http://www.openfuxml.org/layout"
+			 id="section.system.revision.structure">
+	
+	<ofx:title lang="en">Revisions</ofx:title>
+	
+	<l:list id="section.developer.ts.structure.list">
+	    <l:type description="true"/>
+	    
+	    <l:item name="View" lang="en" version="1">
+	    	<ofx:paragraph>
+				A view specifies from which point of view revisions are shown.
+				One example for a view may be a user who has changed something or the project where the changes belong to. 
+			</ofx:paragraph>
+	    </l:item>
+	    <l:item name="View" lang="fr" version="1">
+	    	<ofx:paragraph>TBD</ofx:paragraph>
+	    </l:item>
+	    
+		<l:item name="Scope" lang="en" version="1">
+	    	<ofx:paragraph>
+				A scope represents a category where a entity belongs to.
+			</ofx:paragraph>
+	    </l:item>
+		<l:item name="Scope" lang="fr" version="1">
+	    	<ofx:paragraph>TBD</ofx:paragraph>
+	    </l:item>
+	    
+		<l:item name="Entity" lang="en" version="1">
+	    	<ofx:paragraph>
+				A entity is representing a object.
+			</ofx:paragraph>
+	    </l:item>
+		<l:item name="Entity" lang="fr" version="1">
+	    	<ofx:paragraph>TBD</ofx:paragraph>
+	    </l:item>
+	    
+	    <l:item name="Attribute" lang="en" version="1">
+	    	<ofx:paragraph>
+				Attributes belong to an entity.
+			</ofx:paragraph>
+	    </l:item>
+		<l:item name="Attribute" lang="fr" version="1">
+	    	<ofx:paragraph>TBD</ofx:paragraph>
+	    </l:item> 
+	    
+		<l:item name="View Mapping" lang="en" version="1">
+	    	<ofx:paragraph>
+				Each view can contain different entities. The individual scope of each entity needs to be specified.
+			</ofx:paragraph>
+	    </l:item>
+		<l:item name="View Mapping" lang="fr" version="1">
+	    	<ofx:paragraph>TBD</ofx:paragraph>
+	    </l:item> 
+	    
+	    <l:item name="Entity Mapping" lang="en" version="1">
+	    	<ofx:paragraph>
+				Each entity can be mapped to a specific scope. The object path to the scope needs to be specified.
+			</ofx:paragraph>
+	    </l:item>
+		<l:item name="Entity Mapping" lang="fr" version="1">
+	    	<ofx:paragraph>TBD</ofx:paragraph>
+	    </l:item> 
+	    
+	</l:list>
+	
+	<ofx:paragraph lang="en">
+		The entity relationship diagram for configuration revision reports is shown in Figure
+		<ofx:reference target="image.system.revision.er"/>.
+	</ofx:paragraph>
+	
+	<media:image id="image.system.revision.er">
+	    <ofx:title>Entity Relationship Diagram of Revision Configuration</ofx:title>
+	    <layout:alignment horizontal="center"/>
+	    <layout:width unit="cm">6</layout:width>
+	    <media:media src="aht-utils/svg/admin/development/er/revision.svg" dst="admin/development/er/revision"/>
+	</media:image>
+	
+</ofx:section>

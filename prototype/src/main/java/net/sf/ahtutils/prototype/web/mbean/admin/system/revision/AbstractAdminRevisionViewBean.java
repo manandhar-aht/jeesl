@@ -16,9 +16,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
+import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
@@ -37,15 +37,20 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionViewBean.class);
 	
 	private List<RV> views; public List<RV> getViews() {return views;}
+	private List<RVM> mappings; public List<RVM> getMappings() {return mappings;}
+	
 	private RV rv; public RV getRv() {return rv;} public void setRv(RV rv) {this.rv = rv;}
+	private RVM mapping; public RVM getMapping() {return mapping;}public void setMapping(RVM mapping) {this.mapping = mapping;}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RVM,RS,RE,REM,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping,Class<RA> cAttribute)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute);		
-		reload();
+		entities = fRevision.all(cEntity);
+		scopes = fRevision.all(cScope);
+		reloadViews();
 	}
 
-	public void reload()
+	public void reloadViews()
 	{
 		views = fRevision.all(cView);
 		logger.info(AbstractLogMessage.reloaded(cView,views));
@@ -67,6 +72,13 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 		rv = fRevision.find(cView, rv);
 		rv = efLang.persistMissingLangs(fRevision,langs,rv);
 		rv = efDescription.persistMissingLangs(fRevision,langs,rv);
+		reloadView();
+	}
+	
+	private void reloadView()
+	{
+		rv = fRevision.load(cView, rv);
+		mappings = rv.getMaps();
 	}
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -74,7 +86,8 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 		logger.info(AbstractLogMessage.saveEntity(rv));
 		rv = fRevision.save(rv);
 		bMessage.growlSuccessSaved();
-		reload();
+		reloadViews();
+		reloadView();
 		updatePerformed();
 	}
 	
@@ -84,18 +97,60 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 		fRevision.rm(rv);
 		bMessage.growlSuccessRemoved();
 		rv=null;
-		reload();
+		reloadViews();
 		updatePerformed();
 	}
 	
 	public void cancel()
 	{
 		rv = null;
+		mapping=null;
 	}
 	
-	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, views);}
-	protected void updatePerformed(){}	
+	//*************************************************************************************
 	
+	public void addMapping() throws UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.addEntity(cMappingEntity));
+		mapping = efMappingView.build(rv,null,null);
+//			attribute.setName(efLang.createEmpty(langs));
+//			attribute.setDescription(efDescription.createEmpty(langs));
+	}
+	
+	public void selectMapping() throws UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.selectEntity(mapping));
+		mapping = fRevision.find(cMappingView, mapping);
+	}
+	
+	public void saveMapping() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.saveEntity(mapping));
+		mapping.setScope(fRevision.find(cScope,mapping.getScope()));
+		mapping.setEntity(fRevision.find(cEntity,mapping.getEntity()));
+		mapping = fRevision.save(mapping);
+		reloadView();
+		bMessage.growlSuccessSaved();
+		updatePerformed();
+	}
+	
+	public void rmMapping() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.rmEntity(mapping));
+		fRevision.rm(mapping);
+		mapping=null;
+		bMessage.growlSuccessRemoved();
+		reloadView();
+		updatePerformed();
+	}
+	
+	public void cancelMapping()
+	{
+		mapping=null;
+	}
+	
+	protected void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, views);}
+	protected void updatePerformed(){}	
 	
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)

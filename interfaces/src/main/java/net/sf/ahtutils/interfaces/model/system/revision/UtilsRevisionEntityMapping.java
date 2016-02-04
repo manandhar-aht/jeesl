@@ -22,4 +22,7 @@ public interface UtilsRevisionEntityMapping<L extends UtilsLang,D extends UtilsD
 	
 	RS getScope();
 	void setScope(RS scope);
+	
+	String getXpath();
+	void setXpath(String xpath);
 }

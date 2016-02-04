@@ -12,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 
-public class EjbRevisionMappingFactory<L extends UtilsLang,D extends UtilsDescription,
+public class EjbRevisionMappingViewFactory<L extends UtilsLang,D extends UtilsDescription,
 									RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,REM,RA>,
 									RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,REM,RA>,
 									RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,REM,RA>,
@@ -20,11 +20,11 @@ public class EjbRevisionMappingFactory<L extends UtilsLang,D extends UtilsDescri
 									REM extends UtilsRevisionEntityMapping<L,D,RV,RVM,RS,RE,REM,RA>,
 									RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,REM,RA>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbRevisionMappingFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbRevisionMappingViewFactory.class);
 	
 	final Class<RVM> cMapping;
     
-	public EjbRevisionMappingFactory(final Class<RVM> cMapping)
+	public EjbRevisionMappingViewFactory(final Class<RVM> cMapping)
 	{       
         this.cMapping = cMapping;
 	}
@@ -36,9 +36,9 @@ public class EjbRevisionMappingFactory<L extends UtilsLang,D extends UtilsDescri
 					RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,REM,RA>,
 					REM extends UtilsRevisionEntityMapping<L,D,RV,RVM,RS,RE,REM,RA>,
 					RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,REM,RA>>
-	EjbRevisionMappingFactory<L,D,RV,RVM,RS,RE,REM,RA> factory(final Class<RVM> cMapping)
+	EjbRevisionMappingViewFactory<L,D,RV,RVM,RS,RE,REM,RA> factory(final Class<RVM> cMapping)
 	{
-		return new EjbRevisionMappingFactory<L,D,RV,RVM,RS,RE,REM,RA>(cMapping);
+		return new EjbRevisionMappingViewFactory<L,D,RV,RVM,RS,RE,REM,RA>(cMapping);
 	}
     
 	public RVM build(RV view, RE entity, RS scope)

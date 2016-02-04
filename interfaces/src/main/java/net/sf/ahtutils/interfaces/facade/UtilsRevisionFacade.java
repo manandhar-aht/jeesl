@@ -19,4 +19,5 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 			extends UtilsFacade
 {	
 	RE load(Class<RE> cEntity, RE entity);
+	RV load(Class<RV> cView, RV view);
 }

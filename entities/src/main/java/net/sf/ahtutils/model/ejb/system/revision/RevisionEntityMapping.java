@@ -50,6 +50,10 @@ public class RevisionEntityMapping implements Serializable,EjbRemoveable,EjbPers
 	@Override public boolean isVisible() {return visible;}
 	@Override public void setVisible(boolean visible) {this.visible = visible;}
 
+	private String xpath;
+	@Override public String getXpath() {return xpath;}
+	@Override public void setXpath(String xpath) {this.xpath = xpath;}
+	
 
 	@Override public String toString()
 	{

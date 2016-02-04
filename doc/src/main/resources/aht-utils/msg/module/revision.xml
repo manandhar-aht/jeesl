@@ -85,4 +85,18 @@
     		<s:lang key="fr" translation="Attributes"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupRevisionMappings">
+    	<s:langs>
+    		<s:lang key="de" translation="Mappings"/>
+    		<s:lang key="en" translation="Mappings"/>
+    		<s:lang key="fr" translation="Mappings"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupRevisionMapping">
+    	<s:langs>
+    		<s:lang key="de" translation="Mapping"/>
+    		<s:lang key="en" translation="Mapping"/>
+    		<s:lang key="fr" translation="Mapping"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

@@ -82,6 +82,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		entity = efDescription.persistMissingLangs(fRevision,langs,entity);
 		reloadEntity();
 		attribute=null;
+		mapping=null;
 	}
 	
 	public void saveEntity() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -99,6 +100,8 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		logger.info(AbstractLogMessage.rmEntity(entity));
 		fRevision.rm(entity);
 		entity=null;
+		mapping=null;
+		attribute=null;
 		bMessage.growlSuccessRemoved();
 		reloadEntities();
 		updatePerformed();
@@ -108,6 +111,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	{
 		entity = null;
 		attribute=null;
+		mapping=null;
 	}
 	
 	//*************************************************************************************
@@ -196,6 +200,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	protected void reorderEntites() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, entities);}
 	protected void reorderAttributes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, attributes);}
 	protected void reorderMappings() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, mappings);}
+	
 	protected void updatePerformed(){}	
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)

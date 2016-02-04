@@ -2,6 +2,7 @@ package net.sf.ahtutils.controller.facade;
 
 import javax.persistence.EntityManager;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -40,5 +41,13 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		view = em.find(cView, view.getId());
 		view.getMaps().size();
 		return view;
+	}
+
+	@Override
+	public void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException
+	{
+		mapping = em.find(cMappingView, mapping.getId());
+		mapping.getView().getMaps().remove(mapping);
+		this.rmProtected(mapping);
 	}
 }

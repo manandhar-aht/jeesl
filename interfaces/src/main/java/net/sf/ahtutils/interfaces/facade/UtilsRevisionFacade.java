@@ -1,5 +1,6 @@
 package net.sf.ahtutils.interfaces.facade;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
@@ -20,4 +21,6 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 {	
 	RE load(Class<RE> cEntity, RE entity);
 	RV load(Class<RV> cView, RV view);
+	
+	void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException;
 }

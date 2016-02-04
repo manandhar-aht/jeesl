@@ -46,7 +46,7 @@
 						<p:panel id="pView" header="#{msg.aupRevisionView}"
 									rendered="#{not empty cc.attrs.bean.rv}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
-								<aht:icon type="aupCancel" mayDisappear="true" listener="#{cc.attrs.bean.cancel()}" update=":#{cc.id}:sView" tooltip="#{msg.ttCancel}"/>
+								<aht:icon type="aupCancel" mayDisappear="true" listener="#{cc.attrs.bean.cancel()}" update=":#{cc.id}:sView :#{cc.id}:sDetails" tooltip="#{msg.ttCancel}"/>
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.allowSave}" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="aupDelete" mayDisappear="true" rendered="#{cc.attrs.bean.rv.id gt 0}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
@@ -90,14 +90,14 @@
 								<aht:icon type="aupDelete" mayDisappear="true" rendered="#{cc.attrs.bean.mapping.id gt 0}" listener="#{cc.attrs.bean.rmMapping()}" update=":#{cc.id}:sDetails" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
-								<p:outputLabel value="#{msg.aupRevisionScope}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.mapping.scope}" effect="fade" >
-									<f:selectItems value="#{cc.attrs.bean.scopes}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
-								</p:selectOneMenu>
-								
 								<p:outputLabel value="#{msg.aupRevisionEntity}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.mapping.entity}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.entities}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeEntity()}" update="@form"/>
+								</p:selectOneMenu>
+								<p:outputLabel value="#{msg.aupRevisionScope}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.mapping.scope}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.scopes}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
 						</p:panel>

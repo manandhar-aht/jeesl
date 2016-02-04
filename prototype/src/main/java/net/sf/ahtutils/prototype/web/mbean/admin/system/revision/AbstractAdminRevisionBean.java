@@ -17,40 +17,40 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionMapping;
+import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 
 public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends UtilsDescription,
-											RV extends UtilsRevisionView<L,D,RV,RM,RS,RE,RA>,
-											RM extends UtilsRevisionMapping<L,D,RV,RM,RS,RE,RA>,
-											RS extends UtilsRevisionScope<L,D,RV,RM,RS,RE,RA>,
-											RE extends UtilsRevisionEntity<L,D,RV,RM,RS,RE,RA>,
-											RA extends UtilsRevisionAttribute<L,D,RV,RM,RS,RE,RA>>
+											RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,RA>,
+											RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,RA>,
+											RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,RA>,
+											RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,RA>,
+											RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,RA>>
 																extends AbstractAdminBean<L,D>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionBean.class);
 	
-	protected UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision;
+	protected UtilsRevisionFacade<L,D,RV,RVM,RS,RE,RA> fRevision;
 	
 	protected Class<RV> cView;
-	protected Class<RM> cMapping;
+	protected Class<RVM> cMapping;
 	protected Class<RS> cScope;
 	protected Class<RE> cEntity;
 	protected Class<RA> cAttribute;
 	
-	protected EjbRevisionViewFactory<L,D,RV,RM,RS,RE,RA> efView;
-	protected EjbRevisionMappingFactory<L,D,RV,RM,RS,RE,RA> efMapping;
-	protected EjbRevisionScopeFactory<L,D,RV,RM,RS,RE,RA> efScope;
-	protected EjbRevisionEntityFactory<L,D,RV,RM,RS,RE,RA> efEntity;
-	protected EjbRevisionAttributeFactory<L,D,RV,RM,RS,RE,RA> efAttribute;
+	protected EjbRevisionViewFactory<L,D,RV,RVM,RS,RE,RA> efView;
+	protected EjbRevisionMappingFactory<L,D,RV,RVM,RS,RE,RA> efMapping;
+	protected EjbRevisionScopeFactory<L,D,RV,RVM,RS,RE,RA> efScope;
+	protected EjbRevisionEntityFactory<L,D,RV,RVM,RS,RE,RA> efEntity;
+	protected EjbRevisionAttributeFactory<L,D,RV,RVM,RS,RE,RA> efAttribute;
 	
 	protected List<RS> scopes; public List<RS> getScopes() {return scopes;}
 	
-	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView, Class<RM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<RA> cAttribute)
+	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RVM,RS,RE,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView, Class<RVM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<RA> cAttribute)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fRevision=fRevision;

@@ -7,45 +7,47 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionMapping;
+import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 
 public class EjbRevisionMappingFactory<L extends UtilsLang,D extends UtilsDescription,
-									RV extends UtilsRevisionView<L,D,RV,RM,RS,RE,RA>,
-									RM extends UtilsRevisionMapping<L,D,RV,RM,RS,RE,RA>,
-									RS extends UtilsRevisionScope<L,D,RV,RM,RS,RE,RA>,
-									RE extends UtilsRevisionEntity<L,D,RV,RM,RS,RE,RA>,
-									RA extends UtilsRevisionAttribute<L,D,RV,RM,RS,RE,RA>>
+									RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,RA>,
+									RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,RA>,
+									RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,RA>,
+									RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,RA>,
+									RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,RA>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbRevisionMappingFactory.class);
 	
-	final Class<RM> cMapping;
+	final Class<RVM> cMapping;
     
-	public EjbRevisionMappingFactory(final Class<RM> cMapping)
+	public EjbRevisionMappingFactory(final Class<RVM> cMapping)
 	{       
         this.cMapping = cMapping;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
-					RV extends UtilsRevisionView<L,D,RV,RM,RS,RE,RA>,
-					RM extends UtilsRevisionMapping<L,D,RV,RM,RS,RE,RA>,
-					RS extends UtilsRevisionScope<L,D,RV,RM,RS,RE,RA>,
-					RE extends UtilsRevisionEntity<L,D,RV,RM,RS,RE,RA>,
-					RA extends UtilsRevisionAttribute<L,D,RV,RM,RS,RE,RA>>
-	EjbRevisionMappingFactory<L,D,RV,RM,RS,RE,RA> factory(final Class<RM> cMapping)
+					RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,RA>,
+					RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,RA>,
+					RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,RA>,
+					RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,RA>,
+					RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,RA>>
+	EjbRevisionMappingFactory<L,D,RV,RVM,RS,RE,RA> factory(final Class<RVM> cMapping)
 	{
-		return new EjbRevisionMappingFactory<L,D,RV,RM,RS,RE,RA>(cMapping);
+		return new EjbRevisionMappingFactory<L,D,RV,RVM,RS,RE,RA>(cMapping);
 	}
     
-	public RM build(RS scope, RE entity)
+	public RVM build(RV view, RE entity, RS scope)
 	{
-		RM ejb = null;
+		RVM ejb = null;
 		try
 		{
 			ejb = cMapping.newInstance();
 			ejb.setPosition(0);
 			ejb.setVisible(true);
+			ejb.setView(view);
+			ejb.setEntity(entity);
 			ejb.setScope(scope);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

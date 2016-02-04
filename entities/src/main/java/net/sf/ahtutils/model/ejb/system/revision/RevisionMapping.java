@@ -13,14 +13,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionMapping;
+import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Mapping",category="revision",subset="revision")
 public class RevisionMapping implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsRevisionMapping<Lang,Description,RevisionView,RevisionMapping,RevisionScope,RevisionEntity,RevisionAttribute>
+								UtilsRevisionViewMapping<Lang,Description,RevisionView,RevisionMapping,RevisionScope,RevisionEntity,RevisionAttribute>
 {
 	public static final long serialVersionUID=1;
 
@@ -37,6 +37,11 @@ public class RevisionMapping implements Serializable,EjbRemoveable,EjbPersistabl
 	public RevisionView getView() {return view;}
 	public void setView(RevisionView view) {this.view = view;}
 
+	@NotNull @ManyToOne
+	private RevisionEntity entity;
+	public RevisionEntity getEntity() {return entity;}
+	public void setEntity(RevisionEntity entity) {this.entity = entity;}
+	
 	@NotNull @ManyToOne
 	private RevisionScope scope;
 	public RevisionScope getScope() {return scope;}

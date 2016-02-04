@@ -13,15 +13,15 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface UtilsRevisionView<L extends UtilsLang,D extends UtilsDescription,
-									RV extends UtilsRevisionView<L,D,RV,RM,RS,RE,RA>,
-									RM extends UtilsRevisionMapping<L,D,RV,RM,RS,RE,RA>,
-									RS extends UtilsRevisionScope<L,D,RV,RM,RS,RE,RA>,
-									RE extends UtilsRevisionEntity<L,D,RV,RM,RS,RE,RA>,
-									RA extends UtilsRevisionAttribute<L,D,RV,RM,RS,RE,RA>>
+									RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,RA>,
+									RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,RA>,
+									RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,RA>,
+									RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,RA>,
+									RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,RA>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>
 {					
-	List<RM> getMaps();
-	void setMaps(List<RM> maps);
+	List<RVM> getMaps();
+	void setMaps(List<RVM> maps);
 }

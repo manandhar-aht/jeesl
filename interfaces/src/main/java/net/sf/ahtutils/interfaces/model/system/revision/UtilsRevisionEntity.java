@@ -28,4 +28,7 @@ public interface UtilsRevisionEntity<L extends UtilsLang,D extends UtilsDescript
 	
 	List<RA> getAttributes();
 	void setAttributes(List<RA> attributes);
+	
+	List<REM> getMaps();
+	void setMaps(List<REM> maps);
 }

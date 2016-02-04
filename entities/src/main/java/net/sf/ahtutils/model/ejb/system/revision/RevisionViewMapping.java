@@ -34,13 +34,13 @@ public class RevisionViewMapping implements Serializable,EjbRemoveable,EjbPersis
 	
 	@NotNull @ManyToOne
 	private RevisionView view;
-	public RevisionView getView() {return view;}
-	public void setView(RevisionView view) {this.view = view;}
+	@Override public RevisionView getView() {return view;}
+	@Override public void setView(RevisionView view) {this.view = view;}
 
 	@NotNull @ManyToOne
 	private RevisionEntity entity;
-	public RevisionEntity getEntity() {return entity;}
-	public void setEntity(RevisionEntity entity) {this.entity = entity;}
+	@Override public RevisionEntity getEntity() {return entity;}
+	@Override public void setEntity(RevisionEntity entity) {this.entity = entity;}
 	
 	@NotNull @ManyToOne
 	private RevisionScope scope;

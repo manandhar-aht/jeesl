@@ -50,8 +50,8 @@ public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersista
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
 	private Map<String,Description> description;
-	public Map<String,Description> getDescription() {return description;}
-	public void setDescription(Map<String,Description> description) {this.description = description;}
+	@Override public Map<String,Description> getDescription() {return description;}
+	@Override public void setDescription(Map<String,Description> description) {this.description = description;}
 	
 	private int position;
 	@Override public int getPosition() {return position;}
@@ -62,8 +62,8 @@ public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersista
 	@Override public void setVisible(boolean visible) {this.visible = visible;}
 	
 	private String xpath;
-	public String getXpath() {return xpath;}
-	public void setXpath(String xpath) {this.xpath = xpath;}
+	@Override public String getXpath() {return xpath;}
+	@Override public void setXpath(String xpath) {this.xpath = xpath;}
 	
 	
 	@Override public String toString()

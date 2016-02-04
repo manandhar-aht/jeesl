@@ -31,21 +31,16 @@ public class RevisionEntityMapping implements Serializable,EjbRemoveable,EjbPers
 	private long id;
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
-	
-	@NotNull @ManyToOne
-	private RevisionView view;
-	public RevisionView getView() {return view;}
-	public void setView(RevisionView view) {this.view = view;}
 
 	@NotNull @ManyToOne
 	private RevisionEntity entity;
-	public RevisionEntity getEntity() {return entity;}
-	public void setEntity(RevisionEntity entity) {this.entity = entity;}
+	@Override public RevisionEntity getEntity() {return entity;}
+	@Override public void setEntity(RevisionEntity entity) {this.entity = entity;}
 	
 	@NotNull @ManyToOne
 	private RevisionScope scope;
-	public RevisionScope getScope() {return scope;}
-	public void setScope(RevisionScope scope) {this.scope = scope;}
+	@Override public RevisionScope getScope() {return scope;}
+	@Override public void setScope(RevisionScope scope) {this.scope = scope;}
 
 	private int position;
 	@Override public int getPosition() {return position;}

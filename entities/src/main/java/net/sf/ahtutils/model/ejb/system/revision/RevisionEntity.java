@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -66,13 +67,19 @@ public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
 	private Map<String,Description> description;
-	public Map<String,Description> getDescription() {return description;}
-	public void setDescription(Map<String,Description> description) {this.description = description;}
+	@Override public Map<String,Description> getDescription() {return description;}
+	@Override public void setDescription(Map<String,Description> description) {this.description = description;}
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="entity")
 	private List<RevisionAttribute> attributes;
-	public List<RevisionAttribute> getAttributes() {if(attributes==null){attributes=new ArrayList<RevisionAttribute>();}return attributes;}
-	public void setAttributes(List<RevisionAttribute> attributes) {this.attributes = attributes;} 
+	@Override public List<RevisionAttribute> getAttributes() {if(attributes==null){attributes=new ArrayList<RevisionAttribute>();}return attributes;}
+	@Override public void setAttributes(List<RevisionAttribute> attributes) {this.attributes = attributes;} 
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="entity")
+	@OrderBy("position")
+	private List<RevisionEntityMapping> maps;
+	@Override public List<RevisionEntityMapping> getMaps() {if(maps==null){maps=new ArrayList<RevisionEntityMapping>();}return maps;}
+	@Override public void setMaps(List<RevisionEntityMapping> maps) {this.maps=maps;}
 	
 	@Override public String toString()
 	{

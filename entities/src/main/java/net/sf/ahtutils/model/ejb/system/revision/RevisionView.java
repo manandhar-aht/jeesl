@@ -60,8 +60,8 @@ public class RevisionView implements Serializable,EjbRemoveable,EjbPersistable,
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
 	private Map<String,Description> description;
-	public Map<String,Description> getDescription() {return description;}
-	public void setDescription(Map<String,Description> description) {this.description = description;}
+	@Override public Map<String,Description> getDescription() {return description;}
+	@Override public void setDescription(Map<String,Description> description) {this.description = description;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="view")
 	@OrderBy("position")

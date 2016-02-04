@@ -15,7 +15,7 @@ import org.apache.batik.transcoder.TranscoderException;
 import org.apache.commons.io.IOUtils;
 import org.openfuxml.content.media.Image;
 import org.openfuxml.factory.xml.media.XmlImageFactory;
-import org.openfuxml.media.transcode.Svg2PngTranscoder;
+import org.openfuxml.media.transcode.Svg2SvgTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,23 +78,22 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends Util
 		{
 			logger.info("Build SVG: size " + size + " id:" + id);
 	    	SVGGraphics2D g = svgF.build(size,graphic);
-	    	bytes = Svg2PngTranscoder.transcode(g);
+	    	bytes = Svg2SvgTranscoder.transcode(g);
+	    	respond(request,response,bytes,"svg");
 		}
     	else if(graphic.getType().getCode().equals(UtilsGraphicType.Code.svg.toString()))
     	{
-//       		if (s.ggetGraphic.)
-    		bytes = Svg2PngTranscoder.transcode(size,graphic.getData());
+//    		bytes = Svg2PngTranscoder.transcode(size,graphic.getData());
+    		respond(request,response,graphic.getData(),"svg");
     	}
-
-		respond(request,response,bytes);
 	}
 	
-	protected void respond(HttpServletRequest request, HttpServletResponse response,byte[] bytes) throws ServletException, IOException
+	protected void respond(HttpServletRequest request, HttpServletResponse response,byte[] bytes, String suffix) throws ServletException, IOException
     {
 		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 		
 		response.reset();
-		response.setContentType(getServletContext().getMimeType("x.png"));
+		response.setContentType(getServletContext().getMimeType("x."+suffix));
 		response.setHeader("Content-Length", String.valueOf(bytes.length));
 		
 	  	IOUtils.copy(bais,response.getOutputStream());

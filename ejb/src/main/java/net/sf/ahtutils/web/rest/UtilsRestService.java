@@ -22,7 +22,7 @@ import net.sf.ahtutils.xml.utils.Utils;
 
 public class UtilsRestService <L extends UtilsLang,
 							D extends UtilsDescription,
-							G extends UtilsGraphic<L,D,GT,GS>,
+							G extends UtilsGraphic<L,D,G,GT,GS>,
 							GT extends UtilsStatus<GT,L,D>,
 							GS extends UtilsStatus<GS,L,D>,
 							P extends UtilsProperty>
@@ -61,7 +61,7 @@ public class UtilsRestService <L extends UtilsLang,
 	
 	public static <L extends UtilsLang,
 				D extends UtilsDescription,
-				G extends UtilsGraphic<L,D,GT,GS>,
+				G extends UtilsGraphic<L,D,G,GT,GS>,
 				GT extends UtilsStatus<GT,L,D>,
 				GS extends UtilsStatus<GS,L,D>,
 				P extends UtilsProperty> 

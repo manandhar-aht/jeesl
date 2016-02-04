@@ -24,7 +24,7 @@ import net.sf.exlp.util.io.StringUtil;
 
 public class AbstractOptionTableBean <L extends UtilsLang,
 										D extends UtilsDescription,
-										G extends UtilsGraphic<L,D,GT,GS>,
+										G extends UtilsGraphic<L,D,G,GT,GS>,
 										GT extends UtilsStatus<GT,L,D>,
 										GS extends UtilsStatus<GS,L,D>>
 										implements Serializable

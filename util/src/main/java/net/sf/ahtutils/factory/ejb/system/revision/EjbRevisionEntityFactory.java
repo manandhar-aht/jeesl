@@ -41,7 +41,7 @@ public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescrip
 		return new EjbRevisionEntityFactory<L,D,RV,RVM,RS,RE,REM,RA>(cEntity);
 	}
     
-	public RE build(RS scope)
+	public RE build()
 	{
 		RE ejb = null;
 		try
@@ -49,7 +49,6 @@ public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescrip
 			ejb = cEntity.newInstance();
 			ejb.setPosition(0);
 			ejb.setVisible(true);
-			ejb.setScope(scope);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

@@ -10,4 +10,5 @@
 	<node category="status" code="reds7" id="4"/>
 	<node category="ts" code="blues7" id="5"/>
 	<node category="tsQa" code="purples7" id="4"/>
+	<node category="revision" code="blues7" id="5"/>
 </node>

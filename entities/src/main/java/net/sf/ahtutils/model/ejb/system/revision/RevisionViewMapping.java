@@ -18,7 +18,7 @@ import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="View Mapping",category="revision",subset="revision")
+@EjbErNode(name="View Mapping",category="revision",subset="revision",level=3)
 public class RevisionViewMapping implements Serializable,EjbRemoveable,EjbPersistable,
 								UtilsRevisionViewMapping<Lang,Description,RevisionView,RevisionViewMapping,RevisionScope,RevisionEntity,RevisionEntityMapping,RevisionAttribute>
 {

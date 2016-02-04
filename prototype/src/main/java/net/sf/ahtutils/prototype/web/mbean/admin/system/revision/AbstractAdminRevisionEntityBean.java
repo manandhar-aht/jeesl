@@ -60,7 +60,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void addEntity() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.addEntity(cEntity));
-		entity = efEntity.build(null);
+		entity = efEntity.build();
 		entity.setName(efLang.createEmpty(langs));
 		entity.setDescription(efDescription.createEmpty(langs));
 		attribute=null;
@@ -85,7 +85,6 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void saveEntity() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(entity));
-		entity.setScope(fRevision.find(cScope, entity.getScope()));
 		entity = fRevision.save(entity);
 		reloadEntities();
 		reloadEntity();

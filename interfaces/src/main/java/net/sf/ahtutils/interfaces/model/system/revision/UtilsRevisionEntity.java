@@ -23,9 +23,6 @@ public interface UtilsRevisionEntity<L extends UtilsLang,D extends UtilsDescript
 				EjbWithCode,EjbWithPositionVisible,
 		EjbWithLang<L>,EjbWithDescription<D>
 {	
-	RS getScope();
-	void setScope(RS scope);
-	
 	List<RA> getAttributes();
 	void setAttributes(List<RA> attributes);
 	

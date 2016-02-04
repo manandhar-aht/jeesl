@@ -10,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -39,11 +38,6 @@ public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable
 	private long id;
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
-	
-	@NotNull @ManyToOne
-	private RevisionScope scope;
-	@Override public RevisionScope getScope() {return scope;}
-	@Override public void setScope(RevisionScope scope) {this.scope = scope;}
 	
 	@NotNull
 	protected String code;

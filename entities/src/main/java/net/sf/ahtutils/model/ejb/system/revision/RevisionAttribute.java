@@ -22,7 +22,7 @@ import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Attribute",category="revision",subset="revision")
+@EjbErNode(name="Attribute",category="revision",subset="revision",level=2)
 public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersistable,
 								UtilsRevisionAttribute<Lang,Description,RevisionView,RevisionViewMapping,RevisionScope,RevisionEntity,RevisionEntityMapping,RevisionAttribute>
 {

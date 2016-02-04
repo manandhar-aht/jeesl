@@ -69,7 +69,7 @@ public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable
 	public Map<String,Description> getDescription() {return description;}
 	public void setDescription(Map<String,Description> description) {this.description = description;}
 	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="entity")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="entity")
 	private List<RevisionAttribute> attributes;
 	public List<RevisionAttribute> getAttributes() {if(attributes==null){attributes=new ArrayList<RevisionAttribute>();}return attributes;}
 	public void setAttributes(List<RevisionAttribute> attributes) {this.attributes = attributes;} 

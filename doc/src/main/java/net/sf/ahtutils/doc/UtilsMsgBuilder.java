@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 public class UtilsMsgBuilder
 {	
-	public static final String srcGeneric = "msg.aht-utils/generic.xml";
+	public static final String generic = "aht-utils/msg/generic.xml";
 	public static final String srcProject = "msg.aht-utils/project.xml";
 	public static final String srcFinance = "msg.aht-utils/finance/finance.xml";
 	public static final String srcAmount = "msg.aht-utils/finance/amount.xml";

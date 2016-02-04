@@ -18,7 +18,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sCategories" width="8">
+				<aht:slot id="sCategories" width="4">
 					<h:form id="fCategories">
 						<p:dataTable var="v" value="#{cc.attrs.bean.views}" draggableRows="true"
 							selection="#{cc.attrs.bean.rv}" selectionMode="single" rowKey="#{v.id}">
@@ -27,9 +27,9 @@
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sView" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
-							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sView" listener="#{cc.attrs.bean.select()}"/>
-							<p:column rendered="false">  
+							<p:column rendered="true">  
 								<h:outputText value="#{v.position}"/>
 				            </p:column>
 				            <p:column rendered="false" headerText="#{msg.aupCode}">  

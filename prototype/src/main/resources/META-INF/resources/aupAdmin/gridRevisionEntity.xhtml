@@ -24,19 +24,22 @@
 							selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{e.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.aupRevisionEntities}">
-									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sView" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addEntity()}" update=":#{cc.id}:sView :#{cc.id}:sAttributes" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
-							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
-							<p:ajax event="rowSelect" update=":#{cc.id}:sView" listener="#{cc.attrs.bean.select()}"/>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderEntites()}" update="@form"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sView :#{cc.id}:sAttributes" listener="#{cc.attrs.bean.selectEntity()}"/>
 							<p:column rendered="true">  
-								<h:outputText value="#{e.scope.position}.#{e.position}"/>
+								<h:outputText value="#{e.position}"/>
 				            </p:column>
 				            <p:column headerText="#{msg.aupRevisionScope}">  
 								<h:outputText value="#{e.scope.name[userBean.localeCode].lang}"/>
 				            </p:column>
-				            <p:column headerText="#{msg.aupRevisionView}">  
-								<h:outputText value="#{v.name[userBean.localeCode].lang}"/>
+				            <p:column headerText="#{msg.aupRevisionEntity}">  
+								<h:outputText value="#{e.name[userBean.localeCode].lang}"/>
+				            </p:column>
+				             <p:column>  
+								<aup:iconCheckmark value="#{e.visible}"/>
 				            </p:column>
 				       	</p:dataTable>
 					</h:form>
@@ -46,20 +49,63 @@
 						<p:panel id="pView" header="#{msg.aupRevisionEntity}"
 									rendered="#{not empty cc.attrs.bean.entity}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
-								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancel()}" update=":#{cc.id}:sView" tooltip="#{msg.ttCancel}"/>
-								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.allowSave}" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.entity.id gt 0}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
+								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelEntity()}" update=":#{cc.id}:sView :#{cc.id}:sAttributes" tooltip="#{msg.ttCancel}"/>
+								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.allowSave}" listener="#{cc.attrs.bean.saveEntity()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.entity.id gt 0}" listener="#{cc.attrs.bean.rmEntity()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
-								<p:outputLabel value="#{msg.aupCode}"/>
-								<h:inputText autocomplete="off" value="#{cc.attrs.bean.entity.code}"/>
-								
+								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.entity.visible}"/>
 								<p:outputLabel value="#{msg.aupRevisionScope}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.entity.scope}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.scopes}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
+								<p:outputLabel value="#{msg.aupCode}"/>
+								<h:inputText autocomplete="off" value="#{cc.attrs.bean.entity.code}"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.entity}"
+													labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
+       												keys="#{translationBean.langKeys}" withDescription="true"/>
+						</p:panel>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sAttributes" width="4">
+					<h:form id="fAttributes" rendered="#{(not empty cc.attrs.bean.entity) and (cc.attrs.bean.entity.id gt 0)}">
+						<p:dataTable var="a" value="#{cc.attrs.bean.attributes}" draggableRows="true"
+							selection="#{cc.attrs.bean.attribute}" selectionMode="single" rowKey="#{a.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.aupRevisionAttributes}">
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addAttribute()}" update=":#{cc.id}:fAttribute" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderAttributes()}" update="@form"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:fAttribute" listener="#{cc.attrs.bean.selectAttribute()}"/>
+							<p:column rendered="true">  
+								<h:outputText value="#{a.position}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.aupRevisionAttribute}">  
+								<h:outputText value="#{a.name[userBean.localeCode].lang}"/>
+				            </p:column>
+				            <p:column>  
+								<aup:iconCheckmark value="#{a.visible}"/>
+				            </p:column>
+				       	</p:dataTable>
+					</h:form>
+					<h:form id="fAttribute">
+						<p:panel id="pView" header="#{msg.aupRevisionAttribute}"
+									rendered="#{not empty cc.attrs.bean.attribute}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelAttribute()}" update=":#{cc.id}:sAttributes" tooltip="#{msg.ttCancel}"/>
+								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.allowSave}" listener="#{cc.attrs.bean.saveAttribute()}" update=":#{cc.id}:sAttributes" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.attribute.id gt 0}" listener="#{cc.attrs.bean.rmAttribute()}" update=":#{cc.id}:sAttributes" tooltip="#{msg.ttDelete}"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.visible}"/>
+								<p:outputLabel value="#{msg.aupXpath}"/>
+								<h:inputText autocomplete="off" value="#{cc.attrs.bean.attribute.xpath}"/>
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.attribute}"
 													labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
        												keys="#{translationBean.langKeys}" withDescription="true"/>
 						</p:panel>

@@ -1,5 +1,8 @@
-package net.sf.ahtutils.interfaces.facade;
+package net.sf.ahtutils.controller.facade;
 
+import javax.persistence.EntityManager;
+
+import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
@@ -8,13 +11,25 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 
-public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescription,
+public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescription,
 									RV extends UtilsRevisionView<L,D,RV,RM,RS,RE,RA>,
 									RM extends UtilsRevisionMapping<L,D,RV,RM,RS,RE,RA>,
 									RS extends UtilsRevisionScope<L,D,RV,RM,RS,RE,RA>,
 									RE extends UtilsRevisionEntity<L,D,RV,RM,RS,RE,RA>,
 									RA extends UtilsRevisionAttribute<L,D,RV,RM,RS,RE,RA>>
-			extends UtilsFacade
+					extends UtilsFacadeBean
+					implements UtilsRevisionFacade<L,D,RV,RM,RS,RE,RA>
 {	
-	RE load(Class<RE> cEntity, RE entity);
+	public UtilsRevisionFacadeBean(EntityManager em)
+	{
+		super(em);
+	}
+
+	@Override
+	public RE load(Class<RE> cEntity, RE entity)
+	{
+		entity = em.find(cEntity, entity.getId());
+		entity.getAttributes().size();
+		return entity;
+	}
 }

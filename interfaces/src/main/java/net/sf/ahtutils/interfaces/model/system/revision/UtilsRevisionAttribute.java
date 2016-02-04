@@ -22,6 +22,6 @@ public interface UtilsRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 	RE getEntity();
 	void setEntity(RE entitiy);
 	
-	boolean getOutdated();
-	void setOutdated(boolean outdated);
+	String getXpath();
+	void setXpath(String xpath);
 }

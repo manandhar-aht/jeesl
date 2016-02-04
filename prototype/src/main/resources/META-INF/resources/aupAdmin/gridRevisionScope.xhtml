@@ -27,7 +27,7 @@
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sView" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
-							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sView" listener="#{cc.attrs.bean.select()}"/>
 							<p:column rendered="true">  
 								<h:outputText value="#{v.position}"/>

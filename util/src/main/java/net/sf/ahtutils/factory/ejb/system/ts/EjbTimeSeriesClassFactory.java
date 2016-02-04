@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.ts;
+package net.sf.ahtutils.factory.ejb.system.ts;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionEntityFactory;
 import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionMappingFactory;
 import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionScopeFactory;
@@ -45,6 +46,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected EjbRevisionMappingFactory<L,D,RV,RM,RS,RE,RA> efMapping;
 	protected EjbRevisionScopeFactory<L,D,RV,RM,RS,RE,RA> efScope;
 	protected EjbRevisionEntityFactory<L,D,RV,RM,RS,RE,RA> efEntity;
+	protected EjbRevisionAttributeFactory<L,D,RV,RM,RS,RE,RA> efAttribute;
 	
 	protected List<RS> scopes; public List<RS> getScopes() {return scopes;}
 	
@@ -62,6 +64,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		efMapping = EjbRevisionMappingFactory.factory(cMapping);
 		efScope = EjbRevisionScopeFactory.factory(cScope);
 		efEntity = EjbRevisionEntityFactory.factory(cEntity);
+		efAttribute = EjbRevisionAttributeFactory.factory(cAttribute);
 		
 		allowSave = true;
 	}

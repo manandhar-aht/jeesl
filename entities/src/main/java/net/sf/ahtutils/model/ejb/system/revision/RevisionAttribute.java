@@ -61,10 +61,10 @@ public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersista
 	@Override public boolean isVisible() {return visible;}
 	@Override public void setVisible(boolean visible) {this.visible = visible;}
 	
-	private boolean outdated;
-	@Override public boolean getOutdated() {return outdated;}
-	@Override public void setOutdated(boolean outdated) {this.outdated = outdated;}
-
+	private String xpath;
+	public String getXpath() {return xpath;}
+	public void setXpath(String xpath) {this.xpath = xpath;}
+	
 	
 	@Override public String toString()
 	{

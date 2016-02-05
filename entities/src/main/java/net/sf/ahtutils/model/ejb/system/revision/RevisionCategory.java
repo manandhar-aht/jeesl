@@ -11,7 +11,7 @@ import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Category",category="ts",subset="ts",level=4)
+@EjbErNode(name="Category",category="revision",subset="revision",level=4)
 public class RevisionCategory implements Serializable,EjbRemoveable,EjbPersistable,
 							UtilsStatus<RevisionCategory,Lang,Description>
 {

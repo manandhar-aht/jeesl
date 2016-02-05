@@ -54,7 +54,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 
 	public void reloadViews()
 	{
-		views = fRevision.all(cView);
+		views = fRevision.allOrderedPosition(cView);
 		logger.info(AbstractLogMessage.reloaded(cView,views));
 //		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
 //		else{categories = fUtils.allOrderedPositionVisible(cCategory);}

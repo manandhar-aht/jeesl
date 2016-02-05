@@ -1,7 +1,5 @@
 package net.sf.ahtutils.interfaces.model.system.revision;
 
-import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
-import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -19,12 +17,12 @@ public interface UtilsRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 										REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
 										RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
 										RAT extends UtilsStatus<RAT,L,D>>
-		extends EjbWithId,EjbSaveable,EjbRemoveable,
+		extends EjbWithId,
 				EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>
 {					
-	RE getEntity();
-	void setEntity(RE entitiy);
+//	RE getEntity();
+//	void setEntity(RE entitiy);
 	
 	RAT getType();
 	void setType(RAT type);

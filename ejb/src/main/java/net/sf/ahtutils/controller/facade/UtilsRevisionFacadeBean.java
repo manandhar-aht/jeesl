@@ -3,6 +3,7 @@ package net.sf.ahtutils.controller.facade;
 import javax.persistence.EntityManager;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -30,6 +31,20 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	{
 		super(em);
 	}
+	
+	@Override public RV load(Class<RV> cView, RV view)
+	{
+		view = em.find(cView, view.getId());
+		view.getMaps().size();
+		return view;
+	}
+	
+	@Override public RS load(Class<RS> cScope, RS scope)
+	{
+		scope = em.find(cScope, scope.getId());
+		scope.getAttributes().size();
+		return scope;
+	}
 
 	@Override public RE load(Class<RE> cEntity, RE entity)
 	{
@@ -39,12 +54,7 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		return entity;
 	}
 	
-	@Override public RV load(Class<RV> cView, RV view)
-	{
-		view = em.find(cView, view.getId());
-		view.getMaps().size();
-		return view;
-	}
+
 
 	@Override
 	public void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException
@@ -52,5 +62,53 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		mapping = em.find(cMappingView, mapping.getId());
 		mapping.getView().getMaps().remove(mapping);
 		this.rmProtected(mapping);
+	}
+
+	@Override
+	public RA save(Class<RE> cEntity, RE entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		entity = this.find(cEntity, entity);
+		attribute = this.saveProtected(attribute);
+		if(!entity.getAttributes().contains(attribute))
+		{
+			entity.getAttributes().add(attribute);
+			this.saveProtected(entity);
+		}
+		return attribute;
+	}
+	
+	@Override
+	public RA save(Class<RS> cScope, RS scope, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		attribute = this.saveProtected(attribute);
+		if(!scope.getAttributes().contains(attribute))
+		{
+			scope.getAttributes().add(attribute);
+			this.saveProtected(scope);
+		}
+		return attribute;
+	}
+
+	@Override
+	public void rm(Class<RE> cEntity, RE entity, RA attribute) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		entity = this.find(cEntity, entity);
+		if(entity.getAttributes().contains(attribute))
+		{
+			entity.getAttributes().remove(attribute);
+			this.saveProtected(entity);
+		}
+		this.rmProtected(attribute);		
+	}
+
+	@Override
+	public void rm(Class<RS> cScope, RS scope, RA attribute) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(scope.getAttributes().contains(attribute))
+		{
+			scope.getAttributes().remove(attribute);
+			this.saveProtected(scope);
+		}
+		this.rmProtected(attribute);		
 	}
 }

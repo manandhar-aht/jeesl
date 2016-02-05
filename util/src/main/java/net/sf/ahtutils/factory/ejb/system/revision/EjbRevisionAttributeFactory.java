@@ -46,7 +46,7 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 		return new EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>(cAttribute);
 	}
     
-	public RA build(RE entity)
+	public RA build(RAT type)
 	{
 		RA ejb = null;
 		try
@@ -54,7 +54,7 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 			ejb = cAttribute.newInstance();
 			ejb.setPosition(0);
 			ejb.setVisible(true);
-			ejb.setEntity(entity);
+			ejb.setType(type);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

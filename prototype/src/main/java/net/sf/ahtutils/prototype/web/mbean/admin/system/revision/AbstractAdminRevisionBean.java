@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionEntityFactory;
 import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionMappingEntityFactory;
@@ -26,6 +27,7 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.util.comparator.ejb.revision.RevisionEntityComparator;
+import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends UtilsDescription,
 											RC extends UtilsStatus<RC,L,D>,
@@ -60,10 +62,13 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efMappingEntity;
 	protected EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efAttribute;
 	
+	protected List<RA> attributes; public List<RA> getAttributes() {return attributes;}
 	protected List<RC> categories; public List<RC> getCategories() {return categories;}
 	protected List<RS> scopes; public List<RS> getScopes() {return scopes;}
 	protected List<RE> entities; public List<RE> getEntities() {return entities;}
 	protected List<RAT> types; public List<RAT> getTypes() {return types;}
+	
+	protected RA attribute; public RA getAttribute() {return attribute;}public void setAttribute(RA attribute) {this.attribute = attribute;}
 	
 	protected Comparator<RE> comparatorEntity;
 	
@@ -90,6 +95,27 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
 		
 		allowSave = true;
+	}
+	
+	public void addAttribute() throws UtilsNotFoundException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cAttribute));}
+		attribute = efAttribute.build(null);
+		attribute.setName(efLang.createEmpty(langs));
+		attribute.setDescription(efDescription.createEmpty(langs));
+	}
+	
+	public void selectAttribute() throws UtilsNotFoundException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(attribute));}
+		attribute = fRevision.find(cAttribute, attribute);
+		attribute = efLang.persistMissingLangs(fRevision,langs,attribute);
+		attribute = efDescription.persistMissingLangs(fRevision,langs,attribute);
+	}
+	
+	public void cancelAttribute()
+	{
+		attribute=null;
 	}
 	
 	//Security Handling for Invisible entries

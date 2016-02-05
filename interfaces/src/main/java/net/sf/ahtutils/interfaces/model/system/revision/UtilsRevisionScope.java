@@ -1,5 +1,7 @@
 package net.sf.ahtutils.interfaces.model.system.revision;
 
+import java.util.List;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -28,4 +30,7 @@ public interface UtilsRevisionScope<L extends UtilsLang,D extends UtilsDescripti
 {					
 	String getFqcn();
 	void setFqcn(String fqcn);
+	
+	List<RA> getAttributes();
+	void setAttributes(List<RA> attributes);
 }

@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
@@ -71,11 +73,12 @@ public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable
 	private Map<String,Description> description;
 	@Override public Map<String,Description> getDescription() {return description;}
 	@Override public void setDescription(Map<String,Description> description) {this.description = description;}
-	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="entity")
+		
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="RevisionEntity_Attribute",joinColumns={@JoinColumn(name="entity")},inverseJoinColumns={@JoinColumn(name="attribute")})
 	private List<RevisionAttribute> attributes;
 	@Override public List<RevisionAttribute> getAttributes() {if(attributes==null){attributes=new ArrayList<RevisionAttribute>();}return attributes;}
-	@Override public void setAttributes(List<RevisionAttribute> attributes) {this.attributes = attributes;} 
+	@Override public void setAttributes(List<RevisionAttribute> attributes) {this.attributes = attributes;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="entity")
 	@OrderBy("position")

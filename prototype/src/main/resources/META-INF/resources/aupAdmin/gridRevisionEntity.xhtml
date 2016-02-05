@@ -75,7 +75,7 @@
 							selection="#{cc.attrs.bean.mapping}" selectionMode="single" rowKey="#{m.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.aupRevisionMappings}">
-									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addMapping()}" update=":#{cc.id}:fMapping" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addMapping()}" update=":#{cc.id}:fMappings :#{cc.id}:fMapping" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderMappings()}" update="@form"/>
@@ -110,7 +110,7 @@
 							selection="#{cc.attrs.bean.attribute}" selectionMode="single" rowKey="#{a.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.aupRevisionAttributes}">
-									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addAttribute()}" update=":#{cc.id}:fAttribute" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addAttribute()}" update=":#{cc.id}:fAttributes :#{cc.id}:fAttribute" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderAttributes()}" update="@form"/>

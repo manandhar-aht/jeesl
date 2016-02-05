@@ -40,11 +40,9 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionEntityBean.class);
 	
-	private List<RA> attributes; public List<RA> getAttributes() {return attributes;}
 	private List<REM> mappings; public List<REM> getMappings() {return mappings;}
 	
 	private RE entity; public RE getEntity() {return entity;} public void setEntity(RE entity) {this.entity = entity;}
-	private RA attribute; public RA getAttribute() {return attribute;}public void setAttribute(RA attribute) {this.attribute = attribute;}
 	private REM mapping; public REM getMapping() {return mapping;}public void setMapping(REM mapping) {this.mapping = mapping;}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
@@ -124,27 +122,11 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	//*************************************************************************************
 	
-	public void addAttribute() throws UtilsNotFoundException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cAttribute));}
-		attribute = efAttribute.build(entity);
-		attribute.setName(efLang.createEmpty(langs));
-		attribute.setDescription(efDescription.createEmpty(langs));
-	}
-	
-	public void selectAttribute() throws UtilsNotFoundException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(attribute));}
-		attribute = fRevision.find(cAttribute, attribute);
-		attribute = efLang.persistMissingLangs(fRevision,langs,attribute);
-		attribute = efDescription.persistMissingLangs(fRevision,langs,attribute);
-	}
-	
 	public void saveAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(attribute));}
 		if(attribute.getType()!=null){attribute.setType(fRevision.find(cRat, attribute.getType()));}
-		attribute = fRevision.save(attribute);
+		attribute = fRevision.save(cEntity,entity,attribute);
 		reloadEntity();
 		bMessage.growlSuccessSaved();
 		updatePerformed();
@@ -153,16 +135,11 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void rmAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(attribute));}
-		fRevision.rm(attribute);
+		fRevision.rm(cEntity,entity,attribute);
 		attribute=null;
 		bMessage.growlSuccessRemoved();
 		reloadEntity();
 		updatePerformed();
-	}
-	
-	public void cancelAttribute()
-	{
-		attribute=null;
 	}
 	
 	//*************************************************************************************

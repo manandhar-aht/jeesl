@@ -41,7 +41,8 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping,Class<RA> cAttribute,Class<RAT> cRat)
 	{
-		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute,cRat);	
+		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute,cRat);
+		types = fRevision.allOrderedPositionVisible(cRat);
 		reloadViews();
 	}
 
@@ -51,6 +52,12 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 		logger.info(AbstractLogMessage.reloaded(cScope,scopes));
 //		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
 //		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
+	}
+	
+	private void reloadScope()
+	{
+		scope = fRevision.load(cScope, scope);
+		attributes = scope.getAttributes();
 	}
 	
 	public void add() throws UtilsNotFoundException
@@ -67,6 +74,8 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 		scope = fRevision.find(cScope,scope);
 		scope = efLang.persistMissingLangs(fRevision,langs,scope);
 		scope = efDescription.persistMissingLangs(fRevision,langs,scope);
+		reloadScope();
+		attribute=null;
 	}
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -75,6 +84,7 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 		scope = fRevision.save(scope);
 		bMessage.growlSuccessSaved();
 		reloadViews();
+		reloadScope();
 		updatePerformed();
 	}
 	
@@ -90,7 +100,28 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 	
 	public void cancel()
 	{
-		scope = null;
+		scope=null;
+		attribute=null;
+	}
+	
+	public void saveAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(attribute));}
+		if(attribute.getType()!=null){attribute.setType(fRevision.find(cRat, attribute.getType()));}
+		attribute = fRevision.save(cScope,scope,attribute);
+		reloadScope();
+		bMessage.growlSuccessSaved();
+		updatePerformed();
+	}
+	
+	public void rmAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(attribute));}
+		fRevision.rm(cScope,scope,attribute);
+		attribute=null;
+		bMessage.growlSuccessRemoved();
+		reloadScope();
+		updatePerformed();
 	}
 	
 	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, scopes);}

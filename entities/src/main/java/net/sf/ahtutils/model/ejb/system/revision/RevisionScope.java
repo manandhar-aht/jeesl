@@ -1,6 +1,8 @@
 package net.sf.ahtutils.model.ejb.system.revision;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -8,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -68,6 +72,12 @@ public class RevisionScope implements Serializable,EjbRemoveable,EjbPersistable,
 	private String fqcn;
 	@Override public String getFqcn() {return fqcn;}
 	@Override public void setFqcn(String fqcn) {this.fqcn = fqcn;}
+	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="RevisionScope_Attribute",joinColumns={@JoinColumn(name="scope")},inverseJoinColumns={@JoinColumn(name="attribute")})
+	private List<RevisionAttribute> attributes;
+	@Override public List<RevisionAttribute> getAttributes() {if(attributes==null){attributes=new ArrayList<RevisionAttribute>();}return attributes;}
+	@Override public void setAttributes(List<RevisionAttribute> attributes) {this.attributes = attributes;}
 	
 	
 	@Override public String toString()

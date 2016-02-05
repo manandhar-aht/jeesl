@@ -15,12 +15,13 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping
 
 public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
-									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-									RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-									RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-									REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA>>
+									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									RAT extends UtilsStatus<RAT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbRevisionAttributeFactory.class);
 	
@@ -33,15 +34,16 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					RC extends UtilsStatus<RC,L,D>,
-					RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-					RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-					RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-					RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-					REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA>>
-	EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA> factory(final Class<RA> cAttribute)
+					RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					RAT extends UtilsStatus<RAT,L,D>>
+	EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> factory(final Class<RA> cAttribute)
 	{
-		return new EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA>(cAttribute);
+		return new EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>(cAttribute);
 	}
     
 	public RA build(RE entity)

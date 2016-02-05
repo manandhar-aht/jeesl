@@ -16,14 +16,15 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 
 public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,	
-									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-									RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-									RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-									REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA>>
+									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+									RAT extends UtilsStatus<RAT,L,D>>
 					extends UtilsFacadeBean
-					implements UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA>
+					implements UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>
 {	
 	public UtilsRevisionFacadeBean(EntityManager em)
 	{

@@ -29,12 +29,13 @@ import net.sf.ahtutils.xml.audit.Change;
 
 public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 							RC extends UtilsStatus<RC,L,D>,
-							RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-							RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-							RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-							RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-							REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-							RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+							RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+							RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+							RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+							RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+							REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+							RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+							RAT extends UtilsStatus<RAT,L,D>,
 							REV extends UtilsRevision,
 							C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
 							R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
@@ -45,7 +46,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(RevisionEngine.class);
 	
-	private UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA> fRevision;
+	private UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision;
 	
 	private final Class<RV> cView;
 	private final Class<RE> cEntity;
@@ -53,7 +54,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 	private String lang;
 	private Map<String,RVM> map;
 	
-	public RevisionEngine(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA> fRevision, final Class<RV> cView, final Class<RE> cEntity)
+	public RevisionEngine(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RE> cEntity)
 	{
 		this.fRevision=fRevision;
 		this.cView=cView;
@@ -64,12 +65,13 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					RC extends UtilsStatus<RC,L,D>,
-					RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-					RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-					RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-					RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-					REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+					RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+					RAT extends UtilsStatus<RAT,L,D>,
 					REV extends UtilsRevision,
 					C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
 					R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
@@ -77,9 +79,9 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 					U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
 					A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
 					USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
-					RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,REV,C,R,V,U,A,USER> factory(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA> fRevision, final Class<RV> cView, final Class<RE> cEntity)
+					RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,USER> factory(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RE> cEntity)
 	{
-		return new RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,REV,C,R,V,U,A,USER>(fRevision, cView, cEntity);
+		return new RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,USER>(fRevision, cView, cEntity);
 	}
 	
 	public void init(String lang, RV view)

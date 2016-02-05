@@ -26,23 +26,23 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.util.comparator.ejb.revision.RevisionEntityComparator;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityRoleComparator;
 
 public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends UtilsDescription,
 											RC extends UtilsStatus<RC,L,D>,
-											RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-											RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-											RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-											RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-											REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
-											RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA>>
+											RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+											RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+											RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+											RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+											REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+											RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+											RAT extends UtilsStatus<RAT,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionBean.class);
 	
-	protected UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA> fRevision;
+	protected UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision;
 	
 	protected Class<RC> cCategory;
 	protected Class<RV> cView;
@@ -51,13 +51,14 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected Class<RE> cEntity;
 	protected Class<REM> cMappingEntity;
 	protected Class<RA> cAttribute;
+	protected Class<RAT> cRat;
 	
-	protected EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA> efView;
-	protected EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA> efMappingView;
-	protected EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA> efScope;
-	protected EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA> efEntity;
-	protected EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA> efMappingEntity;
-	protected EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA> efAttribute;
+	protected EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efView;
+	protected EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efMappingView;
+	protected EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efScope;
+	protected EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efEntity;
+	protected EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efMappingEntity;
+	protected EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efAttribute;
 	
 	protected List<RC> categories; public List<RC> getCategories() {return categories;}
 	protected List<RS> scopes; public List<RS> getScopes() {return scopes;}
@@ -65,7 +66,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	
 	protected Comparator<RE> comparatorEntity;
 	
-	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView, Class<RVM> cMappingView, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute)
+	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView, Class<RVM> cMappingView, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fRevision=fRevision;
@@ -76,6 +77,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		this.cEntity=cEntity;
 		this.cMappingEntity=cEntityMapping;
 		this.cAttribute=cAttribute;
+		this.cRat=cRat;
 		
 		efView = EjbRevisionViewFactory.factory(cView);
 		efMappingView = EjbRevisionMappingViewFactory.factory(cMappingView);
@@ -84,7 +86,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		efMappingEntity = EjbRevisionMappingEntityFactory.factory(cEntityMapping);
 		efAttribute = EjbRevisionAttributeFactory.factory(cAttribute);
 		
-		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RE,REM,RA>()).factory(RevisionEntityComparator.Type.position);
+		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
 		
 		allowSave = true;
 	}

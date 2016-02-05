@@ -26,6 +26,9 @@ public interface UtilsRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 	RE getEntity();
 	void setEntity(RE entitiy);
 	
+	RAT getType();
+	void setType(RAT type);
+	
 	String getXpath();
 	void setXpath(String xpath);
 }

@@ -52,6 +52,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute,cRat);
 		scopes = fRevision.all(cScope);
 		categories = fRevision.allOrderedPositionVisible(cCategory);
+		types = fRevision.allOrderedPositionVisible(cRat);
 		reloadEntities();
 	}
 
@@ -142,6 +143,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void saveAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(attribute));}
+		if(attribute.getType()!=null){attribute.setType(fRevision.find(cRat, attribute.getType()));}
 		attribute = fRevision.save(attribute);
 		reloadEntity();
 		bMessage.growlSuccessSaved();

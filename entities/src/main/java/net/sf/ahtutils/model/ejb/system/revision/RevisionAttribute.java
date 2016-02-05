@@ -41,6 +41,11 @@ public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersista
 	@Override public RevisionEntity getEntity() {return entity;}
 	@Override public void setEntity(RevisionEntity entity) {this.entity = entity;}
 	
+	@NotNull @ManyToOne
+	private RevisionAttributeType type;
+	public RevisionAttributeType getType() {return type;}
+	public void setType(RevisionAttributeType type) {this.type = type;}
+
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
 	private Map<String,Lang> name;

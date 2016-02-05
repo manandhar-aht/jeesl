@@ -18,7 +18,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sCategories" width="4">
+				<aht:slot id="sCategories" width="5">
 					<h:form id="fCategories">
 						<p:dataTable var="e" value="#{cc.attrs.bean.entities}" draggableRows="true"
 							selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{e.id}">
@@ -30,18 +30,21 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderEntites()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sView :#{cc.id}:sAttributes" listener="#{cc.attrs.bean.selectEntity()}"/>
 							<p:column rendered="true">  
-								<h:outputText value="#{e.position}"/>
+								<h:outputText value="#{e.category.position}.#{e.position}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.aupRevisionCategory}">  
+								<h:outputText value="#{e.category.name[userBean.localeCode].lang}"/>
 				            </p:column>
 				            <p:column headerText="#{msg.aupRevisionEntity}">  
 								<h:outputText value="#{e.name[userBean.localeCode].lang}"/>
 				            </p:column>
-				             <p:column>  
+							<p:column>  
 								<aup:iconCheckmark value="#{e.visible}"/>
 				            </p:column>
 				       	</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sView" width="4">
+				<aht:slot id="sView" width="3">
 					<h:form id="fView">
 						<p:panel id="pView" header="#{msg.aupRevisionEntity}"
 									rendered="#{not empty cc.attrs.bean.entity}" styleClass="auPanelWithGrid">
@@ -51,6 +54,10 @@
 								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.entity.id gt 0}" listener="#{cc.attrs.bean.rmEntity()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupRevisionCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.entity.category}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.categories}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
+								</p:selectOneMenu>
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.entity.visible}"/>
 								<p:outputLabel value="#{msg.aupCode}"/>

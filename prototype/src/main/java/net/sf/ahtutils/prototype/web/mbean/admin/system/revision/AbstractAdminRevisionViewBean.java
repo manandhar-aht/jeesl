@@ -13,6 +13,7 @@ import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
@@ -24,13 +25,14 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsDescription,
-											RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,REM,RA>,
-											RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,REM,RA>,
-											RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,REM,RA>,
-											RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,REM,RA>,
-											REM extends UtilsRevisionEntityMapping<L,D,RV,RVM,RS,RE,REM,RA>,
-											RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,REM,RA>>
-					extends AbstractAdminRevisionBean<L,D,RV,RVM,RS,RE,REM,RA>
+											RC extends UtilsStatus<RC,L,D>,
+											RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+											RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+											RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+											RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+											REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+											RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA>>
+					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RE,REM,RA>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -42,9 +44,9 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	private RV rv; public RV getRv() {return rv;} public void setRv(RV rv) {this.rv = rv;}
 	private RVM mapping; public RVM getMapping() {return mapping;}public void setMapping(RVM mapping) {this.mapping = mapping;}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RV,RVM,RS,RE,REM,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping,Class<RA> cAttribute)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory, Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping,Class<RA> cAttribute)
 	{
-		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute);		
+		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute);		
 		entities = fRevision.all(cEntity);
 		scopes = fRevision.all(cScope);
 		reloadViews();

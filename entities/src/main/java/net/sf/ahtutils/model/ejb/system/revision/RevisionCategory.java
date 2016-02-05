@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model.ejb.system.ts;
+package net.sf.ahtutils.model.ejb.system.revision;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -12,8 +12,8 @@ import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Category",category="ts",subset="ts",level=4)
-public class TsCategory implements Serializable,EjbRemoveable,EjbPersistable,
-							UtilsStatus<TsCategory,Lang,Description>
+public class RevisionCategory implements Serializable,EjbRemoveable,EjbPersistable,
+							UtilsStatus<RevisionCategory,Lang,Description>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;
@@ -54,7 +54,10 @@ public class TsCategory implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public <P extends EjbWithCode> void setParent(P parent) {}
 	
 	
-	public boolean equals(Object object){return (object instanceof TsCategory) ? id == ((TsCategory) object).getId() : (object == this);}
+	public boolean equals(Object object)
+	{
+        return (object instanceof RevisionCategory) ? id == ((RevisionCategory) object).getId() : (object == this);
+    }
 	
 	public String toString()
 	{

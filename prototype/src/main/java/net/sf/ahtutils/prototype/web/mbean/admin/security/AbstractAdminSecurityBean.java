@@ -118,15 +118,11 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 		efUsecase = EjbSecurityUsecaseFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efAction = EjbSecurityActionFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		
-		SecurityRoleComparator<L,D,C,R,V,U,A,USER> cfRole = new SecurityRoleComparator<L,D,C,R,V,U,A,USER>();
-		SecurityViewComparator<L,D,C,R,V,U,A,USER> cfView = new SecurityViewComparator<L,D,C,R,V,U,A,USER>();
-		SecurityUsecaseComparator<L,D,C,R,V,U,A,USER> cfUsecase = new SecurityUsecaseComparator<L,D,C,R,V,U,A,USER>();
-		SecurityActionComparator<L,D,C,R,V,U,A,USER> cfAction = new SecurityActionComparator<L,D,C,R,V,U,A,USER>();
 		
-		comparatorRole = cfRole.factory(SecurityRoleComparator.Type.position);
-		comparatorView = cfView.factory(SecurityViewComparator.Type.position);
-		comparatorUsecase = cfUsecase.factory(SecurityUsecaseComparator.Type.position); 
-		comparatorAction = cfAction.factory(SecurityActionComparator.Type.position); 
+		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,USER>()).factory(SecurityRoleComparator.Type.position);
+		comparatorView = (new SecurityViewComparator<L,D,C,R,V,U,A,USER>()).factory(SecurityViewComparator.Type.position);
+		comparatorUsecase = (new SecurityUsecaseComparator<L,D,C,R,V,U,A,USER>()).factory(SecurityUsecaseComparator.Type.position); 
+		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,USER>()).factory(SecurityActionComparator.Type.position); 
 		
 		reloadCategories();
 	}

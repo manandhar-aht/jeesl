@@ -99,4 +99,11 @@
     		<s:lang key="fr" translation="Mapping"/>
     	</s:langs>
     </s:translation>
+    	<s:translation key="aupRevisionCategory">
+    	<s:langs>
+    		<s:lang key="de" translation="Category"/>
+    		<s:lang key="en" translation="Category"/>
+    		<s:lang key="fr" translation="Category"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

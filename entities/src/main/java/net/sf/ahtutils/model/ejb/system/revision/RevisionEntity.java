@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -29,7 +30,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(name="RevisionEntity", uniqueConstraints=@UniqueConstraint(columnNames={"code"}))
 @EjbErNode(name="Entity",category="revision",subset="revision")
 public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsRevisionEntity<Lang,Description,RevisionView,RevisionViewMapping,RevisionScope,RevisionEntity,RevisionEntityMapping,RevisionAttribute>
+								UtilsRevisionEntity<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionEntity,RevisionEntityMapping,RevisionAttribute>
 {
 	public static final long serialVersionUID=1;	
 	
@@ -39,6 +40,13 @@ public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 	
+	@Override public String resolveParentAttribute() {return "category";}
+	
+	@NotNull @ManyToOne
+	private RevisionCategory category;
+	public RevisionCategory getCategory() {return category;}
+	public void setCategory(RevisionCategory category) {this.category = category;}
+
 	@NotNull
 	protected String code;
 	@Override public String getCode() {return code;}

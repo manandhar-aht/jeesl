@@ -6,6 +6,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
@@ -14,14 +15,15 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 
 public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescription,
-									RV extends UtilsRevisionView<L,D,RV,RVM,RS,RE,REM,RA>,
-									RVM extends UtilsRevisionViewMapping<L,D,RV,RVM,RS,RE,REM,RA>,
-									RS extends UtilsRevisionScope<L,D,RV,RVM,RS,RE,REM,RA>,
-									RE extends UtilsRevisionEntity<L,D,RV,RVM,RS,RE,REM,RA>,
-									REM extends UtilsRevisionEntityMapping<L,D,RV,RVM,RS,RE,REM,RA>,
-									RA extends UtilsRevisionAttribute<L,D,RV,RVM,RS,RE,REM,RA>>
+									RC extends UtilsStatus<RC,L,D>,	
+									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+									RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+									RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+									REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA>,
+									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA>>
 					extends UtilsFacadeBean
-					implements UtilsRevisionFacade<L,D,RV,RVM,RS,RE,REM,RA>
+					implements UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA>
 {	
 	public UtilsRevisionFacadeBean(EntityManager em)
 	{

@@ -75,6 +75,8 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 		rv = fRevision.find(cView, rv);
 		rv = efLang.persistMissingLangs(fRevision,langs,rv);
 		rv = efDescription.persistMissingLangs(fRevision,langs,rv);
+		mapping=null;
+		
 		reloadView();
 	}
 	

@@ -49,7 +49,6 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute,cRat);
 		scopes = fRevision.all(cScope);
-		categories = fRevision.allOrderedPositionVisible(cCategory);
 		types = fRevision.allOrderedPositionVisible(cRat);
 		reloadEntities();
 	}

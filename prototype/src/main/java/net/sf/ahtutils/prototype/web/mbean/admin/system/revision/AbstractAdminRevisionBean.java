@@ -27,6 +27,7 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.util.comparator.ejb.revision.RevisionEntityComparator;
+import net.sf.ahtutils.util.comparator.ejb.revision.RevisionScopeComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends UtilsDescription,
@@ -70,6 +71,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	
 	protected RA attribute; public RA getAttribute() {return attribute;}public void setAttribute(RA attribute) {this.attribute = attribute;}
 	
+	protected Comparator<RS> comparatorScope;
 	protected Comparator<RE> comparatorEntity;
 	
 	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView, Class<RVM> cMappingView, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
@@ -92,7 +94,10 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		efMappingEntity = EjbRevisionMappingEntityFactory.factory(cEntityMapping);
 		efAttribute = EjbRevisionAttributeFactory.factory(cAttribute);
 		
+		comparatorScope = (new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>()).factory(RevisionScopeComparator.Type.position);
 		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
+		
+		categories = fRevision.allOrderedPositionVisible(cCategory);
 		
 		allowSave = true;
 	}

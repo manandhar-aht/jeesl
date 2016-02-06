@@ -27,4 +27,7 @@ public interface UtilsRevisionViewMapping<L extends UtilsLang,D extends UtilsDes
 	
 	RE getEntity();
 	void setEntity(RE entity);
+	
+	String getXpath();
+	void setXpath(String xpath);
 }

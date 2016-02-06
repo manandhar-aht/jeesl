@@ -12,10 +12,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -41,6 +43,13 @@ public class RevisionScope implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 	
+	@Override public String resolveParentAttribute() {return "category";}
+	
+	@NotNull @ManyToOne
+	private RevisionCategory category;
+	public RevisionCategory getCategory() {return category;}
+	public void setCategory(RevisionCategory category) {this.category = category;}
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
 	private Map<String,Lang> name;
@@ -64,14 +73,6 @@ public class RevisionScope implements Serializable,EjbRemoveable,EjbPersistable,
 	private String code;
 	@Override public String getCode() {return code;}
 	@Override public void setCode(String code) {this.code = code;}
-	
-	private String label;
-	@Override public String getLabel() {return label;}
-	@Override public void setLabel(String label) {this.label = label;}
-
-	private String fqcn;
-	@Override public String getFqcn() {return fqcn;}
-	@Override public void setFqcn(String fqcn) {this.fqcn = fqcn;}
 	
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="RevisionScope_Attribute",joinColumns={@JoinColumn(name="scope")},inverseJoinColumns={@JoinColumn(name="attribute")})

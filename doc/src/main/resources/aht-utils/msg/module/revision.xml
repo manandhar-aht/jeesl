@@ -99,11 +99,39 @@
     		<s:lang key="fr" translation="Mapping"/>
     	</s:langs>
     </s:translation>
-    	<s:translation key="aupRevisionCategory">
+	<s:translation key="aupRevisionCategory">
     	<s:langs>
     		<s:lang key="de" translation="Category"/>
     		<s:lang key="en" translation="Category"/>
     		<s:lang key="fr" translation="Category"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupRevisionAttrbiuteShowWeb">
+    	<s:langs>
+    		<s:lang key="de" translation="Web"/>
+    		<s:lang key="en" translation="Web"/>
+    		<s:lang key="fr" translation="Web"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupRevisionAttrbiuteShowPrint">
+    	<s:langs>
+    		<s:lang key="de" translation="Druck"/>
+    		<s:lang key="en" translation="Print"/>
+    		<s:lang key="fr" translation="Print"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupRevisionAttrbiuteShowName">
+    	<s:langs>
+    		<s:lang key="de" translation="Name"/>
+    		<s:lang key="en" translation="Name"/>
+    		<s:lang key="fr" translation="Name"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupRevisionAttrbiuteShowEnclosure">
+    	<s:langs>
+    		<s:lang key="de" translation="Einbettung"/>
+    		<s:lang key="en" translation="Enclosure"/>
+    		<s:lang key="fr" translation="Enclosure"/>
     	</s:langs>
     </s:translation>
 </s:translations>

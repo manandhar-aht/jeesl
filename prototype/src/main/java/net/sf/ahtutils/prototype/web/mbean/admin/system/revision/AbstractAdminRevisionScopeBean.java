@@ -1,6 +1,7 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.system.revision;
 
 import java.io.Serializable;
+import java.util.Collections;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,6 +125,8 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 		updatePerformed();
 	}
 	
-	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, scopes);}
+	protected void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, cScope, scopes);Collections.sort(scopes, comparatorScope);}
+	protected void reorderAttributes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, attributes);}
+	
 	protected void updatePerformed(){}	
 }

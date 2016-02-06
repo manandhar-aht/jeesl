@@ -25,9 +25,9 @@
 				<artifactId>jaxen</artifactId>
 		</dependency>
 		<dependency>
-                    <groupId>com.itextpdf</groupId>
-                    <artifactId>itextpdf</artifactId>
-                </dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+		</dependency>
 
 			<dependency>
 			    <groupId>net.sf.jasperreports</groupId>
@@ -150,6 +150,13 @@
 					<artifactId>ant-launcher</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<dependency>
+	      	<groupId>org.hibernate</groupId>
+	      	<artifactId>hibernate-envers</artifactId>
+	      	<version>4.2.0.Final</version>
+			<scope>provided</scope>
 		</dependency>
 		
 		<dependency>

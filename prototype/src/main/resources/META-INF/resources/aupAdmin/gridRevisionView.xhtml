@@ -99,6 +99,8 @@
 								<p:selectOneMenu value="#{cc.attrs.bean.mapping.scope}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.scopes}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
+								<p:outputLabel value="#{msg.aupXpath}"/>
+								<h:inputText autocomplete="off" value="#{cc.attrs.bean.mapping.xpath}"/>
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

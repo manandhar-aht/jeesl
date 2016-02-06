@@ -25,7 +25,9 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.audit.Change;
+import net.sf.ahtutils.xml.audit.Scope;
 
 public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 							RC extends UtilsStatus<RC,L,D>,
@@ -49,15 +51,17 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 	private UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision;
 	
 	private final Class<RV> cView;
+	private final Class<RS> cScope;
 	private final Class<RE> cEntity;
 	
 	private String lang;
 	private Map<String,RVM> map;
 	
-	public RevisionEngine(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RE> cEntity)
+	public RevisionEngine(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity)
 	{
 		this.fRevision=fRevision;
 		this.cView=cView;
+		this.cScope=cScope;
 		this.cEntity=cEntity;
 		
 		map = new ConcurrentHashMap<String,RVM>();
@@ -79,9 +83,9 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 					U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
 					A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
 					USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
-					RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,USER> factory(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RE> cEntity)
+					RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,USER> factory(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity)
 	{
-		return new RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,USER>(fRevision, cView, cEntity);
+		return new RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,USER>(fRevision, cView, cScope, cEntity);
 	}
 	
 	public void init(String lang, RV view)
@@ -92,6 +96,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		for(RVM m : view.getMaps())
 		{
 			m.setEntity(fRevision.load(cEntity, m.getEntity()));
+			m.setScope(fRevision.load(cScope, m.getScope()));
 			map.put(m.getEntity().getCode(),m);
 		}
 		logger.info(this.getClass().getSimpleName()+" initialized with "+map.size()+" entities");
@@ -102,43 +107,83 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		Object o = revision.getEntity();
 		String key = o.getClass().getName();
 		Change xml;
-		
 		if(map.containsKey(key))
 		{
 			xml = build(map.get(key),o);
 		}
 		else
 		{
-			xml = new Change();
+			return null;
 		}
-		
+		xml.setAid(revision.getType().ordinal());
 		return xml;
 	}
 	
 	public Change build(RVM viewMapping, Object o)
 	{
+		JXPathContext context = JXPathContext.newContext(o);
+		
 		Change change = new Change();
 		change.setType(viewMapping.getEntity().getName().get(lang).getLang());
 		
 		StringBuffer sb = new StringBuffer();
 		for(RA attribute : viewMapping.getEntity().getAttributes())
 		{
-			JXPathContext context = JXPathContext.newContext(o);
-			sb.append(build(attribute, context));
-			sb.append(" ");
+			if(attribute.isShowPrint())
+			{
+				sb.append(build(attribute, context));
+				sb.append(" ");
+			}
 		}
 		change.setText(sb.toString().trim());
+		change.setScope(build(viewMapping,context));
 		
 		return change;
+	}
+		
+	private Scope build(RVM rvm, JXPathContext context)
+	{
+		Object oScope = context.getValue(rvm.getXpath());
+		JXPathContext ctx = JXPathContext.newContext(oScope);
+		
+		Scope xScope = new Scope();
+		xScope.setClazz(oScope.getClass().getName());
+		xScope.setCategory(rvm.getScope().getCategory().getName().get(lang).getLang());
+		
+		if(oScope instanceof EjbWithId){xScope.setId(((EjbWithId)oScope).getId());}
+		StringBuffer sb = new StringBuffer();
+		for(RA attribute : rvm.getScope().getAttributes())
+		{
+			if(attribute.isShowPrint())
+			{
+				sb.append(build(attribute, ctx));
+				sb.append(" ");
+			}
+		}
+		xScope.setEntity(sb.toString().trim());
+		
+		return xScope;
 	}
 	
 	private String build(RA attribute, JXPathContext ctx)
 	{
 		StringBuffer sb = new StringBuffer();
-		sb.append("{");
-		sb.append(attribute.getName().get(lang).getLang()).append(": ");
-		sb.append((String)ctx.getValue(attribute.getXpath()));
-		sb.append("}");
+		if(attribute.isShowEnclosure()){sb.append("{");}
+		if(attribute.isShowName()){sb.append(attribute.getName().get(lang).getLang()).append(": ");}
+		
+		String txt;
+		if(attribute.getType().getCode().startsWith(UtilsRevisionAttribute.Type.text.toString()))
+		{
+			txt = (String)ctx.getValue(attribute.getXpath());
+		}
+		else
+		{
+			logger.warn("Unsupported Type: "+attribute.getType().getCode());
+			txt = ""+ctx.getValue(attribute.getXpath());
+		}
+		sb.append(txt);
+		
+		if(attribute.isShowEnclosure()){sb.append("}");}
 		return sb.toString();
 	}
 }

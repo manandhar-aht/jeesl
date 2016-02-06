@@ -62,14 +62,25 @@ public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersista
 	@Override public int getPosition() {return position;}
 	@Override public void setPosition(int position) {this.position = position;}
 	
-	private boolean visible;
-	@Override public boolean isVisible() {return visible;}
-	@Override public void setVisible(boolean visible) {this.visible = visible;}
-	
 	private String xpath;
 	@Override public String getXpath() {return xpath;}
 	@Override public void setXpath(String xpath) {this.xpath = xpath;}
 	
+	private boolean showWeb;
+	@Override public boolean isShowWeb() {return showWeb;}
+	@Override public void setShowWeb(boolean showWeb) {this.showWeb = showWeb;}
+	
+	private boolean showPrint;
+	@Override public boolean isShowPrint() {return showPrint;}
+	@Override public void setShowPrint(boolean showPrint) {this.showPrint = showPrint;}
+	
+	private boolean showName;
+	@Override public boolean isShowName() {return showName;}
+	@Override public void setShowName(boolean showName) {this.showName = showName;}
+	
+	private boolean showEnclosure;
+	@Override public boolean isShowEnclosure() {return showEnclosure;}
+	@Override public void setShowEnclosure(boolean showEnclosure) {this.showEnclosure = showEnclosure;}
 	
 	@Override public String toString()
 	{

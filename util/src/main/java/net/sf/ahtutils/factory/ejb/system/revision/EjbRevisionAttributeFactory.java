@@ -53,8 +53,12 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 		{
 			ejb = cAttribute.newInstance();
 			ejb.setPosition(0);
-			ejb.setVisible(true);
 			ejb.setType(type);
+			
+			ejb.setShowWeb(false);
+			ejb.setShowPrint(false);
+			ejb.setShowEnclosure(false);
+			ejb.setShowName(false);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

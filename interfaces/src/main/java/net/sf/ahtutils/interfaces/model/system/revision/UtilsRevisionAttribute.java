@@ -3,7 +3,7 @@ package net.sf.ahtutils.interfaces.model.system.revision;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
@@ -18,15 +18,24 @@ public interface UtilsRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 										RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
 										RAT extends UtilsStatus<RAT,L,D>>
 		extends EjbWithId,
-				EjbWithPositionVisible,
+				EjbWithPosition,
 				EjbWithLang<L>,EjbWithDescription<D>
 {					
-//	RE getEntity();
-//	void setEntity(RE entitiy);
-	
 	RAT getType();
 	void setType(RAT type);
 	
 	String getXpath();
 	void setXpath(String xpath);
+	
+	boolean isShowPrint();
+	void setShowPrint(boolean showPrint);
+	
+	boolean isShowWeb();
+	void setShowWeb(boolean showWeb);
+	
+	boolean isShowName();
+	void setShowName(boolean showName);
+	
+	boolean isShowEnclosure();
+	void setShowEnclosure(boolean showEnclosure);
 }

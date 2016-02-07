@@ -112,4 +112,11 @@
 			<s:lang key="fr" translation="Preview"/>
 		</s:langs>
 	</s:translation>
+		<s:translation key="aupCategory">
+    	<s:langs>
+    		<s:lang key="de" translation="Category"/>
+    		<s:lang key="en" translation="Category"/>
+    		<s:lang key="fr" translation="Category"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

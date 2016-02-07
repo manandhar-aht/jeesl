@@ -123,7 +123,4 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	{
 		attribute=null;
 	}
-	
-	//Security Handling for Invisible entries
-	protected boolean allowSave; public boolean getAllowSave() {return allowSave;}
 }

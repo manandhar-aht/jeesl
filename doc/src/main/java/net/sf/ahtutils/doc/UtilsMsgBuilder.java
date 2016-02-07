@@ -30,6 +30,7 @@ public class UtilsMsgBuilder
 	public static final String srcDate = "msg.aht-utils/date.xml";
 	
 	public static final String timeseries = "aht-utils/msg/module/timeseries.xml";
+	public static final String io = "aht-utils/msg/module/io.xml";
 	public static final String tooltip = "aht-utils/msg/tooltip.xml";
 	public static final String srcMonitoring = "msg.aht-utils/monitoring.xml";
 	public static final String srcWizard = "msg.aht-utils/wizard.xml";

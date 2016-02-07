@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="aupIoTemplates">
+    	<s:langs>
+    		<s:lang key="de" translation="Templates"/>
+    		<s:lang key="en" translation="Templates"/>
+    		<s:lang key="fr" translation="Templates"/>
+    	</s:langs>
+    </s:translation>
+    	<s:translation key="aupIoTemplate">
+    	<s:langs>
+    		<s:lang key="de" translation="Template"/>
+    		<s:lang key="en" translation="Template"/>
+    		<s:lang key="fr" translation="Template"/>
+    	</s:langs>
+    </s:translation>
+</s:translations>

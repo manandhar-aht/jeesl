@@ -32,7 +32,7 @@
 							<p:column rendered="true">  
 								<h:outputText value="#{e.category.position}.#{e.position}"/>
 				            </p:column>
-				            <p:column headerText="#{msg.aupRevisionCategory}">  
+				            <p:column headerText="#{msg.aupCategory}">  
 								<h:outputText value="#{e.category.name[userBean.localeCode].lang}"/>
 				            </p:column>
 				            <p:column headerText="#{msg.aupRevisionEntity}">  
@@ -54,7 +54,7 @@
 								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.entity.id gt 0}" listener="#{cc.attrs.bean.rmEntity()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
-								<p:outputLabel value="#{msg.aupRevisionCategory}"/>
+								<p:outputLabel value="#{msg.aupCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.entity.category}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.categories}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>

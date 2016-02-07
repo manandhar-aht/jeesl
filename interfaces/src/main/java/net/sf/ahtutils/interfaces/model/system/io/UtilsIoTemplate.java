@@ -14,12 +14,16 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface UtilsIoTemplate<L extends UtilsLang,D extends UtilsDescription,
-									IOT extends UtilsIoTemplate<L,D,IOT,IOTT>,
-									IOTT extends UtilsStatus<IOTT,L,D>>
+									IOT extends UtilsIoTemplate<L,D,IOT,IOTT,IOTC>,
+									IOTT extends UtilsStatus<IOTT,L,D>,
+									IOTC extends UtilsStatus<IOTC,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithParent,EjbWithPositionParent,
 		EjbWithLang<L>,EjbWithDescription<D>
 {	
 	IOTT getType();
 	void setType(IOTT type);
+	
+	IOTC getCategory();
+	void setCategory(IOTC category);
 }

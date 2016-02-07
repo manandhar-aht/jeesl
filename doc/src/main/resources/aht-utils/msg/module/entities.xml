@@ -12,4 +12,16 @@
 			<s:lang key="fr" translation="Revision Attribute Type"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IoTemplateType">
+		<s:langs>
+			<s:lang key="en" translation="Template Type"/>
+			<s:lang key="fr" translation="Template Type"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoTemplateCategory">
+		<s:langs>
+			<s:lang key="en" translation="Template Category"/>
+			<s:lang key="fr" translation="Template Category"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

@@ -27,7 +27,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(name="IoTemplate", uniqueConstraints=@UniqueConstraint(columnNames={"code"}))
 @EjbErNode(name="Template",category="io",subset="io")
 public class IoTemplate implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsIoTemplate<Lang,Description,IoTemplate,IoTemplateType>
+								UtilsIoTemplate<Lang,Description,IoTemplate,IoTemplateType,IoTemplateCategory>
 {
 	public static final long serialVersionUID=1;	
 	
@@ -37,12 +37,17 @@ public class IoTemplate implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 	
-	@Override public String resolveParentAttribute() {return "type";}
+	@Override public String resolveParentAttribute() {return "category";}
 	
 	@NotNull @ManyToOne
 	private IoTemplateType type;
 	public IoTemplateType getType() {return type;}
 	public void setType(IoTemplateType type) {this.type = type;}
+	
+	@NotNull @ManyToOne
+	private IoTemplateCategory category;
+	public IoTemplateCategory getCategory() {return category;}
+	public void setCategory(IoTemplateCategory category) {this.category = category;}
 
 	@NotNull
 	protected String code;

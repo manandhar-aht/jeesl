@@ -38,4 +38,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		efLang = new EjbLangFactory<L>(cLang);
 		efDescription = new EjbDescriptionFactory<D>(cDescription);
 	}
+	
+	//Security Handling
+	protected boolean allowSave; public boolean getAllowSave() {return allowSave;}
 }

@@ -53,7 +53,7 @@
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupCode}"/>
 								<h:inputText autocomplete="off" value="#{cc.attrs.bean.scope.code}"/>
-								<p:outputLabel value="#{msg.aupRevisionCategory}"/>
+								<p:outputLabel value="#{msg.aupCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.scope.category}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.categories}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>

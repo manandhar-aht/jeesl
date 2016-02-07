@@ -2,7 +2,6 @@ package net.sf.ahtutils.prototype.web.mbean.admin.system.revision;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +17,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
+import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;

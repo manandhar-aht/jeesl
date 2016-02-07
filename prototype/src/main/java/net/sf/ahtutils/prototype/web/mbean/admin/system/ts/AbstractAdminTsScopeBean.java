@@ -198,7 +198,6 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	
 	//Security Handling for Invisible entries
 	private boolean showInvisibleScopes; public boolean isShowInvisibleScopes() {return showInvisibleScopes;}
-	private boolean allowSave; public boolean getAllowSave() {return allowSave;}
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{

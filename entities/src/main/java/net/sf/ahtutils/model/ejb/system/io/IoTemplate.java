@@ -24,8 +24,8 @@ import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@Table(name="RevisionEntity", uniqueConstraints=@UniqueConstraint(columnNames={"code"}))
-@EjbErNode(name="Entity",category="revision",subset="revision")
+@Table(name="IoTemplate", uniqueConstraints=@UniqueConstraint(columnNames={"code"}))
+@EjbErNode(name="Template",category="io",subset="io")
 public class IoTemplate implements Serializable,EjbRemoveable,EjbPersistable,
 								UtilsIoTemplate<Lang,Description,IoTemplate,IoTemplateType>
 {

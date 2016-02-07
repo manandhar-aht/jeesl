@@ -33,7 +33,8 @@ public class CliErDiagram extends AbstractErDiagram
 //		create("status");
 //		create("symbol");
 //		create("ts");
-		create("revision");
+//		create("revision");
+		create("io");
 	}
 	
 	public static void main(String args[]) throws Exception

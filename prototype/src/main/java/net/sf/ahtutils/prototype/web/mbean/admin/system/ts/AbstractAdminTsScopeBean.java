@@ -1,6 +1,7 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.system.ts;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,9 +10,8 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.system.ts.EjbTimeSeriesCategoryFactory;
+import net.sf.ahtutils.factory.ejb.system.ts.EjbTsScopeFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
-import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -22,7 +22,6 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
-import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminTsScopeBean <L extends UtilsLang,
@@ -37,23 +36,14 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											WS extends UtilsStatus<WS,L,D>,
 											QAF extends UtilsStatus<QAF,L,D>>
-					extends AbstractAdminBean<L,D>
+					extends AbstractAdminTsBean<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsScopeBean.class);
+			
+	private EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efCategory;
 	
-	protected UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs;
-		
-	private EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efCategory;
-	
-	protected Class<CAT> cCategory;
-	protected Class<SCOPE> cScope;
-	protected Class<UNIT> cUnit;
-	protected Class<INT> cInt;
-	protected Class<EC> cEc;
-	
-	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
 	protected List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
 	protected List<INT> opIntervals; public List<INT> getOpIntervals() {return opIntervals;}
@@ -68,35 +58,35 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
 	{
-		super.initAdmin(langs,cLang,cDescription,bMessage);
-		this.cScope=cScope;
-		this.cUnit=cUnit;
-		this.cEc=cEc;
-		this.cInt=cInt;
-		this.cCategory=cCategory;
+		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cEc,cInt);
 		
-		efCategory = EjbTimeSeriesCategoryFactory.factory(cScope);
+		efCategory = EjbTsScopeFactory.factory(cScope);
 		
-		allowSave = true;
 		showInvisibleScopes = true;
 		
-		reloadCategories();
+		reloadScopes();
 	}
 	
 	protected void initLists()
 	{
 		units = fTs.all(cUnit);
-		categories = fTs.all(cCategory);
 		opIntervals = fTs.all(cInt);
 		opClasses = fTs.all(cEc);
 	}
 	
-	public void reloadCategories()
+	public void multiToggle(UtilsStatus<?,L,D> o)
 	{
-		logger.info("reloadCategories");
-		scopes = fTs.all(cScope);
-//		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
-//		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
+		if(debugOnInfo){logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());}
+		sbhCategory.multiToggle(o);
+		reloadScopes();
+		cancel();
+	}
+	
+	public void reloadScopes()
+	{
+		if(debugOnInfo){logger.info("reloadScopes");}
+		scopes = fTs.findScopes(cScope, cCategory, sbhCategory.getSelected(), showInvisibleScopes);
+		Collections.sort(scopes, comparatorScope);
 	}
 	
 	public void add() throws UtilsNotFoundException
@@ -120,7 +110,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.saveEntity(scope));
 		scope.setUnit(fTs.find(cUnit, scope.getUnit()));
 		scope = fTs.save(scope);
-		reloadCategories();
+		reloadScopes();
 		updatePerformed();
 	}
 	
@@ -129,7 +119,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.rmEntity(scope));
 		fTs.rm(scope);
 		scope=null;
-		reloadCategories();
+		reloadScopes();
 	}
 	
 	public void cancel()
@@ -137,7 +127,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		scope = null;
 	}
 	
-	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, scopes);}
+	protected void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, cScope, scopes);}
 	protected void updatePerformed(){}
 	
 	//OverlayPanel Interval

@@ -32,6 +32,9 @@
 							<p:column rendered="true">  
 								<h:outputText value="#{v.category.position}.#{v.position}"/>
 				            </p:column>
+				            <p:column headerText="#{msg.aupCategory}">  
+								<h:outputText value="#{v.category.name[userBean.localeCode].lang}"/>
+				            </p:column>
 				            <p:column rendered="false" headerText="#{msg.aupCode}">  
 								<h:outputText value="#{v.code}"/>  
 				            </p:column>

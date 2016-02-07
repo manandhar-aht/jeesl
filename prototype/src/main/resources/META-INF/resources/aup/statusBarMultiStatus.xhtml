@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="label" required="false" default="#{msg.aupTypes}"/>
+		<composite:attribute name="handler" required="true"/>
+		<composite:attribute name="update" required="true"/>
+	</composite:interface>
+
+	<composite:implementation>
+		<aup:statusBarItem label="#{cc.attrs.label} (#{fn:length(cc.attrs.handler.selected)}/#{fn:length(cc.attrs.handler.list)})"
+								 orientation="right"
+								 childs="#{cc.attrs.handler.list}">
+			<h:commandLink>
+				<h:outputText value="#{var.name[userBean.localeCode].lang}"/>
+				<aup:sbCheckmark value="#{cc.attrs.handler.map[var]}"/>
+				<p:ajax event="click" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.multiToggle(var)}"/>
+			</h:commandLink>
+		</aup:statusBarItem>
+	</composite:implementation>
+</html>

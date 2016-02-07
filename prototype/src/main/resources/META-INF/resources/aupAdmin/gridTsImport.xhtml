@@ -22,7 +22,7 @@
 					<h:form id="fCategories">
 						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
-								<p:outputLabel value="#{msg.aupTsCategory}"/>
+								<p:outputLabel value="#{msg.aupCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.category}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 									<p:ajax event="change" listener="#{cc.attrs.bean.changeCategory()}" update="@form"/>

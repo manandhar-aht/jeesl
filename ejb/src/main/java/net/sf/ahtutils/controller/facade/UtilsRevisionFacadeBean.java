@@ -1,7 +1,10 @@
 package net.sf.ahtutils.controller.facade;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
+import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
@@ -54,8 +57,19 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		return entity;
 	}
 	
+	@Override public List<RS> findScopes(Class<RS> cScope, Class<RC> cCategory, List<RC> categories, boolean showInvisibleScopes)
+	{
+		List<ParentPredicate<RC>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
+		return allForOrParents(cScope,ppCategory);
+	}
+	
+	@Override public List<RE> findEntities(Class<RE> cEntity, Class<RC> cCategory, List<RC> categories, boolean showInvisibleEntities)
+	{
+		List<ParentPredicate<RC>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
+		return allForOrParents(cEntity,ppCategory);
+	}
 
-
+	
 	@Override
 	public void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException
 	{

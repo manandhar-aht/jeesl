@@ -1,5 +1,7 @@
 package net.sf.ahtutils.interfaces.facade;
 
+import java.util.List;
+
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -27,6 +29,8 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 	RS load(Class<RS> cScope, RS scope);
 	RE load(Class<RE> cEntity, RE entity);
 	
+	List<RS> findScopes(Class<RS> cScope, Class<RC> cCategory, List<RC> categories, boolean showInvisibleScopes);
+	List<RE> findEntities(Class<RE> cEntity, Class<RC> cCategory, List<RC> categories, boolean showInvisibleEntities);
 	
 	void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException;
 	

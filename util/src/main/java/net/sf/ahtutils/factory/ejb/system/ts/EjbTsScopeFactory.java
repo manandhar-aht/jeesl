@@ -12,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntity;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
-public class EjbTimeSeriesClassFactory<L extends UtilsLang,
+public class EjbTsScopeFactory<L extends UtilsLang,
 											D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
 											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
@@ -25,13 +25,13 @@ public class EjbTimeSeriesClassFactory<L extends UtilsLang,
 											WS extends UtilsStatus<WS,L,D>,
 											QAF extends UtilsStatus<QAF,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbTimeSeriesClassFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbTsScopeFactory.class);
 	
-	final Class<EC> cEc;
+	final Class<SCOPE> cScope;
     
-	public EjbTimeSeriesClassFactory(final Class<EC> cEc)
+	public EjbTsScopeFactory(final Class<SCOPE> cScope)
 	{       
-        this.cEc=cEc;
+        this.cScope = cScope;
 	}
 	
 	public static <L extends UtilsLang,
@@ -46,17 +46,20 @@ public class EjbTimeSeriesClassFactory<L extends UtilsLang,
 					DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 					WS extends UtilsStatus<WS,L,D>,
 					QAF extends UtilsStatus<QAF,L,D>>
-	EjbTimeSeriesClassFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> factory(final Class<EC> cEc)
+	EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> factory(final Class<SCOPE> cScope)
 	{
-		return new EjbTimeSeriesClassFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>(cEc);
+		return new EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>(cScope);
 	}
     
-	public EC build()
+	public SCOPE build(UNIT unit)
 	{
-		EC ejb = null;
+		SCOPE ejb = null;
 		try
 		{
-			ejb = cEc.newInstance();
+			ejb = cScope.newInstance();
+			ejb.setPosition(1);
+			ejb.setVisible(true);
+			ejb.setUnit(unit);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

@@ -29,7 +29,10 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sCategory" listener="#{cc.attrs.bean.select()}"/>
-				            <p:column headerText="#{msg.aupTsScope}">  
+				            <p:column rendered="true">  
+								<h:outputText value="#{s.category.position}.#{s.position}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.aupTsClass}">  
 								<h:outputText value="#{s.name[userBean.localeCode].lang}"/>
 				            </p:column>
 				       	</p:dataTable>

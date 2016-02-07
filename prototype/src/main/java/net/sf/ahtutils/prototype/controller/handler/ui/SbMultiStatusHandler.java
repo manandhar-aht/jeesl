@@ -20,19 +20,34 @@ public class SbMultiStatusHandler <L extends UtilsLang,D extends UtilsDescriptio
 	final static Logger logger = LoggerFactory.getLogger(SbMultiStatusHandler.class);
 	private static final long serialVersionUID = 1L;
 
+	private final Class<T> cT;
+	
 	private List<T> list;public List<T> getList() {return list;}public void setList(List<T> list) {this.list = list;}
 	private List<T> selected;public List<T> getSelected() {return selected;}
 	private Map<T,Boolean> map;public Map<T,Boolean> getMap() {return map;}
 
-	public SbMultiStatusHandler(List<T> list)
+	public SbMultiStatusHandler(final Class<T> cT, List<T> list)
 	{
+		this.cT=cT;
 		this.list=list;
 		map = new ConcurrentHashMap<T,Boolean>();
 		selected = new ArrayList<T>();
 		refresh();
 	}
+	
+	public void selectAll()
+	{
+		for(T t : list){map.put(t, true);}
+		refresh();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void multiToggle(Object o)
+	{
+		if(o.getClass().isAssignableFrom(cT)){toggle((T)o);}
+	}
 
-	public void multiToggle(T type)
+	public void toggle(T type)
 	{
 		if(!map.containsKey(type)){map.put(type,true);}
 		else

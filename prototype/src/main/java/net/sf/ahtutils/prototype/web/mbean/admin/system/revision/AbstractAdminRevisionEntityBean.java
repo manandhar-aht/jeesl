@@ -49,13 +49,19 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		types = fRevision.allOrderedPositionVisible(cRat);
 		reloadEntities();
 	}
+	
+	public void multiToggle(UtilsStatus<?,L,D> o)
+	{
+		logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());
+		sbhCategory.multiToggle(o);
+		reloadEntities();
+		cancelEntity();
+	}
 
 	private void reloadEntities()
 	{
-		entities = fRevision.all(cEntity);
+		entities = fRevision.findEntities(cEntity, cCategory, sbhCategory.getSelected(), true);
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cEntity,entities));}
-//		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
-//		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
 		Collections.sort(entities, comparatorEntity);
 	}
 	

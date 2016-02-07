@@ -1,5 +1,7 @@
 package net.sf.ahtutils.interfaces.facade;
 
+import java.util.List;
+
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -23,5 +25,5 @@ public interface UtilsTsFacade <L extends UtilsLang,
 								QAF extends UtilsStatus<QAF,L,D>>
 			extends UtilsFacade
 {	
-
+	List<SCOPE> findScopes(Class<SCOPE> cScope, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleScopes);
 }

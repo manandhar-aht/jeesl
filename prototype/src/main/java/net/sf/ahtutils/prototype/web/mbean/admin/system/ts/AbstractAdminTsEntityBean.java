@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.system.ts.EjbTimeSeriesClassFactory;
+import net.sf.ahtutils.factory.ejb.system.ts.EjbTsClassFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -44,7 +44,7 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	
 	protected UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs;
 		
-	private EjbTimeSeriesClassFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efClass;
+	private EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efClass;
 	
 	protected Class<EC> cEc;
 	
@@ -58,15 +58,14 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 		allowSave=true;
 		this.cEc=cEc;
 		
-		efClass = EjbTimeSeriesClassFactory.factory(cEc);
-		
+		efClass = EjbTsClassFactory.factory(cEc);
 		
 		reloadClasses();
 	}
 	
 	public void reloadClasses()
 	{
-		logger.info("reloadCategories");
+		logger.info("reloadClasses");
 		classes = fTs.all(cEc);
 //		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
 //		else{categories = fUtils.allOrderedPositionVisible(cCategory);}

@@ -25,6 +25,7 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMappi
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.util.comparator.ejb.revision.RevisionEntityComparator;
 import net.sf.ahtutils.util.comparator.ejb.revision.RevisionScopeComparator;
@@ -75,6 +76,8 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected Comparator<RS> comparatorScope;
 	protected Comparator<RE> comparatorEntity;
 	
+	protected SbMultiStatusHandler<L,D,RC> sbhCategory; public SbMultiStatusHandler<L,D,RC> getSbhCategory() {return sbhCategory;}
+	
 	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView, Class<RVM> cMappingView, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
@@ -99,6 +102,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
 		
 		categories = fRevision.allOrderedPositionVisible(cCategory);
+		sbhCategory = new SbMultiStatusHandler<L,D,RC>(cCategory,categories); sbhCategory.selectAll();
 		
 		allowSave = true;
 	}

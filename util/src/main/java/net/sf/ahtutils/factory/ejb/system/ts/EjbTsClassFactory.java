@@ -12,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntity;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
-public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
+public class EjbTsClassFactory<L extends UtilsLang,
 											D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
 											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
@@ -25,13 +25,13 @@ public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 											WS extends UtilsStatus<WS,L,D>,
 											QAF extends UtilsStatus<QAF,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbTimeSeriesCategoryFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbTsClassFactory.class);
 	
-	final Class<SCOPE> cScope;
+	final Class<EC> cEc;
     
-	public EjbTimeSeriesCategoryFactory(final Class<SCOPE> cScope)
+	public EjbTsClassFactory(final Class<EC> cEc)
 	{       
-        this.cScope = cScope;
+        this.cEc=cEc;
 	}
 	
 	public static <L extends UtilsLang,
@@ -46,20 +46,17 @@ public class EjbTimeSeriesCategoryFactory<L extends UtilsLang,
 					DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 					WS extends UtilsStatus<WS,L,D>,
 					QAF extends UtilsStatus<QAF,L,D>>
-	EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> factory(final Class<SCOPE> cScope)
+	EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> factory(final Class<EC> cEc)
 	{
-		return new EjbTimeSeriesCategoryFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>(cScope);
+		return new EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>(cEc);
 	}
     
-	public SCOPE build(UNIT unit)
+	public EC build()
 	{
-		SCOPE ejb = null;
+		EC ejb = null;
 		try
 		{
-			ejb = cScope.newInstance();
-			ejb.setPosition(0);
-			ejb.setVisible(true);
-			ejb.setUnit(unit);
+			ejb = cEc.newInstance();
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

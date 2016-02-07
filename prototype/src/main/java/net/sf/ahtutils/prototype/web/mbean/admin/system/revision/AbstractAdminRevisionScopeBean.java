@@ -44,15 +44,22 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute,cRat);
 		types = fRevision.allOrderedPositionVisible(cRat);
-		reloadViews();
+		reloadScopes();
+	}
+	
+	public void multiToggle(UtilsStatus<?,L,D> o)
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());}
+		sbhCategory.multiToggle(o);
+		reloadScopes();
+		cancel();
 	}
 
-	public void reloadViews()
+	public void reloadScopes()
 	{
-		scopes = fRevision.all(cScope);
+		scopes = fRevision.findScopes(cScope, cCategory, sbhCategory.getSelected(), true);
 		logger.info(AbstractLogMessage.reloaded(cScope,scopes));
-//		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
-//		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
+		Collections.sort(scopes, comparatorScope);
 	}
 	
 	private void reloadScope()
@@ -84,7 +91,7 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 		logger.info(AbstractLogMessage.saveEntity(scope));
 		scope = fRevision.save(scope);
 		bMessage.growlSuccessSaved();
-		reloadViews();
+		reloadScopes();
 		reloadScope();
 		updatePerformed();
 	}
@@ -95,7 +102,7 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 		fRevision.rm(scope);
 		bMessage.growlSuccessRemoved();
 		scope=null;
-		reloadViews();
+		reloadScopes();
 		updatePerformed();
 	}
 	

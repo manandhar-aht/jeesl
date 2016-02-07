@@ -1,6 +1,8 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.system.io;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import net.sf.ahtutils.interfaces.model.system.io.UtilsIoTemplate;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
+import net.sf.ahtutils.util.comparator.ejb.io.IoTemplateComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDescription,
@@ -44,6 +47,10 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	private List<IOTC> categories; public List<IOTC> getCategories() {return categories;}
 
 	private SbMultiStatusHandler<L,D,IOTT> sbhType; public SbMultiStatusHandler<L,D,IOTT> getSbhType() {return sbhType;}
+	private SbMultiStatusHandler<L,D,IOTC> sbhCategory; public SbMultiStatusHandler<L,D,IOTC> getSbhCategory() {return sbhCategory;}
+		
+	private Comparator<IOT> comparatorTemplate;
+	
 	private EjbIoTemplateFactory<L,D,IOT,IOTT,IOTC> efTemplate;
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsIoFacade<L,D,IOT,IOTT,IOTC> fIo, final Class<L> cLang, final Class<D> cDescription,Class<IOT> cTemplate, Class<IOTT> cTemplateType, Class<IOTC> cTemplateCategory)
@@ -56,18 +63,33 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		
 		efTemplate = EjbIoTemplateFactory.factory(cTemplate);
 		
+		comparatorTemplate = (new IoTemplateComparator<L,D,IOT,IOTT,IOTC>()).factory(IoTemplateComparator.Type.position);
+		
 		types = fIo.allOrderedPositionVisible(cTemplateType);
 		categories = fIo.allOrderedPositionVisible(cTemplateCategory);
 		
-		sbhType = new SbMultiStatusHandler<L,D,IOTT>(types);
+		sbhType = new SbMultiStatusHandler<L,D,IOTT>(cTemplateType,types); sbhType.selectAll();
+		sbhCategory = new SbMultiStatusHandler<L,D,IOTC>(cTemplateCategory,categories); sbhCategory.selectAll();
 		
 		allowSave=true;
+		
+		reloadTemplates();
 	}
-
+	
+	public void multiToggle(UtilsStatus<?,L,D> o)
+	{
+		logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());
+		sbhType.multiToggle(o);
+		sbhCategory.multiToggle(o);
+		reloadTemplates();
+		cancelTemplate();
+	}
+	
 	private void reloadTemplates()
 	{
-		templates = fIo.allOrderedPositionVisible(cTemplate);
-//		Collections.sort(entities, comparatorEntity);
+		templates = fIo.findTemplates(cTemplate, cTemplateType, cTemplateCategory, sbhType.getSelected(), sbhCategory.getSelected());
+		logger.info(AbstractLogMessage.reloaded(cTemplate, templates));
+		Collections.sort(templates, comparatorTemplate);
 	}
 	
 	public void addTemplate() throws UtilsNotFoundException

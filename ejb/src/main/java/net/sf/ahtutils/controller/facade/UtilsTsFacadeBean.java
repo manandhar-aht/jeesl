@@ -1,7 +1,10 @@
 package net.sf.ahtutils.controller.facade;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
+import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -30,5 +33,11 @@ public class UtilsTsFacadeBean<L extends UtilsLang,
 	public UtilsTsFacadeBean(EntityManager em)
 	{
 		super(em);
+	}
+
+	@Override public List<SCOPE> findScopes(Class<SCOPE> cScope, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleScopes)
+	{
+		List<ParentPredicate<CAT>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
+		return allForOrParents(cScope,ppCategory);
 	}
 }

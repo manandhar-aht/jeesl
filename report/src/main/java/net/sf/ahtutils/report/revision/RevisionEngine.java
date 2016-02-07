@@ -143,7 +143,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		
 	private Scope build(RVM rvm, JXPathContext context)
 	{
-		Object oScope = context.getValue(rvm.getXpath());
+		Object oScope = context.getValue(rvm.getEntityMapping().getXpath());
 		JXPathContext ctx = JXPathContext.newContext(oScope);
 		
 		Scope xScope = new Scope();

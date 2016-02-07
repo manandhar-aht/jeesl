@@ -96,7 +96,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		for(RVM m : view.getMaps())
 		{
 			m.setEntity(fRevision.load(cEntity, m.getEntity()));
-//			m.setScope(fRevision.load(cScope, m.getScope()));
+			m.getEntityMapping().setScope(fRevision.load(cScope, m.getEntityMapping().getScope()));
 			map.put(m.getEntity().getCode(),m);
 		}
 		logger.info(this.getClass().getSimpleName()+" initialized with "+map.size()+" entities");
@@ -148,11 +148,11 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		
 		Scope xScope = new Scope();
 		xScope.setClazz(oScope.getClass().getName());
-//		xScope.setCategory(rvm.getScope().getCategory().getName().get(lang).getLang());
+		xScope.setCategory(rvm.getEntityMapping().getScope().getCategory().getName().get(lang).getLang());
 		
 		if(oScope instanceof EjbWithId){xScope.setId(((EjbWithId)oScope).getId());}
 		StringBuffer sb = new StringBuffer();
-/*		for(RA attribute : rvm.getScope().getAttributes())
+		for(RA attribute : rvm.getEntityMapping().getScope().getAttributes())
 		{
 			if(attribute.isShowPrint())
 			{
@@ -160,8 +160,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 				sb.append(" ");
 			}
 		}
-*/		xScope.setEntity(sb.toString().trim());
-		
+		xScope.setEntity(sb.toString().trim());
 		return xScope;
 	}
 	

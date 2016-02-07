@@ -17,6 +17,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.io.UtilsIoTemplate;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
+import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
@@ -42,7 +43,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	private List<IOTT> types; public List<IOTT> getTypes() {return types;}
 	private List<IOTC> categories; public List<IOTC> getCategories() {return categories;}
 
-//	private SbMultiStatusHandler sbh; public SbMultiStatusHandler getSbh() {return sbh;}
+	private SbMultiStatusHandler<L,D,IOTT> sbhType; public SbMultiStatusHandler<L,D,IOTT> getSbhType() {return sbhType;}
 	private EjbIoTemplateFactory<L,D,IOT,IOTT,IOTC> efTemplate;
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsIoFacade<L,D,IOT,IOTT,IOTC> fIo, final Class<L> cLang, final Class<D> cDescription,Class<IOT> cTemplate, Class<IOTT> cTemplateType, Class<IOTC> cTemplateCategory)
@@ -57,6 +58,8 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		
 		types = fIo.allOrderedPositionVisible(cTemplateType);
 		categories = fIo.allOrderedPositionVisible(cTemplateCategory);
+		
+		sbhType = new SbMultiStatusHandler<L,D,IOTT>(types);
 		
 		allowSave=true;
 	}

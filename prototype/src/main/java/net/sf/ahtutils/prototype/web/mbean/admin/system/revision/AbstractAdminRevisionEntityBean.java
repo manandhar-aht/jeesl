@@ -40,8 +40,6 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionEntityBean.class);
 	
-	private List<REM> mappings; public List<REM> getMappings() {return mappings;}
-	
 	private RE entity; public RE getEntity() {return entity;} public void setEntity(RE entity) {this.entity = entity;}
 	private REM mapping; public REM getMapping() {return mapping;}public void setMapping(REM mapping) {this.mapping = mapping;}
 	
@@ -75,7 +73,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	{
 		entity = fRevision.load(cEntity, entity);
 		attributes = entity.getAttributes();
-		mappings = entity.getMaps();
+		entityMappings = entity.getMaps();
 	}
 	
 	public void selectEntity() throws UtilsNotFoundException
@@ -184,7 +182,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	protected void reorderEntites() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, cEntity, entities);Collections.sort(entities, comparatorEntity);}
 	protected void reorderAttributes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, attributes);}
-	protected void reorderMappings() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, mappings);}
+	protected void reorderMappings() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, entityMappings);}
 	
 	protected void updatePerformed(){}	
 	

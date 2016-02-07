@@ -43,9 +43,9 @@ public class RevisionViewMapping implements Serializable,EjbRemoveable,EjbPersis
 	@Override public void setEntity(RevisionEntity entity) {this.entity = entity;}
 	
 	@NotNull @ManyToOne
-	private RevisionScope scope;
-	public RevisionScope getScope() {return scope;}
-	public void setScope(RevisionScope scope) {this.scope = scope;}
+	private RevisionEntityMapping entityMapping;
+	@Override public RevisionEntityMapping getEntityMapping() {return entityMapping;}
+	@Override public void setEntityMapping(RevisionEntityMapping entityMapping) {this.entityMapping = entityMapping;}
 
 	private int position;
 	@Override public int getPosition() {return position;}

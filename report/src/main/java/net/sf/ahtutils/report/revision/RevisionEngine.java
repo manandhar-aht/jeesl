@@ -96,7 +96,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		for(RVM m : view.getMaps())
 		{
 			m.setEntity(fRevision.load(cEntity, m.getEntity()));
-			m.setScope(fRevision.load(cScope, m.getScope()));
+//			m.setScope(fRevision.load(cScope, m.getScope()));
 			map.put(m.getEntity().getCode(),m);
 		}
 		logger.info(this.getClass().getSimpleName()+" initialized with "+map.size()+" entities");
@@ -119,15 +119,15 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		return xml;
 	}
 	
-	public Change build(RVM viewMapping, Object o)
+	public Change build(RVM rvm, Object o)
 	{
 		JXPathContext context = JXPathContext.newContext(o);
 		
 		Change change = new Change();
-		change.setType(viewMapping.getEntity().getName().get(lang).getLang());
+		change.setType(rvm.getEntity().getName().get(lang).getLang());
 		
 		StringBuffer sb = new StringBuffer();
-		for(RA attribute : viewMapping.getEntity().getAttributes())
+		for(RA attribute : rvm.getEntity().getAttributes())
 		{
 			if(attribute.isShowPrint())
 			{
@@ -136,7 +136,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 			}
 		}
 		change.setText(sb.toString().trim());
-		change.setScope(build(viewMapping,context));
+		change.setScope(build(rvm,context));
 		
 		return change;
 	}
@@ -148,11 +148,11 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		
 		Scope xScope = new Scope();
 		xScope.setClazz(oScope.getClass().getName());
-		xScope.setCategory(rvm.getScope().getCategory().getName().get(lang).getLang());
+//		xScope.setCategory(rvm.getScope().getCategory().getName().get(lang).getLang());
 		
 		if(oScope instanceof EjbWithId){xScope.setId(((EjbWithId)oScope).getId());}
 		StringBuffer sb = new StringBuffer();
-		for(RA attribute : rvm.getScope().getAttributes())
+/*		for(RA attribute : rvm.getScope().getAttributes())
 		{
 			if(attribute.isShowPrint())
 			{
@@ -160,7 +160,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 				sb.append(" ");
 			}
 		}
-		xScope.setEntity(sb.toString().trim());
+*/		xScope.setEntity(sb.toString().trim());
 		
 		return xScope;
 	}

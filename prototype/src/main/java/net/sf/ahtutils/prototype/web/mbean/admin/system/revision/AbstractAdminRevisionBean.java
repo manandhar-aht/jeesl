@@ -67,6 +67,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected List<RC> categories; public List<RC> getCategories() {return categories;}
 	protected List<RS> scopes; public List<RS> getScopes() {return scopes;}
 	protected List<RE> entities; public List<RE> getEntities() {return entities;}
+	protected List<REM> entityMappings; public List<REM> getEntityMappings() {return entityMappings;}
 	protected List<RAT> types; public List<RAT> getTypes() {return types;}
 	
 	protected RA attribute; public RA getAttribute() {return attribute;}public void setAttribute(RA attribute) {this.attribute = attribute;}

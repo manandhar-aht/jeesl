@@ -52,7 +52,7 @@ public class EjbRevisionViewFactory<L extends UtilsLang,D extends UtilsDescripti
 		try
 		{
 			ejb = cView.newInstance();
-			ejb.setPosition(0);
+			ejb.setPosition(1);
 			ejb.setVisible(true);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

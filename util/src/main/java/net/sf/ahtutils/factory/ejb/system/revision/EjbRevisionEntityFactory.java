@@ -52,7 +52,7 @@ public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescrip
 		try
 		{
 			ejb = cEntity.newInstance();
-			ejb.setPosition(0);
+			ejb.setPosition(1);
 			ejb.setVisible(true);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

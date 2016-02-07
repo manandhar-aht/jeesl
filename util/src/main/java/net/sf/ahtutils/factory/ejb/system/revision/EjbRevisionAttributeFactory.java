@@ -52,7 +52,7 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 		try
 		{
 			ejb = cAttribute.newInstance();
-			ejb.setPosition(0);
+			ejb.setPosition(1);
 			ejb.setType(type);
 			
 			ejb.setShowWeb(false);

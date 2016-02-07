@@ -40,7 +40,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionViewBean.class);
 	
 	private List<RV> views; public List<RV> getViews() {return views;}
-	private List<RVM> mappings; public List<RVM> getMappings() {return mappings;}
+	private List<RVM> viewMappings; public List<RVM> getViewMappings() {return viewMappings;}
 	
 	private RV rv; public RV getRv() {return rv;} public void setRv(RV rv) {this.rv = rv;}
 	private RVM mapping; public RVM getMapping() {return mapping;}public void setMapping(RVM mapping) {this.mapping = mapping;}
@@ -49,7 +49,6 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute,cRat);		
 		entities = fRevision.all(cEntity);
-		scopes = fRevision.all(cScope);
 		reloadViews();
 	}
 
@@ -76,14 +75,13 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 		rv = efLang.persistMissingLangs(fRevision,langs,rv);
 		rv = efDescription.persistMissingLangs(fRevision,langs,rv);
 		mapping=null;
-		
 		reloadView();
 	}
 	
 	private void reloadView()
 	{
 		rv = fRevision.load(cView, rv);
-		mappings = rv.getMaps();
+		viewMappings = rv.getMaps();
 	}
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -116,40 +114,51 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	
 	public void changeEntity()
 	{
-		scopes.clear();
 		if(mapping.getEntity()!=null)
 		{
 			mapping.setEntity(fRevision.find(cEntity,mapping.getEntity()));
 			logger.info(AbstractLogMessage.selectOneMenuChange(mapping.getEntity()));
-			RE e = fRevision.load(cEntity, mapping.getEntity());
-			for(REM rem : e.getMaps())
-			{
-				scopes.add(rem.getScope());
-			}
+			reloadEntityMappings();
+			if(entityMappings.isEmpty()){mapping.setEntityMapping(null);}
+			else{mapping.setEntityMapping(entityMappings.get(0));}
 		}
+	}
+	
+	private void reloadEntityMappings()
+	{
+		RE e = fRevision.load(cEntity, mapping.getEntity());
+		entityMappings = e.getMaps();
 	}
 	
 	public void addMapping() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(cMappingView));
+		logger.info(AbstractLogMessage.addEntity(cMappingView)+" entites:"+entities.size()+" empty:"+entities.isEmpty());
 		RE re = null;
-		if(entities.size()>0){re = entities.get(0);}
-		mapping = efMappingView.build(rv,re,null);
-		changeEntity();
-		
+		if(!entities.isEmpty())
+		{
+			re = entities.get(0);
+			mapping = efMappingView.build(rv,re,null);
+			reloadEntityMappings();
+			if(!entityMappings.isEmpty()){mapping.setEntityMapping(entityMappings.get(0));}
+		}
+		else
+		{
+			mapping = efMappingView.build(rv,re,null);
+			entityMappings.clear();
+		}	
 	}
 	
 	public void selectMapping() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(mapping));
 		mapping = fRevision.find(cMappingView, mapping);
-		changeEntity();
+		reloadEntityMappings();
 	}
 	
 	public void saveMapping() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(mapping));
-		mapping.setScope(fRevision.find(cScope,mapping.getScope()));
+		mapping.setEntityMapping(fRevision.find(cMappingEntity,mapping.getEntityMapping()));
 		mapping.setEntity(fRevision.find(cEntity,mapping.getEntity()));
 		mapping = fRevision.save(mapping);
 		reloadView();
@@ -173,7 +182,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	}
 	
 	protected void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, views);}
-	protected void reorderMappings() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, mappings);}
+	protected void reorderMappings() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, viewMappings);}
 	protected void updatePerformed(){}	
 	
 	

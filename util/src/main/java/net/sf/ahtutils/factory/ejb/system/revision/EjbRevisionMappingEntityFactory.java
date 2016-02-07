@@ -52,7 +52,7 @@ public class EjbRevisionMappingEntityFactory<L extends UtilsLang,D extends Utils
 		try
 		{
 			ejb = cMapping.newInstance();
-			ejb.setPosition(0);
+			ejb.setPosition(1);
 			ejb.setVisible(true);
 			ejb.setEntity(entity);
 		}

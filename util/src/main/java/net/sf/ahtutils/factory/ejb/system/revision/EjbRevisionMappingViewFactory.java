@@ -46,17 +46,17 @@ public class EjbRevisionMappingViewFactory<L extends UtilsLang,D extends UtilsDe
 		return new EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>(cMapping);
 	}
     
-	public RVM build(RV view, RE entity, RS scope)
+	public RVM build(RV view, RE entity, REM entityMapping)
 	{
 		RVM ejb = null;
 		try
 		{
 			ejb = cMapping.newInstance();
-			ejb.setPosition(0);
+			ejb.setPosition(1);
 			ejb.setVisible(true);
 			ejb.setView(view);
 			ejb.setEntity(entity);
-			ejb.setScope(scope);
+			ejb.setEntityMapping(entityMapping);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

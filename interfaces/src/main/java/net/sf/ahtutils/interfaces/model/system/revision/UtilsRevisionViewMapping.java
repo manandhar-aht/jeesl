@@ -22,11 +22,11 @@ public interface UtilsRevisionViewMapping<L extends UtilsLang,D extends UtilsDes
 	RV getView();
 	void setView(RV view);
 	
-	RS getScope();
-	void setScope(RS scope);
-	
 	RE getEntity();
 	void setEntity(RE entity);
+	
+	REM getEntityMapping();
+	void setEntityMapping(REM entityMapping);
 	
 	String getXpath();
 	void setXpath(String xpath);

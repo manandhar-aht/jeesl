@@ -71,7 +71,7 @@
 				</aht:slot>
 				<aht:slot id="sAttributes" width="4">
 					<h:form id="fMappings" rendered="#{(not empty cc.attrs.bean.entity) and (cc.attrs.bean.entity.id gt 0)}">
-						<p:dataTable var="m" value="#{cc.attrs.bean.mappings}" draggableRows="true"
+						<p:dataTable var="m" value="#{cc.attrs.bean.entityMappings}" draggableRows="true"
 							selection="#{cc.attrs.bean.mapping}" selectionMode="single" rowKey="#{m.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.aupRevisionMappings}">

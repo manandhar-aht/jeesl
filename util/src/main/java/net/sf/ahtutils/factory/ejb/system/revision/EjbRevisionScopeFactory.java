@@ -52,7 +52,7 @@ public class EjbRevisionScopeFactory<L extends UtilsLang,D extends UtilsDescript
 		try
 		{
 			ejb = cScope.newInstance();
-			ejb.setPosition(0);
+			ejb.setPosition(1);
 			ejb.setVisible(true);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

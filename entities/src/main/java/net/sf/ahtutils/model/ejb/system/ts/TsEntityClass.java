@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -26,31 +27,45 @@ public class TsEntityClass implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 	
+	@Override public String resolveParentAttribute() {return "category";}
+	
+	@NotNull
+	//@ManyToOne
+	private TsCategory category;
+	@Override public TsCategory getCategory() {return category;}
+	@Override public void setCategory(TsCategory category) {this.category = category;}
+	
 	private String code;
-	public String getCode() {return code;}
-	public void setCode(String code) {this.code = code;}
+	@Override public String getCode() {return code;}
+	@Override public void setCode(String code) {this.code = code;}
+	
+	private Integer position;
+	@Override public int getPosition() {return position;}
+	@Override public void setPosition(int position) {this.position = position;}
+	
+	private Boolean visible;
+	@Override public boolean isVisible() {return visible;}
+	@Override public void setVisible(boolean visible) {this.visible = visible;}
 
 	private String xpath;
-	public String getXpath() {return xpath;}
-	public void setXpath(String xpath) {this.xpath = xpath;}
+	@Override public String getXpath() {return xpath;}
+	@Override public void setXpath(String xpath) {this.xpath = xpath;}
 	
 	private String attribute;
-	public String getAttribute() {return attribute;}
-	public void setAttribute(String attribute) {this.attribute = attribute;}
+	@Override public String getAttribute() {return attribute;}
+	@Override public void setAttribute(String attribute) {this.attribute = attribute;}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
 	private Map<String, Lang> name;
-	public Map<String, Lang> getName() {return name;}
-	public void setName(Map<String, Lang> name) {this.name = name;}
+	@Override public Map<String, Lang> getName() {return name;}
+	@Override public void setName(Map<String, Lang> name) {this.name = name;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
 	private Map<String,Description> description;
-	public Map<String,Description> getDescription() {return description;}
-	public void setDescription(Map<String,Description> description) {this.description = description;}
-	
-	
+	@Override public Map<String,Description> getDescription() {return description;}
+	@Override public void setDescription(Map<String,Description> description) {this.description = description;}
 	
 	
 	public boolean equals(Object object)

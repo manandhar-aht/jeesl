@@ -40,4 +40,10 @@ public class UtilsTsFacadeBean<L extends UtilsLang,
 		List<ParentPredicate<CAT>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
 		return allForOrParents(cScope,ppCategory);
 	}
+	
+	@Override public List<EC> findClasses(Class<EC> cClass, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleScopes)
+	{
+		List<ParentPredicate<CAT>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
+		return allForOrParents(cClass,ppCategory);
+	}
 }

@@ -26,4 +26,5 @@ public interface UtilsTsFacade <L extends UtilsLang,
 			extends UtilsFacade
 {	
 	List<SCOPE> findScopes(Class<SCOPE> cScope, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleScopes);
+	List<EC> findClasses(Class<EC> cClass, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleClasses);
 }

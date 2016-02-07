@@ -16,9 +16,9 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<aup:grid>
+		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sCategories" width="5">
+				<aht:slot id="sCategories" width="7">
 					<h:form id="fCategories">
 						<p:dataTable var="s" value="#{cc.attrs.bean.classes}" draggableRows="true"
 							selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{s.id}">
@@ -27,10 +27,13 @@
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
-							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderEntities()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sCategory" listener="#{cc.attrs.bean.select()}"/>
-				            <p:column rendered="true">  
+							<p:column rendered="true">  
 								<h:outputText value="#{s.category.position}.#{s.position}"/>
+				            </p:column>
+				             <p:column headerText="#{msg.aupCategory}">  
+								<h:outputText value="#{s.category.name[userBean.localeCode].lang}"/>
 				            </p:column>
 				            <p:column headerText="#{msg.aupTsClass}">  
 								<h:outputText value="#{s.name[userBean.localeCode].lang}"/>
@@ -38,7 +41,7 @@
 				       	</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sCategory" width="7">
+				<aht:slot id="sCategory" width="5">
 					<h:form id="fCategory">
 						<p:panel id="pLang" header="#{msg.aupTsClass}"
 								 rendered="#{not empty cc.attrs.bean.entity}" styleClass="auPanelWithGrid">
@@ -50,6 +53,12 @@
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">							
 								<p:outputLabel value="#{msg.aupCode}"/>
 								<p:inputText value="#{cc.attrs.bean.entity.code}"/>
+								<p:outputLabel value="#{msg.aupCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.entity.category}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.categories}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
+								</p:selectOneMenu>
+								<p:outputLabel rendered="#{cc.attrs.bean.showInvisibleEntities}" value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showInvisibleEntities}" value="#{cc.attrs.bean.entity.visible}"/>
 								<p:outputLabel value="#{msg.aupXpath}"/>
 								<p:inputText value="#{cc.attrs.bean.entity.xpath}"/>
 								<p:outputLabel value="#{msg.aupTsClassAttribute}"/>

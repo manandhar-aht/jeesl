@@ -21,7 +21,7 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntity;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
-import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
+import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminTsEntityBean <L extends UtilsLang,
@@ -36,39 +36,39 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											WS extends UtilsStatus<WS,L,D>,
 											QAF extends UtilsStatus<QAF,L,D>>
-					extends AbstractAdminBean<L,D>
+					extends AbstractAdminTsBean<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsEntityBean.class);
-	
-	protected UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs;
-		
+			
 	private EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efClass;
-	
-	protected Class<EC> cEc;
 	
 	protected List<EC> classes; public List<EC> getClasses() {return classes;}
 	
 	protected EC entity; public void setEntity(EC entityClass) {this.entity = entityClass;} public EC getEntity() {return entity;}
 
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<EC> cEc)
+	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
 	{
-		super.initAdmin(langs,cLang,cDescription,bMessage);
-		allowSave=true;
-		this.cEc=cEc;
+		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cEc,cInt);
 		
 		efClass = EjbTsClassFactory.factory(cEc);
-		
+		showInvisibleEntities=true;
 		reloadClasses();
+	}
+	
+	public void multiToggle(UtilsStatus<?,L,D> o)
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());}
+		sbhCategory.multiToggle(o);
+		reloadClasses();
+		cancel();
 	}
 	
 	public void reloadClasses()
 	{
-		logger.info("reloadClasses");
-		classes = fTs.all(cEc);
-//		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
-//		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
+		classes = fTs.findClasses(cEc, cCategory, sbhCategory.getSelected(), showInvisibleEntities);
+		logger.info(AbstractLogMessage.reloaded(cEc, classes));
 	}
 	
 	public void add() throws UtilsNotFoundException
@@ -90,6 +90,7 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(entity));
+		entity.setCategory(fTs.find(cCategory, entity.getCategory()));
 		entity = fTs.save(entity);
 		reloadClasses();
 		updatePerformed();
@@ -108,9 +109,11 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 		entity = null;
 	}
 	
-//	protected void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, scopes);}
+	protected void reorderEntities() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, cEc, classes);}
 	protected void updatePerformed(){}
 		
+	private boolean showInvisibleEntities; public boolean isShowInvisibleEntities() {return showInvisibleEntities;}
+	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String action)
 	{
 		allowSave = jsfSecurityHandler.allow(action);

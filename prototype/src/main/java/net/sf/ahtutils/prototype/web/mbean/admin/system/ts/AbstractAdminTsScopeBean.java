@@ -12,6 +12,7 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.system.ts.EjbTsScopeFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -42,7 +43,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsScopeBean.class);
 			
-	private EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efCategory;
+	private EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efScope;
 	
 	protected List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
@@ -56,18 +57,18 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected EC opClass;public EC getOpClass() {return opClass;}public void setOpClass(EC opClass) {this.opClass = opClass;}
 	protected EC tbClass;public EC getTbClass() {return tbClass;}public void setTbClass(EC tbClass) {this.tbClass = tbClass;}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
+	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
 	{
 		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cEc,cInt);
 		
-		efCategory = EjbTsScopeFactory.factory(cScope);
+		efScope = EjbTsScopeFactory.factory(cScope);
 		
 		showInvisibleScopes = true;
-		
+		initLists();
 		reloadScopes();
 	}
 	
-	protected void initLists()
+	private void initLists()
 	{
 		units = fTs.all(cUnit);
 		opIntervals = fTs.all(cInt);
@@ -92,7 +93,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	public void add() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.addEntity(cScope));
-		scope = efCategory.build(null);
+		scope = efScope.build(null);
 		scope.setName(efLang.createEmpty(langs));
 		scope.setDescription(efDescription.createEmpty(langs));
 	}
@@ -109,6 +110,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.saveEntity(scope));
 		scope.setUnit(fTs.find(cUnit, scope.getUnit()));
+		scope.setCategory(fTs.find(cCategory, scope.getCategory()));
 		scope = fTs.save(scope);
 		reloadScopes();
 		updatePerformed();

@@ -55,6 +55,7 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 	protected void initTsSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
+		this.fTs=fTs;
 		this.cScope=cScope;
 		this.cUnit=cUnit;
 		this.cEc=cEc;

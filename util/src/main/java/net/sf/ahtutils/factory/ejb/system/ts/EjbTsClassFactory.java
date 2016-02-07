@@ -57,6 +57,8 @@ public class EjbTsClassFactory<L extends UtilsLang,
 		try
 		{
 			ejb = cEc.newInstance();
+			ejb.setPosition(1);
+			ejb.setVisible(true);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

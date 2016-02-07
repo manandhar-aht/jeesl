@@ -42,6 +42,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	private List<IOTT> types; public List<IOTT> getTypes() {return types;}
 	private List<IOTC> categories; public List<IOTC> getCategories() {return categories;}
 
+//	private SbMultiStatusHandler sbh; public SbMultiStatusHandler getSbh() {return sbh;}
 	private EjbIoTemplateFactory<L,D,IOT,IOTT,IOTC> efTemplate;
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsIoFacade<L,D,IOT,IOTT,IOTC> fIo, final Class<L> cLang, final Class<D> cDescription,Class<IOT> cTemplate, Class<IOTT> cTemplateType, Class<IOTC> cTemplateCategory)

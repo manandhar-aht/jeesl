@@ -20,13 +20,13 @@ import javax.validation.constraints.NotNull;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
-import net.sf.ahtutils.model.ejb.security.SecurityAction;
-import net.sf.ahtutils.model.ejb.security.SecurityCategory;
-import net.sf.ahtutils.model.ejb.security.SecurityRole;
-import net.sf.ahtutils.model.ejb.security.SecurityUsecase;
-import net.sf.ahtutils.model.ejb.security.SecurityView;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
+import net.sf.ahtutils.model.ejb.system.security.SecurityAction;
+import net.sf.ahtutils.model.ejb.system.security.SecurityCategory;
+import net.sf.ahtutils.model.ejb.system.security.SecurityRole;
+import net.sf.ahtutils.model.ejb.system.security.SecurityUsecase;
+import net.sf.ahtutils.model.ejb.system.security.SecurityView;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 

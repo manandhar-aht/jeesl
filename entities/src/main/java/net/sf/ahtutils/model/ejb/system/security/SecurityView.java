@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model.ejb.security;
+package net.sf.ahtutils.model.ejb.system.security;
 
 
 import java.io.Serializable;

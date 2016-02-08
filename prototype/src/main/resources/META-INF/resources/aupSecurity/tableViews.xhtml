@@ -25,7 +25,7 @@
             <p:column headerText="#{msg.aupSecurityView}">  
 				<h:outputText value="#{v.name[userBean.localeCode].lang}" />  
             </p:column>
-			<p:column rendered="#{cc.attrs.bean.showInvisibleRecords}">  
+			<p:column rendered="#{cc.attrs.bean.uiShowInvisible}">  
 				<h:graphicImage rendered="#{v.visible}" name="#{iconBean.icon12['securityVisible']}" library="gfx"/>
                 <h:graphicImage rendered="#{not v.visible}" name="#{iconBean.icon12['securityInvisible']}" library="gfx"/>
             </p:column>

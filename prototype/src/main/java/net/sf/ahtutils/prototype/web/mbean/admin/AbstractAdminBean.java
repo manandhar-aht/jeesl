@@ -10,6 +10,7 @@ import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 
 public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 					implements Serializable
@@ -29,8 +30,9 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	{
 		debugOnInfo = false;
 		
-		allowSave = true;
-		showInvisible = true;
+		uiAllowAdd = true;
+		uiAllowSave = true;
+		uiShowInvisible = true;
 	}
 	
 	public void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription, FacesMessageBean bMessage)
@@ -43,7 +45,13 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	}
 	
 	//Security Handling
-	protected boolean allowSave; public boolean getAllowSave() {return allowSave;}
-	protected boolean showInvisible; public boolean isShowInvisible() {return showInvisible;}
+	protected boolean uiAllowAdd;public boolean isUiAllowAdd() {return uiAllowAdd;}
+	protected boolean uiAllowSave; public boolean getUiAllowSave() {return uiAllowSave;}
+	protected boolean uiShowInvisible; public boolean isUiShowInvisible() {return uiShowInvisible;}
+	
+	protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
+	{
+		
+	}
 	
 }

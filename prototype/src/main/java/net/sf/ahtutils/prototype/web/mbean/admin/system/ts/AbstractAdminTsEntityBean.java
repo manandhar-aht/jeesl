@@ -62,7 +62,7 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	
 	public void reloadClasses()
 	{
-		classes = fTs.findClasses(cEc, cCategory, sbhCategory.getSelected(), showInvisible);
+		classes = fTs.findClasses(cEc, cCategory, sbhCategory.getSelected(), uiShowInvisible);
 		logger.info(AbstractLogMessage.reloaded(cEc, classes));
 		Collections.sort(classes, comparatorClass);
 	}
@@ -110,11 +110,11 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String action)
 	{
-		allowSave = jsfSecurityHandler.allow(action);
+		uiAllowSave = jsfSecurityHandler.allow(action);
 
 		if(logger.isTraceEnabled())
 		{
-			logger.info(allowSave+" allowSave "+action);
+			logger.info(uiAllowSave+" uiAllowSave "+action);
 		}
 	}
 }

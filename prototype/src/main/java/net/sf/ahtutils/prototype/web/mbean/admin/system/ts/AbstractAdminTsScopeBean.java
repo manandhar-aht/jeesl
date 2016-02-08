@@ -81,7 +81,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	public void reloadScopes()
 	{
 		if(debugOnInfo){logger.info("reloadScopes");}
-		scopes = fTs.findScopes(cScope, cCategory, sbhCategory.getSelected(), showInvisible);
+		scopes = fTs.findScopes(cScope, cCategory, sbhCategory.getSelected(), uiShowInvisible);
 		Collections.sort(scopes, comparatorScope);
 	}
 	
@@ -184,13 +184,13 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	}
 	
 	
-	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
+	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
 	{
-		showInvisible= jsfSecurityHandler.allow(actionDeveloper);
+		uiShowInvisible= jsfSecurityHandler.allow(viewCode);
 
 		if(logger.isTraceEnabled())
 		{
-			logger.info(showInvisible+" showInvisible a:"+actionDeveloper);
+			logger.info(uiShowInvisible+" showInvisible a:"+viewCode);
 		}
 	}
 }

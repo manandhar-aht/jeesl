@@ -25,8 +25,8 @@
 					<f:selectItems value="#{adminSecurityViewsBean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 				</p:selectOneMenu>
 								
-				<p:outputLabel rendered="#{adminSecurityViewsBean.showInvisibleRecords}" value="#{msg.aupSecurityVisible}"/>
-				<p:selectBooleanCheckbox rendered="#{adminSecurityViewsBean.showInvisibleRecords}" value="#{adminSecurityViewsBean.view.visible}"/>
+				<p:outputLabel rendered="#{adminSecurityViewsBean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
+				<p:selectBooleanCheckbox rendered="#{adminSecurityViewsBean.uiShowInvisible}" value="#{adminSecurityViewsBean.view.visible}"/>
 				
 				<p:outputLabel value="#{msg.aupSecurityCode}"/>
 				<h:outputText rendered="#{not cc.attrs.bean.showDeveloper}" value="#{cc.attrs.bean.view.code}"/>

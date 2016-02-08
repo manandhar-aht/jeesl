@@ -9,9 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
-import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.factory.ejb.symbol.EjbGraphicFactory;
+import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
 import net.sf.ahtutils.interfaces.model.graphic.UtilsWithGraphic;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -20,6 +19,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsWithImage;
 import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
+import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.exlp.util.io.StringUtil;
 
 public class AbstractOptionTableBean <L extends UtilsLang,
@@ -27,15 +27,15 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 										G extends UtilsGraphic<L,D,G,GT,GS>,
 										GT extends UtilsStatus<GT,L,D>,
 										GS extends UtilsStatus<GS,L,D>>
-										implements Serializable
+			extends AbstractAdminBean<L,D>
+			implements Serializable
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractOptionTableBean.class);
 	private static final long serialVersionUID = 1L;
 
-	protected boolean allowStatusAdd;public boolean isAllowStatusAdd() {return allowStatusAdd;}
+	
 	protected boolean allowStatusReorder;public boolean isAllowStatusReorder() {return allowStatusReorder;}
 	protected boolean allowCodeChange;public boolean isAllowCodeChange() {return allowCodeChange;}
-	protected boolean allowSave; public boolean isAllowSave() {return allowSave;}
 	protected boolean allowRemove; public boolean isAllowRemove() {return allowRemove;}
 	protected boolean allowSvg; public boolean isAllowSvg() {return allowSvg;}
 	
@@ -54,8 +54,6 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	
 	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
 	
-	protected EjbLangFactory<L> efLang;
-	protected EjbDescriptionFactory<D> efDescription;
 	protected EjbGraphicFactory<L,D,G,GT,GS> efGraphic;
 	
 	public AbstractOptionTableBean()
@@ -67,16 +65,14 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		hasTranslatorAction = true;
 		
 		allowStatusReorder = true;
-		allowSave = true;
 		allowRemove = true;
 		
 		allowAdditionalElements = new Hashtable<Long,Boolean>();
 	}
 	
-	protected void initUtils(Class<L> cL, Class<D> cD, Class<G> cG, Class<GT> cGT, Class<GS> cGS)
+	protected void initUtils(String[] langs, FacesMessageBean bMessage, Class<L> cLang, Class<D> cDescription, Class<G> cG, Class<GT> cGT, Class<GS> cGS)
 	{
-		efLang = EjbLangFactory.createFactory(cL);
-		efDescription = EjbDescriptionFactory.createFactory(cD);
+		super.initAdmin(langs,cLang,cDescription,bMessage);
 		efGraphic = EjbGraphicFactory.factory(cG);
 	}
 	
@@ -91,7 +87,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		hasTranslatorAction = jsfSecurityHandler.allow(actionTranslator);
 		
 		allowStatusReorder = hasDeveloperAction || hasAdministratorAction;
-		allowSave = hasDeveloperAction || hasAdministratorAction || hasTranslatorAction;
+		uiAllowSave = hasDeveloperAction || hasAdministratorAction || hasTranslatorAction;
 		allowRemove = hasDeveloperAction || hasAdministratorAction;
 	}
 	
@@ -129,10 +125,10 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		{
 			logger.info(StringUtil.stars());
 			logger.info("Page Actions");
-			logger.info("\t"+allowStatusAdd+" allowStatusAdd");
+			logger.info("\t"+uiAllowAdd+" allowStatusAdd");
 			logger.info("\t"+allowStatusReorder+" allowStatusReorder");
 			logger.info("\t"+allowCodeChange+" allowCodeChange");
-			logger.info("\t"+allowSave+" allowSave");
+			logger.info("\t"+uiAllowSave+" uiAllowSave");
 			logger.info("\t"+allowRemove+" allowRemove");
 		}
 	}

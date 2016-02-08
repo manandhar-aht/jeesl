@@ -31,8 +31,8 @@
 				<h:inputText rendered="#{!cc.attrs.bean.denyRemove}" value="#{cc.attrs.bean.role.code}"/>
 				<h:outputText rendered="#{cc.attrs.bean.denyRemove}" value="#{cc.attrs.bean.role.code}"/>
 				
-				<p:outputLabel rendered="#{cc.attrs.bean.showInvisibleRecords}" value="#{msg.aupSecurityVisible}"/>
-				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showInvisibleRecords}" value="#{cc.attrs.bean.role.visible}"/>
+				<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
+				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{cc.attrs.bean.role.visible}"/>
 				
 				<p:outputLabel rendered="#{cc.attrs.bean.showDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
 				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showDocumentation}" value="#{cc.attrs.bean.role.documentation}"/>

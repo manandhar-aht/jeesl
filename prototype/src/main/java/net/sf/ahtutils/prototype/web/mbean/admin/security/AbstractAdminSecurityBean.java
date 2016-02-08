@@ -87,8 +87,6 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	public void initSecuritySuper(FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<USER> cUser, String[] langs)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
-		showInvisibleCategories = true;
-		showInvisibleRecords = true;
 		showDocumentation = true;
 		
 		this.cCategory=cCategory;
@@ -126,7 +124,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	{
 		logger.info("reloadCategories");
 		
-		if(showInvisibleCategories){categories = fSecurity.allOrderedPosition(cCategory,categoryType);}
+		if(uiShowInvisible){categories = fSecurity.allOrderedPosition(cCategory,categoryType);}
 		else{categories = fSecurity.allOrderedPositionVisible(cCategory,categoryType);}
 	}
 	
@@ -145,16 +143,13 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	protected void categorySaved(){}
 	
 	//Handling for Invisible entries
-	private boolean showInvisibleCategories; public boolean isShowInvisibleCategories() {return showInvisibleCategories;}
-	protected boolean showInvisibleRecords; public boolean isShowInvisibleRecords() {return showInvisibleRecords;}
 	protected boolean showDocumentation; public boolean isShowDocumentation() {return showDocumentation;}
 	private boolean showDeveloper; public boolean isShowDeveloper() {return showDeveloper;}
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionInvisible, String actionDocumentation){updateSecurity(jsfSecurityHandler,actionInvisible,actionDocumentation,null);}
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionInvisible, String actionDocumentation, String actionDeveloper)
 	{
-		showInvisibleCategories = jsfSecurityHandler.allow(actionInvisible);
-		showInvisibleRecords = jsfSecurityHandler.allow(actionInvisible);
+		uiShowInvisible = jsfSecurityHandler.allow(actionInvisible);
 		showDocumentation = jsfSecurityHandler.allow(actionDocumentation);
 		
 		if(actionDeveloper!=null){showDeveloper = jsfSecurityHandler.allow(actionDeveloper);}
@@ -162,8 +157,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 		
 		if(logger.isTraceEnabled())
 		{
-			logger.info(showInvisibleCategories+" showInvisibleCategories "+actionInvisible);
-			logger.info(showInvisibleRecords+" showInvisibleRecords "+actionInvisible);
+			logger.info(uiShowInvisible+" uiShowInvisible "+actionInvisible);
 			logger.info(showDocumentation+" showInvisibleCategories "+actionDocumentation);
 			logger.info(showDeveloper+" showDeveloper "+actionDeveloper);
 		}

@@ -74,11 +74,11 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		for(R r : fSecurity.allForCategory(cRole,cCategory,category.getCode()))
 		{
 			logger.trace("Role "+r.toString());
-			if(r.isVisible() | showInvisibleRecords){roles.add(r);}
+			if(r.isVisible() | uiShowInvisible){roles.add(r);}
 		}
 		Collections.sort(roles, comparatorRole);
 		
-		logger.info("Reloaded "+roles.size()+" (invisibleRecords:"+showInvisibleRecords+")");
+		logger.info("Reloaded "+roles.size()+" (uiShowInvisible:"+uiShowInvisible+")");
 	}
 	
 	public void selectRole()

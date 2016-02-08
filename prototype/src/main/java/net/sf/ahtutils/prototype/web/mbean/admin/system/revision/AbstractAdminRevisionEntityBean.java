@@ -193,11 +193,11 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{
-		allowSave = jsfSecurityHandler.allow(actionDeveloper);
+		uiAllowSave = jsfSecurityHandler.allow(actionDeveloper);
 
 		if(logger.isTraceEnabled())
 		{
-			logger.info(allowSave+" allowSave ("+actionDeveloper+")");
+			logger.info(uiAllowSave+" allowSave ("+actionDeveloper+")");
 		}
 	}
 }

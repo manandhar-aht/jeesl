@@ -32,7 +32,7 @@
             <p:column headerText="#{msg.aupSecurityRole}">  
 				<h:outputText value="#{r.name[userBean.localeCode].lang}" />  
             </p:column>
-            <p:column rendered="#{cc.attrs.bean.showInvisibleRecords}">  
+            <p:column rendered="#{cc.attrs.bean.uiShowInvisible}">  
 				<h:graphicImage rendered="#{r.visible}" name="#{iconBean.icon12['securityVisible']}" library="gfx"/>
                 <h:graphicImage rendered="#{not r.visible}" name="#{iconBean.icon12['securityInvisible']}" library="gfx"/>
             </p:column>

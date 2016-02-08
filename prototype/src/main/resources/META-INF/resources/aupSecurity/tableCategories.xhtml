@@ -32,7 +32,7 @@
             <p:column headerText="#{msg.aupSecurityCategory}">  
 				<h:outputText value="#{c.name[userBean.localeCode].lang}"/>
             </p:column>
-            <p:column rendered="#{cc.attrs.bean.showInvisibleCategories}">  
+            <p:column rendered="#{cc.attrs.bean.uiShowInvisible}">  
 				<h:graphicImage rendered="#{c.visible}" name="#{iconBean.icon12['aupSecurityVisible']}" library="gfx"/>
                 <h:graphicImage rendered="#{not c.visible}" name="#{iconBean.icon12['aupSecurityInvisible']}" library="gfx"/>
             </p:column>

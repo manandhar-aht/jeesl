@@ -26,8 +26,8 @@
 				<h:outputText rendered="#{!cc.attrs.withAdd}" value="#{cc.attrs.bean.category.code}"/>
 				<h:inputText rendered="#{cc.attrs.withAdd}" value="#{cc.attrs.bean.category.code}"/>
 				
-				<p:outputLabel rendered="#{cc.attrs.bean.showInvisibleCategories}" value="#{msg.aupSecurityVisible}"/>
-				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showInvisibleCategories}" value="#{cc.attrs.bean.category.visible}"/>
+				<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
+				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{cc.attrs.bean.category.visible}"/>
 				
 				<p:outputLabel rendered="#{cc.attrs.bean.showDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
 				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showDocumentation}" value="#{cc.attrs.bean.category.documentation}"/>

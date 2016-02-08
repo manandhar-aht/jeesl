@@ -71,8 +71,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		
 		sbhType = new SbMultiStatusHandler<L,D,IOTT>(cTemplateType,types); sbhType.selectAll();
 		sbhCategory = new SbMultiStatusHandler<L,D,IOTC>(cTemplateCategory,categories); sbhCategory.selectAll();
-		
-		allowSave=true;
+
 		
 		reloadTemplates();
 	}
@@ -147,11 +146,11 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String action)
 	{
-		allowSave = jsfSecurityHandler.allow(action);
+		uiAllowSave = jsfSecurityHandler.allow(action);
 
 		if(logger.isTraceEnabled())
 		{
-			logger.info(allowSave+" allowSave ("+action+")");
+			logger.info(uiAllowSave+" allowSave ("+action+")");
 		}
 	}
 }

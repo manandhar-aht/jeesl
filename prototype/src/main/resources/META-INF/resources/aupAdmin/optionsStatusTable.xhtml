@@ -17,7 +17,7 @@
 	          selection="#{cc.attrs.bean.status}" selectionMode="single" rowKey="#{s.id}">
 			<f:facet name="header">
 	          	<aht:pfDataTableHeader title="#{msg[cc.attrs.bean.category.code]}">
-	          		<aht:icon rendered="#{cc.attrs.bean.allowStatusAdd}" type="add" listener="#{cc.attrs.bean.add()}" update="#{cc.attrs.update}" tooltip="#{msg.ttNew}"/>
+	          		<aht:icon rendered="#{cc.attrs.bean.uiAllowAdd}" type="add" listener="#{cc.attrs.bean.add()}" update="#{cc.attrs.update}" tooltip="#{msg.ttNew}"/>
 	          	</aht:pfDataTableHeader>
 			</f:facet>
 			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form #{cc.attrs.update}"/>

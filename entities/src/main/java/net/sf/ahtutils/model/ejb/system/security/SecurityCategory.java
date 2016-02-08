@@ -31,7 +31,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 public class SecurityCategory implements Serializable, EjbWithCode,EjbRemoveable,EjbPersistable,
 	UtilsSecurityCategory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
 {
-	public static final long serialVersionUID=2;
+	public static final long serialVersionUID=1;
 	
 	public static enum Code{system,regional}
 	
@@ -83,8 +83,5 @@ public class SecurityCategory implements Serializable, EjbWithCode,EjbRemoveable
 		return sb.toString();
 	}
 	
-	public boolean equals(Object object)
-	{
-        return (object instanceof SecurityCategory) ? id == ((SecurityCategory) object).getId() : (object == this);
-    }
+	@Override public boolean equals(Object object) {return (object instanceof SecurityCategory) ? id == ((SecurityCategory) object).getId() : (object == this);}
 }

@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
@@ -47,6 +49,8 @@ public class SecurityView implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 	public long getId() {return id;}
 	public void setId(long id) {this.id = id;}
 	
+	@Override public String resolveParentAttribute() {return "category";}
+	
 	@NotNull @ManyToOne
 	private SecurityCategory category;
 	public SecurityCategory getCategory() {return category;}
@@ -56,8 +60,6 @@ public class SecurityView implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 	private String code;
 	public String getCode() {return code;}
 	public void setCode(String code) {this.code = code;}
-	
-	@Override public String resolveParentAttribute() {return "category";}
 	
 	private boolean visible;
 	@Override public boolean isVisible() {return visible;}
@@ -122,8 +124,6 @@ public class SecurityView implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 	@Override public List<SecurityRole> getRoles() {if(roles==null){roles = new ArrayList<SecurityRole>();}return roles;}
 	@Override public void setRoles(List<SecurityRole> roles) {this.roles = roles;}
 	
-	public boolean equals(Object object)
-	{
-        return (object instanceof SecurityView) ? id == ((SecurityView) object).getId() : (object == this);
-    }	
+	@Override public boolean equals(Object object){return (object instanceof SecurityView) ? id == ((SecurityView) object).getId() : (object == this);}
+	@Override public int hashCode() {return new HashCodeBuilder(17,53).append(id).toHashCode();}
 }

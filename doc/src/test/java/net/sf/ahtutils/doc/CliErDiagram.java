@@ -29,10 +29,10 @@ public class CliErDiagram extends AbstractErDiagram
 	
 	public void create() throws IOException, ClassNotFoundException, TranscoderException
 	{
-//		create("security");
+		create("security");
 //		create("status");
 //		create("symbol");
-		create("ts");
+//		create("ts");
 //		create("revision");
 //		create("io");
 	}

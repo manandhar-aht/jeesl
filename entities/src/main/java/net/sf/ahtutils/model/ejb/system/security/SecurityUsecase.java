@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
@@ -97,8 +99,6 @@ public class SecurityUsecase implements EjbWithCode,Serializable,EjbRemoveable,E
 	@Override public void setRoles(List<SecurityRole> roles) {this.roles = roles;}
 	
 	
-	public boolean equals(Object object)
-	{
-        return (object instanceof SecurityUsecase) ? id == ((SecurityUsecase) object).getId() : (object == this);
-    }
+	@Override public boolean equals(Object object){return (object instanceof SecurityUsecase) ? id == ((SecurityUsecase) object).getId() : (object == this);}
+	@Override public int hashCode() {return new HashCodeBuilder(17,53).append(id).toHashCode();}
 }

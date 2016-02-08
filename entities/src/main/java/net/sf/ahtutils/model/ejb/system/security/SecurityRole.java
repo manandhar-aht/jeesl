@@ -21,6 +21,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
@@ -103,26 +105,9 @@ public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 	private List<AhtUtilsUser> users;
 	public List<AhtUtilsUser> getUsers() {return users;}
 	public void setUsers(List<AhtUtilsUser> users) {this.users = users;}
-		
-	
-	public boolean equals(Object object)
-	{
-        return (object instanceof SecurityRole)
-             ? id == ((SecurityRole) object).getId()
-             : (object == this);
-    }
-	
-	public int hashCode()
-	{
-		int hashCode = 11;
-		int multi = 29;
 
-		hashCode = hashCode * multi + (int)(this.id & 0xFFFFFFFF);
-		hashCode = hashCode * multi + (int)(this.id >>> 32);
-		return hashCode;
-	}
 	
-	public String toString()
+	@Override public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
@@ -132,4 +117,7 @@ public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 		sb.append("]");
 		return sb.toString();
 	}
+	
+	@Override public boolean equals(Object object){return (object instanceof SecurityRole) ? id == ((SecurityRole) object).getId() : (object == this);}
+	@Override public int hashCode() {return new HashCodeBuilder(17, 53).append(id).toHashCode();}
 }

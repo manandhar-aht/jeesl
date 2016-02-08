@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.system.ts.EjbTsScopeFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -43,7 +42,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsScopeBean.class);
 			
-	private EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efScope;
+
 	
 	protected List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
@@ -60,10 +59,6 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
 	{
 		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cEc,cInt);
-		
-		efScope = EjbTsScopeFactory.factory(cScope);
-		
-		showInvisibleScopes = true;
 		initLists();
 		reloadScopes();
 	}
@@ -86,7 +81,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	public void reloadScopes()
 	{
 		if(debugOnInfo){logger.info("reloadScopes");}
-		scopes = fTs.findScopes(cScope, cCategory, sbhCategory.getSelected(), showInvisibleScopes);
+		scopes = fTs.findScopes(cScope, cCategory, sbhCategory.getSelected(), showInvisible);
 		Collections.sort(scopes, comparatorScope);
 	}
 	
@@ -129,7 +124,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		scope = null;
 	}
 	
-	protected void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, cScope, scopes);}
+	protected void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, cScope, scopes);Collections.sort(scopes, comparatorScope);}
 	protected void updatePerformed(){}
 	
 	//OverlayPanel Interval
@@ -188,16 +183,14 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(tbClass));}
 	}
 	
-	//Security Handling for Invisible entries
-	private boolean showInvisibleScopes; public boolean isShowInvisibleScopes() {return showInvisibleScopes;}
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{
-		showInvisibleScopes = jsfSecurityHandler.allow(actionDeveloper);
+		showInvisible= jsfSecurityHandler.allow(actionDeveloper);
 
 		if(logger.isTraceEnabled())
 		{
-			logger.info(showInvisibleScopes+" showInvisibleScopes "+actionDeveloper);
+			logger.info(showInvisible+" showInvisible a:"+actionDeveloper);
 		}
 	}
 }

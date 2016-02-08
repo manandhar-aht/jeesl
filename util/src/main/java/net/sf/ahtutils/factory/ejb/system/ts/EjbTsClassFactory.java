@@ -51,7 +51,7 @@ public class EjbTsClassFactory<L extends UtilsLang,
 		return new EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>(cEc);
 	}
     
-	public EC build()
+	public EC build(CAT category)
 	{
 		EC ejb = null;
 		try
@@ -59,6 +59,7 @@ public class EjbTsClassFactory<L extends UtilsLang,
 			ejb = cEc.newInstance();
 			ejb.setPosition(1);
 			ejb.setVisible(true);
+			ejb.setCategory(category);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

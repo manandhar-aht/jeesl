@@ -69,35 +69,20 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	protected List<C> categories; public List<C> getCategories() {return categories;}
 	protected List<V> opViews; public List<V> getOpViews(){return opViews;}
 	protected List<A> opActions; public List<A> getOpActions(){return opActions;}
+	protected List<U> opUsecases; public List<U> getOpUsecases(){return opUsecases;}
 	
 	private List<V> opFvActions; public List<V> getOpFvActions(){return opFvActions;} public void setOpFvActions(List<V> opFvActions){this.opFvActions = opFvActions;}
 	private List<V> opFvViews;public List<V> getOpFvViews(){return opFvViews;}public void setOpFvViews(List<V> opFvViews){this.opFvViews = opFvViews;}
+	private List<U> opFvUsecases;public List<U> getOpFvUsecases(){return opFvUsecases;}public void setOpFvUsecases(List<U> opFvUsecases){this.opFvUsecases = opFvUsecases;}
 	
 	protected C category;public void setCategory(C category) {this.category = category;}public C getCategory() {return category;}
 	
-	
 	protected V opView;public V getOpView(){return opView;}public void setOpView(V opView){this.opView = opView;}
 	protected V tblView;public V getTblView(){return tblView;}public void setTblView(V tblView){this.tblView = tblView;}
-	
-	//OP Actions
-
 	protected A opAction;public A getOpAction(){return opAction;}public void setOpAction(A opAction){this.opAction = opAction;}
-	
-	protected A tblAction;
-	public A getTblAction(){return tblAction;}
-	public void setTblAction(A tblAction){this.tblAction = tblAction;}
-	
-	//OP Usecases
-	protected List<U> opUsecases; public List<U> getOpUsecases(){return opUsecases;}
-	
-	private List<U> opFvUsecases;
-	public List<U> getOpFvUsecases(){return opFvUsecases;}
-	public void setOpFvUsecases(List<U> opFvUsecases){this.opFvUsecases = opFvUsecases;}
-
+	protected A tblAction;public A getTblAction(){return tblAction;}public void setTblAction(A tblAction){this.tblAction = tblAction;}
 	protected U opUsecase;public U getOpUsecase(){return opUsecase;}public void setOpUsecase(U opUsecase){this.opUsecase = opUsecase;}
 	protected U tblUsecase;public U getTblUsecase(){return tblUsecase;}public void setTblUsecase(U tblUsecase){this.tblUsecase = tblUsecase;}
-	
-	protected String[] langs;
 	
 	public void initSecuritySuper(FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<USER> cUser, String[] langs)
 	{
@@ -117,7 +102,6 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 		efRole = EjbSecurityRoleFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efUsecase = EjbSecurityUsecaseFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efAction = EjbSecurityActionFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
-		
 		
 		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,USER>()).factory(SecurityRoleComparator.Type.position);
 		comparatorView = (new SecurityViewComparator<L,D,C,R,V,U,A,USER>()).factory(SecurityViewComparator.Type.position);

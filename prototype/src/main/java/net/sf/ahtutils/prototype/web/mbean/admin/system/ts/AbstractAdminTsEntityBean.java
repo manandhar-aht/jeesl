@@ -1,6 +1,7 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.system.ts;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.system.ts.EjbTsClassFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -42,8 +42,6 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsEntityBean.class);
 			
-	private EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efClass;
-	
 	protected List<EC> classes; public List<EC> getClasses() {return classes;}
 	
 	protected EC entity; public void setEntity(EC entityClass) {this.entity = entityClass;} public EC getEntity() {return entity;}
@@ -51,9 +49,6 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
 	{
 		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cEc,cInt);
-		
-		efClass = EjbTsClassFactory.factory(cEc);
-		showInvisibleEntities=true;
 		reloadClasses();
 	}
 	
@@ -67,14 +62,15 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	
 	public void reloadClasses()
 	{
-		classes = fTs.findClasses(cEc, cCategory, sbhCategory.getSelected(), showInvisibleEntities);
+		classes = fTs.findClasses(cEc, cCategory, sbhCategory.getSelected(), showInvisible);
 		logger.info(AbstractLogMessage.reloaded(cEc, classes));
+		Collections.sort(classes, comparatorClass);
 	}
 	
 	public void add() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.addEntity(cEc));
-		entity = efClass.build();
+		entity = efClass.build(null);
 		entity.setName(efLang.createEmpty(langs));
 		entity.setDescription(efDescription.createEmpty(langs));
 	}
@@ -109,10 +105,8 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 		entity = null;
 	}
 	
-	protected void reorderEntities() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, cEc, classes);}
+	protected void reorderEntities() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, cEc, classes);Collections.sort(classes, comparatorClass);}
 	protected void updatePerformed(){}
-		
-	private boolean showInvisibleEntities; public boolean isShowInvisibleEntities() {return showInvisibleEntities;}
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String action)
 	{

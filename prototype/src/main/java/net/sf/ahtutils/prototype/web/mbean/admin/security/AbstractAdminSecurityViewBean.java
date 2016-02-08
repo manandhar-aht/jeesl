@@ -36,19 +36,12 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityViewBean.class);
 
-	private List<V> views;
-	public List<V> getViews(){return views;}
+	private List<V> views;public List<V> getViews(){return views;}
+	private List<A> actions;public List<A> getActions(){return actions;}
 	
-	private List<A> actions;
-	public List<A> getActions(){return actions;}
+	private V view;public V getView(){return view;}public void setView(V view) {this.view = view;}
+	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
 	
-	private V view;
-	public V getView(){return view;}
-	public void setView(V view) {this.view = view;}
-	
-	private A action;
-	public A getAction(){return action;}
-	public void setAction(A action) {this.action = action;}
 	
 	public void initSuper(FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<USER> cUser, String[] langs)
 	{

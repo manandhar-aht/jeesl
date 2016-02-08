@@ -28,6 +28,9 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	public AbstractAdminBean()
 	{
 		debugOnInfo = false;
+		
+		allowSave = true;
+		showInvisible = true;
 	}
 	
 	public void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription, FacesMessageBean bMessage)
@@ -41,4 +44,6 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	
 	//Security Handling
 	protected boolean allowSave; public boolean getAllowSave() {return allowSave;}
+	protected boolean showInvisible; public boolean isShowInvisible() {return showInvisible;}
+	
 }

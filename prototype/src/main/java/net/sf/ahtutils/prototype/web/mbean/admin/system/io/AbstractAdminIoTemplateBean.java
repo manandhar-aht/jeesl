@@ -40,18 +40,19 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	private Class<IOTT> cTemplateType;
 	private Class<IOTC> cTemplateCategory;
 	
-	private IOT template; public IOT getTemplate() {return template;} public void setTemplate(IOT template) {this.template = template;}
-
 	private List<IOT> templates; public List<IOT> getTemplates() {return templates;}
 	private List<IOTT> types; public List<IOTT> getTypes() {return types;}
 	private List<IOTC> categories; public List<IOTC> getCategories() {return categories;}
+	
+	private IOT template; public IOT getTemplate() {return template;} public void setTemplate(IOT template) {this.template = template;}
 
-	private SbMultiStatusHandler<L,D,IOTT> sbhType; public SbMultiStatusHandler<L,D,IOTT> getSbhType() {return sbhType;}
-	private SbMultiStatusHandler<L,D,IOTC> sbhCategory; public SbMultiStatusHandler<L,D,IOTC> getSbhCategory() {return sbhCategory;}
+	private EjbIoTemplateFactory<L,D,IOT,IOTT,IOTC> efTemplate;
 		
 	private Comparator<IOT> comparatorTemplate;
 	
-	private EjbIoTemplateFactory<L,D,IOT,IOTT,IOTC> efTemplate;
+	private SbMultiStatusHandler<L,D,IOTT> sbhType; public SbMultiStatusHandler<L,D,IOTT> getSbhType() {return sbhType;}
+	private SbMultiStatusHandler<L,D,IOTC> sbhCategory; public SbMultiStatusHandler<L,D,IOTC> getSbhCategory() {return sbhCategory;}
+
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsIoFacade<L,D,IOT,IOTT,IOTC> fIo, final Class<L> cLang, final Class<D> cDescription,Class<IOT> cTemplate, Class<IOTT> cTemplateType, Class<IOTC> cTemplateCategory)
 	{

@@ -7,6 +7,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.factory.ejb.system.ts.EjbTsClassFactory;
+import net.sf.ahtutils.factory.ejb.system.ts.EjbTsScopeFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -19,6 +21,7 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
+import net.sf.ahtutils.util.comparator.ejb.ts.TsClassComparator;
 import net.sf.ahtutils.util.comparator.ejb.ts.TsScopeComparator;
 
 public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescription,
@@ -48,10 +51,14 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 	
 	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
 	
-	protected SbMultiStatusHandler<L,D,CAT> sbhCategory; public SbMultiStatusHandler<L,D,CAT> getSbhCategory() {return sbhCategory;}
+	protected EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efScope;
+	protected EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> efClass;
 	
 	protected Comparator<SCOPE> comparatorScope;
-	
+	protected Comparator<EC> comparatorClass;
+
+	protected SbMultiStatusHandler<L,D,CAT> sbhCategory; public SbMultiStatusHandler<L,D,CAT> getSbhCategory() {return sbhCategory;}
+
 	protected void initTsSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
@@ -62,9 +69,11 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 		this.cInt=cInt;
 		this.cCategory=cCategory;
 		
-		allowSave = true;
-		
 		comparatorScope = (new TsScopeComparator<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>()).factory(TsScopeComparator.Type.position);
+		comparatorClass = (new TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>()).factory(TsClassComparator.Type.position);
+		
+		efScope = EjbTsScopeFactory.factory(cScope);
+		efClass = EjbTsClassFactory.factory(cEc);
 		
 		categories = fTs.allOrderedPositionVisible(cCategory);
 		sbhCategory = new SbMultiStatusHandler<L,D,CAT>(cCategory,categories); sbhCategory.selectAll();

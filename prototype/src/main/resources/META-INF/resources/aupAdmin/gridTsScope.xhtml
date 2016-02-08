@@ -44,7 +44,7 @@
 				            <p:column headerText="#{msg.aupTsUnit}">  
 								<h:outputText value="#{s.unit.symbol}"/>
 				            </p:column>
-				            <p:column rendered="#{cc.attrs.bean.showInvisibleScopes}">  
+				            <p:column rendered="#{cc.attrs.bean.showInvisible}">  
 								<aup:iconCheckmark value="#{s.visible}"/>
 				            </p:column>
 				       	</p:dataTable>
@@ -63,9 +63,6 @@
 								<p:outputLabel value="#{msg.aupCode}"/>
 								<h:inputText autocomplete="off" value="#{cc.attrs.bean.scope.code}"/>
 								
-								<p:outputLabel rendered="#{cc.attrs.bean.showInvisibleScopes}" value="#{msg.aupSecurityVisible}"/>
-								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showInvisibleScopes}" value="#{cc.attrs.bean.scope.visible}"/>
-							
 								<p:outputLabel value="#{msg.aupCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.scope.category}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.categories}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
@@ -75,6 +72,10 @@
 								<p:selectOneMenu value="#{cc.attrs.bean.scope.unit}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.units}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80" rendered="#{cc.attrs.bean.showInvisible}" >
+								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.scope.visible}"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.scope}"
 													labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"

@@ -57,13 +57,6 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected Class<RA> cAttribute;
 	protected Class<RAT> cRat;
 	
-	protected EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efView;
-	protected EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efMappingView;
-	protected EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efScope;
-	protected EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efEntity;
-	protected EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efMappingEntity;
-	protected EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efAttribute;
-	
 	protected List<RA> attributes; public List<RA> getAttributes() {return attributes;}
 	protected List<RC> categories; public List<RC> getCategories() {return categories;}
 	protected List<RS> scopes; public List<RS> getScopes() {return scopes;}
@@ -72,6 +65,13 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected List<RAT> types; public List<RAT> getTypes() {return types;}
 	
 	protected RA attribute; public RA getAttribute() {return attribute;}public void setAttribute(RA attribute) {this.attribute = attribute;}
+
+	protected EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efView;
+	protected EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efMappingView;
+	protected EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efScope;
+	protected EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efEntity;
+	protected EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efMappingEntity;
+	protected EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efAttribute;
 	
 	protected Comparator<RS> comparatorScope;
 	protected Comparator<RE> comparatorEntity;
@@ -103,8 +103,6 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		
 		categories = fRevision.allOrderedPositionVisible(cCategory);
 		sbhCategory = new SbMultiStatusHandler<L,D,RC>(cCategory,categories); sbhCategory.selectAll();
-		
-		allowSave = true;
 	}
 	
 	public void addAttribute() throws UtilsNotFoundException

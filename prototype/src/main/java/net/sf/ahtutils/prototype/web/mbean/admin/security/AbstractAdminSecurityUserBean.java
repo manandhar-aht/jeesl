@@ -45,8 +45,6 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	protected UtilsUserFacade<L,D,C,R,V,U,A,USER> fUtilsUser;
 	protected UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fUtilsSecurity;
 	
-	protected FacesMessageBean bUtilsMessage;
-	
 	private Class<R> cRole;
 	private Class<USER> cUser;
 	
@@ -68,7 +66,6 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	{
 		this.fUtilsUser=fUtilsUser;
 		this.fUtilsSecurity=fUtilsSecurity;
-		this.bUtilsMessage=bUtilsMessage;
 		
 		this.cRole=cRole;
 		this.cUser=cUser;
@@ -118,7 +115,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 			checkPwd();
 			user = fUtilsUser.saveTransaction(user);
 			reloadUser();
-			bUtilsMessage.growlSuccessSaved();
+			bMessage.growlSuccessSaved();
 			if(revision!=null){revision.pageFlowPrimarySave(user);}
 			userChangePerformed();
 		}
@@ -132,7 +129,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		{
 			fUtilsUser.rm(myUser);
 			user = null;
-			bUtilsMessage.growlSuccessRemoved();
+			bMessage.growlSuccessRemoved();
 			if(revision!=null){revision.pageFlowPrimaryCancel();}
 			userChangePerformed();
 		}
@@ -146,7 +143,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 			logger.info("Checking PWD");
 			if(pwd1.length()!=pwd2.length())
 			{
-				bUtilsMessage.growlError("fmPwdDidNotMatch");
+				bMessage.growlError("fmPwdDidNotMatch");
 				return;
 			}
 	
@@ -154,14 +151,14 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 			{
 				if(pwd1.equals(pwd2))
 				{
-					bUtilsMessage.growlSuccess("fmPwdChanged");
+					bMessage.growlSuccess("fmPwdChanged");
 					
 					EjbWithPwd ejb = (EjbWithPwd)user;
 					ejb.setPwd(pwd1);
 				}
 				else
 				{
-					bUtilsMessage.growlError("fmPwdDidNotMatch");
+					bMessage.growlError("fmPwdDidNotMatch");
 					return;
 				}
 			}

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -29,8 +30,7 @@ public class TsEntityClass implements Serializable,EjbRemoveable,EjbPersistable,
 	
 	@Override public String resolveParentAttribute() {return "category";}
 	
-	@NotNull
-	//@ManyToOne
+	@NotNull @ManyToOne
 	private TsCategory category;
 	@Override public TsCategory getCategory() {return category;}
 	@Override public void setCategory(TsCategory category) {this.category = category;}

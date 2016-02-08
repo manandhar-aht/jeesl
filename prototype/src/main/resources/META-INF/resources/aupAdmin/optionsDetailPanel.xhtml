@@ -24,13 +24,13 @@
 			<f:facet name="actions">
 				<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancel()}" update="#{cc.attrs.update}" tooltip="#{msg.ttCancel}"/>
 				<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.save()}" update="#{cc.attrs.update}" tooltip="#{msg.ttSave}"/>
-				<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.allowRemove and cc.attrs.bean.allowCodeChange}" listener="#{cc.attrs.bean.rm(cc.attrs.bean.status)}" update="#{cc.attrs.update}" tooltip="#{msg.ttDelete}"/>
+				<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.uiAllowRemove and cc.attrs.bean.uiAllowCode}" listener="#{cc.attrs.bean.rm(cc.attrs.bean.status)}" update="#{cc.attrs.update}" tooltip="#{msg.ttDelete}"/>
 			</f:facet>
 			<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
 
 				<p:outputLabel value="#{msg.aupOptionCode}"/>
-				<p:inputText rendered="#{cc.attrs.bean.allowCodeChange}" value="#{cc.attrs.bean.status.code}"/>
-				<h:outputText rendered="#{not cc.attrs.bean.allowCodeChange}" value="#{cc.attrs.bean.status.code}"/>
+				<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.code}"/>
+				<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.code}"/>
 
 				<p:outputLabel rendered="#{cc.attrs.bean.supportsSymbol}" for="sSymbol" value="#{msg.aupOptionSymbol}"/>
 				<p:inputText rendered="#{cc.attrs.bean.supportsSymbol}" id="sSymbol" value="#{cc.attrs.bean.status.symbol}"/>

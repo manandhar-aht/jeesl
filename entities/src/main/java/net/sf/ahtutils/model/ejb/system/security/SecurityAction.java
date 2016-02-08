@@ -35,7 +35,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @EjbErNode(name="Action",category="security",subset="security")
 
 public class SecurityAction implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-	UtilsSecurityAction<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
+	UtilsSecurityAction<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,AhtUtilsUser>
 {
 	public static final long serialVersionUID=1;
 

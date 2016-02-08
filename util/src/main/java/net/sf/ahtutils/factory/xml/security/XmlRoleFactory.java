@@ -1,10 +1,14 @@
 package net.sf.ahtutils.factory.xml.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
 import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
@@ -13,17 +17,15 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.xml.security.Role;
 import net.sf.exlp.util.io.StringUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class XmlRoleFactory<L extends UtilsLang,
 	D extends UtilsDescription, 
-	C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-	R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-	V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-	U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-	A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-	USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
+	C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+	R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+	V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+	U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+	A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+	AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+	USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlRoleFactory.class);
 		
@@ -85,19 +87,19 @@ public class XmlRoleFactory<L extends UtilsLang,
 		
 		if(q.isSetViews())
 		{
-			XmlViewsFactory<L,D,C,R,V,U,A,USER> f = new XmlViewsFactory<L,D,C,R,V,U,A,USER>(q.getViews());
+			XmlViewsFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlViewsFactory<L,D,C,R,V,U,A,AT,USER>(q.getViews());
 			xml.setViews(f.build(role.getViews()));
 		}
 		
 		if(q.isSetActions())
 		{
-			XmlActionsFactory<L,D,C,R,V,U,A,USER> f = new XmlActionsFactory<L,D,C,R,V,U,A,USER>(q.getActions());
+			XmlActionsFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlActionsFactory<L,D,C,R,V,U,A,AT,USER>(q.getActions());
 			xml.setActions(f.build(role.getActions()));
 		}
 		
 		if(q.isSetUsecases())
 		{
-			XmlUsecasesFactory<L,D,C,R,V,U,A,USER> f = new XmlUsecasesFactory<L,D,C,R,V,U,A,USER>(q.getUsecases());
+			XmlUsecasesFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlUsecasesFactory<L,D,C,R,V,U,A,AT,USER>(q.getUsecases());
 			xml.setUsecases(f.build(role.getUsecases()));
 		}
 		

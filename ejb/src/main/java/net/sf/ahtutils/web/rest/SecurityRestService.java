@@ -21,6 +21,7 @@ import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
@@ -41,12 +42,19 @@ import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.security.Staffs;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
-public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription,C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
+public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription,
+								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+								R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+								V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+								U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+								A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 				implements UtilsSecurityRestExport
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityRestService.class);
 	
-	private UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity;
+	private UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	
 	private final Class<C> cCategory;
 	private final Class<R> cRole;
@@ -54,15 +62,15 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<U> cUsecase;
 	private final Class<A> cAction;
 	
-	private SecurityInitViews<L,D,C,R,V,U,A,USER> initViews;
+	private SecurityInitViews<L,D,C,R,V,U,A,AT,USER> initViews;
 	
-	private XmlCategoryFactory<L,D,C,R,V,U,A,USER> fCategory;
+	private XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER> fCategory;
 	private XmlViewFactory xfView;
-	private XmlRoleFactory<L,D,C,R,V,U,A,USER> fRole,fRoleDescription,fRoleCode;
-	private XmlActionFactory<L,D,C,R,V,U,A,USER> fAction;
-	private XmlUsecaseFactory<L,D,C,R,V,U,A,USER> fUsecase,fUsecaseDoc;
+	private XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> fRole,fRoleDescription,fRoleCode;
+	private XmlActionFactory<L,D,C,R,V,U,A,AT,USER> fAction;
+	private XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER> fUsecase,fUsecaseDoc;
 	
-	private SecurityRestService(UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity,final Class<L> cL,final Class<D> cD,final Class<C> cCategory,final Class<V> cView,final Class<R> cRole,final Class<U> cUsecase,final Class<A> cAction,final Class<USER> cUser)
+	private SecurityRestService(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,final Class<L> cL,final Class<D> cD,final Class<C> cCategory,final Class<V> cView,final Class<R> cRole,final Class<U> cUsecase,final Class<A> cAction,final Class<USER> cUser)
 	{
 		this.fSecurity=fSecurity;
 		this.cCategory=cCategory;
@@ -71,30 +79,30 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cUsecase=cUsecase;
 		this.cAction=cAction;
 		
-		fCategory = new XmlCategoryFactory<L,D,C,R,V,U,A,USER>(null,SecurityQuery.exCategory());
+		fCategory = new XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER>(null,SecurityQuery.exCategory());
 		xfView = new XmlViewFactory(SecurityQuery.exViewOld(),null);
-		fRole = new XmlRoleFactory<L,D,C,R,V,U,A,USER>(SecurityQuery.exRole(),null);
-		fRoleDescription = new XmlRoleFactory<L,D,C,R,V,U,A,USER>(SecurityQuery.role(),null);
-		fRoleCode = new XmlRoleFactory<L,D,C,R,V,U,A,USER>(XmlRoleFactory.build(""));
-		fAction = new XmlActionFactory<L,D,C,R,V,U,A,USER>(SecurityQuery.exActionAcl());
-		fUsecase = new XmlUsecaseFactory<L,D,C,R,V,U,A,USER>(SecurityQuery.exUsecase());
-		fUsecaseDoc = new XmlUsecaseFactory<L,D,C,R,V,U,A,USER>(SecurityQuery.docUsecase());
+		fRole = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exRole(),null);
+		fRoleDescription = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.role(),null);
+		fRoleCode = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(XmlRoleFactory.build(""));
+		fAction = new XmlActionFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exActionAcl());
+		fUsecase = new XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exUsecase());
+		fUsecaseDoc = new XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.docUsecase());
 		
 		initViews = AbstractSecurityInit.factoryViews(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser,fSecurity);
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
-	SecurityRestService<L,D,C,R,V,U,A,USER>
-		factory(UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity, final Class<L> cL,final Class<D> cD,final Class<C> cCategory, final Class<V> cView, final Class<R> cRole, final Class<U> cUsecase,final Class<A> cAction,final Class<USER> cUser)
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+	SecurityRestService<L,D,C,R,V,U,A,AT,USER>
+		factory(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<L> cL,final Class<D> cD,final Class<C> cCategory, final Class<V> cView, final Class<R> cRole, final Class<U> cUsecase,final Class<A> cAction,final Class<USER> cUser)
 	{
-		return new SecurityRestService<L,D,C,R,V,U,A,USER>(fSecurity,cL,cD,cCategory,cView,cRole,cUsecase,cAction,cUser);
+		return new SecurityRestService<L,D,C,R,V,U,A,AT,USER>(fSecurity,cL,cD,cCategory,cView,cRole,cUsecase,cAction,cUser);
 	}
 	
 	public DataUpdate iuSecurityViews(Access views){return initViews.iuViews(views);}
 
-	public <STAFF extends UtilsStaff<L,D,C,R,V,U,A,USER,DOMAIN>,DOMAIN extends EjbWithId> Staffs exportStaffs(Class<STAFF> cStaff)
+	public <STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,DOMAIN extends EjbWithId> Staffs exportStaffs(Class<STAFF> cStaff)
 	{
-		XmlStaffFactory<L,D,C,R,V,U,A,USER,STAFF,DOMAIN> f = new XmlStaffFactory<L,D,C,R,V,U,A,USER,STAFF,DOMAIN>(SecurityQuery.exStaff());
+		XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,DOMAIN> f = new XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,DOMAIN>(SecurityQuery.exStaff());
 		
 		Staffs staffs = new Staffs();
 		

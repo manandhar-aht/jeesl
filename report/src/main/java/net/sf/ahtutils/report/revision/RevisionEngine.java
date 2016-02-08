@@ -20,6 +20,7 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
@@ -39,12 +40,13 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 							RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
 							RAT extends UtilsStatus<RAT,L,D>,
 							REV extends UtilsRevision,
-							C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-							R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-							V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-							U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-							A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-							USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
+							C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+							R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+							V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+							U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+							A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+							AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+							USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(RevisionEngine.class);
 	
@@ -77,15 +79,16 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>,
 					REV extends UtilsRevision,
-					C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-					R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-					V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-					U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-					A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-					USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
-					RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,USER> factory(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity)
+					C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+					R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+					V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+					U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+					A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+					AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+					USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+					RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> factory(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity)
 	{
-		return new RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,USER>(fRevision, cView, cScope, cEntity);
+		return new RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER>(fRevision, cView, cScope, cEntity);
 	}
 	
 	public void init(String lang, RV view)
@@ -102,7 +105,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		logger.info(this.getClass().getSimpleName()+" initialized with "+map.size()+" entities");
 	}
 	
-	public Change build(UtilsRevisionContainer<REV,?,L,D,C,R,V,U,A,USER> revision)
+	public Change build(UtilsRevisionContainer<REV,?,L,D,C,R,V,U,A,AT,USER> revision)
 	{
 		Object o = revision.getEntity();
 		String key = o.getClass().getName();

@@ -18,6 +18,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.system.security.SecurityAction;
+import net.sf.ahtutils.model.ejb.system.security.SecurityActionTemplate;
 import net.sf.ahtutils.model.ejb.system.security.SecurityCategory;
 import net.sf.ahtutils.model.ejb.system.security.SecurityRole;
 import net.sf.ahtutils.model.ejb.system.security.SecurityUsecase;
@@ -30,7 +31,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(name = "StaffWorkspace",uniqueConstraints = @UniqueConstraint(columnNames = {"domain_id","role_id","user_id"}))
 @EjbErNode(name="Staff",category="ts",level=2,subset="ts")
 public class TsStaffWorkspace implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,EjbSaveable,
-					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser,TsWorkspace>
+					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,AhtUtilsUser,TsWorkspace>
 {
 	public static final long serialVersionUID=1;
 

@@ -36,7 +36,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @EjbErNode(name="Usecase",category="security",subset="security")
 
 public class SecurityUsecase implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-			UtilsSecurityUsecase<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
+			UtilsSecurityUsecase<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,AhtUtilsUser>
 {
 	public static final long serialVersionUID=1;
 	

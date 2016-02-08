@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
@@ -22,13 +23,14 @@ import net.sf.ahtutils.xml.status.Domain;
 
 public class XmlStaffFactory<L extends UtilsLang,
 							D extends UtilsDescription,
-							C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-							R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-							V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-							U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-							A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-							USER extends UtilsUser<L,D,C,R,V,U,A,USER>,
-							STAFF extends UtilsStaff<L,D,C,R,V,U,A,USER,DOMAIN>,
+							C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+							R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+							V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+							U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+							A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+							AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+							USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
+							STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,
 							DOMAIN extends EjbWithId>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlStaffFactory.class);
@@ -58,13 +60,13 @@ public class XmlStaffFactory<L extends UtilsLang,
 		
 		if(q.isSetUser())
 		{
-			XmlUserFactory<L,D,C,R,V,U,A,USER> f = new XmlUserFactory<L,D,C,R,V,U,A,USER>(q.getUser());
+			XmlUserFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlUserFactory<L,D,C,R,V,U,A,AT,USER>(q.getUser());
 			xml.setUser(f.build(staff.getUser()));
 		}
 		
 		if(q.isSetRole())
 		{
-			XmlRoleFactory<L,D,C,R,V,U,A,USER> f = new XmlRoleFactory<L,D,C,R,V,U,A,USER>(lang,q.getRole());
+			XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(lang,q.getRole());
 			xml.setRole(f.build(staff.getRole()));
 		}
 		

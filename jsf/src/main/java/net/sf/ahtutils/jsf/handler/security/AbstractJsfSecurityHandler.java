@@ -15,6 +15,7 @@ import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
@@ -24,17 +25,18 @@ import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
 
 public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 													D extends UtilsDescription,
-													C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-													R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-													V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-													U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-													A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-													USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
+													C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+													R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+													V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+													U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+													A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+													AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+													USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJsfSecurityHandler.class);
 	public static final long serialVersionUID=1;
 
-	protected UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity;
+	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	
 	
 	protected List<A> actions; public List<A> getActions() {return actions;}
@@ -50,7 +52,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 	protected boolean noActions; public boolean isNoActions() {return noActions;}
 	protected boolean noRoles; public boolean isNoRoles() {return noRoles;}
 	
-	public AbstractJsfSecurityHandler(UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity,String pageCode, Class<V> cV)
+	public AbstractJsfSecurityHandler(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,String pageCode, Class<V> cV)
 	{
 		this.fSecurity=fSecurity;
 		this.pageCode=pageCode;
@@ -62,7 +64,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 		mapHasRole = new Hashtable<R,Boolean>();
 		actions = new ArrayList<A>();
 		
-		SecurityActionComparator<L,D,C,R,V,U,A,USER> cfAction = new SecurityActionComparator<L,D,C,R,V,U,A,USER>();
+		SecurityActionComparator<L,D,C,R,V,U,A,AT,USER> cfAction = new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>();
 		cfAction.factory(SecurityActionComparator.Type.position);
 		comparatorAction = cfAction.factory(SecurityActionComparator.Type.position);
 		

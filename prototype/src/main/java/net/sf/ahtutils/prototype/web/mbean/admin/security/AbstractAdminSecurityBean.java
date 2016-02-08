@@ -19,6 +19,7 @@ import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
@@ -34,25 +35,26 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityBean <L extends UtilsLang,
 											D extends UtilsDescription,
-											C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-											R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-											V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-											U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-											A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-											USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
+											C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+											R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+											V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+											U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+											A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+											AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityBean.class);
 	
-	protected UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity;
+	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected UtilsSecurityCategory.Type categoryType;
 	
-	protected EjbSecurityCategoryFactory<L,D,C,R,V,U,A,USER> efCategory;
-	protected EjbSecurityRoleFactory<L,D,C,R,V,U,A,USER> efRole;
-	protected EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,USER> efUsecase;
-	protected EjbSecurityActionFactory<L,D,C,R,V,U,A,USER> efAction;
+	protected EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> efCategory;
+	protected EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> efRole;
+	protected EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> efUsecase;
+	protected EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> efAction;
 	
 	protected Class<C> cCategory;
 	protected Class<R> cRole;
@@ -101,10 +103,10 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 		efUsecase = EjbSecurityUsecaseFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efAction = EjbSecurityActionFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		
-		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,USER>()).factory(SecurityRoleComparator.Type.position);
-		comparatorView = (new SecurityViewComparator<L,D,C,R,V,U,A,USER>()).factory(SecurityViewComparator.Type.position);
-		comparatorUsecase = (new SecurityUsecaseComparator<L,D,C,R,V,U,A,USER>()).factory(SecurityUsecaseComparator.Type.position); 
-		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,USER>()).factory(SecurityActionComparator.Type.position); 
+		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityRoleComparator.Type.position);
+		comparatorView = (new SecurityViewComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityViewComparator.Type.position);
+		comparatorUsecase = (new SecurityUsecaseComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityUsecaseComparator.Type.position); 
+		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityActionComparator.Type.position); 
 		
 		reloadCategories();
 	}

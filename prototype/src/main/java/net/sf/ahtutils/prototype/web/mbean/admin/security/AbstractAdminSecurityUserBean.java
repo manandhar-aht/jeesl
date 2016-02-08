@@ -19,6 +19,7 @@ import net.sf.ahtutils.interfaces.facade.UtilsUserFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
@@ -30,20 +31,21 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 											D extends UtilsDescription,
-											C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-											R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-											V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-											U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-											A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-											USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
+											C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+											R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+											V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+											U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+											A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+											AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		extends AbstractAdminBean<L,D>
 		implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityUserBean.class);
 
-	protected UtilsUserFacade<L,D,C,R,V,U,A,USER> fUtilsUser;
-	protected UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fUtilsSecurity;
+	protected UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser;
+	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity;
 	
 	private Class<R> cRole;
 	private Class<USER> cUser;
@@ -55,14 +57,14 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	protected USER user; public USER getUser(){return user;} public void setUser(USER user){this.user = user;}
 	
 	protected Map<Long,Boolean> mapRoles; public Map<Long, Boolean> getMapRoles() {return mapRoles;}
-	protected EjbSecurityUserFactory<L,D,C,R,V,U,A,USER> efUser;
+	protected EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER> efUser;
 	
 	protected String pwd1; public String getPwd1() {return pwd1;} public void setPwd1(String pwd1) {this.pwd1 = pwd1;}
 	protected String pwd2;public String getPwd2() {return pwd2;}public void setPwd2(String pwd2){this.pwd2 = pwd2;}
 	
 	protected UtilsRevisionPageFlow<USER,USER> revision; public UtilsRevisionPageFlow<USER, USER> getRevision() {return revision;}
 	
-	public void initSuper(UtilsUserFacade<L,D,C,R,V,U,A,USER> fUtilsUser, UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage, final Class<R> cRole, final Class<USER> cUser)
+	public void initSuper(UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage, final Class<R> cRole, final Class<USER> cUser)
 	{
 		this.fUtilsUser=fUtilsUser;
 		this.fUtilsSecurity=fUtilsSecurity;

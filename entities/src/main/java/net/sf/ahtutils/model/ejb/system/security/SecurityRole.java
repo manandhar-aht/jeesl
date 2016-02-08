@@ -37,7 +37,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @EjbErNode(name="Role",category="security",subset="security,ts")
 
 public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-	UtilsSecurityRole<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
+	UtilsSecurityRole<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,AhtUtilsUser>
 {
 	public static enum Code {systemAht}
 	public static enum CodeRegion {regionalManager,regionalEditor}

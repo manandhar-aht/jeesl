@@ -1,5 +1,8 @@
 package net.sf.ahtutils.web.rest.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.db.ejb.AhtDbEjbUpdater;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
@@ -11,6 +14,7 @@ import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
@@ -20,25 +24,23 @@ import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityUsecaseImport;
 import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class SecurityInitUsecases <L extends UtilsLang,
  								D extends UtilsDescription, 
- 								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
- 								R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
- 								V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
- 								U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
- 								A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
- 								USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
-		extends AbstractSecurityInit<L,D,C,R,V,U,A,USER>
+ 								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+ 								R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+ 								V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+ 								U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+ 								A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+ 								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+ 								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+		extends AbstractSecurityInit<L,D,C,R,V,U,A,AT,USER>
 		implements UtilsSecurityUsecaseImport
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityInitUsecases.class);
 	
 	private AhtDbEjbUpdater<U> updateUsecases;
 	
-	public SecurityInitUsecases(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<USER> cUser,UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fAcl)
+	public SecurityInitUsecases(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<USER> cUser,UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{       
         super(cL,cD,cC,cR,cV,cU,cA,cUser,fAcl);
 	}

@@ -3,49 +3,52 @@ package net.sf.ahtutils.jsf.util;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsIdentity;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class SecurityActionManager <L extends UtilsLang,
 									D extends UtilsDescription,
-									C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-									R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-									V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-									U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-									A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-									USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
+									C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+									R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+									V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+									U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+									A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+									AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+									USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityActionManager.class);
 	
 	public static <L extends UtilsLang,
 		   D extends UtilsDescription, 
-		   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-		   R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-		   V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-		   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-		   A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-		   USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
-		SecurityActionManager<L,D,C,R,V,U,A,USER>
-		factory(UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity,final Class<V> cView, String viewId, UtilsIdentity<L,D,C,R,V,U,A,USER> identity) throws UtilsNotFoundException
+		   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+		   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+		   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+		   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+		   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+		   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+		   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+		SecurityActionManager<L,D,C,R,V,U,A,AT,USER>
+		factory(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,final Class<V> cView, String viewId, UtilsIdentity<L,D,C,R,V,U,A,AT,USER> identity) throws UtilsNotFoundException
 	{
-		return new SecurityActionManager<L,D,C,R,V,U,A,USER>(fSecurity,cView,viewId,identity);
+		return new SecurityActionManager<L,D,C,R,V,U,A,AT,USER>(fSecurity,cView,viewId,identity);
 	}
 	
 	private Map<String,Boolean> allowed;
 	
-	public SecurityActionManager(UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity, final Class<V> cView, String viewId, UtilsIdentity<L,D,C,R,V,U,A,USER> identity) throws UtilsNotFoundException
+	public SecurityActionManager(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<V> cView, String viewId, UtilsIdentity<L,D,C,R,V,U,A,AT,USER> identity) throws UtilsNotFoundException
 	{
 		allowed = new Hashtable<String,Boolean>();
 		V view = fSecurity.fByCode(cView,viewId);

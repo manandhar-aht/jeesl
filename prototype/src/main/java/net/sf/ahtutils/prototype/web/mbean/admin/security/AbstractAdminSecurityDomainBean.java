@@ -17,6 +17,7 @@ import net.sf.ahtutils.interfaces.facade.UtilsUserFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
@@ -29,21 +30,22 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 												D extends UtilsDescription,
-												C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-												R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-												V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-												U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-												A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-												USER extends UtilsUser<L,D,C,R,V,U,A,USER>,
-												STAFF extends UtilsStaff<L,D,C,R,V,U,A,USER,DOMAIN>,
+												C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+												R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+												V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+												U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+												A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+												AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+												USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
+												STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,
 												DOMAIN extends EjbWithId>
-		implements Serializable,OpUserBean<L,D,C,R,V,U,A,USER>
+		implements Serializable,OpUserBean<L,D,C,R,V,U,A,AT,USER>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityDomainBean.class);
 
-	protected UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity;
-	protected UtilsUserFacade<L,D,C,R,V,U,A,USER> fUser;
+	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	protected UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUser;
 	
 	protected Class<C> cCategory;
 	protected Class<R> cRole;
@@ -58,12 +60,12 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	protected DOMAIN domain; public DOMAIN getDomain(){return domain;} public void setDomain(DOMAIN domain){this.domain = domain;}
 	protected STAFF staff; public STAFF getStaff(){return staff;} public void setStaff(STAFF staff) {this.staff = staff;}
 	
-	protected EjbStaffFactory<L,D,C,R,V,U,A,USER,STAFF,DOMAIN> efStaff;
+	protected EjbStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,DOMAIN> efStaff;
 	
-	private OverlayUserSelectionHandler<L,D,C,R,V,U,A,USER> opContactHandler;
-	@Override public OverlayUserSelectionHandler<L,D,C,R,V,U,A,USER> getOpUserHandler() {return opContactHandler;}
+	private OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> opContactHandler;
+	@Override public OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> getOpUserHandler() {return opContactHandler;}
 	
-	protected void initSuper(UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity, UtilsUserFacade<L,D,C,R,V,U,A,USER> fUser, Class<C> cCategory, Class<R> cRole, Class<USER> cUser, Class<STAFF> cStaff)
+	protected void initSuper(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUser, Class<C> cCategory, Class<R> cRole, Class<USER> cUser, Class<STAFF> cStaff)
 	{
 		this.fSecurity=fSecurity;
 		this.fUser=fUser;
@@ -75,7 +77,7 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 		
 		efStaff = EjbStaffFactory.factory(cStaff);
 		
-		opContactHandler = new OverlayUserSelectionHandler<L,D,C,R,V,U,A,USER>(this);
+		opContactHandler = new OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER>(this);
 	}
 	
 	protected void loadRoles(String category)

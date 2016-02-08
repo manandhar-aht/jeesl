@@ -36,7 +36,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @EjbErNode(name="View",category="security",subset="security")
 
 public class SecurityView implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-		UtilsSecurityView<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,AhtUtilsUser>
+		UtilsSecurityView<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,AhtUtilsUser>
 {
 	public static enum Code {welcome}
 	public static enum CodeSeries {seriesAll,series,season,episode}

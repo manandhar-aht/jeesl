@@ -1,28 +1,30 @@
 package net.sf.ahtutils.controller.factory.utils.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsIdentity;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,USER>,
+public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER>,
 								   L extends UtilsLang,
 								   D extends UtilsDescription,
-								   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-								   R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-								   V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-								   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-								   A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-								   USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
+								   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+								   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+								   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+								   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+								   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+								   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+								   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
 
 	final static Logger logger = LoggerFactory.getLogger(UtilsIdentityFactory.class);
@@ -58,16 +60,17 @@ public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,USER>,
 		this.clUser = clUser;
 	} 
 
-	public static <I extends UtilsIdentity<L,D,C,R,V,U,A,USER>,
+	public static <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER>,
 	   			   L extends UtilsLang,
 	   			   D extends UtilsDescription,
-	   			   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,USER>,
-	   			   R extends UtilsSecurityRole<L,D,C,R,V,U,A,USER>,
-	   			   V extends UtilsSecurityView<L,D,C,R,V,U,A,USER>,
-	   			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,USER>,
-	   			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,USER>,
-	   			USER extends UtilsUser<L,D,C,R,V,U,A,USER>>
-	UtilsIdentityFactory<I,L,D,C,R,V,U,A,USER> factory(final Class<I> clIdentity,
+	   			   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+	   			   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+	   			   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+	   			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+	   			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+	   			AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+	   			USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+	UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER> factory(final Class<I> clIdentity,
 													 final Class<L> clLang,
 													 final Class<D> clDescription,
 													 final Class<C> clCategory,
@@ -77,10 +80,10 @@ public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,USER>,
 													 final Class<A> clAction,
 													 final Class<USER> clUser)
 	{
-		return new UtilsIdentityFactory<I,L,D,C,R,V,U,A,USER>(clIdentity,clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
+		return new UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER>(clIdentity,clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
 	}
 
-	public I create(UtilsSecurityFacade<L,D,C,R,V,U,A,USER> fSecurity, USER user)
+	public I create(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, USER user)
 	{		
 		I identity = null;
 		

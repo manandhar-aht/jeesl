@@ -35,8 +35,8 @@
 				<p:outputLabel rendered="#{cc.attrs.bean.supportsSymbol}" for="sSymbol" value="#{msg.aupOptionSymbol}"/>
 				<p:inputText rendered="#{cc.attrs.bean.supportsSymbol}" id="sSymbol" value="#{cc.attrs.bean.status.symbol}"/>
 
-				<p:outputLabel rendered="#{cc.attrs.bean.allowStatusReorder}" value="#{msg.aupOptionPosition}"/>
-				<p:inputText rendered="#{cc.attrs.bean.allowStatusReorder}" value="#{cc.attrs.bean.status.position}"/>
+				<p:outputLabel rendered="#{cc.attrs.bean.uiAllowReorder}" value="#{msg.aupOptionPosition}"/>
+				<p:inputText rendered="#{cc.attrs.bean.uiAllowReorder}" value="#{cc.attrs.bean.status.position}"/>
 				
 				<p:outputLabel rendered="#{cc.attrs.bean.hasDeveloperAction}" value="#{msg.aupOptionVisible}" />
 				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.hasDeveloperAction}" value="#{cc.attrs.bean.status.visible}" />

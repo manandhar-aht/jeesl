@@ -108,7 +108,7 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	protected void reorderEntities() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, cEc, classes);Collections.sort(classes, comparatorClass);}
 	protected void updatePerformed(){}
 	
-	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String action)
+	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String action)
 	{
 		uiAllowSave = jsfSecurityHandler.allow(action);
 

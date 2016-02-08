@@ -32,7 +32,9 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		
 		uiAllowAdd = true;
 		uiAllowSave = true;
+		uiAllowReorder = true;
 		uiShowInvisible = true;
+		
 	}
 	
 	public void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription, FacesMessageBean bMessage)
@@ -47,6 +49,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	//Security Handling
 	protected boolean uiAllowAdd;public boolean isUiAllowAdd() {return uiAllowAdd;}
 	protected boolean uiAllowSave; public boolean getUiAllowSave() {return uiAllowSave;}
+	protected boolean uiAllowReorder; public boolean getUiAllowReorder() {return uiAllowReorder;}
 	protected boolean uiShowInvisible; public boolean isUiShowInvisible() {return uiShowInvisible;}
 	
 	protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)

@@ -33,8 +33,6 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(AbstractOptionTableBean.class);
 	private static final long serialVersionUID = 1L;
 
-	
-	protected boolean allowStatusReorder;public boolean isAllowStatusReorder() {return allowStatusReorder;}
 	protected boolean allowCodeChange;public boolean isAllowCodeChange() {return allowCodeChange;}
 	protected boolean allowRemove; public boolean isAllowRemove() {return allowRemove;}
 	protected boolean allowSvg; public boolean isAllowSvg() {return allowSvg;}
@@ -63,8 +61,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		hasDeveloperAction = false;
 		hasAdministratorAction = true;
 		hasTranslatorAction = true;
-		
-		allowStatusReorder = true;
+
 		allowRemove = true;
 		
 		allowAdditionalElements = new Hashtable<Long,Boolean>();
@@ -86,7 +83,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		hasAdministratorAction = jsfSecurityHandler.allow(actionAdministrator);
 		hasTranslatorAction = jsfSecurityHandler.allow(actionTranslator);
 		
-		allowStatusReorder = hasDeveloperAction || hasAdministratorAction;
+		uiAllowReorder = hasDeveloperAction || hasAdministratorAction;
 		uiAllowSave = hasDeveloperAction || hasAdministratorAction || hasTranslatorAction;
 		allowRemove = hasDeveloperAction || hasAdministratorAction;
 	}
@@ -126,7 +123,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			logger.info(StringUtil.stars());
 			logger.info("Page Actions");
 			logger.info("\t"+uiAllowAdd+" allowStatusAdd");
-			logger.info("\t"+allowStatusReorder+" allowStatusReorder");
+			logger.info("\t"+uiAllowReorder+" uiAllowReorder");
 			logger.info("\t"+allowCodeChange+" allowCodeChange");
 			logger.info("\t"+uiAllowSave+" uiAllowSave");
 			logger.info("\t"+allowRemove+" allowRemove");

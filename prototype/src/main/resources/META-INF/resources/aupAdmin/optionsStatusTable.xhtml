@@ -13,7 +13,7 @@
 	</composite:interface>
         
 	<composite:implementation>
-		<p:dataTable var="s" value="#{cc.attrs.bean.items}" draggableRows="#{cc.attrs.bean.allowStatusReorder}"
+		<p:dataTable var="s" value="#{cc.attrs.bean.items}" draggableRows="#{cc.attrs.bean.uiAllowReorder}"
 	          selection="#{cc.attrs.bean.status}" selectionMode="single" rowKey="#{s.id}">
 			<f:facet name="header">
 	          	<aht:pfDataTableHeader title="#{msg[cc.attrs.bean.category.code]}">

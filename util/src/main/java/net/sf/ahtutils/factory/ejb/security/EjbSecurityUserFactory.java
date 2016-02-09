@@ -22,6 +22,7 @@ public class EjbSecurityUserFactory <L extends UtilsLang,
 										 A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 										 AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 										 USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+	extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityUserFactory.class);
 	
@@ -43,6 +44,7 @@ public class EjbSecurityUserFactory <L extends UtilsLang,
     
     public EjbSecurityUserFactory(final Class<USER> cUser)
     {
+    	super(null,null);
         this.cUser = cUser;
     } 
     

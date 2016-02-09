@@ -78,8 +78,21 @@
     		<s:lang key="en" translation="Use-Case"/>
     		<s:lang key="fr" translation="Use-Case"/>
     	</s:langs>
-    </s:translation> 
-    
+    </s:translation>
+	<s:translation key="aupSecurityActionTemplates">
+    	<s:langs>
+    		<s:lang key="de" translation="Action Templates"/>
+    		<s:lang key="en" translation="Action Templates"/>
+    		<s:lang key="fr" translation="Action Templates"/>
+    	</s:langs>
+    </s:translation>    
+	<s:translation key="aupSecurityActionTemplate">
+    	<s:langs>
+    		<s:lang key="de" translation="Action Template"/>
+    		<s:lang key="en" translation="Action Template"/>
+    		<s:lang key="fr" translation="Action Template"/>
+    	</s:langs>
+    </s:translation>
     <s:translation key="aupSecurityVisible">
     	<s:langs>
     		<s:lang key="de" translation="Sichtbar"/>

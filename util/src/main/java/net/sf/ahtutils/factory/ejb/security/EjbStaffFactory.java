@@ -27,6 +27,7 @@ public class EjbStaffFactory <L extends UtilsLang,
 						USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
 						STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,
 						DOMAIN extends EjbWithId>
+	extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbStaffFactory.class);
 	
@@ -50,6 +51,7 @@ public class EjbStaffFactory <L extends UtilsLang,
     
     public EjbStaffFactory(final Class<STAFF> cStaff)
     {
+    	super(null,null);
         this.cStaff = cStaff;
     } 
     

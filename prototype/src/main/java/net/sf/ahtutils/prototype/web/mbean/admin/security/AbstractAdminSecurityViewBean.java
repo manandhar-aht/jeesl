@@ -52,15 +52,31 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);		
 	}
 	
-	public void selectCategory() throws UtilsNotFoundException
+	@Override public void categorySelected() throws UtilsNotFoundException
 	{
-		super.selectCategory();
 		reloadViews();
 		view=null;
 		action=null;
 	}
+	@Override protected void categorySaved() throws UtilsNotFoundException
+	{
+		reloadViews();
+	}
 	
 	
+	private void reloadViews() throws UtilsNotFoundException
+	{
+		views = fSecurity.allForCategory(cView,cCategory,category.getCode());
+
+		logger.info("Reloaded "+views.size());
+	}
+	
+	private void reloadActions()
+	{
+		view = fSecurity.load(cView,view);
+		actions = view.getActions();
+		Collections.sort(actions, comparatorAction);
+	}
 	
 	public void selectView()
 	{
@@ -75,30 +91,6 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.selectEntity(action));
 		action = efLang.persistMissingLangs(fSecurity,langs,action);
 		action = efDescription.persistMissingLangs(fSecurity,langs,action);
-	}
-	
-	//RELOAD
-	private void reloadViews() throws UtilsNotFoundException
-	{
-		views = fSecurity.allForCategory(cView,cCategory,category.getCode());
-		
-		logger.info("Reloaded "+views.size());
-	}
-	
-	private void reloadActions()
-	{
-		view = fSecurity.load(cView,view);
-		actions = view.getActions();
-		Collections.sort(actions, comparatorAction);
-	}
-	
-	//SAVE
-	public void saveCategory() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info(AbstractLogMessage.saveEntity(category));
-		category = fSecurity.save(category);
-		reloadCategories();
-		categorySaved();
 	}
 	
 	public void saveView() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -132,15 +124,6 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		action=null;
 	}
 	
-	protected void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info("updateOrder "+views.size());
-		PositionListReorderer.reorder(fSecurity, views);
-	}
-	
-	protected void reorderActions() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info("updateOrder "+actions.size());
-		PositionListReorderer.reorder(fSecurity, actions);
-	}
+	protected void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, views);}
+	protected void reorderActions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, actions);}
 }

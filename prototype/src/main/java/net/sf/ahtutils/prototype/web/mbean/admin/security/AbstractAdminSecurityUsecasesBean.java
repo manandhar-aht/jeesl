@@ -22,6 +22,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
+import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
@@ -54,13 +55,21 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 		opActions = new ArrayList<A>();
 	}
 	
-	//SELECT
-	public void selectCategory() throws UtilsNotFoundException
+	public void categorySelected() throws UtilsNotFoundException
 	{
-		super.selectCategory();
 		reloadUsecases();
 		usecase=null;
 	}
+	public void saveCategory() throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(category));
+		category = fSecurity.save(category);
+		reloadCategories();
+		reloadUsecases();
+		categorySaved();
+	}
+	
+	
 	public void selectUsecase()
 	{
 		logger.info(AbstractLogMessage.selectEntity(usecase));
@@ -106,14 +115,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	}
 
 	//Save
-	public void saveCategory() throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info(AbstractLogMessage.saveEntity(category));
-		category = fSecurity.save(category);
-		reloadCategories();
-		reloadUsecases();
-		categorySaved();
-	}
+
 	public void saveUsecase() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(usecase));
@@ -166,16 +168,5 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 		}
 	}
 	
-	//Order
-	protected void reorderUsecases() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info("updateOrder "+usecases.size());
-		int i=1;
-		for(U u : usecases)
-		{
-			u.setPosition(i);
-			fSecurity.update(u);
-			i++;
-		}
-	}
+	protected void reorderUsecases() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, usecases);}
 }

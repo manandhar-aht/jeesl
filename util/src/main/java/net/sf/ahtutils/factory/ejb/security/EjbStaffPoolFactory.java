@@ -28,16 +28,10 @@ public class EjbStaffPoolFactory <L extends UtilsLang,
 										 P extends EjbWithId,
 										 E extends EjbWithId,
 										 USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+		extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbStaffPoolFactory.class);
 	
-    final Class<L> clLang;
-    final Class<D> clDescription;
-    final Class<C> clCategory;
-    final Class<R> clRole;
-    final Class<V> clView;
-    final Class<U> clUsecase;
-    final Class<A> clAction;
     final Class<S> clStaff;
     final Class<P> clPool;
     final Class<E> clEntity;
@@ -62,13 +56,12 @@ public class EjbStaffPoolFactory <L extends UtilsLang,
     
     public EjbStaffPoolFactory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<S> clStaff, final Class<P> clPool,final Class<E> clEntity,final Class<USER> clUser)
     {
-        this.clLang = clLang;
-        this.clDescription = clDescription;
-        this.clCategory = clCategory;
-        this.clRole = clRole;
-        this.clView = clView;
-        this.clUsecase = clUsecase;
-        this.clAction = clAction;
+    	super(clLang,clDescription);
+        this.cCategory = clCategory;
+        this.cRole = clRole;
+        this.cView = clView;
+        this.cUsecase = clUsecase;
+        this.cAction = clAction;
         this.clStaff = clStaff;
         this.clPool = clPool;
         this.clEntity = clEntity;

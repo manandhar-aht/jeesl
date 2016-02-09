@@ -20,6 +20,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
+import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityActionBean <L extends UtilsLang,
@@ -47,12 +48,14 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang,
 		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 	}
 	
-	// SELECT
-	public void selectCategory() throws UtilsNotFoundException
+	@Override public void categorySelected() throws UtilsNotFoundException
 	{
-		super.selectCategory();
 		reloadTemplates();
 		template=null;
+	}
+	@Override protected void categorySaved() throws UtilsNotFoundException
+	{
+		reloadTemplates();
 	}
 	
 	private void reloadTemplates() throws UtilsNotFoundException
@@ -77,16 +80,6 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang,
 		template.setDescription(efDescription.createEmpty(langs));
 	}
 	
-	
-	//SAVE
-	public void saveCategory() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info(AbstractLogMessage.saveEntity(category));
-		category = fSecurity.save(category);
-		reloadCategories();
-		categorySaved();
-	}
-	
 	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(template));
@@ -96,8 +89,5 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang,
 	}
 	
 	
-	protected void reorderTemplates() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-
-	}
+	protected void reorderTemplates() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, templates);}
 }

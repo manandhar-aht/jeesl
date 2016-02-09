@@ -21,18 +21,9 @@ public class EjbSecurityActionTemplateFactory <L extends UtilsLang, D extends Ut
 										 A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 										 AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 										 USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+		extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityActionTemplateFactory.class);
-	
-    private Class<L> clLang;
-    private Class<D> clDescription;
-    private Class<C> clCategory;
-    private Class<R> clRole;
-    private Class<V> clView;
-    private Class<U> clUsecase;
-    private Class<A> clAction;
-    private Class<AT> clActionTemplate;
-    private Class<USER> clUser;
 	
     public static <L extends UtilsLang,
 	 			   D extends UtilsDescription,
@@ -50,9 +41,8 @@ public class EjbSecurityActionTemplateFactory <L extends UtilsLang, D extends Ut
     
     public EjbSecurityActionTemplateFactory(final Class<L> clLang,final Class<D> clDescription,Class<AT> clActionTemplate)
     {
-        this.clLang = clLang;
-        this.clDescription = clDescription;
-        this.clActionTemplate = clActionTemplate;
+    	super(clLang,clDescription);
+        this.cTemplate = clActionTemplate;
     } 
     
     public AT build(C category, String code)
@@ -61,7 +51,7 @@ public class EjbSecurityActionTemplateFactory <L extends UtilsLang, D extends Ut
     	
     	try
     	{
-			ejb = clActionTemplate.newInstance();
+			ejb = cTemplate.newInstance();
 			ejb.setCategory(category);
 			ejb.setCode(code);
 			ejb.setPosition(1);

@@ -22,42 +22,14 @@ public class EjbSecurityActionFactory <L extends UtilsLang,
 										 A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 										 AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 										 USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+			extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityActionFactory.class);
-	
-    final Class<L> clLang;
-    final Class<D> clDescription;
-    final Class<C> clCategory;
-    final Class<R> clRole;
-    final Class<V> clView;
-    final Class<U> clUsecase;
-    final Class<A> clAction;
-    final Class<USER> clUser;
-	
-    public static <L extends UtilsLang,
-	 			   D extends UtilsDescription,
-	 			   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-	 			   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-	 			   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-	 			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-	 			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	 			  AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
-	 			   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
-    	EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> factory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
-    {
-        return new EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>(clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
-    }
     
-    public EjbSecurityActionFactory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
+    public EjbSecurityActionFactory(final Class<L> clLang,final Class<D> clDescription,final Class<A> cAction)
     {
-        this.clLang = clLang;
-        this.clDescription = clDescription;
-        this.clCategory = clCategory;
-        this.clRole = clRole;
-        this.clView = clView;
-        this.clUsecase = clUsecase;
-        this.clAction = clAction;
-        this.clUser = clUser;
+    	super(clLang,clDescription);
+        this.cAction = cAction;
     } 
     
     public A create(V view, String code)
@@ -66,7 +38,7 @@ public class EjbSecurityActionFactory <L extends UtilsLang,
     	
     	try
     	{
-			ejb = clAction.newInstance();
+			ejb = cAction.newInstance();
 			ejb.setPosition(1);
 			ejb.setView(view);
 			ejb.setCode(code);

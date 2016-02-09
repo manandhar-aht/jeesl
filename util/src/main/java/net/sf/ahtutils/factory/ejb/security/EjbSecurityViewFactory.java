@@ -22,17 +22,9 @@ public class EjbSecurityViewFactory <L extends UtilsLang,
 										 A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 										 AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 										 USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityViewFactory.class);
-	
-    final Class<L> clLang;
-    final Class<D> clDescription;
-    final Class<C> clCategory;
-    final Class<R> clRole;
-    final Class<V> clView;
-    final Class<U> clUsecase;
-    final Class<A> clAction;
-    final Class<USER> clUser;
 	
     public static <L extends UtilsLang,
 	 			   D extends UtilsDescription,
@@ -50,14 +42,13 @@ public class EjbSecurityViewFactory <L extends UtilsLang,
     
     public EjbSecurityViewFactory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
     {
-        this.clLang = clLang;
-        this.clDescription = clDescription;
-        this.clCategory = clCategory;
-        this.clRole = clRole;
-        this.clView = clView;
-        this.clUsecase = clUsecase;
-        this.clAction = clAction;
-        this.clUser = clUser;
+    	super(clLang,clDescription);
+        this.cCategory = clCategory;
+        this.cRole = clRole;
+        this.cView = clView;
+        this.cUsecase = clUsecase;
+        this.cAction = clAction;
+        this.cUser = clUser;
     } 
     
     public V create(C category, String code)
@@ -66,7 +57,7 @@ public class EjbSecurityViewFactory <L extends UtilsLang,
     	
     	try
     	{
-			ejb = clView.newInstance();
+			ejb = cView.newInstance();
 			ejb.setCategory(category);
 			ejb.setCode(code);
 		}

@@ -105,7 +105,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 		efCategory = EjbSecurityCategoryFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efRole = EjbSecurityRoleFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efUsecase = EjbSecurityUsecaseFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
-		efAction = EjbSecurityActionFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
+		efAction = EjbSecurityActionFactory.factoryAction(cLang,cDescription,cAction);
 		efTemplate = EjbSecurityActionTemplateFactory.factory(cLang,cDescription,cTemplate);
 		
 		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityRoleComparator.Type.position);
@@ -125,7 +125,18 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.selectEntity(category));
 		category = efLang.persistMissingLangs(fSecurity,langs,category);
 		category = efDescription.persistMissingLangs(fSecurity,langs,category);
+		categorySelected();
 	}
+	protected void categorySelected() throws UtilsNotFoundException {}
+	
+	public void saveCategory() throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(category));}
+		category = fSecurity.save(category);
+		categorySaved();
+		bMessage.growlSuccessSaved();
+	}
+	protected void categorySaved()  throws UtilsNotFoundException {}
 	
 	protected void reloadCategories()
 	{
@@ -146,8 +157,6 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 			i++;
 		}
 	}
-	
-	protected void categorySaved(){}
 	
 	//Handling for Invisible entries
 	protected boolean showDocumentation; public boolean isShowDocumentation() {return showDocumentation;}

@@ -62,12 +62,14 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		roles = new ArrayList<R>();
 	}
 	
-	// SELECT
-	public void selectCategory() throws UtilsNotFoundException
+	@Override public void categorySelected() throws UtilsNotFoundException
 	{
-		super.selectCategory();
 		reloadRoles();
 		role=null;
+	}
+	@Override protected void categorySaved() throws UtilsNotFoundException
+	{
+		reloadRoles();
 	}
 	
 	private void reloadRoles() throws UtilsNotFoundException
@@ -121,16 +123,6 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 			opActions.addAll(v.getActions());
 		}
 	}
-	
-	//SAVE
-	public void saveCategory() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info(AbstractLogMessage.saveEntity(category));
-		category = fSecurity.save(category);
-		reloadCategories();
-		categorySaved();
-	}
-
 
 	//Role
 	public void addRole() throws UtilsConstraintViolationException

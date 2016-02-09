@@ -32,6 +32,8 @@ public interface UtilsSecurityFacade <L extends UtilsLang,
 	
 	R load(Class<R> cRole, R role);
 	V load(Class<V> cView, V view);
+	U load(Class<U> cUsecase, U usecase);
+	
 	List<V> allViewsForUser(Class<USER> cUser, USER user);
 	
 	List<R> allRolesForUser(Class<USER> cUser, USER user);

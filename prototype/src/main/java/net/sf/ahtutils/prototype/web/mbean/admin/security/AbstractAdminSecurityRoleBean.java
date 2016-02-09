@@ -3,7 +3,9 @@ package net.sf.ahtutils.prototype.web.mbean.admin.security;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.bean.op.OpEntityBean;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -24,6 +27,8 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.prototype.controller.handler.op.OverlayEntitySelectionHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.exlp.util.io.StringUtil;
 
@@ -37,7 +42,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 											AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 			extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,USER>
-					implements Serializable
+					implements Serializable,OpEntityBean<AT>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityRoleBean.class);
@@ -47,6 +52,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 	private R role; public R getRole(){return role;} public void setRole(R role) {this.role = role;}
 	
 	private boolean denyRemove; public boolean isDenyRemove(){return denyRemove;}
+	
 	
 	public void initSuper(String[] langs, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
@@ -60,6 +66,8 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		opUsecases = fSecurity.all(cUsecase);
 		
 		roles = new ArrayList<R>();
+		
+		opTemplateHandler = new OverlayEntitySelectionHandler<AT>(this);
 	}
 	
 	@Override public void categorySelected() throws UtilsNotFoundException
@@ -89,6 +97,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 	public void selectRole()
 	{
 		logger.trace(AbstractLogMessage.selectEntity(role));
+		updateRole();
 		role = efLang.persistMissingLangs(fSecurity,langs,role);
 		role = efDescription.persistMissingLangs(fSecurity,langs,role);		
 		role = fSecurity.load(cRole,role);
@@ -112,16 +121,22 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		}
 	}
 	
-	//RELOAD
+	private void updateRole()
+	{
+		role = fSecurity.load(cRole, role);
+		opTemplateHandler.setTbList(role.getTemplates());
+	}
 
 	private void reloadActions()
 	{
-		opActions.clear();
+		Set<AT> set = new HashSet<AT>();
 		for(V v : role.getViews())
 		{
 			v = fSecurity.load(cView,v);
 			opActions.addAll(v.getActions());
+			set.addAll(v.getTemplates());
 		}
+		opTemplateHandler.setOpList(new ArrayList<AT>(set));
 	}
 
 	//Role
@@ -145,6 +160,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.saveEntity(role));
 		role.setCategory(fSecurity.find(cCategory, role.getCategory()));
 		role = fSecurity.save(role);
+		updateRole();
 		reloadRoles();
 		roleUpdatePerformed();
 	}
@@ -217,4 +233,26 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 	
 	//Order
 	protected void reorderRoles() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, roles);}
+	
+	@SuppressWarnings("unchecked")
+	@Override public void addOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.selectOverlayPanel(item));
+		if(item.getClass().getName().equals(cTemplate.getName()))
+		{
+			fSecurity.addTemplate(cRole, cTemplate, role, (AT)item);
+		}
+		updateRole();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override public void rmOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.selectOverlayPanel(item));
+		if(item.getClass().getName().equals(cTemplate.getName()))
+		{
+			fSecurity.rmTemplate(cRole, cTemplate, role, (AT)item);
+		}
+		updateRole();
+	}
 }

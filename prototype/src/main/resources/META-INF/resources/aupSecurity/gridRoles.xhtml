@@ -13,6 +13,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="false" default="#{adminSecurityRolesBean}"/>
+		<composite:attribute name="at" required="false" default="false"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -30,6 +31,27 @@
 					<h:form id="fViews"><aupSec:addViews rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fViews :#{cc.id}:fAction" views="#{cc.attrs.bean.role.views}"/></h:form>
 					<h:form id="fAction"><aupSec:addActions rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fAction" actions="#{cc.attrs.bean.role.actions}"/></h:form>
 					<h:form id="fUsecase"><aupSec:addUsecases rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fUsecase" usecases="#{cc.attrs.bean.role.usecases}"/></h:form>
+					<h:form id="fTemplates">
+						<aup:tableOverlaySelection id="tos" rendered="#{cc.attrs.at}"
+								handler="#{cc.attrs.bean.opTemplateHandler}" header="#{msg.aupSecurityActionTemplates}">
+							<p:column>  
+								<h:outputText value="#{var.position}" />  
+				            </p:column>
+				       		<p:column headerText="#{msg.aupSecurityActionTemplate}">  
+								<h:outputText value="#{var.name[userBean.localeCode].lang}"/>  
+				            </p:column>
+				            <f:facet name="op">
+				            	<aup:opEntitySelection id="opes" for="@form:tos:dt:dth:giAdd" update="@form" handler="#{cc.attrs.bean.opTemplateHandler}">
+       								<p:column>  
+										<h:outputText value="#{var.position}" />  
+						            </p:column>
+						       		<p:column headerText="#{msg.aupSecurityActionTemplate}">  
+										<h:outputText value="#{var.name[userBean.localeCode].lang}"/>  
+						            </p:column>
+	       						</aup:opEntitySelection>
+       						</f:facet>
+						</aup:tableOverlaySelection>
+					</h:form>
 				</aht:slot>
 			</aht:row>
 		</aup:grid>

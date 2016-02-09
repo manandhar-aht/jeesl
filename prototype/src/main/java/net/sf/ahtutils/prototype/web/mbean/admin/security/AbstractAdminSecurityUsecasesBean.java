@@ -3,7 +3,9 @@ package net.sf.ahtutils.prototype.web.mbean.admin.security;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.bean.op.OpEntityBean;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -23,6 +26,8 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.prototype.controller.handler.op.OverlayEntitySelectionHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
@@ -35,7 +40,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 											AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,USER>
-		implements Serializable
+		implements Serializable,OpEntityBean<AT>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityUsecasesBean.class);
@@ -53,6 +58,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 		Collections.sort(opViews, comparatorView);
 		
 		opActions = new ArrayList<A>();
+		opTemplateHandler = new OverlayEntitySelectionHandler<AT>(this);
 	}
 	
 	public void categorySelected() throws UtilsNotFoundException
@@ -69,19 +75,24 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 		categorySaved();
 	}
 	
-	
 	public void selectUsecase()
 	{
 		logger.info(AbstractLogMessage.selectEntity(usecase));
+		reloadUsecase();
 		usecase = efLang.persistMissingLangs(fSecurity,langs,usecase);
 		usecase = efDescription.persistMissingLangs(fSecurity,langs,usecase);
-		usecase = fSecurity.find(cUsecase,usecase);
 		Collections.sort(usecase.getViews(), comparatorView);
 		Collections.sort(usecase.getActions(), comparatorAction);
 		reloadActions();
 	}
 	
 	//Reload
+	private void reloadUsecase()
+	{
+		usecase = fSecurity.load(cUsecase, usecase);
+		opTemplateHandler.setTbList(usecase.getTemplates());
+	}
+	
 	private void reloadUsecases() throws UtilsNotFoundException
 	{
 		logger.info("reloadUsecases");
@@ -89,13 +100,16 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	}
 	private void reloadActions()
 	{
+		Set<AT> set = new HashSet<AT>();
 		opActions.clear();
 		for(V v : usecase.getViews())
 		{
 			v = fSecurity.load(cView,v);
 			opActions.addAll(v.getActions());
+			set.addAll(v.getTemplates());
 		}
 		Collections.sort(opActions, comparatorAction);
+		opTemplateHandler.setOpList(new ArrayList<AT>(set));
 	}
 	
 	//Add
@@ -121,6 +135,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.saveEntity(usecase));
 		usecase.setCategory(fSecurity.find(cCategory, usecase.getCategory()));
 		usecase = fSecurity.save(usecase);
+		reloadUsecase();
 		reloadUsecases();
 	}
 	
@@ -169,4 +184,26 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	}
 	
 	protected void reorderUsecases() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, usecases);}
+	
+	@SuppressWarnings("unchecked")
+	@Override public void addOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.selectOverlayPanel(item));
+		if(item.getClass().getName().equals(cTemplate.getName()))
+		{
+			fSecurity.addTemplate(cUsecase, cTemplate, usecase, (AT)item);
+		}
+		reloadUsecase();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override public void rmOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.selectOverlayPanel(item));
+		if(item.getClass().getName().equals(cTemplate.getName()))
+		{
+			fSecurity.rmTemplate(cUsecase, cTemplate, usecase, (AT)item);
+		}
+		reloadUsecase();
+	}
 }

@@ -45,6 +45,8 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 	{
 		role = em.find(cRole, role.getId());
 		role.getUsers().size();
+		role.getActions().size();
+		role.getTemplates().size();
 		return role;
 	}
 	
@@ -54,6 +56,14 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 		view.getActions().size();
 		view.getTemplates().size();
 		return view;
+	}
+	
+	@Override public U load(Class<U> cUsecase, U usecase)
+	{
+		usecase = em.find(cUsecase, usecase.getId());
+		usecase.getActions().size();
+		usecase.getTemplates().size();
+		return usecase;
 	}
 	
 	@Override public List<V> allViewsForUser(Class<USER> clUser, USER user)

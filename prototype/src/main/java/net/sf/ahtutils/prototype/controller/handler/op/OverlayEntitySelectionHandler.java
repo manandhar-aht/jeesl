@@ -57,12 +57,10 @@ public class OverlayEntitySelectionHandler <T extends EjbWithId>
         tb=null;
     }
     
-	@Override public void selectTb()
-	{
-		logger.info("Selected: "+tb);
-	}
+	@Override public void selectTb() {}
 	@Override public void rmTb() throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		bean.rmOpEntity(tb);
+		tb = null;
 	}
 }

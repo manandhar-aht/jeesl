@@ -12,7 +12,6 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.bean.op.OpEntityBean;
-import net.sf.ahtutils.interfaces.controller.handler.op.OpEntitySelectionHandler;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -48,8 +47,6 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	
 	private V view;public V getView(){return view;}public void setView(V view) {this.view = view;}
 	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
-	
-	private OpEntitySelectionHandler<AT> opTemplateHandler; public OpEntitySelectionHandler<AT> getOpTemplateHandler() {return opTemplateHandler;}
 	
 	public void initSuper(String[] langs, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate,final Class<USER> cUser)
 	{

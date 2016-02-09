@@ -16,6 +16,7 @@ import net.sf.ahtutils.factory.ejb.security.EjbSecurityCategoryFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityRoleFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityUsecaseFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.controller.handler.op.OpEntitySelectionHandler;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -88,6 +89,8 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	protected A tblAction;public A getTblAction(){return tblAction;}public void setTblAction(A tblAction){this.tblAction = tblAction;}
 	protected U opUsecase;public U getOpUsecase(){return opUsecase;}public void setOpUsecase(U opUsecase){this.opUsecase = opUsecase;}
 	protected U tblUsecase;public U getTblUsecase(){return tblUsecase;}public void setTblUsecase(U tblUsecase){this.tblUsecase = tblUsecase;}
+	
+	protected OpEntitySelectionHandler<AT> opTemplateHandler; public OpEntitySelectionHandler<AT> getOpTemplateHandler() {return opTemplateHandler;}
 	
 	public void initSecuritySuper(String[] langs, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{

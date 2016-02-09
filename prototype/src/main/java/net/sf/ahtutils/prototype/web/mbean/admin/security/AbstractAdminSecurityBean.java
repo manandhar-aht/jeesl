@@ -11,6 +11,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityActionFactory;
+import net.sf.ahtutils.factory.ejb.security.EjbSecurityActionTemplateFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityCategoryFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityRoleFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityUsecaseFactory;
@@ -55,12 +56,14 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	protected EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> efRole;
 	protected EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> efUsecase;
 	protected EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> efAction;
+	protected EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER> efTemplate;
 	
 	protected Class<C> cCategory;
 	protected Class<R> cRole;
 	protected Class<V> cView;
 	protected Class<U> cUsecase;
 	protected Class<A> cAction;
+	protected Class<AT> cTemplate;
 	
 	protected Comparator<R> comparatorRole;
 	protected Comparator<V> comparatorView;
@@ -86,9 +89,10 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	protected U opUsecase;public U getOpUsecase(){return opUsecase;}public void setOpUsecase(U opUsecase){this.opUsecase = opUsecase;}
 	protected U tblUsecase;public U getTblUsecase(){return tblUsecase;}public void setTblUsecase(U tblUsecase){this.tblUsecase = tblUsecase;}
 	
-	public void initSecuritySuper(FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<USER> cUser, String[] langs)
+	public void initSecuritySuper(String[] langs, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
+		this.fSecurity=fSecurity;
 		showDocumentation = true;
 		
 		this.cCategory=cCategory;
@@ -96,12 +100,13 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 		this.cUsecase=cUsecase;
 		this.cView=cView;
 		this.cAction=cAction;
-		this.langs=langs;
+		this.cTemplate=cTemplate;
 		
 		efCategory = EjbSecurityCategoryFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efRole = EjbSecurityRoleFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efUsecase = EjbSecurityUsecaseFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efAction = EjbSecurityActionFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
+		efTemplate = EjbSecurityActionTemplateFactory.factory(cLang,cDescription,cTemplate);
 		
 		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityRoleComparator.Type.position);
 		comparatorView = (new SecurityViewComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityViewComparator.Type.position);

@@ -19,16 +19,63 @@
 		<aup:grid>
 			<aht:row>
 				<aht:slot id="sCategories" width="4">
-					<h:form id="fCategories"><aupSec:tableCategories bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategory :#{cc.id}:fViews :#{cc.id}:sActions"/></h:form>
+					<h:form id="fCategories"><aupSec:tableCategories bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategory :#{cc.id}:sActions :#{cc.id}:sAction"/></h:form>
 					<h:form id="fCategory"><aupSec:panelCategory bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategories :#{cc.id}:fCategory"/></h:form>
 				</aht:slot>
-				<aht:slot id="sViews" width="4">
-					<h:form id="fViews"><aupSec:tableViews bean="#{cc.attrs.bean}" update=":#{cc.id}:sActions"/></h:form>
+				<aht:slot id="sActions" width="4">
+					<h:form id="fTemplates">
+						<p:dataTable var="v" value="#{cc.attrs.bean.templates}" draggableRows="true"
+						rendered="#{not empty cc.attrs.bean.category}"
+						selection="#{cc.attrs.bean.template}" selectionMode="single" rowKey="#{v.id}">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.aupSecurityUsecases}">
+								<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addTemplate()}" update=":#{cc.id}:sActions :#{cc.id}:sAction" tooltip="#{msg.ttAdd}"/>
+							</aht:pfDataTableHeader>
+						</f:facet>
+						<p:ajax event="rowSelect" update=":#{cc.id}:sAction" listener="#{cc.attrs.bean.selectTemplate()}"/>
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTemplates()}" update="@form"/>
+						<p:column>  
+							<h:outputText value="#{v.position}" />  
+			            </p:column>  
+			            <p:column headerText="#{msg.aupSecurityView}">  
+							<h:outputText value="#{v.name[userBean.localeCode].lang}" />  
+			            </p:column>
+						<p:column rendered="#{cc.attrs.bean.uiShowInvisible}">  
+							<h:graphicImage rendered="#{v.visible}" name="#{iconBean.icon12['securityVisible']}" library="gfx"/>
+			                <h:graphicImage rendered="#{not v.visible}" name="#{iconBean.icon12['securityInvisible']}" library="gfx"/>
+			            </p:column>
+			            <p:column rendered="#{cc.attrs.bean.showDocumentation}">  
+							<h:graphicImage rendered="#{v.documentation}" name="#{iconBean.icon12['aupSecurityDocumentation']}" library="gfx"/>
+			            </p:column>
+			       	</p:dataTable>
+					</h:form>
 				</aht:slot>
-				<aht:slot id="sActions" width="4" renderChildren="#{not empty cc.attrs.bean.view}">
-					<h:form id="fView"><aupSec:panelView rendered="#{not empty cc.attrs.bean.view}" update=":#{cc.id}:sViews :#{cc.id}:sActions"/></h:form>
-					<h:form id="fActions"><aupSec:tableActions update=":#{cc.id}:sActions"/></h:form>
-					<h:form id="fAction"><aupSec:panelAction rendered="#{not empty cc.attrs.bean.action}" update=":#{cc.id}:sActions"/></h:form>
+				<aht:slot id="sAction" width="4">
+					<h:form id="fTemplate">
+						<p:panel header="#{msg.aupSecurityUsecase}" styleClass="auPanelWithGrid"
+								 rendered="#{not empty cc.attrs.bean.template}">
+							<f:facet name="actions">
+								<aht:icon type="save" listener="#{cc.attrs.bean.saveTemplate()}" update=":#{cc.id}:sActions :#{cc.id}:sAction" tooltip="#{msg.ttSave}"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+								<p:outputLabel value="#{msg.aupSecurityCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.template.category}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+								</p:selectOneMenu>
+								<p:outputLabel value="#{msg.aupSecurityCode}"/>
+								<h:inputText value="#{cc.attrs.bean.template.code}"/>
+								
+								<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{cc.attrs.bean.template.visible}"/>
+								
+								<p:outputLabel rendered="#{cc.attrs.bean.showDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
+								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showDocumentation}" value="#{cc.attrs.bean.template.documentation}"/>
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.template}"
+									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
+				       				keys="#{translationBean.langKeys}" withDescription="true"/>
+						</p:panel>
+					</h:form>
 				</aht:slot>
 			</aht:row>
 	    </aup:grid>

@@ -1,7 +1,6 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.security;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +10,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -20,7 +20,6 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
-import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityActionBean <L extends UtilsLang,
@@ -38,56 +37,46 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityActionBean.class);
 
-	private List<V> views;public List<V> getViews(){return views;}
-	private List<A> actions;public List<A> getActions(){return actions;}
+	private List<AT> templates;public List<AT> getTemplates(){return templates;}
 	
-	private V view;public V getView(){return view;}public void setView(V view) {this.view = view;}
-	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
+	private AT template;public AT getTemplate(){return template;}public void setTemplate(AT template) {this.template = template;}
 	
-	
-	public void initSuper(FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<USER> cUser, String[] langs)
+	public void initSuper(String[] langs, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
-		categoryType = UtilsSecurityCategory.Type.view;
-		initSecuritySuper(bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser,langs);		
+		categoryType = UtilsSecurityCategory.Type.action;
+		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 	}
 	
 	// SELECT
 	public void selectCategory() throws UtilsNotFoundException
 	{
 		super.selectCategory();
-		reloadViews();
-		view=null;
-		action=null;
-	}
-	public void selectView()
-	{
-		logger.info(AbstractLogMessage.selectEntity(view));
-		view = efLang.persistMissingLangs(fSecurity,langs,view);
-		view = efDescription.persistMissingLangs(fSecurity,langs,view);
-		reloadActions();
-		action=null;
-	}
-	public void selectAction()
-	{
-		logger.info(AbstractLogMessage.selectEntity(action));
-		action = efLang.persistMissingLangs(fSecurity,langs,action);
-		action = efDescription.persistMissingLangs(fSecurity,langs,action);
+		reloadTemplates();
+		template=null;
 	}
 	
-	//RELOAD
-	private void reloadViews() throws UtilsNotFoundException
+	private void reloadTemplates() throws UtilsNotFoundException
 	{
-		views = fSecurity.allForCategory(cView,cCategory,category.getCode());
-		
-		logger.info("Reloaded "+views.size());
+		templates = fSecurity.allForCategory(cTemplate,cCategory,category.getCode());
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cTemplate, templates));}
+	}
+
+	public void selectTemplate()
+	{
+		logger.info(AbstractLogMessage.selectEntity(template));
+		template = fSecurity.find(cTemplate, template);
+		template = efLang.persistMissingLangs(fSecurity,langs,template);
+		template = efDescription.persistMissingLangs(fSecurity,langs,template);
 	}
 	
-	private void reloadActions()
+	public void addTemplate() throws UtilsConstraintViolationException
 	{
-		view = fSecurity.load(cView,view);
-		actions = view.getActions();
-		Collections.sort(actions, comparatorAction);
+		logger.info(AbstractLogMessage.addEntity(cTemplate));
+		template = efTemplate.build(category,"");
+		template.setName(efLang.createEmpty(langs));
+		template.setDescription(efDescription.createEmpty(langs));
 	}
+	
 	
 	//SAVE
 	public void saveCategory() throws UtilsConstraintViolationException, UtilsLockingException
@@ -98,46 +87,17 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang,
 		categorySaved();
 	}
 	
-	public void saveView() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.saveEntity(view));
-		view.setCategory(fSecurity.find(cCategory, view.getCategory()));
-		view = fSecurity.save(view);
-		reloadViews();
+		logger.info(AbstractLogMessage.saveEntity(template));
+		template.setCategory(fSecurity.find(cCategory, template.getCategory()));
+		template = fSecurity.save(template);
+		reloadTemplates();
 	}
 	
-	public void saveAction() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info(AbstractLogMessage.saveEntity(action));
-		action = fSecurity.save(action);
-		reloadActions();
-	}
 	
-	//ACTION
-	public void addAction() throws UtilsConstraintViolationException
+	protected void reorderTemplates() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info(AbstractLogMessage.addEntity(cAction));
-		action = efAction.create(view,"");
-		action.setName(efLang.createEmpty(langs));
-		action.setDescription(efDescription.createEmpty(langs));
-	}
-	
-	public void rmAction() throws UtilsConstraintViolationException
-	{
-		logger.info(AbstractLogMessage.rmEntity(action));
-		fSecurity.rm(action);
-		action=null;
-	}
-	
-	protected void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info("updateOrder "+views.size());
-		PositionListReorderer.reorder(fSecurity, views);
-	}
-	
-	protected void reorderActions() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info("updateOrder "+actions.size());
-		PositionListReorderer.reorder(fSecurity, actions);
+
 	}
 }

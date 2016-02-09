@@ -12,6 +12,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -42,10 +43,10 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	
 	private U usecase; public U getUsecase(){return usecase;} public void setUsecase(U usecase){this.usecase = usecase;}
 	
-	public void initSuper(FacesMessageBean bMessage, String[] langs,final Class<L> cLang,final Class<D> cDescription, final Class<C> cCategory,final Class<R> cRole,final Class<V> cView,final Class<U> cUsecase, final Class<A> cAction,final Class<USER> cUser)
+	public void initSuper(String[] langs, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage,final Class<L> cLang,final Class<D> cDescription, final Class<C> cCategory,final Class<R> cRole,final Class<V> cView,final Class<U> cUsecase, final Class<A> cAction,final Class<AT> cTemplate, final Class<USER> cUser)
 	{
 		categoryType = UtilsSecurityCategory.Type.usecase;
-		initSecuritySuper(bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser,langs);
+		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 		
 		opViews = fSecurity.all(cView);
 		Collections.sort(opViews, comparatorView);

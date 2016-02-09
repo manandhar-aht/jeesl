@@ -11,6 +11,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -45,13 +46,12 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
 	
 	
-	public void initSuper(FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<USER> cUser, String[] langs)
+	public void initSuper(String[] langs, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate,final Class<USER> cUser)
 	{
 		categoryType = UtilsSecurityCategory.Type.view;
-		initSecuritySuper(bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser,langs);		
+		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);		
 	}
 	
-	// SELECT
 	public void selectCategory() throws UtilsNotFoundException
 	{
 		super.selectCategory();
@@ -59,6 +59,9 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		view=null;
 		action=null;
 	}
+	
+	
+	
 	public void selectView()
 	{
 		logger.info(AbstractLogMessage.selectEntity(view));

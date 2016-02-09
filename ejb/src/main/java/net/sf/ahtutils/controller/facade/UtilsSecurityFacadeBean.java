@@ -163,6 +163,7 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 		if(clWc.getSimpleName().contains("Usecase")){type=UtilsSecurityCategory.Type.usecase.toString();}
 		else if(clWc.getSimpleName().contains("Role")){type=UtilsSecurityCategory.Type.role.toString();}
 		else if(clWc.getSimpleName().contains("View")){type=UtilsSecurityCategory.Type.view.toString();}
+		else if(clWc.getSimpleName().contains("Action")){type=UtilsSecurityCategory.Type.action.toString();}
 		
 		C category = this.fByTypeCode(clC, type, code);
 		

@@ -23,7 +23,8 @@ public interface UtilsSecurityView<L extends UtilsLang,
 			extends EjbWithCode,EjbSaveable,EjbWithPositionVisible,EjbWithParent,
 					EjbWithLang<L>,EjbWithDescription<D>,
 					UtilsSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>,
-					UtilsSecurityWithActions<L,D,C,R,V,U,A,AT,USER>
+					UtilsSecurityWithActions<L,D,C,R,V,U,A,AT,USER>,
+					UtilsSecurityWithActionTemplates<L,D,C,R,V,U,A,AT,USER>
 {
 	public static final String extractId = "securityViews";
 	

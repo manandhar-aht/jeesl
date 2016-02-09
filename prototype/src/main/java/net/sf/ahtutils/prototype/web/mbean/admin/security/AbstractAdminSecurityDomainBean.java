@@ -56,7 +56,6 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	protected List<DOMAIN> domains; public List<DOMAIN> getDomains(){return domains;}
 	protected List<STAFF> staffs; public List<STAFF> getStaffs(){return staffs;}
 	
-	
 	protected DOMAIN domain; public DOMAIN getDomain(){return domain;} public void setDomain(DOMAIN domain){this.domain = domain;}
 	protected STAFF staff; public STAFF getStaff(){return staff;} public void setStaff(STAFF staff) {this.staff = staff;}
 	

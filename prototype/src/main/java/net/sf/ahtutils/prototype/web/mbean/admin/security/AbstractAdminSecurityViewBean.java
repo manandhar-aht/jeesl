@@ -11,6 +11,8 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.bean.op.OpEntityBean;
+import net.sf.ahtutils.interfaces.controller.handler.op.OpEntitySelectionHandler;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -22,6 +24,8 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.prototype.controller.handler.op.OverlayEntitySelectionHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityViewBean <L extends UtilsLang,
@@ -34,7 +38,7 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 											AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,USER>
-		implements Serializable
+		implements Serializable,OpEntityBean<AT>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityViewBean.class);
@@ -45,11 +49,17 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	private V view;public V getView(){return view;}public void setView(V view) {this.view = view;}
 	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
 	
+	private OpEntitySelectionHandler<AT> opTemplateHandler; public OpEntitySelectionHandler<AT> getOpTemplateHandler() {return opTemplateHandler;}
 	
 	public void initSuper(String[] langs, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate,final Class<USER> cUser)
 	{
 		categoryType = UtilsSecurityCategory.Type.view;
-		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);		
+		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		
+		opTemplateHandler = new OverlayEntitySelectionHandler<AT>(this);
+		opTemplateHandler.setOpList(fSecurity.allOrderedPositionVisible(cTemplate));
+		
+		uiAllowAdd=false;
 	}
 	
 	@Override public void categorySelected() throws UtilsNotFoundException
@@ -71,9 +81,15 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		logger.info("Reloaded "+views.size());
 	}
 	
-	private void reloadActions()
+	private void reloadView()
 	{
 		view = fSecurity.load(cView,view);
+		opTemplateHandler.clearTable();
+		opTemplateHandler.setTbList(view.getTemplates());
+	}
+	
+	private void reloadActions()
+	{
 		actions = view.getActions();
 		Collections.sort(actions, comparatorAction);
 	}
@@ -81,11 +97,14 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	public void selectView()
 	{
 		logger.info(AbstractLogMessage.selectEntity(view));
+		view = fSecurity.load(cView, view);
 		view = efLang.persistMissingLangs(fSecurity,langs,view);
 		view = efDescription.persistMissingLangs(fSecurity,langs,view);
+		reloadView();
 		reloadActions();
 		action=null;
 	}
+	
 	public void selectAction()
 	{
 		logger.info(AbstractLogMessage.selectEntity(action));
@@ -98,6 +117,7 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.saveEntity(view));
 		view.setCategory(fSecurity.find(cCategory, view.getCategory()));
 		view = fSecurity.save(view);
+		reloadView();
 		reloadViews();
 	}
 	
@@ -105,6 +125,7 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.saveEntity(action));
 		action = fSecurity.save(action);
+		reloadView();
 		reloadActions();
 	}
 	
@@ -126,4 +147,26 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	
 	protected void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, views);}
 	protected void reorderActions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, actions);}
+	
+	@SuppressWarnings("unchecked")
+	@Override public void addOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.selectOverlayPanel(item));
+		if(item.getClass().getName().equals(cTemplate.getName()))
+		{
+			fSecurity.addTemplate(cView, cTemplate, view, (AT)item);
+		}
+		reloadView();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override public void rmOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.selectOverlayPanel(item));
+		if(item.getClass().getName().equals(cTemplate.getName()))
+		{
+			fSecurity.rmTemplate(cView, cTemplate, view, (AT)item);
+		}
+		reloadView();
+	}
 }

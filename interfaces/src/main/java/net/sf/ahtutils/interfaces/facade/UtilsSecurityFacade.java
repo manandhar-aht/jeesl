@@ -11,6 +11,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithActionTemplates;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsStaffPool;
@@ -43,6 +44,9 @@ public interface UtilsSecurityFacade <L extends UtilsLang,
 	
 	void grantRole(Class<USER> clUser, Class<R> clRole, USER user, R role, boolean grant);
 	boolean hasRole(Class<USER> clUser, Class<R> clRole, USER user, R role);
+	
+	<WT extends UtilsSecurityWithActionTemplates<L,D,C,R,V,U,A,AT,USER>> void addTemplate(Class<WT> cWt, Class<AT> cTemplate, WT container, AT template);
+	<WT extends UtilsSecurityWithActionTemplates<L,D,C,R,V,U,A,AT,USER>> void rmTemplate(Class<WT> cWt, Class<AT> cTemplate, WT container, AT template);
 	
 	<WC extends UtilsSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>> List<WC> allForCategory(Class<WC> clWc, Class<C> clC, String catCode) throws UtilsNotFoundException;
 	

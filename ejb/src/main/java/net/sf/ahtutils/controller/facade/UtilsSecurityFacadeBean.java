@@ -17,6 +17,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithActionTemplates;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithCategory;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsStaffPool;
@@ -51,6 +52,7 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 	{
 		view = em.find(cView, view.getId());
 		view.getActions().size();
+		view.getTemplates().size();
 		return view;
 	}
 	
@@ -291,5 +293,29 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 			}
 		}
 		return result;
+	}
+
+	@Override public <WT extends UtilsSecurityWithActionTemplates<L, D, C, R, V, U, A, AT, USER>> void addTemplate(Class<WT> cWt, Class<AT> cTemplate, WT container, AT template)
+	{
+		logger.info("Adding Template c:"+container.toString()+" t:"+template.toString());
+		container = em.find(cWt,container.getId());
+		template = em.find(cTemplate,template.getId());
+		if(!container.getTemplates().contains(template))
+		{
+			container.getTemplates().add(template);
+		}
+		em.merge(container);	
+	}
+	
+	@Override public <WT extends UtilsSecurityWithActionTemplates<L, D, C, R, V, U, A, AT, USER>> void rmTemplate(Class<WT> cWt, Class<AT> cTemplate, WT container, AT template)
+	{
+		logger.info("Removing Template c:"+container.toString()+" t:"+template.toString());
+		container = em.find(cWt,container.getId());
+		template = em.find(cTemplate,template.getId());
+		if(container.getTemplates().contains(template))
+		{
+			container.getTemplates().remove(template);
+		}
+		em.merge(container);	
 	}
 }

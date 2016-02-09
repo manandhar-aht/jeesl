@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+    
+<composite:interface>
+	<composite:attribute name="handler" required="true"/>
+	<composite:attribute name="header" required="false" default="Table"/>
+	
+	<composite:facet name="op" required="true"/>
+</composite:interface>
+
+<composite:implementation>
+	<p:dataTable id="dt" var="var" value="#{cc.attrs.handler.tbList}" draggableRows="false"
+			selection="#{cc.attrs.handler.tb}" selectionMode="single" rowKey="#{var.id}">
+			<f:facet name="header">
+				<aht:pfDataTableHeader id="dth" title="#{msg.aupSecurityActionTemplates}">
+					<h:graphicImage id="giAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['aupAdd']}"/>
+					<aht:icon rendered="#{not empty cc.attrs.handler.tb}" type="aupRm" mayDisappear="true" listener="#{cc.attrs.handler.rmTb()}" update="@form" tooltip="#{msg.ttRemove}"/>
+					<p:tooltip for="giAdd" value="#{msg.ttAdd}"/>
+				</aht:pfDataTableHeader>
+			</f:facet>
+			<p:ajax event="rowSelect" update="@form" listener="#{cc.attrs.handler.selectTb()}"/>
+			<composite:insertChildren/>
+       	</p:dataTable>
+       	<composite:renderFacet name="op"/>
+</composite:implementation>
+</html>

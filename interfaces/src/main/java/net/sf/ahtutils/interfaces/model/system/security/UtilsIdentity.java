@@ -26,7 +26,8 @@ public interface UtilsIdentity <L extends UtilsLang,
 	int sizeAllowedRoles();
 	int sizeAllowedActions();
 	
-	void allowView(V v);
-	void allowRole(R r);
-	void allowAction(A a);
+	void allowView(V view);
+	void allowRole(R role);
+	void allowAction(A action);
+	void allowAction(V view, AT template);
 }

@@ -14,7 +14,6 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
-import net.sf.ahtutils.interfaces.bean.op.OpEntityBean;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -26,8 +25,6 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.prototype.controller.handler.op.OverlayEntitySelectionHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
@@ -40,7 +37,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 											AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,USER>
-		implements Serializable,OpEntityBean<AT>
+		implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityUsecasesBean.class);
@@ -58,7 +55,6 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 		Collections.sort(opViews, comparatorView);
 		
 		opActions = new ArrayList<A>();
-		opTemplateHandler = new OverlayEntitySelectionHandler<AT>(this);
 	}
 	
 	public void categorySelected() throws UtilsNotFoundException
@@ -90,7 +86,6 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	private void reloadUsecase()
 	{
 		usecase = fSecurity.load(cUsecase, usecase);
-		opTemplateHandler.setTbList(usecase.getTemplates());
 	}
 	
 	private void reloadUsecases() throws UtilsNotFoundException
@@ -184,26 +179,4 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	}
 	
 	protected void reorderUsecases() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, usecases);}
-	
-	@SuppressWarnings("unchecked")
-	@Override public void addOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
-	{
-		logger.info(AbstractLogMessage.selectOverlayPanel(item));
-		if(item.getClass().getName().equals(cTemplate.getName()))
-		{
-			fSecurity.addTemplate(cUsecase, cTemplate, usecase, (AT)item);
-		}
-		reloadUsecase();
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override public void rmOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
-	{
-		logger.info(AbstractLogMessage.selectOverlayPanel(item));
-		if(item.getClass().getName().equals(cTemplate.getName()))
-		{
-			fSecurity.rmTemplate(cUsecase, cTemplate, usecase, (AT)item);
-		}
-		reloadUsecase();
-	}
 }

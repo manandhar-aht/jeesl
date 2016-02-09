@@ -21,8 +21,8 @@ public interface UtilsSecurityActionTemplate<L extends UtilsLang,
 								   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 			extends EjbWithCode,EjbSaveable,EjbRemoveable,
 					EjbWithPositionVisible,EjbWithParent,
-					UtilsSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>,
-					EjbWithLang<L>,EjbWithDescription<D>
+					EjbWithLang<L>,EjbWithDescription<D>,
+					UtilsSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>
 {
 	public boolean getDocumentation();
 	public void setDocumentation(boolean documentation);

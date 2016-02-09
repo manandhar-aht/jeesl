@@ -102,12 +102,6 @@ public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 	public void setUsecases(List<SecurityUsecase> usecases) {this.usecases = usecases;}
 	
 	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name="SecurityRole_Template",joinColumns={@JoinColumn(name="role")},inverseJoinColumns={@JoinColumn(name="template")})
-	private List<SecurityActionTemplate> templates;
-	@Override public List<SecurityActionTemplate> getTemplates() {if(templates==null){templates=new ArrayList<SecurityActionTemplate>();}return templates;}
-	@Override public void setTemplates(List<SecurityActionTemplate> templates) {this.templates = templates;}
-	
-	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "User_SecurityRole")
 	private List<AhtUtilsUser> users;
 	public List<AhtUtilsUser> getUsers() {return users;}

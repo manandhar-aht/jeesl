@@ -136,6 +136,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(category));}
 		category = fSecurity.save(category);
+		reloadCategories();
 		categorySaved();
 		bMessage.growlSuccessSaved();
 	}

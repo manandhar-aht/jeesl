@@ -25,8 +25,8 @@ public interface UtilsSecurityRole<L extends UtilsLang,
 					EjbWithLang<L>,EjbWithDescription<D>,
 					UtilsSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>,
 					UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER>,
-					UtilsSecurityWithActions<L,D,C,R,V,U,A,AT,USER>,
-					UtilsSecurityWithActionTemplates<L,D,C,R,V,U,A,AT,USER>
+					UtilsSecurityWithActions<L,D,C,R,V,U,A,AT,USER>
+//					UtilsSecurityWithActionTemplates<L,D,C,R,V,U,A,AT,USER>
 					
 {
 	public static final String extractId = "securityRoles";

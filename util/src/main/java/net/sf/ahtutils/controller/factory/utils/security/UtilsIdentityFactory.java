@@ -37,7 +37,7 @@ public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER
 	final Class<V>  clView;
 	final Class<U> 	clUsecase;
 	final Class<A> 	clAction;
-	final Class<USER>  clUser;
+	final Class<USER>  cUser;
 
 	public UtilsIdentityFactory(final Class<I> clIdentity,
 								final Class<L> clLang,
@@ -47,7 +47,7 @@ public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER
 								final Class<V> clView,
 								final Class<U> clUsecase,
 								final Class<A> clAction,
-								final Class<USER> clUser)
+								final Class<USER> cUser)
 	{
 		this.clIdentity=clIdentity;
 		this.clLang=clLang;
@@ -57,7 +57,7 @@ public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER
 		this.clView=clView;
 		this.clUsecase=clUsecase;
 		this.clAction=clAction;
-		this.clUser = clUser;
+		this.cUser = cUser;
 	} 
 
 	public static <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER>,
@@ -92,15 +92,9 @@ public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER
 			identity = clIdentity.newInstance();
 			identity.setUser(user);
 			
-			for(A a : fSecurity.allActionsForUser(clUser, user)){identity.allowAction(a);}		
-			for(R r : fSecurity.allRolesForUser(clUser,user)){identity.allowRole(r);}
-			
-			if(logger.isTraceEnabled()){logger.info("Views");}
-			for(V v : fSecurity.allViewsForUser(clUser,user))
-			{
-				if(logger.isTraceEnabled()){logger.info("\t"+v.toString());}
-				identity.allowView(v);
-			}
+			for(A a : fSecurity.allActionsForUser(cUser, user)){identity.allowAction(a);}		
+			for(R r : fSecurity.allRolesForUser(cUser,user)){identity.allowRole(r);}
+			for(V v : fSecurity.allViewsForUser(cUser,user)){identity.allowView(v);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

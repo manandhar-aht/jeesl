@@ -46,7 +46,7 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 		role = em.find(cRole, role.getId());
 		role.getUsers().size();
 		role.getActions().size();
-		role.getTemplates().size();
+//		role.getTemplates().size();
 		return role;
 	}
 	
@@ -62,7 +62,7 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 	{
 		usecase = em.find(cUsecase, usecase.getId());
 		usecase.getActions().size();
-		usecase.getTemplates().size();
+//		usecase.getTemplates().size();
 		return usecase;
 	}
 	
@@ -133,9 +133,9 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 		return new ArrayList<R>(roles.values());
 	}
 	
-	@Override public List<A> allActionsForUser(Class<USER> clUser, USER user)
+	@Override public List<A> allActionsForUser(Class<USER> cUser, USER user)
 	{
-		user = em.find(clUser, user.getId());
+		user = em.find(cUser, user.getId());
 		Map<Long,A> actions = new HashMap<Long,A>();
 		for(R r : user.getRoles())
 		{

@@ -3,6 +3,10 @@ package net.sf.ahtutils.controller.model.idm;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.factory.txt.security.TxtSecurityActionFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -23,8 +27,11 @@ public class AbstractIdentityUser <L extends UtilsLang,
 								   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 								   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
+	final static Logger logger = LoggerFactory.getLogger(AbstractIdentityUser.class);
 	public static final long serialVersionUID=1;
 
+	private TxtSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> txtAction;
+	
 	private Map<String,Boolean> mapUsecases,mapRoles,mapActions;
 	
 	private Map<String,Boolean> mapSystemViews; //Only systems views, domain views not included
@@ -33,6 +40,8 @@ public class AbstractIdentityUser <L extends UtilsLang,
 	
 	public AbstractIdentityUser()
 	{
+		txtAction = new TxtSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>();
+		
 		mapUsecases = new Hashtable<String,Boolean>();
 		mapViews = new Hashtable<String,Boolean>();
 		mapSystemViews = new Hashtable<String,Boolean>();
@@ -44,6 +53,7 @@ public class AbstractIdentityUser <L extends UtilsLang,
 	public void allowView(V view) {mapViews.put(view.getCode(), true);}
 	public void allowRole(R role) {mapRoles.put(role.getCode(), true);}
 	public void allowAction(A action) {mapActions.put(action.getCode(), true);}
+	public void allowAction(V view, AT template){mapActions.put(txtAction.code(view,template), true);}
 	
 	public boolean hasUsecase(String code)
 	{

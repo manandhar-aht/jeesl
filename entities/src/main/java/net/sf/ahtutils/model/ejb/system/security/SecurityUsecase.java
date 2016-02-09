@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
@@ -98,6 +100,11 @@ public class SecurityUsecase implements EjbWithCode,Serializable,EjbRemoveable,E
 	@Override public List<SecurityRole> getRoles() {if(roles==null){roles = new ArrayList<SecurityRole>();}return roles;}
 	@Override public void setRoles(List<SecurityRole> roles) {this.roles = roles;}
 	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="SecurityUsecase_Template",joinColumns={@JoinColumn(name="uc")},inverseJoinColumns={@JoinColumn(name="template")})
+	private List<SecurityActionTemplate> templates;
+	@Override public List<SecurityActionTemplate> getTemplates() {if(templates==null){templates=new ArrayList<SecurityActionTemplate>();}return templates;}
+	@Override public void setTemplates(List<SecurityActionTemplate> templates) {this.templates = templates;}
 	
 	@Override public boolean equals(Object object){return (object instanceof SecurityUsecase) ? id == ((SecurityUsecase) object).getId() : (object == this);}
 	@Override public int hashCode() {return new HashCodeBuilder(17,53).append(id).toHashCode();}

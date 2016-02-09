@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -99,6 +100,12 @@ public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 	private List<SecurityUsecase> usecases;
 	public List<SecurityUsecase> getUsecases() {if(usecases==null){usecases = new ArrayList<SecurityUsecase>();}return usecases;}
 	public void setUsecases(List<SecurityUsecase> usecases) {this.usecases = usecases;}
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="SecurityRole_Template",joinColumns={@JoinColumn(name="role")},inverseJoinColumns={@JoinColumn(name="template")})
+	private List<SecurityActionTemplate> templates;
+	@Override public List<SecurityActionTemplate> getTemplates() {if(templates==null){templates=new ArrayList<SecurityActionTemplate>();}return templates;}
+	@Override public void setTemplates(List<SecurityActionTemplate> templates) {this.templates = templates;}
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "User_SecurityRole")

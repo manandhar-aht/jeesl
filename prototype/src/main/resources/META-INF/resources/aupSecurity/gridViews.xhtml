@@ -13,6 +13,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="false" default="#{adminSecurityViewsBean}"/>
+		<composite:attribute name="at" required="false" default="false"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -30,7 +31,8 @@
 					<h:form id="fActions"><aupSec:tableActions update=":#{cc.id}:sActions"/></h:form>
 					<h:form id="fAction"><aupSec:panelAction rendered="#{not empty cc.attrs.bean.action}" update=":#{cc.id}:sActions"/></h:form>
 					<h:form id="fTemplates">
-						<aup:tableOverlaySelection id="tos" handler="#{cc.attrs.bean.opTemplateHandler}" header="#{msg.aupSecurityActionTemplates}">
+						<aup:tableOverlaySelection id="tos" rendered="#{cc.attrs.at}"
+								handler="#{cc.attrs.bean.opTemplateHandler}" header="#{msg.aupSecurityActionTemplates}">
 							<p:column>  
 								<h:outputText value="#{var.position}" />  
 				            </p:column>

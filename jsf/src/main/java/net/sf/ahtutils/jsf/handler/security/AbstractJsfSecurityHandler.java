@@ -91,8 +91,8 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 	protected void addActionWithSecurity(A action, boolean allow)
 	{
 		actions.add(action);
-		mapAllow.put(action.getCode(), override(allow));
-		logger.trace(action.toString() + " " + allow(action.getCode()));
+		mapAllow.put(action.toCode(), override(allow));
+		logger.trace(action.toString() + " " + allow(action.toCode()));
 	}
 	
 	private boolean override(boolean allow)

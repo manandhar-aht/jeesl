@@ -29,5 +29,4 @@ public interface UtilsIdentity <L extends UtilsLang,
 	void allowView(V view);
 	void allowRole(R role);
 	void allowAction(A action);
-	void allowAction(V view, AT template);
 }

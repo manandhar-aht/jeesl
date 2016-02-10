@@ -103,4 +103,11 @@
     		<s:lang key="fr" translation="XPath"/>
     	</s:langs>
     </s:translation>
+    	<s:translation key="aupTemplate">
+    	<s:langs>
+    		<s:lang key="de" translation="Vorlage"/>
+    		<s:lang key="en" translation="Template"/>
+    		<s:lang key="fr" translation="Template"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

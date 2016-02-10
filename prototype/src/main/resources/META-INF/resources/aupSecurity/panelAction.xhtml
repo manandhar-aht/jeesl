@@ -21,7 +21,7 @@
 				<aht:icon type="save" listener="#{cc.attrs.bean.saveAction()}" update="#{cc.attrs.update}" tooltip="#{msg.ttSave}"/>
 			</f:facet>
 			<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
-				<p:outputLabel value="#{msg.aupSecurityActionTemplate}"/>
+				<p:outputLabel value="#{msg.aupTemplate}"/>
 				<p:selectOneMenu value="#{cc.attrs.bean.action.template}" effect="fade" >
 					<f:selectItem itemLabel="---"/>
 					<f:selectItems value="#{cc.attrs.bean.templates}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>

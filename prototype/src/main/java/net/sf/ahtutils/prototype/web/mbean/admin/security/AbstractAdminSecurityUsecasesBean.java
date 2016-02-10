@@ -3,9 +3,7 @@ package net.sf.ahtutils.prototype.web.mbean.admin.security;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,7 +93,6 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	}
 	private void reloadActions()
 	{
-		Set<AT> set = new HashSet<AT>();
 		opActions.clear();
 		for(V v : usecase.getViews())
 		{
@@ -103,7 +100,6 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 			opActions.addAll(v.getActions());
 		}
 		Collections.sort(opActions, comparatorAction);
-		opTemplateHandler.setOpList(new ArrayList<AT>(set));
 	}
 	
 	//Add

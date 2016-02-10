@@ -36,4 +36,7 @@ public interface UtilsSecurityAction<L extends UtilsLang,
 	
 	public Boolean getDocumentation();
 	public void setDocumentation(Boolean documentation);
+	
+	public AT getTemplate();
+	public void setTemplate(AT template);
 }

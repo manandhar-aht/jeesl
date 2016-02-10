@@ -50,6 +50,8 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		categoryType = UtilsSecurityCategory.Type.view;
 		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 		
+		templates = fSecurity.allOrderedPositionVisible(cTemplate);
+		
 		uiAllowAdd=false;
 	}
 	
@@ -75,7 +77,6 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	private void reloadView()
 	{
 		view = fSecurity.load(cView,view);
-		opTemplateHandler.clearTable();
 	}
 	
 	private void reloadActions()

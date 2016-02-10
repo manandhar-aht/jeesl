@@ -3,9 +3,7 @@ package net.sf.ahtutils.prototype.web.mbean.admin.security;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,13 +122,11 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 
 	private void reloadActions()
 	{
-		Set<AT> set = new HashSet<AT>();
 		for(V v : role.getViews())
 		{
 			v = fSecurity.load(cView,v);
 			opActions.addAll(v.getActions());
 		}
-		opTemplateHandler.setOpList(new ArrayList<AT>(set));
 	}
 
 	//Role

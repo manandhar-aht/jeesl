@@ -50,6 +50,11 @@ public class SecurityAction implements EjbWithCode,Serializable,EjbRemoveable,Ej
 	private SecurityView view;
 	public SecurityView getView() {return view;}
 	public void setView(SecurityView view) {this.view = view;}
+	
+	@ManyToOne
+	private SecurityActionTemplate template;
+	public SecurityActionTemplate getTemplate() {return template;}
+	public void setTemplate(SecurityActionTemplate template) {this.template = template;}
 		
 	@NotNull
 	private String code;

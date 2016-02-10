@@ -77,4 +77,12 @@ public class ObjectFactory {
         return new Hint();
     }
 
+    /**
+     * Create an instance of {@link Title }
+     * 
+     */
+    public Title createTitle() {
+        return new Title();
+    }
+
 }

@@ -4,6 +4,7 @@
     <s:descriptions/>
     <sec:roles type="myType"/>
     <sec:actions/>
+    <sec:templates/>
     <sec:usecases/>
     <acl:views/>
     <sec:staffs/>

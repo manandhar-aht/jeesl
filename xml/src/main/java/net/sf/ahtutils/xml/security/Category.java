@@ -29,6 +29,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}roles"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}actions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/security}templates"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}usecases"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/access}views"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}staffs" maxOccurs="unbounded"/&gt;
@@ -51,6 +52,7 @@ import net.sf.ahtutils.xml.status.Langs;
     "descriptions",
     "roles",
     "actions",
+    "templates",
     "usecases",
     "views",
     "staffs"
@@ -69,6 +71,8 @@ public class Category
     protected Roles roles;
     @XmlElement(required = true)
     protected Actions actions;
+    @XmlElement(required = true)
+    protected Templates templates;
     @XmlElement(required = true)
     protected Usecases usecases;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/access", required = true)
@@ -196,6 +200,34 @@ public class Category
 
     public boolean isSetActions() {
         return (this.actions!= null);
+    }
+
+    /**
+     * Gets the value of the templates property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Templates }
+     *     
+     */
+    public Templates getTemplates() {
+        return templates;
+    }
+
+    /**
+     * Sets the value of the templates property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Templates }
+     *     
+     */
+    public void setTemplates(Templates value) {
+        this.templates = value;
+    }
+
+    public boolean isSetTemplates() {
+        return (this.templates!= null);
     }
 
     /**

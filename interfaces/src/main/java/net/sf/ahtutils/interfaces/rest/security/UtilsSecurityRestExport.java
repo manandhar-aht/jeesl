@@ -9,6 +9,10 @@ import net.sf.ahtutils.xml.security.Security;
 
 public interface UtilsSecurityRestExport
 {
+	@GET @Path("/security/actions")
+	@Produces(MediaType.APPLICATION_XML)
+	Security exportSecurityActions();
+	
 	@GET @Path("/security/views")
 	@Produces(MediaType.APPLICATION_XML)
 	Security exportSecurityViews();

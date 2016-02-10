@@ -20,6 +20,7 @@
                 <xsd:element ref="us:descriptions" maxOccurs="1"/>
                 <xsd:element ref="sec:roles" maxOccurs="1"/>
                 <xsd:element ref="sec:actions" maxOccurs="1"/>
+                <xsd:element ref="sec:templates" maxOccurs="1"/>
                 <xsd:element ref="sec:usecases" maxOccurs="1"/>
                 <xsd:element ref="a:views" maxOccurs="1"/>
                 <xsd:element ref="sec:staffs" maxOccurs="unbounded"/>
@@ -91,6 +92,27 @@
                 <xsd:element ref="us:descriptions" maxOccurs="1"/>
                 <xsd:element ref="us:langs" maxOccurs="1"/>
                 <xsd:element ref="sec:view" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+			<xsd:attribute name="position" type="xsd:int"/>
+            <xsd:attribute name="visible" type="xsd:boolean"/>
+            <xsd:attribute name="documentation" type="xsd:boolean"/>
+            <xsd:attribute name="label" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    	<xsd:element name="templates">
+        <xsd:complexType>
+            <xsd:sequence>
+            	<xsd:element ref="sec:template" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+	<xsd:element name="template">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="us:descriptions" maxOccurs="1"/>
+                <xsd:element ref="us:langs" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="code" type="xsd:string"/>

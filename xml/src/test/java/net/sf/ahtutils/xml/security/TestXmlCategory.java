@@ -30,6 +30,7 @@ public class TestXmlCategory extends AbstractXmlSecurityTest<Category>
     		xml.setDescriptions(TestXmlDescriptions.create(false));
     		xml.setRoles(TestXmlRoles.create(false));
     		xml.setActions(TestXmlActions.create(false));
+    		xml.setTemplates(TestXmlTemplates.create(false));
     		xml.setViews(TestXmlViews.create(false));
     		xml.setUsecases(TestXmlUsecases.create(false));
     		xml.getStaffs().add(TestXmlStaffs.create(false));xml.getStaffs().add(TestXmlStaffs.create(false));

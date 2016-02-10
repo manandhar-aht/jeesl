@@ -184,6 +184,15 @@ public class SecurityQuery
 		return xml;
 	}
 	
+	public static net.sf.ahtutils.xml.security.Template exTemplate()
+	{
+		net.sf.ahtutils.xml.security.Template xml = new net.sf.ahtutils.xml.security.Template();
+		xml.setCode("");
+		xml.setLangs(StatusQuery.langs());
+		xml.setDescriptions(StatusQuery.descriptions());
+		return xml;
+	}
+	
 	public static net.sf.ahtutils.xml.access.Action exActionAcl()
 	{
 		net.sf.ahtutils.xml.access.Action xml = new net.sf.ahtutils.xml.access.Action();

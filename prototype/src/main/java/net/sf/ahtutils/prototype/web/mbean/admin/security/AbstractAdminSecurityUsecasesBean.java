@@ -101,7 +101,6 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 		{
 			v = fSecurity.load(cView,v);
 			opActions.addAll(v.getActions());
-			set.addAll(v.getTemplates());
 		}
 		Collections.sort(opActions, comparatorAction);
 		opTemplateHandler.setOpList(new ArrayList<AT>(set));

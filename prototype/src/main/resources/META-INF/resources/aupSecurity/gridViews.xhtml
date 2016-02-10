@@ -30,27 +30,6 @@
 					<h:form id="fView"><aupSec:panelView rendered="#{not empty cc.attrs.bean.view}" update=":#{cc.id}:sViews :#{cc.id}:sActions"/></h:form>
 					<h:form id="fActions"><aupSec:tableActions update=":#{cc.id}:sActions"/></h:form>
 					<h:form id="fAction"><aupSec:panelAction rendered="#{not empty cc.attrs.bean.action}" update=":#{cc.id}:sActions"/></h:form>
-					<h:form id="fTemplates">
-						<aup:tableOverlaySelection id="tos" rendered="#{cc.attrs.at}"
-								handler="#{cc.attrs.bean.opTemplateHandler}" header="#{msg.aupSecurityActionTemplates}">
-							<p:column>  
-								<h:outputText value="#{var.position}" />  
-				            </p:column>
-				       		<p:column headerText="#{msg.aupSecurityActionTemplate}">  
-								<h:outputText value="#{var.name[userBean.localeCode].lang}"/>  
-				            </p:column>
-				            <f:facet name="op">
-				            	<aup:opEntitySelection id="opes" for="@form:tos:dt:dth:giAdd" update="@form" handler="#{cc.attrs.bean.opTemplateHandler}">
-       								<p:column>  
-										<h:outputText value="#{var.position}" />  
-						            </p:column>
-						       		<p:column headerText="#{msg.aupSecurityActionTemplate}">  
-										<h:outputText value="#{var.name[userBean.localeCode].lang}"/>  
-						            </p:column>
-	       						</aup:opEntitySelection>
-       						</f:facet>
-						</aup:tableOverlaySelection>
-					</h:form>
 				</aht:slot>
 			</aht:row>
 	    </aup:grid>

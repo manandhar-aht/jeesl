@@ -97,12 +97,6 @@ public class SecurityView implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 	@Override public List<SecurityUsecase> getUsecases() {if(usecases==null){usecases = new ArrayList<SecurityUsecase>();}return usecases;}
 	@Override public void setUsecases(List<SecurityUsecase> usecases) {this.usecases = usecases;}
 	
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name="SecurityView_Template",joinColumns={@JoinColumn(name="view")},inverseJoinColumns={@JoinColumn(name="template")})
-	private List<SecurityActionTemplate> templates;
-	@Override public List<SecurityActionTemplate> getTemplates() {if(templates==null){templates=new ArrayList<SecurityActionTemplate>();}return templates;}
-	@Override public void setTemplates(List<SecurityActionTemplate> templates) {this.templates = templates;}
-	
 	private Boolean accessPublic;
 	@Override public Boolean getAccessPublic() {return accessPublic;}
 	@Override public void setAccessPublic(Boolean accessPublic) {this.accessPublic = accessPublic;}

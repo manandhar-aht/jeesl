@@ -129,7 +129,6 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		{
 			v = fSecurity.load(cView,v);
 			opActions.addAll(v.getActions());
-			set.addAll(v.getTemplates());
 		}
 		opTemplateHandler.setOpList(new ArrayList<AT>(set));
 	}

@@ -94,7 +94,6 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fSecurity=fSecurity;
-		showDocumentation = true;
 		
 		this.cCategory=cCategory;
 		this.cRole=cRole;
@@ -157,27 +156,6 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 			c.setPosition(i);
 			fSecurity.update(c);
 			i++;
-		}
-	}
-	
-	//Handling for Invisible entries
-	protected boolean showDocumentation; public boolean isShowDocumentation() {return showDocumentation;}
-	private boolean showDeveloper; public boolean isShowDeveloper() {return showDeveloper;}
-	
-	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionInvisible, String actionDocumentation){updateSecurity(jsfSecurityHandler,actionInvisible,actionDocumentation,null);}
-	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String actionInvisible, String actionDocumentation, String actionDeveloper)
-	{
-		uiShowInvisible = jsfSecurityHandler.allow(actionInvisible);
-		showDocumentation = jsfSecurityHandler.allow(actionDocumentation);
-		
-		if(actionDeveloper!=null){showDeveloper = jsfSecurityHandler.allow(actionDeveloper);}
-		else{showDeveloper=false;}
-		
-		if(logger.isTraceEnabled())
-		{
-			logger.info(uiShowInvisible+" uiShowInvisible "+actionInvisible);
-			logger.info(showDocumentation+" showInvisibleCategories "+actionDocumentation);
-			logger.info(showDeveloper+" showDeveloper "+actionDeveloper);
 		}
 	}
 }

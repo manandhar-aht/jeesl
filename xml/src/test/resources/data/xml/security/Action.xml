@@ -3,4 +3,5 @@
     <s:descriptions/>
     <s:langs/>
     <sec:view id="123" code="myCode" label="myLabel" position="1" visible="true"/>
+    <sec:template id="123" code="myCode" position="1" visible="true" documentation="true" label="myLabel"/>
 </sec:action>

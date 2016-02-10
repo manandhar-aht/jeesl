@@ -34,8 +34,8 @@
 				<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
 				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{cc.attrs.bean.role.visible}"/>
 				
-				<p:outputLabel rendered="#{cc.attrs.bean.showDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
-				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showDocumentation}" value="#{cc.attrs.bean.role.documentation}"/>
+				<p:outputLabel rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
+				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{cc.attrs.bean.role.documentation}"/>
 			</p:panelGrid>
 			<aht:tabTranslationEditor value="#{cc.attrs.bean.role}"
 					labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"

@@ -25,6 +25,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}view"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/security}template"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -43,7 +44,8 @@ import net.sf.ahtutils.xml.status.Langs;
 @XmlType(name = "", propOrder = {
     "descriptions",
     "langs",
-    "view"
+    "view",
+    "template"
 })
 @XmlRootElement(name = "action")
 public class Action
@@ -57,6 +59,8 @@ public class Action
     protected Langs langs;
     @XmlElement(required = true)
     protected View view;
+    @XmlElement(required = true)
+    protected Template template;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "code")
@@ -152,6 +156,34 @@ public class Action
 
     public boolean isSetView() {
         return (this.view!= null);
+    }
+
+    /**
+     * Gets the value of the template property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Template }
+     *     
+     */
+    public Template getTemplate() {
+        return template;
+    }
+
+    /**
+     * Sets the value of the template property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Template }
+     *     
+     */
+    public void setTemplate(Template value) {
+        this.template = value;
+    }
+
+    public boolean isSetTemplate() {
+        return (this.template!= null);
     }
 
     /**

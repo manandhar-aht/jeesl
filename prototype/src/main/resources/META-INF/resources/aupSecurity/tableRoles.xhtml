@@ -36,7 +36,7 @@
 				<h:graphicImage rendered="#{r.visible}" name="#{iconBean.icon12['securityVisible']}" library="gfx"/>
                 <h:graphicImage rendered="#{not r.visible}" name="#{iconBean.icon12['securityInvisible']}" library="gfx"/>
             </p:column>
-            <p:column rendered="#{cc.attrs.bean.showDocumentation}">  
+            <p:column rendered="#{cc.attrs.bean.uiShowDocumentation}">  
 				<h:graphicImage rendered="#{r.documentation}" name="#{iconBean.icon12['aupSecurityDocumentation']}" library="gfx"/>
                 <h:graphicImage rendered="#{not r.documentation}" name="#{iconBean.icon12['aupSecurityNoDocumentation']}" library="gfx"/>
             </p:column>

@@ -3,6 +3,7 @@ package net.sf.ahtutils.interfaces.model.system.security;
 import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.EjbWithParent;
@@ -20,7 +21,8 @@ public interface UtilsSecurityView<L extends UtilsLang,
 								   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 								   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 								   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
-			extends EjbWithCode,EjbSaveable,EjbWithPositionVisible,EjbWithParent,
+			extends EjbWithCode,EjbSaveable,EjbRemoveable,
+					EjbWithPositionVisible,EjbWithParent,
 					EjbWithLang<L>,EjbWithDescription<D>,
 					UtilsSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>,
 					UtilsSecurityWithActions<L,D,C,R,V,U,A,AT,USER>

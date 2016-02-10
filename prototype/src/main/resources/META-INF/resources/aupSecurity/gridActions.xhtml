@@ -44,7 +44,7 @@
 							<h:graphicImage rendered="#{v.visible}" name="#{iconBean.icon12['securityVisible']}" library="gfx"/>
 			                <h:graphicImage rendered="#{not v.visible}" name="#{iconBean.icon12['securityInvisible']}" library="gfx"/>
 			            </p:column>
-			            <p:column rendered="#{cc.attrs.bean.showDocumentation}">  
+			            <p:column rendered="#{cc.attrs.bean.uiShowDocumentation}">  
 							<h:graphicImage rendered="#{v.documentation}" name="#{iconBean.icon12['aupSecurityDocumentation']}" library="gfx"/>
 			            </p:column>
 			       	</p:dataTable>
@@ -67,8 +67,8 @@
 								<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{cc.attrs.bean.template.visible}"/>
 								
-								<p:outputLabel rendered="#{cc.attrs.bean.showDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
-								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.showDocumentation}" value="#{cc.attrs.bean.template.documentation}"/>
+								<p:outputLabel rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
+								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{cc.attrs.bean.template.documentation}"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.template}"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"

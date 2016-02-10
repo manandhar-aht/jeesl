@@ -94,6 +94,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Template }
+     * 
+     */
+    public Template createTemplate() {
+        return new Template();
+    }
+
+    /**
      * Create an instance of {@link Usecases }
      * 
      */
@@ -131,14 +139,6 @@ public class ObjectFactory {
      */
     public Templates createTemplates() {
         return new Templates();
-    }
-
-    /**
-     * Create an instance of {@link Template }
-     * 
-     */
-    public Template createTemplate() {
-        return new Template();
     }
 
     /**

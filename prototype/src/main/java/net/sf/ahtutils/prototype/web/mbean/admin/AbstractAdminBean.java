@@ -46,7 +46,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		uiAllowCode = true;
 		
 		uiShowInvisible = true;
-		
+		uiShowDocumentation = true;
 	}
 	
 	public void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription, FacesMessageBean bMessage)
@@ -65,6 +65,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	protected boolean uiAllowReorder; public boolean getUiAllowReorder() {return uiAllowReorder;}
 	protected boolean uiAllowCode;public boolean isUiAllowCode() {return uiAllowCode;}
 	protected boolean uiShowInvisible; public boolean isUiShowInvisible() {return uiShowInvisible;}
+	protected boolean uiShowDocumentation; public boolean isUiShowDocumentation() {return uiShowDocumentation;}
 	
 	protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
 	{
@@ -81,7 +82,9 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		uiAllowRemove = hasDeveloperAction || hasAdministratorAction;
 		uiAllowReorder = hasDeveloperAction || hasAdministratorAction;
 		uiAllowCode = hasDeveloperAction;
+		
 		uiShowInvisible = hasDeveloperAction;
+		uiShowDocumentation = hasDeveloperAction;
 	}
 	
 	protected void debugUi(boolean debug)

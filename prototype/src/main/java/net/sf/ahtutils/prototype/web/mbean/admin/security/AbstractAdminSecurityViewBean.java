@@ -52,8 +52,6 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 		
 		templates = fSecurity.allOrderedPositionVisible(cTemplate);
-		
-		uiAllowAdd=false;
 	}
 	
 	@Override public void categorySelected() throws UtilsNotFoundException
@@ -113,6 +111,14 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		reloadViews();
 	}
 	
+	public void rmView() throws UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.rmEntity(view));
+		fSecurity.rm(view);
+		view=null;
+		action=null;
+	}
+	
 	public void saveAction() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(action));
@@ -136,6 +142,8 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.rmEntity(action));
 		fSecurity.rm(action);
 		action=null;
+		reloadView();
+		reloadActions();
 	}
 	
 	public void changeTemplate()

@@ -1,6 +1,7 @@
 package net.sf.ahtutils.interfaces.model.system.security;
 
 import java.util.List;
+import java.util.Map;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -24,7 +25,10 @@ public interface UtilsSecurityAction<L extends UtilsLang,
 			extends EjbWithCode,EjbSaveable,EjbRemoveable,
 					EjbWithPositionVisible,EjbWithParent,
 					EjbWithLang<L>,EjbWithDescription<D>
-{
+{	
+	public String toCode();
+	public Map<String,L> toName();
+	
 	public V getView();
 	public void setView(V view);
 	

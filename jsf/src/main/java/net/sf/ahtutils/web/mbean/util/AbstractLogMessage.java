@@ -138,8 +138,9 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 	 public static <T extends EjbWithId> String selectOneMenuChange(T t)
 	 {
         StringBuffer sb = new StringBuffer();
-        sb.append("Change selectOneMenu ").append(t.getClass().getSimpleName());
-        sb.append(": ").append(t.toString());
+        sb.append("Change selectOneMenu ");
+        if(t!=null){sb.append(t.getClass().getSimpleName()).append(": ").append(t.toString());}
+        else{sb.append("null");}
         return sb.toString();
 	 }
 	 public static <T extends EjbWithId> String selectOverlayPanel(T t)

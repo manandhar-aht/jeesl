@@ -61,6 +61,23 @@ public class SecurityAction implements EjbWithCode,Serializable,EjbRemoveable,Ej
 	public String getCode() {return code;}
 	public void setCode(String code) {this.code = code;}
 	
+	public String toCode()
+	{
+		StringBuffer sb = new StringBuffer();
+		if(template==null){sb.append(code);}
+		else
+		{
+	    	sb.append(view.getCode());
+	    	sb.append(template.getCode().substring(template.getCode().lastIndexOf("."), template.getCode().length()));
+		}
+		return sb.toString();
+	}
+	public Map<String,Lang> toName()
+	{
+		if(template==null){return name;}
+		else{return template.getName();}
+	}
+	
 	@Override public String resolveParentAttribute() {return "category";}
 	
 	private boolean visible;

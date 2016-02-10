@@ -3,6 +3,7 @@ package net.sf.ahtutils.prototype.web.mbean.admin.security;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,6 +116,7 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	public void saveAction() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(action));
+		if(action.getTemplate()!=null){action.setTemplate(fSecurity.find(cTemplate, action.getTemplate()));}
 		action = fSecurity.save(action);
 		reloadView();
 		reloadActions();
@@ -134,6 +136,16 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.rmEntity(action));
 		fSecurity.rm(action);
 		action=null;
+	}
+	
+	public void changeTemplate()
+	{
+		logger.info(AbstractLogMessage.selectOneMenuChange(action.getTemplate()));
+		if(action.getTemplate()!=null)
+		{
+			action.setTemplate(fSecurity.find(cTemplate, action.getTemplate()));
+			action.setCode(UUID.randomUUID().toString());
+		}
 	}
 	
 	protected void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, views);}

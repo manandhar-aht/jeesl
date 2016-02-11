@@ -1,6 +1,7 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.system.security;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -122,16 +123,22 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	public void saveAction() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(action));
+		List<L> langs = new ArrayList<L>();
+		List<D> descriptions = new ArrayList<D>();
 		if(action.getTemplate()!=null)
 		{
 			action.setTemplate(fSecurity.find(cTemplate, action.getTemplate()));
 			logger.info("Testing ... "+action.toString());
 			
+			if(action.getName()!=null){langs.addAll(action.getName().values());}
+			if(action.getDescription()!=null){descriptions.addAll(action.getDescription().values());}
+			
 			action.setName(null);
 			action.setDescription(null);
-			
 		}
 		action = fSecurity.save(action);
+		if(!langs.isEmpty()){fSecurity.rm(langs);}
+		if(!descriptions.isEmpty()){fSecurity.rm(descriptions);}
 		reloadView();
 		reloadActions();
 	}
@@ -161,6 +168,11 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		{
 			action.setTemplate(fSecurity.find(cTemplate, action.getTemplate()));
 			action.setCode(UUID.randomUUID().toString());
+		}
+		else
+		{
+			action = efLang.persistMissingLangs(fSecurity,langs,action);
+			action = efDescription.persistMissingLangs(fSecurity,langs,action);
 		}
 	}
 	

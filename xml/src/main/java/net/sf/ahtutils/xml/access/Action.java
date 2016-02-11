@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.security.Roles;
+import net.sf.ahtutils.xml.security.Template;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
 
@@ -26,6 +27,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}roles"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/security}template"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -41,7 +43,8 @@ import net.sf.ahtutils.xml.status.Langs;
 @XmlType(name = "", propOrder = {
     "descriptions",
     "langs",
-    "roles"
+    "roles",
+    "template"
 })
 @XmlRootElement(name = "action")
 public class Action
@@ -55,6 +58,8 @@ public class Action
     protected Langs langs;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
     protected Roles roles;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
+    protected Template template;
     @XmlAttribute(name = "code")
     protected String code;
     @XmlAttribute(name = "name")
@@ -144,6 +149,34 @@ public class Action
 
     public boolean isSetRoles() {
         return (this.roles!= null);
+    }
+
+    /**
+     * Gets the value of the template property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Template }
+     *     
+     */
+    public Template getTemplate() {
+        return template;
+    }
+
+    /**
+     * Sets the value of the template property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Template }
+     *     
+     */
+    public void setTemplate(Template value) {
+        this.template = value;
+    }
+
+    public boolean isSetTemplate() {
+        return (this.template!= null);
     }
 
     /**

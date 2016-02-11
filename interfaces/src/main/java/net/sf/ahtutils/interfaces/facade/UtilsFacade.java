@@ -83,6 +83,7 @@ public interface UtilsFacade extends UtilsIdFacade
 	
 	<T extends EjbRemoveable> void rmTransaction(T o) throws UtilsConstraintViolationException;
 	<T extends EjbRemoveable> void rm(T o) throws UtilsConstraintViolationException;
+	<T extends EjbRemoveable> void rm(List<T> list) throws UtilsConstraintViolationException;
 	
 	//Parent
 	<T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1);

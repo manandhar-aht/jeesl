@@ -199,6 +199,7 @@ public class SecurityQuery
 		xml.setCode("");
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setTemplate(SecurityQuery.exTemplate());
 		return xml;
 	}
 	

@@ -183,7 +183,6 @@ public class LatexSecurityWriter extends AbstractDocumentationLatexWriter
 	public void pageActions(UtilsSecurityRestExport rest) throws OfxAuthoringException, OfxConfigurationException, IOException
 	{
 		Security security = rest.documentationSecurityPageActions();
-//		JaxbUtil.info(security);System.exit(-1);
 		
 		for(net.sf.ahtutils.xml.security.Category category : security.getCategory())
 		{

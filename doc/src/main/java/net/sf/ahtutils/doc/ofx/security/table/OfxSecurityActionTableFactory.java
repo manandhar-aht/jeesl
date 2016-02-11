@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
 import net.sf.ahtutils.doc.ofx.util.OfxMultiLangFactory;
+import net.sf.ahtutils.factory.xml.security.XmlActionFactory;
 import net.sf.ahtutils.xml.access.Action;
 import net.sf.ahtutils.xml.security.Role;
 import net.sf.ahtutils.xml.status.Translations;
@@ -125,8 +126,8 @@ public class OfxSecurityActionTableFactory extends AbstractUtilsOfxDocumentation
 	{
 		Row row = new Row();
 		
-		row.getCell().add(OfxMultiLangFactory.cell(langs, action.getLangs()));
-		row.getCell().add(OfxMultiLangFactory.cell(langs, action.getDescriptions()));
+		row.getCell().add(OfxMultiLangFactory.cell(langs, XmlActionFactory.toLangs(action)));
+		row.getCell().add(OfxMultiLangFactory.cell(langs, XmlActionFactory.toDescriptions(action)));
 		
 		if(view.isSetRoles())
 		{

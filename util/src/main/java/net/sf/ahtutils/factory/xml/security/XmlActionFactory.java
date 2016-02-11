@@ -15,6 +15,8 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.xml.security.Action;
+import net.sf.ahtutils.xml.status.Descriptions;
+import net.sf.ahtutils.xml.status.Langs;
 
 public class XmlActionFactory <L extends UtilsLang,
 								D extends UtilsDescription, 
@@ -65,6 +67,12 @@ public class XmlActionFactory <L extends UtilsLang,
 			xml.setView(f.build(action.getView()));
 		}
 		
+		if(q.isSetTemplate() && action.getTemplate()!=null)
+		{
+			XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER>(q.getTemplate());
+			xml.setTemplate(f.build(action.getTemplate()));
+		}
+		
 		return xml;
 	}
 	
@@ -84,6 +92,14 @@ public class XmlActionFactory <L extends UtilsLang,
 			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(qAcl.getDescriptions());
 			xml.setDescriptions(f.create(action.getDescription()));
 		}
+		
+		if(qAcl.isSetTemplate() && action.getTemplate()!=null)
+		{
+			
+			XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER>(qAcl.getTemplate());
+			xml.setTemplate(f.build(action.getTemplate()));
+		}
+		
 		return xml;
 	}
 	
@@ -92,5 +108,17 @@ public class XmlActionFactory <L extends UtilsLang,
 		net.sf.ahtutils.xml.security.Action xml = new net.sf.ahtutils.xml.security.Action();
 		xml.setCode(code);
 		return xml;
+	}
+	
+	public static Langs toLangs(net.sf.ahtutils.xml.access.Action action)
+	{		
+		if(action.getTemplate()==null) {return action.getLangs();}
+		else {return action.getTemplate().getLangs();}
+	}
+	
+	public static Descriptions toDescriptions(net.sf.ahtutils.xml.access.Action action)
+	{		
+		if(action.getTemplate()==null) {return action.getDescriptions();}
+		else {return action.getTemplate().getDescriptions();}
 	}
 }

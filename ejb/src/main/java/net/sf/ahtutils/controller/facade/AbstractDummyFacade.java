@@ -434,17 +434,8 @@ public class AbstractDummyFacade implements UtilsFacade
 		return null;
 	}
 
-	@Override
-	public <T extends EjbWithPositionParent, P extends EjbWithId> List<T> allOrderedPositionParent(Class<T> cl, P parent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T extends EjbRemoveable> void rmTransaction(T o) throws UtilsConstraintViolationException {
-		// TODO Auto-generated method stub
-		
-	}
+	@Override public <T extends EjbWithPositionParent, P extends EjbWithId> List<T> allOrderedPositionParent(Class<T> cl, P parent) {return null;}
+	@Override public <T extends EjbRemoveable> void rmTransaction(T o) throws UtilsConstraintViolationException {}
 
 	@Override
 	public <T extends EjbWithRecord, P extends EjbWithId> List<T> allOrderedParentsRecordBetween(Class<T> cl,
@@ -452,4 +443,6 @@ public class AbstractDummyFacade implements UtilsFacade
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override public <T extends EjbRemoveable> void rm(List<T> list) throws UtilsConstraintViolationException {}
 }

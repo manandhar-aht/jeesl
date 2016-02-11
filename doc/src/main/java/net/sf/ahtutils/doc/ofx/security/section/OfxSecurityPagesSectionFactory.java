@@ -34,9 +34,12 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
 import net.sf.ahtutils.doc.ofx.util.OfxMultiLangFactory;
+import net.sf.ahtutils.factory.xml.security.XmlActionFactory;
 import net.sf.ahtutils.xml.security.Role;
 import net.sf.ahtutils.xml.status.Description;
+import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Lang;
+import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.ahtutils.xml.xpath.StatusXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
@@ -89,13 +92,14 @@ public class OfxSecurityPagesSectionFactory extends AbstractUtilsOfxDocumentatio
 			for(net.sf.ahtutils.xml.access.Action action : view.getActions().getAction())
 			{
 				Item item = OfxListItemFactory.build();
+				
 				for(String lang : langs)
 				{
 					Paragraph p = XmlParagraphFactory.build(lang);
 					
 					try
 					{
-						Lang l = StatusXpath.getLang(action.getLangs(), lang);
+						Lang l = StatusXpath.getLang(XmlActionFactory.toLangs(action), lang);
 						p.getContent().add(ofxItalic.build(l.getTranslation()));
 						p.getContent().add(": ");
 					}
@@ -104,7 +108,7 @@ public class OfxSecurityPagesSectionFactory extends AbstractUtilsOfxDocumentatio
 					
 					try
 					{
-						Description d = StatusXpath.getDescription(action.getDescriptions(), lang);
+						Description d = StatusXpath.getDescription(XmlActionFactory.toDescriptions(action), lang);
 						p.getContent().add(d.getValue());
 					}
 					catch (ExlpXpathNotFoundException e) {e.printStackTrace();}
@@ -117,7 +121,6 @@ public class OfxSecurityPagesSectionFactory extends AbstractUtilsOfxDocumentatio
 			section.getContent().add(list);
 		}
 		
-		if(view.getCode().equals("programBudget")){JaxbUtil.trace(section);}
 		return section;
 	}
 	

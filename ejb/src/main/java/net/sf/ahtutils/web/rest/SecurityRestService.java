@@ -36,6 +36,7 @@ import net.sf.ahtutils.util.query.SecurityQuery;
 import net.sf.ahtutils.web.rest.security.AbstractSecurityInit;
 import net.sf.ahtutils.web.rest.security.SecurityInitViews;
 import net.sf.ahtutils.xml.access.Access;
+import net.sf.ahtutils.xml.access.Action;
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.access.Views;
 import net.sf.ahtutils.xml.security.Role;
@@ -257,8 +258,6 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 			{
 				try
 				{
-					
-//					net.sf.ahtutils.xml.security.Views views = net.sf.ahtutils.factory.xml.security.XmlViewsFactory.build();
 					Views views = XmlViewsFactory.build();
 					
 					for(V view : fSecurity.allForCategory(cView, cCategory, category.getCode()))
@@ -268,7 +267,8 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 						xView.setActions(XmlActionsFactory.create());
 						for(A action : view.getActions())
 						{
-							xView.getActions().getAction().add(fAction.create(action));
+							Action xAction = fAction.create(action);
+							xView.getActions().getAction().add(xAction);
 						}
 						
 						Roles xRoles = XmlRolesFactory.build();

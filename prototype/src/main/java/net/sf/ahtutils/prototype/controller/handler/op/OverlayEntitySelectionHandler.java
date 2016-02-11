@@ -11,7 +11,7 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.op.OpEntityBean;
 import net.sf.ahtutils.interfaces.controller.handler.op.OpEntitySelectionHandler;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.prototype.web.mbean.admin.security.AbstractAdminSecurityViewBean;
+import net.sf.ahtutils.prototype.web.mbean.admin.system.security.AbstractAdminSecurityViewBean;
 
 public class OverlayEntitySelectionHandler <T extends EjbWithId>
 	implements OpEntitySelectionHandler<T>

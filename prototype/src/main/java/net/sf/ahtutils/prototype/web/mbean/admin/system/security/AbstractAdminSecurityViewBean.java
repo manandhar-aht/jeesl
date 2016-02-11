@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean.admin.security;
+package net.sf.ahtutils.prototype.web.mbean.admin.system.security;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -97,7 +97,7 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	
 	public void selectAction()
 	{
-		logger.info(AbstractLogMessage.selectEntity(action));
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(action));}
 		action = efLang.persistMissingLangs(fSecurity,langs,action);
 		action = efDescription.persistMissingLangs(fSecurity,langs,action);
 	}
@@ -122,7 +122,15 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	public void saveAction() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(action));
-		if(action.getTemplate()!=null){action.setTemplate(fSecurity.find(cTemplate, action.getTemplate()));}
+		if(action.getTemplate()!=null)
+		{
+			action.setTemplate(fSecurity.find(cTemplate, action.getTemplate()));
+			logger.info("Testing ... "+action.toString());
+			
+			action.setName(null);
+			action.setDescription(null);
+			
+		}
 		action = fSecurity.save(action);
 		reloadView();
 		reloadActions();

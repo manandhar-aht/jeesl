@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean.admin.security;
+package net.sf.ahtutils.prototype.web.mbean.admin.system.security;
 
 import java.io.Serializable;
 import java.util.ArrayList;

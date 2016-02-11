@@ -25,8 +25,8 @@ public class DataUpdateTracker implements net.sf.ahtutils.interfaces.controller.
 	
 	private DataUpdate update;
 	
-	private Map<String,Integer> mapSuccess;
-	private Map<String,Integer> mapFail;
+	private Map<String,Integer> updateSuccess,updateFail;
+	private Map<String,Integer> createSuccess,createFail;
 	
 	public DataUpdateTracker()
 	{
@@ -41,8 +41,10 @@ public class DataUpdateTracker implements net.sf.ahtutils.interfaces.controller.
 		update.getResult().setFail(0);
 		update.getResult().setTotal(0);
 		
-		mapSuccess = new HashMap<String,Integer>();
-		mapFail = new HashMap<String,Integer>();
+		updateSuccess = new HashMap<String,Integer>();
+		updateFail = new HashMap<String,Integer>();
+		createSuccess = new HashMap<String,Integer>();
+		createFail = new HashMap<String,Integer>();
 		
 		if(autoStart){start();}
 	}
@@ -63,19 +65,26 @@ public class DataUpdateTracker implements net.sf.ahtutils.interfaces.controller.
 		update.getResult().setSuccess(update.getResult().getSuccess()+1);
 	}
 	
-	@Override public void createSuccess(Class<?> c){}
-	
+	@Override public void createSuccess(Class<?> c)
+	{
+		if(!createSuccess.containsKey(c.getName())){createSuccess.put(c.getName(), 0);}
+		createSuccess.put(c.getName(), createSuccess.get(c.getName())+1);
+	}
 	@Override public void updateSuccess(Class<?> c, long id)
 	{
-		if(!mapSuccess.containsKey(c.getName())){mapSuccess.put(c.getName(), 0);}
-		mapSuccess.put(c.getName(), mapSuccess.get(c.getName())+1);
+		if(!updateSuccess.containsKey(c.getName())){updateSuccess.put(c.getName(), 0);}
+		updateSuccess.put(c.getName(), updateSuccess.get(c.getName())+1);
 	}
 	
-	@Override public void createFail(Class<?> c, Throwable t){}
+	@Override public void createFail(Class<?> c, Throwable t)
+	{
+		if(!createFail.containsKey(c.getName())){createFail.put(c.getName(), 0);}
+		createFail.put(c.getName(), createFail.get(c.getName())+1);
+	}
 	@Override public void updateFail(Class<?> c, long id, Throwable t)
 	{
-		if(!mapFail.containsKey(c.getName())){mapFail.put(c.getName(), 0);}
-		mapFail.put(c.getName(), mapFail.get(c.getName())+1);
+		if(!updateFail.containsKey(c.getName())){updateFail.put(c.getName(), 0);}
+		updateFail.put(c.getName(), updateFail.get(c.getName())+1);
 	}
 	
 	public void fail(Throwable t, boolean printStackTrace)
@@ -114,15 +123,19 @@ public class DataUpdateTracker implements net.sf.ahtutils.interfaces.controller.
 	{
 		Set<String> setClassNames = new HashSet<String>();
 		
-		setClassNames.addAll(mapSuccess.keySet());
-		setClassNames.addAll(mapFail.keySet());
+		setClassNames.addAll(updateSuccess.keySet());
+		setClassNames.addAll(updateFail.keySet());
+		setClassNames.addAll(createSuccess.keySet());
+		setClassNames.addAll(createFail.keySet());
 		
 		for(String c : setClassNames)
 		{
 			StringBuffer sb = new StringBuffer();
 			sb.append(c);
-			sb.append(" success:");if(mapSuccess.containsKey(c)){sb.append(mapSuccess.get(c));}else{sb.append(0);}
-			sb.append(" fail:");if(mapFail.containsKey(c)){sb.append(mapFail.get(c));}else{sb.append(0);}
+			sb.append(" udpateSuccess:");if(updateSuccess.containsKey(c)){sb.append(updateSuccess.get(c));}else{sb.append(0);}
+			sb.append(" udpateFail:");if(updateFail.containsKey(c)){sb.append(updateFail.get(c));}else{sb.append(0);}
+			sb.append(" createSuccess:");if(createSuccess.containsKey(c)){sb.append(createSuccess.get(c));}else{sb.append(0);}
+			sb.append(" createFail:");if(createFail.containsKey(c)){sb.append(createFail.get(c));}else{sb.append(0);}
 			logger.info(sb.toString());
 		}
 	}

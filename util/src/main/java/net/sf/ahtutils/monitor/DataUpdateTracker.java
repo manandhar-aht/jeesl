@@ -57,14 +57,14 @@ public class DataUpdateTracker
 	{
 		update.getResult().setSuccess(update.getResult().getSuccess()+1);
 	}
-	public void updateSuccess(Class<?> c)
+	public void updateSuccess(Class<?> c, long id)
 	{
 		if(!mapSuccess.containsKey(c.getName())){mapSuccess.put(c.getName(), 0);}
 		mapSuccess.put(c.getName(), mapSuccess.get(c.getName())+1);
 	}
 
 	
-	public void updateFail(Class<?> c, Throwable t)
+	public void updateFail(Class<?> c, long id, Throwable t)
 	{
 		if(!mapFail.containsKey(c.getName())){mapFail.put(c.getName(), 0);}
 		mapFail.put(c.getName(), mapFail.get(c.getName())+1);

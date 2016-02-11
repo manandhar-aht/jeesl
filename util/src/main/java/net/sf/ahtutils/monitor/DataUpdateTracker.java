@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
 import net.sf.ahtutils.factory.xml.sync.XmlExceptionFactory;
 import net.sf.ahtutils.factory.xml.sync.XmlExceptionsFactory;
@@ -14,8 +17,10 @@ import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.ahtutils.xml.sync.Result;
 import net.sf.exlp.util.DateUtil;
 
-public class DataUpdateTracker
+public class DataUpdateTracker implements net.sf.ahtutils.interfaces.controller.DataUpdateTracker
 {
+	final static Logger logger = LoggerFactory.getLogger(DataUpdateTracker.class);
+	
 	public static enum Code {success,fail,partial}
 	
 	private DataUpdate update;
@@ -57,14 +62,17 @@ public class DataUpdateTracker
 	{
 		update.getResult().setSuccess(update.getResult().getSuccess()+1);
 	}
-	public void updateSuccess(Class<?> c, long id)
+	
+	@Override public void createSuccess(Class<?> c){}
+	
+	@Override public void updateSuccess(Class<?> c, long id)
 	{
 		if(!mapSuccess.containsKey(c.getName())){mapSuccess.put(c.getName(), 0);}
 		mapSuccess.put(c.getName(), mapSuccess.get(c.getName())+1);
 	}
-
 	
-	public void updateFail(Class<?> c, long id, Throwable t)
+	@Override public void createFail(Class<?> c, Throwable t){}
+	@Override public void updateFail(Class<?> c, long id, Throwable t)
 	{
 		if(!mapFail.containsKey(c.getName())){mapFail.put(c.getName(), 0);}
 		mapFail.put(c.getName(), mapFail.get(c.getName())+1);
@@ -115,6 +123,7 @@ public class DataUpdateTracker
 			sb.append(c);
 			sb.append(" success:");if(mapSuccess.containsKey(c)){sb.append(mapSuccess.get(c));}else{sb.append(0);}
 			sb.append(" fail:");if(mapFail.containsKey(c)){sb.append(mapFail.get(c));}else{sb.append(0);}
+			logger.info(sb.toString());
 		}
 	}
 }

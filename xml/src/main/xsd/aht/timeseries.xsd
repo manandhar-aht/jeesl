@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://ahtutils.aht-group.com/timeseries"
+    xmlns:uts="http://ahtutils.aht-group.com/timeseries"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="data">
+        <xsd:complexType>
+        	<xsd:sequence>
+
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="record" type="xsd:dateTime"/>
+            <xsd:attribute name="value" type="xsd:double"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

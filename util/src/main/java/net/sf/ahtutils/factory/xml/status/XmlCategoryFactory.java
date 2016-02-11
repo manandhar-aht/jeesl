@@ -11,7 +11,9 @@ import net.sf.ahtutils.xml.status.Category;
 public class XmlCategoryFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlCategoryFactory.class);
-			
+	
+	private static boolean errorPrinted = false;
+	
 	private String lang;
 	private Category q;
 	
@@ -59,7 +61,19 @@ public class XmlCategoryFactory
 				xml.setLabel(msg);
 			}
 		}
-		else if(q.isSetLabel() && lang==null){logger.warn("Should render label, but lang is null");}
+		else if(q.isSetLabel() && lang==null)
+		{
+			logger.warn("Should render label, but lang is null");
+			if(!errorPrinted)
+			{
+				logger.warn("This StackTrace will only shown once!");
+				for (StackTraceElement ste : Thread.currentThread().getStackTrace())
+				{
+				    System.err.println(ste);
+				}
+				errorPrinted=true;
+			}
+		}
 		
 		return xml;
 	}

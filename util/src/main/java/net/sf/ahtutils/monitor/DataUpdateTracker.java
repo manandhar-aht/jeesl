@@ -1,6 +1,10 @@
 package net.sf.ahtutils.monitor;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
 import net.sf.ahtutils.factory.xml.sync.XmlExceptionFactory;
@@ -16,6 +20,9 @@ public class DataUpdateTracker
 	
 	private DataUpdate update;
 	
+	private Map<String,Integer> mapSuccess;
+	private Map<String,Integer> mapFail;
+	
 	public DataUpdateTracker()
 	{
 		this(false);
@@ -28,6 +35,9 @@ public class DataUpdateTracker
 		update.getResult().setSuccess(0);
 		update.getResult().setFail(0);
 		update.getResult().setTotal(0);
+		
+		mapSuccess = new HashMap<String,Integer>();
+		mapFail = new HashMap<String,Integer>();
 		
 		if(autoStart){start();}
 	}
@@ -46,6 +56,18 @@ public class DataUpdateTracker
 	public void success()
 	{
 		update.getResult().setSuccess(update.getResult().getSuccess()+1);
+	}
+	public void updateSuccess(Class<?> c)
+	{
+		if(!mapSuccess.containsKey(c.getName())){mapSuccess.put(c.getName(), 0);}
+		mapSuccess.put(c.getName(), mapSuccess.get(c.getName())+1);
+	}
+
+	
+	public void updateFail(Class<?> c, Throwable t)
+	{
+		if(!mapFail.containsKey(c.getName())){mapFail.put(c.getName(), 0);}
+		mapFail.put(c.getName(), mapFail.get(c.getName())+1);
 	}
 	
 	public void fail(Throwable t, boolean printStackTrace)
@@ -78,5 +100,21 @@ public class DataUpdateTracker
 		else if(update.getResult().getFail()!=0){update.getResult().setStatus(XmlStatusFactory.create(Code.partial.toString()));}
 		
 		return update;
+	}
+	
+	public void process(boolean debug)
+	{
+		Set<String> setClassNames = new HashSet<String>();
+		
+		setClassNames.addAll(mapSuccess.keySet());
+		setClassNames.addAll(mapFail.keySet());
+		
+		for(String c : setClassNames)
+		{
+			StringBuffer sb = new StringBuffer();
+			sb.append(c);
+			sb.append(" success:");if(mapSuccess.containsKey(c)){sb.append(mapSuccess.get(c));}else{sb.append(0);}
+			sb.append(" fail:");if(mapFail.containsKey(c)){sb.append(mapFail.get(c));}else{sb.append(0);}
+		}
 	}
 }

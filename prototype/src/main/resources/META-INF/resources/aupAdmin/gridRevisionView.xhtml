@@ -18,7 +18,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sCategories" width="4">
+				<aht:slot id="sCategories" width="3">
 					<h:form id="fCategories">
 						<p:dataTable var="v" value="#{cc.attrs.bean.views}" draggableRows="true"
 							selection="#{cc.attrs.bean.rv}" selectionMode="single" rowKey="#{v.id}">
@@ -60,7 +60,7 @@
 						</p:panel>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sDetails" width="4">
+				<aht:slot id="sDetails" width="5">
 					<h:form id="fMappings" rendered="#{(not empty cc.attrs.bean.rv) and (cc.attrs.bean.rv.id gt 0)}">
 						<p:dataTable var="m" value="#{cc.attrs.bean.viewMappings}" draggableRows="true"
 							selection="#{cc.attrs.bean.mapping}" selectionMode="single" rowKey="#{m.id}">
@@ -77,11 +77,11 @@
 				            <p:column>  
 								<aup:iconCheckmark value="#{m.visible}"/>
 				            </p:column>
-				            <p:column headerText="#{msg.aupRevisionEntity}">  
-								<h:outputText value="#{m.entity.name[userBean.localeCode].lang}"/>
-				            </p:column>
 				            <p:column headerText="#{msg.aupRevisionScope}">  
 								<h:outputText value="#{m.entityMapping.scope.name[userBean.localeCode].lang}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.aupRevisionEntity}">  
+								<h:outputText value="#{m.entity.name[userBean.localeCode].lang}"/>
 				            </p:column>
 				       	</p:dataTable>
 					</h:form>

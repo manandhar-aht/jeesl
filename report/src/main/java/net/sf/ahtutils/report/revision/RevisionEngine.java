@@ -110,14 +110,10 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		Object o = revision.getEntity();
 		String key = o.getClass().getName();
 		Change xml;
-		if(map.containsKey(key))
-		{
-			xml = build(map.get(key),o);
-		}
-		else
-		{
-			return null;
-		}
+		boolean entityIsAvailable = map.containsKey(key);
+		
+		if(entityIsAvailable){xml = build(map.get(key),o);}
+		else{return null;}
 		xml.setAid(revision.getType().ordinal());
 		return xml;
 	}
@@ -139,15 +135,26 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 			}
 		}
 		change.setText(sb.toString().trim());
-		change.setScope(build(rvm,context));
+		change.setScope(build(rvm,context,o));
 		
 		return change;
 	}
 		
-	private Scope build(RVM rvm, JXPathContext context)
+	private Scope build(RVM rvm, JXPathContext context, Object oChild)
 	{
-		Object oScope = context.getValue(rvm.getEntityMapping().getXpath());
-		JXPathContext ctx = JXPathContext.newContext(oScope);
+		JXPathContext ctx;
+		Object oScope;
+		
+		if(rvm.getEntityMapping().getXpath().trim().length()==0)
+		{
+			ctx = context;
+			oScope = oChild;
+		}
+		else
+		{
+			oScope = context.getValue(rvm.getEntityMapping().getXpath());
+			ctx = JXPathContext.newContext(oScope);
+		}
 		
 		Scope xScope = new Scope();
 		xScope.setClazz(oScope.getClass().getName());

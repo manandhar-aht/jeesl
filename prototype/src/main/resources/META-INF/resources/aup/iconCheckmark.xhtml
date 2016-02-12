@@ -8,15 +8,17 @@
     
 	<composite:interface>
 		<composite:attribute name="value" required="false"/>
+		<composite:attribute name="showFalse" required="false" default="true"/>
         <composite:attribute name="ttChecked" required="false" default="#{msg.ttCheck}"/>
         <composite:attribute name="ttUnChecked" required="false" default="#{msg.ttUnCheck}"/>
+        
 	</composite:interface>
 
 	<composite:implementation>
 		<ui:fragment rendered="#{not empty cc.attrs.value}">
 			<h:graphicImage id="giUnCheck" rendered="#{cc.attrs.value}" name="12/ui/symbol/check/mark.png" library="aupGfx"/>
-			<h:graphicImage id="giCheck" rendered="#{not cc.attrs.value}" name="12/ui/symbol/check/x.png" library="aupGfx"/>
-			<p:tooltip for="giCheck" value="#{cc.attrs.ttChecked}" />
+			<h:graphicImage id="giCheck" rendered="#{cc.attrs.showFalse and (not cc.attrs.value)}" name="12/ui/symbol/check/x.png" library="aupGfx"/>
+			<p:tooltip rendered="#{cc.attrs.showFalse and (not cc.attrs.value)}" for="giCheck" value="#{cc.attrs.ttChecked}" />
         	<p:tooltip for="giUnCheck" value="#{cc.attrs.ttUnChecked}" />
 		</ui:fragment>
 	</composite:implementation>

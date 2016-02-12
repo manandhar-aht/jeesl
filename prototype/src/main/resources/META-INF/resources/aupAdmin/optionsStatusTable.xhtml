@@ -9,7 +9,8 @@
     
 	<composite:interface>
 		<composite:attribute name="bean" required="true" />
-		<composite:attribute name="update" required="false" default=":sLang"/>
+		<composite:attribute name="updateSelect" required="false" default=":sLang"/>
+		<composite:attribute name="updateAdd" required="false" default=":sCategory :sLang"/>
 	</composite:interface>
         
 	<composite:implementation>
@@ -17,11 +18,11 @@
 	          selection="#{cc.attrs.bean.status}" selectionMode="single" rowKey="#{s.id}">
 			<f:facet name="header">
 	          	<aht:pfDataTableHeader title="#{msg[cc.attrs.bean.category.code]}">
-	          		<aht:icon rendered="#{cc.attrs.bean.uiAllowAdd}" type="add" listener="#{cc.attrs.bean.add()}" update="#{cc.attrs.update}" tooltip="#{msg.ttNew}"/>
+	          		<aht:icon rendered="#{cc.attrs.bean.uiAllowAdd}" type="add" listener="#{cc.attrs.bean.add()}" update="#{cc.attrs.updateAdd}" tooltip="#{msg.ttNew}"/>
 	          	</aht:pfDataTableHeader>
 			</f:facet>
 			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form #{cc.attrs.update}"/>
-			<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectStatus}" update="#{cc.attrs.update}"/>
+			<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectStatus}" update="#{cc.attrs.updateSelect}"/>
 			<p:column rendered="#{not empty cc.attrs.bean.parents}">
                     <f:facet name="header">#{msg.StatusParent}</f:facet>
                     <h:outputText value="#{s.parent.name[userBean.localeCode].lang}" />

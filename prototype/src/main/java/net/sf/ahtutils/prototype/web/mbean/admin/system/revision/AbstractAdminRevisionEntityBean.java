@@ -74,6 +74,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		entity.setName(efLang.createEmpty(langs));
 		entity.setDescription(efDescription.createEmpty(langs));
 		attribute=null;
+		mapping=null;
 	}
 	
 	private void reloadEntity()

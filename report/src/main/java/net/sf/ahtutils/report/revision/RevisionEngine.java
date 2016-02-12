@@ -1,8 +1,9 @@
 package net.sf.ahtutils.report.revision;
 
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.jxpath.JXPathContext;
 import org.slf4j.Logger;
@@ -62,6 +63,8 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 	private Map<String,RVM> map;
 	private List<RAT> types;
 	
+	private Map<RAT,DecimalFormat> mapDf;
+	
 	public RevisionEngine(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity, final Class<RAT> cRat)
 	{
 		this.fRevision=fRevision;
@@ -69,8 +72,11 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		this.cScope=cScope;
 		this.cEntity=cEntity;
 		
-		map = new ConcurrentHashMap<String,RVM>();
+		map = new HashMap<String,RVM>();
+		mapDf = new HashMap<RAT,DecimalFormat>();
+		
 		types = fRevision.all(cRat);
+		buildTypes();
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -94,6 +100,14 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 					RevisionEngine<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> factory(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity, final Class<RAT> cRat)
 	{
 		return new RevisionEngine<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER>(fRevision, cView, cScope, cEntity, cRat);
+	}
+	
+	private void buildTypes()
+	{
+		for(RAT rat : types)
+		{
+			if(rat.getCode().startsWith(UtilsRevisionAttribute.Type.number.toString())){mapDf.put(rat, new DecimalFormat(rat.getSymbol()));}
+		}
 	}
 	
 	public void init(String lang, RV view)
@@ -184,20 +198,28 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		StringBuffer sb = new StringBuffer();
 		if(attribute.isShowEnclosure()){sb.append("{");}
 		if(attribute.isShowName()){sb.append(attribute.getName().get(lang).getLang()).append(": ");}
-		
-		String txt;
+		sb.append(buildString(attribute,ctx));
+		if(attribute.isShowEnclosure()){sb.append("}");}
+		return sb.toString();
+	}
+	
+	private String buildString(RA attribute, JXPathContext ctx)
+	{
+		String result = null;
 		if(attribute.getType().getCode().startsWith(UtilsRevisionAttribute.Type.text.toString()))
 		{
-			txt = (String)ctx.getValue(attribute.getXpath());
+			result = (String)ctx.getValue(attribute.getXpath());
+		}
+		else if(attribute.getType().getCode().startsWith(UtilsRevisionAttribute.Type.number.toString()))
+		{
+			result = mapDf.get(attribute.getType()).format((Double)ctx.getValue(attribute.getXpath()));
 		}
 		else
 		{
 			logger.warn("Unsupported Type: "+attribute.getType().getCode());
-			txt = ""+ctx.getValue(attribute.getXpath());
+			result = ""+ctx.getValue(attribute.getXpath());
 		}
-		sb.append(txt);
 		
-		if(attribute.isShowEnclosure()){sb.append("}");}
-		return sb.toString();
+		return result;
 	}
 }

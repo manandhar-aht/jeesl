@@ -22,6 +22,7 @@ public class TableMultiSelectionHandler <T extends EjbWithId>
 	public TableMultiSelectionHandler()
 	{
 		map = new ConcurrentHashMap<T,Boolean>();
+		entities = new ArrayList<T>();
 	}
 	
 	public void preSelect(List<T> types)

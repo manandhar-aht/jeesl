@@ -20,6 +20,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsWithImage;
 import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
+import net.sf.exlp.util.io.StringUtil;
 
 public class AbstractOptionTableBean <L extends UtilsLang,
 										D extends UtilsDescription,
@@ -82,6 +83,19 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			logger.info("Graphic? "+supportsGraphic);
 			logger.info("Symbol? "+supportsSymbol);
 		} 
+	}
+	
+	protected void debugUi(boolean debug)
+	{
+		super.debugUi(debug);
+		if(debug)
+		{
+			logger.info(StringUtil.stars());
+			logger.info("Option Tables Settings");
+			logger.info("\tImage? "+supportsImage);
+			logger.info("\tGraphic? "+supportsGraphic);
+			logger.info("\tSymbol? "+supportsSymbol);
+		}
 	}
 	
 	public void reorder() throws UtilsConstraintViolationException, UtilsLockingException {}

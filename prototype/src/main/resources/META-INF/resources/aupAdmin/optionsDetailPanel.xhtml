@@ -27,14 +27,18 @@
 				<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.uiAllowRemove and cc.attrs.bean.uiAllowCode}" listener="#{cc.attrs.bean.rm(cc.attrs.bean.status)}" update="#{cc.attrs.update}" tooltip="#{msg.ttDelete}"/>
 			</f:facet>
 			<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
-
 				<p:outputLabel value="#{msg.aupOptionCode}"/>
 				<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.code}"/>
 				<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.code}"/>
-
-				<p:outputLabel rendered="#{cc.attrs.bean.supportsSymbol}" for="sSymbol" value="#{msg.aupOptionSymbol}"/>
-				<p:inputText rendered="#{cc.attrs.bean.supportsSymbol}" id="sSymbol" value="#{cc.attrs.bean.status.symbol}"/>
-
+			</p:panelGrid>
+			
+			<p:panelGrid rendered="#{cc.attrs.bean.supportsSymbol}" columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
+				<p:outputLabel  value="#{msg.aupOptionSymbol}"/>
+				<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.symbol}"/>
+				<h:outputText rendered="#not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.symbol}"/>
+			</p:panelGrid>
+			
+			<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
 				<p:outputLabel rendered="#{cc.attrs.bean.uiAllowReorder}" value="#{msg.aupOptionPosition}"/>
 				<p:inputText rendered="#{cc.attrs.bean.uiAllowReorder}" value="#{cc.attrs.bean.status.position}"/>
 				

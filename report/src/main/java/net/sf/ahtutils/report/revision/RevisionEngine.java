@@ -1,5 +1,6 @@
 package net.sf.ahtutils.report.revision;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -58,8 +59,9 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 	
 	private String lang;
 	private Map<String,RVM> map;
+	private List<RAT> types;
 	
-	public RevisionEngine(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity)
+	public RevisionEngine(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity, final Class<RAT> cRat)
 	{
 		this.fRevision=fRevision;
 		this.cView=cView;
@@ -67,6 +69,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		this.cEntity=cEntity;
 		
 		map = new ConcurrentHashMap<String,RVM>();
+		types = fRevision.all(cRat);
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -86,9 +89,9 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 					A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 					AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 					USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
-					RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> factory(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity)
+					RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> factory(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity, final Class<RAT> cRat)
 	{
-		return new RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER>(fRevision, cView, cScope, cEntity);
+		return new RevisionEngine<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER>(fRevision, cView, cScope, cEntity, cRat);
 	}
 	
 	public void init(String lang, RV view)

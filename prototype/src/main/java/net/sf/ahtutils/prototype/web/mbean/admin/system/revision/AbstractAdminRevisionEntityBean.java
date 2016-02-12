@@ -43,11 +43,12 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	private RE entity; public RE getEntity() {return entity;} public void setEntity(RE entity) {this.entity = entity;}
 	private REM mapping; public REM getMapping() {return mapping;}public void setMapping(REM mapping) {this.mapping = mapping;}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
 	{
-		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cEntity,cEntityMapping,cAttribute,cRat);
+		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);
 		scopes = fRevision.all(cScope);
 		types = fRevision.allOrderedPositionVisible(cRat);
+		scopeTypes = fRevision.allOrderedPositionVisible(cScopeType);
 		reloadEntities();
 	}
 	
@@ -150,9 +151,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void addMapping() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cMappingEntity));}
-		mapping = efMappingEntity.build(entity);
-//		attribute.setName(efLang.createEmpty(langs));
-//		attribute.setDescription(efDescription.createEmpty(langs));
+		mapping = efMappingEntity.build(entity,null,null);
 	}
 	
 	public void selectMapping() throws UtilsNotFoundException
@@ -165,6 +164,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(mapping));}
 		mapping.setScope(fRevision.find(cScope,mapping.getScope()));
+		mapping.setType(fRevision.find(cScopeType, mapping.getType()));
 		mapping = fRevision.save(mapping);
 		reloadEntity();
 		bMessage.growlSuccessSaved();

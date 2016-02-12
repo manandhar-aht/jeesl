@@ -53,6 +53,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected Class<RV> cView;
 	protected Class<RVM> cMappingView;
 	protected Class<RS> cScope;
+	protected Class<RST> cScopeType;
 	protected Class<RE> cEntity;
 	protected Class<REM> cMappingEntity;
 	protected Class<RA> cAttribute;
@@ -61,6 +62,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected List<RA> attributes; public List<RA> getAttributes() {return attributes;}
 	protected List<RC> categories; public List<RC> getCategories() {return categories;}
 	protected List<RS> scopes; public List<RS> getScopes() {return scopes;}
+	protected List<RST> scopeTypes; public List<RST> getScopeTypes() {return scopeTypes;}
 	protected List<RE> entities; public List<RE> getEntities() {return entities;}
 	protected List<REM> entityMappings; public List<REM> getEntityMappings() {return entityMappings;}
 	protected List<RAT> types; public List<RAT> getTypes() {return types;}
@@ -79,7 +81,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	
 	protected SbMultiStatusHandler<L,D,RC> sbhCategory; public SbMultiStatusHandler<L,D,RC> getSbhCategory() {return sbhCategory;}
 	
-	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView, Class<RVM> cMappingView, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
+	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView, Class<RVM> cMappingView, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fRevision=fRevision;
@@ -87,6 +89,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		this.cView=cView;
 		this.cMappingView=cMappingView;
 		this.cScope=cScope;
+		this.cScopeType=cScopeType;
 		this.cEntity=cEntity;
 		this.cMappingEntity=cEntityMapping;
 		this.cAttribute=cAttribute;

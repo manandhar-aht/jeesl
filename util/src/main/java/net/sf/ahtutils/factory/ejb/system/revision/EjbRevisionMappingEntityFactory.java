@@ -48,7 +48,7 @@ public class EjbRevisionMappingEntityFactory<L extends UtilsLang,D extends Utils
 		return new EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(cMapping);
 	}
     
-	public REM build (RE entity)
+	public REM build (RE entity, RS scope, RST type)
 	{
 		REM ejb = null;
 		try
@@ -57,6 +57,8 @@ public class EjbRevisionMappingEntityFactory<L extends UtilsLang,D extends Utils
 			ejb.setPosition(1);
 			ejb.setVisible(true);
 			ejb.setEntity(entity);
+			ejb.setScope(scope);
+			ejb.setType(type);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

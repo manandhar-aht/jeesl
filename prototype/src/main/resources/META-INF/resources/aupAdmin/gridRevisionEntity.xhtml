@@ -100,6 +100,10 @@
 								<p:selectOneMenu value="#{cc.attrs.bean.mapping.scope}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.scopes}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
+								<p:outputLabel value="#{msg.aupType}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.mapping.type}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.scopeTypes}" var="t" itemLabel="#{t.name[userBean.localeCode].lang}" itemValue="#{t}"/>
+								</p:selectOneMenu>
 								<p:outputLabel value="#{msg.aupXpath}"/>
 								<h:inputText autocomplete="off" value="#{cc.attrs.bean.mapping.xpath}"/>
 							</p:panelGrid>

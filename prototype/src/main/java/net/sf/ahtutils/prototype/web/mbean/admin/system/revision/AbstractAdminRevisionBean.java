@@ -33,12 +33,13 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends UtilsDescription,
 											RC extends UtilsStatus<RC,L,D>,
-											RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-											RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-											RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-											RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-											REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-											RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+											RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											RST extends UtilsStatus<RST,L,D>,
+											RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 											RAT extends UtilsStatus<RAT,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
@@ -46,7 +47,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionBean.class);
 	
-	protected UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision;
+	protected UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision;
 	
 	protected Class<RC> cCategory;
 	protected Class<RV> cView;
@@ -66,19 +67,19 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	
 	protected RA attribute; public RA getAttribute() {return attribute;}public void setAttribute(RA attribute) {this.attribute = attribute;}
 
-	protected EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efView;
-	protected EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efMappingView;
-	protected EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efScope;
-	protected EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efEntity;
-	protected EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efMappingEntity;
-	protected EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> efAttribute;
+	protected EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efView;
+	protected EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efMappingView;
+	protected EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efScope;
+	protected EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efEntity;
+	protected EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efMappingEntity;
+	protected EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efAttribute;
 	
 	protected Comparator<RS> comparatorScope;
 	protected Comparator<RE> comparatorEntity;
 	
 	protected SbMultiStatusHandler<L,D,RC> sbhCategory; public SbMultiStatusHandler<L,D,RC> getSbhCategory() {return sbhCategory;}
 	
-	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView, Class<RVM> cMappingView, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
+	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView, Class<RVM> cMappingView, Class<RS> cScope, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fRevision=fRevision;
@@ -98,8 +99,8 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		efMappingEntity = EjbRevisionMappingEntityFactory.factory(cEntityMapping);
 		efAttribute = EjbRevisionAttributeFactory.factory(cAttribute);
 		
-		comparatorScope = (new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>()).factory(RevisionScopeComparator.Type.position);
-		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
+		comparatorScope = (new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionScopeComparator.Type.position);
+		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
 		
 		categories = fRevision.allOrderedPositionVisible(cCategory);
 		sbhCategory = new SbMultiStatusHandler<L,D,RC>(cCategory,categories); sbhCategory.selectAll();

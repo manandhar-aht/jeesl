@@ -20,7 +20,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Entity Mapping",category="revision",subset="revision",level=3)
 public class RevisionEntityMapping implements Serializable,EjbRemoveable,EjbPersistable,
-									UtilsRevisionEntityMapping<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
+									UtilsRevisionEntityMapping<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionScopeType,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
 {
 	public static final long serialVersionUID=1;
 
@@ -41,6 +41,11 @@ public class RevisionEntityMapping implements Serializable,EjbRemoveable,EjbPers
 	private RevisionScope scope;
 	@Override public RevisionScope getScope() {return scope;}
 	@Override public void setScope(RevisionScope scope) {this.scope = scope;}
+	
+	@NotNull @ManyToOne
+	private RevisionScopeType type;
+	@Override public RevisionScopeType getType() {return type;}
+	@Override public void setType(RevisionScopeType type) {this.type = type;}
 
 	private int position;
 	@Override public int getPosition() {return position;}

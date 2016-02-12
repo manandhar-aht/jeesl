@@ -20,7 +20,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="View Mapping",category="revision",subset="revision",level=3)
 public class RevisionViewMapping implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsRevisionViewMapping<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
+								UtilsRevisionViewMapping<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionScopeType,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
 {
 	public static final long serialVersionUID=1;
 

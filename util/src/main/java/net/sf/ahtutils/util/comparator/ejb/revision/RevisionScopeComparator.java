@@ -18,12 +18,13 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping
 
 public class RevisionScopeComparator<L extends UtilsLang,D extends UtilsDescription,
 										RC extends UtilsStatus<RC,L,D>,
-										RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-										RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-										RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-										RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-										REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-										RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+										RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										RST extends UtilsStatus<RST,L,D>,
+										RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 										RAT extends UtilsStatus<RAT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(RevisionScopeComparator.class);
@@ -38,7 +39,7 @@ public class RevisionScopeComparator<L extends UtilsLang,D extends UtilsDescript
     public Comparator<RS> factory(Type type)
     {
         Comparator<RS> c = null;
-        RevisionScopeComparator<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT> factory = new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>();
+        RevisionScopeComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory = new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;

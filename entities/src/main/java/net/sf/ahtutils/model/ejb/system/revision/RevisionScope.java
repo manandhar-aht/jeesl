@@ -31,7 +31,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(name="RevisionScope", uniqueConstraints=@UniqueConstraint(columnNames={"code"}))
 @EjbErNode(name="Scope",category="revision",subset="revision")
 public class RevisionScope implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsRevisionScope<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
+								UtilsRevisionScope<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionScopeType,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
 {
 	public static final long serialVersionUID=1;
 

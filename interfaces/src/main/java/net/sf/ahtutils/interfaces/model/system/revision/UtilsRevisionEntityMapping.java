@@ -10,12 +10,13 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface UtilsRevisionEntityMapping<L extends UtilsLang,D extends UtilsDescription,
 											RC extends UtilsStatus<RC,L,D>,
-											RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-											RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-											RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-											RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-											REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
-											RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RE,REM,RA,RAT>,
+											RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											RST extends UtilsStatus<RST,L,D>,
+											RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 											RAT extends UtilsStatus<RAT,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithPositionVisible
@@ -25,6 +26,9 @@ public interface UtilsRevisionEntityMapping<L extends UtilsLang,D extends UtilsD
 	
 	RS getScope();
 	void setScope(RS scope);
+	
+	RST getType();
+	void setType(RST type);
 	
 	String getXpath();
 	void setXpath(String xpath);

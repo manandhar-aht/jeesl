@@ -5,6 +5,7 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
     xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+    xmlns:aup="http://ahtutils.sourceforge.net/prototype"
     xmlns:composite="http://java.sun.com/jsf/composite">
     
 	<composite:interface>
@@ -23,9 +24,12 @@
 			</f:facet>
 			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form #{cc.attrs.update}"/>
 			<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectStatus}" update="#{cc.attrs.updateSelect}"/>
+			<p:column styleClass="aupPfDtColCentered">  
+				<aup:iconCheckmark value="#{s.visible}"/>
+            </p:column>
 			<p:column rendered="#{not empty cc.attrs.bean.parents}">
-                    <f:facet name="header">#{msg.StatusParent}</f:facet>
-                    <h:outputText value="#{s.parent.name[userBean.localeCode].lang}" />
+	            <f:facet name="header">#{msg.StatusParent}</f:facet>
+	            <h:outputText value="#{s.parent.name[userBean.localeCode].lang}" />
 			</p:column>
 			<p:column>
 	             <f:facet name="header">#{msg.aupOptionCode}</f:facet>  
@@ -39,7 +43,7 @@
 				<f:facet name="header">#{msg.aupOptionSymbol}</f:facet>  
 				<h:outputText value="#{s.symbol}" />
 			</p:column>
-			<p:column rendered="#{cc.attrs.bean.supportsGraphic}">
+			<p:column rendered="#{cc.attrs.bean.supportsGraphic}" styleClass="aupPfDtColCentered">
 				<aht:statusSymbolizer value="#{s}"/>
 			</p:column>
 		</p:dataTable>

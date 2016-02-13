@@ -68,10 +68,8 @@ public class RevisionEngineScopeResolver<L extends UtilsLang,D extends UtilsDesc
 			default: return null;
 		}
 		}
-		catch (ClassNotFoundException e){e.printStackTrace();} catch (UtilsNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		catch (ClassNotFoundException e){e.printStackTrace();}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		return null;
 	}
 	
@@ -94,7 +92,7 @@ public class RevisionEngineScopeResolver<L extends UtilsLang,D extends UtilsDesc
 		{
 			if(attribute.isShowPrint())
 			{
-				sb.append(rear.build(attribute, ctx));
+				sb.append(rear.build(lang, attribute, ctx));
 				sb.append(" ");
 			}
 		}

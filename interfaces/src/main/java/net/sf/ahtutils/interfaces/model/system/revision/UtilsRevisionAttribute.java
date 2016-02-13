@@ -22,7 +22,7 @@ public interface UtilsRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 				EjbWithPosition,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
-	public static enum Type{text,number,date,amount}
+	public static enum Type{text,number,date,amount,bool}
 	
 	RAT getType();
 	void setType(RAT type);

@@ -48,8 +48,6 @@ public class RevisionEngineAttributeResolver<L extends UtilsLang,D extends Utils
 {
 	final static Logger logger = LoggerFactory.getLogger(RevisionEngineAttributeResolver.class);
 
-	private String lang;
-
 	private Map<RAT,DecimalFormat> mapDecimalFormatter;
 	private Map<RAT,SimpleDateFormat> mapDateFormatter;
 	
@@ -59,7 +57,7 @@ public class RevisionEngineAttributeResolver<L extends UtilsLang,D extends Utils
 		this.mapDateFormatter=mapDateFormatter;
 	}
 		
-	public String build(RA attribute, JXPathContext ctx)
+	public String build(String lang, RA attribute, JXPathContext ctx)
 	{
 		StringBuffer sb = new StringBuffer();
 		if(attribute.isShowEnclosure()){sb.append("{");}
@@ -78,11 +76,18 @@ public class RevisionEngineAttributeResolver<L extends UtilsLang,D extends Utils
 		}
 		else if(attribute.getType().getCode().startsWith(UtilsRevisionAttribute.Type.number.toString()))
 		{
-			result = mapDecimalFormatter.get(attribute.getType()).format((Double)ctx.getValue(attribute.getXpath()));
+			result = mapDecimalFormatter.get(attribute.getType()).format((Number)ctx.getValue(attribute.getXpath()));
 		}
 		else if(attribute.getType().getCode().startsWith(UtilsRevisionAttribute.Type.date.toString()))
 		{
-			result = mapDateFormatter.get(attribute.getType()).format((Date)ctx.getValue(attribute.getXpath()));
+			Object o = ctx.getValue(attribute.getXpath());
+			if(o!=null){result = mapDateFormatter.get(attribute.getType()).format((Date)o);}
+			else result="null";
+		}
+		else if(attribute.getType().getCode().startsWith(UtilsRevisionAttribute.Type.bool.toString()))
+		{
+			Boolean b = (Boolean)ctx.getValue(attribute.getXpath());
+			result = b.toString();
 		}
 		else
 		{

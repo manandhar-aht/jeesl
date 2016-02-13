@@ -121,6 +121,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 	
 	public Change build(RVM rvm, Object o)
 	{
+		logger.info(o.getClass().getSimpleName());
 		JXPathContext context = JXPathContext.newContext(o);
 		
 		Change change = new Change();
@@ -131,7 +132,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		{
 			if(attribute.isShowPrint())
 			{
-				sb.append(rear.build(attribute, context));
+				sb.append(rear.build(lang,attribute,context));
 				sb.append(" ");
 			}
 		}

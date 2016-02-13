@@ -76,13 +76,15 @@ public class RevisionEngineAttributeResolver<L extends UtilsLang,D extends Utils
 		}
 		else if(attribute.getType().getCode().startsWith(UtilsRevisionAttribute.Type.number.toString()))
 		{
-			result = mapDecimalFormatter.get(attribute.getType()).format((Number)ctx.getValue(attribute.getXpath()));
+			Object o = ctx.getValue(attribute.getXpath());
+			if(o!=null){result = mapDecimalFormatter.get(attribute.getType()).format((Number)ctx.getValue(attribute.getXpath()));}
+			else {result="null";}
 		}
 		else if(attribute.getType().getCode().startsWith(UtilsRevisionAttribute.Type.date.toString()))
 		{
 			Object o = ctx.getValue(attribute.getXpath());
 			if(o!=null){result = mapDateFormatter.get(attribute.getType()).format((Date)o);}
-			else result="null";
+			else {result="null";}
 		}
 		else if(attribute.getType().getCode().startsWith(UtilsRevisionAttribute.Type.bool.toString()))
 		{

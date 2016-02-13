@@ -152,24 +152,33 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void addMapping() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cMappingEntity));}
-		mapping = efMappingEntity.build(entity,null,null);
+		RST rst = null; if(!scopeTypes.isEmpty()){rst=scopeTypes.get(0);}
+		mapping = efMappingEntity.build(entity,null,rst);
+		updateUi();
 	}
 	
 	public void selectMapping() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(mapping));}
 		mapping = fRevision.find(cMappingEntity, mapping);
+		updateUi();
 	}
 	
-	public void saveMapping() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	public void saveMapping() throws UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(mapping));}
 		mapping.setScope(fRevision.find(cScope,mapping.getScope()));
 		mapping.setType(fRevision.find(cScopeType, mapping.getType()));
-		mapping = fRevision.save(mapping);
-		reloadEntity();
-		bMessage.growlSuccessSaved();
-		updatePerformed();
+		
+		try
+		{
+			mapping = fRevision.save(mapping);
+			updateUi();
+			reloadEntity();
+			bMessage.growlSuccessSaved();
+			updatePerformed();
+		}
+		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
 	}
 	
 	public void rmMapping() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -186,6 +195,29 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	{
 		mapping=null;
 	}
+	
+	public void changeScopeType()
+	{
+		mapping.setType(fRevision.find(cScopeType, mapping.getType()));
+		logger.info(AbstractLogMessage.selectEntity(mapping, mapping.getType()));
+		updateUi();
+	}
+	
+	//UI
+	private boolean uiWithJpqlTree;
+	
+	public boolean isUiWithJpqlTree() {
+		return uiWithJpqlTree;
+	}
+	private void updateUi()
+	{
+		uiWithJpqlTree = false;
+		if(mapping!=null)
+		{
+			if(mapping.getType().getCode().equals(UtilsRevisionEntityMapping.Type.jpqlTree.toString())){uiWithJpqlTree=true;}
+		}
+	}
+	
 	
 	protected void reorderEntites() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, cEntity, entities);Collections.sort(entities, comparatorEntity);}
 	protected void reorderAttributes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, attributes);}

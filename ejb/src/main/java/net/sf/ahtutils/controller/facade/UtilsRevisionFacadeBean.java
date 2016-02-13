@@ -3,10 +3,13 @@ package net.sf.ahtutils.controller.facade;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -15,6 +18,7 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 
@@ -69,10 +73,8 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		List<ParentPredicate<RC>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
 		return allForOrParents(cEntity,ppCategory);
 	}
-
 	
-	@Override
-	public void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException
+	@Override public void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException
 	{
 		mapping = em.find(cMappingView, mapping.getId());
 		mapping.getView().getMaps().remove(mapping);
@@ -92,8 +94,7 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		return attribute;
 	}
 	
-	@Override
-	public RA save(Class<RS> cScope, RS scope, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException
+	@Override public RA save(Class<RS> cScope, RS scope, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		attribute = this.saveProtected(attribute);
 		if(!scope.getAttributes().contains(attribute))
@@ -104,8 +105,7 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		return attribute;
 	}
 
-	@Override
-	public void rm(Class<RE> cEntity, RE entity, RA attribute) throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public void rm(Class<RE> cEntity, RE entity, RA attribute) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		entity = this.find(cEntity, entity);
 		if(entity.getAttributes().contains(attribute))
@@ -116,8 +116,7 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		this.rmProtected(attribute);		
 	}
 
-	@Override
-	public void rm(Class<RS> cScope, RS scope, RA attribute) throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public void rm(Class<RS> cScope, RS scope, RA attribute) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(scope.getAttributes().contains(attribute))
 		{
@@ -125,5 +124,20 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 			this.saveProtected(scope);
 		}
 		this.rmProtected(attribute);		
+	}
+	
+	@Override public <T extends EjbWithId> T jpaTree(Class<T> c, String jpa, long id) throws UtilsNotFoundException
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("SELECT c ");
+		sb.append(" FROM "+c.getName()+" c");
+		sb.append(" WHERE c.").append(jpa);
+		sb.append("=:refId");
+		
+		TypedQuery<T> q = em.createQuery(sb.toString(), c);
+		q.setParameter("refId", id);
+		
+		try	{return q.getSingleResult();}
+		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found "+c.getSimpleName()+" for jpa="+jpa);}
 	}
 }

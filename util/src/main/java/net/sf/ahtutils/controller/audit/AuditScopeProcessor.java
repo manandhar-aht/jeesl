@@ -37,6 +37,11 @@ public class AuditScopeProcessor
 
         return scopes;
     }
+    
+    public static boolean hasChanges(Scope scope)
+    {
+    	return (scope.isSetChange());
+    }
 
     private void modificationWithChanges(List<Change> changes, Map.Entry<String, Scope> me, String elementToAdd)
     {

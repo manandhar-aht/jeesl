@@ -9,4 +9,6 @@ public interface FacesMessageBean
 	
 	void growlSuccessSaved();
 	void growlSuccessRemoved();
+	
+	void errorConstraintViolationDuplicateObject();
 }

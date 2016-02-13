@@ -21,6 +21,8 @@ public interface UtilsRevisionEntityMapping<L extends UtilsLang,D extends UtilsD
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithPositionVisible
 {			
+	public static enum Type{xpath,jpqlTree}
+	
 	RE getEntity();
 	void setEntity(RE entity);
 	
@@ -32,4 +34,7 @@ public interface UtilsRevisionEntityMapping<L extends UtilsLang,D extends UtilsD
 	
 	String getXpath();
 	void setXpath(String xpath);
+	
+	String getJpqlTree();
+	void setJpqlTree(String jpqlTree);
 }

@@ -1,6 +1,5 @@
 package net.sf.ahtutils.model.ejb.system.revision;
 
-
 import java.io.Serializable;
 
 import javax.persistence.GeneratedValue;
@@ -59,7 +58,11 @@ public class RevisionEntityMapping implements Serializable,EjbRemoveable,EjbPers
 	@Override public String getXpath() {return xpath;}
 	@Override public void setXpath(String xpath) {this.xpath = xpath;}
 	
-
+	private String jpqlTree;
+	@Override public String getJpqlTree() {return jpqlTree;}
+	@Override public void setJpqlTree(String jpqlTree) {this.jpqlTree = jpqlTree;}
+	
+	
 	@Override public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

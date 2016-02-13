@@ -33,6 +33,9 @@
             <p:column headerText="#{msg.aupRevisionAttribute}">  
 				<h:outputText value="#{a.name[userBean.localeCode].lang}"/>
             </p:column>
+            <p:column headerText="P" styleClass="aupPfDtColCentered">  
+				<aup:iconCheckmark value="#{a.showPrint}"/>
+            </p:column>
        	</p:dataTable>
 	</composite:implementation>
 </html>

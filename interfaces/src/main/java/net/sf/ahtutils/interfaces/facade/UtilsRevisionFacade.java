@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -13,6 +14,7 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMappi
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
@@ -39,4 +41,6 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 	RA save(Class<RS> cScope, RS scope, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
 	void rm(Class<RE> cEntity, RE entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
 	void rm(Class<RS> cScope, RS scop, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
+	
+	<T extends EjbWithId> T jpaTree(Class<T> c, String jpa, long id) throws UtilsNotFoundException;
 }

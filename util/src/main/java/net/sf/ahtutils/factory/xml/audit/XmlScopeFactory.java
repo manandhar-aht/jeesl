@@ -16,4 +16,10 @@ public class XmlScopeFactory
 		xml.setClazz(cl);
 		return xml;
 	}
+	
+	public static Scope build()
+	{
+		Scope xml = new Scope();
+		return xml;
+	}
 }

@@ -13,9 +13,7 @@ a { color: #D82B00; text-decoration: none; }
 a:hover { color: #333; text-decoration: none; }
 
 /* PrimeFaces */
-.ui-outputlabel{
-	font-weight: bold;
-}
+.ui-outputlabel{font-weight: bold;}
 
 /* Main Styles */
 
@@ -132,6 +130,8 @@ margin-top: 8px;
 	padding: 5px;
 }
 
+.aupPfDtColCentered {text-align:center !important;}
+
 .aupContentCenter {
 	float: left;
 }
@@ -202,6 +202,7 @@ margin-top: 8px;
 .aupBold{font-weight: bold;}
 .aupRemark{color: red;}		
 .w100 {width: 100%;}
+.aupW100 {width: 100%;}
 
 .aupFontUnicode {
 	font-family: Arial Unicode MS, Lucida Grande

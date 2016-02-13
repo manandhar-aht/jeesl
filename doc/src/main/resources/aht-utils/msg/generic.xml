@@ -103,6 +103,13 @@
     		<s:lang key="fr" translation="XPath"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupJpql">
+    	<s:langs>
+    		<s:lang key="de" translation="JPQL"/>
+    		<s:lang key="en" translation="JPQL"/>
+    		<s:lang key="fr" translation="JPQL"/>
+    	</s:langs>
+    </s:translation>
     	<s:translation key="aupTemplate">
     	<s:langs>
     		<s:lang key="de" translation="Vorlage"/>

@@ -6,6 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.AuditQuery;
+
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
@@ -17,10 +21,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
+import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,	
@@ -139,5 +143,17 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		
 		try	{return q.getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found "+c.getSimpleName()+" for jpa="+jpa);}
+	}
+	
+	@Override @SuppressWarnings("unchecked")
+	public <T extends EjbWithId> List<T> revisions(Class<T> c, List<Long> ids)
+	{
+		AuditQuery query = AuditReaderFactory.get(em).createQuery().forRevisionsOfEntity(c, false, true);
+		query.add(AuditEntity.revisionNumber().in(ids));
+		query.addOrder(AuditEntity.revisionNumber().desc());
+//		List<SimpleRevisionEntity<T>> list = SimpleRevisionEntity.build(query.getResultList());
+//		for(SimpleRevisionEntity<T> item : list){lazyLoad(item.getEntity());}
+//		return list;
+		return null;
 	}
 }

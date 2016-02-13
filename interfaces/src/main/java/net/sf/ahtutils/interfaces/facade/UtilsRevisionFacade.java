@@ -43,4 +43,6 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 	void rm(Class<RS> cScope, RS scop, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
 	
 	<T extends EjbWithId> T jpaTree(Class<T> c, String jpa, long id) throws UtilsNotFoundException;
+	
+	<T extends EjbWithId> List<T> revisions(Class<T> c, List<Long> ids);
 }

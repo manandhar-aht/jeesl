@@ -17,6 +17,8 @@ public class TestXmlUser extends AbstractXmlAuditTest<User>
     	User xml = new User();
     	xml.setFirstName("myFirst");
     	xml.setLastName("myLast");
+    	xml.setEmail("myEmail");
+    	xml.setLabel("myLabel");
     	
     	if(withChilds)
     	{

@@ -8,8 +8,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface UtilsUser <L extends UtilsLang,
-							D extends UtilsDescription,
+public interface UtilsUser <L extends UtilsLang, D extends UtilsDescription,
 							C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 							R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 							V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,

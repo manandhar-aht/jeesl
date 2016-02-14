@@ -14,6 +14,15 @@ import net.sf.ahtutils.factory.xml.audit.XmlChangeFactory;
 import net.sf.ahtutils.factory.xml.audit.XmlRevisionFactory;
 import net.sf.ahtutils.factory.xml.audit.XmlRevisionsFactory;
 import net.sf.ahtutils.factory.xml.audit.XmlScopeFactory;
+import net.sf.ahtutils.model.ejb.status.Description;
+import net.sf.ahtutils.model.ejb.status.Lang;
+import net.sf.ahtutils.model.ejb.system.security.SecurityAction;
+import net.sf.ahtutils.model.ejb.system.security.SecurityActionTemplate;
+import net.sf.ahtutils.model.ejb.system.security.SecurityCategory;
+import net.sf.ahtutils.model.ejb.system.security.SecurityRole;
+import net.sf.ahtutils.model.ejb.system.security.SecurityUsecase;
+import net.sf.ahtutils.model.ejb.system.security.SecurityView;
+import net.sf.ahtutils.model.ejb.user.AhtUtilsUser;
 import net.sf.ahtutils.test.AbstractAhtUtilsTest;
 import net.sf.ahtutils.test.AhtUtilsTestBootstrap;
 import net.sf.ahtutils.xml.audit.Change;
@@ -30,13 +39,15 @@ public class TestAuditScopeProcessor extends AbstractAhtUtilsTest
 	private Revisions revisions;
 	
 	private AuditScopeProcessor asp;
+	private XmlRevisionFactory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,AhtUtilsUser> xfRevision;
 	
 	@Before
     public void init()
     {
+		asp = new AuditScopeProcessor();
+	    xfRevision = new XmlRevisionFactory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,AhtUtilsUser>();
 		initScopeList();
 		initRevisions();
-        asp = new AuditScopeProcessor();
     }
 	
 	private void initScopeList()
@@ -58,14 +69,14 @@ public class TestAuditScopeProcessor extends AbstractAhtUtilsTest
 	{
 		revisions = XmlRevisionsFactory.build();
 		
-		Revision r1 = XmlRevisionFactory.build(1, new Date());
+		Revision r1 = xfRevision.build(1, new Date());
 		Scope a = XmlScopeFactory.build(1, "a");
 		a.getChange().add(XmlChangeFactory.build(1, "a1"));
 		a.getChange().add(XmlChangeFactory.build(2, "a2"));
 		r1.getScope().add(a);
 		revisions.getRevision().add(r1);
        
-		Revision r2 = XmlRevisionFactory.build(2, new Date());
+		Revision r2 = xfRevision.build(2, new Date());
 		Scope b = XmlScopeFactory.build(2, "b");
 		Scope c = XmlScopeFactory.build(3, "c");
 		b.getChange().add(XmlChangeFactory.build(1, "b1"));
@@ -74,6 +85,13 @@ public class TestAuditScopeProcessor extends AbstractAhtUtilsTest
 		r2.getScope().add(b);
 		r2.getScope().add(c);
 		revisions.getRevision().add(r2);
+		
+		Revision r3 = xfRevision.build(3, new Date());
+		Scope s4 = XmlScopeFactory.build(1, "a");
+		s4.getChange().add(XmlChangeFactory.build(1, "a1"));
+		s4.getChange().add(XmlChangeFactory.build(2, "a2"));
+		r3.getScope().add(a);
+		revisions.getRevision().add(r3);
 	}
 
     @Test
@@ -97,8 +115,7 @@ public class TestAuditScopeProcessor extends AbstractAhtUtilsTest
         Assert.assertEquals(3, actual.size());
     }
     
-    @Test
-    public void ordering()
+    @Test public void ordering()
     {
     	int i=0;
     	List<Scope> actual = asp.group(list);
@@ -112,20 +129,22 @@ public class TestAuditScopeProcessor extends AbstractAhtUtilsTest
     	}
     }
     
+    @Test public void flatSize()
+    {
+    	Scope scope = XmlScopeFactory.build(asp.flat(revisions.getRevision()));
+    	Assert.assertEquals(7, scope.getChange().size());
+    }
+    
     public void flat()
     {
     	JaxbUtil.info(revisions);
-    	
-    	List<Change> changes = asp.flat(revisions.getRevision());
-    	Scope scope = new Scope();
-    	scope.getChange().addAll(changes);
+    	Scope scope = XmlScopeFactory.build(asp.flat(revisions.getRevision()));
     	JaxbUtil.info(scope);
     }
     
     public static void main (String[] args) throws Exception
 	{
 		AhtUtilsTestBootstrap.init();
-		
 		TestAuditScopeProcessor test = new TestAuditScopeProcessor();
 		
 //		test.init();test.nrOfScopes();

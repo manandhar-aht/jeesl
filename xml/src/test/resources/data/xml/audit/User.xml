@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<at:user xmlns:at="http://ahtutils.aht-group.com/audit" firstName="myFirst" lastName="myLast"/>
+<at:user xmlns:at="http://ahtutils.aht-group.com/audit" firstName="myFirst" lastName="myLast" email="myEmail" label="myLabel"/>

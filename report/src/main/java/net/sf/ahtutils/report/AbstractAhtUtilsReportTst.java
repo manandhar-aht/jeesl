@@ -162,7 +162,7 @@ public class AbstractAhtUtilsReportTst
 		Assert.assertEquals("actual XML differes from expected XML",JaxbUtil.toString(expected),JaxbUtil.toString(actual));
 	}
 	
-	protected void outputXls(UtilsXlsReport report) throws FileNotFoundException, IOException, Exception
+	protected void outputXls(UtilsXlsReport report) throws Exception
     {
     	IOUtils.copy(report.xlsStream(), new FileOutputStream(new File(fTarget,report.xlsFileName())));
     }

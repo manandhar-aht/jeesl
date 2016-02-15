@@ -12,29 +12,18 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AuditScopeProcessor
 {
-	public AuditScopeProcessor()
-	{
-		
-	}
+	public AuditScopeProcessor(){}
 
     public List<Scope> group(List<Change> changes)
     {
         List<Scope> scopes = new ArrayList<Scope>();
-        LinkedHashMap<String,Scope> tmp = new LinkedHashMap<String,Scope>();
-
         for (Change change : changes)
         {
         	JaxbUtil.trace(change);
-            tmp.put(change.getScope().getId() + "/" + change.getScope().getClazz(), change.getScope());
-        }
-
-        for(Map.Entry<String, Scope> me : tmp.entrySet())
-        {
-            modificationWithChanges(changes, me, "Change");
-            scopes.add(me.getValue());
+			modificationWithChanges(changes, change.getScope(), "Change");
+			if(scopes.size() == 0 || !compareScopes(scopes.get(scopes.size()-1), change.getScope())){scopes.add(change.getScope());}
         }
         deleteScopes(changes);
-
         return scopes;
     }
     
@@ -43,50 +32,42 @@ public class AuditScopeProcessor
     	return (scope.isSetChange());
     }
 
-    private void modificationWithChanges(List<Change> changes, Map.Entry<String, Scope> me, String elementToAdd)
+    private void modificationWithChanges(List<Change> changes, Scope me, String elementToAdd)
     {
         for (Change ch: changes)
         {
             // add change to scope
             if(elementToAdd.equals("Change"))
             {
-                if (compareScopes(ch.getScope(), me)) {me.getValue().getChange().add(ch);}
+                if (compareScopes(ch.getScope(), me)){me.getChange().add(ch);}
             }
             // add scope to change
             if(elementToAdd.equals("Scope"))
             {
-                for(Change c : me.getValue().getChange())
-                {
-                    if(compareChanges(ch, c)) {ch.setScope(me.getValue());}
-                }
+                for(Change c : me.getChange()){if(compareChanges(ch, c)) {ch.setScope(me);}}
             }
         }
     }
 
-    private void modificationWithRevisions(List<Revision> revisions, Map.Entry<String, Scope> me, String elementToAdd)
+    private void modificationWithRevisions(List<Revision> revisions, Scope me, String elementToAdd)
     {
         for(Revision r : revisions)
         {
             // add revision to scope
             if (elementToAdd.equals("Revision"))
             {
-                for(Scope sc : (r.getScope()))
-                {
-                    if(compareScopes(sc, me)) {me.getValue().setRevision(r);}
-                }
+                for(Scope sc : (r.getScope())){if(compareScopes(sc, me)) {me.setRevision(r);}}
             }
             // add scope to revision
-            if(elementToAdd.equals("Scope"))
-            {
-                if(compareRevisions(r, me.getValue().getRevision())) {r.getScope().add(me.getValue());}
-            }
+            if(elementToAdd.equals("Scope")){if(compareRevisions(r, me.getRevision())){r.getScope().add(me);}}
         }
     }
 
-    private boolean compareScopes(Scope sc1, Map.Entry<String, Scope> me)
+    private boolean compareScopes(Scope sc1, Scope me)
     {
-        String key = sc1.getId() + "/" + sc1.getClazz();
-        return me.getKey().equals(key);
+        String scope1 = sc1.getId() + "/" + sc1.getClazz();
+		String scope2 = me.getId() + "/" + me.getClazz();
+        return scope2.equals(scope1);
     }
 
     private boolean compareChanges(Change ch1, Change ch2)
@@ -112,39 +93,23 @@ public class AuditScopeProcessor
         }
     }
 
-    private void deleteChanges(LinkedHashMap<String, Scope> scopes)
-    {
-        for(Map.Entry<String, Scope> me : scopes.entrySet())
-        {
-            me.getValue().unsetChange();
-        }
-    }
-
     public List<Change> flat(List<Revision> revisions)
     {
     	List<Change> changes = new ArrayList<Change>();
-        LinkedHashMap<String, Scope> scopes = new LinkedHashMap<String, Scope>();
         for(Revision rev : revisions)
         {
             for(Scope sc : rev.getScope())
             {
-                scopes.put(sc.getId() + "/" + sc.getClazz(), sc);
+				for(Change ch : sc.getChange())
+				{
+					changes.add(ch);
+				}
+				modificationWithChanges(changes, sc, "Scope");
+				modificationWithRevisions(revisions, sc, "Revision");
+				sc.unsetChange();
             }
         }
-
-        for(Map.Entry<String, Scope> me : scopes.entrySet())
-        {
-            for(Change ch : me.getValue().getChange())
-            {
-                changes.add(ch);
-            }
-            modificationWithChanges(changes, me, "Scope");
-            modificationWithRevisions(revisions, me, "Revision");
-        }
-
-        deleteChanges(scopes);
         deleteScopes(revisions);
-
     	return changes;
     }
 }

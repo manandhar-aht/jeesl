@@ -90,7 +90,7 @@ public class TestAuditScopeProcessor extends AbstractAhtUtilsTest
 		Scope s4 = XmlScopeFactory.build(1, "a");
 		s4.getChange().add(XmlChangeFactory.build(1, "a1"));
 		s4.getChange().add(XmlChangeFactory.build(2, "a2"));
-		r3.getScope().add(a);
+		r3.getScope().add(s4);
 		revisions.getRevision().add(r3);
 	}
 
@@ -141,7 +141,7 @@ public class TestAuditScopeProcessor extends AbstractAhtUtilsTest
     	Scope scope = XmlScopeFactory.build(asp.flat(revisions.getRevision()));
     	JaxbUtil.info(scope);
     }
-    
+
     public static void main (String[] args) throws Exception
 	{
 		AhtUtilsTestBootstrap.init();

@@ -11,7 +11,8 @@
     	</ofx:paragraph>
 	</ed:term>
 	<ed:term code="browser">
-        <text:text classifier="name">web browser</text:text>
+        <text:text classifier="name">Web browser</text:text>
+        <text:text classifier="text">web browser</text:text>
         <ofx:paragraph lang="en">
             Web browser is a programme used to display websites and interact with them.
         </ofx:paragraph>

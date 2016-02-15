@@ -17,8 +17,15 @@ public class XmlFiguresFactory
 	
 	public static Figures build(long id)
 	{
-		Figures xml = new Figures();
+		Figures xml = build();
 		xml.setId(id);
+		return xml;
+	}
+	
+	public static Figures build(String code)
+	{
+		Figures xml = build();
+		xml.setCode(code);
 		return xml;
 	}
 	

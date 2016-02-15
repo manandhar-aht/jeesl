@@ -33,4 +33,12 @@ public class XmlFinanceFactory
 		xml.setLabel(label);
 		return xml;
 	}
+	
+	public static Finance id(long id, double value)
+	{
+		Finance xml = new Finance();
+		xml.setId(id);
+		xml.setValue(value);
+		return xml;
+	}
 }

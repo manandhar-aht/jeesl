@@ -159,13 +159,17 @@ public class OfxRestSectionFactory extends AbstractUtilsOfxDocumentationFactory
 		Paragraph p = XmlParagraphFactory.build();
 		p.getContent().add("The specifications for the method call are listed in Table ");
 		p.getContent().add(OfxReferenceFactory.build(sbId.toString()));
-		p.getContent().add(" and an example of the response is shown in the following listing.");
+		
+		if(!rest.withListing()){p.getContent().add(".");}
+		else{p.getContent().add(" and an example of the response is shown in the following listing.");}
 		section.getContent().add(p);
 		
-		Listing listing = new Listing();
-		listing.setExternal(listingDir+"/"+c.getSimpleName()+"/"+method.getName()+".xml");
-		section.getContent().add(listing);
-		
+		if(rest.withListing())
+		{
+			Listing listing = new Listing();
+			listing.setExternal(listingDir+"/"+c.getSimpleName()+"/"+method.getName()+".xml");
+			section.getContent().add(listing);
+		}
 		return section;
 	}
 	

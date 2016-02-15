@@ -14,27 +14,6 @@
 	<packaging>jar</packaging>
 		
 	<dependencies>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-     		<dependency>
-   	   		<groupId>org.slf4j</groupId>
-   	   		<artifactId>slf4j-log4j12</artifactId>
-   	   		<scope>test</scope>
-   	   	</dependency>
-   	   	<dependency>
-   	   		<groupId>junit</groupId>
-   	   		<artifactId>junit</artifactId>
-   	   		<type>jar</type>
-   	   		<scope>test</scope>
-   	   	</dependency>
-   	   	<dependency>
-   	   		<groupId>log4j</groupId>
-   	   		<artifactId>log4j</artifactId>
-   	   		<scope>test</scope>
-   	   	</dependency>
    	   	<dependency>
    	   		<groupId>com.sun.faces</groupId>
    	   		<artifactId>jsf-api</artifactId>
@@ -59,6 +38,46 @@
 			<groupId>net.sf.ahtutils</groupId>
 			<artifactId>ahtutils-jsf</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.metachart</groupId>
+			<artifactId>metachart-jsf</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
+			<exclusions>
+			   	<exclusion>
+			   		<artifactId>metachart-xml</artifactId>
+			   		<groupId>org.metachart</groupId>
+			   	</exclusion>
+		   </exclusions>
+		</dependency>
+		<dependency>
+		   <artifactId>metachart-xml</artifactId>
+		   <groupId>org.metachart</groupId>
+		   <version>0.0.2-SNAPSHOT</version>
+		   <scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+     		<dependency>
+   	   		<groupId>org.slf4j</groupId>
+   	   		<artifactId>slf4j-log4j12</artifactId>
+   	   		<scope>test</scope>
+   	   	</dependency>
+   	   	<dependency>
+   	   		<groupId>junit</groupId>
+   	   		<artifactId>junit</artifactId>
+   	   		<type>jar</type>
+   	   		<scope>test</scope>
+   	   	</dependency>
+   	   	<dependency>
+   	   		<groupId>log4j</groupId>
+   	   		<artifactId>log4j</artifactId>
+   	   		<scope>test</scope>
+   	   	</dependency>
 	</dependencies>
 		
 	<dependencyManagement>

@@ -30,6 +30,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link TimeSeries }
+     * 
+     */
+    public TimeSeries createTimeSeries() {
+        return new TimeSeries();
+    }
+
+    /**
      * Create an instance of {@link Data }
      * 
      */

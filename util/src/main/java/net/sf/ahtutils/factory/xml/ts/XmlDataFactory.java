@@ -14,6 +14,8 @@ public class XmlDataFactory
 		
 	public static Data build(long id){return build(id,null,null);}
 	
+	public static Data build(Date record, Double value){return build(null,record,value);}
+	
 	public static Data build(Long id, Date record, Double value)
 	{
 		Data xml = new Data();

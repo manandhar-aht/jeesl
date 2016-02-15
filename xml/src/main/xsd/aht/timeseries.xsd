@@ -2,6 +2,13 @@
 <xsd:schema targetNamespace="http://ahtutils.aht-group.com/timeseries"
     xmlns:uts="http://ahtutils.aht-group.com/timeseries"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="timeSeries">
+        <xsd:complexType>
+        	<xsd:sequence>
+				<xsd:element ref="uts:data" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
 	<xsd:element name="data">
         <xsd:complexType>
         	<xsd:sequence>

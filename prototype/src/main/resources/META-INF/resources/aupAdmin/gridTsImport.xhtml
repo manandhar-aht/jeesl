@@ -52,9 +52,23 @@
 				<aht:slot id="sImport" width="4">
 					<h:form id="fRandom" rendered="#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval)}">
 						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
-							button and generate random data
+							<p:commandButton value="5 Random" type="button">
+									<p:ajax event="click" update=":#{cc.id}:sTs " listener="#{cc.attrs.bean.random()}" process="@form"/>
+							</p:commandButton>
 						</p:panel>
 					</h:form>
+				</aht:slot>
+				<aht:slot id="sTs" width="4">
+					<p:dataTable var="d" value="#{cc.attrs.bean.timeSeries.data}" rendered="#{not empty cc.attrs.bean.timeSeries}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.aupTsTimeSeries}">
+									
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:column rendered="true" header="#{msg.aupTsValue}">  
+								<h:outputText value="#{d.value}"/>
+				            </p:column>
+				       	</p:dataTable>
 				</aht:slot>
 			</aht:row>
 	    </aup:grid>

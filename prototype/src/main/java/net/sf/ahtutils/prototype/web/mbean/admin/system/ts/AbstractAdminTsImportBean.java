@@ -1,11 +1,17 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.system.ts;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
+import org.joda.time.DateTime;
+import org.metachart.xml.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.factory.xml.ts.XmlDataFactory;
+import net.sf.ahtutils.factory.xml.ts.XmlTimeSeriesFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -17,6 +23,7 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntity;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
+import net.sf.ahtutils.xml.ts.TimeSeries;
 
 public class AbstractAdminTsImportBean <L extends UtilsLang,
 											D extends UtilsDescription,
@@ -44,6 +51,9 @@ public class AbstractAdminTsImportBean <L extends UtilsLang,
 	private SCOPE scope; public SCOPE getScope() {return scope;} public void setScope(SCOPE scope) {this.scope = scope;}
 	private EC clas; public EC getClas() {return clas;} public void setClas(EC clas) {this.clas = clas;}
 	private INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
+	
+	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;}
+	private DataSet chartDs; public DataSet getChartDs(){return chartDs;}
 	
 	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
 	{
@@ -105,4 +115,17 @@ public class AbstractAdminTsImportBean <L extends UtilsLang,
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(interval));}
 		}
 	}
+	
+	public void random()
+	{
+		DateTime dt = new DateTime(new Date());
+		Random rnd = new Random();
+		
+		timeSeries = XmlTimeSeriesFactory.build();
+		for(int i=0;i<5;i++)
+		{
+			timeSeries.getData().add(XmlDataFactory.build(dt.plusDays(i).toDate(), rnd.nextInt(10)*rnd.nextDouble()));
+		}
+	}
+	
 }

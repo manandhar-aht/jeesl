@@ -17,7 +17,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTimeSeries;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntity;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
@@ -30,7 +30,7 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
 											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
-											ENTITY extends UtilsTsEntity<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+											ENTITY extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											INT extends UtilsStatus<INT,L,D>,
 											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
@@ -46,9 +46,9 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	
 	protected EC entity; public void setEntity(EC entityClass) {this.entity = entityClass;} public EC getEntity() {return entity;}
 
-	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
+	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
-		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cEc,cInt);
+		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cEc,cInt,cData,cWs);
 		reloadClasses();
 	}
 	

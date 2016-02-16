@@ -8,7 +8,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTimeSeries;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntity;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
@@ -18,7 +18,7 @@ public class EjbTsClassFactory<L extends UtilsLang,
 											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
 											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
-											ENTITY extends UtilsTsEntity<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+											ENTITY extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 											INT extends UtilsStatus<INT,L,D>,
 											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
@@ -40,7 +40,7 @@ public class EjbTsClassFactory<L extends UtilsLang,
 					SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
 					TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
-					ENTITY extends UtilsTsEntity<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+					ENTITY extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 					EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 					INT extends UtilsStatus<INT,L,D>,
 					DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,

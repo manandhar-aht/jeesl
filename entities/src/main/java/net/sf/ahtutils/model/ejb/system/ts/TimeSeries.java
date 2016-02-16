@@ -17,7 +17,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Time Series",category="ts",subset="ts")
 public class TimeSeries implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsTimeSeries<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsEntity,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
+								UtilsTimeSeries<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsBridge,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
 {
 	public static final long serialVersionUID=1;
 	
@@ -37,7 +37,7 @@ public class TimeSeries implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public void setInterval(TsInterval interval) {this.interval = interval;}
 	
 	@NotNull @ManyToOne
-	private TsEntity entity;
-	@Override public TsEntity getEntity() {return entity;}
-	@Override public void setEntity(TsEntity entity) {this.entity = entity;}
+	private TsBridge entity;
+	@Override public TsBridge getEntity() {return entity;}
+	@Override public void setEntity(TsBridge entity) {this.entity = entity;}
 }

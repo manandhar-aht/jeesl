@@ -77,4 +77,39 @@
     		<s:lang key="fr" translation="Import of Timeseries"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupTsUpload">
+    	<s:langs>
+    		<s:lang key="de" translation="Upload"/>
+    		<s:lang key="en" translation="Upload"/>
+    		<s:lang key="fr" translation="Upload"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsTimeSerie">
+    	<s:langs>
+    		<s:lang key="de" translation="Zeitserien"/>
+    		<s:lang key="en" translation="Timeseries"/>
+    		<s:lang key="fr" translation="Timeseries"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsValue">
+    	<s:langs>
+    		<s:lang key="de" translation="Wert"/>
+    		<s:lang key="en" translation="Value"/>
+    		<s:lang key="fr" translation="Value"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsEntities">
+    	<s:langs>
+    		<s:lang key="de" translation="Entitäten"/>
+    		<s:lang key="en" translation="Entities"/>
+    		<s:lang key="fr" translation="Entities"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTsEntity">
+    	<s:langs>
+    		<s:lang key="de" translation="Entität"/>
+    		<s:lang key="en" translation="Entity"/>
+    		<s:lang key="fr" translation="Entity"/>
+    	</s:langs>
+    </s:translation>    
 </s:translations>

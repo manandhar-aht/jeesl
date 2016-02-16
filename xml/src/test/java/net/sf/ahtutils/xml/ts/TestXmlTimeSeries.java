@@ -18,6 +18,7 @@ public class TestXmlTimeSeries extends AbstractXmlTimeseriesTest<TimeSeries>
     	
     	if(withChilds)
     	{
+    		xml.setEntity(TestXmlEntity.create(false));
     		xml.getData().add(TestXmlData.create(false));
     		xml.getData().add(TestXmlData.create(false));
     	}

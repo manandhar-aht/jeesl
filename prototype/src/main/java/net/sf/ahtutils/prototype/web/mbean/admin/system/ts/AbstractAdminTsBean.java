@@ -16,7 +16,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTimeSeries;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntity;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
@@ -29,7 +29,7 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 									SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
 									TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
-									ENTITY extends UtilsTsEntity<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+									ENTITY extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 									EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
 									INT extends UtilsStatus<INT,L,D>,
 									DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
@@ -46,8 +46,10 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 	protected Class<CAT> cCategory;
 	protected Class<SCOPE> cScope;
 	protected Class<UNIT> cUnit;
-	protected Class<INT> cInt;
 	protected Class<EC> cEc;
+	protected Class<INT> cInt;
+	protected Class<DATA> cData;
+	protected Class<WS> cWs;
 	
 	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
 	
@@ -59,7 +61,7 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 
 	protected SbMultiStatusHandler<L,D,CAT> sbhCategory; public SbMultiStatusHandler<L,D,CAT> getSbhCategory() {return sbhCategory;}
 
-	protected void initTsSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt)
+	protected void initTsSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fTs=fTs;
@@ -68,6 +70,8 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 		this.cEc=cEc;
 		this.cInt=cInt;
 		this.cCategory=cCategory;
+		this.cData=cData;
+		this.cWs=cWs;
 		
 		comparatorScope = (new TsScopeComparator<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>()).factory(TsScopeComparator.Type.position);
 		comparatorClass = (new TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>()).factory(TsClassComparator.Type.position);

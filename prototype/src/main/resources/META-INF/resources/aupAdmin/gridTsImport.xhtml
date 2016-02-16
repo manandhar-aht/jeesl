@@ -6,6 +6,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mc="http://www.metachart.org/chart"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupSec="http://ahtutils.sourceforge.net/prototype/security"
@@ -50,25 +51,75 @@
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sImport" width="4">
-					<h:form id="fRandom" rendered="#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval)}">
-						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
+					<h:form id="fUpload" rendered="#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval)}">
+						<p:panel id="pLang" header="#{msg.aupTsUpload}" styleClass="auPanelWithGrid">
 							<p:commandButton value="5 Random" type="button">
-									<p:ajax event="click" update=":#{cc.id}:sTs " listener="#{cc.attrs.bean.random()}" process="@form"/>
+									<p:ajax event="click" update=":#{cc.id}:rowVis :#{cc.id}:sImport" listener="#{cc.attrs.bean.random()}" process="@form"/>
 							</p:commandButton>
 						</p:panel>
+					</h:form>
+					<h:form id="fImport" rendered="#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval) and (not empty cc.attrs.bean.entity)}">
+						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupTsWorkspace}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.workspace}" effect="fade">
+									<f:selectItems value="#{cc.attrs.bean.workspaces}" var="w" itemLabel="#{w.name[userBean.localeCode].lang}" itemValue="#{w}"/>
+								</p:selectOneMenu>
+								<h:outputText value=""/>
+								<p:commandButton value="Import" type="button">
+									<p:ajax event="click" update=":#{cc.id}:rowVis" listener="#{cc.attrs.bean.importData()}" process="@form"/>
+								</p:commandButton>
+							</p:panelGrid>
+						</p:panel>
+					</h:form>
+				</aht:slot>
+			</aht:row>
+			<aht:row id="rowVis">
+				<aht:slot id="sEntity" width="2">
+					<h:form id="fEntity">
+						<p:dataTable var="e" value="#{cc.attrs.bean.entities}" rendered="#{not empty cc.attrs.bean.entities}"
+								selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{e.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.aupTsEntities}"/>
+							</f:facet>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sImport" listener="#{cc.attrs.bean.selectEntity()}"/>
+			                <p:column rendered="true" headerText="#{msg.aupTsEntity}">  
+								<h:outputText value="#{cc.attrs.bean.mapLabels[e]}"/>
+				            </p:column>
+				       	</p:dataTable>
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sTs" width="4">
 					<p:dataTable var="d" value="#{cc.attrs.bean.timeSeries.data}" rendered="#{not empty cc.attrs.bean.timeSeries}">
-							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.aupTsTimeSeries}">
-									
-								</aht:pfDataTableHeader>
-							</f:facet>
-							<p:column rendered="true" header="#{msg.aupTsValue}">  
-								<h:outputText value="#{d.value}"/>
-				            </p:column>
-				       	</p:dataTable>
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.aupTsTimeSerie}"/>
+						</f:facet>
+						<p:column rendered="true" headerText="#{msg.aupDate}">  
+							<h:outputText value="#{d.record}">
+		                	<f:converter converterId="net.sf.ahtutils.jsf.converter.XmlGregorianCalendarConverter" />
+		                	<f:attribute name="pattern" value="dd.MM.yy HH:mm" />
+		                </h:outputText>
+			            </p:column>
+						<p:column rendered="true" headerText="#{msg.aupTsValue}">  
+							<h:outputText value="#{d.value}"/>
+			            </p:column>
+			       	</p:dataTable>
+				</aht:slot>
+				<aht:slot width="6">
+					<mc:chart type="column" height="300" rendered="#{not empty cc.attrs.bean.chartDs}">
+	                   <mc:title value="#{cc.attrs.bean.scope.name[userBean.localeCode].lang}"/>
+	                   <mc:subTitle value="#{cc.attrs.bean.interval.name[userBean.localeCode].lang}"/>
+	                   <mc:axis code="x" type="datetime">
+	                   	<mc:title value="Date"/>
+	                   </mc:axis>
+	                   <mc:axis code="y" min="0">
+	                       <mc:title value="#{cc.attrs.bean.scope.unit.code}"/>
+	                   </mc:axis>
+	                   <mc:tooltip shared="true"/>
+	                   <mc:series>
+	                       <mc:dataSet value="#{cc.attrs.bean.chartDs}"/>
+	                   </mc:series>
+	               </mc:chart>
 				</aht:slot>
 			</aht:row>
 	    </aup:grid>

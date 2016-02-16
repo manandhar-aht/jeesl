@@ -10,14 +10,14 @@ import javax.validation.constraints.NotNull;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntity;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Entity",category="ts",subset="ts",level=2)
-public class TsEntity implements Serializable,EjbRemoveable,EjbPersistable,
-		UtilsTsEntity<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsEntity,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
+@EjbErNode(name="Bridge",category="ts",subset="ts",level=2)
+public class TsBridge implements Serializable,EjbRemoveable,EjbPersistable,
+		UtilsTsBridge<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsBridge,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
 {
 	public static final long serialVersionUID=1;
 	
@@ -25,6 +25,10 @@ public class TsEntity implements Serializable,EjbRemoveable,EjbPersistable,
 	private long id;
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
+	
+	private long refId;
+	public long getRefId() {return refId;}
+	public void setRefId(long refId) {this.refId = refId;}
 	
 	@NotNull @ManyToOne
 	private TsEntityClass entityClass;

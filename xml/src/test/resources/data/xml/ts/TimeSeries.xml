@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <timeSeries xmlns="http://ahtutils.aht-group.com/timeseries">
+    <entity id="123" code="myCode"/>
     <data id="123" record="2011-11-11T11:11:11" value="234.56"/>
     <data id="123" record="2011-11-11T11:11:11" value="234.56"/>
 </timeSeries>

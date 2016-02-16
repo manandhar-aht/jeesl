@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/timeseries}entity"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/timeseries}data" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -32,6 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "entity",
     "data"
 })
 @XmlRootElement(name = "timeSeries")
@@ -41,7 +43,37 @@ public class TimeSeries
 
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
+    protected Entity entity;
+    @XmlElement(required = true)
     protected List<Data> data;
+
+    /**
+     * Gets the value of the entity property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Entity }
+     *     
+     */
+    public Entity getEntity() {
+        return entity;
+    }
+
+    /**
+     * Sets the value of the entity property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Entity }
+     *     
+     */
+    public void setEntity(Entity value) {
+        this.entity = value;
+    }
+
+    public boolean isSetEntity() {
+        return (this.entity!= null);
+    }
 
     /**
      * Gets the value of the data property.

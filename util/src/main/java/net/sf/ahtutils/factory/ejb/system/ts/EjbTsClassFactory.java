@@ -12,18 +12,17 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
-public class EjbTsClassFactory<L extends UtilsLang,
-											D extends UtilsDescription,
-											CAT extends UtilsStatus<CAT,L,D>,
-											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
-											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
-											BRIDGE extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
-											EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
-											INT extends UtilsStatus<INT,L,D>,
-											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
-											WS extends UtilsStatus<WS,L,D>,
-											QAF extends UtilsStatus<QAF,L,D>>
+public class EjbTsClassFactory<L extends UtilsLang, D extends UtilsDescription,
+								CAT extends UtilsStatus<CAT,L,D>,
+								SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								UNIT extends UtilsStatus<UNIT,L,D>,
+								TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								BRIDGE extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								INT extends UtilsStatus<INT,L,D>,
+								DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								WS extends UtilsStatus<WS,L,D>,
+								QAF extends UtilsStatus<QAF,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbTsClassFactory.class);
 	

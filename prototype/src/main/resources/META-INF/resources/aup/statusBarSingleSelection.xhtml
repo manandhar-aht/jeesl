@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="status" required="false"/>
+		<composite:attribute name="list" required="false"/>
+		<composite:attribute name="update" required="true"/>
+	</composite:interface>
+
+	<composite:implementation>
+		<aup:statusBarItem rendered="#{not empty cc.attrs.status}"
+						   		label="#{cc.attrs.status.name[userBean.localeCode].lang}"
+									orientation="right"
+									childs="#{cc.attrs.list}">
+			<p:commandLink id="clSbTargetTypeToggle" actionListener="#{cc.attrs.bean.selectSbStatus(var)}" ajax="true">
+				<h:outputText value="#{var.name[userBean.localeCode].lang}"/>
+			</p:commandLink>
+		</aup:statusBarItem>
+	</composite:implementation>
+</html>

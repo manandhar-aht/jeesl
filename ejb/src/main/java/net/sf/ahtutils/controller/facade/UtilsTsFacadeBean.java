@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.system.ts.EjbTsBridgeFactory;
 import net.sf.ahtutils.factory.ejb.system.ts.EjbTsFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
@@ -57,9 +58,18 @@ public class UtilsTsFacadeBean<L extends UtilsLang,
 		List<ParentPredicate<CAT>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
 		return allForOrParents(cClass,ppCategory);
 	}
-
-	@Override
-	public BRIDGE fcBridge(Class<BRIDGE> cBridge, EC entityClass, long refId) throws UtilsConstraintViolationException
+	
+	@Override public BRIDGE fcBridge(Class<BRIDGE> cBridge, EC entityClass, long refId) throws UtilsConstraintViolationException
+	{
+		try {return fBridge(cBridge, entityClass, refId);}
+		catch (UtilsNotFoundException ex)
+		{
+			if(efBridge==null){efBridge = new EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>(cBridge);}
+			BRIDGE bridge = efBridge.build(entityClass, refId);
+			return this.persist(bridge);
+		}
+	}
+	@Override public BRIDGE fBridge(Class<BRIDGE> cBridge, EC entityClass, long refId) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<BRIDGE> cQ = cB.createQuery(cBridge);
@@ -70,18 +80,21 @@ public class UtilsTsFacadeBean<L extends UtilsLang,
 		
 		CriteriaQuery<BRIDGE> select = cQ.select(from);
 		select.where(cB.equal(pClass, entityClass),cB.equal(pRef, refId));
-		
 		try	{return em.createQuery(select).getSingleResult();}
-		catch (NoResultException ex)
-		{
-			if(efBridge==null){efBridge = new EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>(cBridge);}
-			BRIDGE bridge = efBridge.build(entityClass, refId);
-			return this.persist(bridge);
-		}
+		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cBridge.getName()+" found for entityClass/refId");}
 	}
 
-	@Override
-	public TS fcTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException
+	@Override public TS fcTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException
+	{
+		try {return fTimeSeries(cTs, scope, interval, bridge);}
+		catch (UtilsNotFoundException e)
+		{
+			if(efTs==null){efTs = new EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>(cTs);}
+			TS ts = efTs.build(scope, interval, bridge);
+			return this.persist(ts);
+		}
+	}
+	@Override public TS fTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<TS> cQ = cB.createQuery(cTs);
@@ -95,11 +108,6 @@ public class UtilsTsFacadeBean<L extends UtilsLang,
 		select.where(cB.equal(pScope, scope),cB.equal(pInterval, interval),cB.equal(pBridge, bridge));
 		
 		try	{return em.createQuery(select).getSingleResult();}
-		catch (NoResultException ex)
-		{
-			if(efTs==null){efTs = new EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>(cTs);}
-			TS ts = efTs.build(scope, interval, bridge);
-			return this.persist(ts);
-		}
+		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cTs.getName()+" found for scope/interval/bridge");}
 	}
 }

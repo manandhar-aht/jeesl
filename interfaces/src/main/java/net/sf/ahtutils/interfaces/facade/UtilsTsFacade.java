@@ -35,4 +35,6 @@ public interface UtilsTsFacade <L extends UtilsLang,
 	
 	TS fTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException;
 	TS fcTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException;
+	
+	List<DATA> fData(Class<DATA> cData, WS workspace, TS timeSeries);
 }

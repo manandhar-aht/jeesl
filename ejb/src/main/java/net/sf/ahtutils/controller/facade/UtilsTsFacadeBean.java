@@ -110,4 +110,19 @@ public class UtilsTsFacadeBean<L extends UtilsLang,
 		try	{return em.createQuery(select).getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cTs.getName()+" found for scope/interval/bridge");}
 	}
+	
+	@Override public List<DATA> fData(Class<DATA> cData, WS workspace, TS timeSeries)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<DATA> cQ = cB.createQuery(cData);
+		Root<DATA> from = cQ.from(cData);
+		
+		Path<WS> pWs = from.get("workspace");
+		Path<TS> pTs = from.get("timeSeries");
+		
+		CriteriaQuery<DATA> select = cQ.select(from);
+		select.where(cB.equal(pWs, workspace),cB.equal(pTs, timeSeries));
+		
+		return em.createQuery(select).getResultList();
+	}
 }

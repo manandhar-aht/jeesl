@@ -17,13 +17,13 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
 public class TsClassComparator<L extends UtilsLang, D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
-								SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+								SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 								UNIT extends UtilsStatus<UNIT,L,D>,
-								TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
-								ENTITY extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
-								EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+								TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								BRIDGE extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 								INT extends UtilsStatus<INT,L,D>,
-								DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+								DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 								WS extends UtilsStatus<WS,L,D>,
 								QAF extends UtilsStatus<QAF,L,D>>
 {
@@ -39,7 +39,7 @@ public class TsClassComparator<L extends UtilsLang, D extends UtilsDescription,
     public Comparator<EC> factory(Type type)
     {
         Comparator<EC> c = null;
-        TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> factory = new TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>();
+        TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> factory = new TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;

@@ -33,16 +33,16 @@ import net.sf.ahtutils.xml.ts.TimeSeries;
 
 public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
-											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+											SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
-											ENTITY extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
-											EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+											TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+											BRIDGE extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+											EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>,
+											DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 											WS extends UtilsStatus<WS,L,D>,
 											QAF extends UtilsStatus<QAF,L,D>>
-					extends AbstractAdminTsBean<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF>
+					extends AbstractAdminTsBean<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -66,7 +66,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;}
 	private DataSet chartDs; public DataSet getChartDs(){return chartDs;}
 	
-	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,ENTITY,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
+	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
 		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cEc,cInt,cData,cWs);
 	}
@@ -175,6 +175,8 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 		logger.info("Import Data to "+workspace);
 		
 		
-		
+		entity=null;
+		timeSeries=null;
+		chartDs=null;
 	}
 }

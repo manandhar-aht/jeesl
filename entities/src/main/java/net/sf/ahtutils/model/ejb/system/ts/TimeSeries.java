@@ -37,7 +37,7 @@ public class TimeSeries implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public void setInterval(TsInterval interval) {this.interval = interval;}
 	
 	@NotNull @ManyToOne
-	private TsBridge entity;
-	@Override public TsBridge getEntity() {return entity;}
-	@Override public void setEntity(TsBridge entity) {this.entity = entity;}
+	private TsBridge bridge;
+	@Override public TsBridge getBridge() {return bridge;}
+	@Override public void setBridge(TsBridge bridge) {this.bridge = bridge;}
 }

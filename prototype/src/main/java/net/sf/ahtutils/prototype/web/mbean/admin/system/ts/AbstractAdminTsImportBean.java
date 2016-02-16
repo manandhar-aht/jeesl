@@ -14,6 +14,8 @@ import org.metachart.xml.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.factory.xml.mc.XmlMcDataSetFactory;
 import net.sf.ahtutils.factory.xml.ts.XmlDataFactory;
 import net.sf.ahtutils.factory.xml.ts.XmlTimeSeriesFactory;
@@ -23,12 +25,13 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTimeSeries;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
+import net.sf.ahtutils.xml.ts.Data;
 import net.sf.ahtutils.xml.ts.TimeSeries;
 
 public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDescription,
@@ -66,9 +69,9 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;}
 	private DataSet chartDs; public DataSet getChartDs(){return chartDs;}
 	
-	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
+	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
-		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cEc,cInt,cData,cWs);
+		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cTs,cBridge,cEc,cInt,cData,cWs);
 	}
 	
 	protected void initLists()
@@ -174,9 +177,22 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 		workspace = fTs.find(cWs, workspace);
 		logger.info("Import Data to "+workspace);
 		
-		
-		entity=null;
-		timeSeries=null;
-		chartDs=null;
+		try
+		{
+			BRIDGE bridge = fTs.fcBridge(cBridge, clas, entity.getId());
+			TS ts = fTs.fcTimeSeries(cTs, scope, interval, bridge);
+			logger.info("Using TS "+ts.toString());
+			
+			List<DATA> datas = new ArrayList<DATA>();
+			for(Data data : timeSeries.getData()){datas.add(efData.build(workspace, ts, data));}
+			fTs.save(datas);
+			
+			entities=null;
+			entity=null;
+			timeSeries=null;
+			chartDs=null;
+		}
+		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+		catch (UtilsLockingException e) {e.printStackTrace();}
 	}
 }

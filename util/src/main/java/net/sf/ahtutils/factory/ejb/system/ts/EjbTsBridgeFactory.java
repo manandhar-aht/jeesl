@@ -1,8 +1,8 @@
-package net.sf.ahtutils.interfaces.facade;
+package net.sf.ahtutils.factory.ejb.system.ts;
 
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -12,8 +12,7 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
-public interface UtilsTsFacade <L extends UtilsLang,
-								D extends UtilsDescription,
+public class EjbTsBridgeFactory<L extends UtilsLang, D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
 								SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 								UNIT extends UtilsStatus<UNIT,L,D>,
@@ -24,11 +23,27 @@ public interface UtilsTsFacade <L extends UtilsLang,
 								DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 								WS extends UtilsStatus<WS,L,D>,
 								QAF extends UtilsStatus<QAF,L,D>>
-			extends UtilsFacade
-{	
-	List<SCOPE> findScopes(Class<SCOPE> cScope, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleScopes);
-	List<EC> findClasses(Class<EC> cClass, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleClasses);
+{
+	final static Logger logger = LoggerFactory.getLogger(EjbTsBridgeFactory.class);
 	
-	BRIDGE fcBridge(Class<BRIDGE> cBridge, EC entityClass, long refId) throws UtilsConstraintViolationException;
-	TS fcTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException;
+	final Class<BRIDGE> cBridge;
+    
+	public EjbTsBridgeFactory(final Class<BRIDGE> cBridge)
+	{       
+        this.cBridge=cBridge;
+	}
+
+	public BRIDGE build(EC entityClass, long refId)
+	{
+		BRIDGE ejb = null;
+		try
+		{
+			ejb = cBridge.newInstance();
+			ejb.setEntityClass(entityClass);
+			ejb.setRefId(refId);
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		return ejb;
+	}
 }

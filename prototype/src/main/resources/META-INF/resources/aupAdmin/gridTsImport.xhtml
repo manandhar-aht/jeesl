@@ -67,7 +67,7 @@
 								</p:selectOneMenu>
 								<h:outputText value=""/>
 								<p:commandButton value="Import" type="button">
-									<p:ajax event="click" update=":#{cc.id}:rowVis" listener="#{cc.attrs.bean.importData()}" process="@form"/>
+									<p:ajax event="click" update=":#{cc.id}:rowVis :#{cc.id}:sImport" listener="#{cc.attrs.bean.importData()}" process="@form"/>
 								</p:commandButton>
 							</p:panelGrid>
 						</p:panel>

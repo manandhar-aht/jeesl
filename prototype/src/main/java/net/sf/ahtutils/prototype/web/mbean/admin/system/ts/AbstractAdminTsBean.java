@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.factory.ejb.system.ts.EjbTsClassFactory;
+import net.sf.ahtutils.factory.ejb.system.ts.EjbTsDataFactory;
 import net.sf.ahtutils.factory.ejb.system.ts.EjbTsScopeFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
@@ -15,8 +16,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTimeSeries;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
+import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
@@ -46,6 +47,8 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 	protected Class<CAT> cCategory;
 	protected Class<SCOPE> cScope;
 	protected Class<UNIT> cUnit;
+	protected Class<TS> cTs;
+	protected Class<BRIDGE> cBridge;
 	protected Class<EC> cEc;
 	protected Class<INT> cInt;
 	protected Class<DATA> cData;
@@ -55,18 +58,21 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 	
 	protected EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> efScope;
 	protected EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> efClass;
+	protected EjbTsDataFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> efData;
 	
 	protected Comparator<SCOPE> comparatorScope;
 	protected Comparator<EC> comparatorClass;
 
 	protected SbMultiStatusHandler<L,D,CAT> sbhCategory; public SbMultiStatusHandler<L,D,CAT> getSbhCategory() {return sbhCategory;}
 
-	protected void initTsSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
+	protected void initTsSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fTs=fTs;
 		this.cScope=cScope;
 		this.cUnit=cUnit;
+		this.cTs=cTs;
+		this.cBridge=cBridge;
 		this.cEc=cEc;
 		this.cInt=cInt;
 		this.cCategory=cCategory;
@@ -78,6 +84,7 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 		
 		efScope = EjbTsScopeFactory.factory(cScope);
 		efClass = EjbTsClassFactory.factory(cEc);
+		efData = EjbTsDataFactory.factory(cData);
 		
 		categories = fTs.allOrderedPositionVisible(cCategory);
 		sbhCategory = new SbMultiStatusHandler<L,D,CAT>(cCategory,categories); sbhCategory.selectAll();

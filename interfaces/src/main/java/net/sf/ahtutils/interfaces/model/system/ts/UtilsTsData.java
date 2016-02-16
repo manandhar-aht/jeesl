@@ -1,5 +1,6 @@
 package net.sf.ahtutils.interfaces.model.system.ts;
 
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -18,7 +19,7 @@ public interface UtilsTsData <L extends UtilsLang,
 								DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 								WS extends UtilsStatus<WS,L,D>,
 								QAF extends UtilsStatus<QAF,L,D>>
-		extends EjbWithId, EjbWithRecord
+		extends EjbWithId,EjbWithRecord,EjbSaveable
 {
 	TS getTimeSeries();
 	void setTimeSeries(TS timeSeries);

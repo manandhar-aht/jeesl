@@ -41,7 +41,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 	public static final long serialVersionUID=1;
 
 	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
-	private I identity;
+	protected I identity;
 	
 	protected List<A> actions; public List<A> getActions() {return actions;}
 	protected List<R> roles; public List<R> getRoles() {return roles;}
@@ -58,8 +58,9 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 	protected boolean noActions; public boolean isNoActions() {return noActions;}
 	protected boolean noRoles; public boolean isNoRoles() {return noRoles;}
 	
-	public AbstractJsfSecurityHandler(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, String pageCode, Class<V> cV)
+	public AbstractJsfSecurityHandler(I identity, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, String pageCode, Class<V> cV)
 	{
+		this.identity=identity;
 		this.fSecurity=fSecurity;
 		this.pageCode=pageCode;
 		
@@ -84,9 +85,35 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 
 			roles = fSecurity.rolesForView(cV, view);
 			noRoles = roles.size()==0;
+			update();
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
+	
+	private void update()
+	{
+		logger.info("AllowedActions:");
+		clear();
+		for(A action : view.getActions())
+		{
+			boolean allow = identity.hasAction(action.toCode());
+			addActionWithSecurity(action,allow);
+		}
+		checkIcon();
+	}
+	
+	protected void clear()
+	{
+		actions.clear();
+		mapAllow.clear();
+		mapHasRole.clear();
+		for(R r : roles)
+		{
+			mapHasRole.put(r, identity.hasRole(r.getCode()));
+		}
+	}
+	
+	
 	
 	protected void addActionWithSecurity(A action, boolean allow)
 	{
@@ -103,8 +130,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 	
 	protected void checkIcon(){noActions = actions.size() == 0;}
 	
-	@Override
-	public boolean allow(String actionCode)
+	@Override public boolean allow(String actionCode)
 	{
 		if(actionCode==null){return false;}
 		else {return (mapAllow.containsKey(actionCode) && mapAllow.get(actionCode));}

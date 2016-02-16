@@ -64,8 +64,9 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected UtilsRevisionPageFlow<USER,USER> revision; public UtilsRevisionPageFlow<USER, USER> getRevision() {return revision;}
 	
-	public void initSuper(UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage, final Class<R> cRole, final Class<USER> cUser)
+	public void initSuper(UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage, final Class<L> cLang, final Class<D> cDescription, final Class<R> cRole, final Class<USER> cUser)
 	{
+		super.initAdmin(langs, cLang, cDescription, bUtilsMessage);
 		this.fUtilsUser=fUtilsUser;
 		this.fUtilsSecurity=fUtilsSecurity;
 		

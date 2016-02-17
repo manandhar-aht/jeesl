@@ -39,6 +39,7 @@ public class AbstractRememberMeBean <L extends UtilsLang,D extends UtilsDescript
 	final static Logger logger = LoggerFactory.getLogger(AbstractRememberMeBean.class);
 	private static final long serialVersionUID = 1L;
 	
+	protected boolean logOnInfo = false;
 	private boolean dummy; public boolean isDummy() {return dummy;} public void setDummy(boolean dummy) {this.dummy = dummy;}
 	
 	protected void readCookie(Class<REM> cRem, UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUser, String cookieName)
@@ -46,22 +47,23 @@ public class AbstractRememberMeBean <L extends UtilsLang,D extends UtilsDescript
 		Map<String,Object> cookies = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();
 		if(cookies.containsKey(cookieName))
 		{
-			logger.info("Cookie found");
+			if(logOnInfo){logger.info("Cookie found");}
 			try
 			{
 				Cookie cookie = (Cookie) cookies.get(cookieName);
 				REM rem = fUser.fByCode(cRem, cookie.getValue());
-				logger.info("REM found");
+				if(logOnInfo){logger.info("REM found");}
 				if(rem.getUser() instanceof EjbWithEmail)
 				{
-					logger.info("ASSIGN");
+					if(logOnInfo){logger.info("ASSIGN");}
 					EjbWithEmail email = (EjbWithEmail)rem.getUser();
 					preSelect(email.getEmail());
 				}
-				else{logger.info("NOT");}
+				else{if(logOnInfo){logger.info("NOT");}}
 			}
-			catch (UtilsNotFoundException e){logger.info(e.getMessage());}
+			catch (UtilsNotFoundException e){if(logOnInfo){logger.info(e.getMessage());}}
 		}
+		else{if(logOnInfo){logger.info("Cookie NOT found");}}
 	}
 	
 	protected void preSelect(String userName){}

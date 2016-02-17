@@ -26,5 +26,15 @@ public class FigureSummer
 		}
 		return XmlFinanceFactory.create(resultCode, sum);
 	}
+	
+	public static void add(Finance finance, double value)
+	{
+		finance.setValue(finance.getValue()+value);
+	}
+	
+	public static double substract(Finance a, Finance b)
+	{
+		return a.getValue()-b.getValue();
+	}
 }
 

@@ -109,7 +109,8 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 		mapHasRole.clear();
 		for(R r : roles)
 		{
-			mapHasRole.put(r, identity.hasRole(r.getCode()));
+			if(identity!=null){mapHasRole.put(r, identity.hasRole(r.getCode()));}
+			else{mapHasRole.put(r,false);}
 		}
 	}
 	

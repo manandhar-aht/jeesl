@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.finance.UtilsFinance;
+import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 
 public class XmlFinanceFactory
@@ -34,6 +35,13 @@ public class XmlFinanceFactory
 		return xml;
 	}
 	
+	public static void addId(Figures figures, long id, Double value)
+	{
+		if(value!=null)
+		{
+			figures.getFinance().add(XmlFinanceFactory.id(id, value));
+		}
+	}
 	public static Finance id(long id, double value)
 	{
 		Finance xml = new Finance();

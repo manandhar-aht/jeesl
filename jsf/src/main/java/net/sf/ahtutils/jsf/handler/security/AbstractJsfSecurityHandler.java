@@ -96,7 +96,8 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 		clear();
 		for(A action : view.getActions())
 		{
-			boolean allow = identity.hasAction(action.toCode());
+			boolean allow = false;
+			if(identity!=null){allow=identity.hasAction(action.toCode());}
 			addActionWithSecurity(action,allow);
 		}
 		checkIcon();

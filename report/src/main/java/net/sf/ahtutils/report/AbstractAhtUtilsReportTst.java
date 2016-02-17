@@ -164,6 +164,8 @@ public class AbstractAhtUtilsReportTst
 	
 	protected void outputXls(UtilsXlsReport report) throws Exception
     {
-    	IOUtils.copy(report.xlsStream(), new FileOutputStream(new File(fTarget,report.xlsFileName())));
+		File fDst = new File(fTarget,report.xlsFileName());
+		logger.debug("Saving to "+fDst);
+    	IOUtils.copy(report.xlsStream(), new FileOutputStream(fDst));
     }
 }

@@ -5,10 +5,12 @@ import net.sf.ahtutils.test.AbstractXmlTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractXmlMonitoringTest extends AbstractXmlTest
+public abstract class AbstractXmlMonitoringTest <T extends Object> extends AbstractXmlTest<T>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractXmlMonitoringTest.class);
-	
-	protected static final String rootDir = "src/test/resources/data/xml/monitoring";
-    protected static final String dirSuffix = "monitoring";
+    
+	public AbstractXmlMonitoringTest(Class<T> cXml)
+	{
+		super(cXml,"monitoring");
+	}
 }

@@ -1,34 +1,18 @@
 package net.sf.ahtutils.xml.monitoring;
 
-import java.io.FileNotFoundException;
-
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
-import net.sf.exlp.util.xml.JaxbUtil;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlActors extends AbstractXmlMonitoringTest
+import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
+
+public class TestXmlActors extends AbstractXmlMonitoringTest<Actors>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlActors.class);
 	
-	@BeforeClass
-	public static void initFiles()
-	{
-		setXmlFile(dirSuffix,Actors.class);
-	}
+	public TestXmlActors(){super(Actors.class);}
+	public static Actors create(boolean withChildren){return (new TestXmlActors()).build(withChildren);} 
     
-    @Test
-    public void xml() throws FileNotFoundException
-    {
-    	Actors actual = create(true);
-    	Actors expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Actors.class);
-    	assertJaxbEquals(expected, actual);
-    }  
-    
-    public static Actors create(boolean withChilds)
+    public Actors build(boolean withChilds)
     {
     	Actors xml = new Actors();
     	
@@ -40,16 +24,11 @@ public class TestXmlActors extends AbstractXmlMonitoringTest
     	
     	return xml;
     }
-    
-    public void save() {save(create(true),fXml);}
-	
+
 	public static void main(String[] args)
     {
 		UtilsXmlTestBootstrap.init();
-			
-		TestXmlActors.initJaxb();
-		TestXmlActors.initFiles();	
 		TestXmlActors test = new TestXmlActors();
-		test.save();
+		test.saveReferenceXml();
     }
 }

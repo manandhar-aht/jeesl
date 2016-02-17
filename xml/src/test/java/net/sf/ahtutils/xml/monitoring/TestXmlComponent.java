@@ -1,35 +1,18 @@
 package net.sf.ahtutils.xml.monitoring;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
-import net.sf.exlp.util.xml.JaxbUtil;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlComponent extends AbstractXmlMonitoringTest
+import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
+
+public class TestXmlComponent extends AbstractXmlMonitoringTest<Component>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlComponent.class);
 	
-	@BeforeClass
-	public static void initFiles()
-	{
-		fXml = new File(rootDir,Component.class.getSimpleName()+".xml");
-	}
+	public TestXmlComponent(){super(Component.class);}
+	public static Component create(boolean withChildren){return (new TestXmlComponent()).build(withChildren);}
     
-    @Test
-    public void xml() throws FileNotFoundException
-    {
-    	Component actual = create(true);
-    	Component expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Component.class);
-    	assertJaxbEquals(expected, actual);
-    }  
-    
-    public static Component create(boolean withChilds)
+    public Component build(boolean withChilds)
     {
     	Component xml = new Component();
     	xml.setId(123);
@@ -49,10 +32,7 @@ public class TestXmlComponent extends AbstractXmlMonitoringTest
 	public static void main(String[] args)
     {
 		UtilsXmlTestBootstrap.init();
-			
-		TestXmlComponent.initJaxb();
-		TestXmlComponent.initFiles();	
 		TestXmlComponent test = new TestXmlComponent();
-		test.save();
+		test.saveReferenceXml();
     }
 }

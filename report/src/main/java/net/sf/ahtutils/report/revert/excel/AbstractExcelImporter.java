@@ -10,11 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.report.util.DataUtil;
-import static net.sf.ahtutils.report.util.DataUtil.getStringValue;
 import net.sf.ahtutils.util.reflection.ReflectionsUtil;
+import net.sf.ahtutils.xml.report.DataAssociation;
+import net.sf.ahtutils.xml.report.ImportStructure;
+import net.sf.ahtutils.xml.report.XlsSheet;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -24,25 +27,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractExcelImporter <C extends Serializable, I extends ImportStrategy> {
-
+	
 	final static Logger logger = LoggerFactory.getLogger(AbstractExcelImporter.class);
 	
 	protected File                       excelFile;
 	protected XSSFWorkbook               workbook;
 	protected Sheet                      activeSheet;
-	public  UtilsFacade                 facade;
-	protected Map<String, Class>        handler;
-        protected Map<String, Class>        validators;
+	protected String                     activeColumn;
+	public  UtilsFacade                  facade;
+	protected Map<String, String>        propertyRelations;
+	protected Map<String, Class>         strategies;
+	protected Map<String, Class>		 validators;
+	protected Map<String, Class>		 targetClasses;
 	protected short                      primaryKey;
 	protected Hashtable<String, C>       entities          = new Hashtable<String, C>();
 	protected Hashtable<String, Object>  tempPropertyStore = new Hashtable<String, Object>();
 	protected Boolean                    hasPrimaryKey     = false;
+	protected XlsSheet definition;
+	protected ImportStructure structure;
 	
-	public  Integer                    enititesSaved = 0;	
-	public Integer getEnititesSaved() {return enititesSaved;}
-	public void setEnititesSaved(Integer enititesSaved) {this.enititesSaved = enititesSaved;}
-
-	public AbstractExcelImporter(String filename) throws IOException
+	public AbstractExcelImporter(UtilsXlsDefinitionResolver resolver, String reportCode, String filename) throws IOException, ClassNotFoundException
 	{
 		// Prepare file to be read
 		this.excelFile      = new File(filename);
@@ -50,126 +54,47 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		
 		// Read Excel workbook from given file(name)
 		this.workbook       = new XSSFWorkbook(fis);
+		
+		// Read information to import taken from Resolver
+		definition = resolver.definition(reportCode).getXlsSheet().get(0);
+		structure = definition.getImportStructure();
+		
+		// Prepare the row import definitions
+		// According to this post http://stackoverflow.com/questions/18231991/class-forname-caching
+		// Caching is most probably not important for classes, but to minimize JXPath searches
+		propertyRelations = new HashMap<String, String>();
+		strategies		  = new HashMap<String, Class>();
+		validators		  = new HashMap<String, Class>();
+		targetClasses	  = new HashMap<String, Class>();
+		for (DataAssociation association : structure.getDataAssociations().getDataAssociation())
+		{
+			String column = association.getColumn();
+			propertyRelations.put(column, association.getProperty());
+			if (association.isSetHandledBy())	{strategies.put(column, Class.forName(association.getHandledBy()));}
+			if (association.isSetValidatedBy()) {validators.put(column, Class.forName(association.getValidatedBy()));}
+			if (association.isSetTargetClass()) {targetClasses.put(column, Class.forName(association.getTargetClass()));}
+		}
 	}
 	
 	public void setFacade(UtilsFacade facade){this.facade = facade;}
 	public void setPrimaryKey(Integer columnNumber){this.primaryKey    = columnNumber.shortValue();this.hasPrimaryKey = true;}
-	public void setHandler(Map<String, Class> strategies){this.handler = strategies;}
-        public void setValidators(Map<String, Class> validators){this.validators = validators;}
 	
-	public void selectSheetByName(String name)
-	{
-		// Select a sheet from the Excel workbook by name
-		activeSheet         = workbook.getSheet(name);
-	}
+	// Select a sheet from the Excel workbook by name
+	public void selectSheetByName(String name)	{activeSheet         = workbook.getSheet(name);}
 	
-	public void selectFirstSheet()
-	{
-		// Select a sheet from the Excel workbook by name
-		activeSheet         = workbook.getSheetAt(0);
-	}
+	// Select a sheet from the Excel workbook by name
+	public void selectFirstSheet()				{activeSheet         = workbook.getSheetAt(0);}
 	
-	public void debugHeader()       {debugRow(0);}
-	public void debugFirstRow()     {debugRow(1);}
-	
-	public void debugRow(Integer rowIndex)
-	{
-		// Using a StringBuffer to create one line with all column titles
-		StringBuffer sb = new StringBuffer();
-		sb.append("Debugging Row " +rowIndex +" ... ");
+	// Debugging of sheet data
+	public void debugHeader()       {DataUtil.debugRow(activeSheet, 0);}
+	public void debugFirstRow()     {DataUtil.debugRow(activeSheet, 1);}
 		
-		// Selecting first row since this should be the place where the column titles should be placed 
-		Row firstRow    = activeSheet.getRow(rowIndex);
-		
-		// Iterating through all cells in first row
-		for (short i = firstRow.getFirstCellNum() ; i < firstRow.getLastCellNum() ; i++)
-		{
-			Cell cell = firstRow.getCell(i);
-			// Get the Cell Value as Object
-			Object object = DataUtil.getCellValue(cell);
-			
-			// Get a String representation of the value
-			String cellValue = getStringValue(object);
-			
-			// Add the content of the cell to StringBuffer
-			sb.append("Column " +i +": '" +cellValue + "' ");
-		}
-		
-		// Show the StringBuffer content in logging
-		logger.info(sb.toString());
-	}
-	
-		
-	public ArrayList<C> createEntitiesFromData(Map<Short, String> associationTable, Boolean skipTitle, Class<C> entityObject) throws Exception
-	{
-		// Create a list to hold the Entity classes to be created
-		ArrayList<C> importedEntities = new ArrayList<C>();
-		
-		// Define the rows to begin with and to end with, whether with or without first row
-		Integer end   = activeSheet.getLastRowNum();
-		Integer start = activeSheet.getFirstRowNum();
-		if (skipTitle) {start++;}
-		
-		// Iterate through all given rows
-		for (int i = start; i < end+1; i++)
-		{
-			// Get the next row
-			Row row = activeSheet.getRow(i);
-			
-			// See if there is already an instance created for this key, otherwise create a new one
-			String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
-			C entity = entityObject.newInstance();
-			if (hasPrimaryKey)
-			{
-				if ( this.entities.containsKey(entityKey))
-				{
-					entity = this.entities.get(entityKey);
-				}
-			}
-			
-			// Iterate through the columns and assign data as given in the association table
-			for (short j = row.getFirstCellNum() ; j < row.getLastCellNum() ; j++)
-			{
-				Cell cell = row.getCell(j);
-				
-				// Get the Cell Value as Object
-				Object object = DataUtil.getCellValue(cell);
-				
-				// Read the name of the property that should be filled with the data from this column
-				String propertyName = associationTable.get(j);
-			
-			    // Assign the data to the entity using the setter
-				logger.trace("Cell " +row.getRowNum() +"," +j);
-				if (propertyName!=null && !object.getClass().getCanonicalName().endsWith("java.lang.Object"))
-				{
-					String property = propertyName;
-					if(logger.isTraceEnabled()){logger.trace("Setting " +property + " to " +object.toString() +" type: " +object.getClass().getCanonicalName() +")");}
-					tempPropertyStore.put(property, object.toString());
-					invokeSetter(property,
-							      new Object[] { object },
-							      entity.getClass(),
-							      entity);
-				}
-			}
-			//facade.save(entity);
-			importedEntities.add(entity);
-			if (hasPrimaryKey)
-			{
-				entities.put(entityKey, entity);
-			}
-		}
-		return importedEntities;
-		
-	}
-        
-        public Map<C,ArrayList<String>> createValidatedEntitiesFromData(Map<Short, String> associationTable, Boolean skipTitle, Class<C> entityObject) throws Exception
+	public Map<C,ArrayList<String>> execute(Boolean skipTitle) throws Exception
 	{
 		// Create a list to hold the Entity classes to be created
 		Hashtable<C,ArrayList<String>> importedEntities = new Hashtable<C,ArrayList<String>>();
                 
-                
-		
-		// Define the rows to begin with and to end with, whether with or without first row
+        // Define the rows to begin with and to end with, whether with or without first row
 		Integer end   = activeSheet.getLastRowNum();
 		Integer start = activeSheet.getFirstRowNum();
 		if (skipTitle) {start++;}
@@ -182,10 +107,11 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			
 			// See if there is already an instance created for this key, otherwise create a new one
 			String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
-			C entity = entityObject.newInstance();
+			C entity = (C) Class.forName(structure.getTargetClass()).newInstance();
                         
-                        // Create a list of properties that falied the validation
-                        ArrayList<String> failedValidations = new ArrayList<String>();
+			// Create a list of properties that falied the validation
+			// This can be used for staging purposes later on
+			ArrayList<String> failedValidations = new ArrayList<String>();
                         
 			if (hasPrimaryKey)
 			{
@@ -199,12 +125,13 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			for (short j = row.getFirstCellNum() ; j < row.getLastCellNum() ; j++)
 			{
 				Cell cell = row.getCell(j);
+				activeColumn = j +"";
 				
 				// Get the Cell Value as Object
 				Object object = DataUtil.getCellValue(cell);
 				
 				// Read the name of the property that should be filled with the data from this column
-				String propertyName = associationTable.get(j);
+				String propertyName = propertyRelations.get(j +"");
 			
 			    // Assign the data to the entity using the setter
 				logger.trace("Cell " +row.getRowNum() +"," +j);
@@ -213,14 +140,16 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 					String property = propertyName;
 					if(logger.isTraceEnabled()){logger.trace("Setting " +property + " to " +object.toString() +" type: " +object.getClass().getCanonicalName() +")");}
 					tempPropertyStore.put(property, object.toString());
+					Class handler = strategies.get(activeColumn);
 					Boolean validated = invokeSetter(property,
-							      new Object[] { object },
-							      entity.getClass(),
-							      entity);
-                                        if (!validated)
-                                        {
-                                            failedValidations.add(property);
-                                        }
+														new Object[] { object },
+														entity.getClass(),
+														entity,
+														handler);
+					if (!validated)
+					{
+						failedValidations.add(property);
+					}
 				}
 			}
                         
@@ -240,10 +169,12 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	 protected Boolean invokeSetter(String   property, 
 			 							Object[] parameters,
 			 							Class    targetClass,
-			 							Object   target)        throws Exception
+			 							Object   target,
+										Class    handler)        throws Exception
 	 {
-                Boolean validated = false;
-		String methodName = "set" +property;
+        Boolean validated		= false;
+		String methodName		= "set" +property;
+		String valueFromCell	= parameters[0].toString();
 	 	logger.trace("Invoking " +methodName);
 	 	
 	 	// Now find the correct method
@@ -279,16 +210,12 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
         {
         	if (!(parameterClass.equals("java.lang.Double") || parameterClass.equals("double") || parameterClass.equals("long") || parameterClass.equals("java.util.Date") || parameterClass.equals("java.lang.String")))
             {
-            	logger.trace("Loading import strategy for " +parameterClass +": " +handler.get(parameterClass) +".");
+            	logger.trace("Loading import strategy for " +parameterClass +": " +handler.getCanonicalName() +".");
             	
                 // Instantiate new strategy to handle import
-            	ImportStrategy strategy = (ImportStrategy) handler.get(parameterClass).newInstance();
+            	ImportStrategy strategy = (ImportStrategy) handler.newInstance();
             	
-                // Instantiate new strategy to handle import
-            	ValidationStrategy validator = (ValidationStrategy) validators.get(parameterClass).newInstance();
-            	
-                
-            	// Pass database connection and current set of temporary properties
+                // Pass database connection and current set of temporary properties
 				
             	strategy.setFacade(facade);
             	strategy.setTempPropertyStore(tempPropertyStore);
@@ -297,8 +224,32 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
                 Object value  = strategy.handleObject(parameters[0], parameterClass, property);
             	parameters[0] =  value;
                 
-                // Validate the loaded value
-                validated = validator.validate(value, parameterClass, property);
+				
+				
+				if (validators.containsKey(activeColumn))
+				{
+					logger.info("Found " +property +" validator");
+					// Instantiate new strategy to handle import
+					ValidationStrategy validator = (ValidationStrategy) validators.get(activeColumn).newInstance();
+					validator.setFacade(facade);
+					logger.info("Using " +validator.getClass().getCanonicalName());
+					// Validate the loaded value
+					if (targetClasses.containsKey(activeColumn)) 
+					{
+						validated = validator.validate(valueFromCell, targetClasses.get(activeColumn).getCanonicalName(), property);
+					}
+					else
+					{
+						validated = validator.validate(valueFromCell, "", property);
+					}
+					
+					logger.info("Validation result: " +validated);
+				}
+				else
+				{
+					validated = true;
+				}
+                
             	
             	// Sync new temporary properties if any added
             	tempPropertyStore = strategy.getTempPropertyStore();
@@ -321,30 +272,6 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
             	parameters[0] = parameters[0] +"";
             }
 			
-			// Validate the result
-			// Get the list of validators from context
-			HashMap<String, String> validators = (HashMap<String, String>) tempPropertyStore.get("validators");
-			HashMap<String, ArrayList<String>> validationFailed = (HashMap) tempPropertyStore.get("validationFailed");
-			
-			if (validators.containsKey(property))
-			{
-				String entityType = validators.get(property);
-				logger.info("Validator found for " +property +" class to be searched: " +entityType);
-				if(!validate(parameters[0].toString(), property, entityType))
-				{
-					ArrayList<String> failed = new ArrayList<String>();
-					if (validationFailed.containsKey(property))
-					{
-						validationFailed.get(property).add(parameters[0].toString());
-					}
-					else
-					{
-						failed.add(parameters[0].toString());
-						validationFailed.put(property, failed);
-					}
-				}
-			}
-			
 			// Now invoke the method with the parameter from the Excel sheet
             m.invoke(target, parameters);
         }
@@ -355,26 +282,6 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
         }
         return validated;
 	 }
-	 
-	 public Boolean validate(String code, String property, String entityType)
-	{
-		// Try to get an object from database
-		Object o = null;
-		try {
-			Class entityClass = Class.forName(entityType);
-			o = facade.fByCode(entityClass, code);
-
-		} catch (Exception ex) {
-			logger.error(ex.getMessage());
-		}
-		
-		if (!(o == null))
-		{
-			return false;
-		}
-		return true;
-		
-	}
 	 
 	public Hashtable<String, Object> getTempPropertyStore() {return tempPropertyStore;}
 	public void setTempPropertyStore(Hashtable<String, Object> tempPropertyStore) {this.tempPropertyStore = tempPropertyStore;}

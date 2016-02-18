@@ -12,6 +12,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Hyperlink;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -95,5 +97,32 @@ public class DataUtil {
 			logger.trace("Found cell with NULL value");
 		}
 		return value;
+	}
+	
+	public static void debugRow(Sheet sheet, Integer rowIndex)
+	{
+		// Using a StringBuffer to create one line with all column titles
+		StringBuffer sb = new StringBuffer();
+		sb.append("Debugging Row " +rowIndex +" ... ");
+		
+		// Selecting first row since this should be the place where the column titles should be placed 
+		Row firstRow    = sheet.getRow(rowIndex);
+		
+		// Iterating through all cells in first row
+		for (short i = firstRow.getFirstCellNum() ; i < firstRow.getLastCellNum() ; i++)
+		{
+			Cell cell = firstRow.getCell(i);
+			// Get the Cell Value as Object
+			Object object = DataUtil.getCellValue(cell);
+			
+			// Get a String representation of the value
+			String cellValue = getStringValue(object);
+			
+			// Add the content of the cell to StringBuffer
+			sb.append("Column " +i +": '" +cellValue + "' ");
+		}
+		
+		// Show the StringBuffer content in logging
+		logger.info(sb.toString());
 	}
 }

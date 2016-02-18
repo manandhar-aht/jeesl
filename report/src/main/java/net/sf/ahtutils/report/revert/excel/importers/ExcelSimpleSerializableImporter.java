@@ -2,6 +2,7 @@ package net.sf.ahtutils.report.revert.excel.importers;
 
 import java.io.IOException;
 import java.io.Serializable;
+import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 
 import net.sf.ahtutils.report.revert.excel.AbstractExcelImporter;
 import net.sf.ahtutils.report.revert.excel.ImportStrategy;
@@ -14,15 +15,10 @@ public class ExcelSimpleSerializableImporter <S extends Serializable, I extends 
 	
 	final static Logger logger = LoggerFactory.getLogger(ExcelSimpleSerializableImporter.class);
 	
-	final Class<S> cSerializable;
-	
-	public ExcelSimpleSerializableImporter(Class<S> cSerializable, String filename) throws IOException
+	public ExcelSimpleSerializableImporter(UtilsXlsDefinitionResolver resolver, String code, String filename) throws IOException, ClassNotFoundException
 	{
 		// Initialize the Abstract class with the given filename
-		super(filename);
-		
-		// Initialize class parameter
-		this.cSerializable = cSerializable;
+		super(resolver, code, filename);
 	}
 	
 	/**
@@ -40,8 +36,8 @@ public class ExcelSimpleSerializableImporter <S extends Serializable, I extends 
 	*
 	*/
 	public static <S extends Serializable, C extends Serializable, I extends ImportStrategy>
-	ExcelSimpleSerializableImporter<S,I> factory(final Class<S> cSerializable, String filename) throws IOException
+	ExcelSimpleSerializableImporter<S,I> factory(UtilsXlsDefinitionResolver resolver, String code, String filename) throws IOException, ClassNotFoundException
 	{
-		return new ExcelSimpleSerializableImporter<S,I>(cSerializable, filename);
+		return new ExcelSimpleSerializableImporter<S,I>(resolver, code, filename);
 	}
 }

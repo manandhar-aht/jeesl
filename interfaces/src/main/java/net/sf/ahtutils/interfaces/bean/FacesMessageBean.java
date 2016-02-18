@@ -11,4 +11,5 @@ public interface FacesMessageBean
 	void growlSuccessRemoved();
 	
 	void errorConstraintViolationDuplicateObject();
+	public void errorConstraintViolationInUse();
 }

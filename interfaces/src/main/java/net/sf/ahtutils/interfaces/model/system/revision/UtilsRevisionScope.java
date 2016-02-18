@@ -7,8 +7,8 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.EjbWithParent;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
+import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
@@ -26,7 +26,7 @@ public interface UtilsRevisionScope<L extends UtilsLang,D extends UtilsDescripti
 									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
-				EjbWithPositionVisible,EjbWithParent,EjbWithPositionParent,
+				EjbWithPositionVisible,EjbWithParentAttributeResolver,EjbWithPositionParent,
 				EjbWithCode,
 				EjbWithLang<L>,EjbWithDescription<D>
 {		

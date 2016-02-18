@@ -1,8 +1,8 @@
 package net.sf.ahtutils.interfaces.model.with.position;
 
-import net.sf.ahtutils.interfaces.model.with.EjbWithParent;
+import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 
-public interface EjbWithPositionVisibleParent extends EjbWithPositionVisible,EjbWithParent
+public interface EjbWithPositionVisibleParent extends EjbWithPositionVisible,EjbWithParentAttributeResolver
 {
 
 }

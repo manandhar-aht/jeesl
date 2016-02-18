@@ -7,7 +7,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.EjbWithParent;
+import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisibleParent;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
@@ -27,7 +27,7 @@ public interface UtilsTsScope <L extends UtilsLang,
 									WS extends UtilsStatus<WS,L,D>,
 									QAF extends UtilsStatus<QAF,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
-				EjbWithPositionVisibleParent,EjbWithParent,EjbWithPositionParent,
+				EjbWithPositionVisibleParent,EjbWithParentAttributeResolver,EjbWithPositionParent,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
 	CAT getCategory();

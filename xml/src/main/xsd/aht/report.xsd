@@ -222,21 +222,16 @@
         <xsd:complexType>
             <xsd:sequence>
 	            <xsd:element ref="r:xlsWorkbook" maxOccurs="unbounded"/>
-	           	
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
-	<xsd:element name="dataHandler">
-        <xsd:complexType>
-	            <xsd:attribute name="class"     type="xsd:string"/>
-				<xsd:attribute name="handledBy" type="xsd:string"/>
-				<xsd:attribute name="validatedBy" type="xsd:string"/>
-        </xsd:complexType>
-	</xsd:element>
 	<xsd:element name="dataAssociation">
 		<xsd:complexType>
-	            <xsd:attribute name="column"   type="xsd:string"/>
-				<xsd:attribute name="property" type="xsd:string"/>
+	            <xsd:attribute name="column"		type="xsd:string"/>
+				<xsd:attribute name="property"		type="xsd:string"/>
+				<xsd:attribute name="targetClass"	type="xsd:string"/>
+				<xsd:attribute name="handledBy"		type="xsd:string"/>
+				<xsd:attribute name="validatedBy"	type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
 	<xsd:element name="dataAssociations">
@@ -246,18 +241,10 @@
 			</xsd:sequence>
         </xsd:complexType>
     </xsd:element>
-	<xsd:element name="dataHandlers">
-        <xsd:complexType>
-            <xsd:sequence>
-				<xsd:element ref="r:dataHandler" maxOccurs="unbounded"/>
-			</xsd:sequence>
-        </xsd:complexType>
-    </xsd:element>
 	<xsd:element name="importStructure">
         <xsd:complexType>
             <xsd:sequence>
 				<xsd:element ref="r:dataAssociations" maxOccurs="1"/>
-				<xsd:element ref="r:dataHandlers" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="targetClass" type="xsd:string"/>
         </xsd:complexType>

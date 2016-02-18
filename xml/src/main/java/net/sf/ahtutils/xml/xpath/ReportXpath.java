@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
+import net.sf.ahtutils.xml.report.DataAssociation;
+import net.sf.ahtutils.xml.report.DataHandler;
 import net.sf.ahtutils.xml.report.Info;
 import net.sf.ahtutils.xml.report.Jr;
 import net.sf.ahtutils.xml.report.Media;
@@ -12,6 +14,7 @@ import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.Template;
 import net.sf.ahtutils.xml.report.Templates;
 import net.sf.ahtutils.xml.report.XlsDefinition;
+import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
@@ -121,6 +124,26 @@ public class ReportXpath
 		List<XlsWorkbook> listResult = (List<XlsWorkbook>)context.selectNodes("//xlsWorkbook[@code='" +code +"']");
 		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+XlsWorkbook.class.getSimpleName()+" for code="+code);}
 		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+XlsWorkbook.class.getSimpleName()+" for code="+code);}
+		return listResult.get(0);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static synchronized DataHandler getDataHandler(XlsSheet definition, String clazz) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		JXPathContext context = JXPathContext.newContext(definition);
+		List<DataHandler> listResult = (List<DataHandler>)context.selectNodes("//dataHandler[@class='" +clazz +"']");
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+DataHandler.class.getSimpleName()+" for class="+clazz);}
+		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+DataHandler.class.getSimpleName()+" for code="+clazz);}
+		return listResult.get(0);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static synchronized DataAssociation getDataAssociation(XlsSheet definition, String property) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		JXPathContext context = JXPathContext.newContext(definition);
+		List<DataAssociation> listResult = (List<DataAssociation>)context.selectNodes("//dataAssociation[@property='" +property +"']");
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+DataAssociation.class.getSimpleName()+" for property="+property);}
+		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+DataAssociation.class.getSimpleName()+" for code="+property);}
 		return listResult.get(0);
 	}
 }

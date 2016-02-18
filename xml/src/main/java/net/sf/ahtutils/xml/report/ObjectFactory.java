@@ -277,20 +277,4 @@ public class ObjectFactory {
         return new DataAssociation();
     }
 
-    /**
-     * Create an instance of {@link DataHandlers }
-     * 
-     */
-    public DataHandlers createDataHandlers() {
-        return new DataHandlers();
-    }
-
-    /**
-     * Create an instance of {@link DataHandler }
-     * 
-     */
-    public DataHandler createDataHandler() {
-        return new DataHandler();
-    }
-
 }

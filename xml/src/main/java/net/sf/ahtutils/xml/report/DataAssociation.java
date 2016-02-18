@@ -20,6 +20,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;attribute name="column" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="property" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="targetClass" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="handledBy" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="validatedBy" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -39,6 +42,12 @@ public class DataAssociation
     protected String column;
     @XmlAttribute(name = "property")
     protected String property;
+    @XmlAttribute(name = "targetClass")
+    protected String targetClass;
+    @XmlAttribute(name = "handledBy")
+    protected String handledBy;
+    @XmlAttribute(name = "validatedBy")
+    protected String validatedBy;
 
     /**
      * Gets the value of the column property.
@@ -94,6 +103,90 @@ public class DataAssociation
 
     public boolean isSetProperty() {
         return (this.property!= null);
+    }
+
+    /**
+     * Gets the value of the targetClass property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTargetClass() {
+        return targetClass;
+    }
+
+    /**
+     * Sets the value of the targetClass property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTargetClass(String value) {
+        this.targetClass = value;
+    }
+
+    public boolean isSetTargetClass() {
+        return (this.targetClass!= null);
+    }
+
+    /**
+     * Gets the value of the handledBy property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getHandledBy() {
+        return handledBy;
+    }
+
+    /**
+     * Sets the value of the handledBy property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setHandledBy(String value) {
+        this.handledBy = value;
+    }
+
+    public boolean isSetHandledBy() {
+        return (this.handledBy!= null);
+    }
+
+    /**
+     * Gets the value of the validatedBy property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getValidatedBy() {
+        return validatedBy;
+    }
+
+    /**
+     * Sets the value of the validatedBy property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setValidatedBy(String value) {
+        this.validatedBy = value;
+    }
+
+    public boolean isSetValidatedBy() {
+        return (this.validatedBy!= null);
     }
 
 }

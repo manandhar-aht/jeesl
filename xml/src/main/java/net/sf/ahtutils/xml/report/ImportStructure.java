@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}dataAssociations"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/report}dataHandlers"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="targetClass" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -33,8 +32,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "dataAssociations",
-    "dataHandlers"
+    "dataAssociations"
 })
 @XmlRootElement(name = "importStructure")
 public class ImportStructure
@@ -44,8 +42,6 @@ public class ImportStructure
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
     protected DataAssociations dataAssociations;
-    @XmlElement(required = true)
-    protected DataHandlers dataHandlers;
     @XmlAttribute(name = "targetClass")
     protected String targetClass;
 
@@ -75,34 +71,6 @@ public class ImportStructure
 
     public boolean isSetDataAssociations() {
         return (this.dataAssociations!= null);
-    }
-
-    /**
-     * Gets the value of the dataHandlers property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link DataHandlers }
-     *     
-     */
-    public DataHandlers getDataHandlers() {
-        return dataHandlers;
-    }
-
-    /**
-     * Sets the value of the dataHandlers property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link DataHandlers }
-     *     
-     */
-    public void setDataHandlers(DataHandlers value) {
-        this.dataHandlers = value;
-    }
-
-    public boolean isSetDataHandlers() {
-        return (this.dataHandlers!= null);
     }
 
     /**

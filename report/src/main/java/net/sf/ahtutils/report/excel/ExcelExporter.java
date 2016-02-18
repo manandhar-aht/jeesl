@@ -53,7 +53,7 @@ public class ExcelExporter
     public Hashtable<String, Integer> errors = new Hashtable<String, Integer>();
 	
     final static Logger logger = LoggerFactory.getLogger(ExcelExporter.class);
-
+	
     public ExcelExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String listDefinition, String languageKey) throws Exception
     {
 		// Get all info

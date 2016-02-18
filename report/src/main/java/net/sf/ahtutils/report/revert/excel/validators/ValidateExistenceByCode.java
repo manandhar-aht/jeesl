@@ -23,12 +23,13 @@ public class ValidateExistenceByCode implements ValidationStrategy {
 	public Boolean validate(Object object, String parameterClass, String property) {
 		
 		String code = (String) object;
+		
 		Class  lutClass      = null;
                 Object lookupEntity  = null;
 		Boolean validated    = false;
                 
 		if(logger.isTraceEnabled()){logger.trace("Searching for Entity with Code " +code);}
-		
+		logger.info(code + facade.toString());
 		// Try to find the entity with given code in database
 		if (facade != null)
 		{

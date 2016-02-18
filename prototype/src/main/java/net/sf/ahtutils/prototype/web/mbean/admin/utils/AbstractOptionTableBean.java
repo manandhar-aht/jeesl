@@ -1,6 +1,7 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.utils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -25,9 +26,12 @@ import net.sf.ahtutils.interfaces.model.graphic.UtilsWithGraphic;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 import net.sf.ahtutils.interfaces.model.status.UtilsWithImage;
 import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
+import net.sf.ahtutils.interfaces.model.with.image.EjbWithImage;
+import net.sf.ahtutils.interfaces.model.with.image.EjbWithImageAlt;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParent;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
@@ -60,11 +64,13 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	protected long index;
 	protected Map<Long,Boolean> allowAdditionalElements; public Map<Long, Boolean> getAllowAdditionalElements(){return allowAdditionalElements;}
 	
+	protected Object category; public Object getCategory() {return category;} public void setCategory(Object category) {this.category = category;}
 	protected Object status; public Object getStatus() {return status;} public void setStatus(Object status) {this.status = status;}
 	
 	@SuppressWarnings("rawtypes")
 	protected Class cl,clParent;
 	
+	protected List<EjbWithPosition> categories; public List<EjbWithPosition> getCategories(){return categories;}
 	protected List<EjbWithPosition> parents; public List<EjbWithPosition> getParents(){return parents;}
 	protected List<EjbWithPosition> items; public List<EjbWithPosition> getItems() {return items;}
 	
@@ -87,6 +93,8 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		
 		status = null;
 		allowAdditionalElements = new Hashtable<Long,Boolean>();
+		
+		categories = new ArrayList<EjbWithPosition>();
 	}
 	
 	protected void initUtils(String[] langs, UtilsFacade fUtils, FacesMessageBean bMessage, Class<L> cLang, Class<D> cDescription, Class<?> cStatus, Class<G> cG, Class<GT> cGT, Class<GS> cGS)
@@ -132,7 +140,31 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		}
 	}
 	
-	public void selectCategory(boolean reset) throws ClassNotFoundException{}
+	public void selectCategory() throws ClassNotFoundException{selectCategory(true);}
+	@SuppressWarnings("unchecked")
+	public void selectCategory(boolean reset) throws ClassNotFoundException
+	{
+		logger.info("selectCategory "+((EjbWithCode)category).getCode() +" ("+ ((EjbWithImageAlt)category).getImageAlt()+") allowAdditionalElements:"+allowAdditionalElements.get(((EjbWithId)category).getId()));
+		cl = Class.forName(((EjbWithImage)category).getImage());
+		updateUiForCategory();
+		
+		uiAllowAdd = allowAdditionalElements.get(((EjbWithId)category).getId()) || hasDeveloperAction;
+		
+		if(((EjbWithImageAlt)category).getImageAlt()!=null)
+		{
+            clParent = Class.forName(((EjbWithImageAlt)category).getImageAlt()).asSubclass(cStatus);
+            parents = fUtils.all(clParent);
+            logger.info(cl.getSimpleName()+" "+parents.size());
+		}
+		else
+		{
+			clParent=null;
+			parents=null;
+		}
+		reloadStatusEntries();
+		if(reset){status = null;}
+		debugUi(true);
+	}
 	
 	@SuppressWarnings("unchecked")
 	protected void reloadStatusEntries()
@@ -159,6 +191,42 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			G g = efGraphic.buildSymbol(type, style);
 			((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(g);
 		}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void selectStatus() throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
+	{
+//		status = fUtils.find(cStatus,status);
+		logger.debug("selectStatus");
+//		status = blAdmin.verifiyLangs(cl,MeisDescription.class,status,MeisLang.defaultLangs);
+		if(((EjbWithParent)status).getParent()!=null)
+		{
+			parentId=((EjbWithParent)status).getParent().getId();
+		}
+		
+		if(supportsGraphic && ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic()==null)
+		{
+			logger.info("Need to create a graphic entity for this status");
+			GT type = fUtils.fByCode(cGT, UtilsGraphicType.Code.symbol.toString());
+			GS style = fUtils.fByCode(cGS, UtilsGraphicStyle.Code.circle.toString());
+			G g = fUtils.persist(efGraphic.buildSymbol(type, style));
+			((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(g);
+			status = fUtils.update(status);
+		}
+		
+		uiAllowCode = hasDeveloperAction || hasAdministratorAction;
+		if(hasDeveloperAction){uiAllowCode=true;}
+		else if(status instanceof UtilsStatusFixedCode)
+		{
+			for(String fixed : ((UtilsStatusFixedCode)status).getFixedCodes())
+			{
+				if(fixed.equals(((UtilsStatus)category).getCode()))
+				{
+					uiAllowCode=false;
+				}
+			}
+		}
+		debugUi(false);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -201,7 +269,6 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		}
 	}
 	
-	public void selectCategory() throws ClassNotFoundException{}
 	protected void updateAppScopeBean2(Object o){}
 	
 	public void reorder() throws UtilsConstraintViolationException, UtilsLockingException

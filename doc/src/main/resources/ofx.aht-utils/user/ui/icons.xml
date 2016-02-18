@@ -258,6 +258,18 @@
 	                    <ofx:paragraph>The wizards indicates some algorithms executed by the system to help you performing some tasks.</ofx:paragraph>
 	                </table:cell>
 	            </table:row>
+	            <table:row>
+	                <table:cell>
+	                    <media:image>
+	                        <layout:height unit="em">1.0</layout:height>
+	                        <media:media src="svg.aht-utils/icon/ui/printer.svg" dst="icon/ui/printer"/>
+	                    </media:image>
+	                </table:cell>
+	                <table:cell><ofx:paragraph>Printer</ofx:paragraph></table:cell>
+	                <table:cell>
+	                    <ofx:paragraph>The printer icon opens the print dialog.</ofx:paragraph>
+	                </table:cell>
+	            </table:row>
 	        </table:body>
     	</table:content>
 	</table:table>

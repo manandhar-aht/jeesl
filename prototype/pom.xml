@@ -38,6 +38,11 @@
 			<groupId>net.sf.ahtutils</groupId>
 			<artifactId>ahtutils-jsf</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.ahtutils</groupId>
+			<artifactId>ahtutils-report</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.metachart</groupId>

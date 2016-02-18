@@ -1,5 +1,9 @@
 package net.sf.ahtutils.prototype.web.mbean.admin.system.ts;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,9 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.jxpath.JXPathContext;
 import org.joda.time.DateTime;
 import org.metachart.xml.DataSet;
+import org.primefaces.event.FileUploadEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +26,7 @@ import net.sf.ahtutils.factory.xml.mc.XmlMcDataSetFactory;
 import net.sf.ahtutils.factory.xml.ts.XmlDataFactory;
 import net.sf.ahtutils.factory.xml.ts.XmlTimeSeriesFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -30,6 +37,8 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.report.revert.excel.ImportStrategy;
+import net.sf.ahtutils.report.revert.excel.importers.ExcelSimpleSerializableImporter;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.ahtutils.xml.ts.Data;
 import net.sf.ahtutils.xml.ts.TimeSeries;
@@ -69,9 +78,13 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;} public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
 	private DataSet chartDs; public DataSet getChartDs(){return chartDs;}
 	
-	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
+	protected UtilsXlsDefinitionResolver xlsResolver;
+	protected File importRoot;
+	
+	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
 		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cTs,cBridge,cEc,cInt,cData,cWs);
+		this.xlsResolver=xlsResolver;
 	}
 	
 	protected void initLists()
@@ -129,6 +142,43 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 			interval = fTs.find(cInt, interval);
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(interval));}
 		}
+	}
+	
+	/**
+	 * Import Excel time series to XML objects. 
+	 * Excel file is stored locally, then loaded into a Apache POI object.
+	 * Then AHTUtils ExcelImporter system is configured (what information is to be put where) and used to import Excel data linewise to XML object representation.
+	 * @param event The PrimeFaces FileUpload event that contains the uploaded data and meta information
+	 * @throws java.io.FileNotFoundException
+	 */	
+	public void uploadData(FileUploadEvent event) throws FileNotFoundException, IOException, ClassNotFoundException, Exception
+	{
+		// Store the uploaded data locally (is overwritten without asking for files with the same name) 
+		// and save the filename for use in log messages when saving to database
+		String filename = event.getFile().getFileName();
+		File f = new File(importRoot,filename);
+		FileOutputStream out = new FileOutputStream(f);
+		IOUtils.copy(event.getFile().getInputstream(), out);
+		
+		// Create a new TimeSeries
+		setTimeSeries(XmlTimeSeriesFactory.build());
+		
+		// Get a new Resolver that gives you the XlsWorkbook by asking the reports.xml registry for the file
+		
+		// Instantiate and configure the importer
+		// ATTENTION: Do not use the primary key option here (would cause bad results)
+		ExcelSimpleSerializableImporter<Data,ImportStrategy> statusImporter = ExcelSimpleSerializableImporter.factory(xlsResolver, "TimeSeries", f.getAbsolutePath());
+		statusImporter.selectFirstSheet();
+		statusImporter.setFacade(fTs);
+		statusImporter.getTempPropertyStore().put("createEntityForUnknown", true);
+		statusImporter.getTempPropertyStore().put("lookup", false);
+		  
+		Map<Data,ArrayList<String>> data  = statusImporter.execute(true);
+		
+		if(debugOnInfo){logger.info("Loaded " +data.size() +" time series data entries to be saved in the database.");}
+		timeSeries.getData().addAll(data.keySet());
+		entity=null;
+		preview();
 	}
 	
 	public void random()

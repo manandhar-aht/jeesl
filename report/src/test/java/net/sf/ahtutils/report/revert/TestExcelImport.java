@@ -2,11 +2,11 @@ package net.sf.ahtutils.report.revert;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 import net.sf.ahtutils.report.revert.excel.DummyEntity;
-import net.sf.ahtutils.report.revert.excel.importers.ExcelEjbWithIdImporter;
+import net.sf.ahtutils.report.revert.excel.importers.ExcelSimpleSerializableImporter;
 import net.sf.ahtutils.test.AbstractAhtUtilsReportTest;
 import net.sf.ahtutils.test.AhtUtilsReportBootstrap;
 
@@ -22,7 +22,7 @@ public class TestExcelImport extends AbstractAhtUtilsReportTest {
 	private String filename = "src/test/resources/data/xlsx/importTest.xlsx";
 	
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void test() throws Exception {
 		
@@ -30,7 +30,7 @@ public class TestExcelImport extends AbstractAhtUtilsReportTest {
 		AhtUtilsReportBootstrap.init();
 		
 		// Initialize the importer
-		ExcelEjbWithIdImporter statusImporter = ExcelEjbWithIdImporter.factory(DummyEntity.class, filename);
+		ExcelSimpleSerializableImporter statusImporter = ExcelSimpleSerializableImporter.factory(new AhtUtilsXlsDefinitionResolver(), "testReport", filename);
 		
 		// Select the first sheet in Excel file to be the active one
 		statusImporter.selectFirstSheet();
@@ -41,29 +41,20 @@ public class TestExcelImport extends AbstractAhtUtilsReportTest {
 		// Show first after header (2nd) where first data should be found
 		statusImporter.debugFirstRow();
 		
-		// Define what column should be associated with which property of the entity
-		// WARNING: Make sure that the properties are of the correct data type as to be found in Excel sheet:
-		// - Double for numeric cells
-		// - String for text cells
-		// - Date   for cells formatted as date 
-		Hashtable<Short, String> associationTable = new Hashtable<Short, String>();
-		associationTable.put((short) 0, "ValueDouble");
-		associationTable.put((short) 1, "ValueDate");
-		associationTable.put((short) 2, "ValueString");
-		
 		// Let the importer set the given column values to entity properties and get a list of entities for all rows
-		ArrayList<Object> importedEntities = statusImporter.createEntitiesFromData(associationTable, true, DummyEntity.class);
+		Map<Object, List<String>> importedEntities = statusImporter.execute(true);
 		
 		// Specify how to format dates in debug output
 		DateFormat df = SimpleDateFormat.getDateInstance();
-		
+		System.out.println("Size " +importedEntities.size());
 		// Debug the entity properties
-		for (Object importedEntity : importedEntities)
+		for (Object importedEntity : importedEntities.keySet())
 		{
 			DummyEntity entity = (DummyEntity) importedEntity;
-			logger.info("Imported ValueString Property = " +entity.getValueString());
-			logger.info("Imported ValueDouble Property = " +entity.getValueDouble());
-			logger.info("Imported ValueDate   Property = " +df.format(entity.getValueDate()));
+		//	logger.info("Imported ValueString Property = " +entity.getValueString());
+		//	logger.info("Imported ValueDouble Property = " +entity.getValueDouble());
+		//	logger.info("Imported ValueDate   Property = " +df.format(entity.getValueDate()));
+			System.out.println("Imported Code Property = " +entity.getCode());
 		}
 		
 	}

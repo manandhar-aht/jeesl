@@ -11,6 +11,9 @@
         <ns2:media dir="" type="pdf">
             <ns2:jr type="mr" name="Simple"/>
         </ns2:media>
+		<ns2:media dir="" type="xls">
+            <ns2:jr type="mr" name="Simple"/>
+        </ns2:media>
         <example>src/test/resources/data/xml/report/testData.xml</example>
     </ns2:report>
     <ns2:report id="sectest" dir="sectest" ltr="true">

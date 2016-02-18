@@ -1,0 +1,15 @@
+<r:xlsDefinition xmlns:r="http://ahtutils.aht-group.com/report" xmlns:us="http://ahtutils.aht-group.com/status">
+	<r:xlsWorkbook code="testWorkbook">
+        <r:xlsSheet query="//test">
+			<us:langs>
+				<us:lang key="en" translation="Test Data"/>
+			</us:langs>
+			<r:importStructure targetClass="net.sf.ahtutils.report.revert.excel.DummyEntity">
+				<r:dataAssociations>
+					<r:dataAssociation column="2" 
+									   property="Code" />
+				</r:dataAssociations>
+			</r:importStructure>
+        </r:xlsSheet>
+    </r:xlsWorkbook>
+</r:xlsDefinition>

@@ -254,6 +254,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DataAssociation }
+     * 
+     */
+    public DataAssociation createDataAssociation() {
+        return new DataAssociation();
+    }
+
+    /**
      * Create an instance of {@link ImportStructure }
      * 
      */
@@ -267,14 +275,6 @@ public class ObjectFactory {
      */
     public DataAssociations createDataAssociations() {
         return new DataAssociations();
-    }
-
-    /**
-     * Create an instance of {@link DataAssociation }
-     * 
-     */
-    public DataAssociation createDataAssociation() {
-        return new DataAssociation();
     }
 
 }

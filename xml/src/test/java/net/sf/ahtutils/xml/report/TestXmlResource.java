@@ -1,36 +1,19 @@
 package net.sf.ahtutils.xml.report;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
-import net.sf.ahtutils.xml.report.Resource.Value;
-import net.sf.exlp.util.xml.JaxbUtil;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlResource extends AbstractXmlReportTest
+import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
+import net.sf.ahtutils.xml.report.Resource.Value;
+
+public class TestXmlResource extends AbstractXmlReportTest<Resource>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlResource.class);
 	
-	@BeforeClass
-	public static void initFiles()
-	{
-		fXml = new File(rootDir,"resource2.xml");
-	}
+	public TestXmlResource(){super(Resource.class);}
+	public static Resource create(boolean withChildren){return (new TestXmlResource()).build(withChildren);}
     
-    @Test
-    public void testResource() throws FileNotFoundException
-    {
-    	Resource test = create();
-    	Resource ref = (Resource)JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Resource.class);
-    	assertJaxbEquals(ref, test);
-    }
-    
-    public static Resource create()
+    public Resource build(boolean withChildren)
     {
     	Resource resource = new Resource();
     	resource.setName("logo");
@@ -40,16 +23,11 @@ public class TestXmlResource extends AbstractXmlReportTest
     	resource.setValue(myValue);
     	return resource;
     }
-    
-    public void save() {save(create(),fXml);}
 	
 	public static void main(String[] args)
     {
 		UtilsXmlTestBootstrap.init();
-			
-		TestXmlResource.initJaxb();
-		TestXmlResource.initFiles();	
 		TestXmlResource test = new TestXmlResource();
-		test.save();
+		test.saveReferenceXml();
     }
 }

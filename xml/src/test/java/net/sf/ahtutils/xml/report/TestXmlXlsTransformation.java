@@ -1,30 +1,18 @@
 package net.sf.ahtutils.xml.report;
 
-import java.io.FileNotFoundException;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
-import net.sf.exlp.util.xml.JaxbUtil;
 
-public class TestXmlXlsTransformation extends AbstractXmlReportTest
+public class TestXmlXlsTransformation extends AbstractXmlReportTest<XlsTransformation>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlXlsTransformation.class);
 	
-	@BeforeClass public static void initFiles(){setXmlFile(dirSuffix,XlsTransformation.class);}
+	public TestXmlXlsTransformation(){super(XlsTransformation.class);}
+	public static XlsTransformation create(boolean withChildren){return (new TestXmlXlsTransformation()).build(withChildren);}
     
-    @Test
-    public void testReport() throws FileNotFoundException
-    {
-    	XlsTransformation test = create(true);
-    	XlsTransformation ref = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), XlsTransformation.class);
-    	assertJaxbEquals(ref, test);
-    }
-    
-    public static XlsTransformation create(boolean withChildren)
+    public XlsTransformation build(boolean withChildren)
     {
     	XlsTransformation xml = new XlsTransformation();
     	
@@ -39,16 +27,11 @@ public class TestXmlXlsTransformation extends AbstractXmlReportTest
     	
     	return xml;
     }
-    
-    public void save() {save(create(true),fXml);}
 	
 	public static void main(String[] args)
     {
 		UtilsXmlTestBootstrap.init();
-			
-		TestXmlXlsTransformation.initJaxb();
-		TestXmlXlsTransformation.initFiles();
 		TestXmlXlsTransformation test = new TestXmlXlsTransformation();
-		test.save();
+		test.saveReferenceXml();
     }
 }

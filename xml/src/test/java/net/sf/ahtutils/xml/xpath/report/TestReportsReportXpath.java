@@ -25,10 +25,10 @@ public class TestReportsReportXpath extends AbstractXmlTest
 	{
 		reports = new Reports();
 		
-		xml1 = TestXmlReport.create("t1");reports.getReport().add(xml1);
-		xml2 = TestXmlReport.create("t2");reports.getReport().add(xml2);
-		xml3 = TestXmlReport.create("t3");reports.getReport().add(xml3);
-		xml4 = TestXmlReport.create("t3");reports.getReport().add(xml4);
+		xml1 = TestXmlReport.create(false);xml1.setId("t1");reports.getReport().add(xml1);
+		xml2 = TestXmlReport.create(false);xml2.setId("t2");reports.getReport().add(xml2);
+		xml3 = TestXmlReport.create(false);xml3.setId("t3");reports.getReport().add(xml3);
+		xml4 = TestXmlReport.create(false);xml4.setId("t3");reports.getReport().add(xml4);
 	}
 	
 	@Test

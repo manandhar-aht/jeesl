@@ -76,8 +76,8 @@ public class ReportXpath
 		
 		JXPathContext context = JXPathContext.newContext(reports);
 		List<Jr> listResult = (List<Jr>)context.selectNodes(sb.toString());
-		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+Report.class.getSimpleName()+" for id="+id);}
-		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+Report.class.getSimpleName()+" for id="+id);}
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+Report.class.getSimpleName()+" for id="+id+" and format="+format);}
+		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+Report.class.getSimpleName()+" for id="+id+" and format="+format);}
 		return listResult.get(0);
 	}
 	

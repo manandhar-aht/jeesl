@@ -1,56 +1,34 @@
 package net.sf.ahtutils.xml.report;
 
-import java.io.FileNotFoundException;
-
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
-import net.sf.exlp.util.xml.JaxbUtil;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlReport extends AbstractXmlReportTest
+import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
+
+public class TestXmlReport extends AbstractXmlReportTest<Report>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlReport.class);
 	
-	@BeforeClass
-	public static void initFiles()
-	{
-        setXmlFile(dirSuffix,"report2");
-	}
+	public TestXmlReport(){super(Report.class);}
+	public static Report create(boolean withChildren){return (new TestXmlReport()).build(withChildren);}
     
-    @Test
-    public void testReport() throws FileNotFoundException
-    {
-    	Report test = create();
-    	Report ref = (Report)JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Report.class);
-    	assertJaxbEquals(ref, test);
-    }
-    
-    public static Report create(){return create("testReportId");}
-    public static Report create(String id)
+    public Report build(boolean withChildren)
     {
     	Report report = new Report();
-    	report.setId(id);
+    	report.setId("myId");
     	report.setDir("testDir");
     	report.setExample("testExampleXmlFile");
-    	report.getMedia().add(TestXmlMedia.create("pdf"));
-    	report.getMedia().add(TestXmlMedia.create("xls"));
+    	report.getMedia().add(TestXmlMedia.create(false));
+    	report.getMedia().add(TestXmlMedia.create(false));
     	report.setLtr(true);
     	report.setRtl(false);
     	return report;
     }
-    
-    public void save() {save(create(),fXml);}
 	
 	public static void main(String[] args)
     {
 		UtilsXmlTestBootstrap.init();
-			
-		TestXmlReport.initJaxb();
-		TestXmlReport.initFiles();
 		TestXmlReport test = new TestXmlReport();
-		test.save();
+		test.saveReferenceXml();
     }
 }

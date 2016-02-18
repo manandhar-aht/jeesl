@@ -8,6 +8,7 @@ import net.sf.ahtutils.xml.report.TestXmlReport;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,20 +27,21 @@ public class TestReportsMrXpath extends AbstractXmlTest
 	{
 		reports = new Reports();
 		
-		xml1 = TestXmlReport.create("t1");
-		xml1.getMedia().get(0).getJr().get(0).setName("n1");
+		xml1 = TestXmlReport.create(false);xml1.setId("t1");
+		xml1.getMedia().get(0).getJr().get(0).setName("n1");xml1.getMedia().get(0).setType("pdf");
 		reports.getReport().add(xml1);
 		
-		xml2 = TestXmlReport.create("t2");
-		xml2.getMedia().get(0).getJr().get(0).setName("n2");;
+		xml2 = TestXmlReport.create(false);xml2.setId("t2");
+		xml2.getMedia().get(0).getJr().get(0).setName("n2");xml2.getMedia().get(0).setType("pdf");
 		reports.getReport().add(xml2);
-		xml3 = TestXmlReport.create("t3");reports.getReport().add(xml3);
-		xml4 = TestXmlReport.create("t3");reports.getReport().add(xml4);
+		xml3 = TestXmlReport.create(false);xml3.setId("t3");reports.getReport().add(xml3);xml3.getMedia().get(0).setType("pdf");xml3.getMedia().get(1).setType("pdf");
+		xml4 = TestXmlReport.create(false);xml3.setId("t3");reports.getReport().add(xml4);
 	}
 	
 	@Test
 	public void testId1() throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
+		JaxbUtil.info(reports);
 		Jr actual = ReportXpath.getMr(reports, xml1.getId(), "pdf");
 		assertJaxbEquals(xml1.getMedia().get(0).getJr().get(0), actual);
 	}

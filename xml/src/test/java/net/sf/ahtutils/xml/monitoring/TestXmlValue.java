@@ -12,7 +12,7 @@ public class TestXmlValue extends AbstractXmlMonitoringTest<Value>
 	public TestXmlValue(){super(Value.class);}
 	public static Value create(boolean withChildren){return (new TestXmlValue()).build(withChildren);}
     
-    public static Value create()
+    public Value build(boolean withChildren)
     {
     	Value xml = new Value();
     	xml.setValue("myValue");

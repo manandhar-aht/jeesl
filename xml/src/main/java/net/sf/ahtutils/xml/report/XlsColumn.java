@@ -25,6 +25,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsTransformation"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}dataAssociation"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="column" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="required" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
@@ -43,7 +44,8 @@ import net.sf.ahtutils.xml.status.Langs;
 @XmlType(name = "", propOrder = {
     "langs",
     "descriptions",
-    "xlsTransformation"
+    "xlsTransformation",
+    "dataAssociation"
 })
 @XmlRootElement(name = "xlsColumn")
 public class XlsColumn
@@ -57,6 +59,8 @@ public class XlsColumn
     protected Descriptions descriptions;
     @XmlElement(required = true)
     protected XlsTransformation xlsTransformation;
+    @XmlElement(required = true)
+    protected DataAssociation dataAssociation;
     @XmlAttribute(name = "column")
     protected String column;
     @XmlAttribute(name = "required")
@@ -152,6 +156,34 @@ public class XlsColumn
 
     public boolean isSetXlsTransformation() {
         return (this.xlsTransformation!= null);
+    }
+
+    /**
+     * Gets the value of the dataAssociation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link DataAssociation }
+     *     
+     */
+    public DataAssociation getDataAssociation() {
+        return dataAssociation;
+    }
+
+    /**
+     * Sets the value of the dataAssociation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DataAssociation }
+     *     
+     */
+    public void setDataAssociation(DataAssociation value) {
+        this.dataAssociation = value;
+    }
+
+    public boolean isSetDataAssociation() {
+        return (this.dataAssociation!= null);
     }
 
     /**

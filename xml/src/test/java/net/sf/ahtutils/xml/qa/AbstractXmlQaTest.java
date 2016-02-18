@@ -6,7 +6,7 @@ import net.sf.ahtutils.xml.system.AbstractXmlSystemTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractXmlQaTest <T extends Object> extends AbstractXmlTest<T> 
+public abstract class AbstractXmlQaTest <T extends Object> extends AbstractXmlTest<T>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractXmlSystemTest.class);
 	

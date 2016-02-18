@@ -3,4 +3,5 @@
     <s:langs/>
     <s:descriptions/>
     <r:xlsTransformation dataClass="myDataClass" formatPattern="myPattern" beanProperty="myBeanProperty"/>
+    <r:dataAssociation column="A"/>
 </r:xlsColumn>

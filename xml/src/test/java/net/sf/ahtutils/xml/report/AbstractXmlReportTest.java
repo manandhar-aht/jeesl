@@ -1,14 +1,16 @@
 package net.sf.ahtutils.xml.report;
 
-import net.sf.ahtutils.test.AbstractXmlTest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractXmlReportTest extends AbstractXmlTest
+import net.sf.ahtutils.test.AbstractXmlTest;
+
+public abstract class AbstractXmlReportTest <T extends Object> extends AbstractXmlTest<T>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractXmlReportTest.class);
-	
-	protected static final String rootDir = "src/test/resources/data/xml/report";
-    protected static final String dirSuffix = "report";
+    
+	public AbstractXmlReportTest(Class<T> cXml)
+	{
+		super(cXml,"report");
+	}
 }

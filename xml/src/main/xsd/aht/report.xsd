@@ -291,6 +291,7 @@
 	            <xsd:element ref="us:langs" maxOccurs="1"/>
                 <xsd:element ref="us:descriptions" maxOccurs="1"/>
                 <xsd:element ref="r:xlsTransformation" maxOccurs="1"/>
+                <xsd:element ref="r:dataAssociation" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="column" type="xsd:string"/>
             <xsd:attribute name="required" type="xsd:boolean"/>

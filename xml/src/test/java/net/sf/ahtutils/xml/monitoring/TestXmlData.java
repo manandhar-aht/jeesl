@@ -24,7 +24,7 @@ public class TestXmlData extends AbstractXmlMonitoringTest<Data>
     	{
     		xml.setIndicator(TestXmlIndicator.create(false));
     		xml.setObserver(TestXmlObserver.create(false));
-    		xml.getValue().add(TestXmlValue.create());xml.getValue().add(TestXmlValue.create());
+    		xml.getValue().add(TestXmlValue.create(false));xml.getValue().add(TestXmlValue.create(false));
     	}
     	
     	return xml;

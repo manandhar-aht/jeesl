@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<aht:container xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:aht="http://ahtutils.aht-group.com">
+    <s:status id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" style="myStyle" position="1"/>
+    <s:status id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" style="myStyle" position="1"/>
+</aht:container>

@@ -44,8 +44,6 @@ public class AbstractAhtUtilsXmlTest <T extends Object>
 		}
 	}
 	
-	
-	
 	protected void assertJaxbEquals(Object expected, Object actual)
 	{
 		Assert.assertEquals("Actual XML differes from expected XML",JaxbUtil.toString(expected),JaxbUtil.toString(actual));

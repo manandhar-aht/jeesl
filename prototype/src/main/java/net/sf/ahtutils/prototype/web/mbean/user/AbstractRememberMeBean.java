@@ -47,9 +47,9 @@ public class AbstractRememberMeBean <L extends UtilsLang,D extends UtilsDescript
 		Map<String,Object> cookies = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();
 		if(cookies.containsKey(cookieName))
 		{
-			if(logOnInfo){logger.info("Cookie found");}
 			try
 			{
+				if(logOnInfo){logger.info("Cookie found");}
 				Cookie cookie = (Cookie) cookies.get(cookieName);
 				REM rem = fUser.fByCode(cRem, cookie.getValue());
 				if(logOnInfo){logger.info("REM found");}

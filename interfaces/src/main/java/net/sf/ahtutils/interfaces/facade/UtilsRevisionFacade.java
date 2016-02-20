@@ -8,6 +8,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.system.revision.EjbWithRevisionAttributes;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
@@ -37,10 +38,10 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 	
 	void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException;
 	
-	RA save(Class<RE> cEntity, RE entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
-	RA save(Class<RS> cScope, RS scope, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
-	void rm(Class<RE> cEntity, RE entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
-	void rm(Class<RS> cScope, RS scop, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
+	<W extends EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>> RA save(Class<W> cW, W entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
+	<W extends EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>> void rm(Class<W> cW, W entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
+//	RA save(Class<RS> cScope, RS scope, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
+//	void rm(Class<RS> cScope, RS scop, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
 	
 	<T extends EjbWithId> T jpaTree(Class<T> c, String jpa, long id) throws UtilsNotFoundException;
 	

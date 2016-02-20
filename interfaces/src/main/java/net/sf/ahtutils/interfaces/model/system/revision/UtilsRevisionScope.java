@@ -1,7 +1,5 @@
 package net.sf.ahtutils.interfaces.model.system.revision;
 
-import java.util.List;
-
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -28,11 +26,8 @@ public interface UtilsRevisionScope<L extends UtilsLang,D extends UtilsDescripti
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithPositionVisible,EjbWithParentAttributeResolver,EjbWithPositionParent,
 				EjbWithCode,
-				EjbWithLang<L>,EjbWithDescription<D>
+				EjbWithLang<L>,EjbWithDescription<D>,EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
 {		
 	RC getCategory();
 	void setCategory(RC category);
-	
-	List<RA> getAttributes();
-	void setAttributes(List<RA> attributes);
 }

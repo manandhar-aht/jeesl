@@ -18,6 +18,7 @@ import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.system.revision.EjbWithRevisionAttributes;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
@@ -85,10 +86,10 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		this.rmProtected(mapping);
 	}
 
-	@Override
-	public RA save(Class<RE> cEntity, RE entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException
+	@Override public <W extends EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>>
+			RA save(Class<W> cW, W entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException
 	{
-		entity = this.find(cEntity, entity);
+		entity = this.find(cW, entity);
 		attribute = this.saveProtected(attribute);
 		if(!entity.getAttributes().contains(attribute))
 		{
@@ -97,35 +98,15 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		}
 		return attribute;
 	}
-	
-	@Override public RA save(Class<RS> cScope, RS scope, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException
-	{
-		attribute = this.saveProtected(attribute);
-		if(!scope.getAttributes().contains(attribute))
-		{
-			scope.getAttributes().add(attribute);
-			this.saveProtected(scope);
-		}
-		return attribute;
-	}
 
-	@Override public void rm(Class<RE> cEntity, RE entity, RA attribute) throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public <W extends EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>>
+			void rm(Class<W> cW, W entity, RA attribute) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		entity = this.find(cEntity, entity);
+		entity = this.find(cW, entity);
 		if(entity.getAttributes().contains(attribute))
 		{
 			entity.getAttributes().remove(attribute);
 			this.saveProtected(entity);
-		}
-		this.rmProtected(attribute);		
-	}
-
-	@Override public void rm(Class<RS> cScope, RS scope, RA attribute) throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		if(scope.getAttributes().contains(attribute))
-		{
-			scope.getAttributes().remove(attribute);
-			this.saveProtected(scope);
 		}
 		this.rmProtected(attribute);		
 	}
@@ -145,7 +126,7 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found "+c.getSimpleName()+" for jpa="+jpa);}
 	}
 	
-	@Override @SuppressWarnings("unchecked")
+	@Override
 	public <T extends EjbWithId> List<T> revisions(Class<T> c, List<Long> ids)
 	{
 		AuditQuery query = AuditReaderFactory.get(em).createQuery().forRevisionsOfEntity(c, false, true);

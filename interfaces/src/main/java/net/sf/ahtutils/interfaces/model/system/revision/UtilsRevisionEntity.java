@@ -27,13 +27,10 @@ public interface UtilsRevisionEntity<L extends UtilsLang,D extends UtilsDescript
 									RAT extends UtilsStatus<RAT,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithParentAttributeResolver,EjbWithPositionParent,
-		EjbWithLang<L>,EjbWithDescription<D>
+				EjbWithLang<L>,EjbWithDescription<D>,EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
 {	
 	RC getCategory();
 	void setCategory(RC category);
-	
-	List<RA> getAttributes();
-	void setAttributes(List<RA> attributes);
 	
 	List<REM> getMaps();
 	void setMaps(List<REM> maps);

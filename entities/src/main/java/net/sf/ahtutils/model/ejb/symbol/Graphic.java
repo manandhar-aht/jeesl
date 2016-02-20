@@ -21,7 +21,9 @@ public class Graphic implements EjbRemoveable,Serializable,EjbPersistable,
 	
 	private long id;
 	@Override public long getId() {return id;}
-	@Override  public void setId(long id) {this.id = id;}
+	@Override public void setId(long id) {this.id = id;}
+	
+	@Override public Long getVersionLock() {return new Long(0);}
 	
 	@ManyToOne
 	private GraphicType type;

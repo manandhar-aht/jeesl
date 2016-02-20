@@ -11,7 +11,9 @@ public interface UtilsGraphic<L extends UtilsLang,
 								GT extends UtilsStatus<GT,L,D>,
 								GS extends UtilsStatus<GS,L,D>>
 		extends EjbWithId
-{					
+{		
+	Long getVersionLock();
+	
 	GT getType();
 	void setType(GT type);
 	

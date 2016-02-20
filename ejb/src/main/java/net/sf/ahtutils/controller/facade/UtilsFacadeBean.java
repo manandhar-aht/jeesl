@@ -78,8 +78,9 @@ public class UtilsFacadeBean implements UtilsFacade
 		else {return object.equalsAttributes(em.find(c,object.getId()));}
 	}
 	
-	@Override public <T extends EjbMergeable> T merge(T o) throws UtilsConstraintViolationException, UtilsLockingException {return this.update(o);}
 	@Override public <T extends EjbMergeable> T mergeTransaction(T o) throws UtilsConstraintViolationException, UtilsLockingException {return update(o);}
+	@Override public <T extends EjbMergeable> T merge(T o) throws UtilsConstraintViolationException, UtilsLockingException {return this.update(o);}
+	
 	
 
 	public <T extends EjbWithId> T saveProtected(T o) throws UtilsConstraintViolationException, UtilsLockingException

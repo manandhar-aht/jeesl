@@ -2,4 +2,6 @@
 <s:organisation xmlns:s="http://ahtutils.aht-group.com/status" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1">
     <s:langs/>
     <s:descriptions/>
+    <s:function code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
+    <s:function code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
 </s:organisation>

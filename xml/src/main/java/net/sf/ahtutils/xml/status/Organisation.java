@@ -2,6 +2,8 @@
 package net.sf.ahtutils.xml.status;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -22,6 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}function" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -41,7 +44,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "langs",
-    "descriptions"
+    "descriptions",
+    "function"
 })
 @XmlRootElement(name = "organisation")
 public class Organisation
@@ -53,6 +57,8 @@ public class Organisation
     protected Langs langs;
     @XmlElement(required = true)
     protected Descriptions descriptions;
+    @XmlElement(required = true)
+    protected List<Function> function;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "code")
@@ -124,6 +130,43 @@ public class Organisation
 
     public boolean isSetDescriptions() {
         return (this.descriptions!= null);
+    }
+
+    /**
+     * Gets the value of the function property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the function property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getFunction().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Function }
+     * 
+     * 
+     */
+    public List<Function> getFunction() {
+        if (function == null) {
+            function = new ArrayList<Function>();
+        }
+        return this.function;
+    }
+
+    public boolean isSetFunction() {
+        return ((this.function!= null)&&(!this.function.isEmpty()));
+    }
+
+    public void unsetFunction() {
+        this.function = null;
     }
 
     /**

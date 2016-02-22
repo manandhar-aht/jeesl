@@ -39,6 +39,8 @@ public class TestXmlOrganisation extends AbstractXmlStatusTest
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
+    		
+    		xml.getFunction().add(TestXmlFunction.create(false));xml.getFunction().add(TestXmlFunction.create(false));
     	}
     	
     	return xml;

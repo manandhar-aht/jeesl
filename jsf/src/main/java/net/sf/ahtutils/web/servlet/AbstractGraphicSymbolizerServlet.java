@@ -19,6 +19,7 @@ import org.openfuxml.media.transcode.Svg2SvgTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.factory.svg.SvgSymbolFactory;
 import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
 import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphicType;
@@ -67,13 +68,15 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends Util
         return XmlImageFactory.idHeight(id,size);
 	}
 	
-	protected void process(HttpServletRequest request, HttpServletResponse response, G graphic, Image image) throws ServletException, IOException, TranscoderException
+	protected void process(HttpServletRequest request, HttpServletResponse response, G graphic, Image image) throws ServletException, IOException, TranscoderException, UtilsProcessingException
     {
 		byte[] bytes = null;
     	
 		String id = image.getId();
 		int size = (int) image.getHeight().getValue();
 		
+		if(graphic==null){throw new UtilsProcessingException("graphic is null");}
+		if(graphic.getType()==null){throw new UtilsProcessingException("graphic.type is null");}
     	if(graphic.getType().getCode().equals(UtilsGraphicType.Code.symbol.toString()))
 		{
 			logger.info("Build SVG: size " + size + " id:" + id);

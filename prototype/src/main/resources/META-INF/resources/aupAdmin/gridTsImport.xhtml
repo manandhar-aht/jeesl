@@ -82,7 +82,8 @@
 								<aht:pfDataTableHeader title="#{msg.aupTsEntities}"/>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sImport" listener="#{cc.attrs.bean.selectEntity()}"/>
-			                <p:column rendered="true" headerText="#{msg.aupTsEntity}">  
+			                <p:column rendered="true" headerText="#{msg.aupTsEntity}"
+			                			filterBy="#{cc.attrs.bean.mapLabels[e]}" filterMatchMode="contains">  
 								<h:outputText value="#{cc.attrs.bean.mapLabels[e]}"/>
 				            </p:column>
 				       	</p:dataTable>

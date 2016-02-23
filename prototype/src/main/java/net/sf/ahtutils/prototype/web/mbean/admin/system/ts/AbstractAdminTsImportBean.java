@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +41,7 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.report.revert.excel.ImportStrategy;
 import net.sf.ahtutils.report.revert.excel.importers.ExcelSimpleSerializableImporter;
+import net.sf.ahtutils.util.comparator.xml.ts.TsDataComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.ahtutils.xml.ts.Data;
 import net.sf.ahtutils.xml.ts.TimeSeries;
@@ -81,10 +84,14 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	protected UtilsXlsDefinitionResolver xlsResolver;
 	protected File importRoot;
 	
+	private Comparator<Data> cTsData;
+	
 	protected void initSuper(String[] langs, UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
 		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cTs,cBridge,cEc,cInt,cData,cWs);
 		this.xlsResolver=xlsResolver;
+		
+		cTsData = TsDataComparator.factory(TsDataComparator.Type.date);
 	}
 	
 	protected void initLists()
@@ -177,6 +184,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 		
 		if(debugOnInfo){logger.info("Loaded " +data.size() +" time series data entries to be saved in the database.");}
 		timeSeries.getData().addAll(data.keySet());
+		Collections.sort(timeSeries.getData(), cTsData);
 		entity=null;
 		preview();
 	}

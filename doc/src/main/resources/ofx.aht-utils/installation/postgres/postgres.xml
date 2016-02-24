@@ -67,7 +67,7 @@
 		
 		<ofx:listing>
 				<ofx:raw># TYPE  DATABASE        USER            ADDRESS                 METHOD
-host    all             all             10.0.0.0/24             md5</ofx:raw>
+                            host    all             all             10.0.0.0/24             md5</ofx:raw>
 		</ofx:listing>
 		
 		<ofx:listing>

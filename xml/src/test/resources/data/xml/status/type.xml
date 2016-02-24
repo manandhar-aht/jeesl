@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:type xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" id="123" key="myKey" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1">
-    <s:transistions/>
+    <s:parent id="123" code="myCode" position="2"/>
     <s:langs/>
     <s:descriptions/>
     <s:lang version="1" key="myKey" translation="myTranslation"/>
-    <s:parent id="123" code="myCode" position="2"/>
+    <s:transistions/>
+    <s:subType id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
+    <s:subType id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
 </s:type>

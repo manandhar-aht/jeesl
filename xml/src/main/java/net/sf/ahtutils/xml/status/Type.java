@@ -22,11 +22,12 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/status}transistions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}parent"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}lang" maxOccurs="unbounded"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/status}parent"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}transistions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}subType" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="key" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -45,11 +46,12 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "transistions",
+    "parent",
     "langs",
     "descriptions",
     "lang",
-    "parent"
+    "transistions",
+    "subType"
 })
 @XmlRootElement(name = "type")
 public class Type
@@ -58,7 +60,7 @@ public class Type
 
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
-    protected Transistions transistions;
+    protected Parent parent;
     @XmlElement(required = true)
     protected Langs langs;
     @XmlElement(required = true)
@@ -66,7 +68,9 @@ public class Type
     @XmlElement(required = true)
     protected List<Lang> lang;
     @XmlElement(required = true)
-    protected Parent parent;
+    protected Transistions transistions;
+    @XmlElement(required = true)
+    protected List<SubType> subType;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "key")
@@ -85,31 +89,31 @@ public class Type
     protected Integer position;
 
     /**
-     * Gets the value of the transistions property.
+     * Gets the value of the parent property.
      * 
      * @return
      *     possible object is
-     *     {@link Transistions }
+     *     {@link Parent }
      *     
      */
-    public Transistions getTransistions() {
-        return transistions;
+    public Parent getParent() {
+        return parent;
     }
 
     /**
-     * Sets the value of the transistions property.
+     * Sets the value of the parent property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Transistions }
+     *     {@link Parent }
      *     
      */
-    public void setTransistions(Transistions value) {
-        this.transistions = value;
+    public void setParent(Parent value) {
+        this.parent = value;
     }
 
-    public boolean isSetTransistions() {
-        return (this.transistions!= null);
+    public boolean isSetParent() {
+        return (this.parent!= null);
     }
 
     /**
@@ -206,31 +210,68 @@ public class Type
     }
 
     /**
-     * Gets the value of the parent property.
+     * Gets the value of the transistions property.
      * 
      * @return
      *     possible object is
-     *     {@link Parent }
+     *     {@link Transistions }
      *     
      */
-    public Parent getParent() {
-        return parent;
+    public Transistions getTransistions() {
+        return transistions;
     }
 
     /**
-     * Sets the value of the parent property.
+     * Sets the value of the transistions property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Parent }
+     *     {@link Transistions }
      *     
      */
-    public void setParent(Parent value) {
-        this.parent = value;
+    public void setTransistions(Transistions value) {
+        this.transistions = value;
     }
 
-    public boolean isSetParent() {
-        return (this.parent!= null);
+    public boolean isSetTransistions() {
+        return (this.transistions!= null);
+    }
+
+    /**
+     * Gets the value of the subType property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the subType property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getSubType().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link SubType }
+     * 
+     * 
+     */
+    public List<SubType> getSubType() {
+        if (subType == null) {
+            subType = new ArrayList<SubType>();
+        }
+        return this.subType;
+    }
+
+    public boolean isSetSubType() {
+        return ((this.subType!= null)&&(!this.subType.isEmpty()));
+    }
+
+    public void unsetSubType() {
+        this.subType = null;
     }
 
     /**

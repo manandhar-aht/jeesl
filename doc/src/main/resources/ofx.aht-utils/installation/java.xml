@@ -34,12 +34,12 @@
 			<ofx:title lang="none">Linux Debian: 6 Squeeze and 7 Wheezy)</ofx:title>
 	
 		<ofx:paragraph lang="en">
-			Get the 64 bit version of Java JDK (jdk-7u79-linux-x64.tar.gz) from
+			Get the latest 64 bit version of Java JDK (e.g jdk-8u74-linux-x64.tar.gz) from
 
             <text:emphasis style="typewriter">http://www.oracle.com/technetwork/java/javase/downloads/index.html</text:emphasis>
 		</ofx:paragraph>
 		<ofx:paragraph lang="de">
-			Das Java JDK (jdk-7u79-linux-x64.tar.gz) in der 64 bit version kann hier heruntergelanden werden
+			Das Java JDK (jdk-8u74-linux-x64.tar.gz) in der 64 bit version kann hier heruntergelanden werden
 			
 			herunterladen http://www.oracle.com/technetwork/java/javase/downloads/index.html
 		</ofx:paragraph>
@@ -47,12 +47,12 @@
 	 	
 		<ofx:listing>
 			<ofx:raw>cd /opt
-tar -xvzf path_to_download/jdk-7u79-linux-x64.tar.gz
+tar -xvzf path_to_download/jdk-8u74-linux-x64.tar.gz
 
-update-alternatives --install /usr/bin/java java /opt/jdk1.7.0_79/bin/java 1
-update-alternatives --install /usr/bin/javac javac /opt/jdk1.7.0_79/bin/javac 1
-update-alternatives --set java /opt/jdk1.7.0_79/bin/java
-update-alternatives --set javac /opt/jdk1.7.0_79/bin/javac</ofx:raw>
+update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_74/bin/java 1
+update-alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_74/bin/javac 1
+update-alternatives --set java /opt/jdk1.8.0_74/bin/java
+update-alternatives --set javac /opt/jdk1.8.0_74/bin/javac</ofx:raw>
 		</ofx:listing>
 	</ofx:section>
 	
@@ -69,9 +69,9 @@ update-alternatives --set javac /opt/jdk1.7.0_79/bin/javac</ofx:raw>
 	</ofx:paragraph>
 	
 	<ofx:listing>
-		<ofx:raw>java version "1.7.0_79"
-Java(TM) SE Runtime Environment (build 1.7.0_79)
-Java HotSpot(TM) 64-Bit Server VM (build 24.60, mixed mode)</ofx:raw>
+		<ofx:raw>java version "1.8.0_74"
+Java(TM) SE Runtime Environment (build 1.8.0_74)
+Java HotSpot(TM) 64-Bit Server VM (build 25.74, mixed mode)</ofx:raw>
 	</ofx:listing>
 	
 	<ofx:section container="true" classifier="debianRaspberry">

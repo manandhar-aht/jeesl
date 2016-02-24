@@ -28,7 +28,7 @@ sudo make comments-install</ofx:raw>
 		<ofx:title>Linux (Debian Wheezy)</ofx:title>
 		
 		<ofx:listing>
-			<ofx:raw>apt-get install postgresql-9.1-postgis</ofx:raw>
+			<ofx:raw>apt-get install postgresql-9.4-postgis-2.1</ofx:raw>
 		</ofx:listing>
 		
 	</ofx:section>

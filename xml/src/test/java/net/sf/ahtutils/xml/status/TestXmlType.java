@@ -43,11 +43,12 @@ public class TestXmlType extends AbstractXmlStatusTest
     	
     	if(withChilds)
     	{
+    		xml.setParent(TestXmlParent.create(false));
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
     		xml.getLang().add(TestXmlLang.create(false));
     		xml.setTransistions(TestXmlTransistions.create(false));
-    		xml.setParent(TestXmlParent.create(false));
+    		xml.getSubType().add(TestXmlSubType.create(false));xml.getSubType().add(TestXmlSubType.create(false));
     	}
     	
     	return xml;

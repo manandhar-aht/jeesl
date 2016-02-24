@@ -76,7 +76,7 @@
             <xsd:sequence>
                 <xsd:element ref="us:type" maxOccurs="unbounded"/>
                 <xsd:element ref="us:mainType" maxOccurs="unbounded"/>
-                <xsd:element ref="us:subType" maxOccurs="unbounded"/> 
+                <xsd:element ref="us:subType" maxOccurs="unbounded"/>
             </xsd:sequence>
             <xsd:attribute name="group" type="xsd:string"/>
         </xsd:complexType>
@@ -84,11 +84,12 @@
     <xsd:element name="type">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element ref="us:transistions" maxOccurs="1"/>
+                <xsd:element ref="us:parent" maxOccurs="1"/>
                 <xsd:element ref="us:langs" maxOccurs="1"/>
                 <xsd:element ref="us:descriptions" maxOccurs="1"/>
                 <xsd:element ref="us:lang" maxOccurs="unbounded"/>
-                <xsd:element ref="us:parent" maxOccurs="1"/>
+                <xsd:element ref="us:transistions" maxOccurs="1"/>
+				<xsd:element ref="us:subType" maxOccurs="unbounded"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="key" type="xsd:string"/>

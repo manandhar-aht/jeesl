@@ -110,6 +110,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SubType }
+     * 
+     */
+    public SubType createSubType() {
+        return new SubType();
+    }
+
+    /**
      * Create an instance of {@link Responsible }
      * 
      */
@@ -195,14 +203,6 @@ public class ObjectFactory {
      */
     public MainType createMainType() {
         return new MainType();
-    }
-
-    /**
-     * Create an instance of {@link SubType }
-     * 
-     */
-    public SubType createSubType() {
-        return new SubType();
     }
 
     /**

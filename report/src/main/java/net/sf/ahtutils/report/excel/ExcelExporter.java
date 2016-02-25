@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.TreeMap;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -23,11 +24,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.report.XlsColumn;
+import net.sf.ahtutils.xml.report.XlsMultiColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
+import net.sf.ahtutils.xml.report.XlsTransformation;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.ahtutils.xml.xpath.StatusXpath;
+import static org.slf4j.MDC.put;
 
 public class ExcelExporter
 {
@@ -38,7 +43,7 @@ public class ExcelExporter
     public CellStyle        dateHeaderStyle;
     public CellStyle        numberStyle; 
     public CreationHelper   createHelper;
-    
+    public JXPathContext	context;
     
     // The data
     public Object    report;
@@ -48,6 +53,12 @@ public class ExcelExporter
     
     // How many results are there for the given query
     public Integer   counter;
+	
+	// Current line while exporting
+	private int      rowNr = 1;
+	
+	// Languge
+	private String   languageKey;
         
     public Hashtable<String, CellStyle> cellStyles = new Hashtable<String, CellStyle>();
     public Hashtable<String, Integer> errors = new Hashtable<String, Integer>();
@@ -59,7 +70,7 @@ public class ExcelExporter
 		// Get all info
         this.query      = listDefinition;
         this.report     = report;
-        
+        this.languageKey= languageKey;
 		
         // Create a new Excel Workbook and a POI Helper Object
         wb = new XSSFWorkbook();
@@ -93,31 +104,32 @@ public class ExcelExporter
 		int i = 1;
         for (XlsSheet sheet : workbook.getXlsSheet())
         {
+			// Reset the rowCounter
+			rowNr = 1;
+			
 			// First check for an existing name given in the definition
 			String sheetName = "sheet" +i;
-			
-			if (sheet.isSetLangs())
+			try {
+			Langs langs = ReportXpath.getLangs(sheet);
+			Lang  lang  = StatusXpath.getLang(langs, languageKey);
+			if (lang != null)
 			{
-				if (sheet.getLangs().isSetLang())
-				{
-					Langs langs = sheet.getLangs();
-					Lang  lang  = StatusXpath.getLang(langs, languageKey);
-					if (lang != null)
-					{
-						sheetName = lang.getTranslation();
-					}
-				}
+				sheetName = lang.getTranslation();
+			}}
+			catch (Exception e)
+			{
+				logger.warn("Could not retrieve sheet name from definition, falling back to standard name.");
 			}
-            exportSheet(sheet, sheetName);
+			exportSheet(sheet, sheetName);
 			i++;
-        }
+		}
     }
 
     public void exportSheet(XlsSheet sheetDefinition, String id) throws Exception
     {
 		logger.debug("Creating Sheet " +id);
         // Create JXPath context for working with the report data
-        JXPathContext context = JXPathContext.newContext(report);
+        context = JXPathContext.newContext(report);
         
         // Create Excel Sheet named as given in constructor
         Sheet sheet = wb.createSheet(id);
@@ -131,7 +143,7 @@ public class ExcelExporter
         for (XlsColumn column : sortedColumns)
         {
             headers.add(column.getLangs().getLang().get(0).getTranslation());
-                            errors.put(column.getLangs().getLang().get(0).getTranslation(), 0);
+            errors.put(column.getLangs().getLang().get(0).getTranslation(), 0);
         }
         String[] headerArray = new String[headers.size()];
         createHeader(sheet, headers.toArray(headerArray));
@@ -140,7 +152,6 @@ public class ExcelExporter
 		String queryExpression = sheetDefinition.getQuery();
 		logger.info("Iterating to find " +queryExpression);
 		Iterator iterator     = context.iteratePointers(queryExpression);
-        int rowNr = 1;
 		logger.debug("Beginning iteration");
         while (iterator.hasNext())
         {
@@ -153,13 +164,43 @@ public class ExcelExporter
                 XlsColumn columnDefinition = sortedColumns.get(i);
                 CellStyle   style = cellStyles.get(columnDefinition.getColumn());
                 String      type  = columnDefinition.getXlsTransformation().getDataClass();
-                String expression = columnDefinition.getXlsTransformation().getBeanProperty();
-                String columnId   = columnDefinition.getLangs().getLang().get(0).getTranslation();
+				String columnId   = columnDefinition.getLangs().getLang().get(0).getTranslation();
+				
+				String expression = "";
+				
+				
+				Boolean relative  = true;
+                if (columnDefinition.getXlsTransformation().isSetBeanProperty())
+				{
+					expression = columnDefinition.getXlsTransformation().getBeanProperty();
+				}
+				else if (columnDefinition.getXlsTransformation().isSetXPath())
+				{
+					expression = columnDefinition.getXlsTransformation().getXPath();
+					relative   = false;
+				}
+				
+				if (sheetDefinition.isSetPrimaryKey())
+				{
+					String primaryKey = relativeContext.getValue(sheetDefinition.getPrimaryKey()).toString();
+					expression = expression.replace("@@@primaryKey@@@", primaryKey);
+				}
+				
+                
                 try {
                     Object  value = null;
                     //String xpath  = query +"[" +row +"]/" + expression;
                     logger.trace("Using XPath expression: " +expression);
-                    value = relativeContext.getValue(expression);
+					if (relative)
+					{
+						value = relativeContext.getValue(expression);
+						logger.trace("... in relative context.");
+					}
+					else
+					{
+						value = context.getValue(expression);
+						logger.trace("... in complete context.");
+					}
                     logger.trace("Got Value " +value.toString());
                     createCell(sheet, rowNr, i, value, type, style);
 
@@ -168,6 +209,7 @@ public class ExcelExporter
                     Integer counter = errors.get(columnId);
                     counter++;
                     errors.put(columnId, counter);
+					logger.trace("ERROR occured: " +e.getMessage());
                 }
             }
 			
@@ -259,19 +301,95 @@ public class ExcelExporter
     public ArrayList<XlsColumn> preProcessColumns(XlsSheet sheet)
     {
         ArrayList<XlsColumn> columns = new ArrayList<XlsColumn>();
-        TreeMap<String, XlsColumn> tempListForSorting = new TreeMap<String, XlsColumn>();
-        for (XlsColumn column : sheet.getXlsColumn())
+		Integer columnNr = 0;
+        for (Object o : sheet.getContent())
         {
-            // TODO Decide if this one is exported by reading isExported later.
-            tempListForSorting.put(column.getColumn(), column);
-        }
-        for (String key : tempListForSorting.keySet())
-        {
-            columns.add(tempListForSorting.get(key));
-            cellStyles.put(key, getCellStyle(tempListForSorting.get(key)));
+			if (o instanceof XlsColumn)
+			{
+				XlsColumn c = (XlsColumn) o;
+				c.setColumn("" +columnNr);
+				columns.add(c);
+				cellStyles.put("" +columnNr, getCellStyle(c));
+				columnNr++;
+			}
+			if (o instanceof XlsMultiColumn)
+			{
+				XlsMultiColumn c = (XlsMultiColumn) o;
+				List<XlsColumn> list = createColumns(c, columnNr);
+				columns.addAll(list);
+				columnNr = columnNr + list.size();
+				//TODO Create Label row and shift all headers to 2nd row, begin iterating data in 3rd
+				//Info about merging can be found here: http://poi.apache.org/spreadsheet/quick-guide.html#MergedCells
+			}
         }
         return columns;
     }
+	
+	public List<XlsColumn> createColumns(XlsMultiColumn multiColumn, Integer startAt)
+	{
+		ArrayList<XlsColumn> list = new ArrayList<XlsColumn>();
+		
+		// Create Content Rows
+		String queryExpression = multiColumn.getQuery();
+		logger.info("Iterating to find the elements for the multi column " +queryExpression);
+		
+		Iterator iterator     = context.iteratePointers(queryExpression);
+		logger.debug("Beginning iteration");
+        
+		// The XPath template to be filled with the ID from the multi column definition
+		XlsColumn columnTemplate = multiColumn.getXlsColumn().get(0);
+		String template = columnTemplate.getXlsTransformation().getBeanProperty();
+		
+		while (iterator.hasNext())
+        {
+			Pointer pointerToItem = (Pointer)iterator.next();
+			logger.trace("Got pointer: " +pointerToItem.getValue().getClass());
+			JXPathContext relativeContext = context.getRelativeContext(pointerToItem);
+			
+			Object  value = null;
+			//String xpath  = query +"[" +row +"]/" + expression;
+
+			String expressionId    = multiColumn.getId();
+			String expressionLabel = multiColumn.getColumnLabel();
+
+			logger.trace("Using XPath expression to evaluate the : " +expressionId);
+			String id    = relativeContext.getValue(expressionId).toString();
+			String label = relativeContext.getValue(expressionLabel).toString();
+			logger.trace("Got Value " +id);
+
+			String xPath = template.replace("@@@columnId@@@", id);
+			logger.info(xPath);
+			XlsColumn c = createColumn(startAt, xPath, label, columnTemplate);
+			list.add(c);
+			startAt++;
+		}
+		return list;
+		
+	}
+		
+	public XlsColumn createColumn(Integer columnNr, String xPath, String label, XlsColumn columnTemplate)
+	{
+		logger.trace("Creating Column at position " +columnNr + " with expression " +xPath + " and label " +label + " for language " +languageKey);
+		XlsColumn c = new XlsColumn();
+
+		XlsTransformation t = new XlsTransformation();
+		t.setXPath(xPath);
+		t.setFormatPattern(columnTemplate.getXlsTransformation().getFormatPattern());
+		t.setDataClass(columnTemplate.getXlsTransformation().getDataClass());
+		
+		Langs langs = new Langs();
+		Lang  lang  = new Lang();
+		lang.setKey(languageKey);
+		lang.setTranslation(label);
+		langs.getLang().add(lang);
+		
+		c.setLangs(langs);
+		c.setXlsTransformation(t);
+		c.setColumn(columnNr +"");
+		
+		cellStyles.put("" +columnNr, getCellStyle(c));
+		return c;
+	}
 
     public Workbook getWb() {return wb;}
     public void setWb(Workbook wb) {this.wb = wb;}

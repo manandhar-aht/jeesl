@@ -6,6 +6,7 @@ import java.util.List;
 import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.ahtutils.xml.report.DataAssociation;
 import net.sf.ahtutils.xml.report.DataHandler;
+import net.sf.ahtutils.xml.report.ImportStructure;
 import net.sf.ahtutils.xml.report.Info;
 import net.sf.ahtutils.xml.report.Jr;
 import net.sf.ahtutils.xml.report.Media;
@@ -13,9 +14,12 @@ import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.Template;
 import net.sf.ahtutils.xml.report.Templates;
+import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsDefinition;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
+import net.sf.ahtutils.xml.status.Lang;
+import net.sf.ahtutils.xml.status.Langs;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 import net.sf.exlp.util.xml.JDomUtil;
@@ -144,6 +148,54 @@ public class ReportXpath
 		List<DataAssociation> listResult = (List<DataAssociation>)context.selectNodes("//dataAssociation[@property='" +property +"']");
 		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+DataAssociation.class.getSimpleName()+" for property="+property);}
 		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+DataAssociation.class.getSimpleName()+" for code="+property);}
+		return listResult.get(0);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static synchronized Langs getLangs(XlsSheet definition) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		JXPathContext context = JXPathContext.newContext(definition);
+		List<Langs> listResult = (List<Langs>)context.selectNodes("//langs");
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+Langs.class.getSimpleName()+" are set");}
+		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+Langs.class.getSimpleName()+" are set");}
+		return listResult.get(0);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static synchronized List<Lang> getLang(Langs definition) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		JXPathContext context = JXPathContext.newContext(definition);
+		List<Lang> listResult = (List<Lang>)context.selectNodes("//lang");
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+Langs.class.getSimpleName()+" are set");}
+		return listResult;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static synchronized List<XlsColumn> getColumns(XlsSheet definition) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		JXPathContext context = JXPathContext.newContext(definition);
+		List<XlsColumn> listResult = (List<XlsColumn>)context.selectNodes("//xlsColumn");
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+XlsColumn.class.getSimpleName()+" are set");}
+		return listResult;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static synchronized ImportStructure getImportStructure(XlsSheet definition) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		JXPathContext context = JXPathContext.newContext(definition);
+		List<ImportStructure> listResult = (List<ImportStructure>)context.selectNodes("//importStructure");
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+ImportStructure.class.getSimpleName()+" is set");}
+		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+ImportStructure.class.getSimpleName()+" are set");}
+		return listResult.get(0);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static synchronized String getPrimaryKey(XlsSheet definition) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		JXPathContext context = JXPathContext.newContext(definition);
+		List<String> listResult = (List<String>)context.selectNodes("@primaryKey");
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+ImportStructure.class.getSimpleName()+" is set");}
+		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+ImportStructure.class.getSimpleName()+" are set");}
 		return listResult.get(0);
 	}
 }

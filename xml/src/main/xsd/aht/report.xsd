@@ -267,14 +267,16 @@
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="xlsSheet">
-        <xsd:complexType>
+        <xsd:complexType mixed="true">
             <xsd:sequence>
             	<xsd:element ref="us:langs" maxOccurs="1"/>
+				<xsd:element ref="r:xlsMultiColumn" maxOccurs="unbounded"/>
             	<xsd:element ref="r:xlsColumns" maxOccurs="unbounded"/>
 	            <xsd:element ref="r:xlsColumn" maxOccurs="unbounded"/>
 	           	<xsd:element ref="r:importStructure" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="query" type="xsd:string"/>
+			<xsd:attribute name="primaryKey" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
 	<xsd:element name="xlsColumns">
@@ -301,11 +303,22 @@
             <xsd:attribute name="width" type="xsd:int"/>
         </xsd:complexType>
     </xsd:element>
+	<xsd:element name="xlsMultiColumn">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="r:xlsColumn" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:string"/>
+            <xsd:attribute name="columnLabel" type="xsd:string"/>
+            <xsd:attribute name="query" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
     <xsd:element name="xlsTransformation">
         <xsd:complexType>
             <xsd:attribute name="dataClass" type="xsd:string"/>
             <xsd:attribute name="formatPattern" type="xsd:string"/>
             <xsd:attribute name="beanProperty" type="xsd:string"/>
+			<xsd:attribute name="xPath" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
 </xsd:schema>

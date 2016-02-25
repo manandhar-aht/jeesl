@@ -29,6 +29,9 @@ import net.sf.ahtutils.doc.ofx.util.OfxMultiLangFactory;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.status.Translations;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
+import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
 public class OfxXlsDefinitionFactory extends AbstractUtilsOfxDocumentationFactory
 {
@@ -47,7 +50,7 @@ public class OfxXlsDefinitionFactory extends AbstractUtilsOfxDocumentationFactor
 		headerKeys.add("auXlsDefinitionDescription");
 	}
 	
-	public Table build(XlsSheet sheet) throws OfxAuthoringException
+	public Table build(XlsSheet sheet) throws OfxAuthoringException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
 		Table table = new Table();
 		table.setSpecification(createSpecifications());
@@ -84,13 +87,14 @@ public class OfxXlsDefinitionFactory extends AbstractUtilsOfxDocumentationFactor
 		return specification;
 	}
 	
-	private Content createContent(XlsSheet sheet) throws OfxAuthoringException
+	private Content createContent(XlsSheet sheet) throws OfxAuthoringException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
 		Head head = new Head();
 		head.getRow().add(createHeaderRow(headerKeys));
 		
 		Body body = new Body();
-		for(XlsColumn xlsColumn : sheet.getXlsColumn())
+		List<XlsColumn> columns = ReportXpath.getColumns(sheet);
+		for (XlsColumn xlsColumn : columns)
 		{
 			body.getRow().add(createRow(xlsColumn));
 		}

@@ -18,6 +18,9 @@ import net.sf.ahtutils.util.reflection.ReflectionsUtil;
 import net.sf.ahtutils.xml.report.DataAssociation;
 import net.sf.ahtutils.xml.report.ImportStructure;
 import net.sf.ahtutils.xml.report.XlsSheet;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
+import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -46,7 +49,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	protected XlsSheet definition;
 	protected ImportStructure structure;
 	
-	public AbstractExcelImporter(UtilsXlsDefinitionResolver resolver, String reportCode, String filename) throws IOException, ClassNotFoundException
+	public AbstractExcelImporter(UtilsXlsDefinitionResolver resolver, String reportCode, String filename) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
 		// Prepare file to be read
 		this.excelFile      = new File(filename);
@@ -57,7 +60,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		
 		// Read information to import taken from Resolver
 		definition = resolver.definition(reportCode).getXlsSheet().get(0);
-		structure = definition.getImportStructure();
+		structure = ReportXpath.getImportStructure(definition);
 		
 		// Prepare the row import definitions
 		// According to this post http://stackoverflow.com/questions/18231991/class-forname-caching

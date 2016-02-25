@@ -48,8 +48,7 @@ import net.sf.ahtutils.xml.status.Langs;
     "dataAssociation"
 })
 @XmlRootElement(name = "xlsColumn")
-public class XlsColumn
-    implements Serializable
+public class XlsColumn implements Serializable
 {
 
     private final static long serialVersionUID = 1L;

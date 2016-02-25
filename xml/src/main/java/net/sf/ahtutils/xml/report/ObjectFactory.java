@@ -230,11 +230,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link XlsColumns }
+     * Create an instance of {@link XlsMultiColumn }
      * 
      */
-    public XlsColumns createXlsColumns() {
-        return new XlsColumns();
+    public XlsMultiColumn createXlsMultiColumn() {
+        return new XlsMultiColumn();
     }
 
     /**
@@ -259,6 +259,14 @@ public class ObjectFactory {
      */
     public DataAssociation createDataAssociation() {
         return new DataAssociation();
+    }
+
+    /**
+     * Create an instance of {@link XlsColumns }
+     * 
+     */
+    public XlsColumns createXlsColumns() {
+        return new XlsColumns();
     }
 
     /**

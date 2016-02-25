@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="dataClass" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="formatPattern" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="beanProperty" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="xPath" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -42,6 +43,8 @@ public class XlsTransformation
     protected String formatPattern;
     @XmlAttribute(name = "beanProperty")
     protected String beanProperty;
+    @XmlAttribute(name = "xPath")
+    protected String xPath;
 
     /**
      * Gets the value of the dataClass property.
@@ -125,6 +128,34 @@ public class XlsTransformation
 
     public boolean isSetBeanProperty() {
         return (this.beanProperty!= null);
+    }
+
+    /**
+     * Gets the value of the xPath property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getXPath() {
+        return xPath;
+    }
+
+    /**
+     * Sets the value of the xPath property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setXPath(String value) {
+        this.xPath = value;
+    }
+
+    public boolean isSetXPath() {
+        return (this.xPath!= null);
     }
 
 }

@@ -76,7 +76,7 @@ public class AhtUtilsXlsDefinitionResolver implements UtilsXlsDefinitionResolver
 				langs.getLang().add(lang);
 				column.setLangs(langs);
 
-				sheet.getXlsColumn().add(column);
+				sheet.getContent().add(column);
 			}
 			
 		}

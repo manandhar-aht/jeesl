@@ -24,6 +24,8 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsColumn" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
+ *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="columnLabel" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="query" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -36,13 +38,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "xlsColumn"
 })
-@XmlRootElement(name = "xlsColumns")
-public class XlsColumns implements Serializable
+@XmlRootElement(name = "xlsMultiColumn")
+public class XlsMultiColumn implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
     protected List<XlsColumn> xlsColumn;
+    @XmlAttribute(name = "id")
+    protected String id;
+    @XmlAttribute(name = "columnLabel")
+    protected String columnLabel;
     @XmlAttribute(name = "query")
     protected String query;
 
@@ -81,6 +87,62 @@ public class XlsColumns implements Serializable
 
     public void unsetXlsColumn() {
         this.xlsColumn = null;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setId(String value) {
+        this.id = value;
+    }
+
+    public boolean isSetId() {
+        return (this.id!= null);
+    }
+
+    /**
+     * Gets the value of the columnLabel property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getColumnLabel() {
+        return columnLabel;
+    }
+
+    /**
+     * Sets the value of the columnLabel property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setColumnLabel(String value) {
+        this.columnLabel = value;
+    }
+
+    public boolean isSetColumnLabel() {
+        return (this.columnLabel!= null);
     }
 
     /**

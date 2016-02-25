@@ -18,12 +18,7 @@ public class TestXmlXlsSheet extends AbstractXmlReportTest<XlsSheet>
     	XlsSheet xml = new XlsSheet();
     	xml.setQuery("myQuery");
     	
-    	if(withChildren)
-    	{
-    		xml.setLangs(TestXmlLangs.create(false));
-    		xml.getXlsColumn().add(TestXmlXlsColumn.create(false));xml.getXlsColumn().add(TestXmlXlsColumn.create(false));
-    		xml.getXlsColumns().add(TestXmlXlsColumns.create(false));xml.getXlsColumns().add(TestXmlXlsColumns.create(false));
-    	}
+    	
     	
     	return xml;
     }

@@ -6,6 +6,8 @@ import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 
 import net.sf.ahtutils.report.revert.excel.AbstractExcelImporter;
 import net.sf.ahtutils.report.revert.excel.ImportStrategy;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
+import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,7 @@ public class ExcelSimpleSerializableImporter <S extends Serializable, I extends 
 	
 	final static Logger logger = LoggerFactory.getLogger(ExcelSimpleSerializableImporter.class);
 	
-	public ExcelSimpleSerializableImporter(UtilsXlsDefinitionResolver resolver, String code, String filename) throws IOException, ClassNotFoundException
+	public ExcelSimpleSerializableImporter(UtilsXlsDefinitionResolver resolver, String code, String filename) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
 		// Initialize the Abstract class with the given filename
 		super(resolver, code, filename);
@@ -36,7 +38,7 @@ public class ExcelSimpleSerializableImporter <S extends Serializable, I extends 
 	*
 	*/
 	public static <S extends Serializable, C extends Serializable, I extends ImportStrategy>
-	ExcelSimpleSerializableImporter<S,I> factory(UtilsXlsDefinitionResolver resolver, String code, String filename) throws IOException, ClassNotFoundException
+	ExcelSimpleSerializableImporter<S,I> factory(UtilsXlsDefinitionResolver resolver, String code, String filename) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
 		return new ExcelSimpleSerializableImporter<S,I>(resolver, code, filename);
 	}

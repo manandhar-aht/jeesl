@@ -35,8 +35,7 @@ import javax.xml.bind.annotation.XmlType;
     "dataAssociations"
 })
 @XmlRootElement(name = "importStructure")
-public class ImportStructure
-    implements Serializable
+public class ImportStructure implements Serializable
 {
 
     private final static long serialVersionUID = 1L;

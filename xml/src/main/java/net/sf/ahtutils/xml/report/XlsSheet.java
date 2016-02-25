@@ -7,7 +7,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElementRefs;
+import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.status.Langs;
@@ -24,11 +26,13 @@ import net.sf.ahtutils.xml.status.Langs;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsMultiColumn" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsColumns" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsColumn" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}importStructure"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="query" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="primaryKey" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -38,10 +42,7 @@ import net.sf.ahtutils.xml.status.Langs;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "langs",
-    "xlsColumns",
-    "xlsColumn",
-    "importStructure"
+    "content"
 })
 @XmlRootElement(name = "xlsSheet")
 public class XlsSheet
@@ -49,145 +50,60 @@ public class XlsSheet
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
-    protected Langs langs;
-    @XmlElement(required = true)
-    protected List<XlsColumns> xlsColumns;
-    @XmlElement(required = true)
-    protected List<XlsColumn> xlsColumn;
-    @XmlElement(required = true)
-    protected ImportStructure importStructure;
+    @XmlElementRefs({
+        @XmlElementRef(name = "langs", namespace = "http://ahtutils.aht-group.com/status", type = Langs.class),
+        @XmlElementRef(name = "xlsColumns", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumns.class),
+        @XmlElementRef(name = "importStructure", namespace = "http://ahtutils.aht-group.com/report", type = ImportStructure.class),
+        @XmlElementRef(name = "xlsColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumn.class),
+        @XmlElementRef(name = "xlsMultiColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsMultiColumn.class)
+    })
+    @XmlMixed
+    protected List<Serializable> content;
     @XmlAttribute(name = "query")
     protected String query;
+    @XmlAttribute(name = "primaryKey")
+    protected String primaryKey;
 
     /**
-     * Gets the value of the langs property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Langs }
-     *     
-     */
-    public Langs getLangs() {
-        return langs;
-    }
-
-    /**
-     * Sets the value of the langs property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Langs }
-     *     
-     */
-    public void setLangs(Langs value) {
-        this.langs = value;
-    }
-
-    public boolean isSetLangs() {
-        return (this.langs!= null);
-    }
-
-    /**
-     * Gets the value of the xlsColumns property.
+     * Gets the value of the content property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the xlsColumns property.
+     * This is why there is not a <CODE>set</CODE> method for the content property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getXlsColumns().add(newItem);
+     *    getContent().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link XlsColumns }
-     * 
-     * 
-     */
-    public List<XlsColumns> getXlsColumns() {
-        if (xlsColumns == null) {
-            xlsColumns = new ArrayList<XlsColumns>();
-        }
-        return this.xlsColumns;
-    }
-
-    public boolean isSetXlsColumns() {
-        return ((this.xlsColumns!= null)&&(!this.xlsColumns.isEmpty()));
-    }
-
-    public void unsetXlsColumns() {
-        this.xlsColumns = null;
-    }
-
-    /**
-     * Gets the value of the xlsColumn property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the xlsColumn property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getXlsColumn().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
+     * {@link ImportStructure }
+     * {@link Langs }
+     * {@link String }
      * {@link XlsColumn }
+     * {@link XlsMultiColumn }
      * 
      * 
      */
-    public List<XlsColumn> getXlsColumn() {
-        if (xlsColumn == null) {
-            xlsColumn = new ArrayList<XlsColumn>();
+    public List<Serializable> getContent() {
+        if (content == null) {
+            content = new ArrayList<Serializable>();
         }
-        return this.xlsColumn;
+        return this.content;
     }
 
-    public boolean isSetXlsColumn() {
-        return ((this.xlsColumn!= null)&&(!this.xlsColumn.isEmpty()));
+    public boolean isSetContent() {
+        return ((this.content!= null)&&(!this.content.isEmpty()));
     }
 
-    public void unsetXlsColumn() {
-        this.xlsColumn = null;
-    }
-
-    /**
-     * Gets the value of the importStructure property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ImportStructure }
-     *     
-     */
-    public ImportStructure getImportStructure() {
-        return importStructure;
-    }
-
-    /**
-     * Sets the value of the importStructure property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ImportStructure }
-     *     
-     */
-    public void setImportStructure(ImportStructure value) {
-        this.importStructure = value;
-    }
-
-    public boolean isSetImportStructure() {
-        return (this.importStructure!= null);
+    public void unsetContent() {
+        this.content = null;
     }
 
     /**
@@ -216,6 +132,34 @@ public class XlsSheet
 
     public boolean isSetQuery() {
         return (this.query!= null);
+    }
+
+    /**
+     * Gets the value of the primaryKey property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPrimaryKey() {
+        return primaryKey;
+    }
+
+    /**
+     * Sets the value of the primaryKey property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPrimaryKey(String value) {
+        this.primaryKey = value;
+    }
+
+    public boolean isSetPrimaryKey() {
+        return (this.primaryKey!= null);
     }
 
 }

@@ -42,6 +42,7 @@ public class XmlFinanceFactory
 			figures.getFinance().add(XmlFinanceFactory.id(id, value));
 		}
 	}
+	
 	public static Finance id(long id, double value)
 	{
 		Finance xml = new Finance();

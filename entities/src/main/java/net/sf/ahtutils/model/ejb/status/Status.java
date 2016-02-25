@@ -29,7 +29,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type")
 @DiscriminatorValue("generic")
-@Table(name = "UtilsStatus", uniqueConstraints = @UniqueConstraint(columnNames = {"type","code"}))
+@Table(name = "UtilsStatus", uniqueConstraints=@UniqueConstraint(columnNames = {"type","code"}))
 @EjbErNode(name="Status",category="status",subset="status")
 public class Status implements UtilsStatus<Status,Lang,Description>,EjbRemoveable,Serializable
 {

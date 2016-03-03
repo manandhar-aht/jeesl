@@ -51,12 +51,10 @@ public class PivotAggregator <T extends EjbWithId, P extends EjbWithId>
     public Double sumT(T t)
     {
     	double value = 0;
-    	boolean match = false;
     	for(SimplePivotData<T,P> d : list)
     	{
-    		if(d.getT().equals(t)){value=value+d.getValue();match=true;}
+    		if(d.getT().equals(t)){value=value+d.getValue();}
     	}
-    	if(!match){return null;}
     	return value;
     }
 }

@@ -43,6 +43,14 @@ public class XmlFinanceFactory
 		}
 	}
 	
+	public static void addCode(Figures figures, String code, Double value)
+	{
+		if(value!=null)
+		{
+			figures.getFinance().add(XmlFinanceFactory.create(code, value));
+		}
+	}
+	
 	public static Finance id(long id, double value)
 	{
 		Finance xml = new Finance();

@@ -166,7 +166,7 @@ public class ReportXpath
 	{
 		JXPathContext context = JXPathContext.newContext(definition);
 		List<Lang> listResult = (List<Lang>)context.selectNodes("//lang");
-		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+Langs.class.getSimpleName()+" are set");}
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+Lang.class.getSimpleName()+" are set");}
 		return listResult;
 	}
 	

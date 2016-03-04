@@ -108,12 +108,14 @@ public class ExcelExporter
 			
 			// First check for an existing name given in the definition
 			String sheetName = "sheet" +i;
+			
 			try {
-			Langs langs = ReportXpath.getLangs(sheet);
+			Langs langs = ReportXpath.getLangs(sheet.getContent());
 			Lang  lang  = StatusXpath.getLang(langs, languageKey);
 			if (lang != null)
 			{
-				logger.info("No Sheetname translation?");
+				logger.info("Setting Sheetname to " +lang.getTranslation());
+				
 				sheetName = lang.getTranslation();
 			}}
 			catch (Exception e)

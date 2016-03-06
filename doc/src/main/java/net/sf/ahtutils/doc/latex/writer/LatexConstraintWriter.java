@@ -8,8 +8,7 @@ import org.apache.commons.configuration.Configuration;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.exception.OfxConfigurationException;
-import org.openfuxml.interfaces.DefaultSettingsManager;
-import org.openfuxml.interfaces.media.CrossMediaManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
 import org.openfuxml.renderer.latex.OfxMultiLangLatexWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,12 +30,12 @@ public class LatexConstraintWriter extends AbstractDocumentationLatexWriter
 		
 	private OfxConstraintScopeSectionFactory ofConstraint;
 	
-	public LatexConstraintWriter(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm, DefaultSettingsManager dsm)
+	public LatexConstraintWriter(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
-		super(config,translations,langs,cmm,dsm);
+		super(config,translations,langs,cp);
 		
 		File baseDir = new File(config.getString(UtilsDocumentation.keyBaseLatexDir));
-		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cmm,dsm);
+		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cp);
 		
 		ofConstraint = new OfxConstraintScopeSectionFactory(config,langs,translations);
 		try{ofConstraint.setConstraintTypes(JaxbUtil.loadJAXB(LatexStatusWriter.systemConstraintsType, Aht.class));}

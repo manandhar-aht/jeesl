@@ -2,8 +2,7 @@ package net.sf.ahtutils.doc.latex.builder;
 
 import org.apache.commons.configuration.Configuration;
 import org.openfuxml.exception.OfxConfigurationException;
-import org.openfuxml.interfaces.DefaultSettingsManager;
-import org.openfuxml.interfaces.media.CrossMediaManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,9 +19,9 @@ public class UtilsLatexDeveloperDocumentationBuilder extends AbstractLatexDocume
 	
 	public static enum Code {configuration}
 		
-	public UtilsLatexDeveloperDocumentationBuilder(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm,DefaultSettingsManager dsm)
+	public UtilsLatexDeveloperDocumentationBuilder(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
-		super(config,translations,langs,cmm,dsm);
+		super(config,translations,langs,cp);
 	}
 	
 	@Override protected void applyBaseLatexDir()

@@ -11,7 +11,8 @@ import org.openfuxml.content.graph.Node;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.exception.OfxConfigurationException;
-import org.openfuxml.interfaces.DefaultSettingsManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
+import org.openfuxml.interfaces.configuration.DefaultSettingsManager;
 import org.openfuxml.interfaces.media.CrossMediaManager;
 import org.openfuxml.renderer.latex.OfxMultiLangLatexWriter;
 import org.slf4j.Logger;
@@ -50,26 +51,26 @@ public class LatexSecurityWriter extends AbstractDocumentationLatexWriter
 	private List<String> headerKeysViews;
 	
 	@Deprecated
-	public LatexSecurityWriter(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm, DefaultSettingsManager dsm)
+	public LatexSecurityWriter(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
-		super(config,translations,langs,cmm,dsm);
+		super(config,translations,langs,cp);
 		
 		File baseDir = new File(config.getString(UtilsDocumentation.keyBaseLatexDir));
-		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cmm,dsm);
+		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cp);
 		
 		buildFactories();
 	}
 	
-	public LatexSecurityWriter(Configuration config, Translations translations,String[] langs, OfxMultiLangLatexWriter ofxMlw, CrossMediaManager cmm, DefaultSettingsManager dsm)
+	public LatexSecurityWriter(Configuration config, Translations translations,String[] langs, OfxMultiLangLatexWriter ofxMlw, ConfigurationProvider cp)
 	{
-		super(config,translations,langs,cmm,dsm);
+		super(config,translations,langs,cp);
 		this.ofxMlw=ofxMlw;
 		buildFactories();
 	}
 	
 	private void buildFactories()
 	{
-		ofSecurityCategoryList = new OfxSecurityCategoryListFactory(config,langs,translations,cmm,dsm);
+		ofSecurityCategoryList = new OfxSecurityCategoryListFactory(config,langs,translations,cp);
 		ofUsecases = new OfxSecurityUsecasesSectionFactory(config,langs,translations);
 		ofRoles = new OfxSecurityRolesSectionFactory(config,langs,translations);
 		ofViews = new OfxSecurityViewsSectionFactory(config,langs,translations);
@@ -114,7 +115,7 @@ public class LatexSecurityWriter extends AbstractDocumentationLatexWriter
 			{
 				logger.debug("Converting "+xmlFile+" to LaTex ("+f.getAbsolutePath());
 				Access access = JaxbUtil.loadJAXB(xmlFile, Access.class);
-				OfxSecurityCategoryListFactory latexFactory = new OfxSecurityCategoryListFactory(config,lang,translations,cmm,dsm);
+				OfxSecurityCategoryListFactory latexFactory = new OfxSecurityCategoryListFactory(config,lang,translations,cp);
 				String content = latexFactory.saveDescription(access.getCategory());
 				StringIO.writeTxt(f, content);
 			}
@@ -139,7 +140,7 @@ public class LatexSecurityWriter extends AbstractDocumentationLatexWriter
 			{
 				logger.info("Converting "+xmlFile+" to LaTex ("+f.getAbsolutePath());
 				Security access = JaxbUtil.loadJAXB(xmlFile, Security.class);
-				OfxSecurityCategoryListFactory latexFactory = new OfxSecurityCategoryListFactory(config,lang,translations,cmm,dsm);
+				OfxSecurityCategoryListFactory latexFactory = new OfxSecurityCategoryListFactory(config,lang,translations,cp);
 				String content = latexFactory.saveDescriptionSec(access.getCategory());
 				StringIO.writeTxt(f, content);
 			}

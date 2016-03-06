@@ -4,22 +4,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import net.sf.ahtutils.doc.UtilsDocumentation;
-import net.sf.ahtutils.xml.status.Translations;
-import net.sf.exlp.util.io.StringIO;
-
 import org.apache.commons.configuration.Configuration;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.content.table.Table;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.exception.OfxConfigurationException;
-import org.openfuxml.interfaces.DefaultSettingsManager;
-import org.openfuxml.interfaces.media.CrossMediaManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
 import org.openfuxml.renderer.latex.content.structure.LatexSectionRenderer;
 import org.openfuxml.renderer.latex.content.table.LatexTableRenderer;
 import org.openfuxml.renderer.latex.preamble.LatexPreamble;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.doc.UtilsDocumentation;
+import net.sf.ahtutils.xml.status.Translations;
+import net.sf.exlp.util.io.StringIO;
 
 public class AbstractDocumentationLatexWriter
 {	
@@ -31,23 +30,21 @@ public class AbstractDocumentationLatexWriter
 	protected Translations translations;
 	protected String[] langs;
 	
-	protected CrossMediaManager cmm;
-	protected DefaultSettingsManager dsm;
+	protected ConfigurationProvider cp;
 	
-	public AbstractDocumentationLatexWriter(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm,DefaultSettingsManager dsm)
+	public AbstractDocumentationLatexWriter(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
 		this.config=config;
 		this.translations=translations;
 		this.langs=langs;
-		this.cmm=cmm;
-		this.dsm=dsm;
+		this.cp=cp;
 		
 		baseLatexDir=config.getString(UtilsDocumentation.keyBaseLatexDir);
 	}
 	
 	protected void writeTable(Table table, File f) throws OfxAuthoringException, IOException
 	{
-		LatexTableRenderer tableRenderer = new LatexTableRenderer(cmm,dsm);
+		LatexTableRenderer tableRenderer = new LatexTableRenderer(cp);
 		tableRenderer.setPreBlankLine(false);
 		tableRenderer.render(table);
 		
@@ -59,7 +56,7 @@ public class AbstractDocumentationLatexWriter
 	protected void writeSection(Section section, File f) throws OfxAuthoringException, IOException, OfxConfigurationException {writeSection(1, section, f);}
 	protected void writeSection(int sectionLevel, Section section, File f) throws OfxAuthoringException, IOException, OfxConfigurationException
 	{
-		LatexSectionRenderer sectionRenderer = new LatexSectionRenderer(cmm,dsm,sectionLevel,new LatexPreamble(cmm,dsm));
+		LatexSectionRenderer sectionRenderer = new LatexSectionRenderer(cp,sectionLevel,new LatexPreamble(cp));
 		sectionRenderer.render(section);
 		
 		StringWriter sw = new StringWriter();

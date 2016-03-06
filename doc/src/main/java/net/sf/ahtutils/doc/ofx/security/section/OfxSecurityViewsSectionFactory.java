@@ -48,11 +48,11 @@ public class OfxSecurityViewsSectionFactory extends AbstractUtilsOfxDocumentatio
 	public OfxSecurityViewsSectionFactory(Configuration config, String[] langs, Translations translations)
 	{
 		super(config,langs,translations);
-		ofSecurityCategoryList = new OfxSecurityCategoryListFactory(config,langs,translations,null,null);
+		ofSecurityCategoryList = new OfxSecurityCategoryListFactory(config,langs,translations,null);
 		ofSecurityViewTable = new OfxSecurityViewTableFactory(config,langs,translations);
 		ofSecurityActionTable = new OfxSecurityActionTableFactory(config,langs,translations);
 		
-		adminDocBuilder = new UtilsLatexAdminDocumentationBuilder(config,translations,langs,null,null);
+		adminDocBuilder = new UtilsLatexAdminDocumentationBuilder(config,translations,langs,null);
 	}
 	
 	

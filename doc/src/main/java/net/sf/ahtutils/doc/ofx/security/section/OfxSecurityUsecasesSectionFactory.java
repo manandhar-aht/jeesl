@@ -37,10 +37,10 @@ public class OfxSecurityUsecasesSectionFactory extends AbstractUtilsOfxDocumenta
 	public OfxSecurityUsecasesSectionFactory(Configuration config, String[] langs, Translations translations)
 	{
 		super(config,langs,translations);
-		ofSecurityCategoryList = new OfxSecurityCategoryListFactory(config,langs,translations,null,null);
+		ofSecurityCategoryList = new OfxSecurityCategoryListFactory(config,langs,translations,null);
 		ofSecurityUsecaseTable = new OfxSecurityUsecaseTableFactory(config,langs,translations);
 		
-		adminDocBuilder = new UtilsLatexAdminDocumentationBuilder(config,translations,langs,null,null);
+		adminDocBuilder = new UtilsLatexAdminDocumentationBuilder(config,translations,langs,null);
 	}
 	
 	

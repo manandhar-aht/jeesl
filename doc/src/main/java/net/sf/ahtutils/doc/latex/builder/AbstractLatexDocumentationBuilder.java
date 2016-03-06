@@ -12,8 +12,7 @@ import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.exception.OfxConfigurationException;
 import org.openfuxml.factory.xml.ofx.content.XmlCommentFactory;
-import org.openfuxml.interfaces.DefaultSettingsManager;
-import org.openfuxml.interfaces.media.CrossMediaManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
 import org.openfuxml.processor.pre.ExternalContentEagerLoader;
 import org.openfuxml.util.OfxCommentBuilder;
 import org.openfuxml.util.filter.OfxClassifierFilter;
@@ -32,9 +31,9 @@ public class AbstractLatexDocumentationBuilder extends AbstractDocumentationLate
 	
 	protected Map<String,String> dstFiles;
 
-	public AbstractLatexDocumentationBuilder(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm,DefaultSettingsManager dsm)
+	public AbstractLatexDocumentationBuilder(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
-		super(config,translations,langs,cmm,dsm);
+		super(config,translations,langs,cp);
 		this.config=config;
 		this.langs=langs;
 		

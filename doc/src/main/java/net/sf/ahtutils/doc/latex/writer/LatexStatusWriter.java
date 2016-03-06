@@ -4,6 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.apache.commons.configuration.Configuration;
+import org.openfuxml.content.table.Table;
+import org.openfuxml.exception.OfxAuthoringException;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
+import org.openfuxml.renderer.latex.OfxMultiLangLatexWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.db.xml.UtilsDbXmlSeedUtil;
 import net.sf.ahtutils.doc.UtilsDocumentation;
 import net.sf.ahtutils.doc.ofx.status.OfxStatusTableFactory;
@@ -14,15 +22,6 @@ import net.sf.ahtutils.xml.dbseed.Db;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.exlp.util.io.StringUtil;
 import net.sf.exlp.util.xml.JaxbUtil;
-
-import org.apache.commons.configuration.Configuration;
-import org.openfuxml.content.table.Table;
-import org.openfuxml.exception.OfxAuthoringException;
-import org.openfuxml.interfaces.DefaultSettingsManager;
-import org.openfuxml.interfaces.media.CrossMediaManager;
-import org.openfuxml.renderer.latex.OfxMultiLangLatexWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class LatexStatusWriter extends AbstractDocumentationLatexWriter
 {	
@@ -36,11 +35,11 @@ public class LatexStatusWriter extends AbstractDocumentationLatexWriter
 	private String seedKey,seedKeyParent;
 	private boolean withIcon;
 	
-	public LatexStatusWriter(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm,DefaultSettingsManager dsm, String dirTable) throws UtilsConfigurationException
+	public LatexStatusWriter(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp, String dirTable) throws UtilsConfigurationException
 	{
-		super(config,translations,langs,cmm,dsm);
+		super(config,translations,langs,cp);
 		File baseDir = new File(config.getString(UtilsDocumentation.keyBaseLatexDir));
-		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cmm,dsm);
+		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cp);
 		ofxMlw.setDirTable(dirTable);
 		
 		withIcon = false;

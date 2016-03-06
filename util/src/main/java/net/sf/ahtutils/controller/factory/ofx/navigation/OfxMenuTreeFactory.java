@@ -10,9 +10,10 @@ import net.sf.exlp.util.io.StringIO;
 
 import org.metachart.xml.graph.Node;
 import org.metachart.xml.graph.Tree;
+import org.openfuxml.factory.ConfigurationProviderFacotry;
 import org.openfuxml.media.cross.NoOpCrossMediaManager;
-import org.openfuxml.processor.settings.OfxDefaultSettingsManager;
 import org.openfuxml.renderer.latex.content.graph.LatexTreeRenderer;
+import org.openfuxml.util.configuration.settings.OfxDefaultSettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,7 @@ public class OfxMenuTreeFactory
 		try
 		{
 			logger.debug("Saving Reference to "+f);
-			LatexTreeRenderer renderer = new LatexTreeRenderer(new NoOpCrossMediaManager(),new OfxDefaultSettingsManager());
+			LatexTreeRenderer renderer = new LatexTreeRenderer(ConfigurationProviderFacotry.build(new NoOpCrossMediaManager(),new OfxDefaultSettingsManager()));
 //			renderer.render(create(menu));
 			StringWriter actual = new StringWriter();
 			renderer.write(actual);

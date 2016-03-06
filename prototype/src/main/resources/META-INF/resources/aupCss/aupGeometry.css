@@ -203,6 +203,7 @@ margin-top: 8px;
 .aupRemark{color: red;}		
 .w100 {width: 100%;}
 .aupW100 {width: 100%;}
+.aupNbsc {white-space: nowrap;}
 
 .aupFontUnicode {
 	font-family: Arial Unicode MS, Lucida Grande

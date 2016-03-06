@@ -2,22 +2,21 @@ package net.sf.ahtutils.doc.latex.builder;
 
 import java.util.NoSuchElementException;
 
-import net.sf.ahtutils.doc.UtilsDocumentation;
-import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.xml.status.Translations;
-import net.sf.exlp.exception.ExlpXpathNotFoundException;
-import net.sf.exlp.exception.ExlpXpathNotUniqueException;
-
 import org.apache.commons.configuration.Configuration;
 import org.openfuxml.content.media.Image;
 import org.openfuxml.content.ofx.Listing;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxConfigurationException;
-import org.openfuxml.interfaces.DefaultSettingsManager;
-import org.openfuxml.interfaces.media.CrossMediaManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
 import org.openfuxml.xml.xpath.content.SectionXpath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.doc.UtilsDocumentation;
+import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
+import net.sf.ahtutils.xml.status.Translations;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
+import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
 public class UtilsLatexDevelopmentDocumentationBuilder extends AbstractLatexDocumentationBuilder
 {	
@@ -32,9 +31,9 @@ public class UtilsLatexDevelopmentDocumentationBuilder extends AbstractLatexDocu
 	public static enum Code {latex,doc,svn}
 	public static enum Maven {mvnIntroduction,mvnShortcuts,mvnStructure}
 		
-	public UtilsLatexDevelopmentDocumentationBuilder(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm,DefaultSettingsManager dsm)
+	public UtilsLatexDevelopmentDocumentationBuilder(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
-		super(config,translations,langs,cmm,dsm);
+		super(config,translations,langs,cp);
 	}
 	
 	@Override protected void applyBaseLatexDir()

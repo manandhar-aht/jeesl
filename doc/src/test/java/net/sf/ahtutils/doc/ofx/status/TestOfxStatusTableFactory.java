@@ -85,7 +85,7 @@ public class TestOfxStatusTableFactory extends AbstractOfxStatusFactoryTest
 	public void testLatex() throws OfxAuthoringException, IOException, UtilsConfigurationException
 	{
 		Table actual = fOfx.toOfx(xmlStatus);
-		LatexGridTableRenderer renderer = new LatexGridTableRenderer(cmm,dsm);
+		LatexGridTableRenderer renderer = new LatexGridTableRenderer(cp);
 		renderer.render(actual);
     	debug(renderer);
     	save(renderer,fTxt);

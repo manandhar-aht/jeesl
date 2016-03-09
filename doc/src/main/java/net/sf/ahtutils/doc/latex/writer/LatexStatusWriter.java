@@ -18,7 +18,8 @@ import net.sf.exlp.util.xml.JaxbUtil;
 import org.apache.commons.configuration.Configuration;
 import org.openfuxml.content.table.Table;
 import org.openfuxml.exception.OfxAuthoringException;
-import org.openfuxml.interfaces.DefaultSettingsManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
+import org.openfuxml.interfaces.configuration.DefaultSettingsManager;
 import org.openfuxml.interfaces.media.CrossMediaManager;
 import org.openfuxml.renderer.latex.OfxMultiLangLatexWriter;
 import org.slf4j.Logger;
@@ -35,16 +36,50 @@ public class LatexStatusWriter extends AbstractDocumentationLatexWriter
 	
 	private String seedKey,seedKeyParent;
 	private boolean withIcon;
-	
-	public LatexStatusWriter(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm,DefaultSettingsManager dsm, String dirTable) throws UtilsConfigurationException
+
+	@Deprecated
+	public LatexStatusWriter(Configuration config, Translations translations, String[] langs, final CrossMediaManager cmm, final DefaultSettingsManager dsm, String dirTable) throws UtilsConfigurationException
 	{
 		super(config,translations,langs,cmm,dsm);
 		File baseDir = new File(config.getString(UtilsDocumentation.keyBaseLatexDir));
-		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cmm,dsm);
+		ConfigurationProvider cp = new ConfigurationProvider()
+		{
+			@Override
+			public DefaultSettingsManager getDefaultSettingsManager()
+			{
+				return dsm;
+			}
+
+			@Override
+			public CrossMediaManager getCrossMediaManager()
+			{
+				return cmm;
+			}
+		};
+		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cp);
 		ofxMlw.setDirTable(dirTable);
 		
 		withIcon = false;
 		
+		String dbSeedFile = config.getString(UtilsDbXmlSeedUtil.configKeySeed);
+		logger.debug("Using seed: "+dbSeedFile);
+		try
+		{
+			Db dbSeed = (Db)JaxbUtil.loadJAXB(dbSeedFile, Db.class);
+			seedUtil = new UtilsDbXmlSeedUtil(dbSeed);
+		}
+		catch (FileNotFoundException e) {throw new UtilsConfigurationException(e.getMessage());}
+	}
+
+	public LatexStatusWriter(Configuration config, Translations translations, String[] langs, ConfigurationProvider cp, String dirTable) throws UtilsConfigurationException
+	{
+		super(config,translations,langs,cp);
+		File baseDir = new File(config.getString(UtilsDocumentation.keyBaseLatexDir));
+		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cp);
+		ofxMlw.setDirTable(dirTable);
+
+		withIcon = false;
+
 		String dbSeedFile = config.getString(UtilsDbXmlSeedUtil.configKeySeed);
 		logger.debug("Using seed: "+dbSeedFile);
 		try

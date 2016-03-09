@@ -12,7 +12,8 @@ import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.factory.xml.list.OfxListFactory;
 import org.openfuxml.factory.xml.list.OfxListItemFactory;
 import org.openfuxml.factory.xml.ofx.content.XmlCommentFactory;
-import org.openfuxml.interfaces.DefaultSettingsManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
+import org.openfuxml.interfaces.configuration.DefaultSettingsManager;
 import org.openfuxml.interfaces.media.CrossMediaManager;
 import org.openfuxml.renderer.latex.content.list.LatexListRenderer;
 import org.openfuxml.renderer.latex.content.structure.LatexSectionRenderer;
@@ -36,6 +37,7 @@ public class OfxSecurityCategoryListFactory extends AbstractUtilsOfxDocumentatio
 	
 	private CrossMediaManager cmm;
 	private DefaultSettingsManager dsm;
+	private ConfigurationProvider cp;
 	
 	public OfxSecurityCategoryListFactory(Configuration config, String lang, Translations translations,CrossMediaManager cmm,DefaultSettingsManager dsm)
 	{
@@ -47,13 +49,19 @@ public class OfxSecurityCategoryListFactory extends AbstractUtilsOfxDocumentatio
 		this.cmm=cmm;
 		this.dsm=dsm;
 	}
+
+	public OfxSecurityCategoryListFactory(Configuration config,String[] langs, Translations translations,ConfigurationProvider cp)
+	{
+		super(config,langs,translations);
+		this.cp=cp;
+	}
 	
 	@Deprecated public String saveDescription(java.util.List<Category> categories) throws OfxAuthoringException
 	{
 		try
 		{
-			LatexListRenderer renderer = new LatexListRenderer(cmm,dsm,false);
-			renderer.render(create(categories),new LatexSectionRenderer(cmm,dsm,0,null));
+			LatexListRenderer renderer = new LatexListRenderer(cp,false);
+			renderer.render(create(categories),new LatexSectionRenderer(cp,0,null));
 			StringWriter sw = new StringWriter();
 			renderer.write(sw);
 			return sw.toString();
@@ -65,8 +73,8 @@ public class OfxSecurityCategoryListFactory extends AbstractUtilsOfxDocumentatio
 	{
 		try
 		{
-			LatexListRenderer renderer = new LatexListRenderer(cmm,dsm,false);
-			renderer.render(list(categories),new LatexSectionRenderer(cmm,dsm,0,null));
+			LatexListRenderer renderer = new LatexListRenderer(cp,false);
+			renderer.render(list(categories),new LatexSectionRenderer(cp,0,null));
 			StringWriter sw = new StringWriter();
 			renderer.write(sw);
 			return sw.toString();

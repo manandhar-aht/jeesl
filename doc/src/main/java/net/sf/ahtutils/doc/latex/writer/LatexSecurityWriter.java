@@ -11,7 +11,8 @@ import org.openfuxml.content.graph.Node;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.exception.OfxConfigurationException;
-import org.openfuxml.interfaces.DefaultSettingsManager;
+import org.openfuxml.interfaces.configuration.DefaultSettingsManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
 import org.openfuxml.interfaces.media.CrossMediaManager;
 import org.openfuxml.renderer.latex.OfxMultiLangLatexWriter;
 import org.slf4j.Logger;
@@ -50,26 +51,40 @@ public class LatexSecurityWriter extends AbstractDocumentationLatexWriter
 	private List<String> headerKeysViews;
 	
 	@Deprecated
-	public LatexSecurityWriter(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm, DefaultSettingsManager dsm)
+	public LatexSecurityWriter(Configuration config, Translations translations, String[] langs, final CrossMediaManager cmm, final DefaultSettingsManager dsm)
 	{
 		super(config,translations,langs,cmm,dsm);
 		
 		File baseDir = new File(config.getString(UtilsDocumentation.keyBaseLatexDir));
-		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cmm,dsm);
+		ConfigurationProvider cp = new ConfigurationProvider()
+		{
+			@Override
+			public DefaultSettingsManager getDefaultSettingsManager()
+			{
+				return dsm;
+			}
+
+			@Override
+			public CrossMediaManager getCrossMediaManager()
+			{
+				return cmm;
+			}
+		};
+		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cp);
 		
 		buildFactories();
 	}
 	
-	public LatexSecurityWriter(Configuration config, Translations translations,String[] langs, OfxMultiLangLatexWriter ofxMlw, CrossMediaManager cmm, DefaultSettingsManager dsm)
+	public LatexSecurityWriter(Configuration config, Translations translations, String[] langs, OfxMultiLangLatexWriter ofxMlw, ConfigurationProvider cp)
 	{
-		super(config,translations,langs,cmm,dsm);
+		super(config,translations,langs,cp);
 		this.ofxMlw=ofxMlw;
 		buildFactories();
 	}
 	
 	private void buildFactories()
 	{
-		ofSecurityCategoryList = new OfxSecurityCategoryListFactory(config,langs,translations,cmm,dsm);
+		ofSecurityCategoryList = new OfxSecurityCategoryListFactory(config,langs,translations,cp.getCrossMediaManager(),cp.getDefaultSettingsManager());
 		ofUsecases = new OfxSecurityUsecasesSectionFactory(config,langs,translations);
 		ofRoles = new OfxSecurityRolesSectionFactory(config,langs,translations);
 		ofViews = new OfxSecurityViewsSectionFactory(config,langs,translations);

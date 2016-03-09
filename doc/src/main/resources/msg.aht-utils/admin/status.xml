@@ -42,7 +42,14 @@
     		<s:lang key="fr" translation="Type"/>
     	</s:langs>
     </s:translation>
-    	<s:translation key="aupTypes">
+    <s:translation key="aupSubType">
+    	<s:langs>
+    		<s:lang key="de" translation="Sub Type"/>
+    		<s:lang key="en" translation="Sub Type"/>
+    		<s:lang key="fr" translation="Sub Type"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupTypes">
     	<s:langs>
     		<s:lang key="de" translation="Typen"/>
     		<s:lang key="en" translation="Types"/>

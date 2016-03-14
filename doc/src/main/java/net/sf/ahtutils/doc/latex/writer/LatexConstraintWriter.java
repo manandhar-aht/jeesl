@@ -9,8 +9,6 @@ import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.exception.OfxConfigurationException;
 import org.openfuxml.interfaces.configuration.ConfigurationProvider;
-import org.openfuxml.interfaces.configuration.DefaultSettingsManager;
-import org.openfuxml.interfaces.media.CrossMediaManager;
 import org.openfuxml.renderer.latex.OfxMultiLangLatexWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,46 +29,18 @@ public class LatexConstraintWriter extends AbstractDocumentationLatexWriter
 	private OfxMultiLangLatexWriter ofxMlw;
 		
 	private OfxConstraintScopeSectionFactory ofConstraint;
-
-	@Deprecated
-	public LatexConstraintWriter(Configuration config, Translations translations, String[] langs, final CrossMediaManager cmm, final DefaultSettingsManager dsm)
-	{
-		super(config,translations,langs,cmm,dsm);
-		
-		File baseDir = new File(config.getString(UtilsDocumentation.keyBaseLatexDir));
-		ConfigurationProvider cp = new ConfigurationProvider()
-		{
-			@Override
-			public DefaultSettingsManager getDefaultSettingsManager()
-			{
-				return dsm;
-			}
-
-			@Override
-			public CrossMediaManager getCrossMediaManager()
-			{
-				return cmm;
-			}
-		};
-		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cp);
-		
-		ofConstraint = new OfxConstraintScopeSectionFactory(config,langs,translations);
-		try{ofConstraint.setConstraintTypes(JaxbUtil.loadJAXB(LatexStatusWriter.systemConstraintsType, Aht.class));}
-		catch (FileNotFoundException e) {e.printStackTrace();}
-		
-	}
-
-	public LatexConstraintWriter(Configuration config, Translations translations, String[] langs, ConfigurationProvider cp)
+	
+	public LatexConstraintWriter(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
 		super(config,translations,langs,cp);
-
+		
 		File baseDir = new File(config.getString(UtilsDocumentation.keyBaseLatexDir));
 		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cp);
-
+		
 		ofConstraint = new OfxConstraintScopeSectionFactory(config,langs,translations);
 		try{ofConstraint.setConstraintTypes(JaxbUtil.loadJAXB(LatexStatusWriter.systemConstraintsType, Aht.class));}
 		catch (FileNotFoundException e) {e.printStackTrace();}
-
+		
 	}
 	
 	public void constraints(String artifact) throws OfxAuthoringException, OfxConfigurationException, IOException, UtilsConfigurationException

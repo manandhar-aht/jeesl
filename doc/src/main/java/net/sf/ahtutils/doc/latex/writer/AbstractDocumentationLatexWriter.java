@@ -4,23 +4,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import net.sf.ahtutils.doc.UtilsDocumentation;
-import net.sf.ahtutils.xml.status.Translations;
-import net.sf.exlp.util.io.StringIO;
-
 import org.apache.commons.configuration.Configuration;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.content.table.Table;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.exception.OfxConfigurationException;
-import org.openfuxml.interfaces.configuration.DefaultSettingsManager;
-import org.openfuxml.interfaces.media.CrossMediaManager;
 import org.openfuxml.interfaces.configuration.ConfigurationProvider;
 import org.openfuxml.renderer.latex.content.structure.LatexSectionRenderer;
 import org.openfuxml.renderer.latex.content.table.LatexTableRenderer;
 import org.openfuxml.renderer.latex.preamble.LatexPreamble;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.doc.UtilsDocumentation;
+import net.sf.ahtutils.xml.status.Translations;
+import net.sf.exlp.util.io.StringIO;
 
 public class AbstractDocumentationLatexWriter
 {	
@@ -32,29 +30,15 @@ public class AbstractDocumentationLatexWriter
 	protected Translations translations;
 	protected String[] langs;
 	
-	protected CrossMediaManager cmm;
-	protected DefaultSettingsManager dsm;
 	protected ConfigurationProvider cp;
-
-	@Deprecated
-	public AbstractDocumentationLatexWriter(Configuration config, Translations translations, String[] langs, CrossMediaManager cmm, DefaultSettingsManager dsm)
-	{
-		this.config=config;
-		this.translations=translations;
-		this.langs=langs;
-		this.cmm=cmm;
-		this.dsm =dsm;
-		
-		baseLatexDir=config.getString(UtilsDocumentation.keyBaseLatexDir);
-	}
-
+	
 	public AbstractDocumentationLatexWriter(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
 		this.config=config;
 		this.translations=translations;
 		this.langs=langs;
 		this.cp=cp;
-
+		
 		baseLatexDir=config.getString(UtilsDocumentation.keyBaseLatexDir);
 	}
 	

@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TreeMap;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
@@ -32,7 +31,6 @@ import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.ahtutils.xml.xpath.StatusXpath;
-import static org.slf4j.MDC.put;
 
 public class ExcelExporter
 {
@@ -64,6 +62,7 @@ public class ExcelExporter
     public Hashtable<String, Integer> errors = new Hashtable<String, Integer>();
 	
     final static Logger logger = LoggerFactory.getLogger(ExcelExporter.class);
+	private int MIN_WIDTH = 5000;
 	
     public ExcelExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String listDefinition, String languageKey) throws Exception
     {
@@ -109,15 +108,19 @@ public class ExcelExporter
 			
 			// First check for an existing name given in the definition
 			String sheetName = "sheet" +i;
+			
 			try {
-			Langs langs = ReportXpath.getLangs(sheet);
+			Langs langs = ReportXpath.getLangs(sheet.getContent());
 			Lang  lang  = StatusXpath.getLang(langs, languageKey);
 			if (lang != null)
 			{
+				logger.info("Setting Sheetname to " +lang.getTranslation());
+				
 				sheetName = lang.getTranslation();
 			}}
 			catch (Exception e)
 			{
+				logger.warn(e.getMessage());
 				logger.warn("Could not retrieve sheet name from definition, falling back to standard name.");
 			}
 			exportSheet(sheet, sheetName);
@@ -217,7 +220,7 @@ public class ExcelExporter
         }
         logger.info("Processed " +rowNr +" entries.");
         
-        fixWidth(sheet);
+        fixWidth(sortedColumns, sheet);
         for (String key : errors.keySet())
         {
             if (errors.get(key)>0)
@@ -232,6 +235,9 @@ public class ExcelExporter
     {
 		// Refer to POI standard styles at https://poi.apache.org/apidocs/org/apache/poi/ss/usermodel/BuiltinFormats.html
         CellStyle style = wb.createCellStyle();
+		Font font = wb.createFont();
+		font.setFontName("Arial");
+		style.setFont(font);
 		String dataClass = columnDefinition.getXlsTransformation().getDataClass();
 		if (dataClass.equalsIgnoreCase("String"))
 		{
@@ -289,11 +295,28 @@ public class ExcelExporter
         return sheet;
     }
 
-    public Sheet fixWidth(Sheet sheet)
+    public Sheet fixWidth(List<XlsColumn> columns, Sheet sheet)
     {
-        for (int i = 0; i<8; i++)
+		
+		for (int i = 0; i<columns.size(); i++)
             {
-                    sheet.autoSizeColumn(i);
+				String formatPattern = "";
+				if (columns.get(i).getXlsTransformation().isSetFormatPattern())
+				{
+					formatPattern = columns.get(i).getXlsTransformation().getFormatPattern();
+					logger.trace("Format Pattern " +formatPattern);
+				}
+				if (formatPattern.contains(" "))
+				{
+					sheet.setColumnWidth(i, MIN_WIDTH);
+					logger.trace("Column " +i +" is to MID_WIDTH which is " +sheet.getColumnWidth(i));
+				}
+				else
+				{
+					sheet.autoSizeColumn(i);
+					logger.trace("Column " +i +" is set of " +sheet.getColumnWidth(i));
+				}
+				
             }
         return sheet;
     }

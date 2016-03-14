@@ -22,7 +22,7 @@ public class TestLatexDevelopmentDocumentationBuilder extends AbstractUtilsDocTe
 	{	
 		super.initOfx();
 		mrl = new MultiResourceLoader();
-//        b = new UtilsLatexDevelopmentDocumentationBuilder(null,null,null,cmm,dsm);
+        b = new UtilsLatexDevelopmentDocumentationBuilder(null,null,null,cp);
 	}
 
 	public static void main(String args[]) throws Exception

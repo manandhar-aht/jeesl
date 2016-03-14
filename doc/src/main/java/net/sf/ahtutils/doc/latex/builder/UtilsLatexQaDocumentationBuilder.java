@@ -1,15 +1,14 @@
 package net.sf.ahtutils.doc.latex.builder;
 
+import org.apache.commons.configuration.Configuration;
+import org.openfuxml.exception.OfxConfigurationException;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.doc.UtilsDocumentation;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.xml.status.Translations;
-
-import org.apache.commons.configuration.Configuration;
-import org.openfuxml.exception.OfxConfigurationException;
-import org.openfuxml.interfaces.configuration.DefaultSettingsManager;
-import org.openfuxml.interfaces.media.CrossMediaManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class UtilsLatexQaDocumentationBuilder extends AbstractLatexDocumentationBuilder
 {	
@@ -21,9 +20,9 @@ public class UtilsLatexQaDocumentationBuilder extends AbstractLatexDocumentation
 	
 	public static enum Code {qaDuration}
 		
-	public UtilsLatexQaDocumentationBuilder(Configuration config, Translations translations,String[] langs, CrossMediaManager cmm,DefaultSettingsManager dsm)
+	public UtilsLatexQaDocumentationBuilder(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
-		super(config,translations,langs,cmm,dsm);
+		super(config,translations,langs,cp);
 	}
 	
 	@Override protected void applyBaseLatexDir()

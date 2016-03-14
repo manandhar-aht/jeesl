@@ -63,7 +63,7 @@ public class TestOfxLangStatisticTableFactory extends AbstractOfxStatusFactoryTe
 	public void testLatex() throws OfxAuthoringException, IOException
 	{
 		Table actual = fOfx.toOfx(lStats,headerKeys);
-		LatexGridTableRenderer renderer = new LatexGridTableRenderer(cmm,dsm);
+		LatexGridTableRenderer renderer = new LatexGridTableRenderer(cp);
 		renderer.render(actual);
     	debug(renderer);
     	save(renderer,fTxt);

@@ -1,5 +1,6 @@
 package net.sf.ahtutils.xml.xpath;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 import net.sf.exlp.util.xml.JDomUtil;
 
 import org.apache.commons.jxpath.JXPathContext;
+import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.filter.Filters;
@@ -152,21 +154,26 @@ public class ReportXpath
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static synchronized Langs getLangs(XlsSheet definition) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	public static synchronized Langs getLangs(List<Serializable> contentList) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
-		JXPathContext context = JXPathContext.newContext(definition);
-		List<Langs> listResult = (List<Langs>)context.selectNodes("//langs");
-		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+Langs.class.getSimpleName()+" are set");}
-		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+Langs.class.getSimpleName()+" are set");}
-		return listResult.get(0);
+		for (Object o  : contentList)
+		{
+			//logger.trace("" +o.getClass().getName());
+			if (o.getClass().getName().equals("net.sf.ahtutils.xml.status.Langs")) 
+			{
+				return (Langs) o;
+			}
+		}
+		return null;
 	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public static synchronized List<Lang> getLang(Langs definition) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
 		JXPathContext context = JXPathContext.newContext(definition);
 		List<Lang> listResult = (List<Lang>)context.selectNodes("//lang");
-		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+Langs.class.getSimpleName()+" are set");}
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+Lang.class.getSimpleName()+" are set");}
 		return listResult;
 	}
 	

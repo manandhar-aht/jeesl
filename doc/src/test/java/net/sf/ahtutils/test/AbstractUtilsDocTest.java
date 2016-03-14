@@ -4,22 +4,24 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import net.sf.exlp.util.io.LoggerInit;
-import net.sf.exlp.util.io.RelativePathFactory;
-import net.sf.exlp.util.io.StringIO;
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openfuxml.interfaces.DefaultSettingsManager;
+import org.openfuxml.factory.ConfigurationProviderFacotry;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
+import org.openfuxml.interfaces.configuration.DefaultSettingsManager;
 import org.openfuxml.interfaces.media.CrossMediaManager;
-import org.openfuxml.interfaces.renderer.latex.OfxLatexRenderer;
+import org.openfuxml.interfaces.renderer.OfxLatexRenderer;
 import org.openfuxml.media.cross.NoOpCrossMediaManager;
-import org.openfuxml.processor.settings.OfxDefaultSettingsManager;
+import org.openfuxml.util.configuration.settings.OfxDefaultSettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.exlp.util.io.LoggerInit;
+import net.sf.exlp.util.io.RelativePathFactory;
+import net.sf.exlp.util.io.StringIO;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AbstractUtilsDocTest
 {
@@ -27,6 +29,7 @@ public class AbstractUtilsDocTest
 	
 	protected CrossMediaManager cmm;
 	protected DefaultSettingsManager dsm;
+	protected ConfigurationProvider cp;
 	
 	protected File f;
 	protected boolean saveReference=false;
@@ -65,6 +68,8 @@ public class AbstractUtilsDocTest
 	{
 		cmm = new NoOpCrossMediaManager();
 		dsm = new OfxDefaultSettingsManager();
+		
+		cp = ConfigurationProviderFacotry.build(cmm, dsm);
 	}
 	
 	protected void assertJaxbEquals(Object expected, Object actual)

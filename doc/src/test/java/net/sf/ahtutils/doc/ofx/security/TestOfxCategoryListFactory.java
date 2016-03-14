@@ -61,8 +61,8 @@ public class TestOfxCategoryListFactory extends AbstractOfxSecurityFactoryTest
 	{	
 		super.initOfx();
 		
-//		parentSection = new LatexSectionRenderer(cmm,dsm,0,null);
-//		factory = new OfxSecurityCategoryListFactory(config,lang,translations,cmm,dsm);
+		parentSection = new LatexSectionRenderer(cp,0,null);
+		factory = new OfxSecurityCategoryListFactory(config,lang,translations,cp);
 		list = new ArrayList<Category>();
 		rc1 = createCategory(1);list.add(rc1);
 	}
@@ -88,11 +88,11 @@ public class TestOfxCategoryListFactory extends AbstractOfxSecurityFactoryTest
 	public void testLatex() throws OfxAuthoringException, IOException
 	{
 		List actual = factory.create(list);
-//		LatexListRenderer renderer = new LatexListRenderer(cmm,dsm);
-//		renderer.render(actual,parentSection);
-//    	debug(renderer);
-//    	save(renderer,fTxt);
-//    	assertText(renderer,fTxt);
+		LatexListRenderer renderer = new LatexListRenderer(cp);
+		renderer.render(actual,parentSection);
+    	debug(renderer);
+    	save(renderer,fTxt);
+    	assertText(renderer,fTxt);
 		
 	}
 	

@@ -20,13 +20,15 @@ import org.openfuxml.content.table.Row;
 import org.openfuxml.content.table.Specification;
 import org.openfuxml.content.table.Table;
 import org.openfuxml.exception.OfxAuthoringException;
+import org.openfuxml.factory.ConfigurationProviderFacotry;
 import org.openfuxml.factory.xml.table.OfxCellFactory;
 import org.openfuxml.factory.xml.table.OfxColumnFactory;
-import org.openfuxml.interfaces.DefaultSettingsManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
+import org.openfuxml.interfaces.configuration.DefaultSettingsManager;
 import org.openfuxml.interfaces.media.CrossMediaManager;
 import org.openfuxml.media.cross.NoOpCrossMediaManager;
-import org.openfuxml.processor.settings.OfxDefaultSettingsManager;
 import org.openfuxml.renderer.latex.content.table.LatexGridTableRenderer;
+import org.openfuxml.util.configuration.settings.OfxDefaultSettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,16 +39,16 @@ public class OfxLangStatisticTableFactory
 	private String lang;
 	private Translations translations;
 	
-	private CrossMediaManager cmm;
-	private DefaultSettingsManager dsm;
+	private ConfigurationProvider cp;
 	
 	public OfxLangStatisticTableFactory(String lang, Translations translations)
 	{
 		this.lang=lang;
 		this.translations=translations;
 		
-		cmm = new NoOpCrossMediaManager();
-		dsm = new OfxDefaultSettingsManager();
+		CrossMediaManager cmm = new NoOpCrossMediaManager();
+		DefaultSettingsManager dsm = new OfxDefaultSettingsManager();
+		cp = ConfigurationProviderFacotry.build(cmm, dsm);
 		
 		logger.warn("NYI CMM/DSM");
 	}
@@ -56,7 +58,7 @@ public class OfxLangStatisticTableFactory
 		try
 		{
 			logger.debug("Saving Reference to "+f);
-			LatexGridTableRenderer renderer = new LatexGridTableRenderer(cmm,dsm);
+			LatexGridTableRenderer renderer = new LatexGridTableRenderer(cp);
 			renderer.render(toOfx(lLangs,headerKeys));
 			StringWriter actual = new StringWriter();
 			renderer.write(actual);

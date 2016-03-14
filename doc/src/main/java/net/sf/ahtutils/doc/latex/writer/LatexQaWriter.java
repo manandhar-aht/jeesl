@@ -11,8 +11,7 @@ import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.exception.OfxConfigurationException;
 import org.openfuxml.factory.xml.layout.XmlAlignmentFactory;
 import org.openfuxml.factory.xml.table.OfxColumnFactory;
-import org.openfuxml.interfaces.DefaultSettingsManager;
-import org.openfuxml.interfaces.media.CrossMediaManager;
+import org.openfuxml.interfaces.configuration.ConfigurationProvider;
 import org.openfuxml.renderer.latex.OfxMultiLangLatexWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,10 +57,10 @@ public class LatexQaWriter
 	
 	private boolean withResponsible,withOrganisation;
 	
-	public LatexQaWriter(Configuration config, Translations translations, String[] langs, CrossMediaManager cmm, DefaultSettingsManager dsm) throws UtilsConfigurationException
+	public LatexQaWriter(Configuration config, Translations translations, String[] langs, ConfigurationProvider cp) throws UtilsConfigurationException
 	{
 		File baseDir = new File(config.getString(UtilsDocumentation.keyBaseLatexDir));
-		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cmm,dsm);
+		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cp);
 		
 		ofContainerInput = new OfxQaInputSectionFactory(config,langs,translations);
 		ofRoles = new OfxQaRoleTableFactory(config,langs,translations);

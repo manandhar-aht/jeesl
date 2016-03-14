@@ -1,13 +1,14 @@
 package net.sf.ahtutils.factory.xml.status;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.status.Type;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class XmlTypeFactory
 {
@@ -16,6 +17,7 @@ public class XmlTypeFactory
 	private String lang;
 	private Type q;
 	
+	public XmlTypeFactory(Query q){this(q.getLang(),q.getType());}
 	public XmlTypeFactory(Type q){this(null,q);}
 	public XmlTypeFactory(String lang,Type q)
 	{

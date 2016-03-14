@@ -253,7 +253,6 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		catch (UtilsLockingException e) {bMessage.errorConstraintViolationInUse();}
 	}
 	
-	
 	public void rm() throws ClassNotFoundException
 	{
 		try
@@ -267,6 +266,11 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		{
 //			addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,"WARN", e.getMessage()));
 		}
+	}
+	
+	public void cancel()
+	{
+		status=null;
 	}
 	
 	protected void updateAppScopeBean2(Object o){}

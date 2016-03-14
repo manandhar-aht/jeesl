@@ -16,7 +16,7 @@ import net.sf.ahtutils.xml.status.Type;
 
 public class StatusQuery
 {
-	public static enum Key {StatusExport,Langs,extractType,statusLabel}
+	public static enum Key {StatusExport,Langs,extractType,statusLabel,typeLabel}
 	
 	private static Map<Key,Query> mQueries;
 	
@@ -33,6 +33,7 @@ public class StatusQuery
 				case Langs: q.setLangs(langs());break;
 				case extractType: q.setType(extractType());break;
 				case statusLabel: q.setStatus(statusLabel());break;
+				case typeLabel: q.setType(typeLabel());break;
 			}
 			mQueries.put(key, q);
 		}
@@ -63,6 +64,16 @@ public class StatusQuery
 	public static Status statusLabel()
 	{		
 		Status xml = new Status();
+		xml.setId(0);
+		xml.setCode("");
+		xml.setLabel("");
+		return xml;
+	}
+	
+	public static Type typeLabel()
+	{		
+		Type xml = new Type();
+		xml.setId(0);
 		xml.setCode("");
 		xml.setLabel("");
 		return xml;

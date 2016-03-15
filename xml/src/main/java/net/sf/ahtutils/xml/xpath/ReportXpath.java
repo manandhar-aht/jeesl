@@ -167,6 +167,20 @@ public class ReportXpath
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static synchronized ImportStructure getImportStructure(List<Serializable> contentList) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		for (Object o  : contentList)
+		{
+			//logger.trace("" +o.getClass().getName());
+			if (o.getClass().getName().equals("net.sf.ahtutils.xml.report.ImportStructure")) 
+			{
+				return (ImportStructure) o;
+			}
+		}
+		return null;
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public static synchronized List<Lang> getLang(Langs definition) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException

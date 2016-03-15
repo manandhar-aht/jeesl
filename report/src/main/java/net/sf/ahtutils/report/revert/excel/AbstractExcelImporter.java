@@ -60,7 +60,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		
 		// Read information to import taken from Resolver
 		definition = resolver.definition(reportCode).getXlsSheet().get(0);
-		structure = ReportXpath.getImportStructure(definition);
+		structure = ReportXpath.getImportStructure(definition.getContent());
 		
 		// Prepare the row import definitions
 		// According to this post http://stackoverflow.com/questions/18231991/class-forname-caching
@@ -229,29 +229,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
                 
 				
 				
-				if (validators.containsKey(activeColumn))
-				{
-					logger.info("Found " +property +" validator");
-					// Instantiate new strategy to handle import
-					ValidationStrategy validator = (ValidationStrategy) validators.get(activeColumn).newInstance();
-					validator.setFacade(facade);
-					logger.info("Using " +validator.getClass().getCanonicalName());
-					// Validate the loaded value
-					if (targetClasses.containsKey(activeColumn)) 
-					{
-						validated = validator.validate(valueFromCell, targetClasses.get(activeColumn).getCanonicalName(), property);
-					}
-					else
-					{
-						validated = validator.validate(valueFromCell, "", property);
-					}
-					
-					logger.info("Validation result: " +validated);
-				}
-				else
-				{
-					validated = true;
-				}
+				
                 
             	
             	// Sync new temporary properties if any added
@@ -283,6 +261,29 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
         	logger.trace("Entity does not have the method " +methodName +". Initiating special treatment.");
         	
         }
+		if (validators.containsKey(activeColumn))
+				{
+					logger.info("Found " +property +" validator");
+					// Instantiate new strategy to handle import
+					ValidationStrategy validator = (ValidationStrategy) validators.get(activeColumn).newInstance();
+					validator.setFacade(facade);
+					logger.info("Using " +validator.getClass().getCanonicalName());
+					// Validate the loaded value
+					if (targetClasses.containsKey(activeColumn)) 
+					{
+						validated = validator.validate(valueFromCell, targetClasses.get(activeColumn).getCanonicalName(), property);
+					}
+					else
+					{
+						validated = validator.validate(valueFromCell, "", property);
+					}
+					
+					logger.info("Validation result: " +validated);
+				}
+				else
+				{
+					validated = true;
+				}
         return validated;
 	 }
 	 

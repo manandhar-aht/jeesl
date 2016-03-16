@@ -2,6 +2,7 @@
 <xsd:schema targetNamespace="http://ahtutils.aht-group.com/report"
     xmlns:r="http://ahtutils.aht-group.com/report"
     xmlns:us="http://ahtutils.aht-group.com/status"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="status.xsd"/>
     <xsd:element name="reports">
@@ -315,7 +316,18 @@
     </xsd:element>
     <xsd:element name="xlsTransformation">
         <xsd:complexType>
-            <xsd:attribute name="dataClass" type="xsd:string"/>
+			<xsd:annotation>
+				<xsd:documentation>
+					This is for xlsTransformation
+				</xsd:documentation>
+			</xsd:annotation>
+            <xsd:attribute name="dataClass" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>
+						This is for the dataClass attribute
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
             <xsd:attribute name="formatPattern" type="xsd:string"/>
             <xsd:attribute name="beanProperty" type="xsd:string"/>
 			<xsd:attribute name="xPath" type="xsd:string"/>

@@ -4,10 +4,8 @@ import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.jdom2.Namespace;
 import org.junit.Before;
 import org.junit.Test;
-import org.openfuxml.addon.chart.OfxChartRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -16,9 +14,7 @@ import org.w3c.dom.Element;
 import net.sf.ahtutils.test.AbstractAhtUtilsReportTest;
 import net.sf.ahtutils.xml.report.Info;
 import net.sf.ahtutils.xml.report.Info.Title;
-import net.sf.ahtutils.xml.report.Media;
 import net.sf.exlp.util.xml.DomUtil;
-import net.sf.exlp.util.xml.JDomUtil;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public class TestDomUtil extends AbstractAhtUtilsReportTest
@@ -48,34 +44,4 @@ public class TestDomUtil extends AbstractAhtUtilsReportTest
 		Info actual = DomUtil.toJaxb(root, Info.class);
 		this.assertJaxbEquals(expected, actual);
 	}
-	
-	@Test
-	public void chartReader()
-	{
-		//Read JDOM data document
-		org.jdom2.Document jdomDoc =  JDomUtil.load("src/test/resources/data/xml/report/testData.xml");
-		
-		//Get the root element (report)
-		org.jdom2.Element reportElement = jdomDoc.getRootElement();
-		//System.out.println("Root: " +reportElement.toString());
-		
-		//Get the info element as child of report element
-		org.jdom2.Element infoElement   = reportElement.getChild("info", Namespace.getNamespace("http://ahtutils.aht-group.com/report"));
-		//System.out.println("Info: " +infoElement.toString());
-		
-		Info info = (Info) JDomUtil.toJaxb(infoElement, Info.class);
-		JaxbUtil.error(info);
-		
-		OfxChartRenderer ofxRenderer = new OfxChartRenderer();
-		for (Media media : info.getMedia())
-		{
-			logger.warn("Chart Module deactivated");
-//			Chart chart          = media.getChart();
-//			logger.error("Test chart");
-//			JaxbUtil.error(chart);
-//			JFreeChart jfreeChart = ofxRenderer.render(chart);
-//			BufferedImage chartImage = jfreeChart.createBufferedImage(300, 400);
-		}
-	}
-	
 }

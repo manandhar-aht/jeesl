@@ -96,10 +96,6 @@
    	   				<groupId>com.google.guava</groupId>
    	   			</exclusion>
    	   			<exclusion>
-   	   				<artifactId>ofx-chart</artifactId>
-   	   				<groupId>org.openfuxml</groupId>
-   	   			</exclusion>
-   	   			<exclusion>
    	   				<artifactId>ofx-core</artifactId>
    	   				<groupId>org.openfuxml</groupId>
    	   			</exclusion>
@@ -184,8 +180,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jgrapht</groupId>
-			<artifactId>jgrapht</artifactId>
-			<version>0.8.3</version>
+			<artifactId>jgrapht-core</artifactId>
+			<version>0.9.1</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

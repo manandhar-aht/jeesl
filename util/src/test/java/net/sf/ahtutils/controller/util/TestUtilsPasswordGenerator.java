@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.util.poi;
+package net.sf.ahtutils.controller.util;
 
 import net.sf.ahtutils.controller.util.UtilsPasswordGenerator;
 import net.sf.ahtutils.test.AhtUtilsTestBootstrap;
@@ -33,6 +33,5 @@ public class TestUtilsPasswordGenerator
 		logger.debug("Test");
 		TestUtilsPasswordGenerator test = new TestUtilsPasswordGenerator();
 		test.direct();
-		
 	}
 }

@@ -225,25 +225,23 @@
 			</exclusions>
     		<scope>provided</scope>
     	</dependency>
-<!--     	<dependency>
-    		<groupId>jaxen</groupId>
-    		<artifactId>jaxen</artifactId>
-    	</dependency>
- -->    	<dependency>
-    		<groupId>de.rrze</groupId>
-    		<artifactId>jpwgen</artifactId>
-    	</dependency>
+    	
+	  	
     	
     	
 <!--	28.11.2015 ... Trying to deactivate. Should only be required in report module -->
+<!--	27.03.2016 ... Scope set to provided -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-		</dependency>  
+			<scope>provided</scope>
+		</dependency>
+		
     	<dependency>
     		<groupId>net.sf.ahtutils</groupId>
     		<artifactId>ahtutils-test</artifactId>

@@ -14,6 +14,13 @@
     		<s:lang key="fr" translation="Started"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="aupDateStart">
+    	<s:langs>
+    		<s:lang key="de" translation="Start Date"/>
+    		<s:lang key="en" translation="Start Date"/>
+    		<s:lang key="fr" translation="Start Date"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupDateFinished">
     	<s:langs>
     		<s:lang key="de" translation="Finished"/>
@@ -55,6 +62,13 @@
     		<s:lang key="de" translation="Gesendet"/>
     		<s:lang key="en" translation="Submitted"/>
     		<s:lang key="fr" translation="Submitted"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupDateSubmission">
+    	<s:langs>
+    		<s:lang key="de" translation="Submisison Date"/>
+    		<s:lang key="en" translation="Submisison Date"/>
+    		<s:lang key="fr" translation="Submisison Date"/>
     	</s:langs>
     </s:translation>
     

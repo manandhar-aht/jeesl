@@ -1,12 +1,8 @@
 package net.sf.ahtutils.controller.util;
 
-import java.util.List;
-
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import de.rrze.jpwgen.flags.PwGeneratorFlagBuilder;
-import de.rrze.jpwgen.impl.PwGenerator;
 
 public class UtilsPasswordGenerator
 {
@@ -19,13 +15,6 @@ public class UtilsPasswordGenerator
 	
 	public static String random(int size)
 	{
-		PwGeneratorFlagBuilder flags = new PwGeneratorFlagBuilder(); 
-		flags.setIncludeNumerals();
-//		flags.setIncludeCapitals(); 
-//		flags.setIncludeReducedSymbols();
-		flags.setFilterAmbiguous(); 
-		
-		List<String> passwords = PwGenerator.generate(size, 1, 1000, flags.build(), null, null); 
-		return passwords.get(0);
+		return RandomStringUtils.randomAlphabetic(size);
 	}
 }

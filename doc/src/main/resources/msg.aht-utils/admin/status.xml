@@ -133,4 +133,11 @@
     		<s:lang key="fr" translation="Category"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupStage">
+    	<s:langs>
+    		<s:lang key="de" translation="Stufe"/>
+    		<s:lang key="en" translation="Stage"/>
+    		<s:lang key="fr" translation="Stage"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

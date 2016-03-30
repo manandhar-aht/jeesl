@@ -206,6 +206,11 @@
         	</dependency>
             
             <!-- SEAM -->
+			<dependency>
+	   			<groupId>org.jboss.solder</groupId>
+	   			<artifactId>solder-impl</artifactId>
+	   			<version>3.1.0.Final</version>
+	   		</dependency>
             <dependency>
 	   			<groupId>org.jboss.seam.international</groupId>
 	   			<artifactId>seam-international-api</artifactId>
@@ -253,50 +258,34 @@
     	   		<version>4.12</version>
     	   	</dependency>
 			
-			<!-- JSF -->
+			<!-- Primefaces -->
 			<dependency>  
 		    	<groupId>org.primefaces</groupId>  
 		        <artifactId>primefaces</artifactId>
-		        <version>5.1</version>  
+		        <version>5.2</version>  
 		    </dependency>
 			<dependency>
 		        <groupId>org.primefaces.extensions</groupId>
 		        <artifactId>primefaces-extensions</artifactId>
-		        <version>3.0.0</version>
+		        <version>3.2.0</version>
 	    	</dependency>
 		   	<dependency>  
 		   		<groupId>org.primefaces.themes</groupId>  
 		   		<artifactId>cupertino</artifactId>  
 		   		<version>1.0.10</version>  
 		   	</dependency>
-
-			<!-- JSF Utilities -->
-			<dependency>
-		    	<groupId>org.omnifaces</groupId>
-		    	<artifactId>omnifaces</artifactId>
-		    	<version>1.8.1</version>
-			</dependency>
-			<dependency>
-				<groupId>jstl</groupId>
-				<artifactId>jstl</artifactId>
-				<version>1.2</version>
+		   	<dependency>  
+				<groupId>org.primefaces.themes</groupId>  
+				<artifactId>blitzer</artifactId>
+				<version>1.0.10</version>  
 			</dependency>
 			
-			<!-- This should be removed 
-			<dependency>
-		         <groupId>org.richfaces</groupId>
-		         <artifactId>richfaces-bom</artifactId>
-		         <version>4.2.1.Final</version>
-		         <scope>import</scope>
-		         <type>pom</type>
-	     	</dependency>  -->
-	     	<!-- This is a replacement for richfaces-bom -->
+			<!-- JSF -->
 			<dependency>
 				<groupId>javax.el</groupId>
 				<artifactId>javax.el-api</artifactId>
 				<version>2.2.5</version>
-			</dependency>
-	     	
+			</dependency>	
 	     	<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
@@ -316,6 +305,18 @@
 				<groupId>com.sun.faces</groupId>
 				<artifactId>jsf-impl</artifactId>
 				<version>2.1.0</version>
+			</dependency>
+
+			<!-- JSF Utilities -->
+			<dependency>
+		    	<groupId>org.omnifaces</groupId>
+		    	<artifactId>omnifaces</artifactId>
+		    	<version>1.8.1</version>
+			</dependency>
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
 			</dependency>
         	
         	<!-- XML -->

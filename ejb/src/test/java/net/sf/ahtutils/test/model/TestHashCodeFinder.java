@@ -1,14 +1,15 @@
 package net.sf.ahtutils.test.model;
 
-import net.sf.ahtutils.model.DuplicateHashCodeFinder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.File;
 import java.util.Map;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import net.sf.ahtutils.model.DuplicateHashCodeFinder;
 
 public class TestHashCodeFinder
 {
@@ -22,7 +23,7 @@ public class TestHashCodeFinder
 		hcc.searchForHashCodeBuilder();
 	}
 
-	@Test
+	@Test @Ignore
 	public void test()
 	{
 		int expectedSize = 2;

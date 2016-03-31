@@ -8,11 +8,11 @@
 	
 	<ofx:paragraph lang="de">
 		Dieses Informationssystem implementiert ein <text:emphasis italic="true">mehrstufiges Sicherheitskonzept</text:emphasis>, dass den Seitenzugriff sowie
-		den Zugriff auf Informationen, und die Möglichkeit Benutzeraktionen durchzuführen, steuert.
+		den Zugriff auf Informationen, und die Möglichkeit Benutzeraktionen durchzuführen, steuert. Die folgenden Komponenten sind der Kern des Sicherheitskonzepts:
 	</ofx:paragraph>
 	<ofx:paragraph lang="en">
 		This information system has implemented a <text:emphasis italic="true">multi-level security concept</text:emphasis> which controls the page access as well as
-		the access to information and the ability to perform actions. 
+		the access to information and the ability to perform actions. The following following components are the core elements of the security concept:
 	</ofx:paragraph>
 	
 	<l:list id="section.admin.security.introduction.list">
@@ -41,8 +41,9 @@
 		</l:item>
 		<l:item name="Actions" lang="en" version="2" id="section.admin.security.introduction.list.actions">
 			<ofx:paragraph>
-				are always related to a single <text:emphasis italic="true">view</text:emphasis> and can be interpreted as user interactions. They can be used by all users allowed to access the <text:emphasis italic="true">view</text:emphasis>, but it is also possible to restrict the
-				action to specific user groups.
+				are always related to a single <text:emphasis italic="true">view</text:emphasis> and can be interpreted as user interactions.
+				It is possible that all actions of a single <text:emphasis italic="true">view</text:emphasis> are allowed for all users,
+				but it is also possible to restrict specific user interactions to selected user groups.
 				Actions are implemented and defined by the <text:emphasis italic="true">System Developers</text:emphasis>.
 				The <text:emphasis italic="true">System Administrators</text:emphasis> are not able to add new
 				actions to the system, but are able to change the names and descriptions
@@ -61,7 +62,7 @@
 				but <text:emphasis italic="true">System Administrators</text:emphasis> have full access to this configuration
 				and are able to add, remove or modify use cases. Each use case contains
 				multiple <text:emphasis italic="true">view</text:emphasis> or <text:emphasis italic="true">actions</text:emphasis>. This reflects the requirement that a user usually needs access to multiple pages
-				with several allowed user interactions to perform a complex use case.
+				with several allowed user interactions to perform a complex task.
 			</ofx:paragraph>
 	    </l:item>
 	    <l:item name="XX" lang="fr">

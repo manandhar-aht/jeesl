@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <r:xlsWorkbook xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report" code="myCode">
     <r:xlsSheets query="myQuery"/>
-    <r:xlsSheet query="myQuery"/>
-    <r:xlsSheet query="myQuery"/>
+    <r:xlsSheet query="myQuery" primaryKey="myPK"/>
+    <r:xlsSheet query="myQuery" primaryKey="myPK"/>
 </r:xlsWorkbook>

@@ -9,6 +9,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 
@@ -17,10 +18,12 @@ import net.sf.ahtutils.report.util.DataUtil;
 import net.sf.ahtutils.util.reflection.ReflectionsUtil;
 import net.sf.ahtutils.xml.report.DataAssociation;
 import net.sf.ahtutils.xml.report.ImportStructure;
+import net.sf.ahtutils.xml.report.ImportType;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
+import org.apache.commons.lang.reflect.MethodUtils;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -42,6 +45,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	protected Map<String, Class>         strategies;
 	protected Map<String, Class>		 validators;
 	protected Map<String, Class>		 targetClasses;
+	protected Map<String, Boolean>		 isList;
 	protected short                      primaryKey;
 	protected Hashtable<String, C>       entities          = new Hashtable<String, C>();
 	protected Hashtable<String, Object>  tempPropertyStore = new Hashtable<String, Object>();
@@ -69,11 +73,20 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		strategies		  = new HashMap<String, Class>();
 		validators		  = new HashMap<String, Class>();
 		targetClasses	  = new HashMap<String, Class>();
+		isList			  = new HashMap<String, Boolean>();
 		for (DataAssociation association : structure.getDataAssociations().getDataAssociation())
 		{
 			String column = association.getColumn();
 			propertyRelations.put(column, association.getProperty());
-			if (association.isSetHandledBy())	{strategies.put(column, Class.forName(association.getHandledBy()));}
+			if (association.isSetHandledBy())	{strategies.put(column, Class.forName(association.getHandledBy()));
+													if (association.isSetType())
+													{
+														if(association.getType().equals(ImportType.LIST))
+														{
+															isList.put(column, true);
+														}
+													}
+												}
 			if (association.isSetValidatedBy()) {validators.put(column, Class.forName(association.getValidatedBy()));}
 			if (association.isSetTargetClass()) {targetClasses.put(column, Class.forName(association.getTargetClass()));}
 		}
@@ -175,117 +188,142 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			 							Object   target,
 										Class    handler)        throws Exception
 	 {
-        Boolean validated		= false;
-		String methodName		= "set" +property;
-		String valueFromCell	= parameters[0].toString();
-	 	logger.trace("Invoking " +methodName);
-	 	
-	 	// Now find the correct method
-	 	Method[] methods = targetClass.getMethods();
-	 	Class parameter  = null;
-	 	Method m         = null;
-	 	for (Method method : methods)
-	 	{
-	 		if (method.getName().equals(methodName))
-	 		{
-	 			parameter = method.getParameterTypes()[0];
-	 			m = method;
-	 		}
-	 	}
-	
-        if (Modifier.isPrivate(m.getModifiers()))
-        {
-            m.setAccessible(true);
-        }
-        
-        // Determine parameter type of setter
-        // Type t = m.getGenericParameterTypes()[0];
-        // String parameterClass = t.getTypeName();
-        
-        String parameterClass = parameter.getCanonicalName();
-     //   logger.info(parameterClass);
-     //   logger.info(parameters[0].getClass().getCanonicalName());
-        
-        // Lets see if the setter is accepting a data type that is available in Excel (String, Double, Date)
-        // Otherwise assume that it is used with a lookup table
-        
-        if (ReflectionsUtil.hasMethod(target, methodName))
-        {
-        	if (!(parameterClass.equals("java.lang.Double") || parameterClass.equals("double") || parameterClass.equals("long") || parameterClass.equals("java.util.Date") || parameterClass.equals("java.lang.String")))
-            {
-            	logger.trace("Loading import strategy for " +parameterClass +": " +handler.getCanonicalName() +".");
-            	
-                // Instantiate new strategy to handle import
-            	ImportStrategy strategy = (ImportStrategy) handler.newInstance();
-            	
-                // Pass database connection and current set of temporary properties
-				
-            	strategy.setFacade(facade);
-            	strategy.setTempPropertyStore(tempPropertyStore);
-            	
-            	// Process import step
-                Object value  = strategy.handleObject(parameters[0], parameterClass, property);
-            	parameters[0] =  value;
-                
-				
-				
-				
-                
-            	
-            	// Sync new temporary properties if any added
-            	tempPropertyStore = strategy.getTempPropertyStore();
-				
-				// Add the current property/value pair, can be useful when inspecting IDs (overwritten for new lines for examples)
-				if(logger.isTraceEnabled()){logger.trace("Set " +property + " to " + value.toString());}
-				tempPropertyStore.put(property, value);
-            }
+		if (isList.containsKey(activeColumn))
+		{
+			List list = (List) MethodUtils.invokeMethod(target, "get" +property, null);
 			
-			// Needed to correct the Class of the general number
-            if (parameterClass.equals("long"))
-            {
-            	Number number = (Number) parameters[0];
-            	parameters[0] = number.longValue();
-            }
+			// Instantiate new strategy to handle import
+			ImportStrategy strategy = (ImportStrategy) handler.newInstance();
+
+			// Pass database connection and current set of temporary properties
+			strategy.setFacade(facade);
+			strategy.setTempPropertyStore(tempPropertyStore);
+
+			// Process import step - Parameterclass is not requrired here
+			Object value  = strategy.handleObject(parameters[0], "", property);
+			parameters[0] =  value;
 			
-			// This is important if the String is a Number, Excel will format the cell to be a "general number"
-			if (parameterClass.equals("java.lang.String"))
-            {
-            	parameters[0] = parameters[0] +"";
-            }
-			
-			// Now invoke the method with the parameter from the Excel sheet
-            m.invoke(target, parameters);
-        }
-        else
-        {
-        	logger.trace("Entity does not have the method " +methodName +". Initiating special treatment.");
-        	
-        }
-		if (validators.containsKey(activeColumn))
+			list.add(value);
+			return true;
+		}
+		else
+		{
+		
+			Boolean validated		= false;
+			String methodName		= "set" +property;
+			String valueFromCell	= parameters[0].toString();
+			logger.trace("Invoking " +methodName);
+
+			// Now find the correct method
+			Method[] methods = targetClass.getMethods();
+			Class parameter  = null;
+			Method m         = null;
+			for (Method method : methods)
+			{
+				if (method.getName().equals(methodName))
 				{
-					logger.info("Found " +property +" validator");
+					parameter = method.getParameterTypes()[0];
+					m = method;
+				}
+			}
+
+			if (Modifier.isPrivate(m.getModifiers()))
+			{
+				m.setAccessible(true);
+			}
+
+			// Determine parameter type of setter
+			// Type t = m.getGenericParameterTypes()[0];
+			// String parameterClass = t.getTypeName();
+
+			String parameterClass = parameter.getCanonicalName();
+		 //   logger.info(parameterClass);
+		 //   logger.info(parameters[0].getClass().getCanonicalName());
+
+			// Lets see if the setter is accepting a data type that is available in Excel (String, Double, Date)
+			// Otherwise assume that it is used with a lookup table
+
+			if (ReflectionsUtil.hasMethod(target, methodName))
+			{
+				if (!(parameterClass.equals("java.lang.Double") || parameterClass.equals("double") || parameterClass.equals("long") || parameterClass.equals("java.util.Date") || parameterClass.equals("java.lang.String")))
+				{
+					logger.trace("Loading import strategy for " +parameterClass +": " +handler.getCanonicalName() +".");
+
 					// Instantiate new strategy to handle import
-					ValidationStrategy validator = (ValidationStrategy) validators.get(activeColumn).newInstance();
-					validator.setFacade(facade);
-					logger.info("Using " +validator.getClass().getCanonicalName());
-					// Validate the loaded value
-					if (targetClasses.containsKey(activeColumn)) 
+					ImportStrategy strategy = (ImportStrategy) handler.newInstance();
+
+					// Pass database connection and current set of temporary properties
+
+					strategy.setFacade(facade);
+					strategy.setTempPropertyStore(tempPropertyStore);
+
+					// Process import step
+					Object value  = strategy.handleObject(parameters[0], parameterClass, property);
+					parameters[0] =  value;
+
+
+
+
+
+
+					// Sync new temporary properties if any added
+					tempPropertyStore = strategy.getTempPropertyStore();
+
+					// Add the current property/value pair, can be useful when inspecting IDs (overwritten for new lines for examples)
+					if(logger.isTraceEnabled()){logger.trace("Set " +property + " to " + value.toString());}
+					tempPropertyStore.put(property, value);
+				}
+
+				// Needed to correct the Class of the general number
+				if (parameterClass.equals("long"))
+				{
+					Number number = (Number) parameters[0];
+					parameters[0] = number.longValue();
+				}
+
+				// This is important if the String is a Number, Excel will format the cell to be a "general number"
+				if (parameterClass.equals("java.lang.String"))
+				{
+					parameters[0] = parameters[0] +"";
+				}
+
+				// Now invoke the method with the parameter from the Excel sheet
+				m.invoke(target, parameters);
+
+			}
+			else
+			{
+				logger.trace("Entity does not have the method " +methodName +". Initiating special treatment.");
+
+			}
+			if (validators.containsKey(activeColumn))
 					{
-						validated = validator.validate(valueFromCell, targetClasses.get(activeColumn).getCanonicalName(), property);
+						logger.info("Found " +property +" validator");
+						// Instantiate new strategy to handle import
+						ValidationStrategy validator = (ValidationStrategy) validators.get(activeColumn).newInstance();
+						validator.setFacade(facade);
+						logger.info("Using " +validator.getClass().getCanonicalName());
+						// Validate the loaded value
+						if (targetClasses.containsKey(activeColumn)) 
+						{
+							validated = validator.validate(valueFromCell, targetClasses.get(activeColumn).getCanonicalName(), property);
+						}
+						else
+						{
+							validated = validator.validate(valueFromCell, "", property);
+						}
+
+						logger.info("Validation result: " +validated);
 					}
 					else
 					{
-						validated = validator.validate(valueFromCell, "", property);
+						validated = true;
 					}
-					
-					logger.info("Validation result: " +validated);
-				}
-				else
-				{
-					validated = true;
-				}
-        return validated;
-	 }
+				return validated;
+			}
+			
+		}
+	 
 	 
 	public Hashtable<String, Object> getTempPropertyStore() {return tempPropertyStore;}
 	public void setTempPropertyStore(Hashtable<String, Object> tempPropertyStore) {this.tempPropertyStore = tempPropertyStore;}

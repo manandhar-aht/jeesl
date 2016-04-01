@@ -27,7 +27,7 @@ public class LoadByCodeStrategy implements ImportStrategy {
 	@Override
 	public Object handleObject(Object object, String parameterClass, String property) {
 		
-		String code = (String) object;
+		String code = object.toString();
 		Class  lutClass      = null;
     	Object lookupEntity  = null;
     	

@@ -236,6 +236,18 @@
    	   		<artifactId>jaxb-impl</artifactId>
    	   		<scope>test</scope>
    	   	</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.0</version>
+			<type>jar</type>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 	
 	<dependencyManagement>

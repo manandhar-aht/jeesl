@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			xmlns:l="http://www.openfuxml.org/list"
+			xmlns:t="http://www.openfuxml.org/table"
+			xmlns:media="http://www.openfuxml.org/media"
+			xmlns:layout="http://www.openfuxml.org/layout"
+			xmlns:text="http://www.openfuxml.org/text"
+			id="section.admin.development.maven.shortcuts">
+	<ofx:title lang="en">Tumux Shortcuts</ofx:title>
+			
+	<ofx:paragraph lang="en">
+		In development environments several commands need to be executed regularly. To save time typing, several shortcuts of the most used commands
+		are provided in Table <ofx:reference target="table.admin.development.maven.shortcuts"/>.
+	</ofx:paragraph>
+		
+	<t:table id="table.admin.development.maven.shortcuts">	
+	    <ofx:title lang="en" version="1">Maven Shortcuts</ofx:title>
+	    <t:specification>
+	        <t:columns> 
+	            <t:column><layout:width unit="percentage" flex="true" narrow="true">30.0</layout:width></t:column>
+	            <t:column><layout:width unit="percentage" flex="true" narrow="true">10.0</layout:width></t:column>
+	            <t:column><layout:width unit="percentage" flex="true" narrow="false">60.0</layout:width></t:column>
+	        </t:columns>
+	    </t:specification>
+	    <t:content>
+	        <t:head>
+	            <t:row>
+	                <t:cell><ofx:paragraph lang="en">Description</ofx:paragraph></t:cell>
+	                <t:cell><ofx:paragraph lang="en">Shortcut</ofx:paragraph></t:cell>
+	                <t:cell><ofx:paragraph lang="en">Command</ofx:paragraph></t:cell>
+	            </t:row>
+	        </t:head>
+	        <t:body>
+	            <t:row>
+	                <t:cell><ofx:paragraph>Set number</ofx:paragraph></t:cell>
+	                <t:cell><ofx:paragraph>Ctrl+b, ., 222</ofx:paragraph></t:cell>
+	                <t:cell><ofx:paragraph><text:emphasis style="typewriter">mvn clean install compile -DskipTests</text:emphasis></ofx:paragraph></t:cell>
+	            </t:row>
+				
+	        </t:body>
+	    </t:content>
+	</t:table>
+	
+</ofx:section>

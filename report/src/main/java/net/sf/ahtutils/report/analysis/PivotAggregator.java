@@ -18,7 +18,8 @@ public class PivotAggregator <T extends EjbWithId, P extends EjbWithId>
 {
     final static Logger logger = LoggerFactory.getLogger(PivotAggregator.class);
 
-    private Class<T> cT;
+    @SuppressWarnings("unused")
+	private Class<T> cT;
     private Class<P> cP;
     
     private List<SimplePivotData<T,P>> list;
@@ -47,7 +48,7 @@ public class PivotAggregator <T extends EjbWithId, P extends EjbWithId>
     public List<T> listT() {return new ArrayList<T>(setT);}
     public List<P> listP() {return new ArrayList<P>(setP);}
     
-    public List<P> listDescValueP(T t)
+    public List<UtilsRankedResult<P>> rankedP(T t)
     {
     	EjbRankedResultFactory<P> f = new EjbRankedResultFactory<P>(cP);
     	List<UtilsRankedResult<P>> ranked = new ArrayList<UtilsRankedResult<P>>();
@@ -59,11 +60,7 @@ public class PivotAggregator <T extends EjbWithId, P extends EjbWithId>
     	
     	RankedResultComparator<UtilsRankedResult<P>,P> rrc = new RankedResultComparator<UtilsRankedResult<P>,P>();
     	Collections.sort(ranked, rrc);
-    	
-    	List<P> result = new ArrayList<P>();
-    	for(UtilsRankedResult<P> rr : ranked){result.add(rr.getEntity());}
-    	
-    	return result;
+    	return ranked;
     }
     
     public Double value(T t, P p)

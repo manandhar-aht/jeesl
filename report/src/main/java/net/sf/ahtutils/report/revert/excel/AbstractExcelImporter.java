@@ -226,7 +226,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 					m = method;
 				}
 			}
-
+			
 			if (Modifier.isPrivate(m.getModifiers()))
 			{
 				m.setAccessible(true);
@@ -245,7 +245,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 
 			if (ReflectionsUtil.hasMethod(target, methodName))
 			{
-				if (!(parameterClass.equals("java.lang.Double") || parameterClass.equals("double") || parameterClass.equals("long") || parameterClass.equals("java.util.Date") || parameterClass.equals("java.lang.String")))
+				if (!(parameterClass.equals("java.lang.Double") || parameterClass.equals("double") || parameterClass.equals("long") || parameterClass.equals("java.util.Date") || parameterClass.equals("java.lang.Boolean")|| parameterClass.equals("boolean") || parameterClass.equals("java.lang.String")))
 				{
 					logger.trace("Loading import strategy for " +parameterClass +": " +handler.getCanonicalName() +".");
 
@@ -285,6 +285,18 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				if (parameterClass.equals("java.lang.String"))
 				{
 					parameters[0] = parameters[0] +"";
+				}
+				
+				// This is important if the String is a Number, Excel will format the cell to be a "general number"
+				if (parameterClass.equals("java.lang.Boolean") || parameterClass.equals("boolean"))
+				{
+					Number number = (Number) parameters[0];
+					Boolean b     = true;
+					if (number.intValue() == 0)
+					{
+						b = false;
+					}
+					parameters[0] = b;
 				}
 
 				// Now invoke the method with the parameter from the Excel sheet

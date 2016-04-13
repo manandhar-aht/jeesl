@@ -1,12 +1,10 @@
 package net.sf.ahtutils.interfaces.model.status;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface UtilsLang extends EjbRemoveable
-{
-	long getId();
-	void setId(long id);
-	
+public interface UtilsLang extends EjbRemoveable,EjbWithId
+{	
 	String getLkey();
 	void setLkey(String lkey);
 	

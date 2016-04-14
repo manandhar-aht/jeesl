@@ -227,6 +227,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			}
 		}
 		debugUi(false);
+		pageFlowPrimarySelect(status);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -296,4 +297,10 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().setType(fUtils.find(cGT, ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
 		logger.info("changeGraphicType to "+((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType().getCode());
 	}
+	
+	//Revision
+	public void pageFlowPrimarySelect(Object revision) {}
+	public void pageFlowPrimaryCancel() {}
+	public void pageFlowPrimarySave(Object revision) {}
+	public void pageFlowPrimaryAdd() {}
 }

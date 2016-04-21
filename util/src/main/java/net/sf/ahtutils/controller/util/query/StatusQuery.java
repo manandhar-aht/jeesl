@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import net.sf.ahtutils.xml.aht.Query;
+import net.sf.ahtutils.xml.status.Category;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Lang;
@@ -16,7 +17,7 @@ import net.sf.ahtutils.xml.status.Type;
 
 public class StatusQuery
 {
-	public static enum Key {StatusExport,Langs,extractType,statusLabel,typeLabel}
+	public static enum Key {StatusExport,Langs,extractType,statusLabel,typeLabel,categoryLabel}
 	
 	private static Map<Key,Query> mQueries;
 	
@@ -34,6 +35,7 @@ public class StatusQuery
 				case extractType: q.setType(extractType());break;
 				case statusLabel: q.setStatus(statusLabel());break;
 				case typeLabel: q.setType(typeLabel());break;
+				case categoryLabel: q.setType(typeLabel());break;
 			}
 			mQueries.put(key, q);
 		}
@@ -74,6 +76,15 @@ public class StatusQuery
 	{		
 		Type xml = new Type();
 		xml.setId(0);
+		xml.setCode("");
+		xml.setLabel("");
+		return xml;
+	}
+	
+	public static Category categoryLabel()
+	{		
+		Category xml = new Category();
+//		xml.setId(0);
 		xml.setCode("");
 		xml.setLabel("");
 		return xml;

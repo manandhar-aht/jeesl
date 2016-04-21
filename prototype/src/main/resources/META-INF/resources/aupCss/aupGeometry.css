@@ -189,12 +189,18 @@ margin-top: 8px;
 	
 .aupFooter .aupFooterLeft{
 	float: left;
-	width: 410px;
+	width: 300px;
+}
+
+.aupFooter .aupFooterCenter{
+	float: left;
+	text-align: right;
+	width: 200px;
 }
 		
 .aupFooter .aupFooterRight{
 	float: right;
-	width: 400px;
+	width: 300px;
 	text-align: right;
 }
 	

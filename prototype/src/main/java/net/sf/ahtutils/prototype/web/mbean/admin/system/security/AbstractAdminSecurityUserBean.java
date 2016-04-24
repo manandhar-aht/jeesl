@@ -59,6 +59,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	protected Map<Long,Boolean> mapRoles; public Map<Long, Boolean> getMapRoles() {return mapRoles;}
 	protected EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER> efUser;
 	
+	protected boolean performPasswordCheck;
 	protected String pwd1; public String getPwd1() {return pwd1;} public void setPwd1(String pwd1) {this.pwd1 = pwd1;}
 	protected String pwd2;public String getPwd2() {return pwd2;}public void setPwd2(String pwd2){this.pwd2 = pwd2;}
 	
@@ -76,6 +77,8 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		efUser = EjbSecurityUserFactory.factory(cUser);
 		mapRoles = new Hashtable<Long,Boolean>();
 		roles = new ArrayList<R>();
+		
+		performPasswordCheck = true;
 	}
 	
 	protected void reloadUsers()
@@ -141,7 +144,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected void checkPwd()
 	{
-		if(EjbWithPwd.class.isAssignableFrom(cUser))
+		if(performPasswordCheck && EjbWithPwd.class.isAssignableFrom(cUser))
 		{
 			logger.info("Checking PWD");
 			if(pwd1.length()!=pwd2.length())
@@ -171,6 +174,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	protected void userChangePerformed() {}
 	protected void constraintViolationOnSave() {}
 	protected void constraintViolationOnRemove() {}
+	protected void passwordsDoNotMatch() {}
 
 	/*
 	public void addRole(R role) throws UtilsConstraintViolationException, UtilsLockingException

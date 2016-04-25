@@ -13,6 +13,7 @@ import net.sf.ahtutils.xml.status.Parent;
 import net.sf.ahtutils.xml.status.Scope;
 import net.sf.ahtutils.xml.status.Scopes;
 import net.sf.ahtutils.xml.status.Status;
+import net.sf.ahtutils.xml.status.SubType;
 import net.sf.ahtutils.xml.status.Type;
 
 public class StatusQuery
@@ -75,6 +76,15 @@ public class StatusQuery
 	public static Type typeLabel()
 	{		
 		Type xml = new Type();
+		xml.setId(0);
+		xml.setCode("");
+		xml.setLabel("");
+		return xml;
+	}
+	
+	public static SubType subTypeLabel()
+	{		
+		SubType xml = new SubType();
 		xml.setId(0);
 		xml.setCode("");
 		xml.setLabel("");

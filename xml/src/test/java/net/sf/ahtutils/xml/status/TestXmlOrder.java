@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlOrder extends AbstractXmlStatusTest
+public class TestXmlOrder extends AbstractXmlStatusTestOld
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlOrder.class);
 	

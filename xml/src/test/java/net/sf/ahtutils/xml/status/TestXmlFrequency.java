@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlFrequency extends AbstractXmlStatusTest
+public class TestXmlFrequency extends AbstractXmlStatusTestOld
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlFrequency.class);
 	

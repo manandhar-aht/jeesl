@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:aggregationMethod xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1">
+    <s:langs/>
+    <s:descriptions/>
+</s:aggregationMethod>

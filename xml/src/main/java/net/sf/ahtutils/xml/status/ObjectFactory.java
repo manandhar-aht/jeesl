@@ -414,6 +414,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AggregationMethod }
+     * 
+     */
+    public AggregationMethod createAggregationMethod() {
+        return new AggregationMethod();
+    }
+
+    /**
      * Create an instance of {@link Freeze }
      * 
      */

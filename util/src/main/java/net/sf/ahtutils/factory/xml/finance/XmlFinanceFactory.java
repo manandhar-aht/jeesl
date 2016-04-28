@@ -22,8 +22,13 @@ public class XmlFinanceFactory
 	public static <E extends Enum<E>> Finance build(E code, double value){return create(code.toString(),value);}
 	public static Finance create(String code, double value)
 	{
+		return build(code,null,value);
+	}
+	public static Finance build(String code, String label, double value)
+	{
 		Finance xml = new Finance();
 		xml.setCode(code);
+		xml.setLabel(label);
 		xml.setValue(value);
 		return xml;
 	}

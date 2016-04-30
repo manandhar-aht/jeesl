@@ -14,6 +14,13 @@
     		<s:lang key="fr" translation="Name"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="aupTitle">
+    	<s:langs>
+    		<s:lang key="en" translation="Titel"/>
+    		<s:lang key="de" translation="Title"/>
+    		<s:lang key="fr" translation="Title"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupDelay">
     	<s:langs>
     		<s:lang key="de" translation="Delay"/>
@@ -115,6 +122,20 @@
     		<s:lang key="de" translation="Vorlage"/>
     		<s:lang key="en" translation="Template"/>
     		<s:lang key="fr" translation="Template"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupCancel">
+    	<s:langs>
+    		<s:lang key="de" translation="Abbrechen"/>
+    		<s:lang key="en" translation="Cancel"/>
+    		<s:lang key="fr" translation="Cancel"/>
+    	</s:langs>
+    </s:translation>
+        <s:translation key="aupMessage">
+    	<s:langs>
+    		<s:lang key="de" translation="Nachricht"/>
+    		<s:lang key="en" translation="Message"/>
+    		<s:lang key="fr" translation="Message"/>
     	</s:langs>
     </s:translation>
 </s:translations>

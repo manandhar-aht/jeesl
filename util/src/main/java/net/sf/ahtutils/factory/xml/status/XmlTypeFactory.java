@@ -69,6 +69,11 @@ public class XmlTypeFactory
 	}
 	
 	public static Type build(String code,String label){return create(null,code,label);}
+	
+	public static <E extends Enum<E>> Type build(E code)
+	{
+		return create(code.toString());
+	}
 	public static Type create(String code){return create(null,code);}
 	public static Type create(String key, String code){return create(key,code,null);}
 	public static Type create(String key, String code, String label)

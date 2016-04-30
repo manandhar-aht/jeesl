@@ -21,6 +21,13 @@
     		<s:lang key="fr" translation="Position"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupDirection">
+    	<s:langs>
+    		<s:lang key="de" translation="Richtung"/>
+    		<s:lang key="en" translation="Direction"/>
+    		<s:lang key="fr" translation="Direction"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupScope">
     	<s:langs>
     		<s:lang key="de" translation="Scope"/>

@@ -196,9 +196,11 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void selectStatus() throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
-//		status = fUtils.find(cStatus,status);
+		status = fUtils.find(cl,(EjbWithId)status);
 		logger.debug("selectStatus");
-//		status = blAdmin.verifiyLangs(cl,MeisDescription.class,status,MeisLang.defaultLangs);
+		status = efLang.persistMissingLangs(fUtils,langs,(EjbWithLang)status);
+		status = efDescription.persistMissingLangs(fUtils,langs,(EjbWithDescription)status);
+		
 		if(((EjbWithParent)status).getParent()!=null)
 		{
 			parentId=((EjbWithParent)status).getParent().getId();

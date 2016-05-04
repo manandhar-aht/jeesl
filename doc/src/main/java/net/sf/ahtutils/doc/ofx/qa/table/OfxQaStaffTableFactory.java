@@ -161,7 +161,6 @@ public class OfxQaStaffTableFactory extends AbstractUtilsOfxDocumentationFactory
 	
 	private Cell build(ColumCode column, Staff staff)
 	{
-		
 		switch(column)
 		{
 			case organisation: return OfxCellFactory.createParagraphCell(staff.getStatus().getLabel());
@@ -172,7 +171,7 @@ public class OfxQaStaffTableFactory extends AbstractUtilsOfxDocumentationFactory
 											if(staff.isSetType()){sb.append(staff.getType().getLabel());}
 											return OfxCellFactory.createParagraphCell(sb.toString());
 			case role: return OfxMultiLangFactory.cell(langs, staff.getRole().getLangs());
-			case responsibility: return OfxCellFactory.createParagraphCell(staff.getResponsible().getLabel());
+			case responsibility: return cellResponsibility(staff);
 			case name: return OfxCellFactory.createParagraphCell(staff.getUser().getFirstName()+" "+staff.getUser().getLastName());
 		}
 		return OfxCellFactory.createParagraphCell("");
@@ -204,4 +203,16 @@ public class OfxQaStaffTableFactory extends AbstractUtilsOfxDocumentationFactory
 	
 	private ColumCode[] columns;
 	public void setColumns(ColumCode... columns) {this.columns = columns;}
+	
+	private Cell cellResponsibility(Staff staff)
+	{
+		if(staff.isSetResponsible() && staff.getResponsible().isSetLabel())
+		{
+			return OfxCellFactory.createParagraphCell(staff.getResponsible().getLabel());
+		}
+		else
+		{
+			return OfxCellFactory.createParagraphCell("");
+		}
+	}
 }

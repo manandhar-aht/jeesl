@@ -67,7 +67,13 @@
 			<s:lang key="en" translation="(Add a new contact on this page!)"/>
 		</s:langs>
 	</s:translation>
-		<s:translation key="aupPasswordNew">
+	<s:translation key="aupPasswordCurrent">
+		<s:langs>
+			<s:lang key="de" translation="Current Password"/>
+			<s:lang key="en" translation="Current Password"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="aupPasswordNew">
 		<s:langs>
 			<s:lang key="de" translation="New Password"/>
 			<s:lang key="en" translation="New Password"/>

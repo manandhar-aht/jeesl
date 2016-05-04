@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
-import net.sf.ahtutils.xml.status.TestXmlLangs;
 
 public class TestXmlXlsSheet extends AbstractXmlReportTest<XlsSheet>
 {
@@ -17,8 +16,12 @@ public class TestXmlXlsSheet extends AbstractXmlReportTest<XlsSheet>
     {
     	XlsSheet xml = new XlsSheet();
     	xml.setQuery("myQuery");
+    	xml.setPrimaryKey("myPK");
     	
-    	
+    	if(withChildren)
+    	{
+    		
+    	}
     	
     	return xml;
     }

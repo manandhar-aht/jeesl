@@ -1,14 +1,13 @@
 package net.sf.ahtutils.xml.qa;
 
-import net.sf.ahtutils.test.AbstractXmlTest;
-import net.sf.ahtutils.xml.system.AbstractXmlSystemTest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.test.AbstractXmlTest;
+
 public abstract class AbstractXmlQaTest <T extends Object> extends AbstractXmlTest<T>
 {
-	final static Logger logger = LoggerFactory.getLogger(AbstractXmlSystemTest.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractXmlQaTest.class);
 	
 	public AbstractXmlQaTest(Class<T> cXml)
 	{

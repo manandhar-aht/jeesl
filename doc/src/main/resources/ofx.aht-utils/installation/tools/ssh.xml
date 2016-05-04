@@ -58,11 +58,20 @@ challengeresponsepasswords no</ofx:raw>
 				</ofx:listing>
 					
 				<ofx:paragraph lang="en" version="1">
-					The public part of this key (key.pub) has to be appended to the file .authorizedkeys.
+					The public part of this key (key.pub) has to be appended to the file <text:emphasis style="typewriter">$HOME/.ssh/authorized_keys</text:emphasis>.
 				</ofx:paragraph>
 				
+				<ofx:listing>
+					<ofx:raw>
+						mkdir $HOME/.ssh
+						touch $HOME/.ssh/authorized_keys
+						chmod 600 $HOME/.ssh/authorized_keys
+						nano $HOME/.ssh/authorized_keys
+					</ofx:raw>
+				</ofx:listing>
+								
 				<ofx:paragraph lang="en" version="1">
-					Then, the server configuration <text:emphasis style="typewriter">"-config" in etc/ssh/sshd-config</text:emphasis> has to be updated.
+					Then, the server configuration <text:emphasis style="typewriter">"-config" in etc/ssh/sshd_config</text:emphasis> has to be updated.
 				</ofx:paragraph>
 			</ofx:section>
 					

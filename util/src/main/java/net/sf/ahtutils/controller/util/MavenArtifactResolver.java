@@ -4,9 +4,7 @@ import java.io.File;
 
 public class MavenArtifactResolver
 {
-	public static final String jodaVersion = "2.0";
-	
-   private static final String LOCAL_MAVEN_REPO =
+	private static final String LOCAL_MAVEN_REPO =
          System.getProperty("maven.repo.local") != null ?
                System.getProperty("maven.repo.local") :
                (System.getProperty("user.home") + File.separatorChar +

@@ -21,6 +21,13 @@
     		<s:lang key="fr" translation="Position"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupDirection">
+    	<s:langs>
+    		<s:lang key="de" translation="Richtung"/>
+    		<s:lang key="en" translation="Direction"/>
+    		<s:lang key="fr" translation="Direction"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupScope">
     	<s:langs>
     		<s:lang key="de" translation="Scope"/>
@@ -28,7 +35,14 @@
     		<s:lang key="fr" translation="Scope"/>
     	</s:langs>
     </s:translation>
-    	<s:translation key="aupModel">
+	<s:translation key="aupSource">
+    	<s:langs>
+    		<s:lang key="de" translation="Quelle"/>
+    		<s:lang key="en" translation="Source"/>
+    		<s:lang key="fr" translation="Source"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupModel">
     	<s:langs>
     		<s:lang key="de" translation="Modell"/>
     		<s:lang key="en" translation="Model"/>

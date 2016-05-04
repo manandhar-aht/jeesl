@@ -78,6 +78,7 @@ public class XmlCategoryFactory
 		return xml;
 	}
 	
+	public static <E extends Enum<E>> Category build(E code){return create(code.toString());}
 	public static Category create(String code)
 	{
 		Category xml = new Category();

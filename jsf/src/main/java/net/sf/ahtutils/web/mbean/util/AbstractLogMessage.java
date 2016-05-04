@@ -170,12 +170,15 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
         	sb.append(" ... ").append(t.toString());
         }
         return sb.toString();
-	 }
+	}
 
-    public static <T extends EjbWithId> String saveEntity(T t)
+	public static <T extends EjbWithId> String saveEntity(T t){return saveEntity(null,t);}
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId>
+		String saveEntity(USER user, T t)
     {
         StringBuffer sb = new StringBuffer();
-        sb.append("Save ").append(t.getClass().getSimpleName());
+        sb.append(user(user));
+        sb.append(" Save ").append(t.getClass().getSimpleName());
         sb.append(": ").append(t.toString());
         return sb.toString();
     }

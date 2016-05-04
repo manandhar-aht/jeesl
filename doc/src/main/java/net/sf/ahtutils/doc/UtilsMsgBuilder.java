@@ -43,7 +43,7 @@ public class UtilsMsgBuilder
 	public static final String msgAdminSystemOptionTables = "msg.aht-utils/admin/system/options.xml";
 	public static final String srcAdminSecurity = "aht-utils/msg/module/security.xml";
 	public static final String srcAdminUser = "aht-utils/msg/admin/user.xml";
-	public static final String srcAdminStatus = "msg.aht-utils/admin/status.xml";
+	public static final String srcAdminStatus = "aht-utils/msg/admin/status.xml";
 	public static final String srcRevision = "aht-utils/msg/module/revision.xml";
 	public static final String srcConstraint = "msg.aht-utils/system/constraint.xml";
 	public static final String facesMessages = "aht-utils/msg/facesMessages.xml";

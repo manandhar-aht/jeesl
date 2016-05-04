@@ -1,13 +1,13 @@
 package net.sf.ahtutils.factory.xml.status;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Parent;
 import net.sf.ahtutils.xml.status.Status;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class XmlStatusFactory
 {
@@ -74,6 +74,11 @@ public class XmlStatusFactory
 		}
 		
 		return xml;
+	}
+	
+	public static <E extends Enum<E>> Status build(E code)
+	{
+		return create(code.toString());
 	}
 	
 	public static Status create(String code)

@@ -29,7 +29,7 @@ public class ValidateExistenceByCode implements ValidationStrategy {
 		Boolean validated    = false;
                 
 		if(logger.isTraceEnabled()){logger.trace("Searching for Entity with Code " +code);}
-		logger.info(code + facade.toString());
+		
 		// Try to find the entity with given code in database
 		if (facade != null)
 		{

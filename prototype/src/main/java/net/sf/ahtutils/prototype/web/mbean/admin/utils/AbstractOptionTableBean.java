@@ -196,9 +196,11 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void selectStatus() throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
-//		status = fUtils.find(cStatus,status);
+		status = fUtils.find(cl,(EjbWithId)status);
 		logger.debug("selectStatus");
-//		status = blAdmin.verifiyLangs(cl,MeisDescription.class,status,MeisLang.defaultLangs);
+		status = efLang.persistMissingLangs(fUtils,langs,(EjbWithLang)status);
+		status = efDescription.persistMissingLangs(fUtils,langs,(EjbWithDescription)status);
+		
 		if(((EjbWithParent)status).getParent()!=null)
 		{
 			parentId=((EjbWithParent)status).getParent().getId();
@@ -227,6 +229,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			}
 		}
 		debugUi(false);
+		pageFlowPrimarySelect(status);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -296,4 +299,10 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().setType(fUtils.find(cGT, ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
 		logger.info("changeGraphicType to "+((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType().getCode());
 	}
+	
+	//Revision
+	public void pageFlowPrimarySelect(Object revision) {}
+	public void pageFlowPrimaryCancel() {}
+	public void pageFlowPrimarySave(Object revision) {}
+	public void pageFlowPrimaryAdd() {}
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="aupQuarter">
+		<s:langs>
+			<s:lang key="en" translation="Quarter"/>
+			<s:lang key="fr" translation="Quarter"/>
+		</s:langs>
+	</s:translation>
+</s:translations>

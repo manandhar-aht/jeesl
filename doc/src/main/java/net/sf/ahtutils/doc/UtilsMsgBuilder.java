@@ -25,9 +25,12 @@ public class UtilsMsgBuilder
 	public static final String generic = "aht-utils/msg/generic.xml";
 	public static final String entities = "aht-utils/msg/module/entities.xml";
 	public static final String srcProject = "msg.aht-utils/project.xml";
-	public static final String srcFinance = "msg.aht-utils/finance/finance.xml";
-	public static final String srcAmount = "msg.aht-utils/finance/amount.xml";
 	public static final String srcDate = "msg.aht-utils/date.xml";
+	
+	//Finance
+	public static final String srcFinance = "aht-utils/msg/finance/finance.xml";
+	public static final String srcAmount = "aht-utils/msg/finance/amount.xml";
+	public static final String financePeriod = "aht-utils/msg/finance/period.xml";
 	
 	public static final String timeseries = "aht-utils/msg/module/timeseries.xml";
 	public static final String io = "aht-utils/msg/module/io.xml";

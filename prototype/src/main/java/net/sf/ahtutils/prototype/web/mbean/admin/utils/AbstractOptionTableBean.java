@@ -222,7 +222,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		{
 			for(String fixed : ((UtilsStatusFixedCode)status).getFixedCodes())
 			{
-				if(fixed.equals(((UtilsStatus)category).getCode()))
+				if(fixed.equals(((UtilsStatus)status).getCode()))
 				{
 					uiAllowCode=false;
 				}

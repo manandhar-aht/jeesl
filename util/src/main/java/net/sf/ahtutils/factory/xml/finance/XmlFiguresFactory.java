@@ -15,23 +15,18 @@ public class XmlFiguresFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlFiguresFactory.class);
 	
-	public static Figures build(long id)
-	{
-		Figures xml = build();
-		xml.setId(id);
-		return xml;
-	}
+	public static Figures build(long id){return build(id,null,null);}
+	public static Figures build(String code){return (build(null,code,null));}
+	public static Figures build(){return build(null,null,null);}
 	
-	public static Figures build(String code)
-	{
-		Figures xml = build();
-		xml.setCode(code);
-		return xml;
-	}
+	public static Figures label(String label){return build(null,null,label);}
 	
-	public static Figures build()
+	public static Figures build(Long id, String code, String label)
 	{
 		Figures xml = new Figures();
+		if(id!=null){xml.setId(id);}
+		if(code!=null){xml.setCode(code);}
+		if(label!=null){xml.setLabel(label);}
 		return xml;
 	}
 	

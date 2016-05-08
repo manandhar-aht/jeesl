@@ -8,4 +8,6 @@
     <f:time id="123" code="myCode" label="myLabel" record="2011-11-11"/>
     <f:counter id="123" code="myCode" label="myLabel" counter="2345"/>
     <f:counter id="123" code="myCode" label="myLabel" counter="2345"/>
+    <f:figures id="123" code="myCode" label="myLabel"/>
+    <f:figures id="123" code="myCode" label="myLabel"/>
 </f:figures>

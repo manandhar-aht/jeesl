@@ -23,12 +23,11 @@ public class TestXmlFigures extends AbstractXmlFinanceTest<Figures>
     	if(withChilds)
     	{
     		xml.getFinance().add(TestXmlFinance.create(false));xml.getFinance().add(TestXmlFinance.create(false));
-    		
     		xml.getTime().add(TestXmlTime.create(false));xml.getTime().add(TestXmlTime.create(false));
-    		
     		xml.getRemark().add(TestXmlRemark.create(false));xml.getRemark().add(TestXmlRemark.create(false));
-    		
     		xml.getCounter().add(TestXmlCounter.create(false));xml.getCounter().add(TestXmlCounter.create(false));
+    		
+    		xml.getFigures().add(TestXmlFigures.create(false));xml.getFigures().add(TestXmlFigures.create(false));
     	}
     	    	
     	return xml;

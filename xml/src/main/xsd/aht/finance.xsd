@@ -13,6 +13,7 @@
                 <xsd:element ref="f:finance" maxOccurs="unbounded"/>
                 <xsd:element ref="f:time" maxOccurs="unbounded"/>
                 <xsd:element ref="f:counter" maxOccurs="unbounded"/>
+                <xsd:element ref="f:figures" maxOccurs="unbounded"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="code" type="xsd:string"/>

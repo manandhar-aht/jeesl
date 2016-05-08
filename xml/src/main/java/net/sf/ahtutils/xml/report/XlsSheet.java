@@ -51,10 +51,10 @@ public class XlsSheet
 
     private final static long serialVersionUID = 1L;
     @XmlElementRefs({
-        @XmlElementRef(name = "xlsColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumn.class),
+        @XmlElementRef(name = "xlsColumns", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumns.class),
         @XmlElementRef(name = "importStructure", namespace = "http://ahtutils.aht-group.com/report", type = ImportStructure.class),
         @XmlElementRef(name = "langs", namespace = "http://ahtutils.aht-group.com/status", type = Langs.class),
-        @XmlElementRef(name = "xlsColumns", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumns.class),
+        @XmlElementRef(name = "xlsColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumn.class),
         @XmlElementRef(name = "xlsMultiColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsMultiColumn.class)
     })
     @XmlMixed
@@ -82,12 +82,12 @@ public class XlsSheet
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link XlsColumn }
-     * {@link String }
-     * {@link XlsMultiColumn }
-     * {@link XlsColumns }
      * {@link Langs }
+     * {@link XlsMultiColumn }
+     * {@link XlsColumn }
+     * {@link XlsColumns }
      * {@link ImportStructure }
+     * {@link String }
      * 
      * 
      */

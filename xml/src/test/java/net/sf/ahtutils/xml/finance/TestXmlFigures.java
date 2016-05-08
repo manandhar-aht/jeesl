@@ -17,6 +17,8 @@ public class TestXmlFigures extends AbstractXmlFinanceTest<Figures>
     {
     	Figures xml = new Figures();
     	xml.setId(123);
+    	xml.setCode("myCode");
+    	xml.setLabel("myLabel");
     	
     	if(withChilds)
     	{

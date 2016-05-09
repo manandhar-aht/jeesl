@@ -65,4 +65,9 @@ public class XmlFinanceFactory
 		xml.setValue(value);
 		return xml;
 	}
+	
+	public static Finance build()
+	{
+		return new Finance();
+	}
 }

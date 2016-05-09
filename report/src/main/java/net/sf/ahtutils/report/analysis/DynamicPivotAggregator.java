@@ -14,27 +14,73 @@ public class DynamicPivotAggregator
 {
     final static Logger logger = LoggerFactory.getLogger(DynamicPivotAggregator.class);
 
-  
-    private Set<EjbWithId> setA,setB,setC;
+    private static boolean debug = false;
     
-    public DynamicPivotAggregator()
-    {
-    	setA = new HashSet<EjbWithId>();
-    	setB = new HashSet<EjbWithId>();
-    	setC = new HashSet<EjbWithId>();
-    }
+    private List<Set<EjbWithId>> entitySet;
+    private List<DynamicPivotData> list;
     
-    public void add(double value, EjbWithId a, EjbWithId b)
+    public DynamicPivotAggregator(int size)
     {
+    	list = new ArrayList<DynamicPivotData>();
+    	entitySet = new ArrayList<Set<EjbWithId>>();
+    
     	
+    	for(int i=0;i<size;i++)
+    	{
+    		entitySet.add(new HashSet<EjbWithId>());
+    	}
     }
     
-    public List<EjbWithId> listA() {return new ArrayList<EjbWithId>(setA);}
-    public List<EjbWithId> listB() {return new ArrayList<EjbWithId>(setB);}
-      
-    public Double value()
+    public void add(DynamicPivotData dpd)
     {
-    	return null;
+    	for(int i=0;i<dpd.getSize();i++)
+    	{
+    		EjbWithId entity = dpd.getEntity(i);
+    		if(!entitySet.get(i).contains(entity))
+    		{
+    			if(debug)
+    			{
+    				StringBuffer sb = new StringBuffer();
+    				sb.append("Adding ").append(i);
+    				sb.append(" ").append(entity.getClass().getSimpleName());
+    				logger.info(sb.toString());
+    			}
+    			
+    			entitySet.get(i).add(entity);
+    		}
+    	}
+    	list.add(dpd);
+    }
+    
+    public List<EjbWithId> list(int index)
+    {
+    	return new ArrayList<EjbWithId>(entitySet.get(index));
+    }
+      
+    public Double value(EjbWithId... selectors)
+    {
+    	double value = 0;
+    	boolean oneMatches = false;
+    	for(DynamicPivotData dpd : list)
+    	{
+    		boolean selectorMatches = true;
+    		for(int i=0;i<selectors.length;i++)
+    		{
+    			EjbWithId selector = selectors[i];
+    			if(selector!=null)
+    			{
+    				if(!selector.equals(dpd.getEntity(i))){selectorMatches=false;}
+    			}
+    		}
+    		
+    		if(selectorMatches)
+    		{
+    			value=value+dpd.getValue();
+    			oneMatches=true;
+    		}
+    	}
+    	if(!oneMatches){return null;}
+    	return value;
     }
     
 }

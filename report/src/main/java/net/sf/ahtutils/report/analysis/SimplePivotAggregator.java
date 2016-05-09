@@ -14,9 +14,9 @@ import net.sf.ahtutils.interfaces.model.ranking.UtilsRankedResult;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.util.comparator.ejb.RankedResultComparator;
 
-public class PivotAggregator <T extends EjbWithId, P extends EjbWithId>
+public class SimplePivotAggregator <T extends EjbWithId, P extends EjbWithId>
 {
-    final static Logger logger = LoggerFactory.getLogger(PivotAggregator.class);
+    final static Logger logger = LoggerFactory.getLogger(SimplePivotAggregator.class);
 
     @SuppressWarnings("unused")
 	private Class<T> cT;
@@ -27,8 +27,8 @@ public class PivotAggregator <T extends EjbWithId, P extends EjbWithId>
     private Set<T> setT;
     private Set<P> setP;
     
-    public PivotAggregator(){this(null,null);}
-    public PivotAggregator(final Class<T> cT, final Class<P> cP)
+    public SimplePivotAggregator(){this(null,null);}
+    public SimplePivotAggregator(final Class<T> cT, final Class<P> cP)
     {
     	this.cT=cT;
     	this.cP=cP;

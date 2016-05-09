@@ -27,9 +27,11 @@ import net.sf.ahtutils.xml.text.Remark;
  *         &lt;element ref="{http://ahtutils.aht-group.com/finance}finance" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/finance}time" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/finance}counter" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/finance}figures" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="label" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -42,7 +44,8 @@ import net.sf.ahtutils.xml.text.Remark;
     "remark",
     "finance",
     "time",
-    "counter"
+    "counter",
+    "figures"
 })
 @XmlRootElement(name = "figures")
 public class Figures
@@ -58,10 +61,14 @@ public class Figures
     protected List<Time> time;
     @XmlElement(required = true)
     protected List<Counter> counter;
+    @XmlElement(required = true)
+    protected List<Figures> figures;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "code")
     protected String code;
+    @XmlAttribute(name = "label")
+    protected String label;
 
     /**
      * Gets the value of the remark property.
@@ -212,6 +219,43 @@ public class Figures
     }
 
     /**
+     * Gets the value of the figures property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the figures property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getFigures().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Figures }
+     * 
+     * 
+     */
+    public List<Figures> getFigures() {
+        if (figures == null) {
+            figures = new ArrayList<Figures>();
+        }
+        return this.figures;
+    }
+
+    public boolean isSetFigures() {
+        return ((this.figures!= null)&&(!this.figures.isEmpty()));
+    }
+
+    public void unsetFigures() {
+        this.figures = null;
+    }
+
+    /**
      * Gets the value of the id property.
      * 
      * @return
@@ -269,6 +313,34 @@ public class Figures
 
     public boolean isSetCode() {
         return (this.code!= null);
+    }
+
+    /**
+     * Gets the value of the label property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * Sets the value of the label property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLabel(String value) {
+        this.label = value;
+    }
+
+    public boolean isSetLabel() {
+        return (this.label!= null);
     }
 
 }

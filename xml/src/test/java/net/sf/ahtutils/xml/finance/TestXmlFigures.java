@@ -17,16 +17,17 @@ public class TestXmlFigures extends AbstractXmlFinanceTest<Figures>
     {
     	Figures xml = new Figures();
     	xml.setId(123);
+    	xml.setCode("myCode");
+    	xml.setLabel("myLabel");
     	
     	if(withChilds)
     	{
     		xml.getFinance().add(TestXmlFinance.create(false));xml.getFinance().add(TestXmlFinance.create(false));
-    		
     		xml.getTime().add(TestXmlTime.create(false));xml.getTime().add(TestXmlTime.create(false));
-    		
     		xml.getRemark().add(TestXmlRemark.create(false));xml.getRemark().add(TestXmlRemark.create(false));
-    		
     		xml.getCounter().add(TestXmlCounter.create(false));xml.getCounter().add(TestXmlCounter.create(false));
+    		
+    		xml.getFigures().add(TestXmlFigures.create(false));xml.getFigures().add(TestXmlFigures.create(false));
     	}
     	    	
     	return xml;

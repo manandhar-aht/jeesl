@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 
-<project name="AHT-Utils XML"  basedir="../../..">
+<project name="JEESL XML"  basedir="../../..">
 
 	<property name="src.dir" location="${basedir}/src/main/java" />
 		<property name="rsrc.dir" location="${basedir}/src/main" />

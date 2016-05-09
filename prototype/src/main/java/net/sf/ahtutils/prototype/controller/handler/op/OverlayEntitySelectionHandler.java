@@ -11,10 +11,8 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.op.OpEntityBean;
 import net.sf.ahtutils.interfaces.controller.handler.op.OpEntitySelectionHandler;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.prototype.web.mbean.admin.system.security.AbstractAdminSecurityViewBean;
 
-public class OverlayEntitySelectionHandler <T extends EjbWithId>
-	implements OpEntitySelectionHandler<T>
+public class OverlayEntitySelectionHandler <T extends EjbWithId> implements OpEntitySelectionHandler<T>
 {
 	final static Logger logger = LoggerFactory.getLogger(OpEntitySelectionHandler.class);
 	public static final long serialVersionUID=1;
@@ -33,34 +31,33 @@ public class OverlayEntitySelectionHandler <T extends EjbWithId>
         tbEntites = new ArrayList<T>();
     }
 
-    @Override public void selectListener() throws UtilsLockingException, UtilsConstraintViolationException
-    {
-        bean.addOpEntity(op);
-        op = null;
-    }
-
     @Override public void clearTable()
     {
     	tbEntites.clear();
     	tb = null;
     }
 
-    @Override  public void addEntity(T item)
+    @Override  public void addEntity() throws UtilsLockingException, UtilsConstraintViolationException
     {
-        if(!tbEntites.contains(item)) {tbEntites.add(item);}
+        if(!tbEntites.contains(op))
+        {
+        	tbEntites.add(op);
+        	bean.addOpEntity(op);
+        }
+        op=null;
         tb=null;
     }
 
-    @Override public void removeEntity()
+    @Override public void removeEntity() throws UtilsLockingException, UtilsConstraintViolationException
     {
-        if(tbEntites.contains(tb)) {tbEntites.remove(tb);}
+        if(tbEntites.contains(tb))
+        {
+        	tbEntites.remove(tb);
+        	bean.rmOpEntity(tb);
+        }
+        op=null;
         tb=null;
     }
     
 	@Override public void selectTb() {}
-	@Override public void rmTb() throws UtilsLockingException, UtilsConstraintViolationException
-	{
-		bean.rmOpEntity(tb);
-		tb = null;
-	}
 }

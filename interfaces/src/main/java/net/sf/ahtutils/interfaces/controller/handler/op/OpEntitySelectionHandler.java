@@ -22,12 +22,9 @@ public interface OpEntitySelectionHandler <T extends EjbWithId>
     public List<T> getTbList();
     public void setTbList(List<T> tbEntites);
 
-    public void selectListener() throws UtilsLockingException, UtilsConstraintViolationException;
-
     public void clearTable();
-    public void addEntity(T item);
-    public void removeEntity();
+    public void addEntity() throws UtilsLockingException, UtilsConstraintViolationException;
+    public void removeEntity() throws UtilsLockingException, UtilsConstraintViolationException;
 
     public void selectTb();
-    public void rmTb() throws UtilsLockingException, UtilsConstraintViolationException;
 }

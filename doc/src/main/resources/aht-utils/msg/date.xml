@@ -64,6 +64,13 @@
     		<s:lang key="fr" translation="Submitted"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupDateRealized">
+    	<s:langs>
+    		<s:lang key="de" translation="Date Realised"/>
+    		<s:lang key="en" translation="Date Realised"/>
+    		<s:lang key="fr" translation="Date Realised"/>
+    	</s:langs>
+    </s:translation>
     <s:translation key="aupDateSubmission">
     	<s:langs>
     		<s:lang key="de" translation="Submisison Date"/>

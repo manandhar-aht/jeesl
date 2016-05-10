@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.interfaces.bean.TableMultiSelectionBean;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
@@ -15,16 +16,34 @@ public class TableMultiSelectionHandler <T extends EjbWithId>
 {
 	final static Logger logger = LoggerFactory.getLogger(TableMultiSelectionHandler.class);
 
+	private TableMultiSelectionBean callback; public TableMultiSelectionBean getCallback() {return callback;} public void setCallback(TableMultiSelectionBean callback) {this.callback = callback;}
+	
 	protected List<T> entities; public List<T> getEntities() {return entities;}
 	private T entity; public T getEntity() {return entity;} public void setEntity(T entity) {this.entity = entity;}
 	private Map<T,Boolean> map; public Map<T,Boolean> getMap(){return map;}
 
 	public TableMultiSelectionHandler()
 	{
-		map = new ConcurrentHashMap<T,Boolean>();
-		entities = new ArrayList<T>();
+		this(new ArrayList<T>());
 	}
 	
+	public TableMultiSelectionHandler(List<T> list)
+	{
+		map = new ConcurrentHashMap<T,Boolean>();
+		entities = list;
+		for(T type : list)
+		{
+			map.put(type,false);
+		}
+	}
+	
+	
+	public void preSelect(T type)
+	{
+		List<T> types = new ArrayList<T>();
+		types.add(type);
+		preSelect(types);
+	}
 	public void preSelect(List<T> types)
 	{
 		map.clear();
@@ -36,10 +55,10 @@ public class TableMultiSelectionHandler <T extends EjbWithId>
 
 	public void select()
 	{
-		
+		logger.info(AbstractLogMessage.selectEntity(entity)+": "+map.get(entity));
 		if (map.containsKey(entity)) {map.put(entity, !map.get(entity));}
 		else {map.put(entity, true);}
-		logger.info(AbstractLogMessage.selectEntity(entity)+": "+map.get(entity));
+		if(callback!=null){callback.callbackTableMultiSelection();}
 	}
 
 	public List<T> toSelected()

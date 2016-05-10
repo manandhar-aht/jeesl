@@ -25,7 +25,7 @@ public class UtilsMsgBuilder
 	public static final String generic = "aht-utils/msg/generic.xml";
 	public static final String entities = "aht-utils/msg/module/entities.xml";
 	public static final String srcProject = "msg.aht-utils/project.xml";
-	public static final String srcDate = "msg.aht-utils/date.xml";
+	public static final String srcDate = "aht-utils/msg/date.xml";
 	
 	//Finance
 	public static final String srcFinance = "aht-utils/msg/finance/finance.xml";

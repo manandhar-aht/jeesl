@@ -267,7 +267,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		}
 		catch (UtilsConstraintViolationException e)
 		{
-//			addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,"WARN", e.getMessage()));
+			bMessage.errorConstraintViolationInUse();
 		}
 	}
 	

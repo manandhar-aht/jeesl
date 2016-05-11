@@ -642,7 +642,8 @@ public class UtilsFacadeBean implements UtilsFacade
 		return list.get(0);
 	}
 	
-	public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1)
+	public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1){return allForParent(type,p1Name, p1,0);}
+	public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1,int maxResults)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 	    CriteriaQuery<T> criteriaQuery = cB.createQuery(type);
@@ -654,6 +655,7 @@ public class UtilsFacadeBean implements UtilsFacade
 	    select.where( cB.equal(p1Path, p1.getId()));
 	    
 		TypedQuery<T> q = em.createQuery(select);
+		if(maxResults>0){q.setMaxResults(maxResults);}
 		
 		try	{return q.getResultList();}
 		catch (NoResultException ex){return new ArrayList<T>();}

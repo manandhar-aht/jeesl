@@ -445,4 +445,11 @@ public class AbstractDummyFacade implements UtilsFacade
 	}
 
 	@Override public <T extends EjbRemoveable> void rm(List<T> list) throws UtilsConstraintViolationException {}
+
+	@Override
+	public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1,
+			int maxResults) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

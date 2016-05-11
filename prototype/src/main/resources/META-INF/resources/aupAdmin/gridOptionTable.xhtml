@@ -52,7 +52,7 @@
 							<p:panelGrid rendered="#{cc.attrs.bean.supportsSymbol}" columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
 								<p:outputLabel  value="#{msg.aupOptionSymbol}"/>
 								<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.symbol}"/>
-								<h:outputText rendered="#not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.symbol}"/>
+								<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.symbol}"/>
 							</p:panelGrid>
 							
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">

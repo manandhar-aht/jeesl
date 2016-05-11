@@ -17,4 +17,10 @@ public class EjbIdFactory
 		if(id>0){return id;}
 		else{return -1*id;}
 	}
+
+	public static long negative(long id)
+	{
+		if(id<0){return id;}
+		else{return -1*id;}
+	}
 }

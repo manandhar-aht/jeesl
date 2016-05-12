@@ -63,8 +63,8 @@
 	</s:translation>
 	<s:translation key="aupAddressBookAddContactPage">
 		<s:langs>
-			<s:lang key="fr" translation="(Add a new contact on this page!)"/>
-			<s:lang key="en" translation="(Add a new contact on this page!)"/>
+			<s:lang key="fr" translation="(Click here to add a new contact!)"/>
+			<s:lang key="en" translation="(Click here to add a new contact!)"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="aupPasswordCurrent">

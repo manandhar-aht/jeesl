@@ -1,5 +1,8 @@
 package net.sf.ahtutils.factory.xml.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +31,7 @@ public class XmlCategoryFactory
 	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Category build(S ejb, String group)
 	{
 		Category xml = new Category();
+		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetCode()){xml.setCode(ejb.getCode());}
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
 		xml.setGroup(group);
@@ -92,5 +96,22 @@ public class XmlCategoryFactory
 		xml.setCode(code);
 		xml.setLabel(label);
 		return xml;
+	}
+	
+	public static Category id()
+	{
+		Category xml = new Category();
+		xml.setId(0);
+		return xml;
+	}
+	
+	public static List<Long> toIds(List<Category> list)
+	{
+		List<Long> result = new ArrayList<Long>();
+		for(Category c : list)
+		{
+			if(c.isSetId()){result.add(c.getId());}
+		}
+		return result;
 	}
 }

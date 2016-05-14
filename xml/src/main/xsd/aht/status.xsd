@@ -240,6 +240,7 @@
                 <xsd:element ref="us:descriptions" maxOccurs="1"/>
                 <xsd:element ref="us:lang" maxOccurs="unbounded"/>
             </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="code" type="xsd:string"/>
             <xsd:attribute name="group" type="xsd:string"/>
             <xsd:attribute name="label" type="xsd:string"/>

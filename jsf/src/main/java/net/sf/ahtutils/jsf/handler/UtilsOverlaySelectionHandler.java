@@ -1,5 +1,6 @@
 package net.sf.ahtutils.jsf.handler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ public class UtilsOverlaySelectionHandler <T extends EjbWithId>
 	
 	public static final long serialVersionUID=1;
 
-    private OverlaySelectionBean<T> bean;
+    private OverlaySelectionBean bean;
 
     private T selection;
 	public T getSelection() {return selection;}
@@ -31,28 +32,40 @@ public class UtilsOverlaySelectionHandler <T extends EjbWithId>
 	public List<T> getSubset() {return subset;}
 	public void setSubset(List<T> subset) {this.subset = subset;}
 	
-	public UtilsOverlaySelectionHandler(OverlaySelectionBean<T> bean)
+	public UtilsOverlaySelectionHandler(OverlaySelectionBean bean)
     {
 		this.bean=bean;
+		subset = new ArrayList<T>();
     }
-
-    public void selectOverlay() throws UtilsLockingException, UtilsConstraintViolationException
-    {
-    	jsfErrors();
-    	bean.opSelect(selection);
-    	selection=null;
-    }
-    
-    public void selectUi() throws UtilsLockingException, UtilsConstraintViolationException
+	
+    public void selectItem() throws UtilsLockingException, UtilsConstraintViolationException
     {
     	logger.warn("selectUi");
     }
     
-    public void removeListener() throws UtilsLockingException, UtilsConstraintViolationException
+    public void addItems(List<T> list)
+    {
+    	for(T t : list){addItem(t);}
+    }
+    public void addItem(T t)
+    {
+    	if(!subset.contains(t)){subset.add(t);}
+    }
+    
+    public void addItem() throws UtilsLockingException, UtilsConstraintViolationException
+    {
+    	jsfErrors();
+    	bean.opCallbackAdd(selection);
+    	if(!subset.contains(selection)){subset.add(selection);}
+    	selection=null;
+    }
+        
+    public void removeItem() throws UtilsLockingException, UtilsConstraintViolationException
     {
     	jsfErrors();
     	logger.warn("removeListener");
-    	bean.opRemove(selection);
+    	if(subset.contains(selection)){subset.remove(selection);}
+    	bean.opCallbackRemove(selection);
     	selection=null;
     }
     

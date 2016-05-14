@@ -32,6 +32,7 @@ public class TestXmlCategory extends AbstractXmlStatusTestOld
     public static Category create(boolean withChilds)
     {
     	Category xml = new Category();
+    	xml.setId(123);
     	xml.setCode("myCode");
     	xml.setVisible(true);
     	xml.setGroup("myGroup");

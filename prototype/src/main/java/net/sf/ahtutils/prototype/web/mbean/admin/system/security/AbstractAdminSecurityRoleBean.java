@@ -116,7 +116,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 	
 	private void updateRole()
 	{
-		role = fSecurity.load(cRole, role);
+		role = fSecurity.load(cRole,role);
 //		opTemplateHandler.setTbList(role.getTemplates());
 	}
 

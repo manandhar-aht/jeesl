@@ -43,8 +43,8 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 	@Override public R load(Class<R> cRole, R role)
 	{
 		role = em.find(cRole, role.getId());
-		role.getUsers().size();
-		role.getActions().size();
+		if(role.getUsers()!=null){role.getUsers().size();}
+		if(role.getActions()!=null){role.getActions().size();}
 //		role.getTemplates().size();
 		return role;
 	}

@@ -30,6 +30,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbMergeable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
+import net.sf.ahtutils.interfaces.model.date.EjbWithValidFromUntil;
 import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
 import net.sf.ahtutils.interfaces.model.util.UtilsProperty;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
@@ -981,6 +982,29 @@ public class UtilsFacadeBean implements UtilsFacade
 	public <T extends EjbWithTimeline> List<T> between(Class<T> clTimeline, Date from, Date to)
 	{
 		return between(clTimeline, from, to, ParentPredicate.empty(), ParentPredicate.empty());
+	}
+	
+	@Override
+	public <T extends EjbWithValidFromUntil> T oneInRange(Class<T> c,Date record) throws UtilsNotFoundException
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<T> cQ = cB.createQuery(c);
+		Root<T> root = cQ.from(c);
+		
+		Expression<Date> dStart = root.get("validFrom");
+		Expression<Date> dEnd   = root.get("validUntil");
+		
+		Predicate pLower = cB.greaterThanOrEqualTo(dStart, record);
+	    Predicate pUpper = cB.lessThanOrEqualTo(dEnd, record);
+				    
+		CriteriaQuery<T> select = cQ.select(root);
+		select.where(cB.and(pLower,pUpper));
+		
+		TypedQuery<T> q = em.createQuery(select);
+		List<T> result = q.getResultList();
+		if(result.size()==1){return result.get(0);}
+		else if(result.size()==0){throw new UtilsNotFoundException("No result");}
+		else {throw new UtilsNotFoundException("Mutliple results");}
 	}
 	
 	@Override

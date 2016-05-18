@@ -994,8 +994,8 @@ public class UtilsFacadeBean implements UtilsFacade
 		Expression<Date> dStart = root.get("validFrom");
 		Expression<Date> dEnd   = root.get("validUntil");
 		
-		Predicate pLower = cB.greaterThanOrEqualTo(dStart, record);
-	    Predicate pUpper = cB.lessThanOrEqualTo(dEnd, record);
+		Predicate pLower = cB.lessThanOrEqualTo(dStart, record);
+	    Predicate pUpper = cB.greaterThan(dEnd, record);
 				    
 		CriteriaQuery<T> select = cQ.select(root);
 		select.where(cB.and(pLower,pUpper));
@@ -1003,7 +1003,7 @@ public class UtilsFacadeBean implements UtilsFacade
 		TypedQuery<T> q = em.createQuery(select);
 		List<T> result = q.getResultList();
 		if(result.size()==1){return result.get(0);}
-		else if(result.size()==0){throw new UtilsNotFoundException("No result");}
+		else if(result.size()==0){throw new UtilsNotFoundException("No result for "+record.toString());}
 		else {throw new UtilsNotFoundException("Mutliple results");}
 	}
 	

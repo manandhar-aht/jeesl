@@ -61,4 +61,17 @@ public class XmlFiguresFactory
 		}
 		return map;
 	}
+	
+	public static boolean hasFinanceElements(Figures figures)
+	{
+		if(figures.isSetFinance()){return true;}
+		else
+		{
+			for(Figures f : figures.getFigures())
+			{
+				if(hasFinanceElements(f)){return true;}
+			}
+		}
+		return false;
+	}
 }

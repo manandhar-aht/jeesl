@@ -1,8 +1,12 @@
 package net.sf.ahtutils.factory.xml.status;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.util.comparator.xml.status.LangComparator;
+import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 
 import org.slf4j.Logger;
@@ -12,6 +16,8 @@ public class XmlLangsFactory <L extends UtilsLang>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlLangsFactory.class);
 		
+	private static Comparator<Lang> comparator = LangComparator.factory(LangComparator.Type.key);
+	
 	private Langs q;
 	
 	public XmlLangsFactory(Langs q)
@@ -21,18 +27,18 @@ public class XmlLangsFactory <L extends UtilsLang>
 	
 	public Langs getUtilsLangs(Map<String,L> mapLangs)
 	{
-		Langs langs = new Langs();
+		Langs xml = new Langs();
 		
 		if(q.isSetLang())
 		{
 			XmlLangFactory<L> f = new XmlLangFactory<L>(q.getLang().get(0));
 			for(L ahtLang : mapLangs.values())
 			{
-				langs.getLang().add(f.getUtilsLang(ahtLang));
+				xml.getLang().add(f.getUtilsLang(ahtLang));
 			}
 		}
-		
-		return langs;
+		Collections.sort(xml.getLang(), comparator);
+		return xml;
 	}
 	
 	public static Langs build()

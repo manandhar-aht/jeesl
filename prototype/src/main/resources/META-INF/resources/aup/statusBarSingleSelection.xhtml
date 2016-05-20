@@ -13,6 +13,7 @@
 		<composite:attribute name="status" required="false"/>
 		<composite:attribute name="list" required="false"/>
 		<composite:attribute name="update" required="true"/>
+		<composite:attribute name="ajax" required="false" default="true"/>
 	</composite:interface>
 
 	<composite:implementation>
@@ -20,7 +21,7 @@
 						   		label="#{cc.attrs.status.name[userBean.localeCode].lang}"
 									orientation="right"
 									childs="#{cc.attrs.list}">
-			<p:commandLink id="clSbTargetTypeToggle" actionListener="#{cc.attrs.bean.selectSbStatus(var)}" ajax="true">
+			<p:commandLink id="clSbTargetTypeToggle" actionListener="#{cc.attrs.bean.selectSbStatus(var)}" ajax="#{cc.attrs.ajax}">
 				<h:outputText value="#{var.name[userBean.localeCode].lang}"/>
 			</p:commandLink>
 		</aup:statusBarItem>

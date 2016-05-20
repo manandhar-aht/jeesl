@@ -264,6 +264,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			updateAppScopeBean2(status);
 			status=null;
 			selectCategory();
+			bMessage.growlSuccessRemoved();
 		}
 		catch (UtilsConstraintViolationException e)
 		{

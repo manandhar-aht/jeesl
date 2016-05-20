@@ -27,8 +27,8 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	protected EjbLangFactory<L> efLang;
 	protected EjbDescriptionFactory<D> efDescription;
 	
-	protected boolean hasDeveloperAction;public boolean isHasDeveloperAction() {return hasDeveloperAction;}
-	protected boolean hasAdministratorAction;
+	protected boolean hasDeveloperAction; public boolean isHasDeveloperAction() {return hasDeveloperAction;}
+	protected boolean hasAdministratorAction; public boolean isHasAdministratorAction() {return hasAdministratorAction;}
 	protected boolean hasTranslatorAction;
 	
 	public AbstractAdminBean()

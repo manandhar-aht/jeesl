@@ -16,8 +16,8 @@
 
 	<composite:implementation>
 		<ui:fragment rendered="#{not empty cc.attrs.value}">
-			<h:graphicImage id="giUnCheck" rendered="#{cc.attrs.value}" name="12/ui/symbol/check/mark.png" library="aupGfx"/>
-			<h:graphicImage id="giCheck" rendered="#{cc.attrs.showFalse and (not cc.attrs.value)}" name="12/ui/symbol/check/x.png" library="aupGfx"/>
+			<h:graphicImage id="giCheck" rendered="#{cc.attrs.value}" name="12/ui/symbol/check/mark.png" library="aupGfx"/>
+			<h:graphicImage id="giUnCheck" rendered="#{cc.attrs.showFalse and (not cc.attrs.value)}" name="12/ui/symbol/check/x.png" library="aupGfx"/>
 			<p:tooltip rendered="#{cc.attrs.showFalse and (not cc.attrs.value)}" for="giCheck" value="#{cc.attrs.ttChecked}" />
         	<p:tooltip for="giUnCheck" value="#{cc.attrs.ttUnChecked}" />
 		</ui:fragment>

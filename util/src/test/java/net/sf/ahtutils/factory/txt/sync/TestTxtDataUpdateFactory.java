@@ -37,7 +37,7 @@ public class TestTxtDataUpdateFactory extends AbstractAhtUtilsTest
     public void client()
     {	
     	dut.success();
-    	String expected = "Now Testing: TestTxtDataUpdateFactory [success] 1/1";
+    	String expected = "Now Testing: TestTxtDataUpdateFactory [success] 1/1 (skipped:0)";
     	String actual = TxtDataUpdateFactory.debug(dut.toDataUpdate());
     	logger.debug(actual);
     	Assert.assertEquals(expected, actual);
@@ -51,6 +51,6 @@ public class TestTxtDataUpdateFactory extends AbstractAhtUtilsTest
 		test.init();
 		
 		test.server();
-//		test.client();
+		test.client();
 	}
 }

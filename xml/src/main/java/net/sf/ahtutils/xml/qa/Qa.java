@@ -28,6 +28,7 @@ import net.sf.ahtutils.xml.survey.Survey;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}staff" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}survey"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/qa}groups"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/qa}checklist" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="client" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -44,7 +45,8 @@ import net.sf.ahtutils.xml.survey.Survey;
     "category",
     "staff",
     "survey",
-    "groups"
+    "groups",
+    "checklist"
 })
 @XmlRootElement(name = "qa")
 public class Qa
@@ -60,6 +62,8 @@ public class Qa
     protected Survey survey;
     @XmlElement(required = true)
     protected Groups groups;
+    @XmlElement(required = true)
+    protected List<Checklist> checklist;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "client")
@@ -195,6 +199,43 @@ public class Qa
 
     public boolean isSetGroups() {
         return (this.groups!= null);
+    }
+
+    /**
+     * Gets the value of the checklist property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the checklist property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getChecklist().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Checklist }
+     * 
+     * 
+     */
+    public List<Checklist> getChecklist() {
+        if (checklist == null) {
+            checklist = new ArrayList<Checklist>();
+        }
+        return this.checklist;
+    }
+
+    public boolean isSetChecklist() {
+        return ((this.checklist!= null)&&(!this.checklist.isEmpty()));
+    }
+
+    public void unsetChecklist() {
+        this.checklist = null;
     }
 
     /**

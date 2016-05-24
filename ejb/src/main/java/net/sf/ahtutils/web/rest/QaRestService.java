@@ -228,4 +228,5 @@ public class QaRestService <L extends UtilsLang,
 		catch (UtilsNotFoundException e) {e.printStackTrace();}	
 		return qa;
 	}
+	
 }

@@ -60,6 +60,8 @@ public interface UtilsQaFacade
 		GROUP load(Class<GROUP> cGroup, GROUP group);
 		QASD load(Class<QASD> cSchedule, QASD schedule);
 		QASS load(Class<QASS> cSlot, QASS slot);
+		STAFF load(Class<STAFF> cStaff, STAFF staff);
+		
 		List<GROUP> fQaGroups(Class<GROUP> cGroup, QA qa);
 		List<QAT> fQaTests(Class<QAT> cTest, Class<QAC> cCategory, Class<QA> cQa, QA qa);
 		List<QAT> fQaTests(Class<QAT> lTest, Class<QAC> cCategory, List<QAC> category);

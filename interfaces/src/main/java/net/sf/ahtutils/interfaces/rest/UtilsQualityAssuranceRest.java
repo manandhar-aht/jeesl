@@ -62,4 +62,8 @@ public interface UtilsQualityAssuranceRest
 	@GET @Path("/test/{id:[0-9]*}")
 	@Produces(MediaType.APPLICATION_XML)
 	Test qaTest(@PathParam("id") long testId);
+	
+	@GET @Path("/checklist/{id:[0-9]*}")
+	@Produces(MediaType.APPLICATION_XML)
+	Qa qaChecklist(@PathParam("id") long testId);
 }

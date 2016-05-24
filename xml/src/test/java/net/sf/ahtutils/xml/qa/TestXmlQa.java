@@ -27,6 +27,7 @@ public class TestXmlQa extends AbstractXmlQaTest<Qa>
     		xml.getStaff().add(TestXmlStaff.create(false));xml.getStaff().add(TestXmlStaff.create(false));
     		xml.setSurvey(TestXmlSurvey.create(false));
     		xml.setGroups(TestXmlGroups.create(false));
+    		xml.getChecklist().add(TestXmlChecklist.create(false));xml.getChecklist().add(TestXmlChecklist.create(false));
     	}
     	
     	return xml;

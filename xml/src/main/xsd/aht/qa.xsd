@@ -15,10 +15,19 @@
                 <xsd:element ref="sec:staff" maxOccurs="unbounded"/>
                 <xsd:element ref="sy:survey" maxOccurs="1"/>
                 <xsd:element ref="qa:groups" maxOccurs="1"/>
+                <xsd:element ref="qa:checklist" maxOccurs="unbounded"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="client" type="xsd:string"/>
             <xsd:attribute name="developer" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="checklist">
+        <xsd:complexType>
+        	<xsd:sequence>
+        		<xsd:element ref="sec:staff" maxOccurs="1"/>
+        		<xsd:element ref="qa:category" maxOccurs="unbounded"/>
+            </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="groups">

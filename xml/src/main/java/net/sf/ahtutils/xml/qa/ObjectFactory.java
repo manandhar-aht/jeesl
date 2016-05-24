@@ -149,4 +149,12 @@ public class ObjectFactory {
         return new Category();
     }
 
+    /**
+     * Create an instance of {@link Checklist }
+     * 
+     */
+    public Checklist createChecklist() {
+        return new Checklist();
+    }
+
 }

@@ -120,6 +120,13 @@ public class UtilsQaFacadeBean <L extends UtilsLang,
 		return group;
 	}
 	
+	@Override public STAFF load(Class<STAFF> cStaff, STAFF staff)
+	{
+		staff = em.find(cStaff, staff.getId());
+		staff.getGroups().size();
+		return staff;
+	}
+	
 	public List<QAT> fQaTests(Class<QAT> clTest, Class<QAC> clCategory, Class<QA> clQa, QA qa)
 	{		
 		CriteriaBuilder cB = em.getCriteriaBuilder();

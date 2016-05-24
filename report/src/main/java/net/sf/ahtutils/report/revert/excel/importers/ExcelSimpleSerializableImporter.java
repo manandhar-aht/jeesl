@@ -1,6 +1,7 @@
 package net.sf.ahtutils.report.revert.excel.importers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 
@@ -22,7 +23,12 @@ public class ExcelSimpleSerializableImporter <S extends Serializable, I extends 
 		// Initialize the Abstract class with the given filename
 		super(resolver, code, filename);
 	}
-	
+
+	public ExcelSimpleSerializableImporter(UtilsXlsDefinitionResolver resolver, String code, InputStream is) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		// Initialize the Abstract class with the given inputstream
+		super(resolver, code, is);
+	}	
 	/**
 	* Because the ExcelStatusImporter is highly parameterized with classes to implement certain aspects, this method
 	* can be used to get an instance that is configured correctly according to your use case
@@ -41,5 +47,11 @@ public class ExcelSimpleSerializableImporter <S extends Serializable, I extends 
 	ExcelSimpleSerializableImporter<S,I> factory(UtilsXlsDefinitionResolver resolver, String code, String filename) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
 		return new ExcelSimpleSerializableImporter<S,I>(resolver, code, filename);
+	}
+	
+	public static <S extends Serializable, C extends Serializable, I extends ImportStrategy>
+	ExcelSimpleSerializableImporter<S,I> factory(UtilsXlsDefinitionResolver resolver, String code, InputStream is) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		return new ExcelSimpleSerializableImporter<S,I>(resolver, code, is);
 	}
 }

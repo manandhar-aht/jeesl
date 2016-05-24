@@ -3,6 +3,7 @@ package net.sf.ahtutils.report.revert.excel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -52,6 +53,41 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	protected Boolean                    hasPrimaryKey     = false;
 	protected XlsSheet definition;
 	protected ImportStructure structure;
+	
+	public AbstractExcelImporter(UtilsXlsDefinitionResolver resolver, String reportCode, InputStream is) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		// Read Excel workbook from given file(name)
+		this.workbook       = new XSSFWorkbook(is);
+		
+		// Read information to import taken from Resolver
+		definition = resolver.definition(reportCode).getXlsSheet().get(0);
+		structure = ReportXpath.getImportStructure(definition.getContent());
+		
+		// Prepare the row import definitions
+		// According to this post http://stackoverflow.com/questions/18231991/class-forname-caching
+		// Caching is most probably not important for classes, but to minimize JXPath searches
+		propertyRelations = new HashMap<String, String>();
+		strategies		  = new HashMap<String, Class>();
+		validators		  = new HashMap<String, Class>();
+		targetClasses	  = new HashMap<String, Class>();
+		isList			  = new HashMap<String, Boolean>();
+		for (DataAssociation association : structure.getDataAssociations().getDataAssociation())
+		{
+			String column = association.getColumn();
+			propertyRelations.put(column, association.getProperty());
+			if (association.isSetHandledBy())	{strategies.put(column, Class.forName(association.getHandledBy()));
+													if (association.isSetType())
+													{
+														if(association.getType().equals(ImportType.LIST))
+														{
+															isList.put(column, true);
+														}
+													}
+												}
+			if (association.isSetValidatedBy()) {validators.put(column, Class.forName(association.getValidatedBy()));}
+			if (association.isSetTargetClass()) {targetClasses.put(column, Class.forName(association.getTargetClass()));}
+		}
+	}
 	
 	public AbstractExcelImporter(UtilsXlsDefinitionResolver resolver, String reportCode, String filename) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
@@ -245,7 +281,14 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 
 			if (ReflectionsUtil.hasMethod(target, methodName))
 			{
-				if (!(parameterClass.equals("java.lang.Double") || parameterClass.equals("double") || parameterClass.equals("long") || parameterClass.equals("java.util.Date") || parameterClass.equals("java.lang.Boolean")|| parameterClass.equals("boolean") || parameterClass.equals("java.lang.String")))
+				if (!(	parameterClass.equals("java.lang.Double") || 
+						parameterClass.equals("double") || 
+						parameterClass.equals("long") || 
+						parameterClass.equals("java.util.Date") || 
+						parameterClass.equals("java.lang.Boolean")|| 
+						parameterClass.equals("boolean") || 
+						parameterClass.equals("int") || 
+						parameterClass.equals("java.lang.String")))
 				{
 					logger.trace("Loading import strategy for " +parameterClass +": " +handler.getCanonicalName() +".");
 
@@ -279,6 +322,20 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				{
 					Number number = (Number) parameters[0];
 					parameters[0] = number.longValue();
+				}
+				
+				// Needed to correct the Class of the general number
+				if (parameterClass.equals("int"))
+				{
+					Number number = (Number) parameters[0];
+					parameters[0] = number.intValue();
+				}
+				
+				// Needed to correct the Class of the general number
+				if (parameterClass.equals("java.lang.Integer"))
+				{
+					Number number = (Number) parameters[0];
+					parameters[0] = new Integer(number.intValue());
 				}
 
 				// This is important if the String is a Number, Excel will format the cell to be a "general number"

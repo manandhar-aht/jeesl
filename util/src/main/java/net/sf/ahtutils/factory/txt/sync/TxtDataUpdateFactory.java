@@ -37,7 +37,9 @@ public class TxtDataUpdateFactory
 		
 		if(du.isSetResult() && du.getResult().isSetSuccess() && du.getResult().isSetTotal() && du.getResult().getTotal()>0)
 		{
-			sb.append(" ").append(du.getResult().getSuccess()+"/"+du.getResult().getTotal());
+			sb.append(" ").append(du.getResult().getSuccess());
+			sb.append("/"+du.getResult().getTotal());
+			if(du.getResult().isSetSkip()){sb.append(" (skipped:").append(du.getResult().getSkip()).append(")");}
 		}
 		
 		return sb.toString();

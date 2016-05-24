@@ -3,7 +3,7 @@
     <sync:mapper oldId="123" newId="345" class="net.sf.ahtutils.xml.sync.TestXmlMapper" oldCode="mc1" newCode="mc2"/>
     <sync:mapper oldId="123" newId="345" class="net.sf.ahtutils.xml.sync.TestXmlMapper" oldCode="mc1" newCode="mc2"/>
     <s:type/>
-    <sync:result total="3" success="2" fail="1"/>
+    <sync:result total="3" success="2" skip="0" fail="1"/>
     <sync:sync clientId="123" serverId="345"/>
     <sync:exceptions/>
 </sync:dataUpdate>

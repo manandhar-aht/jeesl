@@ -19,6 +19,7 @@ public class TestXmlResult extends AbstractXmlSyncTest<Result>
     	xml.setTotal(3);
     	xml.setSuccess(2);
     	xml.setFail(1);
+    	xml.setSkip(0);
     	
     	if(withChilds)
     	{

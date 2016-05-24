@@ -39,6 +39,7 @@ public class DataUpdateTracker implements net.sf.ahtutils.interfaces.controller.
 		update.setResult(new Result());
 		update.getResult().setSuccess(0);
 		update.getResult().setFail(0);
+		update.getResult().setSkip(0);
 		update.getResult().setTotal(0);
 		
 		updateSuccess = new HashMap<String,Integer>();
@@ -63,6 +64,11 @@ public class DataUpdateTracker implements net.sf.ahtutils.interfaces.controller.
 	public void success()
 	{
 		update.getResult().setSuccess(update.getResult().getSuccess()+1);
+	}
+	
+	public void skip()
+	{
+		update.getResult().setSkip(update.getResult().getSkip()+1);
 	}
 	
 	@Override public void createSuccess(Class<?> c)

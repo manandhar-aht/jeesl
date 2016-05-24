@@ -25,6 +25,7 @@ import net.sf.ahtutils.xml.status.Status;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="total" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="success" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
+ *       &lt;attribute name="skip" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="fail" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -49,6 +50,8 @@ public class Result
     protected Long total;
     @XmlAttribute(name = "success")
     protected Long success;
+    @XmlAttribute(name = "skip")
+    protected Long skip;
     @XmlAttribute(name = "fail")
     protected Long fail;
 
@@ -142,6 +145,38 @@ public class Result
 
     public void unsetSuccess() {
         this.success = null;
+    }
+
+    /**
+     * Gets the value of the skip property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
+     */
+    public long getSkip() {
+        return skip;
+    }
+
+    /**
+     * Sets the value of the skip property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
+     */
+    public void setSkip(long value) {
+        this.skip = value;
+    }
+
+    public boolean isSetSkip() {
+        return (this.skip!= null);
+    }
+
+    public void unsetSkip() {
+        this.skip = null;
     }
 
     /**

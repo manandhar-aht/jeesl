@@ -60,6 +60,7 @@
             </xsd:sequence>
             <xsd:attribute name="total" type="xsd:long"/>
             <xsd:attribute name="success" type="xsd:long"/>
+            <xsd:attribute name="skip" type="xsd:long"/>
             <xsd:attribute name="fail" type="xsd:long"/>
         </xsd:complexType>
     </xsd:element>

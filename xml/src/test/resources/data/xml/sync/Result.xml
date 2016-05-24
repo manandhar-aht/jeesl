@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<sync:result xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sync="http://ahtutils.aht-group.com/sync" total="3" success="2" fail="1">
+<sync:result xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:sync="http://ahtutils.aht-group.com/sync" total="3" success="2" skip="0" fail="1">
     <s:status id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" style="myStyle" position="1"/>
 </sync:result>

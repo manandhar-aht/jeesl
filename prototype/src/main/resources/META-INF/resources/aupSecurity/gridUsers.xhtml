@@ -25,7 +25,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row id="row1">
-				<aht:slot id="sCategories" width="6">
+				<aht:slot id="sCategories" width="7">
 					<h:form id="fUsers">
 						<p:dataTable id="userTable" var="u" value="#{cc.attrs.users}" rowKey="#{u.id}"
 								filteredValue="#{cc.attrs.bean.fvUsers}" sortBy="#{u.lastName}"
@@ -37,6 +37,10 @@
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sDetail" listener="#{cc.attrs.bean.selectUser}"/>
+							<p:column rendered="#{cc.attrs.withPermit}" sortBy="#{u.permitLogin}">
+	                        	<h:graphicImage rendered="#{u.permitLogin}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx"/>
+	                            <h:graphicImage rendered="#{not u.permitLogin}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx"/>
+	                        </p:column>
 							<p:column headerText="#{msg.aupFirstName}"
 									sortBy="#{u.firstName}"
 									filterBy="#{u.firstName}" filterMatchMode="contains">
@@ -56,7 +60,7 @@
 		                </p:dataTable>
 		            </h:form>
 				</aht:slot>
-				<aht:slot id="sDetail" width="6" renderChildrenIfEjb="#{cc.attrs.bean.user}">
+				<aht:slot id="sDetail" width="5" renderChildrenIfEjb="#{cc.attrs.bean.user}">
 					<h:form id="fUser">
 						<p:panel header="User Details" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
@@ -79,7 +83,7 @@
 								<p:outputLabel value="#{msg.aupPasswordConfirm}" />
 								<p:password value="#{cc.attrs.bean.pwd2}" autocomplete="off"/>
 							</p:panelGrid>
-							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.withLogin}">
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.withPermit}">
 								<p:outputLabel for="cbLogin" value="#{msg.aupPermitLogin}" />
 								<p:selectBooleanCheckbox id="cbLogin" value="#{cc.attrs.bean.user.permitLogin}" />
 							</p:panelGrid>

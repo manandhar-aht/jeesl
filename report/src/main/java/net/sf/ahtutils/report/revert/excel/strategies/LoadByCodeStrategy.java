@@ -28,6 +28,22 @@ public class LoadByCodeStrategy implements ImportStrategy {
 	public Object handleObject(Object object, String parameterClass, String property) {
 		
 		String code = object.toString();
+		
+		// Excel sometimes does bad formatting, this one fixes that behavior
+		if (object.getClass().getName().equals("java.lang.Double"))
+		{
+			Double n		= (Double) object;
+			if (n % 1 == 0)
+			{
+				code		= "" +n.intValue();
+			}
+			else
+			{
+				code		= "" +n;
+			}
+		}
+		
+		
 		Class  lutClass      = null;
     	Object lookupEntity  = null;
     	

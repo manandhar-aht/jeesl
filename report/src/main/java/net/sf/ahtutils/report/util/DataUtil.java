@@ -67,6 +67,7 @@ public class DataUtil {
 							cell = evaluator.evaluateInCell(cell);
 						}
 			// Depending on the cell type, the value is read using Apache POI methods
+			
 			switch (cell.getCellType()) {
 			
 				// String are easy to handle

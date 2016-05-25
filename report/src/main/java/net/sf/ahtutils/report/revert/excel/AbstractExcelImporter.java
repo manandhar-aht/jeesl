@@ -341,7 +341,22 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				// This is important if the String is a Number, Excel will format the cell to be a "general number"
 				if (parameterClass.equals("java.lang.String"))
 				{
-					parameters[0] = parameters[0] +"";
+					if (parameters[0].getClass().getName().equals("java.lang.Double"))
+					{
+						Double n			= (Double) parameters[0];
+						if (n % 1 == 0)
+						{
+							parameters[0]	= "" +n.intValue();
+						}
+						else
+						{
+							parameters[0]	= "" +n;
+						}
+					}
+					else
+					{
+						parameters[0] = parameters[0] +"";
+					}
 				}
 				
 				// This is important if the String is a Number, Excel will format the cell to be a "general number"

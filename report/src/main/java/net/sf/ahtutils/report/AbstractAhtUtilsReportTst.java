@@ -146,6 +146,12 @@ public class AbstractAhtUtilsReportTst
 		pdf.writeTo(outputStream);
 	}
 	
+	protected void writePdf(String filename) throws IOException
+	{
+		OutputStream outputStream = new FileOutputStream (filename);
+		pdf.writeTo(outputStream);
+	}
+	
 	protected void assertEmptyPage(byte[] data) throws IOException
 	{
                 PdfReader reader = new PdfReader(data);

@@ -46,7 +46,7 @@ public class ExcelTemplateFiller
     final static Logger logger = LoggerFactory.getLogger(ExcelTemplateFiller.class);
 	private int MIN_WIDTH = 5000;
 	
-    public ExcelTemplateFiller(InputStream templateFile, List<FillingInstruction> instructions) throws Exception
+    public ExcelTemplateFiller(InputStream templateFile) throws Exception
     {
 		// Create a new Excel Workbook and a POI Helper Object
         wb = new XSSFWorkbook(templateFile);
@@ -67,11 +67,16 @@ public class ExcelTemplateFiller
         numberStyle = wb.createCellStyle();
         numberStyle.setDataFormat(createHelper.createDataFormat().getFormat("#.00\\ RWF"));
 
-        // Now lets apply the instructions on the template
-		for (FillingInstruction instruction : instructions)
-		{
-			wb = instruction.fill(wb);
-		}
+       
+    }
+    
+    public void fill( List<FillingInstruction> instructions)
+    {
+         // Now lets apply the instructions on the template
+        for (FillingInstruction instruction : instructions)
+        {
+                wb = instruction.fill(wb);
+        }
     }
 
     public XSSFWorkbook getWb() {return wb;}

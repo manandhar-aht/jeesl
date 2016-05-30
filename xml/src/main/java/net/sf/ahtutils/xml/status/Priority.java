@@ -2,8 +2,6 @@
 package net.sf.ahtutils.xml.status;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -22,10 +20,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/status}transistions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/status}lang" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -43,25 +39,19 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "transistions",
     "langs",
-    "descriptions",
-    "lang"
+    "descriptions"
 })
-@XmlRootElement(name = "condition")
-public class Condition
+@XmlRootElement(name = "priority")
+public class Priority
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
-    protected Transistions transistions;
-    @XmlElement(required = true)
     protected Langs langs;
     @XmlElement(required = true)
     protected Descriptions descriptions;
-    @XmlElement(required = true)
-    protected List<Lang> lang;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "code")
@@ -76,34 +66,6 @@ public class Condition
     protected String image;
     @XmlAttribute(name = "position")
     protected Integer position;
-
-    /**
-     * Gets the value of the transistions property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Transistions }
-     *     
-     */
-    public Transistions getTransistions() {
-        return transistions;
-    }
-
-    /**
-     * Sets the value of the transistions property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Transistions }
-     *     
-     */
-    public void setTransistions(Transistions value) {
-        this.transistions = value;
-    }
-
-    public boolean isSetTransistions() {
-        return (this.transistions!= null);
-    }
 
     /**
      * Gets the value of the langs property.
@@ -159,43 +121,6 @@ public class Condition
 
     public boolean isSetDescriptions() {
         return (this.descriptions!= null);
-    }
-
-    /**
-     * Gets the value of the lang property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lang property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getLang().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Lang }
-     * 
-     * 
-     */
-    public List<Lang> getLang() {
-        if (lang == null) {
-            lang = new ArrayList<Lang>();
-        }
-        return this.lang;
-    }
-
-    public boolean isSetLang() {
-        return ((this.lang!= null)&&(!this.lang.isEmpty()));
-    }
-
-    public void unsetLang() {
-        this.lang = null;
     }
 
     /**

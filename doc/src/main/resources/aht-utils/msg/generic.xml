@@ -16,7 +16,7 @@
     </s:translation>
     <s:translation key="aupTitle">
     	<s:langs>
-    		<s:lang key="en" translation="Titel"/>
+    		<s:lang key="en" translation="Title"/>
     		<s:lang key="de" translation="Title"/>
     		<s:lang key="fr" translation="Title"/>
     	</s:langs>

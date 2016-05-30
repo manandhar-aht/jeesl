@@ -32,6 +32,7 @@ public class TestXmlCondition extends AbstractXmlStatusTestOld
     public static Condition create(boolean withChilds)
     {
     	Condition xml = new Condition();
+    	xml.setId(123);
     	xml.setCode("myCode");
     	xml.setVisible(true);
     	xml.setGroup("myGroup");

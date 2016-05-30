@@ -206,6 +206,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Priority }
+     * 
+     */
+    public Priority createPriority() {
+        return new Priority();
+    }
+
+    /**
      * Create an instance of {@link Condition }
      * 
      */

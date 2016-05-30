@@ -25,7 +25,8 @@ public class ListFromCommaSeparatedStringStrategy implements ImportStrategy {
 	public Object handleObject(Object object, String parameterClass, String property) {
 		String value = object.toString();
 		
-		List<String> list = Arrays.asList(value.split("\\s*,\\s*"));
+	//	List<String> list = Arrays.asList(value.split("\\s*,\\s*"));
+            List<String> list = Arrays.asList(value.split(","));
 		
     	return list;
 	}

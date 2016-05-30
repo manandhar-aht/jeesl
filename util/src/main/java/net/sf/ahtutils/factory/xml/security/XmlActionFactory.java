@@ -81,19 +81,21 @@ public class XmlActionFactory <L extends UtilsLang,
 		net.sf.ahtutils.xml.access.Action xml = new net.sf.ahtutils.xml.access.Action();
 		if(qAcl.isSetCode()){xml.setCode(action.getCode());}
 		
-		if(qAcl.isSetLangs())
+		boolean processTemplate = action.getTemplate()!=null;
+		
+		if(qAcl.isSetLangs() && !processTemplate)
 		{
 			XmlLangsFactory<L> f = new XmlLangsFactory<L>(qAcl.getLangs());
 			xml.setLangs(f.getUtilsLangs(action.getName()));
 		}
 		
-		if(qAcl.isSetDescriptions())
+		if(qAcl.isSetDescriptions() && !processTemplate)
 		{
 			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(qAcl.getDescriptions());
 			xml.setDescriptions(f.create(action.getDescription()));
 		}
 		
-		if(qAcl.isSetTemplate() && action.getTemplate()!=null)
+		if(qAcl.isSetTemplate() && processTemplate)
 		{
 			
 			XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER>(qAcl.getTemplate());

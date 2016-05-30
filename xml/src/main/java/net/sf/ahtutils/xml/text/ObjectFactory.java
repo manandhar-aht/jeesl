@@ -62,6 +62,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Solution }
+     * 
+     */
+    public Solution createSolution() {
+        return new Solution();
+    }
+
+    /**
      * Create an instance of {@link Impact }
      * 
      */

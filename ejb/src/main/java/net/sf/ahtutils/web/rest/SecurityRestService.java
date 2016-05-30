@@ -141,7 +141,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 						for(A action : view.getActions())
 						{
 							net.sf.ahtutils.xml.access.Action xAction = fAction.create(action);
-							
+/*	2016-05-30 deactivated
 							List<R> roles = fSecurity.rolesForAction(cAction, action);
 							if(roles.size()>0)
 							{
@@ -152,7 +152,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 								}
 								xAction.setRoles(xRoles);
 							}
-							
+*/							
 							xView.getActions().getAction().add(xAction);
 						}
 						

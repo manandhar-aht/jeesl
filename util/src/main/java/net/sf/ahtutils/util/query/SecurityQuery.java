@@ -195,11 +195,14 @@ public class SecurityQuery
 	
 	public static net.sf.ahtutils.xml.access.Action exActionAcl()
 	{
+		net.sf.ahtutils.xml.security.Template template = new net.sf.ahtutils.xml.security.Template();
+		template.setCode("");
+		
 		net.sf.ahtutils.xml.access.Action xml = new net.sf.ahtutils.xml.access.Action();
 		xml.setCode("");
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
-		xml.setTemplate(SecurityQuery.exTemplate());
+		xml.setTemplate(template);
 		return xml;
 	}
 	

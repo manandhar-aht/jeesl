@@ -22,10 +22,14 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlQuestionFactory.class);
 		
+	private String lang;
 	private Question q;
 	
-	public XmlQuestionFactory(Question q)
+	//TODO tk: remove this constructor
+	public XmlQuestionFactory(Question q){this(null,q);}
+	public XmlQuestionFactory(String lang, Question q)
 	{
+		this.lang=lang;
 		this.q=q;
 	}
 	
@@ -43,7 +47,7 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 		
 		if(q.isSetUnit())
 		{
-			XmlUnitFactory f = new XmlUnitFactory(q.getUnit());
+			XmlUnitFactory f = new XmlUnitFactory(lang,q.getUnit());
 			xml.setUnit(f.build(ejb.getUnit()));
 		}
 		

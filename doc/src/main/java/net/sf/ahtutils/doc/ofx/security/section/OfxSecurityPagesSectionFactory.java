@@ -37,9 +37,7 @@ import net.sf.ahtutils.doc.ofx.util.OfxMultiLangFactory;
 import net.sf.ahtutils.factory.xml.security.XmlActionFactory;
 import net.sf.ahtutils.xml.security.Role;
 import net.sf.ahtutils.xml.status.Description;
-import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Lang;
-import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.ahtutils.xml.xpath.StatusXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
@@ -69,7 +67,6 @@ public class OfxSecurityPagesSectionFactory extends AbstractUtilsOfxDocumentatio
 		fMarginText = XmlFontFactory.relative(-3);
 	}
 	
-	
 	public Section build(net.sf.ahtutils.xml.access.View view) throws OfxAuthoringException
 	{
 		if(view.getCode().equals("programBudget")){JaxbUtil.trace(view);}
@@ -96,9 +93,9 @@ public class OfxSecurityPagesSectionFactory extends AbstractUtilsOfxDocumentatio
 				for(String lang : langs)
 				{
 					Paragraph p = XmlParagraphFactory.build(lang);
-					
 					try
 					{
+						JaxbUtil.trace(action);
 						Lang l = StatusXpath.getLang(XmlActionFactory.toLangs(action), lang);
 						p.getContent().add(ofxItalic.build(l.getTranslation()));
 						p.getContent().add(": ");

@@ -206,6 +206,21 @@ public class SecurityQuery
 		return xml;
 	}
 	
+	public static net.sf.ahtutils.xml.access.Action docActionAcl()
+	{
+		net.sf.ahtutils.xml.security.Template template = new net.sf.ahtutils.xml.security.Template();
+		template.setCode("");
+		template.setLangs(StatusQuery.langs());
+		template.setDescriptions(StatusQuery.descriptions());
+		
+		net.sf.ahtutils.xml.access.Action xml = new net.sf.ahtutils.xml.access.Action();
+		xml.setCode("");
+		xml.setLangs(StatusQuery.langs());
+		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setTemplate(template);
+		return xml;
+	}
+	
 	public static Usecase exUsecase()
 	{
 		net.sf.ahtutils.xml.security.Action action = new net.sf.ahtutils.xml.security.Action();action.setCode("");
@@ -226,6 +241,11 @@ public class SecurityQuery
 	
 	public static Usecase docUsecase()
 	{
+		net.sf.ahtutils.xml.security.Template template = new net.sf.ahtutils.xml.security.Template();
+		template.setCode("");
+		template.setLangs(StatusQuery.langs());
+		template.setDescriptions(StatusQuery.descriptions());
+		
 		net.sf.ahtutils.xml.security.View viewCode = new net.sf.ahtutils.xml.security.View();
 		viewCode.setCode("");
 		
@@ -234,6 +254,7 @@ public class SecurityQuery
 		action.setView(viewCode);
 		action.setLangs(StatusQuery.langs());
 		action.setDescriptions(StatusQuery.descriptions());
+		action.setTemplate(template);
 		
 		Usecase xml = new Usecase();
 		xml.setCode("");

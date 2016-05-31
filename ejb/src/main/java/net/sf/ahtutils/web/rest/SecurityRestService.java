@@ -1,7 +1,5 @@
 package net.sf.ahtutils.web.rest;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,15 +62,15 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<R> cRole;
 	private final Class<V> cView;
 	private final Class<U> cUsecase;
-	private final Class<A> cAction;
+//	private final Class<A> cAction;
 	private final Class<AT> cTemplate;
 	
 	private SecurityInitViews<L,D,C,R,V,U,A,AT,USER> initViews;
 	
 	private XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER> fCategory;
 	private XmlViewFactory xfView;
-	private XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> fRole,fRoleDescription,fRoleCode;
-	private XmlActionFactory<L,D,C,R,V,U,A,AT,USER> fAction;
+	private XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> fRole,fRoleDescription;
+	private XmlActionFactory<L,D,C,R,V,U,A,AT,USER> xfAction,xfActionDoc;
 	private XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER> fTemplate;
 	private XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER> fUsecase,fUsecaseDoc;
 	
@@ -83,15 +81,15 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cRole=cRole;
 		this.cView=cView;
 		this.cUsecase=cUsecase;
-		this.cAction=cAction;
+//		this.cAction=cAction;
 		this.cTemplate=cTemplate;
 		
 		fCategory = new XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER>(null,SecurityQuery.exCategory());
 		xfView = new XmlViewFactory(SecurityQuery.exViewOld(),null);
 		fRole = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exRole(),null);
 		fRoleDescription = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.role(),null);
-		fRoleCode = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(XmlRoleFactory.build(""));
-		fAction = new XmlActionFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exActionAcl());
+		xfAction = new XmlActionFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exActionAcl());
+		xfActionDoc = new XmlActionFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.docActionAcl());
 		fTemplate = new XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exTemplate());
 		fUsecase = new XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exUsecase());
 		fUsecaseDoc = new XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.docUsecase());
@@ -140,7 +138,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 						xView.setActions(XmlActionsFactory.create());
 						for(A action : view.getActions())
 						{
-							net.sf.ahtutils.xml.access.Action xAction = fAction.create(action);
+							net.sf.ahtutils.xml.access.Action xAction = xfAction.create(action);
 /*	2016-05-30 deactivated
 							List<R> roles = fSecurity.rolesForAction(cAction, action);
 							if(roles.size()>0)
@@ -248,6 +246,46 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		}		
 		return xml;
 	}
+	
+	@Override public Security documentationSecurityViews()
+	{
+		Security xml = XmlSecurityFactory.build();		
+		for(C category : fSecurity.allOrderedPosition(cCategory))
+		{
+			if(category.getType().equals(UtilsSecurityCategory.Type.view.toString()))
+			{
+				try
+				{
+					net.sf.ahtutils.xml.security.Category xmlCat = fCategory.build(category);
+					xmlCat.setViews(XmlViewsFactory.build());
+					for(V view : fSecurity.allForCategory(cView, cCategory, category.getCode()))
+					{
+						view = fSecurity.load(cView,view);
+						View xView = xfView.build(view);
+						xView.setActions(XmlActionsFactory.create());
+						for(A action : view.getActions())
+						{
+							net.sf.ahtutils.xml.access.Action xAction = xfActionDoc.create(action);
+							xView.getActions().getAction().add(xAction);
+						}
+						
+						Roles xRoles = XmlRolesFactory.build();
+						for(R role : fSecurity.rolesForView(cView, view))
+						{
+							xRoles.getRole().add(fRoleDescription.build(role));
+						}
+						xView.setRoles(xRoles);
+						
+						xmlCat.getViews().getView().add(xView);
+					}
+					
+					xml.getCategory().add(xmlCat);
+				}
+				catch (UtilsNotFoundException e) {e.printStackTrace();}
+			}
+		}		
+		return xml;
+	}
 
 	@Override public Security documentationSecurityPageActions()
 	{
@@ -267,7 +305,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 						xView.setActions(XmlActionsFactory.create());
 						for(A action : view.getActions())
 						{
-							Action xAction = fAction.create(action);
+							Action xAction = xfActionDoc.create(action);
 							xView.getActions().getAction().add(xAction);
 						}
 						

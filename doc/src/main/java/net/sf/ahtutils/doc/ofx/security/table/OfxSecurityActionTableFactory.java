@@ -27,6 +27,7 @@ import net.sf.ahtutils.factory.xml.security.XmlActionFactory;
 import net.sf.ahtutils.xml.access.Action;
 import net.sf.ahtutils.xml.security.Role;
 import net.sf.ahtutils.xml.status.Translations;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class OfxSecurityActionTableFactory extends AbstractUtilsOfxDocumentationFactory
 {
@@ -125,7 +126,7 @@ public class OfxSecurityActionTableFactory extends AbstractUtilsOfxDocumentation
 	private Row createRow(net.sf.ahtutils.xml.access.View view, Action action) throws OfxAuthoringException
 	{
 		Row row = new Row();
-		
+		JaxbUtil.trace(action);
 		row.getCell().add(OfxMultiLangFactory.cell(langs, XmlActionFactory.toLangs(action)));
 		row.getCell().add(OfxMultiLangFactory.cell(langs, XmlActionFactory.toDescriptions(action)));
 		

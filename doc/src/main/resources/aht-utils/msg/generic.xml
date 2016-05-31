@@ -63,6 +63,13 @@
     		<s:lang key="fr" translation="Remark"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="aupSolution">
+    	<s:langs>
+    		<s:lang key="de" translation="Lösung"/>
+    		<s:lang key="en" translation="Solution"/>
+    		<s:lang key="fr" translation="Solution"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupTopic">
     	<s:langs>
     		<s:lang key="de" translation="Topic"/>

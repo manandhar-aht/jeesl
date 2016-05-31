@@ -25,6 +25,10 @@ public interface UtilsSecurityRestExport
 	@Produces(MediaType.APPLICATION_XML)
 	Security exportSecurityUsecases();
 	
+	@GET @Path("/security/doc/views")
+	@Produces(MediaType.APPLICATION_XML)
+	Security documentationSecurityViews();
+	
 	@GET @Path("/security/doc/pages")
 	@Produces(MediaType.APPLICATION_XML)
 	Security documentationSecurityPageActions();

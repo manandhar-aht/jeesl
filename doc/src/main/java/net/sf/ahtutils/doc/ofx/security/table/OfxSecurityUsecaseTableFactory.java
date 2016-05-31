@@ -25,10 +25,12 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
 import net.sf.ahtutils.doc.ofx.util.OfxMultiLangFactory;
+import net.sf.ahtutils.factory.xml.security.XmlActionFactory;
 import net.sf.ahtutils.xml.security.Action;
 import net.sf.ahtutils.xml.security.Usecase;
 import net.sf.ahtutils.xml.security.View;
 import net.sf.ahtutils.xml.status.Translations;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class OfxSecurityUsecaseTableFactory extends AbstractUtilsOfxDocumentationFactory
 {
@@ -116,6 +118,7 @@ public class OfxSecurityUsecaseTableFactory extends AbstractUtilsOfxDocumentatio
 			{
 				if(action.getView().getCode().equals(view.getCode()))
 				{
+					JaxbUtil.trace(action);
 					Row row = new Row();
 					if(firstAction)
 					{
@@ -126,8 +129,8 @@ public class OfxSecurityUsecaseTableFactory extends AbstractUtilsOfxDocumentatio
 					{
 						row.getCell().add(OfxCellFactory.createParagraphCell(""));
 					}
-					row.getCell().add(OfxMultiLangFactory.cell(langs, action.getLangs()));
-					row.getCell().add(OfxMultiLangFactory.cell(langs, action.getDescriptions()));
+					row.getCell().add(OfxMultiLangFactory.cell(langs, XmlActionFactory.toLangs(action)));
+					row.getCell().add(OfxMultiLangFactory.cell(langs, XmlActionFactory.toDescriptions(action)));
 					rows.add(row);
 					matchedAction=true;
 				}

@@ -116,9 +116,19 @@ public class XmlActionFactory <L extends UtilsLang,
 	{		
 		if(action.getTemplate()==null) {return action.getLangs();}
 		else {return action.getTemplate().getLangs();}
+	}	
+	public static Langs toLangs(net.sf.ahtutils.xml.security.Action action)
+	{		
+		if(action.getTemplate()==null) {return action.getLangs();}
+		else {return action.getTemplate().getLangs();}
 	}
 	
 	public static Descriptions toDescriptions(net.sf.ahtutils.xml.access.Action action)
+	{		
+		if(action.getTemplate()==null) {return action.getDescriptions();}
+		else {return action.getTemplate().getDescriptions();}
+	}
+	public static Descriptions toDescriptions(net.sf.ahtutils.xml.security.Action action)
 	{		
 		if(action.getTemplate()==null) {return action.getDescriptions();}
 		else {return action.getTemplate().getDescriptions();}

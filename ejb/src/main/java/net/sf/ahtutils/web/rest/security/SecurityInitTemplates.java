@@ -42,9 +42,9 @@ public class SecurityInitTemplates <L extends UtilsLang,
 	
 	private AhtDbEjbUpdater<R> updateRole;
 	
-	public SecurityInitTemplates(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<USER> cUser,UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+	public SecurityInitTemplates(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{       
-        super(cL,cD,cC,cR,cV,cU,cA,cUser,fAcl);
+        super(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}
 	
 	public DataUpdate iuSecurityTemplates(Security security)

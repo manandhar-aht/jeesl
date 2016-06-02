@@ -49,6 +49,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
     protected final Class<V> cV;
     protected final Class<U> cU;
     protected final Class<A> cA;
+    protected final Class<AT> cT;
     protected final Class<USER> cUser;
 	
 	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
@@ -62,12 +63,12 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	   			   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
 	   			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 	   			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	   			AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+	   			   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 	   			   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitRoles<L,D,C,R,V,U,A,AT,USER>
-		factoryRoles(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+		factoryRoles(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{
-		return new SecurityInitRoles<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cUser,fAcl);
+		return new SecurityInitRoles<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}
 	
 	public static <L extends UtilsLang,
@@ -77,12 +78,12 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	   			   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
 	   			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 	   			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	   			AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
-	   			USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+	   			   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+	   			   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitViews<L,D,C,R,V,U,A,AT,USER>
-		factoryViews(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+		factoryViews(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{
-		return new SecurityInitViews<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cUser,fAcl);
+		return new SecurityInitViews<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}
 	
 	public static <L extends UtilsLang,
@@ -92,12 +93,12 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	   			   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
 	   			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 	   			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	   			AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
-	   			USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+	   			   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+	   			   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER>
-		factoryUsecases(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+		factoryUsecases(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{
-		return new SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cUser,fAcl);
+		return new SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}
 	
 	public static <L extends UtilsLang,
@@ -107,15 +108,15 @@ public class AbstractSecurityInit <L extends UtilsLang,
 				   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
 				   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 				   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-				AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
-				USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+				   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+				   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER>
-		factoryTemplates(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+		factoryTemplates(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{
-		return new SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cUser,fAcl);
+		return new SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}
 	
-	public AbstractSecurityInit(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<USER> cUser,UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+	public AbstractSecurityInit(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{       
         this.cL = cL;
         this.cD = cD;
@@ -124,6 +125,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
         this.cV = cV;
         this.cU = cU;
         this.cA = cA;
+        this.cT = cT; 
         this.cUser = cUser;
         
         this.fSecurity=fAcl;

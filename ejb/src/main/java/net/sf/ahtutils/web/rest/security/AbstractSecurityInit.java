@@ -1,5 +1,8 @@
 package net.sf.ahtutils.web.rest.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.db.ejb.AhtDbEjbUpdater;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
@@ -26,9 +29,6 @@ import net.sf.ahtutils.xml.access.Category;
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.access.Views;
 import net.sf.ahtutils.xml.security.Security;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AbstractSecurityInit <L extends UtilsLang,
  								D extends UtilsDescription, 
@@ -98,6 +98,21 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		factoryUsecases(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{
 		return new SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cUser,fAcl);
+	}
+	
+	public static <L extends UtilsLang,
+				   D extends UtilsDescription, 
+				   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+				   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+				   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+				   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+				   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+				AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+				USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+		SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER>
+		factoryTemplates(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+	{
+		return new SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cUser,fAcl);
 	}
 	
 	public AbstractSecurityInit(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<USER> cUser,UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)

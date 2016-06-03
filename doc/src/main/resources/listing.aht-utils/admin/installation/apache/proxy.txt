@@ -1,2 +1,7 @@
+    ProxyPreserveHost On
     ProxyPass /@@@APP@@@ http://localhost:8080/@@@APP@@@
     ProxyPassReverse /@@@APP@@@ http://localhost:8080/@@@APP@@@
+    
+    <Proxy *>
+		Allow from all
+	</Proxy>

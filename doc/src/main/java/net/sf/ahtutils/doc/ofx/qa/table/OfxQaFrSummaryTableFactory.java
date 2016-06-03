@@ -67,13 +67,13 @@ public class OfxQaFrSummaryTableFactory extends AbstractUtilsOfxDocumentationFac
 		headerKeys.add("auTableQaTestCase");
 	}
 	
-	public Table build(Category category,Aht testConditions,Aht resultStatus) throws OfxAuthoringException, UtilsConfigurationException
+	public Table build(boolean withResults, Category category,Aht testConditions,Aht resultStatus) throws OfxAuthoringException, UtilsConfigurationException
 	{
 		this.testConditions=testConditions;
 		this.resultStatus=resultStatus;
 		try
 		{	
-			Table table = toOfx(category);
+			Table table = toOfx(withResults,category);
 			table.setId("table.qa.agreements."+category.getCode());
 			
 			if(langs.length>1){logger.warn("Incorrect Assignment");}
@@ -94,11 +94,11 @@ public class OfxQaFrSummaryTableFactory extends AbstractUtilsOfxDocumentationFac
 		catch (ExlpXpathNotUniqueException e) {throw new OfxAuthoringException(e.getMessage());}
 	}
 	
-	public Table toOfx(Category category)
+	public Table toOfx(boolean withResults, Category category)
 	{
 		Table table = new Table();
 		table.setSpecification(createSpecifications());
-		table.setContent(createContent(category));
+		table.setContent(createContent(withResults,category));
 		return table;
 	}
 	
@@ -117,7 +117,7 @@ public class OfxQaFrSummaryTableFactory extends AbstractUtilsOfxDocumentationFac
 		return specification;
 	}
 	
-	private Content createContent(Category category)
+	private Content createContent(boolean withResults, Category category)
 	{
 		Head head = new Head();
 		head.getRow().add(createHeaderRow(headerKeys));
@@ -129,7 +129,7 @@ public class OfxQaFrSummaryTableFactory extends AbstractUtilsOfxDocumentationFac
 		{
 			if(test.isVisible())
 			{
-				body.getRow().add(createRow(test));
+				body.getRow().add(createRow(withResults,test));
 			}
 		}
 		
@@ -140,20 +140,26 @@ public class OfxQaFrSummaryTableFactory extends AbstractUtilsOfxDocumentationFac
 		return content;
 	}
 	
-	private Row createRow(Test test)
+	private Row createRow(boolean withResults, Test test)
 	{
 		Row row = new Row();
 		JaxbUtil.trace(test);
 		try
 		{
-			Cell cellClient = new Cell();
-			for(Result result : test.getResults().getResult())
+			Cell cellClient;
+			if(withResults)
 			{
-				if(result.getStaff().getRole().getCode().equals("qaManager"))
+				cellClient = new Cell();
+				for(Result result : test.getResults().getResult())
 				{
-					cellClient.getContent().add(OfxStatusImageFactory.build(imagePathPrefix,StatusXpath.getStatus(resultStatus.getStatus(), result.getStatus().getCode())));
+					if(result.getStaff().getRole().getCode().equals("qaManager"))
+					{
+						cellClient.getContent().add(OfxStatusImageFactory.build(imagePathPrefix,StatusXpath.getStatus(resultStatus.getStatus(), result.getStatus().getCode())));
+					}
 				}
 			}
+			else{cellClient=OfxCellFactory.createParagraphCell("");}
+			
 			
 			row.getCell().add(OfxCellFactory.createParagraphCell(test.getCode()));
 			row.getCell().add(OfxCellFactory.createParagraphCell(test.getName()));

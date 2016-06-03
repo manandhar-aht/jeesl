@@ -56,6 +56,20 @@ update-alternatives --set javac /opt/jdk1.8.0_74/bin/javac</ofx:raw>
 		</ofx:listing>
 	</ofx:section>
 	
+	<ofx:section container="true" classifier="debianJessie">
+			<ofx:title lang="none">Linux Debian 8 Jessie</ofx:title>
+	
+	 	
+		<ofx:listing>
+			<ofx:raw>echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" > /etc/apt/sources.list.d/webupd8team-java.list
+echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list.d/webupd8team-java.list
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+apt-get update
+apt-get install oracle-java8-installer
+java -version</ofx:raw>
+		</ofx:listing>
+	</ofx:section>
+	
 	<ofx:section container="true" classifier="windows">
 		<ofx:title lang="none">Windows</ofx:title>
 	</ofx:section>

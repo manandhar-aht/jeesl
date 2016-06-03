@@ -145,23 +145,23 @@ public class LatexQaWriter
 		ofxMlw.section(1,"/qa/summary",ofContainerInput.build(qa,"/table/qa/summary/fr"));
 	}
 		
-	public void writeQaFr(Category category) throws OfxAuthoringException, IOException, OfxConfigurationException
+	public void writeQaFr(Category category, boolean withResults) throws OfxAuthoringException, IOException, OfxConfigurationException
 	{
-		ofxMlw.section(2,"/qa/fr/"+category.getCode(),ofFr.build(category));
+		ofxMlw.section(2,"/qa/fr/"+category.getCode(),ofFr.build(category,withResults));
 	}
 	
-	public void frSummary(Category c,Aht testConditions,Aht resultStatus,String lang) throws OfxAuthoringException, IOException, UtilsConfigurationException
+	public void frSummary(boolean withResults, Category c,Aht testConditions,Aht resultStatus,String lang) throws OfxAuthoringException, IOException, UtilsConfigurationException
 	{
-		Table table = ofFrSummary.build(c,testConditions,resultStatus);		
+		Table table = ofFrSummary.build(withResults,c,testConditions,resultStatus);		
 		ofxMlw.table("qa/summary/fr/"+c.getCode(), table);
 	}
 	
-	public void writeQaNfr(Survey surveyQuestions, Survey surveyAnswers, List<Staff> staff) throws OfxAuthoringException, IOException, OfxConfigurationException
+	public void writeQaNfr(boolean withResults, Survey surveyQuestions, Survey surveyAnswers, List<Staff> staff) throws OfxAuthoringException, IOException, OfxConfigurationException
 	{
 		ofxMlw.section(2,"/qa/nfr",ofContainerInput.build(surveyQuestions.getTemplate(),"/section/qa/nfr"));
 		for(net.sf.ahtutils.xml.survey.Section surveySection : surveyQuestions.getTemplate().getSection())
 		{
-			ofxMlw.section(2, "/qa/nfr/"+surveySection.getPosition(), ofNfr.build(surveySection,surveyAnswers,staff));
+			ofxMlw.section(2, "/qa/nfr/"+surveySection.getPosition(), ofNfr.build(withResults,surveySection,surveyAnswers,staff));
 		}
 	}
 		

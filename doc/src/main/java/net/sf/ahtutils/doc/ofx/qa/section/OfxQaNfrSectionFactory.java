@@ -49,7 +49,7 @@ public class OfxQaNfrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 	
 	public void setUnits(Aht units) {ofxTableQuestions.setUnits(units);}
 	
-	public Section build(net.sf.ahtutils.xml.survey.Section mainSection, Survey surveyAnswers, List<Staff> staff) throws OfxAuthoringException
+	public Section build(boolean withResults, net.sf.ahtutils.xml.survey.Section mainSection, Survey surveyAnswers, List<Staff> staff) throws OfxAuthoringException
 	{
 		Section xml = XmlSectionFactory.build();
 
@@ -64,7 +64,7 @@ public class OfxQaNfrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 		List<Section> sections = new ArrayList<Section>();
 		for(net.sf.ahtutils.xml.survey.Section subSection : mainSection.getSection())
 		{
-			sections.add(section(mainSection,subSection,mapAnswers,staff));
+			sections.add(section(withResults,mainSection,subSection,mapAnswers,staff));
 		}
 
 		if(sections.size()==1)
@@ -83,7 +83,7 @@ public class OfxQaNfrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 		return xml;
 	}
 	
-	private Section section(net.sf.ahtutils.xml.survey.Section mainSection, net.sf.ahtutils.xml.survey.Section subSection, Map<Long,Map<Long,Answer>> mapAnswers, List<Staff> staff) throws OfxAuthoringException
+	private Section section(boolean withResults, net.sf.ahtutils.xml.survey.Section mainSection, net.sf.ahtutils.xml.survey.Section subSection, Map<Long,Map<Long,Answer>> mapAnswers, List<Staff> staff) throws OfxAuthoringException
 	{
 		Section xml = XmlSectionFactory.build();
 
@@ -98,7 +98,7 @@ public class OfxQaNfrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 		
 		Table table = ofxTableAnswers.build(subSection,mapAnswers,staff);
 		JaxbUtil.trace(table);
-		if(table.isSetContent() && table.getContent().isSetBody() && table.getContent().getBody().get(0).isSetRow())
+		if(withResults && table.isSetContent() && table.getContent().isSetBody() && table.getContent().getBody().get(0).isSetRow())
 		{
 			xml.getContent().add(table);
 		}

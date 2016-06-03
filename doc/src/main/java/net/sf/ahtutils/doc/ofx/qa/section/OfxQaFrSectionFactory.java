@@ -55,7 +55,7 @@ public class OfxQaFrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 		fOfxTableTestResult = new OfxQaFrResultTableFactory(config,langs,translations);
 	}
 	
-	public Section build(Category category) throws OfxAuthoringException
+	public Section build(Category category, boolean withResults) throws OfxAuthoringException
 	{
 		Section section = XmlSectionFactory.build();
 
@@ -69,13 +69,13 @@ public class OfxQaFrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 		{
 			if(test.isVisible())
 			{
-				section.getContent().add(buildFrTestSection(test));
+				section.getContent().add(buildFrTestSection(test,withResults));
 			}
 		}
 		return section;
 	}
 	
-	private Section buildFrTestSection(Test test) throws OfxAuthoringException
+	private Section buildFrTestSection(Test test, boolean withResults) throws OfxAuthoringException
 	{
 		Section section = XmlSectionFactory.build();
 		section.getContent().add(XmlTitleFactory.build(test.getName()));
@@ -99,7 +99,7 @@ public class OfxQaFrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 			}
 		}
 		
-		if(test.isSetResults() && test.getResults().isSetResult())
+		if(withResults && test.isSetResults() && test.getResults().isSetResult())
 		{
 			section.getContent().add(fOfxTableTestResult.build(test));
 		}

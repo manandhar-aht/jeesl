@@ -38,11 +38,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Transistions }
+     * Create an instance of {@link Parent }
      * 
      */
-    public Transistions createTransistions() {
-        return new Transistions();
+    public Parent createParent() {
+        return new Parent();
     }
 
     /**
@@ -78,11 +78,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Parent }
+     * Create an instance of {@link Transistions }
      * 
      */
-    public Parent createParent() {
-        return new Parent();
+    public Transistions createTransistions() {
+        return new Transistions();
     }
 
     /**

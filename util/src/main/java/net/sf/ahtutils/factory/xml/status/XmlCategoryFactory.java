@@ -10,6 +10,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Category;
+import net.sf.ahtutils.xml.status.Status;
 
 public class XmlCategoryFactory
 {
@@ -113,5 +114,14 @@ public class XmlCategoryFactory
 			if(c.isSetId()){result.add(c.getId());}
 		}
 		return result;
+	}
+	
+	public static Category build(Status status)
+	{
+		Category type = new Category();
+		type.setCode(status.getCode());
+		type.setDescriptions(status.getDescriptions());
+		type.setLangs(status.getLangs());
+		return type;
 	}
 }

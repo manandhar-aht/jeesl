@@ -29,6 +29,21 @@
 					<h:form id="fView"><aupSec:panelView rendered="#{not empty cc.attrs.bean.view}" update=":#{cc.id}:sViews :#{cc.id}:sActions"/></h:form>
 					<h:form id="fActions"><aupSec:tableActions update=":#{cc.id}:sActions"/></h:form>
 					<h:form id="fAction"><aupSec:panelAction rendered="#{not empty cc.attrs.bean.action}" update=":#{cc.id}:sActions"/></h:form>
+					
+					<p:dataTable var="u" value="#{cc.attrs.bean.usecases}" rendered="#{not empty cc.attrs.bean.view}">
+						<f:facet name="header"><aht:pfDataTableHeader title="#{msg.aupSecurityViewAppliedToUsecase}"/></f:facet>
+						<p:column><h:outputText value="#{u.category.position}.#{u.position}" /></p:column>  
+			            <p:column headerText="#{msg.aupSecurityRole}">  
+							<h:outputText value="#{u.name[userBean.localeCode].lang}" />  
+			            </p:column>
+			       	</p:dataTable>
+					<p:dataTable var="r" value="#{cc.attrs.bean.roles}" rendered="#{not empty cc.attrs.bean.view}">
+						<f:facet name="header"><aht:pfDataTableHeader title="#{msg.aupSecurityViewAppliedToRole}"/></f:facet>
+						<p:column> <h:outputText value="#{r.category.position}.#{r.position}" /></p:column>  
+			            <p:column headerText="#{msg.aupSecurityRole}">  
+							<h:outputText value="#{r.name[userBean.localeCode].lang}" />  
+			            </p:column>
+			       	</p:dataTable>
 				</aht:slot>
 			</aht:row>
 	    </aup:grid>

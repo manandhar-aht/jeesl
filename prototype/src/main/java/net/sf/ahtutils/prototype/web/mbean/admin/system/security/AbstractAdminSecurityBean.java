@@ -138,6 +138,24 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	}
 	protected void categorySaved()  throws UtilsNotFoundException {}
 	
+	public void rmCategory() throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(category));}
+		if(categoryRemoveable())
+		{
+			fSecurity.rm(category);
+			category = null;
+			reloadCategories();
+			bMessage.growlSuccessRemoved();
+		}
+		else
+		{
+			logger.warn(cCategory.getSimpleName()+" not removeable ... in use!");
+			bMessage.errorConstraintViolationInUse("category");
+		}
+	}
+	protected boolean categoryRemoveable() throws UtilsNotFoundException {return false;}
+	
 	protected void reloadCategories()
 	{
 		logger.info("reloadCategories");

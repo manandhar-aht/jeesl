@@ -53,6 +53,8 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 	{
 		view = em.find(cView, view.getId());
 		view.getActions().size();
+		view.getRoles().size();
+		view.getUsecases().size();
 		return view;
 	}
 	

@@ -41,8 +41,10 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityViewBean.class);
 
-	private List<V> views;public List<V> getViews(){return views;}
-	private List<A> actions;public List<A> getActions(){return actions;}
+	private List<V> views; public List<V> getViews(){return views;}
+	private List<A> actions; public List<A> getActions(){return actions;}
+	private List<R> roles; public List<R> getRoles(){return roles;}
+	private List<U> usecases; public List<U> getUsecases(){return usecases;}
 	
 	private V view;public V getView(){return view;}public void setView(V view) {this.view = view;}
 	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
@@ -66,17 +68,28 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		reloadViews();
 	}
 	
+	protected boolean categoryRemoveable() throws UtilsNotFoundException
+	{
+		views = fSecurity.allForCategory(cView,cCategory,category.getCode());
+		return views.isEmpty();
+	}
+	
 	
 	private void reloadViews() throws UtilsNotFoundException
 	{
 		views = fSecurity.allForCategory(cView,cCategory,category.getCode());
-
-		logger.info("Reloaded "+views.size());
+		logger.info(AbstractLogMessage.reloaded(cView, views));
 	}
 	
 	private void reloadView()
 	{
 		view = fSecurity.load(cView,view);
+		
+		roles = view.getRoles();
+		Collections.sort(roles, comparatorRole);
+		
+		usecases = view.getUsecases();
+		Collections.sort(usecases, comparatorUsecase);
 	}
 	
 	private void reloadActions()
@@ -110,14 +123,17 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		view = fSecurity.save(view);
 		reloadView();
 		reloadViews();
+		bMessage.growlSuccessSaved();
 	}
 	
-	public void rmView() throws UtilsConstraintViolationException
+	public void rmView() throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(view));
 		fSecurity.rm(view);
 		view=null;
 		action=null;
+		reloadViews();
+		bMessage.growlSuccessRemoved();
 	}
 	
 	public void saveAction() throws UtilsConstraintViolationException, UtilsLockingException
@@ -141,6 +157,7 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		if(!descriptions.isEmpty()){fSecurity.rm(descriptions);}
 		reloadView();
 		reloadActions();
+		bMessage.growlSuccessSaved();
 	}
 	
 	//ACTION
@@ -159,6 +176,7 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		action=null;
 		reloadView();
 		reloadActions();
+		bMessage.growlSuccessRemoved();
 	}
 	
 	public void changeTemplate()

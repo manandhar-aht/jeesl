@@ -31,7 +31,7 @@
 				
 				<p:outputLabel value="#{msg.aupSecurityCode}"/>
 				<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.view.code}"/>
-				<h:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.view.code}"/>
+				<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.view.code}"/>
 				
 				<p:outputLabel rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
 				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{cc.attrs.bean.view.documentation}"/>
@@ -42,13 +42,13 @@
 				<p:outputLabel value="#{msg.aupSecurityAccessLogin}"/>
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.view.accessLogin}"/>
 				<p:outputLabel value="#{msg.aupSecurityJavaPackage}"/>
-				<h:inputText value="#{cc.attrs.bean.view.packageName}"/>
+				<p:inputText value="#{cc.attrs.bean.view.packageName}"/>
 				<p:outputLabel value="#{msg.aupSecurityViewPattern}"/>
-				<h:inputText value="#{cc.attrs.bean.view.viewPattern}"/>
+				<p:inputText value="#{cc.attrs.bean.view.viewPattern}"/>
 				<p:outputLabel value="#{msg.aupSecurityViewMapping}"/>
-				<h:inputText value="#{cc.attrs.bean.view.urlMapping}"/>
+				<p:inputText value="#{cc.attrs.bean.view.urlMapping}"/>
 				<p:outputLabel value="#{msg.aupSecurityViewUrlBase}"/>
-				<h:inputText value="#{cc.attrs.bean.view.urlBase}"/>
+				<p:inputText value="#{cc.attrs.bean.view.urlBase}"/>
 			</p:panelGrid>
 			<aht:tabTranslationEditor value="#{adminSecurityViewsBean.view}"
 					labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"

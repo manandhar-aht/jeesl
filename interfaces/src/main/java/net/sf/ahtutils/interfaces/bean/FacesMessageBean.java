@@ -12,4 +12,5 @@ public interface FacesMessageBean
 	
 	void errorConstraintViolationDuplicateObject();
 	void errorConstraintViolationInUse();
+	void errorConstraintViolationInUse(String id);
 }

@@ -1,6 +1,7 @@
 package net.sf.ahtutils.interfaces.model.system.security;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithTypeCode;
@@ -23,7 +24,7 @@ public interface UtilsSecurityCategory<L extends UtilsLang,
 			extends EjbWithId,EjbWithTypeCode,
 				EjbWithPositionTypeVisible,EjbWithPositionVisible,EjbWithPositionType,
 				EjbWithLang<L>,EjbWithDescription<D>,
-				EjbSaveable
+				EjbSaveable,EjbRemoveable
 {
 	public static enum Type {role,view,usecase,action}
 	

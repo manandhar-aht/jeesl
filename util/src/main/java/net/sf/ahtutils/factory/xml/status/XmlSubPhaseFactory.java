@@ -1,5 +1,8 @@
 package net.sf.ahtutils.factory.xml.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,12 +16,13 @@ public class XmlSubPhaseFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlSubPhaseFactory.class);
 		
-	private String lang;
+	private String localeCode;
 	private SubPhase q;
 	
-	public XmlSubPhaseFactory(String lang,SubPhase q)
+	public XmlSubPhaseFactory(SubPhase q){this(null,q);}
+	public XmlSubPhaseFactory(String localeCode,SubPhase q)
 	{
-		this.lang=lang;
+		this.localeCode=localeCode;
 		this.q=q;
 	}
 	
@@ -26,6 +30,7 @@ public class XmlSubPhaseFactory
 	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> SubPhase build(S ejb, String group)
 	{
 		SubPhase xml = new SubPhase();
+		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetCode()){xml.setCode(ejb.getCode());}
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
 		xml.setGroup(group);
@@ -40,14 +45,14 @@ public class XmlSubPhaseFactory
 
 		}
 		
-		if(q.isSetLabel() && lang!=null)
+		if(q.isSetLabel() && localeCode!=null)
 		{
 			if(ejb.getName()!=null)
 			{
-				if(ejb.getName().containsKey(lang)){xml.setLabel(ejb.getName().get(lang).getLang());}
+				if(ejb.getName().containsKey(localeCode)){xml.setLabel(ejb.getName().get(localeCode).getLang());}
 				else
 				{
-					String msg = "No translation "+lang+" available in "+ejb;
+					String msg = "No translation "+localeCode+" available in "+ejb;
 					logger.warn(msg);
 					xml.setLabel(msg);
 				}
@@ -60,6 +65,14 @@ public class XmlSubPhaseFactory
 			}
 		}
 		
+		return xml;
+	}
+	
+	public static SubPhase id(){return id(0);}
+	private static SubPhase id(long id)
+	{
+		SubPhase xml = new SubPhase();
+		xml.setId(id);
 		return xml;
 	}
 	
@@ -85,5 +98,15 @@ public class XmlSubPhaseFactory
 		xml.setDescriptions(status.getDescriptions());
 		xml.setLangs(status.getLangs());
 		return xml;
+	}
+	
+	public static List<Long> toIds(List<SubPhase> list)
+	{
+		List<Long> result = new ArrayList<Long>();
+		for(SubPhase phase : list)
+		{
+			if(phase.isSetId()){result.add(phase.getId());}
+		}
+		return result;
 	}
 }

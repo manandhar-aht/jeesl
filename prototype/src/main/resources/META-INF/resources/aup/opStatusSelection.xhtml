@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:meis="http://meis.loda.gov.rw/jsf"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+    
+<composite:interface>
+	<composite:attribute name="handler" required="true"/>
+	<composite:attribute name="update" required="true"/>
+	<composite:attribute name="handler" required="true"/>
+	<composite:attribute name="localeCode" required="false" default="#{userBean.localeCode}"/>
+	
+	<composite:attribute name="tableHeader" required="false" default="Entites"/>
+	<composite:attribute name="colHeader" required="false" default="#{msg.aupName}"/>
+	
+	<composite:attribute name="paginatorTemplate" required="false" default="#{appSettingsBean.paginatorTemplate}"/>
+</composite:interface>
+
+<composite:implementation>
+	<p:dataTable id="dtProject" var="p" value="#{cc.attrs.handler.tbList}"
+			selection="#{cc.attrs.handler.tb}" selectionMode="single" rowKey="#{p.id}">
+		<f:facet name="header">
+			<aht:pfDataTableHeader id="dth" title="#{cc.attrs.tableHeader}">
+				<h:graphicImage id="giProjectSelection" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['new']}"/>
+				<p:tooltip for="giProjectSelection" value="#{msg.ttAdd}"/>
+				<meis:iconRemove rendered="#{not empty cc.attrs.handler.tb}" listener="#{cc.attrs.handler.removeEntity()}" update="#{cc.attrs.update}"/>
+			</aht:pfDataTableHeader>
+		</f:facet>
+		<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.selectTb}"/>
+				<p:column headerText="#{cc.attrs.colHeader}">
+					<h:outputText value="#{p.name[cc.attrs.localeCode].lang}" />
+				</p:column>
+			</p:dataTable>
+			<p:overlayPanel for=":#{cc.clientId}:dtProject:dth:giProjectSelection" widgetVar="wv-#{cc.clientId}" appendToBody="false">
+				<p:dataTable id="dtOpContact" var="var" value="#{cc.attrs.handler.opList}"
+							 selection="#{cc.attrs.handler.op}" selectionMode="single" rowKey="#{var.id}">
+					<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.addEntity()}" oncomplete="PF('wv-#{cc.clientId}').hide();"/>
+					<p:column headerText="#{msg.aupType}">
+						<h:outputText value="#{var.name[cc.attrs.localeCode].lang}" />
+					</p:column>
+				</p:dataTable>
+			</p:overlayPanel>
+</composite:implementation>
+</html>

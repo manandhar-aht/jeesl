@@ -4,6 +4,9 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -13,22 +16,19 @@ import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbStatusFactory.class);
 	
-	final Class<S> statusClass;
+	final Class<S> cStatus;
 	final Class<D> cDescription;
     
     private EjbLangFactory<L> efLang;
     private EjbDescriptionFactory<D> efDescription;
 	
-    public EjbStatusFactory(final Class<S> statusClass, final Class<L> cLang, final Class<D> cDescription)
+    public EjbStatusFactory(final Class<S> cStatus, final Class<L> cLang, final Class<D> cDescription)
     {
-        this.statusClass = statusClass;
+        this.cStatus = cStatus;
         this.cDescription = cDescription;
         
         efLang = EjbLangFactory.createFactory(cLang);
@@ -36,15 +36,15 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
     } 
     
     public static <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> EjbStatusFactory<S, L, D>
-    		createFactory(final Class<S> statusClass, final Class<L> cLang, final Class<D> descriptionClass)
+    		createFactory(final Class<S> cStatus, final Class<L> cLang, final Class<D> descriptionClass)
     {
-        return new EjbStatusFactory<S, L, D>(statusClass, cLang, descriptionClass);
+        return new EjbStatusFactory<S, L, D>(cStatus, cLang, descriptionClass);
     }
     
 	public S create(Status status) throws InstantiationException, IllegalAccessException, UtilsConstraintViolationException
 	{
 		if(!status.isSetLangs()){throw new UtilsConstraintViolationException("No <langs> available for "+JaxbUtil.toString(status));}
-        S s = statusClass.newInstance();
+        S s = cStatus.newInstance();
         s.setCode(status.getCode());
         if(status.isSetPosition()){s.setPosition(status.getPosition());}
         else{s.setPosition(0);}
@@ -59,7 +59,7 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
         S s;
 		try
 		{
-			s = statusClass.newInstance();
+			s = cStatus.newInstance();
 			s.setCode(code);
 			if(langKeys!=null){s.setName(efLang.createEmpty(langKeys));}
 			if(langKeys!=null){s.setDescription(efDescription.createEmpty(langKeys));}

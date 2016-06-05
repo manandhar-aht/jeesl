@@ -96,10 +96,11 @@ public class XmlStatusFactory
 		return xml;
 	}
 	
-	public static Status id()
+	public static Status id(){return id(0);}
+	public static Status id(long id)
 	{
 		Status xml = new Status();
-		xml.setId(0);
+		xml.setId(id);
 		return xml;
 	}
 }

@@ -165,6 +165,22 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
         return sb.toString();
 	 }
 	 
+	 public static <T extends EjbWithId> String addOpEntity(T t)
+	 {
+        StringBuffer sb = new StringBuffer();
+        sb.append("Adding from Overlay-Selection ").append(t.getClass().getSimpleName());
+        sb.append(": ").append(t.toString());
+        return sb.toString();
+	 }
+	 
+	 public static <T extends EjbWithId> String rmOpEntity(T t)
+	 {
+        StringBuffer sb = new StringBuffer();
+        sb.append("Removing from Overlay-Selection ").append(t.getClass().getSimpleName());
+        sb.append(": ").append(t.toString());
+        return sb.toString();
+	 }
+	 
 	 public static <T extends EjbWithId> String reorder(Class<T> c, List<T> list)
 	 {
 	        StringBuffer sb = new StringBuffer();

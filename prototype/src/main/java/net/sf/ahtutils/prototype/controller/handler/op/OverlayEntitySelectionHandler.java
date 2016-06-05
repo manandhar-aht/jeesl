@@ -17,7 +17,7 @@ public class OverlayEntitySelectionHandler <T extends EjbWithId> implements OpEn
 	final static Logger logger = LoggerFactory.getLogger(OpEntitySelectionHandler.class);
 	public static final long serialVersionUID=1;
 
-    private OpEntityBean<T> bean;
+    private OpEntityBean bean;
 
     private T op; @Override public T getOp() {return op;} @Override public void setOp(T opEntity) {this.op = opEntity;}
 	private T tb; @Override public T getTb() {return tb;} @Override public void setTb(T tbEntity) {this.tb = tbEntity;}
@@ -25,7 +25,7 @@ public class OverlayEntitySelectionHandler <T extends EjbWithId> implements OpEn
 	private List<T> opEntites; @Override public List<T> getOpList() {return opEntites;} @Override public void setOpList(List<T> opEntites) {this.opEntites = opEntites;}
 	private List<T> tbEntites; @Override public List<T> getTbList() {return tbEntites;} @Override public void setTbList(List<T> tbEntites) {this.tbEntites = tbEntites;}
 
-    public OverlayEntitySelectionHandler(OpEntityBean<T> bean)
+    public OverlayEntitySelectionHandler(OpEntityBean bean)
     {
         this.bean=bean;
         tbEntites = new ArrayList<T>();

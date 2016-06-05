@@ -1,5 +1,8 @@
 package net.sf.ahtutils.factory.xml.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,5 +108,15 @@ public class XmlTypeFactory
 		type.setCode(code);
 		type.setLabel(label);
 		return type;
+	}
+	
+	public static List<Long> toIds(List<Type> list)
+	{
+		List<Long> result = new ArrayList<Long>();
+		for(Type type : list)
+		{
+			if(type.isSetId()){result.add(type.getId());}
+		}
+		return result;
 	}
 }

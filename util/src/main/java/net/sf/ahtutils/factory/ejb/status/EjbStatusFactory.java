@@ -94,4 +94,17 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 		}
 		return mapDesc;
 	}
+	
+	public static <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription>
+		S build(final Class<S> cStatus, final Class<L> cLang, final Class<D> descriptionClass, String[] localeCodes, long id, String code, String name)
+	{
+		EjbStatusFactory<S,L,D> f = EjbStatusFactory.createFactory(cStatus, cLang, descriptionClass);
+		S status = f.create(code, localeCodes);
+		status.setId(id);
+		for(String localeCode : localeCodes)
+		{
+			status.getName().get(localeCode).setLang(name);
+		}
+		return status;
+	}
 }

@@ -66,6 +66,14 @@ public class XmlFinanceFactory
 		return xml;
 	}
 	
+	public static Finance nr(int nr, double value)
+	{
+		Finance xml = new Finance();
+		xml.setNr(nr);
+		xml.setValue(value);
+		return xml;
+	}
+	
 	public static Finance build()
 	{
 		return new Finance();

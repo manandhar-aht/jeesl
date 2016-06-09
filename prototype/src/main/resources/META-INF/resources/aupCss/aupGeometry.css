@@ -258,3 +258,10 @@ margin-top: 8px;
 .aupTrafficLightColumn th{
    padding: 4px 10px !important;
 }
+
+.aupPfTableSingleLine {
+	text-wrap:none;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}

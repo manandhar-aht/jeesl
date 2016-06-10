@@ -28,6 +28,16 @@ public class JsonFlatFigure implements Serializable
 	public String getD2() {return d2;}
 	public void setD2(String d2) {this.d2 = d2;}
 	
+	@JsonProperty("D3")
+	private String d3;
+	public String getD3() {return d3;}
+	public void setD3(String d3) {this.d3 = d3;}
+	
+	@JsonProperty("D4")
+	private String d4;
+	public String getD4() {return d4;}
+	public void setD4(String d4) {this.d4 = d4;}
+	
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

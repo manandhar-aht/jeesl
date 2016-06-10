@@ -11,10 +11,10 @@ public interface OpEntitySelectionHandler <T extends EjbWithId>
 	public static final long serialVersionUID=1;
 
     public T getOp();
-    public void setOp(T user);
+    public void setOp(T op);
     
     public T getTb();
-    public void setTb(T user);
+    public void setTb(T tb);
 
     public List<T> getOpList();
     public void setOpList(List<T> opEntites);
@@ -23,6 +23,7 @@ public interface OpEntitySelectionHandler <T extends EjbWithId>
     public void setTbList(List<T> tbEntites);
 
     public void clearTable();
+    public void addEntity(T item) throws UtilsLockingException, UtilsConstraintViolationException;
     public void addEntity() throws UtilsLockingException, UtilsConstraintViolationException;
     public void removeEntity() throws UtilsLockingException, UtilsConstraintViolationException;
 

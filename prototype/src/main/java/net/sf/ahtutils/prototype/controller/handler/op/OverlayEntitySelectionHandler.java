@@ -36,10 +36,16 @@ public class OverlayEntitySelectionHandler <T extends EjbWithId> implements OpEn
     	tbEntites.clear();
     	tb = null;
     }
+    
+    @Override public void addEntity(T item) throws UtilsLockingException, UtilsConstraintViolationException
+    {
+    	op = item;
+    	addEntity();
+    }
 
     @Override  public void addEntity() throws UtilsLockingException, UtilsConstraintViolationException
     {
-        if(!tbEntites.contains(op))
+        if(op!=null && !tbEntites.contains(op))
         {
         	tbEntites.add(op);
         	bean.addOpEntity(op);

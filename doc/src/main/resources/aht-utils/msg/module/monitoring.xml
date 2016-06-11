@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="aupMeOutcomes">
+    	<s:langs>
+    		<s:lang key="de" translation="Outcomes"/>
+    		<s:lang key="en" translation="Outcomes"/>
+    		<s:lang key="fr" translation="Outcomes"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupMeOutputs">
+    	<s:langs>
+    		<s:lang key="de" translation="Outputs"/>
+    		<s:lang key="en" translation="Outputs"/>
+    		<s:lang key="fr" translation="Outputs"/>
+    	</s:langs>
+    </s:translation>
+        <s:translation key="aupMeOutput">
+    	<s:langs>
+    		<s:lang key="de" translation="Output"/>
+    		<s:lang key="en" translation="Output"/>
+    		<s:lang key="fr" translation="Output"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupMeObjective">
+    	<s:langs>
+    		<s:lang key="de" translation="Objective"/>
+    		<s:lang key="en" translation="Objective"/>
+    		<s:lang key="fr" translation="Objective"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupMeImpact">
+    	<s:langs>
+    		<s:lang key="de" translation="Impact"/>
+    		<s:lang key="en" translation="Impact"/>
+    		<s:lang key="fr" translation="Impact"/>
+    	</s:langs>
+    </s:translation>
+</s:translations>

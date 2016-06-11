@@ -32,10 +32,13 @@ public class UtilsMsgBuilder
 	public static final String srcAmount = "aht-utils/msg/finance/amount.xml";
 	public static final String financePeriod = "aht-utils/msg/finance/period.xml";
 	
+	//Modules
 	public static final String timeseries = "aht-utils/msg/module/timeseries.xml";
 	public static final String io = "aht-utils/msg/module/io.xml";
+	public static final String monitoring = "aht-utils/msg/module/monitoring.xml";
+	
 	public static final String tooltip = "aht-utils/msg/tooltip.xml";
-	public static final String srcMonitoring = "msg.aht-utils/monitoring.xml";
+
 	public static final String srcWizard = "msg.aht-utils/wizard.xml";
 	public static final String srcAdminAuditLog = "msg.aht-utils/admin/system/auditLog.xml";
 	public static final String srcAdminSync = "msg.aht-utils/admin/system/sync.xml";

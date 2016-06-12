@@ -57,7 +57,7 @@ public class UtilsCrudHandlerPositionParent <T extends EjbPositionCrudWithParent
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		entity = bean.crudUpdate(entity);
+		entity = bean.crudPreSave(entity);
 		entity = fUtils.save(entity);
 		reloadList();
 	}

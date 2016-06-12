@@ -58,7 +58,7 @@ public class UtilsCrudHandlerSimple <T extends EjbCrud>
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(bean!=null){entity = bean.crudUpdate(entity);}
+		if(bean!=null){entity = bean.crudPreSave(entity);}
 		entity = fUtils.save(entity);
 		reloadList();
 	}

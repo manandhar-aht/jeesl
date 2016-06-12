@@ -85,7 +85,7 @@ public class UtilsCrudHandlerParent <T extends EjbCrudWithParent, P extends EjbW
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(bean!=null){entity = bean.crudUpdate(entity);}
+		if(bean!=null){entity = bean.crudPreSave(entity);}
 		else if(bean1!=null){entity = bean1.crud1Update(entity);}
 		else if(bean2!=null){entity = bean2.crud2Update(entity);}
 		entity = fUtils.save(entity);

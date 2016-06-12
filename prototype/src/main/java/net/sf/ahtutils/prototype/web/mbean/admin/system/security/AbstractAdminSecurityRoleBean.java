@@ -59,6 +59,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		
 		opActions = new ArrayList<A>();
 		opUsecases = fSecurity.all(cUsecase);
+		Collections.sort(opUsecases,comparatorUsecase);
 		
 		roles = new ArrayList<R>();
 	}

@@ -35,6 +35,13 @@
     		<s:lang key="fr" translation="Reduction Amount"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="aupAmountRetention1">
+    	<s:langs>
+    		<s:lang key="de" translation="Retention"/>
+    		<s:lang key="en" translation="Retention"/>
+    		<s:lang key="fr" translation="Retention"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupAmountAvailable">
     	<s:langs>
     		<s:lang key="de" translation="Available Amount"/>
@@ -120,11 +127,11 @@
     		<s:lang key="fr" translation="Invoiced"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupAmountPayed">
+	<s:translation key="aupAmountPaid">
     	<s:langs>
-    		<s:lang key="de" translation="Payed"/>
-    		<s:lang key="en" translation="Payed"/>
-    		<s:lang key="fr" translation="Payed"/>
+    		<s:lang key="de" translation="Bezahlt"/>
+    		<s:lang key="en" translation="Paid"/>
+    		<s:lang key="fr" translation="Paid"/>
     	</s:langs>
     </s:translation>
 

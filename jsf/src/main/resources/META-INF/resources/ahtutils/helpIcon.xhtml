@@ -15,7 +15,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:outputLink value="#{cc.attrs.value}" rendered="#{cc.attrs.disabled}">
+		<h:outputLink value="#{cc.attrs.value}" rendered="#{cc.attrs.disabled}" target="_blank">
 			<h:graphicImage id="helpIcon" styleClass="#{cc.attrs.styleClass}" library="gfx" name="#{iconBean.icon12[cc.attrs.type]}"/>
 		</h:outputLink>
 	    <p:tooltip id="toolTipHelp" for="helpIcon" value="#{cc.attrs.toolTip}"/>

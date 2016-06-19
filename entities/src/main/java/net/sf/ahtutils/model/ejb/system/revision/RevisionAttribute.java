@@ -41,6 +41,11 @@ public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersista
 //	@Override public RevisionEntity getEntity() {return entity;}
 //	@Override public void setEntity(RevisionEntity entity) {this.entity = entity;}
 	
+	@NotNull
+	protected String code;
+	@Override public String getCode() {return code;}
+	@Override public void setCode(String code) {this.code = code;}
+	
 	@NotNull @ManyToOne
 	private RevisionAttributeType type;
 	public RevisionAttributeType getType() {return type;}

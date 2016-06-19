@@ -34,6 +34,8 @@
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.showEnclosure}"/>
 			</p:panelGrid>
 			<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+				<p:outputLabel value="#{msg.aupCode}"/>
+				<h:inputText autocomplete="off" value="#{cc.attrs.bean.attribute.code}" styleClass="aupW100"/>
 				<p:outputLabel value="#{msg.aupXpath}"/>
 				<h:inputText autocomplete="off" value="#{cc.attrs.bean.attribute.xpath}" styleClass="aupW100"/>
 				<p:outputLabel value="#{msg.aupType}"/>

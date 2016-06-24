@@ -57,6 +57,13 @@
     		<s:lang key="fr" translation="Received"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="aupDateRequested">
+    	<s:langs>
+    		<s:lang key="de" translation="Angefragt"/>
+    		<s:lang key="en" translation="Requested"/>
+    		<s:lang key="fr" translation="Requested"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupDateSubmitted">
     	<s:langs>
     		<s:lang key="de" translation="Gesendet"/>

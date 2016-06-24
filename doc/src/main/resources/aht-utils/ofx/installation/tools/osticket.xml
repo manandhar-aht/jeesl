@@ -32,14 +32,13 @@ apt-get install php5-mysqlnd</ofx:raw>
 				
 				Go to your osticket installation destination and execute the following lines.
 				
-				
 				After these steps, osticket is available and ready for the installation under following address:
 								
 	</ofx:paragraph>
 			
 		<ofx:listing>
 			<ofx:raw>cp /include/ost-sampleconfig.php /include/ost-config.php
-chmod 0666 /include/ost-config.php
+chmod 0666 include/ost-config.php
 ln -s var/www/osticket x.x.x/upload var/www/tickets</ofx:raw>
 		</ofx:listing>
 		

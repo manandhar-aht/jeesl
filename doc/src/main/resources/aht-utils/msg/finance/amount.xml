@@ -91,6 +91,20 @@
     		<s:lang key="fr" translation="Ordered Amount"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="aupAmountRequested">
+    	<s:langs>
+    		<s:lang key="de" translation="Angefordeter Betrag"/>
+    		<s:lang key="en" translation="Requested Amount"/>
+    		<s:lang key="fr" translation="Requested Amount"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupAmountReceived">
+    	<s:langs>
+    		<s:lang key="de" translation="Erhaltener Betrag"/>
+    		<s:lang key="en" translation="Received Amount"/>
+    		<s:lang key="fr" translation="Received Amount"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupRate">
     	<s:langs>
     		<s:lang key="de" translation="Rate"/>

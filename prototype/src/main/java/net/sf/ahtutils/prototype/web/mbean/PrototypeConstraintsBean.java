@@ -17,6 +17,7 @@ import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.system.Constraint;
 import net.sf.ahtutils.xml.system.ConstraintScope;
+import net.sf.ahtutils.xml.system.ConstraintSolution;
 import net.sf.ahtutils.xml.system.Constraints;
 import net.sf.exlp.util.xml.JaxbUtil;
 
@@ -103,6 +104,29 @@ public class PrototypeConstraintsBean implements Serializable,ConstraintsBean
     	}
     	
     	return "Constraint not found in list: "+key;
+    }
+    
+    public String getSolution(String category, String scope, String code, String lang)
+    {    	
+    	String key = category+"-"+scope+"-"+code;
+    	
+    	if(constraints.containsKey(key))
+    	{
+    		Constraint c = constraints.get(key);
+    		if(c.isSetConstraintSolution())
+    		{
+    			ConstraintSolution s = c.getConstraintSolution();
+    			if(s.isSetDescriptions())
+            	{
+            		for(Description d : s.getDescriptions().getDescription())
+                	{
+                		if(d.getKey().equals(lang)){return d.getValue();}
+                	}
+            	}
+    		}
+    	}
+    	
+    	return "Solution not found in list: "+key;
     }
     
     public ConstraintScope getScope(String category, String scope, String lang)

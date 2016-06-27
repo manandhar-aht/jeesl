@@ -35,6 +35,7 @@ import net.sf.ahtutils.xml.status.Type;
  *         &lt;element ref="{http://ahtutils.aht-group.com/system}constraintAttribute" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}lang"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}description"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/system}constraintSolution"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="since" type="{http://www.w3.org/2001/XMLSchema}dateTime" /&gt;
@@ -52,7 +53,8 @@ import net.sf.ahtutils.xml.status.Type;
     "descriptions",
     "constraintAttribute",
     "lang",
-    "description"
+    "description",
+    "constraintSolution"
 })
 @XmlRootElement(name = "constraint")
 public class Constraint
@@ -72,6 +74,8 @@ public class Constraint
     protected Lang lang;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Description description;
+    @XmlElement(required = true)
+    protected ConstraintSolution constraintSolution;
     @XmlAttribute(name = "code")
     protected String code;
     @XmlAttribute(name = "since")
@@ -253,6 +257,34 @@ public class Constraint
 
     public boolean isSetDescription() {
         return (this.description!= null);
+    }
+
+    /**
+     * Gets the value of the constraintSolution property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ConstraintSolution }
+     *     
+     */
+    public ConstraintSolution getConstraintSolution() {
+        return constraintSolution;
+    }
+
+    /**
+     * Sets the value of the constraintSolution property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ConstraintSolution }
+     *     
+     */
+    public void setConstraintSolution(ConstraintSolution value) {
+        this.constraintSolution = value;
+    }
+
+    public boolean isSetConstraintSolution() {
+        return (this.constraintSolution!= null);
     }
 
     /**

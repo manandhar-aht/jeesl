@@ -182,13 +182,8 @@ public class LatexStatusWriter extends AbstractDocumentationLatexWriter
 			ofxMlw.table("/status/"+texName, table);
 			
 		}
-		catch (OfxAuthoringException e)
-		{
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		catch (OfxAuthoringException e){e.printStackTrace();}
+		catch (IOException e) {e.printStackTrace();}
 	}
 	
 	private void loadFile(String keyStatus, String keyParent) throws UtilsConfigurationException

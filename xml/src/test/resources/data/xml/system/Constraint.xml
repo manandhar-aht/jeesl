@@ -7,4 +7,5 @@
     <sys:constraintAttribute class="java.lang.String" attribute="myAttribute"/>
     <s:lang version="1" key="myKey" translation="myTranslation"/>
     <s:description version="1" key="myKey">myValue</s:description>
+    <sys:constraintSolution/>
 </sys:constraint>

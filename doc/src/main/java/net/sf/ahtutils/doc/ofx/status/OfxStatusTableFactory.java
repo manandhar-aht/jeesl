@@ -388,8 +388,11 @@ public class OfxStatusTableFactory extends AbstractUtilsOfxDocumentationFactory
 		Body body = new Body();
 		for(Status status : listStatus.getStatus())
 		{
-			body.getRow().add(row(status));
-			firstRow=false;
+			if(status.isSetVisible() && status.isVisible())
+			{
+				body.getRow().add(row(status));
+				firstRow=false;
+			}
 		}
 		
 		Content content = new Content();

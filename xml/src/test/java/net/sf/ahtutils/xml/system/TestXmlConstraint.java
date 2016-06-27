@@ -28,6 +28,7 @@ public class TestXmlConstraint extends AbstractXmlSystemTest<Constraint>
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
     		xml.getConstraintAttribute().add(TestXmlConstraintAttribute.create(false));xml.getConstraintAttribute().add(TestXmlConstraintAttribute.create(false));
+    		xml.setConstraintSolution(TestXmlConstraintSolution.create(false));
     		xml.setLang(TestXmlLang.create(false));
     		xml.setDescription(TestXmlDescription.create(false));
     	}

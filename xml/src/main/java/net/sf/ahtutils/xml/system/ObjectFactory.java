@@ -86,6 +86,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ConstraintSolution }
+     * 
+     */
+    public ConstraintSolution createConstraintSolution() {
+        return new ConstraintSolution();
+    }
+
+    /**
      * Create an instance of {@link Release }
      * 
      */

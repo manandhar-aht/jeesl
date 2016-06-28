@@ -613,7 +613,18 @@ public class UtilsFacadeBean implements UtilsFacade
 		try	{return q.getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+type.getSimpleName()+" for "+parentName+".id="+id+" validFrom="+validFrom);}
 	}
-	
+	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> T oneForParent(Class<T> type, I p1) throws UtilsNotFoundException
+	{
+		T prototype = null;
+		try {prototype = type.newInstance();}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		List<T> list = allForParent(type,prototype.resolveParentAttribute(), p1);
+		if(list.size()>1){throw new UtilsNotFoundException("More than one result found for "+type.getSimpleName()+" and "+prototype.resolveParentAttribute()+"=="+p1);}
+		if(list.size()==0){throw new UtilsNotFoundException("No "+type.getSimpleName()+" found for "+prototype.resolveParentAttribute()+"=="+p1);}
+		return list.get(0);
+	}
 	@Override public <T extends EjbWithId, I extends EjbWithId> T oneForParent(Class<T> cl, String p1Name, I p1) throws UtilsNotFoundException
 	{
 		List<T> list = allForParent(cl, p1Name, p1);

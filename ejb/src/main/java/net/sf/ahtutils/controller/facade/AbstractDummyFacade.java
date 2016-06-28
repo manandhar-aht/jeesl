@@ -466,4 +466,11 @@ public class AbstractDummyFacade implements UtilsFacade
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> T oneForParent(Class<T> cl, I p1)
+			throws UtilsNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

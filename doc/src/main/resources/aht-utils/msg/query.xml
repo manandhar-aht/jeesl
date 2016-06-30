@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="aupRule">
+    	<s:langs>
+    		<s:lang key="de" translation="Regel"/>
+    		<s:lang key="en" translation="Rule"/>
+    		<s:lang key="fr" translation="Rule"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupIntersection">
+    	<s:langs>
+    		<s:lang key="de" translation="Schnittmenge"/>
+    		<s:lang key="en" translation="Intersection"/>
+    		<s:lang key="fr" translation="Intersection"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupMinimum3">
+    	<s:langs>
+    		<s:lang key="de" translation="Min"/>
+    		<s:lang key="en" translation="Min"/>
+    		<s:lang key="fr" translation="Min"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupMaximum3">
+    	<s:langs>
+    		<s:lang key="de" translation="Max"/>
+    		<s:lang key="en" translation="Max"/>
+    		<s:lang key="fr" translation="Max"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="aupCriteria">
+    	<s:langs>
+    		<s:lang key="de" translation="Kriterium"/>
+    		<s:lang key="en" translation="Criteria"/>
+    		<s:lang key="fr" translation="Criteria"/>
+    	</s:langs>
+    </s:translation>
+</s:translations>

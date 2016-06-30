@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<qa:result xmlns:s="http://ahtutils.aht-group.com/status" xmlns:acl="http://ahtutils.aht-group.com/access" xmlns:ns3="http://ahtutils.aht-group.com/navigation" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:qa="http://ahtutils.aht-group.com/qa" id="123" record="2011-11-11T11:11:11">
-    <s:status id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" style="myStyle" position="1"/>
+<qa:result xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:qa="http://ahtutils.aht-group.com/qa" id="123" record="2011-11-11T11:11:11">
+    <s:status id="123" code="myCode" group="myGroup" label="myLabel" symbol="mySymbol" visible="true" image="test/green.png" style="myStyle" position="1"/>
     <qa:comment>myComment</qa:comment>
     <qa:actual>myActual</qa:actual>
 </qa:result>

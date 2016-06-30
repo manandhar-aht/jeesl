@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="group" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="label" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="symbol" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="image" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="style" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -79,6 +80,8 @@ public class Status
     protected String group;
     @XmlAttribute(name = "label")
     protected String label;
+    @XmlAttribute(name = "symbol")
+    protected String symbol;
     @XmlAttribute(name = "visible")
     protected Boolean visible;
     @XmlAttribute(name = "image")
@@ -388,6 +391,34 @@ public class Status
 
     public boolean isSetLabel() {
         return (this.label!= null);
+    }
+
+    /**
+     * Gets the value of the symbol property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSymbol() {
+        return symbol;
+    }
+
+    /**
+     * Sets the value of the symbol property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSymbol(String value) {
+        this.symbol = value;
+    }
+
+    public boolean isSetSymbol() {
+        return (this.symbol!= null);
     }
 
     /**

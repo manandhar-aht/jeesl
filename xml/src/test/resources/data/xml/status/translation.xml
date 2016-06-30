@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<translation xmlns="http://ahtutils.aht-group.com/status" key="myKey">
-    <langs/>
-    <descriptions/>
-</translation>
+<s:translation xmlns:s="http://ahtutils.aht-group.com/status" key="myKey">
+    <s:langs/>
+    <s:descriptions/>
+</s:translation>

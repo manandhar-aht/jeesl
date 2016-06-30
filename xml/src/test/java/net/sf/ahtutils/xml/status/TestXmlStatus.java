@@ -18,7 +18,7 @@ public class TestXmlStatus extends AbstractXmlStatusTestOld
 	@BeforeClass
 	public static void initFiles()
 	{
-		fXml = new File(rootDir,"status.xml");
+		fXml = new File(rootDir,"status2.xml");
 	}
     
     @Test
@@ -37,6 +37,7 @@ public class TestXmlStatus extends AbstractXmlStatusTestOld
     	xml.setVisible(true);
     	xml.setGroup("myGroup");
     	xml.setLabel("myLabel");
+    	xml.setSymbol("mySymbol");
     	xml.setImage("test/green.png");
     	xml.setStyle("myStyle");
     	xml.setPosition(1);

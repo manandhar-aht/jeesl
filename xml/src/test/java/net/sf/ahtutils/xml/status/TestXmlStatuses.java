@@ -22,7 +22,7 @@ public class TestXmlStatuses extends AbstractXmlStatusTestOld
 	}
     
     @Test
-    public void testXml() throws FileNotFoundException
+    public void xml() throws FileNotFoundException
     {
         Statuses actual = create(true);
         Statuses expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Statuses.class);

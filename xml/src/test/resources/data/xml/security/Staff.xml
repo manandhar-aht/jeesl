@@ -3,7 +3,7 @@
     <sec:role id="123" code="myCode" position="1" visible="true" label="myLabel"/>
     <sec:user firstName="myFirst" lastName="myLast" email="myEmail"/>
     <s:domain code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
-    <s:status id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" style="myStyle" position="1"/>
+    <s:status id="123" code="myCode" group="myGroup" label="myLabel" symbol="mySymbol" visible="true" image="test/green.png" style="myStyle" position="1"/>
     <s:type id="123" key="myKey" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
     <s:responsible code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
     <s:level code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>

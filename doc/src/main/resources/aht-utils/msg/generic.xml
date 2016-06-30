@@ -138,11 +138,25 @@
     		<s:lang key="fr" translation="Cancel"/>
     	</s:langs>
     </s:translation>
-        <s:translation key="aupMessage">
+	<s:translation key="aupMessage">
     	<s:langs>
     		<s:lang key="de" translation="Nachricht"/>
     		<s:lang key="en" translation="Message"/>
     		<s:lang key="fr" translation="Message"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupPreview">
+    	<s:langs>
+    		<s:lang key="de" translation="Vorschau"/>
+    		<s:lang key="en" translation="Preview"/>
+    		<s:lang key="fr" translation="Preview"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="aupRule">
+    	<s:langs>
+    		<s:lang key="de" translation="Regel"/>
+    		<s:lang key="en" translation="Rule"/>
+    		<s:lang key="fr" translation="Rule"/>
     	</s:langs>
     </s:translation>
 </s:translations>

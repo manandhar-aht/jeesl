@@ -22,7 +22,7 @@ public class TestXmlTransistions extends AbstractXmlStatusTestOld
 	}
     
     @Test
-    public void testXml() throws FileNotFoundException
+    public void xml() throws FileNotFoundException
     {
     	Transistions actual = create(true);
     	Transistions expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Transistions.class);

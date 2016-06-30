@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 import net.sf.ahtutils.xml.status.Parent;
 import net.sf.ahtutils.xml.status.Status;
 
@@ -33,6 +34,7 @@ public class XmlStatusFactory
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
 		if(q.isSetStyle()){xml.setStyle(ejb.getStyle());}
 		if(q.isSetImage()){xml.setImage(ejb.getImage());}
+		if(q.isSetSymbol() && (ejb instanceof UtilsWithSymbol)){xml.setSymbol(ejb.getSymbol());}
 		if(q.isSetVisible()){xml.setVisible(ejb.isVisible());}
 		
 		if(q.isSetLangs())

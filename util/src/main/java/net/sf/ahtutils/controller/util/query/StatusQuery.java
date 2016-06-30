@@ -57,6 +57,7 @@ public class StatusQuery
 		xml.setImage("");
 		xml.setStyle("");
 		xml.setPosition(0);
+		xml.setSymbol("");
 		xml.setVisible(true);
 		xml.setLangs(langs());
 		xml.setDescriptions(descriptions());

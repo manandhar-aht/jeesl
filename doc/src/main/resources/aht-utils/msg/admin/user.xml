@@ -37,6 +37,13 @@
 			<s:lang key="en" translation="Gender"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="aupAge">
+		<s:langs>
+			<s:lang key="de" translation="Alter"/>
+			<s:lang key="en" translation="Age"/>
+			<s:lang key="fr" translation="Age"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="aupPhone">
 		<s:langs>
 			<s:lang key="fr" translation="Phone"/>

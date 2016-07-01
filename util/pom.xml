@@ -263,6 +263,13 @@
         	<type>jar</type>
         	<scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4</artifactId>
+            <type>jar</type>
+            <scope>compile</scope>
+            <version>4.5.3</version>
+        </dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -274,6 +281,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 	
@@ -299,7 +307,28 @@
 					<rulesUri>${maven.ignore}</rulesUri>
 		        </configuration>
 			</plugin>
+            <plugin>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-maven-plugin</artifactId>
+            <version>4.5</version>
+            <executions>
+                <execution>
+                    <id>run antlr</id>
+                    <phase>generate-resources</phase>
+                    <goals>
+                        <goal>antlr4</goal>
+                    </goals>
+                    <configuration>
+                        <sourceDirectory>src/main/resources/ahtutils-util/antlr4</sourceDirectory>
+                        <outputDirectory>src/main/java/net/sf/ahtutils/controller/processor/set</outputDirectory>
+                        <arguments>
+                            <argument>-visitor</argument>
+                        </arguments>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
 		</plugins>
 	</build>
-   
+
 </project>

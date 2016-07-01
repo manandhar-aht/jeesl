@@ -1,0 +1,14 @@
+WS=1
+AND=2
+OR=3
+BEG=4
+END=5
+OPAREN=6
+CPAREN=7
+CHAR=8
+SEP=9
+'['=4
+']'=5
+'('=6
+')'=7
+', '=9

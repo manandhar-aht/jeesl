@@ -1,45 +1,85 @@
 package net.sf.ahtutils.controller.processor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import net.sf.ahtutils.controller.processor.set.SetProcessingLexer;
-import net.sf.ahtutils.controller.processor.set.SetProcessingParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.controller.processor.set.SetProcessingLexer;
+import net.sf.ahtutils.controller.processor.set.SetProcessingParser;
+import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
+import net.sf.ahtutils.model.ejb.status.Description;
+import net.sf.ahtutils.model.ejb.status.Lang;
+import net.sf.ahtutils.model.ejb.status.Status;
 import net.sf.ahtutils.test.AbstractAhtUtilsTest;
 
 public class TestSetProcessor extends AbstractAhtUtilsTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestSetProcessor.class);
 	
-	private List<String> a,b,c,d;
+	private static EjbStatusFactory<Status,Lang,Description> ef;
+	
+	private List<String> a,b;
+	private List<String> e,f,g,h;
+	private List<Status> x,y;
+	
+	@BeforeClass public static void initClass()
+	{
+		ef = EjbStatusFactory.createFactory(Status.class,Lang.class,Description.class);
+	}
 	
 	@Before public void init()
-	{
-		a = Arrays.asList("a byte c dummd1deldumm 141447483187945187"      .split(" "));
-		b = Arrays.asList(      "dummd1deldumm e fit g".split(" "));
-		c = Arrays.asList(	"byte 141447483187945187 j k".split(" "));
-		d = Arrays.asList(	"byte l m nkd 141447483187945187".split(" "));
+	{		
+		a = Arrays.asList("a b c d"      .split(" "));
+		b = Arrays.asList(      "d e f g".split(" "));
+		 
+		e = Arrays.asList("a byte c dummd1deldumm 141447483187945187"      .split(" "));
+		f = Arrays.asList(      "dummd1deldumm e fit g".split(" "));
+		g = Arrays.asList(	"byte 141447483187945187 j k".split(" "));
+		h = Arrays.asList(	"byte l m nkd 141447483187945187".split(" "));
 		//a AND (b OR (c AND d))
+		
+		x = new ArrayList<Status>(); x.add(ef.id(1));x.add(ef.id(2));x.add(ef.id(3));
+		y = new ArrayList<Status>(); y.add(ef.id(3));x.add(ef.id(4));x.add(ef.id(5));
 	}
 	
 	@Test public void pre()
     {	
-    	Assert.assertEquals(4, a.size());
-    	Assert.assertEquals(4, b.size());
-		Assert.assertEquals(4, c.size());
-		Assert.assertEquals(4, d.size());
+		Assert.assertEquals(4, a.size());
+		Assert.assertEquals(4, b.size());
+		
+    	Assert.assertEquals(4, e.size());
+    	Assert.assertEquals(4, f.size());
+		Assert.assertEquals(4, g.size());
+		Assert.assertEquals(4, h.size());
     }
  
-    @Test public void and()
+	@Test public void and()
+    {	
+    	List<String> result = SetProcessor.and(a,b);
+    	Assert.assertEquals(1, result.size());
+    	Assert.assertEquals("d", result.get(0));
+    }
+    
+    @Test
+    public void or()
+    {	
+    	List<String> result = SetProcessor.or(a,b);
+    	Assert.assertEquals(7, result.size());
+    }
+	
+    @Test public void simpleAnd()
     {
-		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(a.toString() + "&&" + b.toString()));
+		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(e.toString() + "&&" + f.toString()));
 		SetProcessingParser parser = new SetProcessingParser(new CommonTokenStream(lexer));
 		List<String> result = (List)new SetProcessor().visit(parser.parse());
 		Assert.assertEquals(1, result.size());
@@ -47,9 +87,9 @@ public class TestSetProcessor extends AbstractAhtUtilsTest
     }
     
     @Test
-    public void or()
+    public void simpleOr()
     {
-		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(a.toString() + "||" + b.toString()));
+		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(e.toString() + "||" + f.toString()));
 		SetProcessingParser parser = new SetProcessingParser(new CommonTokenStream(lexer));
 		List<String> result = (List)new SetProcessor().visit(parser.parse());
 		System.out.println(result.toString());
@@ -57,13 +97,23 @@ public class TestSetProcessor extends AbstractAhtUtilsTest
 		Assert.assertEquals("[a, byte, c, 141447483187945187, dummd1deldumm, e, fit, g]", result.toString());
     }
 
-	@Test public void combination()
+	@Test public void simpleCombination()
 	{
-		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(a.toString() + "&& (" + b.toString() + "||" + "("+ c.toString()+"&&" + d.toString() + "))"));
+		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(e.toString() + "&& (" + f.toString() + "||" + "("+ g.toString()+"&&" + h.toString() + "))"));
 		SetProcessingParser parser = new SetProcessingParser(new CommonTokenStream(lexer));
 		List<String> result = (List)new SetProcessor().visit(parser.parse());
 		System.out.println(result.toString());
 		Assert.assertEquals(3, result.size());
 		Assert.assertEquals("[dummd1deldumm, byte, 141447483187945187]", result.toString());
 	}
+	
+	@Test @Ignore public void idAnd()
+    {
+		List<Status> expecteds = new ArrayList<Status>();
+		expecteds.add(ef.id(3));
+		
+		List<Status> actuals = SetProcessor.query("a AND b", x, y);
+		Assert.assertEquals(1, actuals.size());
+		Assert.assertEquals(expecteds.get(0), actuals.get(0));
+    }
 }

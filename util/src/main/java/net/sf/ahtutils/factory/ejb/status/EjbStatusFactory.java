@@ -70,6 +70,20 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
         return s;
     }
 	
+	public S id(long id)
+	{
+        S s;
+		try
+		{
+			s = cStatus.newInstance();
+			s.setId(id);
+		}
+		catch (InstantiationException e) {throw new RuntimeException(e);}
+		catch (IllegalAccessException e) {throw new RuntimeException(e);}
+        
+        return s;
+    }
+	
 	public Map<String,D> getDescriptionMap(Descriptions desciptions) throws InstantiationException, IllegalAccessException
 	{
 		if(desciptions!=null && desciptions.isSetDescription())

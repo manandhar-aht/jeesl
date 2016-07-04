@@ -20,6 +20,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
@@ -81,8 +83,6 @@ public class Status implements UtilsStatus<Status,Lang,Description>,EjbRemoveabl
 	public int getPosition() {return position;}
 	public void setPosition(int position) {this.position = position;}
 
-
-	
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
@@ -96,4 +96,7 @@ public class Status implements UtilsStatus<Status,Lang,Description>,EjbRemoveabl
 	@SuppressWarnings("unchecked")
 	public <P extends EjbWithCode> P getParent() {return (P)parent;}
 	public <P extends EjbWithCode> void setParent(P parent) {this.parent=(Status)parent;}
+	
+	@Override public boolean equals(Object object){return (object instanceof Status) ? id == ((Status) object).getId() : (object == this);}
+	@Override public int hashCode() {return new HashCodeBuilder(17,59).append(id).toHashCode();}
 }

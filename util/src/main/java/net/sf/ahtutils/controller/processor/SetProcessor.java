@@ -3,9 +3,11 @@ package net.sf.ahtutils.controller.processor;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.collections.ListUtils;
+
 import net.sf.ahtutils.controller.processor.set.SetProcessingBaseVisitor;
 import net.sf.ahtutils.controller.processor.set.SetProcessingParser;
-import org.apache.commons.collections.ListUtils;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class SetProcessor extends SetProcessingBaseVisitor
 {
@@ -21,7 +23,7 @@ public class SetProcessor extends SetProcessingBaseVisitor
 		return ListUtils.union(ListUtils.subtract(a,b),b);
 	}
 	
-	public static <T extends Object> List<T> query(String query, List<T>... list)
+	public static <T extends EjbWithId> List<T> query(String query, List<T>... list)
 	{
 		return null;
 	}

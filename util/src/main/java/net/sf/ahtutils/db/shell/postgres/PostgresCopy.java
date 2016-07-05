@@ -11,21 +11,26 @@ public class PostgresCopy
 {
 	final static Logger logger = LoggerFactory.getLogger(PostgresCopy.class);
 	
+	public static String nul = "\\N";
+	
 	public static void write(BufferedWriter bw, String... data) throws IOException
 	{
 		bw.write(StringUtils.join(data, "\t"));
 		bw.newLine();
 	}
 	
-	public static String convertNull(String string)
+	public static String string(String s)
 	{
-		if(string.isEmpty())
+		if(s==null || s.isEmpty())
 		{
-			return "\\N";
+			return nul;
 		}
-		else
-		{
-			return string;
-		}
+		else{return s;}
+	}
+	
+	public static String bool(boolean value)
+	{
+		if(value){return "t";}
+		else{return "f";}
 	}
 }

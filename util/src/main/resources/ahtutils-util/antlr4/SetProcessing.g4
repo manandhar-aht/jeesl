@@ -20,15 +20,15 @@ options {
 parse: expression;
 
 expression:
-	left=list op=binary
-	( right=list
+	left=CHAR op=binary
+	( right=CHAR
 	| OPAREN expression CPAREN);
 
-list:
-	BEG elem (SEP elem)* END;
-
-elem:
-	CHAR+;
+//list:
+//	BEG elem (SEP elem)* END;
+//
+//elem:
+//	CHAR+;
 
 WS: [ \n\t\r]+ -> skip;
 binary: AND | OR;
@@ -38,5 +38,5 @@ BEG: '[';
 END: ']';
 OPAREN: '(';
 CPAREN: ')';
-CHAR: [A-Za-z0-9];
+CHAR: [a-z];
 SEP: ', ';

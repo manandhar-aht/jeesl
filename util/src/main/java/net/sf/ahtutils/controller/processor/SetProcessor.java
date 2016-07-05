@@ -3,29 +3,37 @@ package net.sf.ahtutils.controller.processor;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sf.ahtutils.controller.processor.set.SetProcessingLexer;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.collections.ListUtils;
 
 import net.sf.ahtutils.controller.processor.set.SetProcessingBaseVisitor;
 import net.sf.ahtutils.controller.processor.set.SetProcessingParser;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class SetProcessor extends SetProcessingBaseVisitor
 {
+
 	@SuppressWarnings("unchecked")
-	public static <T extends Object> List<T> and(List<T> a, List<T> b)
+	public static <T> List<T> and(List<T> a, List<T> b)
 	{
 		return ListUtils.intersection(a,b);
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T extends Object> List<T> or(List<T> a, List<T> b)
+	public static <T> List<T> or(List<T> a, List<T> b)
 	{
 		return ListUtils.union(ListUtils.subtract(a,b),b);
 	}
-	
-	public static <T extends EjbWithId> List<T> query(String query, List<T>... list)
+
+	static List lists;
+
+	public static <T> List<T> query(String query, List<T>... list)
 	{
-		return null;
+		lists = Arrays.asList(list);
+		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(query));
+		SetProcessingParser parser = new SetProcessingParser(new CommonTokenStream(lexer));
+		return (List<T>)new SetProcessor().visit(parser.parse());
 	}
 
 	@Override
@@ -33,25 +41,17 @@ public class SetProcessor extends SetProcessingBaseVisitor
 	{
 		if(ctx.op.AND() != null)
 		{
-			List right;
-			if(ctx.OPAREN() != null){right = (List)visitExpression(ctx.expression());}
-			else right = (List)visitList(ctx.right);
-			return and((List)visitList(ctx.left),right);
+			if(ctx.OPAREN()	!= null)
+				return and(asList(ctx.left.getText().charAt(0)),(List)visitExpression(ctx.expression()));
+			return and(asList(ctx.left.getText().charAt(0)), asList(ctx.right.getText().charAt(0)));
 		}
-		else if (ctx.op.OR() != null)
+		if(ctx.op.OR() != null)
 		{
-			List right;
-			if(ctx.OPAREN() != null){right = (List)visitExpression(ctx.expression());}
-			else right = (List)visitList(ctx.right);
-			return or((List)visitList(ctx.left),right);
+			if(ctx.OPAREN()	!= null)
+				return or(asList(ctx.left.getText().charAt(0)),(List)visitExpression(ctx.expression()));
+			return or(asList(ctx.left.getText().charAt(0)), asList(ctx.right.getText().charAt(0)));
 		}
 		throw new RuntimeException("*JediHandWave* This is never happened.");
-	}
-
-	@Override
-	public Object visitList(SetProcessingParser.ListContext ctx)
-	{
-		return Arrays.asList(ctx.getText().replaceAll("\\[|\\]", "").split(", "));
 	}
 
 	@Override
@@ -60,7 +60,10 @@ public class SetProcessor extends SetProcessingBaseVisitor
 		return super.visitParse(ctx);
 	}
 
-	private boolean asBoolean(SetProcessingParser.ExpressionContext ctx) {
-		return (Boolean)visit(ctx);
+	private List asList(char s) {
+		int i = s - 97;
+		return (List)lists.get(i);
 	}
+
+
 }

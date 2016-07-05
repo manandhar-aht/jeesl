@@ -34,26 +34,6 @@ public interface SetProcessingListener extends ParseTreeListener {
 	 */
 	void exitExpression(SetProcessingParser.ExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SetProcessingParser#list}.
-	 * @param ctx the parse tree
-	 */
-	void enterList(SetProcessingParser.ListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SetProcessingParser#list}.
-	 * @param ctx the parse tree
-	 */
-	void exitList(SetProcessingParser.ListContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SetProcessingParser#elem}.
-	 * @param ctx the parse tree
-	 */
-	void enterElem(SetProcessingParser.ElemContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SetProcessingParser#elem}.
-	 * @param ctx the parse tree
-	 */
-	void exitElem(SetProcessingParser.ElemContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link SetProcessingParser#binary}.
 	 * @param ctx the parse tree
 	 */

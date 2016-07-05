@@ -24,9 +24,9 @@ public class SetProcessingParser extends Parser {
 	public static final int
 		WS=1, AND=2, OR=3, BEG=4, END=5, OPAREN=6, CPAREN=7, CHAR=8, SEP=9;
 	public static final int
-		RULE_parse = 0, RULE_expression = 1, RULE_list = 2, RULE_elem = 3, RULE_binary = 4;
+		RULE_parse = 0, RULE_expression = 1, RULE_binary = 2;
 	public static final String[] ruleNames = {
-		"parse", "expression", "list", "elem", "binary"
+		"parse", "expression", "binary"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -113,7 +113,7 @@ public class SetProcessingParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(10);
+			setState(6);
 			expression();
 			}
 		}
@@ -129,14 +129,12 @@ public class SetProcessingParser extends Parser {
 	}
 
 	public static class ExpressionContext extends ParserRuleContext {
-		public ListContext left;
+		public Token left;
 		public BinaryContext op;
-		public ListContext right;
-		public List<ListContext> list() {
-			return getRuleContexts(ListContext.class);
-		}
-		public ListContext list(int i) {
-			return getRuleContext(ListContext.class,i);
+		public Token right;
+		public List<TerminalNode> CHAR() { return getTokens(SetProcessingParser.CHAR); }
+		public TerminalNode CHAR(int i) {
+			return getToken(SetProcessingParser.CHAR, i);
 		}
 		public BinaryContext binary() {
 			return getRuleContext(BinaryContext.class,0);
@@ -171,163 +169,31 @@ public class SetProcessingParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(12);
-			((ExpressionContext)_localctx).left = list();
-			setState(13);
+			setState(8);
+			((ExpressionContext)_localctx).left = match(CHAR);
+			setState(9);
 			((ExpressionContext)_localctx).op = binary();
-			setState(19);
+			setState(15);
 			switch (_input.LA(1)) {
-			case BEG:
+			case CHAR:
 				{
-				setState(14);
-				((ExpressionContext)_localctx).right = list();
+				setState(10);
+				((ExpressionContext)_localctx).right = match(CHAR);
 				}
 				break;
 			case OPAREN:
 				{
-				setState(15);
+				setState(11);
 				match(OPAREN);
-				setState(16);
+				setState(12);
 				expression();
-				setState(17);
+				setState(13);
 				match(CPAREN);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class ListContext extends ParserRuleContext {
-		public TerminalNode BEG() { return getToken(SetProcessingParser.BEG, 0); }
-		public List<ElemContext> elem() {
-			return getRuleContexts(ElemContext.class);
-		}
-		public ElemContext elem(int i) {
-			return getRuleContext(ElemContext.class,i);
-		}
-		public TerminalNode END() { return getToken(SetProcessingParser.END, 0); }
-		public List<TerminalNode> SEP() { return getTokens(SetProcessingParser.SEP); }
-		public TerminalNode SEP(int i) {
-			return getToken(SetProcessingParser.SEP, i);
-		}
-		public ListContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_list; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof SetProcessingListener ) ((SetProcessingListener)listener).enterList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof SetProcessingListener ) ((SetProcessingListener)listener).exitList(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof SetProcessingVisitor ) return ((SetProcessingVisitor<? extends T>)visitor).visitList(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final ListContext list() throws RecognitionException {
-		ListContext _localctx = new ListContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_list);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(21);
-			match(BEG);
-			setState(22);
-			elem();
-			setState(27);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while (_la==SEP) {
-				{
-				{
-				setState(23);
-				match(SEP);
-				setState(24);
-				elem();
-				}
-				}
-				setState(29);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			}
-			setState(30);
-			match(END);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class ElemContext extends ParserRuleContext {
-		public List<TerminalNode> CHAR() { return getTokens(SetProcessingParser.CHAR); }
-		public TerminalNode CHAR(int i) {
-			return getToken(SetProcessingParser.CHAR, i);
-		}
-		public ElemContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_elem; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof SetProcessingListener ) ((SetProcessingListener)listener).enterElem(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof SetProcessingListener ) ((SetProcessingListener)listener).exitElem(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof SetProcessingVisitor ) return ((SetProcessingVisitor<? extends T>)visitor).visitElem(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final ElemContext elem() throws RecognitionException {
-		ElemContext _localctx = new ElemContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_elem);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(33); 
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			do {
-				{
-				{
-				setState(32);
-				match(CHAR);
-				}
-				}
-				setState(35); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			} while ( _la==CHAR );
 			}
 		}
 		catch (RecognitionException re) {
@@ -365,12 +231,12 @@ public class SetProcessingParser extends Parser {
 
 	public final BinaryContext binary() throws RecognitionException {
 		BinaryContext _localctx = new BinaryContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_binary);
+		enterRule(_localctx, 4, RULE_binary);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(37);
+			setState(17);
 			_la = _input.LA(1);
 			if ( !(_la==AND || _la==OR) ) {
 			_errHandler.recoverInline(this);
@@ -391,17 +257,12 @@ public class SetProcessingParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13*\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\26"+
-		"\n\3\3\4\3\4\3\4\3\4\7\4\34\n\4\f\4\16\4\37\13\4\3\4\3\4\3\5\6\5$\n\5"+
-		"\r\5\16\5%\3\6\3\6\3\6\2\2\7\2\4\6\b\n\2\3\3\2\4\5\'\2\f\3\2\2\2\4\16"+
-		"\3\2\2\2\6\27\3\2\2\2\b#\3\2\2\2\n\'\3\2\2\2\f\r\5\4\3\2\r\3\3\2\2\2\16"+
-		"\17\5\6\4\2\17\25\5\n\6\2\20\26\5\6\4\2\21\22\7\b\2\2\22\23\5\4\3\2\23"+
-		"\24\7\t\2\2\24\26\3\2\2\2\25\20\3\2\2\2\25\21\3\2\2\2\26\5\3\2\2\2\27"+
-		"\30\7\6\2\2\30\35\5\b\5\2\31\32\7\13\2\2\32\34\5\b\5\2\33\31\3\2\2\2\34"+
-		"\37\3\2\2\2\35\33\3\2\2\2\35\36\3\2\2\2\36 \3\2\2\2\37\35\3\2\2\2 !\7"+
-		"\7\2\2!\7\3\2\2\2\"$\7\n\2\2#\"\3\2\2\2$%\3\2\2\2%#\3\2\2\2%&\3\2\2\2"+
-		"&\t\3\2\2\2\'(\t\2\2\2(\13\3\2\2\2\5\25\35%";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13\26\4\2\t\2\4\3"+
+		"\t\3\4\4\t\4\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\22\n\3\3\4\3\4\3"+
+		"\4\2\2\5\2\4\6\2\3\3\2\4\5\23\2\b\3\2\2\2\4\n\3\2\2\2\6\23\3\2\2\2\b\t"+
+		"\5\4\3\2\t\3\3\2\2\2\n\13\7\n\2\2\13\21\5\6\4\2\f\22\7\n\2\2\r\16\7\b"+
+		"\2\2\16\17\5\4\3\2\17\20\7\t\2\2\20\22\3\2\2\2\21\f\3\2\2\2\21\r\3\2\2"+
+		"\2\22\5\3\2\2\2\23\24\t\2\2\2\24\7\3\2\2\2\3\21";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

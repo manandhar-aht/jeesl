@@ -31,6 +31,7 @@ public class TestSetProcessor extends AbstractAhtUtilsTest
 	private List<String> a,b;
 	private List<String> e,f,g,h;
 	private List<Status> x,y;
+	private List<Integer> k,m;
 	
 	@BeforeClass public static void initClass()
 	{
@@ -47,9 +48,15 @@ public class TestSetProcessor extends AbstractAhtUtilsTest
 		g = Arrays.asList(	"byte 141447483187945187 j k".split(" "));
 		h = Arrays.asList(	"byte l m nkd 141447483187945187".split(" "));
 		//a AND (b OR (c AND d))
-		
-		x = new ArrayList<Status>(); x.add(ef.id(1));x.add(ef.id(2));x.add(ef.id(3));
-		y = new ArrayList<Status>(); y.add(ef.id(3));x.add(ef.id(4));x.add(ef.id(5));
+
+		ef = EjbStatusFactory.createFactory(Status.class,Lang.class,Description.class); //within initClass() i got an NPE on .id(long l)
+		x = new ArrayList<Status>();
+		x.add(ef.id(1L));x.add(ef.id(2));x.add(ef.id(3));
+		y = new ArrayList<Status>();
+		y.add(ef.id(3));x.add(ef.id(4));x.add(ef.id(5));
+
+		k = Arrays.asList(12,19,205,2401,325871);
+		m = Arrays.asList(45,365,12,4787,15479912);
 	}
 	
 	@Test public void pre()
@@ -79,19 +86,15 @@ public class TestSetProcessor extends AbstractAhtUtilsTest
 	
     @Test public void simpleAnd()
     {
-		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(e.toString() + "&&" + f.toString()));
-		SetProcessingParser parser = new SetProcessingParser(new CommonTokenStream(lexer));
-		List<String> result = (List)new SetProcessor().visit(parser.parse());
+		List<Integer> result = SetProcessor.query("a && b",k,m);
 		Assert.assertEquals(1, result.size());
-		Assert.assertEquals("d", result.get(0));
+		Assert.assertEquals(new Integer(12), result.get(0));
     }
     
     @Test
     public void simpleOr()
     {
-		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(e.toString() + "||" + f.toString()));
-		SetProcessingParser parser = new SetProcessingParser(new CommonTokenStream(lexer));
-		List<String> result = (List)new SetProcessor().visit(parser.parse());
+		List<String> result = SetProcessor.query("a || b",e,f);
 		System.out.println(result.toString());
 		Assert.assertEquals(8, result.size());
 		Assert.assertEquals("[a, byte, c, 141447483187945187, dummd1deldumm, e, fit, g]", result.toString());
@@ -99,9 +102,7 @@ public class TestSetProcessor extends AbstractAhtUtilsTest
 
 	@Test public void simpleCombination()
 	{
-		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(e.toString() + "&& (" + f.toString() + "||" + "("+ g.toString()+"&&" + h.toString() + "))"));
-		SetProcessingParser parser = new SetProcessingParser(new CommonTokenStream(lexer));
-		List<String> result = (List)new SetProcessor().visit(parser.parse());
+		List<String> result = SetProcessor.query("a AND (b OR (c && d))",e,f,g,h);
 		System.out.println(result.toString());
 		Assert.assertEquals(3, result.size());
 		Assert.assertEquals("[dummd1deldumm, byte, 141447483187945187]", result.toString());
@@ -109,11 +110,11 @@ public class TestSetProcessor extends AbstractAhtUtilsTest
 	
 	@Test @Ignore public void idAnd()
     {
-		List<Status> expecteds = new ArrayList<Status>();
-		expecteds.add(ef.id(3));
+		List<Status> expected = new ArrayList<Status>();
+		expected.add(ef.id(3));
 		
 		List<Status> actuals = SetProcessor.query("a AND b", x, y);
 		Assert.assertEquals(1, actuals.size());
-		Assert.assertEquals(expecteds.get(0), actuals.get(0));
+		Assert.assertEquals(expected.get(0), actuals.get(0));
     }
 }

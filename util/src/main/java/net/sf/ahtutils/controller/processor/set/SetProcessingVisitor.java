@@ -29,18 +29,6 @@ public interface SetProcessingVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpression(SetProcessingParser.ExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SetProcessingParser#list}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitList(SetProcessingParser.ListContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SetProcessingParser#elem}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitElem(SetProcessingParser.ElemContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SetProcessingParser#binary}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -1,7 +1,12 @@
 package net.sf.ahtutils.jsf.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class NullNumberBinder
 {
+	final static Logger logger = LoggerFactory.getLogger(NullNumberBinder.class);
+	
 	public NullNumberBinder()
 	{
 		a = "";
@@ -11,28 +16,53 @@ public class NullNumberBinder
 	private String a; 
 	public String getA() {return a;}
 	public void setA(String a) {this.a = a;}
-	public void integerToA(Integer i) {toString(i,a);}
-	public Integer aToInteger() {return fromInteger(a);}
-	
+	public void integerToA(Integer i) {a = toString(i);}
+	public Integer aToInteger() {return fromString(a);}
 	
 	private String b;
 	public String getB() {return b;}
 	public void setB(String b) {this.b = b;}
-	public void integerToB(Integer i) {toString(i,b);}
-	public Integer bToInteger() {return fromInteger(b);}
+	public void integerToB(Integer i) {b = toString(i);}
+	public Integer bToInteger() {return fromString(b);}
 	
-	private void toString(Integer i, String x)
+	private String toString(Integer i)
 	{
-		if(i==null){x="";}
-		else{x=""+i.intValue();}
+		StringBuffer sb = new StringBuffer();
+		if(i==null){sb.append("");}
+		else{sb.append(i.intValue());}
+		
+		if(logger.isTraceEnabled())
+		{
+			StringBuffer sbd = new StringBuffer();
+			sbd.append("Integer ");
+			if(i==null){sbd.append("null");}
+			else{sbd.append(i.intValue());}
+			sbd.append(" returns ").append(sb.toString());
+			logger.trace(sbd.toString());
+		}
+		
+		return sb.toString();
 	}
 	
-	private Integer fromInteger(String x)
+	private Integer fromString(String x)
 	{
-		if(x==null || x.trim().length()==0){return null;}
+		Integer result = null;
+		if(x==null || x.trim().length()==0){}
 		else
 		{
-			return new Integer(x);
+			result = new Integer(x);
 		}
+		
+		if(logger.isTraceEnabled())
+		{
+			StringBuffer sb = new StringBuffer();
+			sb.append("String: ").append(x);
+			sb.append(" returns ");
+			if(result==null){sb.append("null");}
+			else{sb.append(result.intValue());}
+			logger.trace(sb.toString());
+		}
+		
+		return result;
 	}
 }

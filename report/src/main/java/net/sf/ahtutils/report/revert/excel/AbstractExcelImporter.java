@@ -15,6 +15,7 @@ import java.util.Map;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.report.util.DataUtil;
 import net.sf.ahtutils.util.reflection.ReflectionsUtil;
 import net.sf.ahtutils.xml.report.DataAssociation;
@@ -129,7 +130,18 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	}
 	
 	public void setFacade(UtilsFacade facade){this.facade = facade;}
-	public void setPrimaryKey(Integer columnNumber){this.primaryKey    = columnNumber.shortValue();this.hasPrimaryKey = true;}
+	public void setPrimaryKey(Integer columnNumber)
+	{
+		if(columnNumber == null) 
+		{
+			this.hasPrimaryKey = false;
+		}
+		else
+		{
+			this.primaryKey    = columnNumber.shortValue();
+			this.hasPrimaryKey = true;
+		}
+	}
 	
 	// Select a sheet from the Excel workbook by name
 	public void selectSheetByName(String name)	{activeSheet         = workbook.getSheet(name);}
@@ -149,6 +161,8 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
         // Define the rows to begin with and to end with, whether with or without first row
 		Integer end   = activeSheet.getLastRowNum();
 		Integer start = activeSheet.getFirstRowNum();
+		
+		logger.info("Sheet goes from " +start +" to " +end);
 		if (skipTitle) {start++;}
 		
 		// Iterate through all given rows
@@ -157,16 +171,27 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			// Get the next row
 			Row row = activeSheet.getRow(i);
 			
-			// See if there is already an instance created for this key, otherwise create a new one
-			String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
+			// Create a new Entity
 			C entity = (C) Class.forName(structure.getTargetClass()).newInstance();
-                        
+            if (entity instanceof EjbWithId)
+			{
+				Long currentId = new Long(1);
+				if (tempPropertyStore.containsKey("currentId")) 
+					{
+						currentId = (Long) tempPropertyStore.get("currentId");
+					}
+				((EjbWithId) entity).setId(currentId + 1);
+				tempPropertyStore.put("currentId", currentId +1);
+			}
+			
 			// Create a list of properties that falied the validation
 			// This can be used for staging purposes later on
 			ArrayList<String> failedValidations = new ArrayList<String>();
                         
 			if (hasPrimaryKey)
 			{
+				// See if there is already an instance created for this key, otherwise create a new one
+				String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
 				if ( this.entities.containsKey(entityKey))
 				{
 					entity = this.entities.get(entityKey);
@@ -186,7 +211,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				String propertyName = propertyRelations.get(j +"");
 			
 			    // Assign the data to the entity using the setter
-				logger.trace("Cell " +row.getRowNum() +"," +j);
+				logger.trace("Cell " +row.getRowNum() +"," +j +" should store " +propertyName +", value as String is " +object.toString());
 				if (propertyName!=null && !object.getClass().getCanonicalName().endsWith("java.lang.Object"))
 				{
 					String property = propertyName;
@@ -209,6 +234,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			importedEntities.put(entity, failedValidations);
 			if (hasPrimaryKey)
 			{
+				String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
 				entities.put(entityKey, entity);
 			}
 		}

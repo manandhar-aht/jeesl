@@ -128,6 +128,11 @@ public class ExcelExporter
 		}
     }
 
+	
+	// Maybe add a bunch of sheets here for grouped report
+	// Introduce Offsets for iteration of columns
+	// Possible data structure:
+	// 
     public void exportSheet(XlsSheet sheetDefinition, String id) throws Exception
     {
 		logger.debug("Creating Sheet " +id);
@@ -212,7 +217,7 @@ public class ExcelExporter
                     Integer counter = errors.get(columnId);
                     counter++;
                     errors.put(columnId, counter);
-					logger.trace("ERROR occured: " +e.getMessage());
+					logger.info("ERROR occured: " +e.getMessage());
                 }
             }
 			
@@ -243,6 +248,13 @@ public class ExcelExporter
 		{
 			// BuiltIn Style:  0x31 "text" - Alias for "@"
 			style.setDataFormat(createHelper.createDataFormat().getFormat("text"));
+		} 
+		if (dataClass.equalsIgnoreCase("Date"))
+		{
+			// Create styles
+			style.setDataFormat(createHelper.createDataFormat().getFormat("dd.MM.yyyy"));
+			style.setAlignment(CellStyle.ALIGN_CENTER);
+			style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 		} 
 		else if (dataClass.equalsIgnoreCase("Integer"))
 		{
@@ -286,8 +298,24 @@ public class ExcelExporter
                                                     cell.setCellStyle(style);
                                                 }
         else if (type.equals("Integer"))   {
+			logger.info("Class " +value.toString());
+												if (value.getClass().getSimpleName().equals("Long"))
+												{
+													Long l = (Long) value;
+													cell.setCellValue(new Integer(l.intValue()));
+													logger.info("Setting to Long " +l.intValue());
+												}
+												else if (value.getClass().getSimpleName().equals("int") || value.getClass().getSimpleName().equals("Integer"))
+												{
+													Integer i = (Integer) value;
+													cell.setCellValue(i);
+													logger.info("Setting to Integer " +i);
+												}
+												else
+												{
                                                     cell.setCellValue(Integer.parseInt("" +value));
                                                 }
+		}
         else if (type.equals("Boolean"))   {
                                                     Boolean bool = (Boolean) value;
                                                     cell.setCellValue(bool);

@@ -192,7 +192,7 @@ public class SecurityInitViews <L extends UtilsLang,
 			ebj.setView(ejbView);
 			ebj=fSecurity.update(ebj);
 		}
-		catch (UtilsConstraintViolationException e) {logger.error("",e);}
+		catch (UtilsConstraintViolationException e) {logger.error("Action.Code:"+action.getCode(),e);}
 		catch (UtilsLockingException e) {logger.error("",e);}
 	}
 }

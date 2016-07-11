@@ -9,4 +9,11 @@ public class XmlTypesFactory
 		Types xml = new Types();
 		return xml;
 	}
+	
+	public static Types build(String group)
+	{
+		Types xml = new Types();
+		xml.setGroup(group);
+		return xml;
+	}
 }

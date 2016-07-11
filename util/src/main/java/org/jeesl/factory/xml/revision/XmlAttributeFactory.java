@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
 import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
+import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -47,6 +48,11 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 		if(q.isSetXpath()){xml.setXpath(ejb.getXpath());}
 //		if(q.isSetJpa()){xml.setJpa(ejb.get);
 		
+		if(q.isSetWeb()){xml.setWeb(ejb.isShowWeb());}
+		if(q.isSetPrint()){xml.setPrint(ejb.isShowPrint());}
+		if(q.isSetName()){xml.setName(ejb.isShowName());}
+		if(q.isSetEnclosure()){xml.setEnclosure(ejb.isShowEnclosure());}
+		
 		if(q.isSetLangs())
 		{
 			XmlLangsFactory<L> f = new XmlLangsFactory<L>(q.getLangs());
@@ -56,7 +62,13 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 		{
 			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(q.getDescriptions());
 			xml.setDescriptions(f.create(ejb.getDescription()));
-		}	
+		}
+		
+		if(q.isSetType())
+		{
+			XmlTypeFactory f = new XmlTypeFactory(q.getType());
+			xml.setType(f.build(ejb.getType()));
+		}
 		
 		return xml;
 	}

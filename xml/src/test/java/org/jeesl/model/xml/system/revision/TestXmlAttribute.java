@@ -19,10 +19,13 @@ public class TestXmlAttribute extends AbstractXmlRevisionTest<Attribute>
     	Attribute xml = new Attribute();
     	xml.setId(123);
     	xml.setNr(2);
-    	xml.setCode("myCode");
-    	
+    	xml.setCode("myCode");	
     	xml.setXpath("myXPath");
-    	xml.setJpa("myJpa");
+
+    	xml.setWeb(true);
+    	xml.setPrint(true);
+    	xml.setName(true);
+    	xml.setEnclosure(true);
     	
     	if(withChilds)
     	{

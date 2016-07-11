@@ -94,6 +94,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		
 		for(RE re : fRevision.all(cRE))
 		{
+			re = fRevision.load(cRE, re);
 			entities.getEntity().add(xfEntity.build(re));
 		}
 		

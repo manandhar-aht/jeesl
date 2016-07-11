@@ -31,7 +31,10 @@
             <xsd:attribute name="nr" type="xsd:int"/>
             <xsd:attribute name="code" type="xsd:string"/>
             <xsd:attribute name="xpath" type="xsd:string"/>
-            <xsd:attribute name="jpa" type="xsd:string"/>
+            <xsd:attribute name="web" type="xsd:boolean"/>
+            <xsd:attribute name="print" type="xsd:boolean"/>
+            <xsd:attribute name="name" type="xsd:boolean"/>
+            <xsd:attribute name="enclosure" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
 </xsd:schema>

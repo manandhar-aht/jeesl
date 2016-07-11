@@ -50,7 +50,11 @@ public class RevisionQuery
 		xml.setNr(0);
 		xml.setCode("");
 		xml.setXpath("");
-		xml.setJpa("");
+		
+		xml.setWeb(true);
+		xml.setPrint(true);
+		xml.setName(true);
+		xml.setEnclosure(true);
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());

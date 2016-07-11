@@ -31,7 +31,10 @@ import net.sf.ahtutils.xml.status.Type;
  *       &lt;attribute name="nr" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="xpath" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="jpa" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="web" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="print" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="enclosure" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -65,8 +68,14 @@ public class Attribute
     protected String code;
     @XmlAttribute(name = "xpath")
     protected String xpath;
-    @XmlAttribute(name = "jpa")
-    protected String jpa;
+    @XmlAttribute(name = "web")
+    protected Boolean web;
+    @XmlAttribute(name = "print")
+    protected Boolean print;
+    @XmlAttribute(name = "name")
+    protected Boolean name;
+    @XmlAttribute(name = "enclosure")
+    protected Boolean enclosure;
 
     /**
      * Gets the value of the langs property.
@@ -273,31 +282,131 @@ public class Attribute
     }
 
     /**
-     * Gets the value of the jpa property.
+     * Gets the value of the web property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Boolean }
      *     
      */
-    public String getJpa() {
-        return jpa;
+    public boolean isWeb() {
+        return web;
     }
 
     /**
-     * Sets the value of the jpa property.
+     * Sets the value of the web property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Boolean }
      *     
      */
-    public void setJpa(String value) {
-        this.jpa = value;
+    public void setWeb(boolean value) {
+        this.web = value;
     }
 
-    public boolean isSetJpa() {
-        return (this.jpa!= null);
+    public boolean isSetWeb() {
+        return (this.web!= null);
+    }
+
+    public void unsetWeb() {
+        this.web = null;
+    }
+
+    /**
+     * Gets the value of the print property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isPrint() {
+        return print;
+    }
+
+    /**
+     * Sets the value of the print property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setPrint(boolean value) {
+        this.print = value;
+    }
+
+    public boolean isSetPrint() {
+        return (this.print!= null);
+    }
+
+    public void unsetPrint() {
+        this.print = null;
+    }
+
+    /**
+     * Gets the value of the name property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isName() {
+        return name;
+    }
+
+    /**
+     * Sets the value of the name property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setName(boolean value) {
+        this.name = value;
+    }
+
+    public boolean isSetName() {
+        return (this.name!= null);
+    }
+
+    public void unsetName() {
+        this.name = null;
+    }
+
+    /**
+     * Gets the value of the enclosure property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isEnclosure() {
+        return enclosure;
+    }
+
+    /**
+     * Sets the value of the enclosure property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setEnclosure(boolean value) {
+        this.enclosure = value;
+    }
+
+    public boolean isSetEnclosure() {
+        return (this.enclosure!= null);
+    }
+
+    public void unsetEnclosure() {
+        this.enclosure = null;
     }
 
 }

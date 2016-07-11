@@ -2,13 +2,17 @@ package org.jeesl.web.rest.system;
 
 import org.jeesl.factory.xml.revision.XmlEntityFactory;
 import org.jeesl.interfaces.rest.system.revision.JeeslRevisionRestExport;
+import org.jeesl.interfaces.rest.system.revision.JeeslRevisionRestImport;
 import org.jeesl.model.xml.system.revision.Entities;
+import org.jeesl.model.xml.system.revision.Entity;
 import org.jeesl.util.query.xml.RevisionQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.util.query.StatusQuery;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
+import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -19,6 +23,8 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMappi
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import net.sf.ahtutils.monitor.DataUpdateTracker;
+import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription,
 								RC extends UtilsStatus<RC,L,D>,
@@ -30,7 +36,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 								REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 								RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 								RAT extends UtilsStatus<RAT,L,D>>
-					implements JeeslRevisionRestExport
+					implements JeeslRevisionRestExport,JeeslRevisionRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(RevisionRestService.class);
 	
@@ -99,5 +105,26 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		}
 		
 		return entities;
+	}
+	
+	@Override public DataUpdate importSystemRevisionEntities(Entities entities)
+	{
+		DataUpdateTracker dut = new DataUpdateTracker(true);
+		dut.setType(XmlTypeFactory.build(cRE.getName(),"DB Import"));
+		
+		for(Entity entity : entities.getEntity())
+		{
+			try
+			{
+				RE re = fRevision.fByCode(cRE, entity.getCode());
+				logger.info("Found "+re.toString());
+			}
+			catch (UtilsNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return dut.toDataUpdate();
 	}
 }

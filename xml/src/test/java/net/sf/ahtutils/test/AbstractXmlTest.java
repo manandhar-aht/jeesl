@@ -1,10 +1,10 @@
 package net.sf.ahtutils.test;
 
-import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.exlp.util.DateUtil;
 import net.sf.exlp.util.io.LoggerInit;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public abstract class AbstractXmlTest <T extends Object> extends AbstractAhtUtil
 	@BeforeClass
 	public static void initJaxb()
 	{
-		JaxbUtil.setNsPrefixMapper(new AhtUtilsNsPrefixMapper());
+		JaxbUtil.setNsPrefixMapper(new JeeslNsPrefixMapper());
 		DateUtil.ignoreTimeZone=true;
 	}
 }

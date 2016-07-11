@@ -2,7 +2,6 @@ package net.sf.ahtutils.test;
 
 import java.io.File;
 
-import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.exlp.exception.ExlpConfigurationException;
 import net.sf.exlp.util.config.ConfigLoader;
 import net.sf.exlp.util.io.ExlpCentralConfigPointer;
@@ -10,6 +9,7 @@ import net.sf.exlp.util.io.LoggerInit;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class AhtUtilsTestBootstrap
 		loggerInit.addAltPath("config.ahtutils-util.test");
 		loggerInit.init();
 		
-		JaxbUtil.setNsPrefixMapper(new AhtUtilsNsPrefixMapper());
+		JaxbUtil.setNsPrefixMapper(new JeeslNsPrefixMapper());
 		
 		try
 		{

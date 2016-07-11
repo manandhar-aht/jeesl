@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.IOException;
 
 import net.sf.ahtutils.controller.factory.java.security.AbstractJavaSecurityFactoryTst;
-import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.exlp.util.io.LoggerInit;
 import net.sf.exlp.util.io.StringIO;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.apache.commons.io.FileUtils;
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
@@ -50,7 +50,7 @@ public class AbstractUtilsMavenTst
 	@BeforeClass
 	public static void initPrefixMapper()
 	{
-		JaxbUtil.setNsPrefixMapper(new AhtUtilsNsPrefixMapper());
+		JaxbUtil.setNsPrefixMapper(new JeeslNsPrefixMapper());
 	}
 	
 	protected void assertJaxbEquals(Object expected, Object actual)

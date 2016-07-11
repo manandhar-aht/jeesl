@@ -2,10 +2,10 @@ package net.sf.ahtutils.test;
 
 import java.io.File;
 
-import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.exlp.util.io.LoggerInit;
 import net.sf.exlp.xml.ns.NsPrefixMapperInterface;
 
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class AbstractAhtUtilsJsfTst extends AbstractAhtUtilsTest
 	
 	protected NsPrefixMapperInterface getPrefixMapper()
 	{
-		if(nsPrefixMapper==null){nsPrefixMapper = new AhtUtilsNsPrefixMapper();}
+		if(nsPrefixMapper==null){nsPrefixMapper = new JeeslNsPrefixMapper();}
 		return nsPrefixMapper;
 	}
 }

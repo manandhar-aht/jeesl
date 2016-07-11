@@ -1,10 +1,10 @@
 package net.sf.ahtutils.test;
 
-import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.exlp.util.io.LoggerInit;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ public class AhtUtilsDocBootstrap
 //		ConfigLoader.add(configFile);
 //		Configuration config = ConfigLoader.init();					
 //		logger.debug("Config and Logger initialized");
-		JaxbUtil.setNsPrefixMapper(new AhtUtilsNsPrefixMapper());
+		JaxbUtil.setNsPrefixMapper(new JeeslNsPrefixMapper());
 			
 		return null;
 	}

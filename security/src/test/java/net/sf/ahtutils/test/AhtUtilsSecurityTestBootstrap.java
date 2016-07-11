@@ -1,9 +1,9 @@
 package net.sf.ahtutils.test;
 
-import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.exlp.util.io.LoggerInit;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +17,6 @@ public class AhtUtilsSecurityTestBootstrap
 		loggerInit.addAltPath("config.ahtutils-security.test");
 		loggerInit.init();
 		
-		JaxbUtil.setNsPrefixMapper(new AhtUtilsNsPrefixMapper());
+		JaxbUtil.setNsPrefixMapper(new JeeslNsPrefixMapper());
 	}
 }

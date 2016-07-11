@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.ahtutils.xml.report.DataAssociation;
 import net.sf.ahtutils.xml.report.DataHandler;
 import net.sf.ahtutils.xml.report.ImportStructure;
@@ -32,6 +31,7 @@ import org.jdom2.Element;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +118,7 @@ public class ReportXpath
 		XPathExpression<Element> xpath = XPathFactory.instance().compile("/report/info", Filters.element());
 		Element eInfo = xpath.evaluateFirst(jdomDocument);
 		
-		eInfo = JDomUtil.setNameSpaceRecursive(eInfo, AhtUtilsNsPrefixMapper.nsReport);
+		eInfo = JDomUtil.setNameSpaceRecursive(eInfo, JeeslNsPrefixMapper.nsReport);
 		Info info = JDomUtil.toJaxb(eInfo, Info.class);
 		return info;
 	}

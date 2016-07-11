@@ -9,11 +9,11 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
-import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +35,8 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 	
 	public D create(Description description) throws UtilsConstraintViolationException
 	{
-		if(!description.isSetKey()){throw new UtilsConstraintViolationException("Key not set: "+JaxbUtil.toString(description, new AhtUtilsNsPrefixMapper()));}
-		if(!description.isSetValue()){throw new UtilsConstraintViolationException("Value not set: "+JaxbUtil.toString(description, new AhtUtilsNsPrefixMapper()));}
+		if(!description.isSetKey()){throw new UtilsConstraintViolationException("Key not set: "+JaxbUtil.toString(description, new JeeslNsPrefixMapper()));}
+		if(!description.isSetValue()){throw new UtilsConstraintViolationException("Value not set: "+JaxbUtil.toString(description, new JeeslNsPrefixMapper()));}
     	return create(description.getKey(),description.getValue());
 	}
     

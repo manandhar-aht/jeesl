@@ -2,10 +2,10 @@ package net.sf.ahtutils.test;
 
 import java.io.File;
 
-import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.exlp.util.io.LoggerInit;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class AbstractAhtUtilTest extends AbstractAhtUtilsTest
 	@BeforeClass
 	public static void initPrefixMapper()
 	{
-		JaxbUtil.setNsPrefixMapper(new AhtUtilsNsPrefixMapper());
+		JaxbUtil.setNsPrefixMapper(new JeeslNsPrefixMapper());
 	}
 	
 	protected void assertJaxbEquals(Object expected, Object actual)

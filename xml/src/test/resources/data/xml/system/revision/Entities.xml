@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rev:entities xmlns:rev="http://www.jeesl.org/revision">
+    <rev:entity id="123" code="myCode"/>
+    <rev:entity id="123" code="myCode"/>
+</rev:entities>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.jeesl.org/revision"
+	xmlns:rev="http://www.jeesl.org/revision"
+	xmlns:us="http://ahtutils.aht-group.com/status"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="../aht/status.xsd"/>
+	<xsd:element name="entities">
+        <xsd:complexType>
+        	<xsd:sequence>
+                <xsd:element ref="rev:entity" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+	<xsd:element name="entity">
+        <xsd:complexType>
+        	<xsd:sequence>
+                <xsd:element ref="rev:attribute" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="attribute">
+        <xsd:complexType>
+        	<xsd:sequence>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

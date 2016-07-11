@@ -6,12 +6,12 @@ import java.util.Collection;
 
 import net.sf.ahtutils.controller.factory.xml.cloud.facebook.AccessTokenFactory;
 import net.sf.ahtutils.test.AbstractFileProcessingTest;
-import net.sf.ahtutils.xml.AhtUtilsNsPrefixMapper;
 import net.sf.ahtutils.xml.cloud.facebook.Token;
 import net.sf.exlp.util.io.LoggerInit;
 import net.sf.exlp.util.io.StringIO;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -83,7 +83,7 @@ public class TestAccessTokenFactory extends AbstractFileProcessingTest
 		LoggerInit loggerInit = new LoggerInit("log4j.xml");	
 			loggerInit.addAltPath("src/test/resources/config");
 			loggerInit.init();	
-		JaxbUtil.setNsPrefixMapper(new AhtUtilsNsPrefixMapper());
+		JaxbUtil.setNsPrefixMapper(new JeeslNsPrefixMapper());
 			
 		boolean saveReference = true;
 		int id = -1;

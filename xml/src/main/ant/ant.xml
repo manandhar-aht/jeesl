@@ -56,6 +56,6 @@
 				</classpath>
 			</java>
 		<delete dir="${src.dir}/net/sf/exlp"/>
-		<delete dir="${src.dir}/org"/>
+<!--		<delete dir="${src.dir}/org"/> -->
 	</target>	
 </project>

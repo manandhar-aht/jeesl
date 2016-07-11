@@ -1,4 +1,4 @@
-package net.sf.ahtutils.xml;
+package org.jeesl.model.xml;
 
 import org.jdom2.Namespace;
 
@@ -6,7 +6,7 @@ import net.sf.exlp.xml.ns.NsPrefixMapperInterface;
 
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
-public class AhtUtilsNsPrefixMapper extends NamespacePrefixMapper implements NsPrefixMapperInterface
+public class JeeslNsPrefixMapper extends NamespacePrefixMapper implements NsPrefixMapperInterface
 {
 	public static Namespace nsReport = Namespace.getNamespace("r","http://ahtutils.aht-group.com/report");
 	
@@ -33,6 +33,8 @@ public class AhtUtilsNsPrefixMapper extends NamespacePrefixMapper implements NsP
         if("http://ahtutils.aht-group.com/utils".equals(namespaceUri) ){return "u";}
         if("http://ahtutils.aht-group.com/audit".equals(namespaceUri) ){return "at";}
         if("http://ahtutils.aht-group.com/cloud/facebook".equals(namespaceUri) ){return "fb";}
+        
+        if("http://www.jeesl.org/revision".equals(namespaceUri) ){return "rev";}
         
         if("http://www.openfuxml.org/list".equals(namespaceUri) ){return "ofxL";}
         if("http://www.openfuxml.org".equals(namespaceUri) ){return "ofx";}

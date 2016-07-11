@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
+import net.sf.ahtutils.xml.status.TestXmlDescriptions;
+import net.sf.ahtutils.xml.status.TestXmlLangs;
 
 public class TestXmlAttribute extends AbstractXmlRevisionTest<Attribute>
 {
@@ -16,11 +18,16 @@ public class TestXmlAttribute extends AbstractXmlRevisionTest<Attribute>
     {
     	Attribute xml = new Attribute();
     	xml.setId(123);
+    	xml.setNr(2);
     	xml.setCode("myCode");
+    	
+    	xml.setXpath("myXPath");
+    	xml.setJpa("myJpa");
     	
     	if(withChilds)
     	{
-    		
+    		xml.setLangs(TestXmlLangs.create(false));
+    		xml.setDescriptions(TestXmlDescriptions.create(false));
     	}
     	    	
     	return xml;

@@ -23,9 +23,15 @@
     <xsd:element name="attribute">
         <xsd:complexType>
         	<xsd:sequence>
+        		<xsd:element ref="us:langs" maxOccurs="1"/>
+        		<xsd:element ref="us:descriptions" maxOccurs="1"/>
+        		<xsd:element ref="us:type" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="nr" type="xsd:int"/>
             <xsd:attribute name="code" type="xsd:string"/>
+            <xsd:attribute name="xpath" type="xsd:string"/>
+            <xsd:attribute name="jpa" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
 </xsd:schema>

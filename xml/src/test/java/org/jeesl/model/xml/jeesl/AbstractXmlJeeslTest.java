@@ -1,4 +1,4 @@
-package net.sf.ahtutils.xml.aht;
+package org.jeesl.model.xml.jeesl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.test.AbstractXmlTest;
 import net.sf.ahtutils.xml.system.AbstractXmlSystemTest;
 
-public abstract class AbstractXmlAhtTest <T extends Object> extends AbstractXmlTest<T>
+public abstract class AbstractXmlJeeslTest <T extends Object> extends AbstractXmlTest<T>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractXmlSystemTest.class);
 	
-	public AbstractXmlAhtTest(Class<T> cXml)
+	public AbstractXmlJeeslTest(Class<T> cXml)
 	{
 		super(cXml,"aht");
 	}

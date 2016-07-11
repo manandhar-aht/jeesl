@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<aht:query xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:acl="http://ahtutils.aht-group.com/access" xmlns:ns4="http://ahtutils.aht-group.com/navigation" xmlns:qa="http://ahtutils.aht-group.com/qa" xmlns:text="http://ahtutils.aht-group.com/text" xmlns:survey="http://ahtutils.aht-group.com/survey" xmlns:u="http://ahtutils.aht-group.com/utils" xmlns:aht="http://ahtutils.aht-group.com" lang="myLang">
+<aht:query xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:acl="http://ahtutils.aht-group.com/access" xmlns:ns4="http://ahtutils.aht-group.com/navigation" xmlns:qa="http://ahtutils.aht-group.com/qa" xmlns:rev="http://www.jeesl.org/revision" xmlns:text="http://ahtutils.aht-group.com/text" xmlns:survey="http://ahtutils.aht-group.com/survey" xmlns:u="http://ahtutils.aht-group.com/utils" xmlns:aht="http://ahtutils.aht-group.com" lang="myLang">
     <acl:role code="myCode" name="myName"/>
     <s:langs/>
     <s:status id="123" code="myCode" group="myGroup" label="myLabel" symbol="mySymbol" visible="true" image="test/green.png" style="myStyle" position="1"/>
@@ -7,6 +7,7 @@
     <qa:test id="123" name="myName" code="myCode" duration="120"/>
     <sec:category code="myCode" label="myLabel" position="1" visible="true" documentation="true"/>
     <sec:staff id="123"/>
+    <rev:entity id="123" code="myCode"/>
     <survey:templates/>
     <survey:template id="123" code="myCode"/>
     <survey:surveys/>

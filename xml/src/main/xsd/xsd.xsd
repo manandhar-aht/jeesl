@@ -15,12 +15,12 @@
     xmlns:a   ="http://ahtutils.aht-group.com/access"
     xmlns:u   ="http://ahtutils.aht-group.com/utils"
     xmlns:it  ="http://ahtutils.aht-group.com/issue"
+     xmlns:rev ="http://www.jeesl.org/revision"
     xmlns:sec="http://ahtutils.aht-group.com/security"
 	xmlns:srs="http://ahtutils.aht-group.com/srs"
     xmlns:sys="http://ahtutils.aht-group.com/system"
     xmlns:survey="http://ahtutils.aht-group.com/survey"
     xmlns:db ="http://ahtutils.aht-group.com/dbseed"
-    xmlns:rev ="http://www.jeesl.org/revision"
     xmlns:io ="http://exlp.sf.net/io"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
@@ -86,6 +86,8 @@
         	    
         	    <xsd:element ref="sec:category" maxOccurs="1"/>
         	    <xsd:element ref="sec:staff" maxOccurs="1"/>
+        	    
+        	    <xsd:element ref="rev:entity" maxOccurs="1"/>
         	    
         	    <xsd:element ref="survey:templates" maxOccurs="1"/>
         	    <xsd:element ref="survey:template" maxOccurs="1"/>

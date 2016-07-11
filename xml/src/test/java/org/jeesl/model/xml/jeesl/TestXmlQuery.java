@@ -1,10 +1,12 @@
-package net.sf.ahtutils.xml.aht;
+package org.jeesl.model.xml.jeesl;
 
+import org.jeesl.model.xml.system.revision.TestXmlEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.access.TestXmlRole;
+import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.qa.TestXmlTest;
 import net.sf.ahtutils.xml.security.TestXmlCategory;
 import net.sf.ahtutils.xml.security.TestXmlStaff;
@@ -19,7 +21,7 @@ import net.sf.ahtutils.xml.survey.TestXmlTemplates;
 import net.sf.ahtutils.xml.utils.TestXmlTrafficLight;
 import net.sf.ahtutils.xml.utils.TestXmlTrafficLights;
 
-public class TestXmlQuery extends AbstractXmlAhtTest<Query>
+public class TestXmlQuery extends AbstractXmlJeeslTest<Query>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlQuery.class);
 	
@@ -42,6 +44,8 @@ public class TestXmlQuery extends AbstractXmlAhtTest<Query>
     		
     		xml.setCategory(TestXmlCategory.create(false));
     		xml.setStaff(TestXmlStaff.create(false));
+    		
+    		xml.setEntity(TestXmlEntity.create(false));
     		
     		xml.setTemplates(TestXmlTemplates.create(false));
     		xml.setTemplate(TestXmlTemplate.create(false));

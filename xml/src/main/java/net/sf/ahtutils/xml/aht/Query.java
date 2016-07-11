@@ -22,6 +22,7 @@ import net.sf.ahtutils.xml.survey.Template;
 import net.sf.ahtutils.xml.survey.Templates;
 import net.sf.ahtutils.xml.utils.TrafficLight;
 import net.sf.ahtutils.xml.utils.TrafficLights;
+import org.jeesl.model.xml.system.revision.Entity;
 
 
 /**
@@ -41,6 +42,7 @@ import net.sf.ahtutils.xml.utils.TrafficLights;
  *         &lt;element ref="{http://ahtutils.aht-group.com/qa}test"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}category"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}staff"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/revision}entity"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}templates"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}template"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}surveys"/&gt;
@@ -66,6 +68,7 @@ import net.sf.ahtutils.xml.utils.TrafficLights;
     "test",
     "category",
     "staff",
+    "entity",
     "templates",
     "template",
     "surveys",
@@ -94,6 +97,8 @@ public class Query
     protected Category category;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
     protected Staff staff;
+    @XmlElement(namespace = "http://www.jeesl.org/revision", required = true)
+    protected Entity entity;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/survey", required = true)
     protected Templates templates;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/survey", required = true)
@@ -305,6 +310,34 @@ public class Query
 
     public boolean isSetStaff() {
         return (this.staff!= null);
+    }
+
+    /**
+     * Gets the value of the entity property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Entity }
+     *     
+     */
+    public Entity getEntity() {
+        return entity;
+    }
+
+    /**
+     * Sets the value of the entity property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Entity }
+     *     
+     */
+    public void setEntity(Entity value) {
+        this.entity = value;
+    }
+
+    public boolean isSetEntity() {
+        return (this.entity!= null);
     }
 
     /**

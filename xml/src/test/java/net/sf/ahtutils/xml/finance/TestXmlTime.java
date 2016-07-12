@@ -17,6 +17,7 @@ public class TestXmlTime extends AbstractXmlFinanceTest<Time>
     {
     	Time xml = new Time();
     	xml.setId(123);
+    	xml.setNr(1);
     	xml.setCode("myCode");
     	xml.setLabel("myLabel");
     	xml.setRecord(AbstractAhtUtilsXmlTest.getDefaultXmlDate());

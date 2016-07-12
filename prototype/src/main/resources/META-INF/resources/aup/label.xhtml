@@ -16,8 +16,9 @@
 		<composite:attribute name="localeCode" required="false" default="#{localeCode}"/>
 	</composite:interface>
 	<composite:implementation>
-		<p:outputLabel id="ol" for="#{cc.attrs.for}" value="#{appLabelBean.labels[cc.attrs.entity][cc.attrs.code][cc.attrs.localeCode].lang}" style="cursor:pointer"/>
-		<p:overlayPanel id="opOl" for="ol" showEffect="blind" hideEffect="explode" showEvent="click" hideEvent="mousedown"
+		<p:outputLabel id="ol" for="#{cc.attrs.for}"
+			value="#{appLabelBean.labels[cc.attrs.entity][cc.attrs.code][cc.attrs.localeCode].lang}" /> <!-- style="cursor:pointer" -->
+		<p:overlayPanel rendered="false" id="opOl" for="ol" showEffect="blind" hideEffect="explode" showEvent="click" hideEvent="mousedown"
 										dismissable="false" showCloseIcon="true">
 			<p:panel header="#{appLabelBean.labels[cc.attrs.entity][cc.attrs.code][cc.attrs.localeCode].lang}">
 				#{appLabelBean.descriptions[cc.attrs.entity][cc.attrs.code][cc.attrs.localeCode].lang}

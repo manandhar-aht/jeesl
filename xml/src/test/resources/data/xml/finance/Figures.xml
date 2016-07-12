@@ -4,8 +4,8 @@
     <text:remark version="1" key="myKey">myValue</text:remark>
     <f:finance id="123" nr="1" code="myCode" label="myLabel" value="567.89" symbol="mySymbol"/>
     <f:finance id="123" nr="1" code="myCode" label="myLabel" value="567.89" symbol="mySymbol"/>
-    <f:time id="123" code="myCode" label="myLabel" record="2011-11-11"/>
-    <f:time id="123" code="myCode" label="myLabel" record="2011-11-11"/>
+    <f:time id="123" nr="1" code="myCode" label="myLabel" record="2011-11-11"/>
+    <f:time id="123" nr="1" code="myCode" label="myLabel" record="2011-11-11"/>
     <f:counter id="123" code="myCode" label="myLabel" counter="2345"/>
     <f:counter id="123" code="myCode" label="myLabel" counter="2345"/>
     <f:figures id="123" code="myCode" label="myLabel"/>

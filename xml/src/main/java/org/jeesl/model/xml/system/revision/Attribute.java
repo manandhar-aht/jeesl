@@ -23,12 +23,12 @@ import net.sf.ahtutils.xml.status.Type;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}type"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/status}type"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
- *       &lt;attribute name="nr" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="xpath" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="web" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
@@ -44,9 +44,9 @@ import net.sf.ahtutils.xml.status.Type;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "type",
     "langs",
-    "descriptions",
-    "type"
+    "descriptions"
 })
 @XmlRootElement(name = "attribute")
 public class Attribute
@@ -55,15 +55,15 @@ public class Attribute
 
     private final static long serialVersionUID = 1L;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
+    protected Type type;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Langs langs;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Descriptions descriptions;
-    @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
-    protected Type type;
     @XmlAttribute(name = "id")
     protected Long id;
-    @XmlAttribute(name = "nr")
-    protected Integer nr;
+    @XmlAttribute(name = "position")
+    protected Integer position;
     @XmlAttribute(name = "code")
     protected String code;
     @XmlAttribute(name = "xpath")
@@ -76,6 +76,34 @@ public class Attribute
     protected Boolean name;
     @XmlAttribute(name = "enclosure")
     protected Boolean enclosure;
+
+    /**
+     * Gets the value of the type property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Type }
+     *     
+     */
+    public Type getType() {
+        return type;
+    }
+
+    /**
+     * Sets the value of the type property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Type }
+     *     
+     */
+    public void setType(Type value) {
+        this.type = value;
+    }
+
+    public boolean isSetType() {
+        return (this.type!= null);
+    }
 
     /**
      * Gets the value of the langs property.
@@ -134,34 +162,6 @@ public class Attribute
     }
 
     /**
-     * Gets the value of the type property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Type }
-     *     
-     */
-    public Type getType() {
-        return type;
-    }
-
-    /**
-     * Sets the value of the type property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Type }
-     *     
-     */
-    public void setType(Type value) {
-        this.type = value;
-    }
-
-    public boolean isSetType() {
-        return (this.type!= null);
-    }
-
-    /**
      * Gets the value of the id property.
      * 
      * @return
@@ -194,35 +194,35 @@ public class Attribute
     }
 
     /**
-     * Gets the value of the nr property.
+     * Gets the value of the position property.
      * 
      * @return
      *     possible object is
      *     {@link Integer }
      *     
      */
-    public int getNr() {
-        return nr;
+    public int getPosition() {
+        return position;
     }
 
     /**
-     * Sets the value of the nr property.
+     * Sets the value of the position property.
      * 
      * @param value
      *     allowed object is
      *     {@link Integer }
      *     
      */
-    public void setNr(int value) {
-        this.nr = value;
+    public void setPosition(int value) {
+        this.position = value;
     }
 
-    public boolean isSetNr() {
-        return (this.nr!= null);
+    public boolean isSetPosition() {
+        return (this.position!= null);
     }
 
-    public void unsetNr() {
-        this.nr = null;
+    public void unsetPosition() {
+        this.position = null;
     }
 
     /**

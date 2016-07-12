@@ -1,5 +1,6 @@
-package net.sf.ahtutils.factory.ejb.system.revision;
+package org.jeesl.factory.ejb.system.revision;
 
+import org.jeesl.model.xml.system.revision.Attribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,8 +8,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
+import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
@@ -48,6 +49,21 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 		return new EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(cAttribute);
 	}
     
+	public RA build(RAT type, Attribute xml)
+	{
+		RA ejb = build(type);
+		ejb.setCode(xml.getCode());
+		ejb.setXpath(xml.getXpath());
+		ejb.setPosition(xml.getPosition());
+		
+		ejb.setShowWeb(xml.isWeb());
+		ejb.setShowPrint(xml.isPrint());
+		ejb.setShowName(xml.isName());
+		ejb.setShowEnclosure(xml.isEnclosure());
+		
+		return ejb;
+	}
+	
 	public RA build(RAT type)
 	{
 		RA ejb = null;

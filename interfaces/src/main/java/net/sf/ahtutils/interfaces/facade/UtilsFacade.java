@@ -2,6 +2,7 @@ package net.sf.ahtutils.interfaces.facade;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -86,6 +87,7 @@ public interface UtilsFacade extends UtilsIdFacade
 	<T extends EjbRemoveable> void rmTransaction(T o) throws UtilsConstraintViolationException;
 	<T extends EjbRemoveable> void rm(T o) throws UtilsConstraintViolationException;
 	<T extends EjbRemoveable> void rm(List<T> list) throws UtilsConstraintViolationException;
+	<T extends EjbRemoveable> void rm(Set<T> set) throws UtilsConstraintViolationException;
 	
 	//Parent
 	<T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParent(Class<T> type, I p1);

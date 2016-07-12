@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.status.TestXmlDescriptions;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
+import net.sf.ahtutils.xml.status.TestXmlType;
 
 public class TestXmlAttribute extends AbstractXmlRevisionTest<Attribute>
 {
@@ -18,7 +19,7 @@ public class TestXmlAttribute extends AbstractXmlRevisionTest<Attribute>
     {
     	Attribute xml = new Attribute();
     	xml.setId(123);
-    	xml.setNr(2);
+    	xml.setPosition(2);
     	xml.setCode("myCode");	
     	xml.setXpath("myXPath");
 
@@ -29,6 +30,7 @@ public class TestXmlAttribute extends AbstractXmlRevisionTest<Attribute>
     	
     	if(withChilds)
     	{
+    		xml.setType(TestXmlType.create(false));
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
     	}

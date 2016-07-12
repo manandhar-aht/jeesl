@@ -42,6 +42,8 @@ public class XmlEntityFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetCode()){xml.setCode(ejb.getCode());}
+		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
+		if(q.isSetVisible()){xml.setVisible(ejb.isVisible());}
 				
 		if(q.isSetAttribute())
 		{

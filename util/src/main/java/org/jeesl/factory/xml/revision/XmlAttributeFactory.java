@@ -42,7 +42,7 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 		Attribute xml = new Attribute();
 		
 		if(q.isSetId()){xml.setId(ejb.getId());}
-		if(q.isSetNr()){xml.setNr(ejb.getPosition());}
+		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
 		if(q.isSetCode()){xml.setCode(ejb.getCode());}
 		
 		if(q.isSetXpath()){xml.setXpath(ejb.getXpath());}

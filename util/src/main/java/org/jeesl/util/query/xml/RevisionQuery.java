@@ -37,8 +37,9 @@ public class RevisionQuery
 	public static Entity exEntity()
 	{		
 		Entity xml = new Entity();
-//		xml.setId(0);
 		xml.setCode("");
+		xml.setPosition(0);
+		xml.setVisible(true);
 		
 		xml.getAttribute().add(exAttribute());
 		
@@ -48,8 +49,8 @@ public class RevisionQuery
 	public static Attribute exAttribute()
 	{		
 		Attribute xml = new Attribute();
-		xml.setNr(0);
 		xml.setCode("");
+		xml.setPosition(0);
 		xml.setXpath("");
 		
 		xml.setWeb(true);

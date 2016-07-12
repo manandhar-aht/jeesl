@@ -74,6 +74,7 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public <T extends EjbRemoveable> void rmTransaction(T o) throws UtilsConstraintViolationException {rmProtected(o);}
 	public <T extends EjbRemoveable> void rm(T o) throws UtilsConstraintViolationException {rmProtected(o);}
+	public <T extends EjbRemoveable> void rm(Set<T> set) throws UtilsConstraintViolationException {fUtils.rm(set);}
 	public <T extends EjbRemoveable> void rm(List<T> list) throws UtilsConstraintViolationException {fUtils.rm(list);}
 	protected <T extends Object> void rmProtected(T o) throws UtilsConstraintViolationException {fUtils.rmProtected(o);}
 	

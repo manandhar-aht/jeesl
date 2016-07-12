@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.system.revision;
+package org.jeesl.factory.ejb.system.revision;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

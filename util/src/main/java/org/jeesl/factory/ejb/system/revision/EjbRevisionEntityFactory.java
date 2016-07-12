@@ -1,5 +1,6 @@
-package net.sf.ahtutils.factory.ejb.system.revision;
+package org.jeesl.factory.ejb.system.revision;
 
+import org.jeesl.model.xml.system.revision.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,11 +10,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
+import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 
-public class EjbRevisionScopeFactory<L extends UtilsLang,D extends UtilsDescription,
+public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
 									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
@@ -24,13 +25,13 @@ public class EjbRevisionScopeFactory<L extends UtilsLang,D extends UtilsDescript
 									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbRevisionScopeFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbRevisionEntityFactory.class);
 	
-	final Class<RS> cScope;
+	final Class<RE> cEntity;
     
-	public EjbRevisionScopeFactory(final Class<RS> cScope)
+	public EjbRevisionEntityFactory(final Class<RE> cEntity)
 	{       
-        this.cScope = cScope;
+        this.cEntity = cEntity;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -43,17 +44,26 @@ public class EjbRevisionScopeFactory<L extends UtilsLang,D extends UtilsDescript
 					REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>>
-	EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory(final Class<RS> cScope)
+	EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory(final Class<RE> cEntity)
 	{
-		return new EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(cScope);
+		return new EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(cEntity);
+	}
+	
+	public RE build(RC category, Entity xml)
+	{
+		RE ejb = build(category);
+		ejb.setCode(xml.getCode());
+		ejb.setPosition(xml.getPosition());
+		return ejb;
 	}
     
-	public RS build()
+	public RE build(RC category)
 	{
-		RS ejb = null;
+		RE ejb = null;
 		try
 		{
-			ejb = cScope.newInstance();
+			ejb = cEntity.newInstance();
+			ejb.setCategory(category);
 			ejb.setPosition(1);
 			ejb.setVisible(true);
 		}

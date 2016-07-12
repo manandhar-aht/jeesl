@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.system.revision;
+package org.jeesl.factory.ejb.system.revision;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
 import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
 
-public class EjbRevisionMappingEntityFactory<L extends UtilsLang,D extends UtilsDescription,
+public class EjbRevisionScopeFactory<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
 									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
@@ -24,13 +24,13 @@ public class EjbRevisionMappingEntityFactory<L extends UtilsLang,D extends Utils
 									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbRevisionMappingEntityFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbRevisionScopeFactory.class);
 	
-	final Class<REM> cMapping;
+	final Class<RS> cScope;
     
-	public EjbRevisionMappingEntityFactory(final Class<REM> cMapping)
+	public EjbRevisionScopeFactory(final Class<RS> cScope)
 	{       
-        this.cMapping = cMapping;
+        this.cScope = cScope;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -43,22 +43,19 @@ public class EjbRevisionMappingEntityFactory<L extends UtilsLang,D extends Utils
 					REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>>
-	EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory(final Class<REM> cMapping)
+	EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory(final Class<RS> cScope)
 	{
-		return new EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(cMapping);
+		return new EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(cScope);
 	}
     
-	public REM build (RE entity, RS scope, RST type)
+	public RS build()
 	{
-		REM ejb = null;
+		RS ejb = null;
 		try
 		{
-			ejb = cMapping.newInstance();
+			ejb = cScope.newInstance();
 			ejb.setPosition(1);
 			ejb.setVisible(true);
-			ejb.setEntity(entity);
-			ejb.setScope(scope);
-			ejb.setType(type);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

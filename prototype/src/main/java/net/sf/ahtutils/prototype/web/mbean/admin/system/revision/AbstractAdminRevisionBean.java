@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
+import org.jeesl.factory.ejb.system.revision.EjbRevisionEntityFactory;
+import org.jeesl.factory.ejb.system.revision.EjbRevisionMappingEntityFactory;
+import org.jeesl.factory.ejb.system.revision.EjbRevisionMappingViewFactory;
+import org.jeesl.factory.ejb.system.revision.EjbRevisionScopeFactory;
+import org.jeesl.factory.ejb.system.revision.EjbRevisionViewFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionAttributeFactory;
-import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionEntityFactory;
-import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionMappingEntityFactory;
-import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionMappingViewFactory;
-import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionScopeFactory;
-import net.sf.ahtutils.factory.ejb.system.revision.EjbRevisionViewFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;

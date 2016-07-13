@@ -3,6 +3,7 @@ package net.sf.ahtutils.model.json;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Date;
 
 public class JsonFlatFigure implements Serializable
 {
@@ -37,6 +38,26 @@ public class JsonFlatFigure implements Serializable
 	private String d4;
 	public String getD4() {return d4;}
 	public void setD4(String d4) {this.d4 = d4;}
+	
+	@JsonProperty("Date1")
+	private Date date1;
+	public Date getDate1() {return date1;}
+	public void setDate1(Date date1) {this.date1 = date1;}
+	
+	@JsonProperty("Date2")
+	private Date date2;
+	public Date getDate2() {return date2;}
+	public void setDate2(Date date2) {this.date2 = date2;}
+	
+	@JsonProperty("Date3")
+	private Date date3;
+	public Date getDate3() {return date3;}
+	public void setDate3(Date date3) {this.date3 = date3;}
+	
+	@JsonProperty("Date4")
+	private Date date4;
+	public Date getDate4() {return date4;}
+	public void setDate4(Date date4) {this.date4 = date4;}
 	
 	public String toString()
 	{

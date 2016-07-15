@@ -28,7 +28,7 @@ public class FirstLastNameStrategy implements ImportStrategy {
 		if (property.equals("FirstName"))
 		{
 			logger.info("Setting First Name.");
-			String[] nameParts = StringUtils.split(nameCellContent);
+			String[] nameParts = StringUtils.split(nameCellContent, " ");
 			name = nameParts[nameParts.length];
 		}
 		else if (property.equals("LastName"))

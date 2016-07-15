@@ -305,16 +305,10 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			// Lets see if the setter is accepting a data type that is available in Excel (String, Double, Date)
 			// Otherwise assume that it is used with a lookup table
 
+			Boolean isHandled = (handler != null);
 			if (ReflectionsUtil.hasMethod(target, methodName))
 			{
-				if (!(	parameterClass.equals("java.lang.Double") || 
-						parameterClass.equals("double") || 
-						parameterClass.equals("long") || 
-						parameterClass.equals("java.util.Date") || 
-						parameterClass.equals("java.lang.Boolean")|| 
-						parameterClass.equals("boolean") || 
-						parameterClass.equals("int") || 
-						parameterClass.equals("java.lang.String")))
+				if (isHandled)
 				{
 					logger.trace("Loading import strategy for " +parameterClass +": " +handler.getCanonicalName() +".");
 
@@ -341,31 +335,31 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 					// Add the current property/value pair, can be useful when inspecting IDs (overwritten for new lines for examples)
 					if(logger.isTraceEnabled()){logger.trace("Set " +property + " to " + value.toString());}
 					tempPropertyStore.put(property, value);
-				}
+				} 
 
 				// Needed to correct the Class of the general number
-				if (parameterClass.equals("long"))
+				else if (parameterClass.equals("long"))
 				{
 					Number number = (Number) parameters[0];
 					parameters[0] = number.longValue();
 				}
 				
 				// Needed to correct the Class of the general number
-				if (parameterClass.equals("int"))
+				else if (parameterClass.equals("int"))
 				{
 					Number number = (Number) parameters[0];
 					parameters[0] = number.intValue();
 				}
 				
 				// Needed to correct the Class of the general number
-				if (parameterClass.equals("java.lang.Integer"))
+				else if (parameterClass.equals("java.lang.Integer"))
 				{
 					Number number = (Number) parameters[0];
 					parameters[0] = new Integer(number.intValue());
 				}
 
 				// This is important if the String is a Number, Excel will format the cell to be a "general number"
-				if (parameterClass.equals("java.lang.String"))
+				else if (parameterClass.equals("java.lang.String"))
 				{
 					if (parameters[0].getClass().getName().equals("java.lang.Double"))
 					{
@@ -386,7 +380,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				}
 				
 				// This is important if the String is a Number, Excel will format the cell to be a "general number"
-				if (parameterClass.equals("java.lang.Boolean") || parameterClass.equals("boolean"))
+				else if (parameterClass.equals("java.lang.Boolean") || parameterClass.equals("boolean"))
 				{
 					Number number = (Number) parameters[0];
 					Boolean b     = true;

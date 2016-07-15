@@ -25,6 +25,14 @@ public class XmlTimeFactory
 		return xml;
 	}
 	
+	public static Time nr(int nr, Date record)
+	{
+		Time xml = new Time();
+		xml.setNr(nr);
+		xml.setRecord(DateUtil.getXmlGc4D(record));
+		return xml;
+	}
+	
 	public static Time create(Sheet sheet, int row, String col, String code, String label) throws UtilsProcessingException
 	{
 		return create(sheet, row, PoiRowColNumerator.translateNameToIndex(col), code, label);

@@ -7,7 +7,7 @@
     <qa:test id="123" name="myName" code="myCode" duration="120"/>
     <sec:category code="myCode" label="myLabel" position="1" visible="true" documentation="true"/>
     <sec:staff id="123"/>
-    <rev:entity id="123" code="myCode"/>
+    <rev:entity id="123" code="myCode" position="2" visible="true"/>
     <survey:templates/>
     <survey:template id="123" code="myCode"/>
     <survey:surveys/>

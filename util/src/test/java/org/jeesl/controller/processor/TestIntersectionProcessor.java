@@ -1,11 +1,9 @@
-package net.sf.ahtutils.controller.processor;
+package org.jeesl.controller.processor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -14,17 +12,16 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.controller.processor.set.SetProcessingLexer;
-import net.sf.ahtutils.controller.processor.set.SetProcessingParser;
+import net.sf.ahtutils.controller.processor.SetProcessor;
 import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.status.Status;
 import net.sf.ahtutils.test.AbstractAhtUtilsTest;
 
-public class TestSetProcessor extends AbstractAhtUtilsTest
+public class TestIntersectionProcessor extends AbstractAhtUtilsTest
 {
-	final static Logger logger = LoggerFactory.getLogger(TestSetProcessor.class);
+	final static Logger logger = LoggerFactory.getLogger(TestIntersectionProcessor.class);
 	
 	private static EjbStatusFactory<Status,Lang,Description> ef;
 	
@@ -51,7 +48,7 @@ public class TestSetProcessor extends AbstractAhtUtilsTest
 
 		ef = EjbStatusFactory.createFactory(Status.class,Lang.class,Description.class); //within initClass() i got an NPE on .id(long l)
 		x = new ArrayList<Status>();
-		x.add(ef.id(1L));x.add(ef.id(2));x.add(ef.id(3));
+		x.add(ef.id(1));x.add(ef.id(2));x.add(ef.id(3));
 		y = new ArrayList<Status>();
 		y.add(ef.id(3));x.add(ef.id(4));x.add(ef.id(5));
 

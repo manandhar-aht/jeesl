@@ -70,6 +70,8 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
         return s;
     }
 	
+	
+	public S id(int id) {return id((long)id);}
 	public S id(long id)
 	{
         S s;

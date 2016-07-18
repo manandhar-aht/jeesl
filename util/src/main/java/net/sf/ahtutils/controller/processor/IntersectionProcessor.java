@@ -11,7 +11,7 @@ import org.apache.commons.collections.ListUtils;
 import net.sf.ahtutils.controller.processor.set.SetProcessingBaseVisitor;
 import net.sf.ahtutils.controller.processor.set.SetProcessingParser;
 
-public class SetProcessor extends SetProcessingBaseVisitor
+public class IntersectionProcessor extends SetProcessingBaseVisitor
 {
 
 	@SuppressWarnings("unchecked")
@@ -33,7 +33,7 @@ public class SetProcessor extends SetProcessingBaseVisitor
 		lists = Arrays.asList(list);
 		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(query));
 		SetProcessingParser parser = new SetProcessingParser(new CommonTokenStream(lexer));
-		return (List<T>)new SetProcessor().visit(parser.parse());
+		return (List<T>)new IntersectionProcessor().visit(parser.parse());
 	}
 
 	@Override

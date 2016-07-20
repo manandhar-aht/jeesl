@@ -253,6 +253,10 @@ public class ExcelExporter
 		{
 			// Create styles
 			style.setDataFormat(createHelper.createDataFormat().getFormat("dd.MM.yyyy"));
+			if (columnDefinition.getXlsTransformation().isSetFormatPattern())
+			{
+				style.setDataFormat(createHelper.createDataFormat().getFormat(columnDefinition.getXlsTransformation().getFormatPattern()));
+			}
 			style.setAlignment(CellStyle.ALIGN_CENTER);
 			style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 		} 

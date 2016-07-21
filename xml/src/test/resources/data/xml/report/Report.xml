@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<r:report xmlns:r="http://ahtutils.aht-group.com/report" id="myId" dir="testDir" ltr="true" rtl="false">
+<r:report xmlns:r="http://ahtutils.aht-group.com/report" xmlns:s="http://ahtutils.aht-group.com/status" id="myId" dir="testDir" ltr="true" rtl="false" test="myTestClass">
     <r:media dir="testDir" type="myType">
         <r:jr type="mr" name="testReportName" visible="true"/>
     </r:media>
@@ -7,4 +7,5 @@
         <r:jr type="mr" name="testReportName" visible="true"/>
     </r:media>
     <example>testExampleXmlFile</example>
+    <s:descriptions/>
 </r:report>

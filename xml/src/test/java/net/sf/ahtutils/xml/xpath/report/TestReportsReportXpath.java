@@ -3,11 +3,11 @@ package net.sf.ahtutils.xml.xpath.report;
 import net.sf.ahtutils.test.AbstractXmlTest;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
-import net.sf.ahtutils.xml.report.TestXmlReport;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
+import org.jeesl.model.xml.report.TestXmlReport;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;

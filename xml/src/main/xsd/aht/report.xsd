@@ -24,11 +24,13 @@
 		               	<xsd:restriction base="xsd:string"/>
 		            </xsd:simpleType>
 		        </xsd:element>
+		        <xsd:element ref="us:descriptions" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:string"/>
             <xsd:attribute name="dir" type="xsd:string"/>
             <xsd:attribute name="ltr" type="xsd:boolean"/>
             <xsd:attribute name="rtl" type="xsd:boolean"/>
+            <xsd:attribute name="test" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="resources">

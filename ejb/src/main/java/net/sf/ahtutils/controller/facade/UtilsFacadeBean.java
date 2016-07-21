@@ -346,9 +346,9 @@ public class UtilsFacadeBean implements UtilsFacade
         Root<T> root = criteriaQuery.from(type);
         criteriaQuery = criteriaQuery.where(root.<T>get("key").in(key));
 
-		T result=null;
+		T result;
 		TypedQuery<T> q = em.createQuery(criteriaQuery); 
-		try	{result=(T)q.getSingleResult();}
+		try	{result= q.getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found "+type.getSimpleName()+" for key="+key);}
 		return result;
 	}

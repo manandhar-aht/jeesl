@@ -34,10 +34,10 @@
 				<h:outputText value="#{a.view.name[userBean.localeCode].lang}" />
 			</p:column>
 			<p:column headerText="#{msg.aupSecurityCode}">
-				<h:outputText value="#{a.code}" />
+				<h:outputText value="#{a.toCode}" />
 			</p:column>
 			<p:column headerText="#{msg.aupSecurityAction}">
-				<h:outputText value="#{a.name[userBean.localeCode].lang}" />
+				<h:outputText value="#{a.toName[userBean.localeCode].lang}" />
 			</p:column>
 		</p:dataTable>
 		<p:overlayPanel for="dtActions:dth:giActionAdd" widgetVar="wvOpActionSelection" appendToBody="false">
@@ -46,14 +46,17 @@
                          filteredValue="#{cc.attrs.bean.opFvActions}"
                          rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 				<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.opAddAction}" oncomplete="PF('wvOpActionSelection').hide();"/>
+				<p:column>
+					<h:outputText value="#{a.view.category.position}.#{a.view.position}.#{a.position}"/>
+				</p:column>
 				<p:column headerText="#{msg.aupSecurityView}" sortBy="#{a.view.name[userBean.localeCode].lang}" filterBy="#{a.view.name[userBean.localeCode].lang}" filterMatchMode="contains">
 					<h:outputText value="#{a.view.name[userBean.localeCode].lang}" />
 				</p:column>
 				<p:column headerText="#{msg.aupSecurityCode}">
-					<h:outputText value="#{a.code}" />
+					<h:outputText value="#{a.toCode}" />
 				</p:column>
-				<p:column headerText="#{msg.aupSecurityAction}" sortBy="#{a.view.toName[userBean.localeCode].lang}" filterBy="#{a.view.name[userBean.localeCode].lang}" filterMatchMode="contains">
-					<h:outputText value="#{a.name[userBean.localeCode].lang}" />
+				<p:column headerText="#{msg.aupSecurityAction}" sortBy="#{a.view.toName[userBean.localeCode].lang}" filterBy="#{a.view.toName[userBean.localeCode].lang}" filterMatchMode="contains">
+					<h:outputText value="#{a.toName[userBean.localeCode].lang}" />
 				</p:column>
 			</p:dataTable>
 		</p:overlayPanel>

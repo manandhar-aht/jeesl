@@ -59,8 +59,8 @@
 								<p:outputLabel rendered="#{cc.attrs.bean.uiAllowReorder}" value="#{msg.aupOptionPosition}"/>
 								<p:inputText rendered="#{cc.attrs.bean.uiAllowReorder}" value="#{cc.attrs.bean.status.position}"/>
 								
-								<p:outputLabel rendered="#{cc.attrs.bean.hasAdministratorAction}" value="#{msg.aupOptionVisible}" />
-								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.hasAdministratorAction}" value="#{cc.attrs.bean.status.visible}" />
+								<p:outputLabel rendered="#{cc.attrs.bean.hasAdministratorAction or cc.attrs.bean.hasDeveloperAction}" value="#{msg.aupOptionVisible}" />
+								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.hasAdministratorAction or cc.attrs.bean.hasDeveloperAction}" value="#{cc.attrs.bean.status.visible}" />
 								
 								<p:outputLabel rendered="#{not empty cc.attrs.bean.parents}" value="#{msg.StatusParent}"/>
 								<p:selectOneMenu rendered="#{not empty cc.attrs.bean.parents}" value="#{cc.attrs.bean.parentId}" effect="fade" >

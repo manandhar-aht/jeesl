@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.processor;
+package org.jeesl.controller.processor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,6 @@ import net.sf.ahtutils.controller.processor.set.SetProcessingParser;
 
 public class IntersectionProcessor extends SetProcessingBaseVisitor
 {
-
 	@SuppressWarnings("unchecked")
 	public static <T> List<T> and(List<T> a, List<T> b)
 	{

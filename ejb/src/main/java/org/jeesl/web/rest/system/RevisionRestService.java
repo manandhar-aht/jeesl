@@ -89,11 +89,10 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cRAT=cRAT;
 	
 		xfEntity = new XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntities));
-		
-		
+			
 		efLang = EjbLangFactory.createFactory(cL);
 		efDescription = EjbDescriptionFactory.createFactory(cD);
-		efEntity = EjbRevisionEntityFactory.factory(cRE);
+		efEntity = EjbRevisionEntityFactory.factory(cL,cD,cRE);
 		efAttribute = EjbRevisionAttributeFactory.factory(cRA);
 	}
 	
@@ -184,10 +183,18 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		catch (UtilsNotFoundException e)
 		{
 			RC category = fRevision.fByCode(cRC, xml.getCategory().getCode());
-			re = efEntity.build(category);
+			re = efEntity.build(category,xml);
 			re = fRevision.persist(re);
 		}
 		re = fRevision.load(cRE, re);
+		
+		dbDeleteL.addAll(re.getName().values());
+		dbDeleteD.addAll(re.getDescription().values());
+		re.getName().clear();
+		re.getDescription().clear();
+		
+		re.setName(efLang.getLangMap(xml.getLangs()));
+		re.setDescription(efDescription.create(xml.getDescriptions()));
 		
 		Set<RA> set = new HashSet<RA>(re.getAttributes());		
 		for(Attribute xmlAttribute : xml.getAttribute())

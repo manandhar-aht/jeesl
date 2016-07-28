@@ -7,6 +7,7 @@ import org.jeesl.model.xml.system.revision.Attribute;
 import org.jeesl.model.xml.system.revision.Entity;
 
 import net.sf.ahtutils.controller.util.query.StatusQuery;
+import net.sf.ahtutils.factory.xml.status.XmlCategoryFactory;
 import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.xml.aht.Query;
 
@@ -40,9 +41,10 @@ public class RevisionQuery
 		xml.setCode("");
 		xml.setPosition(0);
 		xml.setVisible(true);
-		
+		xml.setCategory(XmlCategoryFactory.create(""));
+		xml.setLangs(StatusQuery.langs());
+		xml.setDescriptions(StatusQuery.descriptions());
 		xml.getAttribute().add(exAttribute());
-		
 		return xml;
 	}
 	

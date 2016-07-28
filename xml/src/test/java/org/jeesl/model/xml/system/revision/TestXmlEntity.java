@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.status.TestXmlCategory;
+import net.sf.ahtutils.xml.status.TestXmlDescriptions;
+import net.sf.ahtutils.xml.status.TestXmlLangs;
 
 public class TestXmlEntity extends AbstractXmlRevisionTest<Entity>
 {
@@ -24,6 +26,8 @@ public class TestXmlEntity extends AbstractXmlRevisionTest<Entity>
     	if(withChilds)
     	{
     		xml.setCategory(TestXmlCategory.create(false));
+    		xml.setLangs(TestXmlLangs.create(false));
+    		xml.setDescriptions(TestXmlDescriptions.create(false));
     		xml.getAttribute().add(TestXmlAttribute.create(false));
     		xml.getAttribute().add(TestXmlAttribute.create(false));
     	}

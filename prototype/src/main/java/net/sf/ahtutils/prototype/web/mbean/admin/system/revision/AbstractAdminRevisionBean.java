@@ -98,7 +98,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		efView = EjbRevisionViewFactory.factory(cView);
 		efMappingView = EjbRevisionMappingViewFactory.factory(cMappingView);
 		efScope = EjbRevisionScopeFactory.factory(cScope);
-		efEntity = EjbRevisionEntityFactory.factory(cEntity);
+		efEntity = EjbRevisionEntityFactory.factory(cLang,cDescription,cEntity);
 		efMappingEntity = EjbRevisionMappingEntityFactory.factory(cEntityMapping);
 		efAttribute = EjbRevisionAttributeFactory.factory(cAttribute);
 		

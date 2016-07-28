@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <rev:entity xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:rev="http://www.jeesl.org/revision" id="123" code="myCode" position="2" visible="true">
     <s:category id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
+    <s:langs/>
+    <s:descriptions/>
     <rev:attribute id="123" position="2" code="myCode" xpath="myXPath" web="true" print="true" name="true" enclosure="true"/>
     <rev:attribute id="123" position="2" code="myCode" xpath="myXPath" web="true" print="true" name="true" enclosure="true"/>
 </rev:entity>

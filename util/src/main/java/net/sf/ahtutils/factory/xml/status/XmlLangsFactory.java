@@ -20,21 +20,23 @@ public class XmlLangsFactory <L extends UtilsLang>
 	
 	private Langs q;
 	
+	private XmlLangFactory<L> xfLang;
+	
 	public XmlLangsFactory(Langs q)
 	{
 		this.q=q;
+		if(q.isSetLang()){xfLang = new XmlLangFactory<L>(q.getLang().get(0));}
 	}
 	
 	public Langs getUtilsLangs(Map<String,L> mapLangs)
 	{
 		Langs xml = new Langs();
 		
-		if(q.isSetLang())
+		if(q.isSetLang() && mapLangs!=null)
 		{
-			XmlLangFactory<L> f = new XmlLangFactory<L>(q.getLang().get(0));
 			for(L ahtLang : mapLangs.values())
 			{
-				xml.getLang().add(f.getUtilsLang(ahtLang));
+				xml.getLang().add(xfLang.getUtilsLang(ahtLang));
 			}
 		}
 		Collections.sort(xml.getLang(), comparator);

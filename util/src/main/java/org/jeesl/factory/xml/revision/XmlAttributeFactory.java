@@ -32,9 +32,15 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 	
 	private Attribute q;
 	
+	private XmlLangsFactory<L> xfLangs;
+	private XmlDescriptionsFactory<D> xfDescriptions;
+	
 	public XmlAttributeFactory(Attribute q)
 	{
 		this.q=q;
+		
+		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
+		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 	}
 	
 	public Attribute build(RA ejb)
@@ -53,16 +59,8 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 		if(q.isSetName()){xml.setName(ejb.isShowName());}
 		if(q.isSetEnclosure()){xml.setEnclosure(ejb.isShowEnclosure());}
 		
-		if(q.isSetLangs())
-		{
-			XmlLangsFactory<L> f = new XmlLangsFactory<L>(q.getLangs());
-			xml.setLangs(f.getUtilsLangs(ejb.getName()));
-		}
-		if(q.isSetDescriptions())
-		{
-			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(q.getDescriptions());
-			xml.setDescriptions(f.create(ejb.getDescription()));
-		}
+		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(ejb.getName()));}
+		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(ejb.getDescription()));}
 		
 		if(q.isSetType())
 		{

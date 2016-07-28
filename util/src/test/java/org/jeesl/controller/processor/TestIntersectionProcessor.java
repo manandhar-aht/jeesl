@@ -22,37 +22,41 @@ public class TestIntersectionProcessor extends AbstractAhtUtilsTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestIntersectionProcessor.class);
 	
-	private static EjbStatusFactory<Status,Lang,Description> ef;
+	private static EjbStatusFactory<Status,Lang,Description> factory;
 	
-	private List<String> a,b;
-	private List<String> e,f,g,h;
+	private List<String> a,b,c;
+	private List<List<String>> ab,abc;
+	
 	private List<Status> x,y;
+	private List<List<Status>> xy;
+	
 	private List<Integer> k,m;
+	private List<List<Integer>> km;
 	
 	@BeforeClass public static void initClass()
 	{
-		ef = EjbStatusFactory.createFactory(Status.class,Lang.class,Description.class);
+		factory = EjbStatusFactory.createFactory(Status.class,Lang.class,Description.class);
 	}
 	
 	@Before public void init()
 	{		
 		a = Arrays.asList("a b c d"      .split(" "));
 		b = Arrays.asList(      "d e f g".split(" "));
-		 
-		e = Arrays.asList("a byte c dummd1deldumm 141447483187945187"      .split(" "));
-		f = Arrays.asList(      "dummd1deldumm e fit g".split(" "));
-		g = Arrays.asList(	"byte 141447483187945187 j k".split(" "));
-		h = Arrays.asList(	"byte l m nkd 141447483187945187".split(" "));
-		//a AND (b OR (c AND d))
-
-		ef = EjbStatusFactory.createFactory(Status.class,Lang.class,Description.class); //within initClass() i got an NPE on .id(long l)
+		c = Arrays.asList("b f".split(" "));
+		
+		ab = new ArrayList<List<String>>();ab.add(a);ab.add(b);
+		abc = new ArrayList<List<String>>();abc.add(a);abc.add(b);abc.add(c);
+		
+		factory = EjbStatusFactory.createFactory(Status.class,Lang.class,Description.class); //within initClass() i got an NPE on .id(long l)
 		x = new ArrayList<Status>();
-		x.add(ef.id(1));x.add(ef.id(2));x.add(ef.id(3));
+		x.add(factory.id(1));x.add(factory.id(2));x.add(factory.id(3));
 		y = new ArrayList<Status>();
-		y.add(ef.id(3));x.add(ef.id(4));x.add(ef.id(5));
+		y.add(factory.id(3));x.add(factory.id(4));x.add(factory.id(5));
+		xy = new ArrayList<List<Status>>();xy.add(x);xy.add(y);
 
 		k = Arrays.asList(12,19,205,2401,325871);
 		m = Arrays.asList(45,365,12,4787,15479912);
+		km = new ArrayList<List<Integer>>();km.add(k);km.add(m);
 	}
 	
 	@Test public void pre()
@@ -60,10 +64,7 @@ public class TestIntersectionProcessor extends AbstractAhtUtilsTest
 		Assert.assertEquals(4, a.size());
 		Assert.assertEquals(4, b.size());
 		
-    	Assert.assertEquals(5, e.size());
-    	Assert.assertEquals(4, f.size());
-		Assert.assertEquals(4, g.size());
-		Assert.assertEquals(5, h.size());
+
     }
  
 	@Test public void and()
@@ -73,43 +74,46 @@ public class TestIntersectionProcessor extends AbstractAhtUtilsTest
     	Assert.assertEquals("d", result.get(0));
     }
     
-    @Test
-    public void or()
+    @Test public void or()
     {	
     	List<String> result = IntersectionProcessor.or(a,b);
     	Assert.assertEquals(7, result.size());
     }
-	
-    @Test public void simpleAnd()
+    
+    @Test public void stringAnd()
     {
-		List<Integer> result = IntersectionProcessor.query("a && b",k,m);
-		Assert.assertEquals(1, result.size());
-		Assert.assertEquals(new Integer(12), result.get(0));
+    	List<String> expecteds = Arrays.asList("d".split(" "));
+		List<String> actuals = IntersectionProcessor.query("a AND b",ab);
+		Assert.assertArrayEquals(expecteds.toArray(new String[expecteds.size()]), actuals.toArray(new String[actuals.size()]));
     }
     
-    @Test
-    public void simpleOr()
+    @Test public void stirngOr1()
     {
-		List<String> result = IntersectionProcessor.query("a || b",e,f);
-		System.out.println(result.toString());
-		Assert.assertEquals(8, result.size());
-		Assert.assertEquals("[a, byte, c, 141447483187945187, dummd1deldumm, e, fit, g]", result.toString());
+    	List<String> expecteds = Arrays.asList("a b c d e f g".split(" "));
+		List<String> actuals = IntersectionProcessor.query("a OR b",ab);
+		Assert.assertArrayEquals(expecteds.toArray(new String[expecteds.size()]), actuals.toArray(new String[actuals.size()]));
+    }
+	
+    @Test public void integerAnd()
+    {
+		List<Integer> result = IntersectionProcessor.query("a && b",km);
+		Assert.assertEquals(1, result.size());
+		Assert.assertEquals(new Integer(12), result.get(0));
     }
 
 	@Test public void simpleCombination()
 	{
-		List<String> result = IntersectionProcessor.query("a AND (b OR (c && d))",e,f,g,h);
-		System.out.println(result.toString());
-		Assert.assertEquals(3, result.size());
-		Assert.assertEquals("[dummd1deldumm, byte, 141447483187945187]", result.toString());
+		List<String> expecteds = Arrays.asList("d b".split(" "));
+		List<String> actuals = IntersectionProcessor.query("a AND (b OR c)",abc);
+		Assert.assertArrayEquals(expecteds.toArray(new String[expecteds.size()]), actuals.toArray(new String[actuals.size()]));
 	}
 	
 	@Test @Ignore public void idAnd()
     {
 		List<Status> expected = new ArrayList<Status>();
-		expected.add(ef.id(3));
+		expected.add(factory.id(3));
 		
-		List<Status> actual = IntersectionProcessor.query("a AND b", x, y);
+		List<Status> actual = IntersectionProcessor.query("a AND b", xy);
 		Assert.assertEquals(1, actual.size());
 		Assert.assertEquals(expected.get(0), actual.get(0));
     }

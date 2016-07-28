@@ -26,10 +26,10 @@ public class IntersectionProcessor extends SetProcessingBaseVisitor
 	}
 
 	static List lists;
-
-	public static <T> List<T> query(String query, List<T>... list)
+	
+	public static <T> List<T> query(String query, List<List<T>> l)
 	{
-		lists = Arrays.asList(list);
+		lists = l;
 		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(query));
 		SetProcessingParser parser = new SetProcessingParser(new CommonTokenStream(lexer));
 		return (List<T>)new IntersectionProcessor().visit(parser.parse());

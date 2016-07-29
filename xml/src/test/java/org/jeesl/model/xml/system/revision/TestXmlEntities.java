@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 
-public class TestXmlEntites extends AbstractXmlRevisionTest<Entities>
+public class TestXmlEntities extends AbstractXmlRevisionTest<Entities>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlEntites.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlEntities.class);
 	
-	public TestXmlEntites(){super(Entities.class);}
-	public static Entities create(boolean withChildren){return (new TestXmlEntites()).build(withChildren);} 
+	public TestXmlEntities(){super(Entities.class);}
+	public static Entities create(boolean withChildren){return (new TestXmlEntities()).build(withChildren);} 
     
     public Entities build(boolean withChilds)
     {
@@ -28,7 +28,7 @@ public class TestXmlEntites extends AbstractXmlRevisionTest<Entities>
 	public static void main(String[] args)
     {
 		UtilsXmlTestBootstrap.init();	
-		TestXmlEntites test = new TestXmlEntites();
+		TestXmlEntities test = new TestXmlEntities();
 		test.saveReferenceXml();
     }
 }

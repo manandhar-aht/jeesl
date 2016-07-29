@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.status.Category;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
+import net.sf.ahtutils.xml.text.Remark;
 
 
 /**
@@ -28,6 +29,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}category"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/text}remark"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/revision}attribute" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
@@ -46,6 +48,7 @@ import net.sf.ahtutils.xml.status.Langs;
     "category",
     "langs",
     "descriptions",
+    "remark",
     "attribute"
 })
 @XmlRootElement(name = "entity")
@@ -60,6 +63,8 @@ public class Entity
     protected Langs langs;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Descriptions descriptions;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/text", required = true)
+    protected Remark remark;
     @XmlElement(required = true)
     protected List<Attribute> attribute;
     @XmlAttribute(name = "id")
@@ -153,6 +158,34 @@ public class Entity
 
     public boolean isSetDescriptions() {
         return (this.descriptions!= null);
+    }
+
+    /**
+     * Gets the value of the remark property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Remark }
+     *     
+     */
+    public Remark getRemark() {
+        return remark;
+    }
+
+    /**
+     * Sets the value of the remark property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Remark }
+     *     
+     */
+    public void setRemark(Remark value) {
+        this.remark = value;
+    }
+
+    public boolean isSetRemark() {
+        return (this.remark!= null);
     }
 
     /**

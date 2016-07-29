@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.system.revision;
+package org.jeesl.interfaces.model.system.revision;
 
 import java.util.List;
 
@@ -34,4 +34,7 @@ public interface UtilsRevisionEntity<L extends UtilsLang,D extends UtilsDescript
 	
 	List<REM> getMaps();
 	void setMaps(List<REM> maps);
+	
+	String getDeveloperInfo();
+	void setDeveloperInfo(String developerInfo);
 }

@@ -9,11 +9,12 @@ import org.jeesl.model.xml.system.revision.Entity;
 import net.sf.ahtutils.controller.util.query.StatusQuery;
 import net.sf.ahtutils.factory.xml.status.XmlCategoryFactory;
 import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
+import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;
 import net.sf.ahtutils.xml.aht.Query;
 
 public class RevisionQuery
 {
-	public static enum Key {exEntities}
+	public static enum Key {exEntity}
 	
 	private static Map<Key,Query> mQueries;
 	
@@ -26,7 +27,7 @@ public class RevisionQuery
 			Query q = new Query();
 			switch(key)
 			{
-				case exEntities: q.setEntity(exEntity());break;
+				case exEntity: q.setEntity(exEntity());break;
 			}
 			mQueries.put(key, q);
 		}
@@ -44,6 +45,7 @@ public class RevisionQuery
 		xml.setCategory(XmlCategoryFactory.create(""));
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setRemark(XmlRemarkFactory.build(""));
 		xml.getAttribute().add(exAttribute());
 		return xml;
 	}

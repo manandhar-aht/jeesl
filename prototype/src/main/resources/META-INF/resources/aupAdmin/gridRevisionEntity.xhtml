@@ -62,6 +62,10 @@
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.entity.visible}"/>
 								<p:outputLabel value="#{msg.aupCode}"/>
 								<h:inputText autocomplete="off" value="#{cc.attrs.bean.entity.code}" styleClass="w100"/>
+								
+								<p:outputLabel value="#{msg.aupRemark}"/>
+								<p:inputTextarea value="#{cc.attrs.bean.entity.developerInfo}" style="width:100%" autocomplete="off"/>
+								
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.entity}"
 													labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"

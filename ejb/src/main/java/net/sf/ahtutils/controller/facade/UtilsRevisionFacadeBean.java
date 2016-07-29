@@ -9,6 +9,13 @@ import javax.persistence.TypedQuery;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
+import org.jeesl.interfaces.model.system.revision.EjbWithRevisionAttributes;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -18,13 +25,6 @@ import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.system.revision.EjbWithRevisionAttributes;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescription,

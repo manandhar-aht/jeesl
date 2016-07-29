@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.system.revision;
+package org.jeesl.interfaces.model.system.revision;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;

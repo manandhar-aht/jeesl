@@ -3,18 +3,18 @@ package net.sf.ahtutils.util.comparator.ejb.revision;
 import java.util.Comparator;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 
 public class RevisionEntityComparator<L extends UtilsLang,D extends UtilsDescription,
 										RC extends UtilsStatus<RC,L,D>,

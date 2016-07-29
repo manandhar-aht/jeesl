@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.system.revision;
+package org.jeesl.interfaces.model.system.revision;
 
 import java.util.List;
 

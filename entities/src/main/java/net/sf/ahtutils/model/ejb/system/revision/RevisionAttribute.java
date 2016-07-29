@@ -14,10 +14,10 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
@@ -86,6 +86,18 @@ public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersista
 	private boolean showEnclosure;
 	@Override public boolean isShowEnclosure() {return showEnclosure;}
 	@Override public void setShowEnclosure(boolean showEnclosure) {this.showEnclosure = showEnclosure;}
+	
+	private Boolean manualUser;
+	@Override public Boolean getManualUser() {return manualUser;}
+	@Override public void setManualUser(Boolean manualUser) {this.manualUser = manualUser;}
+	
+	private Boolean manualAdmin;
+	@Override public Boolean getManualAdmin() {return manualAdmin;}
+	@Override public void setManualAdmin(Boolean manualAdmin) {this.manualAdmin = manualAdmin;}
+	
+	private String developerInfo;
+	@Override public String getDeveloperInfo() {return developerInfo;}
+	@Override public void setDeveloperInfo(String developerInfo) {this.developerInfo=developerInfo;}
 	
 	@Override public String toString()
 	{

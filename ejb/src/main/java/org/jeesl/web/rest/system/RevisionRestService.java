@@ -8,6 +8,12 @@ import java.util.Set;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionEntityFactory;
 import org.jeesl.factory.xml.revision.XmlEntityFactory;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import org.jeesl.interfaces.rest.system.revision.JeeslRevisionRestExport;
 import org.jeesl.interfaces.rest.system.revision.JeeslRevisionRestImport;
 import org.jeesl.model.xml.system.revision.Attribute;
@@ -27,12 +33,6 @@ import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionAttribute;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionScope;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionView;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
@@ -88,7 +88,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cRA=cRA;
 		this.cRAT=cRAT;
 	
-		xfEntity = new XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntities));
+		xfEntity = new XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntity));
 			
 		efLang = EjbLangFactory.createFactory(cL);
 		efDescription = EjbDescriptionFactory.createFactory(cD);
@@ -195,6 +195,9 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		
 		re.setName(efLang.getLangMap(xml.getLangs()));
 		re.setDescription(efDescription.create(xml.getDescriptions()));
+		
+		if(xml.isSetRemark()){re.setDeveloperInfo(xml.getRemark().getValue());}
+		else{re.setDeveloperInfo(null);}
 		
 		Set<RA> set = new HashSet<RA>(re.getAttributes());		
 		for(Attribute xmlAttribute : xml.getAttribute())

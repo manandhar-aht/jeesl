@@ -42,6 +42,8 @@
 				<p:selectOneMenu value="#{cc.attrs.bean.attribute.type}" effect="fade" >
 					<f:selectItems value="#{cc.attrs.bean.types}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 				</p:selectOneMenu>
+				<p:outputLabel value="#{msg.aupRemark}"/>
+				<p:inputTextarea value="#{cc.attrs.bean.attribute.developerInfo}" style="width:100%" autocomplete="off"/>
 			</p:panelGrid>
 			<aht:tabTranslationEditor value="#{cc.attrs.bean.attribute}"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.system.revision;
+package org.jeesl.interfaces.model.system.revision;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -42,4 +42,13 @@ public interface UtilsRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 	
 	boolean isShowEnclosure();
 	void setShowEnclosure(boolean showEnclosure);
+	
+	Boolean getManualUser();
+	void setManualUser(Boolean manualUser);
+	
+	Boolean getManualAdmin();
+	void setManualAdmin(Boolean manualAdmin);
+	
+	String getDeveloperInfo();
+	void setDeveloperInfo(String developerInfo);
 }

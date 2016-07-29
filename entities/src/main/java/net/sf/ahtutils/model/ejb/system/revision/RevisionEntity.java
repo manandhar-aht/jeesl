@@ -21,10 +21,10 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.revision.UtilsRevisionEntity;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
@@ -50,7 +50,7 @@ public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable
 	public void setCategory(RevisionCategory category) {this.category = category;}
 
 	@NotNull
-	protected String code;
+	private String code;
 	@Override public String getCode() {return code;}
 	@Override public void setCode(String code) {this.code = code;}
 	
@@ -85,6 +85,10 @@ public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable
 	private List<RevisionEntityMapping> maps;
 	@Override public List<RevisionEntityMapping> getMaps() {if(maps==null){maps=new ArrayList<RevisionEntityMapping>();}return maps;}
 	@Override public void setMaps(List<RevisionEntityMapping> maps) {this.maps=maps;}
+	
+	private String developerInfo;
+	@Override public String getDeveloperInfo() {return developerInfo;}
+	@Override public void setDeveloperInfo(String developerInfo) {this.developerInfo=developerInfo;}
 	
 	@Override public String toString()
 	{

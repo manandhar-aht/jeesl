@@ -1,12 +1,12 @@
 package net.sf.ahtutils.factory.pf;
 
+import org.jeesl.model.json.JsonFlatFigure;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.AhtUtilsBootstrap;
-import net.sf.ahtutils.model.json.JsonFlatFigure;
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 

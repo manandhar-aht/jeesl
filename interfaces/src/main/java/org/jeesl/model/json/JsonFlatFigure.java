@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model.json;
+package org.jeesl.model.json;
 
 import java.io.Serializable;
 
@@ -58,6 +58,17 @@ public class JsonFlatFigure implements Serializable
 	private Date date4;
 	public Date getDate4() {return date4;}
 	public void setDate4(Date date4) {this.date4 = date4;}
+	
+	@JsonProperty("Finance1")
+	private double f1;
+	public double getF1() {return f1;}
+	public void setF1(double f1) {this.f1 = f1;}
+	
+	@JsonProperty("Finance2")
+	private double f2;
+	public double getF2() {return f2;}
+	public void setF2(double f2) {this.f2 = f2;}
+	
 	
 	public String toString()
 	{

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
+import net.sf.ahtutils.xml.report.Label;
 
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.Pointer;
@@ -124,9 +125,64 @@ public class ExcelExporter
 				logger.warn("Could not retrieve sheet name from definition, falling back to standard name.");
 			}
 			exportSheet(sheet, sheetName);
+			
+			// Begin the footer with three lines of free space
+			rowNr = rowNr + 3;
+			
+			// Write signiture fields
+			applyFooter(sheetName);
+			
+			// Continue with next sheet if existing
 			i++;
 		}
     }
+		
+	public void applyFooter(String sheetName)
+	{
+		// Reset the context back to the complete report XML, because it might have been changed to a local one
+		context = JXPathContext.newContext(report);
+		
+		// Get the Excel Sheet
+		Sheet sheet = wb.getSheet(sheetName);
+
+		// Create the standard text style
+		CellStyle style = wb.createCellStyle();
+		Font font = wb.createFont();
+		font.setFontName("Arial");
+		style.setFont(font);
+
+		// Ask for all labels and add the ones starting with signature to a list
+		Iterator iterator     = context.iteratePointers("//label");
+		ArrayList<Label> signatureLabels = new ArrayList<Label>();
+		while (iterator.hasNext())
+		{
+			Pointer pointerToItem = (Pointer)iterator.next();
+			Object o = pointerToItem.getValue();
+			if ((o!=null))
+			{
+				//TODO Finds also label='xy' attributes, must be restricted in XPath if possible for performance improvement
+				if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
+				if (o.getClass() == Label.class)
+				{
+					Label l = (Label) pointerToItem.getValue();
+					if (l.getKey().startsWith("signature"))
+					{
+						signatureLabels.add(l);
+					}
+				}
+			}
+		}
+		logger.info("Footer will be printed with " +signatureLabels.size() +" labels.");
+		
+		// Write the groups of label (e.g. approved by, prepared by) and the line to write the associated person
+		Integer columnNr = 0;
+		for (int i=0; i<signatureLabels.size();i++)
+		{
+			createCell(sheet, rowNr,   columnNr, signatureLabels.get(i).getValue(), "String", style);
+			createCell(sheet, rowNr+1, columnNr, "_______________", "String", style);
+			columnNr = columnNr + 2;
+		}
+	}
 
 	
 	// Maybe add a bunch of sheets here for grouped report
@@ -233,7 +289,6 @@ public class ExcelExporter
                 logger.error(errors.get(key) +" cell creation errors in " +key);
             }
         }
-
     }
 
     public CellStyle getCellStyle(XlsColumn columnDefinition)

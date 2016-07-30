@@ -125,7 +125,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sb.append(" --no-privileges");
 		sb.append(" --no-owner");
 		sb.append(" --data-only");
-		sb.append(" -t " + table);
+		sb.append(" -t " + table.toLowerCase());
 		sb.append(" ").append(pDirRestore.getValue() + File.separator + pDbName.getValue() + ".sql");
 		
 		super.addLine(sb.toString());
@@ -145,7 +145,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sb.append(" --no-privileges");
 		sb.append(" --no-owner");
 		sb.append(" --data-only");
-		sb.append(" -t " + table);
+		sb.append(" -t " + table.toLowerCase());
 		sb.append(" ").append(pDirRestore.getValue() + File.separator + pDbName.getValue() + ".sql");
 		
 		// Trigger http://dba.stackexchange.com/questions/23000/disable-constraints-before-using-pg-restore-exe
@@ -170,7 +170,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sb.append(" -h ").append(pDbHost.getValue());
 		sb.append(" -U ").append(pDbUser.getValue());
 		sb.append(" -d ").append(pDbName.getValue());
-		sb.append(" -c \"").append("SELECT setval('"+seq+"', (SELECT MAX(id) FROM "+table+"));").append("\"");
+		sb.append(" -c \"").append("SELECT setval('"+seq.toLowerCase()+"', (SELECT MAX(id) FROM "+table+"));").append("\"");
 		
 		if(!pwdSet){setPwd(pDbPwd.getValue());}
 		super.addLine(sb.toString());

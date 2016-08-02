@@ -66,6 +66,7 @@ public class RevisionQuery
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setRemark(XmlRemarkFactory.build(""));
 		
 		return xml;
 	}

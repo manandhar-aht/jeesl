@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
 import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
+import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -34,6 +35,7 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 	
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
+	private XmlTypeFactory xfType;
 	
 	public XmlAttributeFactory(Attribute q)
 	{
@@ -41,6 +43,7 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 		
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
+		if(q.isSetType()){xfType = new XmlTypeFactory(q.getType());}
 	}
 	
 	public Attribute build(RA ejb)
@@ -50,6 +53,7 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
 		if(q.isSetCode()){xml.setCode(ejb.getCode());}
+		if(q.isSetType()){xml.setType(xfType.build(ejb.getType()));}
 		
 		if(q.isSetXpath()){xml.setXpath(ejb.getXpath());}
 //		if(q.isSetJpa()){xml.setJpa(ejb.get);
@@ -61,12 +65,7 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 		
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(ejb.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(ejb.getDescription()));}
-		
-		if(q.isSetType())
-		{
-			XmlTypeFactory f = new XmlTypeFactory(q.getType());
-			xml.setType(f.build(ejb.getType()));
-		}
+		if(q.isSetRemark()){xml.setRemark(XmlRemarkFactory.build(ejb.getDeveloperInfo()));}
 		
 		return xml;
 	}

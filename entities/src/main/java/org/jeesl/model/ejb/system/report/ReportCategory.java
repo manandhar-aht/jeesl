@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model.ejb.system.revision;
+package org.jeesl.model.ejb.system.report;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -12,8 +12,8 @@ import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Category",category="revision",subset="revision",level=4)
-public class RevisionCategory implements Serializable,EjbRemoveable,EjbPersistable,
-							UtilsStatus<RevisionCategory,Lang,Description>
+public class ReportCategory implements Serializable,EjbRemoveable,EjbPersistable,
+							UtilsStatus<ReportCategory,Lang,Description>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;
@@ -56,7 +56,7 @@ public class RevisionCategory implements Serializable,EjbRemoveable,EjbPersistab
 	
 	public boolean equals(Object object)
 	{
-        return (object instanceof RevisionCategory) ? id == ((RevisionCategory) object).getId() : (object == this);
+        return (object instanceof ReportCategory) ? id == ((ReportCategory) object).getId() : (object == this);
     }
 	
 	public String toString()

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model.ejb.system.revision;
+package org.jeesl.model.ejb.system.revision;
 
 import java.io.Serializable;
 import java.util.Map;

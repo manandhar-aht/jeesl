@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model.ejb.system.revision;
+package org.jeesl.model.ejb.system.revision;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,13 +15,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -29,12 +28,14 @@ import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@Table(name="RevisionEntity", uniqueConstraints=@UniqueConstraint(columnNames={"code"}))
-@EjbErNode(name="Entity",category="revision",subset="revision")
-public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsRevisionEntity<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionScopeType,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
+@Table(name="RevisionScope", uniqueConstraints=@UniqueConstraint(columnNames={"code"}))
+@EjbErNode(name="Scope",category="revision",subset="revision")
+public class RevisionScope implements Serializable,EjbRemoveable,EjbPersistable,
+								UtilsRevisionScope<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionScopeType,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
 {
-	public static final long serialVersionUID=1;	
+	public static final long serialVersionUID=1;
+
+	public static enum Code {login}
 	
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -48,19 +49,6 @@ public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable
 	private RevisionCategory category;
 	public RevisionCategory getCategory() {return category;}
 	public void setCategory(RevisionCategory category) {this.category = category;}
-
-	@NotNull
-	private String code;
-	@Override public String getCode() {return code;}
-	@Override public void setCode(String code) {this.code = code;}
-	
-	private int position;
-	@Override public int getPosition() {return position;}
-	@Override public void setPosition(int position) {this.position = position;}
-	
-	private boolean visible;
-	@Override public boolean isVisible() {return visible;}
-	@Override public void setVisible(boolean visible) {this.visible = visible;}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name = "lkey")
@@ -73,22 +61,25 @@ public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable
 	private Map<String,Description> description;
 	@Override public Map<String,Description> getDescription() {return description;}
 	@Override public void setDescription(Map<String,Description> description) {this.description = description;}
-		
+	
+	private int position;
+	@Override public int getPosition() {return position;}
+	@Override public void setPosition(int position) {this.position = position;}
+	
+	private boolean visible;
+	@Override public boolean isVisible() {return visible;}
+	@Override public void setVisible(boolean visible) {this.visible = visible;}
+
+	private String code;
+	@Override public String getCode() {return code;}
+	@Override public void setCode(String code) {this.code = code;}
+	
 	@OneToMany(fetch=FetchType.LAZY)
-	@JoinTable(name="RevisionEntity_Attribute",joinColumns={@JoinColumn(name="entity")},inverseJoinColumns={@JoinColumn(name="attribute")})
+	@JoinTable(name="RevisionScope_Attribute",joinColumns={@JoinColumn(name="scope")},inverseJoinColumns={@JoinColumn(name="attribute")})
 	private List<RevisionAttribute> attributes;
 	@Override public List<RevisionAttribute> getAttributes() {if(attributes==null){attributes=new ArrayList<RevisionAttribute>();}return attributes;}
 	@Override public void setAttributes(List<RevisionAttribute> attributes) {this.attributes = attributes;}
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="entity")
-	@OrderBy("position")
-	private List<RevisionEntityMapping> maps;
-	@Override public List<RevisionEntityMapping> getMaps() {if(maps==null){maps=new ArrayList<RevisionEntityMapping>();}return maps;}
-	@Override public void setMaps(List<RevisionEntityMapping> maps) {this.maps=maps;}
-	
-	private String developerInfo;
-	@Override public String getDeveloperInfo() {return developerInfo;}
-	@Override public void setDeveloperInfo(String developerInfo) {this.developerInfo=developerInfo;}
 	
 	@Override public String toString()
 	{
@@ -97,6 +88,6 @@ public class RevisionEntity implements Serializable,EjbRemoveable,EjbPersistable
 		return sb.toString();
 	}
 	
-	@Override public boolean equals(Object object){return (object instanceof RevisionEntity) ? id == ((RevisionEntity) object).getId() : (object == this);}
+	@Override public boolean equals(Object object){return (object instanceof RevisionScope) ? id == ((RevisionScope) object).getId() : (object == this);}
 	@Override public int hashCode() {return new HashCodeBuilder(17,53).append(id).toHashCode();}
 }

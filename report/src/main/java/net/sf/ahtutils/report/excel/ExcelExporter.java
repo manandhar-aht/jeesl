@@ -5,26 +5,25 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.xml.datatype.XMLGregorianCalendar;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
+import net.sf.ahtutils.xml.report.Info.Subtitle;
+import net.sf.ahtutils.xml.report.Info.Title;
 import net.sf.ahtutils.xml.report.Label;
+import net.sf.ahtutils.xml.report.XlsColumn;
+import net.sf.ahtutils.xml.report.XlsMultiColumn;
 
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.Pointer;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.report.XlsColumn;
-import net.sf.ahtutils.xml.report.XlsMultiColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsTransformation;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
@@ -32,6 +31,8 @@ import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.ahtutils.xml.xpath.StatusXpath;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 public class ExcelExporter
 {
@@ -124,6 +125,11 @@ public class ExcelExporter
 				logger.warn(e.getMessage());
 				logger.warn("Could not retrieve sheet name from definition, falling back to standard name.");
 			}
+			
+			// Write signiture fields
+			applyHeader(sheetName);
+			
+			// Export data
 			exportSheet(sheet, sheetName);
 			
 			// Begin the footer with three lines of free space
@@ -143,7 +149,7 @@ public class ExcelExporter
 		context = JXPathContext.newContext(report);
 		
 		// Get the Excel Sheet
-		Sheet sheet = wb.getSheet(sheetName);
+		Sheet sheet = getSheet(sheetName);
 
 		// Create the standard text style
 		CellStyle style = wb.createCellStyle();
@@ -183,7 +189,48 @@ public class ExcelExporter
 			columnNr = columnNr + 2;
 		}
 	}
+	
+	public void applyHeader(String sheetName)
+	{
+		// Reset the context back to the complete report XML, because it might have been changed to a local one
+		context = JXPathContext.newContext(report);
+		
+		// Get the Excel Sheet
+		Sheet sheet = getSheet(sheetName);
+		logger.info(sheetName + " " +sheet.getSheetName());
+		// Create the standard text style
+		CellStyle style = wb.createCellStyle();
+		Font font = wb.createFont();
+		font.setFontName("Arial");
+		style.setFont(font);
 
+		// Build the Title, subtitle
+		Iterator iterator     = context.iteratePointers("//info/title");
+		Pointer pointerToItem = (Pointer)iterator.next();
+		Object o = pointerToItem.getValue();
+		if ((o!=null))
+		{
+			if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
+			Title t = (Title) pointerToItem.getValue();
+			createCell(sheet, rowNr, 0, t.getValue(), "String", style);
+			logger.info("Title: " +t.getValue());
+			rowNr++;
+		}
+		
+		iterator     = context.iteratePointers("//info/subtitle");
+		pointerToItem = (Pointer)iterator.next();
+		o = pointerToItem.getValue();
+		if ((o!=null))
+		{
+			if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
+			Subtitle s = (Subtitle) pointerToItem.getValue();
+			logger.info("Subtitle: " +s.getValue());
+			createCell(sheet, rowNr, 0, s.getValue(), "String", style);
+			rowNr++;
+		}
+		rowNr++;
+		rowNr++;
+	}
 	
 	// Maybe add a bunch of sheets here for grouped report
 	// Introduce Offsets for iteration of columns
@@ -196,7 +243,7 @@ public class ExcelExporter
         context = JXPathContext.newContext(report);
         
         // Create Excel Sheet named as given in constructor
-        Sheet sheet = wb.createSheet(id);
+        Sheet sheet = getSheet(id);
         
 		
         // PreProcess columns to create Styles and count the number of results for the given report query
@@ -204,14 +251,15 @@ public class ExcelExporter
 		logger.debug("PreProcess complete. Got " +sortedColumns.size() +" columns.");
         // Create Headers
         ArrayList<String> headers = new ArrayList<String>();
-        for (XlsColumn column : sortedColumns)
+		for (XlsColumn column : sortedColumns)
         {
             headers.add(column.getLangs().getLang().get(0).getTranslation());
+			logger.info(column.getLangs().getLang().get(0).getTranslation());
             errors.put(column.getLangs().getLang().get(0).getTranslation(), 0);
         }
         String[] headerArray = new String[headers.size()];
         createHeader(sheet, headers.toArray(headerArray));
-
+		
         // Create Content Rows
 		String queryExpression = sheetDefinition.getQuery();
 		logger.info("Iterating to find " +queryExpression);
@@ -329,20 +377,22 @@ public class ExcelExporter
 
     public Sheet createHeader(Sheet sheet, String[] headers)
     {
-        Row     headerRow = sheet.createRow(0);
+        Row     headerRow = sheet.createRow(rowNr);
         Integer cellNr = 0;
         for (String header : headers)
         {
-            Cell cell = headerRow.createCell(cellNr);
+			Cell cell = headerRow.createCell(cellNr);
                             cell.setCellStyle(dateHeaderStyle);
                             cell.setCellValue(header);
             cellNr++;
         }
+		rowNr++;
         return sheet;
     }
 
     public Sheet createCell(Sheet sheet, Integer rowNr, Integer cellNr, Object value, String type, CellStyle style)
     {
+		if (logger.isTraceEnabled()) {logger.trace("Cell at " +rowNr +"/" +cellNr +" Value: " +value.toString());}
         Row     row = sheet.getRow(rowNr) != null ? sheet.getRow(rowNr) : sheet.createRow(rowNr);
         Cell   cell = row.createCell(cellNr);
         if      (type.equals("String"))                 {cell.setCellValue(value.toString());}
@@ -357,18 +407,18 @@ public class ExcelExporter
                                                     cell.setCellStyle(style);
                                                 }
         else if (type.equals("Integer"))   {
-			logger.info("Class " +value.toString());
+		//	logger.info("Class " +value.toString());
 												if (value.getClass().getSimpleName().equals("Long"))
 												{
 													Long l = (Long) value;
 													cell.setCellValue(new Integer(l.intValue()));
-													logger.info("Setting to Long " +l.intValue());
+												//	logger.info("Setting to Long " +l.intValue());
 												}
 												else if (value.getClass().getSimpleName().equals("int") || value.getClass().getSimpleName().equals("Integer"))
 												{
 													Integer i = (Integer) value;
 													cell.setCellValue(i);
-													logger.info("Setting to Integer " +i);
+												//	logger.info("Setting to Integer " +i);
 												}
 												else
 												{
@@ -499,6 +549,20 @@ public class ExcelExporter
 		
 		cellStyles.put("" +columnNr, getCellStyle(c));
 		return c;
+	}
+	
+	public Sheet getSheet(String sheetName)
+	{
+		Sheet sheet = null;
+		if (wb.getSheet(sheetName) == null)
+		{
+			sheet = wb.createSheet(sheetName);
+		}
+		else
+		{
+			sheet = wb.getSheet(sheetName);
+		}	
+		return sheet;
 	}
 
     public Workbook getWb() {return wb;}

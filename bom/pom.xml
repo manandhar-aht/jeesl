@@ -118,6 +118,23 @@
     	   		<type>pom</type>
 				<scope>import</scope>
     	   	</dependency>
+    	   	
+    	   	<!-- MetaChart -->
+			<dependency>
+				<groupId>org.metachart</groupId>
+				<artifactId>metachart-core</artifactId>
+				<version>0.0.3-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.metachart</groupId>
+				<artifactId>metachart-jsf</artifactId>
+				<version>0.0.3-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.metachart</groupId>
+				<artifactId>metachart-xml</artifactId>
+				<version>0.0.3-SNAPSHOT</version>
+			</dependency>
 		    
 		    <!-- Mail -->
 		    <dependency>

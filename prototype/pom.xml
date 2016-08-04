@@ -47,7 +47,6 @@
 		<dependency>
 			<groupId>org.metachart</groupId>
 			<artifactId>metachart-jsf</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
 			<exclusions>
 			   	<exclusion>
 			   		<artifactId>metachart-xml</artifactId>
@@ -58,7 +57,6 @@
 		<dependency>
 		   <artifactId>metachart-xml</artifactId>
 		   <groupId>org.metachart</groupId>
-		   <version>0.0.2-SNAPSHOT</version>
 		   <scope>provided</scope>
 		</dependency>
 		

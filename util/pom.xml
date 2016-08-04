@@ -54,13 +54,11 @@
 		<dependency>
 			<groupId>org.metachart</groupId>
 			<artifactId>metachart-core</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 		   <artifactId>metachart-xml</artifactId>
 		   <groupId>org.metachart</groupId>
-		   <version>0.0.2-SNAPSHOT</version>
 		   <scope>provided</scope>
 		</dependency>
 <!-- 

@@ -64,7 +64,6 @@
 		<dependency>
 			<groupId>org.metachart</groupId>
 			<artifactId>metachart-core</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		

@@ -60,34 +60,6 @@
     	<maven-ejb-plugin.version>2.3</maven-ejb-plugin.version>
     </properties>
     
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-	    		<groupId>org.apache.httpcomponents</groupId>
-	    		<artifactId>httpclient</artifactId>
-	    		<version>4.1.2</version>
-	    	</dependency>
-        <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4</artifactId>
-            <type>jar</type>
-            <scope>compile</scope>
-            <version>4.5.3</version>
-        </dependency>
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-jaxrs</artifactId>
-				<version>2.2.1.GA</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-jaxb-provider</artifactId>
-				<version>2.2.1.GA</version>
-			</dependency>
-
-		</dependencies>
-	</dependencyManagement>
-
 	<licenses>
 		<license>
 			<name>GNU General Public License</name>
@@ -118,6 +90,33 @@
 	<issueManagement>
 	</issueManagement>
 	
+		<dependencyManagement>
+		<dependencies>
+			<dependency>
+	    		<groupId>org.apache.httpcomponents</groupId>
+	    		<artifactId>httpclient</artifactId>
+	    		<version>4.1.2</version>
+	    	</dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4</artifactId>
+            <type>jar</type>
+            <scope>compile</scope>
+            <version>4.5.3</version>
+        </dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jaxrs</artifactId>
+				<version>2.2.1.GA</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jaxb-provider</artifactId>
+				<version>2.2.1.GA</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
 	<repositories>
 		<repository>
 			<id>aht.3rd</id>
@@ -140,9 +139,9 @@
             <releases><enabled>true</enabled></releases>
 			<snapshots><enabled>false</enabled></snapshots>
         </repository>
-   </repositories>
+	</repositories>
    
-   	<pluginRepositories>
+	<pluginRepositories>
 		<pluginRepository>
 			<id>sonatype.snapshot</id>
 			<name>Sonatype Snapshot Repository</name>
@@ -296,26 +295,6 @@
 				</plugins>
     		</build>
   		</profile>
-    	<profile>
-       		<id>remote-deploy</id>
-       		<build>
-       			<plugins>
-       			<plugin>
-              	<groupId>org.jboss.as.plugins</groupId>
-              	<artifactId>jboss-as-maven-plugin</artifactId>
-           		<version>7.1.0.Final</version>
-              	<inherited>true</inherited>
-              	<configuration>
-               	  	<skip>true</skip>
-               	  	<hostname>${deploy.host}</hostname>
-                    <port>9999</port>
-              		<username>${deploy.username}</username>
-              		<password>${deploy.password}</password>
-              	</configuration>
-           	</plugin>
-           	</plugins>
-       		</build>
-   		</profile>
    		<profile>
        		<id>ram</id>
        		<build>

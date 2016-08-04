@@ -16,7 +16,7 @@
     
     <name>UTILS (AHT Utils)</name>
 	<url>http://sourceforge.net/projects/ahtutils</url>
-	<description>Utilities and Helper for JavaEE Developments</description>
+	<description>Utilities and Helper for JavaEE Developments (JavaEE Support Library)</description>
 
 	<modules>
 		<module>doc</module>
@@ -213,7 +213,7 @@
 				<plugin>
 					<groupId>net.sf.exlp</groupId>
 					<artifactId>exlp-maven</artifactId>
-					<version>0.1.11-SNAPSHOT</version>
+					<version>0.1.11</version>
 				</plugin>
 				<plugin>
 			        <groupId>org.codehaus.mojo</groupId>

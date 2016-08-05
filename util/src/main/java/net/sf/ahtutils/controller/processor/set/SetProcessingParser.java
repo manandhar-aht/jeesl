@@ -136,13 +136,13 @@ public class SetProcessingParser extends Parser {
 		public TerminalNode CHAR(int i) {
 			return getToken(SetProcessingParser.CHAR, i);
 		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
 		public BinaryContext binary() {
 			return getRuleContext(BinaryContext.class,0);
 		}
 		public TerminalNode OPAREN() { return getToken(SetProcessingParser.OPAREN, 0); }
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
 		public TerminalNode CPAREN() { return getToken(SetProcessingParser.CPAREN, 0); }
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -166,33 +166,48 @@ public class SetProcessingParser extends Parser {
 	public final ExpressionContext expression() throws RecognitionException {
 		ExpressionContext _localctx = new ExpressionContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_expression);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(8);
 			((ExpressionContext)_localctx).left = match(CHAR);
-			setState(9);
-			((ExpressionContext)_localctx).op = binary();
-			setState(15);
-			switch (_input.LA(1)) {
-			case CHAR:
+			setState(20);
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			case 1:
 				{
+				setState(9);
+				((ExpressionContext)_localctx).op = binary();
 				setState(10);
 				((ExpressionContext)_localctx).right = match(CHAR);
 				}
 				break;
-			case OPAREN:
+			case 2:
 				{
-				setState(11);
-				match(OPAREN);
 				setState(12);
+				((ExpressionContext)_localctx).op = binary();
+				setState(14);
+				_la = _input.LA(1);
+				if (_la==OPAREN) {
+					{
+					setState(13);
+					match(OPAREN);
+					}
+				}
+
+				setState(16);
 				expression();
-				setState(13);
-				match(CPAREN);
+				setState(18);
+				switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
+				case 1:
+					{
+					setState(17);
+					match(CPAREN);
+					}
+					break;
+				}
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 			}
 		}
@@ -236,7 +251,7 @@ public class SetProcessingParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(17);
+			setState(22);
 			_la = _input.LA(1);
 			if ( !(_la==AND || _la==OR) ) {
 			_errHandler.recoverInline(this);
@@ -257,12 +272,14 @@ public class SetProcessingParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13\26\4\2\t\2\4\3"+
-		"\t\3\4\4\t\4\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\22\n\3\3\4\3\4\3"+
-		"\4\2\2\5\2\4\6\2\3\3\2\4\5\23\2\b\3\2\2\2\4\n\3\2\2\2\6\23\3\2\2\2\b\t"+
-		"\5\4\3\2\t\3\3\2\2\2\n\13\7\n\2\2\13\21\5\6\4\2\f\22\7\n\2\2\r\16\7\b"+
-		"\2\2\16\17\5\4\3\2\17\20\7\t\2\2\20\22\3\2\2\2\21\f\3\2\2\2\21\r\3\2\2"+
-		"\2\22\5\3\2\2\2\23\24\t\2\2\2\24\7\3\2\2\2\3\21";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13\33\4\2\t\2\4\3"+
+		"\t\3\4\4\t\4\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\5\3\21\n\3\3\3\3\3\5\3\25"+
+		"\n\3\5\3\27\n\3\3\4\3\4\3\4\2\2\5\2\4\6\2\3\3\2\4\5\33\2\b\3\2\2\2\4\n"+
+		"\3\2\2\2\6\30\3\2\2\2\b\t\5\4\3\2\t\3\3\2\2\2\n\26\7\n\2\2\13\f\5\6\4"+
+		"\2\f\r\7\n\2\2\r\27\3\2\2\2\16\20\5\6\4\2\17\21\7\b\2\2\20\17\3\2\2\2"+
+		"\20\21\3\2\2\2\21\22\3\2\2\2\22\24\5\4\3\2\23\25\7\t\2\2\24\23\3\2\2\2"+
+		"\24\25\3\2\2\2\25\27\3\2\2\2\26\13\3\2\2\2\26\16\3\2\2\2\26\27\3\2\2\2"+
+		"\27\5\3\2\2\2\30\31\t\2\2\2\31\7\3\2\2\2\5\20\24\26";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

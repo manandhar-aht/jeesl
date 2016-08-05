@@ -20,9 +20,11 @@ options {
 parse: expression;
 
 expression:
-	left=CHAR op=binary
-	( right=CHAR
-	| OPAREN expression CPAREN);
+	left=CHAR
+	(
+	 op=binary right=CHAR
+	| op=binary OPAREN? expression CPAREN?
+	)?;
 
 //list:
 //	BEG elem (SEP elem)* END;

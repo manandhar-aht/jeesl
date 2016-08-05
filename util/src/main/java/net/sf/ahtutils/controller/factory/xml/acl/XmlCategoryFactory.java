@@ -37,13 +37,13 @@ public class XmlCategoryFactory
 		
 		if(qC.isSetLangs())
 		{
-			XmlLangsFactory f = new XmlLangsFactory(qC.getLangs());
+			XmlLangsFactory<L> f = new XmlLangsFactory<L>(qC.getLangs());
 			rc.setLangs(f.getUtilsLangs(aclRoleCategory.getName()));
 		}
 		
 		if(qC.isSetDescriptions())
 		{
-			XmlDescriptionsFactory f = new XmlDescriptionsFactory(qC.getDescriptions());
+			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(qC.getDescriptions());
 			rc.setDescriptions(f.create(aclRoleCategory.getDescription()));
 		}
 		
@@ -65,13 +65,13 @@ public class XmlCategoryFactory
 		
 		if(qC.isSetLangs())
 		{
-			XmlLangsFactory f = new XmlLangsFactory(qC.getLangs());
+			XmlLangsFactory<L> f = new XmlLangsFactory<L>(qC.getLangs());
 			prc.setLangs(f.getUtilsLangs(aclPrc.getName()));
 		}
 		
 		if(qC.isSetDescriptions())
 		{
-			XmlDescriptionsFactory f = new XmlDescriptionsFactory(qC.getDescriptions());
+			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(qC.getDescriptions());
 			prc.setDescriptions(f.create(aclPrc.getDescription()));
 		}
 		
@@ -92,13 +92,13 @@ public class XmlCategoryFactory
 		
 		if(qC.isSetLangs())
 		{
-			XmlLangsFactory f = new XmlLangsFactory(qC.getLangs());
+			XmlLangsFactory<L> f = new XmlLangsFactory<L>(qC.getLangs());
 			xml.setLangs(f.getUtilsLangs(category.getName()));
 		}
 		
 		if(qC.isSetDescriptions())
 		{
-			XmlDescriptionsFactory f = new XmlDescriptionsFactory(qC.getDescriptions());
+			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(qC.getDescriptions());
 			xml.setDescriptions(f.create(category.getDescription()));
 		}
 		

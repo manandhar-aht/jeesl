@@ -6,11 +6,10 @@
 package net.sf.ahtutils.report.jxpath;
 
 import java.util.Iterator;
+
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.Pointer;
-import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -33,7 +32,8 @@ public class TestDataTypesJXpath {
 	}
 	
 	@Test
-	public void test() {
+	public void test()
+	{
 		TestDataStructure structure = new TestDataStructure();
 		//structure.setIntegerValue(1);
 		//structure.setLongValue(2);

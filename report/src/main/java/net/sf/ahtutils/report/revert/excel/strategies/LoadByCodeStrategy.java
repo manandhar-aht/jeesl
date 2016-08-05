@@ -1,21 +1,16 @@
 package net.sf.ahtutils.report.revert.excel.strategies;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.logging.Level;
-import static net.sf.ahtutils.factory.xml.survey.XmlCorrelationFactory.id;
-
-import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
-import net.sf.ahtutils.report.revert.excel.ImportStrategy;
-import net.sf.ahtutils.util.reflection.ReflectionsUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoadByCodeStrategy implements ImportStrategy {
-	
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
+import net.sf.ahtutils.report.revert.excel.ImportStrategy;
+import net.sf.ahtutils.util.reflection.ReflectionsUtil;
+
+public class LoadByCodeStrategy implements ImportStrategy
+{
 	final static Logger logger = LoggerFactory.getLogger(LoadByCodeStrategy.class);
 	
 	private UtilsFacade facade;

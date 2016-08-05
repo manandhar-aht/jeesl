@@ -1,23 +1,17 @@
 package net.sf.ahtutils.xml.xpath.report;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sf.ahtutils.test.AbstractXmlTest;
-import net.sf.ahtutils.xml.report.Media;
-import net.sf.ahtutils.xml.report.TestXmlMedia;
-import net.sf.ahtutils.xml.report.XlsDefinition;
-import net.sf.ahtutils.xml.report.XlsWorkbook;
-import net.sf.ahtutils.xml.xpath.ReportXpath;
-import net.sf.exlp.exception.ExlpXpathNotFoundException;
-import net.sf.exlp.exception.ExlpXpathNotUniqueException;
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.test.AbstractXmlTest;
+import net.sf.ahtutils.xml.report.XlsDefinition;
+import net.sf.ahtutils.xml.report.XlsWorkbook;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
+import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
 public class TestReportExcelDef extends AbstractXmlTest
 {

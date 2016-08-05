@@ -25,6 +25,11 @@
         <ignoreVersion>2.2.11.jbossorg-1</ignoreVersion>
       </ignoreVersions>
     </rule>
+    <rule groupId="org.glassfish.jaxb" comparisonMethod="maven">
+      <ignoreVersions>
+        <ignoreVersion>2.2.11.jbossorg-1</ignoreVersion>
+      </ignoreVersions>
+    </rule>
     <rule groupId="com.sun.faces" comparisonMethod="maven">
       <ignoreVersions>
         <ignoreVersion>2.2.12-jbossorg-2</ignoreVersion>

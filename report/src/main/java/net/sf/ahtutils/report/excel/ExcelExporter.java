@@ -31,6 +31,7 @@ import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.ahtutils.xml.xpath.StatusXpath;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -217,9 +218,15 @@ public class ExcelExporter
 			rowNr++;
 		}
 		
+		// Reset object
+		o = null;
 		iterator     = context.iteratePointers("//info/subtitle");
-		pointerToItem = (Pointer)iterator.next();
-		o = pointerToItem.getValue();
+		if (iterator.hasNext()) 
+		{
+			pointerToItem = (Pointer)iterator.next();
+			o = pointerToItem.getValue();
+		}
+		
 		if ((o!=null))
 		{
 			if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
@@ -262,7 +269,7 @@ public class ExcelExporter
 		
         // Create Content Rows
 		String queryExpression = sheetDefinition.getQuery();
-		logger.info("Iterating to find " +queryExpression);
+		logger.trace("Iterating to find " +queryExpression);
 		Iterator iterator     = context.iteratePointers(queryExpression);
 		logger.debug("Beginning iteration");
         while (iterator.hasNext())
@@ -282,9 +289,11 @@ public class ExcelExporter
 				
 				
 				Boolean relative  = true;
-                if (columnDefinition.getXlsTransformation().isSetBeanProperty())
+				Boolean isJoin    = false;
+				if (columnDefinition.getXlsTransformation().isSetBeanProperty())
 				{
 					expression = columnDefinition.getXlsTransformation().getBeanProperty();
+					if (expression.startsWith("string-join")) {logger.info("Polyfill for XPath 2 string-join activated for " +expression);isJoin = true;}
 				}
 				else if (columnDefinition.getXlsTransformation().isSetXPath())
 				{
@@ -303,17 +312,31 @@ public class ExcelExporter
                     Object  value = null;
                     //String xpath  = query +"[" +row +"]/" + expression;
                     logger.trace("Using XPath expression: " +expression);
-					if (relative)
+					if (relative && !isJoin)
 					{
 						value = relativeContext.getValue(expression);
 						logger.trace("... in relative context.");
 					}
-					else
+					else if (!relative && !isJoin)
 					{
 						value = context.getValue(expression);
 						logger.trace("... in complete context.");
 					}
-                    logger.trace("Got Value " +value.toString());
+					else
+					{
+						List<String> subSet = new ArrayList<String>();
+						String joinExpression = expression.substring(expression.indexOf("(")+1, expression.indexOf(","));
+						Iterator joinIterator = relativeContext.iteratePointers(joinExpression);
+						while (joinIterator.hasNext())
+						{
+							Pointer pointerToSubItem	= (Pointer)joinIterator.next();
+							String subValue				= pointerToSubItem.getValue().toString();
+							subValue					= StringUtils.trim(subValue);
+							subSet.add(subValue);
+						}
+						value = StringUtils.join(subSet, ", ");
+					}
+                    if (logger.isTraceEnabled()) {logger.trace("Got Value " +value.toString());}
                     createCell(sheet, rowNr, i, value, type, style);
 
                 } catch (Exception e)
@@ -321,7 +344,7 @@ public class ExcelExporter
                     Integer counter = errors.get(columnId);
                     counter++;
                     errors.put(columnId, counter);
-					logger.info("ERROR occured: " +e.getMessage());
+					logger.trace("ERROR occured: " +e.getMessage());
                 }
             }
 			

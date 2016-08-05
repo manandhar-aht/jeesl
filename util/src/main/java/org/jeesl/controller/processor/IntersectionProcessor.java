@@ -1,6 +1,5 @@
 package org.jeesl.controller.processor;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.sf.ahtutils.controller.processor.set.SetProcessingLexer;
@@ -38,6 +37,9 @@ public class IntersectionProcessor extends SetProcessingBaseVisitor
 	@Override
 	public Object visitExpression(SetProcessingParser.ExpressionContext ctx)
 	{
+		if(ctx.op == null) {
+			return asList(ctx.left.getText().charAt(0));
+		}
 		if(ctx.op.AND() != null)
 		{
 			if(ctx.OPAREN()	!= null)
@@ -54,10 +56,7 @@ public class IntersectionProcessor extends SetProcessingBaseVisitor
 	}
 
 	@Override
-	public Object visitParse(SetProcessingParser.ParseContext ctx)
-	{
-		return super.visitParse(ctx);
-	}
+	public Object visitParse(SetProcessingParser.ParseContext ctx) {return super.visitParse(ctx);}
 
 	private List asList(char s) {
 		int i = s - 97;

@@ -67,9 +67,9 @@ public class TestIntersectionProcessor extends AbstractAhtUtilsTest
  
 	@Test public void basicAnd()
     {	
-		List<String> expecteds = Arrays.asList("d e f".split(" "));
-    	List<String> actuals = IntersectionProcessor.and(a,b);
-    	Assert.assertArrayEquals(expecteds.toArray(new String[expecteds.size()]), actuals.toArray(new String[actuals.size()]));
+		List<String> expected = Arrays.asList("d e f".split(" "));
+    	List<String> actual = IntersectionProcessor.and(a,b);
+    	Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
     }
     
     @Test public void basicOr()
@@ -80,32 +80,32 @@ public class TestIntersectionProcessor extends AbstractAhtUtilsTest
     
     @Test public void stringSingleWorkaround()
     {
-		List<String> actualsA = IntersectionProcessor.query("a AND a",ab);
-		List<String> actualsB = IntersectionProcessor.query("b AND b",ab);
-		Assert.assertArrayEquals(a.toArray(new String[a.size()]), actualsA.toArray(new String[actualsA.size()]));
-		Assert.assertArrayEquals(b.toArray(new String[b.size()]), actualsB.toArray(new String[actualsB.size()]));
+		List<String> actualA = IntersectionProcessor.query("a AND a",ab);
+		List<String> actualB = IntersectionProcessor.query("b AND b",ab);
+		Assert.assertArrayEquals(a.toArray(new String[a.size()]), actualA.toArray(new String[actualA.size()]));
+		Assert.assertArrayEquals(b.toArray(new String[b.size()]), actualB.toArray(new String[actualB.size()]));
     }
     
-    @Ignore @Test public void stringSingle()
+    @Test public void stringSingle()
     {
-		List<String> actualsA = IntersectionProcessor.query("a",ab);
-		List<String> actualsB = IntersectionProcessor.query("b",ab);
-		Assert.assertArrayEquals(a.toArray(new String[a.size()]), actualsA.toArray(new String[actualsA.size()]));
-		Assert.assertArrayEquals(b.toArray(new String[b.size()]), actualsB.toArray(new String[actualsB.size()]));
+		List<String> actualA = IntersectionProcessor.query("a",ab);
+		List<String> actualB = IntersectionProcessor.query("b",ab);
+		Assert.assertArrayEquals(a.toArray(new String[a.size()]), actualA.toArray(new String[actualA.size()]));
+		Assert.assertArrayEquals(b.toArray(new String[b.size()]), actualB.toArray(new String[actualB.size()]));
     }
     
     @Test public void stringAnd()
     {
-    	List<String> expecteds = Arrays.asList("d e f".split(" "));
-		List<String> actuals = IntersectionProcessor.query("a AND b",ab);
-		Assert.assertArrayEquals(expecteds.toArray(new String[expecteds.size()]), actuals.toArray(new String[actuals.size()]));
+    	List<String> expected = Arrays.asList("d e f".split(" "));
+		List<String> actual = IntersectionProcessor.query("a AND b",ab);
+		Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
     }
     
     @Test public void stirngOr()
     {
-    	List<String> expecteds = Arrays.asList("a b c d e f g".split(" "));
-		List<String> actuals = IntersectionProcessor.query("a OR b",ab);
-		Assert.assertArrayEquals(expecteds.toArray(new String[expecteds.size()]), actuals.toArray(new String[actuals.size()]));
+    	List<String> expected = Arrays.asList("a b c d e f g".split(" "));
+		List<String> actual = IntersectionProcessor.query("a OR b",ab);
+		Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
     }
 	
     @Test public void integerAnd()
@@ -117,23 +117,25 @@ public class TestIntersectionProcessor extends AbstractAhtUtilsTest
 
 	@Test public void simpleCombination()
 	{
-		List<String> expecteds = Arrays.asList("f b d e".split(" "));
-		List<String> actuals = IntersectionProcessor.query("a AND (b OR c)",abc);
-		Assert.assertArrayEquals(expecteds.toArray(new String[expecteds.size()]), actuals.toArray(new String[actuals.size()]));
+		List<String> expected = Arrays.asList("f b d e".split(" "));
+		List<String> actual = IntersectionProcessor.query("a AND (b OR c)",abc);
+		Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
 	}
 	
 	@Ignore @Test public void plain3()
 	{		
-		List<String> expecteds = Arrays.asList("d e".split(" "));
-		List<String> actuals = IntersectionProcessor.query("a AND b AND c",abc);
-		Assert.assertArrayEquals(expecteds.toArray(new String[expecteds.size()]), actuals.toArray(new String[actuals.size()]));
+		List<String> expected = Arrays.asList("d e".split(" "));
+		List<String> actual = IntersectionProcessor.query("a AND b AND c",abc);
+		System.out.println(actual.toString());
+		Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
 	}
 	
 	@Test public void plain3Workaround()
 	{
-		List<String> expecteds = Arrays.asList("d e".split(" "));
-		List<String> actuals = IntersectionProcessor.query("a AND (b AND c)",abc);
-		Assert.assertArrayEquals(expecteds.toArray(new String[expecteds.size()]), actuals.toArray(new String[actuals.size()]));
+		List<String> expected = Arrays.asList("d e".split(" "));
+		List<String> actual = IntersectionProcessor.query("a AND (b AND c)",abc);
+		System.out.println(actual.toString());
+		Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
 	}
 	
 	@Test public void idAnd()

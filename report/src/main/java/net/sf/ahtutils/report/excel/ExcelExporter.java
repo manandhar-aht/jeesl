@@ -218,9 +218,15 @@ public class ExcelExporter
 			rowNr++;
 		}
 		
+		// Reset object
+		o = null;
 		iterator     = context.iteratePointers("//info/subtitle");
-		pointerToItem = (Pointer)iterator.next();
-		o = pointerToItem.getValue();
+		if (iterator.hasNext()) 
+		{
+			pointerToItem = (Pointer)iterator.next();
+			o = pointerToItem.getValue();
+		}
+		
 		if ((o!=null))
 		{
 			if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}

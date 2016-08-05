@@ -197,18 +197,6 @@
 		</dependency>
 
 		<!-- Chart -->
- 		<dependency>
-			<groupId>org.openfuxml</groupId>
-			<artifactId>ofx-chart</artifactId>
-			<type>jar</type>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>commons-logging</artifactId>
-					<groupId>commons-logging</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<dependency>
 			<groupId>org.openfuxml</groupId>
 			<artifactId>ofx-core</artifactId>

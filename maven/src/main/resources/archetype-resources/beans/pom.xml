@@ -141,10 +141,6 @@
          		<groupId>net.sf.jasperreports</groupId>
          	</exclusion>
          	<exclusion>
-         		<artifactId>ofx-chart</artifactId>
-         		<groupId>org.openfuxml</groupId>
-         	</exclusion>
-         	<exclusion>
          		<artifactId>xalan</artifactId>
          		<groupId>xalan</groupId>
          	</exclusion>

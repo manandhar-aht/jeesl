@@ -41,12 +41,12 @@
 	
 		<!-- AHT Utils -->
 		<dependency>
-  			<groupId>net.sf.ahtutils</groupId>
-  			<artifactId>ahtutils-interfaces</artifactId>
+  			<groupId>org.jeesl</groupId>
+  			<artifactId>jeesl-interfaces</artifactId>
   		</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-ejb</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-ejb</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		
@@ -124,8 +124,8 @@
       </dependency>
 
       <dependency>
-         <groupId>net.sf.ahtutils</groupId>
-         <artifactId>ahtutils-util</artifactId>
+         <groupId>org.jeesl</groupId>
+         <artifactId>jeesl-util</artifactId>
          <scope>compile</scope>
          <exclusions>
          	<exclusion>
@@ -199,8 +199,8 @@
          </exclusions>
       </dependency>
       <dependency>
-      	<groupId>net.sf.ahtutils</groupId>
-      	<artifactId>ahtutils-test</artifactId>
+      	<groupId>org.jeesl</groupId>
+      	<artifactId>jeesl-test</artifactId>
       	<scope>test</scope>
       </dependency>
       <dependency>

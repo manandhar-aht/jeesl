@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-    	<groupId>net.sf.ahtutils</groupId>
-    	<artifactId>ahtutils</artifactId>
+    	<groupId>org.jeesl</groupId>
+    	<artifactId>jeesl</artifactId>
     	<version>0.2.6-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>ahtutils-maven</artifactId>
+	<artifactId>jeesl-maven</artifactId>
 	<packaging>maven-plugin</packaging>
 	<name>UTILS - Maven Plugins</name>
 	<url>http://sourceforge.net/projects/ahtutils</url>
@@ -17,8 +17,8 @@
 	<dependencyManagement>
 		<dependencies>      	         
 			<dependency>
-				<groupId>net.sf.ahtutils</groupId>
-				<artifactId>ahtutils-bom</artifactId>
+				<groupId>org.jeesl</groupId>
+				<artifactId>jeesl-bom</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -60,14 +60,14 @@
     		<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-util</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-util</artifactId>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-report</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-report</artifactId>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>

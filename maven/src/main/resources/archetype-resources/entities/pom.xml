@@ -15,8 +15,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-interfaces</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-interfaces</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

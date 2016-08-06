@@ -3,21 +3,21 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-    	<groupId>net.sf.ahtutils</groupId>
-    	<artifactId>ahtutils</artifactId>
+    	<groupId>org.jeesl</groupId>
+    	<artifactId>jeesl</artifactId>
     	<version>0.2.6-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
 	</parent>
 	
-    <artifactId>ahtutils-jsf</artifactId>
+    <artifactId>jeesl-jsf</artifactId>
     <name>UTILS - JSF</name>
 	<packaging>jar</packaging>
 	
 	<dependencyManagement>
 		<dependencies>      	         
 			<dependency>
-				<groupId>net.sf.ahtutils</groupId>
-				<artifactId>ahtutils-bom</artifactId>
+				<groupId>org.jeesl</groupId>
+				<artifactId>jeesl-bom</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -27,8 +27,8 @@
 	
 	<dependencies>
 	   	<dependency>
-   	   		<groupId>net.sf.ahtutils</groupId>
-   	   		<artifactId>ahtutils-ejb</artifactId>
+   	   		<groupId>org.jeesl</groupId>
+   	   		<artifactId>jeesl-ejb</artifactId>
    	   	</dependency>
 	
 		<dependency>
@@ -64,8 +64,8 @@
    	   		<scope>test</scope>
    	   	</dependency>
    	   	<dependency>
-   	   		<groupId>net.sf.ahtutils</groupId>
-   	   		<artifactId>ahtutils-xml</artifactId>
+   	   		<groupId>org.jeesl</groupId>
+   	   		<artifactId>jeesl-xml</artifactId>
    	   		<exclusions>
    	   			<exclusion>
    	   				<artifactId>commons-jxpath</artifactId>
@@ -84,8 +84,8 @@
    	   		<scope>provided</scope>
    	   	</dependency>
    	   	<dependency>
-   	   		<groupId>net.sf.ahtutils</groupId>
-   	   		<artifactId>ahtutils-util</artifactId>
+   	   		<groupId>org.jeesl</groupId>
+   	   		<artifactId>jeesl-util</artifactId>
    	   		<exclusions>
    	   			<exclusion>
    	   				<artifactId>ant</artifactId>
@@ -126,8 +126,8 @@
    	   		</exclusions>
    	   	</dependency>
    	   		<dependency>
-   	   		<groupId>net.sf.ahtutils</groupId>
-   	   		<artifactId>ahtutils-interfaces</artifactId>
+   	   		<groupId>org.jeesl</groupId>
+   	   		<artifactId>jeesl-interfaces</artifactId>
    	   		<scope>provided</scope>
    	   	</dependency>
    	   	
@@ -164,8 +164,8 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-test</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -235,8 +235,8 @@
 	<build>
 		<plugins>
          	<plugin>
-				<groupId>net.sf.ahtutils</groupId>
-				<artifactId>ahtutils-maven</artifactId>
+				<groupId>org.jeesl</groupId>
+				<artifactId>jeesl-maven</artifactId>
 				<version>0.2.6-SNAPSHOT</version>
 				<executions>
  					<execution>
@@ -272,8 +272,8 @@
 							<pluginExecutions>
 								<pluginExecution>
 									<pluginExecutionFilter>
-										<groupId>net.sf.ahtutils</groupId>
-										<artifactId>ahtutils-maven</artifactId>
+										<groupId>org.jeesl</groupId>
+										<artifactId>jeesl-maven</artifactId>
 										<versionRange>[0.2.2-SNAPSHOT,)</versionRange>
 										<goals>
 											<goal>createCssGrid</goal>

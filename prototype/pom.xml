@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-    	<groupId>net.sf.ahtutils</groupId>
-    	<artifactId>ahtutils</artifactId>
+    	<groupId>org.jeesl</groupId>
+    	<artifactId>jeesl</artifactId>
     	<version>0.2.6-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
 	</parent>
 	
-    <artifactId>ahtutils-prototype</artifactId>
+    <artifactId>jeesl-prototype</artifactId>
     <name>UTILS - Prototype</name>
 	<packaging>jar</packaging>
 		
@@ -35,12 +35,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-jsf</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-jsf</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-report</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-report</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		
@@ -86,8 +86,8 @@
 	<dependencyManagement>
 		<dependencies>      	         
 			<dependency>
-				<groupId>net.sf.ahtutils</groupId>
-				<artifactId>ahtutils-bom</artifactId>
+				<groupId>org.jeesl</groupId>
+				<artifactId>jeesl-bom</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>

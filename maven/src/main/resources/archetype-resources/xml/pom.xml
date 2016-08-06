@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-    	<groupId>net.sf.ahtutils</groupId>
-    	<artifactId>ahtutils</artifactId>
+    	<groupId>org.jeesl</groupId>
+    	<artifactId>jeesl</artifactId>
     	<version>0.2.6-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
 	</parent>
 	
-    <artifactId>ahtutils-xml</artifactId>
+    <artifactId>jeesl-xml</artifactId>
     <packaging>jar</packaging>
     <name>UTILS - XML</name>
     
@@ -32,8 +32,8 @@
 	<dependencyManagement>
 		<dependencies>      	         
 			<dependency>
-				<groupId>net.sf.ahtutils</groupId>
-				<artifactId>ahtutils-bom</artifactId>
+				<groupId>org.jeesl</groupId>
+				<artifactId>jeesl-bom</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -134,8 +134,8 @@
    	   		<scope>test</scope>
    	   	</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-test</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

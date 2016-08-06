@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-    	<groupId>net.sf.ahtutils</groupId>
-        <artifactId>ahtutils</artifactId>
+    	<groupId>org.jeesl</groupId>
+        <artifactId>jeesl</artifactId>
         <version>0.2.6-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ahtutils-doc</artifactId>
+    <artifactId>jeesl-doc</artifactId>
     <packaging>jar</packaging>
     <name>UTILS - Documentation</name>
 
@@ -75,37 +75,37 @@
 		</dependency>
 			
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-xml</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-xml</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-interfaces</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-interfaces</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-ejb</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-ejb</artifactId>
 			<type>jar</type>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-util</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-util</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-test</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-        	<groupId>net.sf.ahtutils</groupId>
-        	<artifactId>ahtutils-xml</artifactId>
+        	<groupId>org.jeesl</groupId>
+        	<artifactId>jeesl-xml</artifactId>
         	<type>jar</type>
         	<scope>test</scope>
         	<classifier>tests</classifier>
         </dependency>
 		<dependency>
-			<groupId>net.sf.ahtutils</groupId>
-			<artifactId>ahtutils-entities</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-entities</artifactId>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
@@ -141,8 +141,8 @@
 	<dependencyManagement>
 		<dependencies>      	         
 			<dependency>
-				<groupId>net.sf.ahtutils</groupId>
-				<artifactId>ahtutils-bom</artifactId>
+				<groupId>org.jeesl</groupId>
+				<artifactId>jeesl-bom</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>

@@ -2,9 +2,9 @@ package net.sf.ahtutils.test.model.ejb.status;
 
 import java.util.Random;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,10 +19,6 @@ public class TestStatus
 	private Random rnd;
 	private String code;
 	
-//	@Deployment
-//	public static JavaArchive createTestArchive(){return AbstractTgTest.getJavaArchive();}
-	
-	
 	@Before
 	public void init()
 	{
@@ -33,6 +29,7 @@ public class TestStatus
 	@After
 	public void close(){rnd=null;}
 	
+	@Test
     public void addStatus()
     {
     	Status ejb = create(rnd,code);
@@ -57,5 +54,4 @@ public class TestStatus
     	ejb.setLkey(key);
     	return ejb;
     }
-	public int hashCode(){return new HashCodeBuilder(17, 43).toHashCode();}
 }

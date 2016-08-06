@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.ahtutils.model.ejb.utils.UtilsValidFrom;
-import net.sf.ahtutils.test.AbstractAhtUtilsTest;
+import net.sf.ahtutils.test.AbstractJeeslTest;
 
 import org.joda.time.DateTime;
 import org.junit.Assert;
@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestValidFromProcessor extends AbstractAhtUtilsTest
+public class TestValidFromProcessor extends AbstractJeeslTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestValidFromProcessor.class);
 	

@@ -1,7 +1,8 @@
-package net.sf.ahtutils.test;
+package org.jeesl;
 
 import java.io.File;
 
+import net.sf.ahtutils.test.AbstractJeeslTest;
 import net.sf.exlp.exception.ExlpConfigurationException;
 import net.sf.exlp.util.config.ConfigLoader;
 import net.sf.exlp.util.io.ExlpCentralConfigPointer;
@@ -13,16 +14,16 @@ import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AhtUtilsTestBootstrap
+public class JeeslUtilTestBootstrap
 {
-	final static Logger logger = LoggerFactory.getLogger(AhtUtilsTestBootstrap.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslUtilTestBootstrap.class);
 	
 	public static Configuration init()
 	{
-		AbstractAhtUtilTest.setfTarget(new File("target"));
+		AbstractJeeslTest.setTargetDirectory(new File("target"));
 		
 		LoggerInit loggerInit = new LoggerInit("log4j.xml");
-		loggerInit.addAltPath("config.ahtutils-util.test");
+		loggerInit.addAltPath("jeesl/test/config");
 		loggerInit.init();
 		
 		JaxbUtil.setNsPrefixMapper(new JeeslNsPrefixMapper());

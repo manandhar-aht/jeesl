@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AbstractAhtUtilsSecurityJUnit extends AbstractAhtUtilsTest
+public class AbstractAhtUtilsSecurityJUnit extends AbstractJeeslTest
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractAhtUtilsSecurityJUnit.class);
 	

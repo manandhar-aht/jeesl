@@ -6,12 +6,12 @@ import java.util.Collection;
 
 import net.sf.ahtutils.controller.factory.xml.cloud.facebook.SignedRequestFactory;
 import net.sf.ahtutils.test.AbstractFileProcessingTest;
-import net.sf.ahtutils.test.AhtUtilsTestBootstrap;
 import net.sf.ahtutils.xml.cloud.facebook.SignedRequest;
 import net.sf.exlp.util.DateUtil;
 import net.sf.exlp.util.io.StringIO;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.JeeslUtilTestBootstrap;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -109,7 +109,7 @@ public class TestSignedRequestFactory extends AbstractFileProcessingTest
 	
 	public static void main(String[] args) throws FileNotFoundException
     {
-		AhtUtilsTestBootstrap.init();
+		JeeslUtilTestBootstrap.init();
 		TestSignedRequestFactory.initStatic();	
 		
 		boolean saveReference = true;

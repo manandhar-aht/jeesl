@@ -1,13 +1,13 @@
 package net.sf.ahtutils.controller.util.poi;
 
-import net.sf.ahtutils.test.AbstractAhtUtilsTest;
+import net.sf.ahtutils.test.AbstractJeeslTest;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestPoiRowColNumerator extends AbstractAhtUtilsTest
+public class TestPoiRowColNumerator extends AbstractJeeslTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestPoiRowColNumerator.class);
 	

@@ -8,6 +8,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.commons.io.FileUtils;
+import org.jeesl.JeeslUtilTestBootstrap;
 import org.openfuxml.media.transcode.Svg2PngTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,6 @@ import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.symbol.Graphic;
 import net.sf.ahtutils.model.ejb.symbol.GraphicStyle;
 import net.sf.ahtutils.model.ejb.symbol.GraphicType;
-import net.sf.ahtutils.test.AhtUtilsTestBootstrap;
 
 public class TestSvgSymbolFactory
 {
@@ -44,7 +44,7 @@ public class TestSvgSymbolFactory
 	
 	public static void main(String[] args) throws TranscoderException, IOException, ParserConfigurationException
 	{
-		AhtUtilsTestBootstrap.init();
+		JeeslUtilTestBootstrap.init();
 		TestSvgSymbolFactory test = new TestSvgSymbolFactory();
 		test.test();
 	}

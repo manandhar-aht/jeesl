@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jeesl.JeeslUtilTestBootstrap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,15 +25,14 @@ import net.sf.ahtutils.model.ejb.system.security.SecurityRole;
 import net.sf.ahtutils.model.ejb.system.security.SecurityUsecase;
 import net.sf.ahtutils.model.ejb.system.security.SecurityView;
 import net.sf.ahtutils.model.ejb.user.AhtUtilsUser;
-import net.sf.ahtutils.test.AbstractAhtUtilsTest;
-import net.sf.ahtutils.test.AhtUtilsTestBootstrap;
+import net.sf.ahtutils.test.AbstractJeeslTest;
 import net.sf.ahtutils.xml.audit.Change;
 import net.sf.ahtutils.xml.audit.Revision;
 import net.sf.ahtutils.xml.audit.Revisions;
 import net.sf.ahtutils.xml.audit.Scope;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-public class TestAuditScopeProcessor extends AbstractAhtUtilsTest
+public class TestAuditScopeProcessor extends AbstractJeeslTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestAuditScopeProcessor.class);
 	
@@ -146,7 +146,7 @@ public class TestAuditScopeProcessor extends AbstractAhtUtilsTest
 
     public static void main (String[] args) throws Exception
 	{
-		AhtUtilsTestBootstrap.init();
+		JeeslUtilTestBootstrap.init();
 		TestAuditScopeProcessor test = new TestAuditScopeProcessor();
 		
 //		test.init();test.nrOfScopes();

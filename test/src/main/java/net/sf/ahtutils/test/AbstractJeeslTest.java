@@ -13,12 +13,14 @@ import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AbstractAhtUtilsTest
+public class AbstractJeeslTest
 {
-	final static Logger logger = LoggerFactory.getLogger(AbstractAhtUtilsTest.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslTest.class);
 	
 	protected static File fTarget;
 	protected static Random rnd;
+	
+	public static void setTargetDirectory(File fTarget){AbstractJeeslTest.fTarget=fTarget;}
 	
 	@BeforeClass
 	public static void initTargetDirectory()

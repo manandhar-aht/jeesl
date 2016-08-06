@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.jeesl.AbstractJeeslUtilTest;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,9 +14,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.test.AbstractAhtUtilTest;
-
-public class TestRanking extends AbstractAhtUtilTest
+public class TestRanking extends AbstractJeeslUtilTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestRanking.class);
 	

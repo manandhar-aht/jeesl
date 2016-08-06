@@ -2,16 +2,16 @@ package net.sf.ahtutils.factory.txt.sync;
 
 import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
-import net.sf.ahtutils.test.AbstractAhtUtilsTest;
-import net.sf.ahtutils.test.AhtUtilsTestBootstrap;
+import net.sf.ahtutils.test.AbstractJeeslTest;
 
+import org.jeesl.JeeslUtilTestBootstrap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestTxtDataUpdateFactory extends AbstractAhtUtilsTest
+public class TestTxtDataUpdateFactory extends AbstractJeeslTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestTxtDataUpdateFactory.class);
 	
@@ -45,7 +45,7 @@ public class TestTxtDataUpdateFactory extends AbstractAhtUtilsTest
     
 	public static void main (String[] args) throws Exception
 	{
-		AhtUtilsTestBootstrap.init();
+		JeeslUtilTestBootstrap.init();
 		
 		TestTxtDataUpdateFactory test = new TestTxtDataUpdateFactory();
 		test.init();

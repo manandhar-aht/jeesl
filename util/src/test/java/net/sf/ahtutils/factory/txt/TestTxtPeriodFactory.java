@@ -1,14 +1,14 @@
 package net.sf.ahtutils.factory.txt;
 
+import org.jeesl.JeeslUtilTestBootstrap;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.test.AbstractAhtUtilsTest;
-import net.sf.ahtutils.test.AhtUtilsTestBootstrap;
+import net.sf.ahtutils.test.AbstractJeeslTest;
 
-public class TestTxtPeriodFactory extends AbstractAhtUtilsTest
+public class TestTxtPeriodFactory extends AbstractJeeslTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestTxtPeriodFactory.class);
 	
@@ -31,7 +31,7 @@ public class TestTxtPeriodFactory extends AbstractAhtUtilsTest
        
 	public static void main (String[] args) throws Exception
 	{
-		AhtUtilsTestBootstrap.init();
+		JeeslUtilTestBootstrap.init();
 		
 		TestTxtPeriodFactory test = new TestTxtPeriodFactory();
 		test.init();

@@ -1,15 +1,15 @@
 package net.sf.ahtutils.test.reflection;
 
-import net.sf.ahtutils.test.AbstractAhtUtilsTest;
-import net.sf.ahtutils.test.AhtUtilsTestBootstrap;
+import net.sf.ahtutils.test.AbstractJeeslTest;
 import net.sf.ahtutils.xml.aht.Aht;
 
+import org.jeesl.JeeslUtilTestBootstrap;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestClassForName extends AbstractAhtUtilsTest
+public class TestClassForName extends AbstractJeeslTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestClassForName.class);
 	
@@ -29,7 +29,7 @@ public class TestClassForName extends AbstractAhtUtilsTest
 	
 	public static void main(String args[]) throws Exception
     {
-		AhtUtilsTestBootstrap.init();
+		JeeslUtilTestBootstrap.init();
 		
 		TestClassForName test = new TestClassForName();
 		test.test();

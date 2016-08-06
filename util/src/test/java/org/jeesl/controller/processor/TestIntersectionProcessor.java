@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jeesl.AbstractJeeslUtilTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -16,9 +17,8 @@ import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.status.Status;
-import net.sf.ahtutils.test.AbstractAhtUtilsTest;
 
-public class TestIntersectionProcessor extends AbstractAhtUtilsTest
+public class TestIntersectionProcessor extends AbstractJeeslUtilTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestIntersectionProcessor.class);
 	
@@ -126,7 +126,7 @@ public class TestIntersectionProcessor extends AbstractAhtUtilsTest
 	{		
 		List<String> expected = Arrays.asList("d e".split(" "));
 		List<String> actual = IntersectionProcessor.query("a AND b AND c",abc);
-		System.out.println(actual.toString());
+		logger.debug(actual.toString());
 		Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
 	}
 	
@@ -134,7 +134,7 @@ public class TestIntersectionProcessor extends AbstractAhtUtilsTest
 	{
 		List<String> expected = Arrays.asList("d e".split(" "));
 		List<String> actual = IntersectionProcessor.query("a AND (b AND c)",abc);
-		System.out.println(actual.toString());
+		logger.debug(actual.toString());
 		Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
 	}
 	

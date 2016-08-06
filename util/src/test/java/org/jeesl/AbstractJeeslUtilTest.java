@@ -1,7 +1,8 @@
-package net.sf.ahtutils.test;
+package org.jeesl;
 
 import java.io.File;
 
+import net.sf.ahtutils.test.AbstractJeeslTest;
 import net.sf.exlp.util.io.LoggerInit;
 import net.sf.exlp.util.xml.JaxbUtil;
 
@@ -11,9 +12,9 @@ import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AbstractAhtUtilTest extends AbstractAhtUtilsTest
+public class AbstractJeeslUtilTest extends AbstractJeeslTest
 {
-	final static Logger logger = LoggerFactory.getLogger(AbstractAhtUtilTest.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslUtilTest.class);
 	
 	protected File f;
 	protected boolean saveReference=false;
@@ -22,7 +23,7 @@ public class AbstractAhtUtilTest extends AbstractAhtUtilsTest
 	public static void initFile()
 	{
 		if(!LoggerInit.isLog4jInited()){initLogger();}
-		AbstractAhtUtilsTest.initTargetDirectory();
+		AbstractJeeslTest.initTargetDirectory();
 	}
 	
 	@BeforeClass
@@ -31,7 +32,7 @@ public class AbstractAhtUtilTest extends AbstractAhtUtilsTest
 		if(!LoggerInit.isLog4jInited())
 		{
 			LoggerInit loggerInit = new LoggerInit("log4junit.xml");	
-			loggerInit.addAltPath("config.ahtutils-util.test");
+			loggerInit.addAltPath("jeesl/test/config");
 			loggerInit.init();
 		}
     }

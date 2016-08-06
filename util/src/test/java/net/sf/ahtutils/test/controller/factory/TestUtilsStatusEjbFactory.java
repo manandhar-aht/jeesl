@@ -1,5 +1,6 @@
 package net.sf.ahtutils.test.controller.factory;
 
+import org.jeesl.AbstractJeeslUtilTest;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,12 +13,11 @@ import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.status.Status;
-import net.sf.ahtutils.test.AbstractAhtUtilTest;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.exlp.util.io.LoggerInit;
 
-public class TestUtilsStatusEjbFactory extends AbstractAhtUtilTest
+public class TestUtilsStatusEjbFactory extends AbstractJeeslUtilTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestUtilsStatusEjbFactory.class);
 	

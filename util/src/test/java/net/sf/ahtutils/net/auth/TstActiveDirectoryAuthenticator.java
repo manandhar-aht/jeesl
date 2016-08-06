@@ -1,10 +1,10 @@
 package net.sf.ahtutils.net.auth;
 
 import net.sf.ahtutils.net.auth.ads.ActiveDirectoryAuthenticator;
-import net.sf.ahtutils.test.AhtUtilsTestBootstrap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jeesl.JeeslUtilTestBootstrap;
 
 public class TstActiveDirectoryAuthenticator
 {
@@ -28,7 +28,7 @@ public class TstActiveDirectoryAuthenticator
 	
 	public static void main (String[] args) throws Exception
 	{
-		AhtUtilsTestBootstrap.init();
+		JeeslUtilTestBootstrap.init();
 		TstActiveDirectoryAuthenticator test = new TstActiveDirectoryAuthenticator();
 		test.direct();
 	}

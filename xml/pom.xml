@@ -28,9 +28,9 @@
 	<dependencies>
 		<!-- XML-JAXB -->
 		<dependency>
-   	   		<groupId>org.openfuxml</groupId>
-   	   		<artifactId>ofx-xml</artifactId>
-   	   	</dependency>
+   		<groupId>org.openfuxml</groupId>
+   		<artifactId>ofx-xml</artifactId>
+   	</dependency>
 
 		<!-- ExLP -->
 		<dependency>
@@ -134,7 +134,7 @@
 		</dependency>
 	</dependencies>
 	
-		<build>
+	<build>
 		<plugins>
 			<plugin>
   				<groupId>org.apache.maven.plugins</groupId>
@@ -154,6 +154,38 @@
 					<rulesUri>${maven.ignore}</rulesUri>
 		        </configuration>
 			</plugin>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-pmd-plugin</artifactId>
+		        <configuration>
+			        <excludes>
+			            <exclude>net/sf/ahtutils/xml/access/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/aht/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/audit/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/cloud/facebook/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/dbseed/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/finance/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/issue/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/mail/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/monitoring/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/navigation/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/project/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/qa/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/report/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/security/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/srs/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/status/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/survey/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/symbol/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/sync/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/system/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/text/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/ts/*.java</exclude>
+			            <exclude>net/sf/ahtutils/xml/utils/*.java</exclude>
+							<exclude>org/jeesl/model/xml/system/revision/*.java</exclude>
+					</excludes>
+	        </configuration>
+	      </plugin>
 		</plugins>
 	</build>
 </project>

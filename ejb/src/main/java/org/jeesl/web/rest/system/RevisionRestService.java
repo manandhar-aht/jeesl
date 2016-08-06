@@ -23,17 +23,23 @@ import org.jeesl.util.query.xml.RevisionQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.controller.util.query.StatusQuery;
+import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
 import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
+import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
+import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
 import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
+import net.sf.ahtutils.xml.aht.Aht;
+import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription,
@@ -64,13 +70,13 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<RA> cRA;
 	private final Class<RAT> cRAT;
 
+	private XmlStatusFactory xfStatus;
 	private XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> xfEntity;
 
 	private EjbLangFactory<L> efLang;
 	private EjbDescriptionFactory<D> efDescription;
 	private EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efEntity;
 	private EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efAttribute;
-	
 	
 	private RevisionRestService(UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision,final Class<L> cL, final Class<D> cD, Class<RC> cRC, final Class<RV> cRV, final Class<RVM> cRVM, final Class<RS> cRS, final Class<RST> cRST, final Class<RE> cRE, final Class<REM> cREM, final Class<RA> cRA, final Class<RAT> cRAT)
 	{
@@ -88,6 +94,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cRA=cRA;
 		this.cRAT=cRAT;
 	
+		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfEntity = new XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntity));
 			
 		efLang = EjbLangFactory.createFactory(cL);
@@ -111,6 +118,13 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	{
 		return new RevisionRestService<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(fRevision,cL,cD,cRC,cRV,cRVM,cRS,cRST,cRE,cREM,cRA,cRAT);
 	}
+	
+	@Override public Aht exportSystemRevisionCategories()
+	{
+		Aht aht = new Aht();
+		for(RC ejb : fRevision.allOrderedPosition(cRC)){aht.getStatus().add(xfStatus.build(ejb));}
+		return aht;
+	}
 
 	@Override public Entities exportSystemRevisionEntities()
 	{
@@ -124,6 +138,8 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		
 		return entities;
 	}
+	
+	@Override public DataUpdate importSystemRevisionCategories(Aht categories){return importStatus(cRC,cL,cD,categories,null);}
 	
 	@Override public DataUpdate importSystemRevisionEntities(Entities entities)
 	{
@@ -247,4 +263,16 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		ejbAttribute = fRevision.save(cRE,ejbRevisionEntity,ejbAttribute);
 		return ejbAttribute;
 	}
+	
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Aht container, Class<P> clParent)
+    {
+    	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
+		AhtStatusDbInit asdi = new AhtStatusDbInit();
+        asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus, clLang, clDescription));
+        asdi.setFacade(fRevision);
+        DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, clLang, clParent);
+        asdi.deleteUnusedStatus(clStatus, clLang, clDescription);
+        return dataUpdate;
+    }
 }

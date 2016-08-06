@@ -83,7 +83,7 @@ public class SurveyRestService <L extends UtilsLang,
 	private final Class<DATA> cData;
 	private final Class<CORRELATION> cCorrelation;
 	
-	private XmlStatusFactory fStatus;
+	private XmlStatusFactory xfStatus;
 	private XmlTemplateFactory<L,D,SURVEY,SS,TEMPLATE,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfTemplate;
 	private XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfSurveys;
 	private XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfSurvey;
@@ -112,7 +112,7 @@ public class SurveyRestService <L extends UtilsLang,
 		this.cData=cData;
 		this.cCorrelation=cCorrelation;
 	
-		fStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
+		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,TEMPLATE,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exTemplate).getTemplate());
 		xfTemplate.lazyLoad(fSurvey,cTEMPLATE,cSection);
 		
@@ -155,28 +155,28 @@ public class SurveyRestService <L extends UtilsLang,
 	@Override public Aht exportSurveyTemplateCategory()
 	{
 		Aht aht = new Aht();
-		for(TC ejb : fSurvey.allOrderedPosition(cTC)){aht.getStatus().add(fStatus.build(ejb));}
+		for(TC ejb : fSurvey.allOrderedPosition(cTC)){aht.getStatus().add(xfStatus.build(ejb));}
 		return aht;
 	}
 
 	@Override public Aht exportSurveyTemplateStatus()
 	{
 		Aht aht = new Aht();
-		for(TS ejb : fSurvey.allOrderedPosition(cTS)){aht.getStatus().add(fStatus.build(ejb));}
+		for(TS ejb : fSurvey.allOrderedPosition(cTS)){aht.getStatus().add(xfStatus.build(ejb));}
 		return aht;
 	}
 
 	@Override public Aht exportSurveyUnits()
 	{
 		Aht aht = new Aht();
-		for(UNIT ejb : fSurvey.allOrderedPosition(cUNIT)){aht.getStatus().add(fStatus.build(ejb));}
+		for(UNIT ejb : fSurvey.allOrderedPosition(cUNIT)){aht.getStatus().add(xfStatus.build(ejb));}
 		return aht;
 	}
 
 	@Override public Aht exportSurveyStatus()
 	{
 		Aht aht = new Aht();
-		for(SS ejb : fSurvey.allOrderedPosition(cSS)){aht.getStatus().add(fStatus.build(ejb));}
+		for(SS ejb : fSurvey.allOrderedPosition(cSS)){aht.getStatus().add(xfStatus.build(ejb));}
 		return aht;
 	}
 

@@ -2,21 +2,16 @@ package net.sf.ahtutils.test.model.ejb.status;
 
 import java.util.Random;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.junit.After;
+import org.junit.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.ejb.status.Status;
 import net.sf.ahtutils.test.model.ejb.status.cli.TstStatus;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-@Ignore
-@RunWith(Arquillian.class)
 public class TestStatus
 {
 	final static Logger logger = LoggerFactory.getLogger(TstStatus.class);

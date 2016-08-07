@@ -119,8 +119,7 @@ public class FreemarkerEngine
 			MailXpath.getTemplate(mail, lang, type);
 			return true;
 		}
-		catch (ExlpXpathNotFoundException e) {}
-		catch (ExlpXpathNotUniqueException e) {}
-		return false;
+		catch (ExlpXpathNotFoundException e) {return false;}
+		catch (ExlpXpathNotUniqueException e) {return false;}
 	}
 }

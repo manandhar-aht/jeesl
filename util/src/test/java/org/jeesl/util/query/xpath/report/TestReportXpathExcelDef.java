@@ -13,9 +13,9 @@ import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
-public class TestReportExcelDef extends AbstractJeeslUtilTest
+public class TestReportXpathExcelDef extends AbstractJeeslUtilTest
 {
-	final static Logger logger = LoggerFactory.getLogger(TestReportExcelDef.class);
+	final static Logger logger = LoggerFactory.getLogger(TestReportXpathExcelDef.class);
     
 	private XlsDefinition def;
 	

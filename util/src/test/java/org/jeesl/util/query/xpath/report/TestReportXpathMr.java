@@ -15,9 +15,9 @@ import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-public class TestReportsMrXpath extends AbstractJeeslUtilTest
+public class TestReportXpathMr extends AbstractJeeslUtilTest
 {
-	final static Logger logger = LoggerFactory.getLogger(TestReportsMrXpath.class);
+	final static Logger logger = LoggerFactory.getLogger(TestReportXpathMr.class);
     
 	private Report xml1,xml2,xml3,xml4;
 	private Reports reports;

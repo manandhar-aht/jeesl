@@ -17,9 +17,9 @@ import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-public class TestReportMediaXpath extends AbstractJeeslUtilTest
+public class TestReportXpathMedia extends AbstractJeeslUtilTest
 {
-	final static Logger logger = LoggerFactory.getLogger(TestReportMediaXpath.class);
+	final static Logger logger = LoggerFactory.getLogger(TestReportXpathMedia.class);
     
 	private Media media1,media2,media3,media4;
 	private List<Media> mediaList;

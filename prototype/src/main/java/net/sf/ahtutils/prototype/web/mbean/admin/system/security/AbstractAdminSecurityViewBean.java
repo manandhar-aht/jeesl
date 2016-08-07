@@ -86,10 +86,10 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,
 		view = fSecurity.load(cView,view);
 		
 		roles = view.getRoles();
-		Collections.sort(roles, comparatorRole);
+		Collections.sort(roles,comparatorRole);
 		
 		usecases = view.getUsecases();
-		Collections.sort(usecases, comparatorUsecase);
+		Collections.sort(usecases,comparatorUsecase);
 	}
 	
 	private void reloadActions()

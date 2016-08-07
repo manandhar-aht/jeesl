@@ -64,7 +64,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		
 		efTemplate = EjbIoTemplateFactory.factory(cTemplate);
 		
-		comparatorTemplate = (new IoTemplateComparator<L,D,IOT,IOTT,IOTC>()).factory(IoTemplateComparator.Type.position);
+		comparatorTemplate = new IoTemplateComparator<L,D,IOT,IOTT,IOTC>().factory(IoTemplateComparator.Type.position);
 		
 		types = fIo.allOrderedPositionVisible(cTemplateType);
 		categories = fIo.allOrderedPositionVisible(cTemplateCategory);

@@ -95,8 +95,8 @@ public class OfxMultiLangFactory
 				Status status = StatusXpath.getStatus(aht.getStatus(), code);
 				return cell(langs,status.getLangs());
 			}
-			catch (ExlpXpathNotFoundException e) {}
-			catch (ExlpXpathNotUniqueException e) {}
+			catch (ExlpXpathNotFoundException e) {logger.warn(e.getMessage());}
+			catch (ExlpXpathNotUniqueException e) {logger.warn(e.getMessage());}
 		}
 		return OfxCellFactory.createParagraphCell(code);
 	}

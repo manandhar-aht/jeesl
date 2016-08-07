@@ -6,8 +6,8 @@
     		<s:lang key="en" translation="Quantity"/>
     		<s:lang key="fr" translation="Quantity"/>
     	</s:langs>
-    </s:translation>
-   	<s:translation key="aupAmount">
+	</s:translation>
+	<s:translation key="aupAmount">
     	<s:langs>
     		<s:lang key="de" translation="Amount"/>
     		<s:lang key="en" translation="Amount"/>

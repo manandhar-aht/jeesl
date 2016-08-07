@@ -29,9 +29,9 @@ public class UtilsMsgBuilder
 	public static final String srcDate = "aht-utils/msg/date.xml";
 	
 	//Finance
-	public static final String srcFinance = "aht-utils/msg/finance/finance.xml";
-	public static final String srcAmount = "aht-utils/msg/finance/amount.xml";
-	public static final String financePeriod = "aht-utils/msg/finance/period.xml";
+	public static final String srcFinance = "jeesl/msg/finance/finance.xml";
+	public static final String srcAmount = "jeesl/msg/finance/amount.xml";
+	public static final String financePeriod = "jeesl/msg/finance/period.xml";
 	
 	//Modules
 	public static final String timeseries = "aht-utils/msg/module/timeseries.xml";

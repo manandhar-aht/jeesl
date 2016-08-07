@@ -22,12 +22,12 @@ public class XmlLabelsFactory
 	}
 	
 	public static <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription>
-		void aggregationGroups(String lang, Labels labels, List<S> aggregations)
+		void aggregationGroups(String localeCode, Labels labels, List<S> aggregations)
 	{
 		for(int i=1;i<=aggregations.size();i++)
 		{
 			S s = aggregations.get(i-1);
-			Label label = XmlLabelFactory.build("labelLevel"+i, s.getName().get(lang).getLang());
+			Label label = XmlLabelFactory.build("labelLevel"+i, s.getName().get(localeCode).getLang());
 			labels.getLabel().add(label);
 		}
 	}

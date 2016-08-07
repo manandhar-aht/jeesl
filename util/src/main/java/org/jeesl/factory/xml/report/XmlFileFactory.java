@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.report;
+package org.jeesl.factory.xml.report;
 
 import net.sf.ahtutils.xml.report.File;
 

@@ -5,6 +5,7 @@ public interface FacesMessageBean
 	void growlSuccess(String key);
 	void growlError(String key);
 	
+	<E extends Enum<E>> void errorText(E id, String text);
 	void errorText(String text);
 	
 	void growlSuccessSaved();

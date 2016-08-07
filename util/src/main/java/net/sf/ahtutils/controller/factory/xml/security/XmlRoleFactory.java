@@ -55,12 +55,9 @@ public class XmlRoleFactory <L extends UtilsLang,
     {
     	Role xml = new Role();
     	if(q.isSetCode()){xml.setCode(ejb.getCode());}
-    	if(q.isSetName())
+    	if(q.isSetName() && ejb.getName()!=null && ejb.getName().containsKey(lang))
     	{
-    		if(ejb.getName()!=null && ejb.getName().containsKey(lang))
-    		{
-    			xml.setName(ejb.getName().get(lang).getLang());
-    		}
+    		xml.setName(ejb.getName().get(lang).getLang());
     	}
     	
     	if(q.isSetLangs())

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.doc.resources;
+package org.jeesl.doc.resources;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,9 +18,9 @@ import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.exlp.util.io.resourceloader.MultiResourceLoader;
 import net.sf.exlp.util.io.txt.ExlpTxtWriter;
 
-public class UtilsListingCopy
+public class JeeslListingCopy
 {	
-	final static Logger logger = LoggerFactory.getLogger(UtilsListingCopy.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslListingCopy.class);
 		
 	private String prefix = "listing.aht-utils";
 	
@@ -70,12 +70,12 @@ public class UtilsListingCopy
 	private MultiResourceLoader mrl;
 	private File dirListing;
 	
-	public UtilsListingCopy(Configuration config)
+	public JeeslListingCopy(Configuration config)
 	{
 		this("listing.aht-utils",new File(config.getString(UtilsDocumentation.keyBaseLatexDir)));
 	}
 	
-	public UtilsListingCopy(String prefix,File baseDoc)
+	public JeeslListingCopy(String prefix,File baseDoc)
 	{
 		this.prefix=prefix;
 		mrl = new MultiResourceLoader();

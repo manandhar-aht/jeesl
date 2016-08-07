@@ -3,6 +3,7 @@ package net.sf.ahtutils.doc.ofx.security.section;
 import java.io.FileNotFoundException;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.doc.ofx.OfxMultiLangFactory;
 import org.openfuxml.content.ofx.Comment;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
@@ -18,7 +19,6 @@ import net.sf.ahtutils.doc.latex.builder.UtilsLatexAdminDocumentationBuilder;
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
 import net.sf.ahtutils.doc.ofx.security.list.OfxSecurityCategoryListFactory;
 import net.sf.ahtutils.doc.ofx.security.table.OfxSecurityUsecaseTableFactory;
-import net.sf.ahtutils.doc.ofx.util.OfxMultiLangFactory;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.xml.security.Category;
 import net.sf.ahtutils.xml.security.Security;

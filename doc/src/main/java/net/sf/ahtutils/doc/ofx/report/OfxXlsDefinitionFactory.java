@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.doc.ofx.OfxMultiLangFactory;
 import org.openfuxml.content.ofx.Comment;
 import org.openfuxml.content.table.Body;
 import org.openfuxml.content.table.Columns;
@@ -25,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
-import net.sf.ahtutils.doc.ofx.util.OfxMultiLangFactory;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.status.Translations;

@@ -1,10 +1,11 @@
-package net.sf.ahtutils.doc;
+package org.jeesl.doc.resources;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sf.ahtutils.doc.UtilsDocumentation;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.exlp.util.io.FileIO;
@@ -20,7 +21,7 @@ import org.jdom2.output.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UtilsMsgBuilder
+public class JeeslMsgBuilder
 {	
 	public static final String generic = "aht-utils/msg/generic.xml";
 	public static final String query = "aht-utils/msg/query.xml";
@@ -58,12 +59,12 @@ public class UtilsMsgBuilder
 	public static final String srcSurvey = "msg.aht-utils/survey.xml";
 	public static final String devQa = "msg.aht-utils/development/qa.xml";
 	
-	final static Logger logger = LoggerFactory.getLogger(UtilsMsgBuilder.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslMsgBuilder.class);
 		
 	private MultiResourceLoader mrl;
 	private File baseMsg;
 	
-	public UtilsMsgBuilder(Configuration config)
+	public JeeslMsgBuilder(Configuration config)
 	{
 		mrl = new MultiResourceLoader();
 		baseMsg = new File(config.getString(UtilsDocumentation.keyBaseMsgDir));

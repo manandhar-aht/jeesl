@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.doc.ofx.OfxMultiLangFactory;
 import org.openfuxml.content.list.Item;
 import org.openfuxml.content.list.List;
 import org.openfuxml.content.ofx.Comment;
@@ -20,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
-import net.sf.ahtutils.doc.ofx.util.OfxMultiLangFactory;
 import net.sf.ahtutils.xml.access.Category;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Lang;

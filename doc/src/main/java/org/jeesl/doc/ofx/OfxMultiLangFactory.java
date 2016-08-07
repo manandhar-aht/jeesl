@@ -1,4 +1,4 @@
-package net.sf.ahtutils.doc.ofx.util;
+package org.jeesl.doc.ofx;
 
 import java.util.ArrayList;
 import java.util.List;

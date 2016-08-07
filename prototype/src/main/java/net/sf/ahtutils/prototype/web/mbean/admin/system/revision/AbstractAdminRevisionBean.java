@@ -106,7 +106,8 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
 		
 		categories = fRevision.allOrderedPositionVisible(cCategory);
-		sbhCategory = new SbMultiStatusHandler<L,D,RC>(cCategory,categories); sbhCategory.selectAll();
+		sbhCategory = new SbMultiStatusHandler<L,D,RC>(cCategory,categories);
+		sbhCategory.selectAll();
 	}
 	
 	public void addAttribute() throws UtilsNotFoundException

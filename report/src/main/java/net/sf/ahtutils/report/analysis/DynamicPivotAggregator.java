@@ -54,7 +54,12 @@ public class DynamicPivotAggregator
     
     public List<EjbWithId> list(int index)
     {
-    	return new ArrayList<EjbWithId>(entitySet.get(index));
+    	List<EjbWithId> list = new ArrayList<EjbWithId>();
+    	for(EjbWithId ejb : entitySet.get(index))
+    	{
+    		if(ejb!=null){list.add(ejb);}
+    	}
+    	return list;
     }
       
     public Double value(EjbWithId... selectors)

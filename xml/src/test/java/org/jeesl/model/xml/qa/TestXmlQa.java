@@ -1,11 +1,12 @@
-package net.sf.ahtutils.xml.qa;
+package org.jeesl.model.xml.qa;
 
+import org.jeesl.model.xml.survey.TestXmlSurvey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
+import net.sf.ahtutils.xml.qa.Qa;
 import net.sf.ahtutils.xml.security.TestXmlStaff;
-import net.sf.ahtutils.xml.survey.TestXmlSurvey;
 
 public class TestXmlQa extends AbstractXmlQaTest<Qa>
 {

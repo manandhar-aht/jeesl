@@ -15,7 +15,6 @@ public class TestXmlAction extends AbstractXmlStatusTest<Action>
 	public TestXmlAction(){super(Action.class);}
 	public static Action create(boolean withChildren){return (new TestXmlAction()).build(withChildren);}   
    
-    
     public Action build(boolean withChilds)
     {
     	Action xml = new Action();
@@ -35,8 +34,6 @@ public class TestXmlAction extends AbstractXmlStatusTest<Action>
     	
     	return xml;
     }
-    
-    public void save() {save(create(true),fXml);}
 	
 	public static void main(String[] args)
     {

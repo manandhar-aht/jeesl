@@ -1,5 +1,11 @@
 package org.jeesl.model.xml.jeesl;
 
+import org.jeesl.model.xml.qa.TestXmlTest;
+import org.jeesl.model.xml.survey.TestXmlAnswer;
+import org.jeesl.model.xml.survey.TestXmlSurvey;
+import org.jeesl.model.xml.survey.TestXmlSurveys;
+import org.jeesl.model.xml.survey.TestXmlTemplate;
+import org.jeesl.model.xml.survey.TestXmlTemplates;
 import org.jeesl.model.xml.system.revision.TestXmlEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,17 +13,11 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.access.TestXmlRole;
 import net.sf.ahtutils.xml.aht.Query;
-import net.sf.ahtutils.xml.qa.TestXmlTest;
 import net.sf.ahtutils.xml.security.TestXmlCategory;
 import net.sf.ahtutils.xml.security.TestXmlStaff;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
 import net.sf.ahtutils.xml.status.TestXmlStatus;
 import net.sf.ahtutils.xml.status.TestXmlType;
-import net.sf.ahtutils.xml.survey.TestXmlAnswer;
-import net.sf.ahtutils.xml.survey.TestXmlSurvey;
-import net.sf.ahtutils.xml.survey.TestXmlSurveys;
-import net.sf.ahtutils.xml.survey.TestXmlTemplate;
-import net.sf.ahtutils.xml.survey.TestXmlTemplates;
 import net.sf.ahtutils.xml.utils.TestXmlTrafficLight;
 import net.sf.ahtutils.xml.utils.TestXmlTrafficLights;
 

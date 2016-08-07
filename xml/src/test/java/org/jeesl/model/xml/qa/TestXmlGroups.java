@@ -1,9 +1,10 @@
-package net.sf.ahtutils.xml.qa;
+package org.jeesl.model.xml.qa;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
+import net.sf.ahtutils.xml.qa.Groups;
 
 public class TestXmlGroups extends AbstractXmlQaTest<Groups>
 {

@@ -1,9 +1,8 @@
 package net.sf.ahtutils.xml.sync;
 
+import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 
 public class TestXmlExceptions extends AbstractXmlSyncTest<Exceptions>
 {

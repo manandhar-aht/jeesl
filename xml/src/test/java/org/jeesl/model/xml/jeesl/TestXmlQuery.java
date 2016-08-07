@@ -1,5 +1,6 @@
 package org.jeesl.model.xml.jeesl;
 
+import org.jeesl.UtilsXmlTestBootstrap;
 import org.jeesl.model.xml.qa.TestXmlTest;
 import org.jeesl.model.xml.survey.TestXmlAnswer;
 import org.jeesl.model.xml.survey.TestXmlSurvey;
@@ -10,7 +11,6 @@ import org.jeesl.model.xml.system.revision.TestXmlEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.access.TestXmlRole;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.security.TestXmlCategory;

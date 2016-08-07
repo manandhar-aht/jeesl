@@ -1,9 +1,9 @@
 package net.sf.ahtutils.xml.security;
 
+import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.status.TestXmlDomain;
 
 public class TestXmlStaffs extends AbstractXmlSecurityTest<Staffs>

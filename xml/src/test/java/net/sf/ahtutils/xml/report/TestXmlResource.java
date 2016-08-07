@@ -1,9 +1,9 @@
 package net.sf.ahtutils.xml.report;
 
+import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.report.Resource.Value;
 
 public class TestXmlResource extends AbstractXmlReportTest<Resource>

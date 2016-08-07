@@ -1,8 +1,8 @@
 package net.sf.ahtutils.xml.srs;
 
-import net.sf.ahtutils.test.AbstractXmlTest;
 import net.sf.ahtutils.xml.system.AbstractXmlSystemTest;
 
+import org.jeesl.AbstractXmlTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

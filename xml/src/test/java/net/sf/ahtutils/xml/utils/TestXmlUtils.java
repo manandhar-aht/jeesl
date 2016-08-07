@@ -2,10 +2,10 @@ package net.sf.ahtutils.xml.utils;
 
 import java.io.FileNotFoundException;
 
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.access.TestXmlCategory;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.UtilsXmlTestBootstrap;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;

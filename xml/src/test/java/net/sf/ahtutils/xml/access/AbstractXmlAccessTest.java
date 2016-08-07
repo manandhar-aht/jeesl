@@ -2,8 +2,7 @@ package net.sf.ahtutils.xml.access;
 
 import java.io.File;
 
-import net.sf.ahtutils.test.AbstractXmlTest;
-
+import org.jeesl.AbstractXmlTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

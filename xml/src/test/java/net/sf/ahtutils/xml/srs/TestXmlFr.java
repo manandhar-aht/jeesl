@@ -1,11 +1,10 @@
 package net.sf.ahtutils.xml.srs;
 
+import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.text.TestXmlDescription;
+import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
-import net.sf.ahtutils.xml.text.TestXmlDescription;
-import net.sf.ahtutils.xml.text.TestXmlRemark;
 
 public class TestXmlFr extends AbstractXmlSrsTest<Fr>
 {

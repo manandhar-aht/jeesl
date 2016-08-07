@@ -1,10 +1,9 @@
 package net.sf.ahtutils.xml.finance;
 
+import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
-import net.sf.ahtutils.xml.text.TestXmlRemark;
 
 public class TestXmlFigures extends AbstractXmlFinanceTest<Figures>
 {

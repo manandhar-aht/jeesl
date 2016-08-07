@@ -1,9 +1,8 @@
 package net.sf.ahtutils.xml.dbseed;
 
+import org.jeesl.AbstractXmlTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.test.AbstractXmlTest;
 
 public abstract class AbstractXmlDbseedTest <T extends Object> extends AbstractXmlTest<T>
 {

@@ -1,12 +1,12 @@
 package org.jeesl.model.xml.survey;
 
+import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.status.TestXmlUnit;
 import net.sf.ahtutils.xml.survey.Question;
-import net.sf.ahtutils.xml.text.TestXmlRemark;
 
 public class TestXmlQuestion extends AbstractXmlSurveyTest<Question>
 {
@@ -28,7 +28,7 @@ public class TestXmlQuestion extends AbstractXmlSurveyTest<Question>
     	{
     		xml.setUnit(TestXmlUnit.create(false));
     		xml.setRemark(TestXmlRemark.create(false));
-    		xml.setQuestion(net.sf.ahtutils.xml.text.TestXmlQuestion.create(false));
+    		xml.setQuestion(org.jeesl.model.xml.text.TestXmlQuestion.create(false));
     	}
     	
     	return xml;

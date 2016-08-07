@@ -1,13 +1,13 @@
 package org.jeesl.model.xml.system.revision;
 
+import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.status.TestXmlDescriptions;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
 import net.sf.ahtutils.xml.status.TestXmlType;
-import net.sf.ahtutils.xml.text.TestXmlRemark;
 
 public class TestXmlAttribute extends AbstractXmlRevisionTest<Attribute>
 {

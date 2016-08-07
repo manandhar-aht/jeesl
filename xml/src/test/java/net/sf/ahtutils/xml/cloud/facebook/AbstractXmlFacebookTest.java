@@ -1,8 +1,7 @@
 package net.sf.ahtutils.xml.cloud.facebook;
 
-import net.sf.ahtutils.test.AbstractXmlTest;
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
-
+import org.jeesl.AbstractXmlTest;
+import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

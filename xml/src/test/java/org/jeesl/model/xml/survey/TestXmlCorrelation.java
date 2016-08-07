@@ -1,9 +1,9 @@
 package org.jeesl.model.xml.survey;
 
+import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.ahtutils.xml.survey.Correlation;
 
 public class TestXmlCorrelation extends AbstractXmlSurveyTest<Correlation>

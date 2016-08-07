@@ -2,12 +2,12 @@ package net.sf.ahtutils.xml.utils;
 
 import java.io.FileNotFoundException;
 
+import org.jeesl.UtilsXmlTestBootstrap;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public class TestXmlCiteria extends AbstractXmlUtilsTest

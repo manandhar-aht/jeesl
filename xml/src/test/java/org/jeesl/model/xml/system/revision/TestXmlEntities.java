@@ -1,9 +1,8 @@
 package org.jeesl.model.xml.system.revision;
 
+import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.test.UtilsXmlTestBootstrap;
 
 public class TestXmlEntities extends AbstractXmlRevisionTest<Entities>
 {

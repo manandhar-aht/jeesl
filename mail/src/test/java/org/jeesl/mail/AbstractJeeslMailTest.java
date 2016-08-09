@@ -16,8 +16,8 @@ public class AbstractJeeslMailTest
 	{
 		if(!LoggerInit.isLog4jInited())
 		{
-			LoggerInit loggerInit = new LoggerInit("log4junit-error.xml");	
-			loggerInit.addAltPath("config.ahtutils-test");
+			LoggerInit loggerInit = new LoggerInit("log4j.xml");	
+			loggerInit.addAltPath("jeesl/mail-test/config");
 			loggerInit.init();
 		}
     }

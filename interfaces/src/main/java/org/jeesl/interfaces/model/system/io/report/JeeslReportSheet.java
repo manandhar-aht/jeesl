@@ -1,6 +1,4 @@
-package org.jeesl.interfaces.model.report;
-
-import java.util.List;
+package org.jeesl.interfaces.model.system.io.report;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -12,7 +10,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslReportWorkbook<L extends UtilsLang,D extends UtilsDescription,
+public interface JeeslReportSheet<L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									REPORT extends JeeslReport<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
 									WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
@@ -22,9 +20,6 @@ public interface JeeslReportWorkbook<L extends UtilsLang,D extends UtilsDescript
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>
 {					
-	REPORT getReport();
-	void setReport(REPORT report);
-	
-	List<SHEET> getSheets();
-	void setSheets(List<SHEET> sheets);
+	WORKBOOK getWorkbook();
+	void setWorkbook(WORKBOOK workbook);
 }

@@ -1,5 +1,7 @@
 package org.jeesl.controller.facade;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.jeesl.interfaces.facade.JeeslIoTemplateFacade;
@@ -8,6 +10,7 @@ import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
+import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -24,5 +27,11 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 	public JeeslIoTemplateFacadeBean(EntityManager em)
 	{
 		super(em);
+	}
+	
+	@Override public List<TEMPLATE> fTemplates(Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, List<CATEGORY> categories, boolean showInvisibleEntities)
+	{
+		List<ParentPredicate<CATEGORY>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
+		return allForOrParents(cTemplate,ppCategory);
 	}
 }

@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.facade;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
@@ -17,5 +19,5 @@ public interface JeeslIoTemplateFacade <L extends UtilsLang,D extends UtilsDescr
 										TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
 			extends UtilsFacade
 {	
-
+	List<TEMPLATE> fTemplates(Class<TEMPLATE> cEntity, Class<CATEGORY> cCategory, List<CATEGORY> categories, boolean showInvisibleEntities);
 }

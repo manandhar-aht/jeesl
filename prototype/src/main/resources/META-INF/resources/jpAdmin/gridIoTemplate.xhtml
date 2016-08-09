@@ -20,6 +20,30 @@
 			<aht:row>
 				<aht:slot id="sCategories" width="5">
 					<h:form id="fCategories">
+						<p:dataTable var="t" value="#{cc.attrs.bean.templates}" draggableRows="true"
+							selection="#{cc.attrs.bean.template}" selectionMode="single" rowKey="#{t.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.aupIoTemplates}">
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addTemplate()}" update=":#{cc.id}:sView :#{cc.id}:sAttributes" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTemplates()}" update="@form"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sView :#{cc.id}:sAttributes" listener="#{cc.attrs.bean.selectTemplate()}"/>
+							<p:column rendered="true">  
+								<h:outputText value="#{t.category.position}.#{t.position}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.aupCategory}">  
+								<h:outputText value="#{t.category.name[userBean.localeCode].lang}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.aupIoTemplate}">  
+								<h:outputText value="#{t.name[userBean.localeCode].lang}"/>
+				         </p:column>
+							<p:column styleClass="aupPfDtColCentered">  
+								<aup:iconCheckmark value="#{t.visible}"/>
+				         </p:column>
+				   	</p:dataTable>
+					</h:form>
+					<h:form id="fCategories0">
 						<p:dataTable var="e" value="#{cc.attrs.bean.entities}" draggableRows="true"
 							selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{e.id}">
 							<f:facet name="header">

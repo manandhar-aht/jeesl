@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="bean" required="false" default="#{adminIoTemplateBean}"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<aup:grid id="grid">
+			<aht:row>
+				<aht:slot id="sCategories" width="5">
+					<h:form id="fCategories">
+						<p:dataTable var="e" value="#{cc.attrs.bean.entities}" draggableRows="true"
+							selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{e.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.aupRevisionEntities}">
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addEntity()}" update=":#{cc.id}:sView :#{cc.id}:sAttributes" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderEntites()}" update="@form"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sView :#{cc.id}:sAttributes" listener="#{cc.attrs.bean.selectEntity()}"/>
+							<p:column rendered="true">  
+								<h:outputText value="#{e.category.position}.#{e.position}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.aupCategory}">  
+								<h:outputText value="#{e.category.name[userBean.localeCode].lang}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.aupRevisionEntity}">  
+								<h:outputText value="#{e.name[userBean.localeCode].lang}"/>
+				            </p:column>
+							<p:column styleClass="aupPfDtColCentered">  
+								<aup:iconCheckmark value="#{e.visible}"/>
+				            </p:column>
+				       	</p:dataTable>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sView" width="3">
+					<h:form id="fView">
+						<p:panel id="pView" header="#{msg.aupRevisionEntity}"
+									rendered="#{not empty cc.attrs.bean.entity}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelEntity()}" update=":#{cc.id}:sView :#{cc.id}:sAttributes" tooltip="#{msg.ttCancel}"/>
+								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveEntity()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.entity.id gt 0}" listener="#{cc.attrs.bean.rmEntity()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.entity.category}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.categories}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
+								</p:selectOneMenu>
+								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.entity.visible}"/>
+								<p:outputLabel value="#{msg.aupCode}"/>
+								<h:inputText autocomplete="off" value="#{cc.attrs.bean.entity.code}" styleClass="w100"/>
+								
+								<p:outputLabel value="#{msg.aupRemark}"/>
+								<p:inputTextarea value="#{cc.attrs.bean.entity.developerInfo}" style="width:100%" autocomplete="off"/>
+								
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.entity}"
+													labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
+       												keys="#{translationBean.langKeys}" withDescription="true"/>
+						</p:panel>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sAttributes" width="4">
+					<h:form id="fMappings" rendered="#{(not empty cc.attrs.bean.entity) and (cc.attrs.bean.entity.id gt 0)}">
+						<p:dataTable var="m" value="#{cc.attrs.bean.entityMappings}" draggableRows="true"
+							selection="#{cc.attrs.bean.mapping}" selectionMode="single" rowKey="#{m.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.aupRevisionMappings}">
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addMapping()}" update=":#{cc.id}:fMappings :#{cc.id}:fMapping" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderMappings()}" update="@form"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:fMapping" listener="#{cc.attrs.bean.selectMapping()}"/>
+				            <p:column rendered="true">  
+								<h:outputText value="#{m.position}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.aupRevisionScope}">  
+								<h:outputText value="#{m.scope.name[userBean.localeCode].lang}"/>
+				            </p:column>
+				       	</p:dataTable>
+					</h:form>
+					<h:form id="fMapping">
+						<p:panel header="#{msg.aupRevisionMapping}" rendered="#{not empty cc.attrs.bean.mapping}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="aupCancel" mayDisappear="true" listener="#{cc.attrs.bean.cancelMapping()}" update=":#{cc.id}:sAttributes" tooltip="#{msg.ttCancel}"/>
+								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveMapping()}" update=":#{cc.id}:sAttributes" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="aupDelete" mayDisappear="true" rendered="#{cc.attrs.bean.mapping.id gt 0}" listener="#{cc.attrs.bean.rmMapping()}" update=":#{cc.id}:sAttributes" tooltip="#{msg.ttDelete}"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupRevisionScope}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.mapping.scope}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.scopes}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
+								</p:selectOneMenu>
+								<p:outputLabel value="#{msg.aupType}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.mapping.type}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.scopeTypes}" var="t" itemLabel="#{t.name[userBean.localeCode].lang}" itemValue="#{t}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeScopeType()}" update="@form"/>
+								</p:selectOneMenu>
+								<p:outputLabel value="#{msg.aupXpath}"/>
+								<h:inputText autocomplete="off" value="#{cc.attrs.bean.mapping.xpath}" styleClass="aupW100"/>
+							</p:panelGrid>
+							<p:panelGrid rendered="#{cc.attrs.bean.uiWithJpqlTree}" columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupJpql}"/>
+								<h:inputText autocomplete="off" value="#{cc.attrs.bean.mapping.jpqlTree}" styleClass="aupW100"/>
+							</p:panelGrid>
+							<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						</p:panel>
+					</h:form>
+					<h:form id="fAttributes" rendered="#{(not empty cc.attrs.bean.entity) and (cc.attrs.bean.entity.id gt 0)}">
+						<aupAdmin:tableRevisionAttributes bean="#{cc.attrs.bean}" updateAdd=":#{cc.id}:fAttributes :#{cc.id}:fAttribute" updateSelect=":#{cc.id}:fAttribute"/>
+					</h:form>
+					<h:form id="fAttribute">
+						<aupAdmin:panelRevisionAttribute bean="#{cc.attrs.bean}" update=":#{cc.id}:sAttributes"/>
+					</h:form>
+				</aht:slot>
+			</aht:row>
+	    </aup:grid>
+	</composite:implementation>
+</html>

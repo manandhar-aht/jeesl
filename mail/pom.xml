@@ -14,7 +14,49 @@
     <name>UTILS - Mail</name>
 		
 	<dependencies>
-
+		<dependency>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-interfaces</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-xml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-util</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>antlr4</artifactId>
+					<groupId>org.antlr</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-io</artifactId>
+					<groupId>commons-io</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>joda-time</artifactId>
+					<groupId>joda-time</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>json</artifactId>
+					<groupId>org.json</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-collections</artifactId>
+					<groupId>commons-collections</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ofx-core</artifactId>
+					<groupId>org.openfuxml</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
 		<dependency>
    	   		<groupId>net.sf.exlp</groupId>
    	   		<artifactId>exlp-util</artifactId>
@@ -49,16 +91,24 @@
    	   				<groupId>org.jdom</groupId>
    	   				<artifactId>jdom</artifactId>
    	   			</exclusion>
+   	   			<exclusion>
+   	   				<artifactId>commons-codec</artifactId>
+   	   				<groupId>commons-codec</groupId>
+   	   			</exclusion>
+   	   			<exclusion>
+   	   				<artifactId>joda-time</artifactId>
+   	   				<groupId>joda-time</groupId>
+   	   			</exclusion>
+   	   			<exclusion>
+   	   				<artifactId>commons-collections</artifactId>
+   	   				<groupId>commons-collections</groupId>
+   	   			</exclusion>
    	   		</exclusions>
    	   	</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jeesl</groupId>
-			<artifactId>jeesl-xml</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -76,21 +126,12 @@
 			<artifactId>freemarker</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jeesl</groupId>
-			<artifactId>jeesl-interfaces</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>jmimemagic</groupId>
 			<artifactId>jmimemagic</artifactId>
-			<version>0.1.2</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>xercesImpl</artifactId>
@@ -161,11 +202,6 @@
 	</dependency>
 	
 		<!-- TEST -->
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<scope>test</scope>
-		</dependency>
 	
 	</dependencies>
 	

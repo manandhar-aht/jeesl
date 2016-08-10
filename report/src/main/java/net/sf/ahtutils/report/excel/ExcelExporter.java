@@ -159,7 +159,7 @@ public class ExcelExporter
 		style.setFont(font);
 
 		// Ask for all labels and add the ones starting with signature to a list
-		Iterator iterator     = context.iteratePointers("//label");
+		Iterator iterator     = context.iteratePointers("/info/labels/label");
 		ArrayList<Label> signatureLabels = new ArrayList<Label>();
 		while (iterator.hasNext())
 		{
@@ -206,7 +206,7 @@ public class ExcelExporter
 		style.setFont(font);
 
 		// Build the Title, subtitle
-		Iterator iterator     = context.iteratePointers("//info/title");
+		Iterator iterator     = context.iteratePointers("/info/title");
 		Pointer pointerToItem = (Pointer)iterator.next();
 		Object o = pointerToItem.getValue();
 		if ((o!=null))
@@ -235,6 +235,35 @@ public class ExcelExporter
 			createCell(sheet, rowNr, 0, s.getValue(), "String", style);
 			rowNr++;
 		}
+		
+		// Ask for all labels and add the ones starting with header to a list
+		iterator     = context.iteratePointers("/info/labels/label");
+		ArrayList<Label> headerLabels = new ArrayList<Label>();
+		while (iterator.hasNext())
+		{
+			pointerToItem = (Pointer)iterator.next();
+			o = pointerToItem.getValue();
+			if ((o!=null))
+			{
+				//TODO Finds also label='xy' attributes, must be restricted in XPath if possible for performance improvement
+				if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
+				if (o.getClass() == Label.class)
+				{
+					Label l = (Label) pointerToItem.getValue();
+					if (l.getKey().startsWith("header"))
+					{
+						headerLabels.add(l);
+					}
+				}
+			}
+		}
+		
+		for (int i=0; i<headerLabels.size();i++)
+		{
+			createCell(sheet, rowNr,   0, headerLabels.get(i).getValue(), "String", style);
+		}
+		
+		
 		rowNr++;
 		rowNr++;
 	}

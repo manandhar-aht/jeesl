@@ -269,13 +269,13 @@ public class ExcelExporter
 		
         // Create Content Rows
 		String queryExpression = sheetDefinition.getQuery();
-		logger.trace("Iterating to find " +queryExpression);
+		if (logger.isTraceEnabled()) {logger.trace("Iterating to find " +queryExpression);}
 		Iterator iterator     = context.iteratePointers(queryExpression);
 		logger.debug("Beginning iteration");
         while (iterator.hasNext())
         {
             Pointer pointerToItem = (Pointer)iterator.next();
-			logger.trace("Got pointer: " +pointerToItem.getValue().getClass());
+			if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +pointerToItem.getValue().getClass());}
 			JXPathContext relativeContext = context.getRelativeContext(pointerToItem);
 			
 			for (int i = 0; i<sortedColumns.size(); i++)
@@ -311,16 +311,22 @@ public class ExcelExporter
                 try {
                     Object  value = null;
                     //String xpath  = query +"[" +row +"]/" + expression;
-                    logger.trace("Using XPath expression: " +expression);
+                    if (logger.isTraceEnabled()) {logger.trace("Using XPath expression: " +expression);}
 					if (relative && !isJoin)
 					{
 						value = relativeContext.getValue(expression);
-						logger.trace("... in relative context.");
+						if (logger.isTraceEnabled()) {logger.trace("... in relative context.");}
 					}
 					else if (!relative && !isJoin)
 					{
 						value = context.getValue(expression);
-						logger.trace("... in complete context.");
+						Iterator completeIterator = context.iterate(expression);
+						if (completeIterator.hasNext()) { 
+							value = completeIterator.next();
+							if(logger.isTraceEnabled()) {logger.trace("Found " +value.toString());
+						}}
+						else {if(logger.isTraceEnabled()) {logger.trace("Could not find " +expression);}}
+						if (logger.isTraceEnabled()) {logger.trace("... in complete context.");}
 					}
 					else
 					{
@@ -341,10 +347,10 @@ public class ExcelExporter
 
                 } catch (Exception e)
                 {
-                    Integer counter = errors.get(columnId);
-                    counter++;
-                    errors.put(columnId, counter);
-					logger.trace("ERROR occured: " +e.getMessage());
+                //    Integer counter = errors.get(columnId);
+                //   counter++;
+                //    errors.put(columnId, counter);
+					if (logger.isTraceEnabled()) {logger.trace("ERROR occured: " +e.getMessage());}
                 }
             }
 			

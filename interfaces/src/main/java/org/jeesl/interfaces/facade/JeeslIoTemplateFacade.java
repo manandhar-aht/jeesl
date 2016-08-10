@@ -19,5 +19,7 @@ public interface JeeslIoTemplateFacade <L extends UtilsLang,D extends UtilsDescr
 										TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
 			extends UtilsFacade
 {	
+	TEMPLATE load(Class<TEMPLATE> cTemplate, TEMPLATE template);
+	
 	List<TEMPLATE> fTemplates(Class<TEMPLATE> cEntity, Class<CATEGORY> cCategory, List<CATEGORY> categories, boolean showInvisibleEntities);
 }

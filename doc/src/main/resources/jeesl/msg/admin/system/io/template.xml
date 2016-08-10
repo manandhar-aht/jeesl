@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations xmlns="http://ahtutils.aht-group.com/status">
+	<translation key="jeeslIoTemplates">
+		<langs>
+			<lang key="de" translation="Vorlagen" />
+			<lang key="en" translation="Templates" />
+			<lang key="fr" translation="Templates" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoTemplate">
+		<langs>
+			<lang key="de" translation="Vorlage" />
+			<lang key="en" translation="Template" />
+			<lang key="fr" translation="Template" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoTokens">
+		<langs>
+			<lang key="de" translation="Tokens" />
+			<lang key="en" translation="Tokens" />
+			<lang key="fr" translation="Tokens" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoToken">
+		<langs>
+			<lang key="de" translation="Token" />
+			<lang key="en" translation="Token" />
+			<lang key="fr" translation="Token" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoTemplateDefinitions">
+		<langs>
+			<lang key="de" translation="Definitions" />
+			<lang key="en" translation="Definitions" />
+			<lang key="fr" translation="Definitions" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoTemplateDefinition">
+		<langs>
+			<lang key="de" translation="Definition" />
+			<lang key="en" translation="Definition" />
+			<lang key="fr" translation="Definition" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoTemplatePreview">
+		<langs>
+			<lang key="de" translation="Vorschau" />
+			<lang key="en" translation="Preview" />
+			<lang key="fr" translation="Preview" />
+		</langs>
+	</translation>
+</translations>

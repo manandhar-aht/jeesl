@@ -159,4 +159,11 @@
     		<s:lang key="fr" translation="Rule"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslExample">
+    	<s:langs>
+    		<s:lang key="de" translation="Beispiel"/>
+    		<s:lang key="en" translation="Example"/>
+    		<s:lang key="fr" translation="Example"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

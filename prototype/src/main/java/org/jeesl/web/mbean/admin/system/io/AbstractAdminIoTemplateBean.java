@@ -1,56 +1,51 @@
 package org.jeesl.web.mbean.admin.system.io;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
+import org.jeesl.factory.ejb.system.io.EjbIoTemplateDefinitionFactory;
 import org.jeesl.factory.ejb.system.io.EjbIoTemplateFactory;
+import org.jeesl.factory.ejb.system.io.EjbIoTemplateTokenFactory;
+import org.jeesl.factory.txt.system.io.TxtIoTemplateFactory;
+import org.jeesl.factory.txt.system.io.TxtIoTemplateTokenFactory;
 import org.jeesl.interfaces.facade.JeeslIoTemplateFacade;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import org.jeesl.mail.freemarker.FreemarkerIoTemplateEngine;
 import org.jeesl.util.comparator.ejb.system.io.IoTemplateComparator;
+import org.jeesl.util.comparator.ejb.system.io.IoTemplateDefinitionComparator;
+import org.jeesl.util.comparator.ejb.system.io.IoTemplateTokenComparator;
+import org.primefaces.event.TabChangeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import freemarker.core.InvalidReferenceException;
+import freemarker.template.TemplateException;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
-import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
-import net.sf.ahtutils.prototype.web.mbean.admin.system.revision.AbstractAdminRevisionBean;
+import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDescription,
-											RC extends UtilsStatus<RC,L,D>,
-											RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-											RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-											RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-											RST extends UtilsStatus<RST,L,D>,
-											RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-											REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-											RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-											RAT extends UtilsStatus<RAT,L,D>,
-
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 											TYPE extends UtilsStatus<TYPE,L,D>,
 											TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
 											DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
 											TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
-					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
+					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -58,67 +53,78 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	
 	protected JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fTemplate;
 	
-	private Class<CATEGORY> cCategory2;
+	private Class<TYPE> cType;
+	private Class<CATEGORY> cCategory;
 	private Class<TEMPLATE> cTemplate;
+	private Class<DEFINITION> cDefinition;
+	private Class<TOKEN> cToken;
 	
-	private List<CATEGORY> categories2; public List<CATEGORY> getCategories2() {return categories2;}
+	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
+	private List<TYPE> types; public List<TYPE> getTypes() {return types;}
 	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
+	private List<DEFINITION> definitions; public List<DEFINITION> getDefinitions() {return definitions;}
+	private List<TOKEN> tokens; public List<TOKEN> getTokens() {return tokens;}
 	
 	private TEMPLATE template; public TEMPLATE getTemplate() {return template;} public void setTemplate(TEMPLATE template) {this.template = template;}
+	private DEFINITION definition; public DEFINITION getDefinition() {return definition;} public void setDefinition(DEFINITION definition) {this.definition = definition;}
+	private TOKEN token; public TOKEN getToken() {return token;} public void setToken(TOKEN token) {this.token = token;}
 	
-	private RE entity; public RE getEntity() {return entity;} public void setEntity(RE entity) {this.entity = entity;}
-	private REM mapping; public REM getMapping() {return mapping;}public void setMapping(REM mapping) {this.mapping = mapping;}
+	private EjbIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> efTemplate;
+	private EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> efDefinition;
+	private EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> efToken;
 	
-	protected EjbIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> efTemplate;
+	private SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
+	private FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fmEngine;
 	
-	private SbMultiStatusHandler<L,D,CATEGORY> sbhCategory2; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory2() {return sbhCategory2;}
-	protected Comparator<TEMPLATE> comparatorTemplate;
+	private Comparator<TEMPLATE> comparatorTemplate;
+	private Comparator<TOKEN> comparatorToken;
+	private Comparator<DEFINITION> comparatorDefinition;
+
+	private int tabIndex; public int getTabIndex() {return tabIndex;} public void setTabIndex(int tabIndex) {this.tabIndex = tabIndex;}
+	private String preview; public String getPreview() {return preview;}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fTemplate, UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat, Class<CATEGORY> cCategory2, Class<TEMPLATE> cTemplate)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fTemplate, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
 	{
-		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);
+		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fTemplate=fTemplate;
-		this.cCategory2=cCategory2;
+		this.cCategory=cCategory;
+		this.cType=cType;
 		this.cTemplate=cTemplate;
-		
-		scopes = fRevision.all(cScope);
-		types = fRevision.allOrderedPositionVisible(cRat);
-		scopeTypes = fRevision.allOrderedPositionVisible(cScopeType);
+		this.cDefinition=cDefinition;
+		this.cToken=cToken;
 		
 		efTemplate = EjbIoTemplateFactory.factory(cLang,cDescription,cTemplate);
+		efDefinition = EjbIoTemplateDefinitionFactory.factory(cDescription,cDefinition);
+		efToken = EjbIoTemplateTokenFactory.factory(cLang,cDescription,cToken);
 		
 		comparatorTemplate = new IoTemplateComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>().factory(IoTemplateComparator.Type.position);
+		comparatorToken = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>().factory(IoTemplateTokenComparator.Type.position);
+		comparatorDefinition = new IoTemplateDefinitionComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>().factory(IoTemplateDefinitionComparator.Type.position);
 		
-		categories2 = fRevision.allOrderedPositionVisible(cCategory2);
-		sbhCategory2 = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory2,categories2);
-		sbhCategory2.selectAll();
-		reloadEntities();
+		fmEngine = new FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>();
+		
+		types = fTemplate.allOrderedPositionVisible(cType);
+		categories = fTemplate.allOrderedPositionVisible(cCategory);
+		
+		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
+		sbhCategory.selectAll();
+		reloadTemplates();
 	}
 	
 	public void multiToggle(UtilsStatus<?,L,D> o)
 	{
 		logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());
-		sbhCategory2.multiToggle(o);
-		reloadEntities();
-		cancelEntity();
-	}
-
-	private void reloadEntities()
-	{
-		entities = fRevision.findEntities(cEntity, cCategory, sbhCategory.getSelected(), true);
-		templates = fTemplate.fTemplates(cTemplate, cCategory2, sbhCategory2.getSelected(), true);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cEntity,entities));}
-		Collections.sort(entities, comparatorEntity);
+		sbhCategory.multiToggle(o);
+		reloadTemplates();
+		cancelTemplate();
 	}
 	
-	public void addEntity() throws UtilsNotFoundException
+	//*************************************************************************************
+	private void reloadTemplates()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cEntity));}
-		entity = efEntity.build(null);
-		entity.setName(efLang.createEmpty(langs));
-		entity.setDescription(efDescription.createEmpty(langs));
-		attribute=null;
-		mapping=null;
+		templates = fTemplate.fTemplates(cTemplate, cCategory, sbhCategory.getSelected(), true);
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cTemplate,templates));}
+		Collections.sort(templates, comparatorTemplate);
 	}
 	
 	public void addTemplate() throws UtilsNotFoundException
@@ -127,25 +133,18 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		template = efTemplate.build(null);
 		template.setName(efLang.createEmpty(langs));
 		template.setDescription(efDescription.createEmpty(langs));
-
+		definition=null;
+		preview=null;
 	}
 	
-	private void reloadEntity()
+	private void reloadTemplate()
 	{
-		entity = fRevision.load(cEntity, entity);
-		attributes = entity.getAttributes();
-		entityMappings = entity.getMaps();
-	}
-	
-	public void selectEntity() throws UtilsNotFoundException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(entity));}
-		entity = fRevision.find(cEntity, entity);
-		entity = efLang.persistMissingLangs(fRevision,langs,entity);
-		entity = efDescription.persistMissingLangs(fRevision,langs,entity);
-		reloadEntity();
-		attribute=null;
-		mapping=null;
+		template = fTemplate.load(cTemplate, template);
+		tokens = template.getTokens();
+		definitions = template.getDefinitions();
+		
+		Collections.sort(tokens, comparatorToken);
+		Collections.sort(definitions, comparatorDefinition);
 	}
 	
 	public void selectTemplate() throws UtilsNotFoundException
@@ -154,136 +153,138 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		template = fTemplate.find(cTemplate, template);
 		template = efLang.persistMissingLangs(fTemplate,langs,template);
 		template = efDescription.persistMissingLangs(fTemplate,langs,template);
-		reloadEntity();
+		reloadTemplate();
+		definition=null;
+		preview=null;
 	}
 	
-	public void saveEntity() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(entity));}
-		if(entity.getCategory()!=null){entity.setCategory(fRevision.find(cCategory, entity.getCategory()));}
-		entity = fRevision.save(entity);
-		reloadEntities();
-		reloadEntity();
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(template));}
+		if(template.getCategory()!=null){template.setCategory(fTemplate.find(cCategory, template.getCategory()));}
+		template = fTemplate.save(template);
+		reloadTemplates();
+		reloadTemplate();
 		bMessage.growlSuccessSaved();
 		updatePerformed();
 	}
 	
-	public void rmEntity() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	public void rmTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(entity));}
-		fRevision.rm(entity);
-		entity=null;
-		mapping=null;
-		attribute=null;
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(template));}
+		fTemplate.rm(template);
+		template=null;
 		bMessage.growlSuccessRemoved();
-		reloadEntities();
+		reloadTemplates();
 		updatePerformed();
 	}
 	
-	public void cancelEntity()
+	public void cancelTemplate()
 	{
-		entity = null;
-		attribute=null;
-		mapping=null;
+		template = null;
 	}
-	
-	//*************************************************************************************
-	
-	public void saveAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(attribute));}
-		if(attribute.getType()!=null){attribute.setType(fRevision.find(cRat, attribute.getType()));}
-		attribute = fRevision.save(cEntity,entity,attribute);
-		reloadEntity();
-		bMessage.growlSuccessSaved();
-		updatePerformed();
-	}
-	
-	public void rmAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(attribute));}
-		fRevision.rm(cEntity,entity,attribute);
-		attribute=null;
-		bMessage.growlSuccessRemoved();
-		reloadEntity();
-		updatePerformed();
-	}
-	
-	//*************************************************************************************
-	
-	public void addMapping() throws UtilsNotFoundException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cMappingEntity));}
-		RST rst = null; if(!scopeTypes.isEmpty()){rst=scopeTypes.get(0);}
-		mapping = efMappingEntity.build(entity,null,rst);
-		updateUi();
-	}
-	
-	public void selectMapping() throws UtilsNotFoundException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(mapping));}
-		mapping = fRevision.find(cMappingEntity, mapping);
-		updateUi();
-	}
-	
-	public void saveMapping() throws UtilsLockingException, UtilsNotFoundException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(mapping));}
-		mapping.setScope(fRevision.find(cScope,mapping.getScope()));
-		mapping.setType(fRevision.find(cScopeType, mapping.getType()));
 		
+	//*************************************************************************************
+	public void addToken() throws UtilsNotFoundException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cToken));}
+		token = efToken.build(template);
+		token.setName(efLang.createEmpty(langs));
+		token.setDescription(efDescription.createEmpty(langs));
+	}
+	
+	public void selectToken() throws UtilsNotFoundException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(token));}
+		token = fTemplate.find(cToken, token);
+	}
+	
+	public void saveToken() throws UtilsLockingException, UtilsNotFoundException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(token));}
 		try
 		{
-			mapping = fRevision.save(mapping);
-			updateUi();
-			reloadEntity();
+			token = fTemplate.save(token);
+			reloadTemplate();
 			bMessage.growlSuccessSaved();
 			updatePerformed();
 		}
 		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
 	}
 	
-	public void rmMapping() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	public void rmToken() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(mapping));}
-		fRevision.rm(mapping);
-		mapping=null;
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(token));}
+		fTemplate.rm(token);
+		token=null;
 		bMessage.growlSuccessRemoved();
-		reloadEntity();
+		reloadTemplate();
 		updatePerformed();
 	}
 	
-	public void cancelMapping()
+	public void cancelToken()
 	{
-		mapping=null;
+		token=null;
 	}
 	
-	public void changeScopeType()
+	//*************************************************************************************
+	public void addDefinition() throws UtilsNotFoundException
 	{
-		mapping.setType(fRevision.find(cScopeType, mapping.getType()));
-		logger.info(AbstractLogMessage.selectEntity(mapping, mapping.getType()));
-		updateUi();
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cDefinition));}
+		definition = efDefinition.build(template,null);
+		definition.setDescription(efDescription.createEmpty(langs));
+		preview = null;
 	}
 	
-	//UI
-	private boolean uiWithJpqlTree;
-	
-	public boolean isUiWithJpqlTree() {
-		return uiWithJpqlTree;
-	}
-	private void updateUi()
+	public void selectDefinition() throws UtilsNotFoundException
 	{
-		uiWithJpqlTree = false;
-		if(mapping!=null)
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(definition));}
+		definition = fTemplate.find(cDefinition, definition);
+		renderPreview();
+	}
+	
+	public void saveDefinition() throws UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(definition));}
+		try
 		{
-			if(mapping.getType().getCode().equals(UtilsRevisionEntityMapping.Type.jpqlTree.toString())){uiWithJpqlTree=true;}
+			definition.setType(fTemplate.find(cType, definition.getType()));
+			definition = fTemplate.save(definition);
+			reloadTemplate();
+			renderPreview();
+			bMessage.growlSuccessSaved();
+			updatePerformed();
 		}
+		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
 	}
 	
+    public void definitonTabChange(TabChangeEvent event)
+    {
+    	if(debugOnInfo){logger.info("Tab Change "+event.getTab().getTitle()+" "+tabIndex);}
+    	renderPreview();
+    }
+    
+    private void renderPreview()
+    {
+    	logger.info("Preview of "+langs[tabIndex]);
+    	try
+    	{
+    		fmEngine.addTemplate(template);
+    		
+    		String fmTemplate = TxtIoTemplateFactory.buildCode(template, definition, langs[tabIndex]);
+    		Map<String,String> model = TxtIoTemplateTokenFactory.buildModel(template);
+    		
+    		preview = null;
+			preview = fmEngine.process(fmTemplate,model);
+		}
+    	catch (InvalidReferenceException e) {preview = e.getMessage();}
+    	catch (IOException e) {preview = e.getMessage();}
+    	catch (TemplateException e) {preview = e.getMessage();}
+    }
+    
+	//*************************************************************************************
 	protected void reorderTemplates() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, cTemplate, templates);Collections.sort(templates, comparatorTemplate);}
-	protected void reorderEntites() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, cEntity, entities);Collections.sort(entities, comparatorEntity);}
-	protected void reorderAttributes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, attributes);}
-	protected void reorderMappings() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, entityMappings);}
+	protected void reorderTokens() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, cToken, tokens);Collections.sort(tokens, comparatorToken);}
 	
 	protected void updatePerformed(){}	
 	

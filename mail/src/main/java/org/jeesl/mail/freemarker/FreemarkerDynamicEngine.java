@@ -17,14 +17,17 @@ public class FreemarkerDynamicEngine
 {
 	final static Logger logger = LoggerFactory.getLogger(FreemarkerDynamicEngine.class);
 
-	private StringTemplateLoader fmStringTemplates = new StringTemplateLoader();
+	private StringTemplateLoader fmStringTemplates;
 	private Configuration fmConfiguration;
 	
 	public FreemarkerDynamicEngine()
 	{
-		fmConfiguration = new Configuration();
 		fmStringTemplates = new StringTemplateLoader();
+		
+		fmConfiguration = new Configuration(Configuration.getVersion());
 		fmConfiguration.setTemplateLoader(fmStringTemplates);
+		fmConfiguration.setLogTemplateExceptions(false);
+		fmConfiguration.setDefaultEncoding("UTF-8");
 	}
 	
 	public void addTemplate(String code, String template)

@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public class JeeslMsgBuilder
 {	
-	public static final String generic = "aht-utils/msg/generic.xml";
+	public static final String generic = "jeesl/msg/generic.xml";
 	public static final String query = "aht-utils/msg/query.xml";
 	public static final String entities = "aht-utils/msg/module/entities.xml";
 	public static final String srcProject = "msg.aht-utils/project.xml";
@@ -38,6 +38,9 @@ public class JeeslMsgBuilder
 	public static final String timeseries = "aht-utils/msg/module/timeseries.xml";
 	public static final String io = "aht-utils/msg/module/io.xml";
 	public static final String monitoring = "aht-utils/msg/module/monitoring.xml";
+	
+	//IO
+	public static final String ioTemplate = "jeesl/msg/admin/system/io/template.xml";
 	
 	public static final String tooltip = "aht-utils/msg/tooltip.xml";
 

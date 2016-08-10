@@ -11,14 +11,17 @@
 		<composite:attribute name="keys" required="true"/>
 		<composite:attribute name="labelTranslation" required="false" default="#{msg.aupTranslation}"/>
 		<composite:attribute name="labelDescription" required="false" default="#{msg.aupDescription}"/>
+		<composite:attribute name="withName" required="false" default="true"/>
 		<composite:attribute name="withDescription" required="false" default="false"/>
 	</composite:interface>
         
   <composite:implementation>
   	<p:tabView id="tabView" var="t" value="#{cc.attrs.keys}">  
-  		<p:tab title="#{t}">  
-  			<p:outputLabel value="#{cc.attrs.labelTranslation}"/>
-  			<p:inputTextarea value="#{cc.attrs.value.name[t].lang}" maxlength="254" style="width:100%" autocomplete="off"/>
+  		<p:tab title="#{t}">
+  			<c:if test="#{cc.attrs.withName}">
+	  			<p:outputLabel value="#{cc.attrs.labelTranslation}"/>
+	  			<p:inputTextarea value="#{cc.attrs.value.name[t].lang}" maxlength="254" style="width:100%" autocomplete="off"/>
+  			</c:if>
   			<c:if test="#{cc.attrs.withDescription}">
   				<p:outputLabel value="#{cc.attrs.labelDescription}"/>
   				<p:inputTextarea value="#{cc.attrs.value.description[t].lang}" style="width:100%" autocomplete="off"/>

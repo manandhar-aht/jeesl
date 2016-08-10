@@ -14,11 +14,25 @@
 	<packaging>jar</packaging>
 		
 	<dependencies>
-   	   	<dependency>
-   	   		<groupId>com.sun.faces</groupId>
-   	   		<artifactId>jsf-api</artifactId>
-   	   		<scope>provided</scope>
-   	   	</dependency>
+		<dependency>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-jsf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-report</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-mail</artifactId>
+			<scope>provided</scope>
+		</dependency>
+   	<dependency>
+   		<groupId>com.sun.faces</groupId>
+   		<artifactId>jsf-api</artifactId>
+   		<scope>provided</scope>
+   	</dependency>
 		<dependency>  
    			<groupId>org.primefaces</groupId>  
    			<artifactId>primefaces</artifactId>
@@ -34,16 +48,7 @@
 			<artifactId>javax.el-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.jeesl</groupId>
-			<artifactId>jeesl-jsf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jeesl</groupId>
-			<artifactId>jeesl-report</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		
+
 		<dependency>
 			<groupId>org.metachart</groupId>
 			<artifactId>metachart-jsf</artifactId>

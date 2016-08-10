@@ -63,4 +63,24 @@ public class TestFreemarkerDynamicEngine extends AbstractJeeslMailTest
     	String actual = fde.process(code3,model);
     	Assert.assertEquals(expected, actual);
     }
+    
+    @Test
+    public void catchException()
+    {
+		try
+		{
+			fde.process(code3,model);
+		}
+		catch (InvalidReferenceException e) {logger.error(e.getMessage());}
+		catch (IOException e) {logger.debug(e.getMessage());}
+		catch (TemplateException e) {logger.debug(e.getMessage());}
+    }
+    
+    @Test
+    public void addTemplateMultipleTimes()
+    {
+		fde = new FreemarkerDynamicEngine();
+		fde.addTemplate(code1,"Welcome ${user}");
+		fde.addTemplate(code1,"Welcome ${user}");
+    }
 }

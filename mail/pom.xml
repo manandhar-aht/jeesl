@@ -218,15 +218,12 @@
 	</dependencyManagement>
 	
 	<build>
-        <plugins>
-            <plugin>
+		<plugins>
+			<plugin>
 		        <groupId>org.codehaus.mojo</groupId>
 		        <artifactId>versions-maven-plugin</artifactId>
-		        <configuration>
-					<rulesUri>${maven.ignore}</rulesUri>
-		        </configuration>
+		        <configuration><rulesUri>${maven.ignore.versions}</rulesUri></configuration>
 			</plugin>
-        </plugins>
+		</plugins>
     </build>
-   
 </project>

@@ -29,6 +29,14 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 		super(em);
 	}
 	
+	@Override public TEMPLATE load(Class<TEMPLATE> cTemplate, TEMPLATE template)
+	{
+		template = em.find(cTemplate, template.getId());
+		template.getTokens().size();
+		template.getDefinitions().size();
+		return template;
+	}
+	
 	@Override public List<TEMPLATE> fTemplates(Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, List<CATEGORY> categories, boolean showInvisibleEntities)
 	{
 		List<ParentPredicate<CATEGORY>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);

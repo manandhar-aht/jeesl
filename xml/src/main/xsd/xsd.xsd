@@ -15,8 +15,11 @@
     xmlns:a   ="http://ahtutils.aht-group.com/access"
     xmlns:u   ="http://ahtutils.aht-group.com/utils"
     xmlns:it  ="http://ahtutils.aht-group.com/issue"
-     xmlns:rev ="http://www.jeesl.org/revision"
-    xmlns:sec="http://ahtutils.aht-group.com/security"
+	
+	xmlns:rev ="http://www.jeesl.org/revision"
+	xmlns:text ="http://www.jeesl.org/text"
+	
+	xmlns:sec="http://ahtutils.aht-group.com/security"
 	xmlns:srs="http://ahtutils.aht-group.com/srs"
     xmlns:sys="http://ahtutils.aht-group.com/system"
     xmlns:survey="http://ahtutils.aht-group.com/survey"
@@ -48,7 +51,9 @@
     <xsd:import namespace="http://ahtutils.aht-group.com/navigation" schemaLocation="aht/navigation.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/monitoring" schemaLocation="aht/monitoring.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/cloud/facebook" schemaLocation="cloud/facebook.xsd"/>
-    <xsd:import namespace="http://www.jeesl.org/revision" schemaLocation="jeesl/revision.xsd"/>
+	
+	<xsd:import namespace="http://www.jeesl.org/revision" schemaLocation="jeesl/revision.xsd"/>
+	<xsd:import namespace="http://www.jeesl.org/text" schemaLocation="jeesl/text.xsd"/>
     <xsd:import namespace="http://exlp.sf.net/io" schemaLocation="../../../../../exlp/xml/src/main/xsd/util/io.xsd"/>
     <xsd:annotation>
         <xsd:appinfo>

@@ -28,13 +28,14 @@ public class JeeslNsPrefixMapper extends NamespacePrefixMapper implements NsPref
         if("http://ahtutils.aht-group.com/survey".equals(namespaceUri) ){return "survey";}
         if("http://ahtutils.aht-group.com/sync".equals(namespaceUri) ){return "sync";}
         if("http://ahtutils.aht-group.com/system".equals(namespaceUri) ){return "sys";}
-        if("http://ahtutils.aht-group.com/text".equals(namespaceUri) ){return "text";}
+        if("http://ahtutils.aht-group.com/text".equals(namespaceUri) ){return "t";}
         if("http://ahtutils.aht-group.com/qa".equals(namespaceUri) ){return "qa";}
         if("http://ahtutils.aht-group.com/utils".equals(namespaceUri) ){return "u";}
         if("http://ahtutils.aht-group.com/audit".equals(namespaceUri) ){return "at";}
         if("http://ahtutils.aht-group.com/cloud/facebook".equals(namespaceUri) ){return "fb";}
         
         if("http://www.jeesl.org/revision".equals(namespaceUri) ){return "rev";}
+        if("http://www.jeesl.org/text".equals(namespaceUri) ){return "text";}
         
         if("http://www.openfuxml.org/list".equals(namespaceUri) ){return "ofxL";}
         if("http://www.openfuxml.org".equals(namespaceUri) ){return "ofx";}

@@ -148,6 +148,12 @@
         </jxb:schemaBindings>
     </jxb:bindings>
     
+	<jxb:bindings schemaLocation="../xsd/jeesl/text.xsd" node="/xsd:schema">
+		<jxb:schemaBindings>
+			<jxb:package name="org.jeesl.model.xml.text"/>
+		</jxb:schemaBindings>
+    </jxb:bindings>
+    
     <jxb:bindings schemaLocation="../../../../../exlp/xml/src/main/xsd/util/net.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
             <jxb:package name="net.sf.exlp.xml.net"/>

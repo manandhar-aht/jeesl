@@ -42,17 +42,23 @@ public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescr
 		fmConfiguration.setDefaultEncoding("UTF-8");
 		fmConfiguration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 	}
-	
+		
 	public void addTemplate(TEMPLATE template)
 	{
 		for(DEFINITION definition : template.getDefinitions())
 		{
-			for(String localeCode : definition.getDescription().keySet())
-			{
-				D description = definition.getDescription().get(localeCode);
-				String code = TxtIoTemplateFactory.buildCode(template,definition,localeCode);
-				fmStringTemplates.putTemplate(code,description.getLang());
-			}
+			addTemplate(definition);
+		}
+	}
+	
+	public void addTemplate(DEFINITION definition)
+	{
+		for(String localeCode : definition.getDescription().keySet())
+		{
+			D description = definition.getDescription().get(localeCode);
+			String code = TxtIoTemplateFactory.buildCode(definition.getTemplate(),definition,localeCode);
+			fmStringTemplates.removeTemplate(code);
+			fmStringTemplates.putTemplate(code,description.getLang());
 		}
 	}
 	

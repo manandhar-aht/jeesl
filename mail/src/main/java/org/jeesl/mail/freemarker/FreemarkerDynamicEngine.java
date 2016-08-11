@@ -34,6 +34,7 @@ public class FreemarkerDynamicEngine
 	
 	public void addTemplate(String code, String template)
 	{
+		fmStringTemplates.removeTemplate(code);
 		fmStringTemplates.putTemplate(code, template);
 	}
 	

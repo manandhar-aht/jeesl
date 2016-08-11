@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.jeesl.org/text"
+    xmlns:text="http://www.jeesl.org/text"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="example">
+        <xsd:complexType>
+            <xsd:simpleContent>
+                <xsd:extension base="xsd:string">
+                	<xsd:attribute name="version" type="xsd:int"/>
+                    <xsd:attribute name="key" type="xsd:string"/>
+                </xsd:extension>
+            </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

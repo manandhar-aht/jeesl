@@ -240,7 +240,6 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(definition));}
 		definition = fTemplate.find(cDefinition, definition);
-		reloadTemplate();
 		renderPreview();
 	}
 	
@@ -251,7 +250,6 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		{
 			definition.setType(fTemplate.find(cType, definition.getType()));
 			definition = fTemplate.save(definition);
-			reloadTemplate();
 			renderPreview();
 			bMessage.growlSuccessSaved();
 			updatePerformed();
@@ -270,7 +268,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
     	logger.info("Preview of "+langs[tabIndex]);
     	try
     	{
-    		fmEngine.addTemplate(template);
+    		fmEngine.addTemplate(definition);
     		
     		String fmTemplate = TxtIoTemplateFactory.buildCode(template, definition, langs[tabIndex]);
     		Map<String,String> model = TxtIoTemplateTokenFactory.buildModel(template);

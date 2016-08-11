@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.jeesl.org/io/template"
+	xmlns:iot="http://www.jeesl.org/io/template"
+	xmlns:us="http://ahtutils.aht-group.com/status"
+	xmlns:ut="http://ahtutils.aht-group.com/text"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="../aht/status.xsd"/>
+	<xsd:import namespace="http://ahtutils.aht-group.com/text" schemaLocation="../aht/text.xsd"/>
+	<xsd:element name="templates">
+        <xsd:complexType>
+        	<xsd:sequence>
+                <xsd:element ref="iot:template" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+	<xsd:element name="template">
+		<xsd:complexType>
+        	<xsd:sequence>
+        		<xsd:element ref="us:category" maxOccurs="1"/>
+					<xsd:element ref="us:langs" maxOccurs="1"/>
+	        		<xsd:element ref="us:descriptions" maxOccurs="1"/>
+	        		<xsd:element ref="iot:tokens" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="id" type="xsd:long"/>
+			<xsd:attribute name="code" type="xsd:string"/>
+			<xsd:attribute name="position" type="xsd:int"/>
+			<xsd:attribute name="visible" type="xsd:boolean"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="tokens">
+        <xsd:complexType>
+        	<xsd:sequence>
+                <xsd:element ref="iot:token" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="token">
+		<xsd:complexType>
+        	<xsd:sequence>
+				<xsd:element ref="us:langs" maxOccurs="1"/>
+        		<xsd:element ref="us:descriptions" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="id" type="xsd:long"/>
+			<xsd:attribute name="code" type="xsd:string"/>
+			<xsd:attribute name="position" type="xsd:int"/>
+			<xsd:attribute name="visible" type="xsd:boolean"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

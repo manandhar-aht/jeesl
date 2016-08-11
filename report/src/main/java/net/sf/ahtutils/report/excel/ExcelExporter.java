@@ -159,7 +159,7 @@ public class ExcelExporter
 		style.setFont(font);
 
 		// Ask for all labels and add the ones starting with signature to a list
-		Iterator iterator     = context.iteratePointers("/info/labels/label");
+		Iterator iterator     = context.iteratePointers("/info/labels/label[@scope='signatures']");
 		ArrayList<Label> signatureLabels = new ArrayList<Label>();
 		while (iterator.hasNext())
 		{
@@ -172,10 +172,7 @@ public class ExcelExporter
 				if (o.getClass() == Label.class)
 				{
 					Label l = (Label) pointerToItem.getValue();
-					if (l.getKey().startsWith("signature"))
-					{
-						signatureLabels.add(l);
-					}
+					signatureLabels.add(l);
 				}
 			}
 		}
@@ -185,8 +182,12 @@ public class ExcelExporter
 		Integer columnNr = 0;
 		for (int i=0; i<signatureLabels.size();i++)
 		{
-			createCell(sheet, rowNr,   columnNr, signatureLabels.get(i).getValue(), "String", style);
-			createCell(sheet, rowNr+1, columnNr, "_______________", "String", style);
+			String responsible = "___________________";
+			Label label = signatureLabels.get(i);
+			if (label.isSetValue()) {responsible = label.getValue();}
+			createCell(sheet, rowNr,   columnNr, label.getKey(), "String", style);
+			createCell(sheet, rowNr+1, columnNr, responsible, "String", style);
+			createCell(sheet, rowNr+2, columnNr, "Date: ___/___/_____", "String", style);
 			columnNr = columnNr + 2;
 		}
 	}
@@ -206,6 +207,8 @@ public class ExcelExporter
 		style.setFont(font);
 
 		// Build the Title, subtitle
+		// DEPRECATED since PDF and Excel reports often use different information!
+		/*
 		Iterator iterator     = context.iteratePointers("/info/title");
 		Pointer pointerToItem = (Pointer)iterator.next();
 		Object o = pointerToItem.getValue();
@@ -235,9 +238,12 @@ public class ExcelExporter
 			createCell(sheet, rowNr, 0, s.getValue(), "String", style);
 			rowNr++;
 		}
+		*/
 		
 		// Ask for all labels and add the ones starting with header to a list
-		iterator     = context.iteratePointers("/info/labels/label");
+		Iterator iterator     = context.iteratePointers("/info/labels/label[@scope='header']");
+		Pointer pointerToItem = null;
+		Object o			  = null;
 		ArrayList<Label> headerLabels = new ArrayList<Label>();
 		while (iterator.hasNext())
 		{
@@ -250,17 +256,19 @@ public class ExcelExporter
 				if (o.getClass() == Label.class)
 				{
 					Label l = (Label) pointerToItem.getValue();
-					if (l.getKey().startsWith("header"))
-					{
-						headerLabels.add(l);
-					}
+					headerLabels.add(l);
 				}
 			}
 		}
 		
 		for (int i=0; i<headerLabels.size();i++)
 		{
-			createCell(sheet, rowNr,   0, headerLabels.get(i).getValue(), "String", style);
+			Label header = headerLabels.get(i);
+			String value = "";
+			if (header.isSetKey()) {value = header.getKey() +": ";}
+			value = value + header.getValue();
+			createCell(sheet, rowNr,   0, value, "String", style);
+			rowNr++;
 		}
 		
 		

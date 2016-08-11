@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.qa.Expected;
-import net.sf.ahtutils.xml.qa.Test;
 
 public class TestXmlExpected extends AbstractXmlQaTest<Expected>
 {

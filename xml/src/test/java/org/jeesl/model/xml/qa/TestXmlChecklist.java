@@ -1,11 +1,11 @@
 package org.jeesl.model.xml.qa;
 
 import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.security.TestXmlStaff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.qa.Checklist;
-import net.sf.ahtutils.xml.security.TestXmlStaff;
 
 public class TestXmlChecklist extends AbstractXmlQaTest<Checklist>
 {

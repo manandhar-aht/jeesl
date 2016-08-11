@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.qa.PreCondition;
-import net.sf.ahtutils.xml.qa.Test;
 
 public class TestXmlPreCondition extends AbstractXmlQaTest<PreCondition>
 {

@@ -1,11 +1,10 @@
 package net.sf.ahtutils.xml.project;
 
 import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.security.TestXmlRoles;
+import org.jeesl.model.xml.security.TestXmlUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.security.TestXmlRoles;
-import net.sf.ahtutils.xml.security.TestXmlUser;
 
 public class TestXmlResponsibilities extends AbstractXmlProjectTest<Responsibilities>
 {

@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.qa.Actual;
-import net.sf.ahtutils.xml.qa.Test;
 
 public class TestXmlActual extends AbstractXmlQaTest<Actual>
 {

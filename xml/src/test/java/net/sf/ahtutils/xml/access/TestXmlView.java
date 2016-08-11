@@ -3,12 +3,12 @@ package net.sf.ahtutils.xml.access;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import net.sf.ahtutils.xml.navigation.TestXmlNavigation;
 import net.sf.ahtutils.xml.status.TestXmlDescriptions;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.navigation.TestXmlNavigation;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;

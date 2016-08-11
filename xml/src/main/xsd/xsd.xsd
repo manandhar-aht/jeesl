@@ -17,6 +17,7 @@
     xmlns:it  ="http://ahtutils.aht-group.com/issue"
 	
 	xmlns:rev ="http://www.jeesl.org/revision"
+	xmlns:template ="http://www.jeesl.org/io/template"
 	xmlns:text ="http://www.jeesl.org/text"
 	
 	xmlns:sec="http://ahtutils.aht-group.com/security"

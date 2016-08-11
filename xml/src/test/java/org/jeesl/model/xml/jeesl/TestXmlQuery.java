@@ -2,6 +2,8 @@ package org.jeesl.model.xml.jeesl;
 
 import org.jeesl.UtilsXmlTestBootstrap;
 import org.jeesl.model.xml.qa.TestXmlTest;
+import org.jeesl.model.xml.security.TestXmlCategory;
+import org.jeesl.model.xml.security.TestXmlStaff;
 import org.jeesl.model.xml.survey.TestXmlAnswer;
 import org.jeesl.model.xml.survey.TestXmlSurvey;
 import org.jeesl.model.xml.survey.TestXmlSurveys;
@@ -13,8 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.access.TestXmlRole;
 import net.sf.ahtutils.xml.aht.Query;
-import net.sf.ahtutils.xml.security.TestXmlCategory;
-import net.sf.ahtutils.xml.security.TestXmlStaff;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
 import net.sf.ahtutils.xml.status.TestXmlStatus;
 import net.sf.ahtutils.xml.status.TestXmlType;

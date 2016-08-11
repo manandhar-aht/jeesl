@@ -4,7 +4,6 @@ import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.qa.Test;
 import net.sf.ahtutils.xml.status.TestXmlStatement;
 import net.sf.ahtutils.xml.status.TestXmlStatus;
 

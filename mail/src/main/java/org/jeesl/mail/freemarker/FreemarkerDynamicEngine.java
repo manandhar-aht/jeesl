@@ -12,6 +12,7 @@ import freemarker.core.InvalidReferenceException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
 
 public class FreemarkerDynamicEngine
 {
@@ -28,6 +29,7 @@ public class FreemarkerDynamicEngine
 		fmConfiguration.setTemplateLoader(fmStringTemplates);
 		fmConfiguration.setLogTemplateExceptions(false);
 		fmConfiguration.setDefaultEncoding("UTF-8");
+		fmConfiguration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 	}
 	
 	public void addTemplate(String code, String template)

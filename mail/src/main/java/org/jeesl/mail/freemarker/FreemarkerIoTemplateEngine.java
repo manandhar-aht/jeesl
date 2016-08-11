@@ -16,6 +16,7 @@ import freemarker.core.InvalidReferenceException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -39,6 +40,7 @@ public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescr
 		fmConfiguration.setTemplateLoader(fmStringTemplates);
 		fmConfiguration.setLogTemplateExceptions(false);
 		fmConfiguration.setDefaultEncoding("UTF-8");
+		fmConfiguration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 	}
 	
 	public void addTemplate(TEMPLATE template)

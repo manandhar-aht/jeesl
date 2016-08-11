@@ -240,6 +240,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(definition));}
 		definition = fTemplate.find(cDefinition, definition);
+		reloadTemplate();
 		renderPreview();
 	}
 	

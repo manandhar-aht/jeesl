@@ -57,7 +57,7 @@ public class TestFreemarkerDynamicEngine extends AbstractJeeslMailTest
     }
     
     @Test(expected=InvalidReferenceException.class)
-    public void code3() throws IOException, TemplateException
+    public void referenceException() throws IOException, TemplateException
     {
     	String expected = "ByeBye Big Joe from JEESL";
     	String actual = fde.process(code3,model);
@@ -71,9 +71,9 @@ public class TestFreemarkerDynamicEngine extends AbstractJeeslMailTest
 		{
 			fde.process(code3,model);
 		}
-		catch (InvalidReferenceException e) {logger.error(e.getMessage());}
-		catch (IOException e) {logger.debug(e.getMessage());}
-		catch (TemplateException e) {logger.debug(e.getMessage());}
+		catch (InvalidReferenceException e) {logger.info(e.getMessage());}
+		catch (IOException e) {logger.info(e.getMessage());}
+		catch (TemplateException e) {logger.info(e.getMessage());}
     }
     
     @Test

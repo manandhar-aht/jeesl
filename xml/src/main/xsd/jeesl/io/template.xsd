@@ -2,10 +2,10 @@
 <xsd:schema targetNamespace="http://www.jeesl.org/io/template"
 	xmlns:iot="http://www.jeesl.org/io/template"
 	xmlns:us="http://ahtutils.aht-group.com/status"
-	xmlns:ut="http://ahtutils.aht-group.com/text"
+	xmlns:text="http://www.jeesl.org/text"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="../aht/status.xsd"/>
-	<xsd:import namespace="http://ahtutils.aht-group.com/text" schemaLocation="../aht/text.xsd"/>
+	<xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="../../aht/status.xsd"/>
+	<xsd:import namespace="http://www.jeesl.org/text" schemaLocation="../text.xsd"/>
 	<xsd:element name="templates">
         <xsd:complexType>
         	<xsd:sequence>
@@ -20,6 +20,7 @@
 					<xsd:element ref="us:langs" maxOccurs="1"/>
 	        		<xsd:element ref="us:descriptions" maxOccurs="1"/>
 	        		<xsd:element ref="iot:tokens" maxOccurs="1"/>
+	        		<xsd:element ref="iot:definitions" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="id" type="xsd:long"/>
 			<xsd:attribute name="code" type="xsd:string"/>
@@ -39,9 +40,28 @@
         	<xsd:sequence>
 				<xsd:element ref="us:langs" maxOccurs="1"/>
         		<xsd:element ref="us:descriptions" maxOccurs="1"/>
+        		<xsd:element ref="text:example" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="id" type="xsd:long"/>
 			<xsd:attribute name="code" type="xsd:string"/>
+			<xsd:attribute name="position" type="xsd:int"/>
+			<xsd:attribute name="visible" type="xsd:boolean"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="definitions">
+        <xsd:complexType>
+        	<xsd:sequence>
+                <xsd:element ref="iot:definition" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="definition">
+		<xsd:complexType>
+        	<xsd:sequence>
+        		<xsd:element ref="us:type" maxOccurs="1"/>
+        		<xsd:element ref="us:descriptions" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="id" type="xsd:long"/>
 			<xsd:attribute name="position" type="xsd:int"/>
 			<xsd:attribute name="visible" type="xsd:boolean"/>
 		</xsd:complexType>

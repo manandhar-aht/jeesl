@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template:tokens xmlns:s="http://ahtutils.aht-group.com/status" xmlns:text="http://www.jeesl.org/text" xmlns:template="http://www.jeesl.org/io/template">
+    <template:token id="123" code="myCode" position="2" visible="true"/>
+    <template:token id="123" code="myCode" position="2" visible="true"/>
+</template:tokens>

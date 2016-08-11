@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template:token xmlns:s="http://ahtutils.aht-group.com/status" xmlns:text="http://www.jeesl.org/text" xmlns:template="http://www.jeesl.org/io/template" id="123" code="myCode" position="2" visible="true">
+    <s:langs/>
+    <s:descriptions/>
+    <text:example version="1" key="myKey">myValue</text:example>
+</template:token>

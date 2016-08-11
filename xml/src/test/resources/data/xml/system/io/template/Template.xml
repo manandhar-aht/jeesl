@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template:template xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:text="http://www.jeesl.org/text" xmlns:template="http://www.jeesl.org/io/template" id="123" code="myCode" position="2" visible="true">
+    <s:langs/>
+    <s:descriptions/>
+    <template:tokens/>
+    <template:definitions/>
+</template:template>

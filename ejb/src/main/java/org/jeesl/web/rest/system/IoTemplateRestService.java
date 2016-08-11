@@ -1,11 +1,14 @@
 package org.jeesl.web.rest.system;
 
+import org.jeesl.factory.xml.system.io.template.XmlTemplateFactory;
+import org.jeesl.factory.xml.system.io.template.XmlTemplatesFactory;
 import org.jeesl.interfaces.facade.JeeslIoTemplateFacade;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
 import org.jeesl.interfaces.rest.system.io.template.JeeslIoTemplateRestExport;
 import org.jeesl.interfaces.rest.system.io.template.JeeslIoTemplateRestImport;
+import org.jeesl.model.xml.system.io.template.Templates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +46,7 @@ public class IoTemplateRestService <L extends UtilsLang,D extends UtilsDescripti
 	private final Class<TOKEN> cToken;
 
 	private XmlStatusFactory xfStatus;
+	private XmlTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> xfTemplate;
 	
 	private EjbLangFactory<L> efLang;
 	private EjbDescriptionFactory<D> efDescription;
@@ -88,9 +92,17 @@ public class IoTemplateRestService <L extends UtilsLang,D extends UtilsDescripti
 		return aht;
 	}
 
+	@Override
+	public Templates exportSystemIoTemplates()
+	{
+		Templates xml = XmlTemplatesFactory.build();
+		
+		return xml;
+	}
+	
+	
 	@Override public DataUpdate importSystemIoTemplateCategories(Aht categories){return importStatus(cCategory,cL,cD,categories,null);}
 	@Override public DataUpdate importSystemIoTemplateTypes(Aht types){return importStatus(cType,cL,cD,types,null);}
-	
 	
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Aht container, Class<P> clParent)

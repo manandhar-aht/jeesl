@@ -182,7 +182,10 @@
 			            <exclude>net/sf/ahtutils/xml/text/*.java</exclude>
 			            <exclude>net/sf/ahtutils/xml/ts/*.java</exclude>
 			            <exclude>net/sf/ahtutils/xml/utils/*.java</exclude>
-							<exclude>org/jeesl/model/xml/system/revision/*.java</exclude>
+			            
+			            <exclude>org/jeesl/model/xml/system/io/template/*.java</exclude>
+						<exclude>org/jeesl/model/xml/system/revision/*.java</exclude>
+						<exclude>org/jeesl/model/xml/text/*.java</exclude>
 					</excludes>
 	        </configuration>
 	      </plugin>

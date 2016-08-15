@@ -58,9 +58,9 @@ public class JeeslListingCopy
 	public static final String jbPostgresDriver = "admin/installation/jboss/config/ds-driver-postgres.xml";
 	public static final String jbPostgresDs = "admin/installation/jboss/config/ds-postgres.xml";
 	
-	public static final String apacheProxy = "admin/installation/apache/proxy.txt";
+	public static final String apacheProxy = "admin/installation/tools/apache/proxy.txt";
 	
-	public static final String apacheRedirectListing = "admin/installation/apache/redirect.html";
+	public static final String apacheRedirectListing = "admin/installation/tools/apache/redirect.html";
 	public static final String apacheRedirectPattern = "@@@APACHE.REDIRECT.URL@@@";
 	public static final String apacheRedirectConfig = "doc.admin.apache.redirect.url";
 	

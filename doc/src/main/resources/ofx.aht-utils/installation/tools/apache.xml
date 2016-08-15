@@ -42,7 +42,7 @@
 					<text:emphasis style="typewriter">/etc/apache2/sites-available/default</text:emphasis>:
 				</ofx:paragraph>
 				
-				<ofx:listing external="listing/admin/installation/apache/proxy.txt"/>
+				<ofx:listing external="listing/admin/installation/tools/apache/proxy.txt"/>
 				
 				<ofx:paragraph lang="en">
 					After configuration, the modules <text:emphasis style="typewriter">proxy</text:emphasis>
@@ -60,7 +60,7 @@ service apache2 restart</ofx:raw>
 					<text:emphasis style="typewriter">/var/www/index.html</text:emphasis>:
 				</ofx:paragraph>
 				
-				<ofx:listing external="listing/admin/installation/apache/redirect.html"/>
+				<ofx:listing external="listing/admin/installation/tools/apache/redirect.html"/>
 				
 			</ofx:section>
 

@@ -18,13 +18,13 @@ public class XmlCategoryFactory
 	
 	private static boolean errorPrinted = false;
 	
-	private String lang;
+	private String localeCode;
 	private Category q;
 	
 	public XmlCategoryFactory(Category q){this(null,q);}
-	public XmlCategoryFactory(String lang,Category q)
+	public XmlCategoryFactory(String localeCode,Category q)
 	{
-		this.lang=lang;
+		this.localeCode=localeCode;
 		this.q=q;
 	}
 	
@@ -47,14 +47,14 @@ public class XmlCategoryFactory
 
 		}
 		
-		if(q.isSetLabel() && lang!=null)
+		if(q.isSetLabel() && localeCode!=null)
 		{
 			if(ejb.getName()!=null)
 			{
-				if(ejb.getName().containsKey(lang)){xml.setLabel(ejb.getName().get(lang).getLang());}
+				if(ejb.getName().containsKey(localeCode)){xml.setLabel(ejb.getName().get(localeCode).getLang());}
 				else
 				{
-					String msg = "No translation "+lang+" available in "+ejb;
+					String msg = "No translation "+localeCode+" available in "+ejb;
 					logger.warn(msg);
 					xml.setLabel(msg);
 				}
@@ -66,9 +66,9 @@ public class XmlCategoryFactory
 				xml.setLabel(msg);
 			}
 		}
-		else if(q.isSetLabel() && lang==null)
+		else if(q.isSetLabel() && localeCode==null)
 		{
-			logger.warn("Should render label, but lang is null");
+			logger.warn("Should render label, but localeCode is null");
 			if(!errorPrinted)
 			{
 				logger.warn("This StackTrace will only shown once!");

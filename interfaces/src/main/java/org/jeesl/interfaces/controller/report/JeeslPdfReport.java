@@ -1,8 +1,8 @@
-package net.sf.ahtutils.interfaces.controller.report;
+package org.jeesl.interfaces.controller.report;
 
 import java.io.InputStream;
 
-public interface UtilsPdfReport extends UtilsReport
+public interface JeeslPdfReport extends JeeslReport
 {	
 	public static String mimeType = "application/pdf";
 	

@@ -1,8 +1,8 @@
-package net.sf.ahtutils.interfaces.controller.report;
+package org.jeesl.interfaces.controller.report;
 
 import java.io.InputStream;
 
-public interface UtilsDocReport {
+public interface JeeslDocReport {
 	
 public static String mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 	

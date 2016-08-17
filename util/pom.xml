@@ -13,6 +13,18 @@
     <packaging>jar</packaging>
     <name>UTILS - Util</name>
 	
+	<dependencyManagement>
+		<dependencies>      	         
+			<dependency>
+				<groupId>org.jeesl</groupId>
+				<artifactId>jeesl-bom</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
 	<dependencies>
 		<dependency>
         	<groupId>net.sf.exlp</groupId>
@@ -234,9 +246,7 @@
 			</exclusions>
     		<scope>provided</scope>
     	</dependency>
-    	
-	  	
-    	
+    		
     	
 <!--	28.11.2015 ... Trying to deactivate. Should only be required in report module -->
 <!--	27.03.2016 ... Scope set to provided -->
@@ -283,19 +293,6 @@
             <scope>compile</scope>
         </dependency>
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>      	         
-			<dependency>
-				<groupId>org.jeesl</groupId>
-				<artifactId>jeesl-bom</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
-		</dependencies>
-	</dependencyManagement>
 	
 	<build>
 		<plugins>

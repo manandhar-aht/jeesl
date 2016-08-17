@@ -16,4 +16,9 @@ public class XmlCounterFactory
 		xml.setCounter(counter);
 		return xml;
 	}
+	
+	public static <E extends Enum<E>> Counter build(E code, int counter)
+	{
+		return create(code.toString(),counter);
+	}
 }

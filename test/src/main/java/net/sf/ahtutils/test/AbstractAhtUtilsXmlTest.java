@@ -21,7 +21,6 @@ public class AbstractAhtUtilsXmlTest <T extends Object>
 	private boolean debug;
 	protected static File fXml;
 	
-	private String xmlDirSuffix;
 	private File xmlFile;
 	
 	private Class<T> cXml;
@@ -31,7 +30,6 @@ public class AbstractAhtUtilsXmlTest <T extends Object>
 	{
 		debug=true;
 		this.cXml=cXml;
-		this.xmlDirSuffix=xmlDirSuffix;
 		if(cXml!=null)
 		{
 			try

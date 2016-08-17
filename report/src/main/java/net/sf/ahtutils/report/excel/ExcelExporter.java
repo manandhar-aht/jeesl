@@ -49,9 +49,6 @@ public class ExcelExporter
     // The data
     public Object    report;
     
-    // The query which entities are the subject of this report
-    public String    query;
-    
     // How many results are there for the given query
     public Integer   counter;
 	
@@ -67,10 +64,9 @@ public class ExcelExporter
     final static Logger logger = LoggerFactory.getLogger(ExcelExporter.class);
 	private int MIN_WIDTH = 5000;
 	
-    public ExcelExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String listDefinition, String languageKey) throws Exception
+	public ExcelExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String languageKey) throws Exception
     {
 		// Get all info
-        this.query      = listDefinition;
         this.report     = report;
         this.languageKey= languageKey;
 		

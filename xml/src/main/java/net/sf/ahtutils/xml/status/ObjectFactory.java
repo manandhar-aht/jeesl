@@ -214,6 +214,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Program }
+     * 
+     */
+    public Program createProgram() {
+        return new Program();
+    }
+
+    /**
+     * Create an instance of {@link SubProgram }
+     * 
+     */
+    public SubProgram createSubProgram() {
+        return new SubProgram();
+    }
+
+    /**
      * Create an instance of {@link Condition }
      * 
      */

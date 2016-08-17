@@ -20,12 +20,19 @@
     		<s:lang key="en" translation="Balance"/>
     		<s:lang key="fr" translation="Balance"/>
     	</s:langs>
-    </s:translation>
+	</s:translation>
 	<s:translation key="aupCosts">
     	<s:langs>
     		<s:lang key="de" translation="Kosten"/>
     		<s:lang key="en" translation="Costs"/>
     		<s:lang key="fr" translation="Costs"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslTotal">
+    	<s:langs>
+    		<s:lang key="de" translation="Gesamt"/>
+    		<s:lang key="en" translation="Total"/>
+    		<s:lang key="fr" translation="Total"/>
     	</s:langs>
     </s:translation>
 </s:translations>

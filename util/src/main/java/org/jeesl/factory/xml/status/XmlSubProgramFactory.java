@@ -68,7 +68,8 @@ public class XmlSubProgramFactory
 		return xml;
 	}
 	
-	public static <E extends Enum<E>> SubProgram build(E code){return build(code.toString(),null);}
+	public static <E extends Enum<E>> SubProgram build(E code){return build(code.toString());}
+	public static <E extends Enum<E>> SubProgram build(String code){return build(code.toString(),null);}
 	public static SubProgram build(String code,String label)
 	{
 		SubProgram xml = new SubProgram();

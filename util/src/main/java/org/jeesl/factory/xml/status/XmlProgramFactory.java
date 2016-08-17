@@ -68,7 +68,8 @@ public class XmlProgramFactory
 		return xml;
 	}
 	
-	public static <E extends Enum<E>> Program build(E code){return build(code.toString(),null);}
+	public static <E extends Enum<E>> Program build(E code){return build(code.toString());}
+	public static <E extends Enum<E>> Program build(String code){return build(code.toString(),null);}
 	public static Program build(String code,String label)
 	{
 		Program xml = new Program();

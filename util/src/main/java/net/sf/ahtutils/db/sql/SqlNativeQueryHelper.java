@@ -8,23 +8,29 @@ public class SqlNativeQueryHelper
 	final static Logger logger = LoggerFactory.getLogger(SqlNativeQueryHelper.class);
 	
 	
-	public static void debugDataTypes(Object[] array){debugDataTypes(null,array);}
-	public static void debugDataTypes(String info, Object[] array)
+	
+	public static void debugDataTypes(Object[] array){debugDataTypes(true,null,array);}
+	public static void debugDataTypes(boolean debug, Object[] array){debugDataTypes(debug,null,array);}
+	public static void debugDataTypes(String info, Object[] array){debugDataTypes(true,info,array);}
+	public static void debugDataTypes(boolean debug, String info, Object[] array)
 	{
-		logger.info("*****************************");
-		if(info!=null){logger.info(info);}
-		int i=0;
-		for(Object o : array)
+		if(debug)
 		{
-			if(o!=null)
+			logger.info("*****************************");
+			if(info!=null){logger.info(info);}
+			int i=0;
+			for(Object o : array)
 			{
-				logger.info("\t"+i+" "+o.getClass().getName());
+				if(o!=null)
+				{
+					logger.info("\t"+i+" "+o.getClass().getName());
+				}
+				else
+				{
+					logger.info("\t"+i+" NULL");
+				}
+				i++;
 			}
-			else
-			{
-				logger.info("\t"+i+" NULL");
-			}
-			i++;
 		}
 	}
 	

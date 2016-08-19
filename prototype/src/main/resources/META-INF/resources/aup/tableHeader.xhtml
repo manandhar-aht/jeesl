@@ -14,6 +14,12 @@
 		<composite:attribute name="localeCode" required="false" default="#{localeCode}"/>
 	</composite:interface>
 	<composite:implementation>
-		<h:outputText value="#{appLabelBean.labels[cc.attrs.entity][cc.attrs.code][cc.attrs.localeCode].lang}" />
+		
+		<c:if test="#{not empty cc.attrs.code}">
+	    	<h:outputText value="#{appLabelBean.labels[cc.attrs.entity][cc.attrs.code][cc.attrs.localeCode].lang}" />
+	    </c:if>
+		<c:if test="#{empty cc.attrs.code}">
+	    	<h:outputText value="#{appLabelBean.entities[cc.attrs.entity][cc.attrs.localeCode].lang}" />
+	    </c:if>
 	</composite:implementation>
 </html>

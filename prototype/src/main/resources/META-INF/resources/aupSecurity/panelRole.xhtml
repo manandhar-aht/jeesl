@@ -28,8 +28,8 @@
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="#{msg.aupSecurityCode}"/>
-				<h:inputText rendered="#{!cc.attrs.bean.denyRemove}" value="#{cc.attrs.bean.role.code}"/>
-				<h:outputText rendered="#{cc.attrs.bean.denyRemove}" value="#{cc.attrs.bean.role.code}"/>
+				<h:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.role.code}"/>
+				<h:outputText rendered="#{!cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.role.code}"/>
 				
 				<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
 				<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{cc.attrs.bean.role.visible}"/>

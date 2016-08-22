@@ -2,8 +2,10 @@ package net.sf.ahtutils.controller.facade;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -43,8 +45,11 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 	@Override public R load(Class<R> cRole, R role)
 	{
 		role = em.find(cRole, role.getId());
+		role.getCategory().getId();
 		if(role.getUsers()!=null){role.getUsers().size();}
 		if(role.getActions()!=null){role.getActions().size();}
+		if(role.getViews()!=null){role.getViews().size();}
+		if(role.getUsecases()!=null){role.getUsecases().size();}
 //		role.getTemplates().size();
 		return role;
 	}
@@ -52,6 +57,7 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 	@Override public V load(Class<V> cView, V view)
 	{
 		view = em.find(cView, view.getId());
+		view.getCategory().getId();
 		view.getActions().size();
 		view.getRoles().size();
 		view.getUsecases().size();
@@ -61,7 +67,9 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 	@Override public U load(Class<U> cUsecase, U usecase)
 	{
 		usecase = em.find(cUsecase, usecase.getId());
+		usecase.getCategory().getId();
 		usecase.getActions().size();
+		if(usecase.getViews()!=null){usecase.getViews().size();}
 //		usecase.getTemplates().size();
 		return usecase;
 	}
@@ -95,19 +103,40 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 	@Override public List<R> rolesForView(Class<V> cView, Class<USER> cUser, V view, USER user)
 	{		
 		view = em.find(cView, view.getId());
-		Map<Long,R> roles = new HashMap<Long,R>();
+		Set<R> roles = new HashSet<R>();
 		for(R r : view.getRoles())
 		{
-			if(!roles.containsKey(r.getId())){roles.put(r.getId(), r);}
+			if(!roles.contains(r)){roles.add(r);}
 		}
+		
 		for(U u : view.getUsecases())
 		{
 			for(R r : u.getRoles())
 			{
-				if(!roles.containsKey(r.getId())){roles.put(r.getId(), r);}
+				if(!roles.contains(r)){roles.add(r);}
 			}
 		}
-		return new ArrayList<R>(roles.values());
+		return new ArrayList<R>(roles);
+	}
+	
+//	@Override
+	public List<R> rolesForView2(Class<V> cView, Class<USER> cUser, V view, USER user)
+	{		
+		view = em.find(cView, view.getId());
+		Set<R> roles = new HashSet<R>();
+		for(R r : view.getRoles())
+		{
+			if(!roles.contains(r)){roles.add(r);}
+		}
+		
+		for(U u : view.getUsecases())
+		{
+			for(R r : u.getRoles())
+			{
+				if(!roles.contains(r)){roles.add(r);}
+			}
+		}
+		return new ArrayList<R>(roles);
 	}
 	
 	@Override public List<R> rolesForAction(Class<A> cAction, A action)

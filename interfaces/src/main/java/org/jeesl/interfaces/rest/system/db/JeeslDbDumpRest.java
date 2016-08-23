@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.rest;
+package org.jeesl.interfaces.rest.system.db;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.xml.io.Dir;
 
-public interface UtilsDbDumpRest
+public interface JeeslDbDumpRest
 {	
 	@POST @Path("/upload")
 	@Produces(MediaType.APPLICATION_XML)

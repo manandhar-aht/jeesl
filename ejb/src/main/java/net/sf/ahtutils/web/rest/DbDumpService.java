@@ -7,20 +7,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jeesl.interfaces.rest.system.db.JeeslDbDumpRest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.db.EjbDbDumpFileFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsDbFacade;
 import net.sf.ahtutils.interfaces.model.db.UtilsDbDumpFile;
-import net.sf.ahtutils.interfaces.rest.UtilsDbDumpRest;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.xml.io.Dir;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class DbDumpService<D extends UtilsDbDumpFile> implements UtilsDbDumpRest
+public class DbDumpService<D extends UtilsDbDumpFile> implements JeeslDbDumpRest
 {
 	final static Logger logger = LoggerFactory.getLogger(DbDumpService.class);
 	

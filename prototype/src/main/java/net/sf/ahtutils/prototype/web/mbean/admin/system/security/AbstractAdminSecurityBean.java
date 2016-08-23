@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.web.mbean.prototype.user.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,6 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
-import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityRoleComparator;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityUsecaseComparator;

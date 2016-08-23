@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean;
+package org.jeesl.web.mbean.prototype.user;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -9,19 +9,19 @@ import javax.annotation.PostConstruct;
 import net.sf.ahtutils.jsf.menu.MenuFactory;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
-import net.sf.ahtutils.web.mbean.util.AbstractMenuBean;
 import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.navigation.Breadcrumb;
 import net.sf.ahtutils.xml.navigation.Menu;
 import net.sf.ahtutils.xml.navigation.MenuItem;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.web.mbean.jsf.user.AbstractMenuXmlBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PrototypeMenuBean extends AbstractMenuBean implements Serializable
+public class PrototypeXmlMenuBean extends AbstractMenuXmlBean implements Serializable
 {
-	final static Logger logger = LoggerFactory.getLogger(PrototypeMenuBean.class);
+	final static Logger logger = LoggerFactory.getLogger(PrototypeXmlMenuBean.class);
 	private static final long serialVersionUID = 1L;
 	
 	protected Menu menu;

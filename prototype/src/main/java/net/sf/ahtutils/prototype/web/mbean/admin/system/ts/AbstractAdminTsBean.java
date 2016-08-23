@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.web.mbean.prototype.user.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,6 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
-import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.util.comparator.ejb.ts.TsClassComparator;
 import net.sf.ahtutils.util.comparator.ejb.ts.TsScopeComparator;
 

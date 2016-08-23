@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.mbean.util;
+package org.jeesl.web.mbean.jsf.user;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -8,6 +8,7 @@ import java.util.Map;
 import net.sf.ahtutils.factory.xml.navigation.XmlMenuItemFactory;
 import net.sf.ahtutils.jsf.menu.MenuFactory;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
+import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.ahtutils.xml.navigation.Breadcrumb;
 import net.sf.ahtutils.xml.navigation.Menu;
 import net.sf.ahtutils.xml.navigation.MenuItem;
@@ -16,9 +17,9 @@ import net.sf.exlp.util.xml.JaxbUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractMenuBean implements Serializable
+public abstract class AbstractMenuXmlBean implements Serializable
 {
-	final static Logger logger = LoggerFactory.getLogger(AbstractMenuBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractMenuXmlBean.class);
 	private static final long serialVersionUID = 1L;
 	
 	protected static final String rootMain = "root";
@@ -29,7 +30,7 @@ public abstract class AbstractMenuBean implements Serializable
 	protected Map<String,Boolean> mapViewAllowed;
 	protected boolean userLoggedIn;
 
-	public AbstractMenuBean()
+	public AbstractMenuXmlBean()
 	{
 		userLoggedIn = false;	
 	}

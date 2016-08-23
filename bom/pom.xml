@@ -14,7 +14,7 @@
 
     <dependencyManagement>
         <dependencies>
-        	<!-- AHT Utils -->
+        	<!-- JEESL -->
         	<dependency>
 				<groupId>org.jeesl</groupId>
 				<artifactId>jeesl-xml</artifactId>

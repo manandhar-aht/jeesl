@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean.admin;
+package org.jeesl.web.mbean.prototype.user.admin;
 
 import java.io.Serializable;
 

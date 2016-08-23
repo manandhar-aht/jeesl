@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.admin.system.io;
+package org.jeesl.web.mbean.prototype.user.admin.system.io;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -20,6 +20,7 @@ import org.jeesl.mail.freemarker.FreemarkerIoTemplateEngine;
 import org.jeesl.util.comparator.ejb.system.io.IoTemplateComparator;
 import org.jeesl.util.comparator.ejb.system.io.IoTemplateDefinitionComparator;
 import org.jeesl.util.comparator.ejb.system.io.IoTemplateTokenComparator;
+import org.jeesl.web.mbean.prototype.user.admin.AbstractAdminBean;
 import org.primefaces.event.TabChangeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
-import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDescription,

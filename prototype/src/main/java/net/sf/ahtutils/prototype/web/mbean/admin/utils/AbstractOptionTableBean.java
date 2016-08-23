@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.web.mbean.prototype.user.admin.AbstractAdminBean;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
@@ -39,7 +40,6 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
-import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 import net.sf.exlp.util.io.StringUtil;
 
 public class AbstractOptionTableBean <L extends UtilsLang,

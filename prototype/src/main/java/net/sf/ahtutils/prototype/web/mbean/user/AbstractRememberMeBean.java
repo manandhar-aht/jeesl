@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 
+import org.jeesl.web.mbean.prototype.user.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,6 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
-import net.sf.ahtutils.prototype.web.mbean.admin.AbstractAdminBean;
 
 public class AbstractRememberMeBean <L extends UtilsLang,D extends UtilsDescription,
 										C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,

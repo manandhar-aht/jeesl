@@ -70,6 +70,8 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 		usecase.getCategory().getId();
 		usecase.getActions().size();
 		if(usecase.getViews()!=null){usecase.getViews().size();}
+		if(usecase.getRoles()!=null){usecase.getRoles().size();}
+		if(usecase.getActions()!=null){usecase.getActions().size();}
 //		usecase.getTemplates().size();
 		return usecase;
 	}

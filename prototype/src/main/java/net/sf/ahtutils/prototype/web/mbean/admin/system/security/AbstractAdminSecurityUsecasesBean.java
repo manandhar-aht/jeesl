@@ -42,6 +42,8 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	
 	private List<U> usecases; public List<U> getUsecases() {return usecases;}
 	private List<R> roles; public List<R> getRoles(){return roles;}
+	private List<V> views; public List<V> getViews(){return views;}
+	private List<A> actions; public List<A> getActions(){return actions;}
 	
 	private U usecase; public U getUsecase(){return usecase;} public void setUsecase(U usecase){this.usecase = usecase;}
 	
@@ -51,7 +53,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 		
 		opViews = fSecurity.all(cView);
-		Collections.sort(opViews, comparatorView);
+		Collections.sort(opViews,comparatorView);
 		
 		opActions = new ArrayList<A>();
 	}
@@ -76,8 +78,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 		reloadUsecase();
 		usecase = efLang.persistMissingLangs(fSecurity,langs,usecase);
 		usecase = efDescription.persistMissingLangs(fSecurity,langs,usecase);
-		Collections.sort(usecase.getViews(),comparatorView);
-		Collections.sort(usecase.getActions(),comparatorAction);
+		
 		reloadActions();
 	}
 	
@@ -85,8 +86,12 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang,
 	private void reloadUsecase()
 	{
 		usecase = fSecurity.load(cUsecase,usecase);
-		
 		roles = usecase.getRoles();
+		views = usecase.getViews();
+		actions = usecase.getActions();
+		
+		Collections.sort(views,comparatorView);
+		Collections.sort(actions,comparatorAction);
 		Collections.sort(roles,comparatorRole);
 	}
 	

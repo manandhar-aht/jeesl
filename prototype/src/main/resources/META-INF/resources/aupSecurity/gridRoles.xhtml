@@ -27,9 +27,9 @@
 				</aht:slot>
 				<aht:slot id="sRole" width="6" renderChildren="#{not empty cc.attrs.bean.role}">
 					<h:form id="fRole"><aupSec:panelRole bean="#{cc.attrs.bean}" update=":#{cc.id}:fRoles :#{cc.id}:sRole" /></h:form>
-					<h:form id="fViews"><aupSec:addViews rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fViews :#{cc.id}:fAction" views="#{cc.attrs.bean.role.views}"/></h:form>
-					<h:form id="fAction"><aupSec:addActions rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fAction" actions="#{cc.attrs.bean.role.actions}"/></h:form>
-					<h:form id="fUsecase"><aupSec:addUsecases rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fUsecase" usecases="#{cc.attrs.bean.role.usecases}"/></h:form>
+					<h:form id="fViews"><aupSec:addViews rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fViews :#{cc.id}:fAction" views="#{cc.attrs.bean.views}"/></h:form>
+					<h:form id="fAction"><aupSec:addActions rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fAction" actions="#{cc.attrs.bean.actions}"/></h:form>
+					<h:form id="fUsecase"><aupSec:addUsecases rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fUsecase" usecases="#{cc.attrs.bean.usecases}"/></h:form>
 				</aht:slot>
 			</aht:row>
 		</aup:grid>

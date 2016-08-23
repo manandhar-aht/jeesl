@@ -43,11 +43,13 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityRoleBean.class);
 			
 	private List<R> roles; public List<R> getRoles(){return roles;}
-
+	private List<V> views; public List<V> getViews(){return views;}
+	private List<A> actions; public List<A> getActions(){return actions;}
+	private List<U> usecases; public List<U> getUsecases(){return usecases;}
+	
 	private R role; public R getRole(){return role;} public void setRole(R role) {this.role = role;}
 	
 	private boolean denyRemove; public boolean isDenyRemove(){return denyRemove;}
-	
 	
 	public void initSuper(String[] langs, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
@@ -91,15 +93,19 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 	public void selectRole()
 	{
 		logger.trace(AbstractLogMessage.selectEntity(role));
-		updateRole();
+		role = fSecurity.load(cRole,role);
 		role = efLang.persistMissingLangs(fSecurity,langs,role);
 		role = efDescription.persistMissingLangs(fSecurity,langs,role);		
 		role = fSecurity.load(cRole,role);
 		reloadActions();
 		
-		Collections.sort(role.getViews(),comparatorView);
-		Collections.sort(role.getActions(),comparatorAction);
-		Collections.sort(role.getUsecases(),comparatorUsecase);
+		views = role.getViews();
+		actions = role.getActions();
+		usecases = role.getUsecases();
+		
+		Collections.sort(views,comparatorView);
+		Collections.sort(actions,comparatorAction);
+		Collections.sort(usecases,comparatorUsecase);
 		
 		tblView=null;
 		tblAction=null;
@@ -113,12 +119,6 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 				if(fixed.equals(role.getCode())){denyRemove=true;}
 			}
 		}
-	}
-	
-	private void updateRole()
-	{
-		role = fSecurity.load(cRole,role);
-//		opTemplateHandler.setTbList(role.getTemplates());
 	}
 
 	private void reloadActions()
@@ -151,7 +151,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.saveEntity(role));
 		role.setCategory(fSecurity.find(cCategory, role.getCategory()));
 		role = fSecurity.save(role);
-		updateRole();
+		selectRole();
 		reloadRoles();
 		roleUpdatePerformed();
 	}

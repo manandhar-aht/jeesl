@@ -1,7 +1,5 @@
-package net.sf.ahtutils.factory.xml.security;
+package org.jeesl.factory.xml.system.security;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,10 +14,9 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityViewComparator;
-import net.sf.ahtutils.xml.security.Views;
+import net.sf.ahtutils.xml.security.Usecases;
 
-public class XmlViewsFactory <L extends UtilsLang,
+public class XmlUsecasesFactory <L extends UtilsLang,
 								D extends UtilsDescription, 
 								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 								R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
@@ -29,32 +26,30 @@ public class XmlViewsFactory <L extends UtilsLang,
 								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlViewsFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlUsecasesFactory.class);
 		
-	private Comparator<V> comparator;
-	private Views q;
+	private Usecases q;
 	
-	public XmlViewsFactory(Views q)
+	public XmlUsecasesFactory(Usecases q)
 	{
 		this.q=q;
-		comparator = (new SecurityViewComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityViewComparator.Type.position);
 	}
+	
 
-	public  Views build(List<V> views)
+	public  Usecases build(List<U> usecases)
 	{
-		XmlViewFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlViewFactory<L,D,C,R,V,U,A,AT,USER>(q.getView().get(0));
+		XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(q.getUsecase().get(0));
 		
-		Views xml = build();
-		Collections.sort(views,comparator);
-		for(V view : views)
+		Usecases xml = build();
+		for(U usecase : usecases)
 		{
-			xml.getView().add(f.build(view));
+			xml.getUsecase().add(f.build(usecase));
 		}
 		return xml;
 	}
 	
-	public static Views build()
+	public static Usecases build()
 	{
-		return new Views();
+		return new Usecases();
 	}
 }

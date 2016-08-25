@@ -1,5 +1,7 @@
-package net.sf.ahtutils.factory.xml.security;
+package org.jeesl.factory.xml.system.security;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,10 +16,11 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
-import net.sf.ahtutils.xml.security.Role;
-import net.sf.ahtutils.xml.security.Roles;
+import net.sf.ahtutils.util.comparator.ejb.security.SecurityViewComparator;
+import net.sf.ahtutils.xml.security.Views;
 
-public class XmlRolesFactory <L extends UtilsLang, D extends UtilsDescription, 
+public class XmlViewsFactory <L extends UtilsLang,
+								D extends UtilsDescription, 
 								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 								R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 								V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -26,36 +29,32 @@ public class XmlRolesFactory <L extends UtilsLang, D extends UtilsDescription,
 								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlRolesFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlViewsFactory.class);
 		
-	private Roles q;
+	private Comparator<V> comparator;
+	private Views q;
 	
-	public XmlRolesFactory(Roles q)
+	public XmlViewsFactory(Views q)
 	{
 		this.q=q;
+		comparator = (new SecurityViewComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityViewComparator.Type.position);
 	}
 
-	public Roles build(List<R> roles){return build(roles,null);}
-	public Roles build(List<R> roles,String type)
+	public  Views build(List<V> views)
 	{
-		Role qRole = q.getRole().get(0);
-		XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(qRole);
+		XmlViewFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlViewFactory<L,D,C,R,V,U,A,AT,USER>(q.getView().get(0));
 		
-		Roles xml = new Roles();
-		xml.setType(type);
-		for(R role : roles)
+		Views xml = build();
+		Collections.sort(views,comparator);
+		for(V view : views)
 		{
-			xml.getRole().add(f.build(role));
+			xml.getView().add(f.build(view));
 		}
 		return xml;
-		
 	}
 	
-	public static Roles build(){return XmlRolesFactory.buildType(null);}
-	public static Roles buildType(String type)
+	public static Views build()
 	{
-		Roles xml = new Roles();
-		xml.setType(type);
-		return xml;
+		return new Views();
 	}
 }

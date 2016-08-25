@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.security;
+package org.jeesl.factory.xml.system.security;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
-import net.sf.ahtutils.xml.security.Usecases;
+import net.sf.ahtutils.xml.security.Role;
+import net.sf.ahtutils.xml.security.Roles;
 
-public class XmlUsecasesFactory <L extends UtilsLang,
-								D extends UtilsDescription, 
+public class XmlRolesFactory <L extends UtilsLang, D extends UtilsDescription, 
 								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 								R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 								V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -26,30 +26,36 @@ public class XmlUsecasesFactory <L extends UtilsLang,
 								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlUsecasesFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlRolesFactory.class);
 		
-	private Usecases q;
+	private Roles q;
 	
-	public XmlUsecasesFactory(Usecases q)
+	public XmlRolesFactory(Roles q)
 	{
 		this.q=q;
 	}
-	
 
-	public  Usecases build(List<U> usecases)
+	public Roles build(List<R> roles){return build(roles,null);}
+	public Roles build(List<R> roles,String type)
 	{
-		XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(q.getUsecase().get(0));
+		Role qRole = q.getRole().get(0);
+		XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(qRole);
 		
-		Usecases xml = build();
-		for(U usecase : usecases)
+		Roles xml = new Roles();
+		xml.setType(type);
+		for(R role : roles)
 		{
-			xml.getUsecase().add(f.build(usecase));
+			xml.getRole().add(f.build(role));
 		}
 		return xml;
+		
 	}
 	
-	public static Usecases build()
+	public static Roles build(){return XmlRolesFactory.buildType(null);}
+	public static Roles buildType(String type)
 	{
-		return new Usecases();
+		Roles xml = new Roles();
+		xml.setType(type);
+		return xml;
 	}
 }

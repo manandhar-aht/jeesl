@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.apache.commons.configuration.Configuration;
 import org.jeesl.doc.ofx.OfxMultiLangFactory;
+import org.jeesl.factory.xml.system.security.XmlActionFactory;
 import org.openfuxml.content.layout.Container;
 import org.openfuxml.content.layout.Font;
 import org.openfuxml.content.list.Item;
@@ -34,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
-import net.sf.ahtutils.factory.xml.security.XmlActionFactory;
 import net.sf.ahtutils.xml.security.Role;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Lang;

@@ -1,4 +1,4 @@
-package net.sf.ahtutils;
+package org.jeesl;
 
 import net.sf.exlp.util.config.ConfigLoader;
 import net.sf.exlp.util.io.LoggerInit;
@@ -7,9 +7,9 @@ import org.apache.commons.configuration.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AhtUtilsBootstrap
+public class JeeslBootstrap
 {
-	final static Logger logger = LoggerFactory.getLogger(AhtUtilsBootstrap.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslBootstrap.class);
 	
 	public static Configuration init()
 	{

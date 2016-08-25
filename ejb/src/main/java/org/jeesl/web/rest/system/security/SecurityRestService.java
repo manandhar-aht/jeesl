@@ -1,22 +1,22 @@
-package net.sf.ahtutils.web.rest;
+package org.jeesl.web.rest.system.security;
 
+import org.jeesl.factory.xml.system.security.XmlActionFactory;
+import org.jeesl.factory.xml.system.security.XmlActionsFactory;
+import org.jeesl.factory.xml.system.security.XmlCategoryFactory;
+import org.jeesl.factory.xml.system.security.XmlRoleFactory;
+import org.jeesl.factory.xml.system.security.XmlRolesFactory;
+import org.jeesl.factory.xml.system.security.XmlSecurityFactory;
+import org.jeesl.factory.xml.system.security.XmlStaffFactory;
+import org.jeesl.factory.xml.system.security.XmlTemplateFactory;
+import org.jeesl.factory.xml.system.security.XmlTemplatesFactory;
+import org.jeesl.factory.xml.system.security.XmlUsecaseFactory;
+import org.jeesl.factory.xml.system.security.XmlUsecasesFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.factory.xml.acl.XmlViewFactory;
 import net.sf.ahtutils.controller.factory.xml.acl.XmlViewsFactory;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.xml.security.XmlActionFactory;
-import net.sf.ahtutils.factory.xml.security.XmlActionsFactory;
-import net.sf.ahtutils.factory.xml.security.XmlCategoryFactory;
-import net.sf.ahtutils.factory.xml.security.XmlRoleFactory;
-import net.sf.ahtutils.factory.xml.security.XmlRolesFactory;
-import net.sf.ahtutils.factory.xml.security.XmlSecurityFactory;
-import net.sf.ahtutils.factory.xml.security.XmlStaffFactory;
-import net.sf.ahtutils.factory.xml.security.XmlTemplateFactory;
-import net.sf.ahtutils.factory.xml.security.XmlTemplatesFactory;
-import net.sf.ahtutils.factory.xml.security.XmlUsecaseFactory;
-import net.sf.ahtutils.factory.xml.security.XmlUsecasesFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -237,6 +237,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					xmlCat.setUsecases(XmlUsecasesFactory.build());
 					for(U usecase : fSecurity.allForCategory(cUsecase, cCategory, category.getCode()))
 					{
+						usecase = fSecurity.load(cUsecase, usecase);
 						xmlCat.getUsecases().getUsecase().add(fUsecase.build(usecase));
 					}
 					xml.getCategory().add(xmlCat);

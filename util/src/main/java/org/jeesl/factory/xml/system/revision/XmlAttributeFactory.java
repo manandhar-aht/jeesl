@@ -1,4 +1,4 @@
-package org.jeesl.factory.xml.revision;
+package org.jeesl.factory.xml.system.revision;
 
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;

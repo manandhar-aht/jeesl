@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionEntityFactory;
-import org.jeesl.factory.xml.revision.XmlEntityFactory;
+import org.jeesl.factory.xml.system.revision.XmlEntityFactory;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;

@@ -5,10 +5,10 @@ import java.io.IOException;
 
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.JeeslBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.AhtUtilsBootstrap;
 import net.sf.ahtutils.doc.er.AbstractErDiagram;
 
 public class CliErDiagram extends AbstractErDiagram
@@ -39,7 +39,7 @@ public class CliErDiagram extends AbstractErDiagram
 	
 	public static void main(String args[]) throws Exception
 	{
-		Configuration config = AhtUtilsBootstrap.init();
+		Configuration config = JeeslBootstrap.init();
 		CliErDiagram er = new CliErDiagram(config);
 		er.create();
 	}

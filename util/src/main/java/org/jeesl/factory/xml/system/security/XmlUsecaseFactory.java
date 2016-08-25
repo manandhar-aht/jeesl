@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.security;
+package org.jeesl.factory.xml.system.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +14,9 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
-import net.sf.ahtutils.xml.security.Template;
+import net.sf.ahtutils.xml.security.Usecase;
 
-public class XmlTemplateFactory <L extends UtilsLang,
+public class XmlUsecaseFactory <L extends UtilsLang,
 								D extends UtilsDescription, 
 								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 								R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
@@ -26,40 +26,54 @@ public class XmlTemplateFactory <L extends UtilsLang,
 								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlTemplateFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlUsecaseFactory.class);
 		
-	private Template q;
+	private Usecase q;
 	
-	public XmlTemplateFactory(Template q)
+	public XmlUsecaseFactory(Usecase q)
 	{
 		this.q=q;
 	}
+	
 
-	public Template build(AT template)
+	public Usecase build(U usecase)
 	{
-		Template xml = new Template();
-		if(q.isSetCode()){xml.setCode(template.getCode());}
-		if(q.isSetPosition()){xml.setPosition(template.getPosition());}
-		if(q.isSetVisible()){xml.setVisible(template.isVisible());}
+		Usecase xml = new Usecase();
+		if(q.isSetCode()){xml.setCode(usecase.getCode());}
+		if(q.isSetPosition()){xml.setPosition(usecase.getPosition());}
+		if(q.isSetVisible()){xml.setVisible(usecase.isVisible());}
+		if(q.isSetDocumentation() && usecase.getDocumentation()!=null){xml.setDocumentation(usecase.getDocumentation());}
 		
 		if(q.isSetLangs())
 		{
 			XmlLangsFactory<L> f = new XmlLangsFactory<L>(q.getLangs());
-			xml.setLangs(f.getUtilsLangs(template.getName()));
+			xml.setLangs(f.getUtilsLangs(usecase.getName()));
 		}
 		
 		if(q.isSetDescriptions())
 		{
 			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(q.getDescriptions());
-			xml.setDescriptions(f.create(template.getDescription()));
+			xml.setDescriptions(f.create(usecase.getDescription()));
+		}
+		
+		if(q.isSetViews())
+		{
+			XmlViewsFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlViewsFactory<L,D,C,R,V,U,A,AT,USER>(q.getViews());
+			xml.setViews(f.build(usecase.getViews()));
+		}
+		
+		if(q.isSetActions())
+		{
+			XmlActionsFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlActionsFactory<L,D,C,R,V,U,A,AT,USER>(q.getActions());
+			xml.setActions(f.build(usecase.getActions()));
 		}
 		
 		return xml;
 	}
 	
-	public static Template build(String code)
+	public static Usecase build(String code)
 	{
-		Template xml = new Template();
+		Usecase xml = new Usecase();
 		xml.setCode(code);
 		return xml;
 	}

@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.ahtutils.doc.word.WordResponsibilityMatrixFactory;
-import net.sf.ahtutils.factory.xml.security.XmlRoleFactory;
-import net.sf.ahtutils.factory.xml.security.XmlUserFactory;
 import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
 import net.sf.ahtutils.test.AbstractUtilsDocTest;
 import net.sf.ahtutils.test.AhtUtilsDocBootstrap;
@@ -20,6 +18,8 @@ import net.sf.ahtutils.xml.security.User;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.factory.xml.system.security.XmlRoleFactory;
+import org.jeesl.factory.xml.system.security.XmlUserFactory;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

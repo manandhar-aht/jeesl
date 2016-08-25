@@ -3,13 +3,14 @@ package net.sf.ahtutils.util.query;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.security.XmlActionFactory;
+import org.jeesl.factory.xml.system.security.XmlActionsFactory;
+import org.jeesl.factory.xml.system.security.XmlUsecaseFactory;
+import org.jeesl.factory.xml.system.security.XmlUsecasesFactory;
+import org.jeesl.factory.xml.system.security.XmlViewFactory;
+import org.jeesl.factory.xml.system.security.XmlViewsFactory;
+
 import net.sf.ahtutils.controller.util.query.StatusQuery;
-import net.sf.ahtutils.factory.xml.security.XmlActionFactory;
-import net.sf.ahtutils.factory.xml.security.XmlActionsFactory;
-import net.sf.ahtutils.factory.xml.security.XmlUsecaseFactory;
-import net.sf.ahtutils.factory.xml.security.XmlUsecasesFactory;
-import net.sf.ahtutils.factory.xml.security.XmlViewFactory;
-import net.sf.ahtutils.factory.xml.security.XmlViewsFactory;
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.navigation.Navigation;

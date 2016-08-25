@@ -1,6 +1,6 @@
 package org.jeesl.factory.xml.system.io.template;
 
-import org.jeesl.factory.xml.revision.XmlAttributeFactory;
+import org.jeesl.factory.xml.system.revision.XmlAttributeFactory;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;

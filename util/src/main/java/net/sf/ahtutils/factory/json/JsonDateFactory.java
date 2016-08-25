@@ -6,7 +6,6 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.AhtUtilsBootstrap;
 import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
 import net.sf.ahtutils.interfaces.model.date.EntityWithDate;
 import net.sf.ahtutils.interfaces.model.date.EntityWithDay;
@@ -16,7 +15,7 @@ import net.sf.ahtutils.interfaces.model.date.EntityWithWeek;
 
 public class JsonDateFactory
 {
-	final static Logger logger = LoggerFactory.getLogger(AhtUtilsBootstrap.class);
+	final static Logger logger = LoggerFactory.getLogger(JsonDateFactory.class);
 	
 	public static void build(EntityWithDate json, Date date) 
 	{

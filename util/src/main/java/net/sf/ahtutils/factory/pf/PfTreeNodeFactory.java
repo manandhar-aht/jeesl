@@ -6,13 +6,12 @@ import org.primefaces.model.TreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.AhtUtilsBootstrap;
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 
 public class PfTreeNodeFactory
 {
-	final static Logger logger = LoggerFactory.getLogger(AhtUtilsBootstrap.class);
+	final static Logger logger = LoggerFactory.getLogger(PfTreeNodeFactory.class);
 	
 	public static TreeNode build(Figures figures) 
 	{

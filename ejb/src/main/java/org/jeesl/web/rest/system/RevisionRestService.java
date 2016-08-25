@@ -168,23 +168,19 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 			catch (UtilsLockingException e) {dut.fail(e, true);}
 		}
 		
-		if(logger.isInfoEnabled())
+		if(logger.isDebugEnabled())
 		{
-			logger.info("Will delete in DB");
-			logger.info("\t"+cRE.getSimpleName()+" "+inDbRevisionEntity.size());
-			logger.info("\t"+cL.getSimpleName()+" "+dbDeleteL.size());
-			logger.info("\t"+cD.getSimpleName()+" "+dbDeleteD.size());
+			logger.debug("Will delete in DB");
+			logger.debug("\t"+cRE.getSimpleName()+" "+inDbRevisionEntity.size());
+			logger.debug("\t"+cL.getSimpleName()+" "+dbDeleteL.size());
+			logger.debug("\t"+cD.getSimpleName()+" "+dbDeleteD.size());
 		}
 		try
 		{
 			fRevision.rm(dbDeleteL);
 			fRevision.rm(dbDeleteD);
 		}
-		catch (UtilsConstraintViolationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 		return dut.toDataUpdate();
 	}
 	
@@ -233,9 +229,9 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		
 		for(RA ra : ejbRevisionEntity.getAttributes())
 		{
-			logger.info("****");
-			logger.info("ra.code "+ra.getCode()+" "+ejbRevisionEntity.getCode());
-			logger.info("xml.code "+xml.getCode());
+			logger.debug("****");
+			logger.debug("ra.code "+ra.getCode()+" "+ejbRevisionEntity.getCode());
+			logger.debug("xml.code "+xml.getCode());
 			
 			if(ra.getCode().equals(xml.getCode()))
 			{

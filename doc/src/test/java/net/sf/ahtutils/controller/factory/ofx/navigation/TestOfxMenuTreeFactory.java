@@ -2,14 +2,14 @@ package net.sf.ahtutils.controller.factory.ofx.navigation;
 
 import java.io.File;
 
-import net.sf.ahtutils.controller.factory.xml.navigation.XmlMenuItemFactory;
-import net.sf.ahtutils.test.AhtUtilsDocBootstrap;
-import net.sf.ahtutils.xml.navigation.Menu;
-
+import org.jeesl.factory.xml.system.navigation.XmlMenuItemFactory;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.test.AhtUtilsDocBootstrap;
+import net.sf.ahtutils.xml.navigation.Menu;
 
 public class TestOfxMenuTreeFactory extends AbstractOfxNavigationFactoryTest
 {

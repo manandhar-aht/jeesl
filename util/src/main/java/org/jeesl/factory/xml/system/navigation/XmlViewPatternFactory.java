@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.navigation;
+package org.jeesl.factory.xml.system.navigation;
 
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.navigation.MenuItem;

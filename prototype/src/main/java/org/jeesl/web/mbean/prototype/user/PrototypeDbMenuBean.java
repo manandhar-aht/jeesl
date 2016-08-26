@@ -7,10 +7,10 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.jeesl.factory.xml.system.navigation.XmlMenuItemFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.navigation.XmlMenuItemFactory;
 import net.sf.ahtutils.jsf.menu.MenuFactory;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;

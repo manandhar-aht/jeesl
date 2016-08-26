@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.navigation;
+package org.jeesl.factory.xml.system.navigation;
 
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.navigation.MenuItem;
@@ -20,6 +20,24 @@ public class XmlMenuItemFactory
 		return xml;
 	}
 	
+	public static MenuItem build(MenuItem mi)
+	{
+		MenuItem xml = new MenuItem();
+		xml.setActive(mi.isSetActive() && mi.isActive());
+		xml.setCode(mi.getCode());
+		xml.setHref(mi.getHref());
+		xml.setName(mi.getName());
+		
+		return xml;
+	}
+	
+	public static MenuItem create(String label)
+	{
+		MenuItem xml = new MenuItem();
+		xml.setName(label);
+		return xml;
+	}
+	
 	public static MenuItem dynamic(String dynamicCode, String urlParameter, String label)
 	{
 		View view = new View();
@@ -33,5 +51,11 @@ public class XmlMenuItemFactory
 		return item;
 	}
 	
-	
+	public static MenuItem buildItem(String label, String href)
+	{
+		MenuItem mi = new MenuItem();
+		mi.setName(label);
+		mi.setHref(href);
+		return mi;
+	}
 }

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.navigation;
+package org.jeesl.factory.xml.system.navigation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

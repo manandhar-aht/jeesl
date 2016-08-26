@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.jeesl.factory.xml.system.navigation.XmlMenuItemFactory;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -14,7 +15,6 @@ import org.jgrapht.graph.DefaultEdge;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.controller.factory.xml.navigation.XmlMenuItemFactory;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.jsf.UtilsMenuException;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
@@ -292,6 +292,7 @@ public class MenuFactory
 		try
 		{
 			View view = AccessXpath.getView(access, viewCode.getCode());
+//			View view = mapView.get(viewCode.getCode());
 			if(view.isSetNavigation() && view.getNavigation().isSetUrlMapping())
 			{
 				UrlMapping urlMapping = view.getNavigation().getUrlMapping();
@@ -445,13 +446,5 @@ public class MenuFactory
 	public String getParent(String code)
 	{
 		return mapParent.get(code);
-	}
-	
-	public static MenuItem buildItem(String label,String href)
-	{
-		MenuItem mi = new MenuItem();
-		mi.setName(label);
-		mi.setHref(href);
-		return mi;
 	}
 }

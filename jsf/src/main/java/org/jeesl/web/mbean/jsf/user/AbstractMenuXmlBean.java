@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.sf.ahtutils.factory.xml.navigation.XmlMenuItemFactory;
 import net.sf.ahtutils.jsf.menu.MenuFactory;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
@@ -14,6 +13,7 @@ import net.sf.ahtutils.xml.navigation.Menu;
 import net.sf.ahtutils.xml.navigation.MenuItem;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.factory.xml.system.navigation.XmlMenuItemFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

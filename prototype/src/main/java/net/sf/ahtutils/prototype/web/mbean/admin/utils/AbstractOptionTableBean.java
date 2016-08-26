@@ -6,7 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.web.mbean.prototype.user.admin.AbstractAdminBean;
+import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;

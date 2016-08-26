@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.user.admin;
+package org.jeesl.web.mbean.prototype.admin;
 
 import java.io.Serializable;
 

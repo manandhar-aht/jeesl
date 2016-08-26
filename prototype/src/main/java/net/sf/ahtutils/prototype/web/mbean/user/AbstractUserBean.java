@@ -2,7 +2,7 @@ package net.sf.ahtutils.prototype.web.mbean.user;
 
 import java.io.Serializable;
 
-import org.jeesl.web.mbean.prototype.user.admin.AbstractAdminBean;
+import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

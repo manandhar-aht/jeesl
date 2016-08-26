@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 
-import org.jeesl.web.mbean.prototype.user.admin.AbstractAdminBean;
+import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

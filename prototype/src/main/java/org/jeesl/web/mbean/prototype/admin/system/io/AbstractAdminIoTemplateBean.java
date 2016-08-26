@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.user.admin.system.io;
+package org.jeesl.web.mbean.prototype.admin.system.io;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -20,7 +20,7 @@ import org.jeesl.mail.freemarker.FreemarkerIoTemplateEngine;
 import org.jeesl.util.comparator.ejb.system.io.IoTemplateComparator;
 import org.jeesl.util.comparator.ejb.system.io.IoTemplateDefinitionComparator;
 import org.jeesl.util.comparator.ejb.system.io.IoTemplateTokenComparator;
-import org.jeesl.web.mbean.prototype.user.admin.AbstractAdminBean;
+import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.primefaces.event.TabChangeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.jeesl.factory.xml.system.navigation.XmlMenuItemFactory;
+import org.jeesl.interfaces.controller.builder.MenuBuilder;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -33,7 +34,7 @@ import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-public class MenuXmlBuilder
+public class MenuXmlBuilder implements MenuBuilder
 {
 	final static Logger logger = LoggerFactory.getLogger(MenuXmlBuilder.class);
 	
@@ -54,7 +55,7 @@ public class MenuXmlBuilder
 	private String rootNode;
 	private DirectedGraph<String, DefaultEdge> graph;
 	
-	private int alwaysUpToLevel;
+	private int alwaysUpToLevel;public void setAlwaysUpToLevel(int alwaysUpToLevel) {this.alwaysUpToLevel = alwaysUpToLevel;}
 	
 	public MenuXmlBuilder(Menu menu,String lang){this(menu,null,lang, UUID.randomUUID().toString(),true);}
 	public MenuXmlBuilder(Menu menu,String lang, String rootNode){this(menu,null,lang,rootNode,true);}	
@@ -121,8 +122,6 @@ public class MenuXmlBuilder
 		mi.getMenuItem().clear();
 		mapMenuItems.put(mi.getCode(), mi);
 	}
-	
-	public void setAlwaysUpToLevel(int alwaysUpToLevel) {this.alwaysUpToLevel = alwaysUpToLevel;}
 	
 	private void createAccessMaps()
 	{

@@ -84,7 +84,7 @@ public class PrototypeDbMenuBean implements Serializable
 	
 	protected void buildViewAllowedMap()
 	{
-		logger.warn("This should never been called here. A @Override in extended class is required");
+		
 	}
 
 	// ******************************************

@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import net.sf.ahtutils.jsf.menu.MenuFactory;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.ahtutils.xml.access.Access;
@@ -15,6 +14,7 @@ import net.sf.ahtutils.xml.navigation.Menu;
 import net.sf.ahtutils.xml.navigation.MenuItem;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.jsf.menu.MenuXmlBuilder;
 import org.jeesl.web.mbean.jsf.user.AbstractMenuXmlBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class PrototypeXmlMenuBean extends AbstractMenuXmlBean implements Seriali
 	private static final long serialVersionUID = 1L;
 	
 	protected Menu menu;
-	protected MenuFactory mfMain;
+	protected MenuXmlBuilder mfMain;
 	
 	@PostConstruct
     public void init()
@@ -40,7 +40,7 @@ public class PrototypeXmlMenuBean extends AbstractMenuXmlBean implements Seriali
 			
 			if(logger.isTraceEnabled()){logger.info("main.root="+rootMain);}
 
-			mfMain = new MenuFactory(xmlMenuMain,xmlAccess,getLang(),rootMain);
+			mfMain = new MenuXmlBuilder(xmlMenuMain,xmlAccess,getLang(),rootMain);
 			mfMain.setAlwaysUpToLevel(1);
 		}
 		catch (FileNotFoundException e)

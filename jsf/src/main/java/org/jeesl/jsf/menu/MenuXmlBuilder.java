@@ -1,4 +1,4 @@
-package net.sf.ahtutils.jsf.menu;
+package org.jeesl.jsf.menu;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -33,9 +33,9 @@ import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-public class MenuFactory
+public class MenuXmlBuilder
 {
-	final static Logger logger = LoggerFactory.getLogger(MenuFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(MenuXmlBuilder.class);
 	
 	private String lang;
 
@@ -56,11 +56,11 @@ public class MenuFactory
 	
 	private int alwaysUpToLevel;
 	
-	public MenuFactory(Menu menu,String lang){this(menu,null,lang, UUID.randomUUID().toString(),true);}
-	public MenuFactory(Menu menu,String lang, String rootNode){this(menu,null,lang,rootNode,true);}	
-	public MenuFactory(Menu menu, Access access,String lang){this(menu,access,lang, UUID.randomUUID().toString(),false);}
-	public MenuFactory(Menu menu, Access access,String lang, String rootNode){this(menu,access,lang, rootNode,false);}
-	public MenuFactory(Menu menu, Access access,String lang, String rootNode, boolean noRestrictions)
+	public MenuXmlBuilder(Menu menu,String lang){this(menu,null,lang, UUID.randomUUID().toString(),true);}
+	public MenuXmlBuilder(Menu menu,String lang, String rootNode){this(menu,null,lang,rootNode,true);}	
+	public MenuXmlBuilder(Menu menu, Access access,String lang){this(menu,access,lang, UUID.randomUUID().toString(),false);}
+	public MenuXmlBuilder(Menu menu, Access access,String lang, String rootNode){this(menu,access,lang, rootNode,false);}
+	public MenuXmlBuilder(Menu menu, Access access,String lang, String rootNode, boolean noRestrictions)
 	{
 		this.access=access;
 		this.rootNode=rootNode;

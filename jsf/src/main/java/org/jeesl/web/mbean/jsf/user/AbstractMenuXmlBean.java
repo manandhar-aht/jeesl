@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.sf.ahtutils.jsf.menu.MenuFactory;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.ahtutils.xml.navigation.Breadcrumb;
@@ -14,6 +13,7 @@ import net.sf.ahtutils.xml.navigation.MenuItem;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.jeesl.factory.xml.system.navigation.XmlMenuItemFactory;
+import org.jeesl.jsf.menu.MenuXmlBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,8 +60,8 @@ public abstract class AbstractMenuXmlBean implements Serializable
 
 	// ******************************************
 	// Menu
-	protected Menu menu(MenuFactory mf, String code) {return menu(mf,code,userLoggedIn);}
-	protected Menu menu(MenuFactory mf, String code, boolean loggedIn)
+	protected Menu menu(MenuXmlBuilder mf, String code) {return menu(mf,code,userLoggedIn);}
+	protected Menu menu(MenuXmlBuilder mf, String code, boolean loggedIn)
 	{
 		buildViewAllowedMap();
 		if(code==null || code.length()==0){code=rootMain;}
@@ -81,9 +81,9 @@ public abstract class AbstractMenuXmlBean implements Serializable
 	/**
 	 * Breadcrumb
 	 */
-	public Breadcrumb breadcrumb(MenuFactory mf,String code){return breadcrumb(mf,false,code,false,false);}
-	public Breadcrumb breadcrumb(MenuFactory mf,boolean withRoot, String code, boolean withFirst, boolean withChilds){return breadcrumb(mf,withRoot,code,withFirst,withChilds,null);}
-	public Breadcrumb breadcrumb(MenuFactory mf,boolean withRoot, String code, boolean withFirst, boolean withChilds, Menu dynamicMenu)
+	public Breadcrumb breadcrumb(MenuXmlBuilder mf,String code){return breadcrumb(mf,false,code,false,false);}
+	public Breadcrumb breadcrumb(MenuXmlBuilder mf,boolean withRoot, String code, boolean withFirst, boolean withChilds){return breadcrumb(mf,withRoot,code,withFirst,withChilds,null);}
+	public Breadcrumb breadcrumb(MenuXmlBuilder mf,boolean withRoot, String code, boolean withFirst, boolean withChilds, Menu dynamicMenu)
 	{
 		if(!mapBreadcrumb.containsKey(code))
 		{
@@ -137,8 +137,8 @@ public abstract class AbstractMenuXmlBean implements Serializable
 	
 	// ******************************************
 	// SubMenu
-	public MenuItem sub(MenuFactory mf, String code){return subDyn(mf,code,null);}
-	public MenuItem subDyn(MenuFactory mf, String code, Menu dynamicMenu)
+	public MenuItem sub(MenuXmlBuilder mf, String code){return subDyn(mf,code,null);}
+	public MenuItem subDyn(MenuXmlBuilder mf, String code, Menu dynamicMenu)
 	{
 		boolean mapSubContaines = mapSub.containsKey(code);
 //		logger.info("Creating sub... dynamic?"+(dynamicMenu!=null)+" mapContains:"+mapSubContaines);

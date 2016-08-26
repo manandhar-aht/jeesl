@@ -4,6 +4,7 @@ import net.sf.ahtutils.test.AbstractAhtUtilsJsfTst;
 import net.sf.ahtutils.xml.navigation.Breadcrumb;
 import net.sf.ahtutils.xml.navigation.MenuItem;
 
+import org.jeesl.jsf.menu.MenuXmlBuilder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class TestMenuFactoryBreadcrumb extends AbstractAhtUtilsJsfTst
 {
 	final static Logger logger = LoggerFactory.getLogger(TestMenuFactoryBreadcrumb.class);
 		
-	private MenuFactory mf;
+	private MenuXmlBuilder mf;
 	
 	
 	@Before

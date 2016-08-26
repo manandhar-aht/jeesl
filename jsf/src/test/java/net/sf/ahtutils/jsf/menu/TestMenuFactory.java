@@ -17,6 +17,7 @@ import net.sf.ahtutils.xml.navigation.UrlMapping;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.exlp.util.process.ProcessClock;
 
+import org.jeesl.jsf.menu.MenuXmlBuilder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +43,7 @@ public class TestMenuFactory extends AbstractAhtUtilsJsfTst
 	public static final String code1 = "menuLevel1";
 	public static final String code2 = "menuLevel2";
 	
-	private MenuFactory mf; public MenuFactory getMf() {return mf;}
+	private MenuXmlBuilder mf; public MenuXmlBuilder getMf() {return mf;}
 
 	public static TestMenuFactory factory()
 	{
@@ -56,7 +57,7 @@ public class TestMenuFactory extends AbstractAhtUtilsJsfTst
 	{
 		initAccess();
 		initMenu();
-		mf = new MenuFactory(menu,access,lang,rootNode);
+		mf = new MenuXmlBuilder(menu,access,lang,rootNode);
 	}
 	
 	private void initAccess()
@@ -136,7 +137,7 @@ public class TestMenuFactory extends AbstractAhtUtilsJsfTst
 	public void testWithViewDenied()
 	{
 		mapViewAllowed.put(viewCode, false);
-		mf = new MenuFactory(menu,access,lang);
+		mf = new MenuXmlBuilder(menu,access,lang);
 		Menu actualMenu = mf.build(mapViewAllowed,mTest.getCode());
 		Assert.assertEquals(menu.getMenuItem().size()-1, actualMenu.getMenuItem().size());
 	}

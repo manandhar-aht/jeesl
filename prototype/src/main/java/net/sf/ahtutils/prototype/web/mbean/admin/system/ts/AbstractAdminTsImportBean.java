@@ -16,6 +16,8 @@ import java.util.Random;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.jxpath.JXPathContext;
+import org.jeesl.factory.xml.ts.XmlDataFactory;
+import org.jeesl.factory.xml.ts.XmlTimeSeriesFactory;
 import org.joda.time.DateTime;
 import org.metachart.xml.chart.DataSet;
 import org.primefaces.event.FileUploadEvent;
@@ -25,8 +27,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.factory.xml.mc.XmlMcDataSetFactory;
-import net.sf.ahtutils.factory.xml.ts.XmlDataFactory;
-import net.sf.ahtutils.factory.xml.ts.XmlTimeSeriesFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;

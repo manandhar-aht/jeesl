@@ -16,9 +16,9 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<ui:repeat var="news" value="#{cc.attrs.bean.news}"></ui:repeat>
+		<ui:repeat var="news" value="#{cc.attrs.bean.news}">
 			<p:panel header="#{news.category.name[localeCode].lang}">
-				<h:outputText value="#{news.category.description[localeCode].lang}"/>
+				<h:outputText value="#{news.description[localeCode].lang}"/>
 			</p:panel>
 		</ui:repeat>
 	</composite:implementation>

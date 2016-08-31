@@ -37,15 +37,10 @@ public class UtilsRestService <L extends UtilsLang,
     private final Class<P> cProperty;
     
     private UtilsFacade fUtils;
-
-//    private String[] langKeys;
     
-//    private EjbLangFactory<L> ejbLangFactory;
-//    private EjbDescriptionFactory<D> ejbDescriptionFactory;
-    
-    public UtilsRestService(UtilsFacade fUtils, String[] langKeys, final Class<L> cLang, final Class<D> cDescription, final Class<G> cGraphic,final Class<GT> cGraphicType, final Class<GS> cGraphicStyle, final Class<P> cProperty)
+    public UtilsRestService(UtilsFacade fUtils, String[] localeCodes, final Class<L> cLang, final Class<D> cDescription, final Class<G> cGraphic,final Class<GT> cGraphicType, final Class<GS> cGraphicStyle, final Class<P> cProperty)
 	{   
-    	super(fUtils,langKeys,cLang,cDescription);
+    	super(fUtils,localeCodes,cLang,cDescription);
         
         this.cGraphic=cGraphic;
         this.cGraphicType=cGraphicType;
@@ -53,22 +48,17 @@ public class UtilsRestService <L extends UtilsLang,
         this.cProperty=cProperty;
         
         this.fUtils=fUtils;
-        
-//        this.langKeys=langKeys;      
-//        ejbLangFactory = EjbLangFactory.createFactory(cLang);
-//		ejbDescriptionFactory = EjbDescriptionFactory.createFactory(cDescription);
 	}
 	
-	public static <L extends UtilsLang,
-				D extends UtilsDescription,
+	public static <L extends UtilsLang, D extends UtilsDescription,
 				G extends UtilsGraphic<L,D,G,GT,GS>,
 				GT extends UtilsStatus<GT,L,D>,
 				GS extends UtilsStatus<GS,L,D>,
 				P extends UtilsProperty> 
 		UtilsRestService<L,D,G,GT,GS,P>
-		factory(UtilsFacade fUtils,String[] langKeys,final Class<L> cL, final Class<D> cD, final Class<G> cGraphic,final Class<GT> cGraphicType, final Class<GS> cGraphicStyle, final Class<P> cProperty)
+		factory(UtilsFacade fUtils,String[] localeCodes,final Class<L> cL, final Class<D> cD, final Class<G> cGraphic,final Class<GT> cGraphicType, final Class<GS> cGraphicStyle, final Class<P> cProperty)
 	{
-		return new UtilsRestService<L,D,G,GT,GS,P>(fUtils,langKeys,cL,cD,cGraphic,cGraphicType,cGraphicStyle,cProperty);
+		return new UtilsRestService<L,D,G,GT,GS,P>(fUtils,localeCodes,cL,cD,cGraphic,cGraphicType,cGraphicStyle,cProperty);
 	}
 		
 	public DataUpdate importProperties(Utils utils)

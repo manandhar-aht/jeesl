@@ -55,7 +55,7 @@ public class AbstractUtilsRest <L extends UtilsLang, D extends UtilsDescription>
 	
 	protected <S extends UtilsStatus<S,L,D>> Aht exportStatus(Class<S> c)
 	{
-		XmlStatusFactory f = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport, "").getStatus());
+		XmlStatusFactory f = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		
 		Aht xml = new Aht();
 		for(S s : fUtils.all(c))
@@ -70,10 +70,10 @@ public class AbstractUtilsRest <L extends UtilsLang, D extends UtilsDescription>
 	protected <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> cS, Class<P> cP, Aht status)
 	{
 		AhtStatusDbInit<S,L,D> asdi = new AhtStatusDbInit<S,L,D>();
-	    asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(cS, cL, cD));
+	    asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(cS,cL,cD));
 	    asdi.setFacade(fUtils);
-	    DataUpdate dataUpdate = asdi.iuStatus(status.getStatus(), cS, cL, cP);
-	    asdi.deleteUnusedStatus(cS, cL, cD);
+	    DataUpdate dataUpdate = asdi.iuStatus(status.getStatus(),cS,cL,cP);
+	    asdi.deleteUnusedStatus(cS,cL,cD);
 	    return dataUpdate;
 	}
 }

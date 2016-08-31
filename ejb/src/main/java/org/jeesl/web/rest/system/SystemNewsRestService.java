@@ -7,12 +7,15 @@ import org.jeesl.interfaces.rest.system.news.JeeslSystemNewsRestImport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.db.xml.AhtStatusDbInit;
+import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.rest.AbstractUtilsRest;
 import net.sf.ahtutils.xml.aht.Aht;
+import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class SystemNewsRestService <L extends UtilsLang,D extends UtilsDescription,
@@ -52,5 +55,17 @@ public class SystemNewsRestService <L extends UtilsLang,D extends UtilsDescripti
 	}
 	
 	@Override public Aht exportSystemNewsCategories() {return super.exportStatus(cCategory);}
-	@Override public DataUpdate importSystemNewsCategories(Aht categories){return super.importStatus(cCategory,null,categories);}
+	@Override public DataUpdate importSystemNewsCategories(Aht categories){return importStatus2(cCategory,null,categories);}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+    public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus2(Class<S> clStatus, Class<P> clParent, Aht container)
+    {
+    	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
+		AhtStatusDbInit asdi = new AhtStatusDbInit();
+        asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus, cL, cD));
+        asdi.setFacade(fNews);
+        DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, cL, clParent);
+        asdi.deleteUnusedStatus(clStatus, cL, cD);
+        return dataUpdate;
+    }
 }

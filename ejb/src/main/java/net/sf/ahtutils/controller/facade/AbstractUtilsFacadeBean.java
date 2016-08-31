@@ -23,6 +23,10 @@ import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFromUntil;
 import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
+import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.util.UtilsProperty;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.interfaces.model.with.EjbWithNr;
@@ -48,8 +52,8 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	protected UtilsFacadeBean fUtils;
 	
 	@Override public <E extends EjbEquals<T>, T extends EjbWithId> boolean equalsAttributes(Class<T> c,E object){return fUtils.equalsAttributes(c,object);}
+	@Override public <L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId,G extends UtilsGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>, GS extends UtilsStatus<GS,L,D>> S load(Class<S> cS, S status){return fUtils.load(cS,status);}
 	
-
 	// Persist
 	@Override public <T extends EjbSaveable> void save(List<T> list) throws UtilsConstraintViolationException,UtilsLockingException {fUtils.save(list);}
 	

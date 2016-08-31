@@ -16,6 +16,10 @@ import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFromUntil;
 import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
+import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.util.UtilsProperty;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.interfaces.model.with.EjbWithNr;
@@ -34,8 +38,10 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface UtilsFacade extends UtilsIdFacade
+public interface UtilsFacade  extends UtilsIdFacade
 {
+	<L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId,G extends UtilsGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>, GS extends UtilsStatus<GS,L,D>> S load(Class<S> cS, S status);
+	
 	//NAME
 	<T extends EjbWithName> T fByName(Class<T> type, String name) throws UtilsNotFoundException;
 

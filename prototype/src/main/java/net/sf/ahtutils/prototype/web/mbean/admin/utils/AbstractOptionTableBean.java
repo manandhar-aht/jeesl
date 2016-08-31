@@ -66,7 +66,8 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	
 	protected Object category; public Object getCategory() {return category;} public void setCategory(Object category) {this.category = category;}
 	protected Object status; public Object getStatus() {return status;} public void setStatus(Object status) {this.status = status;}
-	
+	private G graphic; public G getGraphic() {return graphic;} public void setGraphic(G graphic) {this.graphic = graphic;}
+
 	@SuppressWarnings("rawtypes")
 	protected Class cl,clParent;
 	
@@ -188,8 +189,8 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		{
 			GT type = fUtils.fByCode(cGT, UtilsGraphicType.Code.symbol.toString());
 			GS style = fUtils.fByCode(cGS, UtilsGraphicStyle.Code.circle.toString());
-			G g = efGraphic.buildSymbol(type, style);
-			((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(g);
+			graphic = efGraphic.buildSymbol(type, style);
+			((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
 		}
 	}
 	
@@ -197,6 +198,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	public void selectStatus() throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
 		status = fUtils.find(cl,(EjbWithId)status);
+		status = fUtils.load(cl,(EjbWithId)status);
 		logger.debug("selectStatus");
 		status = efLang.persistMissingLangs(fUtils,langs,(EjbWithLang)status);
 		status = efDescription.persistMissingLangs(fUtils,langs,(EjbWithDescription)status);
@@ -211,9 +213,13 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			logger.info("Need to create a graphic entity for this status");
 			GT type = fUtils.fByCode(cGT, UtilsGraphicType.Code.symbol.toString());
 			GS style = fUtils.fByCode(cGS, UtilsGraphicStyle.Code.circle.toString());
-			G g = fUtils.persist(efGraphic.buildSymbol(type, style));
-			((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(g);
+			graphic = fUtils.persist(efGraphic.buildSymbol(type, style));
+			((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
 			status = fUtils.update(status);
+		}
+		else
+		{
+			graphic = ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic();
 		}
 		
 		uiAllowCode = hasDeveloperAction || hasAdministratorAction;
@@ -241,10 +247,11 @@ public class AbstractOptionTableBean <L extends UtilsLang,
             {
             	((EjbWithParent)status).setParent((EjbWithCode)fUtils.find(clParent, parentId));
             }
-        	if(supportsGraphic && ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic()!=null)
+        	if(supportsGraphic && graphic!=null)
             {
-        		((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().setType(fUtils.find(cGT, ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
-            	if(((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getStyle()!=null){((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().setStyle(fUtils.find(cGS, ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getStyle()));}
+        		graphic.setType(fUtils.find(cGT, ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
+            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(cGS, ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getStyle()));}
+            	((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
             }
 
 			status = fUtils.save((EjbSaveable)status);

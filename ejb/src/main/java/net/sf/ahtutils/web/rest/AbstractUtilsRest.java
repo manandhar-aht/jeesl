@@ -67,12 +67,13 @@ public class AbstractUtilsRest <L extends UtilsLang, D extends UtilsDescription>
 		return xml;
 	}
 	
-	protected <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> cS, Class<P> cP, Aht status)
+	protected <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> cS, Class<P> cP, Aht container)
 	{
+		for(Status xml : container.getStatus()){xml.setGroup(cS.getSimpleName());}
 		AhtStatusDbInit<S,L,D> asdi = new AhtStatusDbInit<S,L,D>();
 	    asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(cS,cL,cD));
 	    asdi.setFacade(fUtils);
-	    DataUpdate dataUpdate = asdi.iuStatus(status.getStatus(),cS,cL,cP);
+	    DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(),cS,cL,cP);
 	    asdi.deleteUnusedStatus(cS,cL,cD);
 	    return dataUpdate;
 	}

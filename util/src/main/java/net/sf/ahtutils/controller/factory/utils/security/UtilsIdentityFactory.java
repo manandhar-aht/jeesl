@@ -1,9 +1,9 @@
 package net.sf.ahtutils.controller.factory.utils.security;
 
+import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsIdentity;
@@ -83,7 +83,7 @@ public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER
 		return new UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER>(clIdentity,clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
 	}
 
-	public I create(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, USER user)
+	public I create(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, USER user)
 	{		
 		I identity = null;
 		

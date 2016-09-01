@@ -9,8 +9,9 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
+import org.jeesl.interfaces.facade.JeeslSecurityFacade;
+
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -35,7 +36,7 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 									AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 									USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 							extends UtilsFacadeBean
-							implements UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER>
+							implements JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER>
 {	
 	public UtilsSecurityFacadeBean(EntityManager em)
 	{
@@ -183,6 +184,13 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 			}
 		}
 		return new ArrayList<A>(actions.values());
+	}
+	
+	@Override public List<A> allActions(Class<R> cRole, List<R> roles)
+	{
+		List<A> result = new ArrayList<A>();
+		logger.warn("NYI");
+		return result;
 	}
 	
 	@Override public List<R> allRolesForUser(Class<USER> clUser, USER user)

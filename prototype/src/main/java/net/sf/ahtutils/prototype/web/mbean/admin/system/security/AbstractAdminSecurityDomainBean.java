@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,6 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.security.EjbStaffFactory;
 import net.sf.ahtutils.interfaces.bean.op.user.OpUserBean;
-import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.facade.UtilsUserFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -44,7 +44,7 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityDomainBean.class);
 
-	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUser;
 	
 	protected Class<C> cCategory;
@@ -64,7 +64,7 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	private OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> opContactHandler;
 	@Override public OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> getOpUserHandler() {return opContactHandler;}
 	
-	protected void initSuper(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUser, Class<C> cCategory, Class<R> cRole, Class<USER> cUser, Class<STAFF> cStaff)
+	protected void initSuper(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUser, Class<C> cCategory, Class<R> cRole, Class<USER> cUser, Class<STAFF> cStaff)
 	{
 		this.fSecurity=fSecurity;
 		this.fUser=fUser;

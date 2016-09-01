@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,6 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityUserFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.controller.audit.UtilsRevisionPageFlow;
-import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.facade.UtilsUserFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -45,7 +45,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityUserBean.class);
 
 	protected UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser;
-	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity;
+	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity;
 	
 	private Class<R> cRole;
 	private Class<USER> cUser;
@@ -65,7 +65,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected UtilsRevisionPageFlow<USER,USER> revision; public UtilsRevisionPageFlow<USER, USER> getRevision() {return revision;}
 	
-	public void initSuper(UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage, final Class<L> cLang, final Class<D> cDescription, final Class<R> cRole, final Class<USER> cUser)
+	public void initSuper(UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage, final Class<L> cLang, final Class<D> cDescription, final Class<R> cRole, final Class<USER> cUser)
 	{
 		super.initAdmin(langs, cLang, cDescription, bUtilsMessage);
 		this.fUtilsUser=fUtilsUser;

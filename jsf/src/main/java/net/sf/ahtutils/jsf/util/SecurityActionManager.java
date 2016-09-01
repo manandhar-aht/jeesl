@@ -3,11 +3,11 @@ package net.sf.ahtutils.jsf.util;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsIdentity;
@@ -41,14 +41,14 @@ public class SecurityActionManager <L extends UtilsLang,
 		   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 		   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityActionManager<L,D,C,R,V,U,A,AT,USER>
-		factory(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,final Class<V> cView, String viewId, UtilsIdentity<L,D,C,R,V,U,A,AT,USER> identity) throws UtilsNotFoundException
+		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,final Class<V> cView, String viewId, UtilsIdentity<L,D,C,R,V,U,A,AT,USER> identity) throws UtilsNotFoundException
 	{
 		return new SecurityActionManager<L,D,C,R,V,U,A,AT,USER>(fSecurity,cView,viewId,identity);
 	}
 	
 	private Map<String,Boolean> allowed;
 	
-	public SecurityActionManager(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<V> cView, String viewId, UtilsIdentity<L,D,C,R,V,U,A,AT,USER> identity) throws UtilsNotFoundException
+	public SecurityActionManager(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<V> cView, String viewId, UtilsIdentity<L,D,C,R,V,U,A,AT,USER> identity) throws UtilsNotFoundException
 	{
 		allowed = new Hashtable<String,Boolean>();
 		V view = fSecurity.fByCode(cView,viewId);

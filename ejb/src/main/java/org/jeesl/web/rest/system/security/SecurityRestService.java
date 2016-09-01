@@ -11,13 +11,13 @@ import org.jeesl.factory.xml.system.security.XmlTemplateFactory;
 import org.jeesl.factory.xml.system.security.XmlTemplatesFactory;
 import org.jeesl.factory.xml.system.security.XmlUsecaseFactory;
 import org.jeesl.factory.xml.system.security.XmlUsecasesFactory;
+import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.factory.xml.acl.XmlViewFactory;
 import net.sf.ahtutils.controller.factory.xml.acl.XmlViewsFactory;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -56,7 +56,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityRestService.class);
 	
-	private UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	private JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	
 	private final Class<C> cCategory;
 	private final Class<R> cRole;
@@ -74,7 +74,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	private XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER> fTemplate;
 	private XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER> fUsecase,fUsecaseDoc;
 	
-	private SecurityRestService(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,final Class<L> cL,final Class<D> cD,final Class<C> cCategory,final Class<V> cView,final Class<R> cRole,final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
+	private SecurityRestService(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,final Class<L> cL,final Class<D> cD,final Class<C> cCategory,final Class<V> cView,final Class<R> cRole,final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
 	{
 		this.fSecurity=fSecurity;
 		this.cCategory=cCategory;
@@ -99,7 +99,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 	SecurityRestService<L,D,C,R,V,U,A,AT,USER>
-		factory(UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<L> cL,final Class<D> cD,final Class<C> cCategory, final Class<V> cView, final Class<R> cRole, final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
+		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<L> cL,final Class<D> cD,final Class<C> cCategory, final Class<V> cView, final Class<R> cRole, final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
 	{
 		return new SecurityRestService<L,D,C,R,V,U,A,AT,USER>(fSecurity,cL,cD,cCategory,cView,cRole,cUsecase,cAction,cTemplate,cUser);
 	}

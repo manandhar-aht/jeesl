@@ -1,5 +1,6 @@
 package net.sf.ahtutils.web.rest.security;
 
+import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +11,6 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
 import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -52,7 +52,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
     protected final Class<AT> cT;
     protected final Class<USER> cUser;
 	
-	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected EjbLangFactory<L> ejbLangFactory;
 	protected EjbDescriptionFactory<D> ejbDescriptionFactory;
 	
@@ -66,7 +66,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	   			   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 	   			   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitRoles<L,D,C,R,V,U,A,AT,USER>
-		factoryRoles(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
+		factoryRoles(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
 	{
 		return new SecurityInitRoles<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fSecurity);
 	}
@@ -81,7 +81,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	   			   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 	   			   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitViews<L,D,C,R,V,U,A,AT,USER>
-		factoryViews(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+		factoryViews(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{
 		return new SecurityInitViews<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}
@@ -96,7 +96,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	   			   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 	   			   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER>
-		factoryUsecases(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+		factoryUsecases(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{
 		return new SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}
@@ -111,12 +111,12 @@ public class AbstractSecurityInit <L extends UtilsLang,
 				   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 				   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER>
-		factoryTemplates(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+		factoryTemplates(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{
 		return new SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}
 	
-	public AbstractSecurityInit(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+	public AbstractSecurityInit(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{       
         this.cL = cL;
         this.cD = cD;

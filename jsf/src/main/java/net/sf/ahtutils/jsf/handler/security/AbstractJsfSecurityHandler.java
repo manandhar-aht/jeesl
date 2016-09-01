@@ -6,12 +6,12 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.txt.security.TxtSecurityActionFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsIdentity;
@@ -40,7 +40,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(AbstractJsfSecurityHandler.class);
 	public static final long serialVersionUID=1;
 
-	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected I identity;
 	
 	protected List<A> actions; public List<A> getActions() {return actions;}
@@ -58,7 +58,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 	protected boolean noActions; public boolean isNoActions() {return noActions;}
 	protected boolean noRoles; public boolean isNoRoles() {return noRoles;}
 	
-	public AbstractJsfSecurityHandler(I identity, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, String pageCode, Class<V> cV)
+	public AbstractJsfSecurityHandler(I identity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, String pageCode, Class<V> cV)
 	{
 		this.identity=identity;
 		this.fSecurity=fSecurity;

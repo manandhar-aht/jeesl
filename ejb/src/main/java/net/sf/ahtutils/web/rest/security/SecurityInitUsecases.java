@@ -1,5 +1,6 @@
 package net.sf.ahtutils.web.rest.security;
 
+import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +11,6 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.factory.xml.sync.XmlDataUpdateFactory;
 import net.sf.ahtutils.factory.xml.sync.XmlResultFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -40,7 +40,7 @@ public class SecurityInitUsecases <L extends UtilsLang,
 	
 	private AhtDbEjbUpdater<U> updateUsecases;
 	
-	public SecurityInitUsecases(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+	public SecurityInitUsecases(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{       
         super(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}

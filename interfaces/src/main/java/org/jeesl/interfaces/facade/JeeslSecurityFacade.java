@@ -1,8 +1,9 @@
-package net.sf.ahtutils.interfaces.facade;
+package org.jeesl.interfaces.facade;
 
 import java.util.List;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -17,7 +18,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsStaffPool;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface UtilsSecurityFacade <L extends UtilsLang,
+public interface JeeslSecurityFacade <L extends UtilsLang,
 										D extends UtilsDescription,
 										C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 										R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
@@ -42,6 +43,7 @@ public interface UtilsSecurityFacade <L extends UtilsLang,
 	List<R> rolesForAction(Class<A> cAction, Class<USER> cUser, A action, USER user);
 	
 	List<A> allActionsForUser(Class<USER> clUser, USER user);
+	List<A> allActions(Class<R> cRole, List<R> roles);
 	
 	void grantRole(Class<USER> clUser, Class<R> clRole, USER user, R role, boolean grant);
 	boolean hasRole(Class<USER> clUser, Class<R> clRole, USER user, R role);

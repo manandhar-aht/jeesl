@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,6 @@ import net.sf.ahtutils.factory.ejb.security.EjbSecurityCategoryFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityRoleFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityUsecaseFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
-import net.sf.ahtutils.interfaces.facade.UtilsSecurityFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -48,7 +48,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityBean.class);
 	
-	protected UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected UtilsSecurityCategory.Type categoryType;
 	
 	protected EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> efCategory;
@@ -89,7 +89,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,
 	protected U opUsecase;public U getOpUsecase(){return opUsecase;}public void setOpUsecase(U opUsecase){this.opUsecase = opUsecase;}
 	protected U tblUsecase;public U getTblUsecase(){return tblUsecase;}public void setTblUsecase(U tblUsecase){this.tblUsecase = tblUsecase;}
 		
-	public void initSecuritySuper(String[] langs, UtilsSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public void initSecuritySuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fSecurity=fSecurity;

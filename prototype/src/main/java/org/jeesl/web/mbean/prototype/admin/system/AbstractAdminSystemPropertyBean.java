@@ -9,13 +9,13 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.util.UtilsProperty;
 
+import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends UtilsDescription,P extends UtilsProperty>
+public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends UtilsDescription,P extends JeeslProperty>
 		extends AbstractAdminBean<L,D>
 		implements Serializable
 {

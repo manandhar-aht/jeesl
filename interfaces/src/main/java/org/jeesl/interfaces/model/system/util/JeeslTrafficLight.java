@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.util;
+package org.jeesl.interfaces.model.system.util;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -9,7 +9,7 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
 import net.sf.ahtutils.interfaces.model.with.status.UtilsWithScope;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface UtilsTrafficLight<L extends UtilsLang,
+public interface JeeslTrafficLight<L extends UtilsLang,
 							D extends UtilsDescription,
 							SCOPE extends UtilsStatus<SCOPE,L,D>>
 			extends EjbWithId,

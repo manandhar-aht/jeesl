@@ -7,8 +7,8 @@ import java.util.Map;
 import net.sf.ahtutils.controller.interfaces.mbean.JiraConfig;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.interfaces.model.util.UtilsProperty;
 
+import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +29,7 @@ public class AbstractJiraBean implements Serializable,JiraConfig
 		collectorId = new Hashtable<String,String>();
 	}
 	
-    public <T extends UtilsProperty> void init(UtilsFacade fUtils, Class<T> cl, String[] collectorKeys) throws UtilsNotFoundException
+    public <T extends JeeslProperty> void init(UtilsFacade fUtils, Class<T> cl, String[] collectorKeys) throws UtilsNotFoundException
     {
     	jiraHost = fUtils.valueStringForKey(cl, JiraConfig.Code.jiraHost.toString(), null);
     	jiraScriptPath = fUtils.valueStringForKey(cl, JiraConfig.Code.jiraScriptPath.toString(), null);

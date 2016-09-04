@@ -7,14 +7,14 @@ import net.sf.ahtutils.factory.xml.status.XmlScopeFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.util.UtilsTrafficLight;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.utils.TrafficLight;
 
+import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class XmlTrafficLightFactory<L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends UtilsTrafficLight<L,D,SCOPE>>
+public class XmlTrafficLightFactory<L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlTrafficLightFactory.class);
 		

@@ -1,5 +1,9 @@
 package net.sf.ahtutils.web.rest;
 
+import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.xml.UtilsXmlStructureException;
@@ -11,7 +15,6 @@ import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.util.UtilsTrafficLight;
 import net.sf.ahtutils.interfaces.rest.util.traffic.UtilsTrafficLightRestExport;
 import net.sf.ahtutils.interfaces.rest.util.traffic.UtilsTrafficLightRestImport;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
@@ -20,10 +23,7 @@ import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.ahtutils.xml.utils.TrafficLight;
 import net.sf.ahtutils.xml.utils.TrafficLights;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class TrafficLightRestService <L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends UtilsTrafficLight<L,D,SCOPE>>
+public class TrafficLightRestService <L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
 		implements UtilsTrafficLightRestExport,UtilsTrafficLightRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(TrafficLightRestService.class);
@@ -46,7 +46,7 @@ public class TrafficLightRestService <L extends UtilsLang,D extends UtilsDescrip
 		efLight = EjbTrafficLightFactory.factory(cLang,cDescription,cLight);
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends UtilsTrafficLight<L,D,SCOPE>>
+	public static <L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
 		TrafficLightRestService<L,D,SCOPE,LIGHT>
 			factory(UtilsFacade fUtils,final Class<L> cL,final Class<D> cD,final Class<SCOPE> cScope,final Class<LIGHT> cLight)
 	{

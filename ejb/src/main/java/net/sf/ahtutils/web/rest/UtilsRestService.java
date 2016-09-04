@@ -1,5 +1,6 @@
 package net.sf.ahtutils.web.rest;
 
+import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,6 @@ import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.util.UtilsProperty;
 import net.sf.ahtutils.interfaces.rest.util.status.UtilsStatusRestImport;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.xml.aht.Aht;
@@ -25,7 +25,7 @@ public class UtilsRestService <L extends UtilsLang,
 							G extends UtilsGraphic<L,D,G,GT,GS>,
 							GT extends UtilsStatus<GT,L,D>,
 							GS extends UtilsStatus<GS,L,D>,
-							P extends UtilsProperty>
+							P extends JeeslProperty>
 	extends AbstractUtilsRest<L,D>
 	implements UtilsStatusRestImport
 {
@@ -54,7 +54,7 @@ public class UtilsRestService <L extends UtilsLang,
 				G extends UtilsGraphic<L,D,G,GT,GS>,
 				GT extends UtilsStatus<GT,L,D>,
 				GS extends UtilsStatus<GS,L,D>,
-				P extends UtilsProperty> 
+				P extends JeeslProperty> 
 		UtilsRestService<L,D,G,GT,GS,P>
 		factory(UtilsFacade fUtils,String[] localeCodes,final Class<L> cL, final Class<D> cD, final Class<G> cGraphic,final Class<GT> cGraphicType, final Class<GS> cGraphicStyle, final Class<P> cProperty)
 	{
@@ -66,7 +66,7 @@ public class UtilsRestService <L extends UtilsLang,
 		EjbPropertyFactory<P> f = EjbPropertyFactory.factory(cProperty);
 		
 		DataUpdateTracker dut = new DataUpdateTracker(true);
-		dut.setType(XmlTypeFactory.build(cProperty.getName(),UtilsProperty.class.getSimpleName()+"-DB Import"));
+		dut.setType(XmlTypeFactory.build(cProperty.getName(),JeeslProperty.class.getSimpleName()+"-DB Import"));
 		
 		for(Property property : utils.getProperty())
 		{			

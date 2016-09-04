@@ -1,12 +1,12 @@
 package net.sf.ahtutils.factory.ejb.util;
 
-import net.sf.ahtutils.interfaces.model.util.UtilsProperty;
 import net.sf.ahtutils.xml.utils.Property;
 
+import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbPropertyFactory<P extends UtilsProperty>
+public class EjbPropertyFactory<P extends JeeslProperty>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbPropertyFactory.class);
 	
@@ -17,7 +17,7 @@ public class EjbPropertyFactory<P extends UtilsProperty>
         this.cProperty = cProperty;
 	}
 	
-	public static <P extends UtilsProperty> EjbPropertyFactory<P> factory(final Class<P> cProperty)
+	public static <P extends JeeslProperty> EjbPropertyFactory<P> factory(final Class<P> cProperty)
 	{
 		return new EjbPropertyFactory<P>(cProperty);
 	}

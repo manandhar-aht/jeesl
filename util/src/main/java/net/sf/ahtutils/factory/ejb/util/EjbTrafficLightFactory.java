@@ -6,13 +6,13 @@ import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.util.UtilsTrafficLight;
 import net.sf.ahtutils.xml.utils.TrafficLight;
 
+import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbTrafficLightFactory<L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends UtilsTrafficLight<L,D,SCOPE>>
+public class EjbTrafficLightFactory<L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbTrafficLightFactory.class);
 	
@@ -33,7 +33,7 @@ public class EjbTrafficLightFactory<L extends UtilsLang,D extends UtilsDescripti
         efDescription = EjbDescriptionFactory.createFactory(cDescription);
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends UtilsTrafficLight<L,D,SCOPE>>
+	public static <L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
 		EjbTrafficLightFactory<L,D,SCOPE,LIGHT> factory(final Class<L> cLang,final Class<D> cDescription,final Class<LIGHT> cLight)
 	{
 		return new EjbTrafficLightFactory<L,D,SCOPE,LIGHT>(cLang,cDescription,cLight);

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,6 @@ import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.util.UtilsProperty;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.interfaces.model.with.EjbWithNr;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
@@ -164,35 +164,35 @@ public class AbstractDummyFacade implements UtilsFacade
 	}
 
 	@Override
-	public <T extends UtilsProperty> String valueStringForKey(Class<T> type,
+	public <T extends JeeslProperty> String valueStringForKey(Class<T> type,
 			String key, String defaultValue) {
 		
 		return null;
 	}
 
 	@Override
-	public <T extends UtilsProperty> Integer valueIntForKey(Class<T> type,
+	public <T extends JeeslProperty> Integer valueIntForKey(Class<T> type,
 			String key, Integer defaultValue) {
 		
 		return null;
 	}
 
 	@Override
-	public <T extends UtilsProperty> Boolean valueBooleanForKey(
+	public <T extends JeeslProperty> Boolean valueBooleanForKey(
 			Class<T> type, String key, Boolean defaultValue) {
 		
 		return null;
 	}
 
 	@Override
-	public <T extends UtilsProperty> Date valueDateForKey(Class<T> type,
+	public <T extends JeeslProperty> Date valueDateForKey(Class<T> type,
 			String key, Date defaultValue) {
 		
 		return null;
 	}
 
 	@Override
-	public <T extends UtilsProperty> Long valueLongForKey(Class<T> type,
+	public <T extends JeeslProperty> Long valueLongForKey(Class<T> type,
 			String key, Long defaultValue) throws UtilsNotFoundException {
 		
 		return null;

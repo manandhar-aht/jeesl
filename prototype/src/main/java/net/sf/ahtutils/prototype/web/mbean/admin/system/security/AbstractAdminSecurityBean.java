@@ -33,8 +33,7 @@ import net.sf.ahtutils.util.comparator.ejb.security.SecurityUsecaseComparator;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityViewComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminSecurityBean <L extends UtilsLang,
-											D extends UtilsDescription,
+public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescription,
 											C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 											R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 											V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,

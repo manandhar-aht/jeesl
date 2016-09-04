@@ -38,13 +38,13 @@
 						<f:facet name="actions">
 							<aht:icon type="aupSave" rendered="#{not cc.attrs.bean.property.frozen}" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:sProperties" tooltip="#{msg.ttSave}"/>
 						</f:facet>
-						<h:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
 							<p:outputLabel value="#{msg.Key}"/>
 							<h:outputText value="#{cc.attrs.bean.property.key}"/>
 							<p:outputLabel value="#{msg.Value}"/>
 							<p:inputText rendered="#{!cc.attrs.bean.property.frozen}" value="#{cc.attrs.bean.property.value}"/>
 							<h:outputText rendered="#{cc.attrs.bean.property.frozen}" value="#{cc.attrs.bean.property.value}"/>
-						</h:panelGrid>
+						</p:panelGrid>
 					</p:panel>
 				</h:form>
 			</aht:slot>

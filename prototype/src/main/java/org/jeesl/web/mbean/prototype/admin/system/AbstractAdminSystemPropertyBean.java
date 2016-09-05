@@ -15,7 +15,7 @@ import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends UtilsDescription,P extends JeeslProperty>
+public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends UtilsDescription,P extends JeeslProperty<L,D>>
 		extends AbstractAdminBean<L,D>
 		implements Serializable
 {

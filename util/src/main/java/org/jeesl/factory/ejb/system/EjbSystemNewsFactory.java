@@ -1,6 +1,7 @@
 package org.jeesl.factory.ejb.system;
 
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +45,7 @@ public class EjbSystemNewsFactory<L extends UtilsLang,D extends UtilsDescription
     
 	public NEWS build(CATEGORY category, USER user)
 	{
+		DateTime dt = new DateTime();
 		NEWS ejb = null;
 		try
 		{
@@ -52,6 +54,8 @@ public class EjbSystemNewsFactory<L extends UtilsLang,D extends UtilsDescription
 			ejb.setAuthor(user);
 			ejb.setName(efLang.createEmpty(localeCodes));
 			ejb.setDescription(efDescription.createEmpty(localeCodes));
+			ejb.setValidFrom(dt.toDate());
+			ejb.setValidUntil(dt.plusMonths(1).toDate());
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

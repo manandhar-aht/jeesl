@@ -24,7 +24,7 @@ import net.sf.exlp.xml.io.File;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}type"/&gt;
  *         &lt;element ref="{http://exlp.sf.net/io}file"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/symbol}symbol"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/symbol}symbol"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *     &lt;/restriction&gt;

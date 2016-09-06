@@ -3,6 +3,9 @@ package net.sf.ahtutils.web.rest;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.controller.util.query.StatusQuery;
 import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
@@ -14,11 +17,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.aht.Aht;
+import net.sf.ahtutils.xml.aht.Container;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AbstractUtilsRest <L extends UtilsLang, D extends UtilsDescription>
 {
@@ -58,6 +59,20 @@ public class AbstractUtilsRest <L extends UtilsLang, D extends UtilsDescription>
 		XmlStatusFactory f = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		
 		Aht xml = new Aht();
+		for(S s : fUtils.all(c))
+		{
+			Status status = f.build(s);
+			if(mapGroups.containsKey(c)){status.setGroup(mapGroups.get(c));}
+			xml.getStatus().add(status);
+		}
+		return xml;
+	}
+	
+	protected <S extends UtilsStatus<S,L,D>> Container exportContainer(Class<S> c)
+	{
+		XmlStatusFactory f = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
+		
+		Container xml = new Container();
 		for(S s : fUtils.all(c))
 		{
 			Status status = f.build(s);

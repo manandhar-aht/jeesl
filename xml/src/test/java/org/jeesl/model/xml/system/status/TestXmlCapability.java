@@ -1,24 +1,23 @@
-package org.jeesl.model.xml.status;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.Action;
+import net.sf.ahtutils.xml.status.Capability;
 import net.sf.ahtutils.xml.status.TestXmlDescriptions;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
 
-public class TestXmlAction extends AbstractXmlStatusTest<Action>
+public class TestXmlCapability extends AbstractXmlStatusTest<Capability>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlAction.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlCapability.class);
 	
-	public TestXmlAction(){super(Action.class);}
-	public static Action create(boolean withChildren){return (new TestXmlAction()).build(withChildren);}   
-   
-    public Action build(boolean withChilds)
+	public TestXmlCapability(){super(Capability.class);}
+	public static Capability create(boolean withChildren){return (new TestXmlCapability()).build(withChildren);}   
+    
+    public Capability build(boolean withChilds)
     {
-    	Action xml = new Action();
-    	xml.setId(123);
+    	Capability xml = new Capability();
     	xml.setCode("myCode");
     	xml.setVisible(true);
     	xml.setGroup("myGroup");
@@ -34,11 +33,11 @@ public class TestXmlAction extends AbstractXmlStatusTest<Action>
     	
     	return xml;
     }
-	
+
 	public static void main(String[] args)
     {
 		UtilsXmlTestBootstrap.init();
-		TestXmlAction test = new TestXmlAction();
+		TestXmlCapability test = new TestXmlCapability();
 		test.saveReferenceXml();
     }
 }

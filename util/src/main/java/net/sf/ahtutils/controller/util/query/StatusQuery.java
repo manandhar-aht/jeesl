@@ -62,6 +62,8 @@ public class StatusQuery
 		xml.setLangs(langs());
 		xml.setDescriptions(descriptions());
 		xml.setParent(parent);
+		
+		
 		return xml;
 	}
 	

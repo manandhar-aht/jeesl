@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.status;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;

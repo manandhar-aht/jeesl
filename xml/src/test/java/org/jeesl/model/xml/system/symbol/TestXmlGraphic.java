@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.symbol;
+package org.jeesl.model.xml.system.symbol;
 
 import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;

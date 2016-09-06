@@ -1,7 +1,7 @@
 package org.jeesl.model.xml.system.revision;
 
 import org.jeesl.UtilsXmlTestBootstrap;
-import org.jeesl.model.xml.status.TestXmlCategory;
+import org.jeesl.model.xml.system.status.TestXmlCategory;
 import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

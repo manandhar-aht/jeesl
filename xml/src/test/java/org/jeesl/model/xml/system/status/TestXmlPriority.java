@@ -1,23 +1,24 @@
-package org.jeesl.model.xml.status;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.UtilsXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.Capability;
+import net.sf.ahtutils.xml.status.Priority;
 import net.sf.ahtutils.xml.status.TestXmlDescriptions;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
 
-public class TestXmlCapability extends AbstractXmlStatusTest<Capability>
+public class TestXmlPriority extends AbstractXmlStatusTest<Priority>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlCapability.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlPriority.class);
 	
-	public TestXmlCapability(){super(Capability.class);}
-	public static Capability create(boolean withChildren){return (new TestXmlCapability()).build(withChildren);}   
+	public TestXmlPriority(){super(Priority.class);}
+	public static Priority create(boolean withChildren){return (new TestXmlPriority()).build(withChildren);}   
     
-    public Capability build(boolean withChilds)
+    public Priority build(boolean withChildren)
     {
-    	Capability xml = new Capability();
+    	Priority xml = new Priority();
+    	xml.setId(123);
     	xml.setCode("myCode");
     	xml.setVisible(true);
     	xml.setGroup("myGroup");
@@ -25,19 +26,19 @@ public class TestXmlCapability extends AbstractXmlStatusTest<Capability>
     	xml.setImage("test/green.png");
     	xml.setPosition(1);
     	
-    	if(withChilds)
+    	if(withChildren)
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
     	}
-    	
+
     	return xml;
     }
-
+	
 	public static void main(String[] args)
     {
 		UtilsXmlTestBootstrap.init();
-		TestXmlCapability test = new TestXmlCapability();
+		TestXmlPriority test = new TestXmlPriority();
 		test.saveReferenceXml();
     }
 }

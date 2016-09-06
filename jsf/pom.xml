@@ -203,6 +203,7 @@
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-transcoder</artifactId>
+			<scope>compile</scope>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
@@ -213,7 +214,9 @@
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-codec</artifactId>
+			<scope>compile</scope>
 		</dependency>
+		
    		<dependency>
 			<groupId>org.openfuxml</groupId>
 			<artifactId>ofx-core</artifactId>

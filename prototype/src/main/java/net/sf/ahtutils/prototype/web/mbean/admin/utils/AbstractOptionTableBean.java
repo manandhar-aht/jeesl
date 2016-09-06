@@ -208,18 +208,21 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			parentId=((EjbWithParent)status).getParent().getId();
 		}
 		
-		if(supportsGraphic && ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic()==null)
+		if(supportsGraphic)
 		{
-			logger.info("Need to create a graphic entity for this status");
-			GT type = fUtils.fByCode(cGT, UtilsGraphicType.Code.symbol.toString());
-			GS style = fUtils.fByCode(cGS, UtilsGraphicStyle.Code.circle.toString());
-			graphic = fUtils.persist(efGraphic.buildSymbol(type, style));
-			((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
-			status = fUtils.update(status);
-		}
-		else
-		{
-			graphic = ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic();
+			if(((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic()==null)
+			{
+				logger.info("Need to create a graphic entity for this status");
+				GT type = fUtils.fByCode(cGT, UtilsGraphicType.Code.symbol.toString());
+				GS style = fUtils.fByCode(cGS, UtilsGraphicStyle.Code.circle.toString());
+				graphic = fUtils.persist(efGraphic.buildSymbol(type, style));
+				((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
+				status = fUtils.update(status);
+			}
+			else 
+			{
+				graphic = ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic();
+			}
 		}
 		
 		uiAllowCode = hasDeveloperAction || hasAdministratorAction;

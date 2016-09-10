@@ -1,36 +1,44 @@
 package net.sf.ahtutils.factory.ejb.util;
 
-import net.sf.ahtutils.xml.utils.Property;
-
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbPropertyFactory<P extends JeeslProperty>
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.xml.utils.Property;
+
+public class EjbPropertyFactory<L extends UtilsLang,D extends UtilsDescription,
+								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
+								PROPERTY extends JeeslProperty<L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbPropertyFactory.class);
 	
-	final Class<P> cProperty;
+	final Class<PROPERTY> cProperty;
     
-	public EjbPropertyFactory(final Class<P> cProperty)
+	public EjbPropertyFactory(final Class<PROPERTY> cProperty)
 	{       
         this.cProperty = cProperty;
 	}
 	
-	public static <P extends JeeslProperty> EjbPropertyFactory<P> factory(final Class<P> cProperty)
+	public static <L extends UtilsLang,D extends UtilsDescription,
+					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
+					PROPERTY extends JeeslProperty<L,D>>
+			EjbPropertyFactory<L,D,CATEGORY,PROPERTY> factory(final Class<PROPERTY> cProperty)
 	{
-		return new EjbPropertyFactory<P>(cProperty);
+		return new EjbPropertyFactory<L,D,CATEGORY,PROPERTY>(cProperty);
 	}
     
-	public P build(Property property)
+	public PROPERTY build(Property property)
 	{
 		return build(property.getKey(),property.getValue(),property.isFrozen());
     }
 	
-	public P build(String code, String value){return build(code,value,false);}
-	public P build(String code, String value, boolean frozen)
+	public PROPERTY build(String code, String value){return build(code,value,false);}
+	public PROPERTY build(String code, String value, boolean frozen)
 	{
-		P ejb = null;
+		PROPERTY ejb = null;
 		try
 		{
 			ejb = cProperty.newInstance();
@@ -43,5 +51,4 @@ public class EjbPropertyFactory<P extends JeeslProperty>
 		
 		return ejb;
 	}
-
 }

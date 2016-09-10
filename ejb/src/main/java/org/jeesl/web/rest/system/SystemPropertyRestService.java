@@ -35,8 +35,9 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 	private JeeslSystemPropertyFacade<L,D,CATEGORY,PROPERTY> fProperty;
 	
 	private final Class<CATEGORY> cCategory;
-	
 	private final Class<PROPERTY> cProperty;
+	
+	private EjbPropertyFactory<L,D,CATEGORY,PROPERTY> efProperty;
 	
 	private SystemPropertyRestService(JeeslSystemPropertyFacade<L,D,CATEGORY,PROPERTY> fNews,final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<PROPERTY> cProperty)
 	{
@@ -45,6 +46,8 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 		
 		this.cCategory=cCategory;
 		this.cProperty=cProperty;
+		
+		efProperty = EjbPropertyFactory.factory(cProperty);
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -74,8 +77,6 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 	@Override
 	public DataUpdate importSystemProperties(Utils utils)
 	{
-		EjbPropertyFactory<PROPERTY> f = EjbPropertyFactory.factory(cProperty);
-		
 		DataUpdateTracker dut = new DataUpdateTracker(true);
 		dut.setType(XmlTypeFactory.build(cProperty.getName(),JeeslProperty.class.getSimpleName()+"-DB Import"));
 		
@@ -88,7 +89,7 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 			}
 			catch (UtilsNotFoundException e1)
 			{
-				ejb = f.build(property);
+				ejb = efProperty.build(property);
 				dut.success();
 				try
 				{

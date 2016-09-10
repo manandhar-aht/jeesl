@@ -16,7 +16,6 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -282,92 +281,6 @@ public class UtilsFacadeBean implements UtilsFacade
 		TypedQuery<T> q = em.createQuery(criteriaQuery); 
 		try	{return q.getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+clazz.getSimpleName()+" for email="+email);}
-	}
-	
-	@Override
-	public <T extends JeeslProperty> Integer valueIntForKey(Class<T> type, String key, Integer defaultValue) throws UtilsNotFoundException
-	{
-		try
-		{
-			T t = valueForKey(type, key);
-			return new Integer(t.getValue());
-		}
-		catch (UtilsNotFoundException e)
-		{
-			if(defaultValue!=null){return defaultValue;}
-			else{throw e;}
-		}
-	}
-	@Override
-	public <T extends JeeslProperty> Long valueLongForKey(Class<T> type, String key, Long defaultValue) throws UtilsNotFoundException
-	{
-		try
-		{
-			T t = valueForKey(type, key);
-			return new Long(t.getValue());
-		}
-		catch (UtilsNotFoundException e)
-		{
-			if(defaultValue!=null){return defaultValue;}
-			else{throw e;}
-		}
-	}
-
-	@Override
-	public <T extends JeeslProperty> Boolean valueBooleanForKey(Class<T> type, String key, Boolean defaultValue) throws UtilsNotFoundException
-	{
-		try
-		{
-			T t = valueForKey(type, key);
-			return new Boolean(t.getValue());
-		}
-		catch (UtilsNotFoundException e)
-		{
-			if(defaultValue!=null){return defaultValue;}
-			else{throw e;}
-		}
-	}
-
-	@Override
-	public <T extends JeeslProperty> Date valueDateForKey(Class<T> type, String key, Date defaultValue) throws UtilsNotFoundException
-	{
-		try
-		{
-			T t = valueForKey(type, key);
-			return new Date(new Long(t.getValue()));
-		}
-		catch (UtilsNotFoundException e)
-		{
-			if(defaultValue!=null){return defaultValue;}
-			else{throw e;}
-		}
-	}
-	@Override
-	public <T extends JeeslProperty> String valueStringForKey(Class<T> type, String key, String defaultValue) throws UtilsNotFoundException
-	{
-		try
-		{
-			T t = valueForKey(type, key);
-			return t.getValue();
-		}
-		catch (UtilsNotFoundException e)
-		{
-			if(defaultValue!=null){return defaultValue;}
-			else{throw e;}
-		}
-	}
-	private <T extends JeeslProperty> T valueForKey(Class<T> type, String key) throws UtilsNotFoundException
-	{
-		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(type);
-        Root<T> root = criteriaQuery.from(type);
-        criteriaQuery = criteriaQuery.where(root.<T>get("key").in(key));
-
-		T result;
-		TypedQuery<T> q = em.createQuery(criteriaQuery); 
-		try	{result= q.getSingleResult();}
-		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found "+type.getSimpleName()+" for key="+key);}
-		return result;
 	}
 	
 	@Override public <T extends Object> List<T> all(Class<T> type){return all(type,0);}

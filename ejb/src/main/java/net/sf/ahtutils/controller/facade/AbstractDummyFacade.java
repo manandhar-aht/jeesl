@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -163,40 +162,6 @@ public class AbstractDummyFacade implements UtilsFacade
 		return null;
 	}
 
-	@Override
-	public <T extends JeeslProperty> String valueStringForKey(Class<T> type,
-			String key, String defaultValue) {
-		
-		return null;
-	}
-
-	@Override
-	public <T extends JeeslProperty> Integer valueIntForKey(Class<T> type,
-			String key, Integer defaultValue) {
-		
-		return null;
-	}
-
-	@Override
-	public <T extends JeeslProperty> Boolean valueBooleanForKey(
-			Class<T> type, String key, Boolean defaultValue) {
-		
-		return null;
-	}
-
-	@Override
-	public <T extends JeeslProperty> Date valueDateForKey(Class<T> type,
-			String key, Date defaultValue) {
-		
-		return null;
-	}
-
-	@Override
-	public <T extends JeeslProperty> Long valueLongForKey(Class<T> type,
-			String key, Long defaultValue) throws UtilsNotFoundException {
-		
-		return null;
-	}
 
 	@Override
 	public <T extends EjbWithRecord> List<T> allOrderedRecord(Class<T> type,

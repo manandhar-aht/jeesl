@@ -8,15 +8,9 @@ import javax.ws.rs.core.MediaType;
 
 import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.sync.DataUpdate;
-import net.sf.ahtutils.xml.utils.Utils;
 
 public interface UtilsStatusRestImport
-{
-	@POST @Path("/utils/properties")
-	@Produces(MediaType.APPLICATION_XML)
-	@Consumes(MediaType.APPLICATION_XML)
-	DataUpdate importProperties(Utils utils);
-	
+{	
 	@POST @Path("/ahtutils/symbol/type")
 	@Produces(MediaType.APPLICATION_XML)
 	@Consumes(MediaType.APPLICATION_XML)

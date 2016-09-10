@@ -56,13 +56,7 @@ public interface UtilsFacade  extends UtilsIdFacade
 	<T extends EjbWithNonUniqueCode> List<T> allByCode(Class<T> type, String code);
 	
 	<T extends EjbWithNr, P extends EjbWithId> T fByNr(Class<T> type, String parentName, P parent, long nr) throws UtilsNotFoundException;
-	
-	<T extends JeeslProperty> String valueStringForKey(Class<T> type, String key, String defaultValue) throws UtilsNotFoundException;
-	<T extends JeeslProperty> Integer valueIntForKey(Class<T> type, String key, Integer defaultValue) throws UtilsNotFoundException;
-	<T extends JeeslProperty> Long valueLongForKey(Class<T> type, String key, Long defaultValue) throws UtilsNotFoundException;
-	<T extends JeeslProperty> Boolean valueBooleanForKey(Class<T> type, String key, Boolean defaultValue) throws UtilsNotFoundException;
-	<T extends JeeslProperty> Date valueDateForKey(Class<T> type, String key, Date defaultValue) throws UtilsNotFoundException;
-	
+		
 	<T extends EjbWithType> List<T> allForType(Class<T> clazz, String type);
 	
 	// ORDERING

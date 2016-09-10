@@ -8,14 +8,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.db.xml.AhtStatusDbInit;
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
+import net.sf.ahtutils.factory.ejb.util.EjbPropertyFactory;
+import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.web.rest.AbstractUtilsRest;
 import net.sf.ahtutils.xml.aht.Container;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
+import net.sf.ahtutils.xml.utils.Property;
+import net.sf.ahtutils.xml.utils.Utils;
 
 public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescription,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -29,7 +36,6 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 	
 	private final Class<CATEGORY> cCategory;
 	
-	@SuppressWarnings("unused")
 	private final Class<PROPERTY> cProperty;
 	
 	private SystemPropertyRestService(JeeslSystemPropertyFacade<L,D,CATEGORY,PROPERTY> fNews,final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<PROPERTY> cProperty)
@@ -66,9 +72,33 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
     }
 
 	@Override
-	public DataUpdate importSystemProperties(Container values) {
-		// TODO Auto-generated method stub
-		return null;
+	public DataUpdate importSystemProperties(Utils utils)
+	{
+		EjbPropertyFactory<PROPERTY> f = EjbPropertyFactory.factory(cProperty);
+		
+		DataUpdateTracker dut = new DataUpdateTracker(true);
+		dut.setType(XmlTypeFactory.build(cProperty.getName(),JeeslProperty.class.getSimpleName()+"-DB Import"));
+		
+		for(Property property : utils.getProperty())
+		{			
+			PROPERTY ejb;			
+			try
+			{
+				fProperty.valueStringForKey(property.getKey(),null);
+			}
+			catch (UtilsNotFoundException e1)
+			{
+				ejb = f.build(property);
+				dut.success();
+				try
+				{
+					ejb = (PROPERTY)fUtils.persist(ejb);
+				}
+				catch (UtilsConstraintViolationException e) {dut.fail(e, true);}
+			}
+		}
+
+		return dut.toDataUpdate();
 	}
 
 	@Override

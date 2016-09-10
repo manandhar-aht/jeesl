@@ -4,15 +4,21 @@ import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.sf.ahtutils.controller.interfaces.mbean.JiraConfig;
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-
+import org.jeesl.interfaces.facade.JeeslSystemPropertyFacade;
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AbstractJiraBean implements Serializable,JiraConfig
+import net.sf.ahtutils.controller.interfaces.mbean.JiraConfig;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+
+public class AbstractJiraBean <L extends UtilsLang,D extends UtilsDescription,
+								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
+								P extends JeeslProperty<L,D>> 
+				implements Serializable,JiraConfig
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJiraBean.class);
 	private static final long serialVersionUID = 1L;
@@ -21,22 +27,21 @@ public class AbstractJiraBean implements Serializable,JiraConfig
 	protected String jiraScriptPath;
 	
 	protected Map<String,String> collectorId;
-	
-	//******* Methods *******************************
+
 
 	public AbstractJiraBean()
 	{
 		collectorId = new Hashtable<String,String>();
 	}
 	
-    public <T extends JeeslProperty> void init(UtilsFacade fUtils, Class<T> cl, String[] collectorKeys) throws UtilsNotFoundException
+    public void init(JeeslSystemPropertyFacade<L,D,CATEGORY,P> fUtils, Class<P> cl, String[] collectorKeys) throws UtilsNotFoundException
     {
-    	jiraHost = fUtils.valueStringForKey(cl, JiraConfig.Code.jiraHost.toString(), null);
-    	jiraScriptPath = fUtils.valueStringForKey(cl, JiraConfig.Code.jiraScriptPath.toString(), null);
+    	jiraHost = fUtils.valueStringForKey(JiraConfig.Code.jiraHost.toString(), null);
+    	jiraScriptPath = fUtils.valueStringForKey(JiraConfig.Code.jiraScriptPath.toString(), null);
     	
     	for(String key : collectorKeys)
     	{
-    		collectorId.put(key, fUtils.valueStringForKey(cl, JiraConfig.Code.jiraCollector.toString()+key, null));
+    		collectorId.put(key, fUtils.valueStringForKey(JiraConfig.Code.jiraCollector.toString()+key, null));
     	}
     }
 

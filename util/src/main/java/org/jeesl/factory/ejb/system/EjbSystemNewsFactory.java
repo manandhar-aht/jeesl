@@ -56,6 +56,7 @@ public class EjbSystemNewsFactory<L extends UtilsLang,D extends UtilsDescription
 			ejb.setDescription(efDescription.createEmpty(localeCodes));
 			ejb.setValidFrom(dt.toDate());
 			ejb.setValidUntil(dt.plusMonths(1).toDate());
+			ejb.setVisible(false);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

@@ -24,18 +24,15 @@ public class AbstractNewsBean <L extends UtilsLang,D extends UtilsDescription,
 	
 	private JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews;
 	
-	private Class<NEWS> cNews;
-	
 	private List<NEWS> news; public List<NEWS> getNews() {return news;}
 
-	protected void init(JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews, Class<NEWS> cNews)
+	protected void init(JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews)
 	{	
 		this.fNews=fNews;
-		this.cNews=cNews;
 	}
 
 	protected void reload()
 	{
-		news = fNews.all(cNews);
+		news = fNews.fActiveNews();
 	}
 }

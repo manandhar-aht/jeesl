@@ -39,10 +39,10 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 	
 	private EjbPropertyFactory<L,D,CATEGORY,PROPERTY> efProperty;
 	
-	private SystemPropertyRestService(JeeslSystemPropertyFacade<L,D,CATEGORY,PROPERTY> fNews,final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<PROPERTY> cProperty)
+	private SystemPropertyRestService(JeeslSystemPropertyFacade<L,D,CATEGORY,PROPERTY> fProperty,final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<PROPERTY> cProperty)
 	{
-		super(fNews,localeCodes,cL,cD);
-		this.fProperty=fNews;
+		super(fProperty,localeCodes,cL,cD);
+		this.fProperty=fProperty;
 		
 		this.cCategory=cCategory;
 		this.cProperty=cProperty;

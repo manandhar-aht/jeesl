@@ -42,6 +42,9 @@ public class JeeslMsgBuilder
 	//IO
 	public static final String ioTemplate = "jeesl/msg/admin/system/io/template.xml";
 	
+	//System
+	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
+	
 	public static final String tooltip = "aht-utils/msg/tooltip.xml";
 
 	public static final String srcWizard = "msg.aht-utils/wizard.xml";

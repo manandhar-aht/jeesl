@@ -1,13 +1,26 @@
 package org.jeesl.controller.facade;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.jeesl.interfaces.facade.JeeslSystemNewsFacade;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
+import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
+import net.sf.ahtutils.interfaces.model.date.EjbWithValidUntil;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -20,6 +33,8 @@ public class JeeslSystemNewsFacadeBean<L extends UtilsLang,D extends UtilsDescri
 					extends UtilsFacadeBean
 					implements JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER>
 {	
+	final static Logger logger = LoggerFactory.getLogger(JeeslSystemNewsFacadeBean.class);
+	
 	private final Class<NEWS> cNews;
 	
 	public JeeslSystemNewsFacadeBean(EntityManager em, final Class<NEWS> cNews)
@@ -31,6 +46,26 @@ public class JeeslSystemNewsFacadeBean<L extends UtilsLang,D extends UtilsDescri
 	@Override
 	public List<NEWS> fActiveNews()
 	{
-		return this.all(cNews);
+		logger.info("FACTIVE");
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<NEWS> cQ = cB.createQuery(cNews);
+		Root<NEWS> news = cQ.from(cNews);
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		
+		Path<Boolean> pathVisible = news.get(JeeslSystemNews.Attributes.visible.toString());
+		Expression<Date> dStart = news.get(EjbWithValidFrom.Attributes.validFrom.toString());
+		Expression<Date> dEnd   = news.get(EjbWithValidUntil.Attributes.validUntil.toString());
+		
+		Date now = new Date();
+		predicates.add(cB.isTrue(pathVisible));
+//		predicates.add(cB.lessThanOrEqualTo(dStart,now));
+//		predicates.add(cB.greaterThan(dEnd,now));
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(news);
+		cQ.orderBy(cB.desc(dStart));
+
+		TypedQuery<NEWS> tQ = em.createQuery(cQ);
+		return tQ.getResultList();
 	}
 }

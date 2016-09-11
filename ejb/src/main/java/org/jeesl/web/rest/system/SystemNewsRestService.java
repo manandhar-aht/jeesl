@@ -27,7 +27,6 @@ public class SystemNewsRestService <L extends UtilsLang,D extends UtilsDescripti
 {
 	final static Logger logger = LoggerFactory.getLogger(SystemNewsRestService.class);
 	
-	@SuppressWarnings("unused")
 	private JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews;
 	
 	private final Class<CATEGORY> cCategory;
@@ -49,7 +48,7 @@ public class SystemNewsRestService <L extends UtilsLang,D extends UtilsDescripti
 					NEWS extends JeeslSystemNews<L,D,CATEGORY,NEWS,USER>,
 					USER extends EjbWithId>
 		SystemNewsRestService<L,D,CATEGORY,NEWS,USER>
-			factory(JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews, final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<NEWS> cNews)
+		factory(JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews, final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<NEWS> cNews)
 	{
 		return new SystemNewsRestService<L,D,CATEGORY,NEWS,USER>(fNews,localeCodes,cL,cD,cCategory,cNews);
 	}

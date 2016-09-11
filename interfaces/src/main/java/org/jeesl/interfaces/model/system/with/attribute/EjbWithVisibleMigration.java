@@ -4,6 +4,6 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface EjbWithVisibleMigration extends EjbWithId
 {
-	public Boolean isVisible();
+	public Boolean getVisible();
 	public void setVisible(Boolean visible);
 }

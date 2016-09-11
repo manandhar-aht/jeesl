@@ -20,7 +20,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminNewsBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									NEWS extends JeeslSystemNews<L,D,CATEGORY,NEWS,USER>,
 									USER extends EjbWithId>
@@ -28,7 +28,7 @@ public class AbstractAdminNewsBean <L extends UtilsLang,D extends UtilsDescripti
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminNewsBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSystemNewsBean.class);
 	
 	protected JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews;
 	

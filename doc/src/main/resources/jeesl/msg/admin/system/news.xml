@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations xmlns="http://ahtutils.aht-group.com/status">
+	<translation key="jeeslSystemNews">
+		<langs>
+			<lang key="de" translation="Neuigkeiten" />
+			<lang key="en" translation="News" />
+			<lang key="fr" translation="News" />
+		</langs>
+	</translation>
+	<translation key="jeeslSystemNewsHeadline">
+		<langs>
+			<lang key="de" translation="Überschrift" />
+			<lang key="en" translation="Headline" />
+			<lang key="fr" translation="Headline" />
+		</langs>
+	</translation>
+	<translation key="jeeslNewsDetail">
+		<langs>
+			<lang key="de" translation="Details" />
+			<lang key="en" translation="Details" />
+			<lang key="fr" translation="Details" />
+		</langs>
+	</translation>
+</translations>

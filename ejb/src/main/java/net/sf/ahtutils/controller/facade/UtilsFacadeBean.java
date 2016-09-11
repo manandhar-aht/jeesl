@@ -31,6 +31,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFromUntil;
+import net.sf.ahtutils.interfaces.model.date.EjbWithValidUntil;
 import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
 import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
 import net.sf.ahtutils.interfaces.model.graphic.UtilsWithGraphic;
@@ -944,8 +945,8 @@ public class UtilsFacadeBean implements UtilsFacade
 		CriteriaQuery<T> cQ = cB.createQuery(c);
 		Root<T> root = cQ.from(c);
 		
-		Expression<Date> dStart = root.get("validFrom");
-		Expression<Date> dEnd   = root.get("validUntil");
+		Expression<Date> dStart = root.get(EjbWithValidFrom.Attributes.validFrom.toString());
+		Expression<Date> dEnd   = root.get(EjbWithValidUntil.Attributes.validUntil.toString());
 		
 		Predicate pLower = cB.lessThanOrEqualTo(dStart, record);
 	    Predicate pUpper = cB.greaterThan(dEnd, record);

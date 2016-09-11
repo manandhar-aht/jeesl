@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.news;
 
+import org.jeesl.interfaces.model.system.with.attribute.EjbWithVisibleMigration;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFromUntil;
@@ -14,7 +16,7 @@ public interface JeeslSystemNews<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								NEWS extends JeeslSystemNews<L,D,CATEGORY,NEWS,USER>,
 								USER extends EjbWithId>
-		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithValidFromUntil,
+		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithValidFromUntil,EjbWithVisibleMigration,
 				EjbWithLang<L>,EjbWithDescription<D>
 {	
 	CATEGORY getCategory();

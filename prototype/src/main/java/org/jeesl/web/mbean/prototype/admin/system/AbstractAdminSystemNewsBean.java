@@ -1,7 +1,9 @@
 package org.jeesl.web.mbean.prototype.admin.system;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.factory.ejb.system.EjbSystemNewsFactory;
 import org.jeesl.interfaces.facade.JeeslSystemNewsFacade;
@@ -39,7 +41,7 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 	
 	private List<CATEGORY> categories;public List<CATEGORY> getCategories() {return categories;}
 	private List<NEWS> list; public List<NEWS> getList() {return list;}
-	
+	private Map<NEWS,Boolean> active; public Map<NEWS,Boolean> getActive() {return active;}
 	private NEWS news; public NEWS getNews() {return news;} public void setNews(NEWS news) {this.news = news;}
 	protected USER user;
 
@@ -50,6 +52,7 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 		this.cCategory=cCategory;
 		this.cNews=cNews;
 		categories = fNews.allOrderedPositionVisible(cCategory);
+		active = new HashMap<NEWS,Boolean>();
 		
 		efNews = EjbSystemNewsFactory.factory(localeCodes,cL, cD, cNews);
 		reloadNews();
@@ -57,7 +60,11 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 	
 	private void reloadNews()
 	{
-		list = fNews.all(cNews);
+		list = fNews.allOrdered(cNews,JeeslSystemNews.Attributes.validFrom.toString(),false);
+		active.clear();
+		for(NEWS n : list){active.put(n,false);}
+		for(NEWS n : fNews.fActiveNews()){active.put(n,true);}
+		
 	}
 	
 	public void addNews() throws UtilsNotFoundException

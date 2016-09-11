@@ -19,7 +19,7 @@ public interface JeeslSystemNews<L extends UtilsLang,D extends UtilsDescription,
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithValidFromUntil,EjbWithVisibleMigration,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
-	public static enum Attributes{visible}
+	public static enum Attributes{visible,validFrom}
 	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);

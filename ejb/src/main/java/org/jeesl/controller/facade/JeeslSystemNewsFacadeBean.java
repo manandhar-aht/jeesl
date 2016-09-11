@@ -15,6 +15,8 @@ import javax.persistence.criteria.Root;
 
 import org.jeesl.interfaces.facade.JeeslSystemNewsFacade;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,10 +58,10 @@ public class JeeslSystemNewsFacadeBean<L extends UtilsLang,D extends UtilsDescri
 		Expression<Date> dStart = news.get(EjbWithValidFrom.Attributes.validFrom.toString());
 		Expression<Date> dEnd   = news.get(EjbWithValidUntil.Attributes.validUntil.toString());
 		
-		Date now = new Date();
+		LocalDate date = new LocalDateTime().toLocalDate();
 		predicates.add(cB.isTrue(pathVisible));
-//		predicates.add(cB.lessThanOrEqualTo(dStart,now));
-//		predicates.add(cB.greaterThan(dEnd,now));
+		predicates.add(cB.lessThanOrEqualTo(dStart,date.toDate()));
+		predicates.add(cB.greaterThanOrEqualTo(dEnd,date.toDate()));
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(news);

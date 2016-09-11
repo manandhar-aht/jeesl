@@ -32,6 +32,7 @@
 							<p:column rendered="#{cc.attrs.bean.uiShowInvisible}">  
 								<h:graphicImage rendered="#{news.visible}" name="#{iconBean.icon12['securityVisible']}" library="gfx"/>
 				                <h:graphicImage rendered="#{not news.visible}" name="#{iconBean.icon12['securityInvisible']}" library="gfx"/>
+				                <h:graphicImage rendered="#{cc.attrs.bean.active[news]}" name="#{iconBean.icon12['aupSecurityDocumentation']}" library="gfx"/>
 							</p:column>
 							<p:column headerText="#{msg.aupCategory}">  
 								<h:outputText value="#{news.category.name[userBean.localeCode].lang}"/>
@@ -68,6 +69,16 @@
 								
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.news.visible}"/>
+								
+								<p:outputLabel value="#{msg.aupDateFrom}"/>
+								<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%">
+									<p:calendar value="#{cc.attrs.bean.news.validFrom}" showOn="button" pattern="dd.MM.yyyy"/>
+								</h:panelGroup>
+								
+								<p:outputLabel value="#{msg.aupDateUntil}"/>
+								<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%">
+									<p:calendar value="#{cc.attrs.bean.news.validUntil}" showOn="button" pattern="dd.MM.yyyy"/>
+								</h:panelGroup>
 								
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.news}" withDescription="true"

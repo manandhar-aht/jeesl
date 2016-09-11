@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.facade;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
@@ -14,5 +16,5 @@ public interface JeeslSystemNewsFacade <L extends UtilsLang,D extends UtilsDescr
 										USER extends EjbWithId>
 			extends UtilsFacade
 {	
-	
+	List<NEWS> fActiveNews();
 }

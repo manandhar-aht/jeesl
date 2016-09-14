@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean.admin.utils;
+package org.jeesl.web.mbean.prototype.admin;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,7 +6,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;

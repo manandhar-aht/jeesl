@@ -1,5 +1,7 @@
 package net.sf.ahtutils.controller.facade;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -136,5 +138,16 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 //		for(SimpleRevisionEntity<T> item : list){lazyLoad(item.getEntity());}
 //		return list;
 		return null;
+	}
+	
+	@Override public List<Long> ids(String query)
+	{
+		List<Long> result = new ArrayList<Long>();
+		for(Object o : em.createNativeQuery(query).getResultList())
+		{
+			long id = ((BigInteger)o).longValue();
+			result.add(id);
+		}
+		return result;
 	}
 }

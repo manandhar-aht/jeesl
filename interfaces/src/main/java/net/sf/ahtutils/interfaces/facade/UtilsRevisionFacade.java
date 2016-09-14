@@ -29,7 +29,7 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 			extends UtilsFacade
-{	
+{		
 	RV load(Class<RV> cView, RV view);
 	RS load(Class<RS> cScope, RS scope);
 	RE load(Class<RE> cEntity, RE entity);
@@ -45,4 +45,6 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 	<T extends EjbWithId> T jpaTree(Class<T> c, String jpa, long id) throws UtilsNotFoundException;
 	
 	<T extends EjbWithId> List<T> revisions(Class<T> c, List<Long> ids);
+	
+	List<Long> ids(String query);
 }

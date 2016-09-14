@@ -48,7 +48,6 @@ public class JeeslSystemNewsFacadeBean<L extends UtilsLang,D extends UtilsDescri
 	@Override
 	public List<NEWS> fActiveNews()
 	{
-		logger.info("FACTIVE");
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<NEWS> cQ = cB.createQuery(cNews);
 		Root<NEWS> news = cQ.from(cNews);

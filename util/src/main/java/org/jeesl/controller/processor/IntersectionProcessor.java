@@ -23,6 +23,12 @@ public class IntersectionProcessor extends SetProcessingBaseVisitor
 	{
 		return ListUtils.union(ListUtils.subtract(a,b),b);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> subtract(List<T> a, List<T> b)
+	{
+		return ListUtils.subtract(a,b);
+	}
 
 	static List lists;
 	

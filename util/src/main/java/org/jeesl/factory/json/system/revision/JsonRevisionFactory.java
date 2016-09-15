@@ -1,6 +1,10 @@
 package org.jeesl.factory.json.system.revision;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import net.sf.ahtutils.model.json.system.revision.JsonRevision;
 
@@ -10,7 +14,7 @@ public class JsonRevisionFactory
 	{
 		long id = ((BigInteger)array[0]).longValue();
         long revision = ((BigInteger)array[1]).longValue();
-        int type = ((Short)array[1]).intValue();
+        int type = ((BigInteger)array[1]).intValue();
         long user = ((BigInteger)array[3]).longValue();
         
 		return build(revision,id,type,user);
@@ -30,5 +34,12 @@ public class JsonRevisionFactory
 		json.setType(type);
 		json.setUserId(userId);
 		return json;
+	}
+	
+	public static List<Long> toIds(List<JsonRevision> list)
+	{
+		Set<Long> set = new HashSet<Long>();
+		for(JsonRevision r : list){set.add(r.getId());}
+		return new ArrayList<Long>(set);
 	}
 }

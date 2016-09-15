@@ -13,14 +13,11 @@ public class DynamicPivotData
 {
     final static Logger logger = LoggerFactory.getLogger(DynamicPivotData.class);
 
-    private int size;
-    public int getSize() {
-		return size;
-	}
-
-	private double value;public double getValue() {return value;}
+    private int size; public int getSize() {return size;}
     
-    private List<EjbWithId> entities;  public List<EjbWithId> getEntities() {return entities;}
+	private double value; public double getValue() {return value;}
+	private double[] values; public double[] getValues() {return values;}
+	private List<EjbWithId> entities;  public List<EjbWithId> getEntities() {return entities;}
 
 	public DynamicPivotData(int size)
     {
@@ -31,6 +28,12 @@ public class DynamicPivotData
     public void setData(double value, EjbWithId... entities)
     {
     	this.value=value;
+    	this.entities.addAll(new ArrayList<EjbWithId>(Arrays.asList(entities)));
+    }
+    
+    public void setData(double[] values, EjbWithId... entities)
+    {
+    	this.values=values;
     	this.entities.addAll(new ArrayList<EjbWithId>(Arrays.asList(entities)));
     }
     

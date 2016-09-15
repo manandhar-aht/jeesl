@@ -13,7 +13,7 @@ public class SqlRevisionQueries
 {
 	final static Logger logger = LoggerFactory.getLogger(SqlRevisionQueries.class);
 
-	private static SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd"); 
+	private static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
 	
 	public static String revisionsIn(String entityTable, String revisionTable, Date from, Date to, List<Integer> types)
 	{	
@@ -26,8 +26,8 @@ public class SqlRevisionQueries
 		sb.append("JOIN ").append(revisionTable).append(" r ON e.rev = r.id\n");
 		sb.append("WHERE TRUE\n");
 		sb.append("    AND e.revtype IN (").append(StringUtils.join(types,",")).append(")\n");
-		if(from!=null){sb.append("    AND e.auditrecord >= '").append(df.format(from)).append("'\n");}
-		if(to!=null){sb.append  ("    AND e.auditrecord <= '").append(df.format(to)).append("'");}
+		if(from!=null){sb.append("    AND r.auditrecord >= '").append(df.format(from)).append("'\n");}
+		if(to!=null){sb.append  ("    AND r.auditrecord <= '").append(df.format(to)).append("'");}
 
 		return sb.toString();
 	}

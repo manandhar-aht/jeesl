@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,4 +89,34 @@ public class DynamicPivotAggregator
     	return value;
     }
     
+    public Double[] values(int size, EjbWithId... selectors)
+    {
+    	double[] values = new double[size]; 
+    	for(int i=0;i<size;i++){values[i]=0;}
+
+    	boolean oneMatches = false;
+    	for(DynamicPivotData dpd : list)
+    	{
+    		boolean selectorMatches = true;
+    		for(int i=0;i<selectors.length;i++)
+    		{
+    			EjbWithId selector = selectors[i];
+    			if(selector!=null)
+    			{
+    				if(!selector.equals(dpd.getEntity(i))){selectorMatches=false;}
+    			}
+    		}
+    		
+    		if(selectorMatches)
+    		{
+    			for(int i=0;i<size;i++)
+    			{
+    				values[i]=values[i]+dpd.getValues()[i];
+    			}
+    			oneMatches=true;
+    		}
+    	}
+    	if(!oneMatches){return null;}
+    	return ArrayUtils.toObject(values);
+    }
 }

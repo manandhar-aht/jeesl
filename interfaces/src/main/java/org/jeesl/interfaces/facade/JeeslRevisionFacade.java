@@ -33,6 +33,8 @@ public interface JeeslRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 									RAT extends UtilsStatus<RAT,L,D>>
 			extends UtilsFacade
 {	
+	public static int typeCreate = 0;
+	
 	public static enum Scope{live,revision}
 	
 	RV load(Class<RV> cView, RV view);

@@ -1,5 +1,6 @@
 package org.jeesl.controller.facade;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -161,6 +162,22 @@ public class JeeslRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	{
 		List<Long> result = new ArrayList<Long>();
 		
+		Table t = c.getAnnotation(Table.class);
+		if(t!=null)
+		{			
+			String query=null;
+			switch(scope)
+			{
+				case live: query = SqlRevisionQueries.idsLive(t.name());break;
+				case revision: query = SqlRevisionQueries.idsRevision(revisionPrefix+t.name());break;
+			}
+			
+			for(Object o : em.createNativeQuery(query).getResultList())
+			{
+				long id = ((BigInteger)o).longValue();
+				result.add(id);
+			}
+		}
 		return result;
 	}
 

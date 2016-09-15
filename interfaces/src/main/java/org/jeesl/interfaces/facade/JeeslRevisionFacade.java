@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.facade;
+package org.jeesl.interfaces.facade;
 
 import java.util.Date;
 import java.util.List;
@@ -14,13 +14,14 @@ import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.json.system.revision.JsonRevision;
 
-public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescription,
+public interface JeeslRevisionFacade <L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
 									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
@@ -50,7 +51,7 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 	
 	<T extends EjbWithId> List<T> revisions(Class<T> c, List<Long> ids);
 	
-	<T extends EjbWithId> List<Long> ids(Class<T> c, UtilsRevisionFacade.Scope scope);
+	<T extends EjbWithId> List<Long> ids(Class<T> c, JeeslRevisionFacade.Scope scope);
 	<T extends EjbWithId> List<JsonRevision> findCreated(Class<T> c, Date from, Date to);
 	
 }

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.facade;
+package org.jeesl.controller.facade;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,10 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 
 import org.jeesl.interfaces.facade.JeeslSecurityFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -26,7 +29,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsStaffPool;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class UtilsSecurityFacadeBean<L extends UtilsLang,
+public class JeeslSecurityFacadeBean<L extends UtilsLang,
 									D extends UtilsDescription,
 									C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 									R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
@@ -38,7 +41,9 @@ public class UtilsSecurityFacadeBean<L extends UtilsLang,
 							extends UtilsFacadeBean
 							implements JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER>
 {	
-	public UtilsSecurityFacadeBean(EntityManager em)
+	final static Logger logger = LoggerFactory.getLogger(JeeslSecurityFacadeBean.class);
+	
+	public JeeslSecurityFacadeBean(EntityManager em)
 	{
 		super(em);
 	}

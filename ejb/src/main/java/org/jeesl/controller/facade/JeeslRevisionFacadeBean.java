@@ -1,6 +1,5 @@
-package net.sf.ahtutils.controller.facade;
+package org.jeesl.controller.facade;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +13,7 @@ import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 import org.jeesl.factory.json.system.revision.JsonRevisionFactory;
+import org.jeesl.interfaces.facade.JeeslRevisionFacade;
 import org.jeesl.interfaces.model.system.revision.EjbWithRevisionAttributes;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
@@ -23,19 +23,19 @@ import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import org.jeesl.util.query.sql.SqlRevisionQueries;
 
+import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.db.sql.SqlNativeQueryHelper;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.facade.UtilsRevisionFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.json.system.revision.JsonRevision;
 
-public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescription,
+public class JeeslRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,	
 									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
@@ -46,17 +46,17 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 					extends UtilsFacadeBean
-					implements UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
+					implements JeeslRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
 {	
 	private String revisionPrefix;
 	private String revisionTable;
 
-	public UtilsRevisionFacadeBean(EntityManager em)
+	public JeeslRevisionFacadeBean(EntityManager em)
 	{
 		this("_at_","auditinfo",em);
 	}
 	
-	public UtilsRevisionFacadeBean(String revisionPrefix, String revisionTable, EntityManager em)
+	public JeeslRevisionFacadeBean(String revisionPrefix, String revisionTable, EntityManager em)
 	{
 		super(em);
 		this.revisionPrefix=revisionPrefix;
@@ -157,7 +157,7 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	}
 	
 	@Override
-	public <T extends EjbWithId> List<Long> ids(Class<T> c, UtilsRevisionFacade.Scope scope)
+	public <T extends EjbWithId> List<Long> ids(Class<T> c, JeeslRevisionFacade.Scope scope)
 	{
 		List<Long> result = new ArrayList<Long>();
 		

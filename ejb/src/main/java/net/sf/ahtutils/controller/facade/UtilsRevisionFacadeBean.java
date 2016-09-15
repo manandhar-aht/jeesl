@@ -2,15 +2,18 @@ package net.sf.ahtutils.controller.facade;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Table;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
+import org.jeesl.factory.json.system.revision.JsonRevisionFactory;
 import org.jeesl.interfaces.model.system.revision.EjbWithRevisionAttributes;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
@@ -18,8 +21,10 @@ import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import org.jeesl.util.query.sql.SqlRevisionQueries;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
+import net.sf.ahtutils.db.sql.SqlNativeQueryHelper;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -28,6 +33,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.json.system.revision.JsonRevision;
 
 public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,	
@@ -42,9 +48,19 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 					extends UtilsFacadeBean
 					implements UtilsRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
 {	
+	private String revisionPrefix;
+	private String revisionTable;
+
 	public UtilsRevisionFacadeBean(EntityManager em)
 	{
+		this("_at_","auditinfo",em);
+	}
+	
+	public UtilsRevisionFacadeBean(String revisionPrefix, String revisionTable, EntityManager em)
+	{
 		super(em);
+		this.revisionPrefix=revisionPrefix;
+		this.revisionTable=revisionTable;
 	}
 	
 	@Override public RV load(Class<RV> cView, RV view)
@@ -140,14 +156,29 @@ public class UtilsRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		return null;
 	}
 	
-	@Override public List<Long> ids(String query)
+	@Override
+	public <T extends EjbWithId> List<Long> ids(Class<T> c, UtilsRevisionFacade.Scope scope)
 	{
 		List<Long> result = new ArrayList<Long>();
-		for(Object o : em.createNativeQuery(query).getResultList())
-		{
-			long id = ((BigInteger)o).longValue();
-			result.add(id);
-		}
+		
 		return result;
+	}
+
+	@Override
+	public <T extends EjbWithId> List<JsonRevision> findCreated(Class<T> c, Date from, Date to)
+	{
+		List<JsonRevision> revisions = new ArrayList<JsonRevision>();
+		Table t = c.getAnnotation(Table.class);
+		if(t!=null)
+		{			
+			for(Object o : em.createNativeQuery(SqlRevisionQueries.revisionsIn(revisionPrefix+t.name(), revisionTable, from, to, SqlRevisionQueries.typesCreateRemove())).getResultList())
+			{
+				Object[] array = (Object[])o;
+				SqlNativeQueryHelper.debugDataTypes(false, "findCreated", array);	 
+				revisions.add(JsonRevisionFactory.build(array));
+			}
+			
+		}
+		return revisions;
 	}
 }

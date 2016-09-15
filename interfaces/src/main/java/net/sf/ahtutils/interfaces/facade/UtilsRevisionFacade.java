@@ -1,5 +1,6 @@
 package net.sf.ahtutils.interfaces.facade;
 
+import java.util.Date;
 import java.util.List;
 
 import org.jeesl.interfaces.model.system.revision.EjbWithRevisionAttributes;
@@ -17,6 +18,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.json.system.revision.JsonRevision;
 
 public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
@@ -29,7 +31,9 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 			extends UtilsFacade
-{		
+{	
+	public static enum Scope{live,revision}
+	
 	RV load(Class<RV> cView, RV view);
 	RS load(Class<RS> cScope, RS scope);
 	RE load(Class<RE> cEntity, RE entity);
@@ -46,5 +50,7 @@ public interface UtilsRevisionFacade <L extends UtilsLang,D extends UtilsDescrip
 	
 	<T extends EjbWithId> List<T> revisions(Class<T> c, List<Long> ids);
 	
-	List<Long> ids(String query);
+	<T extends EjbWithId> List<Long> ids(Class<T> c, UtilsRevisionFacade.Scope scope);
+	<T extends EjbWithId> List<JsonRevision> findCreated(Class<T> c, Date from, Date to);
+	
 }

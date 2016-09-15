@@ -330,6 +330,13 @@
 				<version>1.2</version>
 			</dependency>
         	
+			<!-- JSON -->
+			<dependency>
+			   <groupId>com.fasterxml.jackson.core</groupId>
+			   <artifactId>jackson-annotations</artifactId>
+			   <version>2.5.0</version>
+			</dependency>
+        	
         	<!-- XML -->
         	<dependency>
         		<groupId>xalan</groupId>
@@ -400,10 +407,10 @@
 			
 			<!-- Tests -->
 			<dependency>
-    	   		<groupId>junit</groupId>
-    	   		<artifactId>junit</artifactId>
-    	   		<version>4.12</version>
-    	   	</dependency>
+  	   		<groupId>junit</groupId>
+  	   		<artifactId>junit</artifactId>
+  	   		<version>4.12</version>
+  	   	</dependency>
 			
 			<!-- JSON https://github.com/FasterXML/jackson-docs/wiki/Using-Jackson2-with-Maven -->
 			

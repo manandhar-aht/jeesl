@@ -36,13 +36,13 @@ public class XmlGroupFactory
 		
 		if(qRole.isSetLangs())
 		{
-			XmlLangsFactory f = new XmlLangsFactory(qRole.getLangs());
+			XmlLangsFactory<L> f = new XmlLangsFactory<L>(qRole.getLangs());
 			role.setLangs(f.getUtilsLangs(aclRole.getName()));
 		}
 		
 		if(qRole.isSetDescriptions())
 		{
-			XmlDescriptionsFactory f = new XmlDescriptionsFactory(qRole.getDescriptions());
+			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(qRole.getDescriptions());
 			role.setDescriptions(f.create(aclRole.getDescription()));
 		}
 		

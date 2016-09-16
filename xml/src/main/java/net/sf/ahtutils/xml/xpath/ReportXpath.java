@@ -4,6 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.jxpath.JXPathContext;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
+import org.jeesl.model.xml.JeeslNsPrefixMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.xml.report.DataAssociation;
 import net.sf.ahtutils.xml.report.DataHandler;
 import net.sf.ahtutils.xml.report.ImportStructure;
@@ -23,17 +33,6 @@ import net.sf.ahtutils.xml.status.Langs;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 import net.sf.exlp.util.xml.JDomUtil;
-
-import org.apache.commons.jxpath.JXPathContext;
-import org.jdom2.Content;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.filter.Filters;
-import org.jdom2.xpath.XPathExpression;
-import org.jdom2.xpath.XPathFactory;
-import org.jeesl.model.xml.JeeslNsPrefixMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ReportXpath
 {
@@ -153,34 +152,23 @@ public class ReportXpath
 		return listResult.get(0);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static synchronized Langs getLangs(List<Serializable> contentList) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
-		for (Object o  : contentList)
+		for(Object o : contentList)
 		{
-			//logger.trace("" +o.getClass().getName());
-			if (o.getClass().getName().equals("net.sf.ahtutils.xml.status.Langs")) 
-			{
-				return (Langs) o;
-			}
+			if (o instanceof Langs) {return (Langs) o;}
 		}
 		return null;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static synchronized ImportStructure getImportStructure(List<Serializable> contentList) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
-		for (Object o  : contentList)
+		for(Object o  : contentList)
 		{
-			//logger.trace("" +o.getClass().getName());
-			if (o.getClass().getName().equals("net.sf.ahtutils.xml.report.ImportStructure")) 
-			{
-				return (ImportStructure) o;
-			}
+			if (o instanceof ImportStructure) {return (ImportStructure) o;}
 		}
 		return null;
 	}
-	
 	
 	@SuppressWarnings("unchecked")
 	public static synchronized List<Lang> getLang(Langs definition) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException

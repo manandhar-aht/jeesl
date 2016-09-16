@@ -290,7 +290,7 @@ ul.aupHeadlineBreadcrumb,
 /* Reverse the padding horizontally for the left floating li */
 .aupStatusBar > ul > li.aupStatusBarLeft,
 .aupStatusBar > ul > li.aupStatusBarLeft > ul > li {
-  padding: 7px 0.8em 6px 0.6em;
+  padding: 7px 0.5em 6px 0.3em;
 }
 
 .aupStatusBar > ul > li:hover > ul {
@@ -305,4 +305,17 @@ color: #FFF;
 display: block;
 margin: -3px -15px -3px -20px;
 padding: 3px 15px 3px 20px;
+}
+
+.aupStatusBarCalendar > .ui-inputfield{
+background-color: transparent;
+border: none;
+text-shadow: none;
+color: white;
+height: 8px;
+width: 7em;
+}
+
+.aupStatusBarCalendarLabel {
+margin:0 5px 0 5px;
 }

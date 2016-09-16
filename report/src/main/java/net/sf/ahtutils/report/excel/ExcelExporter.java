@@ -1,39 +1,21 @@
 package net.sf.ahtutils.report.excel;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import javax.xml.datatype.XMLGregorianCalendar;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
-import net.sf.ahtutils.xml.report.Info.Subtitle;
-import net.sf.ahtutils.xml.report.Info.Title;
-import net.sf.ahtutils.xml.report.Label;
-import net.sf.ahtutils.xml.report.XlsColumn;
-import net.sf.ahtutils.xml.report.XlsMultiColumn;
-
-import org.apache.commons.jxpath.JXPathContext;
-import org.apache.commons.jxpath.Pointer;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.report.XlsSheet;
-import net.sf.ahtutils.xml.report.XlsTransformation;
-import net.sf.ahtutils.xml.report.XlsWorkbook;
+import net.sf.ahtutils.xml.report.*;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.ahtutils.xml.xpath.StatusXpath;
+import org.apache.commons.jxpath.JXPathContext;
+import org.apache.commons.jxpath.Pointer;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.*;
 
 public class ExcelExporter
 {
@@ -64,7 +46,7 @@ public class ExcelExporter
     final static Logger logger = LoggerFactory.getLogger(ExcelExporter.class);
 	private int MIN_WIDTH = 5000;
 	
-	public ExcelExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String languageKey) throws Exception
+	public ExcelExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String languageKey) /*throws Exception*/
     {
 		// Get all info
         this.report     = report;
@@ -238,8 +220,8 @@ public class ExcelExporter
 		
 		// Ask for all labels and add the ones starting with header to a list
 		Iterator iterator     = context.iteratePointers("/info/labels/label[@scope='header']");
-		Pointer pointerToItem = null;
-		Object o			  = null;
+		Pointer pointerToItem;
+		Object o;
 		ArrayList<Label> headerLabels = new ArrayList<Label>();
 		while (iterator.hasNext())
 		{
@@ -256,17 +238,15 @@ public class ExcelExporter
 				}
 			}
 		}
-		
-		for (int i=0; i<headerLabels.size();i++)
+
+		for(Label header : headerLabels)
 		{
-			Label header = headerLabels.get(i);
 			String value = "";
-			if (header.isSetKey()) {value = header.getKey() +": ";}
+			if(header.isSetKey()) {value = header.getKey() + ": ";}
 			value = value + header.getValue();
-			createCell(sheet, rowNr,   0, value, "String", style);
+			createCell(sheet, rowNr, 0, value, "String", style);
 			rowNr++;
 		}
-		
 		
 		rowNr++;
 		rowNr++;
@@ -276,7 +256,7 @@ public class ExcelExporter
 	// Introduce Offsets for iteration of columns
 	// Possible data structure:
 	// 
-    public void exportSheet(XlsSheet sheetDefinition, String id) throws Exception
+    public void exportSheet(XlsSheet sheetDefinition, String id) /*throws Exception*/
     {
 		logger.debug("Creating Sheet " +id);
         // Create JXPath context for working with the report data
@@ -342,7 +322,7 @@ public class ExcelExporter
 				
                 
                 try {
-                    Object  value = null;
+                    Object  value;
                     //String xpath  = query +"[" +row +"]/" + expression;
                     if (logger.isTraceEnabled()) {logger.trace("Using XPath expression: " +expression);}
 					if (relative && !isJoin)
@@ -473,7 +453,7 @@ public class ExcelExporter
 												if (value.getClass().getSimpleName().equals("Long"))
 												{
 													Long l = (Long) value;
-													cell.setCellValue(new Integer(l.intValue()));
+													cell.setCellValue(l.intValue());
 												//	logger.info("Setting to Long " +l.intValue());
 												}
 												else if (value.getClass().getSimpleName().equals("int") || value.getClass().getSimpleName().equals("Integer"))
@@ -615,7 +595,7 @@ public class ExcelExporter
 	
 	public Sheet getSheet(String sheetName)
 	{
-		Sheet sheet = null;
+		Sheet sheet;
 		if (wb.getSheet(sheetName) == null)
 		{
 			sheet = wb.createSheet(sheetName);

@@ -1,6 +1,7 @@
 package org.jeesl.factory.xml.report;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,15 @@ public class XmlLabelsFactory
 		{
 			S s = aggregations.get(i-1);
 			Label label = XmlLabelFactory.build("labelLevel"+i, s.getName().get(localeCode).getLang());
+			labels.getLabel().add(label);
+		}
+	}
+	
+	public static void aggregationHeader(String lang, Labels labels, Map<Long,String> mapAggregationLabels)
+	{
+		for(Long i : mapAggregationLabels.keySet())
+		{
+			Label label = XmlLabelFactory.build("financeLevel"+i, mapAggregationLabels.get(i));
 			labels.getLabel().add(label);
 		}
 	}

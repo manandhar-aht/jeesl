@@ -1,19 +1,18 @@
 package net.sf.ahtutils.util.cli;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.exlp.exception.ExlpConfigurationException;
 import net.sf.exlp.util.config.ConfigLoader;
 import net.sf.exlp.util.io.ExlpCentralConfigPointer;
 import net.sf.exlp.util.io.LoggerInit;
 import net.sf.exlp.util.io.resourceloader.MultiResourceLoader;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
-import org.apache.commons.configuration.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class UtilsCliOption
 {
@@ -52,10 +51,11 @@ public class UtilsCliOption
 		options.addOption(oDebug);
 	}
 	
-	@SuppressWarnings("static-access")
 	public void buildConfig()
 	{
-		oConfig = OptionBuilder.withArgName("FILE").hasArg().withDescription( "Use individual configuration FILE").create("config");
+		oConfig = Option.builder("config").required(false)
+				.hasArg(true).argName("FILE").desc("Use individual configuration FILE")
+				.build(); 
 		options.addOption(oConfig);
 	}
 	

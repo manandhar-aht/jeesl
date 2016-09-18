@@ -30,7 +30,7 @@ public class AbstractFreemarkerFileFactory
 		this.fTmpDir=fTmpDir;
 		
 		freemarkerNodeModel = new HashMap();
-		freemarkerConfiguration = new Configuration();
+		freemarkerConfiguration = new Configuration(Configuration.getVersion());
 		freemarkerConfiguration.setClassForTemplateLoading(this.getClass(), "/");
 	}
 	
@@ -42,7 +42,6 @@ public class AbstractFreemarkerFileFactory
 		logger.debug("ftmp="+fTmp.getAbsolutePath());
 		
 		Template ftl = freemarkerConfiguration.getTemplate(template,"UTF-8");
-		ftl.setEncoding("UTF-8");
 		
 		StringWriter sw = new StringWriter();
 		ftl.process(freemarkerNodeModel, sw);

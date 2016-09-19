@@ -32,8 +32,8 @@ public class PfTreeNodeFactory
 		{
 			for(Finance f : figures.getFinance())
 			{
-				if(f.isSetNr() && f.getNr()==1){json.setD1(f.getValue()+"");}
-				if(f.isSetNr() && f.getNr()==2){json.setD2(f.getValue()+"");}
+				if(f.isSetNr() && f.getNr()==1){json.setD1(f.getValue());}
+				if(f.isSetNr() && f.getNr()==2){json.setD2(f.getValue());}
 			}
 		}
 		TreeNode node = new DefaultTreeNode(json, parent);

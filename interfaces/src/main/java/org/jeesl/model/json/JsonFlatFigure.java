@@ -24,50 +24,82 @@ public class JsonFlatFigure implements Serializable
 	public String getG3() {return g3;}
 	public void setG3(String g3) {this.g3 = g3;}
 	
+	@JsonProperty("Group4")
+	private String g4;
+	public String getG4() {return g4;}
+	public void setG4(String g4) {this.g4 = g4;}
+	
+	@JsonProperty("Group5")
+	private String g5;
+	public String getG5() {return g5;}
+	public void setG5(String g5) {this.g5 = g5;}
+	
+	@JsonProperty("Group6")
+	private String g6;
+	public String getG6() {return g6;}
+	public void setG6(String g6) {this.g6 = g6;}
+	
+	@JsonProperty("Group7")
+	private String g7;
+	public String getG7() {return g7;}
+	public void setG7(String g7) {this.g7 = g7;}
+	
+	@JsonProperty("Group8")
+	private String g8;
+	public String getG8() {return g8;}
+	public void setG8(String g8) {this.g8 = g8;}
+	
+	@JsonProperty("Group9")
+	private String g9;
+	public String getG9() {return g9;}
+	public void setG9(String g9) {this.g9 = g9;}
+	
+
 	@JsonProperty("Data1")
-	private String d1;
-	public String getD1() {return d1;}
-	public void setD1(String d1) {this.d1 = d1;}
+	private double d1;
+	public double getD1() {return d1;}
+	public void setD1(double d1) {this.d1 = d1;}
 	
 	@JsonProperty("Data2")
-	private String d2;
-	public String getD2() {return d2;}
-	public void setD2(String d2) {this.d2 = d2;}
+	private double d2;
+	public double getD2() {return d2;}
+	public void setD2(double d2) {this.d2 = d2;}
 	
 	@JsonProperty("Data3")
-	private String d3;
-	public String getD3() {return d3;}
-	public void setD3(String d3) {this.d3 = d3;}
+	private double d3;
+	public double getD3() {return d3;}
+	public void setD3(double d3) {this.d3 = d3;}
 
 	@JsonProperty("Data4")
-	private String d4;
-	public String getD4() {return d4;}
-	public void setD4(String d4) {this.d4 = d4;}
+	private double d4;
+	public double getD4() {return d4;}
+	public void setD4(double d4) {this.d4 = d4;}
 	
 	@JsonProperty("Data5")
-	private String d5;
-	public String getD5() {return d5;}
-	public void setD5(String d5) {this.d5 = d5;}
+	private double d5;
+	public double getD5() {return d5;}
+	public void setD5(double d5) {this.d5 = d5;}
 	
 	@JsonProperty("Data6")
-	private String d6;
-	public String getD6() {return d6;}
-	public void setD6(String d6) {this.d6 = d6;}
+	private double d6;
+	public double getD6() {return d6;}
+	public void setD6(double d6) {this.d6 = d6;}
 	
 	@JsonProperty("Data7")
-	private String d7;
-	public String getD7() {return d7;}
-	public void setD7(String d7) {this.d7 = d7;}
+	private double d7;
+	public double getD7() {return d7;}
+	public void setD7(double d7) {this.d7 = d7;}
 	
 	@JsonProperty("Data8")
-	private String d8;
-	public String getD8() {return d8;}
-	public void setD8(String d8) {this.d8 = d8;}
+	private double d8;
+	public double getD8() {return d8;}
+	public void setD8(double d8) {this.d8 = d8;}
 	
 	@JsonProperty("Data9")
-	private String d9;
-	public String getD9() {return d9;}
-	public void setD9(String d9) {this.d9 = d9;}
+	private double d9;
+	public double getD9() {return d9;}
+	public void setD9(double d9) {this.d9 = d9;}
+	
 	
 	@JsonProperty("Date1")
 	private Date date1;
@@ -88,16 +120,7 @@ public class JsonFlatFigure implements Serializable
 	private Date date4;
 	public Date getDate4() {return date4;}
 	public void setDate4(Date date4) {this.date4 = date4;}
-	
-	@JsonProperty("Finance1")
-	private double f1;
-	public double getF1() {return f1;}
-	public void setF1(double f1) {this.f1 = f1;}
-	
-	@JsonProperty("Finance2")
-	private double f2;
-	public double getF2() {return f2;}
-	public void setF2(double f2) {this.f2 = f2;}
+		
 	
 	@JsonProperty("Counter1")
 	private int c1;

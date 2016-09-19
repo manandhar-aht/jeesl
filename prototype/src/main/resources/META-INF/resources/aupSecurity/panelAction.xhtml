@@ -29,12 +29,12 @@
 				</p:selectOneMenu>
 				<p:outputLabel value="#{msg.aupSecurityCode}"/>
 				<h:outputText rendered="#{(not empty cc.attrs.bean.action.template) or (not cc.attrs.bean.uiAllowCode)}" value="#{cc.attrs.bean.action.toCode}"/>
-				<h:inputText rendered="#{(empty cc.attrs.bean.action.template) and (cc.attrs.bean.uiAllowCode)}" value="#{cc.attrs.bean.action.code}"/>
+				<p:inputText rendered="#{(empty cc.attrs.bean.action.template) and (cc.attrs.bean.uiAllowCode)}" value="#{cc.attrs.bean.action.code}"/>
 			</p:panelGrid>
 			<aht:tabTranslationEditor rendered="#{empty cc.attrs.bean.action.template}"
 					value="#{adminSecurityViewsBean.action}"
-					labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
-       				keys="#{translationBean.langKeys}" withDescription="true"/>
+					keys="#{translationBean.langKeys}" withDescription="true"
+					labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"/>
 		</p:panel>
 	</composite:implementation>
 </html>

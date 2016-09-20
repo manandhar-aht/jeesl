@@ -221,6 +221,11 @@
 	 		<groupId>org.openfuxml</groupId>
 	 		<artifactId>ofx-core</artifactId>
 	 	</dependency>
+		<dependency>
+			<groupId>commons-dbutils</groupId>
+			<artifactId>commons-dbutils</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
     	<dependency>
         	<groupId>org.hibernate</groupId>

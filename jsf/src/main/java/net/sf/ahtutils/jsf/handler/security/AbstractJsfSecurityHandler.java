@@ -46,7 +46,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 	protected List<A> actions; public List<A> getActions() {return actions;}
 	protected List<R> roles; public List<R> getRoles() {return roles;}
 	
-	protected String pageCode;
+	protected String pageCode; public String getPageCode() {return pageCode;}
 	protected V view;public V getView() {return view;}
 
 	protected TxtSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> txtAction;

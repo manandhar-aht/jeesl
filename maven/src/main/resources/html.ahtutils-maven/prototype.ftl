@@ -290,7 +290,7 @@ ul.aupHeadlineBreadcrumb,
 /* Reverse the padding horizontally for the left floating li */
 .aupStatusBar > ul > li.aupStatusBarLeft,
 .aupStatusBar > ul > li.aupStatusBarLeft > ul > li {
-  padding: 7px 0.5em 6px 0.3em;
+  padding: 7px 0.8em 6px 0.6em;
 }
 
 .aupStatusBar > ul > li:hover > ul {

@@ -64,7 +64,10 @@ public class JeeslListingCopy
 	public static final String apacheRedirectPattern = "@@@APACHE.REDIRECT.URL@@@";
 	public static final String apacheRedirectConfig = "doc.admin.apache.redirect.url";
 	
+	public static final String srcMavenVersions = "jeesl/maven/maven-versions.xml";
 	public static final String mavenVersions = "development/maven-versions.xml";
+	
+	public static final String jeeslPrefix = "jeesl/listing";
 	
 	private Map<String,String> replace;
 	private MultiResourceLoader mrl;
@@ -73,6 +76,11 @@ public class JeeslListingCopy
 	public JeeslListingCopy(Configuration config)
 	{
 		this("listing.aht-utils",new File(config.getString(UtilsDocumentation.keyBaseLatexDir)));
+	}
+	
+	public JeeslListingCopy(Configuration config, String prefix)
+	{
+		this(prefix,new File(config.getString(UtilsDocumentation.keyBaseLatexDir)));
 	}
 	
 	public JeeslListingCopy(String prefix,File baseDoc)

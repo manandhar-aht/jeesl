@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 public class ExcelExporter
 {
@@ -267,7 +268,7 @@ public class ExcelExporter
         
 		
         // PreProcess columns to create Styles and count the number of results for the given report query
-        ArrayList<XlsColumn> sortedColumns = preProcessColumns(sheetDefinition);
+        ArrayList<XlsColumn> sortedColumns = preProcessColumns(sheetDefinition, sheet);
 		logger.debug("PreProcess complete. Got " +sortedColumns.size() +" columns.");
         // Create Headers
         ArrayList<String> headers = new ArrayList<String>();
@@ -500,10 +501,12 @@ public class ExcelExporter
         return sheet;
     }
 
-    public ArrayList<XlsColumn> preProcessColumns(XlsSheet sheet)
+    public ArrayList<XlsColumn> preProcessColumns(XlsSheet sheet, Sheet xlsSheet)
     {
         ArrayList<XlsColumn> columns = new ArrayList<XlsColumn>();
 		Integer columnNr = 0;
+		boolean hasExtraHeader = false;
+		Row     headerRow = null;
         for (Object o : sheet.getContent())
         {
 			if (o instanceof XlsColumn)
@@ -516,14 +519,32 @@ public class ExcelExporter
 			}
 			if (o instanceof XlsMultiColumn)
 			{
+				if (xlsSheet.getRow(rowNr) == null)
+				{
+					headerRow = xlsSheet.createRow(rowNr);
+				}
+				else
+				{
+					headerRow = xlsSheet.getRow(rowNr);
+				}
 				XlsMultiColumn c = (XlsMultiColumn) o;
 				List<XlsColumn> list = createColumns(c, columnNr);
 				columns.addAll(list);
+				hasExtraHeader = true;
+				
+				Cell cell = headerRow.createCell(columnNr);
+				cell.setCellStyle(dateHeaderStyle);
+				cell.setCellValue(c.getLangs().getLang().get(0).getTranslation());
+				for (int s = columnNr+1 ; s < columnNr + list.size() ; s++)
+				{
+					headerRow.createCell(s);
+				}
+			
+				xlsSheet.addMergedRegion(new CellRangeAddress(rowNr, rowNr, columnNr, (short) (columnNr+list.size()-1)));
 				columnNr = columnNr + list.size();
-				//TODO Create Label row and shift all headers to 2nd row, begin iterating data in 3rd
-				//Info about merging can be found here: http://poi.apache.org/spreadsheet/quick-guide.html#MergedCells
 			}
         }
+		if (hasExtraHeader) {rowNr++;}
         return columns;
     }
 	

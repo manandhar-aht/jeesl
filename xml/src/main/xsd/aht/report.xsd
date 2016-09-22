@@ -317,6 +317,7 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element ref="r:xlsColumn" maxOccurs="unbounded"/>
+				<xsd:element ref="us:langs" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:string"/>
             <xsd:attribute name="columnLabel" type="xsd:string"/>

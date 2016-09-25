@@ -1,8 +1,10 @@
 package org.jeesl.factory.ejb.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -48,6 +50,13 @@ public class EjbIdFactory
 			}
 		}
 		return results;
+	}
+	
+	public static <T extends EjbWithId> Map<Long,T> toIdMap(List<T> list)
+	{
+		Map<Long,T> map = new HashMap<Long,T>();
+		for(T t : list){map.put(t.getId(), t);}
+		return map;
 	}
 	
 	public static <T extends EjbWithId> void setNextNegativeId(T ejb, List<T> list)

@@ -18,10 +18,13 @@ public class NativeQueryDebugger
 {
 	final static Logger logger = LoggerFactory.getLogger(NativeQueryDebugger.class);
 		
-	public static void debug(Connection connection, String sql, boolean executeQuery)
+	public static void debug(Connection connection, String sql, boolean showSql, boolean executeQuery)
 	{
-		System.out.println(StringUtil.stars());
-		System.out.println(sql);
+		if(showSql)
+		{
+			System.out.println(StringUtil.stars());
+			System.out.println(sql);
+		}
 		
 		if(executeQuery)
 		{

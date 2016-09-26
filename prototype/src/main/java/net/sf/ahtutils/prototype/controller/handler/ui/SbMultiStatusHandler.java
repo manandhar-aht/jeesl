@@ -35,9 +35,21 @@ public class SbMultiStatusHandler <L extends UtilsLang,D extends UtilsDescriptio
 		refresh();
 	}
 	
+	public void selectNone()
+	{
+		for(T t : list){map.put(t,false);}
+		refresh();
+	}
+	
 	public void selectAll()
 	{
-		for(T t : list){map.put(t, true);}
+		for(T t : list){map.put(t,true);}
+		refresh();
+	}
+	
+	public void select(T t)
+	{
+		map.put(t, true);
 		refresh();
 	}
 	

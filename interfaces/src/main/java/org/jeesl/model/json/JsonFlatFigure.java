@@ -1,9 +1,10 @@
 package org.jeesl.model.json;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Date;
 
 public class JsonFlatFigure implements Serializable
 {
@@ -54,6 +55,10 @@ public class JsonFlatFigure implements Serializable
 	public String getG9() {return g9;}
 	public void setG9(String g9) {this.g9 = g9;}
 	
+	@JsonProperty("Data")
+	private Map<Integer,Double> data;
+	public Map<Integer, Double> getData() {return data;}
+	public void setData(Map<Integer, Double> data) {this.data = data;}
 
 	@JsonProperty("Data1")
 	private double d1;

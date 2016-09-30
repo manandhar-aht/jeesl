@@ -16,6 +16,7 @@
 		<composite:attribute name="domains" required="false" default="#{cc.attrs.bean.domains}"/>
 		
 		<composite:attribute name="staffTableHeader" required="false" default="#{msg.aupSecurityStaffs}"/>
+		<composite:attribute name="domainTableHeader" required="false" default="#{msg.jeeslSecurityDomainHeaderUser}"/>
 		<composite:attribute name="linkAddContact" required="false"/>
 		
 		<composite:facet name="domainDetail" required="true"/>
@@ -24,17 +25,20 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 	        <aht:row id="row1">
-	            <aht:slot width="3">
-		            <h:form>
-		                <p:dataTable var="var" value="#{cc.attrs.domains}"
+	            <aht:slot width="4">
+						<h:form>
+							<p:dataTable var="var" value="#{cc.attrs.domains}"
 		                			selection="#{cc.attrs.bean.domain}" selectionMode="single" rowKey="#{var.id}">
-		                    <p:ajax event="rowSelect" update=":#{cc.id}:sStaff :#{cc.id}:sUser" listener="#{cc.attrs.bean.selectDomain()}"/>
-		                    <composite:renderFacet name="domainColumns"/>
-							<composite:insertChildren/>
-		                </p:dataTable>
-		            </h:form>
+								<aht:pfDataTableHeader title="#{cc.attrs.staffTableHeader}">
+	                                
+	                            </aht:pfDataTableHeader>
+								<p:ajax event="rowSelect" update=":#{cc.id}:sStaff :#{cc.id}:sUser" listener="#{cc.attrs.bean.selectDomain()}"/>
+								<composite:renderFacet name="domainColumns"/>
+								<composite:insertChildren/>
+							</p:dataTable>
+						</h:form>
 		        </aht:slot>
-		        <aht:slot id="sStaff" width="5" renderChildrenIfEjb="#{cc.attrs.bean.domain}">
+		        <aht:slot id="sStaff" width="4" renderChildrenIfEjb="#{cc.attrs.bean.domain}">
 		            <h:form>
 		                <p:dataTable var="staff" value="#{cc.attrs.bean.staffs}"
 		                             selection="#{cc.attrs.bean.staff}" selectionMode="single" rowKey="#{staff.id}">

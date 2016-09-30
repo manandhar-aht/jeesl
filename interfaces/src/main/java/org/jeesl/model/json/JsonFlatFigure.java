@@ -157,6 +157,26 @@ public class JsonFlatFigure implements Serializable
 	public int getC6() {return c6;}
 	public void setC6(int c6) {this.c6 = c6;}
 	
+	@JsonProperty("Counter7")
+	private int c7;
+	public int getC7() {return c7;}
+	public void setC7(int c7) {this.c7 = c7;}
+	
+	@JsonProperty("Counter8")
+	private int c8;
+	public int getC8() {return c8;}
+	public void setC8(int c8) {this.c8 = c8;}
+	
+	@JsonProperty("Counter9")
+	private int c9;
+	public int getC9() {return c9;}
+	public void setC9(int c9) {this.c9 = c9;}
+	
+	@JsonProperty("Counter10")
+	private int c10;
+	public int getC10() {return c10;}
+	public void setC10(int c10) {this.c10 = c10;}
+	
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

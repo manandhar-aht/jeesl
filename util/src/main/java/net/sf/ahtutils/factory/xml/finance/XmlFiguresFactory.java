@@ -16,6 +16,7 @@ public class XmlFiguresFactory
 	final static Logger logger = LoggerFactory.getLogger(XmlFiguresFactory.class);
 	
 	public static Figures build(long id){return build(id,null,null);}
+	public static <E extends Enum<E>> Figures build(E code){return build(code.toString());}
 	public static Figures build(String code){return (build(null,code,null));}
 	public static Figures build(){return build(null,null,null);}
 	

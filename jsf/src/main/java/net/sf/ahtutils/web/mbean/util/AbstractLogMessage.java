@@ -98,7 +98,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 		String addEntity(USER user, Class<?> cl)
 	{
 		StringBuffer sb = new StringBuffer();
-		sb.append("Adding ");
+		sb.append("Adding");
 		if(user!=null){sb.append(" {").append(user.toString()).append("}");}
 		sb.append(": ");
 		sb.append(cl.getSimpleName());

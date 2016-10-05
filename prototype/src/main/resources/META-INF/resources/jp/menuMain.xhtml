@@ -9,12 +9,12 @@
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
-	<!-- Sucessor in jp -->
-	
 	<composite:interface>
 		<composite:attribute name="code" required="true"/>
+		<composite:attribute name="bean" required="false" default="#{menuBean}"/>
 	</composite:interface>
+	
 	<composite:implementation>
-		<aht:menuUl value="#{menuBean.build(cc.attrs.code)}" scActive="active" maxLevel="1"/>
+		<aht:menuUl value="#{cc.attrs.bean.build(cc.attrs.code)}" scActive="active" maxLevel="1"/>
 	</composite:implementation>
 </html>

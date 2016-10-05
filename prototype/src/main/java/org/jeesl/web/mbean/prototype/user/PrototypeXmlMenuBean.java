@@ -4,7 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
+import org.jeesl.jsf.menu.MenuXmlBuilder;
+import org.jeesl.web.mbean.jsf.user.AbstractMenuXmlBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
@@ -14,11 +17,6 @@ import net.sf.ahtutils.xml.navigation.Menu;
 import net.sf.ahtutils.xml.navigation.MenuItem;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-import org.jeesl.jsf.menu.MenuXmlBuilder;
-import org.jeesl.web.mbean.jsf.user.AbstractMenuXmlBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class PrototypeXmlMenuBean extends AbstractMenuXmlBean implements Serializable
 {
 	final static Logger logger = LoggerFactory.getLogger(PrototypeXmlMenuBean.class);
@@ -27,16 +25,20 @@ public class PrototypeXmlMenuBean extends AbstractMenuXmlBean implements Seriali
 	protected Menu menu;
 	protected MenuXmlBuilder mfMain;
 	
-	@PostConstruct
-    public void init()
+	public PrototypeXmlMenuBean()
+	{
+		
+	}
+	
+    public void init(String views, String menu)
     {
 		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
 		
 		try
 		{
 			super.initMaps();
-			Access xmlAccess = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/views.xml", Access.class);
-			Menu xmlMenuMain = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/menu.xml", Menu.class);
+			Access xmlAccess = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/"+views, Access.class);
+			Menu xmlMenuMain = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/"+menu, Menu.class);
 			
 			if(logger.isTraceEnabled()){logger.info("main.root="+rootMain);}
 

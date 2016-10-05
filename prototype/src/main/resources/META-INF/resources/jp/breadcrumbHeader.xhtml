@@ -9,17 +9,17 @@
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
-	<!-- Sucessor in jp -->
-	
 	<composite:interface>
 		<composite:attribute name="code" required="false"/>
 		<composite:attribute name="value" required="false"/>
 		<composite:attribute name="dynamic" required="false"/>
+		<composite:attribute name="bean" required="false" default="#{menuBean}"/>
 	</composite:interface>
+	
 	<composite:implementation>
 		<h:outputStylesheet library="aupCss" name="aupBreadcrumb.css" target="head"/>
 		<ui:fragment rendered="#{not empty cc.attrs.code}">
-			<aht:breadcrumb value="#{menuBean.breadcrumbDyn(cc.attrs.code,cc.attrs.dynamic)}" styleClass="aupHeadlineBreadcrumb" withChildren="true"/>
+			<aht:breadcrumb value="#{cc.attrs.bean.breadcrumbDyn(cc.attrs.code,cc.attrs.dynamic)}" styleClass="aupHeadlineBreadcrumb" withChildren="true"/>
 		</ui:fragment>
 		<ui:fragment rendered="#{not empty cc.attrs.value}">
 			<aht:breadcrumb value="#{cc.attrs.value}" styleClass="aupHeadlineBreadcrumb" withChildren="true"/>

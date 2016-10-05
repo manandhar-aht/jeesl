@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+    xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="handler" required="false"/>
+	</composite:interface>
+
+	<composite:implementation>
+
+		<aup:statusBarItem rendered="#{not empty cc.attrs.handler}" orientation="left" childs="#{cc.attrs.handler.roles}">
+			<aup:sbCheckmark value="#{cc.attrs.handler.mapHasRole[var]}"/>
+			<h:outputText value="#{var.name[userBean.localeCode].lang}"/>
+			<f:facet name="label">
+				<h:graphicImage rendered="#{cc.attrs.handler.noRoles}" library="gfx" name="#{iconBean.icon12['securityRolesGrey']}" id="sbGiSecurityGrey"/>
+				<h:graphicImage rendered="#{not cc.attrs.handler.noRoles}" library="gfx" name="#{iconBean.icon12['securityRoles']}"/>
+				<p:tooltip rendered="#{cc.attrs.handler.noRoles}" for="sbGiSecurityGrey" value="#{msg.NoRoleSecurities}" />
+			</f:facet>
+		</aup:statusBarItem>
+
+		<aht:li rendered="#{empty cc.attrs.handler}">
+			<f:attribute name="styleClass" value="aupStatusBarLeft"/>
+			<label for="#{cc.id}">
+				<h:graphicImage library="gfx" name="#{iconBean.icon12['securityRolesGrey']}"/>
+			</label>
+			<input type="checkbox" id="#{cc.id}" />
+			<ul>
+				<li>
+					<h:outputText value="#{msg.NoRoleSecurities}"/>
+				</li>
+			</ul>
+		</aht:li>
+	</composite:implementation>
+</html>

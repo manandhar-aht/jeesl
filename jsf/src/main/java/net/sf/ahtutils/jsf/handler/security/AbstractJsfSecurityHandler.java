@@ -35,7 +35,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 													AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 													USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
 													I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER>>
-	implements UtilsJsfSecurityHandler
+	implements UtilsJsfSecurityHandler<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJsfSecurityHandler.class);
 	public static final long serialVersionUID=1;
@@ -52,8 +52,8 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 	protected TxtSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> txtAction;
 	protected Comparator<A> comparatorAction;
 	
-	protected Map<R,Boolean> mapHasRole;public Map<R, Boolean> getMapHasRole() {return mapHasRole;}
-	protected Map<String,Boolean> mapAllow; public Map<String, Boolean> getMapAllow(){return mapAllow;}
+	protected Map<R,Boolean> mapHasRole;public Map<R,Boolean> getMapHasRole() {return mapHasRole;}
+	protected Map<String,Boolean> mapAllow; public Map<String,Boolean> getMapAllow(){return mapAllow;}
 	
 	protected boolean noActions; public boolean isNoActions() {return noActions;}
 	protected boolean noRoles; public boolean isNoRoles() {return noRoles;}

@@ -87,7 +87,7 @@ public class PrototypeDbMenuBean implements Serializable
 		
 	}
 
-	// ******************************************
+	// *******************************************
 	// Menu
 	protected Menu menu(MenuXmlBuilder mf, String code) {return menu(mf,code,userLoggedIn);}
 	protected Menu menu(MenuXmlBuilder mf, String code, boolean loggedIn)

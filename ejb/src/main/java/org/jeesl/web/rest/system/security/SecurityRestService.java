@@ -34,6 +34,7 @@ import net.sf.ahtutils.util.query.SecurityQuery;
 import net.sf.ahtutils.web.rest.security.AbstractSecurityInit;
 import net.sf.ahtutils.web.rest.security.SecurityInitRoles;
 import net.sf.ahtutils.web.rest.security.SecurityInitTemplates;
+import net.sf.ahtutils.web.rest.security.SecurityInitUsecases;
 import net.sf.ahtutils.web.rest.security.SecurityInitViews;
 import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.access.Action;
@@ -70,6 +71,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	private SecurityInitViews<L,D,C,R,V,U,A,AT,USER> initViews;
 	private SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER> initTemplates;
 	private SecurityInitRoles<L,D,C,R,V,U,A,AT,USER> initRoles;
+	private SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER> initUsecases;
 	
 	private XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER> fCategory;
 	private XmlViewFactory xfView;
@@ -101,6 +103,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		initViews = AbstractSecurityInit.factoryViews(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
 		initTemplates = AbstractSecurityInit.factoryTemplates(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
 		initRoles = AbstractSecurityInit.factoryRoles(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
+		initUsecases = AbstractSecurityInit.factoryUsecases(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
@@ -113,6 +116,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	public DataUpdate iuSecurityTemplates(Security templates){return initTemplates.iuSecurityTemplates(templates);}
 	public DataUpdate iuSecurityViews(Access views){return initViews.iuViews(views);}
 	public DataUpdate iuSecurityRoles(Security roles){return initRoles.iuSecurityRoles(roles);}
+	public DataUpdate iuSecurityUsecases(Security usecases){return initUsecases.iuSecurityUsecases(usecases);}
 
 	public <STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,DOMAIN extends EjbWithId> Staffs exportStaffs(Class<STAFF> cStaff)
 	{

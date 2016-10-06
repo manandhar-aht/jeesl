@@ -52,6 +52,7 @@ public class SecurityInitTemplates <L extends UtilsLang,
 		updateRole.dbEjbs(fSecurity.all(cR));
 
 		DataUpdate du = XmlDataUpdateFactory.build();
+		logger.warn("NYI iuSecurityTemplates");
 /*		try
 		{
 			iuCategory(security, UtilsSecurityCategory.Type.role);
@@ -69,24 +70,24 @@ public class SecurityInitTemplates <L extends UtilsLang,
 		return du;
 	}
 	
-	@Override protected void iuChilds(C aclCategory, net.sf.ahtutils.xml.security.Category category) throws UtilsConfigurationException
+	@Override protected void iuChilds(C category, net.sf.ahtutils.xml.security.Category templates) throws UtilsConfigurationException
 	{
-		if(category.isSetRoles() && category.getRoles().isSetRole())
+		if(templates.isSetTemplates() && templates.getTemplates().isSetTemplate())
 		{
-			for(net.sf.ahtutils.xml.security.Role role : category.getRoles().getRole())
+			for(net.sf.ahtutils.xml.security.Template template : templates.getTemplates().getTemplate())
 			{
-				updateRole.actualAdd(role.getCode());
-				iuRole(aclCategory, role);
+				updateRole.actualAdd(template.getCode());
+				iuTemplate(category, template);
 			}
 		}
 	}
 	
-	private void iuRole(C category, net.sf.ahtutils.xml.security.Role role) throws UtilsConfigurationException
+	private void iuTemplate(C category, net.sf.ahtutils.xml.security.Template role) throws UtilsConfigurationException
 	{
-		R ejb;
+		AT ejb;
 		try
 		{
-			ejb = fSecurity.fByCode(cR,role.getCode());
+			ejb = fSecurity.fByCode(cT,role.getCode());
 			ejbLangFactory.rmLang(fSecurity,ejb);
 			ejbDescriptionFactory.rmDescription(fSecurity,ejb);
 		}
@@ -94,7 +95,7 @@ public class SecurityInitTemplates <L extends UtilsLang,
 		{
 			try
 			{
-				ejb = cR.newInstance();
+				ejb = cT.newInstance();
 				ejb.setCategory(category);
 				ejb.setCode(role.getCode());
 				ejb = fSecurity.persist(ejb);				
@@ -113,29 +114,8 @@ public class SecurityInitTemplates <L extends UtilsLang,
 			ejb.setDescription(ejbDescriptionFactory.create(role.getDescriptions()));
 			ejb.setCategory(category);
 			ejb=fSecurity.update(ejb);
-
-			ejb = iuListViewsSecurity(ejb, role.getViews());
-			ejb = iuListActions(ejb, role.getActions());
-			ejb = iuUsecasesForRole(ejb, role.getUsecases());
 		}
 		catch (UtilsConstraintViolationException e) {logger.error("",e);}
-		catch (UtilsNotFoundException e) {throw new UtilsConfigurationException(e.getMessage());}
 		catch (UtilsLockingException e) {logger.error("",e);}
-	}
-	
-	private R iuUsecasesForRole(R ejb, Usecases usecases) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
-	{
-		ejb.getUsecases().clear();
-		ejb = fSecurity.update(ejb);
-		if(usecases!=null)
-		{
-			for(Usecase usecase : usecases.getUsecase())
-			{
-				U ejbUsecase = fSecurity.fByCode(cU, usecase.getCode());
-				ejb.getUsecases().add(ejbUsecase);
-			}
-			ejb = fSecurity.update(ejb);
-		}
-		return ejb;
 	}
 }

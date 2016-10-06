@@ -139,7 +139,6 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		logger.info("i/u "+type+" with "+access.getCategory().size()+" categories");
 		
 		AhtDbEjbUpdater<C> updateCategory = AhtDbEjbUpdater.createFactory(cC);
-		
 		updateCategory.dbEjbs(fSecurity.allForType(cC,type.toString()));
 
 		for(Category category : access.getCategory())
@@ -175,7 +174,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 				if(category.isSetVisible()){ejbCategory.setVisible(category.isVisible());}else{ejbCategory.setVisible(true);}
 				if(category.isSetPosition()){ejbCategory.setPosition(category.getPosition());}else{ejbCategory.setPosition(0);}
 				
-				ejbCategory=(C)fSecurity.update(ejbCategory);
+				ejbCategory=fSecurity.update(ejbCategory);
 				logger.trace("Proceeding with childs");
 				iuChilds(ejbCategory,category);
 			}

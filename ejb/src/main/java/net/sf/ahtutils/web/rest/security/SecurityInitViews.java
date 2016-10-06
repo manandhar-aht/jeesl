@@ -9,6 +9,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
+import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.factory.xml.sync.XmlDataUpdateFactory;
 import net.sf.ahtutils.factory.xml.sync.XmlResultFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -20,6 +21,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
+import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.access.Action;
 import net.sf.ahtutils.xml.access.Category;
@@ -47,7 +49,7 @@ public class SecurityInitViews <L extends UtilsLang,
         super(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}
 	
-	public DataUpdate iuViews(Access access)
+	@Deprecated public DataUpdate iuViews(Access access)
 	{
 		logger.trace("iuViews starting ...");
 		updateView = AhtDbEjbUpdater.createFactory(cV);
@@ -91,6 +93,9 @@ public class SecurityInitViews <L extends UtilsLang,
 	
 	@Deprecated private void iuView(C category, View view) throws UtilsConfigurationException
 	{
+		DataUpdateTracker dut = new DataUpdateTracker(true);
+		dut.setType(XmlTypeFactory.build(cV.getName(),"DB Import/Update"));
+		
 		V ejb;
 		try
 		{
@@ -114,6 +119,9 @@ public class SecurityInitViews <L extends UtilsLang,
 		
 		try
 		{
+			if(view.isSetPublic()){ejb.setAccessPublic(view.isPublic());}else{ejb.setAccessPublic(false);}
+			if(view.isSetOnlyLoginRequired()){ejb.setAccessLogin(view.isOnlyLoginRequired());}else{ejb.setAccessLogin(false);}
+			if(view.isSetDocumentation()){ejb.setDocumentation(view.isDocumentation());}else{ejb.setDocumentation(false);}
 			if(view.isSetVisible()){ejb.setVisible(view.isVisible());}else{ejb.setVisible(true);}
 			if(view.isSetPosition()){ejb.setPosition(view.getPosition());}else{ejb.setPosition(0);}
 			
@@ -121,16 +129,10 @@ public class SecurityInitViews <L extends UtilsLang,
 			ejb.setDescription(ejbDescriptionFactory.create(view.getDescriptions()));
 			ejb.setCategory(category);
 			
-			ejb.setAccessLogin(null);
-			ejb.setAccessPublic(null);
-			
 			ejb.setPackageName(null);
 			ejb.setViewPattern(null);
 			ejb.setUrlBase(null);
-			ejb.setUrlMapping(null);
-			
-			if(view.isSetOnlyLoginRequired()){ejb.setAccessLogin(view.isOnlyLoginRequired());}
-			if(view.isSetPublic()){ejb.setAccessPublic(view.isPublic());}
+			ejb.setUrlMapping(null);	
 			
 			if(view.isSetNavigation())
 			{
@@ -154,9 +156,10 @@ public class SecurityInitViews <L extends UtilsLang,
 					iuAction(ejb, action);
 				}
 			}
+			dut.success();
 		}
-		catch (UtilsConstraintViolationException e) {logger.error("",e);}
-		catch (UtilsLockingException e) {logger.error("",e);}
+		catch (UtilsConstraintViolationException e) {dut.fail(e,false); }
+		catch (UtilsLockingException e) {dut.fail(e,false); }
 	}
 	
 	@Deprecated private void iuAction(V ejbView, Action action) throws UtilsConfigurationException

@@ -1,6 +1,5 @@
 package net.sf.ahtutils.web.rest.security;
 
-import net.sf.ahtutils.db.ejb.AhtDbEjbUpdater;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -23,6 +22,7 @@ import net.sf.ahtutils.xml.security.Usecases;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 import org.jeesl.interfaces.facade.JeeslSecurityFacade;
+import org.jeesl.util.ejb.JeeslDbCodeEjbUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +40,7 @@ public class SecurityInitRoles <L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityInitRoles.class);
 	
-	private AhtDbEjbUpdater<R> updateRole;
+	private JeeslDbCodeEjbUpdater<R> updateRole;
 	
 	public SecurityInitRoles(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{       
@@ -49,7 +49,7 @@ public class SecurityInitRoles <L extends UtilsLang,
 	
 	public DataUpdate iuSecurityRoles(Security security)
 	{
-		updateRole = AhtDbEjbUpdater.createFactory(cR);
+		updateRole = JeeslDbCodeEjbUpdater.createFactory(cR);
 		updateRole.dbEjbs(fSecurity.all(cR));
 
 		DataUpdate du = XmlDataUpdateFactory.build();

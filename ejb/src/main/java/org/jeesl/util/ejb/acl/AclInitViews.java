@@ -1,10 +1,13 @@
-package net.sf.ahtutils.db.ejb.acl;
+package org.jeesl.util.ejb.acl;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
 
+import org.jeesl.util.ejb.JeeslDbCodeEjbUpdater;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.controller.interfaces.AhtAclFacade;
-import net.sf.ahtutils.db.ejb.AhtDbEjbUpdater;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -19,9 +22,7 @@ import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.access.Category;
 import net.sf.ahtutils.xml.access.View;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+@Deprecated
 public class AclInitViews <S extends UtilsStatus<S,L,D>,
 							L extends UtilsLang,
 							D extends UtilsDescription,
@@ -57,7 +58,7 @@ public class AclInitViews <S extends UtilsStatus<S,L,D>,
 		return new AclInitViews<S, L, D, CU, U>(statusClass, langClass, descriptionClass, categoryUsecaseClass, usecaseClass,fAcl);
 	}
 	
-	public AclInitViews(final Class<S> statusClass, final Class<L> langClass, final Class<D> descriptionClass,
+	private AclInitViews(final Class<S> statusClass, final Class<L> langClass, final Class<D> descriptionClass,
 			final Class<CU> categoryUsecaseClass, final Class<U> usecaseClass,
 			AhtAclFacade fAcl)
 	{       
@@ -76,8 +77,8 @@ public class AclInitViews <S extends UtilsStatus<S,L,D>,
 	{
 		logger.debug("i/u "+Category.class.getSimpleName()+" with "+access.getCategory().size()+" categories");
 		
-		AhtDbEjbUpdater<CU> ejbUccUpdate = AhtDbEjbUpdater.createFactory(categoryUsecaseClass);
-		AhtDbEjbUpdater<U> ejbUcUpdate = AhtDbEjbUpdater.createFactory(usecaseClass);
+		JeeslDbCodeEjbUpdater<CU> ejbUccUpdate = JeeslDbCodeEjbUpdater.createFactory(categoryUsecaseClass);
+		JeeslDbCodeEjbUpdater<U> ejbUcUpdate = JeeslDbCodeEjbUpdater.createFactory(usecaseClass);
 		
 		ejbUccUpdate.dbEjbs(fAcl.all(categoryUsecaseClass));
 		ejbUcUpdate.dbEjbs(fAcl.all(usecaseClass));

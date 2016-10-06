@@ -1,10 +1,10 @@
 package net.sf.ahtutils.web.rest.security;
 
 import org.jeesl.interfaces.facade.JeeslSecurityFacade;
+import org.jeesl.util.ejb.JeeslDbCodeEjbUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.ejb.AhtDbEjbUpdater;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -41,8 +41,8 @@ public class SecurityInitViews <L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityInitViews.class);
 	
-	private AhtDbEjbUpdater<V> updateView;
-	private AhtDbEjbUpdater<A> updateAction;
+	private JeeslDbCodeEjbUpdater<V> updateView;
+	private JeeslDbCodeEjbUpdater<A> updateAction;
 	
 	public SecurityInitViews(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{       
@@ -52,8 +52,8 @@ public class SecurityInitViews <L extends UtilsLang,
 	@Deprecated public DataUpdate iuViews(Access access)
 	{
 		logger.trace("iuViews starting ...");
-		updateView = AhtDbEjbUpdater.createFactory(cV);
-		updateAction = AhtDbEjbUpdater.createFactory(cA);
+		updateView = JeeslDbCodeEjbUpdater.createFactory(cV);
+		updateAction = JeeslDbCodeEjbUpdater.createFactory(cA);
 		
 		updateView.dbEjbs(fSecurity.all(cV));
 		updateAction.dbEjbs(fSecurity.all(cA));

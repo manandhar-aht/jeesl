@@ -1,4 +1,4 @@
-package net.sf.ahtutils.db.ejb;
+package org.jeesl.util.ejb;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -10,26 +10,27 @@ import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AhtDbEjbUpdater<C extends EjbWithCode>
+public class JeeslDbCodeEjbUpdater<C extends EjbWithCode>
 {
-	final static Logger logger = LoggerFactory.getLogger(AhtDbEjbUpdater.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslDbCodeEjbUpdater.class);
 	
 	final Class<C> codeClass;
 	
 	private Map<String,C> ejbInDb;
 
-	public AhtDbEjbUpdater(final Class<C> codeClass)
+	public JeeslDbCodeEjbUpdater(final Class<C> codeClass)
     {
         this.codeClass = codeClass;
         ejbInDb = new Hashtable<String,C>();
     } 
 	
-	public static <C extends EjbWithCode> AhtDbEjbUpdater<C> createFactory(final Class<C> codeClass)
+	public static <C extends EjbWithCode> JeeslDbCodeEjbUpdater<C> createFactory(final Class<C> codeClass)
 	{
-		return new AhtDbEjbUpdater<C>(codeClass);
+		return new JeeslDbCodeEjbUpdater<C>(codeClass);
 	}
 	
 	public void dbEjbs(List<C> list)
@@ -57,9 +58,16 @@ public class AhtDbEjbUpdater<C extends EjbWithCode>
 	
 	public void remove(UtilsFacade fUtils)
 	{
-		if(getEjbForRemove().size()>0)
+		if(!getEjbForRemove().isEmpty())
 		{
-			logger.info("Removing "+getEjbForRemove().size()+" from "+codeClass.getSimpleName());
+			List<String> codes = new ArrayList<String>();
+			for(C pc : getEjbForRemove()){codes.add(pc.getCode());}
+			
+			StringBuffer sb = new StringBuffer();
+			sb.append("Removing "+getEjbForRemove().size()+" from "+codeClass.getSimpleName());
+			sb.append(" (").append(StringUtils.join(codes, ",")).append(")");
+
+			logger.info(sb.toString());
 			for(C pc : getEjbForRemove())
 			{
 				if(pc instanceof EjbRemoveable)

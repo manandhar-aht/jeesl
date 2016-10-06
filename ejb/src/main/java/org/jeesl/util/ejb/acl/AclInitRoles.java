@@ -1,9 +1,12 @@
-package net.sf.ahtutils.db.ejb.acl;
+package org.jeesl.util.ejb.acl;
 
 import java.util.Map;
 
+import org.jeesl.util.ejb.JeeslDbCodeEjbUpdater;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.controller.interfaces.AhtAclFacade;
-import net.sf.ahtutils.db.ejb.AhtDbEjbUpdater;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -17,9 +20,7 @@ import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.access.Category;
 import net.sf.ahtutils.xml.access.Role;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+@Deprecated
 public class AclInitRoles <L extends UtilsLang,
 								D extends UtilsDescription, 
 								C extends UtilsAclCategoryProjectRole<L,D,C,R>,
@@ -44,7 +45,7 @@ public class AclInitRoles <L extends UtilsLang,
 		return new AclInitRoles<L,D,C,R>(langClass, descriptionClass, categoryClass, roleClass,fAcl);
 	}
 	
-	public AclInitRoles(final Class<L> langClass, final Class<D> descriptionClass,final Class<C> categoryClass,final Class<R> roleClass,AhtAclFacade fAcl)
+	private AclInitRoles(final Class<L> langClass, final Class<D> descriptionClass,final Class<C> categoryClass,final Class<R> roleClass,AhtAclFacade fAcl)
 	{       
         this.langClass = langClass;
         this.descriptionClass = descriptionClass;
@@ -60,8 +61,8 @@ public class AclInitRoles <L extends UtilsLang,
 	{
 		logger.debug("i/u "+Category.class.getSimpleName()+" with "+access.getCategory().size()+" categories");
 		
-		AhtDbEjbUpdater<C> updateCategory = AhtDbEjbUpdater.createFactory(categoryClass);
-		AhtDbEjbUpdater<R> updateRole = AhtDbEjbUpdater.createFactory(roleClass);
+		JeeslDbCodeEjbUpdater<C> updateCategory = JeeslDbCodeEjbUpdater.createFactory(categoryClass);
+		JeeslDbCodeEjbUpdater<R> updateRole = JeeslDbCodeEjbUpdater.createFactory(roleClass);
 		
 		updateCategory.dbEjbs(fAcl.all(categoryClass));
 		updateRole.dbEjbs(fAcl.all(roleClass));

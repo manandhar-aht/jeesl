@@ -1,10 +1,13 @@
-package net.sf.ahtutils.db.ejb.acl;
+package org.jeesl.util.ejb.acl;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
 
+import org.jeesl.util.ejb.JeeslDbCodeEjbUpdater;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.controller.interfaces.AhtAclFacade;
-import net.sf.ahtutils.db.ejb.AhtDbEjbUpdater;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -23,9 +26,7 @@ import net.sf.ahtutils.xml.access.Group;
 import net.sf.ahtutils.xml.access.Groups;
 import net.sf.ahtutils.xml.access.View;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+@Deprecated
 public class AclInitGroups <S extends UtilsStatus<S,L,D>,
 							L extends UtilsLang,
 							D extends UtilsDescription,
@@ -62,7 +63,7 @@ public class AclInitGroups <S extends UtilsStatus<S,L,D>,
 		return new AclInitGroups<S, L, D, CU, U,CR,R>(statusClass,langClass,descriptionClass,categoryUsecaseClass,usecaseClass,categoryRoleClass,roleClass,fAcl);
 	}
 	
-	public AclInitGroups(final Class<S> statusClass, final Class<L> langClass, final Class<D> descriptionClass,
+	private AclInitGroups(final Class<S> statusClass, final Class<L> langClass, final Class<D> descriptionClass,
 			final Class<CU> categoryUsecaseClass, final Class<U> usecaseClass,
 			final Class<CR> categoryRoleClass,final Class<R> roleClass,
 			AhtAclFacade fAcl)
@@ -82,8 +83,8 @@ public class AclInitGroups <S extends UtilsStatus<S,L,D>,
 	
 	public void iuGroups(Access access) throws FileNotFoundException, UtilsConfigurationException
 	{
-		AhtDbEjbUpdater<CR> updateRoleCategory = AhtDbEjbUpdater.createFactory(categoryRoleClass);
-		AhtDbEjbUpdater<R> updateRole = AhtDbEjbUpdater.createFactory(roleClass);
+		JeeslDbCodeEjbUpdater<CR> updateRoleCategory = JeeslDbCodeEjbUpdater.createFactory(categoryRoleClass);
+		JeeslDbCodeEjbUpdater<R> updateRole = JeeslDbCodeEjbUpdater.createFactory(roleClass);
 		
 		updateRoleCategory.dbEjbs(fAcl.all(categoryRoleClass));
 		updateRole.dbEjbs(fAcl.all(roleClass));

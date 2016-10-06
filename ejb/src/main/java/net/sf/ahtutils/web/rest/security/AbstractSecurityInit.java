@@ -1,10 +1,10 @@
 package net.sf.ahtutils.web.rest.security;
 
 import org.jeesl.interfaces.facade.JeeslSecurityFacade;
+import org.jeesl.util.ejb.JeeslDbCodeEjbUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.ejb.AhtDbEjbUpdater;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -138,7 +138,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	{
 		logger.info("i/u "+type+" with "+access.getCategory().size()+" categories");
 		
-		AhtDbEjbUpdater<C> updateCategory = AhtDbEjbUpdater.createFactory(cC);
+		JeeslDbCodeEjbUpdater<C> updateCategory = JeeslDbCodeEjbUpdater.createFactory(cC);
 		updateCategory.dbEjbs(fSecurity.allForType(cC,type.toString()));
 
 		for(Category category : access.getCategory())
@@ -189,7 +189,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	{
 		logger.info("i/u "+type+" with "+security.getCategory().size()+" categories");
 		
-		AhtDbEjbUpdater<C> updateCategory = AhtDbEjbUpdater.createFactory(cC);
+		JeeslDbCodeEjbUpdater<C> updateCategory = JeeslDbCodeEjbUpdater.createFactory(cC);
 		
 		updateCategory.dbEjbs(fSecurity.allForType(cC,type.toString()));
 

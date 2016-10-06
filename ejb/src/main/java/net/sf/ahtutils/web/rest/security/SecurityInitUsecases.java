@@ -1,10 +1,10 @@
 package net.sf.ahtutils.web.rest.security;
 
 import org.jeesl.interfaces.facade.JeeslSecurityFacade;
+import org.jeesl.util.ejb.JeeslDbCodeEjbUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.ejb.AhtDbEjbUpdater;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -38,7 +38,7 @@ public class SecurityInitUsecases <L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityInitUsecases.class);
 	
-	private AhtDbEjbUpdater<U> updateUsecases;
+	private JeeslDbCodeEjbUpdater<U> updateUsecases;
 	
 	public SecurityInitUsecases(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{       
@@ -48,7 +48,7 @@ public class SecurityInitUsecases <L extends UtilsLang,
 	@Override public DataUpdate iuSecurityUsecases(Security usecases)
 	{
 		logger.trace("iuSecurityUsecases starting ..."+fSecurity.allForType(cC,UtilsSecurityCategory.Type.usecase.toString()).size());
-		updateUsecases = AhtDbEjbUpdater.createFactory(cU);
+		updateUsecases = JeeslDbCodeEjbUpdater.createFactory(cU);
 		updateUsecases.dbEjbs(fSecurity.all(cU));
 
 		DataUpdate du = XmlDataUpdateFactory.build();

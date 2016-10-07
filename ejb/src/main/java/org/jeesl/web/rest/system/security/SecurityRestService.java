@@ -74,10 +74,9 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	private SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER> initUsecases;
 	
 	private XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER> fCategory;
-	private org.jeesl.factory.xml.system.security.XmlViewFactory<L,D,C,R,V,U,A,AT,USER> xfView;
-	private net.sf.ahtutils.controller.factory.xml.acl.XmlViewFactory xfViewOld;
+	private org.jeesl.factory.xml.system.security.XmlViewFactory<L,D,C,R,V,U,A,AT,USER> xfView,xfViewOld;
 	private XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> xfRole,fRoleDescription;
-	private XmlActionFactory<L,D,C,R,V,U,A,AT,USER> xfAction,xfActionDoc;
+	private XmlActionFactory<L,D,C,R,V,U,A,AT,USER> xfAction,xfActionOld,xfActionDoc;
 	private XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER> fTemplate;
 	private XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER> fUsecase,fUsecaseDoc;
 	
@@ -93,10 +92,11 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		
 		fCategory = new XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER>(null,SecurityQuery.exCategory());
 		xfView = new org.jeesl.factory.xml.system.security.XmlViewFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exView());
-		xfViewOld = new net.sf.ahtutils.controller.factory.xml.acl.XmlViewFactory(SecurityQuery.exViewOld(),null);
+		xfViewOld = new org.jeesl.factory.xml.system.security.XmlViewFactory(SecurityQuery.exViewOld());
 		xfRole = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exRole(),null);
 		fRoleDescription = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.role(),null);
-		xfAction = new XmlActionFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exActionAcl());
+		xfAction = new XmlActionFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exAction());
+		xfActionOld = new XmlActionFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exActionAcl());
 		xfActionDoc = new XmlActionFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.docActionAcl());
 		fTemplate = new XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exTemplate());
 		fUsecase = new XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exUsecase());
@@ -150,13 +150,13 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					{
 						eView = fSecurity.load(cView,eView);
 						net.sf.ahtutils.xml.security.View xView = xfView.build(eView);
-/*						xView.setActions(XmlActionsFactory.create());
+						xView.setActions(XmlActionsFactory.build());
 						for(A action : eView.getActions())
 						{
-							net.sf.ahtutils.xml.access.Action xAction = xfAction.create(action);							
+							net.sf.ahtutils.xml.security.Action xAction = xfAction.build(action);							
 							xView.getActions().getAction().add(xAction);
 						}					
-*/						xCategory.getTmp().getView().add(xView);
+						xCategory.getTmp().getView().add(xView);
 					}
 					
 					xml.getCategory().add(xCategory);
@@ -181,11 +181,11 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					for(V eView : fSecurity.allForCategory(cView, cCategory, category.getCode()))
 					{
 						eView = fSecurity.load(cView,eView);
-						View xView = xfViewOld.build(eView);
+						View xView = xfViewOld.create(eView);
 						xView.setActions(XmlActionsFactory.create());
 						for(A action : eView.getActions())
 						{
-							net.sf.ahtutils.xml.access.Action xAction = xfAction.create(action);							
+							net.sf.ahtutils.xml.access.Action xAction = xfActionOld.create(action);							
 							xView.getActions().getAction().add(xAction);
 						}
 /*	Deactivates 2016-10-06						
@@ -296,7 +296,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					for(V view : fSecurity.allForCategory(cView, cCategory, category.getCode()))
 					{
 						view = fSecurity.load(cView,view);
-						View xView = xfViewOld.build(view);
+						View xView = xfViewOld.create(view);
 						xView.setActions(XmlActionsFactory.create());
 						for(A action : view.getActions())
 						{
@@ -336,7 +336,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					for(V view : fSecurity.allForCategory(cView, cCategory, category.getCode()))
 					{
 						view = fSecurity.load(cView,view);
-						View xView = xfViewOld.build(view);
+						View xView = xfViewOld.create(view);
 						xView.setActions(XmlActionsFactory.create());
 						for(A action : view.getActions())
 						{

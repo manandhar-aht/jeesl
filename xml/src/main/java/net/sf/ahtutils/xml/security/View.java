@@ -27,6 +27,7 @@ import org.jeesl.model.xml.system.navigation.Navigation;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}access"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/navigation}navigation"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/security}actions"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -46,7 +47,8 @@ import org.jeesl.model.xml.system.navigation.Navigation;
     "descriptions",
     "langs",
     "access",
-    "navigation"
+    "navigation",
+    "actions"
 })
 @XmlRootElement(name = "view")
 public class View
@@ -62,6 +64,8 @@ public class View
     protected Access access;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/navigation", required = true)
     protected Navigation navigation;
+    @XmlElement(required = true)
+    protected Actions actions;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "code")
@@ -185,6 +189,34 @@ public class View
 
     public boolean isSetNavigation() {
         return (this.navigation!= null);
+    }
+
+    /**
+     * Gets the value of the actions property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Actions }
+     *     
+     */
+    public Actions getActions() {
+        return actions;
+    }
+
+    /**
+     * Sets the value of the actions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Actions }
+     *     
+     */
+    public void setActions(Actions value) {
+        this.actions = value;
+    }
+
+    public boolean isSetActions() {
+        return (this.actions!= null);
     }
 
     /**

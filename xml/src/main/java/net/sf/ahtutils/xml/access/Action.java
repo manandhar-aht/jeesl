@@ -30,7 +30,6 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}template"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="documentation" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -62,8 +61,6 @@ public class Action
     protected Template template;
     @XmlAttribute(name = "code")
     protected String code;
-    @XmlAttribute(name = "name")
-    protected String name;
     @XmlAttribute(name = "documentation")
     protected Boolean documentation;
 
@@ -205,34 +202,6 @@ public class Action
 
     public boolean isSetCode() {
         return (this.code!= null);
-    }
-
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
-
-    public boolean isSetName() {
-        return (this.name!= null);
     }
 
     /**

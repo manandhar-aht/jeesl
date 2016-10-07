@@ -179,15 +179,6 @@ public class SecurityQuery
 		return xml;
 	}
 	
-	public static net.sf.ahtutils.xml.security.Action exAction()
-	{
-		net.sf.ahtutils.xml.security.Action xml = new net.sf.ahtutils.xml.security.Action();
-		xml.setCode("");
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
-		return xml;
-	}
-	
 	public static net.sf.ahtutils.xml.security.Template exTemplate()
 	{
 		net.sf.ahtutils.xml.security.Template xml = new net.sf.ahtutils.xml.security.Template();
@@ -197,12 +188,25 @@ public class SecurityQuery
 		return xml;
 	}
 	
-	public static net.sf.ahtutils.xml.access.Action exActionAcl()
+	@Deprecated public static net.sf.ahtutils.xml.access.Action exActionAcl()
 	{
 		net.sf.ahtutils.xml.security.Template template = new net.sf.ahtutils.xml.security.Template();
 		template.setCode("");
 		
 		net.sf.ahtutils.xml.access.Action xml = new net.sf.ahtutils.xml.access.Action();
+		xml.setCode("");
+		xml.setLangs(StatusQuery.langs());
+		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setTemplate(template);
+		return xml;
+	}
+	
+	public static net.sf.ahtutils.xml.security.Action exAction()
+	{
+		net.sf.ahtutils.xml.security.Template template = new net.sf.ahtutils.xml.security.Template();
+		template.setCode("");
+		
+		net.sf.ahtutils.xml.security.Action xml = new net.sf.ahtutils.xml.security.Action();
 		xml.setCode("");
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());

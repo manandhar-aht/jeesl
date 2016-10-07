@@ -170,7 +170,6 @@
 				<xsd:element ref="sec:template" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="code" type="xsd:string"/>
-            <xsd:attribute name="name" type="xsd:string"/>
             <xsd:attribute name="documentation" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>

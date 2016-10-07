@@ -29,8 +29,9 @@ public class TestXmlView extends AbstractXmlSecurityTest<View>
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
-    		xml.setNavigation(TestXmlNavigation.create(false));
     		xml.setAccess(TestXmlAccess.create(false));
+    		xml.setNavigation(TestXmlNavigation.create(false));
+    		xml.setActions(TestXmlActions.create(false));
     	}
     	return xml;
     }

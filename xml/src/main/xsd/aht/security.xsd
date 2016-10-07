@@ -171,6 +171,7 @@
                 <xsd:element ref="us:langs" maxOccurs="1"/>
                 <xsd:element ref="sec:access" maxOccurs="1"/>
                 <xsd:element ref="n:navigation" maxOccurs="1"/>
+                <xsd:element ref="sec:actions" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="code" type="xsd:string"/>

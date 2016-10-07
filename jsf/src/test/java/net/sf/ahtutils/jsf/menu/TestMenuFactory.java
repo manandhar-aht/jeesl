@@ -3,16 +3,6 @@ package net.sf.ahtutils.jsf.menu;
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.sf.ahtutils.controller.factory.xml.acl.XmlViewFactory;
-import net.sf.ahtutils.factory.xml.status.XmlLangFactory;
-import net.sf.ahtutils.test.AbstractAhtUtilsJsfTst;
-import net.sf.ahtutils.xml.access.Access;
-import net.sf.ahtutils.xml.access.Category;
-import net.sf.ahtutils.xml.access.View;
-import net.sf.ahtutils.xml.access.Views;
-import net.sf.ahtutils.xml.status.Langs;
-import net.sf.exlp.util.process.ProcessClock;
-
 import org.jeesl.jsf.menu.MenuXmlBuilder;
 import org.jeesl.model.xml.system.navigation.Menu;
 import org.jeesl.model.xml.system.navigation.MenuItem;
@@ -23,6 +13,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.factory.xml.status.XmlLangFactory;
+import net.sf.ahtutils.test.AbstractAhtUtilsJsfTst;
+import net.sf.ahtutils.xml.access.Access;
+import net.sf.ahtutils.xml.access.Category;
+import net.sf.ahtutils.xml.access.View;
+import net.sf.ahtutils.xml.access.Views;
+import net.sf.ahtutils.xml.status.Langs;
+import net.sf.exlp.util.process.ProcessClock;
 
 public class TestMenuFactory extends AbstractAhtUtilsJsfTst
 {
@@ -64,7 +63,7 @@ public class TestMenuFactory extends AbstractAhtUtilsJsfTst
 	{
 		mapViewAllowed = new Hashtable<String,Boolean>();
 		
-		v1 = XmlViewFactory.create(viewCode);
+		v1 = org.jeesl.factory.xml.system.security.XmlViewFactory.create(viewCode);
 		v1.setPublic(false);
 		v1.setLangs(new Langs());
 		v1.getLangs().getLang().add(XmlLangFactory.create(lang, "viewTranslation"));
@@ -95,7 +94,7 @@ public class TestMenuFactory extends AbstractAhtUtilsJsfTst
 		
 		mWithView = new MenuItem();
 		mWithView.setCode("mWithView");
-		mWithView.setView(XmlViewFactory.create(viewCode));
+		mWithView.setView(org.jeesl.factory.xml.system.security.XmlViewFactory.create(viewCode));
 		menu.getMenuItem().add(mWithView);
 		
 		mWithHref = new MenuItem();

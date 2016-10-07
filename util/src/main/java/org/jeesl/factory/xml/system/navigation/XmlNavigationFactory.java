@@ -37,6 +37,9 @@ public class XmlNavigationFactory <L extends UtilsLang,
 	{
 		Navigation xml = new Navigation();
 		if(q.isSetPackage()){xml.setPackage(view.getPackageName());}
+		if(q.isSetViewPattern() && view.getViewPattern()!=null){xml.setViewPattern(XmlViewPatternFactory.build(view.getViewPattern()));}
+		if(q.isSetUrlMapping() && view.getUrlMapping()!=null){xml.setUrlMapping(XmlUrlMappingFactory.build(view.getUrlMapping(), view.getUrlBase()));}
+		
 		return xml;
 	}
 }

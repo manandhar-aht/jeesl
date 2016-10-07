@@ -25,6 +25,7 @@ import org.jeesl.model.xml.system.navigation.Navigation;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/security}access"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/navigation}navigation"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
@@ -44,6 +45,7 @@ import org.jeesl.model.xml.system.navigation.Navigation;
 @XmlType(name = "", propOrder = {
     "descriptions",
     "langs",
+    "access",
     "navigation"
 })
 @XmlRootElement(name = "view")
@@ -56,6 +58,8 @@ public class View
     protected Descriptions descriptions;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Langs langs;
+    @XmlElement(required = true)
+    protected Access access;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/navigation", required = true)
     protected Navigation navigation;
     @XmlAttribute(name = "id")
@@ -125,6 +129,34 @@ public class View
 
     public boolean isSetLangs() {
         return (this.langs!= null);
+    }
+
+    /**
+     * Gets the value of the access property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Access }
+     *     
+     */
+    public Access getAccess() {
+        return access;
+    }
+
+    /**
+     * Sets the value of the access property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Access }
+     *     
+     */
+    public void setAccess(Access value) {
+        this.access = value;
+    }
+
+    public boolean isSetAccess() {
+        return (this.access!= null);
     }
 
     /**

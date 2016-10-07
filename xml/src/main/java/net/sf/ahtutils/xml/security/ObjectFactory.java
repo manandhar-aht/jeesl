@@ -78,6 +78,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Access }
+     * 
+     */
+    public Access createAccess() {
+        return new Access();
+    }
+
+    /**
      * Create an instance of {@link Actions }
      * 
      */

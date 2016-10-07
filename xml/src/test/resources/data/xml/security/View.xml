@@ -3,4 +3,5 @@
     <s:descriptions/>
     <s:langs/>
     <nav:navigation code="myCode" package="myPackage"/>
+    <sec:access publicUser="true" authenticatedUser="true"/>
 </sec:view>

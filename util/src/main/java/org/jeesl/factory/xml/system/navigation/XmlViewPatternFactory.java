@@ -1,8 +1,6 @@
 package org.jeesl.factory.xml.system.navigation;
 
-import net.sf.ahtutils.xml.access.View;
-
-import org.jeesl.model.xml.system.navigation.MenuItem;
+import org.jeesl.model.xml.system.navigation.ViewPattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,28 +8,15 @@ public class XmlViewPatternFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlViewPatternFactory.class);
 		
-	public static MenuItem clone(MenuItem item)
+	public static ViewPattern build(String value)
 	{
-		MenuItem xml = new MenuItem();
-		xml.setName(item.getName());
-		xml.setHref(item.getHref());
-		xml.setCode(item.getCode());
-
+		ViewPattern xml = build();
+		xml.setValue(value);
 		return xml;
 	}
 	
-	public static MenuItem dynamic(String dynamicCode, String urlParameter, String label)
+	public static ViewPattern build()
 	{
-		View view = new View();
-		view.setCode(dynamicCode);
-		view.setUrlParameter(urlParameter);
-		view.setLabel(label);
-
-		MenuItem item = new MenuItem();
-		item.setCode(dynamicCode+view.getUrlParameter());
-		item.setView(view);
-		return item;
+		return new ViewPattern();
 	}
-	
-	
 }

@@ -42,7 +42,6 @@ public class XmlViewFactory <L extends UtilsLang,
 		if(q.isSetDescriptions()) {xfDescription = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 		if(q.isSetNavigation()) {xfNavigation = new XmlNavigationFactory<L,D,C,R,V,U,A,AT,USER>(q.getNavigation());}
 	}
-	
 
 	public View build(V view)
 	{
@@ -55,6 +54,7 @@ public class XmlViewFactory <L extends UtilsLang,
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(view.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescription.create(view.getDescription()));}
 		if(q.isSetNavigation()){xml.setNavigation(xfNavigation.build(view));}
+		if(q.isSetAccess()){xml.setAccess(XmlAccessFactory.build(view.getAccessPublic(), view.getAccessPublic()));}
 		
 		return xml;
 	}

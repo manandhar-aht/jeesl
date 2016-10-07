@@ -3,6 +3,9 @@ package net.sf.ahtutils.util.query;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.navigation.XmlUrlMappingFactory;
+import org.jeesl.factory.xml.system.navigation.XmlViewPatternFactory;
+import org.jeesl.factory.xml.system.security.XmlAccessFactory;
 import org.jeesl.factory.xml.system.security.XmlActionFactory;
 import org.jeesl.factory.xml.system.security.XmlActionsFactory;
 import org.jeesl.factory.xml.system.security.XmlUsecaseFactory;
@@ -138,7 +141,6 @@ public class SecurityQuery
 		xml.setNavigation(new Navigation());
 		xml.getNavigation().setPackage("");
 	
-		
 		return xml;
 	}
 	
@@ -152,11 +154,12 @@ public class SecurityQuery
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
 		
-//		xml.setPublic(true);
-//		xml.setOnlyLoginRequired(true);
-		
+		xml.setAccess(XmlAccessFactory.build(true,true));
 		xml.setNavigation(new Navigation());
 		xml.getNavigation().setPackage("");
+		
+		xml.getNavigation().setViewPattern(XmlViewPatternFactory.build());
+		xml.getNavigation().setUrlMapping(XmlUrlMappingFactory.build());
 
 		return xml;
 	}

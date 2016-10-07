@@ -1,5 +1,5 @@
 
-package net.sf.ahtutils.xml.navigation;
+package org.jeesl.model.xml.system.navigation;
 
 import javax.xml.bind.annotation.XmlRegistry;
 

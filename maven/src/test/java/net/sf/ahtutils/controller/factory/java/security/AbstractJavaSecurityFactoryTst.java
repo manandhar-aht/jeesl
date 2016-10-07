@@ -9,11 +9,11 @@ import net.sf.ahtutils.test.AbstractUtilsMavenTst;
 import net.sf.ahtutils.xml.access.Category;
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.access.Views;
-import net.sf.ahtutils.xml.navigation.Navigation;
-import net.sf.ahtutils.xml.navigation.UrlMapping;
-import net.sf.ahtutils.xml.navigation.ViewPattern;
 
 import org.apache.commons.io.FileUtils;
+import org.jeesl.model.xml.system.navigation.Navigation;
+import org.jeesl.model.xml.system.navigation.UrlMapping;
+import org.jeesl.model.xml.system.navigation.ViewPattern;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;

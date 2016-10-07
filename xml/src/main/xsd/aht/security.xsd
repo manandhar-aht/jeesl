@@ -3,9 +3,11 @@
     xmlns:sec="http://ahtutils.aht-group.com/security"
     xmlns:a="http://ahtutils.aht-group.com/access"
     xmlns:us="http://ahtutils.aht-group.com/status"
+    xmlns:n="http://ahtutils.aht-group.com/navigation"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:import namespace="http://ahtutils.aht-group.com/access" schemaLocation="access.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="status.xsd"/>
+    <xsd:import namespace="http://ahtutils.aht-group.com/navigation" schemaLocation="navigation.xsd"/>
 	<xsd:element name="security">
         <xsd:complexType>
             <xsd:sequence>
@@ -159,6 +161,7 @@
             <xsd:sequence>
                 <xsd:element ref="us:descriptions" maxOccurs="1"/>
                 <xsd:element ref="us:langs" maxOccurs="1"/>
+                <xsd:element ref="n:navigation" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="code" type="xsd:string"/>

@@ -1,8 +1,7 @@
 package net.sf.ahtutils.jsf.menu;
 
-import net.sf.ahtutils.xml.navigation.Menu;
-import net.sf.ahtutils.xml.navigation.MenuItem;
-
+import org.jeesl.model.xml.system.navigation.Menu;
+import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

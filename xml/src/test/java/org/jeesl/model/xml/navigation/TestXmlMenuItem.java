@@ -1,11 +1,11 @@
 package org.jeesl.model.xml.navigation;
 
 import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.access.TestXmlView;
-import net.sf.ahtutils.xml.navigation.MenuItem;
 import net.sf.ahtutils.xml.status.TestXmlDescriptions;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
 

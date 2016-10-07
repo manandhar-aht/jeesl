@@ -1,10 +1,10 @@
 package net.sf.ahtutils.jsf.menu;
 
 import net.sf.ahtutils.test.AbstractAhtUtilsJsfTst;
-import net.sf.ahtutils.xml.navigation.Breadcrumb;
-import net.sf.ahtutils.xml.navigation.MenuItem;
 
 import org.jeesl.jsf.menu.MenuXmlBuilder;
+import org.jeesl.model.xml.system.navigation.Breadcrumb;
+import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

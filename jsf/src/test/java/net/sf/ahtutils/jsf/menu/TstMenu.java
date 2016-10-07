@@ -1,9 +1,9 @@
 package net.sf.ahtutils.jsf.menu;
 
 import net.sf.ahtutils.test.UtilsJsfTstBootstrap;
-import net.sf.ahtutils.xml.navigation.Menu;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.model.xml.system.navigation.Menu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

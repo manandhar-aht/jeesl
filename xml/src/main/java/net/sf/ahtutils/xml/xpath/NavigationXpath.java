@@ -2,12 +2,12 @@ package net.sf.ahtutils.xml.xpath;
 
 import java.util.List;
 
-import net.sf.ahtutils.xml.navigation.Menu;
-import net.sf.ahtutils.xml.navigation.MenuItem;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
 import org.apache.commons.jxpath.JXPathContext;
+import org.jeesl.model.xml.system.navigation.Menu;
+import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.model.xml.system.navigation.Menu;
 import org.openfuxml.content.graph.Node;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
@@ -26,7 +27,6 @@ import net.sf.ahtutils.doc.ofx.security.section.OfxSecurityViewsSectionFactory;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityRestExport;
 import net.sf.ahtutils.xml.access.Access;
-import net.sf.ahtutils.xml.navigation.Menu;
 import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.exlp.util.io.StringIO;

@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import net.sf.ahtutils.xml.navigation.Menu;
-import net.sf.ahtutils.xml.navigation.MenuItem;
 import net.sf.exlp.util.io.StringIO;
 
+import org.jeesl.model.xml.system.navigation.Menu;
+import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.metachart.xml.graph.Node;
 import org.metachart.xml.graph.Tree;
 import org.openfuxml.factory.ConfigurationProviderFacotry;

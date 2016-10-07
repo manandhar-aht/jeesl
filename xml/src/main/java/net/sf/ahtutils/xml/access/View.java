@@ -8,7 +8,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import net.sf.ahtutils.xml.navigation.Navigation;
+
+import org.jeesl.model.xml.system.navigation.Navigation;
+
 import net.sf.ahtutils.xml.security.Roles;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;

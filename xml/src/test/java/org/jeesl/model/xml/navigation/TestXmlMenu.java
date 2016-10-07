@@ -1,10 +1,9 @@
 package org.jeesl.model.xml.navigation;
 
 import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.system.navigation.Menu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.navigation.Menu;
 
 public class TestXmlMenu extends AbstractXmlNavigationTest<Menu>
 {

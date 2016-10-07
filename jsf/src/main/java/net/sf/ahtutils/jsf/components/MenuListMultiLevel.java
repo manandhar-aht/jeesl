@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UINamingContainer;
 
-import net.sf.ahtutils.xml.navigation.MenuItem;
+import org.jeesl.model.xml.system.navigation.MenuItem;
 
 @FacesComponent(value="net.sf.ahtutils.jsf.components.MenuListMultiLevel")
 public class MenuListMultiLevel extends UINamingContainer

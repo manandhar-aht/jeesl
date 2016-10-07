@@ -10,14 +10,14 @@ import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.access.Category;
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.access.Views;
-import net.sf.ahtutils.xml.navigation.Menu;
-import net.sf.ahtutils.xml.navigation.MenuItem;
-import net.sf.ahtutils.xml.navigation.Navigation;
-import net.sf.ahtutils.xml.navigation.UrlMapping;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.exlp.util.process.ProcessClock;
 
 import org.jeesl.jsf.menu.MenuXmlBuilder;
+import org.jeesl.model.xml.system.navigation.Menu;
+import org.jeesl.model.xml.system.navigation.MenuItem;
+import org.jeesl.model.xml.system.navigation.Navigation;
+import org.jeesl.model.xml.system.navigation.UrlMapping;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

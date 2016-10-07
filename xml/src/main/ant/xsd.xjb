@@ -108,7 +108,7 @@
 
    	<jxb:bindings schemaLocation="../xsd/aht/navigation.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
-            <jxb:package name="net.sf.ahtutils.xml.navigation"/>
+            <jxb:package name="org.jeesl.model.xml.system.navigation"/>
         </jxb:schemaBindings>
     </jxb:bindings>
     

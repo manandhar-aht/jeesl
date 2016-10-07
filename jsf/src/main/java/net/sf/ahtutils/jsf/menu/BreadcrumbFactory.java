@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.factory.xml.system.navigation.XmlMenuItemFactory;
+import org.jeesl.model.xml.system.navigation.Breadcrumb;
+import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.navigation.Breadcrumb;
-import net.sf.ahtutils.xml.navigation.MenuItem;
 
 public class BreadcrumbFactory
 {

@@ -7,13 +7,13 @@ import java.util.Map;
 
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
-import net.sf.ahtutils.xml.navigation.Breadcrumb;
-import net.sf.ahtutils.xml.navigation.Menu;
-import net.sf.ahtutils.xml.navigation.MenuItem;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.jeesl.factory.xml.system.navigation.XmlMenuItemFactory;
 import org.jeesl.jsf.menu.MenuXmlBuilder;
+import org.jeesl.model.xml.system.navigation.Breadcrumb;
+import org.jeesl.model.xml.system.navigation.Menu;
+import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

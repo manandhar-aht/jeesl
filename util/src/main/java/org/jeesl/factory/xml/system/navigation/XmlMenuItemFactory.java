@@ -1,8 +1,8 @@
 package org.jeesl.factory.xml.system.navigation;
 
 import net.sf.ahtutils.xml.access.View;
-import net.sf.ahtutils.xml.navigation.MenuItem;
 
+import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,7 @@
 package org.jeesl.model.xml.security;
 
 import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.navigation.TestXmlNavigation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,7 @@ public class TestXmlView extends AbstractXmlSecurityTest<View>
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
+    		xml.setNavigation(TestXmlNavigation.create(false));
     	}
     	return xml;
     }

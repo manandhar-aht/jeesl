@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
+import org.jeesl.model.xml.system.navigation.Navigation;
 
 
 /**
@@ -24,6 +25,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/navigation}navigation"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -41,7 +43,8 @@ import net.sf.ahtutils.xml.status.Langs;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "descriptions",
-    "langs"
+    "langs",
+    "navigation"
 })
 @XmlRootElement(name = "view")
 public class View
@@ -53,6 +56,8 @@ public class View
     protected Descriptions descriptions;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Langs langs;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/navigation", required = true)
+    protected Navigation navigation;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "code")
@@ -120,6 +125,34 @@ public class View
 
     public boolean isSetLangs() {
         return (this.langs!= null);
+    }
+
+    /**
+     * Gets the value of the navigation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Navigation }
+     *     
+     */
+    public Navigation getNavigation() {
+        return navigation;
+    }
+
+    /**
+     * Sets the value of the navigation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Navigation }
+     *     
+     */
+    public void setNavigation(Navigation value) {
+        this.navigation = value;
+    }
+
+    public boolean isSetNavigation() {
+        return (this.navigation!= null);
     }
 
     /**

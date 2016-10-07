@@ -142,6 +142,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Tmp }
+     * 
+     */
+    public Tmp createTmp() {
+        return new Tmp();
+    }
+
+    /**
      * Create an instance of {@link Security }
      * 
      */

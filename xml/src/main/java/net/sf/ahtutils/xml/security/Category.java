@@ -31,6 +31,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}actions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}templates"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}usecases"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/security}tmp"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/access}views"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}staffs" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
@@ -54,6 +55,7 @@ import net.sf.ahtutils.xml.status.Langs;
     "actions",
     "templates",
     "usecases",
+    "tmp",
     "views",
     "staffs"
 })
@@ -75,6 +77,8 @@ public class Category
     protected Templates templates;
     @XmlElement(required = true)
     protected Usecases usecases;
+    @XmlElement(required = true)
+    protected Tmp tmp;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/access", required = true)
     protected Views views;
     @XmlElement(required = true)
@@ -256,6 +260,34 @@ public class Category
 
     public boolean isSetUsecases() {
         return (this.usecases!= null);
+    }
+
+    /**
+     * Gets the value of the tmp property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Tmp }
+     *     
+     */
+    public Tmp getTmp() {
+        return tmp;
+    }
+
+    /**
+     * Sets the value of the tmp property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Tmp }
+     *     
+     */
+    public void setTmp(Tmp value) {
+        this.tmp = value;
+    }
+
+    public boolean isSetTmp() {
+        return (this.tmp!= null);
     }
 
     /**

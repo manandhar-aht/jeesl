@@ -15,7 +15,6 @@ import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.controller.factory.xml.acl.XmlViewFactory;
 import net.sf.ahtutils.controller.factory.xml.acl.XmlViewsFactory;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -45,6 +44,7 @@ import net.sf.ahtutils.xml.security.Roles;
 import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.security.Staffs;
 import net.sf.ahtutils.xml.security.Template;
+import net.sf.ahtutils.xml.security.Tmp;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription,
@@ -74,7 +74,8 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	private SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER> initUsecases;
 	
 	private XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER> fCategory;
-	private XmlViewFactory xfView;
+	private org.jeesl.factory.xml.system.security.XmlViewFactory<L,D,C,R,V,U,A,AT,USER> xfView;
+	private net.sf.ahtutils.controller.factory.xml.acl.XmlViewFactory xfViewOld;
 	private XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> xfRole,fRoleDescription;
 	private XmlActionFactory<L,D,C,R,V,U,A,AT,USER> xfAction,xfActionDoc;
 	private XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER> fTemplate;
@@ -91,7 +92,8 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cTemplate=cTemplate;
 		
 		fCategory = new XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER>(null,SecurityQuery.exCategory());
-		xfView = new XmlViewFactory(SecurityQuery.exViewOld(),null);
+		xfView = new org.jeesl.factory.xml.system.security.XmlViewFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exView());
+		xfViewOld = new net.sf.ahtutils.controller.factory.xml.acl.XmlViewFactory(SecurityQuery.exViewOld(),null);
 		xfRole = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exRole(),null);
 		fRoleDescription = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.role(),null);
 		xfAction = new XmlActionFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exActionAcl());
@@ -143,10 +145,43 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 				{
 					net.sf.ahtutils.xml.security.Category xCategory = fCategory.build(category);
 					xCategory.setViews(XmlViewsFactory.build());
+					xCategory.setTmp(new Tmp());
 					for(V eView : fSecurity.allForCategory(cView, cCategory, category.getCode()))
 					{
 						eView = fSecurity.load(cView,eView);
-						View xView = xfView.build(eView);
+						net.sf.ahtutils.xml.security.View xView = xfView.build(eView);
+/*						xView.setActions(XmlActionsFactory.create());
+						for(A action : eView.getActions())
+						{
+							net.sf.ahtutils.xml.access.Action xAction = xfAction.create(action);							
+							xView.getActions().getAction().add(xAction);
+						}					
+*/						xCategory.getTmp().getView().add(xView);
+					}
+					
+					xml.getCategory().add(xCategory);
+				}
+				catch (UtilsNotFoundException e) {e.printStackTrace();}
+			}
+		}		
+		return xml;
+	}
+	
+	@Override public Security exportSecurityViewsOld()
+	{
+		Security xml = XmlSecurityFactory.build();		
+		for(C category : fSecurity.allOrderedPosition(cCategory))
+		{
+			if(category.getType().equals(UtilsSecurityCategory.Type.view.toString()))
+			{
+				try
+				{
+					net.sf.ahtutils.xml.security.Category xCategory = fCategory.build(category);
+					xCategory.setViews(XmlViewsFactory.build());
+					for(V eView : fSecurity.allForCategory(cView, cCategory, category.getCode()))
+					{
+						eView = fSecurity.load(cView,eView);
+						View xView = xfViewOld.build(eView);
 						xView.setActions(XmlActionsFactory.create());
 						for(A action : eView.getActions())
 						{
@@ -261,7 +296,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					for(V view : fSecurity.allForCategory(cView, cCategory, category.getCode()))
 					{
 						view = fSecurity.load(cView,view);
-						View xView = xfView.build(view);
+						View xView = xfViewOld.build(view);
 						xView.setActions(XmlActionsFactory.create());
 						for(A action : view.getActions())
 						{
@@ -301,7 +336,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					for(V view : fSecurity.allForCategory(cView, cCategory, category.getCode()))
 					{
 						view = fSecurity.load(cView,view);
-						View xView = xfView.build(view);
+						View xView = xfViewOld.build(view);
 						xView.setActions(XmlActionsFactory.create());
 						for(A action : view.getActions())
 						{

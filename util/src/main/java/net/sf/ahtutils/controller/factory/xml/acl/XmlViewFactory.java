@@ -26,12 +26,12 @@ public class XmlViewFactory
 		
 	private View q;
 	@SuppressWarnings("unused")
-	private String lang;
+	private String localeCode;
 	
-	public XmlViewFactory(View q, String lang)
+	public XmlViewFactory(View q, String localeCode)
 	{
 		this.q=q;
-		this.lang=lang;
+		this.localeCode=localeCode;
 	}
 	
 	public <L extends UtilsLang,D extends UtilsDescription,CU extends UtilsAclCategoryUsecase<L,D,CU,U>,U extends UtilsAclView<L,D,CU,U>>

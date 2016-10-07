@@ -1,5 +1,6 @@
 package org.jeesl.factory.xml.system.security;
 
+import org.jeesl.factory.xml.system.navigation.XmlNavigationFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,9 +31,16 @@ public class XmlViewFactory <L extends UtilsLang,
 		
 	private View q;
 	
+	private XmlLangsFactory<L> xfLangs;
+	private XmlDescriptionsFactory<D> xfDescription;
+	private XmlNavigationFactory<L,D,C,R,V,U,A,AT,USER> xfNavigation;
+	
 	public XmlViewFactory(View q)
 	{
 		this.q=q;
+		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
+		if(q.isSetDescriptions()) {xfDescription = new XmlDescriptionsFactory<D>(q.getDescriptions());}
+		if(q.isSetNavigation()) {xfNavigation = new XmlNavigationFactory<L,D,C,R,V,U,A,AT,USER>(q.getNavigation());}
 	}
 	
 
@@ -44,17 +52,10 @@ public class XmlViewFactory <L extends UtilsLang,
 		if(q.isSetVisible()){xml.setVisible(view.isVisible());}
 		if(q.isSetDocumentation() && view.getDocumentation()!=null){xml.setDocumentation(view.getDocumentation());}
 		
-		if(q.isSetLangs())
-		{
-			XmlLangsFactory<L> f = new XmlLangsFactory<L>(q.getLangs());
-			xml.setLangs(f.getUtilsLangs(view.getName()));
-		}
+		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(view.getName()));}
+		if(q.isSetDescriptions()){xml.setDescriptions(xfDescription.create(view.getDescription()));}
+		if(q.isSetNavigation()){xml.setNavigation(xfNavigation.build(view));}
 		
-		if(q.isSetDescriptions())
-		{
-			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(q.getDescriptions());
-			xml.setDescriptions(f.create(view.getDescription()));
-		}
 		return xml;
 	}
 	

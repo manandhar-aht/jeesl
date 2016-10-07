@@ -122,7 +122,7 @@ public class SecurityQuery
 		return xml;
 	}
 	
-	public static View exViewOld()
+	@Deprecated public static View exViewOld()
 	{
 		View xml = new View();
 		xml.setCode("");
@@ -155,8 +155,8 @@ public class SecurityQuery
 //		xml.setPublic(true);
 //		xml.setOnlyLoginRequired(true);
 		
-//		xml.setNavigation(new Navigation());
-//		xml.getNavigation().setPackage("");
+		xml.setNavigation(new Navigation());
+		xml.getNavigation().setPackage("");
 
 		return xml;
 	}

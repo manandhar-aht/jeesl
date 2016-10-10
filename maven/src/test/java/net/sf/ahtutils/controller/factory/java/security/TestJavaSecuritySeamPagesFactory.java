@@ -103,10 +103,10 @@ public class TestJavaSecuritySeamPagesFactory extends AbstractJavaSecurityFactor
 	public void mapContent() throws UtilsConfigurationException, IOException, TemplateException
 	{
 		seamPagesFactory.processCategoriesOld(lC);
-		Assert.assertEquals(2, seamPagesFactory.getmViews().size());
-		Assert.assertEquals(v1, seamPagesFactory.getmViews().get(v1.getNavigation().getPackage()).get(0));
-		Assert.assertEquals(v2, seamPagesFactory.getmViews().get(v2.getNavigation().getPackage()).get(1));
-		Assert.assertEquals(v3, seamPagesFactory.getmViews().get(v3.getNavigation().getPackage()).get(0));
+		Assert.assertEquals(2, seamPagesFactory.getMapOldViews().size());
+		Assert.assertEquals(v1, seamPagesFactory.getMapOldViews().get(v1.getNavigation().getPackage()).get(0));
+		Assert.assertEquals(v2, seamPagesFactory.getMapOldViews().get(v2.getNavigation().getPackage()).get(1));
+		Assert.assertEquals(v3, seamPagesFactory.getMapOldViews().get(v3.getNavigation().getPackage()).get(0));
 	}
 	
 //	@Rule public IgnoreOtherRule test = new IgnoreOtherRule("process");

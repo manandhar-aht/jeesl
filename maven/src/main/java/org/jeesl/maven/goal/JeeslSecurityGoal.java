@@ -84,6 +84,7 @@ public class JeeslSecurityGoal extends AbstractMojo
 	    		try {Thread.sleep(2*1000);} catch (InterruptedException e) {e.printStackTrace();}
 	    		executeIdentifierFactory(fTmpDir);
 	    		executeRestrictorFactory(fTmpDir);
+	    		executeSeamPages(fTmpDir);
 	    	}
 		}
     	catch (FileNotFoundException e) {throw new MojoExecutionException(e.getMessage());}
@@ -113,6 +114,13 @@ public class JeeslSecurityGoal extends AbstractMojo
 		
     	restrictorFactory = new JavaSecurityViewRestrictorFactory(fTmpDir,fRestrictorClass,classRestrictor,classAbstractRestrictor,packageBase,classPrefix);
 		restrictorFactory.processViews(viewsXml);
+    }
+    
+    private void executeSeamPages(File fTmpDir) throws FileNotFoundException, UtilsConfigurationException
+    {
+		File fSrcDir = new File(srcDir);
+    	JavaSecuritySeamPagesFactory seamPagesFactory = new JavaSecuritySeamPagesFactory(fTmpDir,classPrefix,fSrcDir,loginView,accessDeniedView,packageBase);
+		seamPagesFactory.processViews(viewsXml);
     }
     
     @Deprecated private void executeIdentifierFactoryOld(File fTmpDir) throws FileNotFoundException, UtilsConfigurationException

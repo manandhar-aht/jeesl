@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.xml.access.Category;
-import net.sf.ahtutils.xml.access.View;
 import net.sf.exlp.exception.ExlpConfigurationException;
 import net.sf.exlp.util.io.dir.DirChecker;
 
@@ -35,9 +33,8 @@ public class JavaSecurityViewRestrictorFactory extends AbstractJavaSecurityFileF
 		this.classAbstractRestrictor=classAbstractRestrictor;
 		this.viewQualifierBasePackage=viewQualifierBasePackage;
 	}
-
-	@Override
-	protected void processCategoriesOld(List<Category> lCategory) throws UtilsConfigurationException
+	
+	@Override protected void processCategories(List<net.sf.ahtutils.xml.security.Category> lCategory) throws UtilsConfigurationException
 	{
 		try {DirChecker.checkParentIsAnDir(fJavaRestrictor);}
 		catch (ExlpConfigurationException e) {throw new UtilsConfigurationException(e.getMessage());}
@@ -49,11 +46,11 @@ public class JavaSecurityViewRestrictorFactory extends AbstractJavaSecurityFileF
 		freemarkerNodeModel.put("abstract", classAbstractRestrictor.substring(classAbstractRestrictor.lastIndexOf(".")+1,classAbstractRestrictor.length()));
 		
 		List<Map> lCodes = new ArrayList<Map>();
-		for(Category category : lCategory)
+		for(net.sf.ahtutils.xml.security.Category category : lCategory)
 		{
-			if(category.isSetViews())
+			if(category.isSetTmp())
 			{
-				for(View view : category.getViews().getView())
+				for(net.sf.ahtutils.xml.security.View view : category.getTmp().getView())
 				{
 					StringBuffer sb = new StringBuffer();
 					sb.append(viewQualifierBasePackage);
@@ -71,7 +68,47 @@ public class JavaSecurityViewRestrictorFactory extends AbstractJavaSecurityFileF
 		freemarkerNodeModel.put("codes", lCodes);
 		try
 		{
-			this.createFile(fJavaRestrictor, "security.ahtutils-util/viewRestrictor.ftl");
+			this.createFile(fJavaRestrictor, "jeesl/freemarker/java/security/viewRestrictor.ftl");
+		}
+		catch (IOException e) {e.printStackTrace();}
+		catch (TemplateException e) {e.printStackTrace();}
+	}
+
+	@Deprecated @Override protected void processCategoriesOld(List<net.sf.ahtutils.xml.access.Category> lCategory) throws UtilsConfigurationException
+	{
+		try {DirChecker.checkParentIsAnDir(fJavaRestrictor);}
+		catch (ExlpConfigurationException e) {throw new UtilsConfigurationException(e.getMessage());}
+		
+		freemarkerNodeModel.put("packageName", classRestrictor.substring(0,classRestrictor.lastIndexOf(".")));
+		freemarkerNodeModel.put("className", classRestrictor.substring(classRestrictor.lastIndexOf(".")+1,classRestrictor.length()));
+		
+		freemarkerNodeModel.put("abstractImport", classAbstractRestrictor);
+		freemarkerNodeModel.put("abstract", classAbstractRestrictor.substring(classAbstractRestrictor.lastIndexOf(".")+1,classAbstractRestrictor.length()));
+		
+		List<Map> lCodes = new ArrayList<Map>();
+		for(net.sf.ahtutils.xml.access.Category category : lCategory)
+		{
+			if(category.isSetViews())
+			{
+				for(net.sf.ahtutils.xml.access.View view : category.getViews().getView())
+				{
+					StringBuffer sb = new StringBuffer();
+					sb.append(viewQualifierBasePackage);
+					sb.append(".").append(AbstractJavaSecurityFileFactory.buildPackage(category.getCode())).append(".");
+					sb.append(createClassName(view.getCode()));
+					
+					Map m = new HashMap();
+					m.put("import", sb.toString());
+					m.put("class", createClassName(view.getCode()));
+					m.put("code", view.getCode());
+					lCodes.add(m);
+				}
+			}
+		}
+		freemarkerNodeModel.put("codes", lCodes);
+		try
+		{
+			this.createFile(fJavaRestrictor, "jeesl/freemarker/java/security/viewRestrictor.ftl");
 		}
 		catch (IOException e) {e.printStackTrace();}
 		catch (TemplateException e) {e.printStackTrace();}

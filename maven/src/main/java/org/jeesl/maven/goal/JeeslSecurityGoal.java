@@ -55,6 +55,7 @@ public class JeeslSecurityGoal extends AbstractMojo
     private String implementation;
 	
 	private JavaSecurityViewIdentifierFactory jfIdentifier;
+	private JavaSecurityViewRestrictorFactory restrictorFactory;
     	
     public void execute() throws MojoExecutionException
     {
@@ -82,6 +83,7 @@ public class JeeslSecurityGoal extends AbstractMojo
 	    		getLog().info("WARN NEW IMPLEMENTATION ");
 	    		try {Thread.sleep(2*1000);} catch (InterruptedException e) {e.printStackTrace();}
 	    		executeIdentifierFactory(fTmpDir);
+	    		executeRestrictorFactory(fTmpDir);
 	    	}
 		}
     	catch (FileNotFoundException e) {throw new MojoExecutionException(e.getMessage());}
@@ -89,18 +91,7 @@ public class JeeslSecurityGoal extends AbstractMojo
     	
     	try {FileUtils.deleteDirectory(fTmpDir);} catch (IOException e) {throw new MojoExecutionException(e.getMessage());}
     }
-    
-    private void executeIdentifierFactoryOld(File fTmpDir) throws FileNotFoundException, UtilsConfigurationException
-    {    	    	
-    	getLog().info("\tpackageBase " +packageBase);
-    	getLog().info("\tviewsXml " +viewsXml);
-    	
-    	File fPackage = new File(TxtFileNameFactory.build(srcDir, packageBase));
-		
-		jfIdentifier = new JavaSecurityViewIdentifierFactory(fTmpDir,fPackage,packageBase,classPrefix);
-		jfIdentifier.processViewsOld(viewsXml);
-    }
-    
+        
     private void executeIdentifierFactory(File fTmpDir) throws FileNotFoundException, UtilsConfigurationException
     {    	    	
     	getLog().info("\tpackageBase " +packageBase);
@@ -112,7 +103,30 @@ public class JeeslSecurityGoal extends AbstractMojo
 		jfIdentifier.processViews(viewsXml);
     }
     
-    private void executeRestrictorFactoryOld(File fTmpDir) throws FileNotFoundException, UtilsConfigurationException
+    private void executeRestrictorFactory(File fTmpDir) throws FileNotFoundException, UtilsConfigurationException
+    {    	
+    	getLog().info("\tclassAbstractRestrictor " +classAbstractRestrictor);
+    	getLog().info("\tclassRestrictor " +classRestrictor);
+    	
+    	File fRestrictorClass = new File(TxtFileNameFactory.build(srcDir, classRestrictor, "java"));
+    	getLog().info("\tfRestrictorClass " +fRestrictorClass.getAbsolutePath());
+		
+    	restrictorFactory = new JavaSecurityViewRestrictorFactory(fTmpDir,fRestrictorClass,classRestrictor,classAbstractRestrictor,packageBase,classPrefix);
+		restrictorFactory.processViews(viewsXml);
+    }
+    
+    @Deprecated private void executeIdentifierFactoryOld(File fTmpDir) throws FileNotFoundException, UtilsConfigurationException
+    {    	    	
+    	getLog().info("\tpackageBase " +packageBase);
+    	getLog().info("\tviewsXml " +viewsXml);
+    	
+    	File fPackage = new File(TxtFileNameFactory.build(srcDir, packageBase));
+		
+		jfIdentifier = new JavaSecurityViewIdentifierFactory(fTmpDir,fPackage,packageBase,classPrefix);
+		jfIdentifier.processViewsOld(viewsXml);
+    }
+    
+    @Deprecated private void executeRestrictorFactoryOld(File fTmpDir) throws FileNotFoundException, UtilsConfigurationException
     {    	
     	getLog().info("classAbstractRestrictor " +classAbstractRestrictor);
     	getLog().info("classRestrictor " +classRestrictor);
@@ -120,11 +134,11 @@ public class JeeslSecurityGoal extends AbstractMojo
     	File fRestrictorClass = new File(TxtFileNameFactory.build(srcDir, classRestrictor, "java"));
     	getLog().info("fRestrictorClass " +fRestrictorClass.getAbsolutePath());
 		
-		JavaSecurityViewRestrictorFactory restrictorFactory = new JavaSecurityViewRestrictorFactory(fTmpDir,fRestrictorClass,classRestrictor,classAbstractRestrictor,packageBase,classPrefix);
+		restrictorFactory = new JavaSecurityViewRestrictorFactory(fTmpDir,fRestrictorClass,classRestrictor,classAbstractRestrictor,packageBase,classPrefix);
 		restrictorFactory.processViewsOld(viewsXml);
     }
     
-    private void executeSeamPagesOld(File fTmpDir) throws FileNotFoundException, UtilsConfigurationException
+    @Deprecated private void executeSeamPagesOld(File fTmpDir) throws FileNotFoundException, UtilsConfigurationException
     {
 		File fSrcDir = new File(srcDir);
     	

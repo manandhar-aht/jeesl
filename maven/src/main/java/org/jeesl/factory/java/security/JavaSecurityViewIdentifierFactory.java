@@ -204,7 +204,7 @@ public class JavaSecurityViewIdentifierFactory extends AbstractJavaSecurityFileF
 		
 		logger.debug("Will create file: "+fJava.getAbsolutePath());
 		
-		this.createFile(fJava, "security.ahtutils-util/identifier.ftl");
+		this.createFile(fJava, "jeesl/freemarker/java/security/identifier.ftl");
 		return fJava;
 	}
 }

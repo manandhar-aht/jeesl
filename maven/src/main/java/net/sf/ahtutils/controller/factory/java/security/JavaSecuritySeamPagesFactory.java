@@ -12,6 +12,7 @@ import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.xml.access.Category;
 import net.sf.ahtutils.xml.access.View;
 
+import org.jeesl.factory.java.security.AbstractJavaSecurityFileFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,7 @@ public class JavaSecuritySeamPagesFactory extends AbstractJavaSecurityFileFactor
 	}
 
 	@Override
-	protected void processCategories(List<Category> lCategory) throws UtilsConfigurationException
+	protected void processCategoriesOld(List<Category> lCategory) throws UtilsConfigurationException
 	{
 		for(Category category : lCategory)
 		{

@@ -1,18 +1,18 @@
-package net.sf.ahtutils.controller.factory.java.security;
+package org.jeesl.factory.java.security;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import net.sf.ahtutils.controller.factory.AbstractFreemarkerFileFactory;
-import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.xml.access.Access;
-import net.sf.ahtutils.xml.access.Category;
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.apache.commons.lang.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.controller.factory.AbstractFreemarkerFileFactory;
+import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
+import net.sf.ahtutils.xml.access.Access;
+import net.sf.ahtutils.xml.security.Security;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AbstractJavaSecurityFileFactory extends AbstractFreemarkerFileFactory 
 {
@@ -31,13 +31,19 @@ public class AbstractJavaSecurityFileFactory extends AbstractFreemarkerFileFacto
 		return createClassName(code)+".java";
 	}
 	
-	public void processViews(String fXml) throws FileNotFoundException, UtilsConfigurationException
+	public void processViewsOld(String fXml) throws FileNotFoundException, UtilsConfigurationException
 	{
 		Access access = JaxbUtil.loadJAXB(fXml, Access.class);
-		processCategories(access.getCategory());
+		processCategoriesOld(access.getCategory());
+	}
+	public void processViews(String fXml) throws FileNotFoundException, UtilsConfigurationException
+	{
+		Security security = JaxbUtil.loadJAXB(fXml, Security.class);
+		processCategories(security.getCategory());
 	}
 	
-	protected void processCategories(List<Category> lCategory) throws UtilsConfigurationException {}
+	protected void processCategoriesOld(List<net.sf.ahtutils.xml.access.Category> lCategory) throws UtilsConfigurationException {logger.warn("This needs to be overridden");}
+	protected void processCategories(List<net.sf.ahtutils.xml.security.Category> lCategory) throws UtilsConfigurationException {logger.warn("This needs to be overridden");}
 	
 	protected String createClassName(String code)
 	{

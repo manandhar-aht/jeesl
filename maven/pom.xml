@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
-			<version>${maven-plugin-api.version}</version>
+			<version>3.3.9</version>
 	    </dependency>
 	    <dependency>
 		<groupId>org.apache.maven.plugin-tools</groupId>
@@ -46,13 +46,6 @@
    	   		<scope>compile</scope>
    	   	</dependency>
 	   
-<!-- 20.12.15 testing removal	   
-	    <dependency>
-			<groupId>org.apache.ant</groupId>
-			<artifactId>ant</artifactId>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>  -->
 		<dependency>
     		<groupId>net.sf.exlp</groupId>
     		<artifactId>exlp-util</artifactId>
@@ -87,7 +80,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 	    </dependency>
-	    
+   
 	</dependencies>
 
 	<build>
@@ -116,6 +109,21 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin> 
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId> 
+				<version>3.3</version> 
+				<configuration> 
+					<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound> 
+				</configuration> 
+				<executions> 
+					<execution> 
+						<id>mojo-descriptor</id>
+						<goals><goal>descriptor</goal></goals> 
+						<phase>process-classes</phase> 
+					</execution>
+				</executions> 
+			</plugin> 
 		</plugins>
 	</build>
 </project>

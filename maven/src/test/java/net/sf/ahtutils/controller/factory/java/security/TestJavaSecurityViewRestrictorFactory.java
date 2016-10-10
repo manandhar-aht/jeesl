@@ -44,7 +44,7 @@ public class TestJavaSecurityViewRestrictorFactory extends AbstractJavaSecurityF
 	@Test
 	public void createIdentifier() throws UtilsConfigurationException, IOException, TemplateException
 	{
-		restrictorFactory.processCategories(lC);
+		restrictorFactory.processCategoriesOld(lC);
 
 		Assert.assertTrue("File should exist: "+fRestrictorClass.getAbsolutePath(),fRestrictorClass.exists());
 		Assert.assertTrue(fRestrictorClass.isFile());

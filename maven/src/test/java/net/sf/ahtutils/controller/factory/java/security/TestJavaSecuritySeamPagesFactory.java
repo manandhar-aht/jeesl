@@ -72,21 +72,21 @@ public class TestJavaSecuritySeamPagesFactory extends AbstractJavaSecurityFactor
 	public void withoutNavigationPackage() throws UtilsConfigurationException, IOException, TemplateException
 	{
 		lC.get(0).getViews().getView().get(0).getNavigation().setPackage(null);
-		seamPagesFactory.processCategories(lC);
+		seamPagesFactory.processCategoriesOld(lC);
 	}
 	
 	@Test(expected=UtilsConfigurationException.class)
 	public void withoutNavigationViewPattern() throws UtilsConfigurationException, IOException, TemplateException
 	{
 		lC.get(0).getViews().getView().get(0).getNavigation().setViewPattern(null);
-		seamPagesFactory.processCategories(lC);
+		seamPagesFactory.processCategoriesOld(lC);
 	}
 	
 	@Test(expected=UtilsConfigurationException.class)
 	public void withoutNavigatioUrlMapping() throws UtilsConfigurationException, IOException, TemplateException
 	{
 		lC.get(0).getViews().getView().get(0).getNavigation().setViewPattern(null);
-		seamPagesFactory.processCategories(lC);
+		seamPagesFactory.processCategoriesOld(lC);
 	}
 	
 	@Test(expected=UtilsConfigurationException.class)
@@ -96,13 +96,13 @@ public class TestJavaSecuritySeamPagesFactory extends AbstractJavaSecurityFactor
 		File fP = new File(fSrcDir,tPackage.replaceAll("\\.", "/"));
 		logger.debug("tdel: "+fP);
 		FileUtils.deleteDirectory(fP);
-		seamPagesFactory.processCategories(lC);
+		seamPagesFactory.processCategoriesOld(lC);
 	}
 	
 	@Test
 	public void mapContent() throws UtilsConfigurationException, IOException, TemplateException
 	{
-		seamPagesFactory.processCategories(lC);
+		seamPagesFactory.processCategoriesOld(lC);
 		Assert.assertEquals(2, seamPagesFactory.getmViews().size());
 		Assert.assertEquals(v1, seamPagesFactory.getmViews().get(v1.getNavigation().getPackage()).get(0));
 		Assert.assertEquals(v2, seamPagesFactory.getmViews().get(v2.getNavigation().getPackage()).get(1));
@@ -113,6 +113,6 @@ public class TestJavaSecuritySeamPagesFactory extends AbstractJavaSecurityFactor
 	@Test
 	public void process() throws UtilsConfigurationException, IOException, TemplateException
 	{
-		seamPagesFactory.processCategories(lC);
+		seamPagesFactory.processCategoriesOld(lC);
 	}
 }

@@ -13,6 +13,7 @@ import net.sf.ahtutils.xml.access.View;
 import net.sf.exlp.exception.ExlpConfigurationException;
 import net.sf.exlp.util.io.dir.DirChecker;
 
+import org.jeesl.factory.java.security.AbstractJavaSecurityFileFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +37,7 @@ public class JavaSecurityViewRestrictorFactory extends AbstractJavaSecurityFileF
 	}
 
 	@Override
-	protected void processCategories(List<Category> lCategory) throws UtilsConfigurationException
+	protected void processCategoriesOld(List<Category> lCategory) throws UtilsConfigurationException
 	{
 		try {DirChecker.checkParentIsAnDir(fJavaRestrictor);}
 		catch (ExlpConfigurationException e) {throw new UtilsConfigurationException(e.getMessage());}

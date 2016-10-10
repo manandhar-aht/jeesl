@@ -15,21 +15,20 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-@SuppressWarnings("rawtypes")
 public class AbstractFreemarkerFileFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractFreemarkerFileFactory.class);
 		
 	protected File fTmpDir;
 	
-	protected Map freemarkerNodeModel;
+	protected Map<String,Object> freemarkerNodeModel;
 	protected Configuration freemarkerConfiguration;
 	
 	public AbstractFreemarkerFileFactory(File fTmpDir)
 	{
 		this.fTmpDir=fTmpDir;
 		
-		freemarkerNodeModel = new HashMap();
+		freemarkerNodeModel = new HashMap<String,Object>();
 		freemarkerConfiguration = new Configuration(Configuration.getVersion());
 		freemarkerConfiguration.setClassForTemplateLoading(this.getClass(), "/");
 	}

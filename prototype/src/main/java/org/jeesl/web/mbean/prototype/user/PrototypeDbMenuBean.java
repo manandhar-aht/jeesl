@@ -42,7 +42,6 @@ public class PrototypeDbMenuBean implements Serializable
 	}
 	
 	@Deprecated
-	@PostConstruct
 	public void initOld(String views, String menu)
     {
 		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);

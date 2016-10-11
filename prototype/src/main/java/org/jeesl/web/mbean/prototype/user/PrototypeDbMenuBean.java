@@ -38,19 +38,20 @@ public class PrototypeDbMenuBean implements Serializable
 
 	public PrototypeDbMenuBean()
 	{
-		userLoggedIn = false;	
+		userLoggedIn = false;
 	}
 	
+	@Deprecated
 	@PostConstruct
-    public void init()
+	public void initOld(String views, String menu)
     {
 		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
 		
 		try
 		{
 			this.initMaps();
-			Access xmlAccess = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/views.xml", Access.class);
-			Menu xmlMenuMain = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/menu.xml", Menu.class);
+			Access xmlAccess = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/"+views, Access.class);
+			Menu xmlMenuMain = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/"+menu, Menu.class);
 			
 			if(logger.isTraceEnabled()){logger.info("main.root="+rootMain);}
 

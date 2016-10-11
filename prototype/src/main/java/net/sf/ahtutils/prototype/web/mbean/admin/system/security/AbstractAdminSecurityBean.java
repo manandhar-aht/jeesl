@@ -17,6 +17,7 @@ import net.sf.ahtutils.factory.ejb.security.EjbSecurityActionTemplateFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityCategoryFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityRoleFactory;
 import net.sf.ahtutils.factory.ejb.security.EjbSecurityUsecaseFactory;
+import net.sf.ahtutils.factory.ejb.security.EjbSecurityViewFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -51,6 +52,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	protected UtilsSecurityCategory.Type categoryType;
 	
 	protected EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> efCategory;
+	protected EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> efView;
 	protected EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> efRole;
 	protected EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> efUsecase;
 	protected EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> efAction;
@@ -101,6 +103,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		this.cTemplate=cTemplate;
 		
 		efCategory = EjbSecurityCategoryFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
+		efView = EjbSecurityViewFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efRole = EjbSecurityRoleFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efUsecase = EjbSecurityUsecaseFactory.factory(cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efAction = EjbSecurityActionFactory.factoryAction(cLang,cDescription,cAction);

@@ -40,15 +40,15 @@ extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
         return new EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER>(clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
     }
     
-    public EjbSecurityViewFactory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
+    public EjbSecurityViewFactory(final Class<L> cLang,final Class<D> cDescription,final Class<C> cCategory,final Class<R> cRole,final Class<V> cView,final Class<U> cUsecase,final Class<A> cAction,final Class<USER> cUser)
     {
-    	super(clLang,clDescription);
-        this.cCategory = clCategory;
-        this.cRole = clRole;
-        this.cView = clView;
-        this.cUsecase = clUsecase;
-        this.cAction = clAction;
-        this.cUser = clUser;
+    	super(cLang,cDescription);
+        this.cCategory = cCategory;
+        this.cRole = cRole;
+        this.cView = cView;
+        this.cUsecase = cUsecase;
+        this.cAction = cAction;
+        this.cUser = cUser;
     } 
     
     public V create(C category, String code)

@@ -97,6 +97,15 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,D extends UtilsD
 		Collections.sort(actions, comparatorAction);
 	}
 	
+	//VIEW
+	public void addView() throws UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.addEntity(cView));
+		view = efView.create(category,"");
+		view.setName(efLang.createEmpty(langs));
+		view.setDescription(efDescription.createEmpty(langs));
+	}
+	
 	public void selectView()
 	{
 		logger.info(AbstractLogMessage.selectEntity(view));

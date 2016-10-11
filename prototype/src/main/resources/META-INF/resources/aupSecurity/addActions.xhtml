@@ -55,7 +55,7 @@
 				<p:column headerText="#{msg.aupSecurityCode}">
 					<h:outputText value="#{a.toCode}" />
 				</p:column>
-				<p:column headerText="#{msg.aupSecurityAction}" sortBy="#{a.view.toName[userBean.localeCode].lang}" filterBy="#{a.view.toName[userBean.localeCode].lang}" filterMatchMode="contains">
+				<p:column headerText="#{msg.aupSecurityAction}" sortBy="#{a.view.toName[userBean.localeCode].lang}" filterBy="#{a.toName[userBean.localeCode].lang}" filterMatchMode="contains">
 					<h:outputText value="#{a.toName[userBean.localeCode].lang}" />
 				</p:column>
 			</p:dataTable>

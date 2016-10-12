@@ -1,5 +1,8 @@
 package org.jeesl.web.rest.system.security;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import org.jeesl.factory.xml.system.security.XmlActionFactory;
 import org.jeesl.factory.xml.system.security.XmlActionsFactory;
 import org.jeesl.factory.xml.system.security.XmlCategoryFactory;
@@ -29,6 +32,10 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityRestExport;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
+import net.sf.ahtutils.util.comparator.ejb.security.SecurityRoleComparator;
+import net.sf.ahtutils.util.comparator.ejb.security.SecurityUsecaseComparator;
+import net.sf.ahtutils.util.comparator.ejb.security.SecurityViewComparator;
 import net.sf.ahtutils.util.query.SecurityQuery;
 import net.sf.ahtutils.web.rest.security.AbstractSecurityInit;
 import net.sf.ahtutils.web.rest.security.SecurityInitRoles;
@@ -68,17 +75,22 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 //	private final Class<A> cAction;
 	private final Class<AT> cTemplate;
 	
-	private SecurityInitViews<L,D,C,R,V,U,A,AT,USER> initViews;
-	private SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER> initTemplates;
-	private SecurityInitRoles<L,D,C,R,V,U,A,AT,USER> initRoles;
-	private SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER> initUsecases;
-	
 	private XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER> fCategory;
 	private org.jeesl.factory.xml.system.security.XmlViewFactory<L,D,C,R,V,U,A,AT,USER> xfView,xfViewOld;
 	private XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> xfRole,fRoleDescription;
 	private XmlActionFactory<L,D,C,R,V,U,A,AT,USER> xfAction,xfActionOld,xfActionDoc;
 	private XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER> fTemplate;
 	private XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER> fUsecase,fUsecaseDoc;
+	
+	protected Comparator<R> comparatorRole;
+	private Comparator<V> comparatorView;
+	private Comparator<U> comparatorUsecase;
+	private Comparator<A> comparatorAction;
+	
+	private SecurityInitViews<L,D,C,R,V,U,A,AT,USER> initViews;
+	private SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER> initTemplates;
+	private SecurityInitRoles<L,D,C,R,V,U,A,AT,USER> initRoles;
+	private SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER> initUsecases;
 	
 	private SecurityRestService(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,final Class<L> cL,final Class<D> cD,final Class<C> cCategory,final Class<V> cView,final Class<R> cRole,final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
 	{
@@ -101,6 +113,11 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		fTemplate = new XmlTemplateFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exTemplate());
 		fUsecase = new XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.exUsecase());
 		fUsecaseDoc = new XmlUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(SecurityQuery.docUsecase());
+		
+		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityRoleComparator.Type.position);
+		comparatorView = (new SecurityViewComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityViewComparator.Type.position);
+		comparatorUsecase = (new SecurityUsecaseComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityUsecaseComparator.Type.position);
+		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityActionComparator.Type.position);
 		
 		initViews = AbstractSecurityInit.factoryViews(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
 		initTemplates = AbstractSecurityInit.factoryTemplates(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
@@ -187,15 +204,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 						{
 							net.sf.ahtutils.xml.access.Action xAction = xfActionOld.create(action);							
 							xView.getActions().getAction().add(xAction);
-						}
-/*	Deactivates 2016-10-06						
-						Roles xRoles = XmlRolesFactory.build();
-						for(R role : fSecurity.rolesForView(cView, view))
-						{
-							xRoles.getRole().add(fRoleDescription.build(role));
-						}
-						xView.setRoles(xRoles);
-*/						
+						}						
 						xCategory.getViews().getView().add(xView);
 					}
 					
@@ -216,16 +225,16 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 			{
 				try
 				{
-					net.sf.ahtutils.xml.security.Category xmlCat = fCategory.build(category);
-					xmlCat.setRoles(XmlRolesFactory.build());
+					net.sf.ahtutils.xml.security.Category xCat = fCategory.build(category);
+					xCat.setRoles(XmlRolesFactory.build());
 					for(R role : fSecurity.allForCategory(cRole, cCategory, category.getCode()))
 					{
 						role = fSecurity.load(cRole,role);
+						Collections.sort(role.getUsecases(),comparatorUsecase);
 						Role xRole = xfRole.build(role);
-						
-						xmlCat.getRoles().getRole().add(xRole);
+						xCat.getRoles().getRole().add(xRole);
 					}
-					xml.getCategory().add(xmlCat);
+					xml.getCategory().add(xCat);
 				}
 				catch (UtilsNotFoundException e) {e.printStackTrace();}
 			}
@@ -272,6 +281,8 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					for(U usecase : fSecurity.allForCategory(cUsecase, cCategory, category.getCode()))
 					{
 						usecase = fSecurity.load(cUsecase, usecase);
+						Collections.sort(usecase.getActions(),comparatorAction);
+						Collections.sort(usecase.getViews(),comparatorView);
 						xmlCat.getUsecases().getUsecase().add(fUsecase.build(usecase));
 					}
 					xml.getCategory().add(xmlCat);

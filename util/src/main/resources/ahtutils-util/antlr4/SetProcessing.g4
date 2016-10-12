@@ -22,20 +22,13 @@ parse: expression;
 expression:
 	left=CHAR
 	(
-	 op=binary right=CHAR
-	| op=binary OPAREN? expression CPAREN?
+	op=binary OPAREN? expression CPAREN?
 	)?;
-
-//list:
-//	BEG elem (SEP elem)* END;
-//
-//elem:
-//	CHAR+;
 
 WS: [ \n\t\r]+ -> skip;
 binary: AND | OR;
-AND: 'AND' | '&&';
-OR: 'OR' | '||';
+AND: 'AND' | '&&' | 'and';
+OR: 'OR' | '||' | 'or';
 BEG: '[';
 END: ']';
 OPAREN: '(';

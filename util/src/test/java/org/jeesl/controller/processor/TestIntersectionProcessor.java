@@ -43,15 +43,15 @@ public class TestIntersectionProcessor extends AbstractJeeslUtilTest
 		a = Arrays.asList("a b c d e f"      .split(" "));
 		b = Arrays.asList(      "d e f g".split(" "));
 		c = Arrays.asList("b d e".split(" "));
-		
+
 		ab = new ArrayList<List<String>>();ab.add(a);ab.add(b);
 		abc = new ArrayList<List<String>>();abc.add(a);abc.add(b);abc.add(c);
-		
+
 		factory = EjbStatusFactory.createFactory(Status.class,Lang.class,Description.class); //within initClass() i got an NPE on .id(long l)
 		x = new ArrayList<Status>();
 		x.add(factory.id(1));x.add(factory.id(2));x.add(factory.id(3));
 		y = new ArrayList<Status>();
-		y.add(factory.id(3));x.add(factory.id(4));x.add(factory.id(5));
+		y.add(factory.id(3));y.add(factory.id(4));y.add(factory.id(5));
 		xy = new ArrayList<List<Status>>();xy.add(x);xy.add(y);
 
 		k = Arrays.asList(12,19,205,2401,325871);
@@ -63,6 +63,11 @@ public class TestIntersectionProcessor extends AbstractJeeslUtilTest
     {	
 		Assert.assertEquals(6, a.size());
 		Assert.assertEquals(4, b.size());
+		Assert.assertEquals(3, c.size());
+		Assert.assertEquals(3, x.size());
+		Assert.assertEquals(3, y.size());
+		Assert.assertEquals(5, k.size());
+		Assert.assertEquals(5, m.size());
     }
  
 	@Test public void basicAnd()
@@ -75,7 +80,7 @@ public class TestIntersectionProcessor extends AbstractJeeslUtilTest
     @Test public void basicOr()
     {	
     	List<String> result = IntersectionProcessor.or(a,b);
-    	Assert.assertEquals(7, result.size());
+		Assert.assertEquals(7, result.size());
     }
     
     @Test public void stringSingleWorkaround()
@@ -101,7 +106,7 @@ public class TestIntersectionProcessor extends AbstractJeeslUtilTest
 		Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
     }
     
-    @Test public void stirngOr()
+    @Test public void stringOr()
     {
     	List<String> expected = Arrays.asList("a b c d e f g".split(" "));
 		List<String> actual = IntersectionProcessor.query("a OR b",ab);
@@ -122,11 +127,10 @@ public class TestIntersectionProcessor extends AbstractJeeslUtilTest
 		Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
 	}
 	
-	@Ignore @Test public void plain3()
+	@Test public void plain3()
 	{		
 		List<String> expected = Arrays.asList("d e".split(" "));
 		List<String> actual = IntersectionProcessor.query("a AND b AND c",abc);
-		logger.debug(actual.toString());
 		Assert.assertArrayEquals(expected.toArray(new String[expected.size()]), actual.toArray(new String[actual.size()]));
 	}
 	

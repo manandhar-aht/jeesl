@@ -31,7 +31,8 @@ public class IntersectionProcessor extends SetProcessingBaseVisitor
 	}
 
 	static List lists;
-	
+
+	@SuppressWarnings("unchecked")
 	public static <T> List<T> query(String query, List<List<T>> l)
 	{
 		lists = l;
@@ -46,17 +47,11 @@ public class IntersectionProcessor extends SetProcessingBaseVisitor
 		if(ctx.op == null) {
 			return asList(ctx.left.getText().charAt(0));
 		}
-		if(ctx.op.AND() != null)
-		{
-			if(ctx.OPAREN()	!= null)
-				return and(asList(ctx.left.getText().charAt(0)),(List)visitExpression(ctx.expression()));
-			return and(asList(ctx.left.getText().charAt(0)), asList(ctx.right.getText().charAt(0)));
+		if(ctx.op.AND() != null) {
+			return and(asList(ctx.left.getText().charAt(0)),(List)visitExpression(ctx.expression()));
 		}
-		if(ctx.op.OR() != null)
-		{
-			if(ctx.OPAREN()	!= null)
-				return or(asList(ctx.left.getText().charAt(0)),(List)visitExpression(ctx.expression()));
-			return or(asList(ctx.left.getText().charAt(0)), asList(ctx.right.getText().charAt(0)));
+		if(ctx.op.OR() != null) {
+			return or(asList(ctx.left.getText().charAt(0)),(List)visitExpression(ctx.expression()));
 		}
 		throw new RuntimeException("*JediHandWave* This is never happened.");
 	}
@@ -68,6 +63,4 @@ public class IntersectionProcessor extends SetProcessingBaseVisitor
 		int i = s - 97;
 		return (List)lists.get(i);
 	}
-
-
 }

@@ -57,8 +57,8 @@ tar -xvzf path_to_download/apache-maven-3.3.3-bin.tar.gz</ofx:raw>
 			</ofx:listing>
 		</ofx:section>
 		
-		<ofx:section container="true" classifier="win">
-			<ofx:title>Windows</ofx:title>
+		<ofx:section container="true" classifier="osx">
+			<ofx:title>OSX</ofx:title>
 			
 			<ofx:listing>
 				<ofx:raw>ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"

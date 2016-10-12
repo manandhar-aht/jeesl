@@ -12,9 +12,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.jeesl.factory.java.security.JavaSecurityViewIdentifierFactory;
+import org.jeesl.factory.java.security.JavaSecurityViewRestrictorFactory;
 
 import net.sf.ahtutils.controller.factory.java.security.JavaSecuritySeamPagesFactory;
-import net.sf.ahtutils.controller.factory.java.security.JavaSecurityViewRestrictorFactory;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.exlp.factory.txt.TxtFileNameFactory;
 

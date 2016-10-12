@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.factory.java.security;
+package org.jeesl.factory.java.security;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,6 @@ import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.exlp.exception.ExlpConfigurationException;
 import net.sf.exlp.util.io.dir.DirChecker;
 
-import org.jeesl.factory.java.security.AbstractJavaSecurityFileFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

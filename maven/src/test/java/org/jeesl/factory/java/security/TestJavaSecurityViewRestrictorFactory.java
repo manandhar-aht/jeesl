@@ -1,8 +1,9 @@
-package net.sf.ahtutils.controller.factory.java.security;
+package org.jeesl.factory.java.security;
 
 import java.io.File;
 import java.io.IOException;
 
+import net.sf.ahtutils.controller.factory.java.security.AbstractJavaSecurityFactoryTst;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.test.UtilsMavenTstBootstrap;
 

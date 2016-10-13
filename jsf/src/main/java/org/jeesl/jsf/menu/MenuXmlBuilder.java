@@ -381,7 +381,7 @@ public class MenuXmlBuilder implements MenuBuilder
 		}
 		else if(miOrig.isSetView())
 		{
-			mi.setHref(getHrefFromViews(miOrig.getView()));
+			mi.setHref(getHrefFromViewsOld(miOrig.getView()));
 		}
 		else
 		{
@@ -414,7 +414,7 @@ public class MenuXmlBuilder implements MenuBuilder
 		}
 		else if(miOrig.isSetView())
 		{
-			mi.setHref(getHrefFromViews(miOrig.getView()));
+			mi.setHref(getHrefFromViewsNew(miOrig.getView()));
 		}
 		else
 		{
@@ -460,10 +460,32 @@ public class MenuXmlBuilder implements MenuBuilder
 		return sbLabel.toString();
 	}
 	
-	private String getHrefFromViews(net.sf.ahtutils.xml.access.View viewCode)
+	private String getHrefFromViewsOld(net.sf.ahtutils.xml.access.View viewCode)
 	{
-		
 		net.sf.ahtutils.xml.access.View view = mapAccessViews.get(viewCode.getCode());
+		if(view.isSetNavigation() && view.getNavigation().isSetUrlMapping())
+		{
+			UrlMapping urlMapping = view.getNavigation().getUrlMapping();
+			StringBuffer sb = new StringBuffer();
+			if(contextRoot!=null)
+			{
+				sb.append("/").append(contextRoot);
+			}
+			if(urlMapping.isSetUrl())
+			{
+				sb.append(urlMapping.getUrl());
+				if(viewCode.isSetUrlParameter()){sb.append(viewCode.getUrlParameter());}
+			}
+			else{sb.append(urlMapping.getValue());}
+			return sb.toString();
+		}
+
+		return null;
+	}
+	
+	private String getHrefFromViewsNew(net.sf.ahtutils.xml.access.View viewCode)
+	{
+		net.sf.ahtutils.xml.security.View view = mapSecurityViews.get(viewCode.getCode());
 		if(view.isSetNavigation() && view.getNavigation().isSetUrlMapping())
 		{
 			UrlMapping urlMapping = view.getNavigation().getUrlMapping();

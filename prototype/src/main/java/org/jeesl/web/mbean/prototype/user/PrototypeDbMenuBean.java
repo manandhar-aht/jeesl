@@ -5,8 +5,6 @@ import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
 import org.jeesl.factory.xml.system.navigation.XmlMenuItemFactory;
 import org.jeesl.jsf.menu.MenuXmlBuilder;
 import org.jeesl.model.xml.system.navigation.Breadcrumb;
@@ -42,7 +40,7 @@ public class PrototypeDbMenuBean implements Serializable
 	}
 	
 	@Deprecated
-	public void initOld(String views, String menu)
+	public void initAccess(String views, String menu)
     {
 		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
 		

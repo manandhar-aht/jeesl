@@ -30,7 +30,7 @@ public class PrototypeXmlMenuBean extends AbstractMenuXmlBean implements Seriali
 		
 	}
 	
-    public void init(String views, String menu)
+    public void initAccess(String views, String menu)
     {
 		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
 		

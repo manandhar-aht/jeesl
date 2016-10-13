@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.ahtutils.xml.access.Access;
+import net.sf.ahtutils.xml.security.Security;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public class PrototypeXmlMenuBean extends AbstractMenuXmlBean implements Serializable
@@ -33,7 +34,6 @@ public class PrototypeXmlMenuBean extends AbstractMenuXmlBean implements Seriali
     public void initAccess(String views, String menu)
     {
 		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
-		
 		try
 		{
 			super.initMaps();
@@ -45,10 +45,25 @@ public class PrototypeXmlMenuBean extends AbstractMenuXmlBean implements Seriali
 			mfMain = new MenuXmlBuilder(xmlMenuMain,xmlAccess,getLang(),rootMain);
 			mfMain.setAlwaysUpToLevel(1);
 		}
-		catch (FileNotFoundException e)
+		catch (FileNotFoundException e){throw new IllegalStateException("Class: " +e.getClass().getName() +" Message: " +e.getMessage());}
+		logger.info(AbstractLogMessage.postConstruct(ptt));
+    }
+    
+    public void initSecurity(String views, String menu)
+    {
+		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
+		try
 		{
-			throw new IllegalStateException("Class: " +e.getClass().getName() +" Message: " +e.getMessage());
+			super.initMaps();
+			Security security = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/"+views, Security.class);
+			Menu xmlMenuMain = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/"+menu, Menu.class);
+			
+			if(logger.isTraceEnabled()){logger.info("main.root="+rootMain);}
+
+			mfMain = new MenuXmlBuilder(xmlMenuMain,security,getLang(),rootMain);
+			mfMain.setAlwaysUpToLevel(1);
 		}
+		catch (FileNotFoundException e){throw new IllegalStateException("Class: " +e.getClass().getName() +" Message: " +e.getMessage());}
 		logger.info(AbstractLogMessage.postConstruct(ptt));
     }
 	

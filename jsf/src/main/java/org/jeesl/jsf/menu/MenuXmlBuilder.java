@@ -25,19 +25,16 @@ import net.sf.ahtutils.exception.jsf.UtilsMenuException;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.ahtutils.xml.access.Access;
-import net.sf.ahtutils.xml.access.Category;
-import net.sf.ahtutils.xml.access.View;
+import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.status.Lang;
-import net.sf.ahtutils.xml.xpath.AccessXpath;
 import net.sf.ahtutils.xml.xpath.NavigationXpath;
-import net.sf.exlp.exception.ExlpXpathNotFoundException;
-import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public class MenuXmlBuilder implements MenuBuilder
 {
 	final static Logger logger = LoggerFactory.getLogger(MenuXmlBuilder.class);
 	
+	private boolean oldImplementation;
 	private String lang;
 
 	private String contextRoot;
@@ -47,7 +44,8 @@ public class MenuXmlBuilder implements MenuBuilder
 	private boolean noRestrictions;
 	private Map<String,Boolean> mapViewAllowed;
 	private Map<String,Map<String,String>> translationsMenu,translationsAccess;
-	private Map<String,View> mapView;
+	private Map<String,net.sf.ahtutils.xml.access.View> mapAccessViews;
+	private Map<String,net.sf.ahtutils.xml.security.View> mapSecurityViews;
 	private Map<String,MenuItem> mapMenuItems;
 	private Map<String,String> mapParent;
 	
@@ -61,7 +59,7 @@ public class MenuXmlBuilder implements MenuBuilder
 	public MenuXmlBuilder(Menu menu, Access access,String lang){this(menu,access,lang, UUID.randomUUID().toString(),false);}
 	public MenuXmlBuilder(Menu menu, Access access,String lang, String rootNode){this(menu,access,lang, rootNode,false);}
 	public MenuXmlBuilder(Menu menu, Access access,String lang, String rootNode, boolean noRestrictions)
-	{
+	{	
 		this.rootNode=rootNode;
 		this.noRestrictions=noRestrictions;
 		
@@ -80,9 +78,38 @@ public class MenuXmlBuilder implements MenuBuilder
 			logger.info("mapMenuItems.size()"+mapMenuItems.size());
 		}
 		
-		mapView = new Hashtable<String,View>();
+		oldImplementation = true;
+		mapAccessViews = new Hashtable<String,net.sf.ahtutils.xml.access.View>();
 		
 		if(access!=null){buildViewMap(access);}
+		alwaysUpToLevel = 1;
+	}
+	
+	public MenuXmlBuilder(Menu menu, Security security,String localeCode, String rootNode)
+	{
+		
+		this.rootNode=rootNode;
+		this.noRestrictions=false;
+		
+		translationsMenu = new Hashtable<String,Map<String,String>>();
+		translationsAccess = new Hashtable<String,Map<String,String>>();
+		mapMenuItems = new Hashtable<String,MenuItem>();
+		mapParent = new Hashtable<String,String>();
+		
+		this.switchLang(localeCode);
+		
+		processMenu(menu);
+		
+		if(logger.isTraceEnabled())
+		{
+			logger.info("Graph: "+graph);
+			logger.info("mapMenuItems.size()"+mapMenuItems.size());
+		}
+		
+		oldImplementation = false;
+		mapSecurityViews = new Hashtable<String,net.sf.ahtutils.xml.security.View>();
+		
+		if(security!=null){buildViewMap(security);}
 		alwaysUpToLevel = 1;
 	}
 	
@@ -123,13 +150,35 @@ public class MenuXmlBuilder implements MenuBuilder
 	
 	private void buildViewMap(Access access)
 	{
-		for(Category c : access.getCategory())
+		for(net.sf.ahtutils.xml.access.Category c : access.getCategory())
 		{
 			if(c.isSetViews())
 			{
-				for(View v : c.getViews().getView())
+				for(net.sf.ahtutils.xml.access.View v : c.getViews().getView())
 				{
-					mapView.put(v.getCode(), v);
+					mapAccessViews.put(v.getCode(), v);
+					if(v.isSetLangs())
+					{
+						for(Lang l : v.getLangs().getLang())
+						{
+							checkLang(l.getKey());
+							translationsAccess.get(l.getKey()).put(v.getCode(), l.getTranslation());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private void buildViewMap(Security security)
+	{
+		for(net.sf.ahtutils.xml.security.Category c : security.getCategory())
+		{
+			if(c.isSetTmp())
+			{
+				for(net.sf.ahtutils.xml.security.View v : c.getTmp().getView())
+				{
+					mapSecurityViews.put(v.getCode(), v);
 					if(v.isSetLangs())
 					{
 						for(Lang l : v.getLangs().getLang())
@@ -159,14 +208,18 @@ public class MenuXmlBuilder implements MenuBuilder
 		
 		ProcessingTimeTracker ptt = null;
 		if(logger.isTraceEnabled()){ptt = new ProcessingTimeTracker(true);}
-		try {result.getMenuItem().addAll(processChilds(1,rootNode,codeCurrent,isLoggedIn));}
+		try
+		{
+			if(oldImplementation){result.getMenuItem().addAll(processChildsOld(1,rootNode,codeCurrent,isLoggedIn));}
+			else {result.getMenuItem().addAll(processChildsNew(1,rootNode,codeCurrent,isLoggedIn));}
+		}
 		catch (UtilsNotFoundException e) {logger.warn(e.getMessage());}
 		if(logger.isTraceEnabled()){logger.info(AbstractLogMessage.time("build "+codeCurrent,ptt));}
 		
 		return result;
 	}
 	
-	private List<MenuItem> processChilds(int level, String node, String codeCurrent, boolean isLoggedIn) throws UtilsNotFoundException
+	private List<MenuItem> processChildsOld(int level, String node, String codeCurrent, boolean isLoggedIn) throws UtilsNotFoundException
 	{
 		List<MenuItem> result = new ArrayList<MenuItem>();
 		
@@ -179,17 +232,20 @@ public class MenuXmlBuilder implements MenuBuilder
 			MenuItem mi = mapMenuItems.get(graph.getEdgeTarget(edge));
 			if(mi.isSetView())
 			{
-				if(!mapView.containsKey(mi.getView().getCode())){throw new UtilsNotFoundException("No view with code="+mi.getView().getCode());}
-				View view = mapView.get(mi.getView().getCode());
+				if(!mapAccessViews.containsKey(mi.getView().getCode())){throw new UtilsNotFoundException("No view with code="+mi.getView().getCode());}
+				net.sf.ahtutils.xml.access.View view = mapAccessViews.get(mi.getView().getCode());
 				if(noRestrictions
 						|| view.isPublic()
 						|| (view.isSetOnlyLoginRequired() && view.isOnlyLoginRequired() && isLoggedIn)
 						|| (mapViewAllowed!=null && mapViewAllowed.containsKey(mi.getView().getCode()) && mapViewAllowed.get(mi.getView().getCode())))
 				{
-					miAdd = processItem(mi,codeCurrent,view);
+					miAdd = processItemOld(mi,codeCurrent,view);
 				}
 			}
-			else {miAdd = processItem(mi,codeCurrent,null);}
+			else
+			{
+				miAdd = processItemOld(mi,codeCurrent,null);
+			}
 			if(miAdd!=null)
 			{
 				if(mi.getCode().equals(codeCurrent)){miAdd.setActive(true);}
@@ -219,7 +275,8 @@ public class MenuXmlBuilder implements MenuBuilder
 				
 				if(level<alwaysUpToLevel || currentIsChild)
 				{
-					miAdd.getMenuItem().addAll(processChilds(level+1,mi.getCode(),codeCurrent,isLoggedIn));
+					miAdd.getMenuItem().addAll(processChildsOld(level+1,mi.getCode(),codeCurrent,isLoggedIn));
+					
 				}
 				mapMenuItems.get(miAdd.getCode()).setName(miAdd.getName());
 				mapMenuItems.get(miAdd.getCode()).setHref(miAdd.getHref());
@@ -229,7 +286,78 @@ public class MenuXmlBuilder implements MenuBuilder
 		return result;
 	}
 	
-	private MenuItem processItem(MenuItem miOrig, String codeCurrent, View view) throws UtilsNotFoundException
+	private List<MenuItem> processChildsNew(int level, String node, String codeCurrent, boolean isLoggedIn) throws UtilsNotFoundException
+	{
+		List<MenuItem> result = new ArrayList<MenuItem>();
+		
+		Iterator<DefaultEdge> iterator = graph.outgoingEdgesOf(node).iterator();
+		
+		while(iterator.hasNext())
+		{
+			DefaultEdge edge = iterator.next();
+			MenuItem miAdd = null;
+			MenuItem mi = mapMenuItems.get(graph.getEdgeTarget(edge));
+			if(mi.isSetView())
+			{
+				if(!mapSecurityViews.containsKey(mi.getView().getCode())){throw new UtilsNotFoundException("No view with code="+mi.getView().getCode());}
+				net.sf.ahtutils.xml.security.View view = mapSecurityViews.get(mi.getView().getCode());
+				if(noRestrictions
+						|| view.getAccess().isPublicUser()
+						|| (view.getAccess().isAuthenticatedUser() && isLoggedIn)
+						|| (mapViewAllowed!=null && mapViewAllowed.containsKey(mi.getView().getCode()) && mapViewAllowed.get(mi.getView().getCode())))
+				{
+					miAdd = processItemNew(mi,codeCurrent,view);
+				}
+			}
+			else
+			{
+				miAdd = processItemNew(mi,codeCurrent,null);
+			}
+			if(miAdd!=null)
+			{
+				if(mi.getCode().equals(codeCurrent)){miAdd.setActive(true);}
+				else{miAdd.setActive(false);}
+				
+				boolean currentIsChild = false;
+				
+				DijkstraShortestPath<String, DefaultEdge> dsp;
+				List<DefaultEdge> path = null;
+				
+				try
+				{
+					dsp = new DijkstraShortestPath<String, DefaultEdge>(graph, mi.getCode(), codeCurrent);
+					path = dsp.getPathEdgeList();
+				}
+				catch (IllegalArgumentException e)
+				{
+					logger.error("Error in graph from "+mi.getCode()+" to "+codeCurrent);
+					logger.error(e.getMessage());
+				}
+				
+				if(path!=null)
+				{
+					currentIsChild = true;
+					miAdd.setActive(true);
+				}
+				
+				if(level<alwaysUpToLevel || currentIsChild)
+				{
+					if(oldImplementation){miAdd.getMenuItem().addAll(processChildsOld(level+1,mi.getCode(),codeCurrent,isLoggedIn));}
+					else
+					{
+						logger.warn("NYI");
+					}
+					
+				}
+				mapMenuItems.get(miAdd.getCode()).setName(miAdd.getName());
+				mapMenuItems.get(miAdd.getCode()).setHref(miAdd.getHref());
+				result.add(miAdd);
+			}
+		}
+		return result;
+	}
+	
+	private MenuItem processItemOld(MenuItem miOrig, String codeCurrent, net.sf.ahtutils.xml.access.View view) throws UtilsNotFoundException
 	{
 		MenuItem mi = new MenuItem();
 		mi.setCode(miOrig.getCode());
@@ -239,7 +367,40 @@ public class MenuXmlBuilder implements MenuBuilder
 		}
 		else if(miOrig.isSetView())
 		{
-			mi.setName(getNameFromViews(view,miOrig.getView()));
+			mi.setName(getNameFromViewsOld(view,miOrig.getView()));
+		}
+		else
+		{
+			logger.warn("Translation missing!!");
+			mi.setName("Translation missing");	
+		}
+		
+		if(miOrig.isSetHref())
+		{
+			mi.setHref(miOrig.getHref());
+		}
+		else if(miOrig.isSetView())
+		{
+			mi.setHref(getHrefFromViews(miOrig.getView()));
+		}
+		else
+		{
+//			mi.setHref("#");
+		}
+		return mi;
+	}
+	
+	private MenuItem processItemNew(MenuItem miOrig, String codeCurrent, net.sf.ahtutils.xml.security.View view) throws UtilsNotFoundException
+	{
+		MenuItem mi = new MenuItem();
+		mi.setCode(miOrig.getCode());
+		if(miOrig.isSetLangs())
+		{
+			mi.setName(getNameFromMenuItem(miOrig.getCode()));
+		}
+		else if(miOrig.isSetView())
+		{
+			mi.setName(getNameFromViewsNew(view,miOrig.getView()));
 		}
 		else
 		{
@@ -269,7 +430,7 @@ public class MenuXmlBuilder implements MenuBuilder
 		else {return translationsMenu.get(lang).get(code);}
 	}
 	
-	private String getNameFromViews(View view, View viewCode)
+	private String getNameFromViewsOld(net.sf.ahtutils.xml.access.View view, net.sf.ahtutils.xml.access.View viewCode)
 	{
 		StringBuffer sbLabel = new StringBuffer();
 		if(!translationsAccess.containsKey(lang)){return "???no-lang-for-"+lang+"???";}
@@ -284,29 +445,40 @@ public class MenuXmlBuilder implements MenuBuilder
 		return sbLabel.toString();
 	}
 	
-	private String getHrefFromViews(View viewCode)
+	private String getNameFromViewsNew(net.sf.ahtutils.xml.security.View view, net.sf.ahtutils.xml.access.View viewCode)
 	{
-//		try
+		StringBuffer sbLabel = new StringBuffer();
+		if(!translationsAccess.containsKey(lang)){return "???no-lang-for-"+lang+"???";}
+		else if(!translationsAccess.get(lang).containsKey(view.getCode())){sbLabel.append("???"+view.getCode()+"???");}
+		else {sbLabel.append(translationsAccess.get(lang).get(view.getCode()));}
+		
+		if(viewCode.isSetLabel())
 		{
-//			View view = AccessXpath.getView(access, viewCode.getCode());
-			View view = mapView.get(viewCode.getCode());
-			if(view.isSetNavigation() && view.getNavigation().isSetUrlMapping())
+			if(sbLabel.length()>0){sbLabel.append(" ");}
+			sbLabel.append(viewCode.getLabel());	
+		}
+		return sbLabel.toString();
+	}
+	
+	private String getHrefFromViews(net.sf.ahtutils.xml.access.View viewCode)
+	{
+		
+		net.sf.ahtutils.xml.access.View view = mapAccessViews.get(viewCode.getCode());
+		if(view.isSetNavigation() && view.getNavigation().isSetUrlMapping())
+		{
+			UrlMapping urlMapping = view.getNavigation().getUrlMapping();
+			StringBuffer sb = new StringBuffer();
+			if(contextRoot!=null)
 			{
-				UrlMapping urlMapping = view.getNavigation().getUrlMapping();
-				StringBuffer sb = new StringBuffer();
-				if(contextRoot!=null)
-				{
-					sb.append("/").append(contextRoot);
-				}
-				if(urlMapping.isSetUrl())
-				{
-					
-					sb.append(urlMapping.getUrl());
-					if(viewCode.isSetUrlParameter()){sb.append(viewCode.getUrlParameter());}
-				}
-				else{sb.append(urlMapping.getValue());}
-				return sb.toString();
+				sb.append("/").append(contextRoot);
 			}
+			if(urlMapping.isSetUrl())
+			{
+				sb.append(urlMapping.getUrl());
+				if(viewCode.isSetUrlParameter()){sb.append(viewCode.getUrlParameter());}
+			}
+			else{sb.append(urlMapping.getValue());}
+			return sb.toString();
 		}
 
 		return null;

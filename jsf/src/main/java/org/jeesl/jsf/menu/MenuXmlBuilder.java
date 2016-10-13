@@ -44,7 +44,6 @@ public class MenuXmlBuilder implements MenuBuilder
 	
 	public void setContextRoot(String contextRoot) {this.contextRoot = contextRoot;}
 
-	private Access access;
 	private boolean noRestrictions;
 	private Map<String,Boolean> mapViewAllowed;
 	private Map<String,Map<String,String>> translationsMenu,translationsAccess;
@@ -63,7 +62,6 @@ public class MenuXmlBuilder implements MenuBuilder
 	public MenuXmlBuilder(Menu menu, Access access,String lang, String rootNode){this(menu,access,lang, rootNode,false);}
 	public MenuXmlBuilder(Menu menu, Access access,String lang, String rootNode, boolean noRestrictions)
 	{
-		this.access=access;
 		this.rootNode=rootNode;
 		this.noRestrictions=noRestrictions;
 		
@@ -84,7 +82,7 @@ public class MenuXmlBuilder implements MenuBuilder
 		
 		mapView = new Hashtable<String,View>();
 		
-		if(access!=null){createAccessMaps();}
+		if(access!=null){buildViewMap(access);}
 		alwaysUpToLevel = 1;
 	}
 	
@@ -123,7 +121,7 @@ public class MenuXmlBuilder implements MenuBuilder
 		mapMenuItems.put(mi.getCode(), mi);
 	}
 	
-	private void createAccessMaps()
+	private void buildViewMap(Access access)
 	{
 		for(Category c : access.getCategory())
 		{
@@ -288,10 +286,10 @@ public class MenuXmlBuilder implements MenuBuilder
 	
 	private String getHrefFromViews(View viewCode)
 	{
-		try
+//		try
 		{
-			View view = AccessXpath.getView(access, viewCode.getCode());
-//			View view = mapView.get(viewCode.getCode());
+//			View view = AccessXpath.getView(access, viewCode.getCode());
+			View view = mapView.get(viewCode.getCode());
 			if(view.isSetNavigation() && view.getNavigation().isSetUrlMapping())
 			{
 				UrlMapping urlMapping = view.getNavigation().getUrlMapping();
@@ -310,8 +308,7 @@ public class MenuXmlBuilder implements MenuBuilder
 				return sb.toString();
 			}
 		}
-		catch (ExlpXpathNotFoundException e) {}
-		catch (ExlpXpathNotUniqueException e) {}
+
 		return null;
 	}
 	

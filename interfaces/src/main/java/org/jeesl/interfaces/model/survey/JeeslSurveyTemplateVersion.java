@@ -1,18 +1,13 @@
 package org.jeesl.interfaces.model.survey;
 
-import java.util.List;
-
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.EjbWithRemark;
-import net.sf.ahtutils.interfaces.model.with.utils.UtilsWithCategory;
-import net.sf.ahtutils.interfaces.model.with.utils.UtilsWithStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface JeeslSurveyTemplate<L extends UtilsLang,
+public interface JeeslSurveyTemplateVersion<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -27,10 +22,7 @@ public interface JeeslSurveyTemplate<L extends UtilsLang,
 										DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithRecord,EjbWithName,EjbWithRemark,
-						UtilsWithStatus<L,D,TS>,
-						UtilsWithCategory<L,D,TC>
+			extends EjbWithId,EjbWithRecord,EjbWithName
 {
-	List<SECTION> getSections();
-	void setSections(List<SECTION> sections);
+
 }

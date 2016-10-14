@@ -1,18 +1,23 @@
-package org.jeesl.interfaces.model.survey;
-
-import java.util.List;
+package org.jeesl.factory.ejb.survey;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.EjbWithRemark;
-import net.sf.ahtutils.interfaces.model.with.utils.UtilsWithCategory;
-import net.sf.ahtutils.interfaces.model.with.utils.UtilsWithStatus;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.model.interfaces.with.EjbWithName;
-import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
+import net.sf.ahtutils.xml.survey.Template;
 
-public interface JeeslSurveyTemplate<L extends UtilsLang,
+import org.jeesl.interfaces.model.survey.JeeslSurvey;
+import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.survey.JeeslSurveyCorrelation;
+import org.jeesl.interfaces.model.survey.JeeslSurveyData;
+import org.jeesl.interfaces.model.survey.JeeslSurveyOption;
+import org.jeesl.interfaces.model.survey.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.survey.JeeslSurveySection;
+import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class EjbSurveyTemplateFactory<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -27,10 +32,34 @@ public interface JeeslSurveyTemplate<L extends UtilsLang,
 										DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithRecord,EjbWithName,EjbWithRemark,
-						UtilsWithStatus<L,D,TS>,
-						UtilsWithCategory<L,D,TC>
 {
-	List<SECTION> getSections();
-	void setSections(List<SECTION> sections);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyTemplateFactory.class);
+	
+	final Class<TEMPLATE> cTemplate;
+    
+	public EjbSurveyTemplateFactory(final Class<TEMPLATE> cTemplate)
+	{       
+        this.cTemplate = cTemplate;
+	}
+    
+	public TEMPLATE build(TC category,TS status, Template xTemplate)
+	{
+		return build(category,status,xTemplate.getDescription().getValue());
+	}
+	
+	public TEMPLATE build(TC category,TS status, String name)
+	{
+		TEMPLATE ejb = null;
+		try
+		{
+			ejb = cTemplate.newInstance();
+			ejb.setName(name);
+			ejb.setCategory(category);
+			ejb.setStatus(status);
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		return ejb;
+	}
 }

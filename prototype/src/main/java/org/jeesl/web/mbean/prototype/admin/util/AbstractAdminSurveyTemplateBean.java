@@ -1,0 +1,143 @@
+package org.jeesl.web.mbean.prototype.admin.util;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jeesl.factory.ejb.survey.EjbSurveyFactoryFactory;
+import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
+import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
+import org.jeesl.interfaces.facade.JeeslSurveyFacade;
+import org.jeesl.interfaces.model.survey.JeeslSurvey;
+import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.survey.JeeslSurveyCorrelation;
+import org.jeesl.interfaces.model.survey.JeeslSurveyData;
+import org.jeesl.interfaces.model.survey.JeeslSurveyOption;
+import org.jeesl.interfaces.model.survey.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.survey.JeeslSurveySection;
+import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
+
+public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
+										D extends UtilsDescription,
+										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
+										SS extends UtilsStatus<SS,L,D>,
+										TEMPLATE extends JeeslSurveyTemplate<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
+										VERSION extends JeeslSurveyTemplateVersion<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
+										TS extends UtilsStatus<TS,L,D>,
+										TC extends UtilsStatus<TC,L,D>,
+										SECTION extends JeeslSurveySection<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
+										QUESTION extends JeeslSurveyQuestion<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
+										UNIT extends UtilsStatus<UNIT,L,D>,
+										ANSWER extends JeeslSurveyAnswer<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
+										DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
+										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
+										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
+					extends AbstractAdminBean<L,D>
+					implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyTemplateBean.class);
+
+	protected JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
+	
+	Class<TEMPLATE> cTemplate;
+	Class<SECTION> cSection;
+	protected Class<QUESTION> cQuestion;
+	protected Class<UNIT> cUnit;
+	
+	protected EjbSurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
+	protected EjbSurveySectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efSection;
+	protected EjbSurveyQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efQuestion;
+
+	protected List<TC> categories; public List<TC> getCategories(){return categories;}
+	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
+	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
+	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
+	
+	protected TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
+	protected TEMPLATE template; public TEMPLATE getTemplate(){return template;} public void setTemplate(TEMPLATE template){this.template = template;}
+	protected SECTION section; public SECTION getSection(){return section;} public void setSection(SECTION section){this.section = section;}
+	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
+	
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<TEMPLATE> cTemplate, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData)
+	{
+		super.initAdmin(localeCodes,cL,cD,bMessage);
+		this.fSurvey = fSurvey;
+		
+		this.cTemplate = cTemplate;
+		this.cSection = cSection;
+		this.cQuestion = cQuestion;
+		this.cUnit = cUnit;
+		
+		ffSurvey = EjbSurveyFactoryFactory.factory(cSurvey, cTemplate, cSection, cQuestion, cAnswer, cData);
+		efSection = ffSurvey.section();
+		efQuestion = ffSurvey.question();
+		
+		categories = new ArrayList<TC>();
+	}
+		
+	protected void reloadTemplate()
+	{
+		template = fSurvey.load(cTemplate,template);
+		sections = template.getSections();
+	}
+	
+	//Section
+	protected void loadSection()
+	{
+		section = fSurvey.load(cSection,section);
+		questions = section.getQuestions();
+	}
+	
+	public void addSection()
+	{
+		logger.info(AbstractLogMessage.addEntity(cSection));
+		section = efSection.build(template,"",0);
+	}
+	
+	public void selectSection()
+	{
+		logger.info(AbstractLogMessage.selectEntity(section));
+		loadSection();
+	}
+	
+	public void saveSection() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(section));
+		section = fSurvey.save(section);
+		reloadTemplate();
+		loadSection();
+	}
+	
+	//Question
+	public void addQuestion()
+	{
+		logger.info(AbstractLogMessage.addEntity(cQuestion));
+		question = efQuestion.build(section,null);
+	}
+	
+	public void selectQuestion()
+	{
+		logger.info(AbstractLogMessage.selectEntity(question));
+	}
+	
+	public void saveQuestion() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(question));
+		question.setUnit(fSurvey.find(cUnit,question.getUnit()));
+		question = fSurvey.save(question);
+		loadSection();
+	}
+}

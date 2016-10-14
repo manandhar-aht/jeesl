@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean;
+package org.jeesl.web.mbean.prototype.system;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;

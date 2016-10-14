@@ -1,18 +1,24 @@
-package org.jeesl.interfaces.model.survey;
+package org.jeesl.factory.ejb.survey;
 
-import java.util.List;
+import java.util.Date;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.EjbWithRemark;
-import net.sf.ahtutils.interfaces.model.with.utils.UtilsWithCategory;
-import net.sf.ahtutils.interfaces.model.with.utils.UtilsWithStatus;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.model.interfaces.with.EjbWithName;
-import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface JeeslSurveyTemplate<L extends UtilsLang,
+import org.jeesl.interfaces.model.survey.JeeslSurvey;
+import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.survey.JeeslSurveyCorrelation;
+import org.jeesl.interfaces.model.survey.JeeslSurveyData;
+import org.jeesl.interfaces.model.survey.JeeslSurveyOption;
+import org.jeesl.interfaces.model.survey.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.survey.JeeslSurveySection;
+import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class EjbSurveyDataFactory<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -27,10 +33,29 @@ public interface JeeslSurveyTemplate<L extends UtilsLang,
 										DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithRecord,EjbWithName,EjbWithRemark,
-						UtilsWithStatus<L,D,TS>,
-						UtilsWithCategory<L,D,TC>
 {
-	List<SECTION> getSections();
-	void setSections(List<SECTION> sections);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDataFactory.class);
+	
+	final Class<DATA> cData;
+    
+	public EjbSurveyDataFactory(final Class<DATA> cData)
+	{       
+        this.cData = cData;
+	}
+		
+	public DATA build(SURVEY survey, CORRELATION correlation)
+	{
+		DATA ejb = null;
+		try
+		{
+			ejb = cData.newInstance();
+			ejb.setSurvey(survey);
+			ejb.setCorrelation(correlation);
+			ejb.setRecord(new Date());
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		return ejb;
+	}
 }

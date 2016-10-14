@@ -1,9 +1,10 @@
-package net.sf.ahtutils.factory.ejb.survey;
+package org.jeesl.factory.ejb.survey;
+
+import java.util.Date;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.survey.Template;
 
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
@@ -17,7 +18,7 @@ import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbSurveyTemplateFactory<L extends UtilsLang,
+public class EjbSurveyDataFactory<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -33,35 +34,30 @@ public class EjbSurveyTemplateFactory<L extends UtilsLang,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveyTemplateFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDataFactory.class);
 	
-	final Class<TEMPLATE> cTemplate;
+	final Class<DATA> cData;
     
-	public EjbSurveyTemplateFactory(final Class<TEMPLATE> cTemplate)
+	public EjbSurveyDataFactory(final Class<DATA> cData)
 	{       
-        this.cTemplate = cTemplate;
+        this.cData = cData;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,SURVEY extends JeeslSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,SS extends UtilsStatus<SS,L,D>,TEMPLATE extends JeeslSurveyTemplate<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,VERSION extends JeeslSurveyTemplateVersion<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,TS extends UtilsStatus<TS,L,D>,TC extends UtilsStatus<TC,L,D>,SECTION extends JeeslSurveySection<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,QUESTION extends JeeslSurveyQuestion<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,UNIT extends UtilsStatus<UNIT,L,D>,ANSWER extends JeeslSurveyAnswer<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
-	EjbSurveyTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> factory(final Class<TEMPLATE> cTemplate)
+	EjbSurveyDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> factory(final Class<DATA> cData)
 	{
-		return new EjbSurveyTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(cTemplate);
-	}
-    
-	public TEMPLATE build(TC category,TS status, Template xTemplate)
-	{
-		return build(category,status,xTemplate.getDescription().getValue());
+		return new EjbSurveyDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(cData);
 	}
 	
-	public TEMPLATE build(TC category,TS status, String name)
+	public DATA build(SURVEY survey, CORRELATION correlation)
 	{
-		TEMPLATE ejb = null;
+		DATA ejb = null;
 		try
 		{
-			ejb = cTemplate.newInstance();
-			ejb.setName(name);
-			ejb.setCategory(category);
-			ejb.setStatus(status);
+			ejb = cData.newInstance();
+			ejb.setSurvey(survey);
+			ejb.setCorrelation(correlation);
+			ejb.setRecord(new Date());
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

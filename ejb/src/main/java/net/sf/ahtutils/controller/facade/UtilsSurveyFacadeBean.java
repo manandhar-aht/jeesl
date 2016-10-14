@@ -11,6 +11,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
+import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
+import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.survey.JeeslSurveyCorrelation;
@@ -24,8 +26,6 @@ import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.survey.EjbSurveyAnswerFactory;
-import net.sf.ahtutils.factory.ejb.survey.EjbSurveyTemplateFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsSurveyFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

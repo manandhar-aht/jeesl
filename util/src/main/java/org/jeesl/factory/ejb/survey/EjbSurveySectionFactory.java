@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.survey;
+package org.jeesl.factory.ejb.survey;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

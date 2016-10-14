@@ -33,7 +33,20 @@
 						</p:column>
 					</p:dataTable>
 				</h:form>
-				
+				<h:form id="fVersion">
+					<p:dataTable var="version" value="#{adminVupAppraisalBean.versions}" rowKey="#{version.id}"
+								 selection="#{adminVupAppraisalBean.version}" selectionMode="single">
+						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{adminVupAppraisalBean.selectCategory}"/>
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.aupSurveyVersion}">
+                                <aht:icon type="aupAdd" listener="#{adminVupAppraisalBean.addVersion()}" update=":#{cc.id}:row1"/>
+                            </aht:pfDataTableHeader>
+						</f:facet>
+						<p:column>
+							<h:outputText value="#{version.name}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
 				<h:form id="fSections" rendered="#{not empty adminVupAppraisalBean.template}">
 					<p:dataTable var="s" value="#{adminVupAppraisalBean.sections}" rowKey="#{s.id}"
                                  selection="#{adminVupAppraisalBean.section}" selectionMode="single">

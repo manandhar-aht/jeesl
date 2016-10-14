@@ -53,6 +53,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	
 	Class<TEMPLATE> cTemplate;
+	Class<VERSION> cVersion;
 	Class<SECTION> cSection;
 	protected Class<QUESTION> cQuestion;
 	protected Class<UNIT> cUnit;
@@ -67,21 +68,23 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
 	
 	protected TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
+	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
 	protected TEMPLATE template; public TEMPLATE getTemplate(){return template;} public void setTemplate(TEMPLATE template){this.template = template;}
 	protected SECTION section; public SECTION getSection(){return section;} public void setSection(SECTION section){this.section = section;}
 	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<TEMPLATE> cTemplate, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData)
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fSurvey = fSurvey;
 		
 		this.cTemplate = cTemplate;
+		this.cVersion = cVersion;
 		this.cSection = cSection;
 		this.cQuestion = cQuestion;
 		this.cUnit = cUnit;
 		
-		ffSurvey = EjbSurveyFactoryFactory.factory(cSurvey, cTemplate, cSection, cQuestion, cAnswer, cData);
+		ffSurvey = EjbSurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection, cQuestion, cAnswer, cData);
 		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();
 		
@@ -92,6 +95,17 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		template = fSurvey.load(cTemplate,template);
 		sections = template.getSections();
+	}
+	
+	//Version
+	public void addVersion()
+	{
+		logger.info(AbstractLogMessage.addEntity(cVersion));
+	}
+	
+	protected void selectVersion()
+	{
+		logger.info(AbstractLogMessage.selectEntity(version));
 	}
 	
 	//Section

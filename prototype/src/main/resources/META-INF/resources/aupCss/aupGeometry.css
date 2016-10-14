@@ -265,3 +265,7 @@ margin-top: 8px;
     overflow:hidden;
     text-overflow:ellipsis;
 }
+
+.ui-treetable thead th, .ui-treetable tbody td, .ui-treetable tfoot td {
+    white-space: normal;
+}

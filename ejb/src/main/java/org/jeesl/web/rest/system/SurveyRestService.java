@@ -3,12 +3,14 @@ package org.jeesl.web.rest.system;
 import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyFactory;
+import org.jeesl.factory.ejb.survey.EjbSurveyFactoryFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.xml.survey.XmlAnswerFactory;
 import org.jeesl.factory.xml.survey.XmlSurveyFactory;
 import org.jeesl.factory.xml.survey.XmlTemplateFactory;
+import org.jeesl.interfaces.facade.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.survey.JeeslSurveyCorrelation;
@@ -30,7 +32,6 @@ import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
 import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.factory.xml.sync.XmlMapperFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsSurveyFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -70,7 +71,7 @@ public class SurveyRestService <L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyRestService.class);
 	
-	private UtilsSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
+	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	
 	private final Class<L> cL;
 	private final Class<D> cD;
@@ -98,7 +99,7 @@ public class SurveyRestService <L extends UtilsLang,
 	private EjbSurveyDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efData;
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efAnswer;
 	
-	private SurveyRestService(UtilsSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS,final Class<TEMPLATE> cTEMPLATE,final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSection,final Class<QUESTION> cQuestion,final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer,final Class<DATA> cData,final Class<CORRELATION> cCorrelation)
+	private SurveyRestService(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS,final Class<TEMPLATE> cTEMPLATE,final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSection,final Class<QUESTION> cQuestion,final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer,final Class<DATA> cData,final Class<CORRELATION> cCorrelation)
 	{
 		this.fSurvey=fSurvey;
 		this.cL=cL;
@@ -125,12 +126,14 @@ public class SurveyRestService <L extends UtilsLang,
 		
 		xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.surveyAnswers));
 		
-		efTemlate = EjbSurveyTemplateFactory.factory(cTEMPLATE);
-		efSection = EjbSurveySectionFactory.factory(cSection);
-		efQuestion = EjbSurveyQuestionFactory.factory(cQuestion);
-		efSurvey = EjbSurveyFactory.factory(cSurvey);
-		efData = EjbSurveyDataFactory.factory(cData);
-		efAnswer = EjbSurveyAnswerFactory.factory(cAnswer);
+		EjbSurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey = EjbSurveyFactoryFactory.factory(cSurvey,cTEMPLATE,cSection,cQuestion,cAnswer,cData);
+		
+		efTemlate = ffSurvey.template();
+		efSection = ffSurvey.section();
+		efQuestion = ffSurvey.question();
+		efSurvey = ffSurvey.survey();
+		efData = ffSurvey.data();
+		efAnswer = ffSurvey.answer();
 	}
 	
 	public static <L extends UtilsLang,
@@ -150,7 +153,7 @@ public class SurveyRestService <L extends UtilsLang,
 					OT extends UtilsStatus<OT,L,D>,
 					CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
 		SurveyRestService<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>
-			factory(UtilsSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS,final Class<TEMPLATE> cTEMPLATE,final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSECTION,final Class<QUESTION> cQuestion,final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer,final Class<DATA> cData,final Class<CORRELATION> cCorrelation)
+			factory(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS,final Class<TEMPLATE> cTEMPLATE,final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSECTION,final Class<QUESTION> cQuestion,final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer,final Class<DATA> cData,final Class<CORRELATION> cCorrelation)
 	{
 		return new SurveyRestService<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(fSurvey,cL,cD,cSurvey,cSS,cTEMPLATE,cTS,cTC,cSECTION,cQuestion,cUNIT,cAnswer,cData,cCorrelation);
 	}

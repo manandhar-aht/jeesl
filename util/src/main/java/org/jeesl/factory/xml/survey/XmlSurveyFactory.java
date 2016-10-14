@@ -1,13 +1,13 @@
 package org.jeesl.factory.xml.survey;
 
 import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsSurveyFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.survey.Survey;
 import net.sf.exlp.util.DateUtil;
 
+import org.jeesl.interfaces.facade.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.survey.JeeslSurveyCorrelation;
@@ -24,7 +24,7 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlSurveyFactory.class);
 	
-	private UtilsSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
+	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	private Class<SURVEY> cSurvey;
 	private Class<DATA> cData;
 	
@@ -35,7 +35,7 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 		this.q=q;
 	}
 	
-	public void lazyLoad(UtilsSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<SURVEY> cSurvey,Class<DATA> cData)
+	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<SURVEY> cSurvey,Class<DATA> cData)
 	{
 		this.fSurvey=fSurvey;
 		this.cSurvey=cSurvey;

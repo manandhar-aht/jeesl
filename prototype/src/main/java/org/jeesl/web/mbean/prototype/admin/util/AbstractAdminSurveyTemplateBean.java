@@ -62,6 +62,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected EjbSurveyQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efQuestion;
 
 	protected List<TC> categories; public List<TC> getCategories(){return categories;}
+	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
 	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
 	

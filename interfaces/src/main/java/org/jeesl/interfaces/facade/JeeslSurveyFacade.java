@@ -41,8 +41,8 @@ public interface JeeslSurveyFacade <L extends UtilsLang,
 	SURVEY load(Class<SURVEY> cSurvey, SURVEY survey);
 	DATA load(Class<DATA> cData, DATA data);
 	
-	TEMPLATE fcSurveyTemplate(TC category);
-	TEMPLATE fcSurveyTemplate(TC category, VERSION version);
+	TEMPLATE fcSurveyTemplate(TC category, TS status);
+	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status);
 	
 	List<ANSWER> fcAnswers(DATA data);
 	List<ANSWER> fAnswers(SURVEY survey);

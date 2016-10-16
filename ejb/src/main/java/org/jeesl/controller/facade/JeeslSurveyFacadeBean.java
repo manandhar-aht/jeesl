@@ -109,7 +109,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	}
 	
 	@Override
-	public TEMPLATE fcSurveyTemplate(TC category)
+	public TEMPLATE fcSurveyTemplate(TC category, TS status)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 
@@ -122,16 +122,10 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		cQ.select(root).distinct(true);
 
 		List<TEMPLATE> list = em.createQuery(cQ).getResultList();
-		if(list.size()==0)
+		if(list.isEmpty())
 		{
-			TEMPLATE template = null;
-			try
-			{
-				TS status = this.fByCode(cTS,JeeslSurveyOption.Status.open.toString());		
-				template = eTemplate.build(category,status,"");
-				em.persist(template);
-			}
-			catch (UtilsNotFoundException e) {e.printStackTrace();}
+			TEMPLATE template = eTemplate.build(category,status,"");
+			em.persist(template);
 			return template;
 		}
 		else
@@ -141,7 +135,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	}
 	
 	@Override
-	public TEMPLATE fcSurveyTemplate(TC category, VERSION version)
+	public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status)
 	{
 		// TODO Auto-generated method stub
 		return null;

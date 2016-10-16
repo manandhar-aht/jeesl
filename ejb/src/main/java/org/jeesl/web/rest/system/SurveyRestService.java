@@ -301,7 +301,7 @@ public class SurveyRestService <L extends UtilsLang,
 			{
 				CORRELATION eCorrelation = fSurvey.find(cCorrelation,xData.getCorrelation().getId());
 				DATA eData = efData.build(eSurvey,eCorrelation);
-				eData = fSurvey.saveData(cData,cCorrelation,eData);
+				eData = fSurvey.saveData(eData);
 				logger.trace("EDATA: "+eData.toString());
 				
 				for(Answer xAnswer : xData.getAnswer())
@@ -349,7 +349,7 @@ public class SurveyRestService <L extends UtilsLang,
 		try
 		{
 			SURVEY survey = fSurvey.find(cSurvey,id);
-			for(ANSWER answer : fSurvey.fAnswers(cAnswer, cData, survey))
+			for(ANSWER answer : fSurvey.fAnswers(survey))
 			{
 				data.getAnswer().add(xfAnswer.build(answer));
 			}

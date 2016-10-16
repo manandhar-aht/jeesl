@@ -49,14 +49,28 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 									OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 									CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
 	extends UtilsFacadeBean implements JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>
-{		
+{
+	
+	final Class<TEMPLATE> cTemplate;
+	final Class<TS> cTS;
+	
+	final Class<ANSWER> cAnswer;
+	final Class<DATA> cData;
+	final Class<CORRELATION> cCorrelation;
+	
 	private EjbSurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efAnswer;
-	EjbSurveyTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> eTemplate;
+	private EjbSurveyTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> eTemplate;
 	
-	public JeeslSurveyFacadeBean(EntityManager em, Class<SURVEY> cSurvey, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, Class<SECTION> cSection, Class<QUESTION> cQuestion, Class<ANSWER> cAnswer,  Class<DATA> cData)
+	public JeeslSurveyFacadeBean(EntityManager em, Class<SURVEY> cSurvey, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, Class<ANSWER> cAnswer,  Class<DATA> cData, final Class<CORRELATION> cCorrelation)
 	{
 		super(em);
+		this.cTemplate=cTemplate;
+		this.cTS=cTS;
+		this.cAnswer=cAnswer;
+		this.cData=cData;
+		this.cCorrelation=cCorrelation;
+		
 		ffSurvey = EjbSurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData);
 		eTemplate = ffSurvey.template();
 		efAnswer = ffSurvey.answer();
@@ -95,7 +109,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	}
 	
 	@Override
-	public TEMPLATE fcSurveyTemplate(Class<TEMPLATE> cTemplate, Class<TS> cTS, TC category)
+	public TEMPLATE fcSurveyTemplate(TC category)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 
@@ -125,9 +139,16 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 			return list.get(0);
 		}
 	}
+	
+	@Override
+	public TEMPLATE fcSurveyTemplate(TC category, VERSION version)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
-	public List<ANSWER> fcAnswers(Class<DATA> cData, Class<ANSWER> cAnswer, Class<TEMPLATE> cTemplate, DATA data)
+	public List<ANSWER> fcAnswers(DATA data)
 	{
 		data = em.find(cData,data.getId());
 		TEMPLATE template = em.find(cTemplate,data.getSurvey().getTemplate().getId());
@@ -161,8 +182,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		}
 	}
 
-	@Override
-	public DATA saveData(Class<DATA> cData, Class<CORRELATION> cCorrelation, DATA data) throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public DATA saveData(DATA data) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(data.getCorrelation().getId()>0)
 		{
@@ -171,9 +191,10 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		return this.saveProtected(data);
 	}
 
-	@Override public List<ANSWER> fAnswers(Class<ANSWER> cAnswer, Class<DATA> cData, SURVEY survey)
+	@Override public List<ANSWER> fAnswers(SURVEY survey)
 	{
-		
 		return this.allForGrandParent(cAnswer, cData, "data", survey, "survey");
 	}
+
+	
 }

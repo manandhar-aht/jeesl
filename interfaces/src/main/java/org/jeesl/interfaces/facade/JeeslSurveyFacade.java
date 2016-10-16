@@ -41,9 +41,11 @@ public interface JeeslSurveyFacade <L extends UtilsLang,
 	SURVEY load(Class<SURVEY> cSurvey, SURVEY survey);
 	DATA load(Class<DATA> cData, DATA data);
 	
-	TEMPLATE fcSurveyTemplate(Class<TEMPLATE> cTemplate, Class<TS> cTS, TC category);
-	List<ANSWER> fcAnswers(Class<DATA> cData, Class<ANSWER> cAnswer, Class<TEMPLATE> cTemplate, DATA data);
-	List<ANSWER> fAnswers(Class<ANSWER> cAnswer, Class<DATA> cData, SURVEY survey);
+	TEMPLATE fcSurveyTemplate(TC category);
+	TEMPLATE fcSurveyTemplate(TC category, VERSION version);
 	
-	DATA saveData(Class<DATA> cData, Class<CORRELATION> cCorrelation, DATA data) throws UtilsConstraintViolationException, UtilsLockingException;
+	List<ANSWER> fcAnswers(DATA data);
+	List<ANSWER> fAnswers(SURVEY survey);
+	
+	DATA saveData(DATA data) throws UtilsConstraintViolationException, UtilsLockingException;
 }

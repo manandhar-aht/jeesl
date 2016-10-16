@@ -33,6 +33,9 @@ public interface JeeslSurveyTemplate<L extends UtilsLang,
 {
 	enum Attributes {category}
 	
+	VERSION getVersion();
+	void setVersion(VERSION version);
+	
 	List<SECTION> getSections();
 	void setSections(List<SECTION> sections);
 }

@@ -112,14 +112,13 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	public TEMPLATE fcSurveyTemplate(TC category, TS status)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-
 		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(cTemplate);
 		Root<TEMPLATE> root = cQ.from(cTemplate);
 
-		Path<TC> pathCategory = root.get("category");
+		Path<TC> pathCategory = root.get(JeeslSurveyTemplate.Attributes.category.toString());
 
-		cQ.where(pathCategory.in(category));
-		cQ.select(root).distinct(true);
+		cQ.where(cB.equal(pathCategory,category));
+		cQ.select(root);
 
 		List<TEMPLATE> list = em.createQuery(cQ).getResultList();
 		if(list.isEmpty())
@@ -128,17 +127,29 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 			em.persist(template);
 			return template;
 		}
-		else
-		{
-			return list.get(0);
-		}
+		else{return list.get(0);}
 	}
 	
 	@Override
 	public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(cTemplate);
+		Root<TEMPLATE> root = cQ.from(cTemplate);
+
+		Path<TC> pathCategory = root.get(JeeslSurveyTemplate.Attributes.category.toString());
+
+		cQ.where(cB.equal(pathCategory,category));
+		cQ.select(root);
+
+		List<TEMPLATE> list = em.createQuery(cQ).getResultList();
+		if(list.isEmpty())
+		{
+			TEMPLATE template = eTemplate.build(category,status,"");
+			em.persist(template);
+			return template;
+		}
+		else{return list.get(0);}
 	}
 
 	@Override
@@ -148,7 +159,6 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		TEMPLATE template = em.find(cTemplate,data.getSurvey().getTemplate().getId());
 		List<ANSWER> result = new ArrayList<ANSWER>();
 
-		
 		Set<Long> existing = new HashSet<Long>();
 		for(ANSWER a : data.getAnswers()){existing.add(a.getQuestion().getId());result.add(a);}
 		createAnswers(existing,template.getSections(),data,result);

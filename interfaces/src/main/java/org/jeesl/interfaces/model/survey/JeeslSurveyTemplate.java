@@ -31,6 +31,8 @@ public interface JeeslSurveyTemplate<L extends UtilsLang,
 						UtilsWithStatus<L,D,TS>,
 						UtilsWithCategory<L,D,TC>
 {
+	enum Attributes {category}
+	
 	List<SECTION> getSections();
 	void setSections(List<SECTION> sections);
 }

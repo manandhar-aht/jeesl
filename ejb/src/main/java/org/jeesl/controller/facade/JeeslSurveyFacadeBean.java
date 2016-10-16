@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
@@ -28,7 +29,6 @@ import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -108,44 +108,32 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		return data;
 	}
 	
-	@Override
-	public TEMPLATE fcSurveyTemplate(TC category, TS status)
+	@Override public TEMPLATE fcSurveyTemplate(TC category, TS status){return fcSurveyTemplate(category,null,status);}
+	@Override public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(cTemplate);
 		Root<TEMPLATE> root = cQ.from(cTemplate);
-
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		
 		Path<TC> pathCategory = root.get(JeeslSurveyTemplate.Attributes.category.toString());
-
-		cQ.where(cB.equal(pathCategory,category));
-		cQ.select(root);
-
-		List<TEMPLATE> list = em.createQuery(cQ).getResultList();
-		if(list.isEmpty())
+		predicates.add(cB.equal(pathCategory,category));
+		
+		if(version!=null)
 		{
-			TEMPLATE template = eTemplate.build(category,status,"");
-			em.persist(template);
-			return template;
+			Path<TC> pathVersion = root.get(JeeslSurveyTemplate.Attributes.version.toString());
+			predicates.add(cB.equal(pathVersion,version));
 		}
-		else{return list.get(0);}
-	}
-	
-	@Override
-	public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status)
-	{
-		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(cTemplate);
-		Root<TEMPLATE> root = cQ.from(cTemplate);
-
-		Path<TC> pathCategory = root.get(JeeslSurveyTemplate.Attributes.category.toString());
-
-		cQ.where(cB.equal(pathCategory,category));
+		
+		predicates.toArray(new Predicate[predicates.size()]);
+		cQ.where();
 		cQ.select(root);
 
 		List<TEMPLATE> list = em.createQuery(cQ).getResultList();
 		if(list.isEmpty())
 		{
 			TEMPLATE template = eTemplate.build(category,status,"");
+			if(version!=null){template.setVersion(version);}
 			em.persist(template);
 			return template;
 		}

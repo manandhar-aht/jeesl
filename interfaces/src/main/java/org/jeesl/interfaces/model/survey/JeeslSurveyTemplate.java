@@ -31,7 +31,7 @@ public interface JeeslSurveyTemplate<L extends UtilsLang,
 						UtilsWithStatus<L,D,TS>,
 						UtilsWithCategory<L,D,TC>
 {
-	enum Attributes {category}
+	enum Attributes {category,version,status}
 	
 	VERSION getVersion();
 	void setVersion(VERSION version);

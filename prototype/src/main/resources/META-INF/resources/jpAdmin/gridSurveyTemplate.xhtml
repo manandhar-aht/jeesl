@@ -63,8 +63,20 @@
 					</p:dataTable>
                 </h:form>
 			</aht:slot>
-			<aht:slot width="5" renderChildren="#{not empty cc.attrs.bean.section}">
-				<h:form id="fSection">
+			<aht:slot width="5" >
+				<h:form id="fSection" rendered="#{not empty cc.attrs.bean.version}">
+					<p:panel header="#{msg.jpTemplateVersion}" styleClass="auPanelWithGrid">
+						<f:facet name="actions">
+							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveVersion()}" update=":#{cc.id}:row1"/>
+						</f:facet>
+						<p:panelGrid columns="2" columnClasses="col1,col2" >
+							<p:outputLabel value="#{msg.aupName}"/>
+							<p:inputText value="#{cc.attrs.bean.version.name}"/>
+						</p:panelGrid>
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+					</p:panel>
+				</h:form>
+				<h:form id="fSection" rendered="#{not empty cc.attrs.bean.section}">
 					<p:panel header="#{msg.aupSurveySection}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:row1"/>
@@ -79,7 +91,7 @@
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 					</p:panel>
 				</h:form>
-				<h:form id="fQuestions" rendered="#{cc.attrs.bean.section.id gt 0}">
+				<h:form id="fQuestions" rendered="#{(not empty cc.attrs.bean.section) and (cc.attrs.bean.section.id gt 0)}">
 					<p:dataTable var="q" value="#{cc.attrs.bean.questions}" rowKey="#{q.id}"
                                  selection="#{cc.attrs.bean.question}" selectionMode="single">
 						<p:ajax event="rowSelect" update=":#{cc.id}:sQuestion" listener="#{cc.attrs.bean.selectQuestion()}"/>

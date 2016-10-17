@@ -15,6 +15,7 @@ import javax.persistence.criteria.Root;
 import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyFactoryFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
+import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.facade.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
@@ -111,6 +112,14 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	@Override public TEMPLATE fcSurveyTemplate(TC category, TS status){return fcSurveyTemplate(category,null,status);}
 	@Override public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status)
 	{
+		if(version!=null && EjbIdFactory.isUnSaved(version))
+		{
+			TEMPLATE template = eTemplate.build(category,status,"");
+			template.setVersion(version);
+			em.persist(template);
+			return template;
+		}
+		
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(cTemplate);
 		Root<TEMPLATE> root = cQ.from(cTemplate);
@@ -133,7 +142,6 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		if(list.isEmpty())
 		{
 			TEMPLATE template = eTemplate.build(category,status,"");
-			if(version!=null){template.setVersion(version);}
 			em.persist(template);
 			return template;
 		}

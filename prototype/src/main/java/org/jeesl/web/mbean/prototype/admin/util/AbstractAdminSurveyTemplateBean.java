@@ -7,6 +7,7 @@ import java.util.List;
 import org.jeesl.factory.ejb.survey.EjbSurveyFactoryFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
+import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.interfaces.facade.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -59,6 +61,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected Class<UNIT> cUnit;
 	
 	protected EjbSurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
+	protected EjbSurveyTemplateVersionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efVersion;
 	protected EjbSurveySectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efSection;
 	protected EjbSurveyQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efQuestion;
 
@@ -85,27 +88,56 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		this.cUnit = cUnit;
 		
 		ffSurvey = EjbSurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection, cQuestion, cAnswer, cData);
+		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();
 		
 		categories = new ArrayList<TC>();
+		versions = new ArrayList<VERSION>();
+	}
+	
+	public void selectCategory() throws UtilsNotFoundException
+	{
+		clearSelection();
+		initTemplate();
+	}
+	
+	protected void clearSelection()
+	{
+		template = null;
+		section=null;
+		question=null;
 	}
 		
 	protected void reloadTemplate()
 	{
 		template = fSurvey.load(cTemplate,template);
+		version = template.getVersion();
 		sections = template.getSections();
 	}
+	
+	//Template
+	protected void initTemplate() throws UtilsNotFoundException{}
 	
 	//Version
 	public void addVersion()
 	{
 		logger.info(AbstractLogMessage.addEntity(cVersion));
+		version = efVersion.build();
 	}
 	
-	protected void selectVersion()
+	protected void selectVersion() throws UtilsNotFoundException
 	{
+		clearSelection();
 		logger.info(AbstractLogMessage.selectEntity(version));
+		version = fSurvey.find(cVersion, version);
+		initTemplate();
+	}
+	
+	protected void saveVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.saveEntity(version));
+		initTemplate();
 	}
 	
 	//Section

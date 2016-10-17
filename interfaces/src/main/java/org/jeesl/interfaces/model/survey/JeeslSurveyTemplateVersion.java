@@ -25,6 +25,8 @@ public interface JeeslSurveyTemplateVersion<L extends UtilsLang,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
 			extends EjbWithId,EjbWithRecord,EjbWithName,EjbSaveable
 {
+	enum Attributes {template}
+	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);
 }

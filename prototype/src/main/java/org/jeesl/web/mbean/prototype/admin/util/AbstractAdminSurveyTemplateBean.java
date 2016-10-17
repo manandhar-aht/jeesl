@@ -126,6 +126,11 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		version = efVersion.build();
 	}
 	
+	protected void reloadVersions()
+	{
+		versions = fSurvey.fVersions(category);
+	}
+	
 	protected void selectVersion() throws UtilsNotFoundException
 	{
 		clearSelection();
@@ -137,6 +142,8 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected void saveVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(version));
+		version = fSurvey.save(version);
+		reloadVersions();
 		initTemplate();
 	}
 	

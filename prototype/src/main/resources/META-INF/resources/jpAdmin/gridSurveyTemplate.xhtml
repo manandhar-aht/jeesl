@@ -33,7 +33,7 @@
 						</p:column>
 					</p:dataTable>
 				</h:form>
-				<h:form id="fVersion" rendered="#{cc.attrs.withVersion}">
+				<h:form id="fVersions" rendered="#{cc.attrs.withVersion}">
 					<p:dataTable var="version" value="#{cc.attrs.bean.versions}" rowKey="#{version.id}"
 								 selection="#{cc.attrs.bean.version}" selectionMode="single">
 						<f:facet name="header">
@@ -61,10 +61,10 @@
 							 <h:outputText value="#{s.name}" />
 						</p:column>
 					</p:dataTable>
-                </h:form>
+				</h:form>
 			</aht:slot>
 			<aht:slot width="5" >
-				<h:form id="fSection" rendered="#{not empty cc.attrs.bean.version}">
+				<h:form id="fVersion" rendered="#{not empty cc.attrs.bean.version}">
 					<p:panel header="#{msg.jpTemplateVersion}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveVersion()}" update=":#{cc.id}:row1"/>
@@ -117,7 +117,7 @@
 						<f:facet name="actions">
 							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveQuestion()}" update=":#{cc.id}:row1"/>
 						</f:facet>
-						<p:panelGrid columns="2" columnClasses="col1,col2" >
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<p:inputText value="#{cc.attrs.bean.question.position}"/>
 						

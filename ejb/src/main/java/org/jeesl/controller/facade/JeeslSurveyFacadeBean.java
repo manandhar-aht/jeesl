@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -53,6 +54,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 {
 	
 	final Class<TEMPLATE> cTemplate;
+	final Class<VERSION> cVersion;
 	final Class<TS> cTS;
 	
 	final Class<ANSWER> cAnswer;
@@ -67,6 +69,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	{
 		super(em);
 		this.cTemplate=cTemplate;
+		this.cVersion=cVersion;
 		this.cTS=cTS;
 		this.cAnswer=cAnswer;
 		this.cData=cData;
@@ -109,6 +112,24 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		return data;
 	}
 	
+	@Override public List<VERSION> fVersions(TC category)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<VERSION> cQ = cB.createQuery(cVersion);
+		Root<VERSION> root = cQ.from(cVersion);
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		
+		Join<VERSION,TEMPLATE> jTemplate = root.join(JeeslSurveyTemplateVersion.Attributes.template.toString());
+		Path<TC> pathCategory = jTemplate.get(JeeslSurveyTemplate.Attributes.category.toString());
+		predicates.add(cB.equal(pathCategory,category));
+		
+		predicates.toArray(new Predicate[predicates.size()]);
+		cQ.where();
+		cQ.select(root);
+
+		return em.createQuery(cQ).getResultList();
+	}
+	
 	@Override public TEMPLATE fcSurveyTemplate(TC category, TS status){return fcSurveyTemplate(category,null,status);}
 	@Override public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status)
 	{
@@ -116,6 +137,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		{
 			TEMPLATE template = eTemplate.build(category,status,"");
 			template.setVersion(version);
+			template.getVersion().setTemplate(template);
 			em.persist(template);
 			return template;
 		}
@@ -194,7 +216,5 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	@Override public List<ANSWER> fAnswers(SURVEY survey)
 	{
 		return this.allForGrandParent(cAnswer, cData, "data", survey, "survey");
-	}
-
-	
+	}	
 }

@@ -8,6 +8,7 @@ import org.jeesl.factory.ejb.survey.EjbSurveyFactoryFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
+import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.facade.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
@@ -104,19 +105,21 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	
 	protected void clearSelection()
 	{
+		if(sections!=null){sections.clear();}
 		template = null;
 		section=null;
 		question=null;
 	}
 		
+	//Template
 	protected void reloadTemplate()
 	{
+		logger.info("Reloading "+template.toString());
 		template = fSurvey.load(cTemplate,template);
 		version = template.getVersion();
 		sections = template.getSections();
 	}
 	
-	//Template
 	protected void initTemplate() throws UtilsNotFoundException{}
 	
 	//Version
@@ -142,9 +145,12 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected void saveVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(version));
-		version = fSurvey.save(version);
-		reloadVersions();
+		if(EjbIdFactory.isSaved(version))
+		{
+			version = fSurvey.save(version);
+		}
 		initTemplate();
+		reloadVersions();
 	}
 	
 	//Section

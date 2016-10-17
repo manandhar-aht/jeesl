@@ -38,19 +38,15 @@
 								<h:outputText value="#{news.category.name[userBean.localeCode].lang}"/>
 							</p:column>
 							<p:column headerText="#{msg.aupDateFrom}">  
-								<h:outputText value="#{news.validFrom}">
-									<f:convertDateTime pattern="dd.MM.yyyy" />
-								</h:outputText>
+								<h:outputText value="#{news.validFrom}"><f:convertDateTime pattern="dd.MM.yyyy" /></h:outputText>
 							</p:column>
-					        <p:column headerText="#{msg.aupDateUntil}">  
-								<h:outputText value="#{news.validUntil}">
-									<f:convertDateTime pattern="dd.MM.yyyy" />
-								</h:outputText>
+							<p:column headerText="#{msg.aupDateUntil}">  
+								<h:outputText value="#{news.validUntil}"><f:convertDateTime pattern="dd.MM.yyyy" /></h:outputText>
 							</p:column>
-					         <p:column headerText="#{msg.jeeslSystemNewsHeadline}">  
+							<p:column headerText="#{msg.jeeslSystemNewsHeadline}">  
 									<h:outputText value="#{news.name[userBean.localeCode].lang}"/>
-					         </p:column>
-					   	</p:dataTable>
+							</p:column>
+						</p:dataTable>
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sDetails" width="5">

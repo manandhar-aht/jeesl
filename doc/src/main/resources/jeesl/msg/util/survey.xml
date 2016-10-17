@@ -105,4 +105,18 @@
     		<s:lang key="fr" translation="Area"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jpSurveyTemplateVersion">
+    	<s:langs>
+    		<s:lang key="de" translation="Version"/>
+    		<s:lang key="en" translation="Version"/>
+    		<s:lang key="fr" translation="Version"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jpSurveyTemplateVersions">
+    	<s:langs>
+    		<s:lang key="de" translation="Versionen"/>
+    		<s:lang key="en" translation="Versions"/>
+    		<s:lang key="fr" translation="Versions"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

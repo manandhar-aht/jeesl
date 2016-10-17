@@ -1,6 +1,7 @@
 package org.jeesl.controller.facade;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +28,8 @@ import org.jeesl.interfaces.model.survey.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.survey.JeeslSurveySection;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -52,6 +55,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 									CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
 	extends UtilsFacadeBean implements JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>
 {
+	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyFacadeBean.class);
 	
 	final Class<TEMPLATE> cTemplate;
 	final Class<VERSION> cVersion;
@@ -120,11 +124,13 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		
 		Join<VERSION,TEMPLATE> jTemplate = root.join(JeeslSurveyTemplateVersion.Attributes.template.toString());
-		Path<TC> pathCategory = jTemplate.get(JeeslSurveyTemplate.Attributes.category.toString());
-		predicates.add(cB.equal(pathCategory,category));
+		Path<TC> pCategory = jTemplate.get(JeeslSurveyTemplate.Attributes.category.toString());
+		Path<Date> pRecord = root.get(JeeslSurveyTemplateVersion.Attributes.record.toString());
 		
-		predicates.toArray(new Predicate[predicates.size()]);
-		cQ.where();
+		predicates.add(cB.equal(pCategory,category));
+		
+		cQ.where(predicates.toArray(new Predicate[predicates.size()]));
+		cQ.orderBy(cB.desc(pRecord));
 		cQ.select(root);
 
 		return em.createQuery(cQ).getResultList();
@@ -133,6 +139,17 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	@Override public TEMPLATE fcSurveyTemplate(TC category, TS status){return fcSurveyTemplate(category,null,status);}
 	@Override public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status)
 	{
+		if(logger.isInfoEnabled())
+		{
+			logger.info("Query:");
+			logger.info("\tCategory: "+category.getCode());
+			if(version!=null)
+			{
+				logger.info("\tVersion: "+version.toString()+" (unsaved:"+EjbIdFactory.isUnSaved(version)+")");
+			}
+			logger.info("\tStatus: "+status.getCode());
+		}
+		
 		if(version!=null && EjbIdFactory.isUnSaved(version))
 		{
 			TEMPLATE template = eTemplate.build(category,status,"");
@@ -147,20 +164,28 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		Root<TEMPLATE> root = cQ.from(cTemplate);
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		
-		Path<TC> pathCategory = root.get(JeeslSurveyTemplate.Attributes.category.toString());
-		predicates.add(cB.equal(pathCategory,category));
+		Path<TC> pCategory = root.get(JeeslSurveyTemplate.Attributes.category.toString());
+		predicates.add(cB.equal(pCategory,category));
 		
 		if(version!=null)
 		{
-			Path<TC> pathVersion = root.get(JeeslSurveyTemplate.Attributes.version.toString());
-			predicates.add(cB.equal(pathVersion,version));
+			Path<VERSION> pVersion = root.get(JeeslSurveyTemplate.Attributes.version.toString());
+//			predicates.add(cB.equal(pVersion,version));
 		}
 		
-		predicates.toArray(new Predicate[predicates.size()]);
-		cQ.where();
+		cQ.where(predicates.toArray(new Predicate[predicates.size()]));
 		cQ.select(root);
 
 		List<TEMPLATE> list = em.createQuery(cQ).getResultList();
+		if(logger.isInfoEnabled())
+		{
+			logger.info("Results: "+list.size());
+			for(TEMPLATE t : list)
+			{
+				logger.info("\t"+t.toString());
+			}
+		}
+		
 		if(list.isEmpty())
 		{
 			TEMPLATE template = eTemplate.build(category,status,"");

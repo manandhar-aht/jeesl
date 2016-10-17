@@ -37,12 +37,15 @@
 					<p:dataTable var="version" value="#{cc.attrs.bean.versions}" rowKey="#{version.id}"
 								 selection="#{cc.attrs.bean.version}" selectionMode="single">
 						<f:facet name="header">
-							<aht:pfDataTableHeader title="#{msg.aupSurveyVersion}">
-                                <aht:icon type="aupAdd" listener="#{cc.attrs.bean.addVersion()}" update=":#{cc.id}:row1"/>
-                            </aht:pfDataTableHeader>
+							<aht:pfDataTableHeader title="#{msg.jpSurveyTemplateVersions}">
+                         <aht:icon type="aupAdd" listener="#{cc.attrs.bean.addVersion()}" update=":#{cc.id}:row1"/>
+                     </aht:pfDataTableHeader>
 						</f:facet>
 						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{cc.attrs.bean.selectVersion()}"/>
-						<p:column>
+						<p:column headerText="#{msg.aupDate}">  
+							<h:outputText value="#{version.record}"><f:convertDateTime pattern="dd.MM.yyyy" /></h:outputText>
+						</p:column>
+						<p:column headerText="#{msg.jpSurveyTemplateVersion}">
 							<h:outputText value="#{version.name}" />
 						</p:column>
 					</p:dataTable>
@@ -65,13 +68,17 @@
 			</aht:slot>
 			<aht:slot width="5" >
 				<h:form id="fVersion" rendered="#{not empty cc.attrs.bean.version}">
-					<p:panel header="#{msg.jpTemplateVersion}" styleClass="auPanelWithGrid">
+					<p:panel header="#{msg.jpSurveyTemplateVersion}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveVersion()}" update=":#{cc.id}:row1"/>
 						</f:facet>
-						<p:panelGrid columns="2" columnClasses="col1,col2" >
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 							<p:outputLabel value="#{msg.aupName}"/>
 							<p:inputText value="#{cc.attrs.bean.version.name}"/>
+							<p:outputLabel value="#{msg.aupDate}"/>
+							<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%">
+								<p:calendar value="#{cc.attrs.bean.version.record}" showOn="button" pattern="dd.MM.yyyy"/>
+							</h:panelGroup>
 						</p:panelGrid>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 					</p:panel>
@@ -81,7 +88,7 @@
 						<f:facet name="actions">
 							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:row1"/>
 						</f:facet>
-						<p:panelGrid columns="2" columnClasses="col1,col2" >
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
 							<p:inputText value="#{cc.attrs.bean.section.name}"/>
 
@@ -97,18 +104,18 @@
 						<p:ajax event="rowSelect" update=":#{cc.id}:sQuestion" listener="#{cc.attrs.bean.selectQuestion()}"/>
 						<f:facet name="header">
 						<aht:pfDataTableHeader title="#{msg.aupSurveyQuestions}">
-                                <aht:icon type="aupAdd" listener="#{cc.attrs.bean.addQuestion()}" update=":#{cc.id}:sQuestion"/>
-                            </aht:pfDataTableHeader>
-                        </f:facet>
-                        <p:column>
-                            <f:facet name="header">#{msg.aupSurveyQuestionCode}</f:facet>
-                            <h:outputText value="#{q.code}" />
-                        </p:column>
+                          <aht:icon type="aupAdd" listener="#{cc.attrs.bean.addQuestion()}" update=":#{cc.id}:sQuestion"/>
+                      </aht:pfDataTableHeader>
+                  </f:facet>
+                  <p:column>
+                      <f:facet name="header">#{msg.aupSurveyQuestionCode}</f:facet>
+                      <h:outputText value="#{q.code}" />
+                  </p:column>
 						<p:column>
-                            <f:facet name="header">#{msg.aupSurveyQuestion}</f:facet>
-                            <h:outputText value="#{q.question}" />
-                        </p:column>
-                    </p:dataTable>
+                       <f:facet name="header">#{msg.aupSurveyQuestion}</f:facet>
+                       <h:outputText value="#{q.question}" />
+                   </p:column>
+               </p:dataTable>
 				</h:form>
 			</aht:slot>
 			<aht:slot id="sQuestion" width="4" renderChildren="#{not empty cc.attrs.bean.question}">

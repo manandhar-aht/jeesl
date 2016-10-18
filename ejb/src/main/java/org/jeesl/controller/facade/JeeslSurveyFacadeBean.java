@@ -129,7 +129,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		
 		predicates.add(cB.equal(pCategory,category));
 		
-		cQ.where(predicates.toArray(new Predicate[predicates.size()]));
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.orderBy(cB.desc(pRecord));
 		cQ.select(root);
 
@@ -161,20 +161,22 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(cTemplate);
-		Root<TEMPLATE> root = cQ.from(cTemplate);
+		Root<TEMPLATE> template = cQ.from(cTemplate);
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		
-		Path<TC> pCategory = root.get(JeeslSurveyTemplate.Attributes.category.toString());
+		Path<TC> pCategory = template.get(JeeslSurveyTemplate.Attributes.category.toString());
 		predicates.add(cB.equal(pCategory,category));
 		
 		if(version!=null)
 		{
-			Path<VERSION> pVersion = root.get(JeeslSurveyTemplate.Attributes.version.toString());
-//			predicates.add(cB.equal(pVersion,version));
+			logger.info("Using Version: "+version.toString());
+			Join<TEMPLATE,VERSION> jVersion = template.join(JeeslSurveyTemplate.Attributes.version.toString());
+//			predicates.add(cB.equal(jVersion,version));
+			predicates.add(cB.isTrue(jVersion.in(version.getId())));
 		}
 		
-		cQ.where(predicates.toArray(new Predicate[predicates.size()]));
-		cQ.select(root);
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(template);
 
 		List<TEMPLATE> list = em.createQuery(cQ).getResultList();
 		if(logger.isInfoEnabled())
@@ -188,9 +190,9 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		
 		if(list.isEmpty())
 		{
-			TEMPLATE template = eTemplate.build(category,status,"");
-			em.persist(template);
-			return template;
+			TEMPLATE t = eTemplate.build(category,status,"");
+			em.persist(t);
+			return t;
 		}
 		else{return list.get(0);}
 	}

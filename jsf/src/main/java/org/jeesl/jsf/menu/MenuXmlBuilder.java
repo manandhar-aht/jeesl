@@ -615,6 +615,8 @@ public class MenuXmlBuilder implements MenuBuilder
 			}
 			else
 			{
+				logger.error("Nothing found in menu, code="+code);
+				JaxbUtil.info(menu);
 				throw new UtilsMenuException("No MenuItem for code:"+code);
 			}
 			

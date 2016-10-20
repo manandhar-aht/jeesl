@@ -222,7 +222,7 @@
         		<version>4.0.1.Final</version>
         	</dependency>
             
-            <!-- SEAM -->
+			<!-- SEAM -->
 			<dependency>
 	   			<groupId>org.jboss.solder</groupId>
 	   			<artifactId>solder-impl</artifactId>
@@ -328,6 +328,18 @@
 				<groupId>jstl</groupId>
 				<artifactId>jstl</artifactId>
 				<version>1.2</version>
+			</dependency>
+			
+			<!-- JCR -->
+			<dependency>
+				<groupId>org.apache.jackrabbit</groupId>
+				<artifactId>oak-jcr</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.jcr</groupId>
+				<artifactId>jcr</artifactId>
+				<version>2.0</version>
 			</dependency>
         	
 			<!-- JSON -->

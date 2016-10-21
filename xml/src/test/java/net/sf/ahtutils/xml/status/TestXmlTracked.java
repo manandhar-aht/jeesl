@@ -1,32 +1,19 @@
 package net.sf.ahtutils.xml.status;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.security.TestXmlUser;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlTracked extends AbstractXmlStatusTestOld
+public class TestXmlTracked extends AbstractXmlStatusTest<Tracked>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlTracked.class);
 	
-	@BeforeClass public static void initFiles() {fXml = new File(rootDir,Tracked.class.getSimpleName()+".xml");}
+	public TestXmlTracked(){super(Tracked.class);}
+	public static Tracked create(boolean withChildren){return (new TestXmlTracked()).build(withChildren);} 
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Tracked actual = create(true);
-    	Tracked expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Tracked.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static Tracked create(boolean withChilds)
+    public Tracked build(boolean withChilds)
     {
     	Tracked xml = new Tracked();
     	xml.setRecord(TestXmlTracked.getDefaultXmlDate());
@@ -43,14 +30,10 @@ public class TestXmlTracked extends AbstractXmlStatusTestOld
     	return xml;
     }
     
-    public void save() {save(create(true),fXml);}
-	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlTracked.initFiles();	
 		TestXmlTracked test = new TestXmlTracked();
-		test.save();
+		test.saveReferenceXml();
     }
 }

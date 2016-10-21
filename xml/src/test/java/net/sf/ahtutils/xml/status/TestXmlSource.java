@@ -1,30 +1,18 @@
 package net.sf.ahtutils.xml.status;
 
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlSource extends AbstractXmlStatusTestOld
+public class TestXmlSource extends AbstractXmlStatusTest<Source>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlSource.class);
 	
-	@BeforeClass public static void initFiles(){setXmlFile(dirSuffix, Source.class);}
+	public TestXmlSource(){super(Source.class);}
+	public static Source create(boolean withChildren){return (new TestXmlSource()).build(withChildren);} 
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Source actual = create(true);
-    	Source expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Source.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static Source create(boolean withChilds)
+    public Source build(boolean withChilds)
     {
     	Source xml = new Source();
     	xml.setCode("myCode");
@@ -42,15 +30,11 @@ public class TestXmlSource extends AbstractXmlStatusTestOld
     	
     	return xml;
     }
-    
-    public void save() {save(create(true),fXml);}
 	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlSource.initFiles();	
 		TestXmlSource test = new TestXmlSource();
-		test.save();
+		test.saveReferenceXml();
     }
 }

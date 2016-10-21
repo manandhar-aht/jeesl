@@ -1,35 +1,18 @@
 package net.sf.ahtutils.xml.status;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlScopes extends AbstractXmlStatusTestOld
+public class TestXmlScopes extends AbstractXmlStatusTest<Scopes>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlScopes.class);
 	
-	@BeforeClass
-	public static void initFiles()
-	{
-		fXml = new File(rootDir,Scopes.class.getSimpleName()+".xml");
-	}
+	public TestXmlScopes(){super(Scopes.class);}
+	public static Scopes create(boolean withChildren){return (new TestXmlScopes()).build(withChildren);} 
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Scopes actual = create(true);
-    	Scopes expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Scopes.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static Scopes create(boolean withChilds)
+    public Scopes build(boolean withChilds)
     {
     	Scopes xml = new Scopes();
     	xml.setGroup("myGroup");
@@ -42,15 +25,11 @@ public class TestXmlScopes extends AbstractXmlStatusTestOld
     	}
     	return xml;
     }
-    
-    public void save() {save(create(true),fXml);}
 	
 	public static void main(String[] args)
     {
-		JeeslXmlTestBootstrap.init();
-			
-		TestXmlScopes.initFiles();	
+		JeeslXmlTestBootstrap.init();	
 		TestXmlScopes test = new TestXmlScopes();
-		test.save();
+		test.saveReferenceXml();
     }
 }

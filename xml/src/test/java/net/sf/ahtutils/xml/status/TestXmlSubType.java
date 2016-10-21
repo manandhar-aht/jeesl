@@ -1,30 +1,18 @@
 package net.sf.ahtutils.xml.status;
 
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlSubType extends AbstractXmlStatusTestOld
+public class TestXmlSubType extends AbstractXmlStatusTest<SubType>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlSubType.class);
 	
-	@BeforeClass public static void initFiles(){setXmlFile(dirSuffix, SubType.class);}
+	public TestXmlSubType(){super(SubType.class);}
+	public static SubType create(boolean withChildren){return (new TestXmlSubType()).build(withChildren);} 
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	SubType actual = create(true);
-    	SubType expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), SubType.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static SubType create(boolean withChilds)
+    public SubType build(boolean withChilds)
     {
     	SubType xml = new SubType();
     	xml.setId(123);
@@ -43,15 +31,11 @@ public class TestXmlSubType extends AbstractXmlStatusTestOld
     	
     	return xml;
     }
-    
-    public void save() {save(create(true),fXml);}
-	
+
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlSubType.initFiles();	
 		TestXmlSubType test = new TestXmlSubType();
-		test.save();
+		test.saveReferenceXml();
     }
 }

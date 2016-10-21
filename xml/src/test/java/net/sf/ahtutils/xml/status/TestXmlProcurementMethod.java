@@ -1,30 +1,18 @@
 package net.sf.ahtutils.xml.status;
 
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlProcurementMethod extends AbstractXmlStatusTestOld
+public class TestXmlProcurementMethod extends AbstractXmlStatusTest<ProcurementMethod>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlProcurementMethod.class);
 	
-	@BeforeClass public static void initFiles(){setXmlFile(dirSuffix, ProcurementMethod.class);}
+	public TestXmlProcurementMethod(){super(ProcurementMethod.class);}
+	public static ProcurementMethod create(boolean withChildren){return (new TestXmlProcurementMethod()).build(withChildren);} 
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	ProcurementMethod actual = create(true);
-    	ProcurementMethod expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), ProcurementMethod.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static ProcurementMethod create(boolean withChilds)
+    public ProcurementMethod build(boolean withChilds)
     {
     	ProcurementMethod xml = new ProcurementMethod();
     	xml.setCode("myCode");
@@ -43,14 +31,10 @@ public class TestXmlProcurementMethod extends AbstractXmlStatusTestOld
     	return xml;
     }
     
-    public void save() {save(create(true),fXml);}
-	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlProcurementMethod.initFiles();	
 		TestXmlProcurementMethod test = new TestXmlProcurementMethod();
-		test.save();
+		test.saveReferenceXml();
     }
 }

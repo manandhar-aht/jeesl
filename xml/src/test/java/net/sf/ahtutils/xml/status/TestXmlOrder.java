@@ -1,35 +1,18 @@
 package net.sf.ahtutils.xml.status;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlOrder extends AbstractXmlStatusTestOld
+public class TestXmlOrder extends AbstractXmlStatusTest<Order>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlOrder.class);
 	
-	@BeforeClass
-	public static void initFiles()
-	{
-		fXml = new File(rootDir,Order.class.getSimpleName()+".xml");
-	}
+	public TestXmlOrder(){super(Order.class);}
+	public static Order create(boolean withChildren){return (new TestXmlOrder()).build(withChildren);} 
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Order actual = create(true);
-    	Order expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Order.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static Order create(boolean withChilds)
+    public Order build(boolean withChilds)
     {
     	Order xml = new Order();
     	xml.setCode("myCode");
@@ -48,14 +31,10 @@ public class TestXmlOrder extends AbstractXmlStatusTestOld
     	return xml;
     }
     
-    public void save() {save(create(true),fXml);}
-	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlOrder.initFiles();	
 		TestXmlOrder test = new TestXmlOrder();
-		test.save();
+		test.saveReferenceXml();
     }
 }

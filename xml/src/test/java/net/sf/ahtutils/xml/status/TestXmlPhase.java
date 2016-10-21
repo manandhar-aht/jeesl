@@ -1,35 +1,18 @@
 package net.sf.ahtutils.xml.status;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlPhase extends AbstractXmlStatusTestOld
+public class TestXmlPhase extends AbstractXmlStatusTest<Phase>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlPhase.class);
 	
-	@BeforeClass
-	public static void initFiles()
-	{
-		fXml = new File(rootDir,Phase.class.getSimpleName()+".xml");
-	}
+	public TestXmlPhase(){super(Phase.class);}
+	public static Phase create(boolean withChildren){return (new TestXmlPhase()).build(withChildren);} 
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Phase actual = create(true);
-    	Phase expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Phase.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static Phase create(boolean withChilds)
+    public Phase build(boolean withChilds)
     {
     	Phase xml = new Phase();
     	xml.setCode("myCode");
@@ -47,15 +30,11 @@ public class TestXmlPhase extends AbstractXmlStatusTestOld
     	
     	return xml;
     }
-    
-    public void save() {save(create(true),fXml);}
 	
 	public static void main(String[] args)
     {
-		JeeslXmlTestBootstrap.init();
-			
-		TestXmlPhase.initFiles();	
+		JeeslXmlTestBootstrap.init();	
 		TestXmlPhase test = new TestXmlPhase();
-		test.save();
+		test.saveReferenceXml();
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<s:type xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" id="123" key="myKey" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1">
+<s:type xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" id="123" key="myKey" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1">
     <s:parent id="123" code="myCode" position="2"/>
     <s:langs/>
     <s:descriptions/>

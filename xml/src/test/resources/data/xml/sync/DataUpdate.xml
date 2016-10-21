@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<sync:dataUpdate xmlns:sync="http://ahtutils.aht-group.com/sync" xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" begin="2011-11-11T11:11:11" finished="2011-11-11T11:11:11">
-    <sync:mapper oldId="123" newId="345" class="net.sf.ahtutils.xml.sync.TestXmlMapper" oldCode="mc1" newCode="mc2"/>
-    <sync:mapper oldId="123" newId="345" class="net.sf.ahtutils.xml.sync.TestXmlMapper" oldCode="mc1" newCode="mc2"/>
+<sync:dataUpdate xmlns:sync="http://ahtutils.aht-group.com/sync" xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" begin="2011-11-11T11:11:11" finished="2011-11-11T11:11:11">
+    <sync:mapper oldId="123" newId="345" class="org.jeesl.model.xml.system.io.sync.TestXmlMapper" oldCode="mc1" newCode="mc2"/>
+    <sync:mapper oldId="123" newId="345" class="org.jeesl.model.xml.system.io.sync.TestXmlMapper" oldCode="mc1" newCode="mc2"/>
     <s:type/>
     <sync:result total="3" success="2" skip="0" fail="1"/>
     <sync:sync clientId="123" serverId="345"/>

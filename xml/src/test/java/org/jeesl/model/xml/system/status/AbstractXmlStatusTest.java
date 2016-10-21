@@ -10,6 +10,6 @@ public abstract class AbstractXmlStatusTest <T extends Object> extends AbstractX
 	
 	public AbstractXmlStatusTest(java.lang.Class<T> cXml)
 	{
-		super(cXml,"status");
+		super(cXml,"system/status");
 	}
 }

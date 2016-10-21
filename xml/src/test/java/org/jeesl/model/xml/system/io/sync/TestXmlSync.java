@@ -23,7 +23,7 @@ public class TestXmlSync extends AbstractXmlSyncTest<Sync>
     	if(withChilds)
     	{
     		xml.setStatus(TestXmlStatus.create(false));
-    		xml.setResult(net.sf.ahtutils.xml.status.TestXmlResult.create(false));
+    		xml.setResult(org.jeesl.model.xml.system.status.TestXmlResult.create(false));
     	}
     	
     	return xml;

@@ -8,7 +8,6 @@ import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.status.TestXmlDescriptions;
 import net.sf.ahtutils.xml.status.TestXmlLang;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
-import net.sf.ahtutils.xml.status.TestXmlParent;
 
 public class TestXmlStatus extends AbstractXmlStatusTest<Status>
 {

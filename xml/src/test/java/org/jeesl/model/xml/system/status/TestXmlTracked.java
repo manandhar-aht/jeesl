@@ -1,7 +1,7 @@
 package org.jeesl.model.xml.system.status;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.security.TestXmlUser;
+import org.jeesl.model.xml.system.security.TestXmlUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

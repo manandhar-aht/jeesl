@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.security;
+package org.jeesl.model.xml.system.security;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.status.TestXmlDescriptions;
@@ -6,18 +6,18 @@ import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.security.Action;
+import net.sf.ahtutils.xml.security.Template;
 
-public class TestXmlAction extends AbstractXmlSecurityTest<Action>
+public class TestXmlTemplate extends AbstractXmlSecurityTest<Template>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlAction.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlTemplate.class);
 	
-	public TestXmlAction(){super(Action.class);}
-	public static Action create(boolean withChildren){return (new TestXmlAction()).build(withChildren);}
+	public TestXmlTemplate(){super(Template.class);}
+	public static Template create(boolean withChildren){return (new TestXmlTemplate()).build(withChildren);}
     
-    public Action build(boolean withChilds)
+    public Template build(boolean withChilds)
     {
-    	Action xml = new Action();
+    	Template xml = new Template();
     	xml.setId(123);
     	xml.setPosition(1);
     	xml.setVisible(true);
@@ -29,8 +29,6 @@ public class TestXmlAction extends AbstractXmlSecurityTest<Action>
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
-    		xml.setView(TestXmlView.create(false));
-    		xml.setTemplate(TestXmlTemplate.create(false));
     	}
     	return xml;
     }
@@ -38,7 +36,7 @@ public class TestXmlAction extends AbstractXmlSecurityTest<Action>
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-		TestXmlAction test = new TestXmlAction();
+		TestXmlTemplate test = new TestXmlTemplate();
 		test.saveReferenceXml();
     }
 }

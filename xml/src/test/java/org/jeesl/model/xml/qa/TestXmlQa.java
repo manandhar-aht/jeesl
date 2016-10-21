@@ -1,8 +1,8 @@
 package org.jeesl.model.xml.qa;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.security.TestXmlStaff;
 import org.jeesl.model.xml.survey.TestXmlSurvey;
+import org.jeesl.model.xml.system.security.TestXmlStaff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

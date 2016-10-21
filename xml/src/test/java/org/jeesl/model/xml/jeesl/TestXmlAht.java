@@ -2,7 +2,7 @@ package org.jeesl.model.xml.jeesl;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.finance.TestXmlCurrency;
-import org.jeesl.model.xml.security.TestXmlUser;
+import org.jeesl.model.xml.system.security.TestXmlUser;
 import org.jeesl.model.xml.system.status.TestXmlStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

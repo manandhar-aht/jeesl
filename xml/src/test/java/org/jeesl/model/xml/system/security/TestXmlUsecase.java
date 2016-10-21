@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.security;
+package org.jeesl.model.xml.system.security;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.status.TestXmlDescriptions;

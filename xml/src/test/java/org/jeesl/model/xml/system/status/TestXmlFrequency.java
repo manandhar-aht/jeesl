@@ -36,5 +36,6 @@ public class TestXmlFrequency extends AbstractXmlStatusTest<Frequency>
     {
 		JeeslXmlTestBootstrap.init();
 		TestXmlFrequency test = new TestXmlFrequency();
-		test.save();		test.saveReferenceXml();    }
+		test.saveReferenceXml();
+    }
 }

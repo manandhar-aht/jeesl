@@ -1,8 +1,10 @@
-package net.sf.ahtutils.xml.issue;
+package org.jeesl.model.xml.system.issue;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.xml.issue.Tasks;
 
 public class TestXmlTasks extends AbstractXmlIssueTest<Tasks>
 {

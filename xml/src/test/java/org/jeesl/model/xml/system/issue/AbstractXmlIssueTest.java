@@ -1,4 +1,4 @@
-package net.sf.ahtutils.xml.issue;
+package org.jeesl.model.xml.system.issue;
 
 import org.jeesl.AbstractXmlTest;
 import org.slf4j.Logger;

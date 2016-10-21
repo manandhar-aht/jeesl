@@ -1,36 +1,18 @@
 package net.sf.ahtutils.xml.status;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlTranslations extends AbstractXmlStatusTestOld
+public class TestXmlTranslations extends AbstractXmlStatusTest<Translations>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlTranslations.class);
 	
-	@BeforeClass
-	public static void initFiles()
-	{
-		fXml = new File(rootDir,"translations.xml");
-	}
+	public TestXmlTranslations(){super(Translations.class);}
+	public static Translations create(boolean withChildren){return (new TestXmlTranslations()).build(withChildren);}   
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Translations actual = create();
-    	Translations expected = (Translations)JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Translations.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    private static Translations create(){return create(true);}
-    public static Translations create(boolean withChilds)
+    public Translations build(boolean withChilds)
     {
     	Translations xml = new Translations();
     	
@@ -40,15 +22,11 @@ public class TestXmlTranslations extends AbstractXmlStatusTestOld
     	}
     	return xml;
     }
-    
-    public void save() {save(create(),fXml);}
 	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlTranslations.initFiles();	
 		TestXmlTranslations test = new TestXmlTranslations();
-		test.save();
+		test.saveReferenceXml();
     }
 }

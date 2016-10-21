@@ -1,35 +1,18 @@
 package net.sf.ahtutils.xml.status;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlTransistions extends AbstractXmlStatusTestOld
+public class TestXmlTransistions extends AbstractXmlStatusTest<Transistions>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlTransistions.class);
 	
-	@BeforeClass
-	public static void initFiles()
-	{
-		fXml = new File(rootDir,"transistions.xml");
-	}
+	public TestXmlTransistions(){super(Transistions.class);}
+	public static Transistions create(boolean withChildren){return (new TestXmlTransistions()).build(withChildren);}   
     
-    @Test
-    public void xml() throws FileNotFoundException
-    {
-    	Transistions actual = create(true);
-    	Transistions expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Transistions.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static Transistions create(boolean withChilds)
+    public Transistions build(boolean withChilds)
     {
     	Transistions xml = new Transistions();
     	
@@ -41,14 +24,10 @@ public class TestXmlTransistions extends AbstractXmlStatusTestOld
     	return xml;
     }
     
-    public void save() {save(create(true),fXml);}
-	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlTransistions.initFiles();	
 		TestXmlTransistions test = new TestXmlTransistions();
-		test.save();
+		test.saveReferenceXml();
     }
 }

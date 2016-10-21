@@ -1,10 +1,9 @@
 package org.jeesl.model.xml.jeesl;
 
 import org.jeesl.AbstractXmlTest;
+import org.jeesl.model.xml.system.core.AbstractXmlSystemTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.system.AbstractXmlSystemTest;
 
 public abstract class AbstractXmlJeeslTest <T extends Object> extends AbstractXmlTest<T>
 {

@@ -1,0 +1,38 @@
+package org.jeesl.model.xml.system.util;
+
+import org.jeesl.UtilsXmlTestBootstrap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.xml.utils.Criteria;
+
+public class TestXmlCiteria extends AbstractXmlUtilsTest<Criteria>
+{
+	final static Logger logger = LoggerFactory.getLogger(TestXmlCiteria.class);
+	
+	public TestXmlCiteria(){super(Criteria.class);}
+	public static Criteria create(boolean withChildren){return (new TestXmlCiteria()).build(withChildren);}
+	
+    public Criteria build(boolean withChilds)
+    {
+    	Criteria xml = new Criteria();
+        xml.setId(123);
+        xml.setCode("myCode");
+        xml.setType("Boolean");
+        xml.setValue("xx");
+    	
+    	if(withChilds)
+    	{
+    		
+    	}
+    	
+    	return xml;
+    }
+	
+	public static void main(String[] args)
+    {
+		UtilsXmlTestBootstrap.init();
+		TestXmlCiteria test = new TestXmlCiteria();
+		test.saveReferenceXml();
+    }
+}

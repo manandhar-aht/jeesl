@@ -1,5 +1,6 @@
 package net.sf.ahtutils.util.query.xpath.dbseed;
 
+import org.jeesl.model.xml.system.io.db.TestDb;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.factory.xml.dbseed.XmlSeedFactory;
 import net.sf.ahtutils.xml.dbseed.Db;
 import net.sf.ahtutils.xml.dbseed.Seed;
-import net.sf.ahtutils.xml.dbseed.TestDb;
 import net.sf.ahtutils.xml.xpath.DbseedXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;

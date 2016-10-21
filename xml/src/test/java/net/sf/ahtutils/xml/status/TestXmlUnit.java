@@ -5,26 +5,21 @@ import java.io.FileNotFoundException;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
+import org.jeesl.model.xml.system.status.TestXmlAction;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlUnit extends AbstractXmlStatusTestOld
+public class TestXmlUnit extends AbstractXmlStatusTest<Unit>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlUnit.class);
 	
-	@BeforeClass public static void initFiles(){setXmlFile(dirSuffix, Unit.class);}
+	public TestXmlUnit(){super(Unit.class);}
+	public static Unit create(boolean withChildren){return (new TestXmlUnit()).build(withChildren);}   
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Unit actual = create(true);
-    	Unit expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Unit.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static Unit create(boolean withChilds)
+    public Unit build(boolean withChilds)
     {
     	Unit xml = new Unit();
     	xml.setCode("myCode");
@@ -42,15 +37,11 @@ public class TestXmlUnit extends AbstractXmlStatusTestOld
     	
     	return xml;
     }
-    
-    public void save() {save(create(true),fXml);}
 	
 	public static void main(String[] args)
     {
 		UtilsXmlTestBootstrap.init();
-			
-		TestXmlUnit.initFiles();	
 		TestXmlUnit test = new TestXmlUnit();
-		test.save();
+		test.saveReferenceXml();
     }
 }

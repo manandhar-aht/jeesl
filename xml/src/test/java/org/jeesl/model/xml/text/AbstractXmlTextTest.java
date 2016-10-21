@@ -1,8 +1,7 @@
 package org.jeesl.model.xml.text;
 
-import net.sf.ahtutils.xml.system.AbstractXmlSystemTest;
-
 import org.jeesl.AbstractXmlTest;
+import org.jeesl.model.xml.system.core.AbstractXmlSystemTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

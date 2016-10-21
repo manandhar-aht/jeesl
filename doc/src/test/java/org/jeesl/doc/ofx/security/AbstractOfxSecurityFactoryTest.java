@@ -1,4 +1,4 @@
-package net.sf.ahtutils.doc.ofx.security;
+package org.jeesl.doc.ofx.security;
 
 import java.io.File;
 

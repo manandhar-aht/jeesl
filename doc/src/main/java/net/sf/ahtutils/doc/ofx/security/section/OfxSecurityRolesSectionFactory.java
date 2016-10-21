@@ -65,7 +65,7 @@ public class OfxSecurityRolesSectionFactory extends AbstractUtilsOfxDocumentatio
 		}
 		catch (FileNotFoundException e) {throw new OfxAuthoringException(e.getMessage());}
 		
-		section.getContent().add(ofSecurityCategoryList.list(security.getCategory()));
+		section.getContent().add(ofSecurityCategoryList.descriptionList(security.getCategory()));
 		
 		for(Category category : security.getCategory())
 		{

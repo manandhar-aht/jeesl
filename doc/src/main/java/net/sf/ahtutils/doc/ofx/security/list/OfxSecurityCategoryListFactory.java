@@ -11,7 +11,6 @@ import org.openfuxml.content.ofx.Comment;
 import org.openfuxml.content.ofx.Paragraph;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.factory.xml.list.OfxListFactory;
-import org.openfuxml.factory.xml.list.OfxListItemFactory;
 import org.openfuxml.factory.xml.ofx.content.XmlCommentFactory;
 import org.openfuxml.interfaces.configuration.ConfigurationProvider;
 import org.openfuxml.renderer.latex.content.list.LatexListRenderer;
@@ -63,7 +62,7 @@ public class OfxSecurityCategoryListFactory extends AbstractUtilsOfxDocumentatio
 		try
 		{
 			LatexListRenderer renderer = new LatexListRenderer(cp,false);
-			renderer.render(list(categories),new LatexSectionRenderer(cp,0,null));
+			renderer.render(descriptionList(categories),new LatexSectionRenderer(cp,0,null));
 			StringWriter sw = new StringWriter();
 			renderer.write(sw);
 			return sw.toString();
@@ -89,17 +88,13 @@ public class OfxSecurityCategoryListFactory extends AbstractUtilsOfxDocumentatio
 		return list;
 	}
 	
-	public List list(java.util.List<net.sf.ahtutils.xml.security.Category> categories)
+	public List descriptionList(java.util.List<net.sf.ahtutils.xml.security.Category> categories) throws OfxAuthoringException
 	{
-		Comment comment = XmlCommentFactory.build();
-		OfxCommentBuilder.doNotModify(comment);
-		
-		List list = OfxListFactory.unordered();
-//		list.setComment(comment);
+		List list = OfxListFactory.description();
 		
 		for(net.sf.ahtutils.xml.security.Category category : categories)
 		{
-			list.getItem().add(OfxListItemFactory.build(OfxMultiLangFactory.paragraph(langs, category.getLangs())));
+			list.getItem().addAll(OfxMultiLangFactory.items(langs, category.getLangs(), category.getDescriptions()));
 		}
 		
 		return list;
@@ -108,7 +103,6 @@ public class OfxSecurityCategoryListFactory extends AbstractUtilsOfxDocumentatio
 	@Deprecated private Item createItem(Category category) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
 		String description,text;
-		
 		try
 		{
 			if(langs.length>1){logger.warn("Incorrect Assignment");}

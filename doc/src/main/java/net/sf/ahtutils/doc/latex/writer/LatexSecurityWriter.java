@@ -127,7 +127,9 @@ public class LatexSecurityWriter extends AbstractDocumentationLatexWriter
 		logger.info("Creating descriptions from "+xmlFile+" to LaTex");
 		
 		Security security = JaxbUtil.loadJAXB(xmlFile, Security.class);
-		org.openfuxml.content.list.List list = ofSecurityCategoryList.list(security.getCategory());
+		org.openfuxml.content.list.List list;
+		try {list = ofSecurityCategoryList.descriptionList(security.getCategory());}
+		catch (OfxAuthoringException e) {throw new UtilsConfigurationException(e.getMessage());}
 		JaxbUtil.info(list);
 		
 		for(String lang : langs)

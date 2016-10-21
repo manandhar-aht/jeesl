@@ -127,6 +127,25 @@ public class OfxMultiLangFactory
 		return item;
 	}
 	
+	public static List<Item> items(String[] localeCodes, Langs langs, Descriptions descriptions) throws OfxAuthoringException
+	{
+		List<Item> list = new ArrayList<Item>();
+		for(String localeCode : localeCodes)
+		{
+			try
+			{
+				Lang lang = StatusXpath.getLang(langs, localeCode);
+				Description description = StatusXpath.getDescription(descriptions, localeCode);
+				Item item = XmlListItemFactory.build(localeCode,lang.getTranslation(),description.getValue());
+				list.add(item);
+			}
+			catch (ExlpXpathNotFoundException e) {throw new OfxAuthoringException(e.getMessage());}
+			catch (ExlpXpathNotUniqueException e) {throw new OfxAuthoringException(e.getMessage());}
+		}
+		
+		return list;
+	}
+	
 	public static List<Paragraph> paragraph(String[] keys, Langs langs){return paragraph(keys,langs,null);}
 	
 	public static List<Paragraph> paragraph(String[] keys, Langs langs, Font font)

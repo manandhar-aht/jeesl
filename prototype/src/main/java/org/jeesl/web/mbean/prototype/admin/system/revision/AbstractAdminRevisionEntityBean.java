@@ -224,6 +224,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	protected void updatePerformed(){}	
 	
+	@SuppressWarnings("rawtypes")
 	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{
 		uiAllowSave = jsfSecurityHandler.allow(actionDeveloper);

@@ -48,6 +48,13 @@ public class XmlLangsFactory <L extends UtilsLang>
 		return new Langs();
 	}
 	
+	public static Langs build(Lang lang)
+	{
+		Langs xml = build();
+		xml.getLang().add(lang);
+		return xml;
+	}
+	
 	public static Langs build(String[] langs)
 	{
 		Langs xml = build();

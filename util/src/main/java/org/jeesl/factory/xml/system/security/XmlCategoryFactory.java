@@ -80,4 +80,11 @@ public class XmlCategoryFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		return xml;
 	}
+	
+	public static net.sf.ahtutils.xml.security.Category build()
+	{
+		Category xml = new Category();
+		
+		return xml;
+	}
 }

@@ -107,7 +107,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		
 		categories = fRevision.allOrderedPositionVisible(cCategory);
 		sbhCategory = new SbMultiStatusHandler<L,D,RC>(cCategory,categories);
-		sbhCategory.selectAll();
+//		sbhCategory.selectAll();
 	}
 	
 	public void addAttribute() throws UtilsNotFoundException

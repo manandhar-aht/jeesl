@@ -46,6 +46,13 @@ public class XmlDescriptionsFactory<D extends UtilsDescription>
 		return new Descriptions();
 	}
 	
+	public static Descriptions build(Description description)
+	{
+		Descriptions xml = build();
+		xml.getDescription().add(description);
+		return xml;
+	}
+	
 	public static Descriptions build(String[] langs)
 	{
 		Descriptions xml = build();

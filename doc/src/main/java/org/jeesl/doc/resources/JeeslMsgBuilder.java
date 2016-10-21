@@ -48,7 +48,7 @@ public class JeeslMsgBuilder
 	
 	public static final String tooltip = "aht-utils/msg/tooltip.xml";
 
-	public static final String srcWizard = "msg.aht-utils/wizard.xml";
+	public static final String srcWizard = "jeesl/msg/wizard.xml";
 	public static final String srcAdminAuditLog = "msg.aht-utils/admin/system/auditLog.xml";
 	public static final String srcAdminSync = "msg.aht-utils/admin/system/sync.xml";
 	public static final String srcAdminSystemProperty = "msg.aht-utils/admin/system/properties.xml";

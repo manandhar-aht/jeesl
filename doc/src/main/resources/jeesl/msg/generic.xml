@@ -7,4 +7,11 @@
     		<s:lang key="fr" translation="Report Viewer"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="jeeslListOf">
+		<s:langs>
+    		<s:lang key="de" translation="Liste von"/>
+    		<s:lang key="en" translation="List of"/>
+    		<s:lang key="fr" translation="List of"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

@@ -326,7 +326,7 @@
             <artifactId>antlr4-maven-plugin</artifactId>
             <version>4.5</version>
             <executions>
-                <execution>
+       <!--          <execution>
                     <id>run antlr</id>
                     <phase>generate-resources</phase>
                     <goals>
@@ -340,6 +340,7 @@
                         </arguments>
                     </configuration>
                 </execution>
+                 -->
             </executions>
         </plugin>
 		</plugins>

@@ -1,27 +1,16 @@
 package org.jeesl.factory.java.security;
 
-import java.io.File;
-
-import net.sf.ahtutils.controller.factory.java.security.AbstractJavaSecurityFactoryTst;
-import net.sf.exlp.exception.ExlpConfigurationException;
-
-import org.jeesl.factory.java.security.AbstractJavaSecurityFileFactory;
-import org.jeesl.factory.java.security.JavaSecurityViewIdentifierFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.controller.factory.java.security.AbstractJavaSecurityFactoryTst;
+import net.sf.exlp.exception.ExlpConfigurationException;
+
 public class TestAbstractJavaSecurityFileFactory extends AbstractJavaSecurityFactoryTst
 {
 	final static Logger logger = LoggerFactory.getLogger(TestAbstractJavaSecurityFileFactory.class);
-	
-	private JavaSecurityViewIdentifierFactory idFactory;
-	
-	private File fPackage;
-	private String classPrefix;
-	
-
 	
 	@Test
 	public void buildPackage() throws ExlpConfigurationException

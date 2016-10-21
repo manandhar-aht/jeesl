@@ -47,7 +47,7 @@ public class FreemarkerEngine
 	{
 		this.encoding=encoding;
 		this.mails=mails;
-		freemarkerConfiguration = new Configuration();
+		freemarkerConfiguration = new Configuration(Configuration.getVersion());
 		freemarkerConfiguration.setClassForTemplateLoading(this.getClass(), "/");
 		fcb = new FreemarkerConfigBuilder(mails);
 	}

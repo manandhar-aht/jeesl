@@ -1,11 +1,11 @@
 package org.jeesl.model.xml.system.io.template;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlType;
 
 public class TestXmlDefinition extends AbstractXmlTemplateTest<Definition>
 {

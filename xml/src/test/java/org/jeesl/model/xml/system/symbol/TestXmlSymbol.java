@@ -1,10 +1,10 @@
 package org.jeesl.model.xml.system.symbol;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.TestXmlStyle;
 import net.sf.ahtutils.xml.symbol.Symbol;
 
 public class TestXmlSymbol extends AbstractXmlSymbolTest<Symbol>

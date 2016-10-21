@@ -1,11 +1,10 @@
 package org.jeesl.model.xml.qa;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlStatement;
+import org.jeesl.model.xml.system.status.TestXmlStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.status.TestXmlStatement;
-import net.sf.ahtutils.xml.status.TestXmlStatus;
 
 public class TestXmlTest extends AbstractXmlQaTest<net.sf.ahtutils.xml.qa.Test>
 {

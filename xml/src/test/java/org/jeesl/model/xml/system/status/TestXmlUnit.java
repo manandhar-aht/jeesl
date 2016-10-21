@@ -1,21 +1,23 @@
-package net.sf.ahtutils.xml.status;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlSubType extends AbstractXmlStatusTest<SubType>
+import net.sf.ahtutils.xml.status.TestXmlDescriptions;
+import net.sf.ahtutils.xml.status.TestXmlLangs;
+import net.sf.ahtutils.xml.status.Unit;
+
+public class TestXmlUnit extends AbstractXmlStatusTest<Unit>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlSubType.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlUnit.class);
 	
-	public TestXmlSubType(){super(SubType.class);}
-	public static SubType create(boolean withChildren){return (new TestXmlSubType()).build(withChildren);} 
+	public TestXmlUnit(){super(Unit.class);}
+	public static Unit create(boolean withChildren){return (new TestXmlUnit()).build(withChildren);}   
     
-    public SubType build(boolean withChilds)
+    public Unit build(boolean withChilds)
     {
-    	SubType xml = new SubType();
-    	xml.setId(123);
+    	Unit xml = new Unit();
     	xml.setCode("myCode");
     	xml.setVisible(true);
     	xml.setGroup("myGroup");
@@ -31,11 +33,11 @@ public class TestXmlSubType extends AbstractXmlStatusTest<SubType>
     	
     	return xml;
     }
-
+	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-		TestXmlSubType test = new TestXmlSubType();
+		TestXmlUnit test = new TestXmlUnit();
 		test.saveReferenceXml();
     }
 }

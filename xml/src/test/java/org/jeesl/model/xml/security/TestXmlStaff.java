@@ -1,6 +1,8 @@
 package org.jeesl.model.xml.security;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlStatus;
+import org.jeesl.model.xml.system.status.TestXmlType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,8 +10,6 @@ import net.sf.ahtutils.xml.security.Staff;
 import net.sf.ahtutils.xml.status.TestXmlDomain;
 import net.sf.ahtutils.xml.status.TestXmlLevel;
 import net.sf.ahtutils.xml.status.TestXmlResponsible;
-import net.sf.ahtutils.xml.status.TestXmlStatus;
-import net.sf.ahtutils.xml.status.TestXmlType;
 
 public class TestXmlStaff extends AbstractXmlSecurityTest<Staff>
 {

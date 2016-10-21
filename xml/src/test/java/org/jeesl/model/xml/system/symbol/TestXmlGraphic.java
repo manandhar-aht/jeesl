@@ -1,10 +1,10 @@
 package org.jeesl.model.xml.system.symbol;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.TestXmlType;
 import net.sf.ahtutils.xml.symbol.Graphic;
 import net.sf.exlp.xml.io.File;
 

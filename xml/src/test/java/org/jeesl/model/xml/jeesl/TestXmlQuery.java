@@ -10,6 +10,8 @@ import org.jeesl.model.xml.survey.TestXmlSurveys;
 import org.jeesl.model.xml.survey.TestXmlTemplate;
 import org.jeesl.model.xml.survey.TestXmlTemplates;
 import org.jeesl.model.xml.system.revision.TestXmlEntity;
+import org.jeesl.model.xml.system.status.TestXmlStatus;
+import org.jeesl.model.xml.system.status.TestXmlType;
 import org.jeesl.model.xml.system.util.TestXmlTrafficLight;
 import org.jeesl.model.xml.system.util.TestXmlTrafficLights;
 import org.slf4j.Logger;
@@ -18,8 +20,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.xml.access.TestXmlRole;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
-import net.sf.ahtutils.xml.status.TestXmlStatus;
-import net.sf.ahtutils.xml.status.TestXmlType;
 
 public class TestXmlQuery extends AbstractXmlJeeslTest<Query>
 {

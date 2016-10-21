@@ -4,21 +4,20 @@ import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.Category;
+import net.sf.ahtutils.xml.status.SubType;
 import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlLang;
 import net.sf.ahtutils.xml.status.TestXmlLangs;
 
-public class TestXmlCategory extends AbstractXmlStatusTest<Category>
+public class TestXmlSubType extends AbstractXmlStatusTest<SubType>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlCategory.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlSubType.class);
 	
-	public TestXmlCategory(){super(Category.class);}
-	public static Category create(boolean withChildren){return (new TestXmlCategory()).build(withChildren);}   
+	public TestXmlSubType(){super(SubType.class);}
+	public static SubType create(boolean withChildren){return (new TestXmlSubType()).build(withChildren);} 
     
-    public Category build(boolean withChilds)
+    public SubType build(boolean withChilds)
     {
-    	Category xml = new Category();
+    	SubType xml = new SubType();
     	xml.setId(123);
     	xml.setCode("myCode");
     	xml.setVisible(true);
@@ -31,8 +30,6 @@ public class TestXmlCategory extends AbstractXmlStatusTest<Category>
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
-    		xml.getLang().add(TestXmlLang.create(false));
-    		xml.setTransistions(TestXmlTransistions.create(false));
     	}
     	
     	return xml;
@@ -41,7 +38,7 @@ public class TestXmlCategory extends AbstractXmlStatusTest<Category>
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-		TestXmlCategory test = new TestXmlCategory();
+		TestXmlSubType test = new TestXmlSubType();
 		test.saveReferenceXml();
     }
 }

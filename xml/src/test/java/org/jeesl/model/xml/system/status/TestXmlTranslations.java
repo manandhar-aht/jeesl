@@ -1,9 +1,10 @@
-package net.sf.ahtutils.xml.status;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.xml.status.Translations;
 
 public class TestXmlTranslations extends AbstractXmlStatusTest<Translations>
 {

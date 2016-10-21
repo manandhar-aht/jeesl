@@ -1,14 +1,14 @@
 package org.jeesl.util.query.xpath.status;
 
 import org.jeesl.AbstractJeeslUtilTest;
+import org.jeesl.model.xml.system.status.TestXmlType;
+import org.jeesl.model.xml.system.status.TestXmlTypes;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.TestXmlType;
-import net.sf.ahtutils.xml.status.TestXmlTypes;
 import net.sf.ahtutils.xml.status.Type;
 import net.sf.ahtutils.xml.status.Types;
 import net.sf.ahtutils.xml.xpath.StatusXpath;

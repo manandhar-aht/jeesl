@@ -1,11 +1,11 @@
 package org.jeesl.model.xml.security;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.security.Staffs;
-import net.sf.ahtutils.xml.status.TestXmlDomain;
 
 public class TestXmlStaffs extends AbstractXmlSecurityTest<Staffs>
 {

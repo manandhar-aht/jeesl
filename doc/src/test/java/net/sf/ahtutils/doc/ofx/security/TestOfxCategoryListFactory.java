@@ -9,14 +9,14 @@ import net.sf.ahtutils.doc.ofx.security.list.OfxSecurityCategoryListFactory;
 import net.sf.ahtutils.test.AhtUtilsDocBootstrap;
 import net.sf.ahtutils.xml.access.Category;
 import net.sf.ahtutils.xml.access.TestXmlCategory;
-import net.sf.ahtutils.xml.status.TestXmlDescription;
-import net.sf.ahtutils.xml.status.TestXmlLang;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.DefaultConfigurationBuilder;
+import org.jeesl.model.xml.system.status.TestXmlDescription;
+import org.jeesl.model.xml.system.status.TestXmlLang;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

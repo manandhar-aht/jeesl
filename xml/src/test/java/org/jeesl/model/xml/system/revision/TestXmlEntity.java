@@ -2,12 +2,11 @@ package org.jeesl.model.xml.system.revision;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.status.TestXmlCategory;
+import org.jeesl.model.xml.system.status.TestXmlDescriptions;
+import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlLangs;
 
 public class TestXmlEntity extends AbstractXmlRevisionTest<Entity>
 {

@@ -1,14 +1,14 @@
 package org.jeesl.model.xml.system.core;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlDescription;
+import org.jeesl.model.xml.system.status.TestXmlDescriptions;
+import org.jeesl.model.xml.system.status.TestXmlLang;
+import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.jeesl.model.xml.system.status.TestXmlType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.TestXmlDescription;
-import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlLang;
-import net.sf.ahtutils.xml.status.TestXmlLangs;
 import net.sf.ahtutils.xml.system.Constraint;
 
 public class TestXmlConstraint extends AbstractXmlSystemTest<Constraint>

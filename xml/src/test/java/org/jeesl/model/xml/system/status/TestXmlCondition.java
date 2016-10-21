@@ -1,36 +1,19 @@
-package net.sf.ahtutils.xml.status;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.system.status.TestXmlTransistions;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlCondition extends AbstractXmlStatusTestOld
+import net.sf.ahtutils.xml.status.Condition;
+
+public class TestXmlCondition extends AbstractXmlStatusTest<Condition>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlCondition.class);
 	
-	@BeforeClass
-	public static void initFiles()
-	{
-		fXml = new File(rootDir,"condition.xml");
-	}
+	public TestXmlCondition(){super(Condition.class);}
+	public static Condition create(boolean withChildren){return (new TestXmlCondition()).build(withChildren);} 
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Condition actual = create(true);
-    	Condition expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Condition.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static Condition create(boolean withChilds)
+    public Condition build(boolean withChilds)
     {
     	Condition xml = new Condition();
     	xml.setId(123);
@@ -52,14 +35,10 @@ public class TestXmlCondition extends AbstractXmlStatusTestOld
     	return xml;
     }
     
-    public void save() {save(create(true),fXml);}
-	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlCondition.initFiles();	
 		TestXmlCondition test = new TestXmlCondition();
-		test.save();
+		test.saveReferenceXml();
     }
 }

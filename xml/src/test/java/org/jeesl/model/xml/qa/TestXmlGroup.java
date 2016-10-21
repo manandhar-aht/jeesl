@@ -23,7 +23,7 @@ public class TestXmlGroup extends AbstractXmlQaTest<Group>
     	
     	if(withChilds)
     	{
-    		xml.setDescription(net.sf.ahtutils.xml.status.TestXmlDescription.create(false));
+    		xml.setDescription(org.jeesl.model.xml.system.status.TestXmlDescription.create(false));
     		xml.getStaff().add(TestXmlStaff.create(false));xml.getStaff().add(TestXmlStaff.create(false));
     	}
     	

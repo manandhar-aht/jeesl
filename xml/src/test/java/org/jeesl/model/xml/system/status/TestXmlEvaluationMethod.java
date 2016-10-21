@@ -4,18 +4,18 @@ import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.Phase;
+import net.sf.ahtutils.xml.status.EvaluationMethod;
 
-public class TestXmlPhase extends AbstractXmlStatusTest<Phase>
+public class TestXmlEvaluationMethod extends AbstractXmlStatusTest<EvaluationMethod>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlPhase.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlEvaluationMethod.class);
 	
-	public TestXmlPhase(){super(Phase.class);}
-	public static Phase create(boolean withChildren){return (new TestXmlPhase()).build(withChildren);} 
+	public TestXmlEvaluationMethod(){super(EvaluationMethod.class);}
+	public static EvaluationMethod create(boolean withChildren){return (new TestXmlEvaluationMethod()).build(withChildren);} 
     
-    public Phase build(boolean withChilds)
+    public EvaluationMethod build(boolean withChilds)
     {
-    	Phase xml = new Phase();
+    	EvaluationMethod xml = new EvaluationMethod();
     	xml.setCode("myCode");
     	xml.setVisible(true);
     	xml.setGroup("myGroup");
@@ -31,11 +31,11 @@ public class TestXmlPhase extends AbstractXmlStatusTest<Phase>
     	
     	return xml;
     }
-	
+    
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();	
-		TestXmlPhase test = new TestXmlPhase();
+		TestXmlEvaluationMethod test = new TestXmlEvaluationMethod();
 		test.saveReferenceXml();
     }
 }

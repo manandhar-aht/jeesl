@@ -1,11 +1,11 @@
 package org.jeesl.model.xml.survey;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlDescription;
 import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.TestXmlDescription;
 import net.sf.ahtutils.xml.survey.Section;
 
 public class TestXmlSection extends AbstractXmlSurveyTest<Section>

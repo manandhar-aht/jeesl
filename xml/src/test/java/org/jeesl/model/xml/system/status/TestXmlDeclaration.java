@@ -4,18 +4,18 @@ import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.Responsible;
+import net.sf.ahtutils.xml.status.Declaration;
 
-public class TestXmlResponsible extends AbstractXmlStatusTest<Responsible>
+public class TestXmlDeclaration extends AbstractXmlStatusTest<Declaration>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlResponsible.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlDeclaration.class);
 	
-	public TestXmlResponsible(){super(Responsible.class);}
-	public static Responsible create(boolean withChildren){return (new TestXmlResponsible()).build(withChildren);} 
+	public TestXmlDeclaration(){super(Declaration.class);}
+	public static Declaration create(boolean withChildren){return (new TestXmlDeclaration()).build(withChildren);} 
     
-    public Responsible build(boolean withChilds)
+    public Declaration build(boolean withChilds)
     {
-    	Responsible xml = new Responsible();
+    	Declaration xml = new Declaration();
     	xml.setCode("myCode");
     	xml.setVisible(true);
     	xml.setGroup("myGroup");
@@ -27,6 +27,8 @@ public class TestXmlResponsible extends AbstractXmlStatusTest<Responsible>
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
+    		
+    		xml.getTracked().add(TestXmlTracked.create(false));
     	}
     	
     	return xml;
@@ -35,7 +37,7 @@ public class TestXmlResponsible extends AbstractXmlStatusTest<Responsible>
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-		TestXmlResponsible test = new TestXmlResponsible();
+		TestXmlDeclaration test = new TestXmlDeclaration();
 		test.saveReferenceXml();
     }
 }

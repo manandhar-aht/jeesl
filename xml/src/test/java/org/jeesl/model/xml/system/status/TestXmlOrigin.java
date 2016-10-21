@@ -5,8 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.status.Origin;
-import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlLangs;
 
 public class TestXmlOrigin extends AbstractXmlStatusTest<Origin>
 {

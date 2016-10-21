@@ -1,31 +1,19 @@
-package net.sf.ahtutils.xml.status;
-
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.system.status.TestXmlTracked;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlFreeze extends AbstractXmlStatusTestOld
+import net.sf.ahtutils.xml.status.Freeze;
+
+public class TestXmlFreeze extends AbstractXmlStatusTest<Freeze>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlFreeze.class);
 	
-	@BeforeClass public static void initFiles(){setXmlFile(dirSuffix, Freeze.class);}
+	public TestXmlFreeze(){super(Freeze.class);}
+	public static Freeze create(boolean withChildren){return (new TestXmlFreeze()).build(withChildren);} 
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Freeze actual = create(true);
-    	Freeze expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Freeze.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static Freeze create(boolean withChilds)
+    public Freeze build(boolean withChilds)
     {
     	Freeze xml = new Freeze();
     	xml.setCode("myCode");
@@ -45,15 +33,11 @@ public class TestXmlFreeze extends AbstractXmlStatusTestOld
     	
     	return xml;
     }
-    
-    public void save() {save(create(true),fXml);}
 	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlFreeze.initFiles();	
 		TestXmlFreeze test = new TestXmlFreeze();
-		test.save();
+		test.saveReferenceXml();
     }
 }

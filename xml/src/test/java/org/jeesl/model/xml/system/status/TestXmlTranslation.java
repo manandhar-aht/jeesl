@@ -4,8 +4,6 @@ import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlLangs;
 import net.sf.ahtutils.xml.status.Translation;
 
 public class TestXmlTranslation extends AbstractXmlStatusTest<Translation>

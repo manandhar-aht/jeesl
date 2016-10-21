@@ -4,18 +4,18 @@ import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.SubProgram;
+import net.sf.ahtutils.xml.status.MainType;
 
-public class TestXmlSubProgram extends AbstractXmlStatusTest<SubProgram>
+public class TestXmlMainType extends AbstractXmlStatusTest<MainType>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlSubProgram.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlMainType.class);
 	
-	public TestXmlSubProgram(){super(SubProgram.class);}
-	public static SubProgram create(boolean withChildren){return (new TestXmlSubProgram()).build(withChildren);}   
+	public TestXmlMainType(){super(MainType.class);}
+	public static MainType create(boolean withChildren){return (new TestXmlMainType()).build(withChildren);} 
     
-    public SubProgram build(boolean withChildren)
+    public MainType build(boolean withChilds)
     {
-    	SubProgram xml = new SubProgram();
+    	MainType xml = new MainType();
     	xml.setId(123);
     	xml.setCode("myCode");
     	xml.setVisible(true);
@@ -24,19 +24,19 @@ public class TestXmlSubProgram extends AbstractXmlStatusTest<SubProgram>
     	xml.setImage("test/green.png");
     	xml.setPosition(1);
     	
-    	if(withChildren)
+    	if(withChilds)
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
     	}
-
+    	
     	return xml;
     }
-	
+    
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-		TestXmlSubProgram test = new TestXmlSubProgram();
+		TestXmlMainType test = new TestXmlMainType();
 		test.saveReferenceXml();
     }
 }

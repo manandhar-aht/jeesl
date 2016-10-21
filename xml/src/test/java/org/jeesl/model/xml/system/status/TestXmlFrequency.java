@@ -4,18 +4,18 @@ import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.Responsible;
+import net.sf.ahtutils.xml.status.Frequency;
 
-public class TestXmlResponsible extends AbstractXmlStatusTest<Responsible>
+public class TestXmlFrequency extends AbstractXmlStatusTest<Frequency>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlResponsible.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlFrequency.class);
 	
-	public TestXmlResponsible(){super(Responsible.class);}
-	public static Responsible create(boolean withChildren){return (new TestXmlResponsible()).build(withChildren);} 
+	public TestXmlFrequency(){super(Frequency.class);}
+	public static Frequency create(boolean withChildren){return (new TestXmlFrequency()).build(withChildren);} 
     
-    public Responsible build(boolean withChilds)
+    public Frequency build(boolean withChilds)
     {
-    	Responsible xml = new Responsible();
+    	Frequency xml = new Frequency();
     	xml.setCode("myCode");
     	xml.setVisible(true);
     	xml.setGroup("myGroup");
@@ -31,11 +31,10 @@ public class TestXmlResponsible extends AbstractXmlStatusTest<Responsible>
     	
     	return xml;
     }
-    
+	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-		TestXmlResponsible test = new TestXmlResponsible();
-		test.saveReferenceXml();
-    }
+		TestXmlFrequency test = new TestXmlFrequency();
+		test.save();		test.saveReferenceXml();    }
 }

@@ -5,9 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.status.Category;
-import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlLang;
-import net.sf.ahtutils.xml.status.TestXmlLangs;
 
 public class TestXmlCategory extends AbstractXmlStatusTest<Category>
 {

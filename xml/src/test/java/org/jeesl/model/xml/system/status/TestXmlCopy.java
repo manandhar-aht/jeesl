@@ -1,21 +1,21 @@
-package net.sf.ahtutils.xml.status;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlMainType extends AbstractXmlStatusTest<MainType>
+import net.sf.ahtutils.xml.status.Copy;
+
+public class TestXmlCopy extends AbstractXmlStatusTest<Copy>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlMainType.class);
+	final static Logger logger = LoggerFactory.getLogger(Copy.class);
 	
-	public TestXmlMainType(){super(MainType.class);}
-	public static MainType create(boolean withChildren){return (new TestXmlMainType()).build(withChildren);} 
+	public TestXmlCopy(){super(Copy.class);}
+	public static Copy create(boolean withChildren){return (new TestXmlCopy()).build(withChildren);} 
     
-    public MainType build(boolean withChilds)
+    public Copy build(boolean withChilds)
     {
-    	MainType xml = new MainType();
-    	xml.setId(123);
+    	Copy xml = new Copy();
     	xml.setCode("myCode");
     	xml.setVisible(true);
     	xml.setGroup("myGroup");
@@ -35,7 +35,7 @@ public class TestXmlMainType extends AbstractXmlStatusTest<MainType>
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-		TestXmlMainType test = new TestXmlMainType();
+		TestXmlCopy test = new TestXmlCopy();
 		test.saveReferenceXml();
     }
 }

@@ -5,7 +5,6 @@ import org.jeesl.model.xml.security.TestXmlUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.TestXmlDeclaration;
 import net.sf.ahtutils.xml.status.Tracked;
 
 public class TestXmlTracked extends AbstractXmlStatusTest<Tracked>

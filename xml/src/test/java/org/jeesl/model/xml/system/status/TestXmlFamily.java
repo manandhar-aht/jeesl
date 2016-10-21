@@ -4,19 +4,18 @@ import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.SubProgram;
+import net.sf.ahtutils.xml.status.Family;
 
-public class TestXmlSubProgram extends AbstractXmlStatusTest<SubProgram>
+public class TestXmlFamily extends AbstractXmlStatusTest<Family>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlSubProgram.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlFamily.class);
 	
-	public TestXmlSubProgram(){super(SubProgram.class);}
-	public static SubProgram create(boolean withChildren){return (new TestXmlSubProgram()).build(withChildren);}   
+	public TestXmlFamily(){super(Family.class);}
+	public static Family create(boolean withChildren){return (new TestXmlFamily()).build(withChildren);} 
     
-    public SubProgram build(boolean withChildren)
+    public Family build(boolean withChilds)
     {
-    	SubProgram xml = new SubProgram();
-    	xml.setId(123);
+    	Family xml = new Family();
     	xml.setCode("myCode");
     	xml.setVisible(true);
     	xml.setGroup("myGroup");
@@ -24,19 +23,19 @@ public class TestXmlSubProgram extends AbstractXmlStatusTest<SubProgram>
     	xml.setImage("test/green.png");
     	xml.setPosition(1);
     	
-    	if(withChildren)
+    	if(withChilds)
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
     	}
-
+    	
     	return xml;
     }
-	
+    
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-		TestXmlSubProgram test = new TestXmlSubProgram();
+		TestXmlFamily test = new TestXmlFamily();
 		test.saveReferenceXml();
     }
 }

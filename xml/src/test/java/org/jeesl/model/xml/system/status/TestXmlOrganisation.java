@@ -5,9 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.status.Organisation;
-import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlFunction;
-import net.sf.ahtutils.xml.status.TestXmlLangs;
 
 public class TestXmlOrganisation extends AbstractXmlStatusTest<Organisation>
 {

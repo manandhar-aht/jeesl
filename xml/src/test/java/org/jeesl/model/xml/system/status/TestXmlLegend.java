@@ -1,30 +1,19 @@
-package net.sf.ahtutils.xml.status;
-
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlLegend extends AbstractXmlStatusTestOld
+import net.sf.ahtutils.xml.status.Legend;
+
+public class TestXmlLegend extends AbstractXmlStatusTest<Legend>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlLegend.class);
 	
-	@BeforeClass public static void initFiles(){setXmlFile(dirSuffix, Legend.class);}
-	
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Legend actual = create(true);
-    	Legend expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Legend.class);
-    	assertJaxbEquals(expected, actual);
-    }
+	public TestXmlLegend(){super(Legend.class);}
+	public static Legend create(boolean withChildren){return (new TestXmlLegend()).build(withChildren);} 
     
-    public static Legend create(boolean withChilds)
+    public Legend build(boolean withChilds)
     {
     	Legend xml = new Legend();
     	xml.setCode("myCode");
@@ -43,14 +32,10 @@ public class TestXmlLegend extends AbstractXmlStatusTestOld
     	return xml;
     }
     
-    public void save() {save(create(true),fXml);}
-	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlLegend.initFiles();	
 		TestXmlLegend test = new TestXmlLegend();
-		test.save();
+		test.saveReferenceXml();
     }
 }

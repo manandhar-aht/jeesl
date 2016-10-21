@@ -1,30 +1,19 @@
-package net.sf.ahtutils.xml.status;
-
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlDomain extends AbstractXmlStatusTestOld
+import net.sf.ahtutils.xml.status.Domain;
+
+public class TestXmlDomain extends AbstractXmlStatusTest<Domain>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlDomain.class);
 	
-	@BeforeClass public static void initFiles(){setXmlFile(dirSuffix, Domain.class);}
-	
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Domain actual = create(true);
-    	Domain expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Domain.class);
-    	assertJaxbEquals(expected, actual);
-    }
+	public TestXmlDomain(){super(Domain.class);}
+	public static Domain create(boolean withChildren){return (new TestXmlDomain()).build(withChildren);} 
     
-    public static Domain create(boolean withChilds)
+    public Domain build(boolean withChilds)
     {
     	Domain xml = new Domain();
     	xml.setCode("myCode");
@@ -43,14 +32,10 @@ public class TestXmlDomain extends AbstractXmlStatusTestOld
     	return xml;
     }
     
-    public void save() {save(create(true),fXml);}
-	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlDomain.initFiles();	
 		TestXmlDomain test = new TestXmlDomain();
-		test.save();
+		test.saveReferenceXml();
     }
 }

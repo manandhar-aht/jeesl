@@ -1,30 +1,19 @@
-package net.sf.ahtutils.xml.status;
-
-import java.io.FileNotFoundException;
-
-import net.sf.exlp.util.xml.JaxbUtil;
+package org.jeesl.model.xml.system.status;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestXmlGender extends AbstractXmlStatusTestOld
+import net.sf.ahtutils.xml.status.Gender;
+
+public class TestXmlGender extends AbstractXmlStatusTest<Gender>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlGender.class);
 	
-	@BeforeClass public static void initFiles(){setXmlFile(dirSuffix, Gender.class);}
+	public TestXmlGender(){super(Gender.class);}
+	public static Gender create(boolean withChildren){return (new TestXmlGender()).build(withChildren);} 
     
-    @Test
-    public void testXml() throws FileNotFoundException
-    {
-    	Gender actual = create(true);
-    	Gender expected = JaxbUtil.loadJAXB(fXml.getAbsolutePath(), Gender.class);
-    	assertJaxbEquals(expected, actual);
-    }
-    
-    public static Gender create(boolean withChilds)
+    public Gender build(boolean withChilds)
     {
     	Gender xml = new Gender();
     	xml.setCode("myCode");
@@ -43,14 +32,10 @@ public class TestXmlGender extends AbstractXmlStatusTestOld
     	return xml;
     }
     
-    public void save() {save(create(true),fXml);}
-	
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-			
-		TestXmlGender.initFiles();	
 		TestXmlGender test = new TestXmlGender();
-		test.save();
+		test.saveReferenceXml();
     }
 }

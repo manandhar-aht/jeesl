@@ -1,12 +1,12 @@
 package org.jeesl.model.xml.system.util;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlDescriptions;
+import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.jeesl.model.xml.system.status.TestXmlScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlLangs;
 import net.sf.ahtutils.xml.utils.TrafficLight;
 
 public class TestXmlTrafficLight extends AbstractXmlUtilsTest<TrafficLight>

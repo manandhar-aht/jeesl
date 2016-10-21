@@ -1,12 +1,12 @@
 package org.jeesl.model.xml.security;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlDescriptions;
+import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.security.Usecase;
-import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlLangs;
 
 public class TestXmlUsecase extends AbstractXmlSecurityTest<Usecase>
 {

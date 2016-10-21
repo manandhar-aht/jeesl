@@ -2,12 +2,12 @@ package org.jeesl.model.xml.navigation;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.navigation.MenuItem;
+import org.jeesl.model.xml.system.status.TestXmlDescriptions;
+import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.access.TestXmlView;
-import net.sf.ahtutils.xml.status.TestXmlDescriptions;
-import net.sf.ahtutils.xml.status.TestXmlLangs;
 
 public class TestXmlMenuItem extends AbstractXmlNavigationTest<MenuItem>
 {

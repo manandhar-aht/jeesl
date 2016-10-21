@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.status;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,7 @@ public class TestXmlPriority extends AbstractXmlStatusTest<Priority>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlPriority test = new TestXmlPriority();
 		test.saveReferenceXml();
     }

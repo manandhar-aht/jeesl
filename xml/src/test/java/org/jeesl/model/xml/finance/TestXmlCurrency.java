@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.finance;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +32,7 @@ public class TestXmlCurrency extends AbstractXmlFinanceTest<Currency>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlCurrency test = new TestXmlCurrency();
 		test.saveReferenceXml();
     }

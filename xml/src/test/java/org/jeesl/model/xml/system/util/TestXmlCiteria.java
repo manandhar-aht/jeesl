@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.util;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,7 @@ public class TestXmlCiteria extends AbstractXmlUtilsTest<Criteria>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlCiteria test = new TestXmlCiteria();
 		test.saveReferenceXml();
     }

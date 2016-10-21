@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.io.sync;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class TestXmlExceptions extends AbstractXmlSyncTest<Exceptions>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();	
+		JeeslXmlTestBootstrap.init();	
 		TestXmlExceptions test = new TestXmlExceptions();
 		test.saveReferenceXml();
     }

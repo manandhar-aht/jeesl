@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.io.template;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class TestXmlDefinitions extends AbstractXmlTemplateTest<Definitions>
     
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();	
+		JeeslXmlTestBootstrap.init();	
 		TestXmlDefinitions test = new TestXmlDefinitions();
 		test.saveReferenceXml();
     }

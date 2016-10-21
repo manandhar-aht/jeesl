@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.monitoring;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class TestXmlDataSet extends AbstractXmlMonitoringTest<DataSet>
 
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlDataSet test = new TestXmlDataSet();
 		test.saveReferenceXml();
     }

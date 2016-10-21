@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.report;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ public class TestXmlFile extends AbstractXmlReportTest<File>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlFile test = new TestXmlFile();
 		test.saveReferenceXml();
     }

@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 import net.sf.exlp.util.xml.JaxbUtil;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.status.AbstractXmlStatusTest;
 import org.jeesl.model.xml.system.status.TestXmlAction;
 import org.junit.BeforeClass;
@@ -40,7 +40,7 @@ public class TestXmlUnit extends AbstractXmlStatusTest<Unit>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlUnit test = new TestXmlUnit();
 		test.saveReferenceXml();
     }

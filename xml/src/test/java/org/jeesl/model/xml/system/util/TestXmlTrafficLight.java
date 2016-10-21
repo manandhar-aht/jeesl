@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.util;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ public class TestXmlTrafficLight extends AbstractXmlUtilsTest<TrafficLight>
     
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlTrafficLight test = new TestXmlTrafficLight();
 		test.saveReferenceXml();
     }

@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.navigation;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.navigation.UrlMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public class TestXmlUrlMapping extends AbstractXmlNavigationTest<UrlMapping>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlUrlMapping test = new TestXmlUrlMapping();
 		test.saveReferenceXml();
     }

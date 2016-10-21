@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.qa;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.security.TestXmlStaff;
 import org.jeesl.model.xml.survey.TestXmlSurvey;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class TestXmlQa extends AbstractXmlQaTest<Qa>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlQa test = new TestXmlQa();
 		test.saveReferenceXml();
     }

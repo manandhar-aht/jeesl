@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 
 import net.sf.exlp.util.xml.JaxbUtil;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.security.TestXmlUser;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class TestXmlTracked extends AbstractXmlStatusTestOld
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 			
 		TestXmlTracked.initFiles();	
 		TestXmlTracked test = new TestXmlTracked();

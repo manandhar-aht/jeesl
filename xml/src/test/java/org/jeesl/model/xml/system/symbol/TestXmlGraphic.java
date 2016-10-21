@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.symbol;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +32,7 @@ public class TestXmlGraphic extends AbstractXmlSymbolTest<Graphic>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlGraphic test = new TestXmlGraphic();
 		test.saveReferenceXml();
     }

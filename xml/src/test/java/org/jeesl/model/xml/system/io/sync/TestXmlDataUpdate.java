@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.io.sync;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +36,7 @@ public class TestXmlDataUpdate extends AbstractXmlSyncTest<DataUpdate>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlDataUpdate test = new TestXmlDataUpdate();
 		test.saveReferenceXml();
     }

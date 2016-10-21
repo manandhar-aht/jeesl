@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.io.template;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.text.TestXmlExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class TestXmlToken extends AbstractXmlTemplateTest<Token>
     
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();	
+		JeeslXmlTestBootstrap.init();	
 		TestXmlToken test = new TestXmlToken();
 		test.saveReferenceXml();
     }

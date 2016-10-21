@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.mail;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +29,7 @@ public class TestXmlImage extends AbstractXmlMailTest<Image>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();	
+		JeeslXmlTestBootstrap.init();	
 		TestXmlImage test = new TestXmlImage();
 		test.saveReferenceXml();
     }

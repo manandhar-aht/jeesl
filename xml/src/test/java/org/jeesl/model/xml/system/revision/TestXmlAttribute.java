@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.revision;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,7 @@ public class TestXmlAttribute extends AbstractXmlRevisionTest<Attribute>
     
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();	
+		JeeslXmlTestBootstrap.init();	
 		TestXmlAttribute test = new TestXmlAttribute();
 		test.saveReferenceXml();
     }

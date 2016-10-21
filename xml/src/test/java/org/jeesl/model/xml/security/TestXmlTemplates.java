@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.security;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +29,7 @@ public class TestXmlTemplates extends AbstractXmlSecurityTest<Templates>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlTemplates test = new TestXmlTemplates();
 		test.saveReferenceXml();
     }

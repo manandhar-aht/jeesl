@@ -8,9 +8,9 @@ import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UtilsXmlTestBootstrap
+public class JeeslXmlTestBootstrap
 {
-	final static Logger logger = LoggerFactory.getLogger(UtilsXmlTestBootstrap.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslXmlTestBootstrap.class);
 		
 	public static void init()
 	{

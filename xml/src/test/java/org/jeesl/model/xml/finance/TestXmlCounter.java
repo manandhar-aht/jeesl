@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.finance;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class TestXmlCounter extends AbstractXmlFinanceTest<Counter>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlCounter test = new TestXmlCounter();
 		test.saveReferenceXml();
     }

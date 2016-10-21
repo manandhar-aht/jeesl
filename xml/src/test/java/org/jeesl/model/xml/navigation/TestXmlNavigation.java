@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.navigation;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.navigation.Navigation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class TestXmlNavigation extends AbstractXmlNavigationTest<Navigation>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlNavigation test = new TestXmlNavigation();
 		test.saveReferenceXml();
     }

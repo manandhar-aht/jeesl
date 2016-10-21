@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.text;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class TestXmlQuestion extends AbstractXmlTextTest<Question>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlQuestion test = new TestXmlQuestion();
 		test.saveReferenceXml();
     }

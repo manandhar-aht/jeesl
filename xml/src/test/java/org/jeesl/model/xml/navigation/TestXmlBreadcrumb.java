@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.navigation;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.navigation.Breadcrumb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class TestXmlBreadcrumb extends AbstractXmlNavigationTest<Breadcrumb>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlBreadcrumb test = new TestXmlBreadcrumb();
 		test.saveReferenceXml();
     }

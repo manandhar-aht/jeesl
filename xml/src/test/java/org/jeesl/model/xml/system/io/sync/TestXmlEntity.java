@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.io.sync;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class TestXmlEntity extends AbstractXmlSyncTest<Entity>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();	
+		JeeslXmlTestBootstrap.init();	
 		TestXmlEntity test = new TestXmlEntity();
 		test.saveReferenceXml();
     }

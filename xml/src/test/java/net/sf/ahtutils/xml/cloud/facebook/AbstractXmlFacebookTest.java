@@ -1,7 +1,7 @@
 package net.sf.ahtutils.xml.cloud.facebook;
 
 import org.jeesl.AbstractXmlTest;
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,7 @@ public abstract class AbstractXmlFacebookTest extends AbstractXmlTest
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		AbstractXmlTest.initJaxb();
 		
 		TestXmlApp.initFiles();

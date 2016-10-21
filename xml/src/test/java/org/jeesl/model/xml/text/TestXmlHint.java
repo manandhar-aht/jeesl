@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.text;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class TestXmlHint extends AbstractXmlTextTest<Hint>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlHint test = new TestXmlHint();
 		test.saveReferenceXml();
     }

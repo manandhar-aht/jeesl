@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.navigation;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.navigation.Menu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class TestXmlMenu extends AbstractXmlNavigationTest<Menu>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlMenu test = new TestXmlMenu();
 		test.saveReferenceXml();
     }

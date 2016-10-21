@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.jeesl;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.qa.TestXmlTest;
 import org.jeesl.model.xml.security.TestXmlCategory;
 import org.jeesl.model.xml.security.TestXmlStaff;
@@ -62,7 +62,7 @@ public class TestXmlQuery extends AbstractXmlJeeslTest<Query>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlQuery test = new TestXmlQuery();
 		test.saveReferenceXml();
     }

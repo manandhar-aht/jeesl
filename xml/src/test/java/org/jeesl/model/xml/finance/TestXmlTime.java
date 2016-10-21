@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.finance;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class TestXmlTime extends AbstractXmlFinanceTest<Time>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlTime test = new TestXmlTime();
 		test.saveReferenceXml();
     }

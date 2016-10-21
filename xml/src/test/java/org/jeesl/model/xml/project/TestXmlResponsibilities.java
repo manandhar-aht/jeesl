@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.project;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.security.TestXmlRoles;
 import org.jeesl.model.xml.security.TestXmlUser;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class TestXmlResponsibilities extends AbstractXmlProjectTest<Responsibili
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlResponsibilities test = new TestXmlResponsibilities();
 		test.saveReferenceXml();
     }

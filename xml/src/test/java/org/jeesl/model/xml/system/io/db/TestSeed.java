@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.io.db;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class TestSeed extends AbstractXmlDbseedTest<Seed>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestSeed test = new TestSeed();
 		test.saveReferenceXml();
     }

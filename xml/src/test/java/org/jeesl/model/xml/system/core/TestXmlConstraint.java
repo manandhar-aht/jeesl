@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.system.core;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +38,7 @@ public class TestXmlConstraint extends AbstractXmlSystemTest<Constraint>
     
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlConstraint test = new TestXmlConstraint();
 		test.saveReferenceXml();
     }

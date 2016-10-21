@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.survey;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.status.TestXmlCategory;
 import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class TestXmlTemplate extends AbstractXmlSurveyTest<Template>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlTemplate test = new TestXmlTemplate();
 		test.saveReferenceXml();
     }

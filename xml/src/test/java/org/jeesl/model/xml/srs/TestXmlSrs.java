@@ -1,6 +1,6 @@
 package org.jeesl.model.xml.srs;
 
-import org.jeesl.UtilsXmlTestBootstrap;
+import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class TestXmlSrs extends AbstractXmlSrsTest<Srs>
 	
 	public static void main(String[] args)
     {
-		UtilsXmlTestBootstrap.init();
+		JeeslXmlTestBootstrap.init();
 		TestXmlSrs test = new TestXmlSrs();
 		test.saveReferenceXml();
     }

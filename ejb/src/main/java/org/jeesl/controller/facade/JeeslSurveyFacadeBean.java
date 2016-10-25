@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -243,5 +244,11 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	@Override public List<ANSWER> fAnswers(SURVEY survey)
 	{
 		return this.allForGrandParent(cAnswer, cData, "data", survey, "survey");
+	}
+
+	@Override
+	public DATA fData(CORRELATION correlation) throws UtilsNotFoundException
+	{
+		return this.oneForParent(cData, "correlation", correlation);
 	}	
 }

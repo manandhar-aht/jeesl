@@ -22,7 +22,13 @@
 				<c:if test="#{not empty cc.attrs.for}"><f:attribute name="for" value="cc.attrs.for"/></c:if>
 				<!-- style="cursor:pointer" -->
 			</p:outputLabel>	
-				 
+	    </c:if>
+	    <c:if test="#{empty cc.attrs.code}">
+	    	<p:outputLabel id="ol"
+				value="#{appLabelBean.entities[cc.attrs.entity][cc.attrs.localeCode].lang}">
+				<c:if test="#{not empty cc.attrs.for}"><f:attribute name="for" value="cc.attrs.for"/></c:if>
+				<!-- style="cursor:pointer" -->
+			</p:outputLabel>	
 	    </c:if>
 	</composite:implementation>
 </html>

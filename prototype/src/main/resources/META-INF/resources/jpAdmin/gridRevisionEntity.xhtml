@@ -61,7 +61,10 @@
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.entity.visible}"/>
 								<p:outputLabel value="#{msg.aupCode}"/>
-								<h:inputText autocomplete="off" value="#{cc.attrs.bean.entity.code}" styleClass="w100"/>
+								<p:inputText autocomplete="off" value="#{cc.attrs.bean.entity.code}"/>
+								
+								<p:outputLabel value="#{msg.jeeslRevisionClass}"/>
+								<h:outputText value="#{cc.attrs.bean.className}"/> 
 								
 								<p:outputLabel value="#{msg.aupRemark}"/>
 								<p:inputTextarea value="#{cc.attrs.bean.entity.developerInfo}" style="width:100%" autocomplete="off"/>

@@ -43,6 +43,8 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	private RE entity; public RE getEntity() {return entity;} public void setEntity(RE entity) {this.entity = entity;}
 	private REM mapping; public REM getMapping() {return mapping;}public void setMapping(REM mapping) {this.mapping = mapping;}
 	
+	private String className; public String getClassName() {return className;}
+	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);
@@ -82,6 +84,15 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		entity = fRevision.load(cEntity, entity);
 		attributes = entity.getAttributes();
 		entityMappings = entity.getMaps();
+		try
+		{
+			Class<?> c = Class.forName(entity.getCode());
+			className = c.getSimpleName();
+		}
+		catch (ClassNotFoundException e)
+		{
+			className = "CLASS NOT FOUND";
+		}
 	}
 	
 	public void selectEntity() throws UtilsNotFoundException

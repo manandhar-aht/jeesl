@@ -127,4 +127,11 @@
     		<s:lang key="fr" translation="Enclosure"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslRevisionClass">
+    	<s:langs>
+    		<s:lang key="de" translation="Klasse"/>
+    		<s:lang key="en" translation="Class"/>
+    		<s:lang key="fr" translation="Class"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

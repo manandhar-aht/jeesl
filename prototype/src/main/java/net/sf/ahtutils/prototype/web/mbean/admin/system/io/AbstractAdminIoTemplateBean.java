@@ -51,9 +51,8 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	private Comparator<IOT> comparatorTemplate;
 	
 	private SbMultiStatusHandler<L,D,IOTT> sbhType; public SbMultiStatusHandler<L,D,IOTT> getSbhType() {return sbhType;}
-	private SbMultiStatusHandler<L,D,IOTC> sbhCategory; public SbMultiStatusHandler<L,D,IOTC> getSbhCategory() {return sbhCategory;}
+	protected SbMultiStatusHandler<L,D,IOTC> sbhCategory; public SbMultiStatusHandler<L,D,IOTC> getSbhCategory() {return sbhCategory;}
 
-	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, UtilsIoFacade<L,D,IOT,IOTT,IOTC> fIo, final Class<L> cLang, final Class<D> cDescription,Class<IOT> cTemplate, Class<IOTT> cTemplateType, Class<IOTC> cTemplateCategory)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
@@ -72,7 +71,6 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		sbhType = new SbMultiStatusHandler<L,D,IOTT>(cTemplateType,types); sbhType.selectAll();
 		sbhCategory = new SbMultiStatusHandler<L,D,IOTC>(cTemplateCategory,categories); sbhCategory.selectAll();
 
-		
 		reloadTemplates();
 	}
 	

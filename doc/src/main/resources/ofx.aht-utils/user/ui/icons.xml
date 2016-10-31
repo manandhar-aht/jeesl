@@ -176,12 +176,18 @@
 	                        <media:media src="svg.aht-utils/icon/ui/help.svg" dst="icon/ui/help"/>
 	                    </media:image>
 	                </table:cell>
-	                <table:cell>
-	                    <ofx:paragraph>Help</ofx:paragraph>
-	                </table:cell>
-	                <table:cell>
-	                    <ofx:paragraph>The user is forwarded to the <ed:glossary code="hd"/> </ofx:paragraph>
-	                </table:cell>
+	                <table:cell><ofx:paragraph>Help</ofx:paragraph></table:cell>
+	                <table:cell><ofx:paragraph>The user is forwarded to the <ed:glossary code="hd"/> </ofx:paragraph></table:cell>
+	            </table:row>
+					<table:row>
+	                <table:cell><media:image><layout:height unit="em">1.0</layout:height><media:media src="jeesl/svg/icon/ui/info/report.svg" dst="icon/ui/info/report"/></media:image></table:cell>
+	                <table:cell><ofx:paragraph>Report</ofx:paragraph></table:cell>
+	                <table:cell><ofx:paragraph>A report is available, by hovering on the icon additional information are available.</ofx:paragraph></table:cell>
+	            </table:row>
+	            <table:row>
+	                <table:cell><media:image><layout:height unit="em">1.0</layout:height><media:media src="jeesl/svg/icon/ui/info/business-logic.svg" dst="icon/ui/info/business-logic"/></media:image></table:cell>
+	                <table:cell><ofx:paragraph>Business Logic</ofx:paragraph></table:cell>
+	                <table:cell><ofx:paragraph>Explanation for Business Processes.</ofx:paragraph></table:cell>
 	            </table:row>
 <!--	            <table:row>
 	                <table:cell>

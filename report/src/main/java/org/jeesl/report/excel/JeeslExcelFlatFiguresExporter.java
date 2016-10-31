@@ -2,9 +2,7 @@ package org.jeesl.report.excel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -37,8 +35,9 @@ public class JeeslExcelFlatFiguresExporter
 	// The sheet in the workbook
 	private final Sheet sheet;
     
-	// The current row number
+	// The current row and column number
 	private short rowNr          = 0;
+	private short column         = 0;
 	
 	public JeeslExcelFlatFiguresExporter()
 	{
@@ -75,7 +74,6 @@ public class JeeslExcelFlatFiguresExporter
 	public byte[] export(List<String> headers, JsonFlatFigures figures)
 	{
 		// Create the column headers
-		short column        = 0;
 		Row row     = sheet.createRow(rowNr);
 		
 		for (String header : headers)
@@ -95,28 +93,24 @@ public class JeeslExcelFlatFiguresExporter
 		for (JsonFlatFigure content : figures.getFigures())
 		{
 			row     = sheet.createRow(rowNr);
-			for (int i = 1; i < 10; i++)
-			{
-				Object o = null;
-				try {
-						o = BeanUtils.getProperty(content, "g" +i);
-					} catch (IllegalAccessException ex) {
-						logger.error(ex.getMessage());
-					} catch (InvocationTargetException ex) {
-						logger.error(ex.getMessage());
-					} catch (NoSuchMethodException ex) {
-						logger.error(ex.getMessage());
-				}
-				if (o != null)
-				{
-					Cell cell   = row.createCell(column);
-					cell.setCellValue(o.toString());
-				}
-				column++;
-				sheet.autoSizeColumn(i);
-			}
+			createNextCell(row, content.getG1());
+			createNextCell(row, content.getG2());
+			createNextCell(row, content.getG3());
+			createNextCell(row, content.getG4());
+			createNextCell(row, content.getG5());
+			createNextCell(row, content.getG6());
+			createNextCell(row, content.getG7());
+			createNextCell(row, content.getG8());
+			createNextCell(row, content.getG9());
+			createNextCell(row, content.getG10());
+			createNextCell(row, content.getG11());
 			column = 0;
 			rowNr++;
+		}
+		for (int i = 1; i < 12; i++)
+		{
+			column++;
+			sheet.autoSizeColumn(i);
 		}
 		return getSheet();
 	}
@@ -130,5 +124,15 @@ public class JeeslExcelFlatFiguresExporter
 			logger.error(ex.getMessage());
 		}
 		return baos.toByteArray();
+	}
+	
+	public void createNextCell(Row row, String content)
+	{
+		if (content != null)
+		{
+			Cell cell   = row.createCell(column);
+			cell.setCellValue(content);
+		}
+		column++;
 	}
 }

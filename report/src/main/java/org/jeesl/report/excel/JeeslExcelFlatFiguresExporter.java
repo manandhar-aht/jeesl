@@ -40,7 +40,7 @@ public class JeeslExcelFlatFiguresExporter
 	// The current row number
 	private short rowNr          = 0;
 	
-	JeeslExcelFlatFiguresExporter()
+	public JeeslExcelFlatFiguresExporter()
 	{
 		// Create the Excel Workbook and select the created sheet
 		wb = new XSSFWorkbook();

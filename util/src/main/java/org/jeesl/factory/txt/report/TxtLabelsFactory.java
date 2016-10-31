@@ -1,7 +1,9 @@
 package org.jeesl.factory.txt.report;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -24,5 +26,17 @@ public class TxtLabelsFactory
 			labels.add(aggregation.getName().get(localeCode).getLang());
 		}
 		return StringUtils.join(labels, ", ");
+	}
+	
+	public static List<String> toList(Map<Long,String> mapAggregationLabels)
+	{
+		List<String> labels = new ArrayList<String>();
+		List<Long> keys = new ArrayList<Long>(mapAggregationLabels.keySet());
+		Collections.sort(keys);
+		for(Long key : keys)
+		{
+			labels.add(mapAggregationLabels.get(key));
+		}
+		return labels;
 	}
 }

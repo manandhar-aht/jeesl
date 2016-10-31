@@ -55,6 +55,16 @@ public class JsonFlatFigure implements Serializable
 	public String getG9() {return g9;}
 	public void setG9(String g9) {this.g9 = g9;}
 	
+	@JsonProperty("Group10")
+	private String g10;
+	public String getG10() {return g10;}
+	public void setG10(String g10) {this.g10 = g10;}
+	
+	@JsonProperty("Group11")
+	private String g11;
+	public String getG11() {return g11;}
+	public void setG11(String g11) {this.g11 = g11;}
+	
 	@JsonProperty("Data")
 	private Map<Integer,Double> data;
 	public Map<Integer, Double> getData() {return data;}

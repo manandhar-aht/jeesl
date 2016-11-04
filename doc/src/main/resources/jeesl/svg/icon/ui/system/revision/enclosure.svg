@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg1"
+   sodipodi:docname="enclosure.svg"
+   viewBox="0 0 50.042858 43.3731"
+   sodipodi:version="0.32"
+   version="1.0"
+   y="0"
+   x="0"
+   inkscape:version="0.91 r13725"
+   width="50.042858"
+   height="43.3731"
+   inkscape:export-filename="/Volumes/ramdisk/enclosure.png"
+   inkscape:export-xdpi="18"
+   inkscape:export-ydpi="18">
+  <defs
+     id="defs7" />
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1016"
+     pagecolor="#ffffff"
+     inkscape:zoom="6.9465337"
+     inkscape:window-x="0"
+     borderopacity="1.0"
+     inkscape:cx="-5.4982087"
+     inkscape:cy="6.5838276"
+     inkscape:window-y="0"
+     inkscape:window-height="685"
+     inkscape:pageopacity="0.0"
+     showgrid="false"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <path
+     id="path836"
+     style="fill:#333333;stroke-width:1pt"
+     d="m 43.419481,37.872661 0,-32.3718613 -3.251767,-1.598e-4 c -0.782981,0 -1.438128,-0.2574649 -1.965442,-0.7724346 -0.515329,-0.5305494 -0.774991,-1.2015559 -0.774991,-2.0129797 0,-0.795844 0.259662,-1.4434411 0.774991,-1.94279107 C 38.729586,0.25746486 39.384733,0 40.167714,0 l 6.575441,0 c 1.078596,0 1.89753,0.28087439 2.456802,0.84266311 0.563267,0.56174879 0.842903,1.38100239 0.842903,2.45772079 l 0,36.7253951 c 0,1.092578 -0.287626,1.919501 -0.862877,2.48117 -0.563267,0.577648 -1.374211,0.866073 -2.436828,0.866073 l -6.575441,0 c -0.79896,0 -1.454107,-0.265255 -1.965442,-0.795764 -0.515329,-0.53051 -0.774991,-1.193647 -0.774991,-1.989411 0,-0.796164 0.259662,-1.451311 0.774991,-1.96624 0.527314,-0.49935 1.182461,-0.749025 1.965442,-0.749025 l 3.251767,0 z M 14.137997,28.509649 20.504509,21.651377 16.642337,17.4852 c -0.936381,-0.9987 -1.568359,-1.677816 -1.895932,-2.036549 -0.311994,-0.374713 -0.554079,-0.741036 -0.725456,-1.100168 -0.171776,-0.374313 -0.257665,-0.795764 -0.257665,-1.263955 0,-1.123338 0.366723,-2.052129 1.100168,-2.785574 0.733446,-0.7334453 1.560369,-1.100168 2.481171,-1.100168 0.889642,0 1.591528,0.1250373 2.106458,0.3747123 0.515329,0.249675 1.045838,0.7334457 1.591927,1.4513107 l 3.979221,4.98551 3.97922,-4.98551 c 0.577249,-0.717865 1.115748,-1.2016357 1.615098,-1.4513107 0.49935,-0.249675 1.194045,-0.3747123 2.084886,-0.3747123 0.918804,0 1.745727,0.3591325 2.480771,1.076998 0.731048,0.717866 1.09857,1.653847 1.09857,2.808744 0,0.468191 -0.08389,0.889642 -0.255668,1.263955 -0.171776,0.359132 -0.423448,0.725455 -0.751022,1.100168 -0.311594,0.358733 -0.934783,1.037849 -1.873561,2.036549 l -3.860974,4.166177 6.365713,6.858272 c 0.40747,0.437031 0.751023,0.912812 1.030659,1.428141 0.295615,0.49935 0.443423,1.092179 0.443423,1.778885 0,1.138917 -0.363527,2.059719 -1.09857,2.762004 -0.735044,0.686307 -1.637868,1.02986 -2.716464,1.02986 -0.69909,0 -1.278336,-0.148207 -1.729749,-0.444621 -0.43783,-0.296814 -0.968339,-0.788174 -1.592727,-1.474881 l -5.219605,-6.179556 -5.220005,6.179556 c -0.54609,0.624388 -1.061019,1.100168 -1.54479,1.427742 -0.48377,0.327973 -1.076598,0.49176 -1.778884,0.49176 -1.076599,0 -1.98182,-0.343553 -2.715266,-1.02986 -0.733445,-0.702285 -1.100167,-1.623087 -1.100167,-2.762004 0,-0.671127 0.125037,-1.240785 0.374712,-1.708976 0.265254,-0.46819 0.631977,-0.96754 1.100168,-1.49805 z M 6.600608,5.5007997 l 0,32.3718613 3.277334,0 c 0.795764,0 1.443321,0.241686 1.942671,0.725456 0.51493,0.49935 0.772195,1.162487 0.772195,1.98981 0,0.826924 -0.249675,1.49805 -0.749025,2.01298 -0.49935,0.514929 -1.154497,0.772195 -1.965841,0.772195 l -6.5774382,0 c -1.0610189,0 -1.8803524,-0.288425 -2.45800048,-0.866073 C 0.28083444,41.94536 0,41.118436 0,40.025859 L 0,3.3004638 C 0,2.2236655 0.28083444,1.4044119 0.84250332,0.84266311 1.4045717,0.28087439 2.2235057,0 3.3005038,0 L 9.877942,0 c 0.795764,0 1.443321,0.249675 1.942671,0.749025 0.51493,0.4837303 0.772195,1.1391572 0.772195,1.9662006 0,0.8426631 -0.257265,1.5214595 -0.772195,2.0363893 -0.49935,0.49935 -1.146907,0.749025 -1.942671,0.749025 l -3.277334,0 z"
+     inkscape:connector-curvature="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>ftmath brackets</dc:title>
+        <dc:date>2011-01-31T02:06:25</dc:date>
+        <dc:description>Originally uploaded by Danny Allen for OCAL 0.18 this icon is part of the flat theme</dc:description>
+        <dc:source>https://openclipart.org/detail/113353/ftmath-brackets-by-anonymous</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Anonymous</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>flat</rdf:li>
+            <rdf:li>icon</rdf:li>
+            <rdf:li>theme</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

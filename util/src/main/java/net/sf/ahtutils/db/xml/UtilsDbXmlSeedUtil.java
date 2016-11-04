@@ -4,23 +4,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.xml.dbseed.Db;
 import net.sf.ahtutils.xml.dbseed.Seed;
 import net.sf.ahtutils.xml.xpath.DbseedXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
+import net.sf.exlp.interfaces.util.ConfigKey;
 import net.sf.exlp.util.xml.JaxbUtil;
-
-import org.apache.commons.configuration.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class UtilsDbXmlSeedUtil
 {
 	final static Logger logger = LoggerFactory.getLogger(UtilsDbXmlSeedUtil.class);
 	
-	public static enum DataSource{ide,jar,path}
+	public static enum DataSource{ide,jar,path,tmp}
 	
 	public static String configKeySeed = "db.seed";
 	public static String configKeyPathExport = "db.export.path";
@@ -31,6 +32,8 @@ public class UtilsDbXmlSeedUtil
 	
     private Configuration config;
 	protected Db dbSeed;
+	private File fTmp;
+	
 	private String seedPath;
 	protected String pathPrefix;
 	
@@ -42,6 +45,10 @@ public class UtilsDbXmlSeedUtil
 		dbSeed = JaxbUtil.loadJAXB(dbSeedFile, Db.class);
 		try{dbSeed.setPathExport(config.getString(configKeyPathExport));} catch (NoSuchElementException e){}
 		seedPath=dbSeed.getPathIde();
+		
+		try{fTmp = new File(config.getString(ConfigKey.dirTmp));}
+		catch (NoSuchElementException e){fTmp = new File(System.getProperty("java.io.tmpdir"));}
+		
 	}
 	
 	public UtilsDbXmlSeedUtil(Db dbSeed)
@@ -73,6 +80,7 @@ public class UtilsDbXmlSeedUtil
 		{
 			case ide: sb.append(dbSeed.getPathIde());break;
 			case path: sb.append(dbSeed.getPathExport());break;
+			case tmp: sb.append(fTmp.getAbsolutePath());break;
 			case jar: break;
 			default: logger.warn("NYI ds="+ds);
 		}
@@ -93,6 +101,7 @@ public class UtilsDbXmlSeedUtil
 		{
 			case path: checkPath(sb.toString());break;
 			case jar: sb = new StringBuffer();sb.append(getContentName(extractId));break;
+			case tmp: checkPath(sb.toString());break;
 			default: ;
 		}
 		

@@ -8,7 +8,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
-	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:jpAdmin="http://jsf.jeesl.org/prototype/admin"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
@@ -69,10 +69,10 @@
 				</aht:slot>
 				<aht:slot id="sAttributes" width="4">
 					<h:form id="fAttributes" rendered="#{(not empty cc.attrs.bean.scope) and (cc.attrs.bean.scope.id gt 0)}">
-						<aupAdmin:tableRevisionAttributes bean="#{cc.attrs.bean}" updateAdd=":#{cc.id}:fAttributes :#{cc.id}:fAttribute" updateSelect=":#{cc.id}:fAttribute"/>
+						<jpAdmin:tableRevisionAttributes bean="#{cc.attrs.bean}" updateAdd=":#{cc.id}:fAttributes :#{cc.id}:fAttribute" updateSelect=":#{cc.id}:fAttribute"/>
 					</h:form>
 					<h:form id="fAttribute">
-						<aupAdmin:panelRevisionAttribute bean="#{cc.attrs.bean}" update=":#{cc.id}:sAttributes"/>
+						<jpAdmin:panelRevisionAttribute bean="#{cc.attrs.bean}" update=":#{cc.id}:sAttributes"/>
 					</h:form>
 				</aht:slot>
 			</aht:row>

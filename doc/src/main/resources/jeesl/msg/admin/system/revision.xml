@@ -99,32 +99,39 @@
     		<s:lang key="fr" translation="Mapping"/>
     	</s:langs>
     </s:translation>
-    <s:translation key="aupRevisionAttrbiuteShowWeb">
+    <s:translation key="jeeslRevisionAttributeWeb">
     	<s:langs>
     		<s:lang key="de" translation="Web"/>
     		<s:lang key="en" translation="Web"/>
     		<s:lang key="fr" translation="Web"/>
     	</s:langs>
     </s:translation>
-    <s:translation key="aupRevisionAttrbiuteShowPrint">
+    <s:translation key="jeeslRevisionAttributePrint">
     	<s:langs>
     		<s:lang key="de" translation="Druck"/>
     		<s:lang key="en" translation="Print"/>
     		<s:lang key="fr" translation="Print"/>
     	</s:langs>
     </s:translation>
-    <s:translation key="aupRevisionAttrbiuteShowName">
+    <s:translation key="jeeslRevisionAttributeName">
     	<s:langs>
     		<s:lang key="de" translation="Name"/>
     		<s:lang key="en" translation="Name"/>
     		<s:lang key="fr" translation="Name"/>
     	</s:langs>
     </s:translation>
-    <s:translation key="aupRevisionAttrbiuteShowEnclosure">
+    <s:translation key="jeeslRevisionAttributeEnclosure">
     	<s:langs>
     		<s:lang key="de" translation="Einbettung"/>
     		<s:lang key="en" translation="Enclosure"/>
     		<s:lang key="fr" translation="Enclosure"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslRevisionAttributeUi">
+    	<s:langs>
+    		<s:lang key="de" translation="UI"/>
+    		<s:lang key="en" translation="UI"/>
+    		<s:lang key="fr" translation="UI"/>
     	</s:langs>
     </s:translation>
     <s:translation key="jeeslRevisionClass">

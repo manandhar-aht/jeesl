@@ -24,14 +24,16 @@
 				<aht:icon type="aupDelete" mayDisappear="true" rendered="#{cc.attrs.bean.attribute.id gt 0}" listener="#{cc.attrs.bean.rmAttribute()}" update="#{cc.attrs.update}" tooltip="#{msg.ttDelete}"/>
 			</f:facet>
 			<p:panelGrid columns="4" columnClasses="auPwg20,auPwg30,auPwg20,auPwg30">
-				<p:outputLabel value="#{msg.aupRevisionAttrbiuteShowWeb}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributeWeb}"/>
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.showWeb}"/>
-				<p:outputLabel value="#{msg.aupRevisionAttrbiuteShowPrint}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributePrint}"/>
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.showPrint}"/>
-				<p:outputLabel value="#{msg.aupRevisionAttrbiuteShowName}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributeName}"/>
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.showName}"/>
-				<p:outputLabel value="#{msg.aupRevisionAttrbiuteShowEnclosure}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributeEnclosure}"/>
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.showEnclosure}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributeUi}"/>
+				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.ui}"/>
 			</p:panelGrid>
 			<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 				<p:outputLabel value="#{msg.aupCode}"/>

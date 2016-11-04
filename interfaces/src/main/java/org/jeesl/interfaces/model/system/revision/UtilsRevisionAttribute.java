@@ -43,6 +43,9 @@ public interface UtilsRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 	boolean isShowEnclosure();
 	void setShowEnclosure(boolean showEnclosure);
 	
+	Boolean getUi();
+	void setUi(Boolean ui);
+	
 	Boolean getManualUser();
 	void setManualUser(Boolean manualUser);
 	

@@ -87,6 +87,10 @@ public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersista
 	@Override public boolean isShowEnclosure() {return showEnclosure;}
 	@Override public void setShowEnclosure(boolean showEnclosure) {this.showEnclosure = showEnclosure;}
 	
+	private Boolean ui;
+	@Override public Boolean getUi() {return ui;}
+	@Override public void setUi(Boolean ui) {this.ui=ui;}
+	
 	private Boolean manualUser;
 	@Override public Boolean getManualUser() {return manualUser;}
 	@Override public void setManualUser(Boolean manualUser) {this.manualUser = manualUser;}

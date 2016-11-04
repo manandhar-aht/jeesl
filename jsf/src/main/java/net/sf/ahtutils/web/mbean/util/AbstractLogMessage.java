@@ -201,6 +201,19 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
         }
         return sb.toString();
 	}
+	 
+	public static <T extends EjbWithId> void infoFilter(boolean debug, Class<?> c, T... entites)
+	{
+		if(debug)
+		{
+			logger.info("Appying Filter in "+c.getSimpleName());
+			for(T t : entites)
+			{
+				logger.info("\t"+t.getClass().getSimpleName()+" "+t.toString());
+			}
+		}
+		 
+	}
 
 	public static <T extends EjbWithId> String saveEntity(T t){return saveEntity(null,t);}
 	public static <L extends UtilsLang,D extends UtilsDescription,C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId>

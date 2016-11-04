@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.aht.Aht;
 
-public class TestXmlAht extends AbstractXmlJeeslTest<Aht>
+public class TestXmlAht extends AbstractXmlAhtTest<Aht>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlAht.class);
 	

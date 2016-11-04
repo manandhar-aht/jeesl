@@ -22,6 +22,12 @@
         </jxb:schemaBindings>
     </jxb:bindings>
     
+	<jxb:bindings schemaLocation="../xsd/jeesl/jeesl.xsd" node="/xsd:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.jeesl.model.xml.jeesl"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>    
+    
 	<jxb:bindings schemaLocation="../xsd/jeesl/symbol.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
             <jxb:package name="net.sf.ahtutils.xml.symbol"/>

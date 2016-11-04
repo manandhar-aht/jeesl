@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.xml.access.TestXmlRole;
 import net.sf.ahtutils.xml.aht.Query;
 
-public class TestXmlQuery extends AbstractXmlJeeslTest<Query>
+public class TestXmlQuery extends AbstractXmlAhtTest<Query>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlQuery.class);
 	

@@ -35,6 +35,7 @@ public class JeeslNsPrefixMapper extends NamespacePrefixMapper implements NsPref
         if("http://ahtutils.aht-group.com/audit".equals(namespaceUri) ){return "at";}
         if("http://ahtutils.aht-group.com/cloud/facebook".equals(namespaceUri) ){return "fb";}
         
+        if("http://www.jeesl.org".equals(namespaceUri) ){return "jeesl";}
         if("http://www.jeesl.org/revision".equals(namespaceUri) ){return "rev";}
         if("http://www.jeesl.org/text".equals(namespaceUri) ){return "text";}
         if("http://www.jeesl.org/io/template".equals(namespaceUri) ){return "template";}

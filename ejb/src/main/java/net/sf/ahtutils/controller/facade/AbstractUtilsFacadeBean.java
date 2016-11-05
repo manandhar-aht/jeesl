@@ -107,7 +107,8 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	public <T extends EjbWithPositionVisible> List<T> allOrderedPositionVisible(Class<T> cl) {return fUtils.allOrderedPositionVisible(cl);}
 	@Override public <T extends EjbWithPositionParent, P extends EjbWithId> List<T> allOrderedPositionParent(Class<T> cl, P parent) {return fUtils.allOrderedPositionParent(cl,parent);}
 	@Override public <T extends EjbWithPositionVisibleParent, P extends EjbWithId> List<T> allOrderedPositionVisibleParent(Class<T> cl, P parent) {return fUtils.allOrderedPositionVisibleParent(cl,parent);}
-	@Override public <T extends EjbWithCode> List<T> allOrderedCode(Class<T> cl) {return fUtils.allOrderedCode(cl);}
+	@Override public <T extends EjbWithCode> List<T> allOrderedCode(Class<T> c) {return fUtils.allOrderedCode(c);}
+	@Override public <T extends EjbWithName> List<T> allOrderedName(Class<T> c) {return fUtils.allOrderedName(c);}
 	public <T extends Object> List<T> allOrdered(Class<T> cl, String by, boolean ascending) {return fUtils.allOrdered(cl, by, ascending);}
 	public <T extends EjbWithRecord> List<T> allOrderedRecord(Class<T> type, boolean ascending) {return fUtils.allOrderedRecord(type,ascending);}
 	@Override public <T extends EjbWithRecord, I extends EjbWithId> List<T> allOrderedParentRecordBetween(Class<T> cl, boolean ascending, String p1Name, I p1,Date from, Date to) {return fUtils.allOrderedParentRecordBetween(cl, ascending, p1Name, p1, from, to);}

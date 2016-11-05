@@ -454,4 +454,10 @@ public class AbstractDummyFacade implements UtilsFacade
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public <T extends EjbWithName> List<T> allOrderedName(Class<T> cl) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

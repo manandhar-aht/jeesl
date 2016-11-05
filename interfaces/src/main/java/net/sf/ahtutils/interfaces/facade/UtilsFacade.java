@@ -61,6 +61,7 @@ public interface UtilsFacade  extends UtilsIdFacade
 	<T extends Object> List<T> allOrdered(Class<T> cl, String by, boolean ascending);
 	<T extends Object,I extends EjbWithId> List<T> allOrderedParent(Class<T> cl, String by, boolean ascending,String p1Name, I p1);
 	<T extends EjbWithCode> List<T> allOrderedCode(Class<T> cl);
+	<T extends EjbWithName> List<T> allOrderedName(Class<T> cl);
 	<T extends EjbWithPosition> List<T> allOrderedPosition(Class<T> type);
 	<T extends EjbWithPositionType, E extends Enum<E>> List<T> allOrderedPosition(Class<T> type, E enu);
 	<T extends EjbWithPositionTypeVisible, E extends Enum<E>> List<T> allOrderedPositionVisible(Class<T> type, E enu);

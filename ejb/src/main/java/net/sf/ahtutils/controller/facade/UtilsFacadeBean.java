@@ -620,6 +620,7 @@ public class UtilsFacadeBean implements UtilsFacade
 	
 	public <T extends EjbWithPosition> List<T> allOrderedPosition(Class<T> cl) {return allOrdered(cl, "position", true);}
 	@Override public <T extends EjbWithCode> List<T> allOrderedCode(Class<T> cl) {return allOrdered(cl, "code", true);}
+	@Override public <T extends EjbWithName> List<T> allOrderedName(Class<T> cl) {return allOrdered(cl, "name", true);}
 	
 	public <T extends EjbWithRecord> List<T> allOrderedRecord(Class<T> cl, boolean ascending)
 	{

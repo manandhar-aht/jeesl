@@ -1,5 +1,6 @@
 package org.jeesl.web.rest.system;
 
+import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestExport;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestImport;
@@ -61,31 +62,13 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		return new IoReportRestService<L,D,CATEGORY,GROUPING,COLAGG>(fReport,cL,cD,cCategory,cType,cColAgg);
 	}
 	
-	@Override public Container exportSystemIoReportCategories()
-	{
-		Container aht = new Container();
-		for(CATEGORY ejb : fReport.allOrderedPosition(cCategory)){aht.getStatus().add(xfStatus.build(ejb));}
-		return aht;
-	}
-	
-	@Override public Container exportSystemIoReportGrouping()
-	{
-		Container aht = new Container();
-		for(GROUPING ejb : fReport.allOrderedPosition(cGrouping)){aht.getStatus().add(xfStatus.build(ejb));}
-		return aht;
-	}
-	
-	@Override public Container exportSystemIoReportColumAggegation()
-	{
-		Container aht = new Container();
-		for(GROUPING ejb : fReport.allOrderedPosition(cGrouping)){aht.getStatus().add(xfStatus.build(ejb));}
-		return aht;
-	}
+	@Override public Container exportSystemIoReportCategories() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cCategory)));}
+	@Override public Container exportSystemIoReportGrouping() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cGrouping)));}
+	@Override public Container exportSystemIoReportColumAggegation() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cColAgg)));}
 
-	
 	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
 	@Override public DataUpdate importSystemIoReportGrouping(Container types){return importStatus(cGrouping,cL,cD,types,null);}
-	@Override public DataUpdate importSystemIoReportColumAggegation(Container types){return importStatus(cGrouping,cL,cD,types,null);}
+	@Override public DataUpdate importSystemIoReportColumAggegation(Container types){return importStatus(cColAgg,cL,cD,types,null);}
 	
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Container container, Class<P> clParent)

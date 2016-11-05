@@ -1,5 +1,8 @@
 package net.sf.ahtutils.factory.xml.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +25,13 @@ public class XmlStatusFactory
 	{
 		this.lang=lang;
 		this.q=q;
+	}
+	
+	public <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> List<Status> build(List<S> list)
+	{
+		List<Status> xml = new ArrayList<Status>();
+		for(S s : list){xml.add(build(s));}
+		return xml;
 	}
 	
 	public <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> Status build(S ejb){return build(ejb,null);}

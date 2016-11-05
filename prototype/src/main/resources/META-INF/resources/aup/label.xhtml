@@ -17,8 +17,9 @@
 	</composite:interface>
 	<composite:implementation>
 		<c:if test="#{not empty cc.attrs.code}">
-	    	<p:outputLabel id="ol" for="#{cc.attrs.for}"
-				value="#{appLabelBean.labels[cc.attrs.entity][cc.attrs.code][cc.attrs.localeCode].lang}" /> <!-- style="cursor:pointer" -->
+	    	<p:outputLabel id="ol"
+	    						for="#{cc.attrs.for}"
+								value="#{appLabelBean.labels[cc.attrs.entity][cc.attrs.code][cc.attrs.localeCode].lang}" /> <!-- style="cursor:pointer" -->
 	    </c:if>
 		<c:if test="#{empty cc.attrs.code}">
 	    	<p:outputLabel id="ol" for="#{cc.attrs.for}"

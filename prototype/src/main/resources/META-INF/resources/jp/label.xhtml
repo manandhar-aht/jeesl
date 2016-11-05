@@ -18,8 +18,8 @@
 	<composite:implementation>
 		<c:if test="#{not empty cc.attrs.code}">
 	    	<p:outputLabel id="ol"
-				value="#{appLabelBean.labels[cc.attrs.entity][cc.attrs.code][cc.attrs.localeCode].lang}">
-				<c:if test="#{not empty cc.attrs.for}"><f:attribute name="for" value="#{cc.attrs.for}"/></c:if>
+								value="#{appLabelBean.labels[cc.attrs.entity][cc.attrs.code][cc.attrs.localeCode].lang}">
+				<c:if test="#{not empty cc.attrs.for}"><f:attribute name="for" value="@form:#{cc.attrs.for}"/></c:if>
 				<!-- style="cursor:pointer" -->
 			</p:outputLabel>	
 	    </c:if>

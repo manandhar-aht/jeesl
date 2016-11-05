@@ -19,42 +19,46 @@ import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									TYPE extends UtilsStatus<TYPE,L,D>>
+									GROUPING extends UtilsStatus<GROUPING,L,D>,
+									COLAGG extends UtilsStatus<COLAGG,L,D>>
 					implements JeeslIoReportRestExport,JeeslIoReportRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(IoReportRestService.class);
 	
-	private JeeslIoReportFacade<L,D,CATEGORY,TYPE> fReport;
+	private JeeslIoReportFacade<L,D,CATEGORY,GROUPING,COLAGG> fReport;
 	
 	private final Class<L> cL;
 	private final Class<D> cD;
 	private final Class<CATEGORY> cCategory;
-	private final Class<TYPE> cType;
+	private final Class<GROUPING> cGrouping;
+	private final Class<COLAGG> cColAgg;
 
 	private XmlStatusFactory xfStatus;
 	
 //	private EjbLangFactory<L> efLang;
 //	private EjbDescriptionFactory<D> efDescription;
 	
-	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,TYPE> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType)
+	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,GROUPING,COLAGG> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<GROUPING> cGrouping, final Class<COLAGG> cColAgg)
 	{
 		this.fReport=fReport;
 		this.cL=cL;
 		this.cD=cD;
 		
 		this.cCategory=cCategory;
-		this.cType=cType;
+		this.cGrouping=cGrouping;
+		this.cColAgg=cColAgg;
 	
 		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					TYPE extends UtilsStatus<TYPE,L,D>>
-	IoReportRestService<L,D,CATEGORY,TYPE>
-			factory(JeeslIoReportFacade<L,D,CATEGORY,TYPE> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType)
+					GROUPING extends UtilsStatus<GROUPING,L,D>,
+					COLAGG extends UtilsStatus<COLAGG,L,D>>
+	IoReportRestService<L,D,CATEGORY,GROUPING,COLAGG>
+			factory(JeeslIoReportFacade<L,D,CATEGORY,GROUPING,COLAGG> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<GROUPING> cType,final Class<COLAGG> cColAgg)
 	{
-		return new IoReportRestService<L,D,CATEGORY,TYPE>(fReport,cL,cD,cCategory,cType);
+		return new IoReportRestService<L,D,CATEGORY,GROUPING,COLAGG>(fReport,cL,cD,cCategory,cType,cColAgg);
 	}
 	
 	@Override public Container exportSystemIoReportCategories()
@@ -67,13 +71,21 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	@Override public Container exportSystemIoReportGrouping()
 	{
 		Container aht = new Container();
-		for(TYPE ejb : fReport.allOrderedPosition(cType)){aht.getStatus().add(xfStatus.build(ejb));}
+		for(GROUPING ejb : fReport.allOrderedPosition(cGrouping)){aht.getStatus().add(xfStatus.build(ejb));}
+		return aht;
+	}
+	
+	@Override public Container exportSystemIoReportColumAggegation()
+	{
+		Container aht = new Container();
+		for(GROUPING ejb : fReport.allOrderedPosition(cGrouping)){aht.getStatus().add(xfStatus.build(ejb));}
 		return aht;
 	}
 
 	
 	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
-	@Override public DataUpdate importSystemIoReportGrouping(Container types){return importStatus(cType,cL,cD,types,null);}
+	@Override public DataUpdate importSystemIoReportGrouping(Container types){return importStatus(cGrouping,cL,cD,types,null);}
+	@Override public DataUpdate importSystemIoReportColumAggegation(Container types){return importStatus(cGrouping,cL,cD,types,null);}
 	
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Container container, Class<P> clParent)

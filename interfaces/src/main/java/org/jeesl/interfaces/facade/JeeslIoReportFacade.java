@@ -7,7 +7,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public interface JeeslIoReportFacade <L extends UtilsLang,D extends UtilsDescription,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-										TYPE extends UtilsStatus<TYPE,L,D>>
+										GROUPING extends UtilsStatus<GROUPING,L,D>,
+										COLAGG extends UtilsStatus<COLAGG,L,D>>
 			extends UtilsFacade
 {	
 	

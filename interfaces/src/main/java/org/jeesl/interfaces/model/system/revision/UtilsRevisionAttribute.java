@@ -46,6 +46,9 @@ public interface UtilsRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 	Boolean getUi();
 	void setUi(Boolean ui);
 	
+	Boolean getBean();
+	void setBean(Boolean bean);
+	
 	Boolean getManualUser();
 	void setManualUser(Boolean manualUser);
 	

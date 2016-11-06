@@ -91,6 +91,10 @@ public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersista
 	@Override public Boolean getUi() {return ui;}
 	@Override public void setUi(Boolean ui) {this.ui=ui;}
 	
+	private Boolean bean;
+	@Override public Boolean getBean() {return bean;}
+	@Override public void setBean(Boolean bean) {this.bean=bean;}
+	
 	private Boolean manualUser;
 	@Override public Boolean getManualUser() {return manualUser;}
 	@Override public void setManualUser(Boolean manualUser) {this.manualUser = manualUser;}

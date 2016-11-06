@@ -27,6 +27,8 @@ public class TestXmlAttribute extends AbstractXmlRevisionTest<Attribute>
     	xml.setPrint(true);
     	xml.setName(true);
     	xml.setEnclosure(true);
+    	xml.setUi(true);
+    	xml.setBean(true);
     	
     	if(withChilds)
     	{

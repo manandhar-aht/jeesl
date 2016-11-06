@@ -61,6 +61,8 @@ public class RevisionQuery
 		xml.setPrint(true);
 		xml.setName(true);
 		xml.setEnclosure(true);
+		xml.setUi(true);
+		xml.setBean(true);
 		
 		xml.setType(XmlTypeFactory.create(""));
 		

@@ -60,6 +60,8 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 		ejb.setShowPrint(xml.isPrint());
 		ejb.setShowName(xml.isName());
 		ejb.setShowEnclosure(xml.isEnclosure());
+		ejb.setUi(xml.isUi());
+		ejb.setBean(xml.isBean());
 		
 		return ejb;
 	}

@@ -37,6 +37,8 @@ import net.sf.ahtutils.xml.text.Remark;
  *       &lt;attribute name="print" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="enclosure" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="ui" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="bean" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -81,6 +83,10 @@ public class Attribute
     protected Boolean name;
     @XmlAttribute(name = "enclosure")
     protected Boolean enclosure;
+    @XmlAttribute(name = "ui")
+    protected Boolean ui;
+    @XmlAttribute(name = "bean")
+    protected Boolean bean;
 
     /**
      * Gets the value of the type property.
@@ -440,6 +446,70 @@ public class Attribute
 
     public void unsetEnclosure() {
         this.enclosure = null;
+    }
+
+    /**
+     * Gets the value of the ui property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isUi() {
+        return ui;
+    }
+
+    /**
+     * Sets the value of the ui property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setUi(boolean value) {
+        this.ui = value;
+    }
+
+    public boolean isSetUi() {
+        return (this.ui!= null);
+    }
+
+    public void unsetUi() {
+        this.ui = null;
+    }
+
+    /**
+     * Gets the value of the bean property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isBean() {
+        return bean;
+    }
+
+    /**
+     * Sets the value of the bean property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setBean(boolean value) {
+        this.bean = value;
+    }
+
+    public boolean isSetBean() {
+        return (this.bean!= null);
+    }
+
+    public void unsetBean() {
+        this.bean = null;
     }
 
 }

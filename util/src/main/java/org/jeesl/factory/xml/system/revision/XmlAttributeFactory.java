@@ -62,8 +62,16 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 		if(q.isSetPrint()){xml.setPrint(ejb.isShowPrint());}
 		if(q.isSetName()){xml.setName(ejb.isShowName());}
 		if(q.isSetEnclosure()){xml.setEnclosure(ejb.isShowEnclosure());}
-		if(q.isSetUi()){xml.setUi(ejb.getUi());}
-		if(q.isSetBean()){xml.setBean(ejb.getBean());}
+		if(q.isSetUi())
+		{
+			if(ejb.getUi()==null){xml.setUi(false);}
+			else{xml.setUi(ejb.getUi());}
+		}
+		if(q.isSetBean())
+		{
+			if(ejb.getBean()==null){xml.setBean(false);}
+			else {xml.setBean(ejb.getBean());}
+		}
 		
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(ejb.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(ejb.getDescription()));}

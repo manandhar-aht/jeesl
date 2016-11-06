@@ -53,6 +53,16 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 	{
 		RA ejb = build(type);
 		ejb.setCode(xml.getCode());
+		applyValues(ejb,xml);
+		
+		return ejb;
+	}
+	
+	public void applyValues(RA ejb, Attribute xml)
+	{
+		if(xml.isSetRemark()){ejb.setDeveloperInfo(xml.getRemark().getValue());}
+		else{ejb.setDeveloperInfo(null);}
+		
 		ejb.setXpath(xml.getXpath());
 		ejb.setPosition(xml.getPosition());
 		
@@ -62,8 +72,6 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 		ejb.setShowEnclosure(xml.isEnclosure());
 		ejb.setUi(xml.isUi());
 		ejb.setBean(xml.isBean());
-		
-		return ejb;
 	}
 	
 	public RA build(RAT type)

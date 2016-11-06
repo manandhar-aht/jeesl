@@ -252,9 +252,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		}
 		ejbAttribute.setName(efLang.getLangMap(xml.getLangs()));
 		ejbAttribute.setDescription(efDescription.create(xml.getDescriptions()));
-		
-		if(xml.isSetRemark()){ejbAttribute.setDeveloperInfo(xml.getRemark().getValue());}
-		else{ejbAttribute.setDeveloperInfo(null);}
+		efAttribute.applyValues(ejbAttribute, xml);
 		
 		ejbAttribute = fRevision.save(cRE,ejbRevisionEntity,ejbAttribute);
 		return ejbAttribute;

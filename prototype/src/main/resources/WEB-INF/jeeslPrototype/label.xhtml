@@ -11,7 +11,10 @@
 	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
 	<c:set var="for" value="#{for}" />
 
-	<p:outputLabel rendered="#{rendered}" value="#{appLabelBean.labels[entity][code][loc].lang}">
+	<p:outputLabel rendered="#{rendered and (not empty code)}" value="#{appLabelBean.labels[entity][code][loc].lang}">
 		<c:if test="#{not empty for}"><f:attribute name="for" value="#{for}"/></c:if>
-	</p:outputLabel>	
+	</p:outputLabel>
+	<p:outputLabel rendered="#{rendered and (empty code)}" value="#{appLabelBean.entities[entity][loc].lang}">
+		<c:if test="#{not empty for}"><f:attribute name="for" value="#{for}"/></c:if>
+	</p:outputLabel>
 </ui:composition>

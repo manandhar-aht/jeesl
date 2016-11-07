@@ -63,8 +63,8 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 		if(xml.isSetRemark()){ejb.setDeveloperInfo(xml.getRemark().getValue());}
 		else{ejb.setDeveloperInfo(null);}
 		
-		ejb.setXpath(xml.getXpath());
 		ejb.setPosition(xml.getPosition());
+		ejb.setXpath(xml.getXpath());
 		
 		ejb.setShowWeb(xml.isWeb());
 		ejb.setShowPrint(xml.isPrint());

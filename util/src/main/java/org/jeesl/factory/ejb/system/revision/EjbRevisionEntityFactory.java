@@ -6,6 +6,7 @@ import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import org.jeesl.model.xml.system.revision.Attribute;
 import org.jeesl.model.xml.system.revision.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,5 +86,13 @@ public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescrip
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public void applyValues(RE ejb, Entity xml)
+	{
+		if(xml.isSetRemark()){ejb.setDeveloperInfo(xml.getRemark().getValue());}
+		else{ejb.setDeveloperInfo(null);}
+		
+		ejb.setPosition(xml.getPosition());
 	}
 }

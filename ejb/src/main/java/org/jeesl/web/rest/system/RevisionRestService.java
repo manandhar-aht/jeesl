@@ -208,8 +208,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		re.setName(efLang.getLangMap(xml.getLangs()));
 		re.setDescription(efDescription.create(xml.getDescriptions()));
 		
-		if(xml.isSetRemark()){re.setDeveloperInfo(xml.getRemark().getValue());}
-		else{re.setDeveloperInfo(null);}
+		efEntity.applyValues(re, xml);
 		
 		Set<RA> set = new HashSet<RA>(re.getAttributes());		
 		for(Attribute xmlAttribute : xml.getAttribute())

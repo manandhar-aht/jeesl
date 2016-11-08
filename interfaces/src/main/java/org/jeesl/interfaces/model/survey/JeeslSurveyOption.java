@@ -22,6 +22,6 @@ public interface JeeslSurveyOption<L extends UtilsLang,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
 			extends EjbWithId
 {
-	public static enum Units{yn,number};
+	public static enum Units{yn,number,txt};
 	public static enum Status{open}; 
 }

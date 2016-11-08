@@ -17,8 +17,8 @@
 		<composite:attribute name="withVersion" required="false" default="true"/>
 	</composite:interface>
 	
-	<composite:implementation>
-		<aup:grid id="grid">
+<composite:implementation>
+	<aup:grid id="grid">
 		<aht:row id="row1">
 			<aht:slot id="sTemplate" width="3">
 				<h:form id="fCategory" rendered="#{cc.attrs.withCategory}">
@@ -53,13 +53,13 @@
 				<h:form id="fSections" rendered="#{not empty cc.attrs.bean.template}">
 					<p:dataTable var="s" value="#{cc.attrs.bean.sections}" rowKey="#{s.id}"
                                  selection="#{cc.attrs.bean.section}" selectionMode="single" draggableRows="true">
-                        <p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSections()}" update="@form"/>
-						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{cc.attrs.bean.selectSection()}"/>
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.aupSurveySections}">
-                                <aht:icon type="aupAdd" listener="#{cc.attrs.bean.addSection()}" update=":#{cc.id}:row1"/>
-                            </aht:pfDataTableHeader>
+                    		<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addSection()}" update=":#{cc.id}:row1"/>
+                     </aht:pfDataTableHeader>
 						</f:facet>
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSections()}" update="@form"/>
+						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{cc.attrs.bean.selectSection()}"/>
 						<p:column>
 							 <h:outputText value="#{s.position}" />
 						</p:column>
@@ -90,7 +90,8 @@
 				<h:form id="fSection" rendered="#{not empty cc.attrs.bean.section}">
 					<p:panel header="#{msg.aupSurveySection}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
-							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:row1"/>
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:row1"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1"/>
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
@@ -104,13 +105,14 @@
 				</h:form>
 				<h:form id="fQuestions" rendered="#{(not empty cc.attrs.bean.section) and (cc.attrs.bean.section.id gt 0)}">
 					<p:dataTable var="q" value="#{cc.attrs.bean.questions}" rowKey="#{q.id}"
-                                 selection="#{cc.attrs.bean.question}" selectionMode="single">
-						<p:ajax event="rowSelect" update=":#{cc.id}:sQuestion" listener="#{cc.attrs.bean.selectQuestion()}"/>
+                                 selection="#{cc.attrs.bean.question}" selectionMode="single" draggableRows="true">
 						<f:facet name="header">
-						<aht:pfDataTableHeader title="#{msg.aupSurveyQuestions}">
+							<aht:pfDataTableHeader title="#{msg.aupSurveyQuestions}">
                           <aht:icon type="aupAdd" listener="#{cc.attrs.bean.addQuestion()}" update=":#{cc.id}:sQuestion"/>
                       </aht:pfDataTableHeader>
                   </f:facet>
+                  <p:ajax event="rowSelect" update=":#{cc.id}:sQuestion" listener="#{cc.attrs.bean.selectQuestion()}"/>
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderQuestions()}" update="@form"/>
                   <p:column>
                       <f:facet name="header">#{msg.aupSurveyQuestionCode}</f:facet>
                       <h:outputText value="#{q.code}" />
@@ -127,6 +129,7 @@
 					<p:panel header="#{msg.aupSurveyQuestion}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveQuestion()}" update=":#{cc.id}:row1"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmQuestion()}" update=":#{cc.id}:row1"/>
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
@@ -155,5 +158,5 @@
 			</aht:slot>
 		</aht:row>
 	</aup:grid>
-	</composite:implementation>
+</composite:implementation>
 </html>

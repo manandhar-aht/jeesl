@@ -181,6 +181,15 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		loadSection();
 	}
 	
+	public void rmSection() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.rmEntity(section));
+		fSurvey.rm(section);
+		section=null;
+		question=null;
+		reloadTemplate();
+	}
+	
 	//Question
 	public void addQuestion()
 	{
@@ -198,6 +207,14 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.saveEntity(question));
 		question.setUnit(fSurvey.find(cUnit,question.getUnit()));
 		question = fSurvey.save(question);
+		loadSection();
+	}
+	
+	public void rmQuestion() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.rmEntity(question));
+		fSurvey.rm(question);
+		question = null;
 		loadSection();
 	}
 	

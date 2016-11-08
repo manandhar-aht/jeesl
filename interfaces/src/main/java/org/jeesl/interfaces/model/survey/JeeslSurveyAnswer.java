@@ -30,7 +30,6 @@ public interface JeeslSurveyAnswer<L extends UtilsLang,
 	QUESTION getQuestion();
 	void setQuestion(QUESTION question);
 	
-	
 	Double getValueDouble();
 	void setValueDouble(Double valueDouble);
 	

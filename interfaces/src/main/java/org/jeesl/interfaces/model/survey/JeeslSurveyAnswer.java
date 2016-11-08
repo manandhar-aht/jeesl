@@ -44,4 +44,7 @@ public interface JeeslSurveyAnswer<L extends UtilsLang,
 	
 	List<OPTION> getOptions();
 	void setOptions(List<OPTION> option);
+	
+	String getRemark();
+	void setRemark(String remark);
 }

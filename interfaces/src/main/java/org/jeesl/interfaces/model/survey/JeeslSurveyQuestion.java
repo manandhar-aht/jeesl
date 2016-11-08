@@ -45,4 +45,12 @@ public interface JeeslSurveyQuestion<L extends UtilsLang,
 	List<OPTION> getOptions();
 	void setOptions(List<OPTION> options);
 	
+	Boolean getCalculateScore();
+	void setCalculateScore(Boolean calculateScore);
+	
+	Double getMaxScore();
+	void setMaxScore(Double maxScore);
+	
+	Double getMinScore();
+	void setMinScore(Double maxScore);
 }

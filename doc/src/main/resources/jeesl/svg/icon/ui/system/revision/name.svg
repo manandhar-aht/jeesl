@@ -10,13 +10,15 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg2"
-   sodipodi:docname="label.svg"
-   inkscape:export-filename="/Volumes/ramdisk/label.png"
-   viewBox="0 0 436 262"
-   inkscape:export-xdpi="4.1221375"
+   sodipodi:docname="name.svg"
+   inkscape:export-filename="D:\Cliparts\box_label_explorer.png"
+   viewBox="0 0 120.0717 88.188782"
+   inkscape:export-xdpi="52.900784"
    version="1.1"
-   inkscape:export-ydpi="4.1221375"
-   inkscape:version="0.91 r13725">
+   inkscape:export-ydpi="52.900784"
+   inkscape:version="0.91 r13725"
+   width="120.0717"
+   height="88.188782">
   <defs
      id="defs35" />
   <title
@@ -27,8 +29,8 @@
      inkscape:zoom="1.5183451"
      borderopacity="1.0"
      inkscape:current-layer="layer1"
-     inkscape:cx="191.65503"
-     inkscape:cy="131"
+     inkscape:cx="78.561369"
+     inkscape:cy="40.878052"
      inkscape:window-maximized="1"
      showgrid="false"
      inkscape:snap-global="true"
@@ -43,52 +45,41 @@
      pagecolor="#ffffff"
      gridtolerance="10"
      inkscape:document-units="px"
-     inkscape:window-height="751">
+     inkscape:window-height="751"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
     <inkscape:grid
        id="grid2816"
        enabled="true"
        visible="true"
        snapvisiblegridlinesonly="true"
        type="xygrid"
-       empspacing="5" />
+       empspacing="5"
+       originx="-113.09366"
+       originy="-90.121948" />
   </sodipodi:namedview>
   <g
      id="layer1"
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
-     transform="translate(50.469 568.99)">
-    <path
-       inkscape:connector-curvature="0"
-       d="m 167.53,-568.99 c 36.365,0 66.892,12.744 75.531,30 l 32.469,0 10,0 0,25 90,0 10,0 0,152 -10,0 -90,0 0,25 -10,0 -32.469,0 c -8.6391,17.256 -39.166,30 -75.531,30 -36.365,0 -66.892,-12.744 -75.531,-30 l -32.469,0 -10,0 0,-25 -90,0 -10,0 0,-152 10,0 90,0 0,-25 10,0 32.469,0 c 8.6391,-17.256 39.166,-30 75.531,-30 z"
-       style="fill:#d7dbd3"
-       id="path5126" />
-    <path
-       inkscape:connector-curvature="0"
-       d="m 167.53,-558.96 c -37.555,0 -68,13.412 -68,29.969 l -40,0 0,25 -10,0 -90,0 0,132 90,0 10,0 0,25 30,0 10,0 c 0,16.557 30.445,29.969 68,29.969 37.555,0 68,-13.412 68,-29.969 l 10,0 30,0 0,-25 10,0 90,0 0,-132 -90,0 -10,0 0,-25 -30,0 -10,0 c 0,-16.557 -30.445,-29.969 -68,-29.969 z"
-       style="fill:#feedcf"
-       id="rect5034" />
-    <path
-       inkscape:connector-curvature="0"
-       style="fill:#bf8b64"
-       d="m 167.531,-547.99 c -31.11,0 -56.67,11.843 -59.69,27 l -40.31,0 0,3 0,22 -100,0 0,3 0,110 0,3 100,0 0,22 0,3 40.31,0 c 3.02,15.16 28.58,27 59.69,27 31.11,0 56.67,-11.84 59.69,-27 l 40.31,0 0,-3 0,-22 100,0 0,-3 0,-110 0,-3 -100,0 0,-22 0,-3 -40.31,0 c -3.02,-15.157 -28.58,-27 -59.69,-27 z m 0,3 c 31.48,0 57,12.088 57,27 l 3,0 37,0 0,25 3,0 97,0 0,110 -97,0 -3,0 0,25 -37,0 -3,0 c 0,14.91 -25.52,27 -57,27 -31.48,0 -57,-12.09 -57,-27 l -40,0 0,-25 -3,0 -97,0 0,-110 97,0 3,0 0,-25 40,0 c 0,-14.912 25.52,-27 57,-27 z"
-       id="rect2915-1" />
-    <path
-       inkscape:connector-curvature="0"
-       style="fill:#945d34"
-       d="m 167.531,-568.99 c -36.37,0 -66.89,12.744 -75.53,30 l -32.47,0 -10,0 0,25 -90,0 -10,0 0,152 10,0 90,0 0,25 10,0 32.47,0 c 8.64,17.26 39.16,30 75.53,30 36.37,0 66.89,-12.74 75.53,-30 l 32.47,0 10,0 0,-25 90,0 10,0 0,-152 -10,0 -90,0 0,-25 -10,0 -32.47,0 c -8.64,-17.256 -39.16,-30 -75.53,-30 z m 0,10.031 c 37.56,0 68,13.412 68,29.969 l 10,0 30,0 0,25 10,0 90,0 0,132 -90,0 -10,0 0,25 -30,0 -10,0 c 0,16.56 -30.44,29.97 -68,29.97 -37.56,0 -68,-13.41 -68,-29.97 l -10,0 -30,0 0,-25 -10,0 -90,0 0,-132 90,0 10,0 0,-25 40,0 c 0,-16.557 30.44,-29.969 68,-29.969 z"
-       id="rect2915-1-0-8" />
+     transform="translate(-62.62466,485.30073)">
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:98.58743286px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="87.701942"
-       y="-317.25195"
+       x="77.825546"
+       y="-317.77899"
        id="text3388"
        sodipodi:linespacing="125%"
-       transform="scale(0.80022522,1.2496482)"><tspan
+       transform="scale(0.80022523,1.2496482)"
+       inkscape:export-filename="/Volumes/ramdisk/name.png"
+       inkscape:export-xdpi="12.049197"
+       inkscape:export-ydpi="12.049197"><tspan
          sodipodi:role="line"
          id="tspan3390"
-         x="87.701942"
-         y="-317.25195">Label</tspan></text>
+         x="77.825546"
+         y="-317.77899">XX:</tspan></text>
   </g>
   <metadata
      id="metadata33">
@@ -125,7 +116,7 @@
         </dc:subject>
       </cc:Work>
       <cc:License
-         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
         <cc:permits
            rdf:resource="http://creativecommons.org/ns#Reproduction" />
         <cc:permits

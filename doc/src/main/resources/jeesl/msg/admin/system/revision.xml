@@ -129,9 +129,9 @@
     </s:translation>
     <s:translation key="jeeslRevisionAttributeUi">
     	<s:langs>
-    		<s:lang key="de" translation="UI"/>
-    		<s:lang key="en" translation="UI"/>
-    		<s:lang key="fr" translation="UI"/>
+    		<s:lang key="de" translation="Label"/>
+    		<s:lang key="en" translation="Label"/>
+    		<s:lang key="fr" translation="Label"/>
     	</s:langs>
     </s:translation>
 	<s:translation key="jeeslRevisionAttributeBean">

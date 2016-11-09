@@ -141,6 +141,13 @@
     		<s:lang key="fr" translation="Bean"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslRevisionAttributeConstruction">
+    	<s:langs>
+    		<s:lang key="de" translation="Working"/>
+    		<s:lang key="en" translation="Working"/>
+    		<s:lang key="fr" translation="Working"/>
+    	</s:langs>
+    </s:translation>
     <s:translation key="jeeslRevisionClass">
     	<s:langs>
     		<s:lang key="de" translation="Klasse"/>

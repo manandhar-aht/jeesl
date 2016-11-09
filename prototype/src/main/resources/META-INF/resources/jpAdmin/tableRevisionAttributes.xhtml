@@ -34,12 +34,13 @@
 				<h:outputText value="#{a.name[userBean.localeCode].lang}"/>
             </p:column>
             <p:column headerText="P" styleClass="aupPfDtColCentered">
-            	<h:graphicImage rendered="#{a.showWeb}"			name="12/ui/system/revision/browser.png"		library="jeeslPrototypeGfx"/>
-            	<h:graphicImage rendered="#{a.showPrint}"			name="12/ui/system/revision/print.png"			library="jeeslPrototypeGfx"/>
-            	<h:graphicImage rendered="#{a.showName}"			name="12/ui/system/revision/name.png"			library="jeeslPrototypeGfx"/>
-            	<h:graphicImage rendered="#{a.showEnclosure}"	name="12/ui/system/revision/enclosure.png"	library="jeeslPrototypeGfx"/>
+            	<h:graphicImage rendered="#{a.showWeb}"			name="12/ui/system/revision/browser.png"			library="jeeslPrototypeGfx"/>
+            	<h:graphicImage rendered="#{a.showPrint}"			name="12/ui/system/revision/print.png"				library="jeeslPrototypeGfx"/>
+            	<h:graphicImage rendered="#{a.showName}"			name="12/ui/system/revision/name.png"				library="jeeslPrototypeGfx"/>
+            	<h:graphicImage rendered="#{a.showEnclosure}"	name="12/ui/system/revision/enclosure.png"		library="jeeslPrototypeGfx"/>
             	<h:graphicImage rendered="#{a.ui}"					name="12/ui/system/revision/label.png"				library="jeeslPrototypeGfx"/>
-            	<h:graphicImage rendered="#{a.bean}"				name="12/ui/system/revision/bean.png"			library="jeeslPrototypeGfx"/>
+            	<h:graphicImage rendered="#{a.bean}"				name="12/ui/system/revision/bean.png"				library="jeeslPrototypeGfx"/>
+            	<h:graphicImage rendered="#{a.construction}"		name="12/ui/system/revision/construction.png"	library="jeeslPrototypeGfx"/>
             </p:column>
        	</p:dataTable>
 	</composite:implementation>

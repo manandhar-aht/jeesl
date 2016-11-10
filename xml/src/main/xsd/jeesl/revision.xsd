@@ -46,6 +46,7 @@
             <xsd:attribute name="enclosure" type="xsd:boolean"/>
             <xsd:attribute name="ui" type="xsd:boolean"/>
             <xsd:attribute name="bean" type="xsd:boolean"/>
+            <xsd:attribute name="construction" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
 </xsd:schema>

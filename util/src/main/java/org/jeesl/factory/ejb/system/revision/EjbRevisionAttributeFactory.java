@@ -72,6 +72,7 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 		ejb.setShowEnclosure(xml.isEnclosure());
 		ejb.setUi(xml.isUi());
 		ejb.setBean(xml.isBean());
+		ejb.setConstruction(xml.isSetConstruction() && xml.isConstruction());
 	}
 	
 	public RA build(RAT type)

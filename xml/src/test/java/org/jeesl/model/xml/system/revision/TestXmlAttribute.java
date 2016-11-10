@@ -29,6 +29,7 @@ public class TestXmlAttribute extends AbstractXmlRevisionTest<Attribute>
     	xml.setEnclosure(true);
     	xml.setUi(true);
     	xml.setBean(true);
+    	xml.setConstruction(true);
     	
     	if(withChilds)
     	{

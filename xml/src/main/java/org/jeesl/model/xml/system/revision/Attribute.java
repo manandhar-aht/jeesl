@@ -39,6 +39,7 @@ import net.sf.ahtutils.xml.text.Remark;
  *       &lt;attribute name="enclosure" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="ui" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="bean" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="construction" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -87,6 +88,8 @@ public class Attribute
     protected Boolean ui;
     @XmlAttribute(name = "bean")
     protected Boolean bean;
+    @XmlAttribute(name = "construction")
+    protected Boolean construction;
 
     /**
      * Gets the value of the type property.
@@ -510,6 +513,38 @@ public class Attribute
 
     public void unsetBean() {
         this.bean = null;
+    }
+
+    /**
+     * Gets the value of the construction property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isConstruction() {
+        return construction;
+    }
+
+    /**
+     * Sets the value of the construction property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setConstruction(boolean value) {
+        this.construction = value;
+    }
+
+    public boolean isSetConstruction() {
+        return (this.construction!= null);
+    }
+
+    public void unsetConstruction() {
+        this.construction = null;
     }
 
 }

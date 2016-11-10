@@ -38,7 +38,7 @@ public class TestReportXpathSerializeable extends AbstractJeeslUtilTest
 		list.add(langs);
 		list.add("b");
 		
-		Langs actual = ReportXpath.getLangs(list);
+		Langs actual = ReportXpath.getFirstLangs(list);
 		Assert.assertEquals(langs,actual);
 	}
 }

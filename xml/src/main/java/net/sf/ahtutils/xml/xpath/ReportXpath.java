@@ -152,7 +152,7 @@ public class ReportXpath
 		return listResult.get(0);
 	}
 	
-	public static synchronized Langs getLangs(List<Serializable> contentList) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	public static synchronized Langs getFirstLangs(List<Serializable> contentList)
 	{
 		for(Object o : contentList)
 		{

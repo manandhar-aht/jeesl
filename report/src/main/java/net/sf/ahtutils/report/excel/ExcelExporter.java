@@ -92,7 +92,7 @@ public class ExcelExporter
 			String sheetName = "sheet" +i;
 			
 			try {
-			Langs langs = ReportXpath.getLangs(sheet.getContent());
+			Langs langs = ReportXpath.getFirstLangs(sheet.getContent());
 			Lang  lang  = StatusXpath.getLang(langs, languageKey);
 			if (lang != null)
 			{

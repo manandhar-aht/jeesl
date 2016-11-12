@@ -53,4 +53,25 @@ public interface JeeslSurveyQuestion<L extends UtilsLang,
 	
 	Double getMinScore();
 	void setMinScore(Double maxScore);
+	
+	
+	Boolean getShowBoolean();
+	void setShowBoolean(Boolean showBoolean);
+	
+	Boolean getShowInteger();
+	void setShowInteger(Boolean showInteger);
+	
+	Boolean getShowDouble();
+	void setShowDouble(Boolean showDouble);
+	
+	Boolean getShowText();
+	void setShowText(Boolean showText);
+	
+	Boolean getShowScore();
+	void setShowScore(Boolean showScore);
+	
+	Boolean getShowRemark();
+	void setShowRemark(Boolean showRemark);
+	
+	
 }

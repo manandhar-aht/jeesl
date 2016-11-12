@@ -30,11 +30,11 @@ public interface JeeslSurveyAnswer<L extends UtilsLang,
 	QUESTION getQuestion();
 	void setQuestion(QUESTION question);
 	
-	Double getValueDouble();
-	void setValueDouble(Double valueDouble);
-	
 	Boolean getValueBoolean();
 	void setValueBoolean(Boolean valueBoolean);
+	
+	Double getValueDouble();
+	void setValueDouble(Double valueDouble);
 	
 	Integer getValueNumber();
 	void setValueNumber(Integer valueNumber);
@@ -44,6 +44,9 @@ public interface JeeslSurveyAnswer<L extends UtilsLang,
 	
 	List<OPTION> getOptions();
 	void setOptions(List<OPTION> option);
+	
+	Double getScore();
+	void setScore(Double score);
 	
 	String getRemark();
 	void setRemark(String remark);

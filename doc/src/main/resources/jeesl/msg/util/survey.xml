@@ -119,4 +119,67 @@
     		<s:lang key="fr" translation="Versions"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jpSurveyQuestionScoreCalculate">
+    	<s:langs>
+    		<s:lang key="de" translation="Calculate Score"/>
+    		<s:lang key="en" translation="Calculate Score"/>
+    		<s:lang key="fr" translation="Calculate Score"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jpSurveyQuestionScoreMin">
+    	<s:langs>
+    		<s:lang key="de" translation="Min. Punkte"/>
+    		<s:lang key="en" translation="Min Score"/>
+    		<s:lang key="fr" translation="Min Score"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jpSurveyQuestionScoreMax">
+    	<s:langs>
+    		<s:lang key="de" translation="Max. Punkte"/>
+    		<s:lang key="en" translation="Max Score"/>
+    		<s:lang key="fr" translation="Max Score"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jpSurveyQuestionShowBoolean">
+    	<s:langs>
+    		<s:lang key="de" translation="Ja/Nein"/>
+    		<s:lang key="en" translation="Yes/No"/>
+    		<s:lang key="fr" translation="Qui/Non"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jpSurveyQuestionShowInteger">
+    	<s:langs>
+    		<s:lang key="de" translation="Natürliche Zahl"/>
+    		<s:lang key="en" translation="Natural Number"/>
+    		<s:lang key="fr" translation="Natural Number"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jpSurveyQuestionShowDouble">
+    	<s:langs>
+    		<s:lang key="de" translation="Zahl"/>
+    		<s:lang key="en" translation="Number"/>
+    		<s:lang key="fr" translation="Number"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jpSurveyQuestionShowText">
+    	<s:langs>
+    		<s:lang key="de" translation="Text"/>
+    		<s:lang key="en" translation="Text"/>
+    		<s:lang key="fr" translation="Text"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jpSurveyQuestionShowScore">
+    	<s:langs>
+    		<s:lang key="de" translation="Score"/>
+    		<s:lang key="en" translation="Score"/>
+    		<s:lang key="fr" translation="Score"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jpSurveyQuestionShowRemark">
+    	<s:langs>
+    		<s:lang key="de" translation="Remark"/>
+    		<s:lang key="en" translation="Remark"/>
+    		<s:lang key="fr" translation="Remark"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

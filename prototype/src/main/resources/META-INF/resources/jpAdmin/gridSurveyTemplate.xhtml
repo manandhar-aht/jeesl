@@ -145,13 +145,35 @@
 							<p:inputTextarea rows="3" styleClass="w100" value="#{cc.attrs.bean.question.question}"/>
 													
 							<p:outputLabel value="#{msg.aupSurveyQuestionUnit}"/>
-							 <p:selectOneMenu value="#{cc.attrs.bean.question.unit}" effect="fade" >
-								  <f:selectItems value="#{appSurveyBean.units}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
-							 </p:selectOneMenu>
+							<p:selectOneMenu value="#{cc.attrs.bean.question.unit}" effect="fade" >
+							  <f:selectItems value="#{appSurveyBean.units}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
+							</p:selectOneMenu>
 							 
-							 <p:outputLabel value="#{msg.aupSurveyRemark}"/>
+							<p:outputLabel value="#{msg.aupSurveyRemark}"/>
 							<p:inputTextarea rows="3" styleClass="w100" value="#{cc.attrs.bean.question.remark}"/>
 						</p:panelGrid>
+						
+						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg30,auPwg20">
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.calculateScore}" />
+							<p:outputLabel value="#{msg.jpSurveyQuestionScoreCalculate}"/>
+							
+							<p:outputLabel value="#{msg.jpSurveyQuestionScoreMin}"/>
+							<p:inputText value="#{cc.attrs.bean.question.minScore}"/>
+							
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showScore}" />
+							<p:outputLabel value="#{msg.jpSurveyQuestionShowScore}"/>
+							<p:outputLabel value="#{msg.jpSurveyQuestionScoreMax}"/>
+							<p:inputText value="#{cc.attrs.bean.question.maxScore}"/>
+							
+						</p:panelGrid>
+						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40">						
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showBoolean}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowBoolean}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showInteger}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowInteger}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showDouble}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowDouble}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showText}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowText}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showRemark}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowRemark}"/>
+						</p:panelGrid>
+						
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 					</p:panel>
 				</h:form>

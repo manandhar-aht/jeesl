@@ -21,30 +21,30 @@ import org.slf4j.LoggerFactory;
 public class JeeslExcelFlatFiguresExporter
 {
 	
-	final static org.slf4j.Logger logger = LoggerFactory.getLogger(JeeslExcelFlatFiguresExporter.class);
+    final static org.slf4j.Logger logger = LoggerFactory.getLogger(JeeslExcelFlatFiguresExporter.class);
 	
-	// Excel related objects
+    // Excel related objects
     public Workbook         wb;
     public Font             headerFont;
     public CellStyle        dateHeaderStyle;
-	public CellStyle		titleStyle;
+    public CellStyle		titleStyle;
     public CellStyle        numberStyle; 
     public CreationHelper   createHelper;
     public JXPathContext	context;
 	
-	// The sheet in the workbook
-	private final Sheet sheet;
-    
-	// The current row and column number
-	private short rowNr          = 0;
-	private short column         = 0;
-	
-	public JeeslExcelFlatFiguresExporter()
-	{
-		// Create the Excel Workbook and select the created sheet
-		wb = new XSSFWorkbook();
-		wb.createSheet("Aggregations");
-		sheet = wb.getSheet("Aggregations");
+    // The sheet in the workbook
+    private final Sheet sheet;
+
+    // The current row and column number
+    private short rowNr          = 0;
+    private short column         = 0;
+
+    public JeeslExcelFlatFiguresExporter()
+    {
+        // Create the Excel Workbook and select the created sheet
+        wb = new XSSFWorkbook();
+        wb.createSheet("Aggregations");
+        sheet = wb.getSheet("Aggregations");
         createHelper = wb.getCreationHelper();
 
         // Create fonts and alter it.
@@ -59,80 +59,80 @@ public class JeeslExcelFlatFiguresExporter
         dateHeaderStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy.MM"));
         dateHeaderStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         dateHeaderStyle.setFont(font);
-		dateHeaderStyle.setFillBackgroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-		dateHeaderStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-		dateHeaderStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        dateHeaderStyle.setFillBackgroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        dateHeaderStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        dateHeaderStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
         numberStyle = wb.createCellStyle();
         numberStyle.setDataFormat(createHelper.createDataFormat().getFormat("#,##0.00"));
 		
-		// Create header style
-		titleStyle = wb.createCellStyle();
+        // Create header style
+        titleStyle = wb.createCellStyle();
         titleStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         titleStyle.setFont(fontTitle);
 	}
 	
 	public byte[] export(List<String> headers, JsonFlatFigures figures)
 	{
-		// Create the column headers
-		Row row     = sheet.createRow(rowNr);
-		
-		for (String header : headers)
-		{
-			Cell cell   = row.createCell(column);
-			
-			cell.setCellStyle(titleStyle);
-			cell.setCellValue(header);
-			column++;
-		}
-		
-		// Reset column number and go to next row
-		column = 0;
-		rowNr++;
-		
-		// Fill in data rows
-		for (JsonFlatFigure content : figures.getFigures())
-		{
-			row     = sheet.createRow(rowNr);
-			createNextCell(row, content.getG1());
-			createNextCell(row, content.getG2());
-			createNextCell(row, content.getG3());
-			createNextCell(row, content.getG4());
-			createNextCell(row, content.getG5());
-			createNextCell(row, content.getG6());
-			createNextCell(row, content.getG7());
-			createNextCell(row, content.getG8());
-			createNextCell(row, content.getG9());
-			createNextCell(row, content.getG10());
-			createNextCell(row, content.getG11());
-			column = 0;
-			rowNr++;
-		}
-		for (int i = 1; i < 12; i++)
-		{
-			column++;
-			sheet.autoSizeColumn(i);
-		}
-		return getSheet();
+            // Create the column headers
+            Row row     = sheet.createRow(rowNr);
+
+            for (String header : headers)
+            {
+                    Cell cell   = row.createCell(column);
+
+                    cell.setCellStyle(titleStyle);
+                    cell.setCellValue(header);
+                    column++;
+            }
+
+            // Reset column number and go to next row
+            column = 0;
+            rowNr++;
+
+            // Fill in data rows
+            for (JsonFlatFigure content : figures.getFigures())
+            {
+                row     = sheet.createRow(rowNr);
+                createNextCell(row, content.getG1());
+                createNextCell(row, content.getG2());
+                createNextCell(row, content.getG3());
+                createNextCell(row, content.getG4());
+                createNextCell(row, content.getG5());
+                createNextCell(row, content.getG6());
+                createNextCell(row, content.getG7());
+                createNextCell(row, content.getG8());
+                createNextCell(row, content.getG9());
+                createNextCell(row, content.getG10());
+                createNextCell(row, content.getG11());
+                column = 0;
+                rowNr++;
+            }
+            for (int i = 1; i < 12; i++)
+            {
+                column++;
+                sheet.autoSizeColumn(i);
+            }
+            return getSheet();
 	}
 	
 	public byte[] getSheet()
 	{
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try {
-			wb.write(baos);
-		} catch (IOException ex) {
-			logger.error(ex.getMessage());
-		}
-		return baos.toByteArray();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try {
+                    wb.write(baos);
+            } catch (IOException ex) {
+                    logger.error(ex.getMessage());
+            }
+            return baos.toByteArray();
 	}
 	
 	public void createNextCell(Row row, String content)
 	{
-		if (content != null)
-		{
-			Cell cell   = row.createCell(column);
-			cell.setCellValue(content);
-		}
-		column++;
+            if (content != null)
+            {
+                    Cell cell   = row.createCell(column);
+                    cell.setCellValue(content);
+            }
+            column++;
 	}
 }

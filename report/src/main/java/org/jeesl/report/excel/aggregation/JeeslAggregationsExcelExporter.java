@@ -13,8 +13,7 @@ import net.sf.ahtutils.xml.report.Info;
 public class JeeslAggregationsExcelExporter
 {
     public static <L extends UtilsLang,D extends UtilsDescription,TYPE extends UtilsStatus<TYPE,L,D>>
-    
-    InputStream export(TYPE type, Info info, Figures figures)
+    	InputStream export(TYPE type, Info info, Figures figures)
     {
     	switch(JeeslReportGrouping.Code.valueOf(type.getCode()))
     	{
@@ -23,6 +22,11 @@ public class JeeslAggregationsExcelExporter
     		default: return null;
     	}
     }
+    
+    public static InputStream export(Info info, Figures figures)
+	{
+		return hierarchical(info,figures);
+	}
     
     private static InputStream flat(Info info, Figures figures)
     {

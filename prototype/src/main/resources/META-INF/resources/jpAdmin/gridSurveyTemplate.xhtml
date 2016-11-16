@@ -61,7 +61,7 @@
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSections()}" update="@form"/>
 						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{cc.attrs.bean.selectSection()}"/>
 						<p:column>
-							 <h:outputText value="#{s.position}" />
+							 <h:outputText value="#{s.code}" />
 						</p:column>
 						<p:column>
 							 <f:facet name="header">#{msg.aupSurveySectionName}</f:facet>
@@ -94,6 +94,9 @@
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1"/>
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+							<p:outputLabel value="#{msg.jpSurveySectionCode}"/>
+							<p:inputText value="#{cc.attrs.bean.section.code}"/>
+						
 							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
 							<p:inputText value="#{cc.attrs.bean.section.name}"/>
 
@@ -114,7 +117,6 @@
                   <p:ajax event="rowSelect" update=":#{cc.id}:sQuestion" listener="#{cc.attrs.bean.selectQuestion()}"/>
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderQuestions()}" update="@form"/>
                   <p:column>
-                      <f:facet name="header">#{msg.aupSurveyQuestionCode}</f:facet>
                       <h:outputText value="#{q.code}" />
                   </p:column>
 						<p:column>
@@ -144,8 +146,8 @@
 							<p:outputLabel value="#{msg.aupSurveyQuestion}"/>
 							<p:inputTextarea rows="3" styleClass="w100" value="#{cc.attrs.bean.question.question}"/>
 													
-							<p:outputLabel value="#{msg.aupSurveyQuestionUnit}"/>
-							<p:selectOneMenu value="#{cc.attrs.bean.question.unit}" effect="fade" >
+							<p:outputLabel rendered="false" value="#{msg.aupSurveyQuestionUnit}"/>
+							<p:selectOneMenu rendered="false" value="#{cc.attrs.bean.question.unit}" effect="fade" >
 							  <f:selectItems value="#{appSurveyBean.units}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 							</p:selectOneMenu>
 							 
@@ -168,6 +170,7 @@
 						</p:panelGrid>
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showBoolean}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowBoolean}"/>
+							<h:outputText value=""/><h:outputText value=""/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showInteger}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowInteger}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showDouble}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowDouble}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showText}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowText}"/>

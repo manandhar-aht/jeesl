@@ -168,6 +168,13 @@
     		<s:lang key="fr" translation="Text"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jpSurveySectionCode">
+    	<s:langs>
+    		<s:lang key="de" translation="Code"/>
+    		<s:lang key="en" translation="Code"/>
+    		<s:lang key="fr" translation="Code"/>
+    	</s:langs>
+    </s:translation>
     <s:translation key="jpSurveyQuestionShowScore">
     	<s:langs>
     		<s:lang key="de" translation="Score"/>

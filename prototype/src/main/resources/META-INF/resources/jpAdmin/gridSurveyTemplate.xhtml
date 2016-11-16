@@ -94,14 +94,18 @@
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1"/>
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
+							<p:inputText value="#{cc.attrs.bean.section.position}"/>
+							
 							<p:outputLabel value="#{msg.jpSurveySectionCode}"/>
 							<p:inputText value="#{cc.attrs.bean.section.code}"/>
 						
 							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
 							<p:inputText value="#{cc.attrs.bean.section.name}"/>
 
-							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
-							<p:inputText value="#{cc.attrs.bean.section.position}"/>
+							<p:outputLabel value="#{msg.jpSurveySectionColumnClasses}"/>
+							<p:inputText value="#{cc.attrs.bean.section.columnClasses}"/>
+
 						</p:panelGrid>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 					</p:panel>

@@ -43,4 +43,7 @@ public interface JeeslSurveySection<L extends UtilsLang,
 	
 	List<QUESTION> getQuestions();
 	void setQuestions(List<QUESTION> questions);
+	
+	String getColumnClasses();
+	void setColumnClasses(String columnClasses);
 }

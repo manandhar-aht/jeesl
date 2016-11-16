@@ -175,6 +175,13 @@
     		<s:lang key="fr" translation="Code"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jpSurveySectionColumnClasses">
+    	<s:langs>
+    		<s:lang key="de" translation="Column Styles"/>
+    		<s:lang key="en" translation="Column Styles"/>
+    		<s:lang key="fr" translation="Column Styles"/>
+    	</s:langs>
+    </s:translation>
     <s:translation key="jpSurveyQuestionShowScore">
     	<s:langs>
     		<s:lang key="de" translation="Score"/>

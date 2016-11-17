@@ -234,10 +234,14 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 
 	@Override public DATA saveData(DATA data) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(data.getCorrelation().getId()>0)
+//		logger.info("Testing Correlation: null?"+(data.getCorrelation()==null));
+//		logger.info("Testing Correlation: Saved?"+EjbIdFactory.isSaved(data.getCorrelation()));
+		
+		if(EjbIdFactory.isSaved(data.getCorrelation()))
 		{
 			data.setCorrelation(em.find(cCorrelation,data.getCorrelation().getId()));
 		}
+//		logger.info("Now Sabing ...");
 		return this.saveProtected(data);
 	}
 

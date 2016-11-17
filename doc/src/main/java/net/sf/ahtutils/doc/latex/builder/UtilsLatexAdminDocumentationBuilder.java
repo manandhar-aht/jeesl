@@ -32,6 +32,8 @@ public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 	
 	public static enum ToolsCode {toolsOsticket,toolsApache}
 	public static enum SystemCode {systemWs,systemTsStructure}
+	
+	public static enum Survey {surveyQuestion,surveySection}
 		
 	public UtilsLatexAdminDocumentationBuilder(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
@@ -88,6 +90,10 @@ public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 		
 		//TimeSeries
 		addConfig(SystemCode.systemTsStructure.toString(),"aht-utils/ofx/system/ts/structure.xml","system/ts/structure");
+		
+		//Survey
+		addConfig(Survey.surveySection.toString(),"jeesl/ofx/administration/utils/survey/section.xml","system/survey/section");
+		addConfig(Survey.surveyQuestion.toString(),"jeesl/ofx/administration/utils/survey/question.xml","system/survey/question");
 	}
 	
 	@Deprecated
@@ -105,6 +111,9 @@ public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 	
 	public void render(SystemCode code) throws UtilsConfigurationException, OfxConfigurationException{render(code.toString());}
 	public void render(int lvl,SystemCode code) throws UtilsConfigurationException, OfxConfigurationException{render(lvl,code.toString());}
+	
+	public void render(Survey code) throws UtilsConfigurationException, OfxConfigurationException{render(code.toString());}
+	public void render(int lvl,Survey code) throws UtilsConfigurationException, OfxConfigurationException{render(lvl,code.toString());}
 	
 	public void render(ToolsCode code) throws UtilsConfigurationException, OfxConfigurationException{render(code.toString());}
 	public void render(int lvl,ToolsCode code) throws UtilsConfigurationException, OfxConfigurationException{render(lvl,code.toString());}

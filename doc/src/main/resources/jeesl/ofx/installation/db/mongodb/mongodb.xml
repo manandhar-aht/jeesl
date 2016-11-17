@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			xmlns:text="http://www.openfuxml.org/text"
+		id="section.admin.installation.postgresql">
+	<ofx:title >MongoDB</ofx:title>
+	
+	<ofx:paragraph lang="en">
+			MongoDB (from humongous) is a free and open-source cross-platform document-oriented database program.
+			Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemas.
+			MongoDB is developed by MongoDB Inc. and is free and open-source,
+			published under a combination of the GNU Affero General Public License and the Apache License.
+	</ofx:paragraph>	
+	
+	<ofx:section>
+		<ofx:title lang="en">Installation</ofx:title>
+		
+		<ofx:section include="install/osx.xml"/>
+	</ofx:section>
+	
+	
+</ofx:section>

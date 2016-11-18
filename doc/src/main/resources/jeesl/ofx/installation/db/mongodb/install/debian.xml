@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			 xmlns:media="http://www.openfuxml.org/media"
+			 xmlns:table="http://www.openfuxml.org/table"
+			 xmlns:layout="http://www.openfuxml.org/layout"
+			 xmlns:text="http://www.openfuxml.org/text"
+			 xmlns:l="http://www.openfuxml.org/list"
+		container="true" classifier="osx">	
+
+	<ofx:section container="true" >
+		<ofx:title>Debian</ofx:title>
+		<ofx:listing>
+			<ofx:raw>apt-get install mongodb</ofx:raw>
+		</ofx:listing>
+			
+</ofx:section>

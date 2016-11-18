@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.report.analysis.DynamicPivotData;
 
 public interface JeeslPivotAggregator
 {

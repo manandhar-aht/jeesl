@@ -1,4 +1,4 @@
-package net.sf.ahtutils.doc.ofx.constraints.table;
+package org.jeesl.doc.ofx.constraints;
 
 import java.util.ArrayList;
 import java.util.List;

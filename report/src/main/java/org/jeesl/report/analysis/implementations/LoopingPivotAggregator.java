@@ -1,4 +1,4 @@
-package net.sf.ahtutils.report.analysis;
+package org.jeesl.report.analysis.implementations;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -6,22 +6,23 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.jeesl.report.analysis.DynamicPivotData;
 import org.jeesl.report.analysis.JeeslPivotAggregator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class DynamicPivotAggregator implements JeeslPivotAggregator
+public class LoopingPivotAggregator implements JeeslPivotAggregator
 {
-    final static Logger logger = LoggerFactory.getLogger(DynamicPivotAggregator.class);
+    final static Logger logger = LoggerFactory.getLogger(LoopingPivotAggregator.class);
 
     private static boolean debug = false;
     
     private List<Set<EjbWithId>> entitySet;
     private List<DynamicPivotData> list;
     
-    public DynamicPivotAggregator(int size)
+    public LoopingPivotAggregator(int size)
     {
     	list = new ArrayList<DynamicPivotData>();
     	entitySet = new ArrayList<Set<EjbWithId>>();

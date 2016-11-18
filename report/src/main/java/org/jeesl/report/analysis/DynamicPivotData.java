@@ -1,4 +1,4 @@
-package net.sf.ahtutils.report.analysis;
+package org.jeesl.report.analysis;
 
 import java.util.ArrayList;
 import java.util.Arrays;

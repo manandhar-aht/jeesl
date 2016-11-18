@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.jeesl.report.analysis.JeeslPivotAggregator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class DynamicPivotAggregator
+public class DynamicPivotAggregator implements JeeslPivotAggregator
 {
     final static Logger logger = LoggerFactory.getLogger(DynamicPivotAggregator.class);
 
@@ -32,7 +33,7 @@ public class DynamicPivotAggregator
     	}
     }
     
-    public void add(DynamicPivotData dpd)
+    @Override public void add(DynamicPivotData dpd)
     {
     	for(int i=0;i<dpd.getSize();i++)
     	{
@@ -53,7 +54,7 @@ public class DynamicPivotAggregator
     	list.add(dpd);
     }
     
-    public List<EjbWithId> list(int index)
+    @Override public List<EjbWithId> list(int index)
     {
     	List<EjbWithId> list = new ArrayList<EjbWithId>();
     	for(EjbWithId ejb : entitySet.get(index))
@@ -89,7 +90,7 @@ public class DynamicPivotAggregator
     	return value;
     }
     
-    public Double[] values(int size, EjbWithId... selectors)
+    @Override public Double[] values(int size, EjbWithId... selectors)
     {
     	double[] values = new double[size]; 
     	for(int i=0;i<size;i++){values[i]=0;}

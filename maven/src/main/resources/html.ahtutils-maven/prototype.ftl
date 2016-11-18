@@ -171,27 +171,27 @@ ul.aupHeadlineBreadcrumb,
 /* ------------------------------------------------ */
 
 .aupStatusBar {
-  height:25px;
-  /* margin: 10px; */
-  margin:-10px 10px 10px 10px;
-  color:#FFFFFF;
-  /* W3C for :  vertical gradient from dark to light blue (on the first 10px, remaining should be light blue) */
-  background: linear-gradient(to bottom, ${colorDark} 0%,${colorMedium} 40%,${colorMedium} 100%);
+	height:25px;
+	/* margin: 10px; */
+	margin:-10px 10px 10px 10px;
+	color:#FFFFFF;
+	/* W3C for :  vertical gradient from dark to light blue (on the first 10px, remaining should be light blue) */
+	background: linear-gradient(to bottom, ${colorDark} 0%,${colorMedium} 40%,${colorMedium} 100%);
 }
 
 /* Equivalent to CSS selector .aupHeadlineBreadcrumb */
 .aupStatusBar > ul {
-  clear:both;
-  display:block;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+	clear:both;
+	display:block;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 .aupStatusBar > ul > li:hover {
-  background: ${colorDark};
-  /* Prevent bledd on hover */
-  height:12px;
+	background: ${colorDark};
+	/* Prevent bledd on hover */
+	height:12px;
 }
 
 .aupStatusBar > ul > li > ul > li:hover {
@@ -200,20 +200,20 @@ ul.aupHeadlineBreadcrumb,
 
 .aupStatusBar > ul > li.aupStatusBarLeft,
 .aupStatusBar > ul > li.aupStatusBarRight {
-  position: relative;
-  /* This margin pushes the next li far enough to squeeze in a CSS separator */
-  margin-right:5px;
-  /* push the ul down to offset the position due to the parent ul's clear:both */
-  top:-6px;
+	position: relative;
+	/* This margin pushes the next li far enough to squeeze in a CSS separator */
+	margin-right:5px;
+	/* push the ul down to offset the position due to the parent ul's clear:both */
+	top:-6px;
 }
 
 .aupStatusBar > ul > li.aupStatusBarLeft {
-  float:left;
+	float:left;
 }
 
 .aupStatusBar > ul > li.aupStatusBarRight {
-  float:right;
-  padding: 5px 1em 6px 1.2em;
+	float:right;
+	padding: 5px 1em 6px 1.2em;
 }
 
 /* Separator for li. These must use different selectors or the results look weird */
@@ -228,29 +228,29 @@ ul.aupHeadlineBreadcrumb,
 }
 
 .aupStatusBar > ul > li > ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 
-  text-align:right;
-  right:0;
+	text-align:right;
+	right:0;
 
-  opacity: 0;
-  visibility: hidden;
-  z-index: 1;
-  position: absolute;
-  -webkit-transition-property: opacity, visibility;
-  -moz-transition-property: opacity, visibility;
-  -o-transition-property: opacity, visibility;
-  transition-property: opacity, visibility;
-  -webkit-transition-duration: .2s, 0s;
-  -moz-transition-duration: .2s, 0s;
-  -o-transition-duration: .2s, 0s;
-  transition-duration: .2s, 0s;
-  -webkit-transition-delay: 0s, .2s;
-  -moz-transition-delay: 0s, .2s;
-  -o-transition-delay: 0s, .2s;
-  transition-delay: 0s, .2s;
+	opacity: 0;
+	visibility: hidden;
+	z-index: 1;
+	position: absolute;
+	-webkit-transition-property: opacity, visibility;
+	-moz-transition-property: opacity, visibility;
+	-o-transition-property: opacity, visibility;
+	transition-property: opacity, visibility;
+	-webkit-transition-duration: .2s, 0s;
+	-moz-transition-duration: .2s, 0s;
+	-o-transition-duration: .2s, 0s;
+	transition-duration: .2s, 0s;
+	-webkit-transition-delay: 0s, .2s;
+	-moz-transition-delay: 0s, .2s;
+	-o-transition-delay: 0s, .2s;
+	transition-delay: 0s, .2s;
 }
 
 /* .aupStatusBar > ul > li:hover ul { */
@@ -269,53 +269,59 @@ ul.aupHeadlineBreadcrumb,
 }*/
 
 .aupStatusBar > ul > li.aupStatusBarLeft > ul {
-  text-align:left;
-  /* The magic line to prevent the li from being hidden by the short width of its parent*/
-  right:auto;
-  /* Align left with parent */
-  left:0;
+	text-align:left;
+	/* The magic line to prevent the li from being hidden by the short width of its parent*/
+	right:auto;
+	/* Align left with parent */
+	left:0;
 }
 
 /* Give the drop down li some body */
 .aupStatusBar > ul > li, 
 .aupStatusBar > ul > li > ul > li {
-  padding: 7px 1em 6px 1.2em;
+	padding: 7px 1em 6px 1.2em;
 }
+
+#aupStatusBarReports > li {
+	width: 400px;
+	white-space: normal;
+}
+
 .aupStatusBar > ul > li > ul > li {
-  display: block;
-  white-space: nowrap;
-  background-color: ${colorMedium};
+	display: block;
+	white-space: nowrap;
+	background-color: ${colorMedium};
 }
 
 /* Reverse the padding horizontally for the left floating li */
 .aupStatusBar > ul > li.aupStatusBarLeft,
 .aupStatusBar > ul > li.aupStatusBarLeft > ul > li {
-  padding: 7px 0.8em 6px 0.6em;
+	padding: 7px 0.8em 6px 0.6em;
 }
 
 .aupStatusBar > ul > li:hover > ul {
-  display:block;
-  float:left;
-  opacity:1;
-  visibility:visible;
+	display:block;
+	float:left;
+	opacity:1;
+	visibility:visible;
 }
 
 .aupStatusBar > ul > li > ul > li >  a {
-color: #FFF;
-display: block;
-margin: -3px -15px -3px -20px;
-padding: 3px 15px 3px 20px;
+	color: #FFF;
+	display: block;
+	margin: -3px -15px -3px -20px;
+	padding: 3px 15px 3px 20px;
 }
 
 .aupStatusBarCalendar > .ui-inputfield{
-background-color: transparent;
-border: none;
-text-shadow: none;
-color: white;
-height: 8px;
-width: 7em;
+	background-color: transparent;
+	border: none;
+	text-shadow: none;
+	color: white;
+	height: 8px;
+	width: 7em;
 }
 
 .aupStatusBarCalendarLabel {
-margin:0 5px 0 5px;
+	margin:0 5px 0 5px;
 }

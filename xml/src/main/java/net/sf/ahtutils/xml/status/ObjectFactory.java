@@ -198,6 +198,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Stage }
+     * 
+     */
+    public Stage createStage() {
+        return new Stage();
+    }
+
+    /**
      * Create an instance of {@link Types }
      * 
      */

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:stage xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1">
+    <s:transistions/>
+    <s:langs/>
+    <s:descriptions/>
+    <s:lang version="1" key="myKey" translation="myTranslation"/>
+</s:stage>

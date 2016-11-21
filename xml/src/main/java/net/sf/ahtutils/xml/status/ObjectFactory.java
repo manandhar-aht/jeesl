@@ -190,6 +190,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Call }
+     * 
+     */
+    public Call createCall() {
+        return new Call();
+    }
+
+    /**
      * Create an instance of {@link Types }
      * 
      */

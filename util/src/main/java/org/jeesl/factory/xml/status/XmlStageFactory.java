@@ -14,14 +14,14 @@ public class XmlStageFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlStageFactory.class);
 		
-	private String lang;
+	private String localeCode;
 	private Stage q;
 	
 //	public XmlProgramFactory(Query q){this(q.getLang(),q.getType());}
 	public XmlStageFactory(Stage q){this(null,q);}
-	public XmlStageFactory(String lang,Stage q)
+	public XmlStageFactory(String localeCode,Stage q)
 	{
-		this.lang=lang;
+		this.localeCode=localeCode;
 		this.q=q;
 	}
 	
@@ -45,14 +45,14 @@ public class XmlStageFactory
 			xml.setDescriptions(f.create(ejb.getDescription()));
 		}
 		
-		if(q.isSetLabel() && lang!=null)
+		if(q.isSetLabel() && localeCode!=null)
 		{
 			if(ejb.getName()!=null)
 			{
-				if(ejb.getName().containsKey(lang)){xml.setLabel(ejb.getName().get(lang).getLang());}
+				if(ejb.getName().containsKey(localeCode)){xml.setLabel(ejb.getName().get(localeCode).getLang());}
 				else
 				{
-					String msg = "No translation "+lang+" available in "+ejb;
+					String msg = "No translation "+localeCode+" available in "+ejb;
 					logger.warn(msg);
 					xml.setLabel(msg);
 				}

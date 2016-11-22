@@ -5,12 +5,17 @@
 			 xmlns:layout="http://www.openfuxml.org/layout"
 			 xmlns:text="http://www.openfuxml.org/text"
 			 xmlns:l="http://www.openfuxml.org/list"
-		container="true" classifier="osx">	
+		container="true">	
 
-	<ofx:section container="true" >
-		<ofx:title>Debian</ofx:title>
+	<ofx:section container="true" classifier="debianJessie">
+		<ofx:title>Debian Jessie</ofx:title>
+		
 		<ofx:listing>
-			<ofx:raw>apt-get install mongodb</ofx:raw>
+			<ofx:raw>apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.2 main" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+apt-get update
+apt-get install -y mongodb-org
+service mongod start</ofx:raw>
 		</ofx:listing>
 			
 </ofx:section>

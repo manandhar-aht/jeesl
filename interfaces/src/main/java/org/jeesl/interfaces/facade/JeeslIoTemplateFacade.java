@@ -6,6 +6,7 @@ import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
 
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -21,5 +22,7 @@ public interface JeeslIoTemplateFacade <L extends UtilsLang,D extends UtilsDescr
 {	
 	TEMPLATE load(Class<TEMPLATE> cTemplate, TEMPLATE template);
 	
-	List<TEMPLATE> fTemplates(Class<TEMPLATE> cEntity, Class<CATEGORY> cCategory, List<CATEGORY> categories, boolean showInvisibleEntities);
+	DEFINITION fDefinition(TYPE type, String code) throws UtilsNotFoundException;
+	
+	List<TEMPLATE> fTemplates(List<CATEGORY> categories, boolean showInvisibleEntities);
 }

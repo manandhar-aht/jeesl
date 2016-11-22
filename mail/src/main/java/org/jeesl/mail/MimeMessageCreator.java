@@ -46,7 +46,6 @@ public class MimeMessageCreator
 	private void createFrom(From from) throws UnsupportedEncodingException, MessagingException
 	{
 		InternetAddress fromAddress = create(from.getEmailAddress());
-		
 		msg.setFrom(fromAddress);
 	}
 	

@@ -122,7 +122,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	//*************************************************************************************
 	private void reloadTemplates()
 	{
-		templates = fTemplate.fTemplates(cTemplate, cCategory, sbhCategory.getSelected(), true);
+		templates = fTemplate.fTemplates(sbhCategory.getSelected(), true);
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cTemplate,templates));}
 		Collections.sort(templates, comparatorTemplate);
 	}

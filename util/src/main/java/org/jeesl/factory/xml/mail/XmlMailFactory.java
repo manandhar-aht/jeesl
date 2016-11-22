@@ -39,7 +39,6 @@ public class XmlMailFactory
     	Mail mail = new Mail();
     	mail.setHeader(header);
     	mail.setExample(content);
-    	
     	return mail;
     }
     

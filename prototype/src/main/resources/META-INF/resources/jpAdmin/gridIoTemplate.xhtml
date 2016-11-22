@@ -65,7 +65,7 @@
 								<h:inputText autocomplete="off" value="#{cc.attrs.bean.template.code}" styleClass="w100"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.template}" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{translationBean.langKeys}" />
+									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
 						</p:panel>
 					</h:form>
 				</aht:slot>
@@ -110,7 +110,7 @@
 								<h:inputText autocomplete="off" value="#{cc.attrs.bean.token.example}" styleClass="w100"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.token}" withName="true" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{translationBean.langKeys}" />
+									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
 							<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						</p:panel>
 					</h:form>

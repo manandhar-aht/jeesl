@@ -107,7 +107,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		categories = fTemplate.allOrderedPositionVisible(cCategory);
 		
 		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
-		sbhCategory.selectAll();
+//		sbhCategory.selectAll();
 		reloadTemplates();
 	}
 	

@@ -5,16 +5,34 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui"
 >
+	
 	<c:set var="entity" value="#{entity}" />
 	<c:set var="code" value="#{code}" />
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
 	<c:set var="for" value="#{for}" />
+	
+	<ui:remove>
+		<c:set var="id" value="#{id}" />
+		<c:set var="info"  value="#{not empty info ? info : false}" />
+	</ui:remove>
 
 	<p:outputLabel rendered="#{rendered and (not empty code)}" value="#{appLabelBean.labels[entity][code][loc].lang}">
+		<c:if test="#{not empty id}"><f:attribute name="id" value="#{id}"/></c:if>
 		<c:if test="#{not empty for}"><f:attribute name="for" value="#{for}"/></c:if>
 	</p:outputLabel>
 	<p:outputLabel rendered="#{rendered and (empty code)}" value="#{appLabelBean.entities[entity][loc].lang}">
 		<c:if test="#{not empty for}"><f:attribute name="for" value="#{for}"/></c:if>
 	</p:outputLabel>
+	
+	<ui:remove>
+		<c:if test="#{info}">
+			<p:overlayPanel for="#{id}" showEffect="blind" hideEffect="explode" showEvent="click" hideEvent="mousedown"
+											dismissable="false" showCloseIcon="true">
+				<p:panel header="#{appLabelBean.labels[entity][code][loc].lang}">
+					#{appLabelBean.descriptions[entity][code][loc].lang}
+				</p:panel>
+			</p:overlayPanel>
+		</c:if>
+	</ui:remove>
 </ui:composition>

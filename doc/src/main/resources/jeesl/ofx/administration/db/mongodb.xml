@@ -8,16 +8,19 @@
 			id="section.admin.db.mongodb">
 	<ofx:title lang="en">MongoDB</ofx:title>
 		
+		
 	<ofx:section>
 		<ofx:title lang="en">Backup</ofx:title>
-		
-
+		The backup process for the current MongoDB of the productive system can be triggerd with the following command:		
+		<text:emphasis style="typewriter">mongodumb --out /PATH_TO_YOUR_BACKUP_FOLDER/</text:emphasis>
+		After this procedure you will have a new folder with database dumpfiles in your specified path. 
 	</ofx:section>
 	
-		<ofx:section>
+	<ofx:section>
 		<ofx:title lang="en">Restore</ofx:title>
-		
-
+		To start restore process execute the following command:
+		<text:emphasis style="typewriter">mongorestore -d [YOUR_DB_NAME] [PATH_TO_YOUR_BACKUP_FOLDER]</text:emphasis>
+		This commandline will restore every dumpfile in your backup folder to your specified DB_NAME.
 	</ofx:section>
 	
 </ofx:section>

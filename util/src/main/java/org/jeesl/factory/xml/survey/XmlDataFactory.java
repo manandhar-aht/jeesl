@@ -15,6 +15,7 @@ import org.jeesl.interfaces.model.survey.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.survey.JeeslSurveySection;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.model.xml.jeesl.QuerySurvey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,12 +26,16 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	private Class<DATA> cData;
 	
+	private XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfSurvey;
 	
 	private Data q;
 	
+	public XmlDataFactory(QuerySurvey query){this(query.getData());}
 	public XmlDataFactory(Data q)
 	{
 		this.q=q;
+		
+		if(q.isSetSurvey()) {xfSurvey = new XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSurvey());}
 	}
 	
 	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<DATA> cData)
@@ -43,14 +48,10 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 	{		
 		if(fSurvey!=null){ejb = fSurvey.load(cData,ejb);}
 		
-		Data xml = new Data();
+		Data xml = build();
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		
-		if(q.isSetSurvey())
-		{
-			XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> f = new XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSurvey());
-			xml.setSurvey(f.build(ejb.getSurvey()));
-		}
+		if(q.isSetSurvey()) {xml.setSurvey(xfSurvey.build(ejb.getSurvey()));}
 		
 		if(q.isSetCorrelation())
 		{
@@ -72,8 +73,14 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 	
 	public static Data id()
 	{
-		Data xml = new Data();
+		Data xml = build();
 		xml.setId(0);
+		return xml;
+	}
+	
+	public static Data build()
+	{
+		Data xml = new Data();
 		return xml;
 	}
 }

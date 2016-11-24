@@ -37,4 +37,12 @@ public class ObjectFactory {
         return new Container();
     }
 
+    /**
+     * Create an instance of {@link QuerySurvey }
+     * 
+     */
+    public QuerySurvey createQuerySurvey() {
+        return new QuerySurvey();
+    }
+
 }

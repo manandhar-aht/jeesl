@@ -9,6 +9,7 @@ import org.jeesl.factory.xml.survey.XmlCorrelationFactory;
 import org.jeesl.factory.xml.survey.XmlDataFactory;
 import org.jeesl.factory.xml.survey.XmlSurveyFactory;
 import org.jeesl.factory.xml.survey.XmlTemplateFactory;
+import org.jeesl.model.xml.jeesl.QuerySurvey;
 
 import net.sf.ahtutils.factory.xml.status.XmlCategoryFactory;
 import net.sf.ahtutils.factory.xml.status.XmlDescriptionFactory;
@@ -141,6 +142,37 @@ public class SurveyQuery
 		xml.setValueBoolean(true);
 		xml.setValueNumber(0);
 		xml.setData(data);
+		return xml;
+	}
+	
+	
+	//JEESL
+	public static enum KeyJeesl {data}
+	
+	private static Map<KeyJeesl,QuerySurvey> mQueriesJeesl;
+	
+	public static QuerySurvey getJeesl(KeyJeesl key){return getJeesl(key,null);}
+	public static QuerySurvey getJeesl(KeyJeesl key,String localeCode)
+	{
+		if(mQueriesJeesl==null){mQueriesJeesl = new Hashtable<KeyJeesl,QuerySurvey>();}
+		if(!mQueriesJeesl.containsKey(key))
+		{
+			QuerySurvey q = new QuerySurvey();
+			switch(key)
+			{
+				case data: q.setData(data());break;
+			}
+			mQueriesJeesl.put(key, q);
+		}
+		QuerySurvey q = mQueriesJeesl.get(key);
+		q.setLocaleCode(localeCode);
+		return q;
+	}
+	
+	public static Data data()
+	{		
+		Data xml = new Data();
+		xml.setId(0);
 		return xml;
 	}
 }

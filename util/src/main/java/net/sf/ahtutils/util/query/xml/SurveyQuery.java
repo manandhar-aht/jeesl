@@ -191,6 +191,10 @@ public class SurveyQuery
 		Answer xml = XmlAnswerFactory.id();
 		xml.setValueBoolean(true);
 		xml.setValueNumber(0);
+		xml.setValueDouble(0);
+		xml.setScore(0);
+		xml.setAnswer(net.sf.ahtutils.factory.xml.text.XmlAnswerFactory.build(""));
+		xml.setRemark(XmlRemarkFactory.build(""));
 		return xml;
 	}
 }

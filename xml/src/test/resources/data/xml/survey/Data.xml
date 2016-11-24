@@ -2,8 +2,8 @@
 <survey:data xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:t="http://ahtutils.aht-group.com/text" xmlns:survey="http://ahtutils.aht-group.com/survey" id="123">
     <survey:survey id="123" name="myName" validFrom="2011-11-11" validTo="2011-11-11"/>
     <survey:correlation id="123" type="myType"/>
-    <survey:answer id="123" valueBoolean="true" valueNumber="123"/>
-    <survey:answer id="123" valueBoolean="true" valueNumber="123"/>
+    <survey:answer id="123" valueBoolean="true" valueNumber="123" valueDouble="123.45" score="2.3"/>
+    <survey:answer id="123" valueBoolean="true" valueNumber="123" valueDouble="123.45" score="2.3"/>
     <survey:section id="123" position="2" code="myCode"/>
     <survey:section id="123" position="2" code="myCode"/>
 </survey:data>

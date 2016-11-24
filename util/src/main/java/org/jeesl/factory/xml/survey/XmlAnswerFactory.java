@@ -13,6 +13,7 @@ import org.jeesl.model.xml.jeesl.QuerySurvey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -46,9 +47,13 @@ public class XmlAnswerFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 		if(q.isSetQuestion()){xml.setQuestion(xfQuestion.build(ejb.getQuestion()));}
 		if(q.isSetData()){xml.setData(xfData.build(ejb.getData()));}
 		
-		if(q.isSetValueBoolean() && ejb.getValueBoolean()!=null){xml.setValueBoolean(ejb.getValueBoolean());}
-		if(q.isSetValueNumber() && ejb.getValueNumber()!=null){xml.setValueNumber(ejb.getValueNumber());}
-		
+		if(q.isSetValueBoolean() && ejb.getQuestion().getShowBoolean() && ejb.getValueBoolean()!=null){xml.setValueBoolean(ejb.getValueBoolean());}
+		if(q.isSetValueNumber() && ejb.getQuestion().getShowInteger() && ejb.getValueNumber()!=null){xml.setValueNumber(ejb.getValueNumber());}
+		if(q.isSetValueDouble() && ejb.getQuestion().getShowDouble() && ejb.getValueDouble()!=null){xml.setValueDouble(ejb.getValueDouble());}
+		if(q.isSetScore() && ejb.getQuestion().getShowScore() && ejb.getScore()!=null){xml.setScore(ejb.getScore());}
+		if(q.isSetAnswer() && ejb.getQuestion().getShowText() && ejb.getValueText()!=null){xml.setAnswer(net.sf.ahtutils.factory.xml.text.XmlAnswerFactory.build(ejb.getValueText()));}
+		if(q.isSetRemark() && ejb.getQuestion().getShowRemark() && ejb.getRemark()!=null){xml.setRemark(XmlRemarkFactory.build(ejb.getRemark()));}
+	
 		return xml;
 	}
 	

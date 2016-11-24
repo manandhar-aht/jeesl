@@ -3,5 +3,5 @@
     <t:question version="1" key="myKey">myValue</t:question>
     <t:remark version="1" key="myKey">myValue</t:remark>
     <s:unit code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
-    <survey:answer id="123" valueBoolean="true" valueNumber="123"/>
+    <survey:answer id="123" valueBoolean="true" valueNumber="123" valueDouble="123.45" score="2.3"/>
 </survey:question>

@@ -14,18 +14,18 @@
         </xsd:complexType>
     </xsd:element>
 	<xsd:element name="template">
-        <xsd:complexType>
+		<xsd:complexType>
         	<xsd:sequence>
         		<xsd:element ref="us:description" maxOccurs="1"/>
         		<xsd:element ref="us:category" maxOccurs="1"/>
         		<xsd:element ref="us:status" maxOccurs="1"/>
-                <xsd:element ref="text:remark" maxOccurs="1"/>
-                <xsd:element ref="survey:section" maxOccurs="unbounded"/>
-            </xsd:sequence>
-            <xsd:attribute name="id" type="xsd:long"/>
-            <xsd:attribute name="code" type="xsd:string"/>
+            <xsd:element ref="text:remark" maxOccurs="1"/>
+				<xsd:element ref="survey:section" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="id" type="xsd:long"/>
+			<xsd:attribute name="code" type="xsd:string"/>
         </xsd:complexType>
-    </xsd:element>
+	</xsd:element>
 	<xsd:element name="section">
         <xsd:complexType>
         	<xsd:sequence>
@@ -106,10 +106,14 @@
         	<xsd:sequence>
         		<xsd:element ref="survey:data" maxOccurs="1"/>
 				<xsd:element ref="survey:question" maxOccurs="1"/>
+				<xsd:element ref="text:answer" maxOccurs="1"/>
+				<xsd:element ref="text:remark" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="id" type="xsd:long"/>
 			<xsd:attribute name="valueBoolean" type="xsd:boolean"/>
 			<xsd:attribute name="valueNumber" type="xsd:int"/>
+			<xsd:attribute name="valueDouble" type="xsd:double"/>
+			<xsd:attribute name="score" type="xsd:double"/>
 		</xsd:complexType>
    </xsd:element>
 </xsd:schema>

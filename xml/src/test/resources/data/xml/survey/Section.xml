@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<survey:section xmlns:s="http://ahtutils.aht-group.com/status" xmlns:text="http://ahtutils.aht-group.com/text" xmlns:survey="http://ahtutils.aht-group.com/survey" id="123" position="2" code="myCode">
+<survey:section xmlns:s="http://ahtutils.aht-group.com/status" xmlns:t="http://ahtutils.aht-group.com/text" xmlns:survey="http://ahtutils.aht-group.com/survey" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" id="123" position="2" code="myCode">
     <s:description version="1" key="myKey">myValue</s:description>
-    <text:remark version="1" key="myKey">myValue</text:remark>
+    <t:remark version="1" key="myKey">myValue</t:remark>
     <survey:section id="123" position="2" code="myCode"/>
     <survey:section id="123" position="2" code="myCode"/>
     <survey:question id="123" position="2" visible="true" code="myCode" topic="myTopic"/>

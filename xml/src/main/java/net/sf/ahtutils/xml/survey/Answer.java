@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import net.sf.ahtutils.xml.text.Remark;
 
 
 /**
@@ -22,10 +23,14 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}data"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}question"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/text}answer"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/text}remark"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="valueBoolean" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="valueNumber" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="valueDouble" type="{http://www.w3.org/2001/XMLSchema}double" /&gt;
+ *       &lt;attribute name="score" type="{http://www.w3.org/2001/XMLSchema}double" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -36,7 +41,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "data",
-    "question"
+    "question",
+    "answer",
+    "remark"
 })
 @XmlRootElement(name = "answer")
 public class Answer
@@ -48,12 +55,20 @@ public class Answer
     protected Data data;
     @XmlElement(required = true)
     protected Question question;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/text", required = true)
+    protected net.sf.ahtutils.xml.text.Answer answer;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/text", required = true)
+    protected Remark remark;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "valueBoolean")
     protected Boolean valueBoolean;
     @XmlAttribute(name = "valueNumber")
     protected Integer valueNumber;
+    @XmlAttribute(name = "valueDouble")
+    protected Double valueDouble;
+    @XmlAttribute(name = "score")
+    protected Double score;
 
     /**
      * Gets the value of the data property.
@@ -109,6 +124,62 @@ public class Answer
 
     public boolean isSetQuestion() {
         return (this.question!= null);
+    }
+
+    /**
+     * Gets the value of the answer property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link net.sf.ahtutils.xml.text.Answer }
+     *     
+     */
+    public net.sf.ahtutils.xml.text.Answer getAnswer() {
+        return answer;
+    }
+
+    /**
+     * Sets the value of the answer property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link net.sf.ahtutils.xml.text.Answer }
+     *     
+     */
+    public void setAnswer(net.sf.ahtutils.xml.text.Answer value) {
+        this.answer = value;
+    }
+
+    public boolean isSetAnswer() {
+        return (this.answer!= null);
+    }
+
+    /**
+     * Gets the value of the remark property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Remark }
+     *     
+     */
+    public Remark getRemark() {
+        return remark;
+    }
+
+    /**
+     * Sets the value of the remark property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Remark }
+     *     
+     */
+    public void setRemark(Remark value) {
+        this.remark = value;
+    }
+
+    public boolean isSetRemark() {
+        return (this.remark!= null);
     }
 
     /**
@@ -205,6 +276,70 @@ public class Answer
 
     public void unsetValueNumber() {
         this.valueNumber = null;
+    }
+
+    /**
+     * Gets the value of the valueDouble property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Double }
+     *     
+     */
+    public double getValueDouble() {
+        return valueDouble;
+    }
+
+    /**
+     * Sets the value of the valueDouble property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Double }
+     *     
+     */
+    public void setValueDouble(double value) {
+        this.valueDouble = value;
+    }
+
+    public boolean isSetValueDouble() {
+        return (this.valueDouble!= null);
+    }
+
+    public void unsetValueDouble() {
+        this.valueDouble = null;
+    }
+
+    /**
+     * Gets the value of the score property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Double }
+     *     
+     */
+    public double getScore() {
+        return score;
+    }
+
+    /**
+     * Sets the value of the score property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Double }
+     *     
+     */
+    public void setScore(double value) {
+        this.score = value;
+    }
+
+    public boolean isSetScore() {
+        return (this.score!= null);
+    }
+
+    public void unsetScore() {
+        this.score = null;
     }
 
 }

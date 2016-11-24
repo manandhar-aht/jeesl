@@ -19,11 +19,15 @@ public class TestXmlAnswer extends AbstractXmlSurveyTest<Answer>
     	xml.setId(123);
     	xml.setValueBoolean(true);
     	xml.setValueNumber(123);
+    	xml.setValueDouble(123.45);
+    	xml.setScore(2.3);
     	
     	if(withChilds)
     	{
     		xml.setData(TestXmlData.create(false));
     		xml.setQuestion(TestXmlQuestion.create(false));
+    		xml.setAnswer(org.jeesl.model.xml.text.TestXmlAnswer.create(false));
+    		xml.setRemark(org.jeesl.model.xml.text.TestXmlRemark.create(false));
     	}
     	
     	return xml;

@@ -46,6 +46,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Answer }
+     * 
+     */
+    public Answer createAnswer() {
+        return new Answer();
+    }
+
+    /**
      * Create an instance of {@link Description }
      * 
      */

@@ -91,6 +91,13 @@ public class SurveyQuery
 		xml.setQuestion(net.sf.ahtutils.factory.xml.text.XmlQuestionFactory.build(""));
 		xml.setRemark(XmlRemarkFactory.build(""));
 		
+		xml.setShowBoolean(true);
+		xml.setShowInteger(true);
+		xml.setShowDouble(true);
+		xml.setShowText(true);
+		xml.setShowScore(true);
+		xml.setShowRemark(true);
+		
 		return xml;
 	}
 	

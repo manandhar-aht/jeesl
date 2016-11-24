@@ -32,6 +32,12 @@ import net.sf.ahtutils.xml.text.Remark;
  *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="topic" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="showBoolean" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="showInteger" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="showDouble" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="showText" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="showScore" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="showRemark" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -70,6 +76,18 @@ public class Question
     protected String code;
     @XmlAttribute(name = "topic")
     protected String topic;
+    @XmlAttribute(name = "showBoolean")
+    protected Boolean showBoolean;
+    @XmlAttribute(name = "showInteger")
+    protected Boolean showInteger;
+    @XmlAttribute(name = "showDouble")
+    protected Boolean showDouble;
+    @XmlAttribute(name = "showText")
+    protected Boolean showText;
+    @XmlAttribute(name = "showScore")
+    protected Boolean showScore;
+    @XmlAttribute(name = "showRemark")
+    protected Boolean showRemark;
 
     /**
      * Gets the value of the question property.
@@ -333,6 +351,198 @@ public class Question
 
     public boolean isSetTopic() {
         return (this.topic!= null);
+    }
+
+    /**
+     * Gets the value of the showBoolean property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isShowBoolean() {
+        return showBoolean;
+    }
+
+    /**
+     * Sets the value of the showBoolean property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setShowBoolean(boolean value) {
+        this.showBoolean = value;
+    }
+
+    public boolean isSetShowBoolean() {
+        return (this.showBoolean!= null);
+    }
+
+    public void unsetShowBoolean() {
+        this.showBoolean = null;
+    }
+
+    /**
+     * Gets the value of the showInteger property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isShowInteger() {
+        return showInteger;
+    }
+
+    /**
+     * Sets the value of the showInteger property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setShowInteger(boolean value) {
+        this.showInteger = value;
+    }
+
+    public boolean isSetShowInteger() {
+        return (this.showInteger!= null);
+    }
+
+    public void unsetShowInteger() {
+        this.showInteger = null;
+    }
+
+    /**
+     * Gets the value of the showDouble property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isShowDouble() {
+        return showDouble;
+    }
+
+    /**
+     * Sets the value of the showDouble property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setShowDouble(boolean value) {
+        this.showDouble = value;
+    }
+
+    public boolean isSetShowDouble() {
+        return (this.showDouble!= null);
+    }
+
+    public void unsetShowDouble() {
+        this.showDouble = null;
+    }
+
+    /**
+     * Gets the value of the showText property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isShowText() {
+        return showText;
+    }
+
+    /**
+     * Sets the value of the showText property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setShowText(boolean value) {
+        this.showText = value;
+    }
+
+    public boolean isSetShowText() {
+        return (this.showText!= null);
+    }
+
+    public void unsetShowText() {
+        this.showText = null;
+    }
+
+    /**
+     * Gets the value of the showScore property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isShowScore() {
+        return showScore;
+    }
+
+    /**
+     * Sets the value of the showScore property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setShowScore(boolean value) {
+        this.showScore = value;
+    }
+
+    public boolean isSetShowScore() {
+        return (this.showScore!= null);
+    }
+
+    public void unsetShowScore() {
+        this.showScore = null;
+    }
+
+    /**
+     * Gets the value of the showRemark property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isShowRemark() {
+        return showRemark;
+    }
+
+    /**
+     * Sets the value of the showRemark property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setShowRemark(boolean value) {
+        this.showRemark = value;
+    }
+
+    public boolean isSetShowRemark() {
+        return (this.showRemark!= null);
+    }
+
+    public void unsetShowRemark() {
+        this.showRemark = null;
     }
 
 }

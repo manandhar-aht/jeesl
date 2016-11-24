@@ -52,6 +52,13 @@
             <xsd:attribute name="visible" type="xsd:boolean"/>
             <xsd:attribute name="code" type="xsd:string"/>
             <xsd:attribute name="topic" type="xsd:string"/>
+            
+            <xsd:attribute name="showBoolean" type="xsd:boolean"/>
+            <xsd:attribute name="showInteger" type="xsd:boolean"/>
+            <xsd:attribute name="showDouble" type="xsd:boolean"/>
+            <xsd:attribute name="showText" type="xsd:boolean"/>
+            <xsd:attribute name="showScore" type="xsd:boolean"/>
+            <xsd:attribute name="showRemark" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="surveys">

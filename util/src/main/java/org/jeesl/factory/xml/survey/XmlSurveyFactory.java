@@ -26,20 +26,24 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 	
 	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	private Class<SURVEY> cSurvey;
-	private Class<DATA> cData;
 	
 	private Survey q;
+	
+	private XmlDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfData;
 	
 	public XmlSurveyFactory(Survey q)
 	{
 		this.q=q;
+		if(q.isSetData()){xfData = new XmlDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getData().get(0));}
+			
 	}
 	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<SURVEY> cSurvey,Class<DATA> cData)
+	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<SURVEY> cSurvey,Class<TEMPLATE> cTemplate,Class<SECTION> cSection,Class<DATA> cData)
 	{
 		this.fSurvey=fSurvey;
 		this.cSurvey=cSurvey;
-		this.cData=cData;
+		
+		if(q.isSetData()){xfData.lazyLoad(fSurvey,cTemplate,cSection,cData);}
 	}
 	
 	public Survey build(SURVEY ejb)
@@ -67,11 +71,10 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 		
 		if(q.isSetData())
 		{
-			XmlDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> f = new XmlDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getData().get(0));
-			f.lazyLoad(fSurvey, cData);
+			
 			for(DATA data : ejb.getSurveyData())
 			{
-				xml.getData().add(f.build(data));
+				xml.getData().add(xfData.build(data));
 			}
 		}
 		return xml;

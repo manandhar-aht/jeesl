@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}survey"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}correlation"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}answer" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/survey}section" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *     &lt;/restriction&gt;
@@ -38,7 +39,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "survey",
     "correlation",
-    "answer"
+    "answer",
+    "section"
 })
 @XmlRootElement(name = "data")
 public class Data
@@ -52,6 +54,8 @@ public class Data
     protected Correlation correlation;
     @XmlElement(required = true)
     protected List<Answer> answer;
+    @XmlElement(required = true)
+    protected List<Section> section;
     @XmlAttribute(name = "id")
     protected Long id;
 
@@ -146,6 +150,43 @@ public class Data
 
     public void unsetAnswer() {
         this.answer = null;
+    }
+
+    /**
+     * Gets the value of the section property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the section property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getSection().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Section }
+     * 
+     * 
+     */
+    public List<Section> getSection() {
+        if (section == null) {
+            section = new ArrayList<Section>();
+        }
+        return this.section;
+    }
+
+    public boolean isSetSection() {
+        return ((this.section!= null)&&(!this.section.isEmpty()));
+    }
+
+    public void unsetSection() {
+        this.section = null;
     }
 
     /**

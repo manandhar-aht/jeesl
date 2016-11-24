@@ -24,10 +24,16 @@ public class XmlAnswerFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 		
 	private Answer q;
 	
+	private XmlQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfQuestion;
+	private XmlDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfData;
+	
 	public XmlAnswerFactory(Query q){this(q.getAnswer());}
 	public XmlAnswerFactory(Answer q)
 	{
 		this.q=q;
+		
+		if(q.isSetData()){xfQuestion = new XmlQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getQuestion());}
+		if(q.isSetData()){xfData = new XmlDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getData());}
 	}
 	
 	public Answer build(ANSWER ejb)
@@ -35,17 +41,8 @@ public class XmlAnswerFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 		Answer xml = new Answer();
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		
-		if(q.isSetQuestion())
-		{
-			XmlQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> f = new XmlQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getQuestion());
-			xml.setQuestion(f.build(ejb.getQuestion()));
-		}
-		
-		if(q.isSetData())
-		{
-			XmlDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> f = new XmlDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getData());
-			xml.setData(f.build(ejb.getData()));
-		}
+		if(q.isSetQuestion()){xml.setQuestion(xfQuestion.build(ejb.getQuestion()));}
+		if(q.isSetData()){xml.setData(xfData.build(ejb.getData()));}
 		
 		if(q.isSetValueBoolean() && ejb.getValueBoolean()!=null){xml.setValueBoolean(ejb.getValueBoolean());}
 		if(q.isSetValueNumber() && ejb.getValueNumber()!=null){xml.setValueNumber(ejb.getValueNumber());}

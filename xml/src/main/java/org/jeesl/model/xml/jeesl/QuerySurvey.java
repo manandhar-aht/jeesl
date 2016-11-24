@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import net.sf.ahtutils.xml.survey.Answer;
 import net.sf.ahtutils.xml.survey.Data;
 
 
@@ -22,6 +23,7 @@ import net.sf.ahtutils.xml.survey.Data;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}data"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/survey}answer"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="localeCode" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -33,7 +35,8 @@ import net.sf.ahtutils.xml.survey.Data;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "data"
+    "data",
+    "answer"
 })
 @XmlRootElement(name = "querySurvey")
 public class QuerySurvey
@@ -43,6 +46,8 @@ public class QuerySurvey
     private final static long serialVersionUID = 1L;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/survey", required = true)
     protected Data data;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/survey", required = true)
+    protected Answer answer;
     @XmlAttribute(name = "localeCode")
     protected String localeCode;
 
@@ -72,6 +77,34 @@ public class QuerySurvey
 
     public boolean isSetData() {
         return (this.data!= null);
+    }
+
+    /**
+     * Gets the value of the answer property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Answer }
+     *     
+     */
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    /**
+     * Sets the value of the answer property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Answer }
+     *     
+     */
+    public void setAnswer(Answer value) {
+        this.answer = value;
+    }
+
+    public boolean isSetAnswer() {
+        return (this.answer!= null);
     }
 
     /**

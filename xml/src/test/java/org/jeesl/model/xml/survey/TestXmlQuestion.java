@@ -29,6 +29,7 @@ public class TestXmlQuestion extends AbstractXmlSurveyTest<Question>
     		xml.setUnit(TestXmlUnit.create(false));
     		xml.setRemark(TestXmlRemark.create(false));
     		xml.setQuestion(org.jeesl.model.xml.text.TestXmlQuestion.create(false));
+    		xml.setAnswer(TestXmlAnswer.create(false));
     	}
     	
     	return xml;

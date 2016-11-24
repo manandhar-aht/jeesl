@@ -45,6 +45,7 @@
                 <xsd:element ref="text:question" maxOccurs="1"/>
                 <xsd:element ref="text:remark" maxOccurs="1"/>
                 <xsd:element ref="us:unit" maxOccurs="1"/>
+                <xsd:element ref="survey:answer" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="position" type="xsd:int"/>
@@ -79,6 +80,7 @@
         		<xsd:element ref="survey:survey" maxOccurs="1"/>
 				<xsd:element ref="survey:correlation" maxOccurs="1"/>
 				<xsd:element ref="survey:answer" maxOccurs="unbounded"/>
+				<xsd:element ref="survey:section" maxOccurs="unbounded"/>
 			</xsd:sequence>
 			<xsd:attribute name="id" type="xsd:long"/>
 		</xsd:complexType>

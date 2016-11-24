@@ -62,19 +62,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Surveys }
+     * Create an instance of {@link Answer }
      * 
      */
-    public Surveys createSurveys() {
-        return new Surveys();
-    }
-
-    /**
-     * Create an instance of {@link Survey }
-     * 
-     */
-    public Survey createSurvey() {
-        return new Survey();
+    public Answer createAnswer() {
+        return new Answer();
     }
 
     /**
@@ -86,6 +78,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Survey }
+     * 
+     */
+    public Survey createSurvey() {
+        return new Survey();
+    }
+
+    /**
      * Create an instance of {@link Correlation }
      * 
      */
@@ -94,11 +94,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Answer }
+     * Create an instance of {@link Surveys }
      * 
      */
-    public Answer createAnswer() {
-        return new Answer();
+    public Surveys createSurveys() {
+        return new Surveys();
     }
 
 }

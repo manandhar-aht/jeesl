@@ -147,7 +147,7 @@ public class SurveyQuery
 	
 	
 	//JEESL
-	public static enum KeyJeesl {data}
+	public static enum KeyJeesl {data,answer}
 	
 	private static Map<KeyJeesl,QuerySurvey> mQueriesJeesl;
 	
@@ -161,6 +161,7 @@ public class SurveyQuery
 			switch(key)
 			{
 				case data: q.setData(data());break;
+				case answer: q.setAnswer(answer());break;
 			}
 			mQueriesJeesl.put(key, q);
 		}
@@ -170,9 +171,19 @@ public class SurveyQuery
 	}
 	
 	public static Data data()
-	{		
+	{	
 		Data xml = new Data();
 		xml.setId(0);
+		xml.getSection().add(exSection());
+		
+		return xml;
+	}
+	
+	private static Answer answer()
+	{
+		Answer xml = XmlAnswerFactory.id();
+		xml.setValueBoolean(true);
+		xml.setValueNumber(0);
 		return xml;
 	}
 }

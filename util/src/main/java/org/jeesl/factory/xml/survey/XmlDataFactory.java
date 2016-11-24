@@ -24,9 +24,13 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 	final static Logger logger = LoggerFactory.getLogger(XmlDataFactory.class);
 		
 	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
+	private Class<TEMPLATE> cTemplate;
 	private Class<DATA> cData;
 	
 	private XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfSurvey;
+	private XmlCorrelationFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfCorrelation;
+	private XmlAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfAnswer;
+	private XmlSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfSection;
 	
 	private Data q;
 	
@@ -36,12 +40,17 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 		this.q=q;
 		
 		if(q.isSetSurvey()) {xfSurvey = new XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSurvey());}
+		if(q.isSetCorrelation()){xfCorrelation = new XmlCorrelationFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getCorrelation());}
+		if(q.isSetAnswer()){xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getAnswer().get(0));}
+		if(q.isSetSection()){xfSection = new XmlSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSection().get(0));}
 	}
 	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<DATA> cData)
+	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<TEMPLATE> cTemplate, Class<SECTION> cSection,Class<DATA> cData)
 	{
 		this.fSurvey=fSurvey;
+		this.cTemplate=cTemplate;
 		this.cData=cData;
+		if(q.isSetSection()){xfSection.lazyLoad(fSurvey, cSection);}
 	}
 	
 	public Data build(DATA ejb)
@@ -52,19 +61,23 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		
 		if(q.isSetSurvey()) {xml.setSurvey(xfSurvey.build(ejb.getSurvey()));}
-		
-		if(q.isSetCorrelation())
-		{
-			XmlCorrelationFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> f = new XmlCorrelationFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getCorrelation());
-			xml.setCorrelation(f.build(ejb.getCorrelation()));
-		}
+		if(q.isSetCorrelation()){xml.setCorrelation(xfCorrelation.build(ejb.getCorrelation()));}
 		
 		if(q.isSetAnswer())
 		{
-			XmlAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> f = new XmlAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getAnswer().get(0));
 			for(ANSWER answer : ejb.getAnswers())
 			{
-				xml.getAnswer().add(f.build(answer));
+				xml.getAnswer().add(xfAnswer.build(answer));
+			}
+		}
+		
+		if(q.isSetSection())
+		{
+			TEMPLATE template = ejb.getSurvey().getTemplate();
+			if(fSurvey!=null){template = fSurvey.load(cTemplate, template);}
+			for(SECTION section : template.getSections())
+			{
+				xml.getSection().add(xfSection.build(section));
 			}
 		}
 		

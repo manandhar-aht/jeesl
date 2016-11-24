@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<survey:question xmlns:text="http://ahtutils.aht-group.com/text" xmlns:s="http://ahtutils.aht-group.com/status" xmlns:survey="http://ahtutils.aht-group.com/survey" id="123" position="2" visible="true" code="myCode" topic="myTopic">
-    <text:question version="1" key="myKey">myValue</text:question>
-    <text:remark version="1" key="myKey">myValue</text:remark>
+<survey:question xmlns:t="http://ahtutils.aht-group.com/text" xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:survey="http://ahtutils.aht-group.com/survey" id="123" position="2" visible="true" code="myCode" topic="myTopic">
+    <t:question version="1" key="myKey">myValue</t:question>
+    <t:remark version="1" key="myKey">myValue</t:remark>
     <s:unit code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
+    <survey:answer id="123" valueBoolean="true" valueNumber="123"/>
 </survey:question>

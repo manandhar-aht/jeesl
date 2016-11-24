@@ -23,6 +23,7 @@ public class TestXmlData extends AbstractXmlSurveyTest<Data>
     		xml.setSurvey(TestXmlSurvey.create(false));
     		xml.setCorrelation(TestXmlCorrelation.create(false));
     		xml.getAnswer().add(TestXmlAnswer.create(false));xml.getAnswer().add(TestXmlAnswer.create(false));
+    		xml.getSection().add(TestXmlSection.create(false));xml.getSection().add(TestXmlSection.create(false));
     	}
     	return xml;
     }

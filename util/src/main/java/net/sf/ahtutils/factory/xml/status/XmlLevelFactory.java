@@ -46,4 +46,11 @@ public class XmlLevelFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang, 
 		xml.setCode(code);
 		return xml;
 	}
+	
+	public static Level build(String code, String label)
+	{
+		Level xml = build(code);
+		xml.setLabel(label);
+		return xml;
+	}
 }

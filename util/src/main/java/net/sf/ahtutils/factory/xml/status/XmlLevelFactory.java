@@ -12,10 +12,12 @@ public class XmlLevelFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang, 
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlLevelFactory.class);
 		
+	private String localeCode;
 	private Level q;
 	
-	public XmlLevelFactory(Level q)
+	public XmlLevelFactory(String localeCode,Level q)
 	{
+		this.localeCode=localeCode;
 		this.q=q;
 	}
 	
@@ -35,6 +37,25 @@ public class XmlLevelFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang, 
 		if(q.isSetDescriptions())
 		{
 
+		}
+		if(q.isSetLabel() && localeCode!=null)
+		{
+			if(ejb.getName()!=null)
+			{
+				if(ejb.getName().containsKey(localeCode)){xml.setLabel(ejb.getName().get(localeCode).getLang());}
+				else
+				{
+					String msg = "No translation "+localeCode+" available in "+ejb;
+					logger.warn(msg);
+					xml.setLabel(msg);
+				}
+			}
+			else
+			{
+				String msg = "No @name available in "+ejb;
+				logger.warn(msg);
+				xml.setLabel(msg);
+			}
 		}
 		
 		return xml;

@@ -17,14 +17,14 @@ public class XmlTypeFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlTypeFactory.class);
 		
-	private String lang;
+	private String localeCode;
 	private Type q;
 	
 	public XmlTypeFactory(Query q){this(q.getLang(),q.getType());}
 	public XmlTypeFactory(Type q){this(null,q);}
-	public XmlTypeFactory(String lang,Type q)
+	public XmlTypeFactory(String localeCode,Type q)
 	{
-		this.lang=lang;
+		this.localeCode=localeCode;
 		this.q=q;
 	}
 	
@@ -48,14 +48,14 @@ public class XmlTypeFactory
 			xml.setDescriptions(f.create(ejb.getDescription()));
 		}
 		
-		if(q.isSetLabel() && lang!=null)
+		if(q.isSetLabel() && localeCode!=null)
 		{
 			if(ejb.getName()!=null)
 			{
-				if(ejb.getName().containsKey(lang)){xml.setLabel(ejb.getName().get(lang).getLang());}
+				if(ejb.getName().containsKey(localeCode)){xml.setLabel(ejb.getName().get(localeCode).getLang());}
 				else
 				{
-					String msg = "No translation "+lang+" available in "+ejb;
+					String msg = "No translation "+localeCode+" available in "+ejb;
 					logger.warn(msg);
 					xml.setLabel(msg);
 				}

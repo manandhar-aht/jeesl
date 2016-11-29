@@ -137,6 +137,11 @@ public class JsonFlatFigure implements Serializable
 	public void setDate4(Date date4) {this.date4 = date4;}
 		
 	
+	@JsonProperty("Bool1")
+	private Boolean b1;
+	public Boolean getB1() {return b1;}
+	public void setB1(Boolean b1) {this.b1 = b1;}
+	
 	@JsonProperty("Counter1")
 	private int c1;
 	public int getC1() {return c1;}

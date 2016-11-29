@@ -9,6 +9,10 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.jeesl.factory.json.system.db.JsonDbConnectionFactory;
+import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
+import org.jeesl.factory.sql.system.db.SqlDbConnectionsFactory;
+import org.jeesl.model.json.JsonFlatFigures;
 import org.jsoup.helper.StringUtil;
 import org.openfuxml.content.table.Table;
 import org.openfuxml.factory.xml.table.OfxTableFactory;
@@ -25,6 +29,14 @@ public class UtilsDbFacadeBean extends UtilsFacadeBean implements UtilsDbFacade
 	public UtilsDbFacadeBean(EntityManager em, boolean handleTransaction)
 	{
 		super(em,handleTransaction);
+	}
+	
+	@Override public String version()
+	{
+		Query q = em.createQuery("select version()");
+
+		Object o = q.getSingleResult();
+		return (String)o;
 	}
 	
 	@Override public  long count(Class<?> cl)
@@ -68,6 +80,18 @@ public class UtilsDbFacadeBean extends UtilsFacadeBean implements UtilsDbFacade
 		Table table = OfxTableFactory.build(fileds,data);
 		
 		return table;
+	}
+	
+	@Override public JsonFlatFigures dbConnections(String dbName)
+	{		
+		JsonFlatFigures flats = JsonFlatFiguresFactory.build();
+		
+		for(Object o : em.createNativeQuery(SqlDbConnectionsFactory.build(dbName)).getResultList())
+		{
+			Object[] array = (Object[])o;
+			flats.getFigures().add(JsonDbConnectionFactory.build(array));
+		}		
+		return flats;
 	}
 	
 	public static void debugDataTypes(Object[] array)

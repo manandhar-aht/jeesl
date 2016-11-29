@@ -205,7 +205,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	public void saveQuestion() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(question));
-		question.setUnit(fSurvey.find(cUnit,question.getUnit()));
+		if(question.getUnit()!=null){question.setUnit(fSurvey.find(cUnit,question.getUnit()));}
 		question = fSurvey.save(question);
 		loadSection();
 	}

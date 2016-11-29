@@ -22,7 +22,6 @@ public class DbConnectionsReport extends AbstractJeeslReport //implements JeeslR
 		headers.add("Query");
 		headers.add("Change");
 		headers.add("Waiting");
-		headers.add("Waiting");
 		headers.add("State");
 		headers.add("Query");
 

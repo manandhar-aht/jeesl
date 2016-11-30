@@ -12,7 +12,7 @@
 	<ofx:section>
 		<ofx:title lang="en">Backup</ofx:title>
 		The backup process for the current MongoDB of the productive system can be triggerd with the following command:		
-		<text:emphasis style="typewriter">mongodumb --out /PATH_TO_YOUR_BACKUP_FOLDER/</text:emphasis>
+		<text:emphasis style="typewriter">mongodumb --db DBNAME --out /PATH_TO_YOUR_BACKUP_FOLDER/</text:emphasis>
 		After this procedure you will have a new folder with database dumpfiles in your specified path. 
 	</ofx:section>
 	

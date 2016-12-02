@@ -40,7 +40,7 @@
 	                <table:cell>
 	                    <media:image>
 	                        <layout:height unit="em">1.0</layout:height>
-	                        <media:media src="svg.aht-utils/icon/ui/system/file/xls.svg" dst="icon/ui/export/xls"/>
+	                        <media:media src="jeesl/svg/icon/ui/system/file/xls.svg" dst="icon/ui/export/xls"/>
 	                    </media:image>
 	                </table:cell>
 	                <table:cell><ofx:paragraph><ed:glossary code="File Format"/></ofx:paragraph></table:cell>
@@ -52,7 +52,7 @@
 	                <table:cell>
 	                    <media:image>
 	                        <layout:height unit="em">1.0</layout:height>
-	                        <media:media src="svg.aht-utils/icon/ui/system/file/pdf.svg" dst="icon/ui/system/file/pdf"/>
+	                        <media:media src="jeesl/svg/icon/ui/system/file/pdf.svg" dst="icon/ui/system/file/pdf"/>
 	                    </media:image>
 	                </table:cell>
 	                <table:cell><ofx:paragraph>PDF</ofx:paragraph></table:cell>

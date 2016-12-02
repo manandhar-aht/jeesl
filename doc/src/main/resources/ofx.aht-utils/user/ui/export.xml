@@ -60,6 +60,20 @@
 	                    <ofx:paragraph>File format called Portable Document Format (.\acrshort{pdf}) used for documents.</ofx:paragraph>
 	                </table:cell>
 	            </table:row>
+	            <table:row>
+	                <table:cell>
+	                    <media:image>
+	                        <layout:height unit="em">1.0</layout:height>
+	                        <media:media src="jeesl/svg/icon/ui/system/file/zip.svg" dst="icon/ui/export/zip"/>
+	                    </media:image>
+	                </table:cell>
+	                <table:cell>
+	                    <ofx:paragraph>ZIP</ofx:paragraph>
+	                </table:cell>
+	                <table:cell>
+	                    <ofx:paragraph>ZIP is an archive file format that supports lossless data compression. A .ZIP file may contain one or more files or directories that may have been compressed.</ofx:paragraph>
+	                </table:cell>
+	            </table:row>
 <!--	            <table:row>
 	                <table:cell>
 	                    <media:image>

@@ -15,9 +15,9 @@
    width="100%"
    height="100%"
    sodipodi:docname="csv.svg"
-   inkscape:export-filename="C:\Users\Yann\Desktop\icon_xls.png"
-   inkscape:export-xdpi="86"
-   inkscape:export-ydpi="86">
+   inkscape:export-filename="/Volumes/ramdisk/csv.png"
+   inkscape:export-xdpi="10.800075"
+   inkscape:export-ydpi="10.800075">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -27,15 +27,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1005"
+     inkscape:window-width="1280"
+     inkscape:window-height="751"
      id="namedview22"
      showgrid="false"
-     inkscape:zoom="5.430341"
-     inkscape:cx="49.444409"
-     inkscape:cy="49.999657"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:zoom="5.6499932"
+     inkscape:cx="49.444207"
+     inkscape:cy="49.999655"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2"
      showborder="true"
@@ -209,14 +209,14 @@
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <cc:license
-           rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
         <dc:publisher>
           <cc:Agent
              rdf:about="http://openclipart.org/">
             <dc:title>Openclipart</dc:title>
           </cc:Agent>
         </dc:publisher>
-        <dc:title></dc:title>
+        <dc:title />
         <dc:date>2012-08-23T09:02:04</dc:date>
         <dc:description>Icon XLS - Ãcone</dc:description>
         <dc:source>https://openclipart.org/detail/171858/icon-xls---Ãcone-by-leandrosciola-171858</dc:source>

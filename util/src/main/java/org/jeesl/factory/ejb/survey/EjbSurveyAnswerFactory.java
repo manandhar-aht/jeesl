@@ -57,7 +57,6 @@ public class EjbSurveyAnswerFactory<L extends UtilsLang,
 		return build(question, data,null,null);
 	}
 	
-	
 	public ANSWER build(QUESTION question, DATA data,Boolean valueBoolean,Integer valueNumber)
 	{
 		ANSWER ejb = null;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<symbol:symbol xmlns:s="http://ahtutils.aht-group.com/status" xmlns:symbol="http://www.jeesl.org/symbol" id="123" size="10" sizeBorder="1" color="AABBCC" colorBorder="DDEEFF">
+<symbol:symbol xmlns:s="http://ahtutils.aht-group.com/status" xmlns:symbol="http://www.jeesl.org/symbol">
     <s:styles group="myGroup"/>
     <symbol:colors/>
+    <symbol:sizes/>
 </symbol:symbol>

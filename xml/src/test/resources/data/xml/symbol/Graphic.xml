@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns4:graphic xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:io="http://exlp.sf.net/io" xmlns:ns4="http://www.jeesl.org/symbol" id="123">
+<symbol:graphic xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:io="http://exlp.sf.net/io" id="123">
     <s:type id="123" key="myKey" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
     <io:file/>
-    <ns4:symbol id="123" size="10" sizeBorder="1" color="AABBCC" colorBorder="DDEEFF"/>
-</ns4:graphic>
+    <symbol:symbol/>
+</symbol:graphic>

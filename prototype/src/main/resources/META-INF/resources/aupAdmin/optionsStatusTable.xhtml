@@ -6,6 +6,7 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:aht="http://ahtutils.sourceforge.net/jsf"
     xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+    xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
     xmlns:composite="http://java.sun.com/jsf/composite">
     
 	<composite:interface>
@@ -44,7 +45,7 @@
 				<h:outputText value="#{s.symbol}" />
 			</p:column>
 			<p:column rendered="#{cc.attrs.bean.supportsGraphic}" styleClass="aupPfDtColCentered">
-				<aht:statusSymbolizer value="#{s}"/>
+				<jtp:statusSymbolizer value="#{s}"/>
 			</p:column>
 		</p:dataTable>
 	</composite:implementation>

@@ -4,7 +4,6 @@ package net.sf.ahtutils.xml.symbol;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -25,8 +24,6 @@ import net.sf.ahtutils.xml.status.Styles;
  *         &lt;element ref="{http://www.jeesl.org/symbol}colors"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/symbol}sizes"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="size" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
- *       &lt;attribute name="sizeBorder" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -52,10 +49,6 @@ public class Symbol
     protected Colors colors;
     @XmlElement(required = true)
     protected Sizes sizes;
-    @XmlAttribute(name = "size")
-    protected Integer size;
-    @XmlAttribute(name = "sizeBorder")
-    protected Integer sizeBorder;
 
     /**
      * Gets the value of the styles property.
@@ -139,70 +132,6 @@ public class Symbol
 
     public boolean isSetSizes() {
         return (this.sizes!= null);
-    }
-
-    /**
-     * Gets the value of the size property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public int getSize() {
-        return size;
-    }
-
-    /**
-     * Sets the value of the size property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setSize(int value) {
-        this.size = value;
-    }
-
-    public boolean isSetSize() {
-        return (this.size!= null);
-    }
-
-    public void unsetSize() {
-        this.size = null;
-    }
-
-    /**
-     * Gets the value of the sizeBorder property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public int getSizeBorder() {
-        return sizeBorder;
-    }
-
-    /**
-     * Sets the value of the sizeBorder property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setSizeBorder(int value) {
-        this.sizeBorder = value;
-    }
-
-    public boolean isSetSizeBorder() {
-        return (this.sizeBorder!= null);
-    }
-
-    public void unsetSizeBorder() {
-        this.sizeBorder = null;
     }
 
 }

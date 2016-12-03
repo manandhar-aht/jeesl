@@ -9,6 +9,7 @@
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdm="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
@@ -104,9 +105,15 @@
 						</p:panel>
 					</h:form>
 					<p:panel header="#{msg.aupGraphicPreview}" rendered="#{(not empty cc.attrs.bean.status) and (cc.attrs.bean.supportsGraphic)}" styleClass="auPanelWithGrid">
-						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+						<p:panelGrid columns="4" columnClasses="auPwg25,auPwg25,auPwg25,auPwg25">
 							<p:outputLabel value="12px"/>
-							<aht:statusSymbolizer value="#{cc.attrs.bean.status}"/>
+							<p:outputLabel value="16px"/>
+							<p:outputLabel value="20px"/>
+							<p:outputLabel value="24px"/>
+							<jtp:statusSymbolizer value="#{cc.attrs.bean.status}" size="12"/>
+							<jtp:statusSymbolizer value="#{cc.attrs.bean.status}" size="16"/>
+							<jtp:statusSymbolizer value="#{cc.attrs.bean.status}" size="20"/>
+							<jtp:statusSymbolizer value="#{cc.attrs.bean.status}" size="24"/>
 						</p:panelGrid>
 					</p:panel>
 					

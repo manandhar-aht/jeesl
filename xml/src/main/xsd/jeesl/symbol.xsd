@@ -23,8 +23,6 @@
 				<xsd:element ref="sym:colors" maxOccurs="1"/>
 				<xsd:element ref="sym:sizes" maxOccurs="1"/>
 			</xsd:sequence>
-			<xsd:attribute name="size" type="xsd:int"/>
-			<xsd:attribute name="sizeBorder" type="xsd:int"/>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="colors">

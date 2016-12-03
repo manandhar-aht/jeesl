@@ -19,6 +19,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Style;
+import net.sf.ahtutils.xml.symbol.Size;
 import net.sf.ahtutils.xml.symbol.Symbol;
 
 public class SvgSymbolFactory<L extends UtilsLang,
@@ -87,7 +88,19 @@ public class SvgSymbolFactory<L extends UtilsLang,
 	public static SVGGraphics2D build(int canvasSize, Symbol rule)
 	{
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-		int size = 5; if(rule.isSetSize()){size = rule.getSize();}
+		
+		int size = 5;
+		if(rule.isSetSizes() && rule.getSizes().isSetSize())
+		{
+			for(Size s : rule.getSizes().getSize())
+			{
+				if(s.getGroup().equals(JeeslGraphicStyle.Size.outer.toString()))
+				{
+					size = s.getValue();
+				}
+			}
+		}
+		
 		String color = "000000";
 		if(rule.isSetColors() && rule.getColors().isSetColor())
 		{

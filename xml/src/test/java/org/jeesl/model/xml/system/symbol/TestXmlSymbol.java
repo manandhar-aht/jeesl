@@ -17,14 +17,12 @@ public class TestXmlSymbol extends AbstractXmlSymbolTest<Symbol>
     public Symbol build(boolean withChilds)
     {
     	Symbol xml = new Symbol();
-//    	xml.setId(123);
-    	xml.setSize(10);
-    	xml.setSizeBorder(1);
     	
     	if(withChilds)
     	{
     		xml.setStyles(TestXmlStyles.create(false));
     		xml.setColors(TestXmlColors.create(false));
+    		xml.setSizes(TestXmlSizes.create(false));
     	}
     	
     	return xml;

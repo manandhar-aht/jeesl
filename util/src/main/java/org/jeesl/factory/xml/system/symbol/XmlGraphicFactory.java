@@ -13,23 +13,21 @@ import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.symbol.Graphic;
 import net.sf.exlp.factory.xml.io.XmlFileFactory;
 
-public class XmlGraphicFactory<L extends UtilsLang,
-								D extends UtilsDescription,
-								G extends JeeslGraphic<L,D,G,GT,GS>,
-								GT extends UtilsStatus<GT,L,D>,
-								GS extends UtilsStatus<GS,L,D>>
+public class XmlGraphicFactory <L extends UtilsLang,D extends UtilsDescription,G extends JeeslGraphic<L,D,G,GT,GS>,GT extends UtilsStatus<GT,L,D>,GS extends UtilsStatus<GS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlGraphicFactory.class);
 	
 	private Graphic q;
 	
 	private XmlTypeFactory<GT,L,D> xfType;
+	private XmlSymbolFactory<L,D,G,GT,GS> xfSymbol;
 	
 	public XmlGraphicFactory(Query query){this(query.getLang(),query.getGraphic());}
 	public XmlGraphicFactory(String localeCode, Graphic q)
 	{
 		this.q=q;
 		if(q.isSetType()){xfType = new XmlTypeFactory<GT,L,D>(q.getType());}
+		if(q.isSetSymbol()){xfSymbol = new XmlSymbolFactory<L,D,G,GT,GS>(localeCode,q.getSymbol());}
 	}
 	
 	public Graphic build(G graphic)
@@ -40,14 +38,11 @@ public class XmlGraphicFactory<L extends UtilsLang,
 		
 		if(graphic.getType().getCode().equals(JeeslGraphicType.Code.svg.toString()))
 		{
-			if(q.isSetFile())
-			{
-				xml.setFile(XmlFileFactory.build(graphic.getData()));
-			}
+			if(q.isSetFile()){xml.setFile(XmlFileFactory.build(graphic.getData()));}
 		}
 		else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
 		{
-			
+			if(q.isSetSymbol()){xml.setSymbol(xfSymbol.build(graphic));}
 		}
 		
 		

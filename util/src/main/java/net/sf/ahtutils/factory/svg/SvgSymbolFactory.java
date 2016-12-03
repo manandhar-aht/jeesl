@@ -18,6 +18,7 @@ import org.w3c.dom.svg.SVGDocument;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.xml.status.Style;
 import net.sf.ahtutils.xml.symbol.Symbol;
 
 public class SvgSymbolFactory<L extends UtilsLang,
@@ -87,13 +88,30 @@ public class SvgSymbolFactory<L extends UtilsLang,
 	{
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		int size = 5; if(rule.isSetSize()){size = rule.getSize();}
-		String color = "000000";if(rule.isSetColor()){color = rule.getColor();}
+		String color = "000000";
+		if(rule.isSetColors() && rule.getColors().isSetColor())
+		{
+			for(net.sf.ahtutils.xml.symbol.Color c : rule.getColors().getColor())
+			{
+				if(c.getGroup().equals(JeeslGraphicStyle.Color.outer.toString()))
+				{
+					color = c.getValue();
+				}
+			}
+		}
 		
 		JeeslGraphicStyle.Code style = JeeslGraphicStyle.Code.circle;
-		if(rule.getStyle()!=null && rule.getStyle().getCode()!=null)
+		if(rule.isSetStyles() && rule.getStyles().isSetStyle())
 		{
-			style = JeeslGraphicStyle.Code.valueOf(rule.getStyle().getCode());
+			for(Style s : rule.getStyles().getStyle())
+			{
+				if(s.getGroup().equals(JeeslGraphicStyle.Group.outer.toString()))
+				{
+					style = JeeslGraphicStyle.Code.valueOf(s.getCode());
+				}
+			}
 		}
+
 		return build(impl,canvasSize,style,size,color);
 	}
 	

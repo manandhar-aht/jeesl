@@ -150,6 +150,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Styles }
+     * 
+     */
+    public Styles createStyles() {
+        return new Styles();
+    }
+
+    /**
      * Create an instance of {@link Style }
      * 
      */

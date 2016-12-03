@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<symbol:sizes xmlns:symbol="http://www.jeesl.org/symbol">
+    <symbol:size group="myGroup" value="12"/>
+    <symbol:size group="myGroup" value="12"/>
+</symbol:sizes>

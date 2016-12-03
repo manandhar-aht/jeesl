@@ -547,6 +547,14 @@
         </xsd:complexType>
     </xsd:element>
     
+	<xsd:element name="styles">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="us:style" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="group" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
   	<xsd:element name="style">
 		<xsd:complexType>
             <xsd:sequence>

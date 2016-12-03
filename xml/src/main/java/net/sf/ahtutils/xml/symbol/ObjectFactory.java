@@ -45,4 +45,36 @@ public class ObjectFactory {
         return new Symbol();
     }
 
+    /**
+     * Create an instance of {@link Colors }
+     * 
+     */
+    public Colors createColors() {
+        return new Colors();
+    }
+
+    /**
+     * Create an instance of {@link Color }
+     * 
+     */
+    public Color createColor() {
+        return new Color();
+    }
+
+    /**
+     * Create an instance of {@link Sizes }
+     * 
+     */
+    public Sizes createSizes() {
+        return new Sizes();
+    }
+
+    /**
+     * Create an instance of {@link Size }
+     * 
+     */
+    public Size createSize() {
+        return new Size();
+    }
+
 }

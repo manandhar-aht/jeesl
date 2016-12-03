@@ -19,13 +19,43 @@
     <xsd:element name="symbol">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element ref="us:style" maxOccurs="1"/>
+				<xsd:element ref="us:styles" maxOccurs="1"/>
+				<xsd:element ref="sym:colors" maxOccurs="1"/>
+				<xsd:element ref="sym:sizes" maxOccurs="1"/>
 			</xsd:sequence>
-			<xsd:attribute name="id" type="xsd:long"/>
 			<xsd:attribute name="size" type="xsd:int"/>
 			<xsd:attribute name="sizeBorder" type="xsd:int"/>
-			<xsd:attribute name="color" type="xsd:string"/>
-			<xsd:attribute name="colorBorder" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="colors">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sym:color" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="color">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:string">
+					<xsd:attribute name="group" type="xsd:string"/>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="sizes">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sym:size" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="size">
+		<xsd:complexType>
+			<xsd:sequence>
+			</xsd:sequence>
+			<xsd:attribute name="group" type="xsd:string"/>
+			<xsd:attribute name="value" type="xsd:int"/>
 		</xsd:complexType>
 	</xsd:element>
 </xsd:schema>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:styles xmlns:s="http://ahtutils.aht-group.com/status" group="myGroup">
+    <s:style code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
+    <s:style code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
+</s:styles>

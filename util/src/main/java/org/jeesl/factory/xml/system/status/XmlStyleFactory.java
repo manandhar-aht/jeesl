@@ -25,6 +25,7 @@ public class XmlStyleFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D
 	}
 	
 	public Style build(S ejb){return build(ejb,null);}
+	public <E extends Enum<E>> Style build(E group, S ejb){return build(ejb,group.toString());}
 	public Style build(S ejb, String group)
 	{
 		Style xml = new Style();

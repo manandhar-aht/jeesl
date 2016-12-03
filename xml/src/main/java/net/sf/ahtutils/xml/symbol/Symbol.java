@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import net.sf.ahtutils.xml.status.Style;
+import net.sf.ahtutils.xml.status.Styles;
 
 
 /**
@@ -21,13 +21,12 @@ import net.sf.ahtutils.xml.status.Style;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/status}style"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}styles"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/symbol}colors"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/symbol}sizes"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="size" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="sizeBorder" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
- *       &lt;attribute name="color" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="colorBorder" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -37,7 +36,9 @@ import net.sf.ahtutils.xml.status.Style;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "style"
+    "styles",
+    "colors",
+    "sizes"
 })
 @XmlRootElement(name = "symbol")
 public class Symbol
@@ -46,76 +47,98 @@ public class Symbol
 
     private final static long serialVersionUID = 1L;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
-    protected Style style;
-    @XmlAttribute(name = "id")
-    protected Long id;
+    protected Styles styles;
+    @XmlElement(required = true)
+    protected Colors colors;
+    @XmlElement(required = true)
+    protected Sizes sizes;
     @XmlAttribute(name = "size")
     protected Integer size;
     @XmlAttribute(name = "sizeBorder")
     protected Integer sizeBorder;
-    @XmlAttribute(name = "color")
-    protected String color;
-    @XmlAttribute(name = "colorBorder")
-    protected String colorBorder;
 
     /**
-     * Gets the value of the style property.
+     * Gets the value of the styles property.
      * 
      * @return
      *     possible object is
-     *     {@link Style }
+     *     {@link Styles }
      *     
      */
-    public Style getStyle() {
-        return style;
+    public Styles getStyles() {
+        return styles;
     }
 
     /**
-     * Sets the value of the style property.
+     * Sets the value of the styles property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Style }
+     *     {@link Styles }
      *     
      */
-    public void setStyle(Style value) {
-        this.style = value;
+    public void setStyles(Styles value) {
+        this.styles = value;
     }
 
-    public boolean isSetStyle() {
-        return (this.style!= null);
+    public boolean isSetStyles() {
+        return (this.styles!= null);
     }
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the colors property.
      * 
      * @return
      *     possible object is
-     *     {@link Long }
+     *     {@link Colors }
      *     
      */
-    public long getId() {
-        return id;
+    public Colors getColors() {
+        return colors;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the colors property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Long }
+     *     {@link Colors }
      *     
      */
-    public void setId(long value) {
-        this.id = value;
+    public void setColors(Colors value) {
+        this.colors = value;
     }
 
-    public boolean isSetId() {
-        return (this.id!= null);
+    public boolean isSetColors() {
+        return (this.colors!= null);
     }
 
-    public void unsetId() {
-        this.id = null;
+    /**
+     * Gets the value of the sizes property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Sizes }
+     *     
+     */
+    public Sizes getSizes() {
+        return sizes;
+    }
+
+    /**
+     * Sets the value of the sizes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Sizes }
+     *     
+     */
+    public void setSizes(Sizes value) {
+        this.sizes = value;
+    }
+
+    public boolean isSetSizes() {
+        return (this.sizes!= null);
     }
 
     /**
@@ -180,62 +203,6 @@ public class Symbol
 
     public void unsetSizeBorder() {
         this.sizeBorder = null;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setColor(String value) {
-        this.color = value;
-    }
-
-    public boolean isSetColor() {
-        return (this.color!= null);
-    }
-
-    /**
-     * Gets the value of the colorBorder property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getColorBorder() {
-        return colorBorder;
-    }
-
-    /**
-     * Sets the value of the colorBorder property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setColorBorder(String value) {
-        this.colorBorder = value;
-    }
-
-    public boolean isSetColorBorder() {
-        return (this.colorBorder!= null);
     }
 
 }

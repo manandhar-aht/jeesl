@@ -1,7 +1,7 @@
 package org.jeesl.model.xml.system.symbol;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.system.status.TestXmlStyle;
+import org.jeesl.model.xml.system.status.TestXmlStyles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,15 +17,14 @@ public class TestXmlSymbol extends AbstractXmlSymbolTest<Symbol>
     public Symbol build(boolean withChilds)
     {
     	Symbol xml = new Symbol();
-    	xml.setId(123);
+//    	xml.setId(123);
     	xml.setSize(10);
     	xml.setSizeBorder(1);
-    	xml.setColor("AABBCC");
-    	xml.setColorBorder("DDEEFF");
     	
     	if(withChilds)
     	{
-    		xml.setStyle(TestXmlStyle.create(false));
+    		xml.setStyles(TestXmlStyles.create(false));
+    		xml.setColors(TestXmlColors.create(false));
     	}
     	
     	return xml;

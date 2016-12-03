@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:symbol xmlns:s="http://ahtutils.aht-group.com/status" xmlns:ns2="http://www.jeesl.org/symbol" id="123" size="10" sizeBorder="1" color="AABBCC" colorBorder="DDEEFF">
-    <s:style code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
-</ns2:symbol>
+<symbol:symbol xmlns:s="http://ahtutils.aht-group.com/status" xmlns:symbol="http://www.jeesl.org/symbol" id="123" size="10" sizeBorder="1" color="AABBCC" colorBorder="DDEEFF">
+    <s:styles group="myGroup"/>
+    <symbol:colors/>
+</symbol:symbol>

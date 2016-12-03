@@ -105,15 +105,9 @@
 						</p:panel>
 					</h:form>
 					<p:panel header="#{msg.aupGraphicPreview}" rendered="#{(not empty cc.attrs.bean.status) and (cc.attrs.bean.supportsGraphic)}" styleClass="auPanelWithGrid">
-						<p:panelGrid columns="4" columnClasses="auPwg25,auPwg25,auPwg25,auPwg25">
+						<p:panelGrid columns="1" columnClasses="auPwg100">
 							<p:outputLabel value="12px"/>
-							<p:outputLabel value="16px"/>
-							<p:outputLabel value="20px"/>
-							<p:outputLabel value="24px"/>
-							<jtp:statusSymbolizer value="#{cc.attrs.bean.status}" size="12"/>
-							<jtp:statusSymbolizer value="#{cc.attrs.bean.status}" size="16"/>
-							<jtp:statusSymbolizer value="#{cc.attrs.bean.status}" size="20"/>
-							<jtp:statusSymbolizer value="#{cc.attrs.bean.status}" size="24"/>
+							<jtp:statusSymbolizer value="#{cc.attrs.bean.status}" height="12"/>
 						</p:panelGrid>
 					</p:panel>
 					

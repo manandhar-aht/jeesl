@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
@@ -16,7 +18,6 @@ import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFromUntil;
 import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -39,7 +40,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface UtilsFacade  extends UtilsIdFacade
 {
-	<L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId,G extends UtilsGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>, GS extends UtilsStatus<GS,L,D>> S load(Class<S> cS, S status);
+	<L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId,G extends JeeslGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>, GS extends UtilsStatus<GS,L,D>> S load(Class<S> cS, S status);
 	
 	//NAME
 	<T extends EjbWithName> T fByName(Class<T> type, String name) throws UtilsNotFoundException;

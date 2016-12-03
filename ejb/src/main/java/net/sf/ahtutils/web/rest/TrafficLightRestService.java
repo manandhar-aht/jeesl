@@ -1,5 +1,6 @@
 package net.sf.ahtutils.web.rest;
 
+import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.xml.UtilsXmlStructureException;
 import net.sf.ahtutils.factory.ejb.util.EjbTrafficLightFactory;
-import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.factory.xml.utils.XmlTrafficLightFactory;
 import net.sf.ahtutils.factory.xml.utils.XmlTrafficLightsFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;

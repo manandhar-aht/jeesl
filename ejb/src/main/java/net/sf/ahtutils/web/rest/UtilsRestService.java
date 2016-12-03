@@ -1,10 +1,10 @@
 package net.sf.ahtutils.web.rest;
 
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -14,7 +14,7 @@ import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class UtilsRestService <L extends UtilsLang,
 							D extends UtilsDescription,
-							G extends UtilsGraphic<L,D,G,GT,GS>,
+							G extends JeeslGraphic<L,D,G,GT,GS>,
 							GT extends UtilsStatus<GT,L,D>,
 							GS extends UtilsStatus<GS,L,D>>
 	extends AbstractUtilsRest<L,D>
@@ -39,7 +39,7 @@ public class UtilsRestService <L extends UtilsLang,
 	}
 	
 	public static <L extends UtilsLang, D extends UtilsDescription,
-				G extends UtilsGraphic<L,D,G,GT,GS>,
+				G extends JeeslGraphic<L,D,G,GT,GS>,
 				GT extends UtilsStatus<GT,L,D>,
 				GS extends UtilsStatus<GS,L,D>> 
 		UtilsRestService<L,D,G,GT,GS>

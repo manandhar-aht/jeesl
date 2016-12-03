@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.commons.io.IOUtils;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicType;
 import org.openfuxml.content.media.Image;
 import org.openfuxml.factory.xml.media.XmlImageFactory;
 import org.openfuxml.media.transcode.Svg2SvgTranscoder;
@@ -21,13 +23,11 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.factory.svg.SvgSymbolFactory;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphicType;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends UtilsDescription, G extends UtilsGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>,GS extends UtilsStatus<GS,L,D>>
+public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends UtilsDescription, G extends JeeslGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>,GS extends UtilsStatus<GS,L,D>>
 	extends HttpServlet
 	implements Serializable
 {
@@ -77,14 +77,14 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends Util
 		
 		if(graphic==null){throw new UtilsProcessingException("graphic is null");}
 		if(graphic.getType()==null){throw new UtilsProcessingException("graphic.type is null");}
-    	if(graphic.getType().getCode().equals(UtilsGraphicType.Code.symbol.toString()))
+    	if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
 		{
 			logger.info("Build SVG: size " + size + " id:" + id);
 	    	SVGGraphics2D g = svgF.build(size,graphic);
 	    	bytes = Svg2SvgTranscoder.transcode(g);
 	    	respond(request,response,bytes,"svg");
 		}
-    	else if(graphic.getType().getCode().equals(UtilsGraphicType.Code.svg.toString()))
+    	else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.svg.toString()))
     	{
 //    		bytes = Svg2PngTranscoder.transcode(size,graphic.getData());
     		respond(request,response,graphic.getData(),"svg");

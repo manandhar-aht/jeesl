@@ -16,6 +16,8 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +35,6 @@ import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFromUntil;
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidUntil;
 import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsWithGraphic;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -72,12 +72,12 @@ public class UtilsFacadeBean implements UtilsFacade
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override public <L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId, G extends UtilsGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>, GS extends UtilsStatus<GS,L,D>> S load(Class<S> cS, S status)
+	@Override public <L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId, G extends JeeslGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>, GS extends UtilsStatus<GS,L,D>> S load(Class<S> cS, S status)
 	{
 		status = em.find(cS, status.getId());
-		if(UtilsWithGraphic.class.isAssignableFrom(cS))
+		if(EjbWithGraphic.class.isAssignableFrom(cS))
 		{
-			if(((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic()!=null){((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getId();}
+			if(((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic()!=null){((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getId();}
 		}
 		
 		return status;

@@ -1,5 +1,6 @@
 package org.jeesl.web.rest.system;
 
+import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.facade.JeeslSystemPropertyFacade;
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.jeesl.interfaces.rest.system.property.JeeslSystemPropertyRestExport;
@@ -12,7 +13,6 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.factory.ejb.util.EjbPropertyFactory;
-import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;

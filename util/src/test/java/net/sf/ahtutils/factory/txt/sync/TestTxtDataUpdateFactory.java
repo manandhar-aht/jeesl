@@ -1,10 +1,10 @@
 package net.sf.ahtutils.factory.txt.sync;
 
-import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.test.AbstractJeeslTest;
 
 import org.jeesl.JeeslUtilTestBootstrap;
+import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

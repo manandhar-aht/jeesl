@@ -4,16 +4,17 @@ import java.io.Serializable;
 
 import javax.persistence.ManyToOne;
 
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Graphic",category="symbol",subset="symbol")
 public class Graphic implements EjbRemoveable,Serializable,EjbPersistable,
-								UtilsGraphic<Lang,Description,Graphic,GraphicType,GraphicStyle>
+								JeeslGraphic<Lang,Description,Graphic,GraphicType,GraphicStyle>
 {
 	public static final long serialVersionUID=1;
 

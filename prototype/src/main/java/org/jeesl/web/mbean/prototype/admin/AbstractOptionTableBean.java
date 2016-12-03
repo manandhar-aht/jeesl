@@ -6,6 +6,10 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicStyle;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicType;
+import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
@@ -19,10 +23,6 @@ import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphicStyle;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphicType;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsWithGraphic;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -43,7 +43,7 @@ import net.sf.exlp.util.io.StringUtil;
 
 public class AbstractOptionTableBean <L extends UtilsLang,
 										D extends UtilsDescription,
-										G extends UtilsGraphic<L,D,G,GT,GS>,
+										G extends JeeslGraphic<L,D,G,GT,GS>,
 										GT extends UtilsStatus<GT,L,D>,
 										GS extends UtilsStatus<GS,L,D>>
 			extends AbstractAdminBean<L,D>
@@ -116,7 +116,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	protected void updateUiForCategory()
 	{
 		supportsImage = UtilsWithImage.class.isAssignableFrom(cl);
-		supportsGraphic = UtilsWithGraphic.class.isAssignableFrom(cl);
+		supportsGraphic = EjbWithGraphic.class.isAssignableFrom(cl);
 		supportsSymbol = UtilsWithSymbol.class.isAssignableFrom(cl);		
 		
 		if(logger.isInfoEnabled())
@@ -186,10 +186,10 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		
 		if(supportsGraphic)
 		{
-			GT type = fUtils.fByCode(cGT, UtilsGraphicType.Code.symbol.toString());
-			GS style = fUtils.fByCode(cGS, UtilsGraphicStyle.Code.circle.toString());
+			GT type = fUtils.fByCode(cGT, JeeslGraphicType.Code.symbol.toString());
+			GS style = fUtils.fByCode(cGS, JeeslGraphicStyle.Code.circle.toString());
 			graphic = efGraphic.buildSymbol(type, style);
-			((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
+			((EjbWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
 		}
 	}
 	
@@ -209,18 +209,18 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		
 		if(supportsGraphic)
 		{
-			if(((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic()==null)
+			if(((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic()==null)
 			{
 				logger.info("Need to create a graphic entity for this status");
-				GT type = fUtils.fByCode(cGT, UtilsGraphicType.Code.symbol.toString());
-				GS style = fUtils.fByCode(cGS, UtilsGraphicStyle.Code.circle.toString());
+				GT type = fUtils.fByCode(cGT, JeeslGraphicType.Code.symbol.toString());
+				GS style = fUtils.fByCode(cGS, JeeslGraphicStyle.Code.circle.toString());
 				graphic = fUtils.persist(efGraphic.buildSymbol(type, style));
-				((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
+				((EjbWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
 				status = fUtils.update(status);
 			}
 			else 
 			{
-				graphic = ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic();
+				graphic = ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic();
 			}
 		}
 		
@@ -251,9 +251,9 @@ public class AbstractOptionTableBean <L extends UtilsLang,
             }
         	if(supportsGraphic && graphic!=null)
             {
-        		graphic.setType(fUtils.find(cGT, ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
-            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(cGS, ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getStyle()));}
-            	((UtilsWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
+        		graphic.setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
+            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(cGS, ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getStyle()));}
+            	((EjbWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
             }
 
 			status = fUtils.save((EjbSaveable)status);
@@ -299,15 +299,15 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	{
 		UploadedFile file = event.getFile();
 		logger.info("Received file with a size of " +file.getSize());
-		((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().setData(file.getContents());  
+		((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().setData(file.getContents());  
 	}
 	
 //	@Override
 	@SuppressWarnings("unchecked")
 	public void changeGraphicType()
 	{
-		((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().setType(fUtils.find(cGT, ((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
-		logger.info("changeGraphicType to "+((UtilsWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType().getCode());
+		((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
+		logger.info("changeGraphicType to "+((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType().getCode());
 	}
 	
 	//Revision

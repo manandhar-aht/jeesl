@@ -8,13 +8,13 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.dom.svg.SVGDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.svg.SVGDocument;
 
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphic;
-import net.sf.ahtutils.interfaces.model.graphic.UtilsGraphicStyle;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -22,7 +22,7 @@ import net.sf.ahtutils.xml.symbol.Symbol;
 
 public class SvgSymbolFactory<L extends UtilsLang,
 									D extends UtilsDescription,
-									G extends UtilsGraphic<L,D,G,GT,GS>,
+									G extends JeeslGraphic<L,D,G,GT,GS>,
 									GT extends UtilsStatus<GT,L,D>,
 									GS extends UtilsStatus<GS,L,D>>
 {
@@ -37,7 +37,7 @@ public class SvgSymbolFactory<L extends UtilsLang,
 	
     public static <L extends UtilsLang,
 					D extends UtilsDescription,
-					G extends UtilsGraphic<L,D,G,GT,GS>,
+					G extends JeeslGraphic<L,D,G,GT,GS>,
 					GT extends UtilsStatus<GT,L,D>,
 					GS extends UtilsStatus<GS,L,D>>
     	SvgSymbolFactory<L,D,G,GT,GS> factory()
@@ -74,10 +74,10 @@ public class SvgSymbolFactory<L extends UtilsLang,
 		int size = 5; if(rule.getSize()!=null){size = rule.getSize();}
 		String color = "000000";if(rule.getColor()!=null){color = rule.getColor();}
 		
-		UtilsGraphicStyle.Code style = UtilsGraphicStyle.Code.circle;
+		JeeslGraphicStyle.Code style = JeeslGraphicStyle.Code.circle;
 		if(rule.getStyle()!=null && rule.getStyle().getCode()!=null)
 		{
-			style = UtilsGraphicStyle.Code.valueOf(rule.getStyle().getCode());
+			style = JeeslGraphicStyle.Code.valueOf(rule.getStyle().getCode());
 		}
 		
 		return build(impl,canvasSize,style,size,color);
@@ -89,15 +89,15 @@ public class SvgSymbolFactory<L extends UtilsLang,
 		int size = 5; if(rule.isSetSize()){size = rule.getSize();}
 		String color = "000000";if(rule.isSetColor()){color = rule.getColor();}
 		
-		UtilsGraphicStyle.Code style = UtilsGraphicStyle.Code.circle;
+		JeeslGraphicStyle.Code style = JeeslGraphicStyle.Code.circle;
 		if(rule.getStyle()!=null && rule.getStyle().getCode()!=null)
 		{
-			style = UtilsGraphicStyle.Code.valueOf(rule.getStyle().getCode());
+			style = JeeslGraphicStyle.Code.valueOf(rule.getStyle().getCode());
 		}
 		return build(impl,canvasSize,style,size,color);
 	}
 	
-	private static SVGGraphics2D build(DOMImplementation impl, int canvasSize, UtilsGraphicStyle.Code style, int size, String color)
+	private static SVGGraphics2D build(DOMImplementation impl, int canvasSize, JeeslGraphicStyle.Code style, int size, String color)
 	{
 		 SVGDocument doc = (SVGDocument) impl.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", null);
 		    SVGGraphics2D g = new SVGGraphics2D(doc);

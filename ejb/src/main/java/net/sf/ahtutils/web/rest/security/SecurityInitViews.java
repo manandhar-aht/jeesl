@@ -1,5 +1,6 @@
 package net.sf.ahtutils.web.rest.security;
 
+import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.facade.JeeslSecurityFacade;
 import org.jeesl.util.ejb.JeeslDbCodeEjbUpdater;
 import org.slf4j.Logger;
@@ -9,7 +10,6 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.factory.xml.sync.XmlDataUpdateFactory;
 import net.sf.ahtutils.factory.xml.sync.XmlResultFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;

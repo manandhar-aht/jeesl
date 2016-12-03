@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.status;
+package org.jeesl.factory.xml.system.status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
+import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -13,7 +15,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 import net.sf.ahtutils.xml.status.Parent;
 import net.sf.ahtutils.xml.status.Status;
 
-public class XmlStatusFactory
+public class XmlStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlStatusFactory.class);
 		
@@ -27,15 +29,15 @@ public class XmlStatusFactory
 		this.q=q;
 	}
 	
-	public <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> List<Status> build(List<S> list)
+	public List<Status> build(List<S> list)
 	{
 		List<Status> xml = new ArrayList<Status>();
 		for(S s : list){xml.add(build(s));}
 		return xml;
 	}
 	
-	public <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> Status build(S ejb){return build(ejb,null);}
-	public <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> Status build(S ejb, String group)
+	public Status build(S ejb){return build(ejb,null);}
+	public Status build(S ejb, String group)
 	{
 		Status xml = new Status();
 		xml.setGroup(group);

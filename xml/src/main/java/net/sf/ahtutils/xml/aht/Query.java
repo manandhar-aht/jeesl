@@ -20,6 +20,7 @@ import net.sf.ahtutils.xml.survey.Survey;
 import net.sf.ahtutils.xml.survey.Surveys;
 import net.sf.ahtutils.xml.survey.Template;
 import net.sf.ahtutils.xml.survey.Templates;
+import net.sf.ahtutils.xml.symbol.Graphic;
 import net.sf.ahtutils.xml.utils.TrafficLight;
 import net.sf.ahtutils.xml.utils.TrafficLights;
 import org.jeesl.model.xml.system.revision.Entity;
@@ -48,6 +49,7 @@ import org.jeesl.model.xml.system.revision.Entity;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}surveys"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}survey"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}answer"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/symbol}graphic"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/utils}trafficLight"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/utils}trafficLights"/&gt;
  *       &lt;/sequence&gt;
@@ -74,6 +76,7 @@ import org.jeesl.model.xml.system.revision.Entity;
     "surveys",
     "survey",
     "answer",
+    "graphic",
     "trafficLight",
     "trafficLights"
 })
@@ -109,6 +112,8 @@ public class Query
     protected Survey survey;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/survey", required = true)
     protected Answer answer;
+    @XmlElement(namespace = "http://www.jeesl.org/symbol", required = true)
+    protected Graphic graphic;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/utils", required = true)
     protected TrafficLight trafficLight;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/utils", required = true)
@@ -478,6 +483,34 @@ public class Query
 
     public boolean isSetAnswer() {
         return (this.answer!= null);
+    }
+
+    /**
+     * Gets the value of the graphic property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Graphic }
+     *     
+     */
+    public Graphic getGraphic() {
+        return graphic;
+    }
+
+    /**
+     * Sets the value of the graphic property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Graphic }
+     *     
+     */
+    public void setGraphic(Graphic value) {
+        this.graphic = value;
+    }
+
+    public boolean isSetGraphic() {
+        return (this.graphic!= null);
     }
 
     /**

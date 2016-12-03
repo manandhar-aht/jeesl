@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.symbol;
+package org.jeesl.factory.xml.system.symbol;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

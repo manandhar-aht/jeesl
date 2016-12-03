@@ -13,6 +13,7 @@ import org.jeesl.model.xml.system.security.TestXmlStaff;
 import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.jeesl.model.xml.system.status.TestXmlStatus;
 import org.jeesl.model.xml.system.status.TestXmlType;
+import org.jeesl.model.xml.system.symbol.TestXmlGraphic;
 import org.jeesl.model.xml.system.util.TestXmlTrafficLight;
 import org.jeesl.model.xml.system.util.TestXmlTrafficLights;
 import org.slf4j.Logger;
@@ -45,13 +46,18 @@ public class TestXmlQuery extends AbstractXmlAhtTest<Query>
     		xml.setCategory(TestXmlCategory.create(false));
     		xml.setStaff(TestXmlStaff.create(false));
     		
+    		//Revision
     		xml.setEntity(TestXmlEntity.create(false));
     		
+    		//Survey
     		xml.setTemplates(TestXmlTemplates.create(false));
     		xml.setTemplate(TestXmlTemplate.create(false));
     		xml.setSurveys(TestXmlSurveys.create(false));
     		xml.setSurvey(TestXmlSurvey.create(false));
     		xml.setAnswer(TestXmlAnswer.create(false));
+    		
+    		//Symbol
+    		xml.setGraphic(TestXmlGraphic.create(false));
     		
     		xml.setTrafficLights(TestXmlTrafficLights.create(false));
     		xml.setTrafficLight(TestXmlTrafficLight.create(false));

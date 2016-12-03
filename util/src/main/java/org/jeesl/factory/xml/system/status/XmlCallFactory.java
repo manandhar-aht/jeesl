@@ -1,5 +1,4 @@
-package org.jeesl.factory.xml.status;
-
+package org.jeesl.factory.xml.system.status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Call;
 
-public class XmlCallFactory
+public class XmlCallFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlCallFactory.class);
 		
@@ -26,8 +25,8 @@ public class XmlCallFactory
 		this.q=q;
 	}
 	
-	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Call build(S ejb){return build(ejb,null);}
-	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Call build(S ejb, String group)
+	public Call build(S ejb){return build(ejb,null);}
+	public Call build(S ejb, String group)
 	{
 		Call xml = new Call();
 		if(q.isSetId()){xml.setId(ejb.getId());}

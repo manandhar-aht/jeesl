@@ -1,10 +1,10 @@
 package net.sf.ahtutils.factory.xml.qa;
 
+import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.factory.xml.status.XmlStatementFactory;
-import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsQaFacade;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaCategory;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaGroup;

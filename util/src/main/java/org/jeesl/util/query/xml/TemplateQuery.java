@@ -8,7 +8,6 @@ import org.jeesl.model.xml.system.revision.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.controller.util.query.StatusQuery;
 import net.sf.ahtutils.factory.xml.status.XmlCategoryFactory;
 import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;

@@ -2,6 +2,7 @@ package org.jeesl.web.rest.system;
 
 import org.jeesl.factory.xml.system.io.template.XmlTemplateFactory;
 import org.jeesl.factory.xml.system.io.template.XmlTemplatesFactory;
+import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.interfaces.facade.JeeslIoTemplateFacade;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
@@ -9,15 +10,14 @@ import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
 import org.jeesl.interfaces.rest.system.io.template.JeeslIoTemplateRestExport;
 import org.jeesl.interfaces.rest.system.io.template.JeeslIoTemplateRestImport;
 import org.jeesl.model.xml.system.io.template.Templates;
+import org.jeesl.util.query.xml.StatusQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.controller.util.query.StatusQuery;
 import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
 import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
-import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;

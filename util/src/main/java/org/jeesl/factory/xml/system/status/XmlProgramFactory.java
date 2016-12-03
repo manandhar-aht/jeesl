@@ -1,4 +1,4 @@
-package org.jeesl.factory.xml.status;
+package org.jeesl.factory.xml.system.status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,27 +8,27 @@ import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.status.Stage;
+import net.sf.ahtutils.xml.status.Program;
 
-public class XmlStageFactory
+public class XmlProgramFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlStageFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlProgramFactory.class);
 		
-	private String localeCode;
-	private Stage q;
+	private String lang;
+	private Program q;
 	
 //	public XmlProgramFactory(Query q){this(q.getLang(),q.getType());}
-	public XmlStageFactory(Stage q){this(null,q);}
-	public XmlStageFactory(String localeCode,Stage q)
+	public XmlProgramFactory(Program q){this(null,q);}
+	public XmlProgramFactory(String lang,Program q)
 	{
-		this.localeCode=localeCode;
+		this.lang=lang;
 		this.q=q;
 	}
 	
-	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Stage build(S ejb){return build(ejb,null);}
-	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Stage build(S ejb, String group)
+	public Program build(S ejb){return build(ejb,null);}
+	public Program build(S ejb, String group)
 	{
-		Stage xml = new Stage();
+		Program xml = new Program();
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetCode()){xml.setCode(ejb.getCode());}
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
@@ -45,14 +45,14 @@ public class XmlStageFactory
 			xml.setDescriptions(f.create(ejb.getDescription()));
 		}
 		
-		if(q.isSetLabel() && localeCode!=null)
+		if(q.isSetLabel() && lang!=null)
 		{
 			if(ejb.getName()!=null)
 			{
-				if(ejb.getName().containsKey(localeCode)){xml.setLabel(ejb.getName().get(localeCode).getLang());}
+				if(ejb.getName().containsKey(lang)){xml.setLabel(ejb.getName().get(lang).getLang());}
 				else
 				{
-					String msg = "No translation "+localeCode+" available in "+ejb;
+					String msg = "No translation "+lang+" available in "+ejb;
 					logger.warn(msg);
 					xml.setLabel(msg);
 				}
@@ -68,11 +68,11 @@ public class XmlStageFactory
 		return xml;
 	}
 	
-	public static <E extends Enum<E>> Stage build(E code){return build(code.toString());}
-	public static <E extends Enum<E>> Stage build(String code){return build(code.toString(),null);}
-	public static Stage build(String code,String label)
+	public static <E extends Enum<E>> Program build(E code){return build(code.toString());}
+	public static <E extends Enum<E>> Program build(String code){return build(code.toString(),null);}
+	public static Program build(String code,String label)
 	{
-		Stage xml = new Stage();
+		Program xml = new Program();
 		xml.setCode(code);
 		xml.setLabel(label);
 		return xml;

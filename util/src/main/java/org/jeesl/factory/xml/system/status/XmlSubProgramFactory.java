@@ -1,4 +1,4 @@
-package org.jeesl.factory.xml.status;
+package org.jeesl.factory.xml.system.status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,27 +8,27 @@ import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.status.Program;
+import net.sf.ahtutils.xml.status.SubProgram;
 
-public class XmlProgramFactory
+public class XmlSubProgramFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlProgramFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlSubProgramFactory.class);
 		
 	private String lang;
-	private Program q;
+	private SubProgram q;
 	
 //	public XmlProgramFactory(Query q){this(q.getLang(),q.getType());}
-	public XmlProgramFactory(Program q){this(null,q);}
-	public XmlProgramFactory(String lang,Program q)
+	public XmlSubProgramFactory(SubProgram q){this(null,q);}
+	public XmlSubProgramFactory(String lang,SubProgram q)
 	{
 		this.lang=lang;
 		this.q=q;
 	}
 	
-	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Program build(S ejb){return build(ejb,null);}
-	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Program build(S ejb, String group)
+	public SubProgram build(S ejb){return build(ejb,null);}
+	public SubProgram build(S ejb, String group)
 	{
-		Program xml = new Program();
+		SubProgram xml = new SubProgram();
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetCode()){xml.setCode(ejb.getCode());}
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
@@ -68,11 +68,11 @@ public class XmlProgramFactory
 		return xml;
 	}
 	
-	public static <E extends Enum<E>> Program build(E code){return build(code.toString());}
-	public static <E extends Enum<E>> Program build(String code){return build(code.toString(),null);}
-	public static Program build(String code,String label)
+	public static <E extends Enum<E>> SubProgram build(E code){return build(code.toString());}
+	public static <E extends Enum<E>> SubProgram build(String code){return build(code.toString(),null);}
+	public static SubProgram build(String code,String label)
 	{
-		Program xml = new Program();
+		SubProgram xml = new SubProgram();
 		xml.setCode(code);
 		xml.setLabel(label);
 		return xml;

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.util.query;
+package org.jeesl.util.query.xml;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -52,10 +52,7 @@ public class StatusQuery
 		parent.setId(0);
 		parent.setCode("");
 		parent.setPosition(0);
-		
-		Graphic g = new Graphic();
-		g.setId(0);
-		
+				
 		Status xml = new Status();
 		xml.setCode("");
 		xml.setImage("");
@@ -66,7 +63,6 @@ public class StatusQuery
 		xml.setLangs(langs());
 		xml.setDescriptions(descriptions());
 		xml.setParent(parent);
-		xml.setGraphic(g);
 		
 		return xml;
 	}

@@ -13,8 +13,8 @@ import org.jeesl.factory.xml.system.security.XmlUsecasesFactory;
 import org.jeesl.factory.xml.system.security.XmlViewFactory;
 import org.jeesl.factory.xml.system.security.XmlViewsFactory;
 import org.jeesl.model.xml.system.navigation.Navigation;
+import org.jeesl.util.query.xml.StatusQuery;
 
-import net.sf.ahtutils.controller.util.query.StatusQuery;
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.security.Category;

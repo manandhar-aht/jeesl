@@ -19,6 +19,7 @@
 	xmlns:rev ="http://www.jeesl.org/revision"
 	xmlns:template ="http://www.jeesl.org/io/template"
 	xmlns:text ="http://www.jeesl.org/text"
+	xmlns:symbol ="http://www.jeesl.org/symbol"
 	
 	xmlns:sec="http://ahtutils.aht-group.com/security"
 	xmlns:srs="http://ahtutils.aht-group.com/srs"
@@ -102,6 +103,8 @@
         	    <xsd:element ref="survey:surveys" maxOccurs="1"/>
         	    <xsd:element ref="survey:survey" maxOccurs="1"/>
         	    <xsd:element ref="survey:answer" maxOccurs="1"/>
+        	    
+        	    <xsd:element ref="symbol:graphic" maxOccurs="1"/>
         	    
         	    <xsd:element ref="u:trafficLight" maxOccurs="1"/>
         	    <xsd:element ref="u:trafficLights" maxOccurs="1"/>

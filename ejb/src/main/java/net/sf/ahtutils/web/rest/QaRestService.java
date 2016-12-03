@@ -1,6 +1,7 @@
 package net.sf.ahtutils.web.rest;
 
 import org.jeesl.factory.xml.system.security.XmlStaffFactory;
+import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +10,6 @@ import net.sf.ahtutils.factory.xml.qa.XmlCategoryFactory;
 import net.sf.ahtutils.factory.xml.qa.XmlGroupFactory;
 import net.sf.ahtutils.factory.xml.qa.XmlGroupsFactory;
 import net.sf.ahtutils.factory.xml.status.XmlResponsibleFactory;
-import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
 import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsQaFacade;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaCategory;

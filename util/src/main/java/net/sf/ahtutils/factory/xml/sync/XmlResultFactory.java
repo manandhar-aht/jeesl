@@ -1,8 +1,8 @@
 package net.sf.ahtutils.factory.xml.sync;
 
-import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
 import net.sf.ahtutils.xml.sync.Result;
 
+import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

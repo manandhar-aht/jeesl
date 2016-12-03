@@ -6,7 +6,6 @@ import java.util.Map;
 import org.jeesl.model.xml.system.revision.Attribute;
 import org.jeesl.model.xml.system.revision.Entity;
 
-import net.sf.ahtutils.controller.util.query.StatusQuery;
 import net.sf.ahtutils.factory.xml.status.XmlCategoryFactory;
 import net.sf.ahtutils.factory.xml.status.XmlTypeFactory;
 import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;

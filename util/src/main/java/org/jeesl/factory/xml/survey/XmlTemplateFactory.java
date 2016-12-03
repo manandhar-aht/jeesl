@@ -2,13 +2,13 @@ package org.jeesl.factory.xml.survey;
 
 import net.sf.ahtutils.factory.xml.status.XmlCategoryFactory;
 import net.sf.ahtutils.factory.xml.status.XmlDescriptionFactory;
-import net.sf.ahtutils.factory.xml.status.XmlStatusFactory;
 import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.survey.Template;
 
+import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.interfaces.facade.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;

@@ -1,6 +1,7 @@
 package org.jeesl.model.xml.system.status;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.symbol.TestXmlGraphic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,7 @@ public class TestXmlStatus extends AbstractXmlStatusTest<Status>
     		xml.getLang().add(TestXmlLang.create(false));
     		xml.setTransistions(TestXmlTransistions.create(false));
     		xml.setParent(TestXmlParent.create(false));
+    		xml.setGraphic(TestXmlGraphic.create(false));
     		
     		xml.getTracked().add(TestXmlTracked.create(false));
     	}

@@ -150,6 +150,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Style }
+     * 
+     */
+    public Style createStyle() {
+        return new Style();
+    }
+
+    /**
      * Create an instance of {@link Category }
      * 
      */
@@ -371,14 +379,6 @@ public class ObjectFactory {
      */
     public Source createSource() {
         return new Source();
-    }
-
-    /**
-     * Create an instance of {@link Style }
-     * 
-     */
-    public Style createStyle() {
-        return new Style();
     }
 
     /**

@@ -10,4 +10,8 @@
         <tag-name>label</tag-name>
         <source>jeeslPrototype/label.xhtml</source>
     </tag>
+    <tag>
+        <tag-name>statusSymbolizer</tag-name>
+        <source>jeeslPrototype/statusSymbolizer.xhtml</source>
+    </tag>
 </facelet-taglib>

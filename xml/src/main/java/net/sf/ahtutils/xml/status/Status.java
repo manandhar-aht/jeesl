@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import net.sf.ahtutils.xml.symbol.Graphic;
 
 
 /**
@@ -28,6 +29,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}lang" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}transistions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}tracked" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/symbol}graphic"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -52,7 +54,8 @@ import javax.xml.bind.annotation.XmlType;
     "descriptions",
     "lang",
     "transistions",
-    "tracked"
+    "tracked",
+    "graphic"
 })
 @XmlRootElement(name = "status")
 public class Status
@@ -72,6 +75,8 @@ public class Status
     protected Transistions transistions;
     @XmlElement(required = true)
     protected List<Tracked> tracked;
+    @XmlElement(namespace = "http://www.jeesl.org/symbol", required = true)
+    protected Graphic graphic;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "code")
@@ -275,6 +280,34 @@ public class Status
 
     public void unsetTracked() {
         this.tracked = null;
+    }
+
+    /**
+     * Gets the value of the graphic property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Graphic }
+     *     
+     */
+    public Graphic getGraphic() {
+        return graphic;
+    }
+
+    /**
+     * Sets the value of the graphic property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Graphic }
+     *     
+     */
+    public void setGraphic(Graphic value) {
+        this.graphic = value;
+    }
+
+    public boolean isSetGraphic() {
+        return (this.graphic!= null);
     }
 
     /**

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema targetNamespace="http://ahtutils.aht-group.com/status"
-    xmlns:us="http://ahtutils.aht-group.com/status"
-    xmlns:sec="http://ahtutils.aht-group.com/security"
-    xmlns:io ="http://exlp.sf.net/io"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xsd:import namespace="http://ahtutils.aht-group.com/security" schemaLocation="security.xsd"/>
-    <xsd:import namespace="http://exlp.sf.net/io" schemaLocation="../../../../../../exlp/xml/src/main/xsd/util/io.xsd"/>
+	xmlns:us="http://ahtutils.aht-group.com/status"
+ 	xmlns:sec="http://ahtutils.aht-group.com/security"
+	xmlns:io ="http://exlp.sf.net/io"
+	xmlns:symbol="http://www.jeesl.org/symbol"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:import namespace="http://ahtutils.aht-group.com/security" schemaLocation="security.xsd"/>
+	<xsd:import namespace="http://exlp.sf.net/io" schemaLocation="../../../../../../exlp/xml/src/main/xsd/util/io.xsd"/>
+	<xsd:import namespace="http://www.jeesl.org/symbol" schemaLocation="../jeesl/symbol.xsd"/>
 	<xsd:element name="statuses">
 		<xsd:complexType>
 			<xsd:sequence>
@@ -23,6 +25,7 @@
                 <xsd:element ref="us:lang" maxOccurs="unbounded"/>
                 <xsd:element ref="us:transistions" maxOccurs="1"/>
                 <xsd:element ref="us:tracked" maxOccurs="unbounded"/>
+                <xsd:element ref="symbol:graphic" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="code" type="xsd:string"/>

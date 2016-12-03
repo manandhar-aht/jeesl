@@ -15,6 +15,7 @@ import net.sf.ahtutils.xml.status.Scopes;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.status.SubType;
 import net.sf.ahtutils.xml.status.Type;
+import net.sf.ahtutils.xml.symbol.Graphic;
 
 public class StatusQuery
 {
@@ -52,6 +53,9 @@ public class StatusQuery
 		parent.setCode("");
 		parent.setPosition(0);
 		
+		Graphic g = new Graphic();
+		g.setId(0);
+		
 		Status xml = new Status();
 		xml.setCode("");
 		xml.setImage("");
@@ -62,7 +66,7 @@ public class StatusQuery
 		xml.setLangs(langs());
 		xml.setDescriptions(descriptions());
 		xml.setParent(parent);
-		
+		xml.setGraphic(g);
 		
 		return xml;
 	}

@@ -218,10 +218,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 				((EjbWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
 				status = fUtils.update(status);
 			}
-			else 
-			{
-				graphic = ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic();
-			}
+			graphic = ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic();
 		}
 		
 		uiAllowCode = hasDeveloperAction || hasAdministratorAction;
@@ -243,6 +240,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	@SuppressWarnings("unchecked")
 	public void save() throws ClassNotFoundException, UtilsNotFoundException
     {
+		boolean debugSave=true;
 		try
 		{
             if(clParent!=null && parentId>0)
@@ -253,10 +251,23 @@ public class AbstractOptionTableBean <L extends UtilsLang,
             {
         		graphic.setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
             	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(cGS, ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getStyle()));}
+        		
+//            	if(debugSave){logger.info("Saving "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
+//           	graphic = fUtils.save(graphic);
             	((EjbWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
+//            	if(debugSave){logger.info("Saved "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
             }
 
+        	if(debugSave){logger.info("Saving "+status.getClass().getSimpleName()+" "+status.toString());}
 			status = fUtils.save((EjbSaveable)status);
+			status = fUtils.load(cl,(EjbWithId)status);
+			if(supportsGraphic)
+			{
+				graphic = ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic();
+				if(debugSave){logger.info("Saved "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
+			}
+			if(debugSave){logger.info("Saved "+status.getClass().getSimpleName()+" "+status.toString());}
+			
 			updateAppScopeBean2(status);
 			selectCategory(false);
 			bMessage.growlSuccessSaved();

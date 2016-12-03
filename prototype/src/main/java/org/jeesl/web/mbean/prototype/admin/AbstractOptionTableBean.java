@@ -261,8 +261,16 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			selectCategory(false);
 			bMessage.growlSuccessSaved();
 		}
-		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationInUse();}
-		catch (UtilsLockingException e) {bMessage.errorConstraintViolationInUse();}
+		catch (UtilsConstraintViolationException e)
+		{
+			logger.error(UtilsConstraintViolationException.class.getSimpleName()+" "+e.getMessage());
+			bMessage.errorConstraintViolationInUse();
+		}
+		catch (UtilsLockingException e)
+		{
+			logger.error(UtilsLockingException.class.getSimpleName()+" "+e.getMessage());
+			bMessage.errorConstraintViolationInUse();
+		}
 	}
 	
 	public void rm() throws ClassNotFoundException

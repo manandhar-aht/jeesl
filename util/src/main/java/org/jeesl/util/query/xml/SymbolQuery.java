@@ -3,10 +3,14 @@ package org.jeesl.util.query.xml;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.status.XmlTypeFactory;
+
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.symbol.Graphic;
+import net.sf.exlp.xml.io.Data;
+import net.sf.exlp.xml.io.File;
 
-public class GraphicQuery
+public class SymbolQuery
 {
 	public static enum Key {GraphicExport}
 	
@@ -32,8 +36,15 @@ public class GraphicQuery
 	
 	private static Graphic exportGraphic()
 	{
+		File f = new File();
+		f.setData(new Data());
+		
 		Graphic g = new Graphic();
 		g.setId(0);
+		
+		g.setType(XmlTypeFactory.create(""));
+		g.setFile(f);
+		
 		return g;
 	}	
 }

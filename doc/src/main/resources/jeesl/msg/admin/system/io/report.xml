@@ -28,5 +28,19 @@
 			<lang key="fr" translation="Sheet" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoGroups">
+		<langs>
+			<lang key="de" translation="Gruppen" />
+			<lang key="en" translation="Groups" />
+			<lang key="fr" translation="Groups" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoGroup">
+		<langs>
+			<lang key="de" translation="Gruppe" />
+			<lang key="en" translation="Group" />
+			<lang key="fr" translation="Group" />
+		</langs>
+	</translation>
 	
 </translations>

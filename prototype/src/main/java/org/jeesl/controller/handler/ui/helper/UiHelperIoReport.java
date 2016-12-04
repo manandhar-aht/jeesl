@@ -31,15 +31,19 @@ public class UiHelperIoReport <L extends UtilsLang,D extends UtilsDescription,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(UiHelperIoReport.class);
 		
-	private REPORT report; public REPORT getReport() {return report;} public void setReport(REPORT report) {this.report = report;}
+	private REPORT report;
+	private SHEET sheet;
+	private GROUP group;
 	
 	private boolean showPanelReport; public boolean isShowPanelReport() {return showPanelReport;}
 	private boolean showPanelSheet; public boolean isShowPanelSheet() {return showPanelSheet;}
+	private boolean showPanelGroup; public boolean isShowPanelGRoup() {return showPanelGroup;}
 
 	public UiHelperIoReport()
 	{
 		showPanelReport = false;
-		showPanelSheet = true;
+		showPanelSheet = false;
+		showPanelGroup = true;
 	}
 	
 	public void check(REPORT report)
@@ -51,4 +55,12 @@ public class UiHelperIoReport <L extends UtilsLang,D extends UtilsDescription,
 		this.report=report;
 	}
 	
+	public void check(SHEET sheet)
+	{
+		if(sheet!=null && EjbIdFactory.isUnSaved(sheet)){showPanelSheet=true;}
+		else if(this.sheet==null){showPanelSheet = false;}
+		else if(this.sheet!=null && sheet!=null) {showPanelSheet = this.sheet.equals(sheet);}
+		else {showPanelSheet = false;}
+		this.sheet=sheet;
+	}
 }

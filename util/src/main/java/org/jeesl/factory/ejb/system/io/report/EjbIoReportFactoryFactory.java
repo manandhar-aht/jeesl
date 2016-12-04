@@ -29,14 +29,18 @@ public class EjbIoReportFactoryFactory<L extends UtilsLang,D extends UtilsDescri
 	final Class<REPORT> cReport;
 	final Class<WORKBOOK> cWorkbook;
 	final Class<SHEET> cSheet;
+	final Class<GROUP> cGroup;
+	final Class<COLUMN> cColumn;
     
-	private EjbIoReportFactoryFactory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet)
+	private EjbIoReportFactoryFactory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn)
 	{       
 		this.cL = cL;
         this.cD = cD;
         this.cReport = cReport;
         this.cWorkbook = cWorkbook;
         this.cSheet = cSheet;
+        this.cGroup = cGroup;
+        this.cColumn = cColumn;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -48,9 +52,9 @@ public class EjbIoReportFactoryFactory<L extends UtilsLang,D extends UtilsDescri
 					COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
 					FILLING extends UtilsStatus<FILLING,L,D>,
 					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-	EjbIoReportFactoryFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> factory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet)
+	EjbIoReportFactoryFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> factory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn)
 	{
-		return new EjbIoReportFactoryFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>(cL,cD,cReport,cWorkbook,cSheet);
+		return new EjbIoReportFactoryFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn);
 	}
 	
 	public EjbIoReportFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> report()
@@ -66,5 +70,15 @@ public class EjbIoReportFactoryFactory<L extends UtilsLang,D extends UtilsDescri
 	public EjbIoReportSheetFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> sheet()
 	{
 		return new EjbIoReportSheetFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>(cL,cD,cSheet);
+	}
+	
+	public EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> group()
+	{
+		return new EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>(cL,cD,cGroup);
+	}
+	
+	public EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> column()
+	{
+		return new EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>(cL,cD,cColumn);
 	}
 }

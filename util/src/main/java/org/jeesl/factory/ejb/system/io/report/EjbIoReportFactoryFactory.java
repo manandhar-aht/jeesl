@@ -57,4 +57,14 @@ public class EjbIoReportFactoryFactory<L extends UtilsLang,D extends UtilsDescri
 	{
 		return new EjbIoReportFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>(cL,cD,cReport);
 	}
+	
+	public EjbIoReportWorkbookFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> workbook()
+	{
+		return new EjbIoReportWorkbookFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>(cL,cD,cWorkbook);
+	}
+	
+	public EjbIoReportSheetFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> sheet()
+	{
+		return new EjbIoReportSheetFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>(cL,cD,cSheet);
+	}
 }

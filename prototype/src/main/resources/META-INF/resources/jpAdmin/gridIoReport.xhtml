@@ -45,14 +45,13 @@
 				   	</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sReport" width="3">
-					<h:form id="fView">
-						<p:panel id="pView" header="#{msg.jeeslIoReport}"
-									rendered="#{not empty cc.attrs.bean.report}" styleClass="auPanelWithGrid">
+				<aht:slot id="sReport" width="4">
+					<h:form id="fReport">
+						<p:panel header="#{msg.jeeslIoReport}" rendered="#{(not empty cc.attrs.bean.report) and cc.attrs.bean.uiHelper.showPanelReport}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
-								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelReport()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}"/>
+								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelReport()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveReport()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.report.id gt 0}" listener="#{cc.attrs.bean.rmReport()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
+								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.report.id gt 0}" listener="#{cc.attrs.bean.rmReport()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupCategory}"/>
@@ -65,6 +64,41 @@
 								<h:inputText autocomplete="off" value="#{cc.attrs.bean.report.code}" styleClass="w100"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.report}" withDescription="true"
+									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+						</p:panel>
+					</h:form>
+					<h:form id="fSheets" rendered="#{(not empty cc.attrs.bean.report) and (cc.attrs.bean.report.id gt 0)}">
+						<p:dataTable var="sheet" value="#{cc.attrs.bean.sheets}" draggableRows="true"
+							selection="#{cc.attrs.bean.sheet}" selectionMode="single" rowKey="#{sheet.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslIoSheets}">
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addSheet()}" update=":#{cc.id}:sSheet" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSheets()}" update="@form"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sSheet" listener="#{cc.attrs.bean.selectSheet()}"/>
+				         <p:column rendered="true">  
+								<h:outputText value="#{sheet.position}"/>
+				         </p:column>
+				         <p:column headerText="#{msg.aupName}">  
+								<h:outputText value="#{sheet.name[userBean.localeCode].lang}"/>
+				         </p:column>
+				      </p:dataTable>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sSheet" width="3">
+					<h:form id="fSheet">
+						<p:panel header="#{msg.jeeslIoSheet}" rendered="#{(not empty cc.attrs.bean.sheet) and cc.attrs.bean.uiHelper.showPanelSheet}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
+								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.sheet.id gt 0}" listener="#{cc.attrs.bean.rmSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.sheet.visible}"/>
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.sheet}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
 						</p:panel>
 					</h:form>

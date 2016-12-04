@@ -14,4 +14,19 @@
 			<lang key="fr" translation="Report" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoSheets">
+		<langs>
+			<lang key="de" translation="Mappen" />
+			<lang key="en" translation="Sheets" />
+			<lang key="fr" translation="Sheets" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoSheet">
+		<langs>
+			<lang key="de" translation="Mappe" />
+			<lang key="en" translation="Sheet" />
+			<lang key="fr" translation="Sheet" />
+		</langs>
+	</translation>
+	
 </translations>

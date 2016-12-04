@@ -1,8 +1,5 @@
-package org.jeesl.util.comparator.ejb.system.io;
+package org.jeesl.factory.ejb.system.io.report;
 
-import java.util.Comparator;
-
-import org.apache.commons.lang.builder.CompareToBuilder;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
@@ -15,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class IoReportComparator<L extends UtilsLang,D extends UtilsDescription,
+public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
 								WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
@@ -25,35 +22,28 @@ public class IoReportComparator<L extends UtilsLang,D extends UtilsDescription,
 								FILLING extends UtilsStatus<FILLING,L,D>,
 								TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(IoReportComparator.class);
-
-    public enum Type {position};
-
-    public IoReportComparator()
-    {
-    	
-    }
+	final static Logger logger = LoggerFactory.getLogger(EjbIoReportSheetFactory.class);
+	
+	final Class<SHEET> cSheet;
     
-    public Comparator<REPORT> factory(Type type)
-    {
-        Comparator<REPORT> c = null;
-        IoReportComparator<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> factory = new IoReportComparator<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>();
-        switch (type)
-        {
-            case position: c = factory.new PositionCodeComparator();break;
-        }
-
-        return c;
-    }
-
-    private class PositionCodeComparator implements Comparator<REPORT>
-    {
-        public int compare(REPORT a, REPORT b)
-        {
-			  CompareToBuilder ctb = new CompareToBuilder();
-			  ctb.append(a.getCategory().getPosition(), b.getCategory().getPosition());
-			  ctb.append(a.getPosition(), b.getPosition());
-			  return ctb.toComparison();
-        }
-    }
+	protected EjbIoReportSheetFactory(final Class<L> cL,final Class<D> cD,final Class<SHEET> cSheet)
+	{       
+        this.cSheet = cSheet;
+	}
+	    
+	public SHEET build(WORKBOOK workbook)
+	{
+		SHEET ejb = null;
+		try
+		{
+			ejb = cSheet.newInstance();
+			ejb.setWorkbook(workbook);
+			ejb.setPosition(0);
+			ejb.setVisible(false);
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		return ejb;
+	}
 }

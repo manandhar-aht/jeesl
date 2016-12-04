@@ -1,4 +1,4 @@
-package org.jeesl.util.comparator.ejb.system.io;
+package org.jeesl.util.comparator.ejb.system.io.template;
 
 import java.util.Comparator;
 
@@ -13,26 +13,26 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class IoTemplateTokenComparator<L extends UtilsLang,D extends UtilsDescription,
+public class IoTemplateDefinitionComparator<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
 								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
 								DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
 								TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
 {
-	final static Logger logger = LoggerFactory.getLogger(IoTemplateTokenComparator.class);
+	final static Logger logger = LoggerFactory.getLogger(IoTemplateDefinitionComparator.class);
 
     public enum Type {position};
 
-    public IoTemplateTokenComparator()
+    public IoTemplateDefinitionComparator()
     {
     	
     }
     
-    public Comparator<TOKEN> factory(Type type)
+    public Comparator<DEFINITION> factory(Type type)
     {
-        Comparator<TOKEN> c = null;
-        IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> factory = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>();
+        Comparator<DEFINITION> c = null;
+        IoTemplateDefinitionComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> factory = new IoTemplateDefinitionComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;
@@ -41,13 +41,12 @@ public class IoTemplateTokenComparator<L extends UtilsLang,D extends UtilsDescri
         return c;
     }
 
-    private class PositionCodeComparator implements Comparator<TOKEN>
+    private class PositionCodeComparator implements Comparator<DEFINITION>
     {
-        public int compare(TOKEN a, TOKEN b)
+        public int compare(DEFINITION a, DEFINITION b)
         {
 			  CompareToBuilder ctb = new CompareToBuilder();
-			  ctb.append(a.getPosition(), b.getPosition());
-			  ctb.append(a.getCode(), b.getCode());
+			  ctb.append(a.getType().getPosition(),b.getType().getPosition());
 			  return ctb.toComparison();
         }
     }

@@ -42,7 +42,10 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	@Override public REPORT load(REPORT report)
 	{
 		report = em.find(cReport, report.getId());
-//		template.getTokens().size();
+		if(report.getWorkbook()!=null)
+		{
+			report.getWorkbook().getSheets().size();
+		}
 		return report;
 	}
 	

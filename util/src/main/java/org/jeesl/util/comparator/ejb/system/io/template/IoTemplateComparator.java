@@ -1,4 +1,4 @@
-package org.jeesl.util.comparator.ejb.system.io;
+package org.jeesl.util.comparator.ejb.system.io.template;
 
 import java.util.Comparator;
 

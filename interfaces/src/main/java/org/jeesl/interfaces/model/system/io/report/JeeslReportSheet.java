@@ -15,7 +15,7 @@ public interface JeeslReportSheet<L extends UtilsLang,D extends UtilsDescription
 									REPORT extends JeeslReport<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
 									WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
 									SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
-									GROUP extends JeeslReportGroup<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+									GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
 									COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>

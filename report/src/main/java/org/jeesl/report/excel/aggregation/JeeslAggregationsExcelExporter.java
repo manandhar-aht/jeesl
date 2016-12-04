@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.jeesl.interfaces.model.system.io.report.JeeslReportGrouping;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportSettingFilling;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -16,9 +16,9 @@ import net.sf.ahtutils.xml.report.Info;
 public class JeeslAggregationsExcelExporter
 {
     public static <L extends UtilsLang,D extends UtilsDescription,TYPE extends UtilsStatus<TYPE,L,D>>
-    	InputStream export(TYPE type, Info info, Figures figures) throws IOException
+    	InputStream export(TYPE filling, Info info, Figures figures) throws IOException
     {
-    	switch(JeeslReportGrouping.Code.valueOf(type.getCode()))
+    	switch(JeeslReportSettingFilling.Code.valueOf(filling.getCode()))
     	{
     		case flat:			return flat(info,figures);
     		case hierarchical:	return hierarchical(info,figures);

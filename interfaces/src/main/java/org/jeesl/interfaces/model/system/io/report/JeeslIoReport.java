@@ -25,4 +25,7 @@ public interface JeeslIoReport<L extends UtilsLang,D extends UtilsDescription,
 {	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);
+	
+	WORKBOOK getWorkbook();
+	void setWorkbook(WORKBOOK workbook);
 }

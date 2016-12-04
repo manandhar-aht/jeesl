@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.io.report;
 
+import java.util.List;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -22,4 +24,7 @@ public interface JeeslReportSheet<L extends UtilsLang,D extends UtilsDescription
 {					
 	WORKBOOK getWorkbook();
 	void setWorkbook(WORKBOOK workbook);
+	
+	List<GROUP> getGroups();
+	void setGroups(List<GROUP> groups);
 }

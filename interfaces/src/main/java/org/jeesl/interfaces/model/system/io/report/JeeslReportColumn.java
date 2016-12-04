@@ -20,5 +20,6 @@ public interface JeeslReportColumn<L extends UtilsLang,D extends UtilsDescriptio
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>
 {					
-
+	GROUP getGroup();
+	void setGroup(GROUP group);
 }

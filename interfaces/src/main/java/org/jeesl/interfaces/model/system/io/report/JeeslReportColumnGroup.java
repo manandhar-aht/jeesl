@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.io.report;
 
+import java.util.List;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -20,5 +22,9 @@ public interface JeeslReportColumnGroup<L extends UtilsLang,D extends UtilsDescr
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>
 {					
-
+	SHEET getSheet();
+	void setSheet(SHEET sheet);
+	
+	List<COLUMN> getColumns();
+	void setColumns(List<COLUMN> columns);
 }

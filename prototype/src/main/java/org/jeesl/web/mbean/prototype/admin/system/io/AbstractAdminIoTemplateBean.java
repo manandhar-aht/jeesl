@@ -7,9 +7,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.factory.ejb.system.io.EjbIoTemplateDefinitionFactory;
-import org.jeesl.factory.ejb.system.io.EjbIoTemplateFactory;
-import org.jeesl.factory.ejb.system.io.EjbIoTemplateTokenFactory;
+import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateDefinitionFactory;
+import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateFactory;
+import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateFactoryFactory;
+import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateTokenFactory;
 import org.jeesl.factory.txt.system.io.TxtIoTemplateFactory;
 import org.jeesl.factory.txt.system.io.TxtIoTemplateTokenFactory;
 import org.jeesl.interfaces.facade.JeeslIoTemplateFacade;
@@ -93,9 +94,10 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		this.cDefinition=cDefinition;
 		this.cToken=cToken;
 		
-		efTemplate = EjbIoTemplateFactory.factory(cLang,cDescription,cTemplate);
-		efDefinition = EjbIoTemplateDefinitionFactory.factory(cDescription,cDefinition);
-		efToken = EjbIoTemplateTokenFactory.factory(cLang,cDescription,cToken);
+		EjbIoTemplateFactoryFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> ef = EjbIoTemplateFactoryFactory.factory(cLang,cDescription,cTemplate,cDefinition,cToken);
+		efTemplate = ef.template();
+		efDefinition = ef.definition();
+		efToken = ef.token();
 		
 		comparatorTemplate = new IoTemplateComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>().factory(IoTemplateComparator.Type.position);
 		comparatorToken = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>().factory(IoTemplateTokenComparator.Type.position);

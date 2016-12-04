@@ -1,4 +1,4 @@
-package org.jeesl.factory.ejb.system.io;
+package org.jeesl.factory.ejb.system.io.template;
 
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
@@ -28,24 +28,13 @@ public class EjbIoTemplateTokenFactory<L extends UtilsLang,D extends UtilsDescri
 	private EjbLangFactory<L> efLang;
 	private EjbDescriptionFactory<D> efDescription;
     
-	public EjbIoTemplateTokenFactory(final Class<L> cL,final Class<D> cD,final Class<TOKEN> cToken)
+	protected EjbIoTemplateTokenFactory(final Class<L> cL,final Class<D> cD,final Class<TOKEN> cToken)
 	{       
         this.cToken = cToken;
 		efLang = EjbLangFactory.createFactory(cL);
 		efDescription = EjbDescriptionFactory.createFactory(cD);
 	}
-	
-	public static <L extends UtilsLang,D extends UtilsDescription,
-					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					TYPE extends UtilsStatus<TYPE,L,D>,
-					TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
-					DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
-					TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
-	EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> factory(final Class<L> cL,final Class<D> cD,final Class<TOKEN> cToken)
-	{
-		return new EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>(cL,cD,cToken);
-	}
-	
+		
 	public TOKEN build(TEMPLATE template, Entity xml)
 	{
 		TOKEN ejb = build(template);

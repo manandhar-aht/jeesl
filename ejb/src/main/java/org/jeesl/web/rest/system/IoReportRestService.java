@@ -3,6 +3,11 @@ package org.jeesl.web.rest.system;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
+import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestExport;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestImport;
 import org.jeesl.model.xml.jeesl.Container;
@@ -20,55 +25,65 @@ import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									GROUPING extends UtilsStatus<GROUPING,L,D>,
-									COLAGG extends UtilsStatus<COLAGG,L,D>>
+									REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+									WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+									SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+									GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+									COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+									FILLING extends UtilsStatus<FILLING,L,D>,
+									TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 					implements JeeslIoReportRestExport,JeeslIoReportRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(IoReportRestService.class);
 	
-	private JeeslIoReportFacade<L,D,CATEGORY,GROUPING,COLAGG> fReport;
+	private JeeslIoReportFacade<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> fReport;
 	
 	private final Class<L> cL;
 	private final Class<D> cD;
 	private final Class<CATEGORY> cCategory;
-	private final Class<GROUPING> cGrouping;
-	private final Class<COLAGG> cColAgg;
+	private final Class<FILLING> cFilling;
+	private final Class<TRANSFORMATION> cTransformation;
 
 	private XmlStatusFactory xfStatus;
 	
 //	private EjbLangFactory<L> efLang;
 //	private EjbDescriptionFactory<D> efDescription;
 	
-	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,GROUPING,COLAGG> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<GROUPING> cGrouping, final Class<COLAGG> cColAgg)
+	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation)
 	{
 		this.fReport=fReport;
 		this.cL=cL;
 		this.cD=cD;
 		
 		this.cCategory=cCategory;
-		this.cGrouping=cGrouping;
-		this.cColAgg=cColAgg;
+		this.cFilling=cFilling;
+		this.cTransformation=cTransformation;
 	
 		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					GROUPING extends UtilsStatus<GROUPING,L,D>,
-					COLAGG extends UtilsStatus<COLAGG,L,D>>
-	IoReportRestService<L,D,CATEGORY,GROUPING,COLAGG>
-			factory(JeeslIoReportFacade<L,D,CATEGORY,GROUPING,COLAGG> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<GROUPING> cType,final Class<COLAGG> cColAgg)
+					REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+					WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+					SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+					GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+					COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+					FILLING extends UtilsStatus<FILLING,L,D>,
+					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
+	IoReportRestService<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>
+			factory(JeeslIoReportFacade<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<FILLING> cFilling,final Class<TRANSFORMATION> cTransformation)
 	{
-		return new IoReportRestService<L,D,CATEGORY,GROUPING,COLAGG>(fReport,cL,cD,cCategory,cType,cColAgg);
+		return new IoReportRestService<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>(fReport,cL,cD,cCategory,cFilling,cTransformation);
 	}
 	
 	@Override public Container exportSystemIoReportCategories() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cCategory)));}
-	@Override public Container exportSystemIoReportGrouping() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cGrouping)));}
-	@Override public Container exportSystemIoReportColumAggegation() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cColAgg)));}
+	@Override public Container exportSystemIoReportGrouping() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cFilling)));}
+	@Override public Container exportSystemIoReportColumAggegation() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cTransformation)));}
 
 	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
-	@Override public DataUpdate importSystemIoReportGrouping(Container types){return importStatus(cGrouping,cL,cD,types,null);}
-	@Override public DataUpdate importSystemIoReportColumAggegation(Container types){return importStatus(cColAgg,cL,cD,types,null);}
+	@Override public DataUpdate importSystemIoReportGrouping(Container types){return importStatus(cFilling,cL,cD,types,null);}
+	@Override public DataUpdate importSystemIoReportColumAggegation(Container types){return importStatus(cTransformation,cL,cD,types,null);}
 	
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Container container, Class<P> clParent)

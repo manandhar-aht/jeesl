@@ -147,7 +147,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		Collections.sort(definitions, comparatorDefinition);
 	}
 	
-	public void selectTemplate() throws UtilsNotFoundException
+	public void selectTemplate()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
 		template = fTemplate.find(cTemplate, template);

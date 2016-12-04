@@ -21,9 +21,9 @@ public interface UtilsIoTemplate<L extends UtilsLang,D extends UtilsDescription,
 				EjbWithCode,EjbWithPositionVisible,EjbWithParentAttributeResolver,EjbWithPositionParent,
 		EjbWithLang<L>,EjbWithDescription<D>
 {	
-	IOTT getType();
-	void setType(IOTT type);
+	IOTT getType2();
+	void setType2(IOTT type);
 	
-	IOTC getCategory();
-	void setCategory(IOTC category);
+	IOTC getCategory2();
+	void setCategory2(IOTC category);
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations xmlns="http://ahtutils.aht-group.com/status">
+	<translation key="jeeslIoReports">
+		<langs>
+			<lang key="de" translation="Berichte" />
+			<lang key="en" translation="Reports" />
+			<lang key="fr" translation="Reports" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoReport">
+		<langs>
+			<lang key="de" translation="Bericht" />
+			<lang key="en" translation="Report" />
+			<lang key="fr" translation="Report" />
+		</langs>
+	</translation>
+</translations>

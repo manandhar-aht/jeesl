@@ -35,7 +35,7 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 		this.cTemplate=cTemplate;
 	}
 	
-	@Override public TEMPLATE load(Class<TEMPLATE> cTemplate, TEMPLATE template)
+	@Override public TEMPLATE load(TEMPLATE template)
 	{
 		template = em.find(cTemplate, template.getId());
 		template.getTokens().size();

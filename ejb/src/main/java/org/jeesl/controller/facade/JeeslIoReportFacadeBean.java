@@ -39,6 +39,13 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		this.cReport=cReport;
 	}
 	
+	@Override public REPORT load(REPORT report)
+	{
+		report = em.find(cReport, report.getId());
+//		template.getTokens().size();
+		return report;
+	}
+	
 	@Override public List<REPORT> fReports(List<CATEGORY> categories, boolean showInvisibleEntities)
 	{
 		List<ParentPredicate<CATEGORY>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);

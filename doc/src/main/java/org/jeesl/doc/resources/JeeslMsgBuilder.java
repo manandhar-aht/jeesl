@@ -42,6 +42,7 @@ public class JeeslMsgBuilder
 	
 	//IO
 	public static final String ioTemplate = "jeesl/msg/admin/system/io/template.xml";
+	public static final String ioReport = "jeesl/msg/admin/system/io/report.xml";
 	
 	//System
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
@@ -60,12 +61,12 @@ public class JeeslMsgBuilder
 	public static final String srcAdminUser = "aht-utils/msg/admin/user.xml";
 	public static final String srcAdminStatus = "aht-utils/msg/admin/status.xml";
 	public static final String revision = "jeesl/msg/admin/system/revision.xml";
-	public static final String srcConstraint = "msg.aht-utils/system/constraint.xml";
+	public static final String srcConstraint = "jeesl/msg/admin/system/constraint.xml";
 	public static final String facesMessages = "aht-utils/msg/facesMessages.xml";
 	
 	@Deprecated public static final String srcSurvey = "jeesl/msg/util/survey.xml";
 	public static final String survey = "jeesl/msg/util/survey.xml";
-	public static final String devQa = "msg.aht-utils/development/qa.xml";
+	public static final String devQa = "jeesl/msg/development/qa.xml";
 	
 	final static Logger logger = LoggerFactory.getLogger(JeeslMsgBuilder.class);
 		

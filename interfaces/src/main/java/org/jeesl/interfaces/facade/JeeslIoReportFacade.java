@@ -24,5 +24,7 @@ public interface JeeslIoReportFacade <L extends UtilsLang,D extends UtilsDescrip
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 			extends UtilsFacade
 {	
+	REPORT load(REPORT report);
+	
 	List<REPORT> fReports(List<CATEGORY> categories, boolean showInvisibleEntities);
 }

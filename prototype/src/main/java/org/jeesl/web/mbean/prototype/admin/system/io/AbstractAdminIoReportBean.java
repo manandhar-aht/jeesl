@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactoryFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -46,7 +48,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private Class<CATEGORY> cCategory;
 	private Class<REPORT> cReport;
-//	private Class<WORKBOOK> cDefinition;
+//	private Class<WORKBOOK> cWorkbook;
 //	private Class<SHEET> cToken;
 	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
@@ -57,17 +59,19 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
 	private Comparator<REPORT> comparatorReport;
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport)
+	private EjbIoReportFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> efReport;
+	
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fReport=fReport;
 		
 		this.cCategory=cCategory;
 		this.cReport=cReport;
-		this.cCategory=cCategory;
-		this.cCategory=cCategory;
-		this.cCategory=cCategory;
 
+		EjbIoReportFactoryFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> ef = EjbIoReportFactoryFactory.factory(cLang, cDescription, cReport, cWorkbook, cSheet);
+		efReport = ef.report();
+		
 		categories = fReport.allOrderedPositionVisible(cCategory);
 		
 		comparatorReport = new IoReportComparator<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>().factory(IoReportComparator.Type.position);
@@ -90,23 +94,21 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	{
 		reports = fReport.fReports(sbhCategory.getSelected(), true);
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cReport,reports));}
-//		Collections.sort(templates, comparatorTemplate);
+		Collections.sort(reports,comparatorReport);
 	}
-/*	
-	public void addTemplate() throws UtilsNotFoundException
+	
+	public void addReport()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cTemplate));}
-		template = efTemplate.build(null);
-		template.setName(efLang.createEmpty(langs));
-		template.setDescription(efDescription.createEmpty(langs));
-		definition=null;
-		preview=null;
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cReport));}
+		report = efReport.build(null);
+		report.setName(efLang.createEmpty(langs));
+		report.setDescription(efDescription.createEmpty(langs));
 	}
-*/	
-	private void reloadTemplate()
+	
+	private void reloadReport()
 	{
-/*		template = fTemplate.load(cTemplate, template);
-		tokens = template.getTokens();
+		report = fReport.load(report);
+		/*		tokens = template.getTokens();
 		definitions = template.getDefinitions();
 		
 		Collections.sort(tokens, comparatorToken);
@@ -119,20 +121,20 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		report = fReport.find(cReport, report);
 		report = efLang.persistMissingLangs(fReport,langs,report);
 		report = efDescription.persistMissingLangs(fReport,langs,report);
-		reloadTemplate();
+		reloadReport();
 	}
-/*	
-	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	
+	public void saveReport() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(template));}
-		if(template.getCategory()!=null){template.setCategory(fTemplate.find(cCategory, template.getCategory()));}
-		template = fTemplate.save(template);
-		reloadTemplates();
-		reloadTemplate();
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(report));}
+		if(report.getCategory()!=null){report.setCategory(fReport.find(cCategory, report.getCategory()));}
+		report = fReport.save(report);
+		reloadReports();
+		reloadReport();
 		bMessage.growlSuccessSaved();
 		updatePerformed();
 	}
-	
+/*	
 	public void rmTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(template));}

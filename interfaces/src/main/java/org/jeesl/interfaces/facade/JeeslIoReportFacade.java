@@ -25,6 +25,8 @@ public interface JeeslIoReportFacade <L extends UtilsLang,D extends UtilsDescrip
 			extends UtilsFacade
 {	
 	REPORT load(REPORT report);
+	SHEET load(SHEET sheet);
+	GROUP load(GROUP group);
 	
 	List<REPORT> fReports(List<CATEGORY> categories, boolean showInvisibleEntities);
 }

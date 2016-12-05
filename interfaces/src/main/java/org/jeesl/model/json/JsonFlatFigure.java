@@ -130,6 +130,33 @@ public class JsonFlatFigure implements Serializable
 	public Double getD12() {return d12;}
 	public void setD12(Double d12) {this.d12 = d12;}
 	
+	
+	@JsonProperty("Data13")
+	private Double d13;
+	public Double getD13() {return d13;}
+	public void setD13(Double d13) {this.d13 = d13;}
+	
+	@JsonProperty("Data14")
+	private Double d14;
+	public Double getD14() {return d14;}
+	public void setD14(Double d14) {this.d14 = d14;}
+	
+	@JsonProperty("Data15")
+	private Double d15;
+	public Double getD15() {return d15;}
+	public void setD15(Double d15) {this.d15 = d15;}
+	
+	@JsonProperty("Data16")
+	private Double d16;
+	public Double getD16() {return d16;}
+	public void setD16(Double d16) {this.d16 = d16;}
+	
+	@JsonProperty("Data17")
+	private Double d17;
+	public Double getD17() {return d17;}
+	public void setD17(Double d17) {this.d17 = d17;}
+	
+	
 	@JsonProperty("Date1")
 	private Date date1;
 	public Date getDate1() {return date1;}

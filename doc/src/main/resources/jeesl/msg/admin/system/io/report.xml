@@ -42,5 +42,18 @@
 			<lang key="fr" translation="Group" />
 		</langs>
 	</translation>
-	
+		<translation key="jeeslIoColumns">
+		<langs>
+			<lang key="de" translation="Spalten" />
+			<lang key="en" translation="Columns" />
+			<lang key="fr" translation="Columns" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoColumn">
+		<langs>
+			<lang key="de" translation="Spalte" />
+			<lang key="en" translation="Column" />
+			<lang key="fr" translation="Column" />
+		</langs>
+	</translation>
 </translations>

@@ -37,13 +37,13 @@ public class UiHelperIoReport <L extends UtilsLang,D extends UtilsDescription,
 	
 	private boolean showPanelReport; public boolean isShowPanelReport() {return showPanelReport;}
 	private boolean showPanelSheet; public boolean isShowPanelSheet() {return showPanelSheet;}
-	private boolean showPanelGroup; public boolean isShowPanelGRoup() {return showPanelGroup;}
+	private boolean showPanelGroup; public boolean isShowPanelGroup() {return showPanelGroup;}
 
 	public UiHelperIoReport()
 	{
 		showPanelReport = false;
 		showPanelSheet = false;
-		showPanelGroup = true;
+		showPanelGroup = false;
 	}
 	
 	public void check(REPORT report)
@@ -62,5 +62,14 @@ public class UiHelperIoReport <L extends UtilsLang,D extends UtilsDescription,
 		else if(this.sheet!=null && sheet!=null) {showPanelSheet = this.sheet.equals(sheet);}
 		else {showPanelSheet = false;}
 		this.sheet=sheet;
+	}
+	
+	public void check(GROUP group)
+	{
+		if(group!=null && EjbIdFactory.isUnSaved(group)){showPanelGroup=true;}
+		else if(this.group==null){showPanelGroup = false;}
+		else if(this.group!=null && group!=null) {showPanelGroup = this.group.equals(group);}
+		else {showPanelGroup = false;}
+		this.group=group;
 	}
 }

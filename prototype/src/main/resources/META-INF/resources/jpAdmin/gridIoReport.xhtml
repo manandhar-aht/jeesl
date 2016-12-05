@@ -138,7 +138,43 @@
 				</aht:slot>
 			</aht:row>
 			<aht:row id="row2">
-			
+				<aht:slot id="sColumns" width="4">
+					<h:form id="fColumns" rendered="#{(not empty cc.attrs.bean.group) and (cc.attrs.bean.group.id gt 0)}">
+						<p:dataTable var="column" value="#{cc.attrs.bean.columns}" draggableRows="true"
+							selection="#{cc.attrs.bean.column}" selectionMode="single" rowKey="#{column.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslIoColumns}">
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addColumn()}" update=":#{cc.id}:sColumns :#{cc.id}:sColumn" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderColumns()}" update="@form"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sColumn" listener="#{cc.attrs.bean.selectColumn()}"/>
+				         <p:column rendered="true">  
+								<h:outputText value="#{column.position}"/>
+				         </p:column>
+				         <p:column headerText="#{msg.aupName}">  
+								<h:outputText value="#{column.name[userBean.localeCode].lang}"/>
+				         </p:column>
+				      </p:dataTable>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sColumn" width="8">
+					<h:form id="fColumn">
+						<p:panel header="#{msg.jeeslIoColumn}" rendered="#{not empty cc.attrs.bean.column}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
+								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.group.id gt 0}" listener="#{cc.attrs.bean.rmColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.column.visible}"/>
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.column}" withDescription="true"
+									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+						</p:panel>
+					</h:form>
+				</aht:slot>
 			</aht:row>
 	    </aup:grid>
 	</composite:implementation>

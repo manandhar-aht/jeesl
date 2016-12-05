@@ -38,7 +38,7 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 		{
 			ejb = cReport.newInstance();
 			ejb.setCategory(category);
-			ejb.setPosition(0);
+			ejb.setPosition(1);
 			ejb.setVisible(true);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

@@ -38,7 +38,7 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 		{
 			ejb = cSheet.newInstance();
 			ejb.setWorkbook(workbook);
-			ejb.setPosition(0);
+			ejb.setPosition(1);
 			ejb.setVisible(false);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

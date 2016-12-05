@@ -38,7 +38,7 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 		{
 			ejb = cGroup.newInstance();
 			ejb.setSheet(sheet);
-			ejb.setPosition(0);
+			ejb.setPosition(1);
 			ejb.setVisible(false);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

@@ -18,6 +18,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.util.comparator.ejb.system.io.report.IoReportColumnComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportGroupComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportSheetComparator;
@@ -58,15 +59,18 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 //	private Class<WORKBOOK> cWorkbook;
 	private Class<SHEET> cSheet;
 	private Class<GROUP> cGroup;
+	private Class<COLUMN> cColumn;
 	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
 	private List<REPORT> reports; public List<REPORT> getReports() {return reports;}
 	private List<SHEET> sheets; public List<SHEET> getSheets() {return sheets;}
 	private List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
+	private List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
 	
 	private REPORT report; public REPORT getReport() {return report;} public void setReport(REPORT report) {this.report = report;}
 	private SHEET sheet; public SHEET getSheet() {return sheet;} public void setSheet(SHEET sheet) {this.sheet = sheet;}
 	private GROUP group; public GROUP getGroup() {return group;}public void setGroup(GROUP group) {this.group = group;}
+	private COLUMN column; public COLUMN getColumn() {return column;} public void setColumn(COLUMN column) {this.column = column;}
 	
 	private UiHelperIoReport<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> uiHelper; public UiHelperIoReport<L, D, CATEGORY, REPORT, WORKBOOK, SHEET, GROUP, COLUMN, FILLING, TRANSFORMATION> getUiHelper() {return uiHelper;}
 	private SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
@@ -74,6 +78,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private Comparator<REPORT> comparatorReport;
 	private Comparator<SHEET> comparatorSheet;
 	private Comparator<GROUP> comparatorGroup;
+	private Comparator<COLUMN> comparatorColumn;
 	
 	private EjbIoReportFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> efReport;
 	private EjbIoReportWorkbookFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> efWorkbook;
@@ -90,6 +95,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		this.cReport=cReport;
 		this.cSheet=cSheet;
 		this.cGroup=cGroup;
+		this.cColumn=cColumn;
 
 		EjbIoReportFactoryFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> ef = EjbIoReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn);
 		efReport = ef.report();
@@ -104,6 +110,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		comparatorReport = new IoReportComparator<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>().factory(IoReportComparator.Type.position);
 		comparatorSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>().factory(IoReportSheetComparator.Type.position);
 		comparatorGroup = new IoReportGroupComparator<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>().factory(IoReportGroupComparator.Type.position);
+		comparatorColumn = new IoReportColumnComparator<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>().factory(IoReportColumnComparator.Type.position);
 		
 		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
 //		sbhCategory.selectAll();
@@ -187,10 +194,10 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 */	
 	public void cancelReport()
 	{
-		report = null;
-		sheet=null;
-		uiHelper.check(report);
-		uiHelper.check(sheet);
+		report = null;uiHelper.check(report);
+		sheet=null;uiHelper.check(sheet);
+		group=null;uiHelper.check(group);
+		column=null;
 	}
 		
 	//*************************************************************************************
@@ -208,7 +215,15 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(sheet));}
 		sheet = fReport.find(cSheet, sheet);
+		reloadSheet();
 		uiHelper.check(sheet);
+	}
+	
+	private void reloadSheet()
+	{
+		sheet = fReport.load(sheet);
+		groups = sheet.getGroups();
+		Collections.sort(groups, comparatorGroup);
 	}
 		
 	public void saveSheet() throws UtilsLockingException
@@ -218,6 +233,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		{
 			sheet = fReport.save(sheet);
 			reloadReport();
+			reloadSheet();
 			bMessage.growlSuccessSaved();
 			updatePerformed();
 			uiHelper.check(sheet);
@@ -237,8 +253,9 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 */	
 	public void cancelSheet()
 	{
-		sheet=null;
-		uiHelper.check(sheet);
+		sheet=null;uiHelper.check(sheet);
+		group=null;uiHelper.check(group);
+		column=null;
 	}
 	
 	//*************************************************************************************
@@ -246,17 +263,99 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	public void addGroup()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cGroup));}
-/*		sheet = efSheet.build(report.getWorkbook());
-		sheet.setName(efLang.createEmpty(langs));
-		sheet.setDescription(efDescription.createEmpty(langs));
-		uiHelper.check(sheet);
-*/	}
+		group = efGroup.build(sheet);
+		group.setName(efLang.createEmpty(langs));
+		group.setDescription(efDescription.createEmpty(langs));
+		uiHelper.check(group);
+	}
 	
 	public void selectGroup()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(group));}
 		group = fReport.find(cGroup, group);
-//		uiHelper.check(sheet);
+		reloadGroup();
+		uiHelper.check(group);
+	}
+	
+	private void reloadGroup()
+	{
+		group = fReport.load(group);
+		columns = group.getColumns();
+		Collections.sort(columns, comparatorColumn);
+	}
+	
+	public void saveGroup() throws UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(group));}
+		try
+		{
+			group = fReport.save(group);
+			reloadReport();
+			reloadSheet();
+			reloadGroup();
+			bMessage.growlSuccessSaved();
+			updatePerformed();
+			uiHelper.check(group);
+		}
+		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
+	}
+	
+	public void cancelGroup()
+	{
+		group=null;uiHelper.check(group);
+		column=null;
+	}
+	
+	//*************************************************************************************
+
+	public void addColumn()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cColumn));}
+		column = efColumn.build(group);
+		column.setName(efLang.createEmpty(langs));
+		column.setDescription(efDescription.createEmpty(langs));
+	}
+	
+	public void selectColumn()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(column));}
+		reloadColumn();
+	}
+	
+	private void reloadColumn()
+	{
+		column = fReport.find(cColumn, column);
+	}
+	
+	public void saveColumn() throws UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(column));}
+		try
+		{
+			column = fReport.save(column);
+			reloadReport();
+			reloadSheet();
+			reloadGroup();
+			reloadColumn();
+			bMessage.growlSuccessSaved();
+			updatePerformed();
+		}
+		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
+	}
+		
+	public void rmColumn() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(column));}
+		fReport.rm(column);
+		column=null;
+		bMessage.growlSuccessRemoved();
+		reloadGroup();
+		updatePerformed();
+	}
+	
+	public void cancelColumn()
+	{
+		column=null;
 	}
     
 	//*************************************************************************************

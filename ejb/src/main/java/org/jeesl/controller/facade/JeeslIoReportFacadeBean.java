@@ -31,12 +31,16 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 {	
 	private final Class<CATEGORY> cCategory;
 	private final Class<REPORT> cReport;
+	private final Class<SHEET> cSheet;
+	private final Class<GROUP> cGroup;
 	
-	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
+	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<SHEET> cSheet, final Class<GROUP> cGroup)
 	{
 		super(em);
 		this.cCategory=cCategory;
 		this.cReport=cReport;
+		this.cSheet=cSheet;
+		this.cGroup=cGroup;
 	}
 	
 	@Override public REPORT load(REPORT report)
@@ -47,6 +51,20 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 			report.getWorkbook().getSheets().size();
 		}
 		return report;
+	}
+	
+	@Override public SHEET load(SHEET sheet)
+	{
+		sheet = em.find(cSheet, sheet.getId());
+		sheet.getGroups().size();
+		return sheet;
+	}
+	
+	@Override public GROUP load(GROUP group)
+	{
+		group = em.find(cGroup, group.getId());
+		group.getColumns().size();
+		return group;
 	}
 	
 	@Override public List<REPORT> fReports(List<CATEGORY> categories, boolean showInvisibleEntities)

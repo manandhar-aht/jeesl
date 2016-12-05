@@ -1,7 +1,9 @@
 package org.jeesl.model.xml.report;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlCategory;
 import org.jeesl.model.xml.system.status.TestXmlDescriptions;
+import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ public class TestXmlReport extends AbstractXmlReportTest<Report>
     {
     	Report xml = new Report();
     	xml.setId("myId");
+    	xml.setCode("myCode");
     	xml.setDir("testDir");
     	xml.setExample("testExampleXmlFile");
     	xml.getMedia().add(TestXmlMedia.create(false));
@@ -28,7 +31,9 @@ public class TestXmlReport extends AbstractXmlReportTest<Report>
     	
     	if(withChildren)
     	{
+    		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
+    		xml.setCategory(TestXmlCategory.create(false));
     	}
     	
     	return xml;

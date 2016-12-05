@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<r:report xmlns:r="http://ahtutils.aht-group.com/report" xmlns:s="http://ahtutils.aht-group.com/status" id="myId" dir="testDir" ltr="true" rtl="false" test="myTestClass">
+<r:report xmlns:r="http://ahtutils.aht-group.com/report" xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" id="myId" code="myCode" dir="testDir" ltr="true" rtl="false" test="myTestClass">
     <r:media dir="testDir" type="myType">
         <r:jr type="mr" name="testReportName" visible="true"/>
     </r:media>
@@ -7,5 +7,7 @@
         <r:jr type="mr" name="testReportName" visible="true"/>
     </r:media>
     <example>testExampleXmlFile</example>
+    <s:langs/>
     <s:descriptions/>
+    <s:category id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
 </r:report>

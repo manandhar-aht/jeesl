@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.access.Role;
 import net.sf.ahtutils.xml.qa.Test;
+import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.security.Category;
 import net.sf.ahtutils.xml.security.Staff;
 import net.sf.ahtutils.xml.status.Langs;
@@ -43,6 +44,7 @@ import org.jeesl.model.xml.system.revision.Entity;
  *         &lt;element ref="{http://ahtutils.aht-group.com/qa}test"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}category"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}staff"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}report"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/revision}entity"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}templates"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}template"/&gt;
@@ -70,6 +72,7 @@ import org.jeesl.model.xml.system.revision.Entity;
     "test",
     "category",
     "staff",
+    "report",
     "entity",
     "templates",
     "template",
@@ -100,6 +103,8 @@ public class Query
     protected Category category;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
     protected Staff staff;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/report", required = true)
+    protected Report report;
     @XmlElement(namespace = "http://www.jeesl.org/revision", required = true)
     protected Entity entity;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/survey", required = true)
@@ -315,6 +320,34 @@ public class Query
 
     public boolean isSetStaff() {
         return (this.staff!= null);
+    }
+
+    /**
+     * Gets the value of the report property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Report }
+     *     
+     */
+    public Report getReport() {
+        return report;
+    }
+
+    /**
+     * Sets the value of the report property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Report }
+     *     
+     */
+    public void setReport(Report value) {
+        this.report = value;
+    }
+
+    public boolean isSetReport() {
+        return (this.report!= null);
     }
 
     /**

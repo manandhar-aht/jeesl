@@ -2,6 +2,7 @@ package org.jeesl.model.xml.jeesl;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.qa.TestXmlTest;
+import org.jeesl.model.xml.report.TestXmlReport;
 import org.jeesl.model.xml.survey.TestXmlAnswer;
 import org.jeesl.model.xml.survey.TestXmlSurvey;
 import org.jeesl.model.xml.survey.TestXmlSurveys;
@@ -45,6 +46,9 @@ public class TestXmlQuery extends AbstractXmlAhtTest<Query>
     		
     		xml.setCategory(TestXmlCategory.create(false));
     		xml.setStaff(TestXmlStaff.create(false));
+    		
+    		//Report
+    		xml.setReport(TestXmlReport.create(false));
     		
     		//Revision
     		xml.setEntity(TestXmlEntity.create(false));

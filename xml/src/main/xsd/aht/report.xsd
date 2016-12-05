@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema targetNamespace="http://ahtutils.aht-group.com/report"
-    xmlns:r="http://ahtutils.aht-group.com/report"
-    xmlns:us="http://ahtutils.aht-group.com/status"
+	xmlns:r="http://ahtutils.aht-group.com/report"
+	xmlns:us="http://ahtutils.aht-group.com/status"
 	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="status.xsd"/>
-    <xsd:element name="reports">
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="status.xsd"/>
+	<xsd:element name="reports">
 	    <xsd:complexType>
             <xsd:sequence>
 	            <xsd:element ref="r:report" maxOccurs="unbounded"/>
@@ -14,25 +14,28 @@
 			<xsd:attribute name="resources" type="xsd:string"/>
 			<xsd:attribute name="templates" type="xsd:string"/>
 		</xsd:complexType>    
-    </xsd:element>
-    <xsd:element name="report">
-        <xsd:complexType>
-            <xsd:sequence>
-	            <xsd:element ref="r:media" maxOccurs="2"/>
-	           	<xsd:element name="example">
-	           		<xsd:simpleType>
-		               	<xsd:restriction base="xsd:string"/>
-		            </xsd:simpleType>
-		        </xsd:element>
-		        <xsd:element ref="us:descriptions" maxOccurs="1"/>
-            </xsd:sequence>
-            <xsd:attribute name="id" type="xsd:string"/>
-            <xsd:attribute name="dir" type="xsd:string"/>
-            <xsd:attribute name="ltr" type="xsd:boolean"/>
-            <xsd:attribute name="rtl" type="xsd:boolean"/>
-            <xsd:attribute name="test" type="xsd:string"/>
-        </xsd:complexType>
-    </xsd:element>
+	</xsd:element>
+	<xsd:element name="report">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="r:media" maxOccurs="2"/>
+				<xsd:element name="example">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string"/>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element ref="us:langs" maxOccurs="1"/>
+				<xsd:element ref="us:descriptions" maxOccurs="1"/>
+				<xsd:element ref="us:category" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="id" type="xsd:string"/>
+			<xsd:attribute name="code" type="xsd:string"/>
+			<xsd:attribute name="dir" type="xsd:string"/>
+			<xsd:attribute name="ltr" type="xsd:boolean"/>
+			<xsd:attribute name="rtl" type="xsd:boolean"/>
+			<xsd:attribute name="test" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
     <xsd:element name="resources">
         <xsd:complexType>
             <xsd:sequence>

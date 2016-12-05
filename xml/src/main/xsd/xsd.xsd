@@ -11,6 +11,7 @@
     xmlns:n   ="http://ahtutils.aht-group.com/navigation"
     xmlns:mo  ="http://ahtutils.aht-group.com/monitoring"
     xmlns:qa  ="http://ahtutils.aht-group.com/qa"
+    xmlns:r   ="http://ahtutils.aht-group.com/report"
     xmlns:ts  ="http://ahtutils.aht-group.com/timeseries"
     xmlns:a   ="http://ahtutils.aht-group.com/access"
     xmlns:u   ="http://ahtutils.aht-group.com/utils"
@@ -95,6 +96,8 @@
         	    
         	    <xsd:element ref="sec:category" maxOccurs="1"/>
         	    <xsd:element ref="sec:staff" maxOccurs="1"/>
+        	    
+        	    <xsd:element ref="r:report" maxOccurs="1"/>
         	    
         	    <xsd:element ref="rev:entity" maxOccurs="1"/>
         	    

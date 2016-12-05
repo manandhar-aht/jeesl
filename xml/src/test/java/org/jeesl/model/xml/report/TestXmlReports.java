@@ -19,7 +19,13 @@ public class TestXmlReports extends AbstractXmlReportTest<Reports>
     	reports.setDir("testDir");
     	reports.setResources("reports.ahtutils-util/resources.xml");
     	reports.setTemplates("reports.ahtutils-util/templates.xml");
-    	reports.getReport().add(TestXmlReport.create(false));
+    	
+    	if(withChildren)
+    	{
+    		reports.getReport().add(TestXmlReport.create(false));
+    		reports.getReport().add(TestXmlReport.create(false));
+    	}
+    	
     	return reports;
     }
 	

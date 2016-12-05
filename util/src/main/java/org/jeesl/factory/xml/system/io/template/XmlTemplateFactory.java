@@ -1,6 +1,5 @@
 package org.jeesl.factory.xml.system.io.template;
 
-import org.jeesl.factory.xml.system.revision.XmlAttributeFactory;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
@@ -22,7 +21,7 @@ public class XmlTemplateFactory <L extends UtilsLang,D extends UtilsDescription,
 								DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
 								TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlAttributeFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlTemplateFactory.class);
 	
 	private Template q;
 	

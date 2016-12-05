@@ -1,6 +1,7 @@
 package org.jeesl.web.rest.system;
 
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
+import org.jeesl.factory.xml.system.io.report.XmlReportFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportsFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
@@ -49,6 +50,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<IMPLEMENTATION> cImplementation;
 
 	private XmlStatusFactory xfStatus;
+	private XmlReportFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION> xfReport;
 	
 //	private EjbLangFactory<L> efLang;
 //	private EjbDescriptionFactory<D> efDescription;

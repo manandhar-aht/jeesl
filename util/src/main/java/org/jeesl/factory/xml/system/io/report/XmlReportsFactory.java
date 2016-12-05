@@ -14,6 +14,5 @@ public class XmlReportsFactory
 		Reports xml = new Reports();
 		
 		return xml;
-		
 	}
 }

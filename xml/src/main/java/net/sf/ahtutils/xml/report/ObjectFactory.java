@@ -46,14 +46,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Reports }
-     * 
-     */
-    public Reports createReports() {
-        return new Reports();
-    }
-
-    /**
      * Create an instance of {@link Report }
      * 
      */
@@ -99,6 +91,14 @@ public class ObjectFactory {
      */
     public Jr createJr() {
         return new Jr();
+    }
+
+    /**
+     * Create an instance of {@link Reports }
+     * 
+     */
+    public Reports createReports() {
+        return new Reports();
     }
 
     /**

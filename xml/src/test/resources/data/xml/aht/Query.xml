@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<aht:query xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:acl="http://ahtutils.aht-group.com/access" xmlns:qa="http://ahtutils.aht-group.com/qa" xmlns:t="http://ahtutils.aht-group.com/text" xmlns:rev="http://www.jeesl.org/revision" xmlns:survey="http://ahtutils.aht-group.com/survey" xmlns:u="http://ahtutils.aht-group.com/utils" xmlns:aht="http://ahtutils.aht-group.com" lang="myLang">
+<aht:query xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:acl="http://ahtutils.aht-group.com/access" xmlns:qa="http://ahtutils.aht-group.com/qa" xmlns:r="http://ahtutils.aht-group.com/report" xmlns:t="http://ahtutils.aht-group.com/text" xmlns:rev="http://www.jeesl.org/revision" xmlns:survey="http://ahtutils.aht-group.com/survey" xmlns:u="http://ahtutils.aht-group.com/utils" xmlns:aht="http://ahtutils.aht-group.com" lang="myLang">
     <acl:role code="myCode" name="myName"/>
     <s:langs/>
     <s:status id="123" code="myCode" group="myGroup" label="myLabel" symbol="mySymbol" visible="true" image="test/green.png" style="myStyle" position="1"/>
@@ -7,6 +7,15 @@
     <qa:test id="123" name="myName" code="myCode" duration="120"/>
     <sec:category code="myCode" label="myLabel" position="1" visible="true" documentation="true"/>
     <sec:staff id="123"/>
+    <r:report id="myId" code="myCode" dir="testDir" ltr="true" rtl="false" test="myTestClass">
+        <r:media dir="testDir" type="myType">
+            <r:jr type="mr" name="testReportName" visible="true"/>
+        </r:media>
+        <r:media dir="testDir" type="myType">
+            <r:jr type="mr" name="testReportName" visible="true"/>
+        </r:media>
+        <example>testExampleXmlFile</example>
+    </r:report>
     <rev:entity id="123" code="myCode" position="2" visible="true"/>
     <survey:templates/>
     <survey:template id="123" code="myCode"/>

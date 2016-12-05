@@ -10,7 +10,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import net.sf.ahtutils.xml.status.Category;
 import net.sf.ahtutils.xml.status.Descriptions;
+import net.sf.ahtutils.xml.status.Langs;
 
 
 /**
@@ -30,9 +32,12 @@ import net.sf.ahtutils.xml.status.Descriptions;
  *             &lt;/restriction&gt;
  *           &lt;/simpleType&gt;
  *         &lt;/element&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}category"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="dir" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="ltr" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="rtl" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
@@ -48,7 +53,9 @@ import net.sf.ahtutils.xml.status.Descriptions;
 @XmlType(name = "", propOrder = {
     "media",
     "example",
-    "descriptions"
+    "langs",
+    "descriptions",
+    "category"
 })
 @XmlRootElement(name = "report")
 public class Report
@@ -61,9 +68,15 @@ public class Report
     @XmlElement(namespace = "", required = true)
     protected String example;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
+    protected Langs langs;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Descriptions descriptions;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
+    protected Category category;
     @XmlAttribute(name = "id")
     protected String id;
+    @XmlAttribute(name = "code")
+    protected String code;
     @XmlAttribute(name = "dir")
     protected String dir;
     @XmlAttribute(name = "ltr")
@@ -139,6 +152,34 @@ public class Report
     }
 
     /**
+     * Gets the value of the langs property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Langs }
+     *     
+     */
+    public Langs getLangs() {
+        return langs;
+    }
+
+    /**
+     * Sets the value of the langs property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Langs }
+     *     
+     */
+    public void setLangs(Langs value) {
+        this.langs = value;
+    }
+
+    public boolean isSetLangs() {
+        return (this.langs!= null);
+    }
+
+    /**
      * Gets the value of the descriptions property.
      * 
      * @return
@@ -167,6 +208,34 @@ public class Report
     }
 
     /**
+     * Gets the value of the category property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Category }
+     *     
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * Sets the value of the category property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Category }
+     *     
+     */
+    public void setCategory(Category value) {
+        this.category = value;
+    }
+
+    public boolean isSetCategory() {
+        return (this.category!= null);
+    }
+
+    /**
      * Gets the value of the id property.
      * 
      * @return
@@ -192,6 +261,34 @@ public class Report
 
     public boolean isSetId() {
         return (this.id!= null);
+    }
+
+    /**
+     * Gets the value of the code property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * Sets the value of the code property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public boolean isSetCode() {
+        return (this.code!= null);
     }
 
     /**

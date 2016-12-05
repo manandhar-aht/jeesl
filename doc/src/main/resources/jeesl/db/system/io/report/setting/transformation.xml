@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jeesl:container xmlns:us="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:un="http://ahtutils.aht-group.com/navigation" xmlns:jeesl="http://www.jeesl.org">
+<jeesl:container xmlns:us="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:un="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:jeesl="http://www.jeesl.org">
     <us:status code="none" visible="true" position="1">
         <us:langs>
             <us:lang key="en" translation="None"/>

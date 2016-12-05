@@ -1,6 +1,5 @@
 package org.jeesl.factory.xml.system.io.report;
 
-import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
@@ -9,15 +8,12 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
-import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.aht.Query;
-import net.sf.ahtutils.xml.report.Report;
+import net.sf.ahtutils.xml.report.XlsWorkbook;
 
-public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
+public class XmlXlsWorkbookFactory <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
 								WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
@@ -28,33 +24,24 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 								TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlReportFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlXlsWorkbookFactory.class);
 	
-	private Report q;
+	private XlsWorkbook q;
 	
-	private XmlCategoryFactory<CATEGORY,L,D> xfCategory;
-	private XmlLangsFactory<L> xfLangs;
-	private XmlDescriptionsFactory<D> xfDescriptions;
+	private XmlSheetsFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION> xfSheets;
 
-	public XmlReportFactory(Query q){this(q.getLang(), q.getReport());}
-	public XmlReportFactory(String localeCode, Report q)
+	public XmlXlsWorkbookFactory(String localeCode, XlsWorkbook q)
 	{
 		this.q=q;
-		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory<CATEGORY,L,D>(q.getCategory());}
-		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
-		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
+		if(q.isSetXlsSheets()){xfSheets = new XmlSheetsFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(localeCode,q.getXlsSheets());}
 	}
 	
-	public Report build(REPORT ejb)
+	public XlsWorkbook build(WORKBOOK workbook)
 	{
-		Report xml = new Report();
+		XlsWorkbook xml = new XlsWorkbook();
 		
-//		if(q.isSetId()){xml.setId(ejb.getId());}
-		
-		if(q.isSetCategory()){xml.setCategory(xfCategory.build(ejb.getCategory()));}	
-		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(ejb.getName()));}
-		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(ejb.getDescription()));}
-				
+		if(q.isSetXlsSheets()){xml.setXlsSheets(xfSheets.build(workbook));}
+						
 		return xml;
 	}
 }

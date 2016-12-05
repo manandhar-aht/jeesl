@@ -12,9 +12,12 @@ public interface JeeslIoReportRestExport
 	@GET @Path("/system/io/report/category") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemIoReportCategories();
 	
-	@GET @Path("/system/io/report/grouping") @Produces(MediaType.APPLICATION_XML)
-	Container exportSystemIoReportGrouping();
+	@GET @Path("/system/io/report/setting/filling") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemIoReportSettingFilling();
 	
-	@GET @Path("/system/io/report/colum/aggregation") @Produces(MediaType.APPLICATION_XML)
-	Container exportSystemIoReportColumAggegation();
+	@GET @Path("/system/io/report/setting/transformation") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemIoReportSettingTransformation();
+	
+	@GET @Path("/system/io/report/setting/implementation") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemIoReportSettingImplementation();
 }

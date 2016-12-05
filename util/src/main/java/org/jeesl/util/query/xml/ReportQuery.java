@@ -3,8 +3,11 @@ package org.jeesl.util.query.xml;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
+
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.report.Report;
+import net.sf.ahtutils.xml.report.XlsWorkbook;
 
 public class ReportQuery
 {
@@ -39,8 +42,16 @@ public class ReportQuery
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setCategory(XmlCategoryFactory.create(""));
+		xml.setXlsWorkbook(exportWorkbook());
 		
 		return xml;
 	}
 	
+	private static XlsWorkbook exportWorkbook()
+	{
+		XlsWorkbook xml = new XlsWorkbook();
+		
+		return xml;
+	}
 }

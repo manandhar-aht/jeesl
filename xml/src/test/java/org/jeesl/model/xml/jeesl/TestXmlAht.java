@@ -1,7 +1,7 @@
 package org.jeesl.model.xml.jeesl;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.finance.TestXmlCurrency;
+import org.jeesl.model.xml.domain.finance.TestXmlCurrency;
 import org.jeesl.model.xml.system.security.TestXmlUser;
 import org.jeesl.model.xml.system.status.TestXmlStatus;
 import org.slf4j.Logger;

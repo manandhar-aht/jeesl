@@ -32,18 +32,19 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	private Report q;
 	
-	private XmlCategoryFactory<CATEGORY,L,D> xfCategory;
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
+	private XmlCategoryFactory<CATEGORY,L,D> xfCategory;
+	private XmlXlsWorkbookFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION> xfWorkbook;
 
 	public XmlReportFactory(Query q){this(q.getLang(), q.getReport());}
 	public XmlReportFactory(String localeCode, Report q)
 	{
 		this.q=q;
-		
 		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory<CATEGORY,L,D>(q.getCategory());}
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
+		if(q.isSetXlsWorkbook()){xfWorkbook = new XmlXlsWorkbookFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(localeCode,q.getXlsWorkbook());}
 	}
 	
 	public Report build(REPORT report)
@@ -59,7 +60,7 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(report.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(report.getDescription()));}
 		
-		
+		if(q.isSetXlsWorkbook() && report.getWorkbook()!=null){xml.setXlsWorkbook(xfWorkbook.build(report.getWorkbook()));}
 		
 		return xml;
 	}

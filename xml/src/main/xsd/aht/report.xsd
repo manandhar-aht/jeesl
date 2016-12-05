@@ -30,9 +30,9 @@
 				<xsd:element ref="r:xlsWorkbook" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="id" type="xsd:string"/>
+			<xsd:attribute name="code" type="xsd:string"/>
 			<xsd:attribute name="position" type="xsd:int"/>
 			<xsd:attribute name="visible" type="xsd:boolean"/>
-			<xsd:attribute name="code" type="xsd:string"/>
 			<xsd:attribute name="dir" type="xsd:string"/>
 			<xsd:attribute name="ltr" type="xsd:boolean"/>
 			<xsd:attribute name="rtl" type="xsd:boolean"/>

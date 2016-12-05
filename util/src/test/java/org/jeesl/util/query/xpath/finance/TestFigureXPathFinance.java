@@ -1,8 +1,8 @@
 package org.jeesl.util.query.xpath.finance;
 
 import org.jeesl.AbstractJeeslUtilTest;
-import org.jeesl.model.xml.finance.TestXmlFigures;
-import org.jeesl.model.xml.finance.TestXmlFinance;
+import org.jeesl.model.xml.domain.finance.TestXmlFigures;
+import org.jeesl.model.xml.domain.finance.TestXmlFinance;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

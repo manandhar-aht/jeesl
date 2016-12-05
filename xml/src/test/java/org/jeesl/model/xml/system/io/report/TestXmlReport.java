@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.report;
+package org.jeesl.model.xml.system.io.report;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.status.TestXmlCategory;
@@ -21,6 +21,9 @@ public class TestXmlReport extends AbstractXmlReportTest<Report>
     	Report xml = new Report();
     	xml.setId("myId");
     	xml.setCode("myCode");
+    	xml.setPosition(1);
+    	xml.setVisible(true);
+    	
     	xml.setDir("testDir");
     	xml.setExample("testExampleXmlFile");
     	xml.getMedia().add(TestXmlMedia.create(false));

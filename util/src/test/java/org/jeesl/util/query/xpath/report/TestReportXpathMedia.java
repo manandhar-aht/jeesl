@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.AbstractJeeslUtilTest;
-import org.jeesl.model.xml.report.TestXmlMedia;
+import org.jeesl.model.xml.system.io.report.TestXmlMedia;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -2,12 +2,12 @@ package org.jeesl.model.xml.jeesl;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.qa.TestXmlTest;
-import org.jeesl.model.xml.report.TestXmlReport;
 import org.jeesl.model.xml.survey.TestXmlAnswer;
 import org.jeesl.model.xml.survey.TestXmlSurvey;
 import org.jeesl.model.xml.survey.TestXmlSurveys;
 import org.jeesl.model.xml.survey.TestXmlTemplate;
 import org.jeesl.model.xml.survey.TestXmlTemplates;
+import org.jeesl.model.xml.system.io.report.TestXmlReport;
 import org.jeesl.model.xml.system.revision.TestXmlEntity;
 import org.jeesl.model.xml.system.security.TestXmlCategory;
 import org.jeesl.model.xml.system.security.TestXmlStaff;

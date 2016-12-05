@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestExport;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestImport;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.util.query.xml.ReportQuery;
 import org.jeesl.util.query.xml.StatusQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<L> cL;
 	private final Class<D> cD;
 	private final Class<CATEGORY> cCategory;
+	private final Class<REPORT> cReport;
 	private final Class<FILLING> cFilling;
 	private final Class<TRANSFORMATION> cTransformation;
 	private final Class<IMPLEMENTATION> cImplementation;
@@ -55,18 +57,20 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 //	private EjbLangFactory<L> efLang;
 //	private EjbDescriptionFactory<D> efDescription;
 	
-	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
+	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
 	{
 		this.fReport=fReport;
 		this.cL=cL;
 		this.cD=cD;
 		
 		this.cCategory=cCategory;
+		this.cReport=cReport;
 		this.cFilling=cFilling;
 		this.cTransformation=cTransformation;
 		this.cImplementation=cImplementation;
 	
 		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
+		xfReport = new XmlReportFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(ReportQuery.get(ReportQuery.Key.exReport));
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -80,9 +84,9 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 					IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>>
 	IoReportRestService<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>
-			factory(JeeslIoReportFacade<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<FILLING> cFilling,final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
+			factory(JeeslIoReportFacade<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<FILLING> cFilling,final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
 	{
-		return new IoReportRestService<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(fReport,cL,cD,cCategory,cFilling,cTransformation,cImplementation);
+		return new IoReportRestService<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(fReport,cL,cD,cCategory,cReport,cFilling,cTransformation,cImplementation);
 	}
 	
 	@Override public Container exportSystemIoReportCategories() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cCategory)));}
@@ -99,7 +103,10 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	public Reports exportSystemIoReports()
 	{
 		Reports reports = XmlReportsFactory.build();
-		
+		for(REPORT report : fReport.all(cReport))
+		{
+			reports.getReport().add(xfReport.build(report));
+		}
 		return reports;
 	}
 	

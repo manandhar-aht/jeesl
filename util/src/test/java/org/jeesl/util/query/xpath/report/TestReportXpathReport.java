@@ -1,7 +1,7 @@
 package org.jeesl.util.query.xpath.report;
 
 import org.jeesl.AbstractJeeslUtilTest;
-import org.jeesl.model.xml.report.TestXmlReport;
+import org.jeesl.model.xml.system.io.report.TestXmlReport;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;

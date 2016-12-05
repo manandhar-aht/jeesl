@@ -40,20 +40,24 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 	public XmlReportFactory(String localeCode, Report q)
 	{
 		this.q=q;
+		
 		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory<CATEGORY,L,D>(q.getCategory());}
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 	}
 	
-	public Report build(REPORT ejb)
+	public Report build(REPORT report)
 	{
 		Report xml = new Report();
 		
 //		if(q.isSetId()){xml.setId(ejb.getId());}
+		if(q.isSetCode()){xml.setCode(report.getCode());}
+		if(q.isSetVisible()){xml.setVisible(report.isVisible());}
+		if(q.isSetPosition()){xml.setPosition(report.getPosition());}
 		
-		if(q.isSetCategory()){xml.setCategory(xfCategory.build(ejb.getCategory()));}	
-		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(ejb.getName()));}
-		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(ejb.getDescription()));}
+		if(q.isSetCategory()){xml.setCategory(xfCategory.build(report.getCategory()));}	
+		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(report.getName()));}
+		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(report.getDescription()));}
 				
 		return xml;
 	}

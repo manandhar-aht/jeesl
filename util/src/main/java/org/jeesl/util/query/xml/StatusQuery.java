@@ -15,7 +15,6 @@ import net.sf.ahtutils.xml.status.Scopes;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.status.SubType;
 import net.sf.ahtutils.xml.status.Type;
-import net.sf.ahtutils.xml.symbol.Graphic;
 
 public class StatusQuery
 {

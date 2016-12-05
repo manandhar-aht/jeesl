@@ -270,6 +270,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XlsColumnGroup }
+     * 
+     */
+    public XlsColumnGroup createXlsColumnGroup() {
+        return new XlsColumnGroup();
+    }
+
+    /**
      * Create an instance of {@link ImportStructure }
      * 
      */

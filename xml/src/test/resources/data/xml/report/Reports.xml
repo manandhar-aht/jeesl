@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <r:reports xmlns:r="http://ahtutils.aht-group.com/report" xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" dir="testDir" resources="reports.ahtutils-util/resources.xml" templates="reports.ahtutils-util/templates.xml">
-    <r:report id="myId" code="myCode" dir="testDir" ltr="true" rtl="false" test="myTestClass">
+    <r:report id="myId" visible="true" position="1" code="myCode" dir="testDir" ltr="true" rtl="false" test="myTestClass">
         <r:media dir="testDir" type="myType">
             <r:jr type="mr" name="testReportName" visible="true"/>
         </r:media>
@@ -9,7 +9,7 @@
         </r:media>
         <example>testExampleXmlFile</example>
     </r:report>
-    <r:report id="myId" code="myCode" dir="testDir" ltr="true" rtl="false" test="myTestClass">
+    <r:report id="myId" visible="true" position="1" code="myCode" dir="testDir" ltr="true" rtl="false" test="myTestClass">
         <r:media dir="testDir" type="myType">
             <r:jr type="mr" name="testReportName" visible="true"/>
         </r:media>

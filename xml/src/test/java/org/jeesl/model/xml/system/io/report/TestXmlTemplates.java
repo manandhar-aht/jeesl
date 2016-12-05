@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.report;
+package org.jeesl.model.xml.system.io.report;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;

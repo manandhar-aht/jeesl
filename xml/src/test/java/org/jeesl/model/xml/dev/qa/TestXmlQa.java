@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.qa;
+package org.jeesl.model.xml.dev.qa;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.survey.TestXmlSurvey;

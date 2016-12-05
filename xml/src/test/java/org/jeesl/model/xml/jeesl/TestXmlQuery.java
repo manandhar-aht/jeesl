@@ -1,7 +1,7 @@
 package org.jeesl.model.xml.jeesl;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.qa.TestXmlTest;
+import org.jeesl.model.xml.dev.qa.TestXmlTest;
 import org.jeesl.model.xml.survey.TestXmlAnswer;
 import org.jeesl.model.xml.survey.TestXmlSurvey;
 import org.jeesl.model.xml.survey.TestXmlSurveys;

@@ -35,10 +35,11 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}category"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsWorkbook"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="dir" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="ltr" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
@@ -57,7 +58,8 @@ import net.sf.ahtutils.xml.status.Langs;
     "example",
     "langs",
     "descriptions",
-    "category"
+    "category",
+    "xlsWorkbook"
 })
 @XmlRootElement(name = "report")
 public class Report
@@ -75,12 +77,14 @@ public class Report
     protected Descriptions descriptions;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Category category;
+    @XmlElement(required = true)
+    protected XlsWorkbook xlsWorkbook;
     @XmlAttribute(name = "id")
     protected String id;
-    @XmlAttribute(name = "visible")
-    protected Boolean visible;
     @XmlAttribute(name = "position")
     protected Integer position;
+    @XmlAttribute(name = "visible")
+    protected Boolean visible;
     @XmlAttribute(name = "code")
     protected String code;
     @XmlAttribute(name = "dir")
@@ -242,6 +246,34 @@ public class Report
     }
 
     /**
+     * Gets the value of the xlsWorkbook property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XlsWorkbook }
+     *     
+     */
+    public XlsWorkbook getXlsWorkbook() {
+        return xlsWorkbook;
+    }
+
+    /**
+     * Sets the value of the xlsWorkbook property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XlsWorkbook }
+     *     
+     */
+    public void setXlsWorkbook(XlsWorkbook value) {
+        this.xlsWorkbook = value;
+    }
+
+    public boolean isSetXlsWorkbook() {
+        return (this.xlsWorkbook!= null);
+    }
+
+    /**
      * Gets the value of the id property.
      * 
      * @return
@@ -267,38 +299,6 @@ public class Report
 
     public boolean isSetId() {
         return (this.id!= null);
-    }
-
-    /**
-     * Gets the value of the visible property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public boolean isVisible() {
-        return visible;
-    }
-
-    /**
-     * Sets the value of the visible property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setVisible(boolean value) {
-        this.visible = value;
-    }
-
-    public boolean isSetVisible() {
-        return (this.visible!= null);
-    }
-
-    public void unsetVisible() {
-        this.visible = null;
     }
 
     /**
@@ -331,6 +331,38 @@ public class Report
 
     public void unsetPosition() {
         this.position = null;
+    }
+
+    /**
+     * Gets the value of the visible property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isVisible() {
+        return visible;
+    }
+
+    /**
+     * Sets the value of the visible property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setVisible(boolean value) {
+        this.visible = value;
+    }
+
+    public boolean isSetVisible() {
+        return (this.visible!= null);
+    }
+
+    public void unsetVisible() {
+        this.visible = null;
     }
 
     /**

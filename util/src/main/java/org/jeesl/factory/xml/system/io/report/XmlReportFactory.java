@@ -58,7 +58,9 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetCategory()){xml.setCategory(xfCategory.build(report.getCategory()));}	
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(report.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(report.getDescription()));}
-				
+		
+		
+		
 		return xml;
 	}
 }

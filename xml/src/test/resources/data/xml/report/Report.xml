@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<r:report xmlns:r="http://ahtutils.aht-group.com/report" xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" id="myId" visible="true" position="1" code="myCode" dir="testDir" ltr="true" rtl="false" test="myTestClass">
+<r:report xmlns:r="http://ahtutils.aht-group.com/report" xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" id="myId" position="1" visible="true" code="myCode" dir="testDir" ltr="true" rtl="false" test="myTestClass">
     <r:media dir="testDir" type="myType">
         <r:jr type="mr" name="testReportName" visible="true"/>
     </r:media>
@@ -10,4 +10,5 @@
     <s:langs/>
     <s:descriptions/>
     <s:category id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
+    <r:xlsWorkbook code="myCode"/>
 </r:report>

@@ -27,6 +27,7 @@
 				<xsd:element ref="us:langs" maxOccurs="1"/>
 				<xsd:element ref="us:descriptions" maxOccurs="1"/>
 				<xsd:element ref="us:category" maxOccurs="1"/>
+				<xsd:element ref="r:xlsWorkbook" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="id" type="xsd:string"/>
 			<xsd:attribute name="position" type="xsd:int"/>

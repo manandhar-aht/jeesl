@@ -94,6 +94,94 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XlsWorkbook }
+     * 
+     */
+    public XlsWorkbook createXlsWorkbook() {
+        return new XlsWorkbook();
+    }
+
+    /**
+     * Create an instance of {@link XlsSheets }
+     * 
+     */
+    public XlsSheets createXlsSheets() {
+        return new XlsSheets();
+    }
+
+    /**
+     * Create an instance of {@link XlsSheet }
+     * 
+     */
+    public XlsSheet createXlsSheet() {
+        return new XlsSheet();
+    }
+
+    /**
+     * Create an instance of {@link XlsMultiColumn }
+     * 
+     */
+    public XlsMultiColumn createXlsMultiColumn() {
+        return new XlsMultiColumn();
+    }
+
+    /**
+     * Create an instance of {@link XlsColumn }
+     * 
+     */
+    public XlsColumn createXlsColumn() {
+        return new XlsColumn();
+    }
+
+    /**
+     * Create an instance of {@link XlsTransformation }
+     * 
+     */
+    public XlsTransformation createXlsTransformation() {
+        return new XlsTransformation();
+    }
+
+    /**
+     * Create an instance of {@link DataAssociation }
+     * 
+     */
+    public DataAssociation createDataAssociation() {
+        return new DataAssociation();
+    }
+
+    /**
+     * Create an instance of {@link XlsColumns }
+     * 
+     */
+    public XlsColumns createXlsColumns() {
+        return new XlsColumns();
+    }
+
+    /**
+     * Create an instance of {@link XlsColumnGroup }
+     * 
+     */
+    public XlsColumnGroup createXlsColumnGroup() {
+        return new XlsColumnGroup();
+    }
+
+    /**
+     * Create an instance of {@link ImportStructure }
+     * 
+     */
+    public ImportStructure createImportStructure() {
+        return new ImportStructure();
+    }
+
+    /**
+     * Create an instance of {@link DataAssociations }
+     * 
+     */
+    public DataAssociations createDataAssociations() {
+        return new DataAssociations();
+    }
+
+    /**
      * Create an instance of {@link Reports }
      * 
      */
@@ -203,94 +291,6 @@ public class ObjectFactory {
      */
     public XlsDefinition createXlsDefinition() {
         return new XlsDefinition();
-    }
-
-    /**
-     * Create an instance of {@link XlsWorkbook }
-     * 
-     */
-    public XlsWorkbook createXlsWorkbook() {
-        return new XlsWorkbook();
-    }
-
-    /**
-     * Create an instance of {@link XlsSheets }
-     * 
-     */
-    public XlsSheets createXlsSheets() {
-        return new XlsSheets();
-    }
-
-    /**
-     * Create an instance of {@link XlsSheet }
-     * 
-     */
-    public XlsSheet createXlsSheet() {
-        return new XlsSheet();
-    }
-
-    /**
-     * Create an instance of {@link XlsMultiColumn }
-     * 
-     */
-    public XlsMultiColumn createXlsMultiColumn() {
-        return new XlsMultiColumn();
-    }
-
-    /**
-     * Create an instance of {@link XlsColumn }
-     * 
-     */
-    public XlsColumn createXlsColumn() {
-        return new XlsColumn();
-    }
-
-    /**
-     * Create an instance of {@link XlsTransformation }
-     * 
-     */
-    public XlsTransformation createXlsTransformation() {
-        return new XlsTransformation();
-    }
-
-    /**
-     * Create an instance of {@link DataAssociation }
-     * 
-     */
-    public DataAssociation createDataAssociation() {
-        return new DataAssociation();
-    }
-
-    /**
-     * Create an instance of {@link XlsColumns }
-     * 
-     */
-    public XlsColumns createXlsColumns() {
-        return new XlsColumns();
-    }
-
-    /**
-     * Create an instance of {@link XlsColumnGroup }
-     * 
-     */
-    public XlsColumnGroup createXlsColumnGroup() {
-        return new XlsColumnGroup();
-    }
-
-    /**
-     * Create an instance of {@link ImportStructure }
-     * 
-     */
-    public ImportStructure createImportStructure() {
-        return new ImportStructure();
-    }
-
-    /**
-     * Create an instance of {@link DataAssociations }
-     * 
-     */
-    public DataAssociations createDataAssociations() {
-        return new DataAssociations();
     }
 
 }

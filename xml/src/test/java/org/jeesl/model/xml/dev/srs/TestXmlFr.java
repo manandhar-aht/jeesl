@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.srs;
+package org.jeesl.model.xml.dev.srs;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.text.TestXmlDescription;

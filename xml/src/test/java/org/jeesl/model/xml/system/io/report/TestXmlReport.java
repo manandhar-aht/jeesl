@@ -37,6 +37,7 @@ public class TestXmlReport extends AbstractXmlReportTest<Report>
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
     		xml.setCategory(TestXmlCategory.create(false));
+    		xml.setXlsWorkbook(TestXmlXlsWorkbook.create(false));
     	}
     	
     	return xml;

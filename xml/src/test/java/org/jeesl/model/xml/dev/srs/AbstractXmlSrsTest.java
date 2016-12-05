@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.srs;
+package org.jeesl.model.xml.dev.srs;
 
 import org.jeesl.AbstractXmlTest;
 import org.jeesl.model.xml.system.core.AbstractXmlSystemTest;

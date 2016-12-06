@@ -217,6 +217,8 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		sheet = fReport.find(cSheet, sheet);
 		reloadSheet();
 		uiHelper.check(sheet);
+		group=null;uiHelper.check(group);
+		column=null;
 	}
 	
 	private void reloadSheet()
@@ -275,6 +277,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		group = fReport.find(cGroup, group);
 		reloadGroup();
 		uiHelper.check(group);
+		column=null;
 	}
 	
 	private void reloadGroup()
@@ -362,6 +365,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	protected void reorderReports() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cReport, reports);Collections.sort(reports, comparatorReport);}
 	protected void reorderSheets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cSheet, sheets);Collections.sort(sheets, comparatorSheet);}
 	protected void reorderGroups() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cGroup, groups);Collections.sort(groups, comparatorGroup);}
+	protected void reorderColumns() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cColumn, columns);Collections.sort(columns, comparatorColumn);}
 	
 	protected void updatePerformed(){}	
 	

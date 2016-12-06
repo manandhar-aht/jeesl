@@ -1,5 +1,9 @@
 package org.jeesl.factory.ejb.system.io.report;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
@@ -37,6 +41,7 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 		try
 		{
 			ejb = cGroup.newInstance();
+			ejb.setCode(UUID.randomUUID().toString());
 			ejb.setSheet(sheet);
 			ejb.setPosition(1);
 			ejb.setVisible(false);
@@ -45,5 +50,29 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public static <L extends UtilsLang,D extends UtilsDescription,
+					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
+					REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+					WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+					SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+					GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+					COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
+					FILLING extends UtilsStatus<FILLING,L,D>,
+					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
+			Map<GROUP,Integer> toMapVisibleGroupSize(SHEET sheet)
+	{
+		Map<GROUP,Integer> map = new HashMap<GROUP,Integer>();
+		for(GROUP g : sheet.getGroups())
+		{
+			int size=0;
+			for(COLUMN c : g.getColumns())
+			{
+				if(c.isVisible()){size++;}
+			}
+			map.put(g,size);
+		}
+		return map;
 	}
 }

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -36,10 +38,13 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	private final Class<REPORT> cReport;
 	protected final String localeCode;
 	
-	protected JsonFlatFigures flats; public JsonFlatFigures getFlats() {return flats;}
 	protected List<String> headers; public List<String> getHeaders() {return headers;}
+	protected Map<GROUP,Integer> mapGroupChilds; public Map<GROUP, Integer> getMapGroupChilds() {return mapGroupChilds;}
+
 	protected REPORT ioReport; public REPORT getIoReport() {return ioReport;}
 	protected SHEET ioSheet; public SHEET getIoSheet() {return ioSheet;}
+	
+	protected JsonFlatFigures flats; public JsonFlatFigures getFlats() {return flats;}
 	
 	private Comparator<SHEET> comparatorSheet;
 
@@ -65,6 +70,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 				{
 					Collections.sort(ioReport.getWorkbook().getSheets(), comparatorSheet);
 					ioSheet = fReport.load(ioReport.getWorkbook().getSheets().get(0), true);
+					mapGroupChilds = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
 				}
 			}
 			catch (UtilsNotFoundException e) {logger.error(e.getMessage());}

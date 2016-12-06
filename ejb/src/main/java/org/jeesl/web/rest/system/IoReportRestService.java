@@ -4,6 +4,7 @@ import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportsFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
+import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -23,6 +24,7 @@ import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
@@ -94,11 +96,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	@Override public Container exportSystemIoReportSettingTransformation() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cTransformation)));}
 	@Override public Container exportSystemIoReportSettingImplementation() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cImplementation)));}
 
-	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
-	@Override public DataUpdate importSystemIoReportSettingFilling(Container types){return importStatus(cFilling,cL,cD,types,null);}
-	@Override public DataUpdate importSystemIoReportSettingTransformation(Container types){return importStatus(cTransformation,cL,cD,types,null);}
-	@Override public DataUpdate importSystemIoReportSettingImplementation(Container types){return importStatus(cImplementation,cL,cD,types,null);}
-	
 	@Override
 	public Reports exportSystemIoReports()
 	{
@@ -109,6 +106,21 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		}
 		return reports;
 	}
+	
+	
+	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
+	@Override public DataUpdate importSystemIoReportSettingFilling(Container types){return importStatus(cFilling,cL,cD,types,null);}
+	@Override public DataUpdate importSystemIoReportSettingTransformation(Container types){return importStatus(cTransformation,cL,cD,types,null);}
+	@Override public DataUpdate importSystemIoReportSettingImplementation(Container types){return importStatus(cImplementation,cL,cD,types,null);}
+	
+	@Override public DataUpdate importSystemIoReports(Reports reports)
+	{
+		DataUpdateTracker dut = new DataUpdateTracker(true);
+		dut.setType(XmlTypeFactory.build(cReport.getName(),"DB Import"));
+		
+		return dut.toDataUpdate();
+	}
+	
 	
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Container container, Class<P> clParent)

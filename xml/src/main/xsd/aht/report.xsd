@@ -293,6 +293,7 @@
 	            <xsd:element ref="r:columnGroup" maxOccurs="unbounded"/>
 	           	<xsd:element ref="r:importStructure" maxOccurs="1"/>
 			</xsd:sequence>
+			<xsd:attribute name="code" type="xsd:string"/>
 			<xsd:attribute name="position" type="xsd:int"/>
 			<xsd:attribute name="visible" type="xsd:boolean"/>
 			<xsd:attribute name="query" type="xsd:string"/>
@@ -306,6 +307,7 @@
 				<xsd:element ref="us:descriptions" maxOccurs="1"/>
 				<xsd:element ref="r:xlsColumn" maxOccurs="unbounded"/>
 			</xsd:sequence>
+			<xsd:attribute name="code" type="xsd:string"/>
 			<xsd:attribute name="position" type="xsd:int"/>
 			<xsd:attribute name="visible" type="xsd:boolean"/>
 			<xsd:attribute name="query" type="xsd:string"/>
@@ -327,6 +329,7 @@
 				<xsd:element ref="r:xlsTransformation" maxOccurs="1"/>
 				<xsd:element ref="r:dataAssociation" maxOccurs="1"/>
 			</xsd:sequence>
+			<xsd:attribute name="code" type="xsd:string"/>
 			<xsd:attribute name="position" type="xsd:int"/>
 			<xsd:attribute name="visible" type="xsd:boolean"/>
 			<xsd:attribute name="column" type="xsd:string"/>

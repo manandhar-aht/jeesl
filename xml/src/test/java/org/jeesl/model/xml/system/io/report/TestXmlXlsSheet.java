@@ -16,6 +16,7 @@ public class TestXmlXlsSheet extends AbstractXmlReportTest<XlsSheet>
     public XlsSheet build(boolean withChildren)
     {
     	XlsSheet xml = new XlsSheet();
+    	xml.setCode("myCode");
     	xml.setPosition(1);
     	xml.setVisible(true);
     	xml.setQuery("myQuery");

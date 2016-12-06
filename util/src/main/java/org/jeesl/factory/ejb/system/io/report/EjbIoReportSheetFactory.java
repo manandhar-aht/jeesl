@@ -1,5 +1,7 @@
 package org.jeesl.factory.ejb.system.io.report;
 
+import java.util.UUID;
+
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
@@ -37,6 +39,7 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 		try
 		{
 			ejb = cSheet.newInstance();
+			ejb.setCode(UUID.randomUUID().toString());
 			ejb.setWorkbook(workbook);
 			ejb.setPosition(1);
 			ejb.setVisible(false);

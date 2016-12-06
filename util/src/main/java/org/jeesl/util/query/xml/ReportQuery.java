@@ -63,6 +63,7 @@ public class ReportQuery
 	private static XlsSheet exportSheet()
 	{
 		XlsSheet xml = new XlsSheet();
+		xml.setCode("");
 		xml.setPosition(0);
 		xml.setVisible(true);
 		
@@ -78,6 +79,7 @@ public class ReportQuery
 	private static ColumnGroup exportColumnGroup()
 	{
 		ColumnGroup xml = new ColumnGroup();
+		xml.setCode("");
 		xml.setPosition(0);
 		xml.setVisible(true);
 		
@@ -91,6 +93,7 @@ public class ReportQuery
 	private static XlsColumn exportColumn()
 	{
 		XlsColumn xml = new XlsColumn();
+		xml.setCode("");
 		xml.setPosition(0);
 		xml.setVisible(true);
 		

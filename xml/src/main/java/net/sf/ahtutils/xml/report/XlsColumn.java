@@ -27,6 +27,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsTransformation"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}dataAssociation"/&gt;
  *       &lt;/sequence&gt;
+ *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="column" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -62,6 +63,8 @@ public class XlsColumn implements Serializable
     protected XlsTransformation xlsTransformation;
     @XmlElement(required = true)
     protected DataAssociation dataAssociation;
+    @XmlAttribute(name = "code")
+    protected String code;
     @XmlAttribute(name = "position")
     protected Integer position;
     @XmlAttribute(name = "visible")
@@ -189,6 +192,34 @@ public class XlsColumn implements Serializable
 
     public boolean isSetDataAssociation() {
         return (this.dataAssociation!= null);
+    }
+
+    /**
+     * Gets the value of the code property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * Sets the value of the code property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public boolean isSetCode() {
+        return (this.code!= null);
     }
 
     /**

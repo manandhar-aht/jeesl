@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
@@ -215,6 +216,16 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(sheet));}
 		sheet = fReport.find(cSheet, sheet);
+		if(sheet.getCode()==null)
+		{
+			try
+			{
+				sheet.setCode(UUID.randomUUID().toString());
+				sheet = fReport.save(sheet);
+			}
+			catch (UtilsConstraintViolationException e) {logger.error(e.getMessage());}
+			catch (UtilsLockingException e) {logger.error(e.getMessage());}
+		}
 		reloadSheet();
 		uiHelper.check(sheet);
 		group=null;uiHelper.check(group);
@@ -275,6 +286,16 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(group));}
 		group = fReport.find(cGroup, group);
+		if(group.getCode()==null)
+		{
+			try
+			{
+				group.setCode(UUID.randomUUID().toString());
+				group = fReport.save(group);
+			}
+			catch (UtilsConstraintViolationException e) {logger.error(e.getMessage());}
+			catch (UtilsLockingException e) {logger.error(e.getMessage());}
+		}
 		reloadGroup();
 		uiHelper.check(group);
 		column=null;
@@ -322,6 +343,16 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	public void selectColumn()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(column));}
+		if(column.getCode()==null)
+		{
+			try
+			{
+				column.setCode(UUID.randomUUID().toString());
+				column = fReport.save(column);
+			}
+			catch (UtilsConstraintViolationException e) {logger.error(e.getMessage());}
+			catch (UtilsLockingException e) {logger.error(e.getMessage());}
+		}
 		reloadColumn();
 	}
 	

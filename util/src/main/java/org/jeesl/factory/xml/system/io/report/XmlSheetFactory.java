@@ -42,7 +42,6 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 	public XmlSheetFactory(String localeCode, XlsSheet q)
 	{
 		this.q=q;
-
 		if(getLangs(q)!=null){xfLangs = new XmlLangsFactory<L>(getLangs(q));}
 		if(getDescriptions(q)!=null){xfDescriptions = new XmlDescriptionsFactory<D>(getDescriptions(q));}
 		if(getColumnGroup(q)!=null){xfGroup = new XmlColumnGroupFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(localeCode,getColumnGroup(q));}
@@ -51,6 +50,10 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 	public XlsSheet build(SHEET sheet)
 	{
 		XlsSheet xml = new XlsSheet();
+		
+		if(q.isSetCode()){xml.setCode(sheet.getCode());}
+		if(q.isSetVisible()){xml.setVisible(sheet.isVisible());}
+		if(q.isSetPosition()){xml.setPosition(sheet.getPosition());}
 		
 		if(getLangs(q)!=null){xml.getContent().add(xfLangs.getUtilsLangs(sheet.getName()));}
 		if(getDescriptions(q)!=null){xml.getContent().add(xfDescriptions.create(sheet.getDescription()));}

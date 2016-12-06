@@ -46,6 +46,7 @@ public class XmlColumnGroupFactory <L extends UtilsLang,D extends UtilsDescripti
 	{
 		ColumnGroup xml = new ColumnGroup();
 		
+		if(q.isSetCode()){xml.setCode(group.getCode());}
 		if(q.isSetVisible()){xml.setVisible(group.isVisible());}
 		if(q.isSetPosition()){xml.setPosition(group.getPosition());}
 		

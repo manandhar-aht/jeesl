@@ -44,6 +44,7 @@ public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 	{
 		XlsColumn xml = new XlsColumn();
 		
+		if(q.isSetCode()){xml.setCode(column.getCode());}
 		if(q.isSetVisible()){xml.setVisible(column.isVisible());}
 		if(q.isSetPosition()){xml.setPosition(column.getPosition());}
 		

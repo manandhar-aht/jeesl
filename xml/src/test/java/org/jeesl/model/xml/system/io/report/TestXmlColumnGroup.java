@@ -18,6 +18,7 @@ public class TestXmlColumnGroup extends AbstractXmlReportTest<ColumnGroup>
     public ColumnGroup build(boolean withChildren)
     {
     	ColumnGroup xml = new ColumnGroup();
+    	xml.setCode("myCode");
     	xml.setPosition(1);
     	xml.setVisible(true);
     	

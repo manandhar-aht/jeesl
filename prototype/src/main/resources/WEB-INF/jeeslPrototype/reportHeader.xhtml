@@ -1,53 +1,27 @@
 <ui:composition
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+ 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
 >
+	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 	
 	<p:columnGroup type="header">
+	
 		<p:row>
-			<p:column colspan="2" headerText="#{appLabelBean.entities['MeisProgram'][localeCode].lang}" />
-			<p:column colspan="7" headerText="#{appLabelBean.entities['MeisProject'][localeCode].lang}" />
-			<p:column colspan="1" headerText="Budget" />
-			<p:column colspan="5" headerText="Contract" />
-			<p:column colspan="5" headerText="Invoices" />
-			<p:column colspan="5" headerText="Payments" />
+			<ui:repeat var="g" value="#{report.ioSheet.groups}">
+				<p:column colspan="#{report.mapGroupChilds[g]}" headerText="#{g.name[loc].lang}" />
+			</ui:repeat>
 		</p:row>
 		<p:row>
-			<p:column colspan="1" headerText="#{appLabelBean.labels['MeisProgram']['code'][localeCode].lang}"/>
-			<p:column colspan="1" headerText="#{appLabelBean.labels['MeisProgram']['name'][localeCode].lang}"/>
-
-			<p:column colspan="1" headerText="#{appLabelBean.labels['MeisProject']['code'][localeCode].lang}"/>
-			<p:column colspan="1" headerText="#{appLabelBean.labels['MeisProject']['name'][localeCode].lang}"/>
-			<p:column colspan="1" headerText="#{appLabelBean.entities['MeisDistrict'][localeCode].lang}" />
-			<p:column colspan="1" headerText="#{appLabelBean.entities['MeisSector'][localeCode].lang}" />
-
-			<p:column colspan="1" headerText="#{appLabelBean.labels['MeisProject']['typeMain'][localeCode].lang}"/>
-			<p:column colspan="1" headerText="#{appLabelBean.labels['MeisProject']['type'][localeCode].lang}"/>
-			<p:column colspan="1" headerText="#{appLabelBean.labels['MeisProject']['typeSecond'][localeCode].lang}"/>
-
-			<p:column colspan="1" headerText=""/>
-			
-			<p:column colspan="1" headerText="Q1"/>
-			<p:column colspan="1" headerText="Q2"/>
-			<p:column colspan="1" headerText="Q3"/>
-			<p:column colspan="1" headerText="Q4"/>
-			<p:column colspan="1" headerText="Total"/>
-			
-			<p:column colspan="1" headerText="Q1"/>
-			<p:column colspan="1" headerText="Q2"/>
-			<p:column colspan="1" headerText="Q3"/>
-			<p:column colspan="1" headerText="Q4"/>
-			<p:column colspan="1" headerText="Total"/>
-			
-			<p:column colspan="1" headerText="Q1"/>
-			<p:column colspan="1" headerText="Q2"/>
-			<p:column colspan="1" headerText="Q3"/>
-			<p:column colspan="1" headerText="Q4"/>
-			<p:column colspan="1" headerText="Total"/>
-
+			<ui:repeat var="g" value="#{report.ioSheet.groups}">
+				<ui:repeat var="c" value="#{g.columns}">
+					<p:column colspan="1" headerText="#{c.name[loc].lang}" />
+				</ui:repeat>
+			</ui:repeat>
 		</p:row>
+	
 	</p:columnGroup>
 </ui:composition>

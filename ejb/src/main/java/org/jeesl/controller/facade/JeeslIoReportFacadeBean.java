@@ -43,12 +43,24 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		this.cGroup=cGroup;
 	}
 	
-	@Override public REPORT load(REPORT report)
+	@Override public REPORT load(REPORT report, boolean recursive)
 	{
 		report = em.find(cReport, report.getId());
 		if(report.getWorkbook()!=null)
 		{
 			report.getWorkbook().getSheets().size();
+			
+			if(recursive)
+			{
+				for(SHEET sheet : report.getWorkbook().getSheets())
+				{
+					for(GROUP group : sheet.getGroups())
+					{
+						group.getColumns().size();
+					}
+				}
+			}
+			
 		}
 		return report;
 	}

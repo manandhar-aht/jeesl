@@ -24,7 +24,7 @@ public interface JeeslIoReportFacade <L extends UtilsLang,D extends UtilsDescrip
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 			extends UtilsFacade
 {	
-	REPORT load(REPORT report);
+	REPORT load(REPORT report, boolean recursive);
 	SHEET load(SHEET sheet);
 	GROUP load(GROUP group);
 	

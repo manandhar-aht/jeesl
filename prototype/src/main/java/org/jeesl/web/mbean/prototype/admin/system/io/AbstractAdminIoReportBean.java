@@ -155,7 +155,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 			catch (UtilsConstraintViolationException e) {logger.error(e.getMessage());}
 			catch (UtilsLockingException e) {logger.error(e.getMessage());}
 		}
-		report = fReport.load(report);
+		report = fReport.load(report,false);
 		sheets = report.getWorkbook().getSheets();
 		
 		Collections.sort(sheets, comparatorSheet);
@@ -369,6 +369,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	
 	protected void updatePerformed(){}	
 	
+	@SuppressWarnings("rawtypes")
 	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{
 		uiAllowSave = jsfSecurityHandler.allow(actionDeveloper);

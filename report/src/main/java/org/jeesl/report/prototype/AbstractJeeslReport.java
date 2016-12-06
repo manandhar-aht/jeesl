@@ -49,7 +49,11 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	{
 		if(fReport!=null)
 		{
-			try {io = fReport.fByCode(cReport,c.getSimpleName());}
+			try
+			{
+				io = fReport.fByCode(cReport,c.getSimpleName());
+				io = fReport.load(io,true);
+			}
 			catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 		}
 	}

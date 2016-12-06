@@ -20,5 +20,6 @@ public interface EjbWithIoReport<L extends UtilsLang,D extends UtilsDescription,
 								FILLING extends UtilsStatus<FILLING,L,D>,
 								TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 {
-	REPORT getIo();
+	REPORT getIoReport();
+	SHEET getIoSheet();
 }

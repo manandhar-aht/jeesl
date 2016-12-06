@@ -1,6 +1,8 @@
 package org.jeesl.report.prototype;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
@@ -10,6 +12,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.model.json.JsonFlatFigures;
+import org.jeesl.util.comparator.ejb.system.io.report.IoReportSheetComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,12 +38,17 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	
 	protected JsonFlatFigures flats; public JsonFlatFigures getFlats() {return flats;}
 	protected List<String> headers; public List<String> getHeaders() {return headers;}
-	protected REPORT io; public REPORT getIo() {return io;}
+	protected REPORT ioReport; public REPORT getIoReport() {return ioReport;}
+	protected SHEET ioSheet; public SHEET getIoSheet() {return ioSheet;}
+	
+	private Comparator<SHEET> comparatorSheet;
 
 	public AbstractJeeslReport(final Class<REPORT> cReport, String localeCode)
 	{
 		this.cReport=cReport;
 		this.localeCode=localeCode;
+		
+		comparatorSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION>().factory(IoReportSheetComparator.Type.position);
 		
 		buildHeaders();
 	}
@@ -51,8 +59,13 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		{
 			try
 			{
-				io = fReport.fByCode(cReport,c.getSimpleName());
-				io = fReport.load(io,true);
+				ioReport = fReport.fByCode(cReport,c.getSimpleName());
+				ioReport = fReport.load(ioReport,false);
+				if(ioReport.getWorkbook()!=null && !ioReport.getWorkbook().getSheets().isEmpty())
+				{
+					Collections.sort(ioReport.getWorkbook().getSheets(), comparatorSheet);
+					ioSheet = fReport.load(ioReport.getWorkbook().getSheets().get(0), true);
+				}
 			}
 			catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 		}

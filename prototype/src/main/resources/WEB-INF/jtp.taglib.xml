@@ -14,4 +14,8 @@
         <tag-name>statusSymbolizer</tag-name>
         <source>jeeslPrototype/statusSymbolizer.xhtml</source>
     </tag>
+    <tag>
+        <tag-name>reportHeader</tag-name>
+        <source>jeeslPrototype/reportHeader.xhtml</source>
+    </tag>
 </facelet-taglib>

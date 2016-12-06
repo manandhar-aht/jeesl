@@ -32,15 +32,13 @@
 							<p:ajax event="rowSelect" update=":#{cc.id}:fReport :#{cc.id}:sSheet :#{cc.id}:sGroup :#{cc.id}:row2" listener="#{cc.attrs.bean.selectReport()}"/>
 							<p:column rendered="true">  
 								<h:outputText value="#{r.category.position}.#{r.position}"/>
+								<aup:iconCheckmark value="#{r.visible}"/>
 				         </p:column>
 				         <p:column headerText="#{msg.aupCategory}">  
 								<h:outputText value="#{r.category.name[userBean.localeCode].lang}"/>
 				         </p:column>
 				         <p:column headerText="#{msg.jeeslIoReport}">  
 								<h:outputText value="#{r.name[userBean.localeCode].lang}"/>
-				         </p:column>
-							<p:column styleClass="aupPfDtColCentered">  
-								<aup:iconCheckmark value="#{r.visible}"/>
 				         </p:column>
 				   	</p:dataTable>
 					</h:form>
@@ -79,6 +77,7 @@
 							<p:ajax event="rowSelect" update=":#{cc.id}:fSheet :#{cc.id}:sGroup :#{cc.id}:row2" listener="#{cc.attrs.bean.selectSheet()}"/>
 				         <p:column rendered="true">  
 								<h:outputText value="#{sheet.position}"/>
+								<aup:iconCheckmark value="#{sheet.visible}"/>
 				         </p:column>
 				         <p:column headerText="#{msg.aupName}">  
 								<h:outputText value="#{sheet.name[userBean.localeCode].lang}"/>
@@ -114,6 +113,7 @@
 							<p:ajax event="rowSelect" update=":#{cc.id}:fGroup :#{cc.id}:row2" listener="#{cc.attrs.bean.selectGroup()}"/>
 				         <p:column rendered="true">  
 								<h:outputText value="#{group.position}"/>
+								<aup:iconCheckmark value="#{group.visible}"/>
 				         </p:column>
 				         <p:column headerText="#{msg.aupName}">  
 								<h:outputText value="#{group.name[userBean.localeCode].lang}"/>
@@ -151,6 +151,7 @@
 							<p:ajax event="rowSelect" update=":#{cc.id}:sColumn" listener="#{cc.attrs.bean.selectColumn()}"/>
 				         <p:column rendered="true">  
 								<h:outputText value="#{column.position}"/>
+								<aup:iconCheckmark value="#{column.visible}"/>
 				         </p:column>
 				         <p:column headerText="#{msg.aupName}">  
 								<h:outputText value="#{column.name[userBean.localeCode].lang}"/>

@@ -25,7 +25,7 @@ public interface JeeslIoReportFacade <L extends UtilsLang,D extends UtilsDescrip
 			extends UtilsFacade
 {	
 	REPORT load(REPORT report, boolean recursive);
-	SHEET load(SHEET sheet);
+	SHEET load(SHEET sheet, boolean recursive);
 	GROUP load(GROUP group);
 	
 	List<REPORT> fReports(List<CATEGORY> categories, boolean showInvisibleEntities);

@@ -223,7 +223,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private void reloadSheet()
 	{
-		sheet = fReport.load(sheet);
+		sheet = fReport.load(sheet,false);
 		groups = sheet.getGroups();
 		Collections.sort(groups, comparatorGroup);
 	}

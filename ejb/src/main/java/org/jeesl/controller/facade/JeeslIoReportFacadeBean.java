@@ -54,10 +54,7 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 			{
 				for(SHEET sheet : report.getWorkbook().getSheets())
 				{
-					for(GROUP group : sheet.getGroups())
-					{
-						group.getColumns().size();
-					}
+					for(GROUP group : sheet.getGroups()){group.getColumns().size();}
 				}
 			}
 			
@@ -65,10 +62,14 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		return report;
 	}
 	
-	@Override public SHEET load(SHEET sheet)
+	@Override public SHEET load(SHEET sheet, boolean recursive)
 	{
 		sheet = em.find(cSheet, sheet.getId());
 		sheet.getGroups().size();
+		if(recursive)
+		{
+			for(GROUP group : sheet.getGroups()){group.getColumns().size();}
+		}
 		return sheet;
 	}
 	

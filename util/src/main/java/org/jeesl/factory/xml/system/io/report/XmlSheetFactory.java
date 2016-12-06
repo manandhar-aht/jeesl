@@ -15,11 +15,12 @@ import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
 
-public class XmlXlsSheetFactory <L extends UtilsLang,D extends UtilsDescription,
+public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
 								WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
@@ -30,21 +31,21 @@ public class XmlXlsSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 								TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlXlsSheetFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlSheetFactory.class);
 	
 	private XlsSheet q;
 	
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
+	private XmlColumnGroupFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION> xfGroup;
 
-//	private XmlSheetsFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION> xfSheets;
-
-	public XmlXlsSheetFactory(String localeCode, XlsSheet q)
+	public XmlSheetFactory(String localeCode, XlsSheet q)
 	{
 		this.q=q;
-//		if(q.isSetXlsSheets()){xfSheets = new XmlSheetsFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(localeCode,q.getXlsSheets());}
+
 		if(getLangs(q)!=null){xfLangs = new XmlLangsFactory<L>(getLangs(q));}
 		if(getDescriptions(q)!=null){xfDescriptions = new XmlDescriptionsFactory<D>(getDescriptions(q));}
+		if(getColumnGroup(q)!=null){xfGroup = new XmlColumnGroupFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(localeCode,getColumnGroup(q));}
 	}
 	
 	public XlsSheet build(SHEET sheet)
@@ -53,7 +54,15 @@ public class XmlXlsSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		if(getLangs(q)!=null){xml.getContent().add(xfLangs.getUtilsLangs(sheet.getName()));}
 		if(getDescriptions(q)!=null){xml.getContent().add(xfDescriptions.create(sheet.getDescription()));}
-						
+		
+		if(getColumnGroup(q)!=null)
+		{
+			for(GROUP g : sheet.getGroups())
+			{
+				xml.getContent().add(xfGroup.build(g));
+			}
+		}
+		
 		return xml;
 	}
 	
@@ -71,6 +80,15 @@ public class XmlXlsSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 		for(Serializable s : q.getContent())
 		{
 			if(s instanceof Descriptions){return (Descriptions)s;}
+		}
+		return null;
+	}
+	
+	private ColumnGroup getColumnGroup(XlsSheet w)
+	{
+		for(Serializable s : q.getContent())
+		{
+			if(s instanceof ColumnGroup){return (ColumnGroup)s;}
 		}
 		return null;
 	}

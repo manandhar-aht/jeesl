@@ -158,11 +158,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link XlsColumnGroup }
+     * Create an instance of {@link ColumnGroup }
      * 
      */
-    public XlsColumnGroup createXlsColumnGroup() {
-        return new XlsColumnGroup();
+    public ColumnGroup createColumnGroup() {
+        return new ColumnGroup();
     }
 
     /**

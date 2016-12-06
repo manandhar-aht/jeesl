@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
 
-public class XmlXlsWorkbookFactory <L extends UtilsLang,D extends UtilsDescription,
+public class XmlWorkbookFactory <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
 								WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN>,
@@ -24,13 +24,13 @@ public class XmlXlsWorkbookFactory <L extends UtilsLang,D extends UtilsDescripti
 								TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlXlsWorkbookFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlWorkbookFactory.class);
 	
 	private XlsWorkbook q;
 	
 	private XmlSheetsFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION> xfSheets;
 
-	public XmlXlsWorkbookFactory(String localeCode, XlsWorkbook q)
+	public XmlWorkbookFactory(String localeCode, XlsWorkbook q)
 	{
 		this.q=q;
 		if(q.isSetXlsSheets()){xfSheets = new XmlSheetsFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(localeCode,q.getXlsSheets());}

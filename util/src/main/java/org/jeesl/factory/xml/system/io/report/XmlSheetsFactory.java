@@ -28,17 +28,17 @@ public class XmlSheetsFactory<L extends UtilsLang,D extends UtilsDescription,
 		
 	private XlsSheets q;
 	
-	private XmlXlsSheetFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION> xfSheet;
+	private XmlSheetFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION> xfSheet;
 
 	public XmlSheetsFactory(String localeCode, XlsSheets q)
 	{
 		this.q=q;
-		if(q.isSetXlsSheet()){xfSheet = new XmlXlsSheetFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(localeCode,q.getXlsSheet().get(0));}
+		if(q.isSetXlsSheet()){xfSheet = new XmlSheetFactory<L,D,CATEGORY,REPORT,WORKBOOK,SHEET,GROUP,COLUMN,FILLING,TRANSFORMATION,IMPLEMENTATION>(localeCode,q.getXlsSheet().get(0));}
 	}
 	
 	public XlsSheets build(WORKBOOK workbook)
 	{
-		XlsSheets xml = new XlsSheets();
+		XlsSheets xml = build();
 		
 		if(q.isSetXlsSheet())
 		{
@@ -48,6 +48,12 @@ public class XmlSheetsFactory<L extends UtilsLang,D extends UtilsDescription,
 			}
 		}
 						
+		return xml;
+	}
+	
+	public static XlsSheets build()
+	{
+		XlsSheets xml = new XlsSheets();						
 		return xml;
 	}
 }

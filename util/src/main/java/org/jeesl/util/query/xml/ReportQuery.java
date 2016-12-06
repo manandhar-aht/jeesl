@@ -3,10 +3,14 @@ package org.jeesl.util.query.xml;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.io.report.XmlSheetsFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 
 import net.sf.ahtutils.xml.aht.Query;
+import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.Report;
+import net.sf.ahtutils.xml.report.XlsColumn;
+import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
 
 public class ReportQuery
@@ -51,7 +55,47 @@ public class ReportQuery
 	private static XlsWorkbook exportWorkbook()
 	{
 		XlsWorkbook xml = new XlsWorkbook();
+		xml.setXlsSheets(XmlSheetsFactory.build());
+		xml.getXlsSheets().getXlsSheet().add(exportSheet());
+		return xml;
+	}
+	
+	private static XlsSheet exportSheet()
+	{
+		XlsSheet xml = new XlsSheet();
+		xml.setPosition(0);
+		xml.setVisible(true);
 		
+		xml.getContent().add(StatusQuery.langs());
+		xml.getContent().add(StatusQuery.descriptions());
+		xml.getContent().add(exportColumnGroup());
+//		xml.setLangs(StatusQuery.langs());
+//		xml.setDescriptions(StatusQuery.descriptions());
+		
+		return xml;
+	}
+	
+	private static ColumnGroup exportColumnGroup()
+	{
+		ColumnGroup xml = new ColumnGroup();
+		xml.setPosition(0);
+		xml.setVisible(true);
+		
+		xml.setLangs(StatusQuery.langs());
+		xml.setDescriptions(StatusQuery.descriptions());
+		
+		xml.getXlsColumn().add(exportColumn());
+		return xml;
+	}
+	
+	private static XlsColumn exportColumn()
+	{
+		XlsColumn xml = new XlsColumn();
+		xml.setPosition(0);
+		xml.setVisible(true);
+		
+		xml.setLangs(StatusQuery.langs());
+		xml.setDescriptions(StatusQuery.descriptions());
 		return xml;
 	}
 }

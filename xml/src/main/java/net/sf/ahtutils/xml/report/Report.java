@@ -38,9 +38,9 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsWorkbook"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
- *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="dir" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="ltr" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="rtl" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
@@ -81,12 +81,12 @@ public class Report
     protected XlsWorkbook xlsWorkbook;
     @XmlAttribute(name = "id")
     protected String id;
+    @XmlAttribute(name = "code")
+    protected String code;
     @XmlAttribute(name = "position")
     protected Integer position;
     @XmlAttribute(name = "visible")
     protected Boolean visible;
-    @XmlAttribute(name = "code")
-    protected String code;
     @XmlAttribute(name = "dir")
     protected String dir;
     @XmlAttribute(name = "ltr")
@@ -302,6 +302,34 @@ public class Report
     }
 
     /**
+     * Gets the value of the code property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * Sets the value of the code property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public boolean isSetCode() {
+        return (this.code!= null);
+    }
+
+    /**
      * Gets the value of the position property.
      * 
      * @return
@@ -363,34 +391,6 @@ public class Report
 
     public void unsetVisible() {
         this.visible = null;
-    }
-
-    /**
-     * Gets the value of the code property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * Sets the value of the code property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCode(String value) {
-        this.code = value;
-    }
-
-    public boolean isSetCode() {
-        return (this.code!= null);
     }
 
     /**

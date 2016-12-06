@@ -6,18 +6,20 @@ import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.report.XlsColumnGroup;
+import net.sf.ahtutils.xml.report.ColumnGroup;
 
-public class TestXmlXlsColumnGroup extends AbstractXmlReportTest<XlsColumnGroup>
+public class TestXmlColumnGroup extends AbstractXmlReportTest<ColumnGroup>
 {
-	final static Logger logger = LoggerFactory.getLogger(TestXmlXlsColumnGroup.class);
+	final static Logger logger = LoggerFactory.getLogger(TestXmlColumnGroup.class);
 	
-	public TestXmlXlsColumnGroup(){super(XlsColumnGroup.class);}
-	public static XlsColumnGroup create(boolean withChildren){return (new TestXmlXlsColumnGroup()).build(withChildren);}   
+	public TestXmlColumnGroup(){super(ColumnGroup.class);}
+	public static ColumnGroup create(boolean withChildren){return (new TestXmlColumnGroup()).build(withChildren);}   
     
-    public XlsColumnGroup build(boolean withChildren)
+    public ColumnGroup build(boolean withChildren)
     {
-    	XlsColumnGroup xml = new XlsColumnGroup();
+    	ColumnGroup xml = new ColumnGroup();
+    	xml.setPosition(1);
+    	xml.setVisible(true);
     	
     	if(withChildren)
     	{
@@ -31,7 +33,7 @@ public class TestXmlXlsColumnGroup extends AbstractXmlReportTest<XlsColumnGroup>
 	public static void main(String[] args)
     {
 		JeeslXmlTestBootstrap.init();
-		TestXmlXlsColumnGroup test = new TestXmlXlsColumnGroup();
+		TestXmlColumnGroup test = new TestXmlColumnGroup();
 		test.saveReferenceXml();
     }
 }

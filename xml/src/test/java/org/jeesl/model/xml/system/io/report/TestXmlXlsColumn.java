@@ -18,6 +18,8 @@ public class TestXmlXlsColumn extends AbstractXmlReportTest<XlsColumn>
     public XlsColumn build(boolean withChildren)
     {
     	XlsColumn xml = new XlsColumn();
+    	xml.setPosition(1);
+    	xml.setVisible(true);
     	
     	xml.setColumn("A");
     	xml.setLabel("myLabel");

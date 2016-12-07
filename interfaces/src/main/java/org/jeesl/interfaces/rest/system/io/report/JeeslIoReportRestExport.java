@@ -25,4 +25,7 @@ public interface JeeslIoReportRestExport
 	
 	@GET @Path("/system/io/report/setting/implementation") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemIoReportSettingImplementation();
+	
+//	@GET @Path("/system/io/report/setting/column/type") @Produces(MediaType.APPLICATION_XML)
+//	Container exportSystemIoReportSettingColumnType();
 }

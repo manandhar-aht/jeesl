@@ -27,4 +27,7 @@ public interface JeeslIoReportRestImport
 	
 	@POST @Path("/system/io/report/setting/implementation") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoReportSettingImplementation(Container container);
+	
+//	@POST @Path("/system/io/report/setting/column/type") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
+//	DataUpdate importSystemIoReportSettingColumnType(Container container);
 }

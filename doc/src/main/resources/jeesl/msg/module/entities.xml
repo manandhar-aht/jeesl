@@ -18,12 +18,6 @@
 			<s:lang key="fr" translation="Revision Scope Type"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="IoReportSettingColumnDataType">
-		<s:langs>
-			<s:lang key="en" translation="Setting Column Data Type"/>
-			<s:lang key="fr" translation="Setting Column Data Type"/>
-		</s:langs>
-	</s:translation>
 	<s:translation key="IoReportSettingFilling">
 		<s:langs>
 			<s:lang key="en" translation="Setting Filling"/>

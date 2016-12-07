@@ -26,4 +26,7 @@ public interface JeeslReportColumn<L extends UtilsLang,D extends UtilsDescriptio
 {					
 	GROUP getGroup();
 	void setGroup(GROUP group);
+	
+	String getQuery();
+	void setQuery(String query);
 }

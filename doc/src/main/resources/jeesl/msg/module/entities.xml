@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="RevisionCategory">
+		<s:langs>
+			<s:lang key="en" translation="Revision Category"/>
+			<s:lang key="fr" translation="Revision Category"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="RevisionAttributeType">
+		<s:langs>
+			<s:lang key="en" translation="Revision Attribute Type"/>
+			<s:lang key="fr" translation="Revision Attribute Type"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="RevisionScopeType">
+		<s:langs>
+			<s:lang key="en" translation="Revision Scope Type"/>
+			<s:lang key="fr" translation="Revision Scope Type"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoReportSettingColumnDataType">
+		<s:langs>
+			<s:lang key="en" translation="Setting Column Data Type"/>
+			<s:lang key="fr" translation="Setting Column Data Type"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoReportSettingFilling">
+		<s:langs>
+			<s:lang key="en" translation="Setting Filling"/>
+			<s:lang key="fr" translation="Setting Filling"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoReportSettingTransformation">
+		<s:langs>
+			<s:lang key="en" translation="Setting Transformation"/>
+			<s:lang key="fr" translation="Setting Transformation"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoReportSettingImplementation">
+		<s:langs>
+			<s:lang key="en" translation="Setting Implementation"/>
+			<s:lang key="fr" translation="Setting Implementation"/>
+		</s:langs>
+	</s:translation>
+</s:translations>

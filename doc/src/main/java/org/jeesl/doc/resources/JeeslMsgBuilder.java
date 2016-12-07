@@ -26,7 +26,7 @@ public class JeeslMsgBuilder
 	public static final String generic = "jeesl/msg/generic.xml";
 	public static final String report = "jeesl/msg/report.xml";
 	public static final String query = "aht-utils/msg/query.xml";
-	public static final String entities = "aht-utils/msg/module/entities.xml";
+	public static final String entities = "jeesl/msg/module/entities.xml";
 	public static final String srcProject = "msg.aht-utils/project.xml";
 	public static final String srcDate = "aht-utils/msg/date.xml";
 	

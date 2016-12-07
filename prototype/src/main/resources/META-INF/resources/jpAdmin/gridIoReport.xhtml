@@ -175,6 +175,10 @@
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.column.visible}"/>
+								
+								<p:outputLabel value="#{msg.jeeslIoColumnQuery}"/>
+								<p:inputText value="#{cc.attrs.bean.column.query}"/>
+								
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.column}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />

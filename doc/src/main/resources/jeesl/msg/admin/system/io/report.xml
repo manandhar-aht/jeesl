@@ -63,4 +63,11 @@
 			<lang key="fr" translation="Column" />
 		</langs>
 	</translation>
+		<translation key="jeeslIoColumnQuery">
+		<langs>
+			<lang key="de" translation="Abfrage" />
+			<lang key="en" translation="Query" />
+			<lang key="fr" translation="Query" />
+		</langs>
+	</translation>
 </translations>

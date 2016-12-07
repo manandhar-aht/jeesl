@@ -59,6 +59,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private Class<CATEGORY> cCategory;
 	private Class<REPORT> cReport;
+	private Class<IMPLEMENTATION> cImplementation;
 //	private Class<WORKBOOK> cWorkbook;
 	private Class<SHEET> cSheet;
 	private Class<GROUP> cGroup;
@@ -66,6 +67,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
 	private List<REPORT> reports; public List<REPORT> getReports() {return reports;}
+	private List<IMPLEMENTATION> implementations; public List<IMPLEMENTATION> getImplementations() {return implementations;}
 	private List<SHEET> sheets; public List<SHEET> getSheets() {return sheets;}
 	private List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	private List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
@@ -89,13 +91,14 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,FILLING,TRANSFORMATION> efGroup;
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,FILLING,TRANSFORMATION> efColumn;
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fReport=fReport;
 		
 		this.cCategory=cCategory;
 		this.cReport=cReport;
+		this.cImplementation=cImplementation;
 		this.cSheet=cSheet;
 		this.cGroup=cGroup;
 		this.cColumn=cColumn;
@@ -114,6 +117,8 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		comparatorSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,FILLING,TRANSFORMATION>().factory(IoReportSheetComparator.Type.position);
 		comparatorGroup = new IoReportGroupComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,FILLING,TRANSFORMATION>().factory(IoReportGroupComparator.Type.position);
 		comparatorColumn = new IoReportColumnComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,FILLING,TRANSFORMATION>().factory(IoReportColumnComparator.Type.position);
+		
+		implementations = fReport.allOrderedPositionVisible(cImplementation);
 		
 		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
 //		sbhCategory.selectAll();
@@ -178,6 +183,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(report));}
 		if(report.getCategory()!=null){report.setCategory(fReport.find(cCategory, report.getCategory()));}
+		if(report.getImplementation()!=null){report.setImplementation(fReport.find(cImplementation, report.getImplementation()));}
 		report = fReport.save(report);
 		reloadReports();
 		reloadReport();

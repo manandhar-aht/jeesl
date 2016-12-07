@@ -1,12 +1,11 @@
-package org.jeesl.model.xml.text;
+package org.jeesl.model.xml.system.util.text;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.text.Description;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.text.Description;
-
-public class TestXmlDescription extends AbstractXmlTextOldTest<Description>
+public class TestXmlDescription extends AbstractXmlTextTest<Description>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlDescription.class);
 	

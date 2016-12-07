@@ -3,7 +3,7 @@ package org.jeesl.model.xml.system.io.template;
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.status.TestXmlDescriptions;
 import org.jeesl.model.xml.system.status.TestXmlLangs;
-import org.jeesl.model.xml.text.TestXmlExample;
+import org.jeesl.model.xml.system.util.text.TestXmlExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

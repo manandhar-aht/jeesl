@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.text.Hint;
 
-public class TestXmlHint extends AbstractXmlTextTest<Hint>
+public class TestXmlHint extends AbstractXmlTextOldTest<Hint>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlHint.class);
 	

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.text.Solution;
 
-public class TestXmlSolution extends AbstractXmlTextTest<Solution>
+public class TestXmlSolution extends AbstractXmlTextOldTest<Solution>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlSolution.class);
 	

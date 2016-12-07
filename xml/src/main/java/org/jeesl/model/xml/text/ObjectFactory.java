@@ -37,4 +37,28 @@ public class ObjectFactory {
         return new Example();
     }
 
+    /**
+     * Create an instance of {@link Remark }
+     * 
+     */
+    public Remark createRemark() {
+        return new Remark();
+    }
+
+    /**
+     * Create an instance of {@link Description }
+     * 
+     */
+    public Description createDescription() {
+        return new Description();
+    }
+
+    /**
+     * Create an instance of {@link Location }
+     * 
+     */
+    public Location createLocation() {
+        return new Location();
+    }
+
 }

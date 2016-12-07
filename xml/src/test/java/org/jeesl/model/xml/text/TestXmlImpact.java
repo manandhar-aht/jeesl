@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.text.Impact;
 
-public class TestXmlImpact extends AbstractXmlTextTest<Impact>
+public class TestXmlImpact extends AbstractXmlTextOldTest<Impact>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlImpact.class);
 	

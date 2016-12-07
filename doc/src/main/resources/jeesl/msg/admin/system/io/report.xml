@@ -14,6 +14,13 @@
 			<lang key="fr" translation="Report" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoReportImplementation">
+		<langs>
+			<lang key="de" translation="Implementierung" />
+			<lang key="en" translation="Implementation" />
+			<lang key="fr" translation="Implementation" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoSheets">
 		<langs>
 			<lang key="de" translation="Mappen" />

@@ -134,7 +134,8 @@ public class AbstractAhtUtilsReportTst
 		sb.append("target/");
 		if(info!=null && info.isSetFile() && info.getFile().getValue().length()>0)
 		{
-			sb.append(info.getFile().getValue());
+			// Replacing the /'s is required, because they may be interpreted as directory separators
+			sb.append(info.getFile().getValue().replaceAll("/", "-"));
 		}
 		else
 		{

@@ -18,4 +18,8 @@
         <tag-name>reportHeader</tag-name>
         <source>jeeslPrototype/reportHeader.xhtml</source>
     </tag>
+    <tag>
+        <tag-name>reportFlat</tag-name>
+        <source>jeeslPrototype/reportFlat.xhtml</source>
+    </tag>
 </facelet-taglib>

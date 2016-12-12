@@ -47,6 +47,8 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected final String localeCode;
 	
 	protected List<String> headers; public List<String> getHeaders() {return headers;}
+	
+	protected List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	protected List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
 	protected Map<GROUP,Integer> mapGroupChilds; public Map<GROUP, Integer> getMapGroupChilds() {return mapGroupChilds;}
 
@@ -84,12 +86,12 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 					Collections.sort(ioReport.getWorkbook().getSheets(), comparatorSheet);
 					ioSheet = fReport.load(ioReport.getWorkbook().getSheets().get(0), true);
 					Collections.sort(ioSheet.getGroups(), comparatorGroup);
-					for(GROUP g : ioSheet.getGroups())
-					{
-						Collections.sort(g.getColumns(), comparatorColumn);
-					}
+					for(GROUP g : ioSheet.getGroups()){Collections.sort(g.getColumns(), comparatorColumn);}
 					mapGroupChilds = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
+					groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
 					columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
+		
+					Collections.sort(groups, comparatorGroup);
 					Collections.sort(columns, comparatorColumn);
 				}
 			}

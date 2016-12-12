@@ -19,6 +19,12 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportColumnComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportGroupComparator;
@@ -51,7 +57,16 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 										ENTITY extends EjbWithId,
 										ATTRIBUTE extends EjbWithId,
 										FILLING extends UtilsStatus<FILLING,L,D>,
-										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
+										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
+										RC extends UtilsStatus<RC,L,D>,
+										RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										RST extends UtilsStatus<RST,L,D>,
+										RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										RAT extends UtilsStatus<RAT,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
@@ -67,14 +82,17 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private Class<SHEET> cSheet;
 	private Class<GROUP> cGroup;
 	private Class<COLUMN> cColumn;
+	private Class<RC> cRevisionCategory;
 	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
+	private List<RC> revisionCategories; public List<RC> getRevisionCategories() {return revisionCategories;}
 	private List<REPORT> reports; public List<REPORT> getReports() {return reports;}
 	private List<IMPLEMENTATION> implementations; public List<IMPLEMENTATION> getImplementations() {return implementations;}
 	private List<SHEET> sheets; public List<SHEET> getSheets() {return sheets;}
 	private List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	private List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
 	
+	private RC revisionCategory; public RC getRevisionCategory() {return revisionCategory;} public void setRevisionCategory(RC revisionCategory) {this.revisionCategory = revisionCategory;}
 	private REPORT report; public REPORT getReport() {return report;} public void setReport(REPORT report) {this.report = report;}
 	private SHEET sheet; public SHEET getSheet() {return sheet;} public void setSheet(SHEET sheet) {this.sheet = sheet;}
 	private GROUP group; public GROUP getGroup() {return group;}public void setGroup(GROUP group) {this.group = group;}
@@ -94,7 +112,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efGroup;
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efColumn;
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<RC> cRevisionCategory)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fReport=fReport;
@@ -105,6 +123,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		this.cSheet=cSheet;
 		this.cGroup=cGroup;
 		this.cColumn=cColumn;
+		this.cRevisionCategory=cRevisionCategory;
 
 		EjbIoReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ef = EjbIoReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn);
 		efReport = ef.report();
@@ -115,6 +134,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		
 		uiHelper = new UiHelperIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>();
 		categories = fReport.allOrderedPositionVisible(cCategory);
+		revisionCategories = fReport.allOrderedPositionVisible(cRevisionCategory);
 		
 		comparatorReport = new IoReportComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportComparator.Type.position);
 		comparatorSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportSheetComparator.Type.position);

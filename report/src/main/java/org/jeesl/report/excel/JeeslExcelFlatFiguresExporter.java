@@ -54,7 +54,7 @@ public class JeeslExcelFlatFiguresExporter<L extends UtilsLang,D extends UtilsDe
     public JXPathContext	context;
 	
     // The sheet in the workbook
-    private final Sheet sheet;
+    private Sheet sheet;
 
     // The current row and column number
     private short rowNr          = 0;
@@ -62,10 +62,11 @@ public class JeeslExcelFlatFiguresExporter<L extends UtilsLang,D extends UtilsDe
 
     public JeeslExcelFlatFiguresExporter()
     {
-        // Create the Excel Workbook and select the created sheet
-        wb = new XSSFWorkbook();
-        wb.createSheet("Aggregations");
-        sheet = wb.getSheet("Aggregations");
+        
+	}
+	
+	public void init(Workbook wb) {
+		// Create the Excel Workbook and select the created sheet
         createHelper = wb.getCreationHelper();
 
         // Create fonts and alter it.
@@ -83,6 +84,7 @@ public class JeeslExcelFlatFiguresExporter<L extends UtilsLang,D extends UtilsDe
         dateHeaderStyle.setFillBackgroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
         dateHeaderStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
         dateHeaderStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		
         numberStyle = wb.createCellStyle();
         numberStyle.setDataFormat(createHelper.createDataFormat().getFormat("#,##0.00"));
 		
@@ -94,8 +96,15 @@ public class JeeslExcelFlatFiguresExporter<L extends UtilsLang,D extends UtilsDe
 	
 	public byte[] export(List<String> headers, JsonFlatFigures figures)
 	{
-		// Create the column headers
-		Row row     = sheet.createRow(rowNr);
+		// Reset row and sheet
+		rowNr	= 0;
+		wb		= new XSSFWorkbook();
+		
+		// Call Init
+		init(wb);
+		
+		sheet	= wb.createSheet("Aggregations");
+		Row row = sheet.createRow(rowNr);
 
 		for (String header : headers)
 		{
@@ -138,19 +147,33 @@ public class JeeslExcelFlatFiguresExporter<L extends UtilsLang,D extends UtilsDe
 	
 	public byte[] exportByColumns(List<COLUMN> columns, JsonFlatFigures figures)
 	{
+		// Reset row and sheet
+		rowNr	= 0;
+		wb		= new XSSFWorkbook();
+		
+		// Call Init
+		init(wb);
+		
+		sheet	= wb.createSheet("Data");
+		
 		// Fill in data rows
 		for (JsonFlatFigure content : figures.getFigures())
 		{
-			// Create a row for all flat figures
-			Row row     = sheet.createRow(rowNr);
-
+			Row row = sheet.createRow(rowNr);
+		
 			// Add data for all defined columns
 			for (COLUMN columnDefinition : columns)
 			{
 				Cell cell   = row.createCell(column);
 				Object value = getRequestedValue(columnDefinition.getQuery(), content);
-				cell.setCellValue(value.toString());
-				logger.trace("Adding " +value.toString() +" to cell " +row.getRowNum() +"," +column);
+				if (value != null)
+				{
+					if (columnDefinition.getQuery().startsWith("g")) {cell.setCellValue(value.toString());}
+					if (columnDefinition.getQuery().startsWith("d")) {
+						double d = (Double) value; cell.setCellValue(d);
+						cell.setCellStyle(numberStyle);}
+					logger.trace("Adding " +value.toString() +" to cell " +row.getRowNum() +"," +column);
+				}
 				column++;
 			}
 			column = 0;
@@ -199,7 +222,18 @@ public class JeeslExcelFlatFiguresExporter<L extends UtilsLang,D extends UtilsDe
 			if (query.equals("g8")) {if (content.getG8()!=null) {return content.getG8();}}
 			if (query.equals("g9")) {if (content.getG9()!=null) {return content.getG9();}}
 			if (query.equals("g10")) {if (content.getG10()!=null) {return content.getG10();}}
+			
+			if (query.equals("d1")) {if (content.getD1()!=null) {return content.getD1();}}
+			if (query.equals("d2")) {if (content.getD2()!=null) {return content.getD2();}}
+			if (query.equals("d3")) {if (content.getD3()!=null) {return content.getD3();}}
+			if (query.equals("d4")) {if (content.getD4()!=null) {return content.getD4();}}
+			if (query.equals("d5")) {if (content.getD5()!=null) {return content.getD5();}}
+			if (query.equals("d6")) {if (content.getD6()!=null) {return content.getD6();}}
+			if (query.equals("d7")) {if (content.getD7()!=null) {return content.getD7();}}
+			if (query.equals("d8")) {if (content.getD8()!=null) {return content.getD8();}}
+			if (query.equals("d9")) {if (content.getD9()!=null) {return content.getD9();}}
+			if (query.equals("d10")) {if (content.getD10()!=null) {return content.getD10();}}
 		}
-		return "";
+		return null;
 	}
 }

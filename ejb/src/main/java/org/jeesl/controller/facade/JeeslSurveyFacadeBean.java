@@ -15,9 +15,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyFactoryFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
+import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.interfaces.facade.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
@@ -66,7 +66,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	final Class<DATA> cData;
 	final Class<CORRELATION> cCorrelation;
 	
-	private EjbSurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
+	private SurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efAnswer;
 	private EjbSurveyTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> eTemplate;
 	
@@ -80,7 +80,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		this.cData=cData;
 		this.cCorrelation=cCorrelation;
 		
-		ffSurvey = EjbSurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData);
+		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData);
 		eTemplate = ffSurvey.template();
 		efAnswer = ffSurvey.answer();
 	}

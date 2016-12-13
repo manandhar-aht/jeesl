@@ -3,10 +3,10 @@ package org.jeesl.web.rest.system;
 import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyFactoryFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
+import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.factory.xml.survey.XmlAnswerFactory;
 import org.jeesl.factory.xml.survey.XmlSurveyFactory;
 import org.jeesl.factory.xml.survey.XmlTemplateFactory;
@@ -128,7 +128,7 @@ public class SurveyRestService <L extends UtilsLang,
 		
 		xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.surveyAnswers));
 		
-		EjbSurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey = EjbSurveyFactoryFactory.factory(cSurvey,cTEMPLATE,cVersion,cSection,cQuestion,cAnswer,cData);
+		SurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey = SurveyFactoryFactory.factory(cSurvey,cTEMPLATE,cVersion,cSection,cQuestion,cAnswer,cData);
 		
 		efTemlate = ffSurvey.template();
 		efSection = ffSurvey.section();

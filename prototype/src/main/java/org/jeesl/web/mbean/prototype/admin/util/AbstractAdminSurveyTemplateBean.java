@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jeesl.factory.ejb.survey.EjbSurveyFactoryFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
+import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.interfaces.facade.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
@@ -62,7 +62,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected Class<QUESTION> cQuestion;
 	protected Class<UNIT> cUnit;
 	
-	protected EjbSurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
+	protected SurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
 	protected EjbSurveyTemplateVersionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efVersion;
 	protected EjbSurveySectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efSection;
 	protected EjbSurveyQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efQuestion;
@@ -89,7 +89,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		this.cQuestion = cQuestion;
 		this.cUnit = cUnit;
 		
-		ffSurvey = EjbSurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection, cQuestion, cAnswer, cData);
+		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection, cQuestion, cAnswer, cData);
 		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();

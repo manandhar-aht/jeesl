@@ -46,7 +46,7 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 		if(q.isSetQuestion() && ejb.getQuestion()!=null){xml.setQuestion(net.sf.ahtutils.factory.xml.text.XmlQuestionFactory.build(ejb.getQuestion()));}
 		if(q.isSetRemark() && ejb.getRemark()!=null){xml.setRemark(XmlRemarkFactory.build(ejb.getRemark()));}
 		
-		if(q.isSetUnit())
+		if(q.isSetUnit() && ejb.getUnit()!=null)
 		{
 			XmlUnitFactory f = new XmlUnitFactory(lang,q.getUnit());
 			xml.setUnit(f.build(ejb.getUnit()));

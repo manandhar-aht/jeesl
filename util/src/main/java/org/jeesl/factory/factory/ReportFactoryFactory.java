@@ -1,5 +1,10 @@
-package org.jeesl.factory.ejb.system.io.report;
+package org.jeesl.factory.factory;
 
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
@@ -13,7 +18,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class EjbIoReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
+public class ReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 										REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE>,
 										IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -27,7 +32,7 @@ public class EjbIoReportFactoryFactory<L extends UtilsLang,D extends UtilsDescri
 										FILLING extends UtilsStatus<FILLING,L,D>,
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbIoReportFactoryFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(ReportFactoryFactory.class);
 	
 	final Class<L> cL;
 	final Class<D> cD;
@@ -37,7 +42,7 @@ public class EjbIoReportFactoryFactory<L extends UtilsLang,D extends UtilsDescri
 	final Class<GROUP> cGroup;
 	final Class<COLUMN> cColumn;
     
-	private EjbIoReportFactoryFactory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn)
+	private ReportFactoryFactory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn)
 	{       
 		this.cL = cL;
         this.cD = cD;
@@ -61,9 +66,9 @@ public class EjbIoReportFactoryFactory<L extends UtilsLang,D extends UtilsDescri
 					ATTRIBUTE extends EjbWithId,
 					FILLING extends UtilsStatus<FILLING,L,D>,
 					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-	EjbIoReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> factory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn)
+	ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> factory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn)
 	{
-		return new EjbIoReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn);
+		return new ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn);
 	}
 	
 	public EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> report()

@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.status.Category;
 import net.sf.ahtutils.xml.status.Descriptions;
+import net.sf.ahtutils.xml.status.Implementation;
 import net.sf.ahtutils.xml.status.Langs;
 
 
@@ -35,6 +36,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}category"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}implementation"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsWorkbook"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -59,6 +61,7 @@ import net.sf.ahtutils.xml.status.Langs;
     "langs",
     "descriptions",
     "category",
+    "implementation",
     "xlsWorkbook"
 })
 @XmlRootElement(name = "report")
@@ -77,6 +80,8 @@ public class Report
     protected Descriptions descriptions;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Category category;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
+    protected Implementation implementation;
     @XmlElement(required = true)
     protected XlsWorkbook xlsWorkbook;
     @XmlAttribute(name = "id")
@@ -243,6 +248,34 @@ public class Report
 
     public boolean isSetCategory() {
         return (this.category!= null);
+    }
+
+    /**
+     * Gets the value of the implementation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Implementation }
+     *     
+     */
+    public Implementation getImplementation() {
+        return implementation;
+    }
+
+    /**
+     * Sets the value of the implementation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Implementation }
+     *     
+     */
+    public void setImplementation(Implementation value) {
+        this.implementation = value;
+    }
+
+    public boolean isSetImplementation() {
+        return (this.implementation!= null);
     }
 
     /**

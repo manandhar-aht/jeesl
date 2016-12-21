@@ -1,6 +1,7 @@
 package org.jeesl.factory.xml.system.io.report;
 
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
+import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
@@ -40,15 +41,17 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
 	private XmlCategoryFactory<CATEGORY,L,D> xfCategory;
+	private XmlImplementationFactory<IMPLEMENTATION,L,D> xfImplementation;
 	private XmlWorkbookFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfWorkbook;
 
 	public XmlReportFactory(Query q){this(q.getLang(), q.getReport());}
 	public XmlReportFactory(String localeCode, Report q)
 	{
 		this.q=q;
-		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory<CATEGORY,L,D>(q.getCategory());}
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
+		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory<CATEGORY,L,D>(localeCode,q.getCategory());}
+		if(q.isSetImplementation()){xfImplementation = new XmlImplementationFactory<IMPLEMENTATION,L,D>(localeCode,q.getImplementation());}
 		if(q.isSetXlsWorkbook()){xfWorkbook = new XmlWorkbookFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,q.getXlsWorkbook());}
 	}
 	
@@ -61,7 +64,9 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetVisible()){xml.setVisible(report.isVisible());}
 		if(q.isSetPosition()){xml.setPosition(report.getPosition());}
 		
-		if(q.isSetCategory()){xml.setCategory(xfCategory.build(report.getCategory()));}	
+		if(q.isSetCategory()){xml.setCategory(xfCategory.build(report.getCategory()));}
+		if(q.isSetImplementation()){xml.setImplementation(xfImplementation.build(report.getImplementation()));}
+		
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(report.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(report.getDescription()));}
 		

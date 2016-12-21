@@ -10,9 +10,9 @@ import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
-import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactoryFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
+import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -125,7 +125,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		this.cColumn=cColumn;
 		this.cRevisionCategory=cRevisionCategory;
 
-		EjbIoReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ef = EjbIoReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn);
+		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ef = ReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn);
 		efReport = ef.report();
 		efWorkbook = ef.workbook();
 		efSheet = ef.sheet();

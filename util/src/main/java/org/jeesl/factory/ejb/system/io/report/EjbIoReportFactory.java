@@ -12,6 +12,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.report.Report;
 
 public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -31,7 +32,7 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	final Class<REPORT> cReport;
     
-	protected EjbIoReportFactory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport)
+	public EjbIoReportFactory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport)
 	{       
         this.cReport = cReport;
 	}
@@ -45,6 +46,23 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 			ejb.setCategory(category);
 			ejb.setPosition(1);
 			ejb.setVisible(true);
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		return ejb;
+	}
+	
+	public REPORT build(CATEGORY category, Report xReport)
+	{
+		REPORT ejb = null;
+		try
+		{
+			ejb = cReport.newInstance();
+			ejb.setCategory(category);
+			ejb.setCode(xReport.getCode());
+			ejb.setPosition(xReport.getPosition());
+			ejb.setVisible(xReport.isVisible());
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

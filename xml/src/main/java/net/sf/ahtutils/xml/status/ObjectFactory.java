@@ -174,6 +174,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Implementation }
+     * 
+     */
+    public Implementation createImplementation() {
+        return new Implementation();
+    }
+
+    /**
      * Create an instance of {@link Unit }
      * 
      */

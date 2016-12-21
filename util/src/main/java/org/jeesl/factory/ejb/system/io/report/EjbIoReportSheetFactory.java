@@ -33,7 +33,7 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 	
 	final Class<SHEET> cSheet;
     
-	protected EjbIoReportSheetFactory(final Class<L> cL,final Class<D> cD,final Class<SHEET> cSheet)
+	public EjbIoReportSheetFactory(final Class<L> cL,final Class<D> cD,final Class<SHEET> cSheet)
 	{       
         this.cSheet = cSheet;
 	}

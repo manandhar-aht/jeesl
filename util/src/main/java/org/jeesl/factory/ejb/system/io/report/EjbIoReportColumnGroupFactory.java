@@ -37,7 +37,7 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 	
 	final Class<GROUP> cGroup;
     
-	protected EjbIoReportColumnGroupFactory(final Class<L> cL,final Class<D> cD,final Class<GROUP> cGroup)
+	public EjbIoReportColumnGroupFactory(final Class<L> cL,final Class<D> cD,final Class<GROUP> cGroup)
 	{       
         this.cGroup = cGroup;
 	}

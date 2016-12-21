@@ -3,6 +3,7 @@ package org.jeesl.model.xml.system.io.report;
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.status.TestXmlCategory;
 import org.jeesl.model.xml.system.status.TestXmlDescriptions;
+import org.jeesl.model.xml.system.status.TestXmlImplementation;
 import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,7 @@ public class TestXmlReport extends AbstractXmlReportTest<Report>
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
     		xml.setCategory(TestXmlCategory.create(false));
+    		xml.setImplementation(TestXmlImplementation.create(false));
     		xml.setXlsWorkbook(TestXmlXlsWorkbook.create(false));
     	}
     	

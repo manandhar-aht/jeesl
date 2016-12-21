@@ -35,7 +35,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 	
 	final Class<COLUMN> cColumn;
     
-	protected EjbIoReportColumnFactory(final Class<L> cL,final Class<D> cD,final Class<COLUMN> cColumn)
+	public EjbIoReportColumnFactory(final Class<L> cL,final Class<D> cD,final Class<COLUMN> cColumn)
 	{       
         this.cColumn = cColumn;
 	}

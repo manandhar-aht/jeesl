@@ -1,5 +1,10 @@
 package org.jeesl.web.rest.system;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
+import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportsFactory;
@@ -20,12 +25,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.db.xml.AhtStatusDbInit;
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
+import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
@@ -57,14 +66,15 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<FILLING> cFilling;
 	private final Class<TRANSFORMATION> cTransformation;
 
-
+	@SuppressWarnings("rawtypes")
 	private XmlStatusFactory xfStatus;
 	private XmlReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfReport;
 	
 //	private EjbLangFactory<L> efLang;
 //	private EjbDescriptionFactory<D> efDescription;
+	private EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efReport;
 	
-	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
+	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
 	{
 		this.fReport=fReport;
 		this.cL=cL;
@@ -78,6 +88,9 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	
 		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfReport = new XmlReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(ReportQuery.get(ReportQuery.Key.exReport));
+		
+		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL, cD, cReport, cWorkbook, cSheet, cGroup, cColumn);
+		efReport = ffReport.report();
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -95,9 +108,9 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>
 					>
 	IoReportRestService<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>
-			factory(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, final Class<FILLING> cFilling,final Class<TRANSFORMATION> cTransformation)
+			factory(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<IMPLEMENTATION> cImplementation, final Class<FILLING> cFilling,final Class<TRANSFORMATION> cTransformation)
 	{
-		return new IoReportRestService<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(fReport,cL,cD,cCategory,cReport,cFilling,cTransformation,cImplementation);
+		return new IoReportRestService<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(fReport,cL,cD,cCategory,cReport,cWorkbook,cSheet,cGroup,cColumn,cFilling,cTransformation,cImplementation);
 	}
 	
 	@Override public Container exportSystemIoReportCategories() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cCategory)));}
@@ -116,7 +129,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		return reports;
 	}
 	
-	
 	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
 	@Override public DataUpdate importSystemIoReportSettingFilling(Container types){return importStatus(cFilling,cL,cD,types,null);}
 	@Override public DataUpdate importSystemIoReportSettingTransformation(Container types){return importStatus(cTransformation,cL,cD,types,null);}
@@ -127,7 +139,52 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		DataUpdateTracker dut = new DataUpdateTracker(true);
 		dut.setType(XmlTypeFactory.build(cReport.getName(),"DB Import"));
 		
+		Set<String> set = new HashSet<String>();
+		for(REPORT eReport : fReport.all(cReport)){set.add(eReport.getCode());}
+		
+		for(Report xReport : reports.getReport())
+		{
+			try
+			{
+				importSystemIoReport(xReport);
+				set.remove(xReport.getCode());
+				dut.success();
+			}
+			catch (UtilsNotFoundException e) {dut.fail(e, true);}
+			catch (UtilsConstraintViolationException e) {dut.fail(e, true);}
+			catch (UtilsLockingException e) {dut.fail(e, true);}
+		}
+		
+		logger.info("Will remove "+set.size()+" "+cReport.getSimpleName());
+		for(String code : set)
+		{
+			try
+			{
+				REPORT eReport = fReport.fByCode(cReport, code);
+				fReport.rm(eReport);
+				dut.success();
+			}
+			catch (UtilsNotFoundException e) {dut.fail(e, true);}
+			catch (UtilsConstraintViolationException e) {dut.fail(e, true);}
+		}
+		
 		return dut.toDataUpdate();
+	}
+	
+	private void importSystemIoReport(Report xReport) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	{
+		REPORT eReport;
+		CATEGORY eCategory = fReport.fByCode(cCategory, xReport.getCategory().getCode());
+//		IMPLEMENTATION eImplementation = fReport.fByCode(cImplementation, xReport.getIm);
+		
+		try {eReport = fReport.fByCode(cReport, xReport.getCode());}
+		catch (UtilsNotFoundException e)
+		{
+			eReport = efReport.build(eCategory,xReport);
+			eReport = fReport.save(eReport);
+		}
+		eReport.setCategory(eCategory);
+		eReport = fReport.save(eReport);
 	}
 	
 	

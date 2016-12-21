@@ -31,7 +31,7 @@ public class EjbIoReportWorkbookFactory<L extends UtilsLang,D extends UtilsDescr
 	
 	final Class<WORKBOOK> cWorkbook;
     
-	protected EjbIoReportWorkbookFactory(final Class<L> cL,final Class<D> cD,final Class<WORKBOOK> cWorkbook)
+	public EjbIoReportWorkbookFactory(final Class<L> cL,final Class<D> cD,final Class<WORKBOOK> cWorkbook)
 	{       
         this.cWorkbook = cWorkbook;
 	}

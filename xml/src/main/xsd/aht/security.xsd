@@ -127,13 +127,13 @@
         </xsd:complexType>
     </xsd:element>
     
-    <xsd:element name="staffs">
-        <xsd:complexType>
-        	<xsd:sequence>
-        		<xsd:element ref="us:domain" maxOccurs="1"/>
-                <xsd:element ref="sec:staff" maxOccurs="unbounded"/>
-            </xsd:sequence>
-        </xsd:complexType>
+	<xsd:element name="staffs">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="us:domain" maxOccurs="1"/>
+				<xsd:element ref="sec:staff" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
     </xsd:element>
     <xsd:element name="staff">
         <xsd:complexType>

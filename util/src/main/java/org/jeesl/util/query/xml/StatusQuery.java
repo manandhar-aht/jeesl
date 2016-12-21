@@ -9,6 +9,7 @@ import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
+import net.sf.ahtutils.xml.status.Level;
 import net.sf.ahtutils.xml.status.Parent;
 import net.sf.ahtutils.xml.status.Scope;
 import net.sf.ahtutils.xml.status.Scopes;
@@ -78,6 +79,15 @@ public class StatusQuery
 	public static Type typeLabel()
 	{		
 		Type xml = new Type();
+		xml.setId(0);
+		xml.setCode("");
+		xml.setLabel("");
+		return xml;
+	}
+	
+	public static Level levelLabel()
+	{		
+		Level xml = new Level();
 		xml.setId(0);
 		xml.setCode("");
 		xml.setLabel("");

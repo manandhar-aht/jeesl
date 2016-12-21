@@ -138,26 +138,27 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		definition=null;
 		preview=null;
 	}
-	
-	private void reloadTemplate()
-	{
-		template = fTemplate.load(cTemplate, template);
-		tokens = template.getTokens();
-		definitions = template.getDefinitions();
 		
-		Collections.sort(tokens, comparatorToken);
-		Collections.sort(definitions, comparatorDefinition);
-	}
-	
 	public void selectTemplate()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
-		template = fTemplate.find(cTemplate, template);
+		template = fTemplate.find(cTemplate,template);
 		template = efLang.persistMissingLangs(fTemplate,langs,template);
 		template = efDescription.persistMissingLangs(fTemplate,langs,template);
 		reloadTemplate();
 		definition=null;
 		preview=null;
+	}
+	
+	private void reloadTemplate()
+	{
+		template = fTemplate.load(template);
+		
+		tokens = template.getTokens();
+		definitions = template.getDefinitions();
+		
+		Collections.sort(tokens, comparatorToken);
+		Collections.sort(definitions, comparatorDefinition);
 	}
 	
 	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException

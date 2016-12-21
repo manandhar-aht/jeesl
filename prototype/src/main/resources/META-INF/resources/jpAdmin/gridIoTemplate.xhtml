@@ -14,6 +14,8 @@
 	<composite:interface>
 		<composite:attribute name="bean" required="false" default="#{adminIoTemplateBean}"/>
 		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
+		<composite:attribute name="withLongPositions" required="false" default="true"/>
+		<composite:attribute name="withShortPositions" required="false" default="false"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -30,8 +32,11 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTemplates()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sView :#{cc.id}:sTokens :#{cc.id}:row2" listener="#{cc.attrs.bean.selectTemplate()}"/>
-							<p:column rendered="true">  
+							<p:column rendered="#{cc.attrs.withLongPositions}">  
 								<h:outputText value="#{t.category.position}.#{t.position}"/>
+				         </p:column>
+				         <p:column rendered="#{cc.attrs.withShortPositions}">  
+								<h:outputText value="#{t.position}"/>
 				         </p:column>
 				         <p:column headerText="#{msg.aupCategory}">  
 								<h:outputText value="#{t.category.name[userBean.localeCode].lang}"/>

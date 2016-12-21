@@ -11,6 +11,7 @@ import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.status.Level;
 import net.sf.ahtutils.xml.status.Parent;
+import net.sf.ahtutils.xml.status.Result;
 import net.sf.ahtutils.xml.status.Scope;
 import net.sf.ahtutils.xml.status.Scopes;
 import net.sf.ahtutils.xml.status.Status;
@@ -88,6 +89,15 @@ public class StatusQuery
 	public static Level levelLabel()
 	{		
 		Level xml = new Level();
+		xml.setId(0);
+		xml.setCode("");
+		xml.setLabel("");
+		return xml;
+	}
+	
+	public static Result resultLabel()
+	{		
+		Result xml = new Result();
 		xml.setId(0);
 		xml.setCode("");
 		xml.setLabel("");

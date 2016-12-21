@@ -27,8 +27,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}lang" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="group" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="label" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="image" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -61,10 +62,12 @@ public class Result
     protected Descriptions descriptions;
     @XmlElement(required = true)
     protected List<Lang> lang;
-    @XmlAttribute(name = "code")
-    protected String code;
+    @XmlAttribute(name = "id")
+    protected Long id;
     @XmlAttribute(name = "group")
     protected String group;
+    @XmlAttribute(name = "code")
+    protected String code;
     @XmlAttribute(name = "label")
     protected String label;
     @XmlAttribute(name = "visible")
@@ -196,31 +199,35 @@ public class Result
     }
 
     /**
-     * Gets the value of the code property.
+     * Gets the value of the id property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Long }
      *     
      */
-    public String getCode() {
-        return code;
+    public long getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the code property.
+     * Sets the value of the id property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Long }
      *     
      */
-    public void setCode(String value) {
-        this.code = value;
+    public void setId(long value) {
+        this.id = value;
     }
 
-    public boolean isSetCode() {
-        return (this.code!= null);
+    public boolean isSetId() {
+        return (this.id!= null);
+    }
+
+    public void unsetId() {
+        this.id = null;
     }
 
     /**
@@ -249,6 +256,34 @@ public class Result
 
     public boolean isSetGroup() {
         return (this.group!= null);
+    }
+
+    /**
+     * Gets the value of the code property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * Sets the value of the code property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public boolean isSetCode() {
+        return (this.code!= null);
     }
 
     /**

@@ -58,10 +58,11 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyFacadeBean.class);
 	
+	final Class<SURVEY> cSurvey;
 	final Class<TEMPLATE> cTemplate;
 	final Class<VERSION> cVersion;
 	final Class<TS> cTS;
-	
+	final Class<SECTION> cSection;
 	final Class<ANSWER> cAnswer;
 	final Class<DATA> cData;
 	final Class<CORRELATION> cCorrelation;
@@ -73,9 +74,11 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	public JeeslSurveyFacadeBean(EntityManager em, Class<SURVEY> cSurvey, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, Class<ANSWER> cAnswer,  Class<DATA> cData, final Class<CORRELATION> cCorrelation)
 	{
 		super(em);
+		this.cSurvey=cSurvey;
 		this.cTemplate=cTemplate;
 		this.cVersion=cVersion;
 		this.cTS=cTS;
+		this.cSection=cSection;
 		this.cAnswer=cAnswer;
 		this.cData=cData;
 		this.cCorrelation=cCorrelation;
@@ -85,14 +88,14 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		efAnswer = ffSurvey.answer();
 	}
 
-	@Override public TEMPLATE load(Class<TEMPLATE> cTemplate, TEMPLATE template)
+	@Override public TEMPLATE load(TEMPLATE template)
 	{
 		template = em.find(cTemplate,template.getId());
 		template.getSections().size();
 		return template;
 	}
 	
-	@Override public SECTION load(Class<SECTION> cSection, SECTION section)
+	@Override public SECTION load(SECTION section)
 	{
 		section = em.find(cSection,section.getId());
 		for(SECTION sub : section.getSections())
@@ -103,7 +106,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		return section;
 	}
 	
-	@Override public SURVEY load(Class<SURVEY> cSurvey, SURVEY survey)
+	@Override public SURVEY load(SURVEY survey)
 	{
 		survey = em.find(cSurvey,survey.getId());
 		survey.getSurveyData().size();

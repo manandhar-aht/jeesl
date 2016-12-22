@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<r:columnGroup xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report" code="myCode" position="1" visible="true">
+<r:columnGroup xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report" code="myCode" position="1" visible="true" showLabel="true">
     <s:langs/>
     <s:descriptions/>
 </r:columnGroup>

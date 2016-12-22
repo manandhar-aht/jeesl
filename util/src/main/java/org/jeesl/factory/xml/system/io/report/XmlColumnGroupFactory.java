@@ -55,6 +55,8 @@ public class XmlColumnGroupFactory <L extends UtilsLang,D extends UtilsDescripti
 		if(q.isSetVisible()){xml.setVisible(group.isVisible());}
 		if(q.isSetPosition()){xml.setPosition(group.getPosition());}
 		
+		if(q.isSetShowLabel()){xml.setShowLabel(group.getShowLabel());}
+		
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(group.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(group.getDescription()));}
 				

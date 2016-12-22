@@ -31,6 +31,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="showLabel" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="query" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -62,6 +63,8 @@ public class ColumnGroup implements Serializable
     protected Integer position;
     @XmlAttribute(name = "visible")
     protected Boolean visible;
+    @XmlAttribute(name = "showLabel")
+    protected Boolean showLabel;
     @XmlAttribute(name = "query")
     protected String query;
 
@@ -248,6 +251,38 @@ public class ColumnGroup implements Serializable
 
     public void unsetVisible() {
         this.visible = null;
+    }
+
+    /**
+     * Gets the value of the showLabel property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isShowLabel() {
+        return showLabel;
+    }
+
+    /**
+     * Sets the value of the showLabel property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setShowLabel(boolean value) {
+        this.showLabel = value;
+    }
+
+    public boolean isSetShowLabel() {
+        return (this.showLabel!= null);
+    }
+
+    public void unsetShowLabel() {
+        this.showLabel = null;
     }
 
     /**

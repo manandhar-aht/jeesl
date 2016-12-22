@@ -1,11 +1,11 @@
 package org.jeesl.web.rest.system;
 
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportsFactory;
-import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
@@ -36,6 +36,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
+import net.sf.ahtutils.xml.report.XlsWorkbook;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
@@ -66,15 +67,13 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<FILLING> cFilling;
 	private final Class<TRANSFORMATION> cTransformation;
 
-	@SuppressWarnings("rawtypes")
-	private XmlStatusFactory xfStatus;
+	private XmlContainerFactory xfContainer;
 	private XmlReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfReport;
 	
-//	private EjbLangFactory<L> efLang;
-//	private EjbDescriptionFactory<D> efDescription;
 	private EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efReport;
+	private EjbIoReportWorkbookFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efWorkbook;
 	
-	private final JeeslDbLangUpdater<REPORT,L> dbUpdaterLang;;
+	private final JeeslDbLangUpdater<REPORT,L> dbUpdaterLang;
 	private final JeeslDbDescriptionUpdater<REPORT,D> dbUpdaterDescription;
 	
 	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
@@ -89,11 +88,12 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cTransformation=cTransformation;
 		this.cImplementation=cImplementation;
 	
-		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
+		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfReport = new XmlReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(ReportQuery.get(ReportQuery.Key.exReport));
 		
 		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL, cD, cReport, cWorkbook, cSheet, cGroup, cColumn);
 		efReport = ffReport.report();
+		efWorkbook = ffReport.workbook();
 		
 		dbUpdaterLang = JeeslDbLangUpdater.factory(cReport, cL);
 		dbUpdaterDescription = JeeslDbDescriptionUpdater.factory(cReport, cD);
@@ -119,10 +119,10 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		return new IoReportRestService<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(fReport,cL,cD,cCategory,cReport,cWorkbook,cSheet,cGroup,cColumn,cFilling,cTransformation,cImplementation);
 	}
 	
-	@Override public Container exportSystemIoReportCategories() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cCategory)));}
-	@Override public Container exportSystemIoReportSettingFilling() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cFilling)));}
-	@Override public Container exportSystemIoReportSettingTransformation() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cTransformation)));}
-	@Override public Container exportSystemIoReportSettingImplementation() {return XmlContainerFactory.buildStatusList(xfStatus.build(fReport.allOrderedPosition(cImplementation)));}
+	@Override public Container exportSystemIoReportCategories() {return xfContainer.build(fReport.allOrderedPosition(cCategory));}
+	@Override public Container exportSystemIoReportSettingFilling() {return xfContainer.build(fReport.allOrderedPosition(cFilling));}
+	@Override public Container exportSystemIoReportSettingTransformation() {return xfContainer.build(fReport.allOrderedPosition(cTransformation));}
+	@Override public Container exportSystemIoReportSettingImplementation() {return xfContainer.build(fReport.allOrderedPosition(cImplementation));}
 
 	@Override
 	public Reports exportSystemIoReports()
@@ -181,13 +181,31 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		eReport.setCategory(eCategory);
 		eReport.setImplementation(eImplementation);
 		
-		dbUpdaterLang.handle(fReport, eReport, xReport.getLangs());eReport = fReport.save(eReport);
-		dbUpdaterDescription.handle(fReport, eReport, xReport.getDescriptions());eReport = fReport.save(eReport);
+		eReport=dbUpdaterLang.handle(fReport, eReport, xReport.getLangs());eReport = fReport.save(eReport);
+		eReport=dbUpdaterDescription.handle(fReport, eReport, xReport.getDescriptions());eReport = fReport.save(eReport);
+		
+		if(xReport.isSetXlsWorkbook())
+		{
+			eReport = importWorkbook(eReport,xReport.getXlsWorkbook());
+			eReport = fReport.save(eReport);
+		}
 		
 		dbUpdaterReport.handled(eReport);
 		eReport = fReport.save(eReport);
 	}
 	
+	private REPORT importWorkbook(REPORT eReport, XlsWorkbook xWorkbook) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		WORKBOOK eWorkbook;
+		if(eReport.getWorkbook()!=null){eWorkbook = eReport.getWorkbook();}
+		else
+		{
+			eWorkbook = efWorkbook.build(eReport);
+			eWorkbook = fReport.save(eWorkbook);
+			eReport.setWorkbook(eWorkbook);
+		}
+		return eReport;
+	}
 	
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Container container, Class<P> clParent)

@@ -192,12 +192,17 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		Collections.sort(sheets, comparatorSheet);
 	}
 	
-	public void selectReport()
+	public void selectReport() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(report));}
 		report = fReport.find(cReport, report);
 		report = efLang.persistMissingLangs(fReport,langs,report);
 		report = efDescription.persistMissingLangs(fReport,langs,report);
+		if(report.getWorkbook()==null)
+		{
+			report.setWorkbook(efWorkbook.build(report));
+			report = fReport.saveTransaction(report);
+		}
 		reloadReport();
 		uiHelper.check(report);
 	}
@@ -421,6 +426,12 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	public void cancelColumn()
 	{
 		column=null;
+	}
+	
+	public void changeRevisionCategory()
+	{
+		revisionCategory = fReport.find(cRevisionCategory, revisionCategory);
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(revisionCategory));}
 	}
     
 	//*************************************************************************************

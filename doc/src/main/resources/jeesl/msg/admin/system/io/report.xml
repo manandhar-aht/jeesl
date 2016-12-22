@@ -49,7 +49,14 @@
 			<lang key="fr" translation="Group" />
 		</langs>
 	</translation>
-		<translation key="jeeslIoColumns">
+	<translation key="jeeslIoGroupShowLabel">
+		<langs>
+			<lang key="de" translation="Text Anzeigen" />
+			<lang key="en" translation="Show Label" />
+			<lang key="fr" translation="Show Label" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoColumns">
 		<langs>
 			<lang key="de" translation="Spalten" />
 			<lang key="en" translation="Columns" />

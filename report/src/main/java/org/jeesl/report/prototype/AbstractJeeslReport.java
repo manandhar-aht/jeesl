@@ -43,10 +43,13 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslReport.class);
 	
+	protected boolean debugOnInfo;
+	
 	private final Class<REPORT> cReport;
 	protected final String localeCode;
 	
 	protected List<String> headers; public List<String> getHeaders() {return headers;}
+	private boolean showGroupings; public boolean isShowGroupings() {return showGroupings;}
 	
 	protected List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	protected List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
@@ -65,38 +68,60 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	{
 		this.cReport=cReport;
 		this.localeCode=localeCode;
+		debugOnInfo = false;
 		
 		comparatorSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportSheetComparator.Type.position);
 		comparatorGroup  = new IoReportGroupComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportGroupComparator.Type.position);
 		comparatorColumn  = new IoReportColumnComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportColumnComparator.Type.position);
 		
+		showGroupings = true;
 		buildHeaders();
 	}
 	
-	protected void initIo(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, Class<?> c)
+	protected void initIo(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, Class<?> classReport)
 	{
 		if(fReport!=null)
 		{
 			try
 			{
-				ioReport = fReport.fByCode(cReport,c.getSimpleName());
+				ioReport = fReport.fByCode(cReport,classReport.getSimpleName());
 				ioReport = fReport.load(ioReport,false);
 				if(ioReport.getWorkbook()!=null && !ioReport.getWorkbook().getSheets().isEmpty())
 				{
 					Collections.sort(ioReport.getWorkbook().getSheets(), comparatorSheet);
 					ioSheet = fReport.load(ioReport.getWorkbook().getSheets().get(0), true);
-					Collections.sort(ioSheet.getGroups(), comparatorGroup);
-					for(GROUP g : ioSheet.getGroups()){Collections.sort(g.getColumns(), comparatorColumn);}
+					
 					mapGroupChilds = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
 					groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
 					columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
 		
 					Collections.sort(groups, comparatorGroup);
 					Collections.sort(columns, comparatorColumn);
+					
+					showGroupings=false;
+					for(GROUP g : groups){if(g.getShowLabel()){showGroupings=true;}}
 				}
 			}
 			catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
+			
+			if(debugOnInfo)
+			{
+				logger.info("Debugging: "+classReport.getSimpleName());
+				logger.info("... showGroupings: "+showGroupings);
+				for(GROUP g : groups)
+				{
+					logger.info("\t"+g.getClass().getSimpleName()+" ("+mapGroupChilds.get(g)+"): "+g.getName().get(localeCode).getLang());
+					for(COLUMN c : columns)
+					{
+						if(c.getGroup().equals(g))
+						{
+							logger.info("\t\t"+c.getClass().getSimpleName()+": "+c.getName().get(localeCode).getLang());
+						}
+					}
+				}
+			}
 		}
+		else{logger.warn("Trying to super.initIo(), but "+JeeslIoReportFacade.class.getSimpleName()+" is null");}
 	}
 	
 	private void buildHeaders()

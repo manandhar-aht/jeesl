@@ -311,6 +311,7 @@
 			<xsd:attribute name="code" type="xsd:string"/>
 			<xsd:attribute name="position" type="xsd:int"/>
 			<xsd:attribute name="visible" type="xsd:boolean"/>
+			<xsd:attribute name="showLabel" type="xsd:boolean"/>
 			<xsd:attribute name="query" type="xsd:string"/>
 		</xsd:complexType>
 	</xsd:element>

@@ -10,17 +10,16 @@
 	
 	<p:columnGroup type="header">
 	
-		<p:row>
-			<ui:repeat var="g" value="#{report.ioSheet.groups}">
-				<p:column rendered="#{g.visible}" colspan="#{report.mapGroupChilds[g]}" headerText="#{g.name[loc].lang}" />
+		<p:row rendered="#{report.showGroupings}">
+			<ui:repeat var="g" value="#{report.groups}">
+				<p:column rendered="#{g.showLabel}" colspan="#{report.mapGroupChilds[g]}" headerText="#{g.name[loc].lang}" />
+				<p:column rendered="#{not g.showLabel}" colspan="#{report.mapGroupChilds[g]}" headerText="" />
 			</ui:repeat>
 		</p:row>
 		<p:row>
-			<ui:repeat var="g" value="#{report.ioSheet.groups}">
-				<ui:repeat var="c" value="#{g.columns}">
-					<p:column rendered="#{g.visible and c.visible}" colspan="1" headerText="#{c.name[loc].lang}" />
+			<ui:repeat var="c" value="#{report.columns}">
+					<p:column colspan="1" headerText="#{c.name[loc].lang}" />
 				</ui:repeat>
-			</ui:repeat>
 		</p:row>
 	
 	</p:columnGroup>

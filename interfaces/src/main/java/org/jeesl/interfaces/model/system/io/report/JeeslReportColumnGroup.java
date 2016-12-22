@@ -34,4 +34,7 @@ public interface JeeslReportColumnGroup<L extends UtilsLang,D extends UtilsDescr
 	
 	List<COLUMN> getColumns();
 	void setColumns(List<COLUMN> columns);
+	
+	Boolean getShowLabel();
+	void setShowLabel(Boolean showLabel);
 }

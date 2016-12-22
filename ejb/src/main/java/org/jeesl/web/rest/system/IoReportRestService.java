@@ -1,8 +1,5 @@
 package org.jeesl.web.rest.system;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
@@ -19,6 +16,9 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestExport;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestImport;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.util.ejb.JeeslDbCodeEjbUpdater;
+import org.jeesl.util.ejb.JeeslDbDescriptionUpdater;
+import org.jeesl.util.ejb.JeeslDbLangUpdater;
 import org.jeesl.util.query.xml.ReportQuery;
 import org.jeesl.util.query.xml.StatusQuery;
 import org.slf4j.Logger;
@@ -74,6 +74,9 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 //	private EjbDescriptionFactory<D> efDescription;
 	private EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efReport;
 	
+	private final JeeslDbLangUpdater<REPORT,L> dbUpdaterLang;;
+	private final JeeslDbDescriptionUpdater<REPORT,D> dbUpdaterDescription;
+	
 	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
 	{
 		this.fReport=fReport;
@@ -91,6 +94,9 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		
 		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL, cD, cReport, cWorkbook, cSheet, cGroup, cColumn);
 		efReport = ffReport.report();
+		
+		dbUpdaterLang = JeeslDbLangUpdater.factory(cReport, cL);
+		dbUpdaterDescription = JeeslDbDescriptionUpdater.factory(cReport, cD);
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -139,15 +145,14 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		DataUpdateTracker dut = new DataUpdateTracker(true);
 		dut.setType(XmlTypeFactory.build(cReport.getName(),"DB Import"));
 		
-		Set<String> set = new HashSet<String>();
-		for(REPORT eReport : fReport.all(cReport)){set.add(eReport.getCode());}
+		JeeslDbCodeEjbUpdater<REPORT> dbUpdaterReport = JeeslDbCodeEjbUpdater.createFactory(cReport);
+		dbUpdaterReport.dbEjbs(fReport);
 		
 		for(Report xReport : reports.getReport())
 		{
 			try
 			{
-				importSystemIoReport(xReport);
-				set.remove(xReport.getCode());
+				importSystemIoReport(dbUpdaterReport,xReport);
 				dut.success();
 			}
 			catch (UtilsNotFoundException e) {dut.fail(e, true);}
@@ -155,35 +160,31 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 			catch (UtilsLockingException e) {dut.fail(e, true);}
 		}
 		
-		logger.info("Will remove "+set.size()+" "+cReport.getSimpleName());
-		for(String code : set)
-		{
-			try
-			{
-				REPORT eReport = fReport.fByCode(cReport, code);
-				fReport.rm(eReport);
-				dut.success();
-			}
-			catch (UtilsNotFoundException e) {dut.fail(e, true);}
-			catch (UtilsConstraintViolationException e) {dut.fail(e, true);}
-		}
+		dbUpdaterReport.remove(fReport);
 		
 		return dut.toDataUpdate();
 	}
 	
-	private void importSystemIoReport(Report xReport) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	private void importSystemIoReport(JeeslDbCodeEjbUpdater<REPORT> dbUpdaterReport, Report xReport) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
 		REPORT eReport;
 		CATEGORY eCategory = fReport.fByCode(cCategory, xReport.getCategory().getCode());
-//		IMPLEMENTATION eImplementation = fReport.fByCode(cImplementation, xReport.getIm);
+		IMPLEMENTATION eImplementation = fReport.fByCode(cImplementation, xReport.getImplementation().getCode());
 		
 		try {eReport = fReport.fByCode(cReport, xReport.getCode());}
 		catch (UtilsNotFoundException e)
 		{
-			eReport = efReport.build(eCategory,xReport);
+			eReport = efReport.build(eCategory,eImplementation,xReport);
 			eReport = fReport.save(eReport);
 		}
+		
 		eReport.setCategory(eCategory);
+		eReport.setImplementation(eImplementation);
+		
+		dbUpdaterLang.handle(fReport, eReport, xReport.getLangs());eReport = fReport.save(eReport);
+		dbUpdaterDescription.handle(fReport, eReport, xReport.getDescriptions());eReport = fReport.save(eReport);
+		
+		dbUpdaterReport.handled(eReport);
 		eReport = fReport.save(eReport);
 	}
 	

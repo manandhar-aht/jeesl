@@ -33,16 +33,31 @@ public class JeeslDbCodeEjbUpdater<C extends EjbWithCode>
 		return new JeeslDbCodeEjbUpdater<C>(codeClass);
 	}
 	
+	@Deprecated //Use
 	public void dbEjbs(List<C> list)
 	{
 		for(C c : list){ejbInDb.put(c.getCode(), c);}
 	}
 	
+	public void dbEjbs(UtilsFacade fUtils)
+	{
+		for(C c : fUtils.all(codeClass)){ejbInDb.put(c.getCode(), c);}
+	}
+	
+	@Deprecated
 	public void actualAdd(String code)
 	{
 		if(ejbInDb.containsKey(code))
 		{
 			ejbInDb.remove(code);
+		}
+	}
+	
+	public void handled(C ejb)
+	{
+		if(ejbInDb.containsKey(ejb.getCode()))
+		{
+			ejbInDb.remove(ejb.getCode());
 		}
 	}
 	

@@ -53,12 +53,13 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 		return ejb;
 	}
 	
-	public REPORT build(CATEGORY category, Report xReport)
+	public REPORT build(CATEGORY category, IMPLEMENTATION eImplementation, Report xReport)
 	{
 		REPORT ejb = null;
 		try
 		{
 			ejb = cReport.newInstance();
+			ejb.setImplementation(eImplementation);
 			ejb.setCategory(category);
 			ejb.setCode(xReport.getCode());
 			ejb.setPosition(xReport.getPosition());

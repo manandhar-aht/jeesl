@@ -18,6 +18,22 @@
         <tag-name>reportHeader</tag-name>
         <source>jeeslPrototype/reportHeader.xhtml</source>
     </tag>
+	<tag>
+        <tag-name>reportHeader2</tag-name>
+        <source>jeeslPrototype/reportHeader2.xhtml</source>
+    </tag>
+    	<tag>
+        <tag-name>reportHeader3</tag-name>
+        <source>jeeslPrototype/reportHeader3.xhtml</source>
+    </tag>
+        	<tag>
+        <tag-name>reportHeader4</tag-name>
+        <source>jeeslPrototype/reportHeader4.xhtml</source>
+    </tag>
+		<tag>
+        <tag-name>reportHeader5</tag-name>
+        <source>jeeslPrototype/reportHeader5.xhtml</source>
+    </tag>
     <tag>
         <tag-name>reportFlat</tag-name>
         <source>jeeslPrototype/reportFlat.xhtml</source>

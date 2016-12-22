@@ -1,0 +1,16 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+>
+		<p:columnGroup type="header">
+			<p:row>
+				<ui:repeat var="c" value="#{reportPlanningMtefBean.report.columns}">
+						<p:column colspan="1" headerText="#{c.name[localeCode].lang}" />
+					</ui:repeat>
+			</p:row>
+		</p:columnGroup>
+</ui:composition>

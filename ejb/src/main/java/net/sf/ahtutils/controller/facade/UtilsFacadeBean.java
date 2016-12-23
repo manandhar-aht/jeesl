@@ -458,6 +458,7 @@ public class UtilsFacadeBean implements UtilsFacade
 	
 	@Override public <T extends EjbRemoveable> void rmTransaction(T o) throws UtilsConstraintViolationException {rmProtected(o);}
 	@Override public <T extends EjbRemoveable> void rm(T o) throws UtilsConstraintViolationException {rmProtected(o);}
+	@Override public <T extends EjbRemoveable> void rmTransaction(List<T> list) throws UtilsConstraintViolationException{for(T t : list){rm(t);}}
 	@Override public <T extends EjbRemoveable> void rm(Set<T> set) throws UtilsConstraintViolationException{rm(new ArrayList<T>(set));}
 	@Override public <T extends EjbRemoveable> void rm(List<T> list) throws UtilsConstraintViolationException{for(T t : list){rm(t);}}
 	

@@ -460,4 +460,10 @@ public class AbstractDummyFacade implements UtilsFacade
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public <T extends EjbRemoveable> void rmTransaction(List<T> list) throws UtilsConstraintViolationException {
+		// TODO Auto-generated method stub
+		
+	}
 }

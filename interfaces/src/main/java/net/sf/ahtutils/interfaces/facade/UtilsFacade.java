@@ -88,6 +88,7 @@ public interface UtilsFacade  extends UtilsIdFacade
 	<T extends EjbRemoveable> void rmTransaction(T o) throws UtilsConstraintViolationException;
 	<T extends EjbRemoveable> void rm(T o) throws UtilsConstraintViolationException;
 	<T extends EjbRemoveable> void rm(List<T> list) throws UtilsConstraintViolationException;
+	<T extends EjbRemoveable> void rmTransaction(List<T> list) throws UtilsConstraintViolationException;
 	<T extends EjbRemoveable> void rm(Set<T> set) throws UtilsConstraintViolationException;
 	
 	//Parent

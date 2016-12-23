@@ -28,6 +28,7 @@ import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsDefinition;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
+import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
@@ -206,5 +207,23 @@ public class ReportXpath
 		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+ImportStructure.class.getSimpleName()+" is set");}
 		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+ImportStructure.class.getSimpleName()+" are set");}
 		return listResult.get(0);
+	}
+	
+	public static Langs getLangs(XlsSheet sheet) throws ExlpXpathNotFoundException
+	{
+		for(Serializable s : sheet.getContent())
+		{
+			if(s instanceof Langs){return (Langs)s;}
+		}
+		throw new ExlpXpathNotFoundException("No "+Langs.class.getSimpleName()+" available");
+	}
+	
+	public static Descriptions getDescriptions(XlsSheet sheet) throws ExlpXpathNotFoundException
+	{
+		for(Serializable s : sheet.getContent())
+		{
+			if(s instanceof Descriptions){return (Descriptions)s;}
+		}
+		throw new ExlpXpathNotFoundException("No "+Descriptions.class.getSimpleName()+" available");
 	}
 }

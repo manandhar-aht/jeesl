@@ -1,4 +1,4 @@
-package org.jeesl.util.ejb;
+package org.jeesl.controller.db.updater;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

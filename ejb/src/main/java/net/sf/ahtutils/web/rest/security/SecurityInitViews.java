@@ -1,8 +1,8 @@
 package net.sf.ahtutils.web.rest.security;
 
+import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.facade.JeeslSecurityFacade;
-import org.jeesl.util.ejb.JeeslDbCodeEjbUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

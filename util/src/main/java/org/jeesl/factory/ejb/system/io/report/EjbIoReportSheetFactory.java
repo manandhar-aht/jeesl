@@ -14,6 +14,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.report.Report;
+import net.sf.ahtutils.xml.report.XlsSheet;
 
 public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -53,5 +55,28 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public SHEET build(WORKBOOK workbook, XlsSheet sheet)
+	{
+		SHEET ejb = null;
+		try
+		{
+			ejb = cSheet.newInstance();
+			ejb.setCode(sheet.getCode());
+			ejb.setWorkbook(workbook);
+			ejb.setPosition(sheet.getPosition());
+			ejb.setVisible(sheet.isVisible());
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		return ejb;
+	}
+	
+	public void update(SHEET eSheet, XlsSheet xSheet)
+	{
+		eSheet.setPosition(xSheet.getPosition());
+		eSheet.setVisible(xSheet.isVisible());
 	}
 }

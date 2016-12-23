@@ -116,7 +116,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected void reloadTemplate()
 	{
 		logger.info("Reloading "+template.toString());
-		template = fSurvey.load(cTemplate,template);
+		template = fSurvey.load(template);
 		version = template.getVersion();
 		sections = template.getSections();
 	}
@@ -154,10 +154,21 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		reloadVersions();
 	}
 	
+	protected void rmVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.rmEntity(version));
+		fSurvey.rm(version);
+		version = null;
+		template = null;
+		section = null;
+		question = null;
+		reloadVersions();
+	}
+	
 	//Section
 	protected void loadSection()
 	{
-		section = fSurvey.load(cSection,section);
+		section = fSurvey.load(section);
 		questions = section.getQuestions();
 	}
 	

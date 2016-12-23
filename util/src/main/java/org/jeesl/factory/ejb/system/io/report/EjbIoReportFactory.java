@@ -70,4 +70,12 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 		
 		return ejb;
 	}
+	
+	public void update (REPORT eReport, Report xReport, CATEGORY eCategory, IMPLEMENTATION eImplementation)
+	{
+		eReport.setCategory(eCategory);
+		eReport.setImplementation(eImplementation);
+		eReport.setPosition(xReport.getPosition());
+		eReport.setVisible(xReport.isVisible());
+	}
 }

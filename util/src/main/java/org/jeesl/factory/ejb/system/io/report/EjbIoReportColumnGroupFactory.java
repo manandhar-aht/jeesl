@@ -78,30 +78,29 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 			ejb = cGroup.newInstance();
 			ejb.setCode(sheet.getCode());
 			ejb.setSheet(sheet);
-			update(null,ejb,group);
+			ejb = update(ejb,group);
 
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
-		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
-		catch (UtilsLockingException e) {e.printStackTrace();}
 		return ejb;
 	}
 	
-	public void update(UtilsFacade fUtils, GROUP eGroup, ColumnGroup xGroup) throws UtilsConstraintViolationException, UtilsLockingException
+	public GROUP update(GROUP eGroup, ColumnGroup xGroup)
 	{
 		eGroup.setPosition(xGroup.getPosition());
 		eGroup.setVisible(xGroup.isVisible());
 		eGroup.setShowLabel(xGroup.isSetShowLabel());
-		
-		if(fUtils!=null)
-		{
-			eGroup=dbuLang.handle(fUtils, eGroup, xGroup.getLangs());
-			eGroup = fUtils.save(eGroup);
-			
-			eGroup=dbuDescription.handle(fUtils, eGroup, xGroup.getDescriptions());
-			eGroup = fUtils.save(eGroup);
-		}
+		return eGroup;
+	}
+	
+	public GROUP updateLD(UtilsFacade fUtils, GROUP eGroup, ColumnGroup xGroup) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		eGroup=dbuLang.handle(fUtils, eGroup, xGroup.getLangs());
+		eGroup = fUtils.save(eGroup);
+		eGroup=dbuDescription.handle(fUtils, eGroup, xGroup.getDescriptions());
+		eGroup = fUtils.save(eGroup);
+		return eGroup;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,

@@ -178,8 +178,14 @@
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.column.visible}"/>
 								
-								<p:outputLabel value="#{msg.jeeslIoColumnQuery}"/>
-								<p:inputText value="#{cc.attrs.bean.column.query}"/>
+								<p:outputLabel value="#{msg.jeeslIoColumnQueryHeader}"/>
+								<p:inputText value="#{cc.attrs.bean.column.queryHeader}"/>
+								
+								<p:outputLabel value="#{msg.jeeslIoColumnQueryCell}"/>
+								<p:inputText value="#{cc.attrs.bean.column.queryCell}"/>
+								
+								<p:outputLabel value="#{msg.jeeslIoColumnQueryFooter}"/>
+								<p:inputText value="#{cc.attrs.bean.column.queryFooter}"/>
 								
 							</p:panelGrid>
 							<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60">

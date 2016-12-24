@@ -156,6 +156,14 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		cancelReport();
 	}
 	
+	private void reset(boolean rReport, boolean rSheet, boolean rGroup, boolean rColumn)
+	{
+		if(rReport){report=null;}
+		if(rSheet){sheet=null;}
+		if(rGroup){group=null;}
+		if(rColumn){column=null;}
+	}
+	
 	//*************************************************************************************
 	private void reloadReports()
 	{
@@ -172,6 +180,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		report.setDescription(efDescription.createEmpty(langs));
 		report.setWorkbook(efWorkbook.build(report));
 		uiHelper.check(report);
+		reset(false,true,true,true);
 	}
 	
 	private void reloadReport()
@@ -204,6 +213,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 			report = fReport.saveTransaction(report);
 		}
 		reloadReport();
+		reset(false,true,true,true);
 		uiHelper.check(report);
 	}
 	
@@ -231,10 +241,10 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 */	
 	public void cancelReport()
 	{
-		report = null;uiHelper.check(report);
-		sheet=null;uiHelper.check(sheet);
-		group=null;uiHelper.check(group);
-		column=null;
+		reset(true,true,true,true);
+		uiHelper.check(report);
+		uiHelper.check(sheet);
+		uiHelper.check(group);
 	}
 		
 	//*************************************************************************************
@@ -246,6 +256,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		sheet.setName(efLang.createEmpty(langs));
 		sheet.setDescription(efDescription.createEmpty(langs));
 		uiHelper.check(sheet);
+		reset(false,false,true,true);
 	}
 	
 	public void selectSheet()
@@ -263,9 +274,9 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 			catch (UtilsLockingException e) {logger.error(e.getMessage());}
 		}
 		reloadSheet();
+		reset(false,false,true,true);
 		uiHelper.check(sheet);
-		group=null;uiHelper.check(group);
-		column=null;
+		uiHelper.check(group);
 	}
 	
 	private void reloadSheet()
@@ -302,9 +313,9 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 */	
 	public void cancelSheet()
 	{
-		sheet=null;uiHelper.check(sheet);
-		group=null;uiHelper.check(group);
-		column=null;
+		reset(false,true,true,true);
+		uiHelper.check(sheet);
+		uiHelper.check(group);
 	}
 	
 	//*************************************************************************************
@@ -315,6 +326,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		group = efGroup.build(sheet);
 		group.setName(efLang.createEmpty(langs));
 		group.setDescription(efDescription.createEmpty(langs));
+		reset(false,false,false,true);
 		uiHelper.check(group);
 	}
 	
@@ -333,8 +345,8 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 			catch (UtilsLockingException e) {logger.error(e.getMessage());}
 		}
 		reloadGroup();
+		reset(false,false,false,true);
 		uiHelper.check(group);
-		column=null;
 	}
 	
 	private void reloadGroup()
@@ -362,8 +374,8 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	
 	public void cancelGroup()
 	{
-		group=null;uiHelper.check(group);
-		column=null;
+		reset(false,false,true,true);
+		uiHelper.check(group);
 	}
 	
 	//*************************************************************************************
@@ -425,7 +437,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	
 	public void cancelColumn()
 	{
-		column=null;
+		reset(false,false,false,true);
 	}
 	
 	public void changeRevisionCategory()

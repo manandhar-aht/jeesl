@@ -34,6 +34,12 @@ public interface JeeslReportColumn<L extends UtilsLang,D extends UtilsDescriptio
 	CDT getDataType();
 	void setDataType(CDT dataType);
 	
-	String getQuery();
-	void setQuery(String query);
+	String getQueryHeader();
+	void setQueryHeader(String queryHeader);
+	
+	String getQueryCell();
+	void setQueryCell(String queryCell);
+	
+	String getQueryFooter();
+	void setQueryFooter(String queryFooter);
 }

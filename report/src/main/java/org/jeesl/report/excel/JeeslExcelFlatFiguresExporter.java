@@ -165,11 +165,11 @@ public class JeeslExcelFlatFiguresExporter<L extends UtilsLang,D extends UtilsDe
 			for (COLUMN columnDefinition : columns)
 			{
 				Cell cell   = row.createCell(column);
-				Object value = getRequestedValue(columnDefinition.getQuery(), content);
+				Object value = getRequestedValue(columnDefinition.getQueryCell(), content);
 				if (value != null)
 				{
-					if (columnDefinition.getQuery().startsWith("g")) {cell.setCellValue(value.toString());}
-					if (columnDefinition.getQuery().startsWith("d")) {
+					if (columnDefinition.getQueryCell().startsWith("g")) {cell.setCellValue(value.toString());}
+					if (columnDefinition.getQueryCell().startsWith("d")) {
 						double d = (Double) value; cell.setCellValue(d);
 						cell.setCellStyle(numberStyle);}
 					logger.trace("Adding " +value.toString() +" to cell " +row.getRowNum() +"," +column);

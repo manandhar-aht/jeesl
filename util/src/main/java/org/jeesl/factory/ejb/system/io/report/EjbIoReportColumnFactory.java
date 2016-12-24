@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
+import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
@@ -12,10 +14,14 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.report.XlsColumn;
 
 public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -34,10 +40,15 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 	final static Logger logger = LoggerFactory.getLogger(EjbIoReportColumnFactory.class);
 	
 	final Class<COLUMN> cColumn;
+	
+	private JeeslDbLangUpdater<COLUMN,L> dbuLang;
+	private JeeslDbDescriptionUpdater<COLUMN,D> dbuDescription;
     
 	public EjbIoReportColumnFactory(final Class<L> cL,final Class<D> cD,final Class<COLUMN> cColumn)
 	{       
         this.cColumn = cColumn;
+        dbuLang = JeeslDbLangUpdater.factory(cColumn, cL);
+        dbuDescription = JeeslDbDescriptionUpdater.factory(cColumn, cD);
 	}
 	    
 	public COLUMN build(GROUP group)
@@ -55,6 +66,39 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public COLUMN build(GROUP group, XlsColumn column)
+	{
+		COLUMN ejb = null;
+		try
+		{
+			ejb = cColumn.newInstance();
+			ejb.setCode(column.getCode());
+			ejb.setGroup(group);
+			ejb = update(ejb,column);
+
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		return ejb;
+	}
+	
+	public COLUMN update(COLUMN eColumn, XlsColumn xColumn)
+	{
+		eColumn.setPosition(xColumn.getPosition());
+		eColumn.setVisible(xColumn.isVisible());
+		
+		return eColumn;
+	}
+	
+	public COLUMN updateLD(UtilsFacade fUtils, COLUMN eColumn, XlsColumn xColumn) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		eColumn=dbuLang.handle(fUtils, eColumn, xColumn.getLangs());
+		eColumn = fUtils.save(eColumn);
+		eColumn=dbuDescription.handle(fUtils, eColumn, xColumn.getDescriptions());
+		eColumn = fUtils.save(eColumn);
+		return eColumn;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,

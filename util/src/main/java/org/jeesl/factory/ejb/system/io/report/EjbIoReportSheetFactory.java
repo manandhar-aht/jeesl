@@ -2,6 +2,8 @@ package org.jeesl.factory.ejb.system.io.report;
 
 import java.util.UUID;
 
+import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
+import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
@@ -10,12 +12,16 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.XlsSheet;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
 
 public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -35,9 +41,15 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 	
 	final Class<SHEET> cSheet;
     
+	private JeeslDbLangUpdater<SHEET,L> dbuLang;
+	private JeeslDbDescriptionUpdater<SHEET,D> dbuDescription;
+	
 	public EjbIoReportSheetFactory(final Class<L> cL,final Class<D> cD,final Class<SHEET> cSheet)
 	{       
         this.cSheet = cSheet;
+        
+        dbuLang = JeeslDbLangUpdater.factory(cSheet, cL);
+        dbuDescription = JeeslDbDescriptionUpdater.factory(cSheet, cD);
 	}
 	    
 	public SHEET build(WORKBOOK workbook)
@@ -65,8 +77,7 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 			ejb = cSheet.newInstance();
 			ejb.setCode(sheet.getCode());
 			ejb.setWorkbook(workbook);
-			ejb.setPosition(sheet.getPosition());
-			ejb.setVisible(sheet.isVisible());
+			ejb = update(ejb,sheet);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
@@ -74,9 +85,20 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 		return ejb;
 	}
 	
-	public void update(SHEET eSheet, XlsSheet xSheet)
+	public SHEET update(SHEET eSheet, XlsSheet xSheet)
 	{
 		eSheet.setPosition(xSheet.getPosition());
 		eSheet.setVisible(xSheet.isVisible());
+		return eSheet;
+	}
+	
+	public SHEET updateLD(UtilsFacade fUtils, SHEET eSheet, XlsSheet xSheet) throws UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException
+	{
+		eSheet=dbuLang.handle(fUtils, eSheet, ReportXpath.getLangs(xSheet));
+		eSheet = fUtils.save(eSheet);
+		
+		eSheet=dbuDescription.handle(fUtils, eSheet, ReportXpath.getDescriptions(xSheet));
+		eSheet = fUtils.save(eSheet);
+		return eSheet;
 	}
 }

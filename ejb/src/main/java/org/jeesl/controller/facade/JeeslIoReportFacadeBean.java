@@ -36,14 +36,16 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 {	
 	private final Class<CATEGORY> cCategory;
 	private final Class<REPORT> cReport;
+	private final Class<WORKBOOK> cWorkbook;
 	private final Class<SHEET> cSheet;
 	private final Class<GROUP> cGroup;
 	
-	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<SHEET> cSheet, final Class<GROUP> cGroup)
+	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup)
 	{
 		super(em);
 		this.cCategory=cCategory;
 		this.cReport=cReport;
+		this.cWorkbook=cWorkbook;
 		this.cSheet=cSheet;
 		this.cGroup=cGroup;
 	}
@@ -65,6 +67,13 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 			
 		}
 		return report;
+	}
+	
+	@Override public WORKBOOK load(WORKBOOK workbook)
+	{
+		workbook = em.find(cWorkbook, workbook.getId());
+		workbook.getSheets().size();
+		return workbook;
 	}
 	
 	@Override public SHEET load(SHEET sheet, boolean recursive)

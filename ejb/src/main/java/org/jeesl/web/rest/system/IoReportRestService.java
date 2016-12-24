@@ -1,8 +1,9 @@
 package org.jeesl.web.rest.system;
 
+import java.io.Serializable;
+
 import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
-import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
-import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
@@ -36,13 +37,13 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
+import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
-import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 
 public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription,
@@ -70,6 +71,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<REPORT> cReport;
 	private final Class<IMPLEMENTATION> cImplementation;
 	private final Class<SHEET> cSheet;
+	private final Class<GROUP> cGroup;
 	private final Class<FILLING> cFilling;
 	private final Class<TRANSFORMATION> cTransformation;
 
@@ -79,13 +81,8 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efReport;
 	private EjbIoReportWorkbookFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efWorkbook;
 	private EjbIoReportSheetFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efSheet;
-	
-	private JeeslDbLangUpdater<REPORT,L> dbuReportLang;
-	private JeeslDbLangUpdater<SHEET,L> dbuSheetLang;
-	
-	private JeeslDbDescriptionUpdater<REPORT,D> dbuReportDescription;
-	private JeeslDbDescriptionUpdater<SHEET,D> dbuSheetDescription;
-	
+	private EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efGroup;
+		
 	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
 	{
 		this.fReport=fReport;
@@ -96,6 +93,8 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cReport=cReport;
 		this.cImplementation=cImplementation;
 		this.cSheet=cSheet;
+		this.cGroup=cGroup;
+		
 		this.cFilling=cFilling;
 		this.cTransformation=cTransformation;
 
@@ -106,12 +105,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		efReport = ffReport.report();
 		efWorkbook = ffReport.workbook();
 		efSheet = ffReport.sheet();
-		
-		dbuReportLang = JeeslDbLangUpdater.factory(cReport, cL);
-		dbuSheetLang = JeeslDbLangUpdater.factory(cSheet, cL);
-		
-		dbuReportDescription = JeeslDbDescriptionUpdater.factory(cReport, cD);
-		dbuSheetDescription = JeeslDbDescriptionUpdater.factory(cSheet, cD);
+		efGroup = ffReport.group();
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -161,14 +155,14 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		dut.setType(XmlTypeFactory.build(cReport.getName(),"DB Import"));
 		
 		JeeslDbCodeEjbUpdater<REPORT> dbUpdaterReport = JeeslDbCodeEjbUpdater.createFactory(cReport);
-		
 		dbUpdaterReport.dbEjbs(fReport);
 		
 		for(Report xReport : reports.getReport())
 		{
 			try
 			{
-				importSystemIoReport(dbUpdaterReport,xReport);
+				REPORT eReport = importSystemIoReport(xReport);
+				dbUpdaterReport.handled(eReport);
 				dut.success();
 			}
 			catch (UtilsNotFoundException e) {dut.fail(e, true);}
@@ -176,13 +170,12 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 			catch (UtilsLockingException e) {dut.fail(e, true);}
 			catch (UtilsProcessingException e) {dut.fail(e, true);}
 		}
-		
 		dbUpdaterReport.remove(fReport);
 		
 		return dut.toDataUpdate();
 	}
 	
-	private void importSystemIoReport(JeeslDbCodeEjbUpdater<REPORT> dbUpdaterReport, Report xReport) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, UtilsProcessingException
+	private REPORT importSystemIoReport(Report xReport) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, UtilsProcessingException
 	{
 		REPORT eReport;
 		CATEGORY eCategory = fReport.fByCode(cCategory, xReport.getCategory().getCode());
@@ -194,19 +187,16 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 			eReport = efReport.build(eCategory,eImplementation,xReport);
 			eReport = fReport.save(eReport);
 		}
-		efReport.update(eReport,xReport,eCategory,eImplementation);
-		
-		eReport=dbuReportLang.handle(fReport, eReport, xReport.getLangs());eReport = fReport.save(eReport);
-		eReport=dbuReportDescription.handle(fReport, eReport, xReport.getDescriptions());eReport = fReport.save(eReport);
-		
+		eReport = efReport.update(eReport, xReport, eCategory, eImplementation);
+		eReport = fReport.save(eReport);
+		eReport = efReport.updateLD(fReport,eReport,xReport);
+				
 		if(xReport.isSetXlsWorkbook())
 		{
-			eReport = importWorkbook(eReport,xReport.getXlsWorkbook());
-			eReport = fReport.save(eReport);
+			importWorkbook(eReport,xReport.getXlsWorkbook());
 		}
 		
-		dbUpdaterReport.handled(eReport);
-		eReport = fReport.save(eReport);
+		return eReport;
 	}
 	
 	private REPORT importWorkbook(REPORT eReport, XlsWorkbook xWorkbook) throws UtilsConstraintViolationException, UtilsLockingException, UtilsProcessingException
@@ -219,16 +209,18 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 			eWorkbook = fReport.save(eWorkbook);
 			eReport.setWorkbook(eWorkbook);
 		}
+		eWorkbook = fReport.load(eWorkbook);
 		
 		JeeslDbCodeEjbUpdater<SHEET> dbUpdaterSheet = JeeslDbCodeEjbUpdater.createFactory(cSheet);
-		dbUpdaterSheet.dbEjbs(fReport);
+		dbUpdaterSheet.dbEjbs(eWorkbook.getSheets());
 		if(xWorkbook.isSetXlsSheets())
 		{
 			for(XlsSheet xSheet : xWorkbook.getXlsSheets().getXlsSheet())
 			{
 				try
 				{
-					importSystemIoSheet(dbUpdaterSheet,eWorkbook,xSheet);
+					SHEET eSheet = importSystemIoSheet(eWorkbook,xSheet);
+					dbUpdaterSheet.handled(eSheet);
 				}
 				catch (UtilsNotFoundException e) {throw new UtilsProcessingException(e.getMessage());}
 				catch (UtilsConstraintViolationException e) {throw new UtilsProcessingException(e.getMessage());}
@@ -236,29 +228,68 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 				catch (ExlpXpathNotFoundException e) {throw new UtilsProcessingException(e.getMessage());}
 			}
 		}
-		
 		dbUpdaterSheet.remove(fReport);
 		
 		return eReport;
 	}
 	
-	private void importSystemIoSheet(JeeslDbCodeEjbUpdater<SHEET> dbUpdaterSheet, WORKBOOK workbook, XlsSheet xSheet) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException
+	private SHEET importSystemIoSheet(WORKBOOK workbook, XlsSheet xSheet) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException, UtilsProcessingException
 	{
+		logger.info("Importing "+cSheet.getSimpleName()+" "+workbook.getReport().getCategory().getPosition()+"."+workbook.getReport().getPosition()+"."+xSheet.getPosition());
 		SHEET eSheet;
-		
 		try {eSheet = fReport.fByCode(cSheet, xSheet.getCode());}
 		catch (UtilsNotFoundException e)
 		{
 			eSheet = efSheet.build(workbook,xSheet);
 			eSheet = fReport.save(eSheet);
 		}
-		efSheet.update(eSheet, xSheet);
-		
-		eSheet=dbuSheetLang.handle(fReport, eSheet, ReportXpath.getLangs(xSheet));eSheet = fReport.save(eSheet);
-		eSheet=dbuSheetDescription.handle(fReport, eSheet, ReportXpath.getDescriptions(xSheet));eSheet = fReport.save(eSheet);	
-		
-		dbUpdaterSheet.handled(eSheet);
+		logger.info("A: "+eSheet.getPosition());
+		eSheet = efSheet.update(eSheet,xSheet);
+		logger.info("B: "+eSheet.getPosition());
 		eSheet = fReport.save(eSheet);
+		logger.info("C: "+eSheet.getPosition());
+		eSheet = efSheet.updateLD(fReport, eSheet, xSheet);
+		logger.info("D: "+eSheet.getPosition());
+		eSheet = fReport.load(eSheet,false);
+		logger.info("E: "+eSheet.getPosition());
+		
+		JeeslDbCodeEjbUpdater<GROUP> dbUpdaterGroup = JeeslDbCodeEjbUpdater.createFactory(cGroup);
+		dbUpdaterGroup.dbEjbs(eSheet.getGroups());
+		for(Serializable s : xSheet.getContent())
+		{
+			if(s instanceof ColumnGroup)
+			{
+				ColumnGroup xGroup = (ColumnGroup)s;
+				try
+				{
+					GROUP eGroup = importSystemIoGroup(eSheet,xGroup);
+					dbUpdaterGroup.handled(eGroup);
+				}
+				catch (UtilsNotFoundException e) {throw new UtilsProcessingException(e.getMessage());}
+				catch (UtilsConstraintViolationException e) {throw new UtilsProcessingException(e.getMessage());}
+				catch (UtilsLockingException e) {throw new UtilsProcessingException(e.getMessage());}
+				catch (ExlpXpathNotFoundException e) {throw new UtilsProcessingException(e.getMessage());}
+			}
+		}
+		dbUpdaterGroup.remove(fReport);
+		logger.info("F: "+eSheet.getPosition());
+		return eSheet;
+	}
+	
+	private GROUP importSystemIoGroup(SHEET eSheet, ColumnGroup xGroup) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException
+	{
+		GROUP eGroup;
+		try {eGroup = fReport.fByCode(cGroup, xGroup.getCode());}
+		catch (UtilsNotFoundException e)
+		{
+			eGroup = efGroup.build(eSheet,xGroup);
+			eGroup = fReport.save(eGroup);
+		}
+		eGroup = fReport.load(eGroup);
+		efGroup.update(fReport,eGroup, xGroup);
+		eGroup = fReport.save(eGroup);
+		
+		return eGroup;
 	}
 	
     @SuppressWarnings({ "rawtypes", "unchecked" })

@@ -30,6 +30,7 @@ public interface JeeslIoReportFacade <L extends UtilsLang,D extends UtilsDescrip
 			extends UtilsFacade
 {	
 	REPORT load(REPORT report, boolean recursive);
+	WORKBOOK load(WORKBOOK workbook);
 	SHEET load(SHEET sheet, boolean recursive);
 	GROUP load(GROUP group);
 	

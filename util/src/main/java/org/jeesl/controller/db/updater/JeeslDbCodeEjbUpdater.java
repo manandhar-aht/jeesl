@@ -33,7 +33,6 @@ public class JeeslDbCodeEjbUpdater<C extends EjbWithCode>
 		return new JeeslDbCodeEjbUpdater<C>(codeClass);
 	}
 	
-	@Deprecated //Use
 	public void dbEjbs(List<C> list)
 	{
 		for(C c : list){ejbInDb.put(c.getCode(), c);}

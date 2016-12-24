@@ -34,7 +34,7 @@ public class XmlWorkbookFactory <L extends UtilsLang,D extends UtilsDescription,
 	private XlsWorkbook q;
 	
 	private XmlSheetsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfSheets;
-
+	
 	public XmlWorkbookFactory(String localeCode, XlsWorkbook q)
 	{
 		this.q=q;

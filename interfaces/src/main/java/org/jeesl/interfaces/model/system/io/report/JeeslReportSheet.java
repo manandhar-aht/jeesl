@@ -3,7 +3,6 @@ package org.jeesl.interfaces.model.system.io.report;
 import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
-import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -25,7 +24,7 @@ public interface JeeslReportSheet<L extends UtilsLang,D extends UtilsDescription
 									CDT extends UtilsStatus<CDT,L,D>,
 									ENTITY extends EjbWithId,
 									ATTRIBUTE extends EjbWithId>
-		extends EjbWithId,EjbSaveable,EjbRemoveable,
+		extends EjbWithId,EjbSaveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,
 				EjbWithLang<L>,EjbWithDescription<D>
 {					

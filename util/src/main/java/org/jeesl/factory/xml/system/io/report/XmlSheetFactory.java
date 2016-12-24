@@ -1,12 +1,15 @@
 package org.jeesl.factory.xml.system.io.report;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.util.comparator.ejb.system.io.report.IoReportGroupComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +43,8 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	private XlsSheet q;
 	
+	private Comparator<GROUP> cGroup;
+	
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
 	private XmlColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfGroup;
@@ -47,6 +52,7 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 	public XmlSheetFactory(String localeCode, XlsSheet q)
 	{
 		this.q=q;
+		cGroup = new IoReportGroupComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportGroupComparator.Type.position);
 		if(getLangs(q)!=null){xfLangs = new XmlLangsFactory<L>(getLangs(q));}
 		if(getDescriptions(q)!=null){xfDescriptions = new XmlDescriptionsFactory<D>(getDescriptions(q));}
 		if(getColumnGroup(q)!=null){xfGroup = new XmlColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,getColumnGroup(q));}
@@ -65,6 +71,7 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		if(getColumnGroup(q)!=null)
 		{
+			Collections.sort(sheet.getGroups(),cGroup);
 			for(GROUP g : sheet.getGroups())
 			{
 				xml.getContent().add(xfGroup.build(g));

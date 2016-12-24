@@ -25,7 +25,7 @@ public interface JeeslReportColumnGroup<L extends UtilsLang,D extends UtilsDescr
 									CDT extends UtilsStatus<CDT,L,D>,
 									ENTITY extends EjbWithId,
 									ATTRIBUTE extends EjbWithId>
-		extends EjbWithId,EjbSaveable,EjbRemoveable,
+		extends EjbWithId,EjbSaveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,
 				EjbWithLang<L>,EjbWithDescription<D>
 {					

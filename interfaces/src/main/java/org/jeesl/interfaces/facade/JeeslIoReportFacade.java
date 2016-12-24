@@ -8,6 +8,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -33,6 +34,10 @@ public interface JeeslIoReportFacade <L extends UtilsLang,D extends UtilsDescrip
 	WORKBOOK load(WORKBOOK workbook);
 	SHEET load(SHEET sheet, boolean recursive);
 	GROUP load(GROUP group);
+	
+	void rmSheet(SHEET sheet) throws UtilsConstraintViolationException;
+	void rmGroup(GROUP group) throws UtilsConstraintViolationException;
+	void rmColumn(COLUMN column) throws UtilsConstraintViolationException;
 	
 	List<REPORT> fReports(List<CATEGORY> categories, boolean showInvisibleEntities);
 }

@@ -372,6 +372,15 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
 	}
 	
+	public void rmGroup() throws UtilsConstraintViolationException
+	{
+		fReport.rmGroup(group);
+		reloadReport();
+		reloadSheet();
+		reset(false,false,true,true);
+		uiHelper.check(group);
+	}
+	
 	public void cancelGroup()
 	{
 		reset(false,false,true,true);
@@ -428,7 +437,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	public void rmColumn() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(column));}
-		fReport.rm(column);
+		fReport.rmColumn(column);
 		column=null;
 		bMessage.growlSuccessRemoved();
 		reloadGroup();

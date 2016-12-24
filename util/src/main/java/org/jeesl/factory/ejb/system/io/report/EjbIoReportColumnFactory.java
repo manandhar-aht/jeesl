@@ -9,6 +9,7 @@ import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportQueryType;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.report.XlsColumn;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
 
 public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -88,6 +91,18 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 	{
 		eColumn.setPosition(xColumn.getPosition());
 		eColumn.setVisible(xColumn.isVisible());
+		
+		if(xColumn.isSetQueries())
+		{
+			try{eColumn.setQueryHeader(ReportXpath.getQuery(JeeslReportQueryType.Code.header.toString(), xColumn.getQueries()).getValue());}
+			catch (ExlpXpathNotFoundException e) {eColumn.setQueryHeader(null);}
+			
+			try{eColumn.setQueryCell(ReportXpath.getQuery(JeeslReportQueryType.Code.cell.toString(), xColumn.getQueries()).getValue());}
+			catch (ExlpXpathNotFoundException e) {eColumn.setQueryCell(null);}
+			
+			try{eColumn.setQueryFooter(ReportXpath.getQuery(JeeslReportQueryType.Code.footer.toString(), xColumn.getQueries()).getValue());}
+			catch (ExlpXpathNotFoundException e) {eColumn.setQueryFooter(null);}
+		}
 		
 		return eColumn;
 	}

@@ -20,6 +20,8 @@ import net.sf.ahtutils.xml.report.ImportStructure;
 import net.sf.ahtutils.xml.report.Info;
 import net.sf.ahtutils.xml.report.Jr;
 import net.sf.ahtutils.xml.report.Media;
+import net.sf.ahtutils.xml.report.Queries;
+import net.sf.ahtutils.xml.report.Query;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.Template;
@@ -225,5 +227,14 @@ public class ReportXpath
 			if(s instanceof Descriptions){return (Descriptions)s;}
 		}
 		throw new ExlpXpathNotFoundException("No "+Descriptions.class.getSimpleName()+" available");
+	}
+	
+	public static Query getQuery(String type, Queries queries) throws ExlpXpathNotFoundException
+	{
+		for(Query q : queries.getQuery())
+		{
+			if(q.getType().equals(type)){return q;}
+		}
+		throw new ExlpXpathNotFoundException("No "+Query.class.getSimpleName()+" for type="+type);
 	}
 }

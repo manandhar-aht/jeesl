@@ -1,10 +1,14 @@
 package org.jeesl.factory.xml.system.io.report;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.util.comparator.ejb.system.io.report.IoReportColumnComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +39,8 @@ public class XmlColumnGroupFactory <L extends UtilsLang,D extends UtilsDescripti
 	
 	private ColumnGroup q;
 	
+	private Comparator<COLUMN> cColumn;
+	
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
 	private XmlColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfColumn;
@@ -42,6 +48,7 @@ public class XmlColumnGroupFactory <L extends UtilsLang,D extends UtilsDescripti
 	public XmlColumnGroupFactory(String localeCode, ColumnGroup q)
 	{
 		this.q=q;
+		cColumn = new IoReportColumnComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportColumnComparator.Type.position);
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 		if(q.isSetXlsColumn()){xfColumn = new XmlColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,q.getXlsColumn().get(0));}
@@ -62,6 +69,7 @@ public class XmlColumnGroupFactory <L extends UtilsLang,D extends UtilsDescripti
 				
 		if(q.isSetXlsColumn())
 		{
+			Collections.sort(group.getColumns(),cColumn);
 			for(COLUMN column : group.getColumns())
 			{
 				xml.getXlsColumn().add(xfColumn.build(column));

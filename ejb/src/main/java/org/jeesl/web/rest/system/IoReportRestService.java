@@ -1,6 +1,9 @@
 package org.jeesl.web.rest.system;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
@@ -22,6 +25,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestExport;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestImport;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.util.comparator.ejb.system.io.report.IoReportComparator;
 import org.jeesl.util.query.xml.ReportQuery;
 import org.jeesl.util.query.xml.StatusQuery;
 import org.slf4j.Logger;
@@ -87,6 +91,8 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efGroup;
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efColumn;
 		
+	private Comparator<REPORT> comparatorReport;
+	
 	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
 	{
 		this.fReport=fReport;
@@ -112,6 +118,8 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		efSheet = ffReport.sheet();
 		efGroup = ffReport.group();
 		efColumn = ffReport.column();
+		
+		comparatorReport = new IoReportComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportComparator.Type.position);
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -143,7 +151,9 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	public Reports exportSystemIoReports()
 	{
 		Reports reports = XmlReportsFactory.build();
-		for(REPORT report : fReport.all(cReport))
+		List<REPORT> list = fReport.all(cReport);
+		Collections.sort(list,comparatorReport);
+		for(REPORT report : list)
 		{
 			reports.getReport().add(xfReport.build(report));
 		}
@@ -234,7 +244,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 				catch (ExlpXpathNotFoundException e) {throw new UtilsProcessingException(e.getMessage());}
 			}
 		}
-		dbUpdaterSheet.remove(fReport);
+		for(SHEET s : dbUpdaterSheet.getEjbForRemove()){fReport.rmSheet(s);}
 		
 		return eReport;
 	}
@@ -272,7 +282,8 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 				catch (ExlpXpathNotFoundException e) {throw new UtilsProcessingException(e.getMessage());}
 			}
 		}
-		dbUpdaterGroup.remove(fReport);
+		for(GROUP g : dbUpdaterGroup.getEjbForRemove()){fReport.rmGroup(g);}
+		
 		return eSheet;
 	}
 	
@@ -304,12 +315,16 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 			catch (UtilsLockingException e) {throw new UtilsProcessingException(e.getMessage());}
 			catch (ExlpXpathNotFoundException e) {throw new UtilsProcessingException(e.getMessage());}
 		}
-		dbUpdaterColumn.remove(fReport);
+		for(COLUMN c : dbUpdaterColumn.getEjbForRemove()){fReport.rmColumn(c);}
+		
 		return eGroup;
 	}
 	
 	private COLUMN importColumn(GROUP eGroup, XlsColumn xColumn) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException
 	{
+		logger.info("Updating "+cColumn.getSimpleName()+" "+eGroup.getSheet().getWorkbook().getReport().getCategory().getPosition()+"."+eGroup.getSheet().getWorkbook().getReport().getPosition()+"."+eGroup.getSheet().getPosition()+"."+eGroup.getPosition()+"."+xColumn.getPosition());
+		boolean debug = xColumn.getCode().equals("688133a2-d098-4fa1-949e-32c3ca9fecdd");
+		
 		COLUMN eColumn;
 		try {eColumn = fReport.fByCode(cColumn, xColumn.getCode());}
 		catch (UtilsNotFoundException e)
@@ -317,10 +332,13 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 			eColumn = efColumn.build(eGroup,xColumn);
 			eColumn = fReport.save(eColumn);
 		}
-		
+		if(debug){logger.info("A: "+eColumn.getQueryHeader()+" "+eColumn.getQueryCell()+" "+eColumn.getQueryFooter());}
 		efColumn.update(eColumn, xColumn);
+		if(debug){logger.info("B: "+eColumn.getQueryHeader()+" "+eColumn.getQueryCell()+" "+eColumn.getQueryFooter());}
 		eColumn = fReport.save(eColumn);
+		if(debug){logger.info("C: "+eColumn.getQueryHeader()+" "+eColumn.getQueryCell()+" "+eColumn.getQueryFooter());}
 		eColumn = efColumn.updateLD(fReport,eColumn,xColumn);
+		if(debug){logger.info("D: "+eColumn.getQueryHeader()+" "+eColumn.getQueryCell()+" "+eColumn.getQueryFooter());}
 		return eColumn;
 	}
 	

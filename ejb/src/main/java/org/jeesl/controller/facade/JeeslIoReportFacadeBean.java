@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.controller.util.ParentPredicate;
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -39,8 +40,9 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	private final Class<WORKBOOK> cWorkbook;
 	private final Class<SHEET> cSheet;
 	private final Class<GROUP> cGroup;
+	private final Class<COLUMN> cColumn;
 	
-	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup)
+	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn)
 	{
 		super(em);
 		this.cCategory=cCategory;
@@ -48,6 +50,7 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		this.cWorkbook=cWorkbook;
 		this.cSheet=cSheet;
 		this.cGroup=cGroup;
+		this.cColumn=cColumn;
 	}
 	
 	@Override public REPORT load(REPORT report, boolean recursive)
@@ -92,6 +95,27 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		group = em.find(cGroup, group.getId());
 		group.getColumns().size();
 		return group;
+	}
+	
+	@Override public void rmSheet(SHEET sheet) throws UtilsConstraintViolationException
+	{
+		sheet = em.find(cSheet, sheet.getId());
+		sheet.getWorkbook().getSheets().remove(sheet);
+		this.rmProtected(sheet);
+	}
+	
+	@Override public void rmGroup(GROUP group) throws UtilsConstraintViolationException
+	{
+		group = em.find(cGroup, group.getId());
+		group.getSheet().getGroups().remove(group);
+		this.rmProtected(group);
+	}
+	
+	@Override public void rmColumn(COLUMN column) throws UtilsConstraintViolationException
+	{
+		column = em.find(cColumn, column.getId());
+		column.getGroup().getColumns().remove(column);
+		this.rmProtected(column);
 	}
 	
 	@Override public List<REPORT> fReports(List<CATEGORY> categories, boolean showInvisibleEntities)

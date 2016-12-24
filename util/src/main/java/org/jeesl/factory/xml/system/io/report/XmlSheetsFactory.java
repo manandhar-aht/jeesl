@@ -1,10 +1,14 @@
 package org.jeesl.factory.xml.system.io.report;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.util.comparator.ejb.system.io.report.IoReportSheetComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,11 +37,14 @@ public class XmlSheetsFactory<L extends UtilsLang,D extends UtilsDescription,
 		
 	private XlsSheets q;
 	
+	private Comparator<SHEET> cSheet;
+	
 	private XmlSheetFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfSheet;
 
 	public XmlSheetsFactory(String localeCode, XlsSheets q)
 	{
 		this.q=q;
+		cSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportSheetComparator.Type.position);
 		if(q.isSetXlsSheet()){xfSheet = new XmlSheetFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,CDT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,q.getXlsSheet().get(0));}
 	}
 	
@@ -47,6 +54,7 @@ public class XmlSheetsFactory<L extends UtilsLang,D extends UtilsDescription,
 		
 		if(q.isSetXlsSheet())
 		{
+			Collections.sort(workbook.getSheets(),cSheet);
 			for(SHEET sheet : workbook.getSheets())
 			{
 				xml.getXlsSheet().add(xfSheet.build(sheet));

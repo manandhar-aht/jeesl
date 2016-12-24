@@ -30,17 +30,13 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderReports()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fReport :#{cc.id}:sSheet :#{cc.id}:sGroup :#{cc.id}:row2" listener="#{cc.attrs.bean.selectReport()}"/>
-							<p:column rendered="true">  
-								<h:outputText value="#{r.category.position}.#{r.position}"/>
+							<p:column rendered="true"><h:outputText value="#{r.category.position}.#{r.position}"/></p:column>
+							<p:column headerText="#{msg.aupCategory}"><h:outputText value="#{r.category.name[userBean.localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslIoReport}"><h:outputText value="#{r.name[userBean.localeCode].lang}"/></p:column>
+							<p:column>  
 								<aup:iconCheckmark value="#{r.visible}"/>
-				         </p:column>
-				         <p:column headerText="#{msg.aupCategory}">  
-								<h:outputText value="#{r.category.name[userBean.localeCode].lang}"/>
-				         </p:column>
-				         <p:column headerText="#{msg.jeeslIoReport}">  
-								<h:outputText value="#{r.name[userBean.localeCode].lang}"/>
-				         </p:column>
-				   	</p:dataTable>
+							</p:column>
+						</p:dataTable>
 					</h:form>
 					<h:form id="fReport">
 						<p:panel header="#{msg.jeeslIoReport}" rendered="#{(not empty cc.attrs.bean.report) and cc.attrs.bean.uiHelper.showPanelReport}" styleClass="auPanelWithGrid">
@@ -72,7 +68,7 @@
 				<aht:slot id="sSheet" width="3">
 					<h:form id="fSheets" rendered="#{(not empty cc.attrs.bean.report) and (cc.attrs.bean.report.id gt 0)}">
 						<p:dataTable var="sheet" value="#{cc.attrs.bean.sheets}" draggableRows="true"
-							selection="#{cc.attrs.bean.sheet}" selectionMode="single" rowKey="#{sheet.id}">
+									selection="#{cc.attrs.bean.sheet}" selectionMode="single" rowKey="#{sheet.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoSheets}">
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addSheet()}" update=":#{cc.id}:fSheet :#{cc.id}:sGroup :#{cc.id}:row2" tooltip="#{msg.ttNew}"/>
@@ -80,14 +76,12 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSheets()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fSheet :#{cc.id}:sGroup :#{cc.id}:row2" listener="#{cc.attrs.bean.selectSheet()}"/>
-				         <p:column rendered="true">  
-								<h:outputText value="#{sheet.position}"/>
+							<p:column rendered="true"><h:outputText value="#{sheet.position}"/></p:column>
+							<p:column headerText="#{msg.aupName}"><h:outputText value="#{sheet.name[userBean.localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.aupName}">  
 								<aup:iconCheckmark value="#{sheet.visible}"/>
-				         </p:column>
-				         <p:column headerText="#{msg.aupName}">  
-								<h:outputText value="#{sheet.name[userBean.localeCode].lang}"/>
-				         </p:column>
-				      </p:dataTable>
+							</p:column>
+						</p:dataTable>
 					</h:form>
 					<h:form id="fSheet">
 						<p:panel header="#{msg.jeeslIoSheet}" rendered="#{(not empty cc.attrs.bean.sheet) and cc.attrs.bean.uiHelper.showPanelSheet}" styleClass="auPanelWithGrid">
@@ -117,11 +111,14 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderGroups()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fGroup :#{cc.id}:row2" listener="#{cc.attrs.bean.selectGroup()}"/>
 				         <p:column rendered="true">  
-								<h:outputText value="#{group.position}"/>
-								<aup:iconCheckmark value="#{group.visible}"/>
+							<h:outputText value="#{group.position}"/>
 				         </p:column>
 				         <p:column headerText="#{msg.aupName}">  
-								<h:outputText value="#{group.name[userBean.localeCode].lang}"/>
+							<h:outputText value="#{group.name[userBean.localeCode].lang}"/>
+				         </p:column>
+				         <p:column rendered="true">
+							<aup:iconCheckmark value="#{group.visible}"/>
+							<h:graphicImage rendered="#{group.showLabel}" name="12/ui/system/io/report/label.png"  library="jeeslPrototypeGfx"/>
 				         </p:column>
 				      </p:dataTable>
 					</h:form>
@@ -157,11 +154,13 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderColumns()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sColumn" listener="#{cc.attrs.bean.selectColumn()}"/>
 				         <p:column rendered="true">  
-								<h:outputText value="#{column.position}"/>
-								<aup:iconCheckmark value="#{column.visible}"/>
+							<h:outputText value="#{column.position}"/>
 				         </p:column>
 				         <p:column headerText="#{msg.aupName}">  
 								<h:outputText value="#{column.name[userBean.localeCode].lang}"/>
+				         </p:column>
+				         <p:column>  
+							<aup:iconCheckmark value="#{column.visible}"/>
 				         </p:column>
 				      </p:dataTable>
 					</h:form>

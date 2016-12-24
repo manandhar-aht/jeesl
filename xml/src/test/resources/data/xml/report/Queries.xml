@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<r:queries xmlns:r="http://ahtutils.aht-group.com/report">
+    <r:query type="myType">myValue</r:query>
+    <r:query type="myType">myValue</r:query>
+</r:queries>

@@ -3,6 +3,7 @@ package org.jeesl.factory.xml.system.io.report;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportQueryType;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.report.Queries;
 import net.sf.ahtutils.xml.report.XlsColumn;
 
 public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
@@ -53,9 +55,20 @@ public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetVisible()){xml.setVisible(column.isVisible());}
 		if(q.isSetPosition()){xml.setPosition(column.getPosition());}
 		
+		if(q.isSetQueries()){xml.setQueries(queries(column));}
+		
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(column.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(column.getDescription()));}
 						
+		return xml;
+	}
+	
+	private Queries queries(COLUMN column)
+	{
+		Queries xml = XmlQueriesFactory.build();
+		if(column.getQueryHeader()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Code.header, column.getQueryHeader()));}
+		if(column.getQueryCell()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Code.cell, column.getQueryCell()));}
+		if(column.getQueryFooter()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Code.footer, column.getQueryFooter()));}
 		return xml;
 	}
 }

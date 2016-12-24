@@ -24,6 +24,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}queries"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsTransformation"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}dataAssociation"/&gt;
  *       &lt;/sequence&gt;
@@ -47,6 +48,7 @@ import net.sf.ahtutils.xml.status.Langs;
 @XmlType(name = "", propOrder = {
     "langs",
     "descriptions",
+    "queries",
     "xlsTransformation",
     "dataAssociation"
 })
@@ -59,6 +61,8 @@ public class XlsColumn implements Serializable
     protected Langs langs;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Descriptions descriptions;
+    @XmlElement(required = true)
+    protected Queries queries;
     @XmlElement(required = true)
     protected XlsTransformation xlsTransformation;
     @XmlElement(required = true)
@@ -136,6 +140,34 @@ public class XlsColumn implements Serializable
 
     public boolean isSetDescriptions() {
         return (this.descriptions!= null);
+    }
+
+    /**
+     * Gets the value of the queries property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Queries }
+     *     
+     */
+    public Queries getQueries() {
+        return queries;
+    }
+
+    /**
+     * Sets the value of the queries property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Queries }
+     *     
+     */
+    public void setQueries(Queries value) {
+        this.queries = value;
+    }
+
+    public boolean isSetQueries() {
+        return (this.queries!= null);
     }
 
     /**

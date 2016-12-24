@@ -3,6 +3,7 @@ package org.jeesl.util.query.xml;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.io.report.XmlQueriesFactory;
 import org.jeesl.factory.xml.system.io.report.XmlSheetsFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
@@ -101,6 +102,8 @@ public class ReportQuery
 		xml.setCode("");
 		xml.setPosition(0);
 		xml.setVisible(true);
+		
+		xml.setQueries(XmlQueriesFactory.build());
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());

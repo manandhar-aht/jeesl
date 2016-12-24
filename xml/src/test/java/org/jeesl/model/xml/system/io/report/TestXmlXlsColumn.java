@@ -33,6 +33,7 @@ public class TestXmlXlsColumn extends AbstractXmlReportTest<XlsColumn>
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
+    		xml.setQueries(TestXmlQueries.create(false));
     		xml.setXlsTransformation(TestXmlXlsTransformation.create(false));
     		xml.setDataAssociation(TestXmlDataAssociation.create(false));
     	}

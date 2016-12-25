@@ -1,7 +1,5 @@
 package org.jeesl.interfaces.model.system.io.report;
 
-import java.util.List;
-
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -13,7 +11,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslReportSheet<L extends UtilsLang,D extends UtilsDescription,
+public interface JeeslReportRow<L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE>,
 									IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -26,13 +24,20 @@ public interface JeeslReportSheet<L extends UtilsLang,D extends UtilsDescription
 									RO extends UtilsStatus<RO,L,D>,
 									ENTITY extends EjbWithId,
 									ATTRIBUTE extends EjbWithId>
+
 		extends EjbWithId,EjbSaveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,
 				EjbWithLang<L>,EjbWithDescription<D>
-{					
-	WORKBOOK getWorkbook();
-	void setWorkbook(WORKBOOK workbook);
+{	
+	SHEET getSheet();
+	void setSheet(SHEET sheet);
 	
-	List<GROUP> getGroups();
-	void setGroups(List<GROUP> groups);
+	RO getOrientation();
+	void setOrientation(RO orientation);
+	
+	CDT getDataType();
+	void setDataType(CDT dataType);
+	
+	String getQueryCell();
+	void setQueryCell(String queryCell);
 }

@@ -18,10 +18,10 @@
 			<s:lang key="fr" translation="Revision Scope Type"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="IoReportRowOrientation">
+	<s:translation key="IoReportRowType">
 		<s:langs>
-			<s:lang key="en" translation="Row Orientation"/>
-			<s:lang key="fr" translation="Row Orientation"/>
+			<s:lang key="en" translation="Row Type"/>
+			<s:lang key="fr" translation="Row Type"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="IoReportSettingFilling">

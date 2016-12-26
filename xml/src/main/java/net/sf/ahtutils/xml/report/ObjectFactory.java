@@ -182,6 +182,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Rows }
+     * 
+     */
+    public Rows createRows() {
+        return new Rows();
+    }
+
+    /**
+     * Create an instance of {@link Row }
+     * 
+     */
+    public Row createRow() {
+        return new Row();
+    }
+
+    /**
      * Create an instance of {@link ImportStructure }
      * 
      */

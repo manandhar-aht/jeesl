@@ -292,6 +292,7 @@
             	<xsd:element ref="r:xlsColumns" maxOccurs="unbounded"/>
 	            <xsd:element ref="r:xlsColumn" maxOccurs="unbounded"/>
 	            <xsd:element ref="r:columnGroup" maxOccurs="unbounded"/>
+	            <xsd:element ref="r:rows" maxOccurs="1"/>
 	           	<xsd:element ref="r:importStructure" maxOccurs="1"/>
 	           	<xsd:element ref="r:queries" maxOccurs="1"/>
 			</xsd:sequence>
@@ -344,6 +345,27 @@
 			<xsd:attribute name="width" type="xsd:int"/>
 		</xsd:complexType>
 	</xsd:element>
+	
+	<xsd:element name="rows">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="r:row" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="row">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="us:langs" maxOccurs="1"/>
+				<xsd:element ref="us:descriptions" maxOccurs="1"/>
+				<xsd:element ref="r:queries" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="code" type="xsd:string"/>
+			<xsd:attribute name="position" type="xsd:int"/>
+			<xsd:attribute name="visible" type="xsd:boolean"/>
+		</xsd:complexType>
+	</xsd:element>
+	
 	<xsd:element name="queries">
 		<xsd:complexType>
 			<xsd:sequence>

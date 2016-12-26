@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.jeesl.factory.xml.system.io.report.XmlQueriesFactory;
+import org.jeesl.factory.xml.system.io.report.XmlRowsFactory;
 import org.jeesl.factory.xml.system.io.report.XmlSheetsFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
@@ -11,6 +12,7 @@ import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.Report;
+import net.sf.ahtutils.xml.report.Row;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
@@ -76,8 +78,7 @@ public class ReportQuery
 		xml.getContent().add(StatusQuery.descriptions());
 		xml.getContent().add(exportColumnGroup());
 		xml.getContent().add(XmlQueriesFactory.build());
-//		xml.setLangs(StatusQuery.langs());
-//		xml.setDescriptions(StatusQuery.descriptions());
+		xml.getContent().add(XmlRowsFactory.build(exportRow()));
 		
 		return xml;
 	}
@@ -94,6 +95,20 @@ public class ReportQuery
 		xml.setDescriptions(StatusQuery.descriptions());
 		
 		xml.getXlsColumn().add(exportColumn());
+		return xml;
+	}
+	
+	private static Row exportRow()
+	{
+		Row xml = new Row();
+		xml.setCode("");
+		xml.setPosition(0);
+		xml.setVisible(true);
+		
+		xml.setQueries(XmlQueriesFactory.build());
+		
+		xml.setLangs(StatusQuery.langs());
+		xml.setDescriptions(StatusQuery.descriptions());
 		return xml;
 	}
 	

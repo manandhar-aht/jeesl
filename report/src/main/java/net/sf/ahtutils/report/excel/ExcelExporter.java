@@ -1,26 +1,42 @@
 package net.sf.ahtutils.report.excel;
 
-import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
-import net.sf.ahtutils.xml.report.*;
-import net.sf.ahtutils.xml.status.Lang;
-import net.sf.ahtutils.xml.status.Langs;
-import net.sf.ahtutils.xml.xpath.ReportXpath;
-import net.sf.ahtutils.xml.xpath.StatusXpath;
-import net.sf.exlp.util.io.StringUtil;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.Pointer;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jeesl.factory.xls.system.io.report.XlsRowFactory;
 import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.*;
-import org.apache.poi.ss.util.CellRangeAddress;
+import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
+import net.sf.ahtutils.xml.report.Label;
+import net.sf.ahtutils.xml.report.XlsColumn;
+import net.sf.ahtutils.xml.report.XlsMultiColumn;
+import net.sf.ahtutils.xml.report.XlsSheet;
+import net.sf.ahtutils.xml.report.XlsTransformation;
+import net.sf.ahtutils.xml.report.XlsWorkbook;
+import net.sf.ahtutils.xml.status.Lang;
+import net.sf.ahtutils.xml.status.Langs;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
+import net.sf.ahtutils.xml.xpath.StatusXpath;
+import net.sf.exlp.util.io.StringUtil;
 
 @Deprecated // Use JeeslExcelDomainExporter
 public class ExcelExporter

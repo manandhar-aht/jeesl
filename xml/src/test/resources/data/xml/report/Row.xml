@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<r:row xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report" code="myCode" position="1" visible="true">
+    <s:langs/>
+    <s:descriptions/>
+    <r:queries/>
+</r:row>

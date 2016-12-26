@@ -14,6 +14,7 @@ import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.DataAssociation;
 import net.sf.ahtutils.xml.report.DataHandler;
 import net.sf.ahtutils.xml.report.ImportStructure;
@@ -24,6 +25,7 @@ import net.sf.ahtutils.xml.report.Queries;
 import net.sf.ahtutils.xml.report.Query;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
+import net.sf.ahtutils.xml.report.Rows;
 import net.sf.ahtutils.xml.report.Template;
 import net.sf.ahtutils.xml.report.Templates;
 import net.sf.ahtutils.xml.report.XlsColumn;
@@ -236,6 +238,24 @@ public class ReportXpath
 			if(s instanceof Queries){return (Queries)s;}
 		}
 		throw new ExlpXpathNotFoundException("No "+Queries.class.getSimpleName()+" available");
+	}
+	
+	public static ColumnGroup getColumnGroup(XlsSheet q) throws ExlpXpathNotFoundException
+	{
+		for(Serializable s : q.getContent())
+		{
+			if(s instanceof ColumnGroup){return (ColumnGroup)s;}
+		}
+		throw new ExlpXpathNotFoundException("No "+ColumnGroup.class.getSimpleName()+" available");
+	}
+	
+	public static Rows getRows(XlsSheet q) throws ExlpXpathNotFoundException
+	{
+		for(Serializable s : q.getContent())
+		{
+			if(s instanceof Rows){return (Rows)s;}
+		}
+		throw new ExlpXpathNotFoundException("No "+Rows.class.getSimpleName()+" available");
 	}
 	
 	public static Query getQuery(String type, Queries queries) throws ExlpXpathNotFoundException

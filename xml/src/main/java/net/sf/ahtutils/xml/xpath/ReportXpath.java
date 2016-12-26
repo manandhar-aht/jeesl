@@ -229,6 +229,15 @@ public class ReportXpath
 		throw new ExlpXpathNotFoundException("No "+Descriptions.class.getSimpleName()+" available");
 	}
 	
+	public static Queries getQueries(XlsSheet q) throws ExlpXpathNotFoundException
+	{
+		for(Serializable s : q.getContent())
+		{
+			if(s instanceof Queries){return (Queries)s;}
+		}
+		throw new ExlpXpathNotFoundException("No "+Queries.class.getSimpleName()+" available");
+	}
+	
 	public static Query getQuery(String type, Queries queries) throws ExlpXpathNotFoundException
 	{
 		for(Query q : queries.getQuery())

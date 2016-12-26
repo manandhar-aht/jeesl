@@ -1,4 +1,4 @@
-package net.sf.ahtutils.report.excel;
+package org.jeesl.report.excel;
 
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 import net.sf.ahtutils.xml.report.*;
@@ -18,9 +18,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 
-@Deprecated // Use JeeslExcelDomainExporter
-public class ExcelExporter
+public class JeeslExcelDomainExporter
 {
+	private final static Logger logger = LoggerFactory.getLogger(JeeslExcelDomainExporter.class);
 	
     // Excel related objects
     public Workbook         wb;
@@ -45,10 +45,9 @@ public class ExcelExporter
     public Hashtable<String, CellStyle> cellStyles = new Hashtable<String, CellStyle>();
     public Hashtable<String, Integer> errors = new Hashtable<String, Integer>();
 	
-    final static Logger logger = LoggerFactory.getLogger(ExcelExporter.class);
 	private int MIN_WIDTH = 5000;
 	
-	public ExcelExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String languageKey)
+	public JeeslExcelDomainExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String languageKey)
     {
 		// Get all info
         this.report     = report;
@@ -186,39 +185,6 @@ public class ExcelExporter
 		font.setFontName("Arial");
 		style.setFont(font);
 
-		// Build the Title, subtitle
-		// DEPRECATED since PDF and Excel reports often use different information!
-		/*
-		Iterator iterator     = context.iteratePointers("/info/title");
-		Pointer pointerToItem = (Pointer)iterator.next();
-		Object o = pointerToItem.getValue();
-		if ((o!=null))
-		{
-			if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
-			Title t = (Title) pointerToItem.getValue();
-			createCell(sheet, rowNr, 0, t.getValue(), "String", style);
-			logger.info("Title: " +t.getValue());
-			rowNr++;
-		}
-		
-		// Reset object
-		o = null;
-		iterator     = context.iteratePointers("//info/subtitle");
-		if (iterator.hasNext()) 
-		{
-			pointerToItem = (Pointer)iterator.next();
-			o = pointerToItem.getValue();
-		}
-		
-		if ((o!=null))
-		{
-			if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
-			Subtitle s = (Subtitle) pointerToItem.getValue();
-			logger.info("Subtitle: " +s.getValue());
-			createCell(sheet, rowNr, 0, s.getValue(), "String", style);
-			rowNr++;
-		}
-		*/
 		
 		// Ask for all labels and add the ones starting with header to a list
 		Iterator iterator     = context.iteratePointers("/info/labels/label[@scope='header']");
@@ -258,7 +224,7 @@ public class ExcelExporter
 	// Introduce Offsets for iteration of columns
 	// Possible data structure:
 	// 
-    public void exportSheet(XlsSheet sheetDefinition, String id) /*throws Exception*/
+    public void exportSheet(XlsSheet sheetDefinition, String id)
     {
 		logger.debug("Creating Sheet " +id);
         // Create JXPath context for working with the report data

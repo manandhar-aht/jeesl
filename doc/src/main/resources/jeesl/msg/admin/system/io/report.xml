@@ -70,21 +70,28 @@
 			<lang key="fr" translation="Column" />
 		</langs>
 	</translation>
-	<translation key="jeeslIoColumnQueryHeader">
+	<translation key="jeeslIoReportQueryTable">
+		<langs>
+			<lang key="de" translation="Abfrage Tabelle" />
+			<lang key="en" translation="Query Table" />
+			<lang key="fr" translation="Query Table" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoReportQueryHeader">
 		<langs>
 			<lang key="de" translation="Abfrage Kopf" />
 			<lang key="en" translation="Query Header" />
 			<lang key="fr" translation="Query Header" />
 		</langs>
 	</translation>
-	<translation key="jeeslIoColumnQueryCell">
+	<translation key="jeeslIoReportQueryCell">
 		<langs>
 			<lang key="de" translation="Abfrage Zelle" />
 			<lang key="en" translation="Query Cell" />
 			<lang key="fr" translation="Query Cell" />
 		</langs>
 	</translation>
-	<translation key="jeeslIoColumnQueryFooter">
+	<translation key="jeeslIoReportQueryFooter">
 		<langs>
 			<lang key="de" translation="Abfrage Fuss" />
 			<lang key="en" translation="Query Footer" />

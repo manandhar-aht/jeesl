@@ -331,8 +331,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	
 	private COLUMN importColumn(GROUP eGroup, XlsColumn xColumn) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException
 	{
-		logger.info("Updating "+cColumn.getSimpleName()+" "+eGroup.getSheet().getWorkbook().getReport().getCategory().getPosition()+"."+eGroup.getSheet().getWorkbook().getReport().getPosition()+"."+eGroup.getSheet().getPosition()+"."+eGroup.getPosition()+"."+xColumn.getPosition());
-		boolean debug = xColumn.getCode().equals("688133a2-d098-4fa1-949e-32c3ca9fecdd");
+		logger.debug("Updating "+cColumn.getSimpleName()+" "+eGroup.getSheet().getWorkbook().getReport().getCategory().getPosition()+"."+eGroup.getSheet().getWorkbook().getReport().getPosition()+"."+eGroup.getSheet().getPosition()+"."+eGroup.getPosition()+"."+xColumn.getPosition());
 		
 		COLUMN eColumn;
 		try {eColumn = fReport.fByCode(cColumn, xColumn.getCode());}
@@ -341,13 +340,9 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 			eColumn = efColumn.build(eGroup,xColumn);
 			eColumn = fReport.save(eColumn);
 		}
-		if(debug){logger.info("A: "+eColumn.getQueryHeader()+" "+eColumn.getQueryCell()+" "+eColumn.getQueryFooter());}
 		efColumn.update(eColumn, xColumn);
-		if(debug){logger.info("B: "+eColumn.getQueryHeader()+" "+eColumn.getQueryCell()+" "+eColumn.getQueryFooter());}
 		eColumn = fReport.save(eColumn);
-		if(debug){logger.info("C: "+eColumn.getQueryHeader()+" "+eColumn.getQueryCell()+" "+eColumn.getQueryFooter());}
 		eColumn = efColumn.updateLD(fReport,eColumn,xColumn);
-		if(debug){logger.info("D: "+eColumn.getQueryHeader()+" "+eColumn.getQueryCell()+" "+eColumn.getQueryFooter());}
 		return eColumn;
 	}
 	

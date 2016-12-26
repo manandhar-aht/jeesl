@@ -288,11 +288,12 @@
 			<xsd:sequence>
             	<xsd:element ref="us:langs" maxOccurs="1"/>
             	<xsd:element ref="us:descriptions" maxOccurs="1"/>
-					<xsd:element ref="r:xlsMultiColumn" maxOccurs="unbounded"/>
+				<xsd:element ref="r:xlsMultiColumn" maxOccurs="unbounded"/>
             	<xsd:element ref="r:xlsColumns" maxOccurs="unbounded"/>
 	            <xsd:element ref="r:xlsColumn" maxOccurs="unbounded"/>
 	            <xsd:element ref="r:columnGroup" maxOccurs="unbounded"/>
 	           	<xsd:element ref="r:importStructure" maxOccurs="1"/>
+	           	<xsd:element ref="r:queries" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="code" type="xsd:string"/>
 			<xsd:attribute name="position" type="xsd:int"/>

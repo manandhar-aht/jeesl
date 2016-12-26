@@ -97,13 +97,13 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		
 		if(xColumn.isSetQueries())
 		{
-			try{eColumn.setQueryHeader(ReportXpath.getQuery(JeeslReportQueryType.Code.header.toString(), xColumn.getQueries()).getValue());}
+			try{eColumn.setQueryHeader(ReportXpath.getQuery(JeeslReportQueryType.Column.header.toString(), xColumn.getQueries()).getValue());}
 			catch (ExlpXpathNotFoundException e) {eColumn.setQueryHeader(null);}
 			
-			try{eColumn.setQueryCell(ReportXpath.getQuery(JeeslReportQueryType.Code.cell.toString(), xColumn.getQueries()).getValue());}
+			try{eColumn.setQueryCell(ReportXpath.getQuery(JeeslReportQueryType.Column.cell.toString(), xColumn.getQueries()).getValue());}
 			catch (ExlpXpathNotFoundException e) {eColumn.setQueryCell(null);}
 			
-			try{eColumn.setQueryFooter(ReportXpath.getQuery(JeeslReportQueryType.Code.footer.toString(), xColumn.getQueries()).getValue());}
+			try{eColumn.setQueryFooter(ReportXpath.getQuery(JeeslReportQueryType.Column.footer.toString(), xColumn.getQueries()).getValue());}
 			catch (ExlpXpathNotFoundException e) {eColumn.setQueryFooter(null);}
 		}
 		

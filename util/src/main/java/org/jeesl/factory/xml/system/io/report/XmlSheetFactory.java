@@ -7,6 +7,7 @@ import java.util.Comparator;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportQueryType;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
@@ -21,9 +22,12 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.report.ColumnGroup;
+import net.sf.ahtutils.xml.report.Queries;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
 
 public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -72,6 +76,13 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(getLangs(q)!=null){xml.getContent().add(xfLangs.getUtilsLangs(sheet.getName()));}
 		if(getDescriptions(q)!=null){xml.getContent().add(xfDescriptions.create(sheet.getDescription()));}
 		
+		try
+		{
+			ReportXpath.getQueries(q);
+			xml.getContent().add(queries(sheet));
+		}
+		catch (ExlpXpathNotFoundException e) {}
+		
 		if(getColumnGroup(q)!=null)
 		{
 			Collections.sort(sheet.getGroups(),cGroup);
@@ -84,6 +95,13 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 		return xml;
 	}
 	
+	private Queries queries(SHEET sheet)
+	{
+		Queries xml = XmlQueriesFactory.build();
+		if(sheet.getQueryTable()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Sheet.table, sheet.getQueryTable()));}
+		return xml;
+	}
+		
 	private Langs getLangs(XlsSheet q)
 	{
 		for(Serializable s : q.getContent())

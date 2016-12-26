@@ -33,6 +33,9 @@ public interface JeeslReportSheet<L extends UtilsLang,D extends UtilsDescription
 	WORKBOOK getWorkbook();
 	void setWorkbook(WORKBOOK workbook);
 	
+	String getQueryTable();
+	void setQueryTable(String queryTable);
+	
 	List<GROUP> getGroups();
 	void setGroups(List<GROUP> groups);
 }

@@ -35,8 +35,7 @@ import javax.xml.bind.annotation.XmlType;
     "query"
 })
 @XmlRootElement(name = "queries")
-public class Queries
-    implements Serializable
+public class Queries implements Serializable
 {
 
     private final static long serialVersionUID = 1L;

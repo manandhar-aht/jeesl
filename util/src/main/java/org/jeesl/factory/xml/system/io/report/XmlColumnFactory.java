@@ -69,9 +69,9 @@ public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 	private Queries queries(COLUMN column)
 	{
 		Queries xml = XmlQueriesFactory.build();
-		if(column.getQueryHeader()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Code.header, column.getQueryHeader()));}
-		if(column.getQueryCell()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Code.cell, column.getQueryCell()));}
-		if(column.getQueryFooter()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Code.footer, column.getQueryFooter()));}
+		if(column.getQueryHeader()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Column.header, column.getQueryHeader()));}
+		if(column.getQueryCell()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Column.cell, column.getQueryCell()));}
+		if(column.getQueryFooter()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Column.footer, column.getQueryFooter()));}
 		return xml;
 	}
 }

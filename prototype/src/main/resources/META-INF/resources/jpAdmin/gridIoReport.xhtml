@@ -90,9 +90,11 @@
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.sheet.id gt 0}" listener="#{cc.attrs.bean.rmSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.sheet.visible}"/>
+								<p:outputLabel value="#{msg.jeeslIoReportQueryTable}"/>
+								<p:inputText value="#{cc.attrs.bean.sheet.queryTable}"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.sheet}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
@@ -177,13 +179,13 @@
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.column.visible}"/>
 								
-								<p:outputLabel value="#{msg.jeeslIoColumnQueryHeader}"/>
+								<p:outputLabel value="#{msg.jeeslIoReportQueryHeader}"/>
 								<p:inputText value="#{cc.attrs.bean.column.queryHeader}"/>
 								
-								<p:outputLabel value="#{msg.jeeslIoColumnQueryCell}"/>
+								<p:outputLabel value="#{msg.jeeslIoReportQueryCell}"/>
 								<p:inputText value="#{cc.attrs.bean.column.queryCell}"/>
 								
-								<p:outputLabel value="#{msg.jeeslIoColumnQueryFooter}"/>
+								<p:outputLabel value="#{msg.jeeslIoReportQueryFooter}"/>
 								<p:inputText value="#{cc.attrs.bean.column.queryFooter}"/>
 								
 							</p:panelGrid>

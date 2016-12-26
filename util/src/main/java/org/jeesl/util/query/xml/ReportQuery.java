@@ -75,6 +75,7 @@ public class ReportQuery
 		xml.getContent().add(StatusQuery.langs());
 		xml.getContent().add(StatusQuery.descriptions());
 		xml.getContent().add(exportColumnGroup());
+		xml.getContent().add(XmlQueriesFactory.build());
 //		xml.setLangs(StatusQuery.langs());
 //		xml.setDescriptions(StatusQuery.descriptions());
 		

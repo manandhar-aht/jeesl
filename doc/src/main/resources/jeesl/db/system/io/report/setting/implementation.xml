@@ -10,9 +10,9 @@
             <us:description key="fr"></us:description>
         </us:descriptions>
     </us:status>
-    <us:status code="aggregation" visible="true" position="2">
+    <us:status code="tree" visible="true" position="2">
         <us:langs>
-            <us:lang key="en" translation="Aggregation"/>
+            <us:lang key="en" translation="Tree"/>
             <us:lang key="fr" translation=""/>
         </us:langs>
         <us:descriptions>

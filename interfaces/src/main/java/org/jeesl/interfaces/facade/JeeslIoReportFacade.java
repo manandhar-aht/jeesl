@@ -41,6 +41,7 @@ public interface JeeslIoReportFacade <L extends UtilsLang,D extends UtilsDescrip
 	void rmSheet(SHEET sheet) throws UtilsConstraintViolationException;
 	void rmGroup(GROUP group) throws UtilsConstraintViolationException;
 	void rmColumn(COLUMN column) throws UtilsConstraintViolationException;
+	void rmRow(ROW row) throws UtilsConstraintViolationException;
 	
 	List<REPORT> fReports(List<CATEGORY> categories, boolean showInvisibleEntities);
 }

@@ -60,8 +60,9 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 	{
 		this.q=q;
 		cGroup = new IoReportGroupComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportGroupComparator.Type.position);
-		if(getLangs(q)!=null){xfLangs = new XmlLangsFactory<L>(getLangs(q));}
-		if(getDescriptions(q)!=null){xfDescriptions = new XmlDescriptionsFactory<D>(getDescriptions(q));}
+		
+		try {xfLangs = new XmlLangsFactory<L>(ReportXpath.getLangs(q));} catch (ExlpXpathNotFoundException e) {}
+		try {xfDescriptions = new XmlDescriptionsFactory<D>(ReportXpath.getDescriptions(q));} catch (ExlpXpathNotFoundException e) {}
 		if(getColumnGroup(q)!=null){xfGroup = new XmlColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,getColumnGroup(q));}
 	}
 	
@@ -73,15 +74,10 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetVisible()){xml.setVisible(sheet.isVisible());}
 		if(q.isSetPosition()){xml.setPosition(sheet.getPosition());}
 		
-		if(getLangs(q)!=null){xml.getContent().add(xfLangs.getUtilsLangs(sheet.getName()));}
-		if(getDescriptions(q)!=null){xml.getContent().add(xfDescriptions.create(sheet.getDescription()));}
+		try {ReportXpath.getLangs(q);xml.getContent().add(xfLangs.getUtilsLangs(sheet.getName()));} catch (ExlpXpathNotFoundException e) {}
+		try {ReportXpath.getDescriptions(q);xml.getContent().add(xfDescriptions.create(sheet.getDescription()));} catch (ExlpXpathNotFoundException e) {}
 		
-		try
-		{
-			ReportXpath.getQueries(q);
-			xml.getContent().add(queries(sheet));
-		}
-		catch (ExlpXpathNotFoundException e) {}
+		try{ ReportXpath.getQueries(q);xml.getContent().add(queries(sheet));}catch (ExlpXpathNotFoundException e) {}
 		
 		if(getColumnGroup(q)!=null)
 		{
@@ -100,24 +96,6 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 		Queries xml = XmlQueriesFactory.build();
 		if(sheet.getQueryTable()!=null){xml.getQuery().add(XmlQueryFactory.build(JeeslReportQueryType.Sheet.table, sheet.getQueryTable()));}
 		return xml;
-	}
-		
-	private Langs getLangs(XlsSheet q)
-	{
-		for(Serializable s : q.getContent())
-		{
-			if(s instanceof Langs){return (Langs)s;}
-		}
-		return null;
-	}
-	
-	private Descriptions getDescriptions(XlsSheet q)
-	{
-		for(Serializable s : q.getContent())
-		{
-			if(s instanceof Descriptions){return (Descriptions)s;}
-		}
-		return null;
 	}
 	
 	private ColumnGroup getColumnGroup(XlsSheet w)

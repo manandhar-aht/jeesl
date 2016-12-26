@@ -70,6 +70,20 @@
 			<lang key="fr" translation="Column" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoReportRows">
+		<langs>
+			<lang key="de" translation="Zeilen" />
+			<lang key="en" translation="Rows" />
+			<lang key="fr" translation="Rows" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoReportRow">
+		<langs>
+			<lang key="de" translation="Zeile" />
+			<lang key="en" translation="Row" />
+			<lang key="fr" translation="Row" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoReportQueryTable">
 		<langs>
 			<lang key="de" translation="Abfrage Tabelle" />

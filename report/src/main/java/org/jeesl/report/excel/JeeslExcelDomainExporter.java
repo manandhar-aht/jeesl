@@ -91,12 +91,12 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 	
 	private int MIN_WIDTH = 5000;
 	
-	public JeeslExcelDomainExporter(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, WORKBOOK workbook)
+	public JeeslExcelDomainExporter(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, WORKBOOK workbook)
     {
         this.languageKey = localeCode;
         this.workbook=workbook;
         
-        ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn);
+        ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow);
         xlfRow = ffReport.xlsRow(localeCode);
         
         // Create a new Excel Workbook and a POI Helper Object

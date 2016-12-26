@@ -10,6 +10,7 @@ import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
@@ -29,6 +30,7 @@ import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportColumnComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportGroupComparator;
+import org.jeesl.util.comparator.ejb.system.io.report.IoReportRowComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportSheetComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -85,6 +87,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private Class<SHEET> cSheet;
 	private Class<GROUP> cGroup;
 	private Class<COLUMN> cColumn;
+	private Class<ROW> cRow;
 	private Class<RC> cRevisionCategory;
 	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
@@ -92,12 +95,14 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private List<REPORT> reports; public List<REPORT> getReports() {return reports;}
 	private List<IMPLEMENTATION> implementations; public List<IMPLEMENTATION> getImplementations() {return implementations;}
 	private List<SHEET> sheets; public List<SHEET> getSheets() {return sheets;}
+	private List<ROW> rows; public List<ROW> getRows() {return rows;}
 	private List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	private List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
 	
 	private RC revisionCategory; public RC getRevisionCategory() {return revisionCategory;} public void setRevisionCategory(RC revisionCategory) {this.revisionCategory = revisionCategory;}
 	private REPORT report; public REPORT getReport() {return report;} public void setReport(REPORT report) {this.report = report;}
 	private SHEET sheet; public SHEET getSheet() {return sheet;} public void setSheet(SHEET sheet) {this.sheet = sheet;}
+	private ROW row; public ROW getRow() {return row;} public void setRow(ROW row) {this.row = row;}
 	private GROUP group; public GROUP getGroup() {return group;}public void setGroup(GROUP group) {this.group = group;}
 	private COLUMN column; public COLUMN getColumn() {return column;} public void setColumn(COLUMN column) {this.column = column;}
 	
@@ -108,14 +113,16 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private Comparator<SHEET> comparatorSheet;
 	private Comparator<GROUP> comparatorGroup;
 	private Comparator<COLUMN> comparatorColumn;
+	private Comparator<ROW> comparatorRow;
 	
 	private EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efReport;
 	private EjbIoReportWorkbookFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efWorkbook;
 	private EjbIoReportSheetFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efSheet;
 	private EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efGroup;
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efColumn;
+	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efRow;
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<RC> cRevisionCategory)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<RC> cRevisionCategory)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fReport=fReport;
@@ -126,14 +133,16 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		this.cSheet=cSheet;
 		this.cGroup=cGroup;
 		this.cColumn=cColumn;
+		this.cRow=cRow;
 		this.cRevisionCategory=cRevisionCategory;
 
-		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ef = ReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn);
+		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ef = ReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow);
 		efReport = ef.report();
 		efWorkbook = ef.workbook();
 		efSheet = ef.sheet();
 		efGroup = ef.group();
 		efColumn = ef.column();
+		efRow = ef.row();
 		
 		uiHelper = new UiHelperIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>();
 		categories = fReport.allOrderedPositionVisible(cCategory);
@@ -143,6 +152,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		comparatorSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportSheetComparator.Type.position);
 		comparatorGroup = new IoReportGroupComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportGroupComparator.Type.position);
 		comparatorColumn = new IoReportColumnComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportColumnComparator.Type.position);
+		comparatorRow  = new IoReportRowComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportRowComparator.Type.position);
 		
 		implementations = fReport.allOrderedPositionVisible(cImplementation);
 		
@@ -159,10 +169,11 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		cancelReport();
 	}
 	
-	private void reset(boolean rReport, boolean rSheet, boolean rGroup, boolean rColumn)
+	private void reset(boolean rReport, boolean rSheet, boolean rRow, boolean rGroup, boolean rColumn)
 	{
 		if(rReport){report=null;}
 		if(rSheet){sheet=null;}
+		if(rRow){row=null;}
 		if(rGroup){group=null;}
 		if(rColumn){column=null;}
 	}
@@ -183,7 +194,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		report.setDescription(efDescription.createEmpty(langs));
 		report.setWorkbook(efWorkbook.build(report));
 		uiHelper.check(report);
-		reset(false,true,true,true);
+		reset(false,true,true,true,true);
 	}
 	
 	private void reloadReport()
@@ -216,7 +227,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 			report = fReport.saveTransaction(report);
 		}
 		reloadReport();
-		reset(false,true,true,true);
+		reset(false,true,true,true,true);
 		uiHelper.check(report);
 	}
 	
@@ -244,7 +255,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 */	
 	public void cancelReport()
 	{
-		reset(true,true,true,true);
+		reset(true,true,true,true,true);
 		uiHelper.check(report);
 		uiHelper.check(sheet);
 		uiHelper.check(group);
@@ -259,7 +270,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		sheet.setName(efLang.createEmpty(langs));
 		sheet.setDescription(efDescription.createEmpty(langs));
 		uiHelper.check(sheet);
-		reset(false,false,true,true);
+		reset(false,false,true,true,true);
 	}
 	
 	public void selectSheet()
@@ -277,7 +288,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 			catch (UtilsLockingException e) {logger.error(e.getMessage());}
 		}
 		reloadSheet();
-		reset(false,false,true,true);
+		reset(false,false,true,true,true);
 		uiHelper.check(sheet);
 		uiHelper.check(group);
 	}
@@ -286,7 +297,9 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	{
 		sheet = fReport.load(sheet,false);
 		groups = sheet.getGroups();
+		rows = sheet.getRows();
 		Collections.sort(groups, comparatorGroup);
+		Collections.sort(rows,comparatorRow);
 	}
 		
 	public void saveSheet() throws UtilsLockingException
@@ -316,7 +329,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 */	
 	public void cancelSheet()
 	{
-		reset(false,true,true,true);
+		reset(false,true,true,true,true);
 		uiHelper.check(sheet);
 		uiHelper.check(group);
 	}
@@ -329,7 +342,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		group = efGroup.build(sheet);
 		group.setName(efLang.createEmpty(langs));
 		group.setDescription(efDescription.createEmpty(langs));
-		reset(false,false,false,true);
+		reset(false,false,true,false,true);
 		uiHelper.check(group);
 	}
 	
@@ -348,7 +361,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 			catch (UtilsLockingException e) {logger.error(e.getMessage());}
 		}
 		reloadGroup();
-		reset(false,false,false,true);
+		reset(false,false,true,false,true);
 		uiHelper.check(group);
 	}
 	
@@ -380,13 +393,13 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		fReport.rmGroup(group);
 		reloadReport();
 		reloadSheet();
-		reset(false,false,true,true);
+		reset(false,false,true,true,true);
 		uiHelper.check(group);
 	}
 	
 	public void cancelGroup()
 	{
-		reset(false,false,true,true);
+		reset(false,false,true,true,true);
 		uiHelper.check(group);
 	}
 	
@@ -449,7 +462,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	
 	public void cancelColumn()
 	{
-		reset(false,false,false,true);
+		reset(false,false,false,false,true);
 	}
 	
 	public void changeRevisionCategory()
@@ -457,12 +470,47 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		revisionCategory = fReport.find(cRevisionCategory, revisionCategory);
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(revisionCategory));}
 	}
+	
+	//*************************************************************************************
+	
+	public void addRow()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cRow));}
+		row = efRow.build(sheet);
+		row.setName(efLang.createEmpty(langs));
+		row.setDescription(efDescription.createEmpty(langs));
+		reset(false,false,false,true,true);
+	}
+	
+	public void saveRow() throws UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(row));}
+		try
+		{
+			row = fReport.save(row);
+			reloadReport();
+			reloadSheet();
+			bMessage.growlSuccessSaved();
+			updatePerformed();
+		}
+		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
+	}
+	
+	public void rmRow() throws UtilsConstraintViolationException
+	{
+		fReport.rmRow(row);
+		reloadReport();
+		reloadSheet();
+		cancelRow();
+	}
+	public void cancelRow(){reset(false,false,true,true,true);}
     
 	//*************************************************************************************
 	protected void reorderReports() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cReport, reports);Collections.sort(reports, comparatorReport);}
 	protected void reorderSheets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cSheet, sheets);Collections.sort(sheets, comparatorSheet);}
 	protected void reorderGroups() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cGroup, groups);Collections.sort(groups, comparatorGroup);}
 	protected void reorderColumns() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cColumn, columns);Collections.sort(columns, comparatorColumn);}
+	protected void reorderRows() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cRow, rows);Collections.sort(rows, comparatorRow);}
 	
 	protected void updatePerformed(){}	
 	

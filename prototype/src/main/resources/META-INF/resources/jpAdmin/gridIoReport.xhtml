@@ -25,11 +25,11 @@
 							selection="#{cc.attrs.bean.report}" selectionMode="single" rowKey="#{r.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoReports}">
-									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addReport()}" update=":#{cc.id}:fReport :#{cc.id}:sSheet :#{cc.id}:sGroup :#{cc.id}:row2" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addReport()}" update=":#{cc.id}:fReport :#{cc.id}:sSheet :#{cc.id}:sGroup :#{cc.id}:row2 :#{cc.id}:row3" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderReports()}" update="@form"/>
-							<p:ajax event="rowSelect" update=":#{cc.id}:fReport :#{cc.id}:sSheet :#{cc.id}:sGroup :#{cc.id}:row2" listener="#{cc.attrs.bean.selectReport()}"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:fReport :#{cc.id}:sSheet :#{cc.id}:sGroup :#{cc.id}:row2 :#{cc.id}:row3" listener="#{cc.attrs.bean.selectReport()}"/>
 							<p:column rendered="true"><h:outputText value="#{r.category.position}.#{r.position}"/></p:column>
 							<p:column headerText="#{msg.aupCategory}"><h:outputText value="#{r.category.name[userBean.localeCode].lang}"/></p:column>
 							<p:column headerText="#{msg.jeeslIoReport}"><h:outputText value="#{r.name[userBean.localeCode].lang}"/></p:column>
@@ -71,11 +71,11 @@
 									selection="#{cc.attrs.bean.sheet}" selectionMode="single" rowKey="#{sheet.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoSheets}">
-									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addSheet()}" update=":#{cc.id}:fSheet :#{cc.id}:sGroup :#{cc.id}:row2" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addSheet()}" update=":#{cc.id}:fSheet :#{cc.id}:sGroup :#{cc.id}:row2  :#{cc.id}:row3" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSheets()}" update="@form"/>
-							<p:ajax event="rowSelect" update=":#{cc.id}:fSheet :#{cc.id}:sGroup :#{cc.id}:row2" listener="#{cc.attrs.bean.selectSheet()}"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:fSheet :#{cc.id}:sGroup :#{cc.id}:row2 :#{cc.id}:row3" listener="#{cc.attrs.bean.selectSheet()}"/>
 							<p:column rendered="true"><h:outputText value="#{sheet.position}"/></p:column>
 							<p:column headerText="#{msg.aupName}"><h:outputText value="#{sheet.name[userBean.localeCode].lang}"/></p:column>
 							<p:column headerText="#{msg.aupName}">  
@@ -173,7 +173,7 @@
 							<f:facet name="actions">
 								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.group.id gt 0}" listener="#{cc.attrs.bean.rmColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.column.id gt 0}" listener="#{cc.attrs.bean.rmColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
@@ -199,6 +199,55 @@
 										<f:selectItems value="#{cc.attrs.bean.revisionCategories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 										<p:ajax update="pgType" event="change" listener="#{cc.attrs.bean.changeRevisionCategory()}"/>
 									</p:selectOneMenu>
+									
+								</p:panelGrid>
+							</p:panelGrid>
+						</p:panel>
+					</h:form>
+				</aht:slot>
+			</aht:row>
+			<aht:row id="row3">
+				<aht:slot id="sRows" width="4">
+					<h:form id="fRows" rendered="#{(not empty cc.attrs.bean.sheet) and (cc.attrs.bean.sheet.id gt 0)}">
+						<p:dataTable var="row" value="#{cc.attrs.bean.rows}" draggableRows="true"
+									selection="#{cc.attrs.bean.row}" selectionMode="single" rowKey="#{row.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslIoReportRows}">
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addRow()}" update=":#{cc.id}:sRows :#{cc.id}:sRow" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderRows()}" update="@form"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sRow" listener="#{cc.attrs.bean.selectRow()}"/>
+				         <p:column rendered="true">  
+							<h:outputText value="#{row.position}"/>
+				         </p:column>
+				         <p:column headerText="#{msg.aupName}">  
+							<h:outputText value="#{row.name[userBean.localeCode].lang}"/>
+				         </p:column>
+				         <p:column>  
+							<aup:iconCheckmark value="#{row.visible}"/>
+				         </p:column>
+				      </p:dataTable>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sRow" width="8">
+					<h:form id="fRow">
+						<p:panel header="#{msg.jeeslIoReportRow}" rendered="#{not empty cc.attrs.bean.row}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelRow()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
+								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveRow()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.row.id gt 0}" listener="#{cc.attrs.bean.rmRow()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.row.visible}"/>
+								
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60">
+								<aht:tabTranslationEditor value="#{cc.attrs.bean.row}" withDescription="true"
+									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+								<p:panelGrid id="pgType" columns="2" columnClasses="auPwg40,auPwg60">
+									
 									
 								</p:panelGrid>
 							</p:panelGrid>

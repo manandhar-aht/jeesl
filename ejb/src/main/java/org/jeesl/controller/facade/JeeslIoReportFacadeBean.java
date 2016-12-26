@@ -44,8 +44,9 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	private final Class<SHEET> cSheet;
 	private final Class<GROUP> cGroup;
 	private final Class<COLUMN> cColumn;
+	private final Class<ROW> cRow;
 	
-	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn)
+	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow)
 	{
 		super(em);
 		this.cCategory=cCategory;
@@ -54,6 +55,7 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		this.cSheet=cSheet;
 		this.cGroup=cGroup;
 		this.cColumn=cColumn;
+		this.cRow=cRow;
 	}
 	
 	@Override public REPORT load(REPORT report, boolean recursive)
@@ -86,6 +88,7 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	{
 		sheet = em.find(cSheet, sheet.getId());
 		sheet.getGroups().size();
+		sheet.getRows().size();
 		if(recursive)
 		{
 			for(GROUP group : sheet.getGroups()){group.getColumns().size();}
@@ -119,6 +122,13 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		column = em.find(cColumn, column.getId());
 		column.getGroup().getColumns().remove(column);
 		this.rmProtected(column);
+	}
+	
+	@Override public void rmRow(ROW row) throws UtilsConstraintViolationException
+	{
+		row = em.find(cRow, row.getId());
+		row.getSheet().getGroups().remove(row);
+		this.rmProtected(row);
 	}
 	
 	@Override public List<REPORT> fReports(List<CATEGORY> categories, boolean showInvisibleEntities)

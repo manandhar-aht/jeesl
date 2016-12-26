@@ -1,26 +1,73 @@
 package org.jeesl.report.excel;
 
-import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
-import net.sf.ahtutils.xml.report.*;
-import net.sf.ahtutils.xml.status.Lang;
-import net.sf.ahtutils.xml.status.Langs;
-import net.sf.ahtutils.xml.xpath.ReportXpath;
-import net.sf.ahtutils.xml.xpath.StatusXpath;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.Pointer;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.commons.lang.mutable.MutableInt;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jeesl.factory.factory.ReportFactoryFactory;
+import org.jeesl.factory.xls.system.io.report.XlsRowFactory;
+import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
+import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.*;
-import org.apache.poi.ss.util.CellRangeAddress;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.report.Label;
+import net.sf.ahtutils.xml.report.XlsColumn;
+import net.sf.ahtutils.xml.report.XlsMultiColumn;
+import net.sf.ahtutils.xml.report.XlsSheet;
+import net.sf.ahtutils.xml.report.XlsTransformation;
+import net.sf.ahtutils.xml.status.Lang;
+import net.sf.ahtutils.xml.status.Langs;
 
-public class JeeslExcelDomainExporter
+public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescription,
+										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
+										REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE>,
+										IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
+										WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE>,
+										SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE>,
+										GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE>,
+										COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE>,
+										ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE>,
+										CDT extends UtilsStatus<CDT,L,D>,
+										RO extends UtilsStatus<RO,L,D>,
+										ENTITY extends EjbWithId,
+										ATTRIBUTE extends EjbWithId,
+										FILLING extends UtilsStatus<FILLING,L,D>,
+										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 {
 	private final static Logger logger = LoggerFactory.getLogger(JeeslExcelDomainExporter.class);
+	
+	private WORKBOOK workbook;
+	
+	private XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE> xlfRow;
 	
     // Excel related objects
     public Workbook         wb;
@@ -30,14 +77,11 @@ public class JeeslExcelDomainExporter
     public CreationHelper   createHelper;
     public JXPathContext	context;
     
-    // The data
-    public Object    report;
-    
     // How many results are there for the given query
     public Integer   counter;
 	
 	// Current line while exporting
-	private int      rowNr = 1;
+	private MutableInt rowNr;
 	
 	// Languge
 	private String   languageKey;
@@ -47,12 +91,14 @@ public class JeeslExcelDomainExporter
 	
 	private int MIN_WIDTH = 5000;
 	
-	public JeeslExcelDomainExporter(UtilsXlsDefinitionResolver resolver, String id, Object report, String languageKey)
+	public JeeslExcelDomainExporter(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, WORKBOOK workbook)
     {
-		// Get all info
-        this.report     = report;
-        this.languageKey= languageKey;
-		
+        this.languageKey = localeCode;
+        this.workbook=workbook;
+        
+        ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RO,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn);
+        xlfRow = ffReport.xlsRow(localeCode);
+        
         // Create a new Excel Workbook and a POI Helper Object
         wb = new XSSFWorkbook();
         createHelper = wb.getCreationHelper();
@@ -72,64 +118,78 @@ public class JeeslExcelDomainExporter
         numberStyle = wb.createCellStyle();
         numberStyle.setDataFormat(createHelper.createDataFormat().getFormat("#.00\\ RWF"));
 
-        // Search for the right Workbook definition in the XlsDefinition
-        XlsWorkbook workbook = resolver.definition(id);
-        
-        if (workbook == null)
-        {
-                logger.error("Xml Workbook not found in Definition.");
-                workbook = new XlsWorkbook();
-        }
-
-        // Now lets create the sheets and export the data
-		int i = 1;
-        for (XlsSheet sheet : workbook.getXlsSheet())
-        {
-			// Reset the rowCounter
-			rowNr = 1;
-			
-			// First check for an existing name given in the definition
-			String sheetName = "sheet" +i;
-			
-			try
-			{
-			Langs langs = ReportXpath.getFirstLangs(sheet.getContent());
-			Lang  lang  = StatusXpath.getLang(langs, languageKey);
-			if (lang != null)
-			{
-				logger.info("Setting Sheetname to " +lang.getTranslation());
-				sheetName = lang.getTranslation();
-			}}
-			catch (Exception e)
-			{
-				logger.warn(e.getMessage());
-				logger.warn("Could not retrieve sheet name from definition, falling back to standard name.");
-			}
-			
-			// Write signiture fields
-			applyHeader(sheetName);
-			
-			// Export data
-			exportSheet(sheet, sheetName);
-			
-			// Begin the footer with three lines of free space
-			rowNr = rowNr + 3;
-			
-			// Write signiture fields
-			applyFooter(sheetName);
-			
-			// Continue with next sheet if existing
-			i++;
-		}
     }
-		
-	public void applyFooter(String sheetName)
+	
+	public void write(Object report, OutputStream os) throws IOException
+	{
+		for(SHEET ioSheet : workbook.getSheets())
+		{
+			rowNr = new MutableInt(1);
+			String sheetName = ioSheet.getName().get(languageKey).getLang();
+			Sheet sheet = XlsSheetFactory.getSheet(wb,sheetName);
+			applyHeader(sheet,ioSheet,report);
+//			exportSheet(sheet,report,ioSheet,null);
+			applyFooter(sheet,report);
+			rowNr.add(3);
+		}
+		wb.write(os);
+	}
+	
+	public void applyHeader(Sheet sheet, SHEET ioSheet, Object report)
 	{
 		// Reset the context back to the complete report XML, because it might have been changed to a local one
 		context = JXPathContext.newContext(report);
 		
 		// Get the Excel Sheet
-		Sheet sheet = getSheet(sheetName);
+		logger.info(sheet.getSheetName());
+		// Create the standard text style
+		CellStyle style = wb.createCellStyle();
+		Font font = wb.createFont();
+		font.setFontName("Arial");
+		style.setFont(font);
+
+		
+		// Ask for all labels and add the ones starting with header to a list
+		Iterator iterator     = context.iteratePointers("/info/labels/label[@scope='header']");
+		Pointer pointerToItem;
+		Object o;
+		ArrayList<Label> headerLabels = new ArrayList<Label>();
+		while (iterator.hasNext())
+		{
+			pointerToItem = (Pointer)iterator.next();
+			o = pointerToItem.getValue();
+			if ((o!=null))
+			{
+				//TODO Finds also label='xy' attributes, must be restricted in XPath if possible for performance improvement
+				if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
+				if (o.getClass() == Label.class)
+				{
+					Label l = (Label) pointerToItem.getValue();
+					headerLabels.add(l);
+				}
+			}
+		}
+
+		for(Label header : headerLabels)
+		{
+			String value = "";
+			if(header.isSetKey()) {value = header.getKey() + ": ";}
+			value = value + header.getValue();
+			createCell(sheet, rowNr.intValue(), 0, value, "String", style);
+			rowNr.add(1);
+		}
+		
+		rowNr.add(2);
+		
+		xlfRow.header(sheet,rowNr,dateHeaderStyle,ioSheet);
+	}
+		
+	public void applyFooter(Sheet sheet, Object report)
+	{
+		// Reset the context back to the complete report XML, because it might have been changed to a local one
+		context = JXPathContext.newContext(report);
+		
+		// Get the Excel Sheet
 
 		// Create the standard text style
 		CellStyle style = wb.createCellStyle();
@@ -164,89 +224,24 @@ public class JeeslExcelDomainExporter
 			String responsible = "___________________";
 			Label label = signatureLabels.get(i);
 			if (label.isSetValue()) {responsible = label.getValue();}
-			createCell(sheet, rowNr,   columnNr, label.getKey(), "String", style);
-			createCell(sheet, rowNr+1, columnNr, responsible, "String", style);
-			createCell(sheet, rowNr+2, columnNr, "Date: ___/___/_____", "String", style);
+			createCell(sheet, rowNr.intValue(),   columnNr, label.getKey(), "String", style);
+			rowNr.add(1);createCell(sheet, rowNr.intValue(), columnNr, responsible, "String", style);
+			rowNr.add(1);createCell(sheet, rowNr.intValue(), columnNr, "Date: ___/___/_____", "String", style);
 			columnNr = columnNr + 2;
 		}
-	}
-	
-	public void applyHeader(String sheetName)
-	{
-		// Reset the context back to the complete report XML, because it might have been changed to a local one
-		context = JXPathContext.newContext(report);
-		
-		// Get the Excel Sheet
-		Sheet sheet = getSheet(sheetName);
-		logger.info(sheetName + " " +sheet.getSheetName());
-		// Create the standard text style
-		CellStyle style = wb.createCellStyle();
-		Font font = wb.createFont();
-		font.setFontName("Arial");
-		style.setFont(font);
-
-		
-		// Ask for all labels and add the ones starting with header to a list
-		Iterator iterator     = context.iteratePointers("/info/labels/label[@scope='header']");
-		Pointer pointerToItem;
-		Object o;
-		ArrayList<Label> headerLabels = new ArrayList<Label>();
-		while (iterator.hasNext())
-		{
-			pointerToItem = (Pointer)iterator.next();
-			o = pointerToItem.getValue();
-			if ((o!=null))
-			{
-				//TODO Finds also label='xy' attributes, must be restricted in XPath if possible for performance improvement
-				if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
-				if (o.getClass() == Label.class)
-				{
-					Label l = (Label) pointerToItem.getValue();
-					headerLabels.add(l);
-				}
-			}
-		}
-
-		for(Label header : headerLabels)
-		{
-			String value = "";
-			if(header.isSetKey()) {value = header.getKey() + ": ";}
-			value = value + header.getValue();
-			createCell(sheet, rowNr, 0, value, "String", style);
-			rowNr++;
-		}
-		
-		rowNr++;
-		rowNr++;
 	}
 	
 	// Maybe add a bunch of sheets here for grouped report
 	// Introduce Offsets for iteration of columns
 	// Possible data structure:
 	// 
-    public void exportSheet(XlsSheet sheetDefinition, String id)
+    public void exportSheet(Sheet sheet, Object report, SHEET ioSheet, XlsSheet sheetDefinition)
     {
-		logger.debug("Creating Sheet " +id);
         // Create JXPath context for working with the report data
         context = JXPathContext.newContext(report);
         
-        // Create Excel Sheet named as given in constructor
-        Sheet sheet = getSheet(id);
-        
-		
         // PreProcess columns to create Styles and count the number of results for the given report query
         ArrayList<XlsColumn> sortedColumns = preProcessColumns(sheetDefinition, sheet);
-		logger.debug("PreProcess complete. Got " +sortedColumns.size() +" columns.");
-        // Create Headers
-        ArrayList<String> headers = new ArrayList<String>();
-		for (XlsColumn column : sortedColumns)
-        {
-            headers.add(column.getLangs().getLang().get(0).getTranslation());
-			logger.info(column.getLangs().getLang().get(0).getTranslation());
-            errors.put(column.getLangs().getLang().get(0).getTranslation(), 0);
-        }
-        String[] headerArray = new String[headers.size()];
-        createHeader(sheet, headers.toArray(headerArray));
 		
         // Create Content Rows
 		String queryExpression = sheetDefinition.getQuery();
@@ -268,7 +263,6 @@ public class JeeslExcelDomainExporter
 				
 				String expression = "";
 				
-				
 				Boolean relative  = true;
 				Boolean isJoin    = false;
 				if (columnDefinition.getXlsTransformation().isSetBeanProperty())
@@ -287,9 +281,9 @@ public class JeeslExcelDomainExporter
 					String primaryKey = relativeContext.getValue(sheetDefinition.getPrimaryKey()).toString();
 					expression = expression.replace("@@@primaryKey@@@", primaryKey);
 				}
-				
                 
-                try {
+                try
+                {
                     Object  value;
                     //String xpath  = query +"[" +row +"]/" + expression;
                     if (logger.isTraceEnabled()) {logger.trace("Using XPath expression: " +expression);}
@@ -324,7 +318,7 @@ public class JeeslExcelDomainExporter
 						value = StringUtils.join(subSet, ", ");
 					}
                     if (logger.isTraceEnabled()) {logger.trace("Got Value " +value.toString());}
-                    createCell(sheet, rowNr, i, value, type, style);
+                    createCell(sheet, rowNr.intValue(), i, value, type, style);
 
                 } catch (Exception e)
                 {
@@ -335,9 +329,9 @@ public class JeeslExcelDomainExporter
                 }
             }
 			
-			rowNr++;
+			rowNr.add(1);
         }
-        logger.info("Processed " +rowNr +" entries.");
+        logger.info("Processed " +rowNr.intValue() +" entries.");
         
         fixWidth(sortedColumns, sheet);
         for (String key : errors.keySet())
@@ -385,20 +379,7 @@ public class JeeslExcelDomainExporter
         return style;
     }
 
-    public Sheet createHeader(Sheet sheet, String[] headers)
-    {
-        Row     headerRow = sheet.createRow(rowNr);
-        Integer cellNr = 0;
-        for (String header : headers)
-        {
-			Cell cell = headerRow.createCell(cellNr);
-                            cell.setCellStyle(dateHeaderStyle);
-                            cell.setCellValue(header);
-            cellNr++;
-        }
-		rowNr++;
-        return sheet;
-    }
+ 
 
     public Sheet createCell(Sheet sheet, Integer rowNr, Integer cellNr, Object value, String type, CellStyle style)
     {
@@ -486,13 +467,13 @@ public class JeeslExcelDomainExporter
 			}
 			if (o instanceof XlsMultiColumn)
 			{
-				if (xlsSheet.getRow(rowNr) == null)
+				if (xlsSheet.getRow(rowNr.intValue()) == null)
 				{
-					headerRow = xlsSheet.createRow(rowNr);
+					headerRow = xlsSheet.createRow(rowNr.intValue());
 				}
 				else
 				{
-					headerRow = xlsSheet.getRow(rowNr);
+					headerRow = xlsSheet.getRow(rowNr.intValue());
 				}
 				XlsMultiColumn c = (XlsMultiColumn) o;
 				List<XlsColumn> list = createColumns(c, columnNr);
@@ -507,11 +488,11 @@ public class JeeslExcelDomainExporter
 					headerRow.createCell(s);
 				}
 			
-				xlsSheet.addMergedRegion(new CellRangeAddress(rowNr, rowNr, columnNr, (short) (columnNr+list.size()-1)));
+				xlsSheet.addMergedRegion(new CellRangeAddress(rowNr.intValue(), rowNr.intValue(), columnNr, (short) (columnNr+list.size()-1)));
 				columnNr = columnNr + list.size();
 			}
         }
-		if (hasExtraHeader) {rowNr++;}
+		if (hasExtraHeader) {rowNr.add(1);}
         return columns;
     }
 	
@@ -580,21 +561,4 @@ public class JeeslExcelDomainExporter
 		cellStyles.put("" +columnNr, getCellStyle(c));
 		return c;
 	}
-	
-	public Sheet getSheet(String sheetName)
-	{
-		Sheet sheet;
-		if (wb.getSheet(sheetName) == null)
-		{
-			sheet = wb.createSheet(sheetName);
-		}
-		else
-		{
-			sheet = wb.getSheet(sheetName);
-		}	
-		return sheet;
-	}
-
-    public Workbook getWb() {return wb;}
-    public void setWb(Workbook wb) {this.wb = wb;}
 }

@@ -6,11 +6,15 @@ import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.ahtutils.xml.xpath.StatusXpath;
+import net.sf.exlp.util.io.StringUtil;
+
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.Pointer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jeesl.factory.xls.system.io.report.XlsRowFactory;
+import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,7 +134,7 @@ public class ExcelExporter
 		context = JXPathContext.newContext(report);
 		
 		// Get the Excel Sheet
-		Sheet sheet = getSheet(sheetName);
+		Sheet sheet = XlsSheetFactory.getSheet(wb,sheetName);
 
 		// Create the standard text style
 		CellStyle style = wb.createCellStyle();
@@ -178,7 +182,7 @@ public class ExcelExporter
 		context = JXPathContext.newContext(report);
 		
 		// Get the Excel Sheet
-		Sheet sheet = getSheet(sheetName);
+		Sheet sheet = XlsSheetFactory.getSheet(wb,sheetName);
 		logger.info(sheetName + " " +sheet.getSheetName());
 		// Create the standard text style
 		CellStyle style = wb.createCellStyle();
@@ -265,7 +269,7 @@ public class ExcelExporter
         context = JXPathContext.newContext(report);
         
         // Create Excel Sheet named as given in constructor
-        Sheet sheet = getSheet(id);
+        Sheet sheet = XlsSheetFactory.getSheet(wb,id);
         
 		
         // PreProcess columns to create Styles and count the number of results for the given report query
@@ -280,8 +284,11 @@ public class ExcelExporter
             errors.put(column.getLangs().getLang().get(0).getTranslation(), 0);
         }
         String[] headerArray = new String[headers.size()];
-        createHeader(sheet, headers.toArray(headerArray));
-		
+        logger.info(StringUtil.stars());
+        logger.info("BEFORE: "+rowNr);
+        XlsRowFactory.header(sheet, rowNr, dateHeaderStyle, headers.toArray(headerArray));rowNr++;
+        logger.info("AFTER: "+rowNr);
+        
         // Create Content Rows
 		String queryExpression = sheetDefinition.getQuery();
 		if (logger.isTraceEnabled()) {logger.trace("Iterating to find " +queryExpression);}
@@ -417,21 +424,6 @@ public class ExcelExporter
 			style.setDataFormat(createHelper.createDataFormat().getFormat(columnDefinition.getXlsTransformation().getFormatPattern()));
 		}
         return style;
-    }
-
-    public Sheet createHeader(Sheet sheet, String[] headers)
-    {
-        Row     headerRow = sheet.createRow(rowNr);
-        Integer cellNr = 0;
-        for (String header : headers)
-        {
-			Cell cell = headerRow.createCell(cellNr);
-                            cell.setCellStyle(dateHeaderStyle);
-                            cell.setCellValue(header);
-            cellNr++;
-        }
-		rowNr++;
-        return sheet;
     }
 
     public Sheet createCell(Sheet sheet, Integer rowNr, Integer cellNr, Object value, String type, CellStyle style)
@@ -615,20 +607,6 @@ public class ExcelExporter
 		return c;
 	}
 	
-	public Sheet getSheet(String sheetName)
-	{
-		Sheet sheet;
-		if (wb.getSheet(sheetName) == null)
-		{
-			sheet = wb.createSheet(sheetName);
-		}
-		else
-		{
-			sheet = wb.getSheet(sheetName);
-		}	
-		return sheet;
-	}
-
     public Workbook getWb() {return wb;}
     public void setWb(Workbook wb) {this.wb = wb;}
 }

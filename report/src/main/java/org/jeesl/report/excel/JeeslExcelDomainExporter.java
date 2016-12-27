@@ -74,7 +74,6 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 	private WORKBOOK ioWorkbook;
 	
 	private ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport;
-	private XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xlfRow;
 	
     // Excel related objects
     public Font             headerFont;
@@ -103,7 +102,6 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
         this.ioWorkbook=ioWorkbook;
         
         ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow);
-        xlfRow = ffReport.xlsRow(localeCode);
     }
 	
 	private void init(Workbook wb)
@@ -138,6 +136,13 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 	    
 		for(SHEET ioSheet : ioWorkbook.getSheets())
 		{
+			List<COLUMN> columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
+			List<ROW> rows = EjbIoReportRowFactory.toListVisibleRows(ioSheet);
+			
+			XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> csp = ffReport.xlsCellStyleProvider(wb,columns,rows);
+			XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xfCell = ffReport.xlsCell(localeCode,csp);
+			XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xfRow = ffReport.xlsRow(localeCode,xfCell);
+			
 			MutableInt rowNr = new MutableInt(1);
 			String sheetName = ioSheet.getName().get(localeCode).getLang();
 			Sheet sheet = XlsSheetFactory.getSheet(wb,sheetName);
@@ -146,8 +151,9 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 			{
 				switch(JeeslReportRowType.Code.valueOf(ioRow.getType().getCode()))
 				{
-					case label: xlfRow.label(sheet, rowNr, styleLabel, dateHeaderStyle, ioRow); break;
-					case table: applyTable(wb,context,sheet,rowNr,ioSheet,ioRow); break;
+					case label: xfRow.label(sheet, rowNr, ioRow); break;
+					case labelValue: xfRow.labelValue(sheet, rowNr, ioRow, context); break;
+					case table: applyTable(wb,context,sheet,rowNr,ioSheet,ioRow,columns,xfRow,xfCell); break;
 					default: break;
 				}
 			}
@@ -160,14 +166,10 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 		wb.write(os);
 	}
 	
-	private void applyTable(Workbook xslWorkbook, JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow)
+	private void applyTable(Workbook xslWorkbook, JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, List<COLUMN> columns, XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xlfRow, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xfCell)
 	{
 		rowNr.add(ioRow.getOffsetRows());
 		xlfRow.header(sheet,rowNr,dateHeaderStyle,ioSheet);
-		
-		List<COLUMN> columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
-		XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> csp = ffReport.xlsCellStyleProvider(xslWorkbook,columns);
-		XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xfCell = ffReport.xlsCell(csp);
 		
 		Iterator<Pointer> iterator = context.iteratePointers(ioSheet.getQueryTable());
 		logger.debug("Beginning iteration");

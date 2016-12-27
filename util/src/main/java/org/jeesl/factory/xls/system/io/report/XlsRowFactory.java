@@ -2,6 +2,7 @@ package org.jeesl.factory.xls.system.io.report;
 
 import java.util.Map;
 
+import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -42,17 +43,32 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 	private String localeCode;
 	
-	public XlsRowFactory(String localeCode)
+	private XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xfCell;
+	
+	public XlsRowFactory(String localeCode, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xfCell)
 	{
 		this.localeCode = localeCode;
+		this.xfCell=xfCell;
 	}
 	
-	public void label(Sheet sheet, MutableInt rowNr, CellStyle styleLabel, CellStyle styleValue, ROW row)
+	public void label(Sheet sheet, MutableInt rowNr, ROW ioRow)
     {
-		rowNr.add(row.getOffsetRows());
+		rowNr.add(ioRow.getOffsetRows());
 		MutableInt columnNr = new MutableInt(0);
 		Row xlsRow = sheet.createRow(rowNr.intValue());
-		XlsCellFactory.build(xlsRow, columnNr, styleLabel, row.getName().get(localeCode).getLang());
+		xfCell.label(xlsRow, columnNr, ioRow);
+		rowNr.add(1);
+    }
+	
+	public void labelValue(Sheet xlsSheet, MutableInt rowNr, ROW ioRow, JXPathContext context)
+    {
+		rowNr.add(ioRow.getOffsetRows());
+		Row xlsRow = xlsSheet.createRow(rowNr.intValue());
+		
+		MutableInt columnNr = new MutableInt(0);
+		xfCell.label(xlsRow, columnNr, ioRow);
+		xfCell.value(xlsRow, columnNr, ioRow, context);
+		
 		rowNr.add(1);
     }
 	

@@ -34,18 +34,34 @@ public class XlsCellStyleProvider<L extends UtilsLang,D extends UtilsDescription
 {
 	final static Logger logger = LoggerFactory.getLogger(XlsCellStyleProvider.class);
 		
-	private CellStyle styleFallback;
+	private CellStyle styleFallback; public CellStyle getStyleFallback() {return styleFallback;}
 	
-	public XlsCellStyleProvider(Workbook xlsWorkbook, List<COLUMN> ioColumns)
+	private CellStyle styleLabelCenter; public CellStyle getStyleLabelCenter() {return styleLabelCenter;}
+	private CellStyle styleLabelLeft; public CellStyle getStyleLabelLeft() {return styleLabelLeft;}
+
+	public XlsCellStyleProvider(Workbook xlsWorkbook, List<COLUMN> ioColumns, List<ROW> ioRows)
 	{
 		styleFallback = xlsWorkbook.createCellStyle();
 //        dateHeaderStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy.MM"));
         styleFallback.setAlignment(CellStyle.ALIGN_LEFT);
         styleFallback.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
  //       dateHeaderStyle.setFont(font);
+        
+        styleLabelCenter = xlsWorkbook.createCellStyle();
+        styleLabelCenter.setAlignment(CellStyle.ALIGN_CENTER);
+        styleLabelCenter.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        
+        styleLabelLeft = xlsWorkbook.createCellStyle();
+        styleLabelLeft.setAlignment(CellStyle.ALIGN_LEFT);
+        styleLabelLeft.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 	}
 	
 	public CellStyle get(COLUMN column)
+	{
+		return styleFallback;
+	}
+	
+	public CellStyle get(ROW row)
 	{
 		return styleFallback;
 	}

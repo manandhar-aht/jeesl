@@ -35,10 +35,13 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(XlsCellFactory.class);
 		
+	private String localeCode;
+	
 	private XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> cellStyleProvider;
 	
-	public XlsCellFactory(XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> cellStyleProvider)
+	public XlsCellFactory(String localeCode, XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> cellStyleProvider)
 	{
+		this.localeCode = localeCode;
 		this.cellStyleProvider=cellStyleProvider;
 	}
 	
@@ -47,12 +50,24 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		Object value = relativeContext.getValue(ioColumn.getQueryCell());
 		if(value!=null)
 		{
-			build(xlsRow,columnNr,cellStyleProvider.get(ioColumn),value.toString());
+			XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.get(ioColumn),value.toString());
 		}
 		else
 		{
 			columnNr.add(1);
 		}
+	}
+	
+	public void label(Row xlsRow, MutableInt columnNr, ROW ioRow)
+	{
+		XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.getStyleLabelLeft(),ioRow.getName().get(localeCode).getLang());
+	}
+	
+	public void value(Row xlsRow, MutableInt columnNr, ROW ioRow, JXPathContext context)
+	{
+		Object value = context.getValue(ioRow.getQueryCell());
+		if(value==null){columnNr.add(1);}
+		else{XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.get(ioRow),value.toString());}
 	}
 	
 	public static void build(Row xlsRow, MutableInt columnNr, CellStyle style, String value)

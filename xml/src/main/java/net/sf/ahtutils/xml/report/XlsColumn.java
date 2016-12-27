@@ -27,6 +27,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}dataType"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}queries"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}layout"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsTransformation"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}dataAssociation"/&gt;
  *       &lt;/sequence&gt;
@@ -52,6 +53,7 @@ import net.sf.ahtutils.xml.status.Langs;
     "descriptions",
     "dataType",
     "queries",
+    "layout",
     "xlsTransformation",
     "dataAssociation"
 })
@@ -68,6 +70,8 @@ public class XlsColumn implements Serializable
     protected DataType dataType;
     @XmlElement(required = true)
     protected Queries queries;
+    @XmlElement(required = true)
+    protected Layout layout;
     @XmlElement(required = true)
     protected XlsTransformation xlsTransformation;
     @XmlElement(required = true)
@@ -201,6 +205,34 @@ public class XlsColumn implements Serializable
 
     public boolean isSetQueries() {
         return (this.queries!= null);
+    }
+
+    /**
+     * Gets the value of the layout property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Layout }
+     *     
+     */
+    public Layout getLayout() {
+        return layout;
+    }
+
+    /**
+     * Sets the value of the layout property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Layout }
+     *     
+     */
+    public void setLayout(Layout value) {
+        this.layout = value;
+    }
+
+    public boolean isSetLayout() {
+        return (this.layout!= null);
     }
 
     /**

@@ -98,6 +98,20 @@
 			<lang key="fr" translation="Width" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoReportOffsetRows">
+		<langs>
+			<lang key="de" translation="Zeilenversatz" />
+			<lang key="en" translation="Offset Rows" />
+			<lang key="fr" translation="Offset Rows" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoReportOffsetColumns">
+		<langs>
+			<lang key="de" translation="Spaltenversatz" />
+			<lang key="en" translation="Offset Columns" />
+			<lang key="fr" translation="Offset Columns" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoReportDataType">
 		<langs>
 			<lang key="de" translation="Datentyp" />

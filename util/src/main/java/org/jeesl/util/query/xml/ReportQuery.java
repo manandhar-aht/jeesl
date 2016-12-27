@@ -3,17 +3,21 @@ package org.jeesl.util.query.xml;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.io.report.XmlLayoutFactory;
 import org.jeesl.factory.xml.system.io.report.XmlOffsetFactory;
 import org.jeesl.factory.xml.system.io.report.XmlQueriesFactory;
 import org.jeesl.factory.xml.system.io.report.XmlRowsFactory;
 import org.jeesl.factory.xml.system.io.report.XmlSheetsFactory;
+import org.jeesl.factory.xml.system.io.report.XmlSizeFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 import org.jeesl.factory.xml.system.status.XmlDataTypeFactory;
 import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
+import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.report.ColumnGroup;
+import net.sf.ahtutils.xml.report.Layout;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Row;
 import net.sf.ahtutils.xml.report.XlsColumn;
@@ -113,10 +117,16 @@ public class ReportQuery
 		xml.setType(XmlTypeFactory.create(""));
 		xml.setDataType(XmlDataTypeFactory.build(""));
 		
-		xml.setOffset(XmlOffsetFactory.build());
 		xml.setQueries(XmlQueriesFactory.build());
-		
+		xml.setLayout(rowLayout());
 
+		return xml;
+	}
+	
+	private static Layout rowLayout()
+	{
+		Layout xml = XmlLayoutFactory.build();
+		xml.setOffset(XmlOffsetFactory.build());
 		return xml;
 	}
 	
@@ -129,9 +139,17 @@ public class ReportQuery
 		
 		xml.setDataType(XmlDataTypeFactory.build(""));
 		xml.setQueries(XmlQueriesFactory.build());
+		xml.setLayout(columnLayout());
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
+		return xml;
+	}
+	
+	private static Layout columnLayout()
+	{
+		Layout xml = XmlLayoutFactory.build();
+		xml.getSize().add(XmlSizeFactory.build(JeeslReportLayout.ColumnWidth.none, XmlTypeFactory.create(""), 1));
 		return xml;
 	}
 }

@@ -272,6 +272,12 @@
 								<aht:tabTranslationEditor value="#{cc.attrs.bean.row}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
 								<p:panelGrid id="pgType" columns="2" columnClasses="auPwg40,auPwg60">
+									<p:outputLabel value="#{msg.jeeslIoReportOffsetRows}"/>
+									<p:inputText value="#{cc.attrs.bean.row.offsetRows}"/>
+									
+									<p:outputLabel value="#{msg.jeeslIoReportOffsetColumns}"/>
+									<p:inputText value="#{cc.attrs.bean.row.offsetColumns}"/>
+								
 									<p:outputLabel value="#{msg.jeeslIoReportDataType}"/>
 									<p:selectOneMenu value="#{cc.attrs.bean.row.dataType}" effect="fade" >
 										<f:selectItem itemLabel="---"/>

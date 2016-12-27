@@ -44,6 +44,7 @@ public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
 	private XmlDataTypeFactory<CDT,L,D> xfDataType;
+	private XmlLayoutFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE> xfLayout;
 	
 	public XmlColumnFactory(String localeCode, XlsColumn q)
 	{
@@ -51,6 +52,7 @@ public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 		if(q.isSetDataType()){xfDataType = new XmlDataTypeFactory<CDT,L,D>(localeCode,q.getDataType());}
+		if(q.isSetLayout()){xfLayout = new XmlLayoutFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>(localeCode,q.getLayout());}
 	}
 	
 	public XlsColumn build(COLUMN column)
@@ -62,10 +64,13 @@ public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetPosition()){xml.setPosition(column.getPosition());}
 		if(q.isSetDataType() && column.getDataType()!=null){xml.setDataType(xfDataType.build(column.getDataType()));}
 		
-		if(q.isSetQueries()){xml.setQueries(queries(column));}
-		
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(column.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(column.getDescription()));}
+		
+		if(q.isSetQueries()){xml.setQueries(queries(column));}
+		if(q.isSetLayout()){xml.setLayout(xfLayout.build(column));}
+		
+
 						
 		return xml;
 	}

@@ -46,6 +46,7 @@ public class XmlRowFactory <L extends UtilsLang,D extends UtilsDescription,
 	private XmlDescriptionsFactory<D> xfDescriptions;
 	private XmlTypeFactory<RT,L,D> xfType;
 	private XmlDataTypeFactory<CDT,L,D> xfDataType;
+	private XmlLayoutFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE> xfLayout;
 	
 	public XmlRowFactory(String localeCode, Row q)
 	{
@@ -54,6 +55,7 @@ public class XmlRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 		if(q.isSetType()){xfType = new XmlTypeFactory<RT,L,D>(localeCode,q.getType());}
 		if(q.isSetDataType()){xfDataType = new XmlDataTypeFactory<CDT,L,D>(localeCode,q.getDataType());}
+		if(q.isSetLayout()){xfLayout = new XmlLayoutFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>(localeCode,q.getLayout());}
 	}
 	
 	public Row build(ROW row)
@@ -70,7 +72,7 @@ public class XmlRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetDataType() && row.getDataType()!=null){xml.setDataType(xfDataType.build(row.getDataType()));}
 		
 		if(q.isSetQueries()){xml.setQueries(queries(row));}
-		if(q.isSetOffset()){xml.setOffset(XmlOffsetFactory.build(row.getOffsetRows(), row.getOffsetColumns()));}
+		if(q.isSetLayout()){xml.setLayout(xfLayout.build(row));}
 						
 		return xml;
 	}

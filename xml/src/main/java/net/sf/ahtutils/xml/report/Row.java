@@ -28,8 +28,8 @@ import net.sf.ahtutils.xml.status.Type;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}type"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}dataType"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/report}offset"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}queries"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}layout"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
@@ -47,8 +47,8 @@ import net.sf.ahtutils.xml.status.Type;
     "descriptions",
     "type",
     "dataType",
-    "offset",
-    "queries"
+    "queries",
+    "layout"
 })
 @XmlRootElement(name = "row")
 public class Row
@@ -65,9 +65,9 @@ public class Row
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected DataType dataType;
     @XmlElement(required = true)
-    protected Offset offset;
-    @XmlElement(required = true)
     protected Queries queries;
+    @XmlElement(required = true)
+    protected Layout layout;
     @XmlAttribute(name = "code")
     protected String code;
     @XmlAttribute(name = "position")
@@ -188,34 +188,6 @@ public class Row
     }
 
     /**
-     * Gets the value of the offset property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Offset }
-     *     
-     */
-    public Offset getOffset() {
-        return offset;
-    }
-
-    /**
-     * Sets the value of the offset property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Offset }
-     *     
-     */
-    public void setOffset(Offset value) {
-        this.offset = value;
-    }
-
-    public boolean isSetOffset() {
-        return (this.offset!= null);
-    }
-
-    /**
      * Gets the value of the queries property.
      * 
      * @return
@@ -241,6 +213,34 @@ public class Row
 
     public boolean isSetQueries() {
         return (this.queries!= null);
+    }
+
+    /**
+     * Gets the value of the layout property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Layout }
+     *     
+     */
+    public Layout getLayout() {
+        return layout;
+    }
+
+    /**
+     * Sets the value of the layout property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Layout }
+     *     
+     */
+    public void setLayout(Layout value) {
+        this.layout = value;
+    }
+
+    public boolean isSetLayout() {
+        return (this.layout!= null);
     }
 
     /**

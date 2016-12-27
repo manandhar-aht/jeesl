@@ -150,6 +150,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Layout }
+     * 
+     */
+    public Layout createLayout() {
+        return new Layout();
+    }
+
+    /**
+     * Create an instance of {@link Offset }
+     * 
+     */
+    public Offset createOffset() {
+        return new Offset();
+    }
+
+    /**
+     * Create an instance of {@link Size }
+     * 
+     */
+    public Size createSize() {
+        return new Size();
+    }
+
+    /**
      * Create an instance of {@link XlsTransformation }
      * 
      */
@@ -195,14 +219,6 @@ public class ObjectFactory {
      */
     public Row createRow() {
         return new Row();
-    }
-
-    /**
-     * Create an instance of {@link Offset }
-     * 
-     */
-    public Offset createOffset() {
-        return new Offset();
     }
 
     /**

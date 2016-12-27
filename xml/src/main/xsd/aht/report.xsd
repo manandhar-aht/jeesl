@@ -332,6 +332,7 @@
 				<xsd:element ref="us:descriptions" maxOccurs="1"/>
 				<xsd:element ref="us:dataType" maxOccurs="1"/>
 				<xsd:element ref="r:queries" maxOccurs="1"/>
+				<xsd:element ref="r:layout" maxOccurs="1"/>
 				<xsd:element ref="r:xlsTransformation" maxOccurs="1"/>
 				<xsd:element ref="r:dataAssociation" maxOccurs="1"/>
 			</xsd:sequence>
@@ -361,8 +362,8 @@
 				<xsd:element ref="us:descriptions" maxOccurs="1"/>
 				<xsd:element ref="us:type" maxOccurs="1"/>
 				<xsd:element ref="us:dataType" maxOccurs="1"/>
-				<xsd:element ref="r:offset" maxOccurs="1"/>
 				<xsd:element ref="r:queries" maxOccurs="1"/>
+				<xsd:element ref="r:layout" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="code" type="xsd:string"/>
 			<xsd:attribute name="position" type="xsd:int"/>
@@ -384,6 +385,24 @@
                     <xsd:attribute name="type" type="xsd:string"/>
                 </xsd:extension>
             </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <xsd:element name="layout">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="r:offset" maxOccurs="1"/>
+				<xsd:element ref="r:size" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="size">
+        <xsd:complexType>
+            <xsd:sequence>
+				<xsd:element ref="us:type" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:attribute name="code" type="xsd:string"/>
+            <xsd:attribute name="value" type="xsd:int"/>
         </xsd:complexType>
     </xsd:element>
     

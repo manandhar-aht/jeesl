@@ -358,6 +358,7 @@
 			<xsd:sequence>
 				<xsd:element ref="us:langs" maxOccurs="1"/>
 				<xsd:element ref="us:descriptions" maxOccurs="1"/>
+				<xsd:element ref="r:offset" maxOccurs="1"/>
 				<xsd:element ref="r:queries" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="code" type="xsd:string"/>
@@ -380,6 +381,16 @@
                     <xsd:attribute name="type" type="xsd:string"/>
                 </xsd:extension>
             </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <xsd:element name="offset">
+        <xsd:complexType>
+            <xsd:sequence>
+
+            </xsd:sequence>
+            <xsd:attribute name="rows" type="xsd:int"/>
+            <xsd:attribute name="columns" type="xsd:int"/>
         </xsd:complexType>
     </xsd:element>
 	

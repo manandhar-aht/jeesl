@@ -26,6 +26,7 @@ public class TestXmlRow extends AbstractXmlReportTest<Row>
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
+    		xml.setOffset(TestXmlOffset.create(false));
     		xml.setQueries(TestXmlQueries.create(false));
     	}
     	

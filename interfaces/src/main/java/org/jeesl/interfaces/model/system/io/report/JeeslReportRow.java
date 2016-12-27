@@ -41,6 +41,9 @@ public interface JeeslReportRow<L extends UtilsLang,D extends UtilsDescription,
 	String getQueryCell();
 	void setQueryCell(String queryCell);
 	
-	int getOffsetTop();
-	void setOffsetTop(int offsetTop);
+	int getOffsetRows();
+	void setOffsetRows(int offsetRows);
+	
+	int getOffsetColumns();
+	void setOffsetColumns(int offsetColumns);
 }

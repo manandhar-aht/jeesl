@@ -24,6 +24,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}offset"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}queries"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -40,6 +41,7 @@ import net.sf.ahtutils.xml.status.Langs;
 @XmlType(name = "", propOrder = {
     "langs",
     "descriptions",
+    "offset",
     "queries"
 })
 @XmlRootElement(name = "row")
@@ -52,6 +54,8 @@ public class Row
     protected Langs langs;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Descriptions descriptions;
+    @XmlElement(required = true)
+    protected Offset offset;
     @XmlElement(required = true)
     protected Queries queries;
     @XmlAttribute(name = "code")
@@ -115,6 +119,34 @@ public class Row
 
     public boolean isSetDescriptions() {
         return (this.descriptions!= null);
+    }
+
+    /**
+     * Gets the value of the offset property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Offset }
+     *     
+     */
+    public Offset getOffset() {
+        return offset;
+    }
+
+    /**
+     * Sets the value of the offset property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Offset }
+     *     
+     */
+    public void setOffset(Offset value) {
+        this.offset = value;
+    }
+
+    public boolean isSetOffset() {
+        return (this.offset!= null);
     }
 
     /**

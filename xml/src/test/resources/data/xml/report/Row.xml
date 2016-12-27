@@ -2,5 +2,6 @@
 <r:row xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report" code="myCode" position="1" visible="true">
     <s:langs/>
     <s:descriptions/>
+    <r:offset rows="2" columns="3"/>
     <r:queries/>
 </r:row>

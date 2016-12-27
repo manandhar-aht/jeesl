@@ -9,6 +9,7 @@ import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportQueryType;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
@@ -23,6 +24,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.report.Row;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
 
 public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -92,6 +95,13 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 		eRow.setVisible(xRow.isVisible());
 		eRow.setType(eRowType);
 		eRow.setDataType(eDataType);
+		
+		if(xRow.isSetQueries())
+		{			
+			try{eRow.setQueryCell(ReportXpath.getQuery(JeeslReportQueryType.Row.cell.toString(), xRow.getQueries()).getValue());}
+			catch (ExlpXpathNotFoundException e) {eRow.setQueryCell(null);}
+		}
+		
 		return eRow;
 	}
 		

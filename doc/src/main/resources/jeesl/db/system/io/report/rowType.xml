@@ -10,7 +10,17 @@
             <us:description key="fr"></us:description>
         </us:descriptions>
     </us:status>
-    <us:status code="table" visible="true" position="2">
+    <us:status code="labelValue" visible="true" position="2">
+        <us:langs>
+            <us:lang key="en" translation="Label &amp; Value"/>
+            <us:lang key="fr" translation=""/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="table" visible="true" position="3">
         <us:langs>
             <us:lang key="en" translation="Table"/>
             <us:lang key="fr" translation=""/>
@@ -20,7 +30,7 @@
             <us:description key="fr"></us:description>
         </us:descriptions>
     </us:status>
-    <us:status code="template" visible="true" position="3">
+    <us:status code="template" visible="true" position="4">
         <us:langs>
             <us:lang key="en" translation="Template"/>
             <us:lang key="fr" translation=""/>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<r:xlsColumn xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report" code="myCode" position="1" visible="true" column="A" required="true" label="myLabel" example="myExample" autoWidth="false" width="2">
+<r:xlsColumn xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:r="http://ahtutils.aht-group.com/report" code="myCode" position="1" visible="true" column="A" required="true" label="myLabel" example="myExample" autoWidth="false" width="2">
     <s:langs/>
     <s:descriptions/>
+    <s:dataType id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
     <r:queries/>
     <r:xlsTransformation dataClass="myDataClass" formatPattern="myPattern" beanProperty="myBeanProperty"/>
     <r:dataAssociation column="A"/>

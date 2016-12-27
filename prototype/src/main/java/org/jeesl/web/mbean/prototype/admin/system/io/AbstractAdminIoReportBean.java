@@ -64,14 +64,14 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 										FILLING extends UtilsStatus<FILLING,L,D>,
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 										RC extends UtilsStatus<RC,L,D>,
-										RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-										RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-										RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+										RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
+										RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
+										RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
 										RST extends UtilsStatus<RST,L,D>,
-										RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-										REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-										RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-										RAT extends UtilsStatus<RAT,L,D>>
+										RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
+										REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
+										RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>
+										>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
@@ -90,16 +90,19 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private Class<ROW> cRow;
 	private Class<RT> cRowType;
 	private Class<RC> cRevisionCategory;
+	private Class<CDT> cDataType;
 	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
 	private List<RC> revisionCategories; public List<RC> getRevisionCategories() {return revisionCategories;}
 	private List<RT> rowTypes; public List<RT> getRowTypes() {return rowTypes;}
+	private List<CDT> attributeTypes; public List<CDT> getAttributeTypes() {return attributeTypes;}
 	private List<REPORT> reports; public List<REPORT> getReports() {return reports;}
 	private List<IMPLEMENTATION> implementations; public List<IMPLEMENTATION> getImplementations() {return implementations;}
 	private List<SHEET> sheets; public List<SHEET> getSheets() {return sheets;}
 	private List<ROW> rows; public List<ROW> getRows() {return rows;}
 	private List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	private List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
+	
 	
 	private RC revisionCategory; public RC getRevisionCategory() {return revisionCategory;} public void setRevisionCategory(RC revisionCategory) {this.revisionCategory = revisionCategory;}
 	private REPORT report; public REPORT getReport() {return report;} public void setReport(REPORT report) {this.report = report;}
@@ -124,7 +127,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efColumn;
 	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efRow;
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<RT> cRowType, Class<RC> cRevisionCategory)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<CDT> cDataType, Class<RT> cRowType, Class<RC> cRevisionCategory)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fReport=fReport;
@@ -138,6 +141,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		this.cRow=cRow;
 		this.cRowType=cRowType;
 		this.cRevisionCategory=cRevisionCategory;
+		this.cDataType=cDataType;
 
 		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ef = ReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow);
 		efReport = ef.report();
@@ -159,6 +163,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		
 		implementations = fReport.allOrderedPositionVisible(cImplementation);
 		rowTypes = fReport.allOrderedPositionVisible(cRowType);
+		attributeTypes = fReport.allOrderedPositionVisible(cDataType);
 		
 		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
 //		sbhCategory.selectAll();
@@ -443,6 +448,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(column));}
 		try
 		{
+			if(column.getDataType()!=null){column.setDataType(fReport.find(cDataType,column.getDataType()));}
 			column = fReport.save(column);
 			reloadReport();
 			reloadSheet();
@@ -467,6 +473,11 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	public void cancelColumn()
 	{
 		reset(false,false,false,false,true);
+	}
+	
+	public void changeColumnDataType()
+	{
+		if(column.getDataType()!=null){column.setDataType(fReport.find(cDataType,column.getDataType()));}
 	}
 	
 	public void changeRevisionCategory()
@@ -502,6 +513,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(row));}
 		try
 		{
+			if(row.getDataType()!=null){row.setDataType(fReport.find(cDataType,row.getDataType()));}
 			row.setType(fReport.find(cRowType,row.getType()));
 			row = fReport.save(row);
 			reloadReport();

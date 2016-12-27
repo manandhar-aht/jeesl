@@ -182,6 +182,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DataType }
+     * 
+     */
+    public DataType createDataType() {
+        return new DataType();
+    }
+
+    /**
      * Create an instance of {@link Unit }
      * 
      */

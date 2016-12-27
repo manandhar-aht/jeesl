@@ -185,6 +185,25 @@
             <xsd:attribute name="position" type="xsd:int"/>
         </xsd:complexType>
     </xsd:element>
+    <xsd:element name="dataType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="us:parent" maxOccurs="1"/>
+                <xsd:element ref="us:langs" maxOccurs="1"/>
+                <xsd:element ref="us:descriptions" maxOccurs="1"/>
+                <xsd:element ref="us:lang" maxOccurs="unbounded"/>
+                <xsd:element ref="us:transistions" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="key" type="xsd:string"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+            <xsd:attribute name="group" type="xsd:string"/>
+            <xsd:attribute name="label" type="xsd:string"/>
+            <xsd:attribute name="visible" type="xsd:boolean"/>
+            <xsd:attribute name="image" type="xsd:string"/>
+            <xsd:attribute name="position" type="xsd:int"/>
+        </xsd:complexType>
+    </xsd:element>
     
     <xsd:element name="priority">
         <xsd:complexType>

@@ -86,6 +86,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<GROUP> cGroup;
 	private final Class<COLUMN> cColumn;
 	private final Class<ROW> cRow;
+	private final Class<CDT> cDataType;
 	private final Class<RT> cRt;
 	private final Class<FILLING> cFilling;
 	private final Class<TRANSFORMATION> cTransformation;
@@ -102,7 +103,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		
 	private Comparator<REPORT> comparatorReport;
 	
-	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<RT> cRt, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
+	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<CDT> cDataType, final Class<RT> cRt, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
 	{
 		this.fReport=fReport;
 		this.cL=cL;
@@ -115,6 +116,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cGroup=cGroup;
 		this.cColumn=cColumn;
 		this.cRow=cRow;
+		this.cDataType=cDataType;
 		this.cRt=cRt;
 		
 		this.cFilling=cFilling;
@@ -151,9 +153,9 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>
 					>
 	IoReportRestService<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>
-			factory(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<RT> cRt, final Class<IMPLEMENTATION> cImplementation, final Class<FILLING> cFilling,final Class<TRANSFORMATION> cTransformation)
+			factory(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<CDT> cDataType, final Class<RT> cRt, final Class<IMPLEMENTATION> cImplementation, final Class<FILLING> cFilling,final Class<TRANSFORMATION> cTransformation)
 	{
-		return new IoReportRestService<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(fReport,cL,cD,cCategory,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cRt,cFilling,cTransformation,cImplementation);
+		return new IoReportRestService<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(fReport,cL,cD,cCategory,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cDataType,cRt,cFilling,cTransformation,cImplementation);
 	}
 	
 	@Override public Container exportSystemIoReportCategories() {return xfContainer.build(fReport.allOrderedPosition(cCategory));}
@@ -338,16 +340,16 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	
 	private COLUMN importColumn(GROUP eGroup, XlsColumn xColumn) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException
 	{
-		logger.debug("Updating "+cColumn.getSimpleName()+" "+eGroup.getSheet().getWorkbook().getReport().getCategory().getPosition()+"."+eGroup.getSheet().getWorkbook().getReport().getPosition()+"."+eGroup.getSheet().getPosition()+"."+eGroup.getPosition()+"."+xColumn.getPosition());
+		CDT eDataType = null;if(xColumn.getDataType()!=null){eDataType = fReport.fByCode(cDataType, xColumn.getDataType().getCode());}
 		
 		COLUMN eColumn;
 		try {eColumn = fReport.fByCode(cColumn, xColumn.getCode());}
 		catch (UtilsNotFoundException e)
 		{
-			eColumn = efColumn.build(eGroup,xColumn);
+			eColumn = efColumn.build(eGroup,xColumn,eDataType);
 			eColumn = fReport.save(eColumn);
 		}
-		efColumn.update(eColumn, xColumn);
+		efColumn.update(eColumn,xColumn,eDataType);
 		eColumn = fReport.save(eColumn);
 		eColumn = efColumn.updateLD(fReport,eColumn,xColumn);
 		return eColumn;
@@ -356,15 +358,16 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private ROW importRow(SHEET eSheet, Row xRow) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException, UtilsProcessingException
 	{
 		RT eRowType = fReport.fByCode(cRt, xRow.getType().getCode());
+		CDT eDataType = null;if(xRow.getDataType()!=null){eDataType = fReport.fByCode(cDataType, xRow.getDataType().getCode());}
 		
 		ROW eRow;
 		try {eRow = fReport.fByCode(cRow, xRow.getCode());}
 		catch (UtilsNotFoundException e)
 		{
-			eRow = efRow.build(eSheet,xRow,eRowType);
+			eRow = efRow.build(eSheet,xRow,eRowType,eDataType);
 			eRow = fReport.save(eRow);
 		}
-		eRow = efRow.update(eRow,xRow,eRowType);
+		eRow = efRow.update(eRow,xRow,eRowType,eDataType);
 		eRow = fReport.save(eRow);
 		eRow = efRow.updateLD(fReport,eRow, xRow);
 

@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import net.sf.ahtutils.xml.status.DataType;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
 
@@ -24,6 +25,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}dataType"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}queries"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsTransformation"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}dataAssociation"/&gt;
@@ -48,6 +50,7 @@ import net.sf.ahtutils.xml.status.Langs;
 @XmlType(name = "", propOrder = {
     "langs",
     "descriptions",
+    "dataType",
     "queries",
     "xlsTransformation",
     "dataAssociation"
@@ -61,6 +64,8 @@ public class XlsColumn implements Serializable
     protected Langs langs;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Descriptions descriptions;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
+    protected DataType dataType;
     @XmlElement(required = true)
     protected Queries queries;
     @XmlElement(required = true)
@@ -140,6 +145,34 @@ public class XlsColumn implements Serializable
 
     public boolean isSetDescriptions() {
         return (this.descriptions!= null);
+    }
+
+    /**
+     * Gets the value of the dataType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link DataType }
+     *     
+     */
+    public DataType getDataType() {
+        return dataType;
+    }
+
+    /**
+     * Sets the value of the dataType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DataType }
+     *     
+     */
+    public void setDataType(DataType value) {
+        this.dataType = value;
+    }
+
+    public boolean isSetDataType() {
+        return (this.dataType!= null);
     }
 
     /**

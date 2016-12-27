@@ -1,5 +1,6 @@
 package org.jeesl.factory.xml.system.io.report;
 
+import org.jeesl.factory.xml.system.status.XmlDataTypeFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
@@ -42,12 +43,14 @@ public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
+	private XmlDataTypeFactory<CDT,L,D> xfDataType;
 	
 	public XmlColumnFactory(String localeCode, XlsColumn q)
 	{
 		this.q=q;
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
+		if(q.isSetDataType()){xfDataType = new XmlDataTypeFactory<CDT,L,D>(localeCode,q.getDataType());}
 	}
 	
 	public XlsColumn build(COLUMN column)
@@ -57,6 +60,7 @@ public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetCode()){xml.setCode(column.getCode());}
 		if(q.isSetVisible()){xml.setVisible(column.isVisible());}
 		if(q.isSetPosition()){xml.setPosition(column.getPosition());}
+		if(q.isSetDataType() && column.getDataType()!=null){xml.setDataType(xfDataType.build(column.getDataType()));}
 		
 		if(q.isSetQueries()){xml.setQueries(queries(column));}
 		

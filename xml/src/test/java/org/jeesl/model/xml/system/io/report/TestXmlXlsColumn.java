@@ -1,6 +1,7 @@
 package org.jeesl.model.xml.system.io.report;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlDataType;
 import org.jeesl.model.xml.system.status.TestXmlDescriptions;
 import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.slf4j.Logger;
@@ -33,6 +34,7 @@ public class TestXmlXlsColumn extends AbstractXmlReportTest<XlsColumn>
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
+    		xml.setDataType(TestXmlDataType.create(false));
     		xml.setQueries(TestXmlQueries.create(false));
     		xml.setXlsTransformation(TestXmlXlsTransformation.create(false));
     		xml.setDataAssociation(TestXmlDataAssociation.create(false));

@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import net.sf.ahtutils.xml.status.DataType;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.status.Type;
@@ -26,6 +27,7 @@ import net.sf.ahtutils.xml.status.Type;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}type"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}dataType"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}offset"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}queries"/&gt;
  *       &lt;/sequence&gt;
@@ -44,6 +46,7 @@ import net.sf.ahtutils.xml.status.Type;
     "langs",
     "descriptions",
     "type",
+    "dataType",
     "offset",
     "queries"
 })
@@ -59,6 +62,8 @@ public class Row
     protected Descriptions descriptions;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Type type;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
+    protected DataType dataType;
     @XmlElement(required = true)
     protected Offset offset;
     @XmlElement(required = true)
@@ -152,6 +157,34 @@ public class Row
 
     public boolean isSetType() {
         return (this.type!= null);
+    }
+
+    /**
+     * Gets the value of the dataType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link DataType }
+     *     
+     */
+    public DataType getDataType() {
+        return dataType;
+    }
+
+    /**
+     * Sets the value of the dataType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DataType }
+     *     
+     */
+    public void setDataType(DataType value) {
+        this.dataType = value;
+    }
+
+    public boolean isSetDataType() {
+        return (this.dataType!= null);
     }
 
     /**

@@ -71,7 +71,7 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 		return ejb;
 	}
 	
-	public ROW build(SHEET sheet, Row row, RT eRowType)
+	public ROW build(SHEET sheet, Row row, RT eRowType, CDT eDataType)
 	{
 		ROW ejb = null;
 		try
@@ -79,19 +79,19 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 			ejb = cRow.newInstance();
 			ejb.setCode(row.getCode());
 			ejb.setSheet(sheet);
-			ejb = update(ejb,row,eRowType);
-
+			ejb = update(ejb,row,eRowType,eDataType);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		return ejb;
 	}
 		
-	public ROW update(ROW eRow, Row xRow, RT eRowType)
+	public ROW update(ROW eRow, Row xRow, RT eRowType, CDT eDataType)
 	{
 		eRow.setPosition(xRow.getPosition());
 		eRow.setVisible(xRow.isVisible());
 		eRow.setType(eRowType);
+		eRow.setDataType(eDataType);
 		return eRow;
 	}
 		

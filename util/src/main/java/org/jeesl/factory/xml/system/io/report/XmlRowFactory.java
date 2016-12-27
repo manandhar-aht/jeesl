@@ -1,5 +1,6 @@
 package org.jeesl.factory.xml.system.io.report;
 
+import org.jeesl.factory.xml.system.status.XmlDataTypeFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -44,6 +45,7 @@ public class XmlRowFactory <L extends UtilsLang,D extends UtilsDescription,
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
 	private XmlTypeFactory<RT,L,D> xfType;
+	private XmlDataTypeFactory<CDT,L,D> xfDataType;
 	
 	public XmlRowFactory(String localeCode, Row q)
 	{
@@ -51,6 +53,7 @@ public class XmlRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 		if(q.isSetType()){xfType = new XmlTypeFactory<RT,L,D>(localeCode,q.getType());}
+		if(q.isSetDataType()){xfDataType = new XmlDataTypeFactory<CDT,L,D>(localeCode,q.getDataType());}
 	}
 	
 	public Row build(ROW row)
@@ -64,6 +67,7 @@ public class XmlRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(row.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(row.getDescription()));}
 		if(q.isSetType()){xml.setType(xfType.build(row.getType()));}
+		if(q.isSetDataType() && row.getDataType()!=null){xml.setDataType(xfDataType.build(row.getDataType()));}
 		
 		if(q.isSetQueries()){xml.setQueries(queries(row));}
 		if(q.isSetOffset()){xml.setOffset(XmlOffsetFactory.build(row.getOffsetRows(), row.getOffsetColumns()));}

@@ -74,7 +74,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		return ejb;
 	}
 	
-	public COLUMN build(GROUP group, XlsColumn column)
+	public COLUMN build(GROUP group, XlsColumn column, CDT eDataType)
 	{
 		COLUMN ejb = null;
 		try
@@ -82,7 +82,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 			ejb = cColumn.newInstance();
 			ejb.setCode(column.getCode());
 			ejb.setGroup(group);
-			ejb = update(ejb,column);
+			ejb = update(ejb,column,eDataType);
 
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
@@ -90,10 +90,11 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		return ejb;
 	}
 	
-	public COLUMN update(COLUMN eColumn, XlsColumn xColumn)
+	public COLUMN update(COLUMN eColumn, XlsColumn xColumn, CDT eDataType)
 	{
 		eColumn.setPosition(xColumn.getPosition());
 		eColumn.setVisible(xColumn.isVisible());
+		eColumn.setDataType(eDataType);
 		
 		if(xColumn.isSetQueries())
 		{

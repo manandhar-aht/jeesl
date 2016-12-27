@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.jeesl.interfaces.model.system.io.report.JeeslReportSettingFilling;
+import org.jeesl.interfaces.model.system.io.report.type.JeeslReportSettingFilling;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

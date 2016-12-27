@@ -3,11 +3,13 @@ package org.jeesl.util.query.xml;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.io.report.XmlOffsetFactory;
 import org.jeesl.factory.xml.system.io.report.XmlQueriesFactory;
 import org.jeesl.factory.xml.system.io.report.XmlRowsFactory;
 import org.jeesl.factory.xml.system.io.report.XmlSheetsFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
+import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.report.ColumnGroup;
@@ -105,10 +107,14 @@ public class ReportQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		
-		xml.setQueries(XmlQueriesFactory.build());
-		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setType(XmlTypeFactory.create(""));
+		
+		xml.setOffset(XmlOffsetFactory.build());
+		xml.setQueries(XmlQueriesFactory.build());
+		
+
 		return xml;
 	}
 	

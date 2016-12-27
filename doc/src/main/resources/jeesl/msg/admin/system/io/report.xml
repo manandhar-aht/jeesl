@@ -84,6 +84,13 @@
 			<lang key="fr" translation="Row" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoReportRowType">
+		<langs>
+			<lang key="de" translation="Typ" />
+			<lang key="en" translation="Type" />
+			<lang key="fr" translation="Type" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoReportQueryTable">
 		<langs>
 			<lang key="de" translation="Abfrage Tabelle" />

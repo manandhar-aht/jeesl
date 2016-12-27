@@ -88,10 +88,12 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private Class<GROUP> cGroup;
 	private Class<COLUMN> cColumn;
 	private Class<ROW> cRow;
+	private Class<RT> cRowType;
 	private Class<RC> cRevisionCategory;
 	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
 	private List<RC> revisionCategories; public List<RC> getRevisionCategories() {return revisionCategories;}
+	private List<RT> rowTypes; public List<RT> getRowTypes() {return rowTypes;}
 	private List<REPORT> reports; public List<REPORT> getReports() {return reports;}
 	private List<IMPLEMENTATION> implementations; public List<IMPLEMENTATION> getImplementations() {return implementations;}
 	private List<SHEET> sheets; public List<SHEET> getSheets() {return sheets;}
@@ -122,7 +124,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efColumn;
 	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efRow;
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<RC> cRevisionCategory)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<RT> cRowType, Class<RC> cRevisionCategory)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fReport=fReport;
@@ -134,6 +136,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		this.cGroup=cGroup;
 		this.cColumn=cColumn;
 		this.cRow=cRow;
+		this.cRowType=cRowType;
 		this.cRevisionCategory=cRevisionCategory;
 
 		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ef = ReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow);
@@ -155,6 +158,7 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		comparatorRow  = new IoReportRowComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportRowComparator.Type.position);
 		
 		implementations = fReport.allOrderedPositionVisible(cImplementation);
+		rowTypes = fReport.allOrderedPositionVisible(cRowType);
 		
 		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
 //		sbhCategory.selectAll();
@@ -482,14 +486,27 @@ public class AbstractAdminIoReportBean <L extends UtilsLang,D extends UtilsDescr
 		reset(false,false,false,true,true);
 	}
 	
+	public void selectRow()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(row));}
+		reloadRow();
+	}
+	
+	private void reloadRow()
+	{
+		row = fReport.find(cRow, row);
+	}
+	
 	public void saveRow() throws UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(row));}
 		try
 		{
+			row.setType(fReport.find(cRowType,row.getType()));
 			row = fReport.save(row);
 			reloadReport();
 			reloadSheet();
+			reloadRow();
 			bMessage.growlSuccessSaved();
 			updatePerformed();
 		}

@@ -26,6 +26,6 @@ public interface JeeslIoReportRestExport
 	@GET @Path("/system/io/report/setting/implementation") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemIoReportSettingImplementation();
 	
-	@GET @Path("/system/io/report/row/orientation") @Produces(MediaType.APPLICATION_XML)
-	Container exportSystemIoReportRowOrientation();
+	@GET @Path("/system/io/report/row/type") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemIoReportRowType();
 }

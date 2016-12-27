@@ -1,5 +1,7 @@
 package org.jeesl.factory.ejb.system.io.report;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
@@ -13,10 +15,14 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.report.Row;
 
 public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -64,68 +70,38 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 		
 		return ejb;
 	}
-/*	
-	public GROUP build(SHEET sheet, ColumnGroup group)
+	
+	public ROW build(SHEET sheet, Row row, RT eRowType)
 	{
-		GROUP ejb = null;
+		ROW ejb = null;
 		try
 		{
-			ejb = cGroup.newInstance();
+			ejb = cRow.newInstance();
 			ejb.setCode(sheet.getCode());
 			ejb.setSheet(sheet);
-			ejb = update(ejb,group);
+			ejb = update(ejb,row,eRowType);
 
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		return ejb;
 	}
-	
-	public GROUP update(GROUP eGroup, ColumnGroup xGroup)
+		
+	public ROW update(ROW eRow, Row xRow, RT eRowType)
 	{
-		eGroup.setPosition(xGroup.getPosition());
-		eGroup.setVisible(xGroup.isVisible());
-		eGroup.setShowLabel(xGroup.isSetShowLabel());
-		return eGroup;
+		eRow.setPosition(xRow.getPosition());
+		eRow.setVisible(xRow.isVisible());
+		eRow.setType(eRowType);
+		return eRow;
 	}
-	
-	public GROUP updateLD(UtilsFacade fUtils, GROUP eGroup, ColumnGroup xGroup) throws UtilsConstraintViolationException, UtilsLockingException
+		
+	public ROW updateLD(UtilsFacade fUtils, ROW eRow, Row xRow) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		eGroup=dbuLang.handle(fUtils, eGroup, xGroup.getLangs());
-		eGroup = fUtils.save(eGroup);
-		eGroup=dbuDescription.handle(fUtils, eGroup, xGroup.getDescriptions());
-		eGroup = fUtils.save(eGroup);
-		return eGroup;
-	}
-	
-	public static <L extends UtilsLang,D extends UtilsDescription,
-					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-					IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-					WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-					SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-					GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-					COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-					ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-					CDT extends UtilsStatus<CDT,L,D>,
-					RT extends UtilsStatus<RT,L,D>,
-					ENTITY extends EjbWithId,
-					ATTRIBUTE extends EjbWithId,
-					FILLING extends UtilsStatus<FILLING,L,D>,
-					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-			Map<GROUP,Integer> toMapVisibleGroupSize(SHEET sheet)
-	{
-		Map<GROUP,Integer> map = new HashMap<GROUP,Integer>();
-		for(GROUP g : sheet.getGroups())
-		{
-			int size=0;
-			for(COLUMN c : g.getColumns())
-			{
-				if(c.isVisible()){size++;}
-			}
-			map.put(g,size);
-		}
-		return map;
+		eRow=dbuLang.handle(fUtils, eRow, xRow.getLangs());
+		eRow = fUtils.save(eRow);
+		eRow=dbuDescription.handle(fUtils, eRow, xRow.getDescriptions());
+		eRow = fUtils.save(eRow);
+		return eRow;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -143,17 +119,17 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 				ATTRIBUTE extends EjbWithId,
 				FILLING extends UtilsStatus<FILLING,L,D>,
 				TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-		List<GROUP> toListVisibleGroups(SHEET sheet)
+		List<ROW> toListVisibleRows(SHEET sheet)
 	{
-		List<GROUP> list = new ArrayList<GROUP>();
-		for(GROUP g : sheet.getGroups())
+		List<ROW> list = new ArrayList<ROW>();
+		for(ROW r : sheet.getRows())
 		{
-			if(g.isVisible())
+			if(r.isVisible())
 			{
-				list.add(g);
+				list.add(r);
 			}
 		}
 		return list;
 	}
-*/
+
 }

@@ -147,8 +147,9 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 			String sheetName = ioSheet.getName().get(localeCode).getLang();
 			Sheet sheet = XlsSheetFactory.getSheet(wb,sheetName);
 			
-			for(ROW ioRow : EjbIoReportRowFactory.toListVisibleRows(ioSheet))
+			for(ROW ioRow : rows)
 			{
+				logger.info(ioRow.getPosition()+" "+ioRow.getName().get(localeCode).getLang());
 				switch(JeeslReportRowType.Code.valueOf(ioRow.getType().getCode()))
 				{
 					case label: xfRow.label(sheet, rowNr, ioRow); break;
@@ -178,7 +179,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
         	Row xlsRow = sheet.createRow(rowNr.intValue());
         	
             Pointer pointerToItem = iterator.next();
-			if (logger.isInfoEnabled()) {logger.info("Got pointer: " +pointerToItem.getValue().getClass());}
+			if (logger.isTraceEnabled()) {logger.info("Got pointer: " +pointerToItem.getValue().getClass());}
 			JXPathContext relativeContext = context.getRelativeContext(pointerToItem);
 			
 			MutableInt columnNr = new MutableInt(0);

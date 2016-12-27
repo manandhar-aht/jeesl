@@ -19,6 +19,7 @@ import org.jeesl.model.json.JsonFlatFigures;
 import org.jeesl.report.excel.JeeslExcelDomainExporter;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportColumnComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportGroupComparator;
+import org.jeesl.util.comparator.ejb.system.io.report.IoReportRowComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportSheetComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +70,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	private Comparator<SHEET> comparatorSheet;
 	private Comparator<GROUP> comparatorGroup;
 	private Comparator<COLUMN> comparatorColumn;
+	private Comparator<ROW> comparatorRow;
 
 	public AbstractJeeslReport(final Class<REPORT> cReport, String localeCode)
 	{
@@ -77,8 +79,9 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		debugOnInfo = false;
 		
 		comparatorSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportSheetComparator.Type.position);
-		comparatorGroup  = new IoReportGroupComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportGroupComparator.Type.position);
-		comparatorColumn  = new IoReportColumnComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportColumnComparator.Type.position);
+		comparatorGroup = new IoReportGroupComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportGroupComparator.Type.position);
+		comparatorColumn = new IoReportColumnComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportColumnComparator.Type.position);
+		comparatorRow = new IoReportRowComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportRowComparator.Type.position);
 		
 		showGroupings = true;
 		buildHeaders();
@@ -113,6 +116,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 						for(SHEET s : ioWorkbook.getSheets())
 						{
 							Collections.sort(s.getGroups(), comparatorGroup);
+							Collections.sort(s.getRows(), comparatorRow);
 							for(GROUP g : s.getGroups())
 							{
 								Collections.sort(g.getColumns(), comparatorColumn);

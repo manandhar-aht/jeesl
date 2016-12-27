@@ -24,6 +24,12 @@
 			<s:lang key="fr" translation="Row Type"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IoReportColumnWidth">
+		<s:langs>
+			<s:lang key="en" translation="Column Width"/>
+			<s:lang key="fr" translation="Column Width"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="IoReportSettingFilling">
 		<s:langs>
 			<s:lang key="en" translation="Setting Filling"/>

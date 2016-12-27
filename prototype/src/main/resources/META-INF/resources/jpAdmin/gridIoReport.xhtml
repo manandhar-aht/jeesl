@@ -193,21 +193,34 @@
 								<aht:tabTranslationEditor value="#{cc.attrs.bean.column}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
 								
-								<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60">
-									<p:outputLabel value="#{msg.jeeslIoReportDataType}"/>
-									<p:selectOneMenu value="#{cc.attrs.bean.column.dataType}" effect="fade" >
-										<f:selectItem itemLabel="---"/>
-										<f:selectItems value="#{cc.attrs.bean.attributeTypes}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
-										<p:ajax event="change" update="pgColumnData" listener="#{cc.attrs.bean.changeColumnDataType()}"/>
-									</p:selectOneMenu>
+								<p:panelGrid columns="1" columnClasses="auPwg100">
+									<p:panelGrid id="pgWidth" columns="3" columnClasses="auPwg40,auPwg50,auPwg10">
+										<p:outputLabel value="#{msg.jeeslIoReportColumWidth}"/>
+										<p:selectOneMenu value="#{cc.attrs.bean.column.columWidth}" effect="fade" >
+											<f:selectItems value="#{cc.attrs.bean.columnWidths}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+										</p:selectOneMenu>
+										<p:inputText value="#{cc.attrs.bean.column.columSize}"/>
+									</p:panelGrid>
 									
-									<p:outputLabel value="#{msg.aupCategory}" rendered="#{empty cc.attrs.bean.column.dataType}"/>
-									<p:selectOneMenu value="#{cc.attrs.bean.revisionCategory}" effect="fade" rendered="#{empty cc.attrs.bean.column.dataType}">
-										<f:selectItems value="#{cc.attrs.bean.revisionCategories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
-										<p:ajax update="pgColumnData" event="change" listener="#{cc.attrs.bean.changeRevisionCategory()}"/>
-									</p:selectOneMenu>
+									<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60">
+										<p:outputLabel value="#{msg.jeeslIoReportDataType}"/>
+										<p:selectOneMenu value="#{cc.attrs.bean.column.dataType}" effect="fade" >
+											<f:selectItem itemLabel="---"/>
+											<f:selectItems value="#{cc.attrs.bean.attributeTypes}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+											<p:ajax event="change" update="pgColumnData" listener="#{cc.attrs.bean.changeColumnDataType()}"/>
+										</p:selectOneMenu>
+									</p:panelGrid>
+									
+									<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60" rendered="#{empty cc.attrs.bean.column.dataType}">
+										<p:outputLabel value="#{msg.aupCategory}"/>
+										<p:selectOneMenu value="#{cc.attrs.bean.revisionCategory}" effect="fade">
+											<f:selectItems value="#{cc.attrs.bean.revisionCategories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+											<p:ajax update="pgColumnData" event="change" listener="#{cc.attrs.bean.changeRevisionCategory()}"/>
+										</p:selectOneMenu>
+									</p:panelGrid>
+									
 								</p:panelGrid>
-								
+
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

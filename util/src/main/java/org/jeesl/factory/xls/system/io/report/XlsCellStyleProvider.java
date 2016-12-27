@@ -3,6 +3,7 @@ package org.jeesl.factory.xls.system.io.report;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -20,14 +21,14 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class XlsCellStyleProvider<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
+								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-								WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-								SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-								GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-								COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-								ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>,
-								CDT extends UtilsStatus<CDT,L,D>,
+								WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>,
+								SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>,
+								GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>,
+								COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>,
+								ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>,
+								CDT extends UtilsStatus<CDT,L,D>,CW extends UtilsStatus<CW,L,D>,
 								RT extends UtilsStatus<RT,L,D>,
 								ENTITY extends EjbWithId,
 								ATTRIBUTE extends EjbWithId>
@@ -41,6 +42,10 @@ public class XlsCellStyleProvider<L extends UtilsLang,D extends UtilsDescription
 
 	public XlsCellStyleProvider(Workbook xlsWorkbook, List<COLUMN> ioColumns, List<ROW> ioRows)
 	{
+        Font fontItalicBold = xlsWorkbook.createFont();
+        fontItalicBold.setItalic(true);
+        fontItalicBold.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		
 		styleFallback = xlsWorkbook.createCellStyle();
 //        dateHeaderStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy.MM"));
         styleFallback.setAlignment(CellStyle.ALIGN_LEFT);
@@ -50,10 +55,12 @@ public class XlsCellStyleProvider<L extends UtilsLang,D extends UtilsDescription
         styleLabelCenter = xlsWorkbook.createCellStyle();
         styleLabelCenter.setAlignment(CellStyle.ALIGN_CENTER);
         styleLabelCenter.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        styleLabelCenter.setFont(fontItalicBold);
         
         styleLabelLeft = xlsWorkbook.createCellStyle();
         styleLabelLeft.setAlignment(CellStyle.ALIGN_LEFT);
         styleLabelLeft.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        styleLabelLeft.setFont(fontItalicBold);
 	}
 	
 	public CellStyle get(COLUMN column)

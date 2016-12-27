@@ -91,6 +91,13 @@
 			<lang key="fr" translation="Type" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoReportColumWidth">
+		<langs>
+			<lang key="de" translation="Breite" />
+			<lang key="en" translation="Width" />
+			<lang key="fr" translation="Width" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoReportDataType">
 		<langs>
 			<lang key="de" translation="Datentyp" />

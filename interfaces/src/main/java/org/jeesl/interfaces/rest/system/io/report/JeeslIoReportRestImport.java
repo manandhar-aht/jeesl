@@ -30,4 +30,8 @@ public interface JeeslIoReportRestImport
 	
 	@POST @Path("/system/io/report/row/type") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoReportRowType(Container container);
+	
+	@POST @Path("/system/io/report/colum/width") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
+	DataUpdate importSystemIoReportColumnWidth(Container container);
+	
 }

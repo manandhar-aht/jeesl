@@ -28,4 +28,7 @@ public interface JeeslIoReportRestExport
 	
 	@GET @Path("/system/io/report/row/type") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemIoReportRowType();
+	
+	@GET @Path("/system/io/report/colum/width") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemIoReportColumnWidth();
 }

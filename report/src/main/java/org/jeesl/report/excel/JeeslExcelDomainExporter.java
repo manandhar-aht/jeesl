@@ -23,8 +23,12 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
+import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
 import org.jeesl.factory.xls.system.io.report.XlsCellStyleFactory;
+import org.jeesl.factory.xls.system.io.report.XlsCellStyleProvider;
 import org.jeesl.factory.xls.system.io.report.XlsRowFactory;
 import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
@@ -67,16 +71,16 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 {
 	private final static Logger logger = LoggerFactory.getLogger(JeeslExcelDomainExporter.class);
 	
-	private WORKBOOK workbook;
+	private WORKBOOK ioWorkbook;
 	
+	private ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport;
 	private XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xlfRow;
 	
     // Excel related objects
-    public Workbook         wb;
     public Font             headerFont;
     public CellStyle        dateHeaderStyle;
     public CellStyle        numberStyle;
-    private CellStyle styleLabel;
+    private CellStyle styleLabel,styleFallback;
     public CreationHelper   createHelper;
     public JXPathContext	context;
     
@@ -86,24 +90,25 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 	// Current line while exporting
 	
 	// Languge
-	private String   languageKey;
+	private String   localeCode;
         
     public Hashtable<String, CellStyle> cellStyles = new Hashtable<String, CellStyle>();
     public Hashtable<String, Integer> errors = new Hashtable<String, Integer>();
 	
 	private int MIN_WIDTH = 5000;
 	
-	public JeeslExcelDomainExporter(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, WORKBOOK workbook)
+	public JeeslExcelDomainExporter(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, WORKBOOK ioWorkbook)
     {
-        this.languageKey = localeCode;
-        this.workbook=workbook;
+        this.localeCode = localeCode;
+        this.ioWorkbook=ioWorkbook;
         
-        ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow);
+        ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow);
         xlfRow = ffReport.xlsRow(localeCode);
-        
-        // Create a new Excel Workbook and a POI Helper Object
-        wb = new XSSFWorkbook();
-        createHelper = wb.getCreationHelper();
+    }
+	
+	private void init(Workbook wb)
+	{
+		createHelper = wb.getCreationHelper();
 
         // Create a new font and alter it.
         Font font = wb.createFont();
@@ -111,6 +116,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
         font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 
         styleLabel = XlsCellStyleFactory.label(wb, font);
+        styleFallback = XlsCellStyleFactory.fallback(wb);
         
         // Create styles
         dateHeaderStyle = wb.createCellStyle();
@@ -121,23 +127,27 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 
         numberStyle = wb.createCellStyle();
         numberStyle.setDataFormat(createHelper.createDataFormat().getFormat("#.00\\ RWF"));
-
-    }
+	}
 	
 	public void write(Object report, OutputStream os) throws IOException
 	{
-		for(SHEET ioSheet : workbook.getSheets())
+	    Workbook wb = new XSSFWorkbook();
+	    init(wb);
+	    
+	    JXPathContext context = JXPathContext.newContext(report);
+	    
+		for(SHEET ioSheet : ioWorkbook.getSheets())
 		{
 			MutableInt rowNr = new MutableInt(1);
-			String sheetName = ioSheet.getName().get(languageKey).getLang();
+			String sheetName = ioSheet.getName().get(localeCode).getLang();
 			Sheet sheet = XlsSheetFactory.getSheet(wb,sheetName);
 			
-			for(ROW ioRow : ioSheet.getRows())
+			for(ROW ioRow : EjbIoReportRowFactory.toListVisibleRows(ioSheet))
 			{
 				switch(JeeslReportRowType.Code.valueOf(ioRow.getType().getCode()))
 				{
 					case label: xlfRow.label(sheet, rowNr, styleLabel, dateHeaderStyle, ioRow); break;
-					case table: applyTable(sheet,rowNr,ioSheet,ioRow); break;
+					case table: applyTable(wb,context,sheet,rowNr,ioSheet,ioRow); break;
 					default: break;
 				}
 			}
@@ -150,12 +160,36 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 		wb.write(os);
 	}
 	
-	private void applyTable(Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow)
+	private void applyTable(Workbook xslWorkbook, JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow)
 	{
+		rowNr.add(ioRow.getOffsetRows());
 		xlfRow.header(sheet,rowNr,dateHeaderStyle,ioSheet);
+		
+		List<COLUMN> columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
+		XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> csp = ffReport.xlsCellStyleProvider(xslWorkbook,columns);
+		XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xfCell = ffReport.xlsCell(csp);
+		
+		Iterator<Pointer> iterator = context.iteratePointers(ioSheet.getQueryTable());
+		logger.debug("Beginning iteration");
+        while (iterator.hasNext())
+        {
+        	Row xlsRow = sheet.createRow(rowNr.intValue());
+        	
+            Pointer pointerToItem = iterator.next();
+			if (logger.isInfoEnabled()) {logger.info("Got pointer: " +pointerToItem.getValue().getClass());}
+			JXPathContext relativeContext = context.getRelativeContext(pointerToItem);
+			
+			MutableInt columnNr = new MutableInt(0);
+			for(COLUMN ioColumn : columns)
+			{
+				xfCell.build(ioColumn,xlsRow,columnNr,relativeContext);
+			}
+			
+			rowNr.add(1);
+        }
 	}
 		
-	public void applyFooter(Sheet sheet, MutableInt rowNr, Object report)
+	private void applyFooter(Workbook wb, Sheet sheet, MutableInt rowNr, Object report)
 	{
 		// Reset the context back to the complete report XML, because it might have been changed to a local one
 		context = JXPathContext.newContext(report);
@@ -206,13 +240,13 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 	// Introduce Offsets for iteration of columns
 	// Possible data structure:
 	// 
-    private void exportSheet(Sheet xlsSheet, MutableInt rowNr, Object report, SHEET ioSheet, XlsSheet sheetDefinition)
+    private void exportSheet(Workbook wb, Sheet xlsSheet, MutableInt rowNr, Object report, SHEET ioSheet, XlsSheet sheetDefinition)
     {
         // Create JXPath context for working with the report data
         context = JXPathContext.newContext(report);
         
         // PreProcess columns to create Styles and count the number of results for the given report query
-        ArrayList<XlsColumn> sortedColumns = preProcessColumns(sheetDefinition,rowNr,xlsSheet);
+        ArrayList<XlsColumn> sortedColumns = preProcessColumns(wb,sheetDefinition,rowNr,xlsSheet);
 		
         // Create Content Rows
 		String queryExpression = sheetDefinition.getQuery();
@@ -313,7 +347,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
         }
     }
 
-    public CellStyle getCellStyle(XlsColumn columnDefinition)
+    public CellStyle getCellStyle(Workbook wb, XlsColumn columnDefinition)
     {
 		// Refer to POI standard styles at https://poi.apache.org/apidocs/org/apache/poi/ss/usermodel/BuiltinFormats.html
         CellStyle style = wb.createCellStyle();
@@ -348,8 +382,6 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 		}
         return style;
     }
-
- 
 
     public Sheet createCell(Sheet sheet, Integer rowNr, Integer cellNr, Object value, String type, CellStyle style)
     {
@@ -419,7 +451,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
         return sheet;
     }
 
-    private ArrayList<XlsColumn> preProcessColumns(XlsSheet sheet, MutableInt rowNr, Sheet xlsSheet)
+    private ArrayList<XlsColumn> preProcessColumns(Workbook wb, XlsSheet sheet, MutableInt rowNr, Sheet xlsSheet)
     {
         ArrayList<XlsColumn> columns = new ArrayList<XlsColumn>();
 		Integer columnNr = 0;
@@ -432,7 +464,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 				XlsColumn c = (XlsColumn) o;
 				c.setColumn("" +columnNr);
 				columns.add(c);
-				cellStyles.put("" +columnNr, getCellStyle(c));
+				cellStyles.put("" +columnNr, getCellStyle(wb,c));
 				columnNr++;
 			}
 			if (o instanceof XlsMultiColumn)
@@ -446,7 +478,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 					headerRow = xlsSheet.getRow(rowNr.intValue());
 				}
 				XlsMultiColumn c = (XlsMultiColumn) o;
-				List<XlsColumn> list = createColumns(c, columnNr);
+				List<XlsColumn> list = createColumns(wb,c, columnNr);
 				columns.addAll(list);
 				hasExtraHeader = true;
 				
@@ -466,7 +498,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
         return columns;
     }
 	
-	public List<XlsColumn> createColumns(XlsMultiColumn multiColumn, Integer startAt)
+	public List<XlsColumn> createColumns(Workbook wb, XlsMultiColumn multiColumn, Integer startAt)
 	{
 		ArrayList<XlsColumn> list = new ArrayList<XlsColumn>();
 		
@@ -500,7 +532,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 
 			String xPath = template.replace("@@@columnId@@@", id);
 			logger.info(xPath);
-			XlsColumn c = createColumn(startAt, xPath, label, columnTemplate);
+			XlsColumn c = createColumn(wb,startAt, xPath, label, columnTemplate);
 			list.add(c);
 			startAt++;
 		}
@@ -508,9 +540,9 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 		
 	}
 		
-	public XlsColumn createColumn(Integer columnNr, String xPath, String label, XlsColumn columnTemplate)
+	public XlsColumn createColumn(Workbook wb, Integer columnNr, String xPath, String label, XlsColumn columnTemplate)
 	{
-		logger.trace("Creating Column at position " +columnNr + " with expression " +xPath + " and label " +label + " for language " +languageKey);
+		logger.trace("Creating Column at position " +columnNr + " with expression " +xPath + " and label " +label + " for language " +localeCode);
 		XlsColumn c = new XlsColumn();
 
 		XlsTransformation t = new XlsTransformation();
@@ -520,7 +552,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 		
 		Langs langs = new Langs();
 		Lang  lang  = new Lang();
-		lang.setKey(languageKey);
+		lang.setKey(localeCode);
 		lang.setTranslation(label);
 		langs.getLang().add(lang);
 		
@@ -528,7 +560,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 		c.setXlsTransformation(t);
 		c.setColumn(columnNr +"");
 		
-		cellStyles.put("" +columnNr, getCellStyle(c));
+		cellStyles.put("" +columnNr, getCellStyle(wb,c));
 		return c;
 	}
 }

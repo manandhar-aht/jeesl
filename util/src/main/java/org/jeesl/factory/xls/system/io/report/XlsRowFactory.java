@@ -49,6 +49,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	public void label(Sheet sheet, MutableInt rowNr, CellStyle styleLabel, CellStyle styleValue, ROW row)
     {
+		rowNr.add(row.getOffsetRows());
 		MutableInt columnNr = new MutableInt(0);
 		Row xlsRow = sheet.createRow(rowNr.intValue());
 		XlsCellFactory.build(xlsRow, columnNr, styleLabel, row.getName().get(localeCode).getLang());

@@ -1,11 +1,16 @@
 package org.jeesl.factory.factory;
 
+import java.util.List;
+
+import org.apache.poi.ss.usermodel.Workbook;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
+import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
+import org.jeesl.factory.xls.system.io.report.XlsCellStyleProvider;
 import org.jeesl.factory.xls.system.io.report.XlsRowFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -113,5 +118,15 @@ public class ReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription
 	public XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xlsRow(String localeCode)
 	{
 		return new XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>(localeCode);
+	}
+	
+	public XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xlsCell(XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> styleProvider)
+	{
+		return new XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>(styleProvider);
+	}
+	
+	public XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE> xlsCellStyleProvider(Workbook xlsWorkbook, List<COLUMN> ioColumns)
+	{
+		return new XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,RT,ENTITY,ATTRIBUTE>(xlsWorkbook,ioColumns);
 	}
 }

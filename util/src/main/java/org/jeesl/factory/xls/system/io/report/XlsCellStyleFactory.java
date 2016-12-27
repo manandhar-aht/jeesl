@@ -19,4 +19,14 @@ public class XlsCellStyleFactory
 		style.setFont(font);
 		return style;
 	}
+	
+	public static CellStyle fallback(Workbook workbook)
+	{
+		CellStyle style = workbook.createCellStyle();
+//		style.setDataFormat(createHelper.createDataFormat().getFormat("yyyy.MM"));
+		style.setAlignment(CellStyle.ALIGN_LEFT);
+		style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+//		style.setFont(font);
+		return style;
+	}
 }

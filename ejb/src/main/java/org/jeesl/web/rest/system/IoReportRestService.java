@@ -48,6 +48,7 @@ import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.Row;
+import net.sf.ahtutils.xml.report.Rows;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
@@ -293,11 +294,14 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 				GROUP eGroup = importGroup(eSheet,xGroup);
 				dbUpdaterGroup.handled(eGroup);
 			}
-			else if(s instanceof Row)
+			else if(s instanceof Rows)
 			{
-				Row xRow = (Row)s;
-				ROW eRow = importRow(eSheet,xRow);
-				dbUpdaterRow.handled(eRow);
+				Rows xRows = (Rows)s;
+				for(Row xRow : xRows.getRow())
+				{
+					ROW eRow = importRow(eSheet,xRow);
+					dbUpdaterRow.handled(eRow);
+				}
 			}
 		}
 		for(GROUP g : dbUpdaterGroup.getEjbForRemove()){fReport.rmGroup(g);}

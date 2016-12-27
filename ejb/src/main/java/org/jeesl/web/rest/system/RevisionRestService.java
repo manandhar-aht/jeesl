@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionEntityFactory;
+import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.system.revision.XmlEntityFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
@@ -17,8 +18,9 @@ import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
-import org.jeesl.interfaces.rest.system.revision.JeeslRevisionRestExport;
-import org.jeesl.interfaces.rest.system.revision.JeeslRevisionRestImport;
+import org.jeesl.interfaces.rest.system.io.revision.JeeslRevisionRestExport;
+import org.jeesl.interfaces.rest.system.io.revision.JeeslRevisionRestImport;
+import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.model.xml.system.revision.Attribute;
 import org.jeesl.model.xml.system.revision.Entities;
 import org.jeesl.model.xml.system.revision.Entity;
@@ -70,6 +72,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<RA> cRA;
 	private final Class<RAT> cRAT;
 
+	private XmlContainerFactory xfContainer;
 	private XmlStatusFactory xfStatus;
 	private XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> xfEntity;
 
@@ -94,6 +97,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cRA=cRA;
 		this.cRAT=cRAT;
 	
+		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfEntity = new XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntity));
 			
@@ -119,6 +123,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		return new RevisionRestService<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(fRevision,cL,cD,cRC,cRV,cRVM,cRS,cRST,cRE,cREM,cRA,cRAT);
 	}
 	
+	@Override public Container exportSystemIoRevisionAttributeTypes() {return xfContainer.build(fRevision.allOrderedPosition(cRAT));}
 	@Override public Aht exportSystemRevisionCategories()
 	{
 		Aht aht = new Aht();
@@ -139,6 +144,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		return entities;
 	}
 	
+	@Override public DataUpdate importSystemIoRevisionAttributeTypes(Container categories){return importStatus(cRAT,cL,cD,categories,null);}
 	@Override public DataUpdate importSystemRevisionCategories(Aht categories){return importStatus(cRC,cL,cD,categories,null);}
 	
 	@Override public DataUpdate importSystemRevisionEntities(Entities entities)
@@ -259,6 +265,18 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Aht container, Class<P> clParent)
+    {
+    	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
+		AhtStatusDbInit asdi = new AhtStatusDbInit();
+        asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus, clLang, clDescription));
+        asdi.setFacade(fRevision);
+        DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, clLang, clParent);
+        asdi.deleteUnusedStatus(clStatus, clLang, clDescription);
+        return dataUpdate;
+    }
+    
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Container container, Class<P> clParent)
     {
     	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
 		AhtStatusDbInit asdi = new AhtStatusDbInit();

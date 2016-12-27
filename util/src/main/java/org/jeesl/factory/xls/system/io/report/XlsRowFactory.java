@@ -47,6 +47,14 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		this.localeCode = localeCode;
 	}
 	
+	public void label(Sheet sheet, MutableInt rowNr, CellStyle styleLabel, CellStyle styleValue, ROW row)
+    {
+		MutableInt columnNr = new MutableInt(0);
+		Row xlsRow = sheet.createRow(rowNr.intValue());
+		XlsCellFactory.build(xlsRow, columnNr, styleLabel, row.getName().get(localeCode).getLang());
+		rowNr.add(1);
+    }
+	
 	public void header(Sheet sheet, MutableInt rowNr, CellStyle dateHeaderStyle, SHEET ioSheet)
     {
 		Map<GROUP,Integer> mapSize = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);

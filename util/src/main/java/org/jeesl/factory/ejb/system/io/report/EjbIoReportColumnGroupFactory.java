@@ -79,7 +79,7 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 		try
 		{
 			ejb = cGroup.newInstance();
-			ejb.setCode(sheet.getCode());
+			ejb.setCode(group.getCode());
 			ejb.setSheet(sheet);
 			ejb = update(ejb,group);
 

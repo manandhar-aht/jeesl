@@ -24,6 +24,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jeesl.factory.factory.ReportFactoryFactory;
+import org.jeesl.factory.xls.system.io.report.XlsCellStyleFactory;
 import org.jeesl.factory.xls.system.io.report.XlsRowFactory;
 import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
@@ -32,6 +33,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.interfaces.model.system.io.report.type.JeeslReportRowType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,7 +75,8 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
     public Workbook         wb;
     public Font             headerFont;
     public CellStyle        dateHeaderStyle;
-    public CellStyle        numberStyle; 
+    public CellStyle        numberStyle;
+    private CellStyle styleLabel;
     public CreationHelper   createHelper;
     public JXPathContext	context;
     
@@ -81,7 +84,6 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
     public Integer   counter;
 	
 	// Current line while exporting
-	private MutableInt rowNr;
 	
 	// Languge
 	private String   languageKey;
@@ -108,6 +110,8 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
         font.setItalic(true);
         font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 
+        styleLabel = XlsCellStyleFactory.label(wb, font);
+        
         // Create styles
         dateHeaderStyle = wb.createCellStyle();
         dateHeaderStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy.MM"));
@@ -124,67 +128,34 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 	{
 		for(SHEET ioSheet : workbook.getSheets())
 		{
-			rowNr = new MutableInt(1);
+			MutableInt rowNr = new MutableInt(1);
 			String sheetName = ioSheet.getName().get(languageKey).getLang();
 			Sheet sheet = XlsSheetFactory.getSheet(wb,sheetName);
-			applyHeader(sheet,ioSheet,report);
+			
+			for(ROW ioRow : ioSheet.getRows())
+			{
+				switch(JeeslReportRowType.Code.valueOf(ioRow.getType().getCode()))
+				{
+					case label: xlfRow.label(sheet, rowNr, styleLabel, dateHeaderStyle, ioRow); break;
+					case table: applyTable(sheet,rowNr,ioSheet,ioRow); break;
+					default: break;
+				}
+			}
+			
+//			applyHeader(sheet,ioSheet,report);
 //			exportSheet(sheet,report,ioSheet,null);
-			applyFooter(sheet,report);
+//			applyFooter(sheet,report);
 			rowNr.add(3);
 		}
 		wb.write(os);
 	}
 	
-	public void applyHeader(Sheet sheet, SHEET ioSheet, Object report)
+	private void applyTable(Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow)
 	{
-		// Reset the context back to the complete report XML, because it might have been changed to a local one
-		context = JXPathContext.newContext(report);
-		
-		// Get the Excel Sheet
-		logger.info(sheet.getSheetName());
-		// Create the standard text style
-		CellStyle style = wb.createCellStyle();
-		Font font = wb.createFont();
-		font.setFontName("Arial");
-		style.setFont(font);
-
-		
-		// Ask for all labels and add the ones starting with header to a list
-		Iterator iterator     = context.iteratePointers("/info/labels/label[@scope='header']");
-		Pointer pointerToItem;
-		Object o;
-		ArrayList<Label> headerLabels = new ArrayList<Label>();
-		while (iterator.hasNext())
-		{
-			pointerToItem = (Pointer)iterator.next();
-			o = pointerToItem.getValue();
-			if ((o!=null))
-			{
-				//TODO Finds also label='xy' attributes, must be restricted in XPath if possible for performance improvement
-				if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
-				if (o.getClass() == Label.class)
-				{
-					Label l = (Label) pointerToItem.getValue();
-					headerLabels.add(l);
-				}
-			}
-		}
-
-		for(Label header : headerLabels)
-		{
-			String value = "";
-			if(header.isSetKey()) {value = header.getKey() + ": ";}
-			value = value + header.getValue();
-			createCell(sheet, rowNr.intValue(), 0, value, "String", style);
-			rowNr.add(1);
-		}
-		
-		rowNr.add(2);
-		
 		xlfRow.header(sheet,rowNr,dateHeaderStyle,ioSheet);
 	}
 		
-	public void applyFooter(Sheet sheet, Object report)
+	public void applyFooter(Sheet sheet, MutableInt rowNr, Object report)
 	{
 		// Reset the context back to the complete report XML, because it might have been changed to a local one
 		context = JXPathContext.newContext(report);
@@ -235,13 +206,13 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 	// Introduce Offsets for iteration of columns
 	// Possible data structure:
 	// 
-    public void exportSheet(Sheet sheet, Object report, SHEET ioSheet, XlsSheet sheetDefinition)
+    private void exportSheet(Sheet xlsSheet, MutableInt rowNr, Object report, SHEET ioSheet, XlsSheet sheetDefinition)
     {
         // Create JXPath context for working with the report data
         context = JXPathContext.newContext(report);
         
         // PreProcess columns to create Styles and count the number of results for the given report query
-        ArrayList<XlsColumn> sortedColumns = preProcessColumns(sheetDefinition, sheet);
+        ArrayList<XlsColumn> sortedColumns = preProcessColumns(sheetDefinition,rowNr,xlsSheet);
 		
         // Create Content Rows
 		String queryExpression = sheetDefinition.getQuery();
@@ -296,10 +267,11 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 					{
 						value = context.getValue(expression);
 						Iterator completeIterator = context.iterate(expression);
-						if (completeIterator.hasNext()) { 
+						if (completeIterator.hasNext())
+						{ 
 							value = completeIterator.next();
-							if(logger.isTraceEnabled()) {logger.trace("Found " +value.toString());
-						}}
+							if(logger.isTraceEnabled()) {logger.trace("Found " +value.toString());}
+						}
 						else {if(logger.isTraceEnabled()) {logger.trace("Could not find " +expression);}}
 						if (logger.isTraceEnabled()) {logger.trace("... in complete context.");}
 					}
@@ -318,13 +290,11 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 						value = StringUtils.join(subSet, ", ");
 					}
                     if (logger.isTraceEnabled()) {logger.trace("Got Value " +value.toString());}
-                    createCell(sheet, rowNr.intValue(), i, value, type, style);
+                    createCell(xlsSheet, rowNr.intValue(), i, value, type, style);
 
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
-                //    Integer counter = errors.get(columnId);
-                //   counter++;
-                //    errors.put(columnId, counter);
 					if (logger.isTraceEnabled()) {logger.trace("ERROR occured: " +e.getMessage());}
                 }
             }
@@ -333,7 +303,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
         }
         logger.info("Processed " +rowNr.intValue() +" entries.");
         
-        fixWidth(sortedColumns, sheet);
+        fixWidth(sortedColumns, xlsSheet);
         for (String key : errors.keySet())
         {
             if (errors.get(key)>0)
@@ -449,7 +419,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
         return sheet;
     }
 
-    public ArrayList<XlsColumn> preProcessColumns(XlsSheet sheet, Sheet xlsSheet)
+    private ArrayList<XlsColumn> preProcessColumns(XlsSheet sheet, MutableInt rowNr, Sheet xlsSheet)
     {
         ArrayList<XlsColumn> columns = new ArrayList<XlsColumn>();
 		Integer columnNr = 0;

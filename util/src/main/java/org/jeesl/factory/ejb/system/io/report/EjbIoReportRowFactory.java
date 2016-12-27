@@ -77,7 +77,7 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 		try
 		{
 			ejb = cRow.newInstance();
-			ejb.setCode(sheet.getCode());
+			ejb.setCode(row.getCode());
 			ejb.setSheet(sheet);
 			ejb = update(ejb,row,eRowType);
 

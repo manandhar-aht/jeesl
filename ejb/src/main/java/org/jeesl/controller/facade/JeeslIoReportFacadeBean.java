@@ -127,7 +127,7 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	@Override public void rmRow(ROW row) throws UtilsConstraintViolationException
 	{
 		row = em.find(cRow, row.getId());
-		row.getSheet().getGroups().remove(row);
+		row.getSheet().getRows().remove(row);
 		this.rmProtected(row);
 	}
 	

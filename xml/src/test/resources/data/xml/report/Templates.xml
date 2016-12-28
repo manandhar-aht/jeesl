@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<r:templates xmlns:r="http://ahtutils.aht-group.com/report">
-    <r:template id="ahtutils-basic-template">
-        <r:field type="field" expression="/report/title" name="title"/>
-        <r:element type="header" file="ahtutils-basic"/>
-    </r:template>
+<r:templates xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report">
+    <r:template id="ahtutils-basic-template" code="myCode" position="1" visible="true"/>
+    <r:template id="ahtutils-basic-template" code="myCode" position="1" visible="true"/>
 </r:templates>

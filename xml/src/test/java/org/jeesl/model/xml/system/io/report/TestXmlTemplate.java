@@ -1,6 +1,8 @@
 package org.jeesl.model.xml.system.io.report;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlDescriptions;
+import org.jeesl.model.xml.system.status.TestXmlLangs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +17,22 @@ public class TestXmlTemplate extends AbstractXmlReportTest<Template>
     
     public Template build(boolean withChildren)
     {
-    	Template template = new Template();
-    	template.setId("ahtutils-basic-template");
-    	template.getElement().add(TestXmlElement.create(false));
-    	template.getField().add(TestXmlField.create(false));
-    	return template;
+    	Template xml = new Template();
+    	xml.setId("ahtutils-basic-template");
+    	xml.setCode("myCode");
+    	xml.setPosition(1);
+    	xml.setVisible(true);
+    	
+    	if(withChildren)
+    	{
+    		xml.getElement().add(TestXmlElement.create(false));
+        	xml.getField().add(TestXmlField.create(false));
+        	
+    		xml.setLangs(TestXmlLangs.create(false));
+    		xml.setDescriptions(TestXmlDescriptions.create(false));
+    	}
+    	
+    	return xml;
     }
 	
 	public static void main(String[] args)

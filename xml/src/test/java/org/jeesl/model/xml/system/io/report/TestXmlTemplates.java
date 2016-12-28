@@ -16,7 +16,13 @@ public class TestXmlTemplates extends AbstractXmlReportTest<Templates>
     public Templates build(boolean withChildren)
     {
     	Templates templates = new Templates();
-    	templates.getTemplate().add(TestXmlTemplate.create(false));
+    	
+    	if(withChildren)
+    	{
+    		templates.getTemplate().add(TestXmlTemplate.create(false));
+    		templates.getTemplate().add(TestXmlTemplate.create(false));
+    	}
+    	
     	return templates;
     }
 	

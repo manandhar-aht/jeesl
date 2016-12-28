@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
 import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
+import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
@@ -13,16 +14,19 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportQueryType;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.report.Size;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
@@ -36,7 +40,8 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 								GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>,
-								CDT extends UtilsStatus<CDT,L,D>,CW extends UtilsStatus<CW,L,D>,
+								CDT extends UtilsStatus<CDT,L,D>,
+								CW extends UtilsStatus<CW,L,D>,
 								RT extends UtilsStatus<RT,L,D>,
 								ENTITY extends EjbWithId,
 								ATTRIBUTE extends EjbWithId,
@@ -46,13 +51,17 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 	final static Logger logger = LoggerFactory.getLogger(EjbIoReportColumnFactory.class);
 	
 	final Class<COLUMN> cColumn;
+	final Class<CDT> cDataType;
+	final Class<CW> cColumnWidth;
 	
 	private JeeslDbLangUpdater<COLUMN,L> dbuLang;
 	private JeeslDbDescriptionUpdater<COLUMN,D> dbuDescription;
     
-	public EjbIoReportColumnFactory(final Class<L> cL,final Class<D> cD,final Class<COLUMN> cColumn)
+	public EjbIoReportColumnFactory(final Class<L> cL,final Class<D> cD,final Class<COLUMN> cColumn, Class<CDT> cDataType, Class<CW> cColumnWidth)
 	{       
         this.cColumn = cColumn;
+        this.cDataType=cDataType;
+        this.cColumnWidth=cColumnWidth;
         dbuLang = JeeslDbLangUpdater.factory(cColumn, cL);
         dbuDescription = JeeslDbDescriptionUpdater.factory(cColumn, cD);
 	}
@@ -74,7 +83,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		return ejb;
 	}
 	
-	public COLUMN build(GROUP group, XlsColumn column, CDT eDataType)
+	public COLUMN build(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, GROUP group, XlsColumn column) throws UtilsNotFoundException
 	{
 		COLUMN ejb = null;
 		try
@@ -82,7 +91,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 			ejb = cColumn.newInstance();
 			ejb.setCode(column.getCode());
 			ejb.setGroup(group);
-			ejb = update(ejb,column,eDataType);
+			ejb = update(fReport,ejb,column);
 
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
@@ -90,11 +99,13 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		return ejb;
 	}
 	
-	public COLUMN update(COLUMN eColumn, XlsColumn xColumn, CDT eDataType)
+	public COLUMN update(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, COLUMN eColumn, XlsColumn xColumn) throws UtilsNotFoundException
 	{
+		CDT eDataType = null;if(xColumn.getDataType()!=null){eDataType = fReport.fByCode(cDataType, xColumn.getDataType().getCode());}
+		eColumn.setDataType(eDataType);
+		
 		eColumn.setPosition(xColumn.getPosition());
 		eColumn.setVisible(xColumn.isVisible());
-		eColumn.setDataType(eDataType);
 		
 		if(xColumn.isSetQueries())
 		{
@@ -107,7 +118,23 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 			try{eColumn.setQueryFooter(ReportXpath.getQuery(JeeslReportQueryType.Column.footer.toString(), xColumn.getQueries()).getValue());}
 			catch (ExlpXpathNotFoundException e) {eColumn.setQueryFooter(null);}
 		}
-		
+		if(xColumn.isSetLayout())
+		{
+			if(xColumn.getLayout().isSetSize())
+			{
+				try
+				{
+					Size size = ReportXpath.getSize(JeeslReportLayout.Code.columnWidth.toString(), xColumn.getLayout());
+					eColumn.setColumWidth(fReport.fByCode(cColumnWidth, size.getType().getCode()));
+					eColumn.setColumSize(size.getValue());
+				}
+				catch (ExlpXpathNotFoundException e)
+				{
+					eColumn.setColumWidth(null);
+					eColumn.setColumSize(null);
+				}
+			}
+		}
 		return eColumn;
 	}
 	

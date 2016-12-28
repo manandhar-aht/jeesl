@@ -127,7 +127,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfReport = new XmlReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(ReportQuery.get(ReportQuery.Key.exReport));
 		
-		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow);
+		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cDataType,cColumWidth);
 		efReport = ffReport.report();
 		efWorkbook = ffReport.workbook();
 		efSheet = ffReport.sheet();
@@ -344,16 +344,14 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	
 	private COLUMN importColumn(GROUP eGroup, XlsColumn xColumn) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException
 	{
-		CDT eDataType = null;if(xColumn.getDataType()!=null){eDataType = fReport.fByCode(cDataType, xColumn.getDataType().getCode());}
-		
 		COLUMN eColumn;
 		try {eColumn = fReport.fByCode(cColumn, xColumn.getCode());}
 		catch (UtilsNotFoundException e)
 		{
-			eColumn = efColumn.build(eGroup,xColumn,eDataType);
+			eColumn = efColumn.build(fReport,eGroup,xColumn);
 			eColumn = fReport.save(eColumn);
 		}
-		efColumn.update(eColumn,xColumn,eDataType);
+		efColumn.update(fReport,eColumn,xColumn);
 		eColumn = fReport.save(eColumn);
 		eColumn = efColumn.updateLD(fReport,eColumn,xColumn);
 		return eColumn;

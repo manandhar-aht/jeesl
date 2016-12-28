@@ -1,17 +1,24 @@
 package org.jeesl.factory.xls.system.io.report;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.jxpath.JXPathContext;
-import org.apache.commons.jxpath.JXPathNotFoundException;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +27,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
+public class XlsColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 							REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 							IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -34,49 +41,28 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 							ENTITY extends EjbWithId,
 							ATTRIBUTE extends EjbWithId>
 {
-	final static Logger logger = LoggerFactory.getLogger(XlsCellFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XlsColumnFactory.class);
 		
-	private String localeCode;
-	
-	private XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE> cellStyleProvider;
-	
-	public XlsCellFactory(String localeCode, XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,CDT,CW,RT,ENTITY,ATTRIBUTE> cellStyleProvider)
+	public XlsColumnFactory()
 	{
-		this.localeCode = localeCode;
-		this.cellStyleProvider=cellStyleProvider;
+		
 	}
 	
-	public void build(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, JXPathContext context)
-	{
-		try
-		{
-			Object value = context.getValue(ioColumn.getQueryCell());
-			if(value!=null)
+	public void adjustWidth(Sheet sheet, List<COLUMN> columns)
+    {
+		for(int i=0; i<columns.size(); i++)
+        {
+			COLUMN ioColumn = columns.get(i);
+			if(ioColumn.getColumWidth()!=null)
 			{
-				XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.get(ioColumn),value.toString());
+				switch(JeeslReportLayout.ColumnWidth.valueOf(ioColumn.getColumWidth().getCode()))
+				{
+					case none: break;
+					case auto: sheet.autoSizeColumn(i);break;
+					case min: sheet.setColumnWidth(i, ioColumn.getColumSize());break;
+					default: break;
+				}
 			}
-			else {columnNr.add(1);}
-		}
-		catch(JXPathNotFoundException e){columnNr.add(1);}
-	}
-	
-	public void label(Row xlsRow, MutableInt columnNr, ROW ioRow)
-	{
-		XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.getStyleLabelLeft(),ioRow.getName().get(localeCode).getLang());
-	}
-	
-	public void value(Row xlsRow, MutableInt columnNr, ROW ioRow, JXPathContext context)
-	{
-		Object value = context.getValue(ioRow.getQueryCell());
-		if(value==null){columnNr.add(1);}
-		else{XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.get(ioRow),value.toString());}
-	}
-	
-	public static void build(Row xlsRow, MutableInt columnNr, CellStyle style, String value)
-	{
-		Cell cell = xlsRow.createCell(columnNr.intValue());
-        cell.setCellStyle(style);
-        cell.setCellValue(value);
-        columnNr.add(1);
-	}
+        }
+    }
 }

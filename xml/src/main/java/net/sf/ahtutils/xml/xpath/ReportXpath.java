@@ -20,12 +20,14 @@ import net.sf.ahtutils.xml.report.DataHandler;
 import net.sf.ahtutils.xml.report.ImportStructure;
 import net.sf.ahtutils.xml.report.Info;
 import net.sf.ahtutils.xml.report.Jr;
+import net.sf.ahtutils.xml.report.Layout;
 import net.sf.ahtutils.xml.report.Media;
 import net.sf.ahtutils.xml.report.Queries;
 import net.sf.ahtutils.xml.report.Query;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.Rows;
+import net.sf.ahtutils.xml.report.Size;
 import net.sf.ahtutils.xml.report.Template;
 import net.sf.ahtutils.xml.report.Templates;
 import net.sf.ahtutils.xml.report.XlsColumn;
@@ -265,5 +267,14 @@ public class ReportXpath
 			if(q.getType().equals(type)){return q;}
 		}
 		throw new ExlpXpathNotFoundException("No "+Query.class.getSimpleName()+" for type="+type);
+	}
+	
+	public static Size getSize(String type, Layout layout) throws ExlpXpathNotFoundException
+	{
+		for(Size s : layout.getSize())
+		{
+			if(s.getCode().equals(type)){return s;}
+		}
+		throw new ExlpXpathNotFoundException("No "+Size.class.getSimpleName()+" for type="+type);
 	}
 }

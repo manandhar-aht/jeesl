@@ -6,11 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportCellFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportTemplateFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
@@ -49,6 +51,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
+import net.sf.ahtutils.xml.report.Cell;
 import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
@@ -113,6 +116,8 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efGroup;
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efColumn;
 	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efRow;
+	private EjbIoReportTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efTemplate;
+	private EjbIoReportCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efCell;
 		
 	private Comparator<REPORT> comparatorReport;
 	private Comparator<TEMPLATE> comparatorTemplate;
@@ -150,6 +155,8 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		efGroup = ffReport.group();
 		efColumn = ffReport.column();
 		efRow = ffReport.row();
+		efTemplate = ffReport.template();
+		efCell = ffReport.cell();
 		
 		comparatorReport = new IoReportComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportComparator.Type.position);
 		comparatorTemplate = new IoReportTemplateComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportTemplateComparator.Type.position);
@@ -205,7 +212,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		{
 			templates.getTemplate().add(xfTemplate.build(template));
 		}
-		return null;
+		return templates;
 	}
 	
 	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
@@ -220,25 +227,71 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		DataUpdateTracker dut = new DataUpdateTracker(true);
 		dut.setType(XmlTypeFactory.build(cReport.getName(),"DB Import"));
 		
-		JeeslDbCodeEjbUpdater<REPORT> dbUpdaterReport = JeeslDbCodeEjbUpdater.createFactory(cReport);
-		dbUpdaterReport.dbEjbs(fReport);
+		JeeslDbCodeEjbUpdater<TEMPLATE> dbUpdaterTemplate = JeeslDbCodeEjbUpdater.createFactory(cTemplate);
+		dbUpdaterTemplate.dbEjbs(fReport);
 		
 		for(Template xTemplate : templates.getTemplate())
 		{
-//			try
+			try
 			{
-//				REPORT eReport = importSystemIoReport(xReport);
-//				dbUpdaterReport.handled(eReport);
+				TEMPLATE eTemplate = importSystemIoReportTemplate(xTemplate);
+				dbUpdaterTemplate.handled(eTemplate);
 				dut.success();
 			}
-//			catch (UtilsNotFoundException e) {dut.fail(e, true);}
-//			catch (UtilsConstraintViolationException e) {dut.fail(e, true);}
-//			catch (UtilsLockingException e) {dut.fail(e, true);}
-//			catch (UtilsProcessingException e) {dut.fail(e, true);}
+			catch (UtilsNotFoundException e) {dut.fail(e, true);}
+			catch (UtilsConstraintViolationException e) {dut.fail(e, true);}
+			catch (UtilsLockingException e) {dut.fail(e, true);}
+			catch (UtilsProcessingException e) {dut.fail(e, true);}
 		}
-		dbUpdaterReport.remove(fReport);
+		dbUpdaterTemplate.remove(fReport);
 		
 		return dut.toDataUpdate();
+	}
+	
+	private TEMPLATE importSystemIoReportTemplate(Template xTemplate) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, UtilsProcessingException
+	{
+		TEMPLATE eTemplate;
+	
+		try {eTemplate = fReport.fByCode(cTemplate, xTemplate.getCode());}
+		catch (UtilsNotFoundException e)
+		{
+			eTemplate = efTemplate.build(xTemplate);
+			eTemplate = fReport.save(eTemplate);
+		}
+		eTemplate = efTemplate.update(eTemplate, xTemplate);
+		eTemplate = fReport.save(eTemplate);
+		eTemplate = efTemplate.updateLD(fReport,eTemplate,xTemplate);
+		eTemplate = fReport.load(eTemplate);	
+		
+		JeeslDbCodeEjbUpdater<CELL> dbuCell = JeeslDbCodeEjbUpdater.createFactory(cCell);
+		
+		dbuCell.dbEjbs(eTemplate.getCells());
+		
+		for(Cell xCell : xTemplate.getCell())
+		{
+			CELL eCell = importCell(eTemplate,xCell);
+			dbuCell.handled(eCell);
+			
+		}
+		for(CELL c : dbuCell.getEjbForRemove()){fReport.rmCell(c);}
+			
+		return eTemplate;
+	}
+	
+	private CELL importCell(TEMPLATE eTemplate, Cell xCell) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, UtilsProcessingException
+	{
+		CELL eCell;
+		try {eCell = fReport.fByCode(cCell, xCell.getCode());}
+		catch (UtilsNotFoundException e)
+		{
+			eCell = efCell.build(eTemplate,xCell);
+			eCell = fReport.save(eCell);
+		}
+		eCell = efCell.update(eCell,xCell);
+		eCell = fReport.save(eCell);
+		eCell = efCell.updateLD(fReport, eCell, xCell);
+		
+		return eCell;
 	}
 	
 	@Override public DataUpdate importSystemIoReports(Reports reports)

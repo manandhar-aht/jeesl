@@ -19,7 +19,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sTemplates" width="3">
+				<aht:slot id="sTemplates" width="4">
 					<h:form id="fTemplates">
 						<p:dataTable var="t" value="#{cc.attrs.bean.templates}" draggableRows="true"
 							selection="#{cc.attrs.bean.template}" selectionMode="single" rowKey="#{t.id}">
@@ -68,7 +68,7 @@
 						</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sCell" width="5">
+				<aht:slot id="sCell" width="4">
 					<h:form id="fCell">
 						<p:panel header="#{msg.jeeslIoReportCell}" rendered="#{not empty cc.attrs.bean.cell}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">

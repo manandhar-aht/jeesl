@@ -46,4 +46,7 @@ public interface JeeslReportRow<L extends UtilsLang,D extends UtilsDescription,
 	
 	int getOffsetColumns();
 	void setOffsetColumns(int offsetColumns);
+	
+	TEMPLATE getTemplate();
+	void setTemplate(TEMPLATE template);
 }

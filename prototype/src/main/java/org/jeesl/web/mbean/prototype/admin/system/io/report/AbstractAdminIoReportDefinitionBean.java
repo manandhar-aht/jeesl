@@ -93,6 +93,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private Class<GROUP> cGroup;
 	private Class<COLUMN> cColumn;
 	private Class<ROW> cRow;
+	private Class<TEMPLATE> cTemplate;
 	private Class<CDT> cDataType;
 	private Class<CW> cColumnWidth;
 	private Class<RT> cRowType;
@@ -110,6 +111,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private List<ROW> rows; public List<ROW> getRows() {return rows;}
 	private List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	private List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
+	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
 	
 	
 	private RC revisionCategory; public RC getRevisionCategory() {return revisionCategory;} public void setRevisionCategory(RC revisionCategory) {this.revisionCategory = revisionCategory;}
@@ -147,6 +149,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		this.cGroup=cGroup;
 		this.cColumn=cColumn;
 		this.cRow=cRow;
+		this.cTemplate=cTemplate;
 		this.cDataType=cDataType;
 		this.cColumnWidth=cColumnWidth;
 		this.cRowType=cRowType;
@@ -175,7 +178,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		attributeTypes = fReport.allOrderedPositionVisible(cDataType);
 		columnWidths = fReport.allOrderedPositionVisible(cColumnWidth);
 		rowTypes = fReport.allOrderedPositionVisible(cRowType);
-		
+		templates = fReport.allOrderedPositionVisible(cTemplate);
 		
 		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
 //		sbhCategory.selectAll();
@@ -527,6 +530,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		try
 		{
 			if(row.getDataType()!=null){row.setDataType(fReport.find(cDataType,row.getDataType()));}
+			if(row.getTemplate()!=null){row.setTemplate(fReport.find(cTemplate, row.getTemplate()));}
 			row.setType(fReport.find(cRowType,row.getType()));
 			row = fReport.save(row);
 			reloadReport();

@@ -149,7 +149,7 @@
 						<p:dataTable var="column" value="#{cc.attrs.bean.columns}" draggableRows="true"
 							selection="#{cc.attrs.bean.column}" selectionMode="single" rowKey="#{column.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{jeeslIoReportColumns}">
+								<aht:pfDataTableHeader title="#{msg.jeeslIoReportColumns}">
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addColumn()}" update=":#{cc.id}:sColumns :#{cc.id}:sColumn" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
@@ -282,6 +282,12 @@
 									<p:selectOneMenu value="#{cc.attrs.bean.row.dataType}" effect="fade" >
 										<f:selectItem itemLabel="---"/>
 										<f:selectItems value="#{cc.attrs.bean.attributeTypes}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+									</p:selectOneMenu>
+									
+									<p:outputLabel value="#{msg.jeeslIoReportTemplate}"/>
+									<p:selectOneMenu value="#{cc.attrs.bean.row.template}" effect="fade" >
+										<f:selectItem itemLabel="---"/>
+										<f:selectItems value="#{cc.attrs.bean.templates}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 									</p:selectOneMenu>
 									
 								</p:panelGrid>

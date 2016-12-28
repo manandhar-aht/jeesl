@@ -6,13 +6,14 @@ import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +73,28 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		Object value = context.getValue(ioRow.getQueryCell());
 		if(value==null){columnNr.add(1);}
 		else{XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.get(ioRow),value.toString());}
+	}
+	
+	public void build(Sheet xslSheet, MutableInt rowNr, ROW ioRow)
+	{
+		int rootRow = rowNr.intValue();
+		int rootColumn = ioRow.getOffsetColumns();
+		int maxRow = rootRow;
+		
+		for(CELL ioCell : ioRow.getTemplate().getCells())
+		{
+			int cellRow = rootRow+ioCell.getRowNr()-1;
+			int cellCol = rootColumn+ioCell.getColNr()-1;
+			if(cellRow>maxRow){maxRow=cellRow;}
+			
+			logger.info("Creating Row "+cellRow+"."+cellCol);
+			Row xlsRow = xslSheet.getRow(cellRow); if(xlsRow==null){xlsRow = xslSheet.createRow(cellRow);}
+			
+			Cell xlsCell = xlsRow.createCell(cellCol);
+			xlsCell.setCellStyle(cellStyleProvider.getStyleFallback());
+			xlsCell.setCellValue(ioCell.getName().get(localeCode).getLang());
+		}
+		rowNr.add(maxRow-rootRow+1);
 	}
 	
 	public static void build(Row xlsRow, MutableInt columnNr, CellStyle style, String value)

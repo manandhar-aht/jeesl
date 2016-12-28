@@ -15,10 +15,15 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.report.Report;
+import net.sf.ahtutils.xml.report.Template;
 
 public class EjbIoReportTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -69,15 +74,15 @@ public class EjbIoReportTemplateFactory<L extends UtilsLang,D extends UtilsDescr
 		
 		return ejb;
 	}
-/*	
-	public REPORT build(CATEGORY category, IMPLEMENTATION eImplementation, Report xReport)
+	
+	public TEMPLATE build(Template xTemplate)
 	{
-		REPORT ejb = null;
+		TEMPLATE ejb = null;
 		try
 		{
-			ejb = cReport.newInstance();
-			ejb.setCode(xReport.getCode());
-			ejb = update(ejb,xReport,category,eImplementation);
+			ejb = cTemplate.newInstance();
+			ejb.setCode(xTemplate.getCode());
+			ejb = update(ejb,xTemplate);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
@@ -85,24 +90,21 @@ public class EjbIoReportTemplateFactory<L extends UtilsLang,D extends UtilsDescr
 		return ejb;
 	}
 	
-	public REPORT update (REPORT eReport, Report xReport, CATEGORY eCategory, IMPLEMENTATION eImplementation)
+	public TEMPLATE update (TEMPLATE eTemplate, Template xTemplate)
 	{
-		eReport.setCategory(eCategory);
-		eReport.setImplementation(eImplementation);
-		eReport.setPosition(xReport.getPosition());
-		eReport.setVisible(xReport.isVisible());
-		return eReport;
+		eTemplate.setPosition(xTemplate.getPosition());
+		eTemplate.setVisible(xTemplate.isVisible());
+		return eTemplate;
 	}
 	
-	public REPORT updateLD(UtilsFacade fUtils, REPORT eReport, Report xReport) throws UtilsConstraintViolationException, UtilsLockingException
+	public TEMPLATE updateLD(UtilsFacade fUtils, TEMPLATE eTemplate, Template xTemplate) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		eReport=dbuReportLang.handle(fUtils, eReport, xReport.getLangs());
-		eReport = fUtils.save(eReport);
+		eTemplate=dbuReportLang.handle(fUtils, eTemplate, xTemplate.getLangs());
+		eTemplate = fUtils.save(eTemplate);
 		
-		eReport=dbuReportDescription.handle(fUtils, eReport, xReport.getDescriptions());
-		eReport = fUtils.save(eReport);
+		eTemplate=dbuReportDescription.handle(fUtils, eTemplate, xTemplate.getDescriptions());
+		eTemplate = fUtils.save(eTemplate);
 		
-		return eReport;
+		return eTemplate;
 	}
-	*/
 }

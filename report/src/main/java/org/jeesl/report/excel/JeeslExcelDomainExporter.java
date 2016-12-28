@@ -92,13 +92,10 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 	
 	// Current line while exporting
 	
-	// Languge
-	private String   localeCode;
+	private String localeCode;
         
     public Hashtable<String, CellStyle> cellStyles = new Hashtable<String, CellStyle>();
     public Hashtable<String, Integer> errors = new Hashtable<String, Integer>();
-	
-	private int MIN_WIDTH = 5000;
 	
 	public JeeslExcelDomainExporter(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<CDT> cDataType, final Class<CW> cColumWidth, WORKBOOK ioWorkbook)
     {
@@ -146,7 +143,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 			XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE> xfRow = ffReport.xlsRow(localeCode,xfCell);
 			XlsColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE> xfColumn = ffReport.xlsColumn();
 			
-			MutableInt rowNr = new MutableInt(1);
+			MutableInt rowNr = new MutableInt(0);
 			String sheetName = ioSheet.getName().get(localeCode).getLang();
 			Sheet sheet = XlsSheetFactory.getSheet(wb,sheetName);
 			
@@ -157,7 +154,8 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 				{
 					case label: xfRow.label(sheet, rowNr, ioRow); break;
 					case labelValue: xfRow.labelValue(sheet, rowNr, ioRow, context); break;
-					case table: applyTable(wb,context,sheet,rowNr,ioSheet,ioRow,columns,xfRow,xfCell); break;
+					case table: applyTable(context,sheet,rowNr,ioSheet,ioRow,columns,xfRow,xfCell); break;
+					case template: applyTemplate(sheet,rowNr,ioSheet,ioRow,xfCell); break;
 					default: break;
 				}
 			}
@@ -171,7 +169,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 		wb.write(os);
 	}
 	
-	private void applyTable(Workbook xslWorkbook, JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, List<COLUMN> columns, XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE> xlfRow, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)
+	private void applyTable(JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, List<COLUMN> columns, XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE> xlfRow, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)
 	{
 		rowNr.add(ioRow.getOffsetRows());
 		xlfRow.header(sheet,rowNr,dateHeaderStyle,ioSheet);
@@ -192,55 +190,19 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 			{
 				xfCell.build(ioColumn,xlsRow,columnNr,relativeContext);
 			}
-			
 			rowNr.add(1);
         }
 	}
-		
-	private void applyFooter(Workbook wb, Sheet sheet, MutableInt rowNr, Object report)
+	
+	private void applyTemplate(Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)
 	{
-		// Reset the context back to the complete report XML, because it might have been changed to a local one
-		context = JXPathContext.newContext(report);
-
-		// Create the standard text style
-		CellStyle style = wb.createCellStyle();
-		Font font = wb.createFont();
-		font.setFontName("Arial");
-		style.setFont(font);
-
-		// Ask for all labels and add the ones starting with signature to a list
-		Iterator iterator     = context.iteratePointers("/info/labels/label[@scope='signatures']");
-		ArrayList<Label> signatureLabels = new ArrayList<Label>();
-		while (iterator.hasNext())
+		if(ioRow.getTemplate()!=null)
 		{
-			Pointer pointerToItem = (Pointer)iterator.next();
-			Object o = pointerToItem.getValue();
-			if ((o!=null))
-			{
-				//TODO Finds also label='xy' attributes, must be restricted in XPath if possible for performance improvement
-				if (logger.isTraceEnabled()) {logger.trace("Got pointer: " +o);}
-				if (o.getClass() == Label.class)
-				{
-					Label l = (Label) pointerToItem.getValue();
-					signatureLabels.add(l);
-				}
-			}
-		}
-		logger.info("Footer will be printed with " +signatureLabels.size() +" labels.");
-		
-		// Write the groups of label (e.g. approved by, prepared by) and the line to write the associated person
-		Integer columnNr = 0;
-		for (int i=0; i<signatureLabels.size();i++)
-		{
-			String responsible = "___________________";
-			Label label = signatureLabels.get(i);
-			if (label.isSetValue()) {responsible = label.getValue();}
-			createCell(sheet, rowNr.intValue(),   columnNr, label.getKey(), "String", style);
-			rowNr.add(1);createCell(sheet, rowNr.intValue(), columnNr, responsible, "String", style);
-			rowNr.add(1);createCell(sheet, rowNr.intValue(), columnNr, "Date: ___/___/_____", "String", style);
-			columnNr = columnNr + 2;
+			rowNr.add(ioRow.getOffsetRows());
+			xfCell.build(sheet, rowNr, ioRow);
 		}
 	}
+
 	
 	// Maybe add a bunch of sheets here for grouped report
 	// Introduce Offsets for iteration of columns

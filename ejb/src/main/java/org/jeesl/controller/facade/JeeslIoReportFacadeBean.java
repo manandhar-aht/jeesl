@@ -6,12 +6,12 @@ import javax.persistence.EntityManager;
 
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
@@ -50,8 +50,9 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	private final Class<COLUMN> cColumn;
 	private final Class<ROW> cRow;
 	private final Class<TEMPLATE> cTemplate;
+	private final Class<CELL> cCell;
 	
-	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate)
+	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell)
 	{
 		super(em);
 		this.cCategory=cCategory;
@@ -62,6 +63,7 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		this.cColumn=cColumn;
 		this.cRow=cRow;
 		this.cTemplate=cTemplate;
+		this.cCell=cCell;
 	}
 	
 	@Override public REPORT load(REPORT report, boolean recursive)
@@ -141,6 +143,13 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		row = em.find(cRow, row.getId());
 		row.getSheet().getRows().remove(row);
 		this.rmProtected(row);
+	}
+	
+	@Override public void rmCell(CELL cell) throws UtilsConstraintViolationException
+	{
+		cell = em.find(cCell, cell.getId());
+		cell.getTemplate().getCells().remove(cell);
+		this.rmProtected(cell);
 	}
 	
 	@Override public List<REPORT> fReports(List<CATEGORY> categories, boolean showInvisibleEntities)

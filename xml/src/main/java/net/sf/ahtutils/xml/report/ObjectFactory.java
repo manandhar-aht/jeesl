@@ -70,6 +70,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Cell }
+     * 
+     */
+    public Cell createCell() {
+        return new Cell();
+    }
+
+    /**
      * Create an instance of {@link Field }
      * 
      */

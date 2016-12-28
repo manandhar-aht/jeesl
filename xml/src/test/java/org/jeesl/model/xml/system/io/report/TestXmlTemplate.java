@@ -30,6 +30,9 @@ public class TestXmlTemplate extends AbstractXmlReportTest<Template>
         	
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
+    		
+    		xml.getCell().add(TestXmlCell.create(false));
+    		xml.getCell().add(TestXmlCell.create(false));
     	}
     	
     	return xml;

@@ -16,6 +16,7 @@ import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 
 import net.sf.ahtutils.xml.aht.Query;
+import net.sf.ahtutils.xml.report.Cell;
 import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.Layout;
 import net.sf.ahtutils.xml.report.Report;
@@ -70,18 +71,30 @@ public class ReportQuery
 	public static Template exTemplate()
 	{
 		Template xml = new Template();
-/*		xml.setCode("");
+		xml.setCode("");
 		xml.setPosition(0);
 		xml.setVisible(true);
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
 		
-		xml.setCategory(XmlCategoryFactory.create(""));
-		xml.setImplementation(XmlImplementationFactory.build(""));
+		xml.getCell().add(exCell());
 		
-		xml.setXlsWorkbook(exportWorkbook());
-*/		
+		return xml;
+	}
+	
+	private static Cell exCell()
+	{
+		Cell xml = new Cell();
+		xml.setCode("");
+		xml.setVisible(true);
+		
+		xml.setColNr(1);
+		xml.setRowNr(1);
+		
+		xml.setLangs(StatusQuery.langs());
+		xml.setDescriptions(StatusQuery.descriptions());
+		
 		return xml;
 	}
 	

@@ -104,6 +104,7 @@
             <xsd:attribute name="visible" type="xsd:boolean"/>
         </xsd:complexType>
 	</xsd:element>
+	
 	<xsd:element name="templates">
 		<xsd:complexType>
 			<xsd:sequence>
@@ -116,6 +117,7 @@
 			<xsd:sequence>
            	<xsd:element ref="us:langs" maxOccurs="1"/>
 				<xsd:element ref="us:descriptions" maxOccurs="1"/>
+				<xsd:element ref="r:cell" maxOccurs="unbounded"/>
    			<xsd:element ref="r:field" maxOccurs="unbounded"/>
 				<xsd:element ref="r:element" maxOccurs="unbounded"/>
 			</xsd:sequence>
@@ -125,6 +127,19 @@
 			<xsd:attribute name="visible" type="xsd:boolean"/>
 		</xsd:complexType>
 	</xsd:element>
+	<xsd:element name="cell">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="us:langs" maxOccurs="1"/>
+				<xsd:element ref="us:descriptions" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="code" type="xsd:string"/>
+			<xsd:attribute name="visible" type="xsd:boolean"/>
+			<xsd:attribute name="rowNr" type="xsd:int"/>
+			<xsd:attribute name="colNr" type="xsd:int"/>
+		</xsd:complexType>
+	</xsd:element>
+	
  	<xsd:element name="field">
         <xsd:complexType>
             <xsd:attribute name="type">

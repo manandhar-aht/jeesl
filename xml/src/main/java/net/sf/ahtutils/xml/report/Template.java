@@ -26,6 +26,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}cell" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}field" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}element" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
@@ -44,6 +45,7 @@ import net.sf.ahtutils.xml.status.Langs;
 @XmlType(name = "", propOrder = {
     "langs",
     "descriptions",
+    "cell",
     "field",
     "element"
 })
@@ -57,6 +59,8 @@ public class Template
     protected Langs langs;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Descriptions descriptions;
+    @XmlElement(required = true)
+    protected List<Cell> cell;
     @XmlElement(required = true)
     protected List<Field> field;
     @XmlElement(required = true)
@@ -124,6 +128,43 @@ public class Template
 
     public boolean isSetDescriptions() {
         return (this.descriptions!= null);
+    }
+
+    /**
+     * Gets the value of the cell property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the cell property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getCell().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Cell }
+     * 
+     * 
+     */
+    public List<Cell> getCell() {
+        if (cell == null) {
+            cell = new ArrayList<Cell>();
+        }
+        return this.cell;
+    }
+
+    public boolean isSetCell() {
+        return ((this.cell!= null)&&(!this.cell.isEmpty()));
+    }
+
+    public void unsetCell() {
+        this.cell = null;
     }
 
     /**

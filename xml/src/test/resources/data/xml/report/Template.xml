@@ -2,6 +2,8 @@
 <r:template xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report" id="ahtutils-basic-template" code="myCode" position="1" visible="true">
     <s:langs/>
     <s:descriptions/>
+    <r:cell code="myCode" visible="true" rowNr="1" colNr="1"/>
+    <r:cell code="myCode" visible="true" rowNr="1" colNr="1"/>
     <r:field type="field" expression="/report/title" name="title"/>
     <r:element type="header" file="ahtutils-basic"/>
 </r:template>

@@ -4,6 +4,7 @@
     <s:descriptions/>
     <s:type id="123" key="myKey" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
     <s:dataType id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
+    <r:template id="ahtutils-basic-template" code="myCode" position="1" visible="true"/>
     <r:queries/>
     <r:layout/>
 </r:row>

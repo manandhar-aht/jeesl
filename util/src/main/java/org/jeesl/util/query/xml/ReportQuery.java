@@ -9,6 +9,7 @@ import org.jeesl.factory.xml.system.io.report.XmlQueriesFactory;
 import org.jeesl.factory.xml.system.io.report.XmlRowsFactory;
 import org.jeesl.factory.xml.system.io.report.XmlSheetsFactory;
 import org.jeesl.factory.xml.system.io.report.XmlSizeFactory;
+import org.jeesl.factory.xml.system.io.report.XmlTemplateFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 import org.jeesl.factory.xml.system.status.XmlDataTypeFactory;
 import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
@@ -148,6 +149,7 @@ public class ReportQuery
 		xml.setDescriptions(StatusQuery.descriptions());
 		xml.setType(XmlTypeFactory.create(""));
 		xml.setDataType(XmlDataTypeFactory.build(""));
+		xml.setTemplate(XmlTemplateFactory.build(""));
 		
 		xml.setQueries(XmlQueriesFactory.build());
 		xml.setLayout(rowLayout());

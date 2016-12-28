@@ -28,6 +28,7 @@ import net.sf.ahtutils.xml.status.Type;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}type"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}dataType"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}template"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}queries"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}layout"/&gt;
  *       &lt;/sequence&gt;
@@ -47,6 +48,7 @@ import net.sf.ahtutils.xml.status.Type;
     "descriptions",
     "type",
     "dataType",
+    "template",
     "queries",
     "layout"
 })
@@ -64,6 +66,8 @@ public class Row
     protected Type type;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected DataType dataType;
+    @XmlElement(required = true)
+    protected Template template;
     @XmlElement(required = true)
     protected Queries queries;
     @XmlElement(required = true)
@@ -185,6 +189,34 @@ public class Row
 
     public boolean isSetDataType() {
         return (this.dataType!= null);
+    }
+
+    /**
+     * Gets the value of the template property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Template }
+     *     
+     */
+    public Template getTemplate() {
+        return template;
+    }
+
+    /**
+     * Sets the value of the template property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Template }
+     *     
+     */
+    public void setTemplate(Template value) {
+        this.template = value;
+    }
+
+    public boolean isSetTemplate() {
+        return (this.template!= null);
     }
 
     /**

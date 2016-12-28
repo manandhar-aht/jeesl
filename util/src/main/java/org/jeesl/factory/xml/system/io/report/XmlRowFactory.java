@@ -3,12 +3,12 @@ package org.jeesl.factory.xml.system.io.report;
 import org.jeesl.factory.xml.system.status.XmlDataTypeFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportQueryType;
 import org.slf4j.Logger;
@@ -52,6 +52,7 @@ public class XmlRowFactory <L extends UtilsLang,D extends UtilsDescription,
 	private XmlTypeFactory<RT,L,D> xfType;
 	private XmlDataTypeFactory<CDT,L,D> xfDataType;
 	private XmlLayoutFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE> xfLayout;
+	private XmlTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE> xfTemplate;
 	
 	public XmlRowFactory(String localeCode, Row q)
 	{
@@ -61,6 +62,7 @@ public class XmlRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetType()){xfType = new XmlTypeFactory<RT,L,D>(localeCode,q.getType());}
 		if(q.isSetDataType()){xfDataType = new XmlDataTypeFactory<CDT,L,D>(localeCode,q.getDataType());}
 		if(q.isSetLayout()){xfLayout = new XmlLayoutFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE>(localeCode,q.getLayout());}
+		if(q.isSetTemplate()){xfTemplate = new XmlTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE>(q.getTemplate());}
 	}
 	
 	public Row build(ROW row)
@@ -75,6 +77,7 @@ public class XmlRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(row.getDescription()));}
 		if(q.isSetType()){xml.setType(xfType.build(row.getType()));}
 		if(q.isSetDataType() && row.getDataType()!=null){xml.setDataType(xfDataType.build(row.getDataType()));}
+		if(q.isSetTemplate() && row.getTemplate()!=null){xml.setTemplate(xfTemplate.build(row.getTemplate()));}
 		
 		if(q.isSetQueries()){xml.setQueries(queries(row));}
 		if(q.isSetLayout()){xml.setLayout(xfLayout.build(row));}

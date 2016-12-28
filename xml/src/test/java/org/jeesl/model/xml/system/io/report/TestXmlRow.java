@@ -30,6 +30,7 @@ public class TestXmlRow extends AbstractXmlReportTest<Row>
     		xml.setDescriptions(TestXmlDescriptions.create(false));
     		xml.setType(TestXmlType.create(false));
     		xml.setDataType(TestXmlDataType.create(false));
+    		xml.setTemplate(TestXmlTemplate.create(false));
     		xml.setQueries(TestXmlQueries.create(false));
     		xml.setLayout(TestXmlLayout.create(false));
     	}

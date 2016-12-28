@@ -87,6 +87,12 @@ public class XmlTemplateFactory <L extends UtilsLang,D extends UtilsDescription,
 		return xml;
 	}
 	
+	public static Template build(String code)
+	{
+		Template xml = build();
+		xml.setCode(code);
+		return xml;
+	}
 	public static Template build()
 	{
 		Template xml = new Template();

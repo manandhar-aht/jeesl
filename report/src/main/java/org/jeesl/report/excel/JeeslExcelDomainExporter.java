@@ -100,12 +100,12 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 	
 	private int MIN_WIDTH = 5000;
 	
-	public JeeslExcelDomainExporter(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<CDT> cDataType, final Class<CW> cColumWidth, WORKBOOK ioWorkbook)
+	public JeeslExcelDomainExporter(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<CDT> cDataType, final Class<CW> cColumWidth, WORKBOOK ioWorkbook)
     {
         this.localeCode = localeCode;
         this.ioWorkbook=ioWorkbook;
         
-        ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cDataType,cColumWidth);
+        ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cDataType,cColumWidth);
     }
 	
 	private void init(Workbook wb)

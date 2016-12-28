@@ -49,8 +49,9 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	private final Class<GROUP> cGroup;
 	private final Class<COLUMN> cColumn;
 	private final Class<ROW> cRow;
+	private final Class<TEMPLATE> cTemplate;
 	
-	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow)
+	public JeeslIoReportFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate)
 	{
 		super(em);
 		this.cCategory=cCategory;
@@ -60,6 +61,7 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		this.cGroup=cGroup;
 		this.cColumn=cColumn;
 		this.cRow=cRow;
+		this.cTemplate=cTemplate;
 	}
 	
 	@Override public REPORT load(REPORT report, boolean recursive)
@@ -76,7 +78,6 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 					for(GROUP group : sheet.getGroups()){group.getColumns().size();}
 				}
 			}
-			
 		}
 		return report;
 	}
@@ -105,6 +106,13 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		group = em.find(cGroup, group.getId());
 		group.getColumns().size();
 		return group;
+	}
+	
+	@Override public TEMPLATE load(TEMPLATE template)
+	{
+		template = em.find(cTemplate, template.getId());
+		template.getCells().size();
+		return template;
 	}
 	
 	@Override public void rmSheet(SHEET sheet) throws UtilsConstraintViolationException

@@ -42,6 +42,7 @@ public interface JeeslIoReportFacade <L extends UtilsLang,D extends UtilsDescrip
 	WORKBOOK load(WORKBOOK workbook);
 	SHEET load(SHEET sheet, boolean recursive);
 	GROUP load(GROUP group);
+	TEMPLATE load(TEMPLATE template);
 	
 	void rmSheet(SHEET sheet) throws UtilsConstraintViolationException;
 	void rmGroup(GROUP group) throws UtilsConstraintViolationException;

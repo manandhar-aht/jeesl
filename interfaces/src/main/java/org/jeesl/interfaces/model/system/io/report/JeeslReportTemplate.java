@@ -1,20 +1,17 @@
-package org.jeesl.interfaces.model.system.with;
+package org.jeesl.interfaces.model.system.io.report;
 
-import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
-
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
+import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface EjbWithIoReport<L extends UtilsLang,D extends UtilsDescription,
+public interface JeeslReportTemplate<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -29,10 +26,10 @@ public interface EjbWithIoReport<L extends UtilsLang,D extends UtilsDescription,
 								CW extends UtilsStatus<CW,L,D>,
 								RT extends UtilsStatus<RT,L,D>,
 								ENTITY extends EjbWithId,
-								ATTRIBUTE extends EjbWithId,
-								FILLING extends UtilsStatus<FILLING,L,D>,
-								TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-{
-	REPORT getIoReport();
-	SHEET getIoSheet();
+								ATTRIBUTE extends EjbWithId>
+		extends EjbWithId,EjbSaveable,EjbRemoveable,
+				EjbWithCode,EjbWithPositionVisible,
+				EjbWithLang<L>,EjbWithDescription<D>
+{	
+	
 }

@@ -16,20 +16,23 @@ import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportsFactory;
+import org.jeesl.factory.xml.system.io.report.XmlTemplateFactory;
+import org.jeesl.factory.xml.system.io.report.XmlTemplatesFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestExport;
 import org.jeesl.interfaces.rest.system.io.report.JeeslIoReportRestImport;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportComparator;
+import org.jeesl.util.comparator.ejb.system.io.report.IoReportTemplateComparator;
 import org.jeesl.util.query.xml.ReportQuery;
 import org.jeesl.util.query.xml.StatusQuery;
 import org.slf4j.Logger;
@@ -51,6 +54,8 @@ import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.Row;
 import net.sf.ahtutils.xml.report.Rows;
+import net.sf.ahtutils.xml.report.Template;
+import net.sf.ahtutils.xml.report.Templates;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
@@ -90,6 +95,8 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<GROUP> cGroup;
 	private final Class<COLUMN> cColumn;
 	private final Class<ROW> cRow;
+	private final Class<TEMPLATE> cTemplate;
+	private final Class<CELL> cCell;
 	private final Class<CDT> cDataType;
 	private final Class<CW> cColumWidth;
 	private final Class<RT> cRt;
@@ -98,6 +105,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 
 	private XmlContainerFactory xfContainer;
 	private XmlReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfReport;
+	private XmlTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfTemplate;
 	
 	private EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efReport;
 	private EjbIoReportWorkbookFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efWorkbook;
@@ -107,6 +115,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efRow;
 		
 	private Comparator<REPORT> comparatorReport;
+	private Comparator<TEMPLATE> comparatorTemplate;
 	
 	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell,final Class<CDT> cDataType, final Class<CW> cColumWidth, final Class<RT> cRt, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
 	{
@@ -121,15 +130,18 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cGroup=cGroup;
 		this.cColumn=cColumn;
 		this.cRow=cRow;
+		this.cTemplate=cTemplate;
+		this.cCell=cCell;
 		this.cDataType=cDataType;
 		this.cColumWidth=cColumWidth;
 		this.cRt=cRt;
 		
 		this.cFilling=cFilling;
 		this.cTransformation=cTransformation;
-
+		
 		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfReport = new XmlReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(ReportQuery.get(ReportQuery.Key.exReport));
+		xfTemplate = new XmlTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(ReportQuery.exTemplate());
 		
 		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cDataType,cColumWidth);
 		efReport = ffReport.report();
@@ -140,6 +152,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		efRow = ffReport.row();
 		
 		comparatorReport = new IoReportComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportComparator.Type.position);
+		comparatorTemplate = new IoReportTemplateComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportTemplateComparator.Type.position);
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -171,8 +184,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	@Override public Container exportSystemIoReportRowType() {return xfContainer.build(fReport.allOrderedPosition(cRt));}
 	@Override public Container exportSystemIoReportColumnWidth() {return xfContainer.build(fReport.allOrderedPosition(cColumWidth));}
 
-	@Override
-	public Reports exportSystemIoReports()
+	@Override public Reports exportSystemIoReports()
 	{
 		Reports reports = XmlReportsFactory.build();
 		List<REPORT> list = fReport.all(cReport);
@@ -184,12 +196,50 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		return reports;
 	}
 	
+	@Override public Templates exportSystemIoReportTemplates()
+	{
+		Templates templates = XmlTemplatesFactory.build();
+		List<TEMPLATE> list = fReport.all(cTemplate);
+		Collections.sort(list,comparatorTemplate);
+		for(TEMPLATE template : list)
+		{
+			templates.getTemplate().add(xfTemplate.build(template));
+		}
+		return null;
+	}
+	
 	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
 	@Override public DataUpdate importSystemIoReportSettingFilling(Container types){return importStatus(cFilling,cL,cD,types,null);}
 	@Override public DataUpdate importSystemIoReportSettingTransformation(Container types){return importStatus(cTransformation,cL,cD,types,null);}
 	@Override public DataUpdate importSystemIoReportSettingImplementation(Container types){return importStatus(cImplementation,cL,cD,types,null);}
 	@Override public DataUpdate importSystemIoReportRowType(Container types){return importStatus(cRt,cL,cD,types,null);}
 	@Override public DataUpdate importSystemIoReportColumnWidth(Container types){return importStatus(cColumWidth,cL,cD,types,null);}
+	
+	@Override public DataUpdate importSystemIoReportTemplates(Templates templates)
+	{
+		DataUpdateTracker dut = new DataUpdateTracker(true);
+		dut.setType(XmlTypeFactory.build(cReport.getName(),"DB Import"));
+		
+		JeeslDbCodeEjbUpdater<REPORT> dbUpdaterReport = JeeslDbCodeEjbUpdater.createFactory(cReport);
+		dbUpdaterReport.dbEjbs(fReport);
+		
+		for(Template xTemplate : templates.getTemplate())
+		{
+//			try
+			{
+//				REPORT eReport = importSystemIoReport(xReport);
+//				dbUpdaterReport.handled(eReport);
+				dut.success();
+			}
+//			catch (UtilsNotFoundException e) {dut.fail(e, true);}
+//			catch (UtilsConstraintViolationException e) {dut.fail(e, true);}
+//			catch (UtilsLockingException e) {dut.fail(e, true);}
+//			catch (UtilsProcessingException e) {dut.fail(e, true);}
+		}
+		dbUpdaterReport.remove(fReport);
+		
+		return dut.toDataUpdate();
+	}
 	
 	@Override public DataUpdate importSystemIoReports(Reports reports)
 	{

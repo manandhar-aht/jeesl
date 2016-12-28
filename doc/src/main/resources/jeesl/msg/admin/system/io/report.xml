@@ -56,14 +56,14 @@
 			<lang key="fr" translation="Show Label" />
 		</langs>
 	</translation>
-	<translation key="jeeslIoColumns">
+	<translation key="jeeslIoReportColumns">
 		<langs>
 			<lang key="de" translation="Spalten" />
 			<lang key="en" translation="Columns" />
 			<lang key="fr" translation="Columns" />
 		</langs>
 	</translation>
-	<translation key="jeeslIoColumn">
+	<translation key="jeeslIoReportColumn">
 		<langs>
 			<lang key="de" translation="Spalte" />
 			<lang key="en" translation="Column" />
@@ -145,6 +145,35 @@
 			<lang key="de" translation="Abfrage Fuss" />
 			<lang key="en" translation="Query Footer" />
 			<lang key="fr" translation="Query Footer" />
+		</langs>
+	</translation>
+	
+	<translation key="jeeslIoReportTemplates">
+		<langs>
+			<lang key="de" translation="Vorlagen" />
+			<lang key="en" translation="Templates" />
+			<lang key="fr" translation="Templates" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoReportTemplate">
+		<langs>
+			<lang key="de" translation="Vorlage" />
+			<lang key="en" translation="Template" />
+			<lang key="fr" translation="Template" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoReportCells">
+		<langs>
+			<lang key="de" translation="Zellen" />
+			<lang key="en" translation="Cells" />
+			<lang key="fr" translation="Cells" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoReportCell">
+		<langs>
+			<lang key="de" translation="Zelle" />
+			<lang key="en" translation="Cell" />
+			<lang key="fr" translation="Cell" />
 		</langs>
 	</translation>
 </translations>

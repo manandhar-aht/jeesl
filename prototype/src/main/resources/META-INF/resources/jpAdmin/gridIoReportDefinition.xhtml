@@ -149,7 +149,7 @@
 						<p:dataTable var="column" value="#{cc.attrs.bean.columns}" draggableRows="true"
 							selection="#{cc.attrs.bean.column}" selectionMode="single" rowKey="#{column.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslIoColumns}">
+								<aht:pfDataTableHeader title="#{jeeslIoReportColumns}">
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addColumn()}" update=":#{cc.id}:sColumns :#{cc.id}:sColumn" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
@@ -169,7 +169,7 @@
 				</aht:slot>
 				<aht:slot id="sColumn" width="8">
 					<h:form id="fColumn">
-						<p:panel header="#{msg.jeeslIoColumn}" rendered="#{not empty cc.attrs.bean.column}" styleClass="auPanelWithGrid">
+						<p:panel header="#{jeeslIoReportColumn}" rendered="#{not empty cc.attrs.bean.column}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>

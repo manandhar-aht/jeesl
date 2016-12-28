@@ -81,9 +81,8 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
 	private List<CELL> cells; public List<CELL> getCells() {return cells;}
 	
-	private TEMPLATE template;
-	
-	private CELL cell;
+	private TEMPLATE template; public TEMPLATE getTemplate() {return template;} public void setTemplate(TEMPLATE template) {this.template = template;}
+	private CELL cell; public CELL getCell() {return cell;} public void setCell(CELL cell) {this.cell = cell;}
 
 	private Comparator<TEMPLATE> comparatorTemplate;
 	private Comparator<CELL> comparatorCell;
@@ -95,6 +94,8 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fReport=fReport; 
+		this.cTemplate = cTemplate;
+		this.cCell = cCell;
 		
 		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ff = ReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cDataType,cColumnWidth);
 		efTemplate = ff.template();
@@ -103,7 +104,7 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		comparatorTemplate = new IoReportTemplateComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportTemplateComparator.Type.position);
 		comparatorCell = new IoReportCellComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>().factory(IoReportCellComparator.Type.position);
 
-		reloadReports();
+		reloadTemplates();
 	}
 	
 	private void reset(boolean rTemplate, boolean rCell)
@@ -113,14 +114,14 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	}
 	
 	//*************************************************************************************
-	private void reloadReports()
+	private void reloadTemplates()
 	{
 		templates = fReport.all(cTemplate);
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cTemplate,templates));}
-		Collections.sort(templates,comparatorTemplate);
+//		Collections.sort(templates,comparatorTemplate);
 	}
 	
-	public void addReport()
+	public void addTemplate()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cTemplate));}
 		template = efTemplate.build();
@@ -129,7 +130,7 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		reset(false,true);
 	}
 	
-	private void reloadReport()
+	private void reloadTemplate()
 	{
 		template = fReport.load(template);
 		cells = template.getCells();
@@ -137,23 +138,23 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		Collections.sort(cells, comparatorCell);
 	}
 	
-	public void selectReport() throws UtilsConstraintViolationException, UtilsLockingException
+	public void selectTemplate() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
 		template = fReport.find(cTemplate, template);
 		template = efLang.persistMissingLangs(fReport,langs,template);
 		template = efDescription.persistMissingLangs(fReport,langs,template);
 		
-		reloadReport();
+		reloadTemplate();
 		reset(false,true);
 	}
 	
-	public void saveReport() throws UtilsConstraintViolationException, UtilsLockingException
+	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(template));}
 		template = fReport.save(template);
-		reloadReports();
-		reloadReport();
+		reloadTemplates();
+		reloadTemplate();
 		bMessage.growlSuccessSaved();
 		updatePerformed();
 	}
@@ -167,10 +168,13 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		reloadTemplates();
 		updatePerformed();
 	}
-*/			
+*/		
+	
+	public void cancelTemplate() {reset(true,true);}
+	
 	//*************************************************************************************
 
-	public void addSheet()
+	public void addCell()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cCell));}
 		cell = efCell.build(template);
@@ -179,20 +183,20 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		reset(false,false);
 	}
 	
-	public void selectSheet()
+	public void selectCell()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(cell));}
 		cell = fReport.find(cCell, cell);
 		reset(false,false);
 	}
 		
-	public void saveSheet() throws UtilsLockingException
+	public void saveCell() throws UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(cell));}
 		try
 		{
 			cell = fReport.save(cell);
-			reloadReport();
+			reloadTemplate();
 			
 			bMessage.growlSuccessSaved();
 			updatePerformed();

@@ -8,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 import org.jeesl.model.xml.jeesl.Container;
 
 import net.sf.ahtutils.xml.report.Reports;
+import net.sf.ahtutils.xml.report.Templates;
 
 public interface JeeslIoReportRestExport
 {
@@ -16,6 +17,9 @@ public interface JeeslIoReportRestExport
 	
 	@GET @Path("/system/io/reports") @Produces(MediaType.APPLICATION_XML)
 	Reports exportSystemIoReports();
+	
+	@GET @Path("/system/io/report/templates") @Produces(MediaType.APPLICATION_XML)
+	Templates exportSystemIoReportTemplates();
 	
 	@GET @Path("/system/io/report/setting/filling") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemIoReportSettingFilling();

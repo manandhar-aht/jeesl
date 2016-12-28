@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import org.jeesl.model.xml.jeesl.Container;
 
 import net.sf.ahtutils.xml.report.Reports;
+import net.sf.ahtutils.xml.report.Templates;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public interface JeeslIoReportRestImport
@@ -18,6 +19,9 @@ public interface JeeslIoReportRestImport
 	
 	@POST @Path("/system/io/reports") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoReports(Reports reports);
+	
+	@POST @Path("/system/io/report/templates") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
+	DataUpdate importSystemIoReportTemplates(Templates templates);
 	
 	@POST @Path("/system/io/report/setting/filling") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoReportSettingFilling(Container container);

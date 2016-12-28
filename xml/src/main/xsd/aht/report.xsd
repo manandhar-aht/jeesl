@@ -103,14 +103,14 @@
             <xsd:attribute name="name" type="xsd:string"/>
             <xsd:attribute name="visible" type="xsd:boolean"/>
         </xsd:complexType>
-    </xsd:element>
-    <xsd:element name="templates">
-	    <xsd:complexType>
-	            <xsd:sequence>
-		            <xsd:element ref="r:template" maxOccurs="unbounded"/>
-				</xsd:sequence>
+	</xsd:element>
+	<xsd:element name="templates">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="r:template" maxOccurs="unbounded"/>
+			</xsd:sequence>
 		</xsd:complexType>    
-    </xsd:element>
+	</xsd:element>
      <xsd:element name="template">
         <xsd:complexType>
            <xsd:sequence>
@@ -387,6 +387,8 @@
             </xsd:simpleContent>
         </xsd:complexType>
     </xsd:element>
+    
+	
     
     <xsd:element name="layout">
 		<xsd:complexType>

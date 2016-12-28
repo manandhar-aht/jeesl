@@ -60,7 +60,8 @@ public class EjbIoReportCellFactory<L extends UtilsLang,D extends UtilsDescripti
 			ejb = cCell.newInstance();
 			ejb.setCode(UUID.randomUUID().toString());
 			ejb.setTemplate(template);
-			ejb.setPosition(1);
+			ejb.setRowNr(1);
+			ejb.setColNr(1);
 			ejb.setVisible(false);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

@@ -20,6 +20,7 @@ import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.Layout;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Row;
+import net.sf.ahtutils.xml.report.Template;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
@@ -63,6 +64,24 @@ public class ReportQuery
 		
 		xml.setXlsWorkbook(exportWorkbook());
 		
+		return xml;
+	}
+	
+	public static Template exTemplate()
+	{
+		Template xml = new Template();
+/*		xml.setCode("");
+		xml.setPosition(0);
+		xml.setVisible(true);
+		
+		xml.setLangs(StatusQuery.langs());
+		xml.setDescriptions(StatusQuery.descriptions());
+		
+		xml.setCategory(XmlCategoryFactory.create(""));
+		xml.setImplementation(XmlImplementationFactory.build(""));
+		
+		xml.setXlsWorkbook(exportWorkbook());
+*/		
 		return xml;
 	}
 	

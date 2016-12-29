@@ -34,6 +34,11 @@ public class LoopingPivotAggregator implements JeeslPivotAggregator
     	}
     }
     
+    @Override public void addAll(List<DynamicPivotData> dpds)
+    {
+    	for(DynamicPivotData dpd : dpds){add(dpd);}
+    }
+    
     @Override public void add(DynamicPivotData dpd)
     {
     	for(int i=0;i<dpd.getSize();i++)

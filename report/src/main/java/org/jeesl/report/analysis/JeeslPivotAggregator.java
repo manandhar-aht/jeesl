@@ -12,6 +12,7 @@ public interface JeeslPivotAggregator
     final static Logger logger = LoggerFactory.getLogger(JeeslPivotAggregator.class);
 
     void add(DynamicPivotData dpd);
+    void addAll(List<DynamicPivotData> dpds);
     List<EjbWithId> list(int index);
     Double[] values(int size, EjbWithId... selectors);
 }

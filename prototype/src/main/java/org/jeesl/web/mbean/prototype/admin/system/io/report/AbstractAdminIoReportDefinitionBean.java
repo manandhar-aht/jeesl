@@ -266,17 +266,17 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		bMessage.growlSuccessSaved();
 		updatePerformed();
 	}
-/*	
-	public void rmTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	
+	public void rmReport() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(template));}
-		fTemplate.rm(template);
-		template=null;
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(report));}
+		fReport.rm(report);
+		reset(true,true,true,true,true);
 		bMessage.growlSuccessRemoved();
-		reloadTemplates();
+		reloadReports();
 		updatePerformed();
 	}
-*/	
+	
 	public void cancelReport()
 	{
 		reset(true,true,true,true,true);

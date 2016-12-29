@@ -35,6 +35,9 @@ public interface JeeslReportSheet<L extends UtilsLang,D extends UtilsDescription
 	WORKBOOK getWorkbook();
 	void setWorkbook(WORKBOOK workbook);
 	
+	IMPLEMENTATION getImplementation();
+	void setImplementation(IMPLEMENTATION implementation);
+	
 	String getQueryTable();
 	void setQueryTable(String queryTable);
 	

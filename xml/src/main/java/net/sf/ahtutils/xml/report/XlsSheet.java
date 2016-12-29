@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.status.Descriptions;
+import net.sf.ahtutils.xml.status.Implementation;
 import net.sf.ahtutils.xml.status.Langs;
 
 
@@ -28,6 +29,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}implementation"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsMultiColumn" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsColumns" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsColumn" maxOccurs="unbounded"/&gt;
@@ -59,15 +61,16 @@ public class XlsSheet
 
     private final static long serialVersionUID = 1L;
     @XmlElementRefs({
-        @XmlElementRef(name = "xlsColumns", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumns.class),
-        @XmlElementRef(name = "xlsColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumn.class),
+        @XmlElementRef(name = "descriptions", namespace = "http://ahtutils.aht-group.com/status", type = Descriptions.class),
         @XmlElementRef(name = "columnGroup", namespace = "http://ahtutils.aht-group.com/report", type = ColumnGroup.class),
         @XmlElementRef(name = "importStructure", namespace = "http://ahtutils.aht-group.com/report", type = ImportStructure.class),
+        @XmlElementRef(name = "rows", namespace = "http://ahtutils.aht-group.com/report", type = Rows.class),
+        @XmlElementRef(name = "xlsColumns", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumns.class),
         @XmlElementRef(name = "langs", namespace = "http://ahtutils.aht-group.com/status", type = Langs.class),
-        @XmlElementRef(name = "descriptions", namespace = "http://ahtutils.aht-group.com/status", type = Descriptions.class),
-        @XmlElementRef(name = "queries", namespace = "http://ahtutils.aht-group.com/report", type = Queries.class),
+        @XmlElementRef(name = "implementation", namespace = "http://ahtutils.aht-group.com/status", type = Implementation.class),
         @XmlElementRef(name = "xlsMultiColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsMultiColumn.class),
-        @XmlElementRef(name = "rows", namespace = "http://ahtutils.aht-group.com/report", type = Rows.class)
+        @XmlElementRef(name = "queries", namespace = "http://ahtutils.aht-group.com/report", type = Queries.class),
+        @XmlElementRef(name = "xlsColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumn.class)
     })
     @XmlMixed
     protected List<Serializable> content;
@@ -100,16 +103,17 @@ public class XlsSheet
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link XlsColumns }
-     * {@link XlsColumn }
-     * {@link ColumnGroup }
-     * {@link ImportStructure }
-     * {@link Langs }
      * {@link Descriptions }
+     * {@link ColumnGroup }
      * {@link String }
-     * {@link Queries }
-     * {@link XlsMultiColumn }
+     * {@link ImportStructure }
      * {@link Rows }
+     * {@link XlsColumns }
+     * {@link Langs }
+     * {@link Implementation }
+     * {@link XlsMultiColumn }
+     * {@link Queries }
+     * {@link XlsColumn }
      * 
      * 
      */

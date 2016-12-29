@@ -119,6 +119,7 @@ public class ReportQuery
 		xml.getContent().add(exportColumnGroup());
 		xml.getContent().add(XmlQueriesFactory.build());
 		xml.getContent().add(XmlRowsFactory.build(exportRow()));
+		xml.getContent().add(XmlImplementationFactory.build(""));
 		
 		return xml;
 	}

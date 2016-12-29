@@ -3,6 +3,7 @@ package org.jeesl.factory.xml.system.io.report;
 import java.util.Collections;
 import java.util.Comparator;
 
+import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
@@ -54,6 +55,7 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
+	private XmlImplementationFactory<IMPLEMENTATION,L,D> xfImplementation;
 	private XmlColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfGroup;
 	private XmlRowsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfRows;
 
@@ -64,6 +66,7 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 		try {xfLangs = new XmlLangsFactory<L>(ReportXpath.getLangs(q));} catch (ExlpXpathNotFoundException e) {}
 		try {xfDescriptions = new XmlDescriptionsFactory<D>(ReportXpath.getDescriptions(q));} catch (ExlpXpathNotFoundException e) {}
+		try {xfImplementation = new XmlImplementationFactory<IMPLEMENTATION,L,D>(localeCode,ReportXpath.getImplementation(q));} catch (ExlpXpathNotFoundException e) {}
 		try {xfGroup = new XmlColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,ReportXpath.getColumnGroup(q));}catch (ExlpXpathNotFoundException e) {}
 		try {xfRows = new XmlRowsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,ReportXpath.getRows(q));}catch (ExlpXpathNotFoundException e) {}
 	}
@@ -80,6 +83,14 @@ public class XmlSheetFactory <L extends UtilsLang,D extends UtilsDescription,
 		try {ReportXpath.getDescriptions(q);xml.getContent().add(xfDescriptions.create(sheet.getDescription()));} catch (ExlpXpathNotFoundException e) {}
 		
 		try {ReportXpath.getQueries(q);xml.getContent().add(queries(sheet));}catch (ExlpXpathNotFoundException e) {}
+		try
+		{
+			if(sheet.getImplementation()!=null && ReportXpath.getImplementation(q)!=null)
+			{
+				xml.getContent().add(xfImplementation.build(sheet.getImplementation()));
+			}
+		}
+		catch (ExlpXpathNotFoundException e) {}
 		
 		try
 		{

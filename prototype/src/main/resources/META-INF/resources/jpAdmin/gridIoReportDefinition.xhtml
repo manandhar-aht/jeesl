@@ -83,6 +83,9 @@
 							<p:column headerText="#{msg.aupName}"><h:outputText value="#{sheet.name[userBean.localeCode].lang}"/></p:column>
 							<p:column headerText="#{msg.aupName}">  
 								<aup:iconCheckmark value="#{sheet.visible}"/>
+								<h:graphicImage rendered="#{sheet.implementation.code eq 'tree'}" style="margin-left: 5px;" name="12/ui/system/io/report/implementation/tree.png"  library="jeeslPrototypeGfx"/>
+								<h:graphicImage rendered="#{sheet.implementation.code eq 'flat'}" style="margin-left: 5px;" name="12/ui/system/io/report/implementation/flat.png"  library="jeeslPrototypeGfx"/>
+								<h:graphicImage rendered="#{sheet.implementation.code eq 'domain'}" style="margin-left: 5px;" name="12/ui/system/io/report/implementation/domain.png"  library="jeeslPrototypeGfx"/>
 							</p:column>
 						</p:dataTable>
 					</h:form>
@@ -98,6 +101,10 @@
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.sheet.visible}"/>
 								<p:outputLabel value="#{msg.jeeslIoReportQueryTable}"/>
 								<p:inputText value="#{cc.attrs.bean.sheet.queryTable}"/>
+								<p:outputLabel value="#{msg.jeeslIoReportImplementation}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.sheet.implementation}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.implementations}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
+								</p:selectOneMenu>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.sheet}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />

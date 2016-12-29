@@ -331,6 +331,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(sheet));}
 		try
 		{
+			if(sheet.getImplementation()!=null){sheet.setImplementation(fReport.find(cImplementation, sheet.getImplementation()));}
 			sheet = fReport.save(sheet);
 			reloadReport();
 			reloadSheet();

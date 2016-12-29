@@ -35,6 +35,7 @@ import net.sf.ahtutils.xml.report.XlsDefinition;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
 import net.sf.ahtutils.xml.status.Descriptions;
+import net.sf.ahtutils.xml.status.Implementation;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
@@ -231,6 +232,15 @@ public class ReportXpath
 			if(s instanceof Descriptions){return (Descriptions)s;}
 		}
 		throw new ExlpXpathNotFoundException("No "+Descriptions.class.getSimpleName()+" available");
+	}
+	
+	public static Implementation getImplementation(XlsSheet sheet) throws ExlpXpathNotFoundException
+	{
+		for(Serializable s : sheet.getContent())
+		{
+			if(s instanceof Implementation){return (Implementation)s;}
+		}
+		throw new ExlpXpathNotFoundException("No "+Implementation.class.getSimpleName()+" available");
 	}
 	
 	public static Queries getQueries(XlsSheet q) throws ExlpXpathNotFoundException

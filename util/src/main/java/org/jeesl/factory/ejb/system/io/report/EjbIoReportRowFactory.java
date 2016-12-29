@@ -7,12 +7,12 @@ import java.util.UUID;
 import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
 import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportQueryType;
 import org.slf4j.Logger;
@@ -105,6 +105,15 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 			try{eRow.setQueryCell(ReportXpath.getQuery(JeeslReportQueryType.Row.cell.toString(), xRow.getQueries()).getValue());}
 			catch (ExlpXpathNotFoundException e) {eRow.setQueryCell(null);}
 		}
+		if(xRow.isSetLayout())
+		{
+			if(xRow.getLayout().isSetOffset())
+			{
+				eRow.setOffsetRows(xRow.getLayout().getOffset().getRows());
+				eRow.setOffsetColumns(xRow.getLayout().getOffset().getColumns());
+			}
+		}
+		
 		
 		return eRow;
 	}

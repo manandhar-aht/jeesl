@@ -70,9 +70,13 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	public void value(Row xlsRow, MutableInt columnNr, ROW ioRow, JXPathContext context)
 	{
-		Object value = context.getValue(ioRow.getQueryCell());
-		if(value==null){columnNr.add(1);}
-		else{XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.get(ioRow),value.toString());}
+		try
+		{
+			Object value = context.getValue(ioRow.getQueryCell());
+			if(value==null){columnNr.add(1);}
+			else{XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.get(ioRow),value.toString());}
+		}
+		catch (JXPathNotFoundException e){columnNr.add(1);}
 	}
 	
 	public void build(Sheet xslSheet, MutableInt rowNr, ROW ioRow)

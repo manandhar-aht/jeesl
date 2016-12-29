@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
+import org.jeesl.factory.xls.system.io.report.XlsFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
@@ -18,7 +19,6 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.model.json.JsonFlatFigures;
-import org.jeesl.report.excel.JeeslExcelDomainExporter;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportCellComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportColumnComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportGroupComparator;
@@ -69,7 +69,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected REPORT ioReport; public REPORT getIoReport() {return ioReport;}
 	protected SHEET ioSheet; public SHEET getIoSheet() {return ioSheet;}
 	
-	protected JeeslExcelDomainExporter<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xlsExporterDomain;
+	protected XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xlsFactory;
 	
 	protected JsonFlatFigures flats; public JsonFlatFigures getFlats() {return flats;}
 	
@@ -138,7 +138,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 								}
 							}
 						}
-						xlsExporterDomain = new JeeslExcelDomainExporter<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cDataType,cColumnWidth,ioWorkbook);
+						xlsFactory = new XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cDataType,cColumnWidth,ioWorkbook);
 					}
 				}
 			}

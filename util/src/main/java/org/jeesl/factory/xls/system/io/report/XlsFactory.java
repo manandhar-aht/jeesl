@@ -1,4 +1,4 @@
-package org.jeesl.report.excel;
+package org.jeesl.factory.xls.system.io.report;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,18 +26,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
-import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
-import org.jeesl.factory.xls.system.io.report.XlsCellStyleProvider;
-import org.jeesl.factory.xls.system.io.report.XlsColumnFactory;
-import org.jeesl.factory.xls.system.io.report.XlsRowFactory;
-import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
-import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumnGroup;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportRow;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportRowType;
 import org.slf4j.Logger;
@@ -47,7 +42,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.xml.report.Label;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsMultiColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
@@ -55,7 +49,7 @@ import net.sf.ahtutils.xml.report.XlsTransformation;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 
-public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescription,
+public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 										REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 										IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -74,7 +68,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
 										FILLING extends UtilsStatus<FILLING,L,D>,
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 {
-	private final static Logger logger = LoggerFactory.getLogger(JeeslExcelDomainExporter.class);
+	private final static Logger logger = LoggerFactory.getLogger(XlsFactory.class);
 	
 	private WORKBOOK ioWorkbook;
 	
@@ -97,7 +91,7 @@ public class JeeslExcelDomainExporter <L extends UtilsLang,D extends UtilsDescri
     public Hashtable<String, CellStyle> cellStyles = new Hashtable<String, CellStyle>();
     public Hashtable<String, Integer> errors = new Hashtable<String, Integer>();
 	
-	public JeeslExcelDomainExporter(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<CDT> cDataType, final Class<CW> cColumWidth, WORKBOOK ioWorkbook)
+	public XlsFactory(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<CDT> cDataType, final Class<CW> cColumWidth, WORKBOOK ioWorkbook)
     {
         this.localeCode = localeCode;
         this.ioWorkbook=ioWorkbook;

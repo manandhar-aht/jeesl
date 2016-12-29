@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.jeesl.factory.ejb.system.io.report.EjbIoReportCellFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportTemplateFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
@@ -24,7 +23,6 @@ import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
-import org.jeesl.util.comparator.ejb.system.io.report.IoReportCellComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportTemplateComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -41,7 +39,7 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends UtilsDescription,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 										REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 										IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -73,46 +71,37 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoReportTemplateBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoReportStyleBean.class);
 	
 	protected JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport;
 	
 	private Class<TEMPLATE> cTemplate;
-	private Class<CELL> cCell;
 	
 	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
-	private List<CELL> cells; public List<CELL> getCells() {return cells;}
 	
 	private TEMPLATE template; public TEMPLATE getTemplate() {return template;} public void setTemplate(TEMPLATE template) {this.template = template;}
-	private CELL cell; public CELL getCell() {return cell;} public void setCell(CELL cell) {this.cell = cell;}
 
 	private Comparator<TEMPLATE> comparatorTemplate;
-	private Comparator<CELL> comparatorCell;
 	
 	private EjbIoReportTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efTemplate;
-	private EjbIoReportCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efCell;
-		
+	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<TEMPLATE> cTemplate, Class<CELL> cCell, Class<CDT> cDataType, Class<CW> cColumnWidth, Class<RT> cRowType, Class<RC> cRevisionCategory)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fReport=fReport; 
 		this.cTemplate = cTemplate;
-		this.cCell = cCell;
 		
 		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ff = ReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cDataType,cColumnWidth);
 		efTemplate = ff.template();
-		efCell = ff.cell();
 				
 		comparatorTemplate = new IoReportTemplateComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportTemplateComparator.Type.position);
-		comparatorCell = new IoReportCellComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportCellComparator.Type.position);
 
 		reloadTemplates();
 	}
 	
-	private void reset(boolean rTemplate, boolean rCell)
+	private void reset(boolean rStyle)
 	{
-		if(rTemplate){template=null;}
-		if(rCell){cell=null;}
+		if(rStyle){template=null;}
 	}
 	
 	//*************************************************************************************
@@ -129,15 +118,12 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		template = efTemplate.build();
 		template.setName(efLang.createEmpty(langs));
 		template.setDescription(efDescription.createEmpty(langs));
-		reset(false,true);
+		reset(false);
 	}
 	
 	private void reloadTemplate()
 	{
 		template = fReport.load(template);
-		cells = template.getCells();
-		
-		Collections.sort(cells, comparatorCell);
 	}
 	
 	public void selectTemplate() throws UtilsConstraintViolationException, UtilsLockingException
@@ -148,7 +134,7 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		template = efDescription.persistMissingLangs(fReport,langs,template);
 		
 		reloadTemplate();
-		reset(false,true);
+		reset(false);
 	}
 	
 	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException
@@ -172,42 +158,8 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	}
 */		
 	
-	public void cancelTemplate() {reset(true,true);}
-	
-	//*************************************************************************************
-
-	public void addCell()
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cCell));}
-		cell = efCell.build(template);
-		cell.setName(efLang.createEmpty(langs));
-		cell.setDescription(efDescription.createEmpty(langs));
-		reset(false,false);
-	}
-	
-	public void selectCell()
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(cell));}
-		cell = fReport.find(cCell, cell);
-		reset(false,false);
-	}
-		
-	public void saveCell() throws UtilsLockingException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(cell));}
-		try
-		{
-			cell = fReport.save(cell);
-			reloadTemplate();
-			
-			bMessage.growlSuccessSaved();
-			updatePerformed();
-		}
-		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
-	}
-
-	public void cancelCell() {reset(false,true);}
-    
+	public void cancelTemplate() {reset(true);}
+	 
 	//*************************************************************************************
 	protected void reorderTemplates() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport,templates);Collections.sort(templates,comparatorTemplate);}
 	

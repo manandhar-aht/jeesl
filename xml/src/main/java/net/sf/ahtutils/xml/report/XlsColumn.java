@@ -40,6 +40,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *       &lt;attribute name="example" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="autoWidth" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="width" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="showLabel" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -94,6 +95,8 @@ public class XlsColumn implements Serializable
     protected Boolean autoWidth;
     @XmlAttribute(name = "width")
     protected Integer width;
+    @XmlAttribute(name = "showLabel")
+    protected Boolean showLabel;
 
     /**
      * Gets the value of the langs property.
@@ -561,6 +564,38 @@ public class XlsColumn implements Serializable
 
     public void unsetWidth() {
         this.width = null;
+    }
+
+    /**
+     * Gets the value of the showLabel property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isShowLabel() {
+        return showLabel;
+    }
+
+    /**
+     * Sets the value of the showLabel property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setShowLabel(boolean value) {
+        this.showLabel = value;
+    }
+
+    public boolean isSetShowLabel() {
+        return (this.showLabel!= null);
+    }
+
+    public void unsetShowLabel() {
+        this.showLabel = null;
     }
 
 }

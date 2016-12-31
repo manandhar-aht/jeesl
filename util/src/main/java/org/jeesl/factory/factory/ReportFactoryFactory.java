@@ -9,6 +9,7 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportStyleFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportTemplateFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
 import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
@@ -53,7 +54,9 @@ public class ReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription
 	
 	final Class<L> cL;
 	final Class<D> cD;
+	final Class<CATEGORY> cCategory;
 	final Class<REPORT> cReport;
+	final Class<IMPLEMENTATION> cImplementation;
 	final Class<WORKBOOK> cWorkbook;
 	final Class<SHEET> cSheet;
 	final Class<GROUP> cGroup;
@@ -61,14 +64,17 @@ public class ReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription
 	final Class<ROW> cRow;
 	final Class<TEMPLATE> cTemplate;
 	final Class<CELL> cCell;
+	final Class<STYLE> cStyle;
 	final Class<CDT> cDataType;
 	final Class<CW> cColumnWidth;
     
-	private ReportFactoryFactory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<CDT> cDataType, final Class<CW> cColumnWidth)
+	private ReportFactoryFactory(final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumnWidth)
 	{       
 		this.cL = cL;
         this.cD = cD;
+        this.cCategory = cCategory;
         this.cReport = cReport;
+        this.cImplementation=cImplementation;
         this.cWorkbook = cWorkbook;
         this.cSheet = cSheet;
         this.cGroup = cGroup;
@@ -76,6 +82,7 @@ public class ReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription
         this.cRow = cRow;
         this.cTemplate = cTemplate;
         this.cCell = cCell;
+        this.cStyle=cStyle;
         this.cDataType=cDataType;
         this.cColumnWidth = cColumnWidth;
 	}
@@ -95,14 +102,14 @@ public class ReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription
 					ATTRIBUTE extends EjbWithId,
 					FILLING extends UtilsStatus<FILLING,L,D>,
 					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-	ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> factory(final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<CDT> cDataType, final Class<CW> cColumnWidth)
+	ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> factory(final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory,final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumnWidth)
 	{
-		return new ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cDataType,cColumnWidth);
+		return new ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth);
 	}
 	
 	public EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> report()
 	{
-		return new EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(cL,cD,cReport);
+		return new EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(cL,cD,cCategory,cReport,cImplementation);
 	}
 	
 	public EjbIoReportWorkbookFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> workbook()
@@ -138,6 +145,11 @@ public class ReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription
 	public EjbIoReportCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> cell()
 	{
 		return new EjbIoReportCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(cL,cD,cCell);
+	}
+	
+	public EjbIoReportStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> style()
+	{
+		return new EjbIoReportStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(cL,cD,cStyle);
 	}
 	
 	public XlsColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xlsColumn()

@@ -9,6 +9,7 @@ import org.jeesl.model.xml.jeesl.Container;
 
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.Templates;
+import net.sf.ahtutils.xml.status.Styles;
 
 public interface JeeslIoReportRestExport
 {
@@ -20,6 +21,9 @@ public interface JeeslIoReportRestExport
 	
 	@GET @Path("/system/io/report/templates") @Produces(MediaType.APPLICATION_XML)
 	Templates exportSystemIoReportTemplates();
+	
+	@GET @Path("/system/io/report/styles") @Produces(MediaType.APPLICATION_XML)
+	Styles exportSystemIoReportStyles();
 	
 	@GET @Path("/system/io/report/setting/filling") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemIoReportSettingFilling();

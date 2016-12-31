@@ -126,7 +126,7 @@
 				         <p:column headerText="#{msg.aupName}"><h:outputText value="#{group.name[userBean.localeCode].lang}"/></p:column>
 				         <p:column rendered="true">
 								<aup:iconCheckmark value="#{group.visible}"/>
-								<h:graphicImage rendered="#{group.showLabel}" name="12/ui/system/io/report/label.png"  library="jeeslPrototypeGfx"/>
+								<h:graphicImage rendered="#{group.showLabel}" name="12/ui/system/io/report/label.png"  library="jeeslPrototypeGfx" style="margin-left: 5px;"/>
 				         </p:column>
 				      </p:dataTable>
 					</h:form>
@@ -137,10 +137,10 @@
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveGroup()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.group.id gt 0}" listener="#{cc.attrs.bean.rmGroup()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+							<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60">
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.group.visible}"/>
-								<p:outputLabel value="#{msg.jeeslIoGroupShowLabel}"/>
+								<p:outputLabel value="#{msg.jeeslIoReportShowLabel}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.group.showLabel}"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.group}" withDescription="true"
@@ -161,14 +161,11 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderColumns()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sColumn" listener="#{cc.attrs.bean.selectColumn()}"/>
-				         <p:column rendered="true">  
-							<h:outputText value="#{column.position}"/>
-				         </p:column>
-				         <p:column headerText="#{msg.aupName}">  
-								<h:outputText value="#{column.name[userBean.localeCode].lang}"/>
-				         </p:column>
+				         <p:column rendered="true"><h:outputText value="#{column.position}"/></p:column>
+				         <p:column headerText="#{msg.aupName}"><h:outputText value="#{column.name[userBean.localeCode].lang}"/></p:column>
 				         <p:column>  
 							<aup:iconCheckmark value="#{column.visible}"/>
+							<h:graphicImage rendered="#{column.showLabel}" name="12/ui/system/io/report/label.png"  library="jeeslPrototypeGfx" style="margin-left: 5px;"/>
 				         </p:column>
 				      </p:dataTable>
 					</h:form>
@@ -184,6 +181,9 @@
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.column.visible}"/>
+								
+								<p:outputLabel value="#{msg.jeeslIoReportShowLabel}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.column.showLabel}"/>
 								
 								<p:outputLabel value="#{msg.jeeslIoReportQueryHeader}"/>
 								<p:inputText value="#{cc.attrs.bean.column.queryHeader}"/>

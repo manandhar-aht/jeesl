@@ -11,15 +11,15 @@
 	<p:columnGroup type="header">
 	
 		<p:row rendered="#{report.showGroupings}">
-			<ui:repeat var="g" value="#{report.groups}">
+			<c:forEach var="g" items="#{report.groups}" >
 				<p:column rendered="#{g.showLabel}" colspan="#{report.mapGroupChilds[g]}" headerText="#{g.name[loc].lang}" />
 				<p:column rendered="#{not g.showLabel}" colspan="#{report.mapGroupChilds[g]}" headerText="" />
-			</ui:repeat>
+			</c:forEach>
 		</p:row>
 		<p:row>
-			<ui:repeat var="c" value="#{report.columns}">
-					<p:column colspan="1" headerText="#{c.name[loc].lang}" />
-				</ui:repeat>
+			<c:forEach var="c" items="#{report.columns}">
+				<p:column colspan="1" headerText="#{c.name[loc].lang}" />
+			</c:forEach>
 		</p:row>
 	
 	</p:columnGroup>

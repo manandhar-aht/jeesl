@@ -80,12 +80,12 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
     public Hashtable<String, CellStyle> cellStyles = new Hashtable<String, CellStyle>();
     public Hashtable<String, Integer> errors = new Hashtable<String, Integer>();
 	
-	public XlsFactory(String localeCode, final Class<L> cL,final Class<D> cD,final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<CDT> cDataType, final Class<CW> cColumWidth, WORKBOOK ioWorkbook)
+	public XlsFactory(String localeCode, final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumWidth, WORKBOOK ioWorkbook)
     {
         this.localeCode = localeCode;
         this.ioWorkbook=ioWorkbook;
         
-        ffReport = ReportFactoryFactory.factory(cL,cD,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cDataType,cColumWidth);
+        ffReport = ReportFactoryFactory.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumWidth);
     }
 	
 	private void init(Workbook wb)

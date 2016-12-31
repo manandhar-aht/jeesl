@@ -1,8 +1,9 @@
 package org.jeesl.factory.ejb.system.io.report;
 
+import java.util.UUID;
+
 import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
 import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
-import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -15,17 +16,12 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
-import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.xml.report.Report;
 
-public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
+public class EjbIoReportStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -36,8 +32,7 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 								ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								TEMPLATE extends JeeslReportTemplate<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
-								STYLE extends JeeslReportStyle<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
-								CDT extends UtilsStatus<CDT,L,D>,
+								STYLE extends JeeslReportStyle<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,CDT extends UtilsStatus<CDT,L,D>,
 								CW extends UtilsStatus<CW,L,D>,
 								RT extends UtilsStatus<RT,L,D>,
 								ENTITY extends EjbWithId,
@@ -45,33 +40,28 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 								FILLING extends UtilsStatus<FILLING,L,D>,
 								TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbIoReportFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbIoReportStyleFactory.class);
 	
-	final Class<CATEGORY> cCategory;
-	final Class<REPORT> cReport;
-	final Class<IMPLEMENTATION> cImplementation;
+	final Class<STYLE> cStyle;
 	
-	
-	private JeeslDbLangUpdater<REPORT,L> dbuReportLang;
-	private JeeslDbDescriptionUpdater<REPORT,D> dbuReportDescription;
+	private JeeslDbLangUpdater<STYLE,L> dbuLang;
+	private JeeslDbDescriptionUpdater<STYLE,D> dbuDescription;
     
-	public EjbIoReportFactory(final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation)
-	{
-		this.cCategory = cCategory;
-        this.cReport = cReport;
-        this.cImplementation=cImplementation;
+	public EjbIoReportStyleFactory(final Class<L> cL,final Class<D> cD,final Class<STYLE> cStyle)
+	{       
+        this.cStyle = cStyle;
         
-		dbuReportLang = JeeslDbLangUpdater.factory(cReport, cL);
-		dbuReportDescription = JeeslDbDescriptionUpdater.factory(cReport, cD);
+        dbuLang = JeeslDbLangUpdater.factory(cStyle,cL);
+        dbuDescription = JeeslDbDescriptionUpdater.factory(cStyle,cD);
 	}
 	    
-	public REPORT build(CATEGORY category)
+	public STYLE build()
 	{
-		REPORT ejb = null;
+		STYLE ejb = null;
 		try
 		{
-			ejb = cReport.newInstance();
-			ejb.setCategory(category);
+			ejb = cStyle.newInstance();
+			ejb.setCode(UUID.randomUUID().toString());
 			ejb.setPosition(1);
 			ejb.setVisible(true);
 		}
@@ -80,15 +70,15 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 		
 		return ejb;
 	}
-	
-	public REPORT build(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, Report xReport) throws UtilsNotFoundException
+/*	
+	public TEMPLATE build(Template xTemplate)
 	{
-		REPORT ejb = null;
+		TEMPLATE ejb = null;
 		try
 		{
-			ejb = cReport.newInstance();
-			ejb.setCode(xReport.getCode());
-			ejb = update(fReport,ejb,xReport);
+			ejb = cTemplate.newInstance();
+			ejb.setCode(xTemplate.getCode());
+			ejb = update(ejb,xTemplate);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
@@ -96,26 +86,22 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 		return ejb;
 	}
 	
-	public REPORT update (JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, REPORT eReport, Report xReport) throws UtilsNotFoundException
+	public TEMPLATE update (TEMPLATE eTemplate, Template xTemplate)
 	{
-		CATEGORY eCategory = fReport.fByCode(cCategory, xReport.getCategory().getCode());
-		IMPLEMENTATION eImplementation = fReport.fByCode(cImplementation, xReport.getImplementation().getCode());
-		
-		eReport.setCategory(eCategory);
-		eReport.setImplementation(eImplementation);
-		eReport.setPosition(xReport.getPosition());
-		eReport.setVisible(xReport.isVisible());
-		return eReport;
+		eTemplate.setPosition(xTemplate.getPosition());
+		eTemplate.setVisible(xTemplate.isVisible());
+		return eTemplate;
 	}
 	
-	public REPORT updateLD(UtilsFacade fUtils, REPORT eReport, Report xReport) throws UtilsConstraintViolationException, UtilsLockingException
+	public TEMPLATE updateLD(UtilsFacade fUtils, TEMPLATE eTemplate, Template xTemplate) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		eReport=dbuReportLang.handle(fUtils, eReport, xReport.getLangs());
-		eReport = fUtils.save(eReport);
+		eTemplate=dbuReportLang.handle(fUtils, eTemplate, xTemplate.getLangs());
+		eTemplate = fUtils.save(eTemplate);
 		
-		eReport=dbuReportDescription.handle(fUtils, eReport, xReport.getDescriptions());
-		eReport = fUtils.save(eReport);
+		eTemplate=dbuReportDescription.handle(fUtils, eTemplate, xTemplate.getDescriptions());
+		eTemplate = fUtils.save(eTemplate);
 		
-		return eReport;
+		return eTemplate;
 	}
+*/
 }

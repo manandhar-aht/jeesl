@@ -49,7 +49,7 @@
 			<lang key="fr" translation="Group" />
 		</langs>
 	</translation>
-	<translation key="jeeslIoGroupShowLabel">
+	<translation key="jeeslIoReportShowLabel">
 		<langs>
 			<lang key="de" translation="Text Anzeigen" />
 			<lang key="en" translation="Show Label" />

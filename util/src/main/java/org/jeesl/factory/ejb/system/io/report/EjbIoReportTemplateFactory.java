@@ -48,15 +48,15 @@ public class EjbIoReportTemplateFactory<L extends UtilsLang,D extends UtilsDescr
 	
 	final Class<TEMPLATE> cTemplate;
 	
-	private JeeslDbLangUpdater<TEMPLATE,L> dbuReportLang;
-	private JeeslDbDescriptionUpdater<TEMPLATE,D> dbuReportDescription;
+	private JeeslDbLangUpdater<TEMPLATE,L> dbuLang;
+	private JeeslDbDescriptionUpdater<TEMPLATE,D> dbuDescription;
     
 	public EjbIoReportTemplateFactory(final Class<L> cL,final Class<D> cD,final Class<TEMPLATE> cTemplate)
 	{       
         this.cTemplate = cTemplate;
         
-		dbuReportLang = JeeslDbLangUpdater.factory(cTemplate,cL);
-		dbuReportDescription = JeeslDbDescriptionUpdater.factory(cTemplate,cD);
+		dbuLang = JeeslDbLangUpdater.factory(cTemplate,cL);
+		dbuDescription = JeeslDbDescriptionUpdater.factory(cTemplate,cD);
 	}
 	    
 	public TEMPLATE build()
@@ -99,10 +99,10 @@ public class EjbIoReportTemplateFactory<L extends UtilsLang,D extends UtilsDescr
 	
 	public TEMPLATE updateLD(UtilsFacade fUtils, TEMPLATE eTemplate, Template xTemplate) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		eTemplate=dbuReportLang.handle(fUtils, eTemplate, xTemplate.getLangs());
+		eTemplate=dbuLang.handle(fUtils, eTemplate, xTemplate.getLangs());
 		eTemplate = fUtils.save(eTemplate);
 		
-		eTemplate=dbuReportDescription.handle(fUtils, eTemplate, xTemplate.getDescriptions());
+		eTemplate=dbuDescription.handle(fUtils, eTemplate, xTemplate.getDescriptions());
 		eTemplate = fUtils.save(eTemplate);
 		
 		return eTemplate;

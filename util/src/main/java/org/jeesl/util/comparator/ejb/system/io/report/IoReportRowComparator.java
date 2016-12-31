@@ -35,9 +35,7 @@ public class IoReportRowComparator<L extends UtilsLang,D extends UtilsDescriptio
 								CW extends UtilsStatus<CW,L,D>,
 								RT extends UtilsStatus<RT,L,D>,
 								ENTITY extends EjbWithId,
-								ATTRIBUTE extends EjbWithId,
-								FILLING extends UtilsStatus<FILLING,L,D>,
-								TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
+								ATTRIBUTE extends EjbWithId>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoReportRowComparator.class);
 
@@ -46,7 +44,7 @@ public class IoReportRowComparator<L extends UtilsLang,D extends UtilsDescriptio
     public Comparator<ROW> factory(Type type)
     {
         Comparator<ROW> c = null;
-        IoReportRowComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> factory = new IoReportRowComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>();
+        IoReportRowComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> factory = new IoReportRowComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;

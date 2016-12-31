@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.jeesl.factory.ejb.system.io.report.EjbIoReportTemplateFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportStyleFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
@@ -23,7 +23,7 @@ import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
-import org.jeesl.util.comparator.ejb.system.io.report.IoReportTemplateComparator;
+import org.jeesl.util.comparator.ejb.system.io.report.IoReportStyleComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,74 +75,74 @@ public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends Utils
 	
 	protected JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport;
 	
-	private Class<TEMPLATE> cTemplate;
+	private Class<STYLE> cStyle;
 	
-	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
+	private List<STYLE> styles; public List<STYLE> getStyles() {return styles;}
 	
-	private TEMPLATE template; public TEMPLATE getTemplate() {return template;} public void setTemplate(TEMPLATE template) {this.template = template;}
+	private STYLE style; public STYLE getStyle() {return style;} public void setStyle(STYLE style) {this.style = style;}
 
-	private Comparator<TEMPLATE> comparatorTemplate;
+	private Comparator<STYLE> comparatorStyle;
 	
-	private EjbIoReportTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efTemplate;
+	private EjbIoReportStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efStyle;
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<TEMPLATE> cTemplate, Class<CELL> cCell, Class<CDT> cDataType, Class<CW> cColumnWidth, Class<RT> cRowType, Class<RC> cRevisionCategory)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<TEMPLATE> cTemplate, Class<CELL> cCell, Class<STYLE> cStyle, Class<CDT> cDataType, Class<CW> cColumnWidth, Class<RT> cRowType, Class<RC> cRevisionCategory)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fReport=fReport; 
-		this.cTemplate = cTemplate;
+		this.cStyle = cStyle;
 		
-		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ff = ReportFactoryFactory.factory(cLang,cDescription,cReport,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cDataType,cColumnWidth);
-		efTemplate = ff.template();
+		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ff = ReportFactoryFactory.factory(cLang,cDescription,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth);
+		efStyle = ff.style();
 				
-		comparatorTemplate = new IoReportTemplateComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportTemplateComparator.Type.position);
+		comparatorStyle = new IoReportStyleComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportStyleComparator.Type.position);
 
-		reloadTemplates();
+		reloadStyles();
 	}
 	
 	private void reset(boolean rStyle)
 	{
-		if(rStyle){template=null;}
+		if(rStyle){style=null;}
 	}
 	
 	//*************************************************************************************
-	private void reloadTemplates()
+	private void reloadStyles()
 	{
-		templates = fReport.all(cTemplate);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cTemplate,templates));}
+		styles = fReport.all(cStyle);
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cStyle,styles));}
 //		Collections.sort(templates,comparatorTemplate);
 	}
 	
-	public void addTemplate()
+	public void addStyle()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cTemplate));}
-		template = efTemplate.build();
-		template.setName(efLang.createEmpty(langs));
-		template.setDescription(efDescription.createEmpty(langs));
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cStyle));}
+		style = efStyle.build();
+		style.setName(efLang.createEmpty(langs));
+		style.setDescription(efDescription.createEmpty(langs));
 		reset(false);
 	}
 	
-	private void reloadTemplate()
+	private void reloadStyle()
 	{
-		template = fReport.load(template);
+		style = fReport.find(cStyle,style);
 	}
 	
-	public void selectTemplate() throws UtilsConstraintViolationException, UtilsLockingException
+	public void selectStyle() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
-		template = fReport.find(cTemplate, template);
-		template = efLang.persistMissingLangs(fReport,langs,template);
-		template = efDescription.persistMissingLangs(fReport,langs,template);
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(style));}
+		style = fReport.find(cStyle, style);
+		style = efLang.persistMissingLangs(fReport,langs,style);
+		style = efDescription.persistMissingLangs(fReport,langs,style);
 		
-		reloadTemplate();
+		reloadStyle();
 		reset(false);
 	}
 	
-	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException
+	public void saveStyle() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(template));}
-		template = fReport.save(template);
-		reloadTemplates();
-		reloadTemplate();
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(style));}
+		style = fReport.save(style);
+		reloadStyles();
+		reloadStyle();
 		bMessage.growlSuccessSaved();
 		updatePerformed();
 	}
@@ -158,10 +158,10 @@ public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends Utils
 	}
 */		
 	
-	public void cancelTemplate() {reset(true);}
+	public void cancelStyles() {reset(true);}
 	 
 	//*************************************************************************************
-	protected void reorderTemplates() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport,templates);Collections.sort(templates,comparatorTemplate);}
+	protected void reorderStyles() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport,styles);Collections.sort(styles,comparatorStyle);}
 	
 	protected void updatePerformed(){}	
 	

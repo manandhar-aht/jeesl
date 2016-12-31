@@ -33,6 +33,9 @@ public interface JeeslReportColumn<L extends UtilsLang,D extends UtilsDescriptio
 	GROUP getGroup();
 	void setGroup(GROUP group);
 	
+	Boolean getShowLabel();
+	void setShowLabel(Boolean showLabel);
+	
 	CDT getDataType();
 	void setDataType(CDT dataType);
 	

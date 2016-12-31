@@ -20,7 +20,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class IoReportColumnComparator<L extends UtilsLang,D extends UtilsDescription,
+public class IoReportStyleComparator<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -37,14 +37,14 @@ public class IoReportColumnComparator<L extends UtilsLang,D extends UtilsDescrip
 								ENTITY extends EjbWithId,
 								ATTRIBUTE extends EjbWithId>
 {
-	final static Logger logger = LoggerFactory.getLogger(IoReportColumnComparator.class);
+	final static Logger logger = LoggerFactory.getLogger(IoReportStyleComparator.class);
 
     public enum Type {position};
     
-    public Comparator<COLUMN> factory(Type type)
+    public Comparator<STYLE> factory(Type type)
     {
-        Comparator<COLUMN> c = null;
-        IoReportColumnComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> factory = new IoReportColumnComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>();
+        Comparator<STYLE> c = null;
+        IoReportStyleComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> factory = new IoReportStyleComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;
@@ -53,15 +53,11 @@ public class IoReportColumnComparator<L extends UtilsLang,D extends UtilsDescrip
         return c;
     }
 
-    private class PositionCodeComparator implements Comparator<COLUMN>
+    private class PositionCodeComparator implements Comparator<STYLE>
     {
-        public int compare(COLUMN a, COLUMN b)
+        public int compare(STYLE a, STYLE b)
         {
 			  CompareToBuilder ctb = new CompareToBuilder();
-			  ctb.append(a.getGroup().getSheet().getWorkbook().getReport().getCategory().getPosition(), b.getGroup().getSheet().getWorkbook().getReport().getCategory().getPosition());
-			  ctb.append(a.getGroup().getSheet().getWorkbook().getReport().getPosition(), b.getGroup().getSheet().getWorkbook().getReport().getPosition());
-			  ctb.append(a.getGroup().getSheet().getPosition(), b.getGroup().getSheet().getPosition());
-			  ctb.append(a.getGroup().getPosition(), b.getGroup().getPosition());
 			  ctb.append(a.getPosition(), b.getPosition());
 			  return ctb.toComparison();
         }

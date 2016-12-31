@@ -33,4 +33,62 @@ public interface JeeslReportStyle<L extends UtilsLang,D extends UtilsDescription
 {	
 	String getColorBackground();
 	void setColorBackground(String colorBackground);
+	
+	
+	String getFont();
+	void setFont(String font);
+	
+	boolean isFontBold();
+	void setFontBold(boolean fontBold);
+	
+	boolean isFontItalic();
+	void setFontItalic(boolean fontItalic);
+	
+	int getSizeFont();
+	void setSizeFont(int sizeFont);
+	
+	String getColorFont();
+	void setColorFont(String colorFont);
+	
+
+	
+		
+	boolean isBorderTop();
+	void setBorderTop(boolean borderTop);
+	
+	boolean isBorderLeft();
+	void setBorderLeft(boolean borderLeft);
+	
+	boolean isBorderRight();
+	void setBorderRight(boolean borderRight);
+	
+	boolean isBorderBottom();
+	void setBorderBottom(boolean borderBottom);
+	
+	
+	String getColorBorderTop();
+	void setColorBorderTop(String colorBorderTop);
+	
+	String getColorBorderLeft();
+	void setColorBorderLeft(String colorBorderLeft);
+	
+	String getColorBorderRight();
+	void setColorBorderRight(String colorBorderRight);
+	
+	String getColorBorderBottom();
+	void setColorBorderBottom(String colorBorderBottom);
+	
+	
+	int getSizeBorderTop();
+	void setSizeBorderTop(int sizeBorderTop);
+	
+	int getSizeBorderLeft();
+	void setSizeBorderLeft(int sizeBorderLeft);
+	
+	int getSizeBorderRight();
+	void setSizeBorderRight(int sizeBorderRight);
+	
+	int getSizeBorderBottom();
+	void setSizeBorderBottom(int sizeBorderBottom);
+	
 }

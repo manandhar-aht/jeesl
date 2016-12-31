@@ -171,6 +171,7 @@ public class ReportQuery
 		xml.setCode("");
 		xml.setPosition(0);
 		xml.setVisible(true);
+		xml.setShowLabel(true);
 		
 		xml.setDataType(XmlDataTypeFactory.build(""));
 		xml.setQueries(XmlQueriesFactory.build());

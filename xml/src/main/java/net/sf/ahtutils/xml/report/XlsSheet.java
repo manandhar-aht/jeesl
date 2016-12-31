@@ -61,15 +61,15 @@ public class XlsSheet
 
     private final static long serialVersionUID = 1L;
     @XmlElementRefs({
-        @XmlElementRef(name = "xlsMultiColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsMultiColumn.class),
         @XmlElementRef(name = "implementation", namespace = "http://ahtutils.aht-group.com/status", type = Implementation.class),
-        @XmlElementRef(name = "importStructure", namespace = "http://ahtutils.aht-group.com/report", type = ImportStructure.class),
-        @XmlElementRef(name = "langs", namespace = "http://ahtutils.aht-group.com/status", type = Langs.class),
         @XmlElementRef(name = "rows", namespace = "http://ahtutils.aht-group.com/report", type = Rows.class),
-        @XmlElementRef(name = "descriptions", namespace = "http://ahtutils.aht-group.com/status", type = Descriptions.class),
-        @XmlElementRef(name = "queries", namespace = "http://ahtutils.aht-group.com/report", type = Queries.class),
-        @XmlElementRef(name = "columnGroup", namespace = "http://ahtutils.aht-group.com/report", type = ColumnGroup.class),
         @XmlElementRef(name = "xlsColumns", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumns.class),
+        @XmlElementRef(name = "queries", namespace = "http://ahtutils.aht-group.com/report", type = Queries.class),
+        @XmlElementRef(name = "importStructure", namespace = "http://ahtutils.aht-group.com/report", type = ImportStructure.class),
+        @XmlElementRef(name = "descriptions", namespace = "http://ahtutils.aht-group.com/status", type = Descriptions.class),
+        @XmlElementRef(name = "columnGroup", namespace = "http://ahtutils.aht-group.com/report", type = ColumnGroup.class),
+        @XmlElementRef(name = "langs", namespace = "http://ahtutils.aht-group.com/status", type = Langs.class),
+        @XmlElementRef(name = "xlsMultiColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsMultiColumn.class),
         @XmlElementRef(name = "xlsColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumn.class)
     })
     @XmlMixed
@@ -103,16 +103,16 @@ public class XlsSheet
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link XlsMultiColumn }
      * {@link Implementation }
-     * {@link ImportStructure }
-     * {@link Langs }
      * {@link Rows }
-     * {@link Descriptions }
-     * {@link Queries }
-     * {@link ColumnGroup }
      * {@link String }
      * {@link XlsColumns }
+     * {@link Queries }
+     * {@link ImportStructure }
+     * {@link Descriptions }
+     * {@link ColumnGroup }
+     * {@link Langs }
+     * {@link XlsMultiColumn }
      * {@link XlsColumn }
      * 
      * 

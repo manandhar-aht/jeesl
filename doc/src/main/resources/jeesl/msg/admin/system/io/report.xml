@@ -176,4 +176,27 @@
 			<lang key="fr" translation="Cell" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoReportStyleColorBackground">
+		<langs>
+			<lang key="de" translation="Hintergrundfarbe" />
+			<lang key="en" translation="Color Background" />
+			<lang key="fr" translation="Color Background" />
+		</langs>
+	</translation>
+	
+	<translation key="jeeslIoReportStyles">
+		<langs>
+			<lang key="de" translation="Stile" />
+			<lang key="en" translation="Styles" />
+			<lang key="fr" translation="Styles" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoReportStyle">
+		<langs>
+			<lang key="de" translation="Stil" />
+			<lang key="en" translation="Style" />
+			<lang key="fr" translation="Style" />
+		</langs>
+	</translation>
+	
 </translations>

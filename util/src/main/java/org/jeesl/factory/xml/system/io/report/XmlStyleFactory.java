@@ -1,5 +1,6 @@
 package org.jeesl.factory.xml.system.io.report;
 
+import org.jeesl.factory.xml.system.symbol.XmlColorFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -18,7 +19,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.xml.status.Style;
+import net.sf.ahtutils.xml.report.Layout;
+import net.sf.ahtutils.xml.report.Style;
 
 public class XmlStyleFactory <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -63,7 +65,18 @@ public class XmlStyleFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(style.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(style.getDescription()));}
-								
+		
+		if(q.isSetLayout()){xml.setLayout(layout(style));}
+		
+		return xml;
+	}
+	
+	private Layout layout(STYLE style)
+	{
+		Layout xml = XmlLayoutFactory.build();
+		
+		xml.getColor().add(XmlColorFactory.build("background", style.getColorBackground()));
+		
 		return xml;
 	}
 	

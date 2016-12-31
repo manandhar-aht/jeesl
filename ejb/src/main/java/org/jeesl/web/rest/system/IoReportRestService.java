@@ -61,13 +61,13 @@ import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.Row;
 import net.sf.ahtutils.xml.report.Rows;
+import net.sf.ahtutils.xml.report.Styles;
 import net.sf.ahtutils.xml.report.Template;
 import net.sf.ahtutils.xml.report.Templates;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
 import net.sf.ahtutils.xml.status.Status;
-import net.sf.ahtutils.xml.status.Styles;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 
@@ -157,7 +157,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfReport = new XmlReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(ReportQuery.get(ReportQuery.Key.exReport));
 		xfTemplate = new XmlTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(ReportQuery.exTemplate());
-//		xfStyle
+		xfStyle = new XmlStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(ReportQuery.exStyle());
 		
 		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumWidth);
 		efReport = ffReport.report();

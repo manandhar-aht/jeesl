@@ -81,6 +81,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 			ejb.setGroup(group);
 			ejb.setPosition(1);
 			ejb.setVisible(false);
+			ejb.setShowLabel(true);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

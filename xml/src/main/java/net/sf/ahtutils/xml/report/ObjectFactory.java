@@ -278,6 +278,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Styles }
+     * 
+     */
+    public Styles createStyles() {
+        return new Styles();
+    }
+
+    /**
+     * Create an instance of {@link Style }
+     * 
+     */
+    public Style createStyle() {
+        return new Style();
+    }
+
+    /**
      * Create an instance of {@link Info.Title }
      * 
      */

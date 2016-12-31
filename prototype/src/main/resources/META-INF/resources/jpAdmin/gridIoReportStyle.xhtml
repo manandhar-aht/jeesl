@@ -22,7 +22,7 @@
 				<aht:slot id="sStyles" width="5">
 					<h:form id="fStyles">
 						<p:dataTable var="s" value="#{cc.attrs.bean.styles}" draggableRows="true"
-							selection="#{cc.attrs.bean.style}" selectionMode="single" rowKey="#{t.id}">
+							selection="#{cc.attrs.bean.style}" selectionMode="single" rowKey="#{s.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoReportStyles}">
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addStyle()}" update=":#{cc.id}:sStyle" tooltip="#{msg.ttNew}"/>
@@ -50,9 +50,23 @@
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.style}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
-							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 								<p:outputLabel value="#{msg.jeeslIoReportStyleColorBackground}"/>
 								<p:colorPicker value="#{cc.attrs.bean.style.colorBackground}"/>
+							</p:panelGrid>		
+									
+							<p:panelGrid columns="3" columnClasses="auPwg30,auPwg40,auPwg30">
+								<h:outputText value=""/>
+								<h:outputText value=""/>
+								<h:outputText value=""/>
+								
+								<h:outputText value=""/>
+								<h:outputText value=""/>
+								<h:outputText value=""/>
+								
+								<h:outputText value=""/>
+								<h:outputText value=""/>
+								<h:outputText value=""/>
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

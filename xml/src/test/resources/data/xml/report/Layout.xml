@@ -3,4 +3,6 @@
     <r:offset rows="2" columns="3"/>
     <r:size code="myCode"/>
     <r:size code="myCode"/>
+    <symbol:color group="myGroup">myValue</symbol:color>
+    <symbol:color group="myGroup">myValue</symbol:color>
 </r:layout>

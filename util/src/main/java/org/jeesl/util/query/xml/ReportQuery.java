@@ -22,6 +22,7 @@ import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.Layout;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Row;
+import net.sf.ahtutils.xml.report.Style;
 import net.sf.ahtutils.xml.report.Template;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
@@ -80,6 +81,21 @@ public class ReportQuery
 		xml.setDescriptions(StatusQuery.descriptions());
 		
 		xml.getCell().add(exCell());
+		
+		return xml;
+	}
+	
+	public static Style exStyle()
+	{
+		Style xml = new Style();
+		xml.setCode("");
+		xml.setPosition(0);
+		xml.setVisible(true);
+		
+		xml.setLangs(StatusQuery.langs());
+		xml.setDescriptions(StatusQuery.descriptions());
+		
+		xml.setLayout(XmlLayoutFactory.build());
 		
 		return xml;
 	}

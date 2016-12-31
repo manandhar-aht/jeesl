@@ -1,6 +1,7 @@
 package org.jeesl.model.xml.system.io.report;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.symbol.TestXmlColor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ public class TestXmlLayout extends AbstractXmlReportTest<Layout>
     	{
     		xml.setOffset(TestXmlOffset.create(false));
     		xml.getSize().add(TestXmlSize.create(false));xml.getSize().add(TestXmlSize.create(false));
+    		xml.getColor().add(TestXmlColor.create(false));xml.getColor().add(TestXmlColor.create(false));
     	}
     	
     	return xml;

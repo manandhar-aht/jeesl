@@ -2,9 +2,11 @@
 <xsd:schema targetNamespace="http://ahtutils.aht-group.com/report"
 	xmlns:r="http://ahtutils.aht-group.com/report"
 	xmlns:us="http://ahtutils.aht-group.com/status"
+	xmlns:sym="http://www.jeesl.org/symbol"
 	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="status.xsd"/>
+	<xsd:import namespace="http://www.jeesl.org/symbol" schemaLocation="../jeesl/symbol.xsd"/>
 	<xsd:element name="reports">
 	    <xsd:complexType>
             <xsd:sequence>
@@ -127,6 +129,28 @@
 			<xsd:attribute name="visible" type="xsd:boolean"/>
 		</xsd:complexType>
 	</xsd:element>
+	
+	<xsd:element name="styles">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="r:style" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>    
+	</xsd:element>
+	<xsd:element name="style">
+		<xsd:complexType>
+			<xsd:sequence>
+           		<xsd:element ref="us:langs" maxOccurs="1"/>
+				<xsd:element ref="us:descriptions" maxOccurs="1"/>
+				<xsd:element ref="r:layout" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="id" type="xsd:long"/>
+			<xsd:attribute name="code" type="xsd:string"/>
+			<xsd:attribute name="position" type="xsd:int"/>
+			<xsd:attribute name="visible" type="xsd:boolean"/>
+		</xsd:complexType>
+	</xsd:element>
+	
 	<xsd:element name="cell">
 		<xsd:complexType>
 			<xsd:sequence>
@@ -410,14 +434,13 @@
             </xsd:simpleContent>
         </xsd:complexType>
     </xsd:element>
-    
-	
-    
+   
     <xsd:element name="layout">
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref="r:offset" maxOccurs="1"/>
 				<xsd:element ref="r:size" maxOccurs="unbounded"/>
+				<xsd:element ref="sym:color" maxOccurs="unbounded"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>

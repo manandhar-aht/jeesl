@@ -3,7 +3,7 @@ package org.jeesl.factory.xml.system.io.report;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.status.Styles;
+import net.sf.ahtutils.xml.report.Styles;
 
 public class XmlStylesFactory
 {

@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import net.sf.ahtutils.xml.symbol.Color;
 
 
 /**
@@ -23,6 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}offset"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}size" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/symbol}color" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -34,7 +36,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "offset",
-    "size"
+    "size",
+    "color"
 })
 @XmlRootElement(name = "layout")
 public class Layout
@@ -46,6 +49,8 @@ public class Layout
     protected Offset offset;
     @XmlElement(required = true)
     protected List<Size> size;
+    @XmlElement(namespace = "http://www.jeesl.org/symbol", required = true)
+    protected List<Color> color;
 
     /**
      * Gets the value of the offset property.
@@ -110,6 +115,43 @@ public class Layout
 
     public void unsetSize() {
         this.size = null;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the color property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getColor().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Color }
+     * 
+     * 
+     */
+    public List<Color> getColor() {
+        if (color == null) {
+            color = new ArrayList<Color>();
+        }
+        return this.color;
+    }
+
+    public boolean isSetColor() {
+        return ((this.color!= null)&&(!this.color.isEmpty()));
+    }
+
+    public void unsetColor() {
+        this.color = null;
     }
 
 }

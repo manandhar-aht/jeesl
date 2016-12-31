@@ -16,10 +16,14 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.report.Style;
 
 public class EjbIoReportStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -70,15 +74,15 @@ public class EjbIoReportStyleFactory<L extends UtilsLang,D extends UtilsDescript
 		
 		return ejb;
 	}
-/*	
-	public TEMPLATE build(Template xTemplate)
+	
+	public STYLE build(Style xStyle)
 	{
-		TEMPLATE ejb = null;
+		STYLE ejb = null;
 		try
 		{
-			ejb = cTemplate.newInstance();
-			ejb.setCode(xTemplate.getCode());
-			ejb = update(ejb,xTemplate);
+			ejb = cStyle.newInstance();
+			ejb.setCode(xStyle.getCode());
+			ejb = update(ejb,xStyle);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
@@ -86,22 +90,24 @@ public class EjbIoReportStyleFactory<L extends UtilsLang,D extends UtilsDescript
 		return ejb;
 	}
 	
-	public TEMPLATE update (TEMPLATE eTemplate, Template xTemplate)
+	public STYLE update (STYLE eStyle, Style xStyle)
 	{
-		eTemplate.setPosition(xTemplate.getPosition());
-		eTemplate.setVisible(xTemplate.isVisible());
-		return eTemplate;
+		eStyle.setPosition(xStyle.getPosition());
+		eStyle.setVisible(xStyle.isVisible());
+		
+	
+		
+		return eStyle;
 	}
 	
-	public TEMPLATE updateLD(UtilsFacade fUtils, TEMPLATE eTemplate, Template xTemplate) throws UtilsConstraintViolationException, UtilsLockingException
+	public STYLE updateLD(UtilsFacade fUtils, STYLE eStyle, Style xStyle) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		eTemplate=dbuReportLang.handle(fUtils, eTemplate, xTemplate.getLangs());
-		eTemplate = fUtils.save(eTemplate);
+		eStyle=dbuLang.handle(fUtils, eStyle, xStyle.getLangs());
+		eStyle = fUtils.save(eStyle);
 		
-		eTemplate=dbuReportDescription.handle(fUtils, eTemplate, xTemplate.getDescriptions());
-		eTemplate = fUtils.save(eTemplate);
+		eStyle=dbuDescription.handle(fUtils, eStyle, xStyle.getDescriptions());
+		eStyle = fUtils.save(eStyle);
 		
-		return eTemplate;
+		return eStyle;
 	}
-*/
 }

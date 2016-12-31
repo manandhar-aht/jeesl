@@ -33,6 +33,7 @@ public class TestXmlRow extends AbstractXmlReportTest<Row>
     		xml.setTemplate(TestXmlTemplate.create(false));
     		xml.setQueries(TestXmlQueries.create(false));
     		xml.setLayout(TestXmlLayout.create(false));
+    		xml.setStyles(TestXmlStyles.create(false));
     	}
     	
     	return xml;

@@ -12,6 +12,7 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportStyleFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportTemplateFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
@@ -61,6 +62,7 @@ import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.Row;
 import net.sf.ahtutils.xml.report.Rows;
+import net.sf.ahtutils.xml.report.Style;
 import net.sf.ahtutils.xml.report.Styles;
 import net.sf.ahtutils.xml.report.Template;
 import net.sf.ahtutils.xml.report.Templates;
@@ -126,6 +128,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efRow;
 	private EjbIoReportTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efTemplate;
 	private EjbIoReportCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efCell;
+	private EjbIoReportStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efStyle;
 		
 	private Comparator<REPORT> comparatorReport;
 	private Comparator<TEMPLATE> comparatorTemplate;
@@ -168,6 +171,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		efRow = ffReport.row();
 		efTemplate = ffReport.template();
 		efCell = ffReport.cell();
+		efStyle = ffReport.style();
 		
 		comparatorReport = new IoReportComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportComparator.Type.position);
 		comparatorTemplate = new IoReportTemplateComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportTemplateComparator.Type.position);
@@ -275,7 +279,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private TEMPLATE importSystemIoReportTemplate(Template xTemplate) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, UtilsProcessingException
 	{
 		TEMPLATE eTemplate;
-	
 		try {eTemplate = fReport.fByCode(cTemplate, xTemplate.getCode());}
 		catch (UtilsNotFoundException e)
 		{
@@ -295,7 +298,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		{
 			CELL eCell = importCell(eTemplate,xCell);
 			dbuCell.handled(eCell);
-			
 		}
 		for(CELL c : dbuCell.getEjbForRemove()){fReport.rmCell(c);}
 			
@@ -316,6 +318,47 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		eCell = efCell.updateLD(fReport, eCell, xCell);
 		
 		return eCell;
+	}
+	
+	@Override public DataUpdate importSystemIoReportStyles(Styles styles)
+	{
+		DataUpdateTracker dut = new DataUpdateTracker(true);
+		dut.setType(XmlTypeFactory.build(cStyle.getName(),"DB Import"));
+		
+		JeeslDbCodeEjbUpdater<STYLE> dbuStyle = JeeslDbCodeEjbUpdater.createFactory(cStyle);
+		dbuStyle.dbEjbs(fReport);
+		
+		for(Style xStyle : styles.getStyle())
+		{
+			try
+			{
+				STYLE eStyle = importSystemIoReportStyle(xStyle);
+				dbuStyle.handled(eStyle);
+				dut.success();
+			}
+			catch (UtilsNotFoundException e) {dut.fail(e, true);}
+			catch (UtilsConstraintViolationException e) {dut.fail(e, true);}
+			catch (UtilsLockingException e) {dut.fail(e, true);}
+			catch (UtilsProcessingException e) {dut.fail(e, true);}
+		}
+		dbuStyle.remove(fReport);
+		
+		return dut.toDataUpdate();
+	}
+	
+	private STYLE importSystemIoReportStyle(Style xStyle) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, UtilsProcessingException
+	{
+		STYLE eStyle;
+		try {eStyle = fReport.fByCode(cStyle, xStyle.getCode());}
+		catch (UtilsNotFoundException e)
+		{
+			eStyle = efStyle.build(xStyle);
+			eStyle = fReport.save(eStyle);
+		}
+		eStyle = efStyle.update(eStyle,xStyle);
+		eStyle = fReport.save(eStyle);
+		eStyle = efStyle.updateLD(fReport,eStyle,xStyle);
+		return eStyle;
 	}
 	
 	@Override public DataUpdate importSystemIoReports(Reports reports)

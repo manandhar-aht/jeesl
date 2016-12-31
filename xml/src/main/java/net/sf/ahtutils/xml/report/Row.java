@@ -30,6 +30,7 @@ import net.sf.ahtutils.xml.status.Type;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}dataType"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}template"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}queries"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}styles"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}layout"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -50,6 +51,7 @@ import net.sf.ahtutils.xml.status.Type;
     "dataType",
     "template",
     "queries",
+    "styles",
     "layout"
 })
 @XmlRootElement(name = "row")
@@ -70,6 +72,8 @@ public class Row
     protected Template template;
     @XmlElement(required = true)
     protected Queries queries;
+    @XmlElement(required = true)
+    protected Styles styles;
     @XmlElement(required = true)
     protected Layout layout;
     @XmlAttribute(name = "code")
@@ -245,6 +249,34 @@ public class Row
 
     public boolean isSetQueries() {
         return (this.queries!= null);
+    }
+
+    /**
+     * Gets the value of the styles property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Styles }
+     *     
+     */
+    public Styles getStyles() {
+        return styles;
+    }
+
+    /**
+     * Sets the value of the styles property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Styles }
+     *     
+     */
+    public void setStyles(Styles value) {
+        this.styles = value;
+    }
+
+    public boolean isSetStyles() {
+        return (this.styles!= null);
     }
 
     /**

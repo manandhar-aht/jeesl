@@ -1,6 +1,7 @@
 package org.jeesl.interfaces.rest.system.io.report;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -9,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import org.jeesl.model.xml.jeesl.Container;
 
 import net.sf.ahtutils.xml.report.Reports;
+import net.sf.ahtutils.xml.report.Styles;
 import net.sf.ahtutils.xml.report.Templates;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
@@ -22,6 +24,9 @@ public interface JeeslIoReportRestImport
 	
 	@POST @Path("/system/io/report/templates") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoReportTemplates(Templates templates);
+	
+	@POST @Path("/system/io/report/styles") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
+	DataUpdate importSystemIoReportStyles(Styles styles);
 	
 	@POST @Path("/system/io/report/setting/filling") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoReportSettingFilling(Container container);
@@ -37,5 +42,4 @@ public interface JeeslIoReportRestImport
 	
 	@POST @Path("/system/io/report/colum/width") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoReportColumnWidth(Container container);
-	
 }

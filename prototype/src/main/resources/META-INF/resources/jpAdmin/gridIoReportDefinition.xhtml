@@ -142,6 +142,10 @@
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.group.visible}"/>
 								<p:outputLabel value="#{msg.jeeslIoReportShowLabel}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.group.showLabel}"/>
+								<p:outputLabel value="#{msg.jeeslIoReportStyleHeader}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.group.styleHeader}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.styles}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
+								</p:selectOneMenu>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.group}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />

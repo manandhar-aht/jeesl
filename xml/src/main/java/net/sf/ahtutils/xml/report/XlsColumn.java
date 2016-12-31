@@ -28,6 +28,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}dataType"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}queries"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}layout"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}styles"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsTransformation"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}dataAssociation"/&gt;
  *       &lt;/sequence&gt;
@@ -55,6 +56,7 @@ import net.sf.ahtutils.xml.status.Langs;
     "dataType",
     "queries",
     "layout",
+    "styles",
     "xlsTransformation",
     "dataAssociation"
 })
@@ -73,6 +75,8 @@ public class XlsColumn implements Serializable
     protected Queries queries;
     @XmlElement(required = true)
     protected Layout layout;
+    @XmlElement(required = true)
+    protected Styles styles;
     @XmlElement(required = true)
     protected XlsTransformation xlsTransformation;
     @XmlElement(required = true)
@@ -236,6 +240,34 @@ public class XlsColumn implements Serializable
 
     public boolean isSetLayout() {
         return (this.layout!= null);
+    }
+
+    /**
+     * Gets the value of the styles property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Styles }
+     *     
+     */
+    public Styles getStyles() {
+        return styles;
+    }
+
+    /**
+     * Sets the value of the styles property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Styles }
+     *     
+     */
+    public void setStyles(Styles value) {
+        this.styles = value;
+    }
+
+    public boolean isSetStyles() {
+        return (this.styles!= null);
     }
 
     /**

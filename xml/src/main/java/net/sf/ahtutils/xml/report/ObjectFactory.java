@@ -182,6 +182,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Styles }
+     * 
+     */
+    public Styles createStyles() {
+        return new Styles();
+    }
+
+    /**
+     * Create an instance of {@link Style }
+     * 
+     */
+    public Style createStyle() {
+        return new Style();
+    }
+
+    /**
      * Create an instance of {@link XlsTransformation }
      * 
      */
@@ -275,22 +291,6 @@ public class ObjectFactory {
      */
     public Templates createTemplates() {
         return new Templates();
-    }
-
-    /**
-     * Create an instance of {@link Styles }
-     * 
-     */
-    public Styles createStyles() {
-        return new Styles();
-    }
-
-    /**
-     * Create an instance of {@link Style }
-     * 
-     */
-    public Style createStyle() {
-        return new Style();
     }
 
     /**

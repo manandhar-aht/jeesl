@@ -9,6 +9,8 @@ import org.jeesl.factory.xml.system.io.report.XmlQueriesFactory;
 import org.jeesl.factory.xml.system.io.report.XmlRowsFactory;
 import org.jeesl.factory.xml.system.io.report.XmlSheetsFactory;
 import org.jeesl.factory.xml.system.io.report.XmlSizeFactory;
+import org.jeesl.factory.xml.system.io.report.XmlStyleFactory;
+import org.jeesl.factory.xml.system.io.report.XmlStylesFactory;
 import org.jeesl.factory.xml.system.io.report.XmlTemplateFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 import org.jeesl.factory.xml.system.status.XmlDataTypeFactory;
@@ -150,7 +152,7 @@ public class ReportQuery
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
-		
+		xml.setStyles(XmlStylesFactory.build(XmlStyleFactory.build("")));
 		xml.getXlsColumn().add(exportColumn());
 		return xml;
 	}
@@ -192,6 +194,7 @@ public class ReportQuery
 		xml.setDataType(XmlDataTypeFactory.build(""));
 		xml.setQueries(XmlQueriesFactory.build());
 		xml.setLayout(columnLayout());
+		xml.setStyles(XmlStylesFactory.build(XmlStyleFactory.build("")));
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());

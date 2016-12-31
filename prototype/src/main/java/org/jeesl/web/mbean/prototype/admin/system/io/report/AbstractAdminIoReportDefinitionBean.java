@@ -96,6 +96,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private Class<COLUMN> cColumn;
 	private Class<ROW> cRow;
 	private Class<TEMPLATE> cTemplate;
+	private Class<STYLE> cStyle;
 	private Class<CDT> cDataType;
 	private Class<CW> cColumnWidth;
 	private Class<RT> cRowType;
@@ -114,7 +115,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	private List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
 	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
-	
+	private List<STYLE> styles; public List<STYLE> getStyles() {return styles;}
 	
 	private RC revisionCategory; public RC getRevisionCategory() {return revisionCategory;} public void setRevisionCategory(RC revisionCategory) {this.revisionCategory = revisionCategory;}
 	private REPORT report; public REPORT getReport() {return report;} public void setReport(REPORT report) {this.report = report;}
@@ -139,7 +140,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efColumn;
 	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efRow;
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<TEMPLATE> cTemplate, Class<CELL> cCell, Class<STYLE> cStyle,  Class<CDT> cDataType, Class<CW> cColumnWidth, Class<RT> cRowType, Class<RC> cRevisionCategory)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<TEMPLATE> cTemplate, Class<CELL> cCell, Class<STYLE> cStyle, Class<CDT> cDataType, Class<CW> cColumnWidth, Class<RT> cRowType, Class<RC> cRevisionCategory)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fReport=fReport;
@@ -152,6 +153,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		this.cColumn=cColumn;
 		this.cRow=cRow;
 		this.cTemplate=cTemplate;
+		this.cStyle=cStyle;
 		this.cDataType=cDataType;
 		this.cColumnWidth=cColumnWidth;
 		this.cRowType=cRowType;
@@ -181,6 +183,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		columnWidths = fReport.allOrderedPositionVisible(cColumnWidth);
 		rowTypes = fReport.allOrderedPositionVisible(cRowType);
 		templates = fReport.allOrderedPositionVisible(cTemplate);
+		styles = fReport.allOrderedPositionVisible(cStyle);
 		
 		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
 //		sbhCategory.selectAll();
@@ -404,6 +407,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(group));}
 		try
 		{
+			if(group.getStyleHeader()!=null){group.setStyleHeader(fReport.find(cStyle,group.getStyleHeader()));}
 			group = fReport.save(group);
 			reloadReport();
 			reloadSheet();

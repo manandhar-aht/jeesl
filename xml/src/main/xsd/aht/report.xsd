@@ -353,6 +353,8 @@
 			<xsd:sequence>
 				<xsd:element ref="us:langs" maxOccurs="1"/>
 				<xsd:element ref="us:descriptions" maxOccurs="1"/>
+				<xsd:element ref="r:layout" maxOccurs="1"/>
+				<xsd:element ref="r:styles" maxOccurs="1"/>
 				<xsd:element ref="r:xlsColumn" maxOccurs="unbounded"/>
 			</xsd:sequence>
 			<xsd:attribute name="code" type="xsd:string"/>
@@ -362,7 +364,7 @@
 			<xsd:attribute name="query" type="xsd:string"/>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name="xlsColumns">
+	<xsd:element name="xlsColumns"> <!-- DEPRECATED -->
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref="r:xlsColumn" maxOccurs="unbounded"/>
@@ -378,6 +380,7 @@
 				<xsd:element ref="us:dataType" maxOccurs="1"/>
 				<xsd:element ref="r:queries" maxOccurs="1"/>
 				<xsd:element ref="r:layout" maxOccurs="1"/>
+				<xsd:element ref="r:styles" maxOccurs="1"/>
 				<xsd:element ref="r:xlsTransformation" maxOccurs="1"/>
 				<xsd:element ref="r:dataAssociation" maxOccurs="1"/>
 			</xsd:sequence>
@@ -410,6 +413,7 @@
 				<xsd:element ref="us:dataType" maxOccurs="1"/>
 				<xsd:element ref="r:template" maxOccurs="1"/>
 				<xsd:element ref="r:queries" maxOccurs="1"/>
+				<xsd:element ref="r:styles" maxOccurs="1"/>
 				<xsd:element ref="r:layout" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="code" type="xsd:string"/>

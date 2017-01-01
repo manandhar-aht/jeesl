@@ -17,6 +17,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
@@ -117,10 +118,11 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	    
 		for(SHEET ioSheet : ioWorkbook.getSheets())
 		{
+			List<GROUP> groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
 			List<COLUMN> columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
 			List<ROW> rows = EjbIoReportRowFactory.toListVisibleRows(ioSheet);
 			
-			XlsCellStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfStyle = ffReport.xlsStyle(wb,columns,rows);
+			XlsStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfStyle = ffReport.xlsStyle(wb,groups,columns,rows);
 			XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell = ffReport.xlsCell(localeCode,xfStyle);
 			XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfRow = ffReport.xlsRow(localeCode,xfCell);
 			XlsColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfColumn = ffReport.xlsColumn();

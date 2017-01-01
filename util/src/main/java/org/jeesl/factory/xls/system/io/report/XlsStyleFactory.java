@@ -1,9 +1,12 @@
 package org.jeesl.factory.xls.system.io.report;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
@@ -23,7 +26,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class XlsCellStyleFactory<L extends UtilsLang,D extends UtilsDescription,
+public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -40,15 +43,18 @@ public class XlsCellStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 								ENTITY extends EjbWithId,
 								ATTRIBUTE extends EjbWithId>
 {
-	final static Logger logger = LoggerFactory.getLogger(XlsCellStyleFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XlsStyleFactory.class);
 	
+	private Map<STYLE,CellStyle> mapHeader;
 	private CellStyle styleFallback; public CellStyle getStyleFallback() {return styleFallback;}
 	
 	private CellStyle styleLabelCenter; public CellStyle getStyleLabelCenter() {return styleLabelCenter;}
 	private CellStyle styleLabelLeft; public CellStyle getStyleLabelLeft() {return styleLabelLeft;}
 	
-	public XlsCellStyleFactory(Workbook xlsWorkbook, List<COLUMN> ioColumns, List<ROW> ioRows)
+	public XlsStyleFactory(Workbook xlsWorkbook, List<GROUP> ioGroups, List<COLUMN> ioColumns, List<ROW> ioRows)
 	{
+		mapHeader = new HashMap<STYLE,CellStyle>();
+		
         Font fontItalicBold = xlsWorkbook.createFont();
         fontItalicBold.setItalic(true);
         fontItalicBold.setBoldweight(Font.BOLDWEIGHT_BOLD);
@@ -68,13 +74,37 @@ public class XlsCellStyleFactory<L extends UtilsLang,D extends UtilsDescription,
         styleLabelLeft.setAlignment(CellStyle.ALIGN_LEFT);
         styleLabelLeft.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         styleLabelLeft.setFont(fontItalicBold);
+        
+		for(GROUP g : ioGroups)
+		{
+			if(!mapHeader.containsKey(g.getStyleHeader())){mapHeader.put(g.getStyleHeader(), buildHeader(xlsWorkbook,g.getStyleHeader()));}
+		}
+
+	}
+	
+	private CellStyle buildHeader(Workbook xlsWorkbook, STYLE ioStyle)
+	{
+        Font font = xlsWorkbook.createFont();
+        font.setItalic(true);
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        
+        CellStyle style = xlsWorkbook.createCellStyle();
+        style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        style.setFont(font);
+        style.setFillBackgroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        
+        return styleLabelCenter;
+        
 	}
 	
 	public CellStyle get(JeeslReportLayout.Style type, GROUP group)
 	{
 		switch(type)
 		{
-			case header: return styleLabelCenter;
+			case header: return mapHeader.get(group.getStyleHeader());
 			case cell: return styleFallback;
 			default: return styleFallback;
 		}

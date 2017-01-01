@@ -4,5 +4,5 @@ public interface JeeslReportLayout
 {
 	public static enum Code{columnWidth}
 	public static enum ColumnWidth{none,auto,min}
-	public static enum Style{header}
+	public static enum Style{header,cell}
 }

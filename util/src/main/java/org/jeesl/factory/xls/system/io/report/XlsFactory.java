@@ -97,7 +97,6 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
         font.setItalic(true);
         font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 
-        
         // Create styles
         dateHeaderStyle = wb.createCellStyle();
         dateHeaderStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy.MM"));
@@ -121,8 +120,8 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			List<COLUMN> columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
 			List<ROW> rows = EjbIoReportRowFactory.toListVisibleRows(ioSheet);
 			
-			XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> csp = ffReport.xlsCellStyleProvider(wb,columns,rows);
-			XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell = ffReport.xlsCell(localeCode,csp);
+			XlsCellStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfStyle = ffReport.xlsStyle(wb,columns,rows);
+			XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell = ffReport.xlsCell(localeCode,xfStyle);
 			XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfRow = ffReport.xlsRow(localeCode,xfCell);
 			XlsColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfColumn = ffReport.xlsColumn();
 			
@@ -155,7 +154,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	private void applyTable(JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, List<COLUMN> columns, XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xlfRow, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)
 	{
 		rowNr.add(ioRow.getOffsetRows());
-		xlfRow.header(sheet,rowNr,dateHeaderStyle,ioSheet);
+		xlfRow.header(sheet,rowNr,ioSheet);
 		
 		@SuppressWarnings("unchecked")
 		Iterator<Pointer> iterator = context.iteratePointers(ioSheet.getQueryTable());
@@ -171,7 +170,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			MutableInt columnNr = new MutableInt(0);
 			for(COLUMN ioColumn : columns)
 			{
-				xfCell.build(ioColumn,xlsRow,columnNr,relativeContext);
+				xfCell.cell(ioColumn,xlsRow,columnNr,relativeContext);
 			}
 			rowNr.add(1);
         }

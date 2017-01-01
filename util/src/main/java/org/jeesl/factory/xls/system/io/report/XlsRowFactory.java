@@ -75,7 +75,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		rowNr.add(1);
     }
 	
-	public void header(Sheet sheet, MutableInt rowNr, CellStyle dateHeaderStyle, SHEET ioSheet)
+	@Deprecated public void header(Sheet sheet, MutableInt rowNr, CellStyle dateHeaderStyle, SHEET ioSheet)
     {
 		Map<GROUP,Integer> mapSize = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
 
@@ -103,6 +103,32 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
             cell.setCellStyle(dateHeaderStyle);
             cell.setCellValue(c.getName().get(localeCode).getLang());
             columnNr++;
+		}
+		rowNr.add(1);
+    }
+	
+	public void header(Sheet sheet, MutableInt rowNr, SHEET ioSheet)
+    {
+		MutableInt columnNr = new MutableInt(0);
+		Map<GROUP,Integer> mapSize = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
+
+		Row groupingRow = sheet.createRow(rowNr.intValue());
+		for(GROUP g : EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet))
+		{
+			xfCell.header(g, groupingRow, columnNr);
+            if(mapSize.get(g)>1)
+            {
+            	sheet.addMergedRegion(new CellRangeAddress(rowNr.intValue(), rowNr.intValue(), columnNr.intValue()-1, columnNr.intValue()+mapSize.get(g)-2));
+            	columnNr.add(mapSize.get(g)-1);
+            }
+		}
+		rowNr.add(1);
+		
+		Row headerRow = sheet.createRow(rowNr.intValue());
+		columnNr.setValue(0);
+		for(COLUMN c : EjbIoReportColumnFactory.toListVisibleColumns(ioSheet))
+		{
+			xfCell.header(c,headerRow,columnNr);
 		}
 		rowNr.add(1);
     }

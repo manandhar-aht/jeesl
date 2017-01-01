@@ -17,17 +17,21 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportStyle;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.report.ColumnGroup;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
 
 public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -50,13 +54,15 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 	final static Logger logger = LoggerFactory.getLogger(EjbIoReportColumnGroupFactory.class);
 	
 	final Class<GROUP> cGroup;
+	final Class<STYLE> cStyle;
 	
 	private JeeslDbLangUpdater<GROUP,L> dbuLang;
 	private JeeslDbDescriptionUpdater<GROUP,D> dbuDescription;
     
-	public EjbIoReportColumnGroupFactory(final Class<L> cL,final Class<D> cD,final Class<GROUP> cGroup)
+	public EjbIoReportColumnGroupFactory(final Class<L> cL,final Class<D> cD,final Class<GROUP> cGroup, final Class<STYLE> cStyle)
 	{       
         this.cGroup = cGroup;
+        this.cStyle = cStyle;
         dbuLang = JeeslDbLangUpdater.factory(cGroup, cL);
         dbuDescription = JeeslDbDescriptionUpdater.factory(cGroup, cD);
 	}
@@ -78,7 +84,7 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 		return ejb;
 	}
 	
-	public GROUP build(SHEET sheet, ColumnGroup group)
+	public GROUP build(UtilsFacade fReport, SHEET sheet, ColumnGroup group) throws UtilsNotFoundException
 	{
 		GROUP ejb = null;
 		try
@@ -86,7 +92,7 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 			ejb = cGroup.newInstance();
 			ejb.setCode(group.getCode());
 			ejb.setSheet(sheet);
-			ejb = update(ejb,group);
+			ejb = update(fReport,ejb,group);
 
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
@@ -94,20 +100,30 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 		return ejb;
 	}
 	
-	public GROUP update(GROUP eGroup, ColumnGroup xGroup)
+	public GROUP update(UtilsFacade fReport, GROUP eGroup, ColumnGroup xGroup) throws UtilsNotFoundException
 	{
 		eGroup.setPosition(xGroup.getPosition());
 		eGroup.setVisible(xGroup.isVisible());
 		eGroup.setShowLabel(xGroup.isSetShowLabel());
+		
+		if(xGroup.isSetLayout())
+		{
+			if(xGroup.getLayout().isSetStyles())
+			{
+				try {eGroup.setStyleHeader(fReport.fByCode(cStyle, ReportXpath.getStyle(JeeslReportLayout.Style.header, xGroup.getLayout().getStyles()).getCode()));}
+				catch (ExlpXpathNotFoundException e) {}
+			}
+		}
+		
 		return eGroup;
 	}
 	
-	public GROUP updateLD(UtilsFacade fUtils, GROUP eGroup, ColumnGroup xGroup) throws UtilsConstraintViolationException, UtilsLockingException
+	public GROUP updateLD(UtilsFacade fReport, GROUP eGroup, ColumnGroup xGroup) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		eGroup=dbuLang.handle(fUtils, eGroup, xGroup.getLangs());
-		eGroup = fUtils.save(eGroup);
-		eGroup=dbuDescription.handle(fUtils, eGroup, xGroup.getDescriptions());
-		eGroup = fUtils.save(eGroup);
+		eGroup=dbuLang.handle(fReport, eGroup, xGroup.getLangs());
+		eGroup = fReport.save(eGroup);
+		eGroup=dbuDescription.handle(fReport, eGroup, xGroup.getDescriptions());
+		eGroup = fReport.save(eGroup);
 		return eGroup;
 	}
 	

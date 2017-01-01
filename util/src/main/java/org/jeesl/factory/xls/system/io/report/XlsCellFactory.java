@@ -16,6 +16,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportStyle;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,22 +46,25 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 	private String localeCode;
 	
-	private XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> cellStyleProvider;
+	private XlsCellStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfStyle;
 	
-	public XlsCellFactory(String localeCode, XlsCellStyleProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> cellStyleProvider)
+	public XlsCellFactory(String localeCode, XlsCellStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfStyle)
 	{
 		this.localeCode = localeCode;
-		this.cellStyleProvider=cellStyleProvider;
+		this.xfStyle=xfStyle;
 	}
 	
-	public void build(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, JXPathContext context)
+	public void header(GROUP ioGroup, Row xlsRow, MutableInt columnNr) {XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioGroup),ioGroup.getName().get(localeCode).getLang());}
+	public void header(COLUMN ioColumn, Row xlsRow, MutableInt columnNr) {XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),ioColumn.getName().get(localeCode).getLang());}
+	
+	public void cell(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, JXPathContext context)
 	{
 		try
 		{
 			Object value = context.getValue(ioColumn.getQueryCell());
 			if(value!=null)
 			{
-				XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.get(ioColumn),value.toString());
+				XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.cell,ioColumn),value.toString());
 			}
 			else {columnNr.add(1);}
 		}
@@ -69,7 +73,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	public void label(Row xlsRow, MutableInt columnNr, ROW ioRow)
 	{
-		XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.getStyleLabelLeft(),ioRow.getName().get(localeCode).getLang());
+		XlsCellFactory.build(xlsRow,columnNr,xfStyle.getStyleLabelLeft(),ioRow.getName().get(localeCode).getLang());
 	}
 	
 	public void value(Row xlsRow, MutableInt columnNr, ROW ioRow, JXPathContext context)
@@ -78,7 +82,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		{
 			Object value = context.getValue(ioRow.getQueryCell());
 			if(value==null){columnNr.add(1);}
-			else{XlsCellFactory.build(xlsRow,columnNr,cellStyleProvider.get(ioRow),value.toString());}
+			else{XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(ioRow),value.toString());}
 		}
 		catch (JXPathNotFoundException e){columnNr.add(1);}
 	}
@@ -99,7 +103,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 			Row xlsRow = xslSheet.getRow(cellRow); if(xlsRow==null){xlsRow = xslSheet.createRow(cellRow);}
 			
 			Cell xlsCell = xlsRow.createCell(cellCol);
-			xlsCell.setCellStyle(cellStyleProvider.getStyleFallback());
+			xlsCell.setCellStyle(xfStyle.getStyleFallback());
 			xlsCell.setCellValue(ioCell.getName().get(localeCode).getLang());
 		}
 		rowNr.add(maxRow-rootRow+1);

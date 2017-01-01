@@ -494,10 +494,10 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		try {eGroup = fReport.fByCode(cGroup, xGroup.getCode());}
 		catch (UtilsNotFoundException e)
 		{
-			eGroup = efGroup.build(eSheet,xGroup);
+			eGroup = efGroup.build(fReport,eSheet,xGroup);
 			eGroup = fReport.save(eGroup);
 		}
-		eGroup = efGroup.update(eGroup, xGroup);
+		eGroup = efGroup.update(fReport,eGroup, xGroup);
 		eGroup = fReport.save(eGroup);
 		eGroup = efGroup.updateLD(fReport,eGroup, xGroup);
 		eGroup = fReport.load(eGroup);

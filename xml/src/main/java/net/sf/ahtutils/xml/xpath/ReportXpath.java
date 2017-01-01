@@ -28,6 +28,8 @@ import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Reports;
 import net.sf.ahtutils.xml.report.Rows;
 import net.sf.ahtutils.xml.report.Size;
+import net.sf.ahtutils.xml.report.Style;
+import net.sf.ahtutils.xml.report.Styles;
 import net.sf.ahtutils.xml.report.Template;
 import net.sf.ahtutils.xml.report.Templates;
 import net.sf.ahtutils.xml.report.XlsColumn;
@@ -286,5 +288,14 @@ public class ReportXpath
 			if(s.getCode().equals(type)){return s;}
 		}
 		throw new ExlpXpathNotFoundException("No "+Size.class.getSimpleName()+" for type="+type);
+	}
+	
+	public static <E extends Enum<E>> Style getStyle(E type, Styles styles) throws ExlpXpathNotFoundException
+	{
+		for(Style s : styles.getStyle())
+		{
+			if(s.getType().equals(type.toString())){return s;}
+		}
+		throw new ExlpXpathNotFoundException("No "+Style.class.getSimpleName()+" for type="+type);
 	}
 }

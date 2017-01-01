@@ -85,8 +85,8 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	private CellStyle buildHeader(Workbook xlsWorkbook, STYLE ioStyle)
 	{
         Font font = xlsWorkbook.createFont();
-        font.setItalic(true);
-        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        if(ioStyle.isFontItalic()){font.setItalic(true);}
+        if(ioStyle.isFontBold()){font.setBoldweight(Font.BOLDWEIGHT_BOLD);}
         
         CellStyle style = xlsWorkbook.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);

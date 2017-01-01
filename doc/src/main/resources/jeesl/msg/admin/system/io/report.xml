@@ -198,5 +198,13 @@
 			<lang key="fr" translation="Style" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoReportStyleHeader">
+		<langs>
+			<lang key="de" translation="Stil Kopfzeile" />
+			<lang key="en" translation="Header Style" />
+			<lang key="fr" translation="Header Style" />
+		</langs>
+	</translation>
+	
 	
 </translations>

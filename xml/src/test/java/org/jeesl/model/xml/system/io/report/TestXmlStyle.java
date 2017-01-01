@@ -17,6 +17,7 @@ public class TestXmlStyle extends AbstractXmlReportTest<Style>
     {
     	Style xml = new Style();
     	xml.setId(123);
+    	xml.setType("myType");
     	xml.setCode("myCode");
     	xml.setPosition(1);
     	xml.setVisible(true);

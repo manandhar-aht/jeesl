@@ -53,6 +53,7 @@ public class XmlColumnGroupFactory <L extends UtilsLang,D extends UtilsDescripti
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
 	private XmlColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfColumn;
+	private XmlLayoutFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfLayout;
 	
 	public XmlColumnGroupFactory(String localeCode, ColumnGroup q)
 	{
@@ -61,6 +62,7 @@ public class XmlColumnGroupFactory <L extends UtilsLang,D extends UtilsDescripti
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 		if(q.isSetXlsColumn()){xfColumn = new XmlColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,q.getXlsColumn().get(0));}
+		if(q.isSetLayout()){xfLayout = new XmlLayoutFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(localeCode,q.getLayout());}
 	}
 	
 	public ColumnGroup build(GROUP group)
@@ -75,7 +77,8 @@ public class XmlColumnGroupFactory <L extends UtilsLang,D extends UtilsDescripti
 		
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(group.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(group.getDescription()));}
-				
+		if(q.isSetLayout()){xml.setLayout(xfLayout.build(group));}
+		
 		if(q.isSetXlsColumn())
 		{
 			Collections.sort(group.getColumns(),cColumn);

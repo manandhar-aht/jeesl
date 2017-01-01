@@ -5,6 +5,7 @@
     <s:dataType id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
     <r:queries/>
     <r:layout/>
+    <r:styles/>
     <r:xlsTransformation dataClass="myDataClass" formatPattern="myPattern" beanProperty="myBeanProperty"/>
     <r:dataAssociation column="A"/>
 </r:xlsColumn>

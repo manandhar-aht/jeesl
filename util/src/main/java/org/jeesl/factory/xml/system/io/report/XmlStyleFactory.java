@@ -55,10 +55,13 @@ public class XmlStyleFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 	}
 	
-	public Style build(STYLE style)
+	
+	public Style build(STYLE style){return build(null,style);}
+	public <E extends Enum<E>> Style build(E type, STYLE style)
 	{
 		Style xml = XmlStyleFactory.build();
 		
+		if(type!=null){xml.setType(type.toString());}
 		if(q.isSetCode()){xml.setCode(style.getCode());}
 		if(q.isSetVisible()){xml.setVisible(style.isVisible());}
 		if(q.isSetPosition()){xml.setPosition(style.getPosition());}

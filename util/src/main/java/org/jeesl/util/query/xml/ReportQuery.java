@@ -152,10 +152,12 @@ public class ReportQuery
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
-		xml.setStyles(XmlStylesFactory.build(XmlStyleFactory.build("")));
+		xml.setLayout(layout());
 		xml.getXlsColumn().add(exportColumn());
 		return xml;
 	}
+	
+	
 	
 	private static Row exportRow()
 	{
@@ -171,15 +173,16 @@ public class ReportQuery
 		xml.setTemplate(XmlTemplateFactory.build(""));
 		
 		xml.setQueries(XmlQueriesFactory.build());
-		xml.setLayout(rowLayout());
+		xml.setLayout(layout());
 
 		return xml;
 	}
 	
-	private static Layout rowLayout()
+	private static Layout layout()
 	{
 		Layout xml = XmlLayoutFactory.build();
 		xml.setOffset(XmlOffsetFactory.build());
+		xml.setStyles(XmlStylesFactory.build(XmlStyleFactory.build("")));
 		return xml;
 	}
 	

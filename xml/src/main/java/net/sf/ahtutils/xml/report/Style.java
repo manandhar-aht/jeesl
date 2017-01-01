@@ -27,6 +27,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}layout"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
+ *       &lt;attribute name="type" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
@@ -57,6 +58,8 @@ public class Style
     protected Layout layout;
     @XmlAttribute(name = "id")
     protected Long id;
+    @XmlAttribute(name = "type")
+    protected String type;
     @XmlAttribute(name = "code")
     protected String code;
     @XmlAttribute(name = "position")
@@ -178,6 +181,34 @@ public class Style
 
     public void unsetId() {
         this.id = null;
+    }
+
+    /**
+     * Gets the value of the type property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Sets the value of the type property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setType(String value) {
+        this.type = value;
+    }
+
+    public boolean isSetType() {
+        return (this.type!= null);
     }
 
     /**

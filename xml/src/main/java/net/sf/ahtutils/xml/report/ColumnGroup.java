@@ -27,7 +27,6 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}layout"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/report}styles"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsColumn" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -47,7 +46,6 @@ import net.sf.ahtutils.xml.status.Langs;
     "langs",
     "descriptions",
     "layout",
-    "styles",
     "xlsColumn"
 })
 @XmlRootElement(name = "columnGroup")
@@ -61,8 +59,6 @@ public class ColumnGroup implements Serializable
     protected Descriptions descriptions;
     @XmlElement(required = true)
     protected Layout layout;
-    @XmlElement(required = true)
-    protected Styles styles;
     @XmlElement(required = true)
     protected List<XlsColumn> xlsColumn;
     @XmlAttribute(name = "code")
@@ -158,34 +154,6 @@ public class ColumnGroup implements Serializable
 
     public boolean isSetLayout() {
         return (this.layout!= null);
-    }
-
-    /**
-     * Gets the value of the styles property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Styles }
-     *     
-     */
-    public Styles getStyles() {
-        return styles;
-    }
-
-    /**
-     * Sets the value of the styles property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Styles }
-     *     
-     */
-    public void setStyles(Styles value) {
-        this.styles = value;
-    }
-
-    public boolean isSetStyles() {
-        return (this.styles!= null);
     }
 
     /**

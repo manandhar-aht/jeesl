@@ -6,5 +6,6 @@
     <s:dataType id="123" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
     <r:template id="ahtutils-basic-template" code="myCode" position="1" visible="true"/>
     <r:queries/>
+    <r:styles/>
     <r:layout/>
 </r:row>

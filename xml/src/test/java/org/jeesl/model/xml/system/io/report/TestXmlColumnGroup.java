@@ -27,7 +27,7 @@ public class TestXmlColumnGroup extends AbstractXmlReportTest<ColumnGroup>
     	{
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setDescriptions(TestXmlDescriptions.create(false));
-    		xml.setStyles(TestXmlStyles.create(false));
+    		xml.setLayout(TestXmlLayout.create(false));
     	}
     	
     	return xml;

@@ -25,6 +25,7 @@ import net.sf.ahtutils.xml.symbol.Color;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}offset"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}size" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/symbol}color" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}styles"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -37,7 +38,8 @@ import net.sf.ahtutils.xml.symbol.Color;
 @XmlType(name = "", propOrder = {
     "offset",
     "size",
-    "color"
+    "color",
+    "styles"
 })
 @XmlRootElement(name = "layout")
 public class Layout
@@ -51,6 +53,8 @@ public class Layout
     protected List<Size> size;
     @XmlElement(namespace = "http://www.jeesl.org/symbol", required = true)
     protected List<Color> color;
+    @XmlElement(required = true)
+    protected Styles styles;
 
     /**
      * Gets the value of the offset property.
@@ -152,6 +156,34 @@ public class Layout
 
     public void unsetColor() {
         this.color = null;
+    }
+
+    /**
+     * Gets the value of the styles property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Styles }
+     *     
+     */
+    public Styles getStyles() {
+        return styles;
+    }
+
+    /**
+     * Sets the value of the styles property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Styles }
+     *     
+     */
+    public void setStyles(Styles value) {
+        this.styles = value;
+    }
+
+    public boolean isSetStyles() {
+        return (this.styles!= null);
     }
 
 }

@@ -42,11 +42,13 @@ public class XmlLayoutFactory<L extends UtilsLang,D extends UtilsDescription,
 	private Layout q;
 	
 	private XmlTypeFactory<CW,L,D> xfType;
+	private XmlStylesFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfStyles;
 	
 	public XmlLayoutFactory(String localeCode, Layout q)
 	{
 		this.q=q;
-		if(q.isSetSize()){{xfType = new XmlTypeFactory<CW,L,D>(localeCode,q.getSize().get(0).getType());}}
+		if(q.isSetSize()){xfType = new XmlTypeFactory<CW,L,D>(localeCode,q.getSize().get(0).getType());}
+		if(q.isSetStyles()){xfStyles = new XmlStylesFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(localeCode,q.getStyles());}
 	}
 	
 	public Layout build(ROW row)
@@ -66,6 +68,13 @@ public class XmlLayoutFactory<L extends UtilsLang,D extends UtilsDescription,
 				xml.getSize().add(XmlSizeFactory.build(JeeslReportLayout.Code.columnWidth, xfType.build(column.getColumWidth()), column.getColumSize()));
 			}
 		}
+		return xml;
+	}
+	
+	public Layout build(GROUP group)
+	{
+		Layout xml = build();
+		if(q.isSetStyles()){xml.setStyles(xfStyles.build(group));}
 		return xml;
 	}
 	

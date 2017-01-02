@@ -53,6 +53,12 @@
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 								<p:outputLabel value="#{msg.jeeslIoReportStyleColorBackground}"/>
 								<p:colorPicker value="#{cc.attrs.bean.style.colorBackground}"/>
+								
+								<p:outputLabel value="#{msg.jeeslIoReportStyleFontBold}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.style.fontBold}"/>
+								
+								<p:outputLabel value="#{msg.jeeslIoReportStyleFontItalic}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.style.fontItalic}"/>
 							</p:panelGrid>		
 									
 							<p:panelGrid columns="3" columnClasses="auPwg30,auPwg40,auPwg30">

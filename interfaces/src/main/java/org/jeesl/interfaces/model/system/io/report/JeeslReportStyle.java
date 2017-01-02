@@ -30,11 +30,7 @@ public interface JeeslReportStyle<L extends UtilsLang,D extends UtilsDescription
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>
-{	
-	String getColorBackground();
-	void setColorBackground(String colorBackground);
-	
-	
+{		
 	String getFont();
 	void setFont(String font);
 	
@@ -47,8 +43,7 @@ public interface JeeslReportStyle<L extends UtilsLang,D extends UtilsDescription
 	int getSizeFont();
 	void setSizeFont(int sizeFont);
 	
-	String getColorFont();
-	void setColorFont(String colorFont);
+
 	
 
 	
@@ -65,6 +60,12 @@ public interface JeeslReportStyle<L extends UtilsLang,D extends UtilsDescription
 	boolean isBorderBottom();
 	void setBorderBottom(boolean borderBottom);
 	
+	
+	String getColorBackground();
+	void setColorBackground(String colorBackground);
+	
+	String getColorFont();
+	void setColorFont(String colorFont);
 	
 	String getColorBorderTop();
 	void setColorBorderTop(String colorBorderTop);

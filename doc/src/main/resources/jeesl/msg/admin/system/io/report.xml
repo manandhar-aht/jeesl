@@ -205,6 +205,19 @@
 			<lang key="fr" translation="Header Style" />
 		</langs>
 	</translation>
-	
+	<translation key="jeeslIoReportStyleFontBold">
+		<langs>
+			<lang key="de" translation="Fett" />
+			<lang key="en" translation="Bold" />
+			<lang key="fr" translation="Bold" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoReportStyleFontItalic">
+		<langs>
+			<lang key="de" translation="Kursiv" />
+			<lang key="en" translation="Italic" />
+			<lang key="fr" translation="Italic" />
+		</langs>
+	</translation>	
 	
 </translations>

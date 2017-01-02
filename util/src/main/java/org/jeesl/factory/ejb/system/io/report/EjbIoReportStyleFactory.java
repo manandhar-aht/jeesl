@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportStyle;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.report.Style;
+import net.sf.ahtutils.xml.symbol.Color;
 
 public class EjbIoReportStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -90,14 +92,33 @@ public class EjbIoReportStyleFactory<L extends UtilsLang,D extends UtilsDescript
 		return ejb;
 	}
 	
-	public STYLE update (STYLE eStyle, Style xStyle)
+	public STYLE update(STYLE eStyle, Style xStyle)
 	{
 		eStyle.setPosition(xStyle.getPosition());
 		eStyle.setVisible(xStyle.isVisible());
 		
-	
+		reset(eStyle, true);
+		for(Color color : xStyle.getLayout().getColor())
+		{
+			switch(JeeslReportLayout.Color.valueOf(color.getGroup()))
+			{
+				case background: eStyle.setColorBackground(color.getValue());break;
+				default: break;
+			}
+		}
 		
 		return eStyle;
+	}
+	
+	private void reset(STYLE eStyle, boolean colors)
+	{
+		eStyle.setColorBackground(null);
+		eStyle.setColorFont(null);
+		eStyle.setColorBorderTop(null);
+		eStyle.setColorBorderLeft(null);
+		eStyle.setColorBorderRight(null);
+		eStyle.setColorBorderBottom(null);
+		
 	}
 	
 	public STYLE updateLD(UtilsFacade fUtils, STYLE eStyle, Style xStyle) throws UtilsConstraintViolationException, UtilsLockingException

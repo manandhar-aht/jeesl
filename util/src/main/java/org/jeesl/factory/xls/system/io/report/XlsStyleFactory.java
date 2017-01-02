@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -18,6 +19,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportStyle;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +48,9 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(XlsStyleFactory.class);
 	
 	private Map<STYLE,CellStyle> mapHeader;
+	private Map<COLUMN,CellStyle> mapCell;
+	private Map<COLUMN,JeeslReportLayout.Data> mapCellDataType;
+	
 	private CellStyle styleFallback; public CellStyle getStyleFallback() {return styleFallback;}
 	
 	private CellStyle styleLabelCenter; public CellStyle getStyleLabelCenter() {return styleLabelCenter;}
@@ -54,6 +59,8 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	public XlsStyleFactory(Workbook xlsWorkbook, List<GROUP> ioGroups, List<COLUMN> ioColumns, List<ROW> ioRows)
 	{
 		mapHeader = new HashMap<STYLE,CellStyle>();
+		mapCell = new HashMap<COLUMN,CellStyle>();
+		mapCellDataType = new HashMap<COLUMN,JeeslReportLayout.Data>();
 		
         Font fontItalicBold = xlsWorkbook.createFont();
         fontItalicBold.setItalic(true);
@@ -77,12 +84,19 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
         
 		for(GROUP g : ioGroups)
 		{
-			if(!mapHeader.containsKey(g.getStyleHeader())){mapHeader.put(g.getStyleHeader(), buildHeader(xlsWorkbook,g.getStyleHeader()));}
+			if(!mapHeader.containsKey(g.getStyleHeader())){mapHeader.put(g.getStyleHeader(), buildStyle(xlsWorkbook,g.getStyleHeader()));}
 		}
-
+		for(COLUMN c : ioColumns)
+		{
+			mapCell.put(c, buildCell(xlsWorkbook,c));
+			
+			CDT cdt = EjbIoReportColumnFactory.toCellDataType(c);
+			if(cdt.getCode().startsWith("numberDouble")){mapCellDataType.put(c,JeeslReportLayout.Data.dble);}
+			else{mapCellDataType.put(c,JeeslReportLayout.Data.string);}	
+		}
 	}
 	
-	private CellStyle buildHeader(Workbook xlsWorkbook, STYLE ioStyle)
+	private CellStyle buildStyle(Workbook xlsWorkbook, STYLE ioStyle)
 	{
         Font font = xlsWorkbook.createFont();
         if(ioStyle.isFontItalic()){font.setItalic(true);}
@@ -97,7 +111,29 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         
         return styleLabelCenter;
+	}
+	
+	private CellStyle buildCell(Workbook xlsWorkbook, COLUMN column)
+	{
+        CellStyle style = xlsWorkbook.createCellStyle();
+//        style.setAlignment(CellStyle.ALIGN_CENTER);
+//        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+       
+        CDT dataType = EjbIoReportColumnFactory.toCellDataType(column);
+        if(dataType!=null)
+        {
+        	if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.text.toString()))
+        	{
+        		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat("text"));
+        	}
+        	else if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.number.toString()))
+        	{
+        		logger.info("Creating "+dataType.getSymbol());
+        		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat(transformJavaToPoiPattern(dataType.getSymbol())));
+        	}
+        }
         
+        return style;
 	}
 	
 	public CellStyle get(JeeslReportLayout.Style type, GROUP group)
@@ -110,15 +146,15 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 		}
 	}
 	
+	public JeeslReportLayout.Data getDataType(COLUMN column){return mapCellDataType.get(column);}
 	public CellStyle get(JeeslReportLayout.Style type, COLUMN column)
 	{
 		switch(type)
 		{
 			case header: return styleLabelCenter;
-			case cell: return styleFallback;
+			case cell: return mapCell.get(column);
 			default: return styleFallback;
 		}
-
 	}
 	
 	public CellStyle get(COLUMN column)
@@ -150,5 +186,10 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 		style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 //		style.setFont(font);
 		return style;
+	}
+	
+	public static String transformJavaToPoiPattern(String pattern)
+	{
+		return pattern.replaceAll("#","0");
 	}
 }

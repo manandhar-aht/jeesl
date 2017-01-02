@@ -6,4 +6,6 @@ public interface JeeslReportLayout
 	public static enum ColumnWidth{none,auto,min}
 	public static enum Style{header,cell}
 	public static enum Color{background}
+	
+	public static enum Data{string,dble}
 }

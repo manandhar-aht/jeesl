@@ -64,7 +64,16 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 			Object value = context.getValue(ioColumn.getQueryCell());
 			if(value!=null)
 			{
-				XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.cell,ioColumn),value.toString());
+				CellStyle style = xfStyle.get(JeeslReportLayout.Style.cell,ioColumn);
+				JeeslReportLayout.Data dt = xfStyle.getDataType(ioColumn);
+//				logger.info(ioColumn.getGroup().getPosition()+"."+ioColumn.getPosition()+" "+dt.toString()+" "+style.getDataFormatString()+" "+value.toString());			
+				switch(dt)
+				{
+					case string: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);	break;
+					case dble: XlsCellFactory.build(xlsRow,columnNr,style,(Double)value);	break;
+					default: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);
+				}
+				
 			}
 			else {columnNr.add(1);}
 		}
@@ -109,11 +118,17 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		rowNr.add(maxRow-rootRow+1);
 	}
 	
-	public static void build(Row xlsRow, MutableInt columnNr, CellStyle style, String value)
+	public static void build(Row xlsRow, MutableInt columnNr, CellStyle style, Object value)
 	{
 		Cell cell = xlsRow.createCell(columnNr.intValue());
         cell.setCellStyle(style);
-        cell.setCellValue(value);
+        
+        logger.info(value.getClass().getSimpleName()+" "+value.toString());
+        
+        if(value instanceof String){cell.setCellValue((String)value);}
+        else if(value instanceof Double){cell.setCellValue((Double)value);}
+        else {cell.setCellValue((String)value);}
+        
         columnNr.add(1);
 	}
 }

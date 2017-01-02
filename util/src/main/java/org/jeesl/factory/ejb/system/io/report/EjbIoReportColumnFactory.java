@@ -112,7 +112,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		
 		eColumn.setPosition(xColumn.getPosition());
 		eColumn.setVisible(xColumn.isVisible());
-		eColumn.setShowLabel(xColumn.isSetShowLabel());
+		eColumn.setShowLabel(xColumn.isShowLabel());
 		
 		if(xColumn.isSetQueries())
 		{

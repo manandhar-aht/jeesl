@@ -62,7 +62,9 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected final String localeCode;
 	
 	protected List<String> headers; public List<String> getHeaders() {return headers;}
-	private boolean showGroupings; public boolean isShowGroupings() {return showGroupings;}
+	
+	private boolean showHeaderGroup; public boolean isShowHeaderGroup() {return showHeaderGroup;}
+	private boolean showHeaderColumn; public boolean isShowHeaderColumn() {return showHeaderColumn;}
 	
 	protected List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	protected List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
@@ -93,7 +95,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		comparatorRow = new IoReportRowComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportRowComparator.Type.position);
 		comparatorCell = new IoReportCellComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportCellComparator.Type.position);
 		
-		showGroupings = true;
+		showHeaderGroup = true;
 		buildHeaders();
 	}
 	
@@ -120,8 +122,22 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 						Collections.sort(groups, comparatorGroup);
 						Collections.sort(columns, comparatorColumn);
 						
-						showGroupings=false;
-						for(GROUP g : groups){if(g.getShowLabel()){showGroupings=true;}}
+						showHeaderGroup=false;
+						showHeaderColumn=false;
+						for(GROUP g : groups)
+						{
+							if(g.isVisible())
+							{
+								if(g.getShowLabel()){showHeaderGroup=true;}
+								for(COLUMN c : g.getColumns())
+								{
+									if(c.isVisible() && c.getShowLabel())
+									{
+										{showHeaderColumn=true;}
+									}
+								}
+							}
+						}
 						
 						for(SHEET s : ioWorkbook.getSheets())
 						{
@@ -149,7 +165,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 			if(debugOnInfo)
 			{
 				logger.info("Debugging: "+classReport.getSimpleName());
-				logger.info("... showGroupings: "+showGroupings);
+				logger.info("... showGroupings: "+showHeaderGroup);
 				for(GROUP g : groups)
 				{
 					logger.info("\t"+g.getClass().getSimpleName()+" ("+mapGroupChilds.get(g)+"): "+g.getName().get(localeCode).getLang());

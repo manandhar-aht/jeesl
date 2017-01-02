@@ -10,15 +10,16 @@
 	
 	<p:columnGroup type="header">
 	
-		<p:row rendered="#{report.showGroupings}">
+		<p:row rendered="#{report.showHeaderGroup}">
 			<c:forEach var="g" items="#{report.groups}" >
 				<p:column rendered="#{g.showLabel}" colspan="#{report.mapGroupChilds[g]}" headerText="#{g.name[loc].lang}" />
 				<p:column rendered="#{not g.showLabel}" colspan="#{report.mapGroupChilds[g]}" headerText="" />
 			</c:forEach>
 		</p:row>
-		<p:row>
+		<p:row rendered="#{report.showHeaderColumn}">
 			<c:forEach var="c" items="#{report.columns}">
-				<p:column colspan="1" headerText="#{c.name[loc].lang}" />
+				<p:column colspan="1" rendered="#{c.showLabel}" headerText="#{c.name[loc].lang}" />
+				<p:column colspan="1" rendered="#{not c.showLabel}" headerText="" />
 			</c:forEach>
 		</p:row>
 	

@@ -72,6 +72,9 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 
 	protected REPORT ioReport; public REPORT getIoReport() {return ioReport;}
 	protected SHEET ioSheet; public SHEET getIoSheet() {return ioSheet;}
+
+	protected FILLING reportFilling;
+	protected TRANSFORMATION reportSettingTransformation;
 	
 	protected XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xlsFactory;
 	

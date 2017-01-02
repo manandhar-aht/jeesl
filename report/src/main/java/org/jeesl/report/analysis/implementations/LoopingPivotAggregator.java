@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.jeesl.report.analysis.DynamicPivotData;
+import org.jeesl.model.pojo.DynamicPivotData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

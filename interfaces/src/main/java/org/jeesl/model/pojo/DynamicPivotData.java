@@ -1,4 +1,4 @@
-package org.jeesl.report.analysis;
+package org.jeesl.model.pojo;
 
 import java.util.ArrayList;
 import java.util.Arrays;

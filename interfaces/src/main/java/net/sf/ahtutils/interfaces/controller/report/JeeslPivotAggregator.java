@@ -2,7 +2,7 @@ package net.sf.ahtutils.interfaces.controller.report;
 
 import java.util.List;
 
-import org.jeesl.report.analysis.DynamicPivotData;
+import org.jeesl.model.pojo.DynamicPivotData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

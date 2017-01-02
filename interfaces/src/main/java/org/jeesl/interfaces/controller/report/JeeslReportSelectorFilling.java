@@ -4,7 +4,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public interface JeeslReportGroupingSelector <GROUPING extends UtilsStatus<GROUPING,L,D>, L extends UtilsLang,D extends UtilsDescription> extends JeeslReport
+public interface JeeslReportSelectorFilling <FILLING extends UtilsStatus<FILLING,L,D>, L extends UtilsLang,D extends UtilsDescription> extends JeeslReport
 {		
-	void setReportGrouping(GROUPING grouping);
+	void setReportSettingFilling(FILLING filling);
 }

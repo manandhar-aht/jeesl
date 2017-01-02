@@ -71,6 +71,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 				{
 					case string: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);	break;
 					case dble: XlsCellFactory.build(xlsRow,columnNr,style,(Double)value);	break;
+					case lng: XlsCellFactory.build(xlsRow,columnNr,style,(Long)value);	break;
 					default: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);
 				}
 				
@@ -123,10 +124,11 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		Cell cell = xlsRow.createCell(columnNr.intValue());
         cell.setCellStyle(style);
         
-        logger.info(value.getClass().getSimpleName()+" "+value.toString());
+//        logger.info(value.getClass().getSimpleName()+" "+value.toString());
         
         if(value instanceof String){cell.setCellValue((String)value);}
         else if(value instanceof Double){cell.setCellValue((Double)value);}
+        else if(value instanceof Long){cell.setCellValue((Long)value);}
         else {cell.setCellValue((String)value);}
         
         columnNr.add(1);

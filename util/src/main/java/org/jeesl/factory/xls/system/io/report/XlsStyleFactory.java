@@ -92,6 +92,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 			
 			CDT cdt = EjbIoReportColumnFactory.toCellDataType(c);
 			if(cdt.getCode().startsWith("numberDouble")){mapCellDataType.put(c,JeeslReportLayout.Data.dble);}
+			else if(cdt.getCode().startsWith("numberLong")){mapCellDataType.put(c,JeeslReportLayout.Data.lng);}
 			else{mapCellDataType.put(c,JeeslReportLayout.Data.string);}	
 		}
 	}

@@ -104,7 +104,7 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 	{
 		eGroup.setPosition(xGroup.getPosition());
 		eGroup.setVisible(xGroup.isVisible());
-		eGroup.setShowLabel(xGroup.isSetShowLabel());
+		eGroup.setShowLabel(xGroup.isShowLabel());
 		
 		if(xGroup.isSetLayout())
 		{

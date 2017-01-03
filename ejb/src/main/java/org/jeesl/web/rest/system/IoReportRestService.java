@@ -516,8 +516,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	
 	private COLUMN importColumn(GROUP eGroup, XlsColumn xColumn) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException
 	{
-		boolean debug = xColumn.getCode().equals("688133a2-d098-4fa1-949e-32c3ca9fecdd");
-		if(debug){logger.info("X SHOW LABEL: "+xColumn.isShowLabel());}
 		COLUMN eColumn;
 		try {eColumn = fReport.fByCode(cColumn, xColumn.getCode());}
 		catch (UtilsNotFoundException e)
@@ -528,7 +526,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		efColumn.update(fReport,eColumn,xColumn);
 		eColumn = fReport.save(eColumn);
 		eColumn = efColumn.updateLD(fReport,eColumn,xColumn);
-		if(debug){logger.info("E SHOW LABEL: "+eColumn.getShowLabel());}
 		return eColumn;
 	}
 	

@@ -93,6 +93,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 			CDT cdt = EjbIoReportColumnFactory.toCellDataType(c);
 			if(cdt.getCode().startsWith("numberDouble")){mapCellDataType.put(c,JeeslReportLayout.Data.dble);}
 			else if(cdt.getCode().startsWith("numberLong")){mapCellDataType.put(c,JeeslReportLayout.Data.lng);}
+			else if(cdt.getCode().startsWith("date")){mapCellDataType.put(c,JeeslReportLayout.Data.dte);}
 			else{mapCellDataType.put(c,JeeslReportLayout.Data.string);}	
 		}
 	}
@@ -129,8 +130,13 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
         	}
         	else if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.number.toString()))
         	{
-        		logger.info("Creating "+dataType.getSymbol());
+        		logger.info("Creating Number "+dataType.getSymbol());
         		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat(transformJavaToPoiPattern(dataType.getSymbol())));
+        	}
+        	else if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.date.toString()))
+        	{
+        		logger.info("Creating Date "+dataType.getSymbol());
+        		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat(dataType.getSymbol()));
         	}
         }
         

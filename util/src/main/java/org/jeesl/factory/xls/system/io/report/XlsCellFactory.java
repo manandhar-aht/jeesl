@@ -1,5 +1,9 @@
 package org.jeesl.factory.xls.system.io.report;
 
+import java.util.Date;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.JXPathNotFoundException;
 import org.apache.commons.lang.mutable.MutableInt;
@@ -72,6 +76,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 					case string: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);	break;
 					case dble: XlsCellFactory.build(xlsRow,columnNr,style,(Double)value);	break;
 					case lng: XlsCellFactory.build(xlsRow,columnNr,style,(Long)value);	break;
+					case dte: XlsCellFactory.build(xlsRow,columnNr,style,(XMLGregorianCalendar)value); break;
 					default: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);
 				}
 				
@@ -129,6 +134,13 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
         if(value instanceof String){cell.setCellValue((String)value);}
         else if(value instanceof Double){cell.setCellValue((Double)value);}
         else if(value instanceof Long){cell.setCellValue((Long)value);}
+        else if(value instanceof Date){cell.setCellValue((Date)value);}
+        else if(value instanceof XMLGregorianCalendar)
+        {
+        	XMLGregorianCalendar xmlGc = (XMLGregorianCalendar)value;
+        	cell.setCellValue(xmlGc.toGregorianCalendar().getTime());
+        }
+        
         else {cell.setCellValue((String)value);}
         
         columnNr.add(1);

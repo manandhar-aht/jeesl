@@ -18,27 +18,26 @@ import net.sf.ahtutils.xml.finance.Figures;
 
 public class JeeslTreeFigureFactory
 {
-	private final static Logger logger = LoggerFactory.getLogger(JeeslTreeFigureFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslTreeFigureFactory.class);
 	
 	public enum Type {data}
 	
 	public static <L extends UtilsLang, D extends UtilsDescription, A extends UtilsStatus<A,L,D>,TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-		Figures build(String localeCode, JeeslPivotFactory<L,D,A> pivotFactory, int lvl, List<A> aggregations, JeeslPivotAggregator dpa, List<EjbWithId> parents, TRANSFORMATION transformation)
+		Figures build(String localeCode, JeeslPivotFactory<L,D,A> pivotFactory, int lvl, List<A> aggregations, JeeslPivotAggregator dpa, List<EjbWithId> parents, JeeslReportSetting.Transformation transformation)
 	{	
-		JeeslReportSetting.Transformation myTransformation = JeeslReportSetting.Transformation.valueOf(transformation.getCode());
+		
 		
 		Figures data = XmlFiguresFactory.build(Type.data);
 		if(aggregations!=null && !aggregations.isEmpty())
 		{
-			data.getFigures().addAll(JeeslTreeFigureFactory.aggregationLevel(localeCode,pivotFactory,0,aggregations,dpa,new ArrayList<EjbWithId>(),myTransformation));
+			data.getFigures().addAll(JeeslTreeFigureFactory.aggregationLevel(localeCode,pivotFactory,0,aggregations,dpa,new ArrayList<EjbWithId>(),transformation));
 		}
 		
 		Figures figures = XmlFiguresFactory.build();
 		figures.getFigures().add(data);
 		
-		if(myTransformation.equals(JeeslReportSetting.Transformation.last))
+		if(transformation.equals(JeeslReportSetting.Transformation.last))
 		{
-			logger.info("Transformation "+myTransformation);
 			Figures last = XmlFiguresFactory.build("transformation");
 			figures.getFigures().add(last);
 		}
@@ -60,14 +59,34 @@ public class JeeslTreeFigureFactory
 			path.addAll(parents);
 			path.add(ejb);
 			
-			if(lvl<aggregations.size()-1)
+			if(lvl+1==aggregations.size())
+			{
+				switch(transformation)
+				{
+					case none:	figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path));
+								break;
+					default: break;
+				}
+				
+			}
+			else if(lvl+1==aggregations.size()-1)
+			{
+				switch(transformation)
+				{
+					case none:	figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path));
+								figures.getFigures().addAll(aggregationLevel(localeCode,pivotFactory,lvl+1,aggregations,dpa,path,transformation));
+								break;
+					case last:	List<EjbWithId> last = dpa.list(pivotFactory.getIndexFor(aggregations.get(lvl+1)));
+								figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path,last));
+								break;
+					default: break;
+				}
+				
+			}
+			else if(lvl+1<aggregations.size())
 			{
 				figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path));
 				figures.getFigures().addAll(aggregationLevel(localeCode,pivotFactory,lvl+1,aggregations,dpa,path,transformation));
-			}
-			else if(lvl==aggregations.size()-1)
-			{
-				figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path));
 			}
 			
 			if(XmlFiguresFactory.hasFinanceElements(figures)){list.add(figures);}

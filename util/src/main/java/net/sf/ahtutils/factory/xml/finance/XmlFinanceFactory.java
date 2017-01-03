@@ -58,6 +58,13 @@ public class XmlFinanceFactory
 		}
 	}
 	
+	public static Finance id(long id)
+	{
+		Finance xml = new Finance();
+		xml.setId(id);
+		return xml;
+	}
+	
 	public static Finance id(long id, double value)
 	{
 		Finance xml = new Finance();

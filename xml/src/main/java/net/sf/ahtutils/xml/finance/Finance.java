@@ -2,9 +2,12 @@
 package net.sf.ahtutils.xml.finance;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -18,6 +21,9 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/finance}finance" maxOccurs="unbounded"/&gt;
+ *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="nr" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -32,13 +38,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
+@XmlType(name = "", propOrder = {
+    "finance"
+})
 @XmlRootElement(name = "finance")
 public class Finance
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
+    @XmlElement(required = true)
+    protected List<Finance> finance;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "nr")
@@ -51,6 +61,43 @@ public class Finance
     protected Double value;
     @XmlAttribute(name = "symbol")
     protected String symbol;
+
+    /**
+     * Gets the value of the finance property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the finance property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getFinance().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Finance }
+     * 
+     * 
+     */
+    public List<Finance> getFinance() {
+        if (finance == null) {
+            finance = new ArrayList<Finance>();
+        }
+        return this.finance;
+    }
+
+    public boolean isSetFinance() {
+        return ((this.finance!= null)&&(!this.finance.isEmpty()));
+    }
+
+    public void unsetFinance() {
+        this.finance = null;
+    }
 
     /**
      * Gets the value of the id property.

@@ -14,4 +14,5 @@ public interface JeeslPivotFactory <L extends UtilsLang, D extends UtilsDescript
 	String buildTreeLevelName(String localeCode, EjbWithId ejb);
 	int getIndexFor(A aggregation);
 	List<Finance> buildFinance(JeeslPivotAggregator dpa, List<EjbWithId> path);
+	List<Finance> buildFinance(JeeslPivotAggregator dpa, List<EjbWithId> path, List<EjbWithId> last);
 }

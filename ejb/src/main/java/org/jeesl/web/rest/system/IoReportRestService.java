@@ -109,7 +109,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<TEMPLATE> cTemplate;
 	private final Class<CELL> cCell;
 	private final Class<STYLE> cStyle;
-	private final Class<CDT> cDataType;
 	private final Class<CW> cColumWidth;
 	private final Class<RT> cRt;
 	private final Class<FILLING> cFilling;
@@ -150,7 +149,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cTemplate=cTemplate;
 		this.cCell=cCell;
 		this.cStyle=cStyle;
-		this.cDataType=cDataType;
 		this.cColumWidth=cColumWidth;
 		this.cRt=cRt;
 		

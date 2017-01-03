@@ -23,6 +23,12 @@ public class TestXmlFinance extends AbstractXmlFinanceTest<Finance>
     	xml.setSymbol("mySymbol");
     	xml.setValue(567.89);
     	    	
+    	if(withChilds)
+    	{
+    		xml.getFinance().add(TestXmlFinance.create(false));
+    		xml.getFinance().add(TestXmlFinance.create(false));
+    	}
+    	
     	return xml;
     }
 	

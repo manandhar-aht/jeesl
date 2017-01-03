@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
+import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xls.system.io.report.XlsFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
@@ -30,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -59,7 +61,12 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	
 	protected boolean debugOnInfo;
 	
+	private final Class<L> cL;
+	private final Class<D> cD;
 	private final Class<REPORT> cReport;
+	private final Class<CATEGORY> cCategory;
+
+	
 	protected final String localeCode;
 	
 	protected List<String> headers; public List<String> getHeaders() {return headers;}
@@ -77,6 +84,9 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected FILLING reportFilling;
 	protected TRANSFORMATION reportSettingTransformation;
 	
+	protected EjbLangFactory<L> efLang;
+	protected ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport;
+	protected EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efColumn;
 	protected XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xlsFactory;
 	
 	protected JsonFlatFigures flats; public JsonFlatFigures getFlats() {return flats;}
@@ -87,8 +97,11 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	private Comparator<ROW> comparatorRow;
 	private Comparator<CELL> comparatorCell;
 
-	public AbstractJeeslReport(final Class<REPORT> cReport, String localeCode)
+	public AbstractJeeslReport(String localeCode, final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
 	{
+		this.cL=cL;
+		this.cD=cD;
+		this.cCategory=cCategory;
 		this.cReport=cReport;
 		this.localeCode=localeCode;
 		debugOnInfo = false;
@@ -103,10 +116,14 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		buildHeaders();
 	}
 	
-	protected void initIo(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, Class<?> classReport, final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumnWidth, Class<RT> cRowType, final Class<TRANSFORMATION> cTransformation)
+	protected void initIo(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, Class<?> classReport, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumnWidth, Class<RT> cRowType, final Class<TRANSFORMATION> cTransformation)
 	{
 		if(fReport!=null)
 		{
+			ffReport = ReportFactoryFactory.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType);
+			efLang = EjbLangFactory.createFactory(cL);
+			efColumn = ffReport.column();
+			
 			try {reportSettingTransformation = fReport.fByCode(cTransformation, JeeslReportSetting.Transformation.none);}
 			catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 			
@@ -122,38 +139,14 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 						Collections.sort(ioWorkbook.getSheets(), comparatorSheet);
 						ioSheet = fReport.load(ioWorkbook.getSheets().get(0), true);
 						
-						mapGroupChilds = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
-						groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
-						columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
-			
-						Collections.sort(groups, comparatorGroup);
-						Collections.sort(columns, comparatorColumn);
-						
-						showHeaderGroup=false;
-						showHeaderColumn=false;
-						for(GROUP g : groups)
-						{
-							if(g.isVisible())
-							{
-								if(g.getShowLabel()){showHeaderGroup=true;}
-								for(COLUMN c : g.getColumns())
-								{
-									if(c.isVisible() && c.getShowLabel())
-									{
-										{showHeaderColumn=true;}
-									}
-								}
-							}
-						}
+						calculateSheetSettings();
+						xlsFactory = new XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType,ioWorkbook);
 						
 						for(SHEET s : ioWorkbook.getSheets())
 						{
 							Collections.sort(s.getGroups(), comparatorGroup);
 							Collections.sort(s.getRows(), comparatorRow);
-							for(GROUP g : s.getGroups())
-							{
-								Collections.sort(g.getColumns(), comparatorColumn);
-							}
+							for(GROUP g : s.getGroups()) {Collections.sort(g.getColumns(), comparatorColumn);}
 							for(ROW r : s.getRows())
 							{
 								if(r.getTemplate()!=null)
@@ -163,7 +156,6 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 								}
 							}
 						}
-						xlsFactory = new XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType,ioWorkbook);
 					}
 				}
 			}
@@ -187,6 +179,36 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 			}
 		}
 		else{logger.warn("Trying to super.initIo(), but "+JeeslIoReportFacade.class.getSimpleName()+" is null");}
+	}
+	
+	protected void calculateSheetSettings()
+	{
+		mapGroupChilds = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
+		groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
+		columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
+
+		Collections.sort(groups, comparatorGroup);
+		Collections.sort(columns, comparatorColumn);
+		
+		showHeaderGroup=false;
+		showHeaderColumn=false;
+		for(GROUP g : groups)
+		{
+			if(g.isVisible())
+			{
+				if(g.getShowLabel()){showHeaderGroup=true;}
+				for(COLUMN c : g.getColumns())
+				{
+					if(c.isVisible() && c.getShowLabel())
+					{
+						{showHeaderColumn=true;}
+					}
+				}
+			}
+		}
+		
+//		xlsFactory = new XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType,ioWorkbook);
+
 	}
 	
 	private void buildHeaders()

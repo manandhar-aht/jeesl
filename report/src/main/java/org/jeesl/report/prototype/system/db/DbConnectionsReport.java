@@ -46,9 +46,9 @@ public class DbConnectionsReport <L extends UtilsLang,D extends UtilsDescription
 
 	private UtilsDbFacade fDb;
 	
-	public DbConnectionsReport(final Class<REPORT> cReport, String localeCode, UtilsDbFacade fDb)
+	public DbConnectionsReport(String localeCode, UtilsDbFacade fDb, final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
 	{
-		super(cReport,localeCode);
+		super(localeCode,cL,cD,cCategory,cReport);
 		this.fDb=fDb;
 		
 		headers.add("Transaction");

@@ -14,6 +14,7 @@ import org.jeesl.model.xml.JeeslNsPrefixMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.report.ColumnGroup;
 import net.sf.ahtutils.xml.report.DataAssociation;
 import net.sf.ahtutils.xml.report.DataHandler;
@@ -297,5 +298,15 @@ public class ReportXpath
 			if(s.getType().equals(type.toString())){return s;}
 		}
 		throw new ExlpXpathNotFoundException("No "+Style.class.getSimpleName()+" for type="+type);
+	}
+	
+	public static Figures getFigures(List<Figures> list, String code) throws ExlpXpathNotFoundException
+	{
+		for(net.sf.ahtutils.xml.finance.Figures figures : list)
+		{
+			if(figures.getCode().equals(code)){return figures;}
+		}
+		
+		throw new ExlpXpathNotFoundException("No "+Figures.class.getSimpleName()+" for code="+code);
 	}
 }

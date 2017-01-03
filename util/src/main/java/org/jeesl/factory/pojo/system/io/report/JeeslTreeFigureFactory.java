@@ -41,7 +41,7 @@ public class JeeslTreeFigureFactory
 			figures.getFigures().add(last);
 		}
 		
-		return data;
+		return figures;
 	}
 	
 	

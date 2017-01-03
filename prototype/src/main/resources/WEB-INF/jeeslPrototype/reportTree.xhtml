@@ -1,0 +1,84 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+>
+	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
+
+	<p:columns var="col" value="#{report.columns}">
+		<h:outputText rendered="#{col.queryCell eq 'g1'}" value="#{flat.g1}"/>
+		
+		<h:outputText rendered="#{col.queryCell eq 'd1'}" value="#{flat.d1}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd2'}" value="#{flat.d2}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd3'}" value="#{flat.d3}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd4'}" value="#{flat.d4}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd5'}" value="#{flat.d5}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd6'}" value="#{flat.d6}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd7'}" value="#{flat.d7}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd8'}" value="#{flat.d8}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd9'}" value="#{flat.d9}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd10'}" value="#{flat.d10}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd11'}" value="#{flat.d11}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd12'}" value="#{flat.d12}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd13'}" value="#{flat.d13}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd14'}" value="#{flat.d14}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd15'}" value="#{flat.d15}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd16'}" value="#{flat.d16}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+		<h:outputText rendered="#{col.queryCell eq 'd17'}" value="#{flat.d17}">
+			<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+			<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+		</h:outputText>
+	</p:columns>	
+	
+</ui:composition>

@@ -300,11 +300,11 @@ public class ReportXpath
 		throw new ExlpXpathNotFoundException("No "+Style.class.getSimpleName()+" for type="+type);
 	}
 	
-	public static Figures getFigures(List<Figures> list, String code) throws ExlpXpathNotFoundException
+	public static <E extends Enum<E>> Figures getFigures(E code, List<Figures> list) throws ExlpXpathNotFoundException
 	{
 		for(net.sf.ahtutils.xml.finance.Figures figures : list)
 		{
-			if(figures.getCode().equals(code)){return figures;}
+			if(figures.getCode().equals(code.toString())){return figures;}
 		}
 		
 		throw new ExlpXpathNotFoundException("No "+Figures.class.getSimpleName()+" for code="+code);

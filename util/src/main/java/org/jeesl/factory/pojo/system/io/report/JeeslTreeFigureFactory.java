@@ -20,12 +20,14 @@ public class JeeslTreeFigureFactory
 {
 	private final static Logger logger = LoggerFactory.getLogger(JeeslTreeFigureFactory.class);
 	
+	public enum Type {data}
+	
 	public static <L extends UtilsLang, D extends UtilsDescription, A extends UtilsStatus<A,L,D>,TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 		Figures build(String localeCode, JeeslPivotFactory<L,D,A> pivotFactory, int lvl, List<A> aggregations, JeeslPivotAggregator dpa, List<EjbWithId> parents, TRANSFORMATION transformation)
 	{	
 		JeeslReportSetting.Transformation myTransformation = JeeslReportSetting.Transformation.valueOf(transformation.getCode());
 		
-		Figures data = XmlFiguresFactory.build("data");
+		Figures data = XmlFiguresFactory.build(Type.data);
 		if(aggregations!=null && !aggregations.isEmpty())
 		{
 			data.getFigures().addAll(JeeslTreeFigureFactory.aggregationLevel(localeCode,pivotFactory,0,aggregations,dpa,new ArrayList<EjbWithId>(),myTransformation));

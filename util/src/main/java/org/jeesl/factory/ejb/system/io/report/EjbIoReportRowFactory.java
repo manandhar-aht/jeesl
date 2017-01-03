@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
 import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
+import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -41,7 +43,8 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 								ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								TEMPLATE extends JeeslReportTemplate<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
-								STYLE extends JeeslReportStyle<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,CDT extends UtilsStatus<CDT,L,D>,CW extends UtilsStatus<CW,L,D>,
+								STYLE extends JeeslReportStyle<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
+								CDT extends UtilsStatus<CDT,L,D>,CW extends UtilsStatus<CW,L,D>,
 								RT extends UtilsStatus<RT,L,D>,
 								ENTITY extends EjbWithId,
 								ATTRIBUTE extends EjbWithId,
@@ -51,13 +54,20 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 	final static Logger logger = LoggerFactory.getLogger(EjbIoReportRowFactory.class);
 	
 	final Class<ROW> cRow;
+	final Class<TEMPLATE> cTemplate;
+	final Class<CDT> cDataType;
+	final Class<RT> cRt;
+	
 	
 	private JeeslDbLangUpdater<ROW,L> dbuLang;
 	private JeeslDbDescriptionUpdater<ROW,D> dbuDescription;
     
-	public EjbIoReportRowFactory(final Class<L> cL,final Class<D> cD,final Class<ROW> cRow)
+	public EjbIoReportRowFactory(final Class<L> cL,final Class<D> cD,final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CDT> cDataType, final Class<RT> cRt)
 	{       
         this.cRow = cRow;
+        this.cTemplate = cTemplate;
+        this.cRt = cRt;
+        this.cDataType=cDataType;
         dbuLang = JeeslDbLangUpdater.factory(cRow, cL);
         dbuDescription = JeeslDbDescriptionUpdater.factory(cRow, cD);
 	}
@@ -79,7 +89,7 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 		return ejb;
 	}
 	
-	public ROW build(SHEET sheet, Row row, RT eRowType, CDT eDataType)
+	public ROW build(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, SHEET sheet, Row row) throws UtilsNotFoundException
 	{
 		ROW ejb = null;
 		try
@@ -87,19 +97,23 @@ public class EjbIoReportRowFactory<L extends UtilsLang,D extends UtilsDescriptio
 			ejb = cRow.newInstance();
 			ejb.setCode(row.getCode());
 			ejb.setSheet(sheet);
-			ejb = update(ejb,row,eRowType,eDataType);
+			ejb = update(fReport,ejb,row);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		return ejb;
 	}
 		
-	public ROW update(ROW eRow, Row xRow, RT eRowType, CDT eDataType)
+	public ROW update(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, ROW eRow, Row xRow) throws UtilsNotFoundException
 	{
+		CDT eDataType = null;if(xRow.isSetDataType()){eDataType = fReport.fByCode(cDataType, xRow.getDataType().getCode());}
+		TEMPLATE eTemplate = null;if(xRow.isSetTemplate()){eTemplate = fReport.fByCode(cTemplate, xRow.getTemplate().getCode());}
+		
+		eRow.setType(fReport.fByCode(cRt, xRow.getType().getCode()));
 		eRow.setPosition(xRow.getPosition());
 		eRow.setVisible(xRow.isVisible());
-		eRow.setType(eRowType);
 		eRow.setDataType(eDataType);
+		eRow.setTemplate(eTemplate);
 		
 		if(xRow.isSetQueries())
 		{			

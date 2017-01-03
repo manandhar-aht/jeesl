@@ -162,7 +162,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		xfTemplate = new XmlTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(ReportQuery.exTemplate());
 		xfStyle = new XmlStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(ReportQuery.exStyle());
 		
-		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumWidth);
+		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumWidth,cRt);
 		efReport = ffReport.report();
 		efWorkbook = ffReport.workbook();
 		efSheet = ffReport.sheet();
@@ -531,17 +531,14 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	
 	private ROW importRow(SHEET eSheet, Row xRow) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException, UtilsProcessingException
 	{
-		RT eRowType = fReport.fByCode(cRt, xRow.getType().getCode());
-		CDT eDataType = null;if(xRow.getDataType()!=null){eDataType = fReport.fByCode(cDataType, xRow.getDataType().getCode());}
-		
 		ROW eRow;
 		try {eRow = fReport.fByCode(cRow, xRow.getCode());}
 		catch (UtilsNotFoundException e)
 		{
-			eRow = efRow.build(eSheet,xRow,eRowType,eDataType);
+			eRow = efRow.build(fReport,eSheet,xRow);
 			eRow = fReport.save(eRow);
 		}
-		eRow = efRow.update(eRow,xRow,eRowType,eDataType);
+		eRow = efRow.update(fReport,eRow,xRow);
 		eRow = fReport.save(eRow);
 		eRow = efRow.updateLD(fReport,eRow, xRow);
 

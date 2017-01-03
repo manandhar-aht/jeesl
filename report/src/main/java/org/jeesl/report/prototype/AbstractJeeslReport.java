@@ -76,7 +76,8 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	
 	protected List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	protected List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
-	protected Map<GROUP,Integer> mapGroupChilds; public Map<GROUP, Integer> getMapGroupChilds() {return mapGroupChilds;}
+	protected Map<GROUP,Integer> mapGroupChilds; public Map<GROUP,Integer> getMapGroupChilds() {return mapGroupChilds;}
+	protected Map<GROUP,List<COLUMN>> mapGroupColumns; public Map<GROUP,List<COLUMN>> getMapGroupColumns() {return mapGroupColumns;}
 
 	protected REPORT ioReport; public REPORT getIoReport() {return ioReport;}
 	protected SHEET ioSheet; public SHEET getIoSheet() {return ioSheet;}
@@ -184,6 +185,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected void calculateSheetSettings()
 	{
 		mapGroupChilds = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
+		mapGroupColumns = EjbIoReportColumnGroupFactory.toMapVisibleGroupColumns(ioSheet);
 		groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
 		columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
 

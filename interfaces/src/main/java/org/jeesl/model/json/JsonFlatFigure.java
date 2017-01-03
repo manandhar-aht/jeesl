@@ -2,6 +2,7 @@ package org.jeesl.model.json;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -65,11 +66,24 @@ public class JsonFlatFigure implements Serializable
 	public String getG11() {return g11;}
 	public void setG11(String g11) {this.g11 = g11;}
 	
+	
 	@JsonProperty("Data")
 	private Map<Integer,Double> data;
 	public Map<Integer, Double> getData() {return data;}
 	public void setData(Map<Integer, Double> data) {this.data = data;}
+	
+	
+	@JsonProperty("List1")
+	private List<Double> list1;
+	public List<Double> getList1() {return list1;}
+	public void setList1(List<Double> list1) {this.list1 = list1;}
 
+	@JsonProperty("List2")
+	private List<Double> list2;
+	public List<Double> getList2() {return list2;}
+	public void setList2(List<Double> list2) {this.list2 = list2;}
+
+	
 	@JsonProperty("Data1")
 	private Double d1;
 	public Double getD1() {return d1;}
@@ -129,7 +143,6 @@ public class JsonFlatFigure implements Serializable
 	private Double d12;
 	public Double getD12() {return d12;}
 	public void setD12(Double d12) {this.d12 = d12;}
-	
 	
 	@JsonProperty("Data13")
 	private Double d13;

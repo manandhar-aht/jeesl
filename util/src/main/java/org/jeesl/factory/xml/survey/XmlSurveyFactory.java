@@ -39,12 +39,12 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 		if(q.isSetStatus()){xfStatus = new XmlStatusFactory<SS,L,D>(q.getStatus());}
 	}
 	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<SURVEY> cSurvey,Class<TEMPLATE> cTemplate,Class<SECTION> cSection,Class<DATA> cData)
+	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<SURVEY> cSurvey,Class<SECTION> cSection,Class<DATA> cData)
 	{
 		this.fSurvey=fSurvey;
 		this.cSurvey=cSurvey;
 		
-		if(q.isSetData()){xfData.lazyLoad(fSurvey,cTemplate,cSection,cData);}
+		if(q.isSetData()){xfData.lazyLoad(fSurvey,cSection,cData);}
 	}
 	
 	public Survey build(SURVEY ejb)

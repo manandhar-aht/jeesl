@@ -1,5 +1,9 @@
 package net.sf.ahtutils.factory.xml.finance;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,5 +88,29 @@ public class XmlFinanceFactory
 	public static Finance build()
 	{
 		return new Finance();
+	}
+	
+	public static List<Finance> pivot(Double[] values, List<EjbWithId> last, Map<EjbWithId,Double[]> mapLast)
+	{
+		List<Finance> finances = new ArrayList<Finance>();
+		if(values!=null)
+		{
+			for(int i=0;i<values.length;i++)
+			{
+				Finance f = XmlFinanceFactory.nr(i+1,values[i]);
+			
+				if(last!=null)
+				{
+					for(EjbWithId entity : last)
+					{
+						Double[] lastValues = mapLast.get(entity);
+						if(lastValues!=null){f.getFinance().add(XmlFinanceFactory.id(entity.getId(), lastValues[i]));}
+						else {f.getFinance().add(XmlFinanceFactory.id(entity.getId()));}
+					}
+				}
+				finances.add(f);
+			}
+		}
+		return finances;
 	}
 }

@@ -25,7 +25,6 @@ public class JeeslTreeFigureFactory
 	public static <L extends UtilsLang, D extends UtilsDescription, A extends UtilsStatus<A,L,D>,TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 		Figures build(String localeCode, JeeslPivotFactory<L,D,A> pivotFactory, int lvl, List<A> aggregations, JeeslPivotAggregator dpa, List<EjbWithId> parents, JeeslReportSetting.Transformation transformation)
 	{	
-		
 		Figures data = XmlFiguresFactory.build(Type.data);
 		if(aggregations!=null && !aggregations.isEmpty())
 		{
@@ -43,7 +42,6 @@ public class JeeslTreeFigureFactory
 		
 		return figures;
 	}
-	
 	
 	private static <L extends UtilsLang, D extends UtilsDescription, A extends UtilsStatus<A,L,D>, TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 		List<Figures> aggregationLevel(String localeCode, JeeslPivotFactory<L,D,A> pivotFactory, int lvl, List<A> aggregations, JeeslPivotAggregator dpa, List<EjbWithId> parents, JeeslReportSetting.Transformation transformation)
@@ -86,7 +84,6 @@ public class JeeslTreeFigureFactory
 			}
 			else if(lvl+1<aggregations.size())
 			{
-//				figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path));
 				figures.getFigures().addAll(aggregationLevel(localeCode,pivotFactory,lvl+1,aggregations,dpa,path,transformation));
 				switch(transformation)
 				{

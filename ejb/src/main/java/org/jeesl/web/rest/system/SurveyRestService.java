@@ -124,7 +124,7 @@ public class SurveyRestService <L extends UtilsLang,
 		xfSurveys = new XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exSurveys).getSurveys().getSurvey().get(0));
 		
 		xfSurvey = new XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exSurvey).getSurvey());
-		xfSurvey.lazyLoad(fSurvey,cSurvey,cTEMPLATE,cSection,cData);
+		xfSurvey.lazyLoad(fSurvey,cSurvey,cSection,cData);
 		
 		xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.surveyAnswers));
 		

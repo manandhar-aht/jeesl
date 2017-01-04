@@ -24,7 +24,6 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 	final static Logger logger = LoggerFactory.getLogger(XmlDataFactory.class);
 		
 	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
-	private Class<TEMPLATE> cTemplate;
 	private Class<DATA> cData;
 	
 	private XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfSurvey;
@@ -45,10 +44,9 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 		if(q.isSetSection()){xfSection = new XmlSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSection().get(0));}
 	}
 	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<TEMPLATE> cTemplate, Class<SECTION> cSection,Class<DATA> cData)
+	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, Class<SECTION> cSection,Class<DATA> cData)
 	{
 		this.fSurvey=fSurvey;
-		this.cTemplate=cTemplate;
 		this.cData=cData;
 		if(q.isSetSection()){xfSection.lazyLoad(fSurvey, cSection);}
 	}
@@ -74,7 +72,7 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 		if(q.isSetSection())
 		{
 			TEMPLATE template = ejb.getSurvey().getTemplate();
-			if(fSurvey!=null){template = fSurvey.load(cTemplate, template);}
+			if(fSurvey!=null){template = fSurvey.load(template);}
 			for(SECTION section : template.getSections())
 			{
 				xml.getSection().add(xfSection.build(section));

@@ -42,7 +42,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,SU
 	
 	public Section build(SECTION ejb)
 	{
-		if(fSurvey!=null){ejb = fSurvey.load(cSection,ejb);}
+		if(fSurvey!=null){ejb = fSurvey.load(ejb);}
 		Section xml = new Section();
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}

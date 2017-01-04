@@ -26,7 +26,6 @@ public class JeeslTreeFigureFactory
 		Figures build(String localeCode, JeeslPivotFactory<L,D,A> pivotFactory, int lvl, List<A> aggregations, JeeslPivotAggregator dpa, List<EjbWithId> parents, JeeslReportSetting.Transformation transformation)
 	{	
 		
-		
 		Figures data = XmlFiguresFactory.build(Type.data);
 		if(aggregations!=null && !aggregations.isEmpty())
 		{
@@ -59,6 +58,9 @@ public class JeeslTreeFigureFactory
 			path.addAll(parents);
 			path.add(ejb);
 			
+			List<EjbWithId> last = null;
+			if(lvl+1<aggregations.size()){last = dpa.list(pivotFactory.getIndexFor(aggregations.get(aggregations.size()-1)));}
+			
 			if(lvl+1==aggregations.size())
 			{
 				switch(transformation)
@@ -76,8 +78,7 @@ public class JeeslTreeFigureFactory
 					case none:	figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path));
 								figures.getFigures().addAll(aggregationLevel(localeCode,pivotFactory,lvl+1,aggregations,dpa,path,transformation));
 								break;
-					case last:	List<EjbWithId> last = dpa.list(pivotFactory.getIndexFor(aggregations.get(lvl+1)));
-								figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path,last));
+					case last:	figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path,last));
 								break;
 					default: break;
 				}
@@ -85,8 +86,14 @@ public class JeeslTreeFigureFactory
 			}
 			else if(lvl+1<aggregations.size())
 			{
-				figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path));
+//				figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path));
 				figures.getFigures().addAll(aggregationLevel(localeCode,pivotFactory,lvl+1,aggregations,dpa,path,transformation));
+				switch(transformation)
+				{
+					case none:	figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path)); break;
+					case last:	figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path,last)); break;
+					default: break;
+				}
 			}
 			
 			if(XmlFiguresFactory.hasFinanceElements(figures)){list.add(figures);}

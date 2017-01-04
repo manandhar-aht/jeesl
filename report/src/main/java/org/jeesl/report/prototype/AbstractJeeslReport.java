@@ -3,6 +3,7 @@ package org.jeesl.report.prototype;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,8 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xls.system.io.report.XlsFactory;
+import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
+import org.jeesl.interfaces.controller.report.JeeslPivotFactory;
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
@@ -36,6 +39,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.exlp.util.io.StringUtil;
 
 public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDescription,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -66,7 +70,6 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	private final Class<REPORT> cReport;
 	private final Class<CATEGORY> cCategory;
 
-	
 	protected final String localeCode;
 	
 	protected List<String> headers; public List<String> getHeaders() {return headers;}
@@ -74,10 +77,12 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	private boolean showHeaderGroup; public boolean isShowHeaderGroup() {return showHeaderGroup;}
 	private boolean showHeaderColumn; public boolean isShowHeaderColumn() {return showHeaderColumn;}
 	
+	protected List<GROUP> groupsAll; public List<GROUP> getGroupsAll() {return groupsAll;}
 	protected List<GROUP> groups; public List<GROUP> getGroups() {return groups;}
 	protected List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
 	protected Map<GROUP,Integer> mapGroupChilds; public Map<GROUP,Integer> getMapGroupChilds() {return mapGroupChilds;}
 	protected Map<GROUP,List<COLUMN>> mapGroupColumns; public Map<GROUP,List<COLUMN>> getMapGroupColumns() {return mapGroupColumns;}
+	protected Map<GROUP,Boolean> mapGroupVisibilityToggle; public Map<GROUP, Boolean> getMapGroupVisibilityToggle() {return mapGroupVisibilityToggle;}
 
 	protected REPORT ioReport; public REPORT getIoReport() {return ioReport;}
 	protected SHEET ioSheet; public SHEET getIoSheet() {return ioSheet;}
@@ -89,6 +94,8 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport;
 	protected EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efColumn;
 	protected XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xlsFactory;
+	
+	protected JeeslComparatorProvider<EjbWithId> cProvider;
 	
 	protected JsonFlatFigures flats; public JsonFlatFigures getFlats() {return flats;}
 	
@@ -113,7 +120,9 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		comparatorRow = new IoReportRowComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportRowComparator.Type.position);
 		comparatorCell = new IoReportCellComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>().factory(IoReportCellComparator.Type.position);
 		
+		mapGroupVisibilityToggle = new HashMap<GROUP,Boolean>();
 		showHeaderGroup = true;
+		
 		buildHeaders();
 	}
 	
@@ -140,9 +149,13 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 						Collections.sort(ioWorkbook.getSheets(), comparatorSheet);
 						ioSheet = fReport.load(ioWorkbook.getSheets().get(0), true);
 						
+						// Only set the toggled visibilities to true on the first time
+						if(mapGroupVisibilityToggle.isEmpty()){for(GROUP g : ioSheet.getGroups()){mapGroupVisibilityToggle.put(g,true);}}
+						
 						calculateSheetSettings();
 						xlsFactory = new XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType,ioWorkbook);
 						
+						//Sorting of the report structure (and lazyloading of Template)
 						for(SHEET s : ioWorkbook.getSheets())
 						{
 							Collections.sort(s.getGroups(), comparatorGroup);
@@ -164,11 +177,13 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 			
 			if(debugOnInfo)
 			{
+				logger.info(StringUtil.stars());
 				logger.info("Debugging: "+classReport.getSimpleName());
-				logger.info("... showGroupings: "+showHeaderGroup);
+				logger.info("ShowHeaderGroup: "+showHeaderGroup);
+				logger.info("showHeaderColumn: "+showHeaderColumn);
 				for(GROUP g : groups)
 				{
-					logger.info("\t"+g.getClass().getSimpleName()+" ("+mapGroupChilds.get(g)+"): "+g.getName().get(localeCode).getLang());
+					logger.info("\t"+g.getPosition()+". "+g.getClass().getSimpleName()+" (childs:"+mapGroupChilds.get(g)+"): "+g.getName().get(localeCode).getLang());
 					for(COLUMN c : columns)
 					{
 						if(c.getGroup().equals(g))
@@ -182,13 +197,51 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		else{logger.warn("Trying to super.initIo(), but "+JeeslIoReportFacade.class.getSimpleName()+" is null");}
 	}
 	
+	protected <A extends UtilsStatus<A,L,D>> void applyTransformation(JeeslReportSetting.Transformation transformation, List<EjbWithId> last, String[] localeCodes, JeeslPivotFactory<L,D,A> pf)
+	{
+		if(transformation.equals(JeeslReportSetting.Transformation.last))
+		{
+			for(GROUP group : groups)
+			{
+				if(group.getColumns().size()==1 && !group.getColumns().get(0).getQueryCell().startsWith("g"))
+				{
+					COLUMN original = group.getColumns().get(0);
+					group.getColumns().clear();
+					group.setQueryCell(original.getQueryCell().replaceAll("d","list"));
+					int arrayIndex = 0;
+					for(EjbWithId ejb : last)
+					{
+						COLUMN c = efColumn.build(group);
+						c.setId(group.getColumns().size()+1);
+						c.setPosition(group.getColumns().size()+1);
+						c.setColumWidth(original.getColumWidth());
+						c.setDataType(original.getDataType());
+						c.setVisible(true);
+						c.setShowLabel(true);
+						c.setPosition(arrayIndex);
+						c.setName(efLang.createEmpty(localeCodes));
+						for(String localeCode : localeCodes){c.getName().get(localeCode).setLang(pf.buildTreeLevelName(localeCode, ejb));}
+						c.setQueryCell(original.getQueryCell());
+						
+						group.getColumns().add(c);
+						arrayIndex++;
+					}
+				}
+			}
+		}
+		calculateSheetSettings();
+	}
+	
 	protected void calculateSheetSettings()
 	{
+		groupsAll = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
+		groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet,mapGroupVisibilityToggle);
+		columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet,mapGroupVisibilityToggle);
+		
 		mapGroupChilds = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
 		mapGroupColumns = EjbIoReportColumnGroupFactory.toMapVisibleGroupColumns(ioSheet);
-		groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
-		columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
 
+		Collections.sort(groupsAll, comparatorGroup);
 		Collections.sort(groups, comparatorGroup);
 		Collections.sort(columns, comparatorColumn);
 		
@@ -196,21 +249,27 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		showHeaderColumn=false;
 		for(GROUP g : groups)
 		{
-			if(g.isVisible())
+			if(g.getShowLabel()){showHeaderGroup=true;}
+			for(COLUMN c : g.getColumns())
 			{
-				if(g.getShowLabel()){showHeaderGroup=true;}
-				for(COLUMN c : g.getColumns())
+				if(c.isVisible() && c.getShowLabel())
 				{
-					if(c.isVisible() && c.getShowLabel())
-					{
-						{showHeaderColumn=true;}
-					}
+					{showHeaderColumn=true;}
 				}
 			}
+		}		
+	}
+	
+	public void toggleGroupVisibility(GROUP g)
+	{
+		if(mapGroupVisibilityToggle.containsKey(g))
+		{
+			mapGroupVisibilityToggle.put(g, !mapGroupVisibilityToggle.get(g));
 		}
-		
-//		xlsFactory = new XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType,ioWorkbook);
-
+		else
+		{
+			mapGroupVisibilityToggle.put(g,true);
+		}
 	}
 	
 	private void buildHeaders()

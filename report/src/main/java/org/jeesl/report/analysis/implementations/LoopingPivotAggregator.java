@@ -1,11 +1,14 @@
 package org.jeesl.report.analysis.implementations;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
 import org.jeesl.model.pojo.DynamicPivotData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +24,14 @@ public class LoopingPivotAggregator implements JeeslPivotAggregator
     
     private List<Set<EjbWithId>> entitySet;
     private List<DynamicPivotData> list;
+    private JeeslComparatorProvider<EjbWithId> cProvider;
     
-    public LoopingPivotAggregator(int size)
+    public LoopingPivotAggregator(JeeslComparatorProvider<EjbWithId> cProvider, int size)
     {
+    	this.cProvider=cProvider;
     	list = new ArrayList<DynamicPivotData>();
     	entitySet = new ArrayList<Set<EjbWithId>>();
     
-    	
     	for(int i=0;i<size;i++)
     	{
     		entitySet.add(new HashSet<EjbWithId>());
@@ -67,6 +71,13 @@ public class LoopingPivotAggregator implements JeeslPivotAggregator
     	{
     		if(ejb!=null){list.add(ejb);}
     	}
+    	
+    	if(!list.isEmpty())
+    	{
+    		Comparator<EjbWithId> c = cProvider.provide(list.get(0));
+    		if(c!=null){Collections.sort(list, c);}
+    	}
+    	
     	return list;
     }
       

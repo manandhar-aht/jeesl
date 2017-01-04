@@ -61,4 +61,12 @@ public class ObjectFactory {
         return new Location();
     }
 
+    /**
+     * Create an instance of {@link Team }
+     * 
+     */
+    public Team createTeam() {
+        return new Team();
+    }
+
 }

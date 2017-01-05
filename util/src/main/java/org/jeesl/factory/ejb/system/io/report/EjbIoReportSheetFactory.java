@@ -1,5 +1,6 @@
 package org.jeesl.factory.ejb.system.io.report;
 
+import java.util.Map;
 import java.util.UUID;
 
 import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
@@ -121,5 +122,19 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 		eSheet=dbuDescription.handle(fUtils, eSheet, ReportXpath.getDescriptions(xSheet));
 		eSheet = fUtils.save(eSheet);
 		return eSheet;
+	}
+	
+	
+	public boolean hasFooters(SHEET sheet){return hasFooters(sheet,null);}
+	public boolean hasFooters(SHEET sheet, Map<GROUP,Boolean> mapGroupVisibilityToggle)
+	{
+		boolean withFooter = false;
+		{
+			for(COLUMN c : EjbIoReportColumnFactory.toListVisibleColumns(sheet,mapGroupVisibilityToggle))
+			{
+				if(EjbIoReportColumnFactory.hasFooter(c)){withFooter=true;}
+			}
+		}
+		return withFooter;
 	}
 }

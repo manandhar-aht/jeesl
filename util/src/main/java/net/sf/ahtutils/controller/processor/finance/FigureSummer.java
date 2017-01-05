@@ -2,12 +2,13 @@ package net.sf.ahtutils.controller.processor.finance;
 
 import java.util.List;
 
-import net.sf.ahtutils.factory.xml.finance.XmlFinanceFactory;
-import net.sf.ahtutils.xml.finance.Finance;
-
 import org.apache.commons.jxpath.JXPathContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.factory.xml.finance.XmlFinanceFactory;
+import net.sf.ahtutils.xml.finance.Figures;
+import net.sf.ahtutils.xml.finance.Finance;
 
 public class FigureSummer
 {
@@ -25,6 +26,14 @@ public class FigureSummer
 			sum=sum+f.getValue();
 		}
 		return XmlFinanceFactory.create(resultCode, sum);
+	}
+	
+	public static void add(Figures figures, String code, double value)
+	{
+		for(Finance f : figures.getFinance())
+		{
+			if(f.getCode().equals(code)){add(f,value);}
+		}
 	}
 	
 	public static void add(Finance finance, double value)

@@ -19,6 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
@@ -37,6 +38,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.exlp.util.io.StringUtil;
 
 public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -63,6 +65,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	private WORKBOOK ioWorkbook;
 	
 	private ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport;
+	private EjbIoReportSheetFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efSheet;
 	
     // Excel related objects
     public Font             headerFont;
@@ -87,6 +90,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
         this.ioWorkbook=ioWorkbook;
         
         ffReport = ReportFactoryFactory.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumWidth,cRowType);
+        efSheet = ffReport.sheet();
     }
 	
 	private void init(Workbook wb)
@@ -176,6 +180,27 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			}
 			rowNr.add(1);
         }
+        
+        if(efSheet.hasFooters(ioSheet))
+        {
+        	Row xlsFooter = sheet.createRow(rowNr.intValue());
+        	logger.info(StringUtil.stars());
+        	logger.info("Handling Footer");
+        	MutableInt columnNr = new MutableInt(0);
+        	for(COLUMN ioColumn : EjbIoReportColumnFactory.toListVisibleColumns(ioSheet))
+			{
+				if(EjbIoReportColumnFactory.hasFooter(ioColumn))
+				{
+					xfCell.footer(ioColumn,xlsFooter,columnNr,context);
+				}
+				else
+				{
+					columnNr.add(1);
+				}
+			}
+        	rowNr.add(1);
+        }
+        
 	}
 	
 	private void applyTemplate(Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)

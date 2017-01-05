@@ -63,14 +63,26 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	public void cell(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, JXPathContext context)
 	{
+		JeeslReportLayout.Data dt = xfStyle.getDataType(ioColumn);
+		CellStyle style = xfStyle.get(JeeslReportLayout.Style.footer,ioColumn);
+		add(xlsRow, columnNr, context, ioColumn.getQueryCell(), style, dt);
+	}
+	
+	public void footer(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, JXPathContext context)
+	{
+		JeeslReportLayout.Data dt = xfStyle.getDataType(ioColumn);
+		CellStyle style = xfStyle.get(JeeslReportLayout.Style.footer,ioColumn);
+		add(xlsRow, columnNr, context, ioColumn.getQueryFooter(), style, dt);
+
+	}
+	
+	private void add(Row xlsRow, MutableInt columnNr, JXPathContext context, String query, CellStyle style, JeeslReportLayout.Data dt)
+	{
 		try
 		{
-			Object value = context.getValue(ioColumn.getQueryCell());
+			Object value = context.getValue(query);
 			if(value!=null)
 			{
-				CellStyle style = xfStyle.get(JeeslReportLayout.Style.cell,ioColumn);
-				JeeslReportLayout.Data dt = xfStyle.getDataType(ioColumn);
-//				logger.info(ioColumn.getGroup().getPosition()+"."+ioColumn.getPosition()+" "+dt.toString()+" "+style.getDataFormatString()+" "+value.toString());			
 				switch(dt)
 				{
 					case string: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);	break;

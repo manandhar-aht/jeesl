@@ -42,11 +42,7 @@ public interface JeeslReportStyle<L extends UtilsLang,D extends UtilsDescription
 	
 	int getSizeFont();
 	void setSizeFont(int sizeFont);
-	
-
-	
-
-	
+		
 		
 	boolean isBorderTop();
 	void setBorderTop(boolean borderTop);

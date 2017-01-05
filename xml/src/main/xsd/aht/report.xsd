@@ -140,7 +140,7 @@
 	<xsd:element name="style">
 		<xsd:complexType>
 			<xsd:sequence>
-           		<xsd:element ref="us:langs" maxOccurs="1"/>
+				<xsd:element ref="us:langs" maxOccurs="1"/>
 				<xsd:element ref="us:descriptions" maxOccurs="1"/>
 				<xsd:element ref="r:layout" maxOccurs="1"/>
 			</xsd:sequence>
@@ -442,6 +442,7 @@
     <xsd:element name="layout">
 		<xsd:complexType>
 			<xsd:sequence>
+				<xsd:element ref="r:font" maxOccurs="1"/>
 				<xsd:element ref="r:offset" maxOccurs="1"/>
 				<xsd:element ref="r:size" maxOccurs="unbounded"/>
 				<xsd:element ref="sym:color" maxOccurs="unbounded"/>
@@ -458,6 +459,12 @@
             <xsd:attribute name="value" type="xsd:int"/>
         </xsd:complexType>
     </xsd:element>
+	<xsd:element name="font">
+		<xsd:complexType>
+			<xsd:attribute name="bold" type="xsd:boolean"/>
+			<xsd:attribute name="italic" type="xsd:boolean"/>
+		</xsd:complexType>
+	</xsd:element>
     
     <xsd:element name="offset">
         <xsd:complexType>

@@ -1,6 +1,5 @@
 package org.jeesl.factory.xml.system.io.report;
 
-import org.jeesl.factory.xml.system.symbol.XmlColorFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -13,16 +12,13 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
-import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.xml.report.Layout;
-import net.sf.ahtutils.xml.report.Style;
+import net.sf.ahtutils.xml.report.Font;
 
-public class XmlStyleFactory <L extends UtilsLang,D extends UtilsDescription,
+public class XmlFontFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -37,56 +33,30 @@ public class XmlStyleFactory <L extends UtilsLang,D extends UtilsDescription,
 								CW extends UtilsStatus<CW,L,D>,
 								RT extends UtilsStatus<RT,L,D>,
 								ENTITY extends EjbWithId,
-								ATTRIBUTE extends EjbWithId
-								>
+								ATTRIBUTE extends EjbWithId>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlStyleFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlFontFactory.class);
 	
-	private Style q;
+	private Font q;
 	
-	private XmlLangsFactory<L> xfLangs;
-	private XmlDescriptionsFactory<D> xfDescriptions;
-	private XmlLayoutFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfLayout;
-	
-	public XmlStyleFactory(Style q){this(null,q);}
-	public XmlStyleFactory(String localeCode, Style q)
+	public XmlFontFactory(Font q)
 	{
 		this.q=q;
-		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
-		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
-		if(q.isSetLayout()){xfLayout = new XmlLayoutFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(localeCode,q.getLayout());}
 	}
 	
-	
-	public Style build(STYLE style){return build(null,style);}
-	public <E extends Enum<E>> Style build(E type, STYLE style)
+	public Font build(STYLE style)
 	{
-		Style xml = XmlStyleFactory.build();
+		Font xml = build();
 		
-		if(type!=null){xml.setType(type.toString());}
-		if(q.isSetCode()){xml.setCode(style.getCode());}
-		if(q.isSetVisible()){xml.setVisible(style.isVisible());}
-		if(q.isSetPosition()){xml.setPosition(style.getPosition());}
-		
-		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(style.getName()));}
-		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(style.getDescription()));}
-		
-		if(q.isSetLayout()){xml.setLayout(xfLayout.layout(style));}
+		if(q.isSetBold()){xml.setBold(style.isFontBold());}
+		if(q.isSetItalic()){xml.setItalic(style.isFontItalic());}
 		
 		return xml;
 	}
 	
-	
-	
-	public static Style build(String code)
+	public static Font build()
 	{
-		Style xml = build();
-		xml.setCode(code);
-		return xml;
-	}
-	public static Style build()
-	{
-		Style xml = new Style();
+		Font xml = new Font();						
 		return xml;
 	}
 }

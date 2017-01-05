@@ -22,6 +22,7 @@ import net.sf.ahtutils.xml.symbol.Color;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}font"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}offset"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}size" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/symbol}color" maxOccurs="unbounded"/&gt;
@@ -36,6 +37,7 @@ import net.sf.ahtutils.xml.symbol.Color;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "font",
     "offset",
     "size",
     "color",
@@ -48,6 +50,8 @@ public class Layout
 
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
+    protected Font font;
+    @XmlElement(required = true)
     protected Offset offset;
     @XmlElement(required = true)
     protected List<Size> size;
@@ -55,6 +59,34 @@ public class Layout
     protected List<Color> color;
     @XmlElement(required = true)
     protected Styles styles;
+
+    /**
+     * Gets the value of the font property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Font }
+     *     
+     */
+    public Font getFont() {
+        return font;
+    }
+
+    /**
+     * Sets the value of the font property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Font }
+     *     
+     */
+    public void setFont(Font value) {
+        this.font = value;
+    }
+
+    public boolean isSetFont() {
+        return (this.font!= null);
+    }
 
     /**
      * Gets the value of the offset property.

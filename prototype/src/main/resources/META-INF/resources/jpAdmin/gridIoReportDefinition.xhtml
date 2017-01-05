@@ -213,6 +213,23 @@
 									</p:panelGrid>
 									
 									<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60">
+										<p:outputLabel value="#{msg.jeeslIoReportStyleHeader}"/>
+										<p:selectOneMenu value="#{cc.attrs.bean.column.styleHeader}" effect="fade" >
+											<f:selectItems value="#{cc.attrs.bean.styles}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
+										</p:selectOneMenu>
+										
+										<p:outputLabel value="#{msg.jeeslIoReportStyleCell}"/>
+										<p:selectOneMenu value="#{cc.attrs.bean.column.styleCell}" effect="fade" >
+											<f:selectItems value="#{cc.attrs.bean.styles}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
+										</p:selectOneMenu>
+										
+										<p:outputLabel value="#{msg.jeeslIoReportStyleFooter}"/>
+										<p:selectOneMenu value="#{cc.attrs.bean.column.styleFooter}" effect="fade" >
+											<f:selectItems value="#{cc.attrs.bean.styles}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
+										</p:selectOneMenu>
+									</p:panelGrid>
+									
+									<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60">
 										<p:outputLabel value="#{msg.jeeslIoReportDataType}"/>
 										<p:selectOneMenu value="#{cc.attrs.bean.column.dataType}" effect="fade" >
 											<f:selectItem itemLabel="---"/>

@@ -40,9 +40,9 @@ public class XmlStylesFactory <L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlStylesFactory.class);
 	
-	private XmlStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfStyle;
-	
 	private Styles q;
+	
+	private XmlStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfStyle;
 	
 	public XmlStylesFactory(String localeCode, Styles q)
 	{
@@ -57,6 +57,20 @@ public class XmlStylesFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetStyle())
 		{
 			if(group.getStyleHeader()!=null){xml.getStyle().add(xfStyle.build(JeeslReportLayout.Style.header, group.getStyleHeader()));}
+		}
+		
+		return xml;
+	}
+	
+	public Styles build(COLUMN column)
+	{
+		Styles xml = build();
+		
+		if(q.isSetStyle())
+		{
+			if(column.getStyleHeader()!=null){xml.getStyle().add(xfStyle.build(JeeslReportLayout.Style.header, column.getStyleHeader()));}
+			if(column.getStyleCell()!=null){xml.getStyle().add(xfStyle.build(JeeslReportLayout.Style.cell, column.getStyleCell()));}
+			if(column.getStyleFooter()!=null){xml.getStyle().add(xfStyle.build(JeeslReportLayout.Style.footer, column.getStyleFooter()));}
 		}
 		
 		return xml;

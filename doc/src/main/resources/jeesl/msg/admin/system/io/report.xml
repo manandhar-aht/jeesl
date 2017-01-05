@@ -205,6 +205,20 @@
 			<lang key="fr" translation="Header Style" />
 		</langs>
 	</translation>
+		<translation key="jeeslIoReportStyleCell">
+		<langs>
+			<lang key="de" translation="Stil Zelle" />
+			<lang key="en" translation="Cell Style" />
+			<lang key="fr" translation="Cell Style" />
+		</langs>
+	</translation>
+		<translation key="jeeslIoReportStyleFooter">
+		<langs>
+			<lang key="de" translation="Stil Fusszeile" />
+			<lang key="en" translation="Footer Style" />
+			<lang key="fr" translation="Footer Style" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoReportStyleFontBold">
 		<langs>
 			<lang key="de" translation="Fett" />

@@ -1,6 +1,7 @@
 package org.jeesl.factory.xml.system.io.report;
 
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
+import org.jeesl.factory.xml.system.symbol.XmlColorFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -43,12 +44,14 @@ public class XmlLayoutFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	private XmlTypeFactory<CW,L,D> xfType;
 	private XmlStylesFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfStyles;
+	private XmlFontFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfFont;
 	
 	public XmlLayoutFactory(String localeCode, Layout q)
 	{
 		this.q=q;
 		if(q.isSetSize()){xfType = new XmlTypeFactory<CW,L,D>(localeCode,q.getSize().get(0).getType());}
 		if(q.isSetStyles()){xfStyles = new XmlStylesFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(localeCode,q.getStyles());}
+		if(q.isSetFont()){xfFont = new XmlFontFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(q.getFont());}
 	}
 	
 	public Layout build(ROW row)
@@ -68,6 +71,7 @@ public class XmlLayoutFactory<L extends UtilsLang,D extends UtilsDescription,
 				xml.getSize().add(XmlSizeFactory.build(JeeslReportLayout.Code.columnWidth, xfType.build(column.getColumWidth()), column.getColumSize()));
 			}
 		}
+		if(q.isSetStyles()){xml.setStyles(xfStyles.build(column));}
 		return xml;
 	}
 	
@@ -75,6 +79,16 @@ public class XmlLayoutFactory<L extends UtilsLang,D extends UtilsDescription,
 	{
 		Layout xml = build();
 		if(q.isSetStyles()){xml.setStyles(xfStyles.build(group));}
+		return xml;
+	}
+	
+	public Layout layout(STYLE style)
+	{
+		Layout xml = XmlLayoutFactory.build();
+		
+		xml.getColor().add(XmlColorFactory.build("background", style.getColorBackground()));
+		if(q.isSetFont()){xml.setFont(xfFont.build(style));}
+		
 		return xml;
 	}
 	

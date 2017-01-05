@@ -3,6 +3,7 @@ package org.jeesl.util.query.xml;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.io.report.XmlFontFactory;
 import org.jeesl.factory.xml.system.io.report.XmlLayoutFactory;
 import org.jeesl.factory.xml.system.io.report.XmlOffsetFactory;
 import org.jeesl.factory.xml.system.io.report.XmlQueriesFactory;
@@ -21,6 +22,7 @@ import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.report.Cell;
 import net.sf.ahtutils.xml.report.ColumnGroup;
+import net.sf.ahtutils.xml.report.Font;
 import net.sf.ahtutils.xml.report.Layout;
 import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.report.Row;
@@ -98,7 +100,16 @@ public class ReportQuery
 		xml.setDescriptions(StatusQuery.descriptions());
 		
 		xml.setLayout(XmlLayoutFactory.build());
+		xml.getLayout().setFont(exFont());
 		
+		return xml;
+	}
+	
+	private static Font exFont()
+	{
+		Font xml = XmlFontFactory.build();
+		xml.setBold(true);
+		xml.setItalic(true);
 		return xml;
 	}
 	
@@ -183,8 +194,11 @@ public class ReportQuery
 		Layout xml = XmlLayoutFactory.build();
 		xml.setOffset(XmlOffsetFactory.build());
 		xml.setStyles(XmlStylesFactory.build(XmlStyleFactory.build("")));
+		xml.getSize().add(XmlSizeFactory.build(JeeslReportLayout.ColumnWidth.none, XmlTypeFactory.create(""), 1));
 		return xml;
 	}
+	
+	
 	
 	private static XlsColumn exportColumn()
 	{
@@ -196,18 +210,10 @@ public class ReportQuery
 		
 		xml.setDataType(XmlDataTypeFactory.build(""));
 		xml.setQueries(XmlQueriesFactory.build());
-		xml.setLayout(columnLayout());
-		xml.setStyles(XmlStylesFactory.build(XmlStyleFactory.build("")));
+		xml.setLayout(layout());
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
-		return xml;
-	}
-	
-	private static Layout columnLayout()
-	{
-		Layout xml = XmlLayoutFactory.build();
-		xml.getSize().add(XmlSizeFactory.build(JeeslReportLayout.ColumnWidth.none, XmlTypeFactory.create(""), 1));
 		return xml;
 	}
 }

@@ -77,8 +77,6 @@ public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		if(q.isSetQueries()){xml.setQueries(queries(column));}
 		if(q.isSetLayout()){xml.setLayout(xfLayout.build(column));}
-		
-
 						
 		return xml;
 	}

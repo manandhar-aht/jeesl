@@ -91,10 +91,16 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 			mapCell.put(c, buildCell(xlsWorkbook,c));
 			
 			CDT cdt = EjbIoReportColumnFactory.toCellDataType(c);
-			if(cdt.getCode().startsWith("numberDouble")){mapCellDataType.put(c,JeeslReportLayout.Data.dble);}
+			if(cdt.getCode().startsWith("text")){mapCellDataType.put(c,JeeslReportLayout.Data.string);}
+			else if(cdt.getCode().startsWith("numberDouble")){mapCellDataType.put(c,JeeslReportLayout.Data.dble);}
+			else if(cdt.getCode().startsWith("numberInteger")){mapCellDataType.put(c,JeeslReportLayout.Data.intgr);}
 			else if(cdt.getCode().startsWith("numberLong")){mapCellDataType.put(c,JeeslReportLayout.Data.lng);}
 			else if(cdt.getCode().startsWith("date")){mapCellDataType.put(c,JeeslReportLayout.Data.dte);}
-			else{mapCellDataType.put(c,JeeslReportLayout.Data.string);}	
+			else
+			{
+				logger.warn("Unknown Handling for "+cdt.getCode());
+				mapCellDataType.put(c,JeeslReportLayout.Data.string);
+			}	
 		}
 	}
 	

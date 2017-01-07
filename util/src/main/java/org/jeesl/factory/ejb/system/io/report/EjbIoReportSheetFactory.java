@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -51,13 +52,15 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoReportSheetFactory.class);
 	
+	final Class<IMPLEMENTATION> cImplementation;
 	final Class<SHEET> cSheet;
     
 	private JeeslDbLangUpdater<SHEET,L> dbuLang;
 	private JeeslDbDescriptionUpdater<SHEET,D> dbuDescription;
 	
-	public EjbIoReportSheetFactory(final Class<L> cL,final Class<D> cD,final Class<SHEET> cSheet)
-	{       
+	public EjbIoReportSheetFactory(final Class<L> cL,final Class<D> cD,final Class<IMPLEMENTATION> cImplementation,final Class<SHEET> cSheet)
+	{
+		this.cImplementation=cImplementation;
         this.cSheet = cSheet;
         
         dbuLang = JeeslDbLangUpdater.factory(cSheet, cL);
@@ -81,7 +84,7 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 		return ejb;
 	}
 	
-	public SHEET build(WORKBOOK workbook, XlsSheet sheet)
+	public SHEET build(UtilsFacade fReport, WORKBOOK workbook, XlsSheet sheet) throws UtilsNotFoundException
 	{
 		SHEET ejb = null;
 		try
@@ -89,7 +92,7 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 			ejb = cSheet.newInstance();
 			ejb.setCode(sheet.getCode());
 			ejb.setWorkbook(workbook);
-			ejb = update(ejb,sheet);
+			ejb = update(fReport,ejb,sheet);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
@@ -97,8 +100,11 @@ public class EjbIoReportSheetFactory<L extends UtilsLang,D extends UtilsDescript
 		return ejb;
 	}
 	
-	public SHEET update(SHEET eSheet, XlsSheet xSheet)
+	public SHEET update(UtilsFacade fReport, SHEET eSheet, XlsSheet xSheet) throws UtilsNotFoundException
 	{
+		try {eSheet.setImplementation(fReport.fByCode(cImplementation, ReportXpath.getImplementation(xSheet).getCode()));}
+		catch (ExlpXpathNotFoundException e) {throw new UtilsNotFoundException(e.getMessage());}
+		
 		eSheet.setPosition(xSheet.getPosition());
 		eSheet.setVisible(xSheet.isVisible());
 		

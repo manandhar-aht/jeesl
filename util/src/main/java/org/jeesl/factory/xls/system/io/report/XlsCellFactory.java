@@ -73,7 +73,6 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		JeeslReportLayout.Data dt = xfStyle.getDataType(ioColumn);
 		CellStyle style = xfStyle.get(JeeslReportLayout.Style.footer,ioColumn);
 		add(xlsRow, columnNr, context, ioColumn.getQueryFooter(), style, dt);
-
 	}
 	
 	private void add(Row xlsRow, MutableInt columnNr, JXPathContext context, String query, CellStyle style, JeeslReportLayout.Data dt)
@@ -83,10 +82,12 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 			Object value = context.getValue(query);
 			if(value!=null)
 			{
+				logger.info(dt+" "+value.toString()+" "+value.getClass().getSimpleName());
 				switch(dt)
 				{
 					case string: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);	break;
 					case dble: XlsCellFactory.build(xlsRow,columnNr,style,(Double)value);	break;
+					case intgr: XlsCellFactory.build(xlsRow,columnNr,style,(Integer)value);	break;
 					case lng: XlsCellFactory.build(xlsRow,columnNr,style,(Long)value);	break;
 					case dte: XlsCellFactory.build(xlsRow,columnNr,style,(XMLGregorianCalendar)value); break;
 					default: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);
@@ -126,7 +127,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 			int cellCol = rootColumn+ioCell.getColNr()-1;
 			if(cellRow>maxRow){maxRow=cellRow;}
 			
-			logger.info("Creating Row "+cellRow+"."+cellCol);
+//			logger.info("Creating Row "+cellRow+"."+cellCol);
 			Row xlsRow = xslSheet.getRow(cellRow); if(xlsRow==null){xlsRow = xslSheet.createRow(cellRow);}
 			
 			Cell xlsCell = xlsRow.createCell(cellCol);

@@ -51,7 +51,6 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 	final Class<REPORT> cReport;
 	final Class<IMPLEMENTATION> cImplementation;
 	
-	
 	private JeeslDbLangUpdater<REPORT,L> dbuReportLang;
 	private JeeslDbDescriptionUpdater<REPORT,D> dbuReportDescription;
     

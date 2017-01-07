@@ -448,10 +448,10 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		try {eSheet = fReport.fByCode(cSheet, xSheet.getCode());}
 		catch (UtilsNotFoundException e)
 		{
-			eSheet = efSheet.build(workbook,xSheet);
+			eSheet = efSheet.build(fReport,workbook,xSheet);
 			eSheet = fReport.save(eSheet);
 		}
-		eSheet = efSheet.update(eSheet,xSheet);
+		eSheet = efSheet.update(fReport,eSheet,xSheet);
 		eSheet = fReport.save(eSheet);
 		eSheet = efSheet.updateLD(fReport, eSheet, xSheet);
 		eSheet = fReport.load(eSheet,false);

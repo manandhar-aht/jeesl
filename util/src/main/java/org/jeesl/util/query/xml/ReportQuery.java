@@ -159,7 +159,9 @@ public class ReportQuery
 		xml.setCode("");
 		xml.setPosition(0);
 		xml.setVisible(true);
+		
 		xml.setShowLabel(true);
+		xml.setShowWeb(true);
 		
 		xml.setLangs(StatusQuery.langs());
 		xml.setDescriptions(StatusQuery.descriptions());
@@ -167,8 +169,6 @@ public class ReportQuery
 		xml.getXlsColumn().add(exportColumn());
 		return xml;
 	}
-	
-	
 	
 	private static Row exportRow()
 	{
@@ -198,15 +198,15 @@ public class ReportQuery
 		return xml;
 	}
 	
-	
-	
 	private static XlsColumn exportColumn()
 	{
 		XlsColumn xml = new XlsColumn();
 		xml.setCode("");
 		xml.setPosition(0);
 		xml.setVisible(true);
+		
 		xml.setShowLabel(true);
+		xml.setShowWeb(true);
 		
 		xml.setDataType(XmlDataTypeFactory.build(""));
 		xml.setQueries(XmlQueriesFactory.build());

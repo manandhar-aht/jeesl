@@ -56,6 +56,13 @@
 			<lang key="fr" translation="Show Label" />
 		</langs>
 	</translation>
+		<translation key="jeeslIoReportShowWeb">
+		<langs>
+			<lang key="de" translation="Web Anzeigen" />
+			<lang key="en" translation="Show Web" />
+			<lang key="fr" translation="Show Web" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoReportColumns">
 		<langs>
 			<lang key="de" translation="Spalten" />

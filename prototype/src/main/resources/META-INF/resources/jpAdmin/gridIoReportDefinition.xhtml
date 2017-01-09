@@ -142,6 +142,8 @@
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.group.visible}"/>
 								<p:outputLabel value="#{msg.jeeslIoReportShowLabel}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.group.showLabel}"/>
+								<p:outputLabel value="#{msg.jeeslIoReportShowWeb}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.group.showWeb}"/>
 								<p:outputLabel value="#{msg.jeeslIoReportStyleHeader}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.group.styleHeader}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.styles}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
@@ -188,6 +190,9 @@
 								
 								<p:outputLabel value="#{msg.jeeslIoReportShowLabel}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.column.showLabel}"/>
+								
+								<p:outputLabel value="#{msg.jeeslIoReportShowWeb}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.column.showWeb}"/>
 								
 								<p:outputLabel value="#{msg.jeeslIoReportQueryHeader}"/>
 								<p:inputText value="#{cc.attrs.bean.column.queryHeader}"/>

@@ -68,7 +68,9 @@ public class XmlColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetCode()){xml.setCode(column.getCode());}
 		if(q.isSetVisible()){xml.setVisible(column.isVisible());}
 		if(q.isSetPosition()){xml.setPosition(column.getPosition());}
+		
 		if(q.isSetShowLabel()){xml.setShowLabel(column.getShowLabel());}
+		if(q.isSetShowWeb()){xml.setShowWeb(column.getShowWeb());}
 		
 		if(q.isSetDataType() && column.getDataType()!=null){xml.setDataType(xfDataType.build(column.getDataType()));}
 		

@@ -39,6 +39,9 @@ public interface JeeslReportColumn<L extends UtilsLang,D extends UtilsDescriptio
 	Boolean getShowLabel();
 	void setShowLabel(Boolean showLabel);
 	
+	Boolean getShowWeb();
+	void setShowWeb(Boolean showWeb);
+	
 	CDT getDataType();
 	void setDataType(CDT dataType);
 	

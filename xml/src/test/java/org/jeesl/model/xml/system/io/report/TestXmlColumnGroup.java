@@ -22,6 +22,7 @@ public class TestXmlColumnGroup extends AbstractXmlReportTest<ColumnGroup>
     	xml.setPosition(1);
     	xml.setVisible(true);
     	xml.setShowLabel(true);
+    	xml.setShowWeb(true);
     	
     	if(withChildren)
     	{

@@ -22,6 +22,8 @@ public class TestXmlXlsColumn extends AbstractXmlReportTest<XlsColumn>
     	xml.setCode("myCode");
     	xml.setPosition(1);
     	xml.setVisible(true);
+    	xml.setShowLabel(true);
+    	xml.setShowWeb(true);
     	
     	xml.setColumn("A");
     	xml.setLabel("myLabel");

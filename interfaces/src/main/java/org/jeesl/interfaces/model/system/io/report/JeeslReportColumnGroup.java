@@ -39,6 +39,9 @@ public interface JeeslReportColumnGroup<L extends UtilsLang,D extends UtilsDescr
 	Boolean getShowLabel();
 	void setShowLabel(Boolean showLabel);
 	
+	Boolean getShowWeb();
+	void setShowWeb(Boolean showWeb);
+	
 	STYLE getStyleHeader();
 	void setStyleHeader(STYLE styleHeader);
 	

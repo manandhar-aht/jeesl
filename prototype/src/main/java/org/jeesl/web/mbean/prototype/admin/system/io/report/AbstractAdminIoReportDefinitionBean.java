@@ -472,6 +472,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		{
 			if(column.getDataType()!=null){column.setDataType(fReport.find(cDataType,column.getDataType()));}
 			if(column.getColumWidth()!=null){column.setColumWidth(fReport.find(cColumnWidth,column.getColumWidth()));}
+			column.setGroup(fReport.find(cGroup,column.getGroup()));
 			column = fReport.save(column);
 			reloadReport();
 			reloadSheet();

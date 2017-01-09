@@ -98,7 +98,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 			ejb = cColumn.newInstance();
 			ejb.setCode(column.getCode());
 			ejb.setGroup(group);
-			ejb = update(fReport,ejb,column);
+			ejb = update(fReport,group,ejb,column);
 
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
@@ -106,9 +106,10 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		return ejb;
 	}
 	
-	public COLUMN update(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, COLUMN eColumn, XlsColumn xColumn) throws UtilsNotFoundException
+	public COLUMN update(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, GROUP group, COLUMN eColumn, XlsColumn xColumn) throws UtilsNotFoundException
 	{
 		CDT eDataType = null;if(xColumn.getDataType()!=null){eDataType = fReport.fByCode(cDataType, xColumn.getDataType().getCode());}
+		eColumn.setGroup(group);
 		eColumn.setDataType(eDataType);
 		
 		eColumn.setPosition(xColumn.getPosition());

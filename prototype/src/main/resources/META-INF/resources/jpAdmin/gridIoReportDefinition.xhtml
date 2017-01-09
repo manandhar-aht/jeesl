@@ -116,7 +116,7 @@
 						<p:dataTable var="group" value="#{cc.attrs.bean.groups}" draggableRows="true"
 							selection="#{cc.attrs.bean.group}" selectionMode="single" rowKey="#{group.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslIoGroups}">
+								<aht:pfDataTableHeader title="#{msg.jeeslIoReportGroups}">
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addGroup()}" update=":#{cc.id}:fGroup :#{cc.id}:row2" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
@@ -131,7 +131,7 @@
 				      </p:dataTable>
 					</h:form>
 					<h:form id="fGroup">
-						<p:panel header="#{msg.jeeslIoGroup}" rendered="#{(not empty cc.attrs.bean.group) and cc.attrs.bean.uiHelper.showPanelGroup}" styleClass="auPanelWithGrid">
+						<p:panel header="#{msg.jeeslIoReportGroup}" rendered="#{(not empty cc.attrs.bean.group) and cc.attrs.bean.uiHelper.showPanelGroup}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelGroup()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveGroup()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
@@ -178,13 +178,18 @@
 				</aht:slot>
 				<aht:slot id="sColumn" width="8">
 					<h:form id="fColumn">
-						<p:panel header="#{jeeslIoReportColumn}" rendered="#{not empty cc.attrs.bean.column}" styleClass="auPanelWithGrid">
+						<p:panel header="#{msg.jeeslIoReportColumn}" rendered="#{not empty cc.attrs.bean.column}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.column.id gt 0}" listener="#{cc.attrs.bean.rmColumn()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.jeeslIoReportGroup}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.column.group}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.groups}" var="g" itemLabel="#{g.name[userBean.localeCode].lang}" itemValue="#{g}"/>
+								</p:selectOneMenu>
+							
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.column.visible}"/>
 								

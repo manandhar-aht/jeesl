@@ -35,14 +35,14 @@
 			<lang key="fr" translation="Sheet" />
 		</langs>
 	</translation>
-	<translation key="jeeslIoGroups">
+	<translation key="jeeslIoReportGroups">
 		<langs>
 			<lang key="de" translation="Gruppen" />
 			<lang key="en" translation="Groups" />
 			<lang key="fr" translation="Groups" />
 		</langs>
 	</translation>
-	<translation key="jeeslIoGroup">
+	<translation key="jeeslIoReportGroup">
 		<langs>
 			<lang key="de" translation="Gruppe" />
 			<lang key="en" translation="Group" />

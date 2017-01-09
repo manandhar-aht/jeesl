@@ -521,7 +521,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 			eColumn = efColumn.build(fReport,eGroup,xColumn);
 			eColumn = fReport.save(eColumn);
 		}
-		efColumn.update(fReport,eColumn,xColumn);
+		efColumn.update(fReport,eGroup,eColumn,xColumn);
 		eColumn = fReport.save(eColumn);
 		eColumn = efColumn.updateLD(fReport,eColumn,xColumn);
 		return eColumn;

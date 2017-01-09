@@ -3,7 +3,11 @@ package org.jeesl.interfaces.model.survey;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
+import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyOption<L extends UtilsLang,
 							D extends UtilsDescription,
@@ -20,8 +24,12 @@ public interface JeeslSurveyOption<L extends UtilsLang,
 							DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
-			extends EjbWithId
+			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,
+					EjbWithLang<L>,EjbWithDescription<D>
 {
 	public static enum Units{yn,number,txt};
-	public static enum Status{open}; 
+	public static enum Status{open};
+	
+	QUESTION getQuestion();
+	void setQuestion(QUESTION question);
 }

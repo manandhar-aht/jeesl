@@ -164,7 +164,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		@SuppressWarnings("unchecked")
 		Iterator<Pointer> iterator = context.iteratePointers(ioSheet.getQueryTable());
-		logger.debug("Beginning iteration");
+		logger.trace("Beginning iteration");
         while (iterator.hasNext())
         {
         	Row xlsRow = sheet.createRow(rowNr.intValue());
@@ -176,6 +176,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			MutableInt columnNr = new MutableInt(0);
 			for(COLUMN ioColumn : columns)
 			{
+//				logger.info(ioColumn.getPosition()+" "+columnNr.intValue());
 				xfCell.cell(ioColumn,xlsRow,columnNr,relativeContext);
 			}
 			rowNr.add(1);

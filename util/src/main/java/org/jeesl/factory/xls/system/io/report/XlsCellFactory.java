@@ -77,17 +77,21 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	private void add(Row xlsRow, MutableInt columnNr, JXPathContext context, String query, CellStyle style, JeeslReportLayout.Data dt)
 	{
+//		logger.info(query);
 		try
 		{
 			Object value = context.getValue(query);
 			if(value!=null)
 			{
-				logger.info(dt+" "+value.toString()+" "+value.getClass().getSimpleName());
+//				logger.info(dt+" "+value.toString()+" "+value.getClass().getSimpleName());
 				switch(dt)
 				{
 					case string: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);	break;
 					case dble: XlsCellFactory.build(xlsRow,columnNr,style,(Double)value);	break;
-					case intgr: XlsCellFactory.build(xlsRow,columnNr,style,(Integer)value);	break;
+					case intgr:		Integer iValue;
+									if(value instanceof String){iValue = Integer.valueOf((String)value);}
+									else {iValue = (Integer)value;}
+									XlsCellFactory.build(xlsRow,columnNr,style,iValue);	break;
 					case lng: XlsCellFactory.build(xlsRow,columnNr,style,(Long)value);	break;
 					case dte: XlsCellFactory.build(xlsRow,columnNr,style,(XMLGregorianCalendar)value); break;
 					default: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);
@@ -147,6 +151,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
         if(value instanceof String){cell.setCellValue((String)value);}
         else if(value instanceof Double){cell.setCellValue((Double)value);}
         else if(value instanceof Long){cell.setCellValue((Long)value);}
+        else if(value instanceof Integer){cell.setCellValue((Integer)value);}
         else if(value instanceof Date){cell.setCellValue((Date)value);}
         else if(value instanceof XMLGregorianCalendar)
         {

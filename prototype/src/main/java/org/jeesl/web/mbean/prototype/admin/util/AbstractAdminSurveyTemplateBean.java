@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.factory.ejb.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
@@ -56,29 +57,33 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 
 	protected JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	
-	Class<TEMPLATE> cTemplate;
-	Class<VERSION> cVersion;
-	Class<SECTION> cSection;
+	private Class<TEMPLATE> cTemplate;
+	private Class<VERSION> cVersion;
+	private Class<SECTION> cSection;
 	protected Class<QUESTION> cQuestion;
 	protected Class<UNIT> cUnit;
+	private Class<OPTION> cOption;
 	
 	protected SurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
 	protected EjbSurveyTemplateVersionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efVersion;
 	protected EjbSurveySectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efSection;
 	protected EjbSurveyQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efQuestion;
+	private EjbSurveyOptionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efOption;
 
 	protected List<TC> categories; public List<TC> getCategories(){return categories;}
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
 	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
+	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
 	
 	protected TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
 	protected TEMPLATE template; public TEMPLATE getTemplate(){return template;} public void setTemplate(TEMPLATE template){this.template = template;}
 	protected SECTION section; public SECTION getSection(){return section;} public void setSection(SECTION section){this.section = section;}
 	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
+	protected OPTION option; public OPTION getOption(){return option;} public void setOption(OPTION option){this.option = option;}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData)
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fSurvey = fSurvey;
@@ -88,14 +93,21 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		this.cSection = cSection;
 		this.cQuestion = cQuestion;
 		this.cUnit = cUnit;
+		this.cOption = cOption;
 		
-		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection, cQuestion, cAnswer, cData);
+		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData,cOption);
 		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();
+		efOption = ffSurvey.option();
 		
 		categories = new ArrayList<TC>();
 		versions = new ArrayList<VERSION>();
+	}
+	
+	private void clear(boolean cOption)
+	{
+		if(cOption){option=null;}
 	}
 	
 	public void selectCategory() throws UtilsNotFoundException
@@ -211,6 +223,14 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	public void selectQuestion()
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
+		reloadQuestion();
+		clear(true);
+	}
+	
+	private void reloadQuestion()
+	{
+		question = fSurvey.find(cQuestion,question);
+		options = question.getOptions();
 	}
 	
 	public void saveQuestion() throws UtilsConstraintViolationException, UtilsLockingException
@@ -227,8 +247,18 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		fSurvey.rm(question);
 		question = null;
 		loadSection();
+		clear(true);
+	}
+	
+	public void addOption()
+	{
+		logger.info(AbstractLogMessage.addEntity(cOption));
+		option = efOption.build(question,"");
+		option.setName(efLang.createEmpty(langs));
+		option.setDescription(efDescription.createEmpty(langs));
 	}
 	
 	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, sections);}
 	protected void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, questions);}
+	protected void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, options);}
 }

@@ -64,8 +64,7 @@ public class JeeslMsgBuilder
 	public static final String srcConstraint = "jeesl/msg/admin/system/constraint.xml";
 	public static final String facesMessages = "aht-utils/msg/facesMessages.xml";
 	
-	@Deprecated public static final String srcSurvey = "jeesl/msg/util/survey.xml";
-	public static final String survey = "jeesl/msg/util/survey.xml";
+	public static final String survey = "jeesl/msg/admin/system/survey.xml";
 	public static final String devQa = "jeesl/msg/development/qa.xml";
 	
 	final static Logger logger = LoggerFactory.getLogger(JeeslMsgBuilder.class);

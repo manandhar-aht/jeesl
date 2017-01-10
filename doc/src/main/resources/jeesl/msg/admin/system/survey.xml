@@ -196,4 +196,18 @@
     		<s:lang key="fr" translation="Remark"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslSurveyQuestionShowSelectOne">
+    	<s:langs>
+    		<s:lang key="de" translation="One Option"/>
+    		<s:lang key="en" translation="One Option"/>
+    		<s:lang key="fr" translation="One Option"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslSurveyQuestionShowSelectMulti">
+    	<s:langs>
+    		<s:lang key="de" translation="Multi Options"/>
+    		<s:lang key="en" translation="Multi Options"/>
+    		<s:lang key="fr" translation="Multi Options"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

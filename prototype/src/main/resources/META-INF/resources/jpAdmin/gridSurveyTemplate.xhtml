@@ -15,6 +15,7 @@
 		<composite:attribute name="bean" required="true"/>
 		<composite:attribute name="withCategory" required="false" default="true"/>
 		<composite:attribute name="withVersion" required="false" default="true"/>
+		<composite:attribute name="withOptions" required="false" default="false"/>
 	</composite:interface>
 	
 <composite:implementation>
@@ -180,6 +181,10 @@
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showDouble}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowDouble}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showText}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowText}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showRemark}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowRemark}"/>
+						</p:panelGrid>
+						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40" rendered="#{cc.attrs.withOptions}">						
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectOne}" /><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectOne}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectMulti}" /><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectMulti}"/>
 						</p:panelGrid>
 						
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>

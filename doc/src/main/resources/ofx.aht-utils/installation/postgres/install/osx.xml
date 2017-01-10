@@ -8,14 +8,13 @@
 		container="true">	
 
 	<ofx:section container="true" classifier="osx">
-			<ofx:title>OSX Yosemite</ofx:title>
+			<ofx:title>OSX Sierra</ofx:title>
 			<ofx:listing>
 				<ofx:raw>brew install postgis</ofx:raw>
 			</ofx:listing>
 			
 			<ofx:listing>
-				<ofx:raw>ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+				<ofx:raw>brew services start postgresql
 createuser --superuser postgres</ofx:raw>
 			</ofx:listing>
 	

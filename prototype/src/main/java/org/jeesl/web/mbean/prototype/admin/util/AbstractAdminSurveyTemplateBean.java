@@ -258,6 +258,14 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		option.setDescription(efDescription.createEmpty(langs));
 	}
 	
+	public void saveOption() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(option));
+		option = fSurvey.save(option);
+		reloadQuestion();
+		bMessage.growlSuccessSaved();
+	}
+	
 	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, sections);}
 	protected void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, questions);}
 	protected void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, options);}

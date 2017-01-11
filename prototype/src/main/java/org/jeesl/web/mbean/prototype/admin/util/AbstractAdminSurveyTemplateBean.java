@@ -110,14 +110,12 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		versions = new ArrayList<VERSION>();
 	}
 	
-	private void clear(boolean cVersion, boolean cOption)
+	protected void clear(boolean cTemplate, boolean cVersion, boolean cSection, boolean cQuestion, boolean cOption)
 	{
+		if(cTemplate){template = null;}
 		if(cVersion){version = null;}
-//		template = null;
-//		section = null;
-//		question = null;
-		
-		
+		if(cSection){section = null;}
+		if(cQuestion){question = null;}	
 		if(cOption){option=null;}
 	}
 	
@@ -182,10 +180,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.rmEntity(version));
 		fSurvey.rmVersion(version);
-		clear(true,true);
-		template = null;
-		section = null;
-		question = null;
+		clear(true,true,true,true,true);
 		reloadVersions();
 	}
 	
@@ -236,7 +231,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
 		reloadQuestion();
-		clear(false,true);
+		clear(false,false,false,false,true);
 	}
 	
 	private void reloadQuestion()
@@ -257,9 +252,8 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(question));}
 		fSurvey.rm(question);
-		question = null;
+		clear(false,false,false,true,true);
 		loadSection();
-		clear(false,true);
 	}
 	
 	public void addOption()
@@ -287,7 +281,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
 		fSurvey.rmOption(option);
-		clear(false,true);
+		clear(false,false,false,false,true);
 		reloadQuestion();
 		bMessage.growlSuccessRemoved();
 	}

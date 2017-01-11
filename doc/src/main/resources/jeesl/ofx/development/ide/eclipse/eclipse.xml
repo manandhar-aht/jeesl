@@ -22,8 +22,8 @@
 			Released under the terms of the Eclipse Public License, Eclipse SDK is free and open source software.
 	</ofx:paragraph>
 	
-	<ofx:section include="luna.xml"/>
-	<ofx:section include="mars.xml"/>
+	<ofx:section include="version/luna.xml"/>
+	<ofx:section include="version/mars.xml"/>
 		
 	<ofx:section>
 		<ofx:title lang="en">FAQ</ofx:title>

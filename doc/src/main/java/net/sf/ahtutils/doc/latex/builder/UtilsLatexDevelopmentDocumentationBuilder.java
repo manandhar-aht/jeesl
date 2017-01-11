@@ -44,7 +44,7 @@ public class UtilsLatexDevelopmentDocumentationBuilder extends AbstractLatexDocu
 	@Override protected void applyConfigCodes()
 	{	
 		addConfig(ErCode.erIntroduction.toString(),"ofx.aht-utils/development/er.xml","admin/development/er");
-		addConfig("eclipse","ofx.aht-utils/development/environment/eclipse/eclipse.xml","admin/development/environment/eclipse");
+		addConfig("eclipse","jeesl/ofx/development/ide/eclipse/eclipse.xml","admin/development/environment/eclipse");
 		
 		addConfig(Code.latex.toString(),"ofx.aht-utils/development/environment/latex.xml","admin/development/environment/latex");
 		addConfig(Code.doc.toString(),"ofx.aht-utils/development/documentation.xml","admin/development/documentation");

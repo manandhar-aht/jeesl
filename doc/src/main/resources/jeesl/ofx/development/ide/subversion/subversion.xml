@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org" id="section.admin.installation.eclipse"
+			xmlns:t="http://www.openfuxml.org/table"
+			xmlns:media="http://www.openfuxml.org/media"
+			xmlns:layout="http://www.openfuxml.org/layout"
+			xmlns:text="http://www.openfuxml.org/text"
+			xmlns:l="http://www.openfuxml.org/list"
+			container="true">
+	
+	<ofx:paragraph lang="en">
+		Subversion
+	</ofx:paragraph>
+	
+	<ofx:paragraph lang="en">
+		brew install --with-java --universal subversion
+		sudo mkdir -p /Library/Java/Extensions
+		 sudo ln -s /usr/local/lib/libsvnjavahl-1.dylib /Library/Java/Extensions/libsvnjavahl-1.dylib
+	</ofx:paragraph>
+
+</ofx:section>

@@ -28,4 +28,14 @@ public class FiguresXpath
 		else if(list.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+Finance.class.getSimpleName()+" for code="+code);}
 		return list.get(0);
 	}
+	
+	public static Finance getFinance(List<Finance> list, int nr) throws ExlpXpathNotFoundException
+	{
+		for(Finance f : list)
+		{
+			if(f.getNr()==nr){return f;}
+		}
+		throw new ExlpXpathNotFoundException("No "+Finance.class.getSimpleName()+" for nr="+nr);
+		
+	}
 }

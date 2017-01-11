@@ -1,6 +1,7 @@
 package org.jeesl.interfaces.model.survey;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -25,7 +26,7 @@ public interface JeeslSurveyOption<L extends UtilsLang,
 							DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,EjbSaveable,
+			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,EjbSaveable,EjbRemoveable,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
 	public static enum Units{yn,number,txt};
@@ -33,4 +34,7 @@ public interface JeeslSurveyOption<L extends UtilsLang,
 	
 	QUESTION getQuestion();
 	void setQuestion(QUESTION question);
+	
+	double getScore();
+	void setScore(double score);
 }

@@ -189,6 +189,13 @@
     		<s:lang key="fr" translation="Score"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslSurveyScore">
+    	<s:langs>
+    		<s:lang key="de" translation="Score"/>
+    		<s:lang key="en" translation="Score"/>
+    		<s:lang key="fr" translation="Score"/>
+    	</s:langs>
+    </s:translation>
     <s:translation key="jpSurveyQuestionShowRemark">
     	<s:langs>
     		<s:lang key="de" translation="Remark"/>
@@ -208,6 +215,20 @@
     		<s:lang key="de" translation="Multi Options"/>
     		<s:lang key="en" translation="Multi Options"/>
     		<s:lang key="fr" translation="Multi Options"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslSurveyOptions">
+    	<s:langs>
+    		<s:lang key="de" translation="Optionen"/>
+    		<s:lang key="en" translation="Options"/>
+    		<s:lang key="fr" translation="Options"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSurveyOption">
+    	<s:langs>
+    		<s:lang key="de" translation="Option"/>
+    		<s:lang key="en" translation="Option"/>
+    		<s:lang key="fr" translation="Option"/>
     	</s:langs>
     </s:translation>
 </s:translations>

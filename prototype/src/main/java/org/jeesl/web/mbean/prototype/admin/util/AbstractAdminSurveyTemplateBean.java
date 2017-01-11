@@ -57,7 +57,6 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 
 	protected JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	
-	private Class<TEMPLATE> cTemplate;
 	private Class<VERSION> cVersion;
 	private Class<SECTION> cSection;
 	protected Class<QUESTION> cQuestion;
@@ -87,8 +86,6 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fSurvey = fSurvey;
-		
-		this.cTemplate = cTemplate;
 		this.cVersion = cVersion;
 		this.cSection = cSection;
 		this.cQuestion = cQuestion;
@@ -243,7 +240,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	
 	public void rmQuestion() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info(AbstractLogMessage.rmEntity(question));
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(question));}
 		fSurvey.rm(question);
 		question = null;
 		loadSection();
@@ -252,18 +249,32 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	
 	public void addOption()
 	{
-		logger.info(AbstractLogMessage.addEntity(cOption));
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cOption));}
 		option = efOption.build(question,"");
 		option.setName(efLang.createEmpty(langs));
 		option.setDescription(efDescription.createEmpty(langs));
 	}
 	
+	public void selectOption()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(option));}
+	}
+	
 	public void saveOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info(AbstractLogMessage.saveEntity(option));
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(option));}
 		option = fSurvey.save(option);
 		reloadQuestion();
 		bMessage.growlSuccessSaved();
+	}
+	
+	public void rmOption() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(option));}
+		fSurvey.rm(option);
+		clear(true);
+		reloadQuestion();
+		bMessage.growlSuccessRemoved();
 	}
 	
 	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, sections);}

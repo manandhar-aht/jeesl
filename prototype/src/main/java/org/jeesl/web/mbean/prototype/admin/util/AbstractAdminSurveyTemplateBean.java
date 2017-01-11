@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.controller.handler.ui.helper.UiHelperSurvey;
 import org.jeesl.factory.ejb.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
@@ -82,6 +83,13 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
 	protected OPTION option; public OPTION getOption(){return option;} public void setOption(OPTION option){this.option = option;}
 	
+	private UiHelperSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> uiHelper; public UiHelperSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> getUiHelper() {return uiHelper;}
+
+	public AbstractAdminSurveyTemplateBean()
+	{
+		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>();
+	}
+	
 	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
@@ -102,8 +110,14 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		versions = new ArrayList<VERSION>();
 	}
 	
-	private void clear(boolean cOption)
+	private void clear(boolean cVersion, boolean cOption)
 	{
+		if(cVersion){version = null;}
+//		template = null;
+//		section = null;
+//		question = null;
+		
+		
 		if(cOption){option=null;}
 	}
 	
@@ -150,6 +164,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.selectEntity(version));
 		version = fSurvey.find(cVersion, version);
 		initTemplate();
+		uiHelper.check(version,sections);
 	}
 	
 	protected void saveVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -166,8 +181,8 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected void rmVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(version));
-		fSurvey.rm(version);
-		version = null;
+		fSurvey.rmVersion(version);
+		clear(true,true);
 		template = null;
 		section = null;
 		question = null;
@@ -221,7 +236,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
 		reloadQuestion();
-		clear(true);
+		clear(false,true);
 	}
 	
 	private void reloadQuestion()
@@ -244,7 +259,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		fSurvey.rm(question);
 		question = null;
 		loadSection();
-		clear(true);
+		clear(false,true);
 	}
 	
 	public void addOption()
@@ -272,7 +287,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
 		fSurvey.rmOption(option);
-		clear(true);
+		clear(false,true);
 		reloadQuestion();
 		bMessage.growlSuccessRemoved();
 	}

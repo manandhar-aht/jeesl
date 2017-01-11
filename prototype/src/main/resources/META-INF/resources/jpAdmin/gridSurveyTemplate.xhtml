@@ -40,8 +40,8 @@
 								 selection="#{cc.attrs.bean.version}" selectionMode="single">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.jpSurveyTemplateVersions}">
-                         <aht:icon type="aupAdd" listener="#{cc.attrs.bean.addVersion()}" update=":#{cc.id}:row1"/>
-                     </aht:pfDataTableHeader>
+		                         <aht:icon type="aupAdd" listener="#{cc.attrs.bean.addVersion()}" update=":#{cc.id}:row1"/>
+		                     </aht:pfDataTableHeader>
 						</f:facet>
 						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{cc.attrs.bean.selectVersion()}"/>
 						<p:column headerText="#{msg.aupDate}">  
@@ -77,7 +77,7 @@
 					<p:panel header="#{msg.jpSurveyTemplateVersion}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveVersion()}" update=":#{cc.id}:row1"/>
-							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmVersion()}" update=":#{cc.id}:grid" rendered="{cc.attrs.bean.version.id gt 0}"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmVersion()}" update=":#{cc.id}:row1" rendered="#{cc.attrs.bean.uiHelper.versionRemoveable}"/>
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 							<p:outputLabel value="#{msg.aupName}"/>

@@ -122,6 +122,12 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		return data;
 	}
 	
+	@Override public void rmVersion(VERSION version) throws UtilsConstraintViolationException
+	{
+		version = em.find(cVersion, version.getId());
+		this.rmProtected(version);
+	}
+	
 	@Override public void rmOption(OPTION option) throws UtilsConstraintViolationException
 	{
 		option = em.find(cOption, option.getId());

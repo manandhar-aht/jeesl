@@ -270,8 +270,8 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	
 	public void rmOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(option));}
-		fSurvey.rm(option);
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
+		fSurvey.rmOption(option);
 		clear(true);
 		reloadQuestion();
 		bMessage.growlSuccessRemoved();

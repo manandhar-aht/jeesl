@@ -65,13 +65,14 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	final Class<SECTION> cSection;
 	final Class<ANSWER> cAnswer;
 	final Class<DATA> cData;
+	final Class<OPTION> cOption;
 	final Class<CORRELATION> cCorrelation;
 	
 	private SurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efAnswer;
 	private EjbSurveyTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> eTemplate;
 	
-	public JeeslSurveyFacadeBean(EntityManager em, Class<SURVEY> cSurvey, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, Class<ANSWER> cAnswer,  Class<DATA> cData, final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
+	public JeeslSurveyFacadeBean(EntityManager em, Class<SURVEY> cSurvey, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, Class<ANSWER> cAnswer,  Class<DATA> cData, final Class<OPTION> cOption, final Class<CORRELATION> cCorrelation)
 	{
 		super(em);
 		this.cSurvey=cSurvey;
@@ -81,6 +82,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		this.cSection=cSection;
 		this.cAnswer=cAnswer;
 		this.cData=cData;
+		this.cOption=cOption;
 		this.cCorrelation=cCorrelation;
 		
 		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData,cOption);
@@ -118,6 +120,13 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		data = em.find(cData,data.getId());
 		data.getAnswers().size();
 		return data;
+	}
+	
+	@Override public void rmOption(OPTION option) throws UtilsConstraintViolationException
+	{
+		option = em.find(cOption, option.getId());
+		option.getQuestion().getOptions().remove(option);
+		this.rmProtected(option);
 	}
 	
 	@Override public List<VERSION> fVersions(TC category)

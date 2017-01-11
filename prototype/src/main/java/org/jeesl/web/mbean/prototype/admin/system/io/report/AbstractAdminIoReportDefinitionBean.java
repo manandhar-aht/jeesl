@@ -102,7 +102,6 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private Class<RT> cRowType;
 	private Class<RC> cRevisionCategory;
 	
-	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
 	private List<RC> revisionCategories; public List<RC> getRevisionCategories() {return revisionCategories;}
 	private List<CW> columnWidths; public List<CW> getColumnWidths() {return columnWidths;}

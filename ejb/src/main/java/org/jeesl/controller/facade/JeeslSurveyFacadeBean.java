@@ -71,7 +71,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efAnswer;
 	private EjbSurveyTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> eTemplate;
 	
-	public JeeslSurveyFacadeBean(EntityManager em, Class<SURVEY> cSurvey, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, Class<ANSWER> cAnswer,  Class<DATA> cData, final Class<CORRELATION> cCorrelation)
+	public JeeslSurveyFacadeBean(EntityManager em, Class<SURVEY> cSurvey, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, Class<ANSWER> cAnswer,  Class<DATA> cData, final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
 	{
 		super(em);
 		this.cSurvey=cSurvey;
@@ -83,7 +83,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		this.cData=cData;
 		this.cCorrelation=cCorrelation;
 		
-		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData);
+		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData,cOption);
 		eTemplate = ffSurvey.template();
 		efAnswer = ffSurvey.answer();
 	}

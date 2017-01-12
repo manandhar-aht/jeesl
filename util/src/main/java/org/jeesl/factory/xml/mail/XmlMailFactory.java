@@ -42,6 +42,14 @@ public class XmlMailFactory
     	return mail;
     }
     
+    public static Mail create(String subject, String emailFrom, String emailTo, String content)
+    {    	
+    	Mail mail = new Mail();
+    	mail.setHeader(XmlHeaderFactory.create(subject, emailFrom, emailTo));
+    	mail.setExample(content);
+    	return mail;
+    }
+    
     public Mail build(Message message) throws MessagingException
     {
     	Mail mail = new Mail();

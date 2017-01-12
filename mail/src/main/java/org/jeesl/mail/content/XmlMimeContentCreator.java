@@ -28,7 +28,7 @@ public class XmlMimeContentCreator extends AbstractMimeContentCreator
 	
 	public void createContent(Mail mail) throws MessagingException
 	{		
-		JaxbUtil.info(mail);
+		JaxbUtil.trace(mail);
 		Multipart mpAlternative = new MimeMultipart("alternative");
 		mpAlternative.addBodyPart(createTxt(mail));	   
 	    

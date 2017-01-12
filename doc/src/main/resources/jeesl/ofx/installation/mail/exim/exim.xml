@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			xmlns:text="http://www.openfuxml.org/text"
+		id="section.admin.installation.postgresql">
+	<ofx:title>Exim</ofx:title>
+	
+	<ofx:paragraph lang="en">
+			apt-get install exim4
+			dpkg-reconfigure exim4-config
+	</ofx:paragraph>	
+	
+	
+	
+	
+</ofx:section>

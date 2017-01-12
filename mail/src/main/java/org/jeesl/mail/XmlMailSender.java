@@ -44,8 +44,7 @@ public class XmlMailSender extends AbstractMailSender
 
 	public void send(Mail mail) throws MessagingException, UnsupportedEncodingException
 	{
-		Session session = buildSession();
-		
+		buildSession();
 		MimeMessage msg = new MimeMessage(session);
 		msg.setFrom(new InternetAddress(mail.getHeader().getFrom().getEmailAddress().getEmail()));
 
@@ -77,8 +76,7 @@ public class XmlMailSender extends AbstractMailSender
 	
 	private void send(Document doc, String lang) throws UnsupportedEncodingException, MessagingException, UtilsProcessingException, UtilsMailException
 	{
-		Session session = buildSession();
-		
+		buildSession();
 		MimeMessage message = new MimeMessage(session);
 		MimeMessageCreator mmc = new MimeMessageCreator(message);
 		
@@ -109,10 +107,14 @@ public class XmlMailSender extends AbstractMailSender
 		FreemarkerMimeContentCreator mcc = new FreemarkerMimeContentCreator(message, fme);
 		mcc.createContent(doc,mail);
 		
-		Transport transport = session.getTransport("smtp");
-		transport.connect();
-		transport.sendMessage(message, message.getAllRecipients());
-		transport.close();
+		connect();
+		for(int i=0;i<5;i++)
+		{
+			logger.info("SENDING ...");
+			transport.sendMessage(message, message.getAllRecipients());
+			logger.info("SENT");
+		}
+		
 	}
 	
 	private Header getHeader(Element root) throws UtilsProcessingException

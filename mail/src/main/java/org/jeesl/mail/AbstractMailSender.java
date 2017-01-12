@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
+import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.Transport;
 
 import org.jdom2.Namespace;
 import org.slf4j.Logger;
@@ -26,6 +28,8 @@ public abstract class AbstractMailSender
 
 	protected List<EmailAddress> alwaysBcc; public void addBcc(EmailAddress bcc){alwaysBcc.add(bcc);}
 	protected EmailAddress overrideOnlyTo; public void setOverrideOnlyTo(EmailAddress overrideOnlyTo) {this.overrideOnlyTo = overrideOnlyTo;}
+	
+	protected Session session;
 	
 	protected Namespace nsMail;
 	
@@ -60,7 +64,6 @@ public abstract class AbstractMailSender
 		plainPwd = true;
 	}
 	
-	
 	public void debugSettings()
 	{
 		logger.info("Host: "+smtpHost);
@@ -68,55 +71,85 @@ public abstract class AbstractMailSender
 		logger.info("Pwd: "+smtpPassword);
 	}
 	
-	protected Session buildSession()
+	protected synchronized void buildSession()
 	{
-		Properties props = System.getProperties();
-		props.put("mail.smtp.host", smtpHost);
-		props.put("mail.smtp.port", smtpPort);
-		props.put("mail.smtp.auth", "false");
-		Session session;
-		
-		if(tlsPwd)
+		if(session==null)
 		{
-			props.put("mail.transport.protocol","smtp");
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.smtp.tls", "true");
-			props.put("mail.smtp.user", smtpUser);
-			props.put("mail.password", smtpPassword);
-			
-			Authenticator auth = new Authenticator()
+			logger.info("Building "+Session.class.getSimpleName());
+			Properties props = System.getProperties();
+			props.put("mail.smtp.host", smtpHost);
+			props.put("mail.smtp.port", smtpPort);
+			props.put("mail.smtp.auth", "false");
+
+			if(tlsPwd)
 			{
-				@Override public PasswordAuthentication getPasswordAuthentication()
+				props.put("mail.transport.protocol","smtp");
+				props.put("mail.smtp.auth", "true");
+				props.put("mail.smtp.starttls.enable", "true");
+				props.put("mail.smtp.tls", "true");
+				props.put("mail.smtp.user", smtpUser);
+				props.put("mail.password", smtpPassword);
+				
+				Authenticator auth = new Authenticator()
 				{
-					return new PasswordAuthentication(smtpUser,smtpPassword);
-				}
-			};
-			session = Session.getInstance(props, auth);
-		}
-		else if(plainPwd)
-		{
-			props.put("mail.transport.protocol","smtp");
-			props.put("mail.smtp.auth", "true");
-//			props.put("mail.smtp.starttls.enable", "true");
-//			props.put("mail.smtp.tls", "true");
-			props.put("mail.smtp.user", smtpUser);
-			props.put("mail.password", smtpPassword);
-			
-			Authenticator auth = new Authenticator()
+					@Override public PasswordAuthentication getPasswordAuthentication()
+					{
+						return new PasswordAuthentication(smtpUser,smtpPassword);
+					}
+				};
+				session = Session.getInstance(props, auth);
+			}
+			else if(plainPwd)
 			{
-				@Override public PasswordAuthentication getPasswordAuthentication()
+				props.put("mail.transport.protocol","smtp");
+				props.put("mail.smtp.auth", "true");
+//				props.put("mail.smtp.starttls.enable", "true");
+//				props.put("mail.smtp.tls", "true");
+				props.put("mail.smtp.user", smtpUser);
+				props.put("mail.password", smtpPassword);
+				
+				Authenticator auth = new Authenticator()
 				{
-					return new PasswordAuthentication(smtpUser,smtpPassword);
-				}
-			};
-			session = Session.getInstance(props, auth);
+					@Override public PasswordAuthentication getPasswordAuthentication()
+					{
+						return new PasswordAuthentication(smtpUser,smtpPassword);
+					}
+				};
+				session = Session.getInstance(props, auth);
+			}
+			else
+			{
+				logger.trace("Creating Seesion with NO authentication");
+				session = Session.getInstance(props, null);
+			}		
+			session.setDebug(smtpDebug);
 		}
-		else
+	}
+	
+	protected Transport transport; 
+	
+	protected synchronized void connect() throws MessagingException
+	{
+		if(transport==null)
 		{
-			session = Session.getInstance(props, null);
-		}		
-		session.setDebug(smtpDebug);
-		return session;
+			buildSession();
+			logger.info("Building "+Transport.class.getSimpleName());
+			transport = session.getTransport("smtp");
+		}
+		logger.info("Checking connected");
+		if(!transport.isConnected())
+		{
+			logger.info("Connecting Transport");
+			transport.connect();
+		}
+		logger.info("Checked connected");
+	}
+	
+	public void disconnect() throws MessagingException
+	{
+		if(transport!=null && transport.isConnected())
+		{
+			transport.close();
+		}
 	}
 }

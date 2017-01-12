@@ -48,4 +48,10 @@
 			<s:lang key="fr" translation="Setting Implementation"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IoMailCategory">
+		<s:langs>
+			<s:lang key="en" translation="Mail Category"/>
+			<s:lang key="fr" translation="Mail Category"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

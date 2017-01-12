@@ -24,11 +24,11 @@ public interface UtilsJsfSecurityHandler <L extends UtilsLang,
 											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>
 										>
 {
-	
 	List<R> getRoles();
 	
 	Map<R,Boolean> getMapHasRole();
 	
+	<E extends Enum<E>> boolean allow(E actionCode);
 	boolean allow(String actionCode);
 	String getPageCode();
 }

@@ -1,5 +1,6 @@
 package org.jeesl.factory.factory;
 
+import org.jeesl.controller.handler.SurveyHandler;
 import org.jeesl.controller.processor.SurveyScoreProcessor;
 import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyDataFactory;
@@ -10,6 +11,7 @@ import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.txt.survey.TxtSurveyQuestionFactory;
+import org.jeesl.interfaces.facade.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.survey.JeeslSurveyCorrelation;
@@ -134,5 +136,10 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 	public SurveyScoreProcessor<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> scoreProcessor()
 	{
 		return new SurveyScoreProcessor<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>();
+	}
+	
+	public SurveyHandler<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> handler(final JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)
+	{
+		return new SurveyHandler<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(fSurvey,this);
 	}
 }

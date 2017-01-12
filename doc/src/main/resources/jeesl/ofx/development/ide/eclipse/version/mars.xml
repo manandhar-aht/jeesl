@@ -25,7 +25,7 @@
             <ofx:title lang="en">Eclipse Marketplace Subversive 3.0.0 Installation</ofx:title>
             <layout:alignment horizontal="center"/>
             <layout:width unit="percentage">60</layout:width>
-            <media:media lang="en" src="png.aht-utils/development/environment/eclipse/mars/marketplace_Mars" dst="en/admin/development/environment/eclipse/mars/marketplace"/>
+            <media:media lang="en" src="jeesl/png/devlopment/ide/eclipse/mars/marketplace.png" dst="en/admin/development/environment/eclipse/mars/marketplace"/>
         </media:image>
 
         <ofx:paragraph lang="en">

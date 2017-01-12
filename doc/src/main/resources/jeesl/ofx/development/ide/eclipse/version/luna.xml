@@ -93,7 +93,7 @@
 			<ofx:title lang="en">Eclipse SCM Connectors Installation</ofx:title>
 				<layout:alignment horizontal="center"/>
 				<layout:width unit="percentage">60</layout:width>
-			<media:media lang="en" src="png.aht-utils/development/environment/eclipse/luna/connectors.png" dst="en/admin/development/environment/eclipse/luna/connectors"/>
+			<media:media lang="en" src="jeesl/png/devlopment/ide/eclipse/luna/connectors.png" dst="en/admin/development/environment/eclipse/luna/connectors"/>
 		</media:image>		
 
 	</ofx:section>

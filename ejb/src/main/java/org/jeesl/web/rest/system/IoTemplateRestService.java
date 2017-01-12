@@ -11,6 +11,7 @@ import org.jeesl.interfaces.rest.system.io.template.JeeslIoTemplateRestExport;
 import org.jeesl.interfaces.rest.system.io.template.JeeslIoTemplateRestImport;
 import org.jeesl.model.xml.system.io.template.Templates;
 import org.jeesl.util.query.xml.StatusQuery;
+import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,14 +32,13 @@ public class IoTemplateRestService <L extends UtilsLang,D extends UtilsDescripti
 									TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
 									DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
 									TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
-					implements JeeslIoTemplateRestExport,JeeslIoTemplateRestImport
+		extends AbstractJeeslRestService<L,D>
+		implements JeeslIoTemplateRestExport,JeeslIoTemplateRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(IoTemplateRestService.class);
 	
 	private JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fTemplate;
 	
-	private final Class<L> cL;
-	private final Class<D> cD;
 	private final Class<CATEGORY> cCategory;
 	private final Class<TYPE> cType;
 	private final Class<TEMPLATE> cTemplate;
@@ -53,9 +53,8 @@ public class IoTemplateRestService <L extends UtilsLang,D extends UtilsDescripti
 	
 	private IoTemplateRestService(JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fTemplate,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<TEMPLATE> cTemplate, final Class<DEFINITION> cDefinition, final Class<TOKEN> cToken)
 	{
+		super(fTemplate,cL,cD);
 		this.fTemplate=fTemplate;
-		this.cL=cL;
-		this.cD=cD;
 		
 		this.cCategory=cCategory;
 		this.cType=cType;
@@ -73,7 +72,7 @@ public class IoTemplateRestService <L extends UtilsLang,D extends UtilsDescripti
 					DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
 					TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
 		IoTemplateRestService<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>
-			factory(JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fTemplate,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<TEMPLATE> cTemplate, final Class<DEFINITION> cDefinition, final Class<TOKEN> cToken)
+		factory(JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fTemplate,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<TEMPLATE> cTemplate, final Class<DEFINITION> cDefinition, final Class<TOKEN> cToken)
 	{
 		return new IoTemplateRestService<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>(fTemplate,cL,cD,cCategory,cType,cTemplate,cDefinition,cToken);
 	}

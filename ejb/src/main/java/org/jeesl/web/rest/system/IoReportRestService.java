@@ -16,7 +16,6 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportStyleFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportTemplateFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
-import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportsFactory;
 import org.jeesl.factory.xml.system.io.report.XmlStyleFactory;
@@ -41,16 +40,14 @@ import org.jeesl.util.comparator.ejb.system.io.report.IoReportComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportStyleComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportTemplateComparator;
 import org.jeesl.util.query.xml.ReportQuery;
-import org.jeesl.util.query.xml.StatusQuery;
+import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsProcessingException;
-import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -69,7 +66,6 @@ import net.sf.ahtutils.xml.report.Templates;
 import net.sf.ahtutils.xml.report.XlsColumn;
 import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.report.XlsWorkbook;
-import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 
@@ -91,14 +87,13 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 									ATTRIBUTE extends EjbWithId,
 									FILLING extends UtilsStatus<FILLING,L,D>,
 									TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
+					extends AbstractJeeslRestService<L,D>
 					implements JeeslIoReportRestExport,JeeslIoReportRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(IoReportRestService.class);
 	
 	private JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport;
 	
-	private final Class<L> cL;
-	private final Class<D> cD;
 	private final Class<CATEGORY> cCategory;
 	private final Class<REPORT> cReport;
 	private final Class<IMPLEMENTATION> cImplementation;
@@ -114,7 +109,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<FILLING> cFilling;
 	private final Class<TRANSFORMATION> cTransformation;
 
-	private XmlContainerFactory xfContainer;
 	private XmlReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfReport;
 	private XmlTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfTemplate;
 	private XmlStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfStyle;
@@ -135,9 +129,8 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	
 	private IoReportRestService(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumWidth, final Class<RT> cRt, final Class<FILLING> cFilling, final Class<TRANSFORMATION> cTransformation,final Class<IMPLEMENTATION> cImplementation)
 	{
+		super(fReport,cL,cD);
 		this.fReport=fReport;
-		this.cL=cL;
-		this.cD=cD;
 		
 		this.cCategory=cCategory;
 		this.cReport=cReport;
@@ -155,7 +148,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cFilling=cFilling;
 		this.cTransformation=cTransformation;
 		
-		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfReport = new XmlReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(ReportQuery.get(ReportQuery.Key.exReport));
 		xfTemplate = new XmlTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(ReportQuery.exTemplate());
 		xfStyle = new XmlStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>(ReportQuery.exStyle());
@@ -542,16 +534,4 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 
 		return eRow;
 	}
-	
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Container container, Class<P> clParent)
-    {
-    	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
-		AhtStatusDbInit asdi = new AhtStatusDbInit();
-        asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus, clLang, clDescription));
-        asdi.setFacade(fReport);
-        DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, clLang, clParent);
-        asdi.deleteUnusedStatus(clStatus, clLang, clDescription);
-        return dataUpdate;
-    }
 }

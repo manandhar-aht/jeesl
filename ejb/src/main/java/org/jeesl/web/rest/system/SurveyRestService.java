@@ -23,6 +23,7 @@ import org.jeesl.interfaces.model.survey.JeeslSurveySection;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
 import org.jeesl.util.query.xml.StatusQuery;
+import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,14 +68,13 @@ public class SurveyRestService <L extends UtilsLang,
 							DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
-					implements UtilsSurveyRestExport,UtilsSurveyRestImport//,UtilsSurveyRest
+				extends AbstractJeeslRestService<L,D>	
+				implements UtilsSurveyRestExport,UtilsSurveyRestImport//,UtilsSurveyRest
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyRestService.class);
 	
 	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	
-	private final Class<L> cL;
-	private final Class<D> cD;
 	private final Class<SURVEY> cSurvey;
 	private final Class<SS> cSS;
 	private final Class<TEMPLATE> cTEMPLATE;
@@ -103,9 +103,8 @@ public class SurveyRestService <L extends UtilsLang,
 	
 	private SurveyRestService(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS,final Class<TEMPLATE> cTEMPLATE, final Class<VERSION> cVersion,final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSection,final Class<QUESTION> cQuestion,final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer,final Class<DATA> cData,final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
 	{
+		super(fSurvey,cL,cD);
 		this.fSurvey=fSurvey;
-		this.cL=cL;
-		this.cD=cD;
 		this.cSurvey=cSurvey;
 		this.cSS=cSS;
 		this.cTEMPLATE=cTEMPLATE;

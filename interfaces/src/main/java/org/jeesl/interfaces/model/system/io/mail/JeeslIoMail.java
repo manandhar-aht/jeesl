@@ -18,6 +18,9 @@ public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);
 	
+	Date getRecordCreation();
+	void setRecordCreation(Date recordCreation);
+	
 	Date getRecordSpool();
 	void setRecordSpool(Date recordSpool);
 	

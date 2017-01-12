@@ -58,7 +58,9 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 
 	protected JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	
+	private Class<TEMPLATE> cTemplate;
 	private Class<VERSION> cVersion;
+	private Class<TS> cTs;
 	private Class<SECTION> cSection;
 	protected Class<QUESTION> cQuestion;
 	protected Class<UNIT> cUnit;
@@ -90,11 +92,14 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>();
 	}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fSurvey = fSurvey;
+		
+		this.cTemplate = cTemplate;
 		this.cVersion = cVersion;
+		this.cTs = cTs;
 		this.cSection = cSection;
 		this.cQuestion = cQuestion;
 		this.cUnit = cUnit;
@@ -143,6 +148,25 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	}
 	
 	protected void initTemplate() throws UtilsNotFoundException{}
+	
+	protected <E extends Enum<E>> void initTemplate(boolean withVersion, E statusCode)
+	{
+		if(category!=null && version!=null)
+		{
+			try
+			{
+				TS status = fSurvey.fByCode(cTs,statusCode);
+				template = fSurvey.fcSurveyTemplate(category,version,status);
+				logger.info("Resolved "+cTemplate.getSimpleName()+": "+template.toString());
+				version = template.getVersion();
+				reloadTemplate();
+				section=null;
+				question=null;
+			}
+			catch (UtilsNotFoundException e) {e.printStackTrace();}
+		}
+	}
+	
 	
 	//Version
 	public void addVersion()

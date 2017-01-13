@@ -14,6 +14,13 @@
 			<lang key="fr" translation="Queue" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoMailStatus">
+		<langs>
+			<lang key="de" translation="Status" />
+			<lang key="en" translation="Status" />
+			<lang key="fr" translation="Status" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoMailCreated">
 		<langs>
 			<lang key="de" translation="Erstellt" />

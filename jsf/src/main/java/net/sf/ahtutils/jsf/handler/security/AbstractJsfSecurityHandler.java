@@ -132,7 +132,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang,
 	
 	protected void checkIcon(){noActions = actions.size() == 0;}
 	
-	@Override public <E extends Enum<E>> boolean allow(E actionCode)
+	@Override public <E extends Enum<E>> boolean allowSuffixCode(E actionCode)
 	{
 		return allow(pageCode+"."+actionCode.toString());
 	}

@@ -23,6 +23,7 @@
 		        <xsd:element ref="m:mail" maxOccurs="1"/>
                 <xsd:element ref="m:header" maxOccurs="1"/>
 		        <xsd:element ref="m:template" maxOccurs="unbounded"/>
+		        <xsd:element ref="m:text" maxOccurs="1"/>
 		        <xsd:element ref="m:attachment" maxOccurs="unbounded"/>
 		        <xsd:element ref="m:image" maxOccurs="unbounded"/>
             </xsd:sequence>

@@ -48,13 +48,13 @@
 							
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
 								<p:outputLabel value="#{msg.aupOptionCode}"/>
-								<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.code}"/>
+								<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.code}" autocomplete="off"/>
 								<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.code}"/>
 							</p:panelGrid>
 							
 							<p:panelGrid rendered="#{cc.attrs.bean.supportsSymbol}" columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
 								<p:outputLabel  value="#{msg.aupOptionSymbol}"/>
-								<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.symbol}"/>
+								<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.symbol}" autocomplete="off"/>
 								<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.status.symbol}"/>
 							</p:panelGrid>
 							
@@ -71,7 +71,7 @@
 								</p:selectOneMenu>
 								
 								<p:outputLabel value="#{msg.aupStatusImageResource}" rendered="#{(cc.attrs.bean.supportsImage) and (cc.attrs.bean.hasDeveloperAction)}"/>
-								<p:inputText value="#{cc.attrs.bean.status.image}" rendered="#{(cc.attrs.bean.supportsImage) and (cc.attrs.bean.hasDeveloperAction)}"/>
+								<p:inputText value="#{cc.attrs.bean.status.image}" rendered="#{(cc.attrs.bean.supportsImage) and (cc.attrs.bean.hasDeveloperAction)}" autocomplete="off"/>
 				
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.status}" keys="#{cc.attrs.langKeys}" withDescription="true"/>

@@ -26,7 +26,7 @@ public class XmlMimeContentCreator extends AbstractMimeContentCreator
 		this.message=message;
 	}
 	
-	public void createContent(Mail mail) throws MessagingException
+	@Deprecated public void createContent(Mail mail) throws MessagingException
 	{		
 		JaxbUtil.trace(mail);
 		Multipart mpAlternative = new MimeMultipart("alternative");
@@ -57,7 +57,38 @@ public class XmlMimeContentCreator extends AbstractMimeContentCreator
 	    }
 	}
 	
-	private MimeBodyPart createTxt(Mail mail) throws MessagingException
+	public void buildContent(Mail mail) throws MessagingException
+	{		
+		JaxbUtil.trace(mail);
+		Multipart mpAlternative = new MimeMultipart("alternative");
+		mpAlternative.addBodyPart(buildTxt(mail));	   
+	    
+	    if(!mail.isSetAttachment() && !mail.isSetImage())
+	    {
+	    	message.setContent(mpAlternative);
+	    }
+	    else
+	    {
+	    	Multipart mixed = new MimeMultipart("mixed");
+	    	
+	        MimeBodyPart wrap = new MimeBodyPart();
+	        wrap.setContent(mpAlternative);    // HERE'S THE KEY
+	        mixed.addBodyPart(wrap);
+	       
+	        for(Attachment attachment : mail.getAttachment())
+	        {
+	        	mixed.addBodyPart(createBinary(attachment));
+	        }
+	        for(Image image : mail.getImage())
+	        {
+	        	logger.warn("Untested here");
+	        	mixed.addBodyPart(createImage(image));
+	        }
+	        message.setContent(mixed);
+	    }
+	}
+	
+	@Deprecated private MimeBodyPart createTxt(Mail mail) throws MessagingException
 	{
 		MimeBodyPart txt = new MimeBodyPart();
 	
@@ -68,6 +99,22 @@ public class XmlMimeContentCreator extends AbstractMimeContentCreator
 		else
 		{
 			txt.setContent(mail.getExample(), "text/plain; charset=\"ISO-8859-1\"");
+		}
+		
+		return txt;
+	}
+	
+	private MimeBodyPart buildTxt(Mail mail) throws MessagingException
+	{
+		MimeBodyPart txt = new MimeBodyPart();
+	
+		if(mail.isSetAttachment())
+		{
+			txt.setContent(mail.getText().getValue()+SystemUtils.LINE_SEPARATOR, "text/plain; charset=\"ISO-8859-1\"");
+		}
+		else
+		{
+			txt.setContent(mail.getText().getValue(), "text/plain; charset=\"ISO-8859-1\"");
 		}
 		
 		return txt;

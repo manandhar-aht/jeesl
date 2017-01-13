@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://www.jeesl.org/io/mail}mail"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/io/mail}header"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/io/mail}template" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/io/mail}text"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/io/mail}attachment" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/io/mail}image" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
@@ -54,6 +55,7 @@ import javax.xml.bind.annotation.XmlType;
     "mail",
     "header",
     "template",
+    "text",
     "attachment",
     "image"
 })
@@ -71,6 +73,8 @@ public class Mail
     protected Header header;
     @XmlElement(required = true)
     protected List<Template> template;
+    @XmlElement(required = true)
+    protected Text text;
     @XmlElement(required = true)
     protected List<Attachment> attachment;
     @XmlElement(required = true)
@@ -209,6 +213,34 @@ public class Mail
 
     public void unsetTemplate() {
         this.template = null;
+    }
+
+    /**
+     * Gets the value of the text property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Text }
+     *     
+     */
+    public Text getText() {
+        return text;
+    }
+
+    /**
+     * Sets the value of the text property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Text }
+     *     
+     */
+    public void setText(Text value) {
+        this.text = value;
+    }
+
+    public boolean isSetText() {
+        return (this.text!= null);
     }
 
     /**

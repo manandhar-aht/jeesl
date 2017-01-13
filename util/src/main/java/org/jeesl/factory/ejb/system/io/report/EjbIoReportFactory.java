@@ -47,9 +47,9 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoReportFactory.class);
 	
-	final Class<CATEGORY> cCategory;
-	final Class<REPORT> cReport;
-	final Class<IMPLEMENTATION> cImplementation;
+	private final Class<CATEGORY> cCategory;
+	private final Class<REPORT> cReport;
+	private final Class<IMPLEMENTATION> cImplementation;
 	
 	private JeeslDbLangUpdater<REPORT,L> dbuReportLang;
 	private JeeslDbDescriptionUpdater<REPORT,D> dbuReportDescription;

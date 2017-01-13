@@ -43,6 +43,7 @@ public class JeeslMsgBuilder
 	//IO
 	public static final String ioTemplate = "jeesl/msg/admin/system/io/template.xml";
 	public static final String ioReport = "jeesl/msg/admin/system/io/report.xml";
+	public static final String ioMail = "jeesl/msg/admin/system/io/mail.xml";
 	
 	//System
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";

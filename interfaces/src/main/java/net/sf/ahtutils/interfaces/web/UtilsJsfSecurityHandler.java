@@ -28,7 +28,7 @@ public interface UtilsJsfSecurityHandler <L extends UtilsLang,
 	
 	Map<R,Boolean> getMapHasRole();
 	
-	<E extends Enum<E>> boolean allow(E actionCode);
+	<E extends Enum<E>> boolean allowSuffixCode(E actionCode);
 	boolean allow(String actionCode);
 	String getPageCode();
 }

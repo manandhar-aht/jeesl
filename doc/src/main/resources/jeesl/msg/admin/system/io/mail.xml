@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations xmlns="http://ahtutils.aht-group.com/status">
+	<translation key="jeeslIoMailQueue">
+		<langs>
+			<lang key="de" translation="Warteschlange" />
+			<lang key="en" translation="Queue" />
+			<lang key="fr" translation="Queue" />
+		</langs>
+	</translation>
+</translations>

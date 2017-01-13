@@ -3,6 +3,7 @@ package org.jeesl.factory.xml.mail;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
+import org.jeesl.factory.xml.system.io.mail.XmlTextFactory;
 import org.jeesl.model.xml.system.io.mail.Header;
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.jeesl.model.xml.system.io.mail.Template;
@@ -33,11 +34,19 @@ public class XmlMailFactory
     	return mail;
     }
     
-    public static Mail create(Header header, String content)
+    @Deprecated public static Mail create(Header header, String content)
     {   	   	
     	Mail mail = new Mail();
     	mail.setHeader(header);
     	mail.setExample(content);
+    	return mail;
+    }
+    
+    public static Mail build(Header header, String text)
+    {   	   	
+    	Mail mail = new Mail();
+    	mail.setHeader(header);
+    	mail.setText(XmlTextFactory.build(text));
     	return mail;
     }
     

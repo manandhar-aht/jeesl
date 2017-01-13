@@ -27,7 +27,6 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	
 	protected JeeslIoMailFacade<L,D,CATEGORY,MAIL> fMail;
 	
-	private Class<CATEGORY> cCategory;
 	private Class<MAIL> cMail;
 
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
@@ -42,7 +41,6 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fMail=fMail;
 		
-		this.cCategory=cCategory;
 		this.cMail=cMail;
 		categories = fMail.allOrderedPositionVisible(cCategory);
 		

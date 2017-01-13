@@ -1,5 +1,9 @@
 package org.jeesl.factory.ejb.system.io.template;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
@@ -63,5 +67,18 @@ public class EjbIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public static <L extends UtilsLang,D extends UtilsDescription,
+					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
+					TYPE extends UtilsStatus<TYPE,L,D>,
+					TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
+					DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
+					TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
+		Map<String,TEMPLATE> buildMap(List<TEMPLATE> templates)
+	{
+		Map<String,TEMPLATE> map = new HashMap<String,TEMPLATE>();
+		for(TEMPLATE t : templates){map.put(t.getCode(),t);}
+		return map;
 	}
 }

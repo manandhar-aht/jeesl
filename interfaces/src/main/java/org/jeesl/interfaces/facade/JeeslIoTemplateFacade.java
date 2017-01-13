@@ -24,5 +24,6 @@ public interface JeeslIoTemplateFacade <L extends UtilsLang,D extends UtilsDescr
 	
 	DEFINITION fDefinition(TYPE type, String code) throws UtilsNotFoundException;
 	
+	<E extends Enum<E>> List<TEMPLATE> loadTemplates(E category);
 	List<TEMPLATE> fTemplates(List<CATEGORY> categories, boolean showInvisibleEntities);
 }

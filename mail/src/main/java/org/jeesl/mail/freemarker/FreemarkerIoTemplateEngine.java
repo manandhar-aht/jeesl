@@ -2,6 +2,7 @@ package org.jeesl.mail.freemarker;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.Map;
 
 import org.jeesl.factory.txt.system.io.TxtIoTemplateFactory;
@@ -41,6 +42,14 @@ public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescr
 		fmConfiguration.setLogTemplateExceptions(false);
 		fmConfiguration.setDefaultEncoding("UTF-8");
 		fmConfiguration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+	}
+	
+	public void addTemplates(List<TEMPLATE> templates)
+	{
+		for(TEMPLATE template : templates)
+		{
+			addTemplate(template);
+		}
 	}
 		
 	public void addTemplate(TEMPLATE template)

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jeesl:container xmlns:us="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:un="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:jeesl="http://www.jeesl.org">
+    <us:status code="queue" visible="true" position="1">
+        <us:langs>
+            <us:lang key="en" translation="Queue"/>
+            <us:lang key="fr" translation=""/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="en">The message is delivered to the queue and waiting for delivery to a SMTP server.</us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="spooling" visible="true" position="2">
+        <us:langs>
+            <us:lang key="en" translation="Spooling"/>
+            <us:lang key="fr" translation=""/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="en">The message is currently handled by the SMTP server.</us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="sent" visible="true" position="3">
+        <us:langs>
+            <us:lang key="en" translation="Sent"/>
+            <us:lang key="fr" translation=""/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="en">The message is successfully sent to the SMTP server.</us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="failed" visible="true" position="4">
+        <us:langs>
+            <us:lang key="en" translation="Failed"/>
+            <us:lang key="fr" translation=""/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="en">Sending to a SMTP server has failed, the retry-counter will give information on how many times sending has already failed.</us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+</jeesl:container>

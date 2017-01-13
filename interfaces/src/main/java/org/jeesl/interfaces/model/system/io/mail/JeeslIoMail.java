@@ -17,7 +17,7 @@ public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 		extends EjbWithId,EjbSaveable,EjbRemoveable
 {	
 	
-	public static enum Status{queue,spooling,failed};
+	public static enum Status{queue,spooling,sent,failed};
 	public static enum Attributes{category,status};
 	
 	CATEGORY getCategory();

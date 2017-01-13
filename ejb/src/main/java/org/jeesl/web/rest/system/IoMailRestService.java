@@ -3,6 +3,7 @@ package org.jeesl.web.rest.system;
 import org.jeesl.interfaces.facade.JeeslIoMailFacade;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
 import org.jeesl.interfaces.rest.system.io.mail.JeeslIoMailRestExport;
+import org.jeesl.interfaces.rest.system.io.mail.JeeslIoMailRestImport;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
@@ -11,12 +12,13 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
 					extends AbstractJeeslRestService<L,D>
-					implements JeeslIoMailRestExport
+					implements JeeslIoMailRestExport,JeeslIoMailRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(IoMailRestService.class);
 	
@@ -49,4 +51,7 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 	
 	@Override public Container exportSystemIoMailCategories() {return xfContainer.build(fMail.allOrderedPosition(cCategory));}
 	@Override public Container exportSystemIoMailStatus() {return xfContainer.build(fMail.allOrderedPosition(cStatus));}
+	
+	@Override public DataUpdate importSystemIoMailCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
+	@Override public DataUpdate importSystemIoMailStatus(Container categories){return importStatus(cStatus,cL,cD,categories,null);}
 }

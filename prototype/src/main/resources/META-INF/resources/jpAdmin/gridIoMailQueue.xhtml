@@ -30,6 +30,7 @@
 							<p:column headerText="#{msg.jeeslIoMailCreated}"><h:outputText value="#{m.recordCreation}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
 							<p:column headerText="#{msg.jeeslIoMailSpooled}"><h:outputText value="#{m.recordSpool}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
 							<p:column headerText="#{msg.jeeslIoMailSent}"><h:outputText value="#{m.recordSent}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
+							<p:column headerText="#{msg.jeeslIoMailCounter}"><h:outputText value="#{m.counter}"/></p:column>
 							<p:column headerText="#{msg.jeeslIoMailRecipient}"><h:outputText value="#{m.recipient}"/></p:column>
 						</p:dataTable>
 					</h:form>
@@ -45,6 +46,9 @@
 							
 							<p:outputLabel value="#{msg.jeeslIoMailSent}"/>
 							<h:outputText value="#{cc.attrs.bean.mail.recordSent}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
+							
+							<p:outputLabel value="#{msg.jeeslIoMailCounter}"/>
+							<h:outputText value="#{cc.attrs.bean.mail.counter}"/>
 							
 							<p:outputLabel value="#{msg.jeeslIoMailRecipient}"/>
 							<h:outputText value="#{cc.attrs.bean.mail.recipient}"/>

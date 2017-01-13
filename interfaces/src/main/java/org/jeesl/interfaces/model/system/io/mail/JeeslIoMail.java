@@ -11,12 +11,19 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL>
+								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>,
+								STATUS extends UtilsStatus<STATUS,L,D>
 								>
 		extends EjbWithId,EjbSaveable,EjbRemoveable
 {	
+	
+	public static enum Status{queue,spooling,failed};
+	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);
+	
+	STATUS getStatus();
+	void setStatus(STATUS status);
 	
 	Date getRecordCreation();
 	void setRecordCreation(Date recordCreation);
@@ -29,6 +36,9 @@ public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 	
 	String getRecipient();
 	void setRecipient(String recipient);
+	
+	int getCounter();
+	void setCounter(int counter);
 	
 	String getXml();
 	void setXml(String xml);

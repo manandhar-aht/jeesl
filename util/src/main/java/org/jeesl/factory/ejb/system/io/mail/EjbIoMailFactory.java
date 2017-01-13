@@ -14,7 +14,7 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class EjbIoMailFactory <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL>>
+								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoMailFactory.class);
 	
@@ -25,13 +25,15 @@ public class EjbIoMailFactory <L extends UtilsLang,D extends UtilsDescription,
         this.cMail = cMail;
 	}
  
-	public MAIL build(CATEGORY category, Mail mail)
+	public MAIL build(CATEGORY category, STATUS status, Mail mail)
 	{
 		MAIL ejb = null;
 		try
 		{
 			ejb = cMail.newInstance();
 			ejb.setCategory(category);
+			ejb.setStatus(status);
+			ejb.setCounter(0);
 			ejb.setRecordCreation(new Date());
 			if(mail.isSetHeader() && mail.getHeader().isSetTo() && mail.getHeader().getTo().isSetEmailAddress()){ejb.setRecipient(mail.getHeader().getTo().getEmailAddress().get(0).getEmail());}
 			ejb.setXml(JaxbUtil.toString(mail));

@@ -35,4 +35,11 @@
 			<lang key="fr" translation="Recipient" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoMailCounter">
+		<langs>
+			<lang key="de" translation="Zähler" />
+			<lang key="en" translation="Counter" />
+			<lang key="fr" translation="Counter" />
+		</langs>
+	</translation>
 </translations>

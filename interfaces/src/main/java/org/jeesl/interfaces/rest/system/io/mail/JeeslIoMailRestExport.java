@@ -11,4 +11,7 @@ public interface JeeslIoMailRestExport
 {
 	@GET @Path("/system/io/mail/category") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemIoMailCategories();
+	
+	@GET @Path("/system/io/mail/status") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemIoMailStatus();
 }

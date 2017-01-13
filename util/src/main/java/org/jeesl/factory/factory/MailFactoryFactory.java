@@ -11,7 +11,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class MailFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL>>
+								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(MailFactoryFactory.class);
 	
@@ -27,14 +27,14 @@ public class MailFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL>>
-		MailFactoryFactory<L,D,CATEGORY,MAIL> factory(final Class<MAIL> cMail)
+					MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
+		MailFactoryFactory<L,D,CATEGORY,MAIL,STATUS> factory(final Class<MAIL> cMail)
 	{
-		return new MailFactoryFactory<L,D,CATEGORY,MAIL>(cMail);
+		return new MailFactoryFactory<L,D,CATEGORY,MAIL,STATUS>(cMail);
 	}
 	
-	public EjbIoMailFactory<L,D,CATEGORY,MAIL> mail()
+	public EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS> mail()
 	{
-		return new EjbIoMailFactory<L,D,CATEGORY,MAIL>(cMail);
+		return new EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS>(cMail);
 	}
 }

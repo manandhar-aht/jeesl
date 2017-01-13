@@ -48,7 +48,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		uiShowDocumentation = true;
 	}
 	
-	public void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription, FacesMessageBean bMessage)
+	protected void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription, FacesMessageBean bMessage)
 	{	
 		this.langs=langs;
 		this.bMessage=bMessage;
@@ -66,6 +66,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	protected boolean uiShowInvisible; public boolean isUiShowInvisible() {return uiShowInvisible;}
 	protected boolean uiShowDocumentation; public boolean isUiShowDocumentation() {return uiShowDocumentation;}
 	
+	@SuppressWarnings("rawtypes")
 	protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
 	{
 		String actionDeveloper = viewCode+".Developer";

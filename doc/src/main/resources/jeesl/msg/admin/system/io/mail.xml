@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <translations xmlns="http://ahtutils.aht-group.com/status">
+	<translation key="jeeslIoMail">
+		<langs>
+			<lang key="de" translation="E-Mail" />
+			<lang key="en" translation="E-Mail" />
+			<lang key="fr" translation="E-Mail" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoMailQueue">
 		<langs>
 			<lang key="de" translation="Warteschlange" />

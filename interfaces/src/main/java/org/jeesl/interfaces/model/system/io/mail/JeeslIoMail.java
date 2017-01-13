@@ -18,6 +18,7 @@ public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 {	
 	
 	public static enum Status{queue,spooling,failed};
+	public static enum Attributes{category,status};
 	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);

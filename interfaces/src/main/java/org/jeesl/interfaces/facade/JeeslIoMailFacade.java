@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.facade;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -14,5 +16,7 @@ public interface JeeslIoMailFacade <L extends UtilsLang,D extends UtilsDescripti
 									MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
 			extends UtilsFacade
 {	
+	List<MAIL> fMails(List<CATEGORY> categories);
+	
 	void spoolMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException;
 }

@@ -35,7 +35,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	
 	private MAIL mail; public MAIL getMail() {return mail;} public void setMail(MAIL mail) {this.mail = mail;}
 	
-	private SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
+	protected SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS> fMail, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<MAIL> cMail)
 	{
@@ -45,8 +45,8 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 		this.cMail=cMail;
 		categories = fMail.allOrderedPositionVisible(cCategory);
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cCategory,categories));}
-		
-		reloadMails();
+		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
+		sbhCategory.selectAll();
 	}
 	
 	public void multiToggle(UtilsStatus<?,L,D> o)
@@ -63,10 +63,9 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	}
 	
 	//*************************************************************************************
-	private void reloadMails()
+	protected void reloadMails()
 	{
-//		mails = fMail.fMails(sbhCategory.getSelected());
-		mails = fMail.all(cMail);
+		mails = fMail.fMails(sbhCategory.getSelected());
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cMail,mails));}
 //		Collections.sort(templates, comparatorTemplate);
 	}

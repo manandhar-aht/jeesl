@@ -7,4 +7,32 @@
 			<lang key="fr" translation="Queue" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoMailCreated">
+		<langs>
+			<lang key="de" translation="Erstellt" />
+			<lang key="en" translation="Created" />
+			<lang key="fr" translation="Created" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoMailSpooled">
+		<langs>
+			<lang key="de" translation="Weiterleitung" />
+			<lang key="en" translation="Spooled" />
+			<lang key="fr" translation="Spooled" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoMailSent">
+		<langs>
+			<lang key="de" translation="Gesendet" />
+			<lang key="en" translation="Sent" />
+			<lang key="fr" translation="Sent" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoMailRecipient">
+		<langs>
+			<lang key="de" translation="Empfänger" />
+			<lang key="en" translation="Recipient" />
+			<lang key="fr" translation="Recipient" />
+		</langs>
+	</translation>
 </translations>

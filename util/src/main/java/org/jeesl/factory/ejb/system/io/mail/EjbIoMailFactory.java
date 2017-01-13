@@ -33,6 +33,7 @@ public class EjbIoMailFactory <L extends UtilsLang,D extends UtilsDescription,
 			ejb = cMail.newInstance();
 			ejb.setCategory(category);
 			ejb.setRecordCreation(new Date());
+			if(mail.isSetHeader() && mail.getHeader().isSetTo() && mail.getHeader().getTo().isSetEmailAddress()){ejb.setRecipient(mail.getHeader().getTo().getEmailAddress().get(0).getEmail());}
 			ejb.setXml(JaxbUtil.toString(mail));
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

@@ -18,7 +18,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sQueue" width="8">
+				<aht:slot id="sQueue" width="9">
 					<h:form id="fQueue">
 						<p:dataTable var="m" value="#{cc.attrs.bean.mails}" draggableRows="true"
 							selection="#{cc.attrs.bean.mail}" selectionMode="single" rowKey="#{m.id}">
@@ -27,13 +27,27 @@
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sMail" listener="#{cc.attrs.bean.selectMail()}"/>
 							<p:column headerText="#{msg.aupCategory}"><h:outputText value="#{m.category.name[userBean.localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslIoMailCreated}"><h:outputText value="#{m.recordCreation}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
+							<p:column headerText="#{msg.jeeslIoMailSpooled}"><h:outputText value="#{m.recordSpool}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
+							<p:column headerText="#{msg.jeeslIoMailSent}"><h:outputText value="#{m.recordSent}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
+							<p:column headerText="#{msg.jeeslIoMailRecipient}"><h:outputText value="#{m.recipient}"/></p:column>
 						</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sMail" width="4">
+				<aht:slot id="sMail" width="3">
 					<p:panel header="#{msg.jeeslIoMail}" rendered="#{not empty cc.attrs.bean.mail}" styleClass="auPanelWithGrid">
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
-							<p:outputLabel value="#{msg.aupSecurityVisible}"/>
+							<p:outputLabel value="#{msg.jeeslIoMailCreated}"/>
+							<h:outputText value="#{cc.attrs.bean.mail.recordCreation}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
+							
+							<p:outputLabel value="#{msg.jeeslIoMailSpooled}"/>
+							<h:outputText value="#{cc.attrs.bean.mail.recordSpool}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
+							
+							<p:outputLabel value="#{msg.jeeslIoMailSent}"/>
+							<h:outputText value="#{cc.attrs.bean.mail.recordSent}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
+							
+							<p:outputLabel value="#{msg.jeeslIoMailRecipient}"/>
+							<h:outputText value="#{cc.attrs.bean.mail.recipient}"/>
 						</p:panelGrid>
 					</p:panel>
 				</aht:slot>

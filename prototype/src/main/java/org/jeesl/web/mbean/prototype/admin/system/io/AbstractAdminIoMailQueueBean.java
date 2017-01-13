@@ -43,6 +43,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 		
 		this.cMail=cMail;
 		categories = fMail.allOrderedPositionVisible(cCategory);
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cCategory,categories));}
 		
 		reloadMails();
 	}

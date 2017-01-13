@@ -27,6 +27,9 @@ public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 	Date getRecordSent();
 	void setRecordSent(Date recordSent);
 	
+	String getRecipient();
+	void setRecipient(String recipient);
+	
 	String getXml();
 	void setXml(String xml);
 }

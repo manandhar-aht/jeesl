@@ -5,7 +5,7 @@
     xmlns:s   ="http://ahtutils.aht-group.com/status"
     xmlns:sym ="http://ahtutils.aht-group.com/symbol"
     xmlns:t   ="http://ahtutils.aht-group.com/text"
-    xmlns:m   ="http://ahtutils.aht-group.com/mail"
+    
     xmlns:p   ="http://ahtutils.aht-group.com/project"
     xmlns:f   ="http://ahtutils.aht-group.com/finance"
     xmlns:n   ="http://ahtutils.aht-group.com/navigation"
@@ -17,8 +17,9 @@
     xmlns:u   ="http://ahtutils.aht-group.com/utils"
     xmlns:it  ="http://ahtutils.aht-group.com/issue"
 	
-	xmlns:rev ="http://www.jeesl.org/revision"
-	xmlns:template ="http://www.jeesl.org/io/template"
+	xmlns:rev		="http://www.jeesl.org/revision"
+	xmlns:template	="http://www.jeesl.org/io/template"
+	xmlns:m 		= "http://www.jeesl.org/io/mail"
 	xmlns:text ="http://www.jeesl.org/text"
 	xmlns:symbol ="http://www.jeesl.org/symbol"
 	
@@ -42,7 +43,7 @@
     <xsd:import namespace="http://ahtutils.aht-group.com/security" schemaLocation="aht/security.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/finance" schemaLocation="aht/finance.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/dbseed" schemaLocation="aht/dbseed.xsd"/>
-    <xsd:import namespace="http://ahtutils.aht-group.com/mail" schemaLocation="aht/mail.xsd"/>
+    
     <xsd:import namespace="http://ahtutils.aht-group.com/qa" schemaLocation="aht/qa.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/issue" schemaLocation="aht/issue.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/srs" schemaLocation="aht/srs.xsd"/>
@@ -57,6 +58,7 @@
 	
 	<xsd:import namespace="http://www.jeesl.org" schemaLocation="jeesl/jeesl.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/io/template" schemaLocation="jeesl/io/template.xsd"/>
+	<xsd:import namespace="http://www.jeesl.org/io/mail" schemaLocation="jeesl/io/mail.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/revision" schemaLocation="jeesl/revision.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/text" schemaLocation="jeesl/text.xsd"/>
     <xsd:import namespace="http://exlp.sf.net/io" schemaLocation="../../../../../exlp/xml/src/main/xsd/util/io.xsd"/>

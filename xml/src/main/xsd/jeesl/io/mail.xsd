@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.jeesl.org/io/mail"
+    xmlns:m="http://www.jeesl.org/io/mail"
+    xmlns:io="http://exlp.sf.net/io"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://exlp.sf.net/io" schemaLocation="../../../../../../../exlp/xml/src/main/xsd/util/io.xsd"/>
+    <xsd:element name="mails">
+	    <xsd:complexType>
+	            <xsd:sequence>
+		            <xsd:element ref="m:mail" maxOccurs="unbounded"/>
+				</xsd:sequence>
+				<xsd:attribute name="dir" type="xsd:string"/>
+		</xsd:complexType>    
+    </xsd:element>
+    <xsd:element name="mail">
+        <xsd:complexType>
+            <xsd:sequence>
+	           	<xsd:element name="example">
+	           		<xsd:simpleType>
+		               	<xsd:restriction base="xsd:string"/>
+		            </xsd:simpleType>
+		        </xsd:element>
+		        <xsd:element ref="m:mail" maxOccurs="1"/>
+                <xsd:element ref="m:header" maxOccurs="1"/>
+		        <xsd:element ref="m:template" maxOccurs="unbounded"/>
+		        <xsd:element ref="m:attachment" maxOccurs="unbounded"/>
+		        <xsd:element ref="m:image" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+            <xsd:attribute name="lang" type="xsd:string"/>
+            <xsd:attribute name="type" type="xsd:string"/>
+            <xsd:attribute name="msgId" type="xsd:string"/>
+            <xsd:attribute name="dir" type="xsd:string"/>
+            <xsd:attribute name="test" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="template">
+        <xsd:complexType>
+        	<xsd:attribute name="lang" type="xsd:string"/>
+            <xsd:attribute name="type" type="xsd:string"/>
+            <xsd:attribute name="file" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="text">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:string"/>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+    <xsd:element name="attachment">
+        <xsd:complexType>
+            <xsd:sequence>
+	           	<xsd:element name="data">
+	           		<xsd:simpleType>
+		               	<xsd:restriction base="xsd:hexBinary"/>
+		            </xsd:simpleType>
+		        </xsd:element>
+		        <xsd:element ref="io:file" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="image">
+        <xsd:complexType>
+            <xsd:sequence>
+	           	<xsd:element name="data">
+	           		<xsd:simpleType>
+		               	<xsd:restriction base="xsd:hexBinary"/>
+		            </xsd:simpleType>
+		        </xsd:element>
+		        <xsd:element ref="io:file" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:attribute name="cid" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="tracker">
+        <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="refId" type="xsd:long"/>
+            <xsd:attribute name="created" type="xsd:dateTime"/>
+            <xsd:attribute name="sent" type="xsd:dateTime"/>
+            <xsd:attribute name="type" type="xsd:string"/>
+            <xsd:attribute name="retryCounter" type="xsd:int"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="header">
+        <xsd:complexType>
+        	<xsd:sequence>
+                <xsd:element ref="m:from" maxOccurs="1"/>
+                <xsd:element ref="m:to" maxOccurs="1"/>
+                <xsd:element ref="m:cc" maxOccurs="1"/>
+                <xsd:element ref="m:bcc" maxOccurs="1"/>
+                <xsd:element name="subject">
+	           		<xsd:simpleType>
+		               	<xsd:restriction base="xsd:string"/>
+		            </xsd:simpleType>
+		        </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="emailAddress">
+        <xsd:complexType>
+            <xsd:attribute name="name" type="xsd:string"/>
+            <xsd:attribute name="email" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="from">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="m:emailAddress" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="to">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="m:emailAddress" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="cc">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="m:emailAddress" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="bcc">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="m:emailAddress" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="link">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="code">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string"/>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="url">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string"/>
+                    </xsd:simpleType>
+                </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="type" type="xsd:string"/>
+            <xsd:attribute name="refId" type="xsd:long"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

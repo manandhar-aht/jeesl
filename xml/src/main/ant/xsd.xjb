@@ -76,12 +76,6 @@
         </jxb:schemaBindings>
     </jxb:bindings>
     
-   	<jxb:bindings schemaLocation="../xsd/aht/mail.xsd" node="/xsd:schema">
-        <jxb:schemaBindings>
-            <jxb:package name="net.sf.ahtutils.xml.mail"/>
-        </jxb:schemaBindings>
-    </jxb:bindings>
-
    	<jxb:bindings schemaLocation="../xsd/aht/issue.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
             <jxb:package name="net.sf.ahtutils.xml.issue"/>
@@ -152,7 +146,13 @@
 		<jxb:schemaBindings>
 			<jxb:package name="org.jeesl.model.xml.system.io.template"/>
 		</jxb:schemaBindings>
-    </jxb:bindings>    
+    </jxb:bindings>
+    
+	<jxb:bindings schemaLocation="../xsd/jeesl/io/mail.xsd" node="/xsd:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="net.sf.ahtutils.xml.mail"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
     
 	<jxb:bindings schemaLocation="../xsd/jeesl/revision.xsd" node="/xsd:schema">
         <jxb:schemaBindings>

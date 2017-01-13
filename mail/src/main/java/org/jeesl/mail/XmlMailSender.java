@@ -14,14 +14,14 @@ import org.jdom2.Element;
 import org.jeesl.mail.content.FreemarkerMimeContentCreator;
 import org.jeesl.mail.content.XmlMimeContentCreator;
 import org.jeesl.mail.freemarker.FreemarkerEngine;
+import org.jeesl.model.xml.system.io.mail.Bcc;
+import org.jeesl.model.xml.system.io.mail.Header;
+import org.jeesl.model.xml.system.io.mail.Mail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.processing.UtilsMailException;
 import net.sf.ahtutils.exception.processing.UtilsProcessingException;
-import net.sf.ahtutils.xml.mail.Bcc;
-import net.sf.ahtutils.xml.mail.Header;
-import net.sf.ahtutils.xml.mail.Mail;
 import net.sf.exlp.util.xml.JDomUtil;
 
 public class XmlMailSender extends AbstractMailSender

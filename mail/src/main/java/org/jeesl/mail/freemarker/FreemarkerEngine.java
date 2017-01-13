@@ -8,8 +8,6 @@ import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 
 import net.sf.ahtutils.exception.processing.UtilsDeveloperException;
-import net.sf.ahtutils.xml.mail.Mail;
-import net.sf.ahtutils.xml.mail.Mails;
 import net.sf.ahtutils.xml.xpath.MailXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
@@ -18,6 +16,8 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.jdom2.Document;
 import org.jdom2.output.Format;
+import org.jeesl.model.xml.system.io.mail.Mail;
+import org.jeesl.model.xml.system.io.mail.Mails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
@@ -71,8 +71,8 @@ public class FreemarkerEngine
 		{
 			Mail mail = MailXpath.getMail(mails, cfgMail.getCode());
 
-			net.sf.ahtutils.xml.mail.Template requestedTemplate =  cfgMail.getTemplate().get(0);
-			net.sf.ahtutils.xml.mail.Template template = MailXpath.getTemplate(mail, requestedTemplate.getLang(), requestedTemplate.getType());
+			org.jeesl.model.xml.system.io.mail.Template requestedTemplate =  cfgMail.getTemplate().get(0);
+			org.jeesl.model.xml.system.io.mail.Template template = MailXpath.getTemplate(mail, requestedTemplate.getLang(), requestedTemplate.getType());
 			
 			StringBuffer sb = new StringBuffer();
 				sb.append(mails.getDir());

@@ -3,8 +3,7 @@ package org.jeesl.factory.xml.mail;
 import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
 
-import net.sf.ahtutils.xml.mail.EmailAddress;
-
+import org.jeesl.model.xml.system.io.mail.EmailAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

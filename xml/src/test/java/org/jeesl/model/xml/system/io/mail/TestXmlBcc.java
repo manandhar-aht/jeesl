@@ -4,8 +4,6 @@ import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.mail.Bcc;
-
 public class TestXmlBcc extends AbstractXmlMailTest<Bcc>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlBcc.class);

@@ -4,8 +4,7 @@ import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
-import net.sf.ahtutils.xml.mail.From;
-
+import org.jeesl.model.xml.system.io.mail.From;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

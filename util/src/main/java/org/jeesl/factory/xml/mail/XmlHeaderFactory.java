@@ -3,13 +3,12 @@ package org.jeesl.factory.xml.mail;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
+import org.jeesl.model.xml.system.io.mail.EmailAddress;
+import org.jeesl.model.xml.system.io.mail.From;
+import org.jeesl.model.xml.system.io.mail.Header;
+import org.jeesl.model.xml.system.io.mail.To;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.mail.EmailAddress;
-import net.sf.ahtutils.xml.mail.From;
-import net.sf.ahtutils.xml.mail.Header;
-import net.sf.ahtutils.xml.mail.To;
 
 public class XmlHeaderFactory
 {

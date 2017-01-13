@@ -1,11 +1,11 @@
 package org.jeesl.mail;
 
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.xml.mail.EmailAddress;
-import net.sf.ahtutils.xml.mail.From;
-import net.sf.ahtutils.xml.mail.Header;
-import net.sf.ahtutils.xml.mail.To;
 
+import org.jeesl.model.xml.system.io.mail.EmailAddress;
+import org.jeesl.model.xml.system.io.mail.From;
+import org.jeesl.model.xml.system.io.mail.Header;
+import org.jeesl.model.xml.system.io.mail.To;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -9,9 +9,6 @@ import javax.mail.MessagingException;
 
 import net.sf.ahtutils.exception.processing.UtilsMailException;
 import net.sf.ahtutils.exception.processing.UtilsProcessingException;
-import net.sf.ahtutils.xml.mail.Header;
-import net.sf.ahtutils.xml.mail.Mail;
-import net.sf.ahtutils.xml.mail.Mails;
 import net.sf.exlp.interfaces.util.ConfigKey;
 import net.sf.exlp.util.xml.JaxbUtil;
 
@@ -22,6 +19,9 @@ import org.jeesl.factory.xml.mail.XmlMailFactory;
 import org.jeesl.mail.JeeslMailTestBootstrap;
 import org.jeesl.mail.XmlMailSender;
 import org.jeesl.mail.freemarker.FreemarkerEngine;
+import org.jeesl.model.xml.system.io.mail.Header;
+import org.jeesl.model.xml.system.io.mail.Mail;
+import org.jeesl.model.xml.system.io.mail.Mails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

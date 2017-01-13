@@ -7,10 +7,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.jeesl.mail.content.XmlMimeContentCreator;
+import org.jeesl.model.xml.system.io.mail.Mail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.mail.Mail;
 
 public class TemplateMailSender extends AbstractMailSender
 {

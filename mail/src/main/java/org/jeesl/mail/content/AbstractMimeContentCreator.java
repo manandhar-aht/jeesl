@@ -7,8 +7,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.util.ByteArrayDataSource;
 
-import net.sf.ahtutils.xml.mail.Attachment;
-import net.sf.ahtutils.xml.mail.Image;
+import org.jeesl.model.xml.system.io.mail.Attachment;
+import org.jeesl.model.xml.system.io.mail.Image;
 
 public class AbstractMimeContentCreator
 {

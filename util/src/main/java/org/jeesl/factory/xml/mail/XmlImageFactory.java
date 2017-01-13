@@ -1,7 +1,6 @@
 package org.jeesl.factory.xml.mail;
 
-import net.sf.ahtutils.xml.mail.Image;
-
+import org.jeesl.model.xml.system.io.mail.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

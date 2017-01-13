@@ -4,8 +4,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.link.UtilsLink;
-import net.sf.ahtutils.xml.mail.Link;
 
+import org.jeesl.model.xml.system.io.mail.Link;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

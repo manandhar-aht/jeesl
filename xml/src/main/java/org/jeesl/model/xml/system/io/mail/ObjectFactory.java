@@ -1,5 +1,5 @@
 
-package net.sf.ahtutils.xml.mail;
+package org.jeesl.model.xml.system.io.mail;
 
 import javax.xml.bind.annotation.XmlRegistry;
 

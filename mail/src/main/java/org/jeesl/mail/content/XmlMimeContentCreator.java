@@ -6,12 +6,12 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import net.sf.ahtutils.xml.mail.Attachment;
-import net.sf.ahtutils.xml.mail.Image;
-import net.sf.ahtutils.xml.mail.Mail;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.apache.commons.lang.SystemUtils;
+import org.jeesl.model.xml.system.io.mail.Attachment;
+import org.jeesl.model.xml.system.io.mail.Image;
+import org.jeesl.model.xml.system.io.mail.Mail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

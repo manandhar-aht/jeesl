@@ -2,12 +2,12 @@ package org.jeesl.mail.imap;
 
 import javax.mail.MessagingException;
 
-import net.sf.ahtutils.xml.mail.Mails;
 import net.sf.exlp.interfaces.util.ConfigKey;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.apache.commons.configuration.Configuration;
 import org.jeesl.mail.JeeslMailTestBootstrap;
+import org.jeesl.model.xml.system.io.mail.Mails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

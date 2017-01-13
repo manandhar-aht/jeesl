@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.test.AbstractAhtUtilsXmlTest;
-import net.sf.ahtutils.xml.mail.Tracker;
 
 public class TestXmlTracker extends AbstractXmlMailTest<Tracker>
 {

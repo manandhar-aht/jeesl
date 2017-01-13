@@ -4,8 +4,6 @@ import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.mail.To;
-
 public class TestXmlTo extends AbstractXmlMailTest<To>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlTo.class);

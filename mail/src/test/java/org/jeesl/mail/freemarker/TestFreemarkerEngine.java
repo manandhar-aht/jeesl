@@ -5,11 +5,11 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import net.sf.ahtutils.exception.processing.UtilsDeveloperException;
-import net.sf.ahtutils.xml.mail.Mail;
-import net.sf.ahtutils.xml.mail.Mails;
-import net.sf.ahtutils.xml.mail.Template;
 
 import org.jeesl.mail.AbstractJeeslMailTest;
+import org.jeesl.model.xml.system.io.mail.Mail;
+import org.jeesl.model.xml.system.io.mail.Mails;
+import org.jeesl.model.xml.system.io.mail.Template;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

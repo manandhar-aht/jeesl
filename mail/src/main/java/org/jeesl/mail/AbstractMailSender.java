@@ -11,10 +11,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 
 import org.jdom2.Namespace;
+import org.jeesl.model.xml.system.io.mail.EmailAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.mail.EmailAddress;
 
 public abstract class AbstractMailSender
 {

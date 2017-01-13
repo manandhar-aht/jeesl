@@ -1,10 +1,9 @@
 package net.sf.ahtutils.factory.txt.mail;
 
+import org.jeesl.model.xml.system.io.mail.EmailAddress;
+import org.jeesl.model.xml.system.io.mail.Header;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.mail.EmailAddress;
-import net.sf.ahtutils.xml.mail.Header;
 
 public class TxtMailHeaderFactory
 {

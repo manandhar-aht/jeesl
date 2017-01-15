@@ -136,7 +136,6 @@ public class SurveyHandler<L extends UtilsLang,
 			{
 				answers.put(q, efAnswer.build(q, surveyData));
 			}
-			
 		}
 		logger.info("Answers build: " + answers.size());
 	}

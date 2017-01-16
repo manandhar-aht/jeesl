@@ -272,5 +272,11 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	public DATA fData(CORRELATION correlation) throws UtilsNotFoundException
 	{
 		return this.oneForParent(cData, "correlation", correlation);
-	}	
+	}
+	
+	@Override public ANSWER saveAnswer(ANSWER answer) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(answer.getOption()!=null){answer.setOption(this.find(cOption,answer.getOption()));}
+		return this.saveProtected(answer);
+	}
 }

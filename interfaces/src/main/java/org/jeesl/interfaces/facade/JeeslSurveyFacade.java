@@ -55,4 +55,6 @@ public interface JeeslSurveyFacade <L extends UtilsLang,
 	
 	DATA fData(CORRELATION correlation) throws UtilsNotFoundException;
 	DATA saveData(DATA data) throws UtilsConstraintViolationException, UtilsLockingException;
+	
+	ANSWER saveAnswer(ANSWER answer) throws UtilsConstraintViolationException, UtilsLockingException;
 }

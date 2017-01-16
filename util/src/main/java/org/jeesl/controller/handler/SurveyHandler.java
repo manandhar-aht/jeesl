@@ -150,7 +150,7 @@ public class SurveyHandler<L extends UtilsLang,
 		for(ANSWER a : answers.values())
 		{
 			a.setData(surveyData);
-			answers.put(a.getQuestion(), fSurvey.save(a));
+			answers.put(a.getQuestion(), fSurvey.saveAnswer(a));
 		}
 	}
 }

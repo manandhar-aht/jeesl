@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<m:header xmlns:m="http://ahtutils.aht-group.com/mail">
-    <m:from/>
-    <m:to/>
-    <m:cc/>
-    <m:bcc/>
+<mail:header xmlns:mail="http://www.jeesl.org/io/mail">
+    <mail:from/>
+    <mail:to/>
+    <mail:cc/>
+    <mail:bcc/>
     <subject>mySubject</subject>
-</m:header>
+</mail:header>

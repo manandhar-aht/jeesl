@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<m:link xmlns:m="http://ahtutils.aht-group.com/mail" id="123" type="myType" refId="345">
+<mail:link xmlns:mail="http://www.jeesl.org/io/mail" id="123" type="myType" refId="345">
     <code>myCode</code>
     <url>myUrl</url>
-</m:link>
+</mail:link>

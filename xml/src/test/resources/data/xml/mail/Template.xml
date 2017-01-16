@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<m:template xmlns:m="http://ahtutils.aht-group.com/mail" lang="myLang" type="myType" file="myFile"/>
+<mail:template xmlns:mail="http://www.jeesl.org/io/mail" lang="myLang" type="myType" file="myFile"/>

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<m:from xmlns:m="http://ahtutils.aht-group.com/mail">
-    <m:emailAddress name="myName" email="my@e.mail"/>
-</m:from>
+<mail:from xmlns:mail="http://www.jeesl.org/io/mail">
+    <mail:emailAddress name="myName" email="my@e.mail"/>
+</mail:from>

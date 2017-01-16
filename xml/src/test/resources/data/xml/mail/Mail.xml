@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<m:mail xmlns:m="http://ahtutils.aht-group.com/mail" xmlns:io="http://exlp.sf.net/io" id="123" code="myCode" lang="myLang" type="myType" msgId="myMsgID" dir="myDir" test="true">
+<mail:mail xmlns:mail="http://www.jeesl.org/io/mail" xmlns:io="http://exlp.sf.net/io" id="123" code="myCode" lang="myLang" type="myType" msgId="myMsgID" dir="myDir" test="true">
     <example>myExample</example>
-    <m:mail id="123" code="myCode" lang="myLang" type="myType" msgId="myMsgID" dir="myDir" test="true">
+    <mail:mail id="123" code="myCode" lang="myLang" type="myType" msgId="myMsgID" dir="myDir" test="true">
         <example>myExample</example>
-    </m:mail>
-    <m:header>
+    </mail:mail>
+    <mail:header>
         <subject>mySubject</subject>
-    </m:header>
-    <m:template lang="myLang" type="myType" file="myFile"/>
-    <m:template lang="myLang" type="myType" file="myFile"/>
-    <m:attachment/>
-    <m:attachment/>
-    <m:image cid="myCid"/>
-    <m:image cid="myCid"/>
-</m:mail>
+    </mail:header>
+    <mail:template lang="myLang" type="myType" file="myFile"/>
+    <mail:template lang="myLang" type="myType" file="myFile"/>
+    <mail:attachment/>
+    <mail:attachment/>
+    <mail:image cid="myCid"/>
+    <mail:image cid="myCid"/>
+</mail:mail>

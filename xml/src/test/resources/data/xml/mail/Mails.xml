@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<m:mails xmlns:m="http://ahtutils.aht-group.com/mail" xmlns:io="http://exlp.sf.net/io" dir="myDir">
-    <m:mail id="123" code="myCode" lang="myLang" type="myType" msgId="myMsgID" dir="myDir" test="true">
+<mail:mails xmlns:mail="http://www.jeesl.org/io/mail" xmlns:io="http://exlp.sf.net/io" dir="myDir">
+    <mail:mail id="123" code="myCode" lang="myLang" type="myType" msgId="myMsgID" dir="myDir" test="true">
         <example>myExample</example>
-    </m:mail>
-</m:mails>
+    </mail:mail>
+</mail:mails>

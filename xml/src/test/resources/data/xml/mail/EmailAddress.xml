@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<m:emailAddress xmlns:m="http://ahtutils.aht-group.com/mail" name="myName" email="my@e.mail"/>
+<mail:emailAddress xmlns:mail="http://www.jeesl.org/io/mail" name="myName" email="my@e.mail"/>

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<m:tracker xmlns:m="http://ahtutils.aht-group.com/mail" id="123" refId="345" created="2011-11-11T11:11:11" sent="2011-11-11T11:11:11" type="myType" retryCounter="1"/>
+<mail:tracker xmlns:mail="http://www.jeesl.org/io/mail" id="123" refId="345" created="2011-11-11T11:11:11" sent="2011-11-11T11:11:11" type="myType" retryCounter="1"/>

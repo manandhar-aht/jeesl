@@ -83,6 +83,16 @@ public class JsonFlatFigure implements Serializable
 	public List<Double> getList2() {return list2;}
 	public void setList2(List<Double> list2) {this.list2 = list2;}
 
+	@JsonProperty("List3")
+	private List<Double> list3;
+	public List<Double> getList3() {return list3;}
+	public void setList3(List<Double> list3) {this.list3 = list3;}
+	
+	@JsonProperty("List4")
+	private List<Double> list4;
+	public List<Double> getList4() {return list4;}
+	public void setList4(List<Double> list4) {this.list4 = list4;}
+	
 	
 	@JsonProperty("Data1")
 	private Double d1;

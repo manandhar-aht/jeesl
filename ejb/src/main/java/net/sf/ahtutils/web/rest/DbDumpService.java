@@ -36,8 +36,7 @@ public class DbDumpService<D extends UtilsDbDumpFile> implements JeeslDbDumpRest
 		fDumpFile = EjbDbDumpFileFactory.factory(cDump);
 	}
 	
-	@Override
-	public DataUpdate uploadDumps(Dir directory)
+	@Override public DataUpdate uploadDumps(Dir directory)
 	{
 		Set<D> set = new HashSet<D>();
 		set.addAll(fDb.all(cDump));
@@ -75,7 +74,7 @@ public class DbDumpService<D extends UtilsDbDumpFile> implements JeeslDbDumpRest
 		return new DataUpdate();
 	}
 	
-	public void findDumps(File fDir)
+	public void findDumps1(File fDir)
 	{
 		Set<D> set = new HashSet<D>();
 		set.addAll(fDb.all(cDump));

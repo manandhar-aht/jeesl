@@ -11,8 +11,6 @@ import net.sf.exlp.xml.io.Dir;
 
 public interface JeeslDbDumpRest
 {	
-	@POST @Path("/upload")
-	@Produces(MediaType.APPLICATION_XML)
-	@Consumes(MediaType.APPLICATION_XML)
+	@POST @Path("/upload") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate uploadDumps(Dir directory);
 }

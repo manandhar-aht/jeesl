@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
+import org.jeesl.factory.txt.system.io.report.TxtIoColumnFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -55,12 +56,15 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	private CellStyle styleLabelCenter; public CellStyle getStyleLabelCenter() {return styleLabelCenter;}
 	private CellStyle styleLabelLeft; public CellStyle getStyleLabelLeft() {return styleLabelLeft;}
+	private TxtIoColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> tfColumn;
 	
 	public XlsStyleFactory(Workbook xlsWorkbook, List<GROUP> ioGroups, List<COLUMN> ioColumns, List<ROW> ioRows)
 	{
 		mapHeader = new HashMap<STYLE,CellStyle>();
 		mapCell = new HashMap<COLUMN,CellStyle>();
 		mapCellDataType = new HashMap<COLUMN,JeeslReportLayout.Data>();
+		
+		tfColumn = new TxtIoColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>("en");
 		
         Font fontItalicBold = xlsWorkbook.createFont();
         fontItalicBold.setItalic(true);
@@ -91,6 +95,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 			mapCell.put(c, buildCell(xlsWorkbook,c));
 			
 			CDT cdt = EjbIoReportColumnFactory.toCellDataType(c);
+			logger.trace(tfColumn.position(c));
 			if(cdt.getCode().startsWith("text")){mapCellDataType.put(c,JeeslReportLayout.Data.string);}
 			else if(cdt.getCode().startsWith("numberDouble")){mapCellDataType.put(c,JeeslReportLayout.Data.dble);}
 			else if(cdt.getCode().startsWith("numberInteger")){mapCellDataType.put(c,JeeslReportLayout.Data.intgr);}

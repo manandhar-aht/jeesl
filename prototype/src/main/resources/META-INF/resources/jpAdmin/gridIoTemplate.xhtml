@@ -155,7 +155,8 @@
 							<p:tabView id="tabView" var="t" value="#{cc.attrs.localeKeys}" activeIndex="#{cc.attrs.bean.tabIndex}">
 								<p:ajax event="tabChange" listener="#{cc.attrs.bean.definitonTabChange}" update=":#{cc.id}:sPreview"/>  
 						  		<p:tab title="#{t}">
-						  			<p:inputTextarea value="#{cc.attrs.bean.definition.description[t].lang}" style="width:100%" autocomplete="off"/>
+						  			<p:inputTextarea value="#{cc.attrs.bean.definition.description[t].lang}" autocomplete="off"
+						  						style="width:100%" autoResize="true"/>
 						  		</p:tab>  
 						  	</p:tabView> 
 						</p:panel>

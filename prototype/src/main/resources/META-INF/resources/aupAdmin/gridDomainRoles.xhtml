@@ -48,10 +48,10 @@
 	                            </aht:pfDataTableHeader>
 	                        </f:facet>
 		                    <p:ajax event="rowSelect" update=":#{cc.id}:sUser" listener="#{cc.attrs.bean.selectStaff()}"/>
-		                    <p:column headerText="#{msg.aupSecurityRole}">
+		                    <p:column headerText="#{msg.aupSecurityRole}" sortBy="#{staff.role.name[userBean.localeCode].lang}" filterBy="#{staff.role.name[userBean.localeCode].lang}" filterMatchMode="contains" filterStyle="width: 50px;">
 		                        <h:outputText value="#{staff.role.name[userBean.localeCode].lang}" />
 		                    </p:column>
-		                    <p:column headerText="#{msg.Name}">
+		                    <p:column headerText="#{msg.Name}" sortBy="#{staff.user.lastName}" filterBy="#{staff.user.lastName}" filterMatchMode="contains" filterStyle="width: 50px;">
 		                        <h:outputText value="#{staff.user.firstName} #{staff.user.lastName}" />
 		                    </p:column>
 		                </p:dataTable>

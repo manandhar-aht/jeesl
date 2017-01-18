@@ -11,6 +11,12 @@ public class JsonFlatFigure implements Serializable
 {
 	public static final long serialVersionUID=1;
 
+	@JsonProperty("String1")
+	private String s1;
+	public String getS1() {return s1;}
+	public void setS1(String s1) {this.s1 = s1;}
+	
+	
 	@JsonProperty("Group1")
 	private String g1;
 	public String getG1() {return g1;}

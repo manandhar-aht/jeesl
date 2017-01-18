@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<r:media xmlns:r="http://ahtutils.aht-group.com/report" dir="testDir" type="myType">
-    <r:jr type="mr" name="testReportName" visible="true"/>
+<r:media xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report" dir="testDir" type="myType">
+    <r:jr type="mr" name="testReportName" alternateDir="altDir" visible="true"/>
 </r:media>

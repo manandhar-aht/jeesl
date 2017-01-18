@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<r:info xmlns:r="http://ahtutils.aht-group.com/report">
+<r:info xmlns:s="http://ahtutils.aht-group.com/status" xmlns:r="http://ahtutils.aht-group.com/report">
     <title>testTitle</title>
     <record>2011-11-11T11:11:11</record>
     <subtitle>testSubTitle</subtitle>
     <footer>testFooter</footer>
-    <r:jr type="mr" name="testReportName" visible="true"/>
-    <r:jr type="mr" name="testReportName" visible="true"/>
+    <r:jr type="mr" name="testReportName" alternateDir="altDir" visible="true"/>
+    <r:jr type="mr" name="testReportName" alternateDir="altDir" visible="true"/>
     <r:file>myFileName</r:file>
     <r:hash>myHash</r:hash>
     <r:user>myUser</r:user>

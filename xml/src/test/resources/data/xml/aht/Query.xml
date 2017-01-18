@@ -7,12 +7,12 @@
     <qa:test id="123" name="myName" code="myCode" duration="120"/>
     <sec:category code="myCode" label="myLabel" position="1" visible="true" documentation="true"/>
     <sec:staff id="123"/>
-    <r:report id="myId" position="1" visible="true" code="myCode" dir="testDir" ltr="true" rtl="false" test="myTestClass">
+    <r:report id="myId" code="myCode" position="1" visible="true" dir="testDir" ltr="true" rtl="false" test="myTestClass">
         <r:media dir="testDir" type="myType">
-            <r:jr type="mr" name="testReportName" visible="true"/>
+            <r:jr type="mr" name="testReportName" alternateDir="altDir" visible="true"/>
         </r:media>
         <r:media dir="testDir" type="myType">
-            <r:jr type="mr" name="testReportName" visible="true"/>
+            <r:jr type="mr" name="testReportName" alternateDir="altDir" visible="true"/>
         </r:media>
         <example>testExampleXmlFile</example>
     </r:report>

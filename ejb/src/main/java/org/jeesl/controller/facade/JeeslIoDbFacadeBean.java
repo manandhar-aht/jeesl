@@ -12,7 +12,7 @@ import javax.persistence.Query;
 import org.jeesl.factory.json.system.db.JsonDbConnectionFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.sql.system.db.SqlDbConnectionsFactory;
-import org.jeesl.interfaces.facade.UtilsDbFacade;
+import org.jeesl.interfaces.facade.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.jsoup.helper.StringUtil;
@@ -29,7 +29,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription,
 									HOST extends UtilsStatus<HOST,L,D>,
 									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
-		extends UtilsFacadeBean implements UtilsDbFacade
+		extends UtilsFacadeBean implements JeeslIoDbFacade
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDbFacadeBean.class);
 	

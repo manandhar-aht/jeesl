@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.interfaces.facade.UtilsDbFacade;
+import org.jeesl.interfaces.facade.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.rest.system.io.db.JeeslDbDumpRest;
 import org.jeesl.web.rest.AbstractJeeslRestService;
@@ -32,11 +32,11 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDbRestService.class);
 	
-	private UtilsDbFacade fDb;
+	private JeeslIoDbFacade fDb;
 	private Class<DUMP> cDump;
 	private EjbDbDumpFileFactory<L,D,HOST,DUMP> fDumpFile;
 	
-	public IoDbRestService(UtilsDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump)
+	public IoDbRestService(JeeslIoDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump)
 	{
 		super(fDb,cL,cD);
 		this.cDump=cDump;

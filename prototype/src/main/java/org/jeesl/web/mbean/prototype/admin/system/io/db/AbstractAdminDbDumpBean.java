@@ -7,7 +7,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-import org.jeesl.interfaces.facade.UtilsDbFacade;
+import org.jeesl.interfaces.facade.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ public class AbstractAdminDbDumpBean <L extends UtilsLang,D extends UtilsDescrip
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminDbDumpBean.class);
 	
-	protected UtilsDbFacade fDb;
+	protected JeeslIoDbFacade fDb;
 	
 	protected List<DUMP> dumps; public List<DUMP> getDumps(){return dumps;}
 

@@ -1,6 +1,6 @@
 package org.jeesl.report.prototype.system.db;
 
-import org.jeesl.interfaces.facade.UtilsDbFacade;
+import org.jeesl.interfaces.facade.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -44,9 +44,9 @@ public class DbConnectionsReport <L extends UtilsLang,D extends UtilsDescription
 {
 	final static Logger logger = LoggerFactory.getLogger(DbConnectionsReport.class);
 
-	private UtilsDbFacade fDb;
+	private JeeslIoDbFacade fDb;
 	
-	public DbConnectionsReport(String localeCode, UtilsDbFacade fDb, final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
+	public DbConnectionsReport(String localeCode, JeeslIoDbFacade fDb, final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
 	{
 		super(localeCode,cL,cD,cCategory,cReport);
 		this.fDb=fDb;

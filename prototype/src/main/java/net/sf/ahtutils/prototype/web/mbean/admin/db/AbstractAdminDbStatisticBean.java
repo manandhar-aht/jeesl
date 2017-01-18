@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.interfaces.facade.UtilsDbFacade;
+import org.jeesl.interfaces.facade.JeeslIoDbFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,7 @@ public class AbstractAdminDbStatisticBean implements Serializable
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminDbStatisticBean.class);
 	
-	protected UtilsDbFacade fDb;
+	protected JeeslIoDbFacade fDb;
 	
 	protected List<Class<?>> list = new ArrayList<Class<?>>();
 	public List<Class<?>> getList(){return list;}

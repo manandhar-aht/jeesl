@@ -8,7 +8,7 @@ import org.openfuxml.content.table.Table;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 
-public interface UtilsDbFacade extends UtilsFacade
+public interface JeeslIoDbFacade extends UtilsFacade
 {
 	String version();
 	long count(Class<?> c);

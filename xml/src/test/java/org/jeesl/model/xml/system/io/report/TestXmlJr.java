@@ -18,6 +18,7 @@ public class TestXmlJr extends AbstractXmlReportTest<Jr>
     	Jr jr = new Jr();
     	jr.setName("testReportName");
     	jr.setType("mr");
+    	jr.setAlternateDir("altDir");
     	jr.setVisible(true);
     	return jr;
     }

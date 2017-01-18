@@ -77,7 +77,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	private void add(Row xlsRow, MutableInt columnNr, JXPathContext context, String query, CellStyle style, JeeslReportLayout.Data dt)
 	{
-//		logger.info(query);
+//		logger.info(columnNr.intValue()+" "+query);
 		try
 		{
 			Object value = context.getValue(query);

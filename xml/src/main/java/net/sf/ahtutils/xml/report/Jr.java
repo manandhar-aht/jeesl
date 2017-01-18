@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;/simpleType&gt;
  *       &lt;/attribute&gt;
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="alternateDir" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -47,6 +48,8 @@ public class Jr
     protected String type;
     @XmlAttribute(name = "name")
     protected String name;
+    @XmlAttribute(name = "alternateDir")
+    protected String alternateDir;
     @XmlAttribute(name = "visible")
     protected Boolean visible;
 
@@ -104,6 +107,34 @@ public class Jr
 
     public boolean isSetName() {
         return (this.name!= null);
+    }
+
+    /**
+     * Gets the value of the alternateDir property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAlternateDir() {
+        return alternateDir;
+    }
+
+    /**
+     * Sets the value of the alternateDir property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAlternateDir(String value) {
+        this.alternateDir = value;
+    }
+
+    public boolean isSetAlternateDir() {
+        return (this.alternateDir!= null);
     }
 
     /**

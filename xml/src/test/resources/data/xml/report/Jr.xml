@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<r:jr xmlns:r="http://ahtutils.aht-group.com/report" type="mr" name="testReportName" visible="true"/>
+<r:jr xmlns:r="http://ahtutils.aht-group.com/report" type="mr" name="testReportName" alternateDir="altDir" visible="true"/>

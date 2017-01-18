@@ -103,6 +103,7 @@
 				</xsd:simpleType>
 			</xsd:attribute>
             <xsd:attribute name="name" type="xsd:string"/>
+            <xsd:attribute name="alternateDir" type="xsd:string"/>
             <xsd:attribute name="visible" type="xsd:boolean"/>
         </xsd:complexType>
 	</xsd:element>

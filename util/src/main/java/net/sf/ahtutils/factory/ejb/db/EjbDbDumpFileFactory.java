@@ -3,40 +3,48 @@ package net.sf.ahtutils.factory.ejb.db;
 import java.io.File;
 import java.util.Date;
 
-import net.sf.ahtutils.interfaces.model.db.UtilsDbDumpFile;
-
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbDbDumpFileFactory<F extends UtilsDbDumpFile>
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+
+public class EjbDbDumpFileFactory<L extends UtilsLang,D extends UtilsDescription,
+									HOST extends UtilsStatus<HOST,L,D>,
+									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbDbDumpFileFactory.class);
 	
-	final Class<F> cDumpFile;
+	private final Class<DUMP> cDumpFile;
     
-	public EjbDbDumpFileFactory(final Class<F> cDumpFile)
+	public EjbDbDumpFileFactory(final Class<DUMP> cDumpFile)
 	{       
         this.cDumpFile = cDumpFile;
 	}
 	
-	public static <F extends UtilsDbDumpFile> EjbDbDumpFileFactory<F> factory(final Class<F> cDumpFile)
+	public static <L extends UtilsLang,D extends UtilsDescription,
+					HOST extends UtilsStatus<HOST,L,D>,
+					DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
+	EjbDbDumpFileFactory<L,D,HOST,DUMP> factory(final Class<DUMP> cDumpFile)
 	{
-		return new EjbDbDumpFileFactory<F>(cDumpFile);
+		return new EjbDbDumpFileFactory<L,D,HOST,DUMP>(cDumpFile);
 	}
     
-	public F build(net.sf.exlp.xml.io.File file)
+	public DUMP build(net.sf.exlp.xml.io.File file)
 	{
 		return build(file.getName(),file.getSize(),file.getLastModifed().toGregorianCalendar().getTime());
     }
 	
-	public F build(File file)
+	public DUMP build(File file)
 	{
 		return build(file.getName(),file.length(),new Date(file.lastModified()));
     }
 	
-	public F build(String name, long size, Date record)
+	public DUMP build(String name, long size, Date record)
 	{
-		F ejb = null;
+		DUMP ejb = null;
 		try
 		{
 			 ejb = cDumpFile.newInstance();
@@ -49,5 +57,4 @@ public class EjbDbDumpFileFactory<F extends UtilsDbDumpFile>
 		
 		return ejb;
 	}
-
 }

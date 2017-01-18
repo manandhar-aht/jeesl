@@ -1,5 +1,5 @@
 
-package net.sf.ahtutils.controller.facade;
+package org.jeesl.controller.facade;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -12,6 +12,8 @@ import javax.persistence.Query;
 import org.jeesl.factory.json.system.db.JsonDbConnectionFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.sql.system.db.SqlDbConnectionsFactory;
+import org.jeesl.interfaces.facade.UtilsDbFacade;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.jsoup.helper.StringUtil;
 import org.openfuxml.content.table.Table;
@@ -19,14 +21,20 @@ import org.openfuxml.factory.xml.table.OfxTableFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.facade.UtilsDbFacade;
+import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class UtilsDbFacadeBean extends UtilsFacadeBean implements UtilsDbFacade
+public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription,
+									HOST extends UtilsStatus<HOST,L,D>,
+									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
+		extends UtilsFacadeBean implements UtilsDbFacade
 {
-	final static Logger logger = LoggerFactory.getLogger(UtilsDbFacadeBean.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslIoDbFacadeBean.class);
 	
-	public UtilsDbFacadeBean(EntityManager em){this(em,false);}
-	public UtilsDbFacadeBean(EntityManager em, boolean handleTransaction)
+	public JeeslIoDbFacadeBean(EntityManager em){this(em,false);}
+	public JeeslIoDbFacadeBean(EntityManager em, boolean handleTransaction)
 	{
 		super(em,handleTransaction);
 	}

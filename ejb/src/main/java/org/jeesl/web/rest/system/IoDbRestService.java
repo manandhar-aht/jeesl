@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.rest;
+package org.jeesl.web.rest.system;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,7 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.interfaces.rest.system.db.JeeslDbDumpRest;
+import org.jeesl.interfaces.facade.UtilsDbFacade;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
+import org.jeesl.interfaces.rest.system.io.db.JeeslDbDumpRest;
+import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,21 +18,27 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.db.EjbDbDumpFileFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsDbFacade;
-import net.sf.ahtutils.interfaces.model.db.UtilsDbDumpFile;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.xml.io.Dir;
 
-public class DbDumpService<D extends UtilsDbDumpFile> implements JeeslDbDumpRest
+public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
+							HOST extends UtilsStatus<HOST,L,D>,
+							DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
+					extends AbstractJeeslRestService<L,D>
+					implements JeeslDbDumpRest
 {
-	final static Logger logger = LoggerFactory.getLogger(DbDumpService.class);
+	final static Logger logger = LoggerFactory.getLogger(IoDbRestService.class);
 	
 	private UtilsDbFacade fDb;
-	private Class<D> cDump;
-	private EjbDbDumpFileFactory<D> fDumpFile;
+	private Class<DUMP> cDump;
+	private EjbDbDumpFileFactory<L,D,HOST,DUMP> fDumpFile;
 	
-	public DbDumpService(final Class<D> cDump,UtilsDbFacade fDb)
+	public IoDbRestService(UtilsDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump)
 	{
+		super(fDb,cL,cD);
 		this.cDump=cDump;
 		this.fDb = fDb;
 		
@@ -38,12 +47,12 @@ public class DbDumpService<D extends UtilsDbDumpFile> implements JeeslDbDumpRest
 	
 	@Override public DataUpdate uploadDumps(Dir directory)
 	{
-		Set<D> set = new HashSet<D>();
+		Set<DUMP> set = new HashSet<DUMP>();
 		set.addAll(fDb.all(cDump));
 		
 		for(net.sf.exlp.xml.io.File f : directory.getFile())
 		{
-			D ejb;
+			DUMP ejb;
 			try
 			{
 				ejb = fDb.fByName(cDump,f.getName());
@@ -60,8 +69,8 @@ public class DbDumpService<D extends UtilsDbDumpFile> implements JeeslDbDumpRest
 			}
 		}
 		logger.info("Size: "+set.size());
-		List<D> list = new ArrayList<D>(set);
-		for(D ejb : list)
+		List<DUMP> list = new ArrayList<DUMP>(set);
+		for(DUMP ejb : list)
 		{
 			try
 			{
@@ -76,12 +85,12 @@ public class DbDumpService<D extends UtilsDbDumpFile> implements JeeslDbDumpRest
 	
 	public void findDumps1(File fDir)
 	{
-		Set<D> set = new HashSet<D>();
+		Set<DUMP> set = new HashSet<DUMP>();
 		set.addAll(fDb.all(cDump));
 		
 		for(File f : fDir.listFiles())
 		{
-			D ejb;
+			DUMP ejb;
 			try
 			{
 				ejb = fDb.fByName(cDump,f.getName());
@@ -98,8 +107,8 @@ public class DbDumpService<D extends UtilsDbDumpFile> implements JeeslDbDumpRest
 			}
 		}
 		logger.info("Size: "+set.size());
-		List<D> list = new ArrayList<D>(set);
-		for(D ejb : list)
+		List<DUMP> list = new ArrayList<DUMP>(set);
+		for(DUMP ejb : list)
 		{
 			try
 			{

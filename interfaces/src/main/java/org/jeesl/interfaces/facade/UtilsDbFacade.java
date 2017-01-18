@@ -1,10 +1,12 @@
-package net.sf.ahtutils.interfaces.facade;
+package org.jeesl.interfaces.facade;
 
 import java.util.List;
 import java.util.Map;
 
 import org.jeesl.model.json.JsonFlatFigures;
 import org.openfuxml.content.table.Table;
+
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 
 public interface UtilsDbFacade extends UtilsFacade
 {

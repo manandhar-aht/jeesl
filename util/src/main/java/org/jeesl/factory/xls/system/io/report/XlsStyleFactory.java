@@ -101,6 +101,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 			else if(cdt.getCode().startsWith("numberInteger")){mapCellDataType.put(c,JeeslReportLayout.Data.intgr);}
 			else if(cdt.getCode().startsWith("numberLong")){mapCellDataType.put(c,JeeslReportLayout.Data.lng);}
 			else if(cdt.getCode().startsWith("date")){mapCellDataType.put(c,JeeslReportLayout.Data.dte);}
+			else if(cdt.getCode().startsWith("bool")){mapCellDataType.put(c,JeeslReportLayout.Data.bool);}
 			else
 			{
 				logger.warn("Unknown Handling for "+cdt.getCode());

@@ -7,5 +7,5 @@ public interface JeeslReportLayout
 	public static enum Style{header,cell,footer}
 	public static enum Color{background}
 	
-	public static enum Data{string,dble,lng,intgr,dte}
+	public static enum Data{string,dble,lng,intgr,dte,bool}
 }

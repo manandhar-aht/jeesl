@@ -94,6 +94,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 									XlsCellFactory.build(xlsRow,columnNr,style,iValue);	break;
 					case lng: XlsCellFactory.build(xlsRow,columnNr,style,(Long)value);	break;
 					case dte: XlsCellFactory.build(xlsRow,columnNr,style,(XMLGregorianCalendar)value); break;
+					case bool: XlsCellFactory.build(xlsRow,columnNr,style,(Boolean)value); break;
 					default: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);
 				}
 				
@@ -153,6 +154,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
         else if(value instanceof Long){cell.setCellValue((Long)value);}
         else if(value instanceof Integer){cell.setCellValue((Integer)value);}
         else if(value instanceof Date){cell.setCellValue((Date)value);}
+        else if(value instanceof Boolean){cell.setCellValue((Boolean)value);}
         else if(value instanceof XMLGregorianCalendar)
         {
         	XMLGregorianCalendar xmlGc = (XMLGregorianCalendar)value;

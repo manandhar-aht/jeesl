@@ -246,7 +246,15 @@ public class ReportHandler {
 		}
 		
 		String reportDir = (String)JXPathContext.newContext(reports).getValue("report[@id='"+ id +"']/@dir");
-		String location = "jrxml/" +reportDir +"/" +format +"/" +type +jr.getName() +".jrxml";
+		String location = "jrxml";
+		if (jr.isSetAlternateDir())
+		{
+			location = location +"/" +jr.getAlternateDir() +"/" +format +"/" +type +jr.getName() +".jrxml";
+		}
+		else
+		{
+			location = location +"/" +reportDir +"/" +format +"/" +type +jr.getName() +".jrxml";
+		}
 		JasperDesign design = null;
 		try
 		{
@@ -305,7 +313,15 @@ public class ReportHandler {
 			throw new ReportException("XPath search found non-unique results when trying to find report with id " +reportId +"! " +e1.getMessage());
 		}
 		String reportDir = (String)JXPathContext.newContext(reports).getValue("report[@id='"+ reportId +"']/@dir");
-		String location = "jasper/" +reportDir +"/" +format +"/ltr/"  +type +report.getName() +".jasper";
+		String location = "jasper";
+		if (report.isSetAlternateDir())
+		{
+			location = location +"/" +report.getAlternateDir() +"/" +format +"/ltr/"  +type +report.getName() +".jasper";
+		}
+		else
+		{
+			location = location +"/" +reportDir +"/" +format +"/ltr/"  +type +report.getName() +".jasper";
+		}
 		JasperReport reportCompiled = null;
 		try
 		{

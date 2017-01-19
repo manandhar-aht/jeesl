@@ -206,6 +206,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Area }
+     * 
+     */
+    public Area createArea() {
+        return new Area();
+    }
+
+    /**
      * Create an instance of {@link Statuses }
      * 
      */
@@ -419,6 +427,14 @@ public class ObjectFactory {
      */
     public Legend createLegend() {
         return new Legend();
+    }
+
+    /**
+     * Create an instance of {@link Outcome }
+     * 
+     */
+    public Outcome createOutcome() {
+        return new Outcome();
     }
 
     /**

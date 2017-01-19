@@ -13,13 +13,13 @@ public class XmlPriorityFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlPriorityFactory.class);
 		
-	private String lang;
-	private Priority q;
+	private final String localeCode;
+	private final Priority q;
 	
 	public XmlPriorityFactory(Priority q){this(null,q);}
-	public XmlPriorityFactory(String lang,Priority q)
+	public XmlPriorityFactory(String localeCode,Priority q)
 	{
-		this.lang=lang;
+		this.localeCode=localeCode;
 		this.q=q;
 	}
 	
@@ -43,14 +43,14 @@ public class XmlPriorityFactory
 			xml.setDescriptions(f.create(ejb.getDescription()));
 		}
 		
-		if(q.isSetLabel() && lang!=null)
+		if(q.isSetLabel() && localeCode!=null)
 		{
 			if(ejb.getName()!=null)
 			{
-				if(ejb.getName().containsKey(lang)){xml.setLabel(ejb.getName().get(lang).getLang());}
+				if(ejb.getName().containsKey(localeCode)){xml.setLabel(ejb.getName().get(localeCode).getLang());}
 				else
 				{
-					String msg = "No translation "+lang+" available in "+ejb;
+					String msg = "No translation "+localeCode+" available in "+ejb;
 					logger.warn(msg);
 					xml.setLabel(msg);
 				}

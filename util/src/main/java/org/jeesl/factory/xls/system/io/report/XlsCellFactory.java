@@ -147,7 +147,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		Cell cell = xlsRow.createCell(columnNr.intValue());
         cell.setCellStyle(style);
         
-//        logger.info(value.getClass().getSimpleName()+" "+value.toString());
+ //       logger.info(value.getClass().getSimpleName()+" "+value.toString()+" style:"+style.toString());
         
         if(value instanceof String){cell.setCellValue((String)value);}
         else if(value instanceof Double){cell.setCellValue((Double)value);}
@@ -155,11 +155,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
         else if(value instanceof Integer){cell.setCellValue((Integer)value);}
         else if(value instanceof Date){cell.setCellValue((Date)value);}
         else if(value instanceof Boolean){cell.setCellValue((Boolean)value);}
-        else if(value instanceof XMLGregorianCalendar)
-        {
-        	XMLGregorianCalendar xmlGc = (XMLGregorianCalendar)value;
-        	cell.setCellValue(xmlGc.toGregorianCalendar().getTime());
-        }
+        else if(value instanceof XMLGregorianCalendar){cell.setCellValue(((XMLGregorianCalendar)value).toGregorianCalendar().getTime());}
         
         else {cell.setCellValue((String)value);}
         

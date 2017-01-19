@@ -181,14 +181,17 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 				logger.info("Debugging: "+classReport.getSimpleName());
 				logger.info("ShowHeaderGroup: "+showHeaderGroup);
 				logger.info("showHeaderColumn: "+showHeaderColumn);
-				for(GROUP g : groups)
+				if(groups!=null)
 				{
-					logger.info("\t"+g.getPosition()+". "+g.getClass().getSimpleName()+" (childs:"+mapGroupChilds.get(g)+"): "+g.getName().get(localeCode).getLang());
-					for(COLUMN c : columns)
+					for(GROUP g : groups)
 					{
-						if(c.getGroup().equals(g))
+						logger.info("\t"+g.getPosition()+". "+g.getClass().getSimpleName()+" (childs:"+mapGroupChilds.get(g)+"): "+g.getName().get(localeCode).getLang());
+						for(COLUMN c : columns)
 						{
-							logger.info("\t\t"+c.getClass().getSimpleName()+": "+c.getName().get(localeCode).getLang());
+							if(c.getGroup().equals(g))
+							{
+								logger.info("\t\t"+c.getClass().getSimpleName()+": "+c.getName().get(localeCode).getLang());
+							}
 						}
 					}
 				}

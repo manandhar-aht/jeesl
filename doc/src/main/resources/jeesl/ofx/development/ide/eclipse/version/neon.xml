@@ -41,8 +41,7 @@
 		
 		<ofx:paragraph lang="en">
 			brew install --with-java --universal subversion
-		
-		
+
 				View add SVN
 				JavaHL 1.9.x
 		</ofx:paragraph>

@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://www.jeesl.org/io/mail}mail" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="dir" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="queue" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -46,6 +47,8 @@ public class Mails
     protected List<Mail> mail;
     @XmlAttribute(name = "dir")
     protected String dir;
+    @XmlAttribute(name = "queue")
+    protected Integer queue;
 
     /**
      * Gets the value of the mail property.
@@ -110,6 +113,38 @@ public class Mails
 
     public boolean isSetDir() {
         return (this.dir!= null);
+    }
+
+    /**
+     * Gets the value of the queue property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public int getQueue() {
+        return queue;
+    }
+
+    /**
+     * Sets the value of the queue property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setQueue(int value) {
+        this.queue = value;
+    }
+
+    public boolean isSetQueue() {
+        return (this.queue!= null);
+    }
+
+    public void unsetQueue() {
+        this.queue = null;
     }
 
 }

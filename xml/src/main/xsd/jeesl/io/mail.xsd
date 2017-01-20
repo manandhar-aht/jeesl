@@ -6,10 +6,11 @@
     <xsd:import namespace="http://exlp.sf.net/io" schemaLocation="../../../../../../../exlp/xml/src/main/xsd/util/io.xsd"/>
     <xsd:element name="mails">
 	    <xsd:complexType>
-	            <xsd:sequence>
-		            <xsd:element ref="m:mail" maxOccurs="unbounded"/>
-				</xsd:sequence>
-				<xsd:attribute name="dir" type="xsd:string"/>
+            <xsd:sequence>
+	            <xsd:element ref="m:mail" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="dir" type="xsd:string"/>
+			<xsd:attribute name="queue" type="xsd:int"/>
 		</xsd:complexType>    
     </xsd:element>
     <xsd:element name="mail">

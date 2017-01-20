@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslCode">
+		<s:langs>
+    		<s:lang key="de" translation="Code"/>
+    		<s:lang key="en" translation="Code"/>
+    		<s:lang key="fr" translation="Code"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="jeeslReportViewer">
 		<s:langs>
     		<s:lang key="de" translation="Report Viewer"/>

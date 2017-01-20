@@ -99,6 +99,8 @@
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.sheet.visible}"/>
+								<p:outputLabel value="#{msg.jeeslCode}"/>
+								<p:inputText value="#{cc.attrs.bean.sheet.code}"/>
 								<p:outputLabel value="#{msg.jeeslIoReportQueryTable}"/>
 								<p:inputText value="#{cc.attrs.bean.sheet.queryTable}"/>
 								<p:outputLabel value="#{msg.jeeslIoReportImplementation}"/>

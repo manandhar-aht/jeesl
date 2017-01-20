@@ -15,6 +15,7 @@ public class TestXmlMails extends AbstractXmlMailTest<Mails>
     {
     	Mails xml = new Mails();
     	xml.setDir("myDir");
+    	xml.setQueue(5);
     	
     	if(withChilds)
     	{

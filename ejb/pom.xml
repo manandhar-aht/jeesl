@@ -109,7 +109,6 @@
          <dependency>
          	<groupId>org.hibernate</groupId>
          	<artifactId>hibernate-core</artifactId>
-         	<version>3.3.2.GA</version>
          	<type>jar</type>
          	<scope>provided</scope>
          </dependency>
@@ -117,7 +116,7 @@
          	<groupId>net.sf.exlp</groupId>
          	<artifactId>exlp-util</artifactId>
          	<type>jar</type>
-         	<scope>test</scope>
+         	<scope>provided</scope>
          </dependency>
 
 		<!-- XML -->

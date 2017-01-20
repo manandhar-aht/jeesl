@@ -17,6 +17,7 @@ public interface JeeslIoMailFacade <L extends UtilsLang,D extends UtilsDescripti
 			extends UtilsFacade
 {	
 	List<MAIL> fMails(List<CATEGORY> categories);
+	List<MAIL> fSpoolMails(int max);
 	
-	void spoolMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException;
+	void queueMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException;
 }

@@ -46,7 +46,7 @@ public abstract class AbstractMailSender
 		smtpUser=null;
 		smtpPassword=null;
 		
-		nsMail = Namespace.getNamespace("http://ahtutils.aht-group.com/mail");
+		nsMail = Namespace.getNamespace("http://www.jeesl.org/io/mail");
 	}
 	
 	public void tlsPasswordAuthentication(String smtpUser, String smtpPassword)

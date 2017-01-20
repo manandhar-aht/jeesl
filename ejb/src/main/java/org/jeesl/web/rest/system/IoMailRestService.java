@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -72,17 +73,19 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 
 		for(MAIL eMail : eMails)
 		{
-			eMail = fMail.find(cMail,eMail);
-			eMail.setRecordSpool(new Date());
-			eMail.setCounter(eMail.getCounter()+1);
 			try
 			{
+				eMail = fMail.find(cMail,eMail);
+				eMail.setRecordSpool(new Date());
+				eMail.setStatus(fMail.fByCode(cStatus, JeeslIoMail.Status.spooling));
+				eMail.setCounter(eMail.getCounter()+1);
 				eMail = fMail.update(eMail);
 				xml.getMail().add(JaxbUtil.loadJAXB(IOUtils.toInputStream(eMail.getXml(), "UTF-8"), Mail.class));
 			}
 			catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 			catch (UtilsLockingException e) {logger.warn(e.getMessage());}
 			catch (IOException e) {logger.error(e.getMessage());}
+			catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 		}		
 		return xml;
 	}

@@ -7,6 +7,13 @@
     		<s:lang key="fr" translation="Code"/>
 		</s:langs>
 	</s:translation>
+		<s:translation key="jeeslStatus">
+		<s:langs>
+    		<s:lang key="de" translation="Status"/>
+    		<s:lang key="en" translation="Status"/>
+    		<s:lang key="fr" translation="Status"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="jeeslReportViewer">
 		<s:langs>
     		<s:lang key="de" translation="Report Viewer"/>

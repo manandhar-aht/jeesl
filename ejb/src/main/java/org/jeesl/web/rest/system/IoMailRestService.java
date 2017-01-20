@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.jeesl.factory.xml.mail.XmlMailFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlMailsFactory;
 import org.jeesl.interfaces.facade.JeeslIoMailFacade;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
@@ -80,7 +81,9 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 				eMail.setStatus(fMail.fByCode(cStatus, JeeslIoMail.Status.spooling));
 				eMail.setCounter(eMail.getCounter()+1);
 				eMail = fMail.update(eMail);
-				xml.getMail().add(JaxbUtil.loadJAXB(IOUtils.toInputStream(eMail.getXml(), "UTF-8"), Mail.class));
+				Mail xMail = JaxbUtil.loadJAXB(IOUtils.toInputStream(eMail.getXml(), "UTF-8"), Mail.class);
+				xMail.setId(eMail.getId());
+				xml.getMail().add(xMail);
 			}
 			catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 			catch (UtilsLockingException e) {logger.warn(e.getMessage());}
@@ -88,5 +91,24 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 			catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 		}		
 		return xml;
+	}
+
+	@Override
+	public Mail confirm(long id)
+	{
+		Mail xMail = XmlMailFactory.build("pending");
+		try
+		{
+			MAIL eMail = fMail.find(cMail,id);
+			eMail.setStatus(fMail.fByCode(cStatus, JeeslIoMail.Status.sent));
+			eMail.setRecordSent(new Date());
+			eMail = fMail.update(eMail);
+			xMail.setId(eMail.getId());
+			xMail.setCode("confirmed");
+		}
+		catch (UtilsNotFoundException e) {xMail.setCode("error");}
+		catch (UtilsConstraintViolationException e) {xMail.setCode("error");}
+		catch (UtilsLockingException e) {xMail.setCode("error");}
+		return xMail;
 	}
 }

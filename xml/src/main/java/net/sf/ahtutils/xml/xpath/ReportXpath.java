@@ -305,8 +305,7 @@ public class ReportXpath
 		for(net.sf.ahtutils.xml.finance.Figures figures : list)
 		{
 			if(figures.getCode().equals(code.toString())){return figures;}
-		}
-		
+		}		
 		throw new ExlpXpathNotFoundException("No "+Figures.class.getSimpleName()+" for code="+code);
 	}
 }

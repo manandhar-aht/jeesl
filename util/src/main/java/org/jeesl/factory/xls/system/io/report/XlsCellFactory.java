@@ -58,14 +58,30 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		this.xfStyle=xfStyle;
 	}
 	
-	public void header(GROUP ioGroup, Row xlsRow, MutableInt columnNr) {XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioGroup),ioGroup.getName().get(localeCode).getLang());}
-	public void header(COLUMN ioColumn, Row xlsRow, MutableInt columnNr) {XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),ioColumn.getName().get(localeCode).getLang());}
+	public void header(GROUP ioGroup, Row xlsRow, MutableInt columnNr)
+	{
+		boolean showLabel = ioGroup.getShowLabel()!=null && ioGroup.getShowLabel();
+		if(showLabel){XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioGroup),ioGroup.getName().get(localeCode).getLang());}
+		else{XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioGroup),null);}
+	}
+	public void header(COLUMN ioColumn, Row xlsRow, MutableInt columnNr)
+	{
+		boolean showLabel = ioColumn.getShowLabel()!=null && ioColumn.getShowLabel();
+		if(showLabel){XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),ioColumn.getName().get(localeCode).getLang());}
+		else{XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),null);}
+	}
 	
 	public void cell(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, JXPathContext context)
 	{
 		JeeslReportLayout.Data dt = xfStyle.getDataType(ioColumn);
-		CellStyle style = xfStyle.get(JeeslReportLayout.Style.footer,ioColumn);
+		CellStyle style = xfStyle.get(JeeslReportLayout.Style.cell,ioColumn);
 		add(xlsRow, columnNr, context, ioColumn.getQueryCell(), style, dt);
+	}
+	
+	public void cell(COLUMN ioColumn, Row xlsRow, int columnNr, Object object)
+	{
+		CellStyle style = xfStyle.get(JeeslReportLayout.Style.cell,ioColumn);
+		build(xlsRow, columnNr, style,object);
 	}
 	
 	public void footer(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, JXPathContext context)
@@ -87,7 +103,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 				switch(dt)
 				{
 					case string: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);	break;
-					case dble: XlsCellFactory.build(xlsRow,columnNr,style,(Double)value);	break;
+					case dble: 	XlsCellFactory.build(xlsRow,columnNr,style,(Double)value);	break;
 					case intgr:		Integer iValue;
 									if(value instanceof String){iValue = Integer.valueOf((String)value);}
 									else {iValue = (Integer)value;}
@@ -97,7 +113,6 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 					case bool: XlsCellFactory.build(xlsRow,columnNr,style,(Boolean)value); break;
 					default: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);
 				}
-				
 			}
 			else {columnNr.add(1);}
 		}
@@ -144,21 +159,26 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	public static void build(Row xlsRow, MutableInt columnNr, CellStyle style, Object value)
 	{
-		Cell cell = xlsRow.createCell(columnNr.intValue());
+		build(xlsRow,columnNr.intValue(),style,value);
+		columnNr.add(1);
+	}
+	
+	public static void build(Row xlsRow, int columnNr, CellStyle style, Object value)
+	{
+		Cell cell = xlsRow.createCell(columnNr);
         cell.setCellStyle(style);
         
  //       logger.info(value.getClass().getSimpleName()+" "+value.toString()+" style:"+style.toString());
-        
-        if(value instanceof String){cell.setCellValue((String)value);}
-        else if(value instanceof Double){cell.setCellValue((Double)value);}
-        else if(value instanceof Long){cell.setCellValue((Long)value);}
-        else if(value instanceof Integer){cell.setCellValue((Integer)value);}
-        else if(value instanceof Date){cell.setCellValue((Date)value);}
-        else if(value instanceof Boolean){cell.setCellValue((Boolean)value);}
-        else if(value instanceof XMLGregorianCalendar){cell.setCellValue(((XMLGregorianCalendar)value).toGregorianCalendar().getTime());}
-        
-        else {cell.setCellValue((String)value);}
-        
-        columnNr.add(1);
+        if(value!=null)
+        {
+	        if(value instanceof String){cell.setCellValue((String)value);}
+	        else if(value instanceof Double){cell.setCellValue((Double)value);}
+	        else if(value instanceof Long){cell.setCellValue((Long)value);}
+	        else if(value instanceof Integer){cell.setCellValue((Integer)value);}
+	        else if(value instanceof Date){cell.setCellValue((Date)value);}
+	        else if(value instanceof Boolean){cell.setCellValue((Boolean)value);}
+	        else if(value instanceof XMLGregorianCalendar){cell.setCellValue(((XMLGregorianCalendar)value).toGregorianCalendar().getTime());}
+	        else {cell.setCellValue((String)value);}
+        }
 	}
 }

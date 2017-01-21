@@ -2,9 +2,11 @@ package org.jeesl.factory.xls.system.io.report;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.Pointer;
@@ -21,6 +23,8 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
+import org.jeesl.factory.pojo.system.io.report.JeeslTreeFigureFactory;
+import org.jeesl.interfaces.controller.report.JeeslReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -31,6 +35,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportStyle;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportRowType;
+import org.jeesl.interfaces.model.system.io.report.type.JeeslReportSetting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +43,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.finance.Figures;
+import net.sf.ahtutils.xml.xpath.ReportXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.util.io.StringUtil;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -72,7 +81,6 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
     public CellStyle        dateHeaderStyle;
     public CellStyle        numberStyle;
     public CreationHelper   createHelper;
-    public JXPathContext	context;
     
     // How many results are there for the given query
     public Integer   counter;
@@ -113,15 +121,20 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
         numberStyle.setDataFormat(createHelper.createDataFormat().getFormat("#.00\\ RWF"));
 	}
 	
-	public void write(Object report, OutputStream os) throws IOException
+	public void write(Object report, OutputStream os) throws IOException {write(null,report,os);}
+	
+	public void write(JeeslReport jeesReprot, Object report, OutputStream os) throws IOException
 	{
+		Map<SHEET,Boolean> mapSheetVisibilityToggle = null; 
+		
 	    Workbook wb = new XSSFWorkbook();
 	    init(wb);
 	    
 	    JXPathContext context = JXPathContext.newContext(report);
 	    
-		for(SHEET ioSheet : ioWorkbook.getSheets())
+		for(SHEET ioSheet : EjbIoReportSheetFactory.toListVisibleShets(ioWorkbook,mapSheetVisibilityToggle))
 		{
+			logger.info("Processing sheet: "+ioSheet.getCode());
 			List<GROUP> groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
 			List<COLUMN> columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet);
 			List<ROW> rows = EjbIoReportRowFactory.toListVisibleRows(ioSheet);
@@ -162,26 +175,15 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 		rowNr.add(ioRow.getOffsetRows());
 		xlfRow.header(sheet,rowNr,ioSheet);
 		
-		@SuppressWarnings("unchecked")
-		Iterator<Pointer> iterator = context.iteratePointers(ioSheet.getQueryTable());
-		logger.trace("Beginning iteration");
-        while (iterator.hasNext())
-        {
-        	Row xlsRow = sheet.createRow(rowNr.intValue());
-        	
-            Pointer pointerToItem = iterator.next();
-			if (logger.isTraceEnabled()) {logger.info("Got pointer: " +pointerToItem.getValue().getClass());}
-			JXPathContext relativeContext = context.getRelativeContext(pointerToItem);
-			
-			MutableInt columnNr = new MutableInt(0);
-			for(COLUMN ioColumn : columns)
-			{
-//				logger.info(ioColumn.getPosition()+" "+columnNr.intValue());
-				xfCell.cell(ioColumn,xlsRow,columnNr,relativeContext);
-			}
-			rowNr.add(1);
-        }
-        
+		JeeslReportSetting.Implementation implementation = JeeslReportSetting.Implementation.valueOf(ioSheet.getImplementation().getCode());
+		
+		switch(implementation)
+		{
+			case model: applyDomainTable(context,sheet,rowNr,ioSheet,columns,xfCell);break;
+			case flat: applyDomainTable(context,sheet,rowNr,ioSheet,columns,xfCell);break;
+			case tree: applyTreeTable(context,sheet,rowNr,ioSheet,columns,xfCell);break;
+		}
+
         if(efSheet.hasFooters(ioSheet))
         {
         	Row xlsFooter = sheet.createRow(rowNr.intValue());
@@ -201,7 +203,67 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			}
         	rowNr.add(1);
         }
-        
+	}
+	
+	private void applyDomainTable(JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, List<COLUMN> columns, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)
+	{
+		@SuppressWarnings("unchecked")
+		Iterator<Pointer> iterator = context.iteratePointers(ioSheet.getQueryTable());
+		logger.trace("Beginning iteration");
+        while (iterator.hasNext())
+        {
+        	Row xlsRow = sheet.createRow(rowNr.intValue());
+        	
+            Pointer pointerToItem = iterator.next();
+			if (logger.isTraceEnabled()) {logger.info("Got pointer: " +pointerToItem.getValue().getClass());}
+			JXPathContext relativeContext = context.getRelativeContext(pointerToItem);
+			
+			MutableInt columnNr = new MutableInt(0);
+			for(COLUMN ioColumn : columns)
+			{
+//				logger.info(ioColumn.getPosition()+" "+columnNr.intValue());
+				xfCell.cell(ioColumn,xlsRow,columnNr,relativeContext);
+			}
+			rowNr.add(1);
+        }
+	}
+	
+	private void applyTreeTable(JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, List<COLUMN> columns, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)
+	{
+		Figures figures = (Figures)context.getValue(ioSheet.getQueryTable());
+		try
+		{
+			Figures data = ReportXpath.getFigures(JeeslTreeFigureFactory.Type.data, figures.getFigures());
+			for(Figures f : data.getFigures())
+			{
+				List<String> parents = new ArrayList<String>();
+				MutableInt columnNr = new MutableInt(0);
+				applyTreeRow(sheet,rowNr,columnNr,columns,xfCell,parents,f);
+			}
+			JaxbUtil.trace(data);
+		}
+		catch (ExlpXpathNotFoundException e) {e.printStackTrace();}
+	}
+	
+	private void applyTreeRow(Sheet sheet, MutableInt rowNr, MutableInt columnNr, List<COLUMN> columns, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell, List<String> parents, Figures f)
+	{
+		Row xlsRow = sheet.createRow(rowNr.intValue());
+		boolean treeColumn=true;
+		for(COLUMN ioColumn : columns)
+		{
+			if(treeColumn)
+			{
+				xfCell.cell(ioColumn,xlsRow,columnNr.intValue()+parents.size(),f.getLabel());
+				treeColumn=false;
+			}
+		}
+		List<String> path = new ArrayList<String>(parents);
+		path.add(f.getLabel());
+		rowNr.add(1);
+		for(Figures childs : f.getFigures())
+		{
+			applyTreeRow(sheet,rowNr,columnNr,columns,xfCell,path,childs);
+		}
 	}
 	
 	private void applyTemplate(Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)

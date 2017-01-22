@@ -25,6 +25,7 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.pojo.system.io.report.JeeslTreeFigureFactory;
 import org.jeesl.interfaces.controller.report.JeeslReport;
+import org.jeesl.interfaces.controller.report.JeeslReportSelectorTransformation;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -44,6 +45,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.finance.Figures;
+import net.sf.ahtutils.xml.finance.Finance;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.util.io.StringUtil;
@@ -122,8 +124,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	public void write(Object report, OutputStream os) throws IOException {write(null,report,os);}
-	
-	public void write(JeeslReport jeesReprot, Object report, OutputStream os) throws IOException
+	public void write(JeeslReport jeeslReport, Object report, OutputStream os) throws IOException
 	{
 		Map<SHEET,Boolean> mapSheetVisibilityToggle = null; 
 		
@@ -147,15 +148,15 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			MutableInt rowNr = new MutableInt(0);
 			String sheetName = ioSheet.getName().get(localeCode).getLang();
 			Sheet sheet = XlsSheetFactory.getSheet(wb,sheetName);
-			
+						
 			for(ROW ioRow : rows)
 			{
-				logger.info(ioRow.getPosition()+" "+ioRow.getName().get(localeCode).getLang());
+				logger.trace(ioRow.getPosition()+" "+ioRow.getName().get(localeCode).getLang());
 				switch(JeeslReportRowType.Code.valueOf(ioRow.getType().getCode()))
 				{
 					case label: xfRow.label(sheet, rowNr, ioRow); break;
 					case labelValue: xfRow.labelValue(sheet, rowNr, ioRow, context); break;
-					case table: applyTable(context,sheet,rowNr,ioSheet,ioRow,columns,xfRow,xfCell); break;
+					case table: applyTable(jeeslReport,context,sheet,rowNr,ioSheet,ioRow,columns,xfRow,xfCell); break;
 					case template: applyTemplate(sheet,rowNr,ioSheet,ioRow,xfCell); break;
 					default: break;
 				}
@@ -169,19 +170,49 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 		}
 		wb.write(os);
 	}
-	
-	private void applyTable(JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, List<COLUMN> columns, XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xlfRow, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)
+
+	@SuppressWarnings("unchecked")
+	private void applyTable(JeeslReport jeeslReport, JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, List<COLUMN> columns, XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xlfRow, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)
 	{
 		rowNr.add(ioRow.getOffsetRows());
-		xlfRow.header(sheet,rowNr,ioSheet);
-		
 		JeeslReportSetting.Implementation implementation = JeeslReportSetting.Implementation.valueOf(ioSheet.getImplementation().getCode());
+		JeeslReportSetting.Transformation transformation = JeeslReportSetting.Transformation.none;
+		
+		if(jeeslReport instanceof JeeslReportSelectorTransformation)
+		{
+			JeeslReportSelectorTransformation<TRANSFORMATION,L,D> jr = ((JeeslReportSelectorTransformation<TRANSFORMATION,L,D>)jeeslReport);
+			transformation = JeeslReportSetting.Transformation.valueOf(jr.getReportSettingTransformation().getCode());
+		}
+		logger.info("Tranformation:"+transformation+" instanceof:"+(jeeslReport instanceof JeeslReportSelectorTransformation));
+		
+		Figures tree = null;
+		Figures treeHeader = null;
+		Figures transformationHeader = null;
+		try
+		{
+			switch(implementation)
+			{
+				case tree: tree = (Figures)context.getValue(ioSheet.getQueryTable());
+						   treeHeader = ReportXpath.getFigures(JeeslTreeFigureFactory.Type.tree, tree.getFigures());
+						   if(transformation.equals(JeeslReportSetting.Transformation.last)){transformationHeader = ReportXpath.getFigures(JeeslTreeFigureFactory.Type.transformation, tree.getFigures());}
+						   break;
+				default: break;
+			}
+		}
+		catch (ExlpXpathNotFoundException e) {e.printStackTrace();}
+		
+		switch(implementation)
+		{
+			case model: xlfRow.header(sheet,rowNr,ioSheet);break;
+			case flat: xlfRow.header(sheet,rowNr,ioSheet);break;
+			case tree: xlfRow.headerTree(sheet,rowNr,ioSheet,treeHeader,transformation,transformationHeader);break;
+		}
 		
 		switch(implementation)
 		{
 			case model: applyDomainTable(context,sheet,rowNr,ioSheet,columns,xfCell);break;
 			case flat: applyDomainTable(context,sheet,rowNr,ioSheet,columns,xfCell);break;
-			case tree: applyTreeTable(context,sheet,rowNr,ioSheet,columns,xfCell);break;
+			case tree: applyTreeTable(tree,treeHeader,sheet,rowNr,ioSheet,columns,xfCell,transformation);break;
 		}
 
         if(efSheet.hasFooters(ioSheet))
@@ -228,42 +259,62 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
         }
 	}
 	
-	private void applyTreeTable(JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, List<COLUMN> columns, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)
+	private void applyTreeTable(Figures tree, Figures treeHeader, Sheet sheet, MutableInt rowNr, SHEET ioSheet, List<COLUMN> columns, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell, JeeslReportSetting.Transformation transformation)
 	{
-		Figures figures = (Figures)context.getValue(ioSheet.getQueryTable());
 		try
 		{
-			Figures data = ReportXpath.getFigures(JeeslTreeFigureFactory.Type.data, figures.getFigures());
+			Figures data = ReportXpath.getFigures(JeeslTreeFigureFactory.Type.data, tree.getFigures());
 			for(Figures f : data.getFigures())
 			{
-				List<String> parents = new ArrayList<String>();
-				MutableInt columnNr = new MutableInt(0);
-				applyTreeRow(sheet,rowNr,columnNr,columns,xfCell,parents,f);
+				applyTreeRow(0,treeHeader,sheet,rowNr,columns,xfCell,new ArrayList<String>(),f,transformation);
 			}
 			JaxbUtil.trace(data);
 		}
 		catch (ExlpXpathNotFoundException e) {e.printStackTrace();}
 	}
 	
-	private void applyTreeRow(Sheet sheet, MutableInt rowNr, MutableInt columnNr, List<COLUMN> columns, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell, List<String> parents, Figures f)
+	private void applyTreeRow(int level, Figures treeHeader, Sheet sheet, MutableInt rowNr, List<COLUMN> columns, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell, List<String> parents, Figures f, JeeslReportSetting.Transformation transformation)
 	{
+		MutableInt columnNr = new MutableInt(0);
+		columnNr.add(level);
 		Row xlsRow = sheet.createRow(rowNr.intValue());
 		boolean treeColumn=true;
 		for(COLUMN ioColumn : columns)
 		{
 			if(treeColumn)
 			{
-				xfCell.cell(ioColumn,xlsRow,columnNr.intValue()+parents.size(),f.getLabel());
+				xfCell.cell(ioColumn,xlsRow,columnNr.intValue(),f.getLabel());
 				treeColumn=false;
+				List<String> path = new ArrayList<String>(parents);
+				path.add(f.getLabel());
+				rowNr.add(1);
+				for(Figures childs : f.getFigures())
+				{
+					applyTreeRow(level+1,treeHeader,sheet,rowNr,columns,xfCell,path,childs,transformation);
+				}
+				columnNr.add(treeHeader.getFigures().size()-level);
+			}
+			else
+			{
+				if(ioColumn.getQueryCell().startsWith("d"))
+				{
+					int nr = Integer.valueOf(ioColumn.getQueryCell().substring(1));
+					switch(transformation)
+					{
+						case none: xfCell.cell(ioColumn,xlsRow,columnNr,Double.valueOf(f.getFinance().get(nr-1).getValue()));break;
+						case last: for(Finance f2 : f.getFinance().get(nr-1).getFinance())
+									{
+										if(f2.isSetValue()){xfCell.cell(ioColumn,xlsRow,columnNr,f2.getValue());}
+										else{columnNr.add(1);}
+									}break;
+						
+					}
+					
+				}
+				else{logger.warn("NYI: "+ioColumn.getQueryCell());}
 			}
 		}
-		List<String> path = new ArrayList<String>(parents);
-		path.add(f.getLabel());
-		rowNr.add(1);
-		for(Figures childs : f.getFigures())
-		{
-			applyTreeRow(sheet,rowNr,columnNr,columns,xfCell,path,childs);
-		}
+		
 	}
 	
 	private void applyTemplate(Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE> xfCell)

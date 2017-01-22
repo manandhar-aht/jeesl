@@ -5,6 +5,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public interface JeeslReportSelectorTransformation <TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>, L extends UtilsLang,D extends UtilsDescription> extends JeeslReport
-{		
+{	
+	TRANSFORMATION getReportSettingTransformation();
 	void setReportSettingTransformation(TRANSFORMATION transformation);
 }

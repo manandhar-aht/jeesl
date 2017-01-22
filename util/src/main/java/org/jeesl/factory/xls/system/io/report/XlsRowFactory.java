@@ -20,6 +20,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportStyle;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
+import org.jeesl.interfaces.model.system.io.report.type.JeeslReportSetting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.xml.finance.Figures;
 
 public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -129,6 +131,68 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		for(COLUMN c : EjbIoReportColumnFactory.toListVisibleColumns(ioSheet))
 		{
 			xfCell.header(c,headerRow,columnNr);
+		}
+		rowNr.add(1);
+    }
+	
+	public void headerTree(Sheet sheet, MutableInt rowNr, SHEET ioSheet, Figures treeHeader, JeeslReportSetting.Transformation transformation, Figures transformationHeader)
+    {
+		logger.info("Tranformation:"+transformation+" with:"+transformationHeader.getFigures().size());
+		
+		MutableInt columnNr = new MutableInt(0);
+		Map<GROUP,Integer> mapSize = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
+
+		Row groupingRow = sheet.createRow(rowNr.intValue());
+		boolean treeLabels = true;
+		for(GROUP g : EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet))
+		{
+			xfCell.header(g, groupingRow, columnNr);
+			
+			int size = mapSize.get(g);
+			if(treeLabels)
+			{
+				size = size+treeHeader.getFigures().size()-1;
+				treeLabels = false;
+			}
+			else if(transformation==JeeslReportSetting.Transformation.last)
+			{
+				size=transformationHeader.getFigures().size();
+			}
+			
+            if(size>1)
+            {
+            	sheet.addMergedRegion(new CellRangeAddress(rowNr.intValue(), rowNr.intValue(), columnNr.intValue()-1, columnNr.intValue()+size-2));
+            	columnNr.add(size-1);
+            }
+		}
+		rowNr.add(1);
+			
+		Row headerRow = sheet.createRow(rowNr.intValue());
+		columnNr.setValue(0);
+		for(COLUMN c : EjbIoReportColumnFactory.toListVisibleColumns(ioSheet))
+		{
+			if(c.getQueryCell().equals("g1"))
+			{
+				for(Figures header : treeHeader.getFigures())
+				{
+					xfCell.header(c,headerRow,columnNr,header.getLabel());
+				}
+			}
+			else
+			{
+				logger.info("NO HEADER COL");
+				switch(transformation)
+				{
+					case none: xfCell.header(c,headerRow,columnNr);break;
+					case last: for(Figures f : transformationHeader.getFigures())
+								{
+									xfCell.header(c,headerRow,columnNr,f.getLabel());
+								}
+								break;
+				}
+				
+			}
+			
 		}
 		rowNr.add(1);
     }

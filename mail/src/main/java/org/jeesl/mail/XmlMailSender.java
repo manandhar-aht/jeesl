@@ -108,13 +108,9 @@ public class XmlMailSender extends AbstractMailSender
 		mcc.createContent(doc,mail);
 		
 		connect();
-		for(int i=0;i<5;i++)
-		{
-			logger.info("SENDING ...");
-			transport.sendMessage(message, message.getAllRecipients());
-			logger.info("SENT");
-		}
-		
+		logger.trace("SENDING ...");
+		transport.sendMessage(message, message.getAllRecipients());
+		logger.trace("SENT");
 	}
 	
 	private Header getHeader(Element root) throws UtilsProcessingException

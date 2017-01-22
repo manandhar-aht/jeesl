@@ -88,8 +88,8 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected SHEET ioSheet; public SHEET getIoSheet() {return ioSheet;}
 
 	protected FILLING reportFilling;
-	protected TRANSFORMATION reportSettingTransformation;
-	
+	protected TRANSFORMATION reportSettingTransformation; public TRANSFORMATION getReportSettingTransformation() {return reportSettingTransformation;}
+
 	protected EjbLangFactory<L> efLang;
 	protected ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> ffReport;
 	protected EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> efColumn;
@@ -134,8 +134,11 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 			efLang = EjbLangFactory.createFactory(cL);
 			efColumn = ffReport.column();
 			
-			try {reportSettingTransformation = fReport.fByCode(cTransformation, JeeslReportSetting.Transformation.none);}
-			catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
+			if(reportSettingTransformation==null)
+			{
+				try {reportSettingTransformation = fReport.fByCode(cTransformation, JeeslReportSetting.Transformation.none);}
+				catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
+			}
 			
 			try
 			{

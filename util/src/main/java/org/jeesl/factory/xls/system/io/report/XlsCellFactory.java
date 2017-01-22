@@ -70,12 +70,21 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(showLabel){XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),ioColumn.getName().get(localeCode).getLang());}
 		else{XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),null);}
 	}
+	public void header(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, String label)
+	{
+		XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),label);
+	}
 	
 	public void cell(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, JXPathContext context)
 	{
 		JeeslReportLayout.Data dt = xfStyle.getDataType(ioColumn);
 		CellStyle style = xfStyle.get(JeeslReportLayout.Style.cell,ioColumn);
 		add(xlsRow, columnNr, context, ioColumn.getQueryCell(), style, dt);
+	}
+	public void cell(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, Object object)
+	{
+		CellStyle style = xfStyle.get(JeeslReportLayout.Style.cell,ioColumn);
+		build(xlsRow, columnNr, style, object);
 	}
 	
 	public void cell(COLUMN ioColumn, Row xlsRow, int columnNr, Object object)

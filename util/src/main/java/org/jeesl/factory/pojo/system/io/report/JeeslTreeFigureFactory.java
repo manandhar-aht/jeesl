@@ -20,7 +20,7 @@ public class JeeslTreeFigureFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslTreeFigureFactory.class);
 	
-	public enum Type {data}
+	public enum Type {data,tree,transformation}
 	
 	public static <L extends UtilsLang, D extends UtilsDescription, A extends UtilsStatus<A,L,D>,TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
 		Figures build(String localeCode, JeeslPivotFactory<L,D,A> pivotFactory, int lvl, List<A> aggregations, JeeslPivotAggregator dpa, List<EjbWithId> parents, JeeslReportSetting.Transformation transformation)
@@ -33,10 +33,15 @@ public class JeeslTreeFigureFactory
 		
 		Figures figures = XmlFiguresFactory.build();
 		figures.getFigures().add(data);
+		figures.getFigures().add(tree(localeCode,aggregations,transformation));
 		
 		if(transformation.equals(JeeslReportSetting.Transformation.last))
 		{
-			Figures last = XmlFiguresFactory.build("transformation");
+			Figures last = XmlFiguresFactory.build(Type.transformation);
+			for(EjbWithId ejb : dpa.list(pivotFactory.getIndexFor(aggregations.get(aggregations.size()-1))))
+			{
+				last.getFigures().add(XmlFiguresFactory.label(pivotFactory.buildTreeLevelName(localeCode, ejb)));
+			}
 			figures.getFigures().add(last);
 		}
 		
@@ -89,12 +94,29 @@ public class JeeslTreeFigureFactory
 				{
 					case none:	figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path)); break;
 					case last:	figures.getFinance().addAll(pivotFactory.buildFinance(dpa,path,last)); break;
-					default: break;
 				}
 			}
 			
 			if(XmlFiguresFactory.hasFinanceElements(figures)){list.add(figures);}
 		}
 		return list;
+	}
+	
+	public static <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription>
+		Figures tree(String localeCode, List<S> aggregations, JeeslReportSetting.Transformation transformation)
+	{
+		int toIndex = 0;
+		switch(transformation)
+		{
+			case none:	toIndex = aggregations.size(); break;
+			case last:	toIndex = aggregations.size()-1; break;
+		}
+		
+		Figures tree = XmlFiguresFactory.build(Type.tree);
+		for(S a : aggregations.subList(0,toIndex))
+		{
+			tree.getFigures().add(XmlFiguresFactory.label(a.getName().get(localeCode).getLang()));
+		}
+		return tree;
 	}
 }

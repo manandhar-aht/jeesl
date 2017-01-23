@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.survey.Answer;
 import net.sf.ahtutils.xml.survey.Data;
+import net.sf.ahtutils.xml.survey.Template;
 
 
 /**
@@ -22,6 +23,7 @@ import net.sf.ahtutils.xml.survey.Data;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/survey}template"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}data"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}answer"/&gt;
  *       &lt;/sequence&gt;
@@ -35,6 +37,7 @@ import net.sf.ahtutils.xml.survey.Data;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "template",
     "data",
     "answer"
 })
@@ -45,11 +48,41 @@ public class QuerySurvey
 
     private final static long serialVersionUID = 1L;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/survey", required = true)
+    protected Template template;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/survey", required = true)
     protected Data data;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/survey", required = true)
     protected Answer answer;
     @XmlAttribute(name = "localeCode")
     protected String localeCode;
+
+    /**
+     * Gets the value of the template property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Template }
+     *     
+     */
+    public Template getTemplate() {
+        return template;
+    }
+
+    /**
+     * Sets the value of the template property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Template }
+     *     
+     */
+    public void setTemplate(Template value) {
+        this.template = value;
+    }
+
+    public boolean isSetTemplate() {
+        return (this.template!= null);
+    }
 
     /**
      * Gets the value of the data property.

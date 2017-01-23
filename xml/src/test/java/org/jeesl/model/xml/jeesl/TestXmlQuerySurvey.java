@@ -3,6 +3,7 @@ package org.jeesl.model.xml.jeesl;
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.survey.TestXmlAnswer;
 import org.jeesl.model.xml.survey.TestXmlData;
+import org.jeesl.model.xml.survey.TestXmlTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,7 @@ public class TestXmlQuerySurvey extends AbstractXmlJeeslTest<QuerySurvey>
         	
     	if(withChilds)
     	{
+    		xml.setTemplate(TestXmlTemplate.create(false));
     		xml.setData(TestXmlData.create(false));
     		xml.setAnswer(TestXmlAnswer.create(false));
     	}

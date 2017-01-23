@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.survey.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.survey.JeeslSurveySection;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.model.xml.jeesl.QuerySurvey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,29 +28,30 @@ public class XmlTemplateFactory<L extends UtilsLang,D extends UtilsDescription,S
 	final static Logger logger = LoggerFactory.getLogger(XmlTemplateFactory.class);
 	
 	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
-	private Class<TEMPLATE> cTemplate;
 	private Class<SECTION> cSection;
 	
-	private Template q;
+	private final Template q;
 	
 	private XmlStatusFactory<TS,L,D> xfStatus;
+	private XmlCategoryFactory<TC,L,D> xfCategory;
 	
+	public XmlTemplateFactory(QuerySurvey q){this(q.getTemplate());}
 	public XmlTemplateFactory(Template q)
 	{
 		this.q=q;
 		if(q.isSetStatus()) {xfStatus = new XmlStatusFactory<TS,L,D>(q.getStatus());}
+		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory<TC,L,D>(q.getCategory());}
 	}
 	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<TEMPLATE> cTemplate,Class<SECTION> cSection)
+	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<SECTION> cSection)
 	{
 		this.fSurvey=fSurvey;
-		this.cTemplate=cTemplate;
 		this.cSection=cSection;
 	}
 	
 	public Template build(TEMPLATE ejb)
 	{
-		if(fSurvey!=null){ejb = fSurvey.load(cTemplate,ejb);}
+		if(fSurvey!=null){ejb = fSurvey.load(ejb);}
 		
 		Template xml = new Template();
 		if(q.isSetId()){xml.setId(ejb.getId());}
@@ -57,11 +59,7 @@ public class XmlTemplateFactory<L extends UtilsLang,D extends UtilsDescription,S
 		if(q.isSetDescription()){xml.setDescription(XmlDescriptionFactory.build(ejb.getName()));}
 		if(q.isSetRemark() && ejb.getRemark()!=null){xml.setRemark(XmlRemarkFactory.build(ejb.getRemark()));}
 		
-		if(q.isSetCategory())
-		{
-			XmlCategoryFactory f = new XmlCategoryFactory(q.getCategory());
-			xml.setCategory(f.build(ejb.getCategory()));
-		}
+		if(q.isSetCategory()){xml.setCategory(xfCategory.build(ejb.getCategory()));}
 		if(q.isSetStatus()){xml.setStatus(xfStatus.build(ejb.getStatus()));}
 		
 		if(q.isSetSection())
@@ -74,7 +72,7 @@ public class XmlTemplateFactory<L extends UtilsLang,D extends UtilsDescription,S
 				xml.getSection().add(f.build(section));
 			}
 		}
-		
+
 		return xml;
 	}
 	

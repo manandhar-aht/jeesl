@@ -18,6 +18,7 @@
 	<xsd:element name="querySurvey">
 		<xsd:complexType>
 			<xsd:sequence>
+				<xsd:element ref="survey:template" maxOccurs="1"/>
 				<xsd:element ref="survey:data" maxOccurs="1"/>
 				<xsd:element ref="survey:answer" maxOccurs="1"/>
 			</xsd:sequence>

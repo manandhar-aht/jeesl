@@ -58,15 +58,15 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyFacadeBean.class);
 	
-	final Class<SURVEY> cSurvey;
-	final Class<TEMPLATE> cTemplate;
-	final Class<VERSION> cVersion;
-	final Class<TS> cTS;
-	final Class<SECTION> cSection;
-	final Class<ANSWER> cAnswer;
-	final Class<DATA> cData;
-	final Class<OPTION> cOption;
-	final Class<CORRELATION> cCorrelation;
+	private final Class<SURVEY> cSurvey;
+	private final Class<TEMPLATE> cTemplate;
+	private final Class<VERSION> cVersion;
+	private final Class<TS> cTS;
+	private final Class<SECTION> cSection;
+	private final Class<ANSWER> cAnswer;
+	private final Class<DATA> cData;
+	private final Class<OPTION> cOption;
+	private final Class<CORRELATION> cCorrelation;
 	
 	private SurveyFactoryFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> efAnswer;
@@ -115,7 +115,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		return survey;
 	}
 
-	@Override public DATA load(Class<DATA> cData, DATA data)
+	@Override public DATA load(DATA data)
 	{
 		data = em.find(cData,data.getId());
 		data.getAnswers().size();
@@ -215,9 +215,8 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		}
 		else{return list.get(0);}
 	}
-
-	@Override
-	public List<ANSWER> fcAnswers(DATA data)
+	
+	@Override public List<ANSWER> fcAnswers(DATA data)
 	{
 		data = em.find(cData,data.getId());
 		TEMPLATE template = em.find(cTemplate,data.getSurvey().getTemplate().getId());

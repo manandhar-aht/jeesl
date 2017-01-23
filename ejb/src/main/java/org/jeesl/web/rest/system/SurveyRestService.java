@@ -120,7 +120,7 @@ public class SurveyRestService <L extends UtilsLang,
 	
 		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exTemplate).getTemplate());
-		xfTemplate.lazyLoad(fSurvey,cTEMPLATE,cSection);
+		xfTemplate.lazyLoad(fSurvey,cSection);
 		
 		xfSurveys = new XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exSurveys).getSurveys().getSurvey().get(0));
 		

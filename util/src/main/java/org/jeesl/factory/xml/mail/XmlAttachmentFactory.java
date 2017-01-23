@@ -3,16 +3,17 @@ package org.jeesl.factory.xml.mail;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import net.sf.jmimemagic.Magic;
-import net.sf.jmimemagic.MagicException;
-import net.sf.jmimemagic.MagicMatchNotFoundException;
-import net.sf.jmimemagic.MagicParseException;
+import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.jeesl.model.xml.system.io.mail.Attachment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicException;
+import net.sf.jmimemagic.MagicMatchNotFoundException;
+import net.sf.jmimemagic.MagicParseException;
 
 public class XmlAttachmentFactory
 {
@@ -26,6 +27,11 @@ public class XmlAttachmentFactory
 		String mimeType = Magic.getMagicMatch(f, false).getMimeType();
 		return create(f.getName(), mimeType, data);
 	}
+	
+	public static Attachment build(String fileName, String mime, InputStream is) throws IOException
+    {
+		return create(fileName,mime,IOUtils.toByteArray(is));
+    }
 	
     public static Attachment create(String fileName, String mime, byte[] data)
     {

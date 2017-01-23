@@ -3,9 +3,9 @@ package net.sf.ahtutils.security.pwd;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.ahtutils.controller.factory.xml.security.XmlRuleFactory;
 import net.sf.ahtutils.xml.security.Rule;
 
+import org.jeesl.factory.xml.system.security.XmlRuleFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

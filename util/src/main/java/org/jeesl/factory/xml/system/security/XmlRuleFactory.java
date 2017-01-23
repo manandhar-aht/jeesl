@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.factory.xml.security;
+package org.jeesl.factory.xml.system.security;
 
 import net.sf.ahtutils.xml.security.Rule;
 

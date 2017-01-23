@@ -1,4 +1,4 @@
-package org.jeesl.mail.content;
+package org.jeesl.mail.processor.mail.msg;
 
 import java.io.IOException;
 

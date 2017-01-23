@@ -19,6 +19,10 @@
         	<type>jar</type>
         	<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-util</artifactId>
+		</dependency>
 		
 		<!-- XML -->
 		<dependency>

@@ -8,7 +8,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.jeesl.mail.AbstractMailSender;
 import org.jeesl.mail.MimeMessageCreator;
-import org.jeesl.mail.content.XmlMimeContentCreator;
+import org.jeesl.mail.processor.mail.msg.XmlMimeContentCreator;
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

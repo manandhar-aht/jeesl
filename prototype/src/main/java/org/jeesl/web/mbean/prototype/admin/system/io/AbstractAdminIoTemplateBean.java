@@ -282,6 +282,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
     	catch (InvalidReferenceException e) {preview = e.getMessage();}
     	catch (IOException e) {preview = e.getMessage();}
     	catch (TemplateException e) {preview = e.getMessage();}
+		catch (Exception e) {preview = "General Exception " +e.getMessage();}
     }
     
 	//*************************************************************************************

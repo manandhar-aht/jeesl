@@ -1,5 +1,5 @@
 psql -U postgres -c "CREATE USER @@@APP@@@ WITH PASSWORD '@@@APP@@@';"
-psql -U postgres -c "SELECT pg_terminate_backend(procpid) FROM pg_stat_activity WHERE procpid <> pg_backend_pid() AND datname = '@@@APP@@@';"
+psql -U postgres -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '@@@APP@@@' AND pid <> pg_backend_pid();"
 psql -U postgres -c "DROP DATABASE IF EXISTS @@@APP@@@;"
 psql -U postgres -c "CREATE DATABASE @@@APP@@@ OWNER @@@APP@@@ ENCODING 'UTF8';"
 psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE @@@APP@@@ TO @@@APP@@@;"

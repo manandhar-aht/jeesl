@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			 xmlns:media="http://www.openfuxml.org/media"
+			 xmlns:table="http://www.openfuxml.org/table"
+			 xmlns:layout="http://www.openfuxml.org/layout"
+			 xmlns:text="http://www.openfuxml.org/text"
+			 xmlns:l="http://www.openfuxml.org/list"
+		container="true">	
+
+	<ofx:section container="true" classifier="debianJessie">
+		<ofx:title>Debian Jessie</ofx:title>
+		
+		<ofx:section classifier="dev">
+			<ofx:title >Classpath OSX</ofx:title>
+			
+			<ofx:paragraph lang="en">
+				~/.profile
+			</ofx:paragraph>
+			
+			<ofx:listing>
+				<ofx:raw>export JAVA_HOME=$(/usr/libexec/java_home)</ofx:raw>
+			</ofx:listing>
+		</ofx:section>
+
+
+	</ofx:section>
+</ofx:section>

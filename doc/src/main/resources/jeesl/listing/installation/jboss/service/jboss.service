@@ -1,0 +1,14 @@
+[Unit]
+Description=Jboss Application Server
+After=network.target
+
+[Service]
+Type=idle
+User=dev
+Group=dev
+ExecStart=/home/dev/jboss-eap-6.3/bin/standalone.sh
+TimeoutStartSec=600
+TimeoutStopSec=600
+
+[Install]
+WantedBy=multi-user.target

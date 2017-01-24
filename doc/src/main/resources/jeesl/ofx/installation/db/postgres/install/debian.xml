@@ -32,4 +32,13 @@ sudo make comments-install</ofx:raw>
 		</ofx:listing>
 		
 	</ofx:section>
+	
+	<ofx:section container="true" classifier="debianJessi">
+		<ofx:title>Debian Jessie</ofx:title>
+		
+		<ofx:listing>
+			<ofx:raw>apt-get install postgresql-9.4-postgis-2.1</ofx:raw>
+		</ofx:listing>
+		
+	</ofx:section>
 </ofx:section>

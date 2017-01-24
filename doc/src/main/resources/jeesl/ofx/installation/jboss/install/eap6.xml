@@ -313,31 +313,45 @@ fi</ofx:raw>
 			<ofx:title lang="en">Start JBoss as a Service</ofx:title>
 			
 			<ofx:paragraph lang="en" version="1">
-                            This paragraph describes how to set up a Linux service to start and stop your JBoss Application Server.
-                            The advantage of a Linux service is that it will run no matter which user is logged onto the machine. 
-                            You can also configure the service to start automatically if the system is rebooted.
-                            Perform the following commands to start with the service installation.
+				This paragraph describes how to set up a Linux service to start and stop your JBoss Application Server.
+				The advantage of a Linux service is that it will run no matter which user is logged onto the machine. 
+				You can also configure the service to start automatically if the system is rebooted.
+				Perform the following commands to start with the service installation.
 			</ofx:paragraph>
 			
-			<ofx:listing setting="shell" external="listing/admin/installation/jboss/service/preparation.txt"/>
-
+			<ofx:section container="true" classifier="debianWheezy">
+				<ofx:listing setting="shell" external="listing/admin/installation/jboss/service/preparation.txt"/>
+				<ofx:paragraph lang="en" version="1">
+					The next step is to configure the service with the shown script below. 
+					Copy this script to your clipboard and past it into the <ed:glossary code="vi"/>
+					terminal (or similar editor) and save your configuration.
+					Verify your installation with of the JBoss Application Server by starting and stopping it
+					(monitor this events with the log terminal).
+					Use the commands "/etc/init.d/jboss {start|stop|log}" to perform this test.
+				</ofx:paragraph>
+				<ofx:listing setting="shell" external="listing/admin/installation/jboss/service/etcInitD.txt"/>
+				<ofx:paragraph lang="en" version="1">
+					To activate the service, the shell command
+					<text:emphasis style="typewriter">sudo update-rc.d jboss defaults</text:emphasis>
+					has to be executed.
+				</ofx:paragraph>
+			</ofx:section>
 			
-			<ofx:paragraph lang="en" version="1">
-                            The next step is to configure the service with the shown script below. 
-                            Copy this script to your clipboard and past it into the <ed:glossary code="vi"/>
-                            terminal (or similar editor) and save your configuration.
-                            Verify your installation with of the JBoss Application Server by starting and stopping it
-                            (monitor this events with the log terminal).
-                            Use the commands "/etc/init.d/jboss {start|stop|log}" to perform this test.
-			</ofx:paragraph>
-			
-			<ofx:listing setting="shell" external="listing/admin/installation/jboss/service/etcInitD.txt"/>
-			
-		<ofx:paragraph lang="en" version="1">
-			To activate the service, the shell command
-			<text:emphasis style="typewriter">sudo update-rc.d jboss defaults</text:emphasis>
-			has to be executed.
-		</ofx:paragraph>
+			<ofx:section container="true" classifier="debianJessie">
+				<ofx:paragraph lang="en" version="1">
+					Do this as root 		
+				</ofx:paragraph>
+					
+				<ofx:listing external="/jeesl-doc/src/main/resources/jeesl/listing/installation/jboss/service/jboss.service"/>
+				<ofx:listing>
+						<ofx:raw>touch /etc/systemd/system/jboss.service
+systemctl daemon-reload
+systemctl enable jboss.service
+systemctl start jboss.service
+systemctl status jboss.service
+journalctl -u jboss.service</ofx:raw>
+				</ofx:listing>
+			</ofx:section>
 			
 		</ofx:section>
 	</ofx:section>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			xmlns:text="http://www.openfuxml.org/text"
+		id="section.admin.installation.postgresql">
+	<ofx:title>Java</ofx:title>
+	
+
+	<ofx:section>
+		<ofx:title lang="en">Installation</ofx:title>
+		
+		<ofx:section include="install/debian.xml"/>
+		<ofx:section include="install/osx.xml"/>
+		<ofx:section include="install/windows.xml"/>
+	</ofx:section>
+	
+	
+</ofx:section>

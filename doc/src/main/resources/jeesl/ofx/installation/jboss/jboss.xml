@@ -10,7 +10,7 @@
 		It runs on multiple platforms. The software is free and open-source software, subject to the requirements of the GNU Lesser General Public License (LGPL).
 	</ofx:paragraph>
 	
-	<ofx:section include="as7.xml"/>
-	<ofx:section include="eap6.xml"/>
+	<ofx:section include="install/as7.xml"/>
+	<ofx:section include="install/eap6.xml"/>
 	
 </ofx:section>

@@ -63,14 +63,14 @@ public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 		addConfig(MaintenanceCode.mScp.toString(),"ofx.aht-utils/maintenance/scp.xml","admin/maintenance/scp");
 
 		//Backup
-		addConfig(BackupCode.bPostgres.toString(),"ofx.aht-utils/administration/db/postgres.xml","admin/db/postgres");
+		addConfig(BackupCode.bPostgres.toString(),"jeesl/ofx/administration/db/postgres.xml","admin/db/postgres");
 		
 		//Installation
 		addConfig(InstallationCode.instIntroduction.toString(),"ofx.aht-utils/installation/introduction.xml","admin/installation/introduction");
 		addConfig(InstallationCode.instDebian.toString(),"ofx.aht-utils/installation/debian/debian.xml","admin/installation/debian");
-		addConfig(InstallationCode.instJava.toString(),"ofx.aht-utils/installation/java.xml","admin/installation/java");
-		addConfig(InstallationCode.instJboss.toString(),"ofx.aht-utils/installation/jboss/jboss.xml","admin/installation/jboss");
-		addConfig(InstallationCode.instPostGis.toString(),"ofx.aht-utils/installation/postgres/postgres.xml","admin/installation/postgres");
+		addConfig(InstallationCode.instJava.toString(),"jeesl/ofx/installation/java/java.xml","admin/installation/java");
+		addConfig(InstallationCode.instJboss.toString(),"jeesl/ofx/installation/jboss/jboss.xml","admin/installation/jboss");
+		addConfig(InstallationCode.instPostGis.toString(),"jeesl/ofx/installation/db/postgres/postgres.xml","admin/installation/postgres");
 		addConfig(InstallationCode.instMySql.toString(),"aht-utils/ofx/installation/db/mysql/mysql.xml","admin/installation/mysql");
 		addConfig(InstallationCode.instMaven.toString(),"ofx.aht-utils/installation/maven.xml","admin/installation/maven");
 //		addConfig(InstallationCode.instGeoserver.toString(),"ofx.aht-utils/installation/geoserver.xml","admin/installation/geoserver");

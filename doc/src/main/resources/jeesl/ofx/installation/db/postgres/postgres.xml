@@ -41,10 +41,9 @@
 		</ofx:paragraph>
 		<ofx:listing classifier="debianWheezy" setting="sql" external="listing/admin/db/postgres/template/debian/wheezy.sql"/>
 		
-		<ofx:paragraph lang="en" classifier="debianWheezy">
-			Then the actual database can be created with the following commands:
-		</ofx:paragraph>
+		<ofx:paragraph lang="en" classifier="debian">Then the actual database can be created with the following commands (as user postgres):</ofx:paragraph>
 
+		<ofx:listing classifier="debianJessie" setting="sql" external="listing/admin/db/postgres/create/debian/jessie.sql"/>
 		<ofx:listing classifier="debianWheezy" setting="sql" external="listing/admin/db/postgres/create/debian/wheezy.sql"/>
 		<ofx:listing classifier="ubuntu14" external="listing/admin/db/postgres/create/ubuntu/14.sql"/>
 		<ofx:listing classifier="osxYosemite" external="listing/admin/db/postgres/create/osx/yosemite.sql"/>

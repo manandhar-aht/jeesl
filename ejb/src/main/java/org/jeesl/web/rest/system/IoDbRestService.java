@@ -83,7 +83,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		return new DataUpdate();
 	}
 	
-	public void findDumps1(File fDir)
+	public void findDumps2(File fDir)
 	{
 		Set<DUMP> set = new HashSet<DUMP>();
 		set.addAll(fDb.all(cDump));

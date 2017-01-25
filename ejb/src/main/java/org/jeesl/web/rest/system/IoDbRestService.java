@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jeesl.interfaces.facade.JeeslIoDbFacade;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.rest.system.io.db.JeeslDbDumpRest;
 import org.jeesl.interfaces.rest.system.io.db.JeeslDbRestExport;
@@ -27,8 +28,9 @@ import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.xml.io.Dir;
 
 public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
+							DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
+							FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
 							HOST extends UtilsStatus<HOST,L,D>,
-							DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
 							STATUS extends UtilsStatus<STATUS,L,D>>
 					extends AbstractJeeslRestService<L,D>
 					implements JeeslDbDumpRest,JeeslDbRestExport
@@ -40,7 +42,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	private final Class<DUMP> cDump;
 	private final Class<STATUS> cStatus;
 	
-	private EjbDbDumpFileFactory<L,D,HOST,DUMP,STATUS> fDumpFile;
+	private EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> fDumpFile;
 	
 	public IoDbRestService(JeeslIoDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump,final Class<STATUS> cStatus)
 	{
@@ -85,7 +87,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		{
 			try
 			{
-				ejb.setEndDate(new Date());
+				ejb.setRecord(new Date());
 				fDb.update(ejb);
 			}
 			catch (UtilsConstraintViolationException e) {e.printStackTrace();}
@@ -123,7 +125,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		{
 			try
 			{
-				ejb.setEndDate(new Date());
+				ejb.setRecord(new Date());
 				fDb.update(ejb);
 			}
 			catch (UtilsConstraintViolationException e) {e.printStackTrace();}

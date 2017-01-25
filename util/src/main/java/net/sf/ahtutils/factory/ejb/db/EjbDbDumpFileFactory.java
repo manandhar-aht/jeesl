@@ -3,6 +3,7 @@ package net.sf.ahtutils.factory.ejb.db;
 import java.io.File;
 import java.util.Date;
 
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +13,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbDbDumpFileFactory<L extends UtilsLang,D extends UtilsDescription,
-									HOST extends UtilsStatus<HOST,L,D>,
-									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
-									STATUS extends UtilsStatus<STATUS,L,D>>
+								DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
+								FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
+								HOST extends UtilsStatus<HOST,L,D>,
+								STATUS extends UtilsStatus<STATUS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbDbDumpFileFactory.class);
 	
@@ -26,12 +28,13 @@ public class EjbDbDumpFileFactory<L extends UtilsLang,D extends UtilsDescription
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
+					DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
+					FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
 					HOST extends UtilsStatus<HOST,L,D>,
-					DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
 					STATUS extends UtilsStatus<STATUS,L,D>>
-	EjbDbDumpFileFactory<L,D,HOST,DUMP,STATUS> factory(final Class<DUMP> cDumpFile)
+	EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> factory(final Class<DUMP> cDumpFile)
 	{
-		return new EjbDbDumpFileFactory<L,D,HOST,DUMP,STATUS>(cDumpFile);
+		return new EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS>(cDumpFile);
 	}
     
 	public DUMP build(net.sf.exlp.xml.io.File file)
@@ -52,7 +55,7 @@ public class EjbDbDumpFileFactory<L extends UtilsLang,D extends UtilsDescription
 			 ejb = cDumpFile.newInstance();
 			 ejb.setName(name);
 			 ejb.setSize(size);
-			 ejb.setStartDate(record);
+			 ejb.setRecord(record);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

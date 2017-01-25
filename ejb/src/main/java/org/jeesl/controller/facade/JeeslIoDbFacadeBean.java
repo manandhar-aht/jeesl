@@ -13,6 +13,7 @@ import org.jeesl.factory.json.system.db.JsonDbConnectionFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.sql.system.db.SqlDbConnectionsFactory;
 import org.jeesl.interfaces.facade.JeeslIoDbFacade;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.jsoup.helper.StringUtil;
@@ -27,9 +28,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription,
-									HOST extends UtilsStatus<HOST,L,D>,
-									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
-									STATUS extends UtilsStatus<STATUS,L,D>>
+								DUMP extends JeeslDbDump<L,D,DUMP,STORE,HOST,STATUS>,
+								STORE extends JeeslDbDumpFile<L,D,DUMP,STORE,HOST,STATUS>,
+								HOST extends UtilsStatus<HOST,L,D>,
+								STATUS extends UtilsStatus<STATUS,L,D>>
 		extends UtilsFacadeBean implements JeeslIoDbFacade
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDbFacadeBean.class);

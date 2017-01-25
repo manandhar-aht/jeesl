@@ -8,13 +8,15 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 import org.jeesl.interfaces.facade.JeeslIoDbFacade;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AbstractAdminDbDumpBean <L extends UtilsLang,D extends UtilsDescription,
+									DUMP extends JeeslDbDump<L,D,DUMP,STORE,HOST,STATUS>,
+									STORE extends JeeslDbDumpFile<L,D,DUMP,STORE,HOST,STATUS>,
 									HOST extends UtilsStatus<HOST,L,D>,
-									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
 									STATUS extends UtilsStatus<STATUS,L,D>>
 						implements Serializable
 {

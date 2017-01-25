@@ -14,6 +14,12 @@ public interface JeeslDbDumpFile<L extends UtilsLang,D extends UtilsDescription,
 {
 	public static enum Status{stored,flagged,deleted};
 	
+	DUMP getDump();
+	void setDump(DUMP dump);
+	
+	HOST getHost();
+	void setHost(HOST host);
+	
 	STATUS getStatus();
 	void setStatus(STATUS status);
 }

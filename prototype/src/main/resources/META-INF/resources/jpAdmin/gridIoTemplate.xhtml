@@ -162,11 +162,9 @@
 						</p:panel>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sPreview" width="5" rendered="#{not empty cc.attrs.bean.preview}">
+				<aht:slot id="sPreview" width="4" rendered="#{not empty cc.attrs.bean.preview}">
 					<p:panel header="#{msg.jeeslIoTemplatePreview}" rendered="#{not empty cc.attrs.bean.definition}" styleClass="auPanelWithGrid">
-						<p:panelGrid columns="1" columnClasses="auPwg100">
-							<h:outputText value="#{cc.attrs.bean.preview}"/>
-						</p:panelGrid>
+						<pre style="white-space: pre-wrap;">#{cc.attrs.bean.preview}</pre>
 					</p:panel>
 				</aht:slot>
 			</aht:row>

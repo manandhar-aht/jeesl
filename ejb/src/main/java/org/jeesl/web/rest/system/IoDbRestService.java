@@ -10,6 +10,8 @@ import java.util.Set;
 import org.jeesl.interfaces.facade.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.rest.system.io.db.JeeslDbDumpRest;
+import org.jeesl.interfaces.rest.system.io.db.JeeslDbRestExport;
+import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,24 +28,33 @@ import net.sf.exlp.xml.io.Dir;
 
 public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 							HOST extends UtilsStatus<HOST,L,D>,
-							DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
+							DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
+							STATUS extends UtilsStatus<STATUS,L,D>>
 					extends AbstractJeeslRestService<L,D>
-					implements JeeslDbDumpRest
+					implements JeeslDbDumpRest,JeeslDbRestExport
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDbRestService.class);
 	
 	private JeeslIoDbFacade fDb;
-	private Class<DUMP> cDump;
-	private EjbDbDumpFileFactory<L,D,HOST,DUMP> fDumpFile;
 	
-	public IoDbRestService(JeeslIoDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump)
+	private final Class<DUMP> cDump;
+	private final Class<STATUS> cStatus;
+	
+	private EjbDbDumpFileFactory<L,D,HOST,DUMP,STATUS> fDumpFile;
+	
+	public IoDbRestService(JeeslIoDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump,final Class<STATUS> cStatus)
 	{
 		super(fDb,cL,cD);
-		this.cDump=cDump;
 		this.fDb = fDb;
+		
+		this.cDump=cDump;
+		this.cStatus=cStatus;
 		
 		fDumpFile = EjbDbDumpFileFactory.factory(cDump);
 	}
+	
+//	@Override public Container exportSystemDbActivityState() {return xfContainer.build(fDb.allOrderedPosition(cCategory));}
+	@Override public Container exportSystemIoDbDumpStatus() {return xfContainer.build(fDb.allOrderedPosition(cStatus));}
 	
 	@Override public DataUpdate uploadDumps(Dir directory)
 	{

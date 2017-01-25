@@ -13,7 +13,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbDbDumpFileFactory<L extends UtilsLang,D extends UtilsDescription,
 									HOST extends UtilsStatus<HOST,L,D>,
-									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
+									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
+									STATUS extends UtilsStatus<STATUS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbDbDumpFileFactory.class);
 	
@@ -26,10 +27,11 @@ public class EjbDbDumpFileFactory<L extends UtilsLang,D extends UtilsDescription
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					HOST extends UtilsStatus<HOST,L,D>,
-					DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
-	EjbDbDumpFileFactory<L,D,HOST,DUMP> factory(final Class<DUMP> cDumpFile)
+					DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
+					STATUS extends UtilsStatus<STATUS,L,D>>
+	EjbDbDumpFileFactory<L,D,HOST,DUMP,STATUS> factory(final Class<DUMP> cDumpFile)
 	{
-		return new EjbDbDumpFileFactory<L,D,HOST,DUMP>(cDumpFile);
+		return new EjbDbDumpFileFactory<L,D,HOST,DUMP,STATUS>(cDumpFile);
 	}
     
 	public DUMP build(net.sf.exlp.xml.io.File file)

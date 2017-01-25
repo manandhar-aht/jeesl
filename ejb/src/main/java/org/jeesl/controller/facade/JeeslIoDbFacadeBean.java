@@ -28,7 +28,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription,
 									HOST extends UtilsStatus<HOST,L,D>,
-									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
+									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
+									STATUS extends UtilsStatus<STATUS,L,D>>
 		extends UtilsFacadeBean implements JeeslIoDbFacade
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDbFacadeBean.class);

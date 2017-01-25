@@ -9,9 +9,12 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
 public interface JeeslDbDumpFile<L extends UtilsLang,D extends UtilsDescription,
 								HOST extends UtilsStatus<HOST,L,D>,
-								DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
+								DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
+								STATUS extends UtilsStatus<STATUS,L,D>>
 					extends EjbWithId,EjbWithDateRange,EjbWithName
 {
+	public static enum Status{stored,flagged,deleted};
+	
 	long getSize();
 	void setSize(long size);
 	

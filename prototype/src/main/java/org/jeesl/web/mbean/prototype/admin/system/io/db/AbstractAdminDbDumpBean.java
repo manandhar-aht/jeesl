@@ -14,7 +14,8 @@ import org.slf4j.LoggerFactory;
 
 public class AbstractAdminDbDumpBean <L extends UtilsLang,D extends UtilsDescription,
 									HOST extends UtilsStatus<HOST,L,D>,
-									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP>>
+									DUMP extends JeeslDbDumpFile<L,D,HOST,DUMP,STATUS>,
+									STATUS extends UtilsStatus<STATUS,L,D>>
 						implements Serializable
 {
 	private static final long serialVersionUID = 1L;

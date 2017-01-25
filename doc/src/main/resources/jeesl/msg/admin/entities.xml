@@ -60,4 +60,17 @@
 			<s:lang key="fr" translation="Mail Status"/>
 		</s:langs>
 	</s:translation>
+	
+	<s:translation key="IoDbDumpStatus">
+		<s:langs>
+			<s:lang key="en" translation="DB Dump Status"/>
+			<s:lang key="fr" translation="DB Dump Status"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoDbHost">
+		<s:langs>
+			<s:lang key="en" translation="DB Dump Host"/>
+			<s:lang key="fr" translation="DB Dump Host"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

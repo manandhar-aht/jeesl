@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -44,6 +45,8 @@ public interface JeeslIoReportFacade <L extends UtilsLang,D extends UtilsDescrip
 	SHEET load(SHEET sheet, boolean recursive);
 	GROUP load(GROUP group);
 	TEMPLATE load(TEMPLATE template);
+	
+	SHEET fSheet(WORKBOOK workbook, String code) throws UtilsNotFoundException;
 	
 	void rmSheet(SHEET sheet) throws UtilsConstraintViolationException;
 	void rmGroup(GROUP group) throws UtilsConstraintViolationException;

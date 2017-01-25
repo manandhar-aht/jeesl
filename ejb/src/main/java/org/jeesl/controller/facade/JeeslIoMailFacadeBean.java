@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
-import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -36,7 +35,9 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoMailFacadeBean.class);
 		
+	@SuppressWarnings("unused")
 	private final Class<CATEGORY> cCategory;
+	
 	private final Class<MAIL> cMail;
 	private final Class<STATUS> cStatus;
 	
@@ -52,10 +53,28 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 		efMail = ff.mail();
 	}
 	
-	@Override public List<MAIL> fMails(List<CATEGORY> categories)
+	@Override public List<MAIL> fMails(List<CATEGORY> categories, List<STATUS> status)
 	{
-		List<ParentPredicate<CATEGORY>> ppCategory = ParentPredicate.createFromList(cCategory,JeeslIoMail.Attributes.category.toString(),categories);
-		return allForOrParents(cMail,ppCategory);
+		if(categories==null || categories.isEmpty()){return new ArrayList<MAIL>();}
+		if(status==null || status.isEmpty()){return new ArrayList<MAIL>();}
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<MAIL> cQ = cB.createQuery(cMail);
+		Root<MAIL> mail = cQ.from(cMail);
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		
+		Path<Date> pRecordCreation = mail.get(JeeslIoMail.Attributes.recordCreation.toString());
+		Path<CATEGORY> pCategory = mail.get(JeeslIoMail.Attributes.category.toString());
+		Path<STATUS> pStatus = mail.get(JeeslIoMail.Attributes.status.toString());
+		
+		predicates.add(pCategory.in(categories));
+		predicates.add(pStatus.in(status));
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.orderBy(cB.desc(pRecordCreation));
+		cQ.select(mail);
+
+		TypedQuery<MAIL> tQ = em.createQuery(cQ);
+		return tQ.getResultList();
 	}
 	
 	@Override public void queueMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException

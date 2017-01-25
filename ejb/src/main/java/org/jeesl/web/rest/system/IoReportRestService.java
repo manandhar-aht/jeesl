@@ -437,7 +437,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	{
 		logger.trace("Importing "+cSheet.getSimpleName()+" "+workbook.getReport().getCategory().getPosition()+"."+workbook.getReport().getPosition()+"."+xSheet.getPosition());
 		SHEET eSheet;
-		try {eSheet = fReport.fByCode(cSheet, xSheet.getCode());}
+		try {eSheet = fReport.fSheet(workbook, xSheet.getCode());}
 		catch (UtilsNotFoundException e)
 		{
 			eSheet = efSheet.build(fReport,workbook,xSheet);
@@ -481,7 +481,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	private GROUP importGroup(SHEET eSheet, ColumnGroup xGroup) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, ExlpXpathNotFoundException, UtilsProcessingException
 	{
 		GROUP eGroup;
-		try {eGroup = fReport.fByCode(cGroup, xGroup.getCode());}
+		try {eGroup = fReport.fByCode(cGroup,xGroup.getCode());}
 		catch (UtilsNotFoundException e)
 		{
 			eGroup = efGroup.build(fReport,eSheet,xGroup);
@@ -530,7 +530,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		}
 		eRow = efRow.update(fReport,eRow,xRow);
 		eRow = fReport.save(eRow);
-		eRow = efRow.updateLD(fReport,eRow, xRow);
+		eRow = efRow.updateLD(fReport,eRow,xRow);
 
 		return eRow;
 	}

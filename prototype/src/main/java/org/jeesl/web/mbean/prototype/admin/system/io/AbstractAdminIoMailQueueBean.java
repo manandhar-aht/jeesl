@@ -83,7 +83,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	//*************************************************************************************
 	protected void reloadMails()
 	{
-		mails = fMail.fMails(sbhCategory.getSelected());
+		mails = fMail.fMails(sbhCategory.getSelected(),sbhStatus.getSelected());
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cMail,mails));}
 //		Collections.sort(templates, comparatorTemplate);
 	}

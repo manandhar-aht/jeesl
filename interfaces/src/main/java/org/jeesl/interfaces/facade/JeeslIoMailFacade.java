@@ -13,10 +13,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public interface JeeslIoMailFacade <L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
+									MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>,
+									STATUS extends UtilsStatus<STATUS,L,D>>
 			extends UtilsFacade
 {	
-	List<MAIL> fMails(List<CATEGORY> categories);
+	List<MAIL> fMails(List<CATEGORY> categories,List<STATUS> stauts);
 	List<MAIL> fSpoolMails(int max);
 	
 	void queueMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException;

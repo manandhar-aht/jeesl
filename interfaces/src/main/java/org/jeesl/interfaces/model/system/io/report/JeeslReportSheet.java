@@ -30,6 +30,7 @@ public interface JeeslReportSheet<L extends UtilsLang,D extends UtilsDescription
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,
 				EjbWithLang<L>,EjbWithDescription<D>
 {	
+	public enum Attributes{workbook,code}
 	public enum Offset{rows,columns} 
 	
 	WORKBOOK getWorkbook();

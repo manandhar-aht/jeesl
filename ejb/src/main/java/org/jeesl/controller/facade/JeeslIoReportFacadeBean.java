@@ -3,6 +3,13 @@ package org.jeesl.controller.facade;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 import org.jeesl.interfaces.facade.JeeslIoReportFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
@@ -18,6 +25,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -117,6 +125,24 @@ public class JeeslIoReportFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		template = em.find(cTemplate, template.getId());
 		template.getCells().size();
 		return template;
+	}
+	
+	@Override public SHEET fSheet(WORKBOOK workbook, String code) throws UtilsNotFoundException
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<SHEET> cQ = cB.createQuery(cSheet);
+        
+		Root<SHEET> sheet = cQ.from(cSheet);
+        
+        Path<WORKBOOK> pWorkbook = sheet.get(JeeslReportSheet.Attributes.workbook.toString());
+        Expression<String> eCode = sheet.get(JeeslReportSheet.Attributes.code.toString());
+       
+        CriteriaQuery<SHEET> select = cQ.select(sheet);
+	    select.where(cB.and(cB.equal(pWorkbook,workbook),cB.equal(eCode,code)));
+
+		TypedQuery<SHEET> q = em.createQuery(cQ); 
+		try	{return q.getSingleResult();}
+		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found "+cSheet.getSimpleName()+" workbook:"+workbook.toString()+" code:"+code);}
 	}
 	
 	@Override public void rmSheet(SHEET sheet) throws UtilsConstraintViolationException

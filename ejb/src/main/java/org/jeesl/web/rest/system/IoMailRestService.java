@@ -70,7 +70,7 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 	{
 		List<MAIL> eMails = fMail.fSpoolMails(1);
 		Mails xml = XmlMailsFactory.build();
-		xml.setQueue(eMails.size());
+		xml.setQueue(fMail.cQueue());
 
 		for(MAIL eMail : eMails)
 		{

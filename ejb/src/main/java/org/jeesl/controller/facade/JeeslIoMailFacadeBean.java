@@ -53,6 +53,31 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 		efMail = ff.mail();
 	}
 	
+	@Override public Integer cQueue()
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<Long> cQ = cB.createQuery(Long.class);
+		Root<MAIL> mail = cQ.from(cMail);
+		
+		Path<STATUS> pStatus = mail.get(JeeslIoMail.Attributes.status.toString());
+
+		try
+		{
+			STATUS statusSpooling = fByCode(cStatus, JeeslIoMail.Status.spooling);
+			STATUS statusQueue = fByCode(cStatus, JeeslIoMail.Status.queue);
+			cQ.where(cB.or(cB.equal(pStatus,statusSpooling),cB.equal(pStatus,statusQueue)));
+			cQ.select(cB.count(mail));
+			TypedQuery<Long> tQ = em.createQuery(cQ);
+			Long c = tQ.getSingleResult();
+			return c.intValue();
+		}
+		catch (UtilsNotFoundException e)
+		{
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+	
 	@Override public List<MAIL> fMails(List<CATEGORY> categories, List<STATUS> status)
 	{
 		if(categories==null || categories.isEmpty()){return new ArrayList<MAIL>();}

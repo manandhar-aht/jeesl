@@ -17,6 +17,7 @@ public interface JeeslIoMailFacade <L extends UtilsLang,D extends UtilsDescripti
 									STATUS extends UtilsStatus<STATUS,L,D>>
 			extends UtilsFacade
 {	
+	Integer cQueue();
 	List<MAIL> fMails(List<CATEGORY> categories,List<STATUS> stauts);
 	List<MAIL> fSpoolMails(int max);
 	

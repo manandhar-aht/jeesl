@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jeesl.factory.ejb.system.io.db.EjbDbDumpFactory;
+import org.jeesl.factory.factory.DbFactoryFactory;
 import org.jeesl.interfaces.facade.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
@@ -62,7 +63,8 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		
 		efHost = EjbStatusFactory.createFactory(cHost,cL,cD);
 		
-		efDumpFile = EjbDbDumpFactory.factory(cDump);
+		DbFactoryFactory<L,D,DUMP,FILE,HOST,STATUS> ff = DbFactoryFactory.factory(cL,cD,cDump,cFile,cHost,cStatus);
+		efDumpFile = ff.dump();
 	}
 	
 //	@Override public Container exportSystemDbActivityState() {return xfContainer.build(fDb.allOrderedPosition(cCategory));}

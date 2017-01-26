@@ -27,16 +27,6 @@ public class EjbDbDumpFactory<L extends UtilsLang,D extends UtilsDescription,
         this.cDumpFile = cDumpFile;
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,
-					DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
-					FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
-					HOST extends UtilsStatus<HOST,L,D>,
-					STATUS extends UtilsStatus<STATUS,L,D>>
-	EjbDbDumpFactory<L,D,DUMP,FILE,HOST,STATUS> factory(final Class<DUMP> cDumpFile)
-	{
-		return new EjbDbDumpFactory<L,D,DUMP,FILE,HOST,STATUS>(cDumpFile);
-	}
-    
 	public DUMP build(net.sf.exlp.xml.io.File file)
 	{
 		return build(file.getName(),file.getSize(),file.getLastModifed().toGregorianCalendar().getTime());

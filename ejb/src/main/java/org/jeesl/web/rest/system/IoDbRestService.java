@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jeesl.factory.ejb.system.io.db.EjbDbDumpFactory;
 import org.jeesl.interfaces.facade.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
@@ -19,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.db.EjbDbDumpFileFactory;
 import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -47,7 +47,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	private final Class<STATUS> cStatus;
 	
 //	private EjbDbDumpFactory<L,D,DUMP,FILE,HOST,STATUS> efDump;
-	private EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> efDumpFile;
+	private EjbDbDumpFactory<L,D,DUMP,FILE,HOST,STATUS> efDumpFile;
 	private EjbStatusFactory<HOST,L,D> efHost; 
 	
 	public IoDbRestService(JeeslIoDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump,final Class<FILE> cFile,final Class<HOST> cHost,final Class<STATUS> cStatus)
@@ -62,7 +62,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		
 		efHost = EjbStatusFactory.createFactory(cHost,cL,cD);
 		
-		efDumpFile = EjbDbDumpFileFactory.factory(cDump);
+		efDumpFile = EjbDbDumpFactory.factory(cDump);
 	}
 	
 //	@Override public Container exportSystemDbActivityState() {return xfContainer.build(fDb.allOrderedPosition(cCategory));}

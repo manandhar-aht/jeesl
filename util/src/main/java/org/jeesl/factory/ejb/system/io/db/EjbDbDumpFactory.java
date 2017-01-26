@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.db;
+package org.jeesl.factory.ejb.system.io.db;
 
 import java.io.File;
 import java.util.Date;
@@ -12,17 +12,17 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class EjbDbDumpFileFactory<L extends UtilsLang,D extends UtilsDescription,
+public class EjbDbDumpFactory<L extends UtilsLang,D extends UtilsDescription,
 								DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
 								FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
 								HOST extends UtilsStatus<HOST,L,D>,
 								STATUS extends UtilsStatus<STATUS,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbDbDumpFileFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbDbDumpFactory.class);
 	
 	private final Class<DUMP> cDumpFile;
     
-	public EjbDbDumpFileFactory(final Class<DUMP> cDumpFile)
+	public EjbDbDumpFactory(final Class<DUMP> cDumpFile)
 	{       
         this.cDumpFile = cDumpFile;
 	}
@@ -32,9 +32,9 @@ public class EjbDbDumpFileFactory<L extends UtilsLang,D extends UtilsDescription
 					FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
 					HOST extends UtilsStatus<HOST,L,D>,
 					STATUS extends UtilsStatus<STATUS,L,D>>
-	EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> factory(final Class<DUMP> cDumpFile)
+	EjbDbDumpFactory<L,D,DUMP,FILE,HOST,STATUS> factory(final Class<DUMP> cDumpFile)
 	{
-		return new EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS>(cDumpFile);
+		return new EjbDbDumpFactory<L,D,DUMP,FILE,HOST,STATUS>(cDumpFile);
 	}
     
 	public DUMP build(net.sf.exlp.xml.io.File file)

@@ -233,12 +233,12 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		return styles;
 	}
 	
-	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
-	@Override public DataUpdate importSystemIoReportSettingFilling(Container types){return importStatus(cFilling,cL,cD,types,null);}
-	@Override public DataUpdate importSystemIoReportSettingTransformation(Container types){return importStatus(cTransformation,cL,cD,types,null);}
-	@Override public DataUpdate importSystemIoReportSettingImplementation(Container types){return importStatus(cImplementation,cL,cD,types,null);}
-	@Override public DataUpdate importSystemIoReportRowType(Container types){return importStatus(cRt,cL,cD,types,null);}
-	@Override public DataUpdate importSystemIoReportColumnWidth(Container types){return importStatus(cColumWidth,cL,cD,types,null);}
+	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,categories,null);}
+	@Override public DataUpdate importSystemIoReportSettingFilling(Container types){return importStatus(cFilling,types,null);}
+	@Override public DataUpdate importSystemIoReportSettingTransformation(Container types){return importStatus(cTransformation,types,null);}
+	@Override public DataUpdate importSystemIoReportSettingImplementation(Container types){return importStatus(cImplementation,types,null);}
+	@Override public DataUpdate importSystemIoReportRowType(Container types){return importStatus(cRt,types,null);}
+	@Override public DataUpdate importSystemIoReportColumnWidth(Container types){return importStatus(cColumWidth,types,null);}
 	
 	@Override public DataUpdate importSystemIoReportTemplates(Templates templates)
 	{

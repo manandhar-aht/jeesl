@@ -21,9 +21,11 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.db.EjbDbDumpFileFactory;
+import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.xml.io.Dir;
 
@@ -40,17 +42,22 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	private JeeslIoDbFacade fDb;
 	
 	private final Class<DUMP> cDump;
+	private final Class<HOST> cHost;
 	private final Class<STATUS> cStatus;
 	
 	private EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> fDumpFile;
+	private EjbStatusFactory<HOST,L,D> efHost; 
 	
-	public IoDbRestService(JeeslIoDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump,final Class<STATUS> cStatus)
+	public IoDbRestService(JeeslIoDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump,final Class<FILE> cFile,final Class<HOST> cHost,final Class<STATUS> cStatus)
 	{
 		super(fDb,cL,cD);
 		this.fDb = fDb;
 		
 		this.cDump=cDump;
+		this.cHost=cHost;
 		this.cStatus=cStatus;
+		
+		efHost = EjbStatusFactory.createFactory(cHost,cL,cD);
 		
 		fDumpFile = EjbDbDumpFileFactory.factory(cDump);
 	}
@@ -60,6 +67,16 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	
 	@Override public DataUpdate uploadDumps(Dir directory)
 	{
+		DataUpdateTracker dut = new DataUpdateTracker();
+		
+		HOST host;
+		try{host = fDb.fByCode(cHost, directory.getCode());}
+		catch (UtilsNotFoundException e)
+		{
+			try{host = fDb.persist(efHost.create(directory.getCode()));}
+			catch (UtilsConstraintViolationException e1) {dut.fail(e1, true);return dut.toDataUpdate();}
+		}
+		
 		Set<DUMP> set = new HashSet<DUMP>();
 		set.addAll(fDb.all(cDump));
 		

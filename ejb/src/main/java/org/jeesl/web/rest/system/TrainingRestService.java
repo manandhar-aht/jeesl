@@ -42,5 +42,5 @@ public class TrainingRestService <L extends UtilsLang,D extends UtilsDescription
 	
 	@Override public Container exportSystemTrainingSlotType() {return xfContainer.build(fTraining.allOrderedPosition(cType));}
 
-	@Override public DataUpdate importSystemTrainingSlotType(Container container){return importStatus(cType,cL,cD,container,null);}
+	@Override public DataUpdate importSystemTrainingSlotType(Container container){return importStatus(cType,container,null);}
 }

@@ -36,14 +36,14 @@ public abstract class AbstractJeeslRestService <L extends UtilsLang,D extends Ut
 	}
 		
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    protected <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Container container, Class<P> clParent)
+    protected <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Container container, Class<P> clParent)
     {
     	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
 		AhtStatusDbInit asdi = new AhtStatusDbInit();
-        asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus, clLang, clDescription));
+        asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus,cL,cD));
         asdi.setFacade(fUtils);
-        DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, clLang, clParent);
-        asdi.deleteUnusedStatus(clStatus, clLang, clDescription);
+        DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, cL, clParent);
+        asdi.deleteUnusedStatus(clStatus, cL, cD);
         return dataUpdate;
     }
 }

@@ -63,8 +63,8 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 	@Override public Container exportSystemIoMailCategories() {return xfContainer.build(fMail.allOrderedPosition(cCategory));}
 	@Override public Container exportSystemIoMailStatus() {return xfContainer.build(fMail.allOrderedPosition(cStatus));}
 	
-	@Override public DataUpdate importSystemIoMailCategories(Container categories){return importStatus(cCategory,cL,cD,categories,null);}
-	@Override public DataUpdate importSystemIoMailStatus(Container categories){return importStatus(cStatus,cL,cD,categories,null);}
+	@Override public DataUpdate importSystemIoMailCategories(Container categories){return importStatus(cCategory,categories,null);}
+	@Override public DataUpdate importSystemIoMailStatus(Container categories){return importStatus(cStatus,categories,null);}
 
 	@Override public Mails spool()
 	{
@@ -78,12 +78,20 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 			{
 				eMail = fMail.find(cMail,eMail);
 				eMail.setRecordSpool(new Date());
-				eMail.setStatus(fMail.fByCode(cStatus, JeeslIoMail.Status.spooling));
 				eMail.setCounter(eMail.getCounter()+1);
-				eMail = fMail.update(eMail);
-				Mail xMail = JaxbUtil.loadJAXB(IOUtils.toInputStream(eMail.getXml(), "UTF-8"), Mail.class);
-				xMail.setId(eMail.getId());
-				xml.getMail().add(xMail);
+				if(eMail.getCounter()>5)
+				{
+					eMail.setStatus(fMail.fByCode(cStatus, JeeslIoMail.Status.failed));
+					eMail = fMail.update(eMail);
+				}
+				else
+				{
+					eMail.setStatus(fMail.fByCode(cStatus, JeeslIoMail.Status.spooling));
+					eMail = fMail.update(eMail);
+					Mail xMail = JaxbUtil.loadJAXB(IOUtils.toInputStream(eMail.getXml(), "UTF-8"), Mail.class);
+					xMail.setId(eMail.getId());
+					xml.getMail().add(xMail);
+				}
 			}
 			catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 			catch (UtilsLockingException e) {logger.warn(e.getMessage());}

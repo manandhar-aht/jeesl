@@ -1,6 +1,5 @@
 package org.jeesl.web.rest.system;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -28,6 +27,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.xml.io.Dir;
+import net.sf.exlp.xml.io.File;
 
 public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 							DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
@@ -42,10 +42,12 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	private JeeslIoDbFacade fDb;
 	
 	private final Class<DUMP> cDump;
+	private final Class<FILE> cFile;
 	private final Class<HOST> cHost;
 	private final Class<STATUS> cStatus;
 	
-	private EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> fDumpFile;
+//	private EjbDbDumpFactory<L,D,DUMP,FILE,HOST,STATUS> efDump;
+	private EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> efDumpFile;
 	private EjbStatusFactory<HOST,L,D> efHost; 
 	
 	public IoDbRestService(JeeslIoDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump,final Class<FILE> cFile,final Class<HOST> cHost,final Class<STATUS> cStatus)
@@ -54,12 +56,13 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		this.fDb = fDb;
 		
 		this.cDump=cDump;
+		this.cFile=cFile;
 		this.cHost=cHost;
 		this.cStatus=cStatus;
 		
 		efHost = EjbStatusFactory.createFactory(cHost,cL,cD);
 		
-		fDumpFile = EjbDbDumpFileFactory.factory(cDump);
+		efDumpFile = EjbDbDumpFileFactory.factory(cDump);
 	}
 	
 //	@Override public Container exportSystemDbActivityState() {return xfContainer.build(fDb.allOrderedPosition(cCategory));}
@@ -77,76 +80,16 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 			catch (UtilsConstraintViolationException e1) {dut.fail(e1, true);return dut.toDataUpdate();}
 		}
 		
-		Set<DUMP> set = new HashSet<DUMP>();
-		set.addAll(fDb.all(cDump));
-		
-		for(net.sf.exlp.xml.io.File f : directory.getFile())
+		for(File xFile : directory.getFile())
 		{
-			DUMP ejb;
-			try
-			{
-				ejb = fDb.fByName(cDump,f.getName());
-				set.remove(ejb);
-			}
+			DUMP eDump;
+			try{eDump = fDb.fByName(cDump, xFile.getName());}
 			catch (UtilsNotFoundException e)
 			{
-				try
-				{
-					ejb = fDumpFile.build(f);
-					ejb = fDb.persist(ejb);
-				}
-				catch (UtilsConstraintViolationException e1) {e1.printStackTrace();}
+//				eDump = fDb.persist(o)
 			}
 		}
-		logger.info("Size: "+set.size());
-		List<DUMP> list = new ArrayList<DUMP>(set);
-		for(DUMP ejb : list)
-		{
-			try
-			{
-				ejb.setRecord(new Date());
-				fDb.update(ejb);
-			}
-			catch (UtilsConstraintViolationException e) {e.printStackTrace();}
-			catch (UtilsLockingException e) {e.printStackTrace();}
-		}
+		
 		return new DataUpdate();
-	}
-	
-	public void findDumps2(File fDir)
-	{
-		Set<DUMP> set = new HashSet<DUMP>();
-		set.addAll(fDb.all(cDump));
-		
-		for(File f : fDir.listFiles())
-		{
-			DUMP ejb;
-			try
-			{
-				ejb = fDb.fByName(cDump,f.getName());
-				set.remove(ejb);
-			}
-			catch (UtilsNotFoundException e)
-			{
-				try
-				{
-					ejb = fDumpFile.build(f);
-					ejb = fDb.persist(ejb);
-				}
-				catch (UtilsConstraintViolationException e1) {e1.printStackTrace();}
-			}
-		}
-		logger.info("Size: "+set.size());
-		List<DUMP> list = new ArrayList<DUMP>(set);
-		for(DUMP ejb : list)
-		{
-			try
-			{
-				ejb.setRecord(new Date());
-				fDb.update(ejb);
-			}
-			catch (UtilsConstraintViolationException e) {e.printStackTrace();}
-			catch (UtilsLockingException e) {e.printStackTrace();}
-		}
 	}
 }

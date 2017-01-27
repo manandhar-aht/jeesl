@@ -44,6 +44,7 @@ public class JeeslMsgBuilder
 	public static final String ioTemplate = "jeesl/msg/admin/system/io/template.xml";
 	public static final String ioReport = "jeesl/msg/admin/system/io/report.xml";
 	public static final String ioMail = "jeesl/msg/admin/system/io/mail.xml";
+	public static final String srcAdminSystemDbDump = "jeesl/msg/admin/system/io/db.xml";
 	
 	//System
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
@@ -56,7 +57,7 @@ public class JeeslMsgBuilder
 	public static final String srcAdminSystemProperty = "msg.aht-utils/admin/system/properties.xml";
 	public static final String srcAdminSystemTraffic = "msg.aht-utils/admin/system/trafficLights.xml";
 	public static final String srcAdminSystemDbStatistic = "msg.aht-utils/admin/system/dbStatistic.xml";
-	public static final String srcAdminSystemDbDump = "msg.aht-utils/admin/system/dbDump.xml";
+	
 	public static final String msgAdminSystemOptionTables = "msg.aht-utils/admin/system/options.xml";
 	public static final String srcAdminSecurity = "aht-utils/msg/module/security.xml";
 	public static final String srcAdminUser = "aht-utils/msg/admin/user.xml";

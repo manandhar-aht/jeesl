@@ -74,7 +74,7 @@ public abstract class AbstractMailSender
 	{
 		if(session==null)
 		{
-			logger.info("Building "+Session.class.getSimpleName());
+			logger.trace("Building "+Session.class.getSimpleName());
 			Properties props = System.getProperties();
 			props.put("mail.smtp.host", smtpHost);
 			props.put("mail.smtp.port", smtpPort);
@@ -132,16 +132,16 @@ public abstract class AbstractMailSender
 		if(transport==null)
 		{
 			buildSession();
-			logger.info("Building "+Transport.class.getSimpleName());
+			logger.trace("Building "+Transport.class.getSimpleName());
 			transport = session.getTransport("smtp");
 		}
-		logger.info("Checking connected");
+		logger.trace("Checking connected");
 		if(!transport.isConnected())
 		{
-			logger.info("Connecting Transport");
+			logger.trace("Connecting Transport");
 			transport.connect();
 		}
-		logger.info("Checked connected");
+		logger.trace("Checked connected");
 	}
 	
 	public void disconnect() throws MessagingException

@@ -16,6 +16,7 @@ public interface JeeslDbDump<L extends UtilsLang,D extends UtilsDescription,
 								STATUS extends UtilsStatus<STATUS,L,D>>
 					extends EjbWithId,EjbWithRecord,EjbWithName
 {
+	public static enum Attributes{record};
 	public static enum Status{stored,flagged,deleted};
 	
 	long getSize();

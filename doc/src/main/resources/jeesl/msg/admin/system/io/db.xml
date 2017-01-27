@@ -28,4 +28,19 @@
     		<s:lang key="fr" translation="Deleted"/>
     	</s:langs>
     </s:translation>
+    
+    <s:translation key="jeeslIoDbDumps">
+		<s:langs>
+			<s:lang key="de" translation="Datensicherungen" />
+			<s:lang key="en" translation="Database Dumps" />
+			<s:lang key="fr" translation="Database Dumps" />
+		</s:langs>
+	</s:translation>
+	<s:translation key="jeeslIoDbDumpStorageLocations">
+		<s:langs>
+			<s:lang key="de" translation="Speicherorte" />
+			<s:lang key="en" translation="Storage Locations" />
+			<s:lang key="fr" translation="Storage Locations" />
+		</s:langs>
+	</s:translation>
 </s:translations>

@@ -9,29 +9,40 @@
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
+		<composite:attribute name="bean" required="false" default="#{adminDbDumpBean}"/>
 		<composite:attribute name="dateTimePattern" required="false" default="dd.MM.yyyy"/>
 	</composite:interface>
 	
 	<composite:implementation>
-		<p:dataTable var="d" value="#{adminDbDumpBean.dumps}">
-			<p:column headerText="#{msg.aupDbDumpDateModified}">  
-				<h:outputText value="#{d.startDate}">
-					<f:convertDateTime pattern="#{cc.attrs.dateTimePattern}" />
-				</h:outputText>  
+		<p:dataTable var="d" value="#{cc.attrs.bean.dumps}">
+			<p:columnGroup type="header">
+				<p:row>
+					<p:column colspan="3" headerText="#{msg.jeeslIoDbDumps}" />
+					<p:column colspan="#{cc.attrs.bean.hosts.size()}" headerText="#{msg.jeeslIoDbDumpStorageLocations}" />
+				</p:row>
+				<p:row>
+					<p:column colspan="1" headerText="#{msg.aupDbDumpDateModified}"/>
+					<p:column colspan="1" headerText="#{msg.aupDbDumpSize}"/>
+					<p:column colspan="1" headerText="#{msg.aupDbDumpName}"/>
+					<p:columns var="h" value="#{cc.attrs.bean.hosts}">
+		            	<f:facet name="header"><h:outputText value="#{h.name[userBean.localeCode].lang}" /></f:facet>
+		            </p:columns>
+				</p:row>
+			
+			</p:columnGroup>
+		
+			<p:column>  
+				<h:outputText value="#{d.record}"><f:convertDateTime pattern="#{cc.attrs.dateTimePattern}" /></h:outputText>  
             </p:column>
-			<p:column headerText="#{msg.aupDbDumpSize}">  
+			<p:column>  
 				<h:outputText value="#{d.size}" />  
             </p:column>
-            <p:column headerText="#{msg.aupDbDumpName}">  
-				<h:outputText value="#{d.name}">
-					
-				</h:outputText>  
+            <p:column >  
+				<h:outputText value="#{d.name}"/>
             </p:column>
-			<p:column headerText="#{msg.aupDbDumpDateDeleted}">  
-				<h:outputText value="#{d.endDate}">
-					<f:convertDateTime pattern="#{cc.attrs.dateTimePattern}" />
-				</h:outputText>  
-            </p:column>
+            <p:columns var="h" value="#{cc.attrs.bean.hosts}">
+            	<h:outputText value="#{cc.attrs.bean.mapFiles[d][h].status.name[userBean.localeCode].lang}"/>
+            </p:columns>
        	</p:dataTable>
 	</composite:implementation>
 </html>

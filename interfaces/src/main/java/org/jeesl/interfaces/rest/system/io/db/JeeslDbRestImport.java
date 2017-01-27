@@ -6,6 +6,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.jeesl.model.xml.jeesl.Container;
+
 import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
@@ -13,4 +15,8 @@ public interface JeeslDbRestImport
 {
 	@POST @Path("/system/db/activity/state") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemDbActivityState(Aht states);
+	
+	@POST @Path("/system/db/dump/status") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
+	DataUpdate importSystemIoDbDumpStatus(Container container);
+	
 }

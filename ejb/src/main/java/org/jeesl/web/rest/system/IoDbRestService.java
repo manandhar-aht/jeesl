@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.rest.system.io.db.JeeslDbDumpRest;
 import org.jeesl.interfaces.rest.system.io.db.JeeslDbRestExport;
+import org.jeesl.interfaces.rest.system.io.db.JeeslDbRestImport;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
+import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.xml.io.Dir;
 import net.sf.exlp.xml.io.File;
@@ -35,7 +37,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 							HOST extends UtilsStatus<HOST,L,D>,
 							STATUS extends UtilsStatus<STATUS,L,D>>
 					extends AbstractJeeslRestService<L,D>
-					implements JeeslDbDumpRest,JeeslDbRestExport
+					implements JeeslDbDumpRest,JeeslDbRestExport,JeeslDbRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDbRestService.class);
 	
@@ -135,4 +137,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		
 		return dut.toDataUpdate();
 	}
+	
+	@Override public DataUpdate importSystemDbActivityState(Aht states){logger.warn("NYI importSystemDbActivityState");return new DataUpdate();}
+	@Override public DataUpdate importSystemIoDbDumpStatus(Container container){return importStatus(cStatus,container,null);}
 }

@@ -23,23 +23,37 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription,
-								DUMP extends JeeslDbDump<L,D,DUMP,STORE,HOST,STATUS>,
-								STORE extends JeeslDbDumpFile<L,D,DUMP,STORE,HOST,STATUS>,
+								DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
+								FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
 								HOST extends UtilsStatus<HOST,L,D>,
 								STATUS extends UtilsStatus<STATUS,L,D>>
-		extends UtilsFacadeBean implements JeeslIoDbFacade
+		extends UtilsFacadeBean implements JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDbFacadeBean.class);
 	
-	public JeeslIoDbFacadeBean(EntityManager em){this(em,false);}
-	public JeeslIoDbFacadeBean(EntityManager em, boolean handleTransaction)
+	private final Class<FILE> cDumpFile;
+	
+	public JeeslIoDbFacadeBean(EntityManager em,final Class<DUMP> cDump,final Class<FILE> cDumpFile,final Class<HOST> cHost,final Class<STATUS> cStatus){this(em,false,cDump,cDumpFile,cHost,cStatus);}
+	public JeeslIoDbFacadeBean(EntityManager em, boolean handleTransaction,final Class<DUMP> cDump,final Class<FILE> cDumpFile,final Class<HOST> cHost,final Class<STATUS> cStatus)
 	{
 		super(em,handleTransaction);
+		this.cDumpFile=cDumpFile;
+	}
+	
+	@Override public List<FILE> fDumpFiles(HOST host) 
+	{
+		return this.allForParent(cDumpFile,JeeslDbDumpFile.Attributes.host.toString(), host);
+	}
+	
+	@Override public FILE fDumpFile(DUMP dump, HOST host) throws UtilsNotFoundException
+	{
+		return this.oneForParents(cDumpFile, JeeslDbDumpFile.Attributes.dump.toString(), dump, JeeslDbDumpFile.Attributes.host.toString(), host);
 	}
 	
 	@Override public String version()

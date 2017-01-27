@@ -1,12 +1,11 @@
 package org.jeesl.web.rest.system;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.jeesl.factory.ejb.system.io.db.EjbDbDumpFactory;
+import org.jeesl.factory.ejb.system.io.db.EjbDbDumpFileFactory;
+import org.jeesl.factory.ejb.system.io.db.EjbIoDumpFactory;
 import org.jeesl.factory.factory.DbFactoryFactory;
 import org.jeesl.interfaces.facade.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
@@ -40,18 +39,18 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDbRestService.class);
 	
-	private JeeslIoDbFacade fDb;
+	private JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb;
 	
 	private final Class<DUMP> cDump;
 	private final Class<FILE> cFile;
 	private final Class<HOST> cHost;
 	private final Class<STATUS> cStatus;
 	
-//	private EjbDbDumpFactory<L,D,DUMP,FILE,HOST,STATUS> efDump;
-	private EjbDbDumpFactory<L,D,DUMP,FILE,HOST,STATUS> efDumpFile;
+	private EjbIoDumpFactory<L,D,DUMP,FILE,HOST,STATUS> efDump;
+	private EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> efDumpFile;
 	private EjbStatusFactory<HOST,L,D> efHost; 
 	
-	public IoDbRestService(JeeslIoDbFacade fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump,final Class<FILE> cFile,final Class<HOST> cHost,final Class<STATUS> cStatus)
+	public IoDbRestService(JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump,final Class<FILE> cFile,final Class<HOST> cHost,final Class<STATUS> cStatus)
 	{
 		super(fDb,cL,cD);
 		this.fDb = fDb;
@@ -64,7 +63,8 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		efHost = EjbStatusFactory.createFactory(cHost,cL,cD);
 		
 		DbFactoryFactory<L,D,DUMP,FILE,HOST,STATUS> ff = DbFactoryFactory.factory(cL,cD,cDump,cFile,cHost,cStatus);
-		efDumpFile = ff.dump();
+		efDump = ff.dump();
+		efDumpFile = ff.file();
 	}
 	
 //	@Override public Container exportSystemDbActivityState() {return xfContainer.build(fDb.allOrderedPosition(cCategory));}
@@ -74,13 +74,25 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	{
 		DataUpdateTracker dut = new DataUpdateTracker();
 		
-		HOST host;
-		try{host = fDb.fByCode(cHost, directory.getCode());}
+		STATUS eStatusStored;
+		STATUS eStatusDeleted;
+		
+		try
+		{
+			eStatusStored = fDb.fByCode(cStatus,JeeslDbDumpFile.Status.stored);
+			eStatusDeleted = fDb.fByCode(cStatus,JeeslDbDumpFile.Status.deleted);
+		}
+		catch (UtilsNotFoundException e) {dut.fail(e, true);return dut.toDataUpdate();}
+		
+		HOST eHost;
+		try{eHost = fDb.fByCode(cHost, directory.getCode());}
 		catch (UtilsNotFoundException e)
 		{
-			try{host = fDb.persist(efHost.create(directory.getCode()));}
+			try{eHost = fDb.persist(efHost.create(directory.getCode()));}
 			catch (UtilsConstraintViolationException e1) {dut.fail(e1, true);return dut.toDataUpdate();}
 		}
+		
+		Set<FILE> setExisting = new HashSet<FILE>(fDb.fDumpFiles(eHost));
 		
 		for(File xFile : directory.getFile())
 		{
@@ -88,10 +100,39 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 			try{eDump = fDb.fByName(cDump, xFile.getName());}
 			catch (UtilsNotFoundException e)
 			{
-//				eDump = fDb.persist(o)
+				try{eDump = fDb.persist(efDump.build(xFile));}
+				catch (UtilsConstraintViolationException e1) {dut.fail(e1, true);return dut.toDataUpdate();}
 			}
+			FILE eFile;
+			try {eFile = fDb.fDumpFile(eDump,eHost);}
+			catch (UtilsNotFoundException e)
+			{
+				try {eFile = fDb.persist(efDumpFile.build(eDump,eHost,eStatusStored));}
+				catch (UtilsConstraintViolationException e1) {dut.fail(e1, true);return dut.toDataUpdate();}
+			}
+			
+			try
+			{
+				if(setExisting.contains(eFile)){setExisting.remove(eFile);}
+				eFile.setStatus(eStatusStored);
+				eFile = fDb.update(eFile);
+			}
+			catch (UtilsConstraintViolationException e) {dut.fail(e,true);return dut.toDataUpdate();}
+			catch (UtilsLockingException e) {dut.fail(e,true);return dut.toDataUpdate();}
 		}
 		
-		return new DataUpdate();
+		for(FILE f : new ArrayList<FILE>(setExisting))
+		{
+			
+			try
+			{
+				f.setStatus(eStatusDeleted);
+				f = fDb.update(f);
+			}
+			catch (UtilsConstraintViolationException e) {dut.fail(e,true);}
+			catch (UtilsLockingException e) {dut.fail(e,true);}
+		}
+		
+		return dut.toDataUpdate();
 	}
 }

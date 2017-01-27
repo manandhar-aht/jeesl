@@ -12,6 +12,7 @@ public interface JeeslDbDumpFile<L extends UtilsLang,D extends UtilsDescription,
 								STATUS extends UtilsStatus<STATUS,L,D>>
 					extends EjbWithId
 {
+	public static enum Attributes{dump,host,status}
 	public static enum Status{stored,flagged,deleted};
 	
 	DUMP getDump();

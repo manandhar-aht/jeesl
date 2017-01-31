@@ -23,7 +23,6 @@ public class JeeslNsPrefixMapper extends NamespacePrefixMapper implements NsPref
         if("http://ahtutils.aht-group.com/project".equals(namespaceUri) ){return "p";}
         if("http://ahtutils.aht-group.com/dbseed".equals(namespaceUri) ){return "db";}
         if("http://ahtutils.aht-group.com/mail".equals(namespaceUri) ){return "m";}
-        if("http://ahtutils.aht-group.com/finance".equals(namespaceUri) ){return "f";}
         if("http://ahtutils.aht-group.com/issue".equals(namespaceUri) ){return "it";}
         if("http://ahtutils.aht-group.com/srs".equals(namespaceUri) ){return "srs";}
         if("http://ahtutils.aht-group.com/survey".equals(namespaceUri) ){return "survey";}
@@ -39,6 +38,7 @@ public class JeeslNsPrefixMapper extends NamespacePrefixMapper implements NsPref
         if("http://www.jeesl.org/revision".equals(namespaceUri) ){return "rev";}
         if("http://www.jeesl.org/text".equals(namespaceUri) ){return "text";}
         if("http://www.jeesl.org/symbol".equals(namespaceUri) ){return "symbol";}
+        if("http://www.jeesl.org/finance".equals(namespaceUri) ){return "f";}
         if("http://www.jeesl.org/io/template".equals(namespaceUri) ){return "template";}
     	if("http://www.jeesl.org/io/mail".equals(namespaceUri) ){return "mail";}
         

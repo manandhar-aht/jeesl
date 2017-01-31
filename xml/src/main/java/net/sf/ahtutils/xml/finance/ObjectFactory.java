@@ -77,4 +77,12 @@ public class ObjectFactory {
         return new Signatures();
     }
 
+    /**
+     * Create an instance of {@link Signature }
+     * 
+     */
+    public Signature createSignature() {
+        return new Signature();
+    }
+
 }

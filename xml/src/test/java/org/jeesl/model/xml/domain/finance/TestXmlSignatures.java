@@ -16,11 +16,15 @@ public class TestXmlSignatures extends AbstractXmlFinanceTest<Signatures>
     public Signatures build(boolean withChildren)
     {
     	Signatures xml = new Signatures();
-
+    	xml.setCode("myCode");
+    	
     	if(withChildren)
     	{
     		xml.getSignatures().add(TestXmlSignatures.create(false));
     		xml.getSignatures().add(TestXmlSignatures.create(false));
+    		
+    		xml.getSignature().add(TestXmlSignature.create(false));
+    		xml.getSignature().add(TestXmlSignature.create(false));
     	}
     	    	
     	return xml;

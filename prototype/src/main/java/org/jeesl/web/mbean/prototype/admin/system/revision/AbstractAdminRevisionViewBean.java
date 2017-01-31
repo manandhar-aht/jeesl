@@ -186,6 +186,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	protected void reorderMappings() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, viewMappings);}
 	protected void updatePerformed(){}	
 	
+	@SuppressWarnings("rawtypes")
 	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{
 		uiAllowSave = jsfSecurityHandler.allow(actionDeveloper);

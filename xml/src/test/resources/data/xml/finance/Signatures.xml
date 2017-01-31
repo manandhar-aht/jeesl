@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<f:signatures xmlns:f="http://www.jeesl.org/finance">
-    <f:signatures/>
-    <f:signatures/>
+<f:signatures xmlns:f="http://www.jeesl.org/finance" xmlns:s="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" code="myCode">
+    <f:signatures code="myCode"/>
+    <f:signatures code="myCode"/>
+    <f:signature code="myCode"/>
+    <f:signature code="myCode"/>
 </f:signatures>

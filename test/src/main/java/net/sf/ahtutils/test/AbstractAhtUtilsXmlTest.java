@@ -56,7 +56,7 @@ public class AbstractAhtUtilsXmlTest <T extends Object>
 	protected void save(Object xml, File f){save(xml,f,true);}
 	protected void save(Object xml, File f, boolean formatted)
 	{
-		logger.debug("Saving Reference XML");
+		logger.debug("Saving Reference XML to "+f.getAbsolutePath());
 		if(debug){JaxbUtil.info(xml);}
     	JaxbUtil.save(f, xml, true);
 	}

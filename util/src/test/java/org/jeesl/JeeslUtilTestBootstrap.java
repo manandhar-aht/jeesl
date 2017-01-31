@@ -30,7 +30,7 @@ public class JeeslUtilTestBootstrap
 		
 		try
 		{
-			String cfn = ExlpCentralConfigPointer.getFile("utils","util").getAbsolutePath();
+			String cfn = ExlpCentralConfigPointer.getFile("jeesl","util").getAbsolutePath();
 			ConfigLoader.add(cfn);
 			logger.info("Using additional config in: "+cfn );
 		}

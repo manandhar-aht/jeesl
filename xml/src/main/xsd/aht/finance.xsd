@@ -61,4 +61,11 @@
             <xsd:attribute name="label" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
+    <xsd:element name="signatures">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="f:signatures" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType> 
+    </xsd:element>
 </xsd:schema>

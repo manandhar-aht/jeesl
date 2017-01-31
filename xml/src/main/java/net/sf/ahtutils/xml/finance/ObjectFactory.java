@@ -69,4 +69,12 @@ public class ObjectFactory {
         return new Counter();
     }
 
+    /**
+     * Create an instance of {@link Signatures }
+     * 
+     */
+    public Signatures createSignatures() {
+        return new Signatures();
+    }
+
 }

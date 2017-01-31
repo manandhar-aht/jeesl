@@ -252,6 +252,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		CDT toCellDataType(COLUMN column)
 	{
 		if(column.getDataType()!=null){return column.getDataType();}
+		logger.warn("No CellDataType for "+column.toString());
 		return null;
 	}
 	

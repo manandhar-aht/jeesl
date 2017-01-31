@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<f:counter xmlns:f="http://ahtutils.aht-group.com/finance" id="123" code="myCode" label="myLabel" counter="2345"/>
+<counter xmlns="http://www.jeesl.org/finance" id="123" code="myCode" label="myLabel" counter="2345"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://ahtutils.aht-group.com/finance"
-    xmlns:f="http://ahtutils.aht-group.com/finance"
+<xsd:schema targetNamespace="http://www.jeesl.org/finance"
+    xmlns:f="http://www.jeesl.org/finance"
     xmlns:s="http://ahtutils.aht-group.com/status"
     xmlns:t="http://ahtutils.aht-group.com/text"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">

@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/finance}finance" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/finance}finance" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="nr" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;

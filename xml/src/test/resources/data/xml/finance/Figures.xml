@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<f:figures xmlns:text="http://ahtutils.aht-group.com/text" xmlns:f="http://ahtutils.aht-group.com/finance" id="123" code="myCode" label="myLabel">
+<f:figures xmlns:text="http://ahtutils.aht-group.com/text" xmlns:f="http://www.jeesl.org/finance" id="123" code="myCode" label="myLabel">
     <text:remark version="1" key="myKey">myValue</text:remark>
     <text:remark version="1" key="myKey">myValue</text:remark>
     <f:finance id="123" nr="1" code="myCode" label="myLabel" value="567.89" symbol="mySymbol"/>

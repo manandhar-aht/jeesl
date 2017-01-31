@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<f:currency xmlns:s="http://ahtutils.aht-group.com/status" xmlns:f="http://ahtutils.aht-group.com/finance" id="123" code="myCode" symbol="mySymbol" label="myLabel">
+<f:currency xmlns:s="http://ahtutils.aht-group.com/status" xmlns:f="http://www.jeesl.org/finance" id="123" code="myCode" symbol="mySymbol" label="myLabel">
     <s:langs/>
 </f:currency>

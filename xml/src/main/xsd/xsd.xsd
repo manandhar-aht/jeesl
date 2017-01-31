@@ -7,7 +7,7 @@
     xmlns:t   ="http://ahtutils.aht-group.com/text"
     
     xmlns:p   ="http://ahtutils.aht-group.com/project"
-    xmlns:f   ="http://ahtutils.aht-group.com/finance"
+    xmlns:f   ="http://www.jeesl.org/finance"
     xmlns:n   ="http://ahtutils.aht-group.com/navigation"
     xmlns:mo  ="http://ahtutils.aht-group.com/monitoring"
     xmlns:qa  ="http://ahtutils.aht-group.com/qa"
@@ -41,7 +41,7 @@
     <xsd:import namespace="http://ahtutils.aht-group.com/project" schemaLocation="aht/project.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/access" schemaLocation="aht/access.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/security" schemaLocation="aht/security.xsd"/>
-    <xsd:import namespace="http://ahtutils.aht-group.com/finance" schemaLocation="aht/finance.xsd"/>
+    <xsd:import namespace="http://www.jeesl.org/finance" schemaLocation="aht/finance.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/dbseed" schemaLocation="aht/dbseed.xsd"/>
     
     <xsd:import namespace="http://ahtutils.aht-group.com/qa" schemaLocation="aht/qa.xsd"/>

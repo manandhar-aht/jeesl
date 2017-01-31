@@ -25,7 +25,7 @@ import net.sf.ahtutils.xml.status.Status;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}status" maxOccurs="unbounded"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/finance}currency" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/finance}currency" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}user" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -49,7 +49,7 @@ public class Aht
     private final static long serialVersionUID = 1L;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected List<Status> status;
-    @XmlElement(namespace = "http://ahtutils.aht-group.com/finance", required = true)
+    @XmlElement(namespace = "http://www.jeesl.org/finance", required = true)
     protected List<Currency> currency;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
     protected List<User> user;

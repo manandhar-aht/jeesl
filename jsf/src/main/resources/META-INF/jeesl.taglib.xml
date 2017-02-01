@@ -1,0 +1,15 @@
+<facelet-taglib version="2.0"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd">
+	<namespace>http://www.jeesl.org/jsf</namespace>
+	<composite-library-name>jeesl</composite-library-name>
+	
+	<function>
+		<function-name>humanFileSize</function-name>
+		<function-class>org.jeesl.jsf.functions.HumanFileSize</function-class>
+		<function-signature>java.lang.String humanFileSize(java.lang.Long)</function-signature>
+	</function>
+	
+</facelet-taglib> 

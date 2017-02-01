@@ -6,6 +6,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jeesl="http://www.jeesl.org/jsf"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
@@ -28,18 +29,11 @@
 		            	<f:facet name="header"><h:outputText value="#{h.name[userBean.localeCode].lang}" /></f:facet>
 		            </p:columns>
 				</p:row>
-			
 			</p:columnGroup>
 		
-			<p:column>  
-				<h:outputText value="#{d.record}"><f:convertDateTime pattern="#{cc.attrs.dateTimePattern}" /></h:outputText>  
-            </p:column>
-			<p:column>  
-				<h:outputText value="#{d.size}" />  
-            </p:column>
-            <p:column >  
-				<h:outputText value="#{d.name}"/>
-            </p:column>
+			<p:column><h:outputText value="#{d.record}"><f:convertDateTime pattern="#{cc.attrs.dateTimePattern}" /></h:outputText></p:column>
+			<p:column><h:outputText value="#{jeesl:humanFileSize(d.size)}" /></p:column>
+            <p:column><h:outputText value="#{d.name}"/></p:column>
             <p:columns var="h" value="#{cc.attrs.bean.hosts}">
             	<h:outputText value="#{cc.attrs.bean.mapFiles[d][h].status.name[userBean.localeCode].lang}"/>
             </p:columns>

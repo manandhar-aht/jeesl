@@ -33,15 +33,19 @@ public class PrototypeDbMenuBean implements Serializable
 	
 	protected Menu menu;
 	protected MenuXmlBuilder mfMain;
+	
+	protected String localeCode;
 
 	public PrototypeDbMenuBean()
 	{
 		userLoggedIn = false;
+		localeCode = "en";
 	}
 	
 	@Deprecated
-	public void initAccess(String views, String menu)
+	public void initAccess(String views, String menu, String localeCode)
     {
+		this.localeCode=localeCode;
 		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
 		
 		try
@@ -69,15 +73,17 @@ public class PrototypeDbMenuBean implements Serializable
 		mapBreadcrumb = new Hashtable<String,Breadcrumb>();
     }
     
-	public void clear(){clear(false);}
-	public void clear(boolean userLoggedIn)
+	public void clear(){clear(localeCode,false);}
+	public void clear(String localeCode, boolean userLoggedIn)
 	{
+		this.localeCode=localeCode;
 		logger.trace("Clearing hashtables ... userLoggedIn:"+userLoggedIn);
 		this.userLoggedIn=userLoggedIn;
 		mapMenu.clear();
 		mapSub.clear();
 		mapBreadcrumb.clear();
 		mapViewAllowed = null;
+		if(mfMain!=null){mfMain.switchLang(localeCode);}
 	}
 	
 	protected void buildViewAllowedMap()
@@ -192,7 +198,7 @@ public class PrototypeDbMenuBean implements Serializable
 	
 	public void userLoggedIn(Map<String, Boolean> allowedViews)
 	{
-		this.clear(true);
+		this.clear(localeCode,true);
 		mapViewAllowed = allowedViews;
 	}
 	
@@ -204,7 +210,7 @@ public class PrototypeDbMenuBean implements Serializable
 		mapBreadcrumb.remove(key);
 	}
 	
-	protected String getLang(){return "en";}
+	protected String getLang(){return localeCode;}
 	
 	public Menu build() {return this.menu(mfMain, rootMain);}
 	public Menu build(String code){return this.menu(mfMain, code);}

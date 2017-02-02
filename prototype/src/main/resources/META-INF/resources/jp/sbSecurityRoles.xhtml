@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+    xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="handler" required="true"/>
+	</composite:interface>
+
+	<composite:implementation>
+
+		<aup:statusBarItem orientation="left" childs="#{cc.attrs.handler.roles}">
+			<aup:sbCheckmark value="#{cc.attrs.handler.mapHasRole[var]}"/>
+			<h:outputText value="#{var.name[userBean.localeCode].lang}"/>
+			<f:facet name="label">
+				<h:graphicImage rendered="#{cc.attrs.handler.noRoles}" library="jeeslPrototypeGfx" name="12/sb/roles-grey.png" id="sbGiSecurityGrey"/>
+				<h:graphicImage rendered="#{not cc.attrs.handler.noRoles}" library="jeeslPrototypeGfx" name="12/sb/roles.png"/>
+				<p:tooltip rendered="#{cc.attrs.handler.noRoles}" for="sbGiSecurityGrey" value="#{msg.NoRoleSecurities}" />
+			</f:facet>
+		</aup:statusBarItem>
+	</composite:implementation>
+</html>

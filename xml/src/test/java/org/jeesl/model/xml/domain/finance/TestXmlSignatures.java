@@ -1,6 +1,7 @@
 package org.jeesl.model.xml.domain.finance;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.status.TestXmlLevels;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ public class TestXmlSignatures extends AbstractXmlFinanceTest<Signatures>
     	
     	if(withChildren)
     	{
+    		xml.setLevels(TestXmlLevels.create(false));
     		xml.getSignatures().add(TestXmlSignatures.create(false));
     		xml.getSignatures().add(TestXmlSignatures.create(false));
     		

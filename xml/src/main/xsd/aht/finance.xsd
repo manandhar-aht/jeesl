@@ -66,6 +66,7 @@
     <xsd:element name="signatures">
         <xsd:complexType>
             <xsd:sequence>
+            	<xsd:element ref="s:levels" maxOccurs="1"/>
                 <xsd:element ref="f:signatures" maxOccurs="unbounded"/>
                 <xsd:element ref="f:signature" maxOccurs="unbounded"/>
             </xsd:sequence>
@@ -79,6 +80,7 @@
                 <xsd:element ref="sec:role" maxOccurs="1"/>
                 <xsd:element ref="s:level" maxOccurs="1"/>
             </xsd:sequence>
+            <xsd:attribute name="position" type="xsd:int"/>
             <xsd:attribute name="code" type="xsd:string"/>
             <xsd:attribute name="label" type="xsd:string"/>
         </xsd:complexType> 

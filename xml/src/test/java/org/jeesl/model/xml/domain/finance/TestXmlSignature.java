@@ -18,6 +18,7 @@ public class TestXmlSignature extends AbstractXmlFinanceTest<Signature>
     public Signature build(boolean withChildren)
     {
     	Signature xml = new Signature();
+    	xml.setPosition(1);
     	xml.setCode("myCode");
     	xml.setLabel("myLabel");
     	

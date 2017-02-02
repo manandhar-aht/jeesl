@@ -881,6 +881,14 @@
     </xsd:element>
     
     <!-- Levels -->
+	<xsd:element name="levels">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="us:level" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="group" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
     <xsd:element name="level">
         <xsd:complexType>
             <xsd:sequence>

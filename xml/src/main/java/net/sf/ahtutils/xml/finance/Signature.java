@@ -25,6 +25,7 @@ import net.sf.ahtutils.xml.status.Level;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}role"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}level"/&gt;
  *       &lt;/sequence&gt;
+ *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="label" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -49,6 +50,8 @@ public class Signature
     protected Role role;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Level level;
+    @XmlAttribute(name = "position")
+    protected Integer position;
     @XmlAttribute(name = "code")
     protected String code;
     @XmlAttribute(name = "label")
@@ -108,6 +111,38 @@ public class Signature
 
     public boolean isSetLevel() {
         return (this.level!= null);
+    }
+
+    /**
+     * Gets the value of the position property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public int getPosition() {
+        return position;
+    }
+
+    /**
+     * Sets the value of the position property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setPosition(int value) {
+        this.position = value;
+    }
+
+    public boolean isSetPosition() {
+        return (this.position!= null);
+    }
+
+    public void unsetPosition() {
+        this.position = null;
     }
 
     /**

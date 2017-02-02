@@ -61,6 +61,11 @@ public class XmlLevelFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang, 
 		return xml;
 	}
 	
+	public static Level build()
+	{
+		return new Level();
+	}
+	
 	public static Level build(String code)
 	{
 		Level xml = new Level();
@@ -71,6 +76,14 @@ public class XmlLevelFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang, 
 	public static Level build(String code, String label)
 	{
 		Level xml = build(code);
+		xml.setLabel(label);
+		return xml;
+	}
+	
+	public static Level build(int position, String label)
+	{
+		Level xml = build();
+		xml.setPosition(position);
 		xml.setLabel(label);
 		return xml;
 	}

@@ -518,6 +518,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Levels }
+     * 
+     */
+    public Levels createLevels() {
+        return new Levels();
+    }
+
+    /**
      * Create an instance of {@link Action }
      * 
      */

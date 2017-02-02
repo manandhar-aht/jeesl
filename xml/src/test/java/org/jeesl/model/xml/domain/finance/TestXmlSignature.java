@@ -19,6 +19,7 @@ public class TestXmlSignature extends AbstractXmlFinanceTest<Signature>
     {
     	Signature xml = new Signature();
     	xml.setCode("myCode");
+    	xml.setLabel("myLabel");
     	
     	if(withChildren)
     	{

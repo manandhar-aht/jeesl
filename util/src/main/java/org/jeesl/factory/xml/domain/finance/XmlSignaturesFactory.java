@@ -14,4 +14,18 @@ public class XmlSignaturesFactory
     	Signatures xml = new Signatures();
     	return xml;
     }
+    
+    public static Signatures build(String code)
+    {
+    	Signatures xml = build();
+    	xml.setCode(code);
+    	return xml;
+    }
+    
+    public static Signatures build(String code, String label)
+    {
+    	Signatures xml = build(code);
+    	xml.setLabel(label);
+    	return xml;
+    }
 }

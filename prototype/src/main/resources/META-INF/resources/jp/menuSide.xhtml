@@ -9,15 +9,15 @@
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
-		<!-- Sucessor in jp -->
-	
 	<composite:interface>
 		<composite:attribute name="code" required="true"/>
 		<composite:attribute name="dynamic" required="false"/>
+		<composite:attribute name="bean" required="false" default="#{menuBean}"/>
 	</composite:interface>
+	
 	<composite:implementation>
 		<h:panelGroup layout="block" styleClass="sidemenu">
-			<aht:menuUl value="#{menuBean.subDyn(cc.attrs.code,cc.attrs.dynamic)}" sc1="top-level"/>
+			<aht:menuUl value="#{cc.attrs.bean.subDyn(cc.attrs.code,cc.attrs.dynamic)}" sc1="top-level"/>
 		</h:panelGroup>
 	</composite:implementation>
 </html>

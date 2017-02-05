@@ -12,7 +12,7 @@
             <us:description key="fr"></us:description>
         </us:descriptions>
     </us:status>
-    <us:status code="jpql" visible="false" position="2">
+    <us:status code="jpql" visible="true" position="2">
         <us:langs>
         	<us:lang key="de" translation="JPQL"/>
             <us:lang key="en" translation="JPQL"/>

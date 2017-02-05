@@ -16,7 +16,7 @@
     </s:translation>
 	<s:translation key="aupRevisionNumber">
     	<s:langs>
-    		<s:lang key="de" translation="Revision Number"/>
+    		<s:lang key="de" translation="Revisionsnummer"/>
     		<s:lang key="en" translation="Revision Number"/>
     		<s:lang key="fr" translation="Revision Number"/>
     	</s:langs>

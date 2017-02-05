@@ -9,13 +9,12 @@ import javax.ws.rs.core.MediaType;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.model.xml.system.revision.Entities;
 
-import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public interface JeeslRevisionRestImport
 {
 	@POST @Path("/system/revision/category") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
-	DataUpdate importSystemRevisionCategories(Aht categories);
+	DataUpdate importSystemRevisionCategories(Container categories);
 	
 	@POST @Path("/system/io/revision/attribute/type") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoRevisionAttributeTypes(Container container);

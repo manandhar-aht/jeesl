@@ -75,7 +75,7 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang,
 	public void addTemplate() throws UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.addEntity(cTemplate));
-		template = efTemplate.build(category,"");
+		template = efTemplate.build(category,"",templates);
 		template.setName(efLang.createEmpty(langs));
 		template.setDescription(efDescription.createEmpty(langs));
 	}

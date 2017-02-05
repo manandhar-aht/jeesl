@@ -13,6 +13,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="false" default="#{adminSecurityActionsBean}"/>
+		<composite:attribute name="localeCodes" required="false" default="#{translationBean.langKeys}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -72,7 +73,7 @@
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.template}"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
-				       				keys="#{translationBean.langKeys}" withDescription="true"/>
+				       				keys="#{cc.attrs.localeCodes}" withDescription="true"/>
 						</p:panel>
 					</h:form>
 				</aht:slot>

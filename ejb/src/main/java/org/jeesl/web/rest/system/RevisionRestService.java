@@ -124,12 +124,8 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	}
 	
 	@Override public Container exportSystemIoRevisionAttributeTypes() {return xfContainer.build(fRevision.allOrderedPosition(cRAT));}
-	@Override public Aht exportSystemRevisionCategories()
-	{
-		Aht aht = new Aht();
-		for(RC ejb : fRevision.allOrderedPosition(cRC)){aht.getStatus().add(xfStatus.build(ejb));}
-		return aht;
-	}
+	@Override public Container exportSystemIoRevisionScopeTypes() {return xfContainer.build(fRevision.allOrderedPosition(cRST));}
+	@Override public Container exportSystemRevisionCategories() {return xfContainer.build(fRevision.allOrderedPosition(cRC));}
 
 	@Override public Entities exportSystemRevisionEntities()
 	{
@@ -145,7 +141,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	}
 	
 	@Override public DataUpdate importSystemIoRevisionAttributeTypes(Container categories){return importStatus(cRAT,cL,cD,categories,null);}
-	@Override public DataUpdate importSystemRevisionCategories(Aht categories){return importStatus(cRC,cL,cD,categories,null);}
+	@Override public DataUpdate importSystemRevisionCategories(org.jeesl.model.xml.jeesl.Container categories){return importStatus(cRC,cL,cD,categories,null);}
 	
 	@Override public DataUpdate importSystemRevisionEntities(Entities entities)
 	{

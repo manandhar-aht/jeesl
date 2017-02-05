@@ -14,6 +14,7 @@
 		<composite:attribute name="update" required="true"/>
 		<composite:attribute name="withAdd" required="false" default="false"/>
         <composite:attribute name="tooltip" required="false" default="#{msg.ttSave}"/>
+        <composite:attribute name="localeCodes" required="false" default="#{translationBean.langKeys}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -35,7 +36,7 @@
 			</p:panelGrid>
 			<aht:tabTranslationEditor value="#{cc.attrs.bean.category}"
 					labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
-       				keys="#{translationBean.langKeys}" withDescription="true"/>
+       				keys="#{cc.attrs.localeCodes}" withDescription="true"/>
        		<p:messages for="category" redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 		</p:panel>
 	</composite:implementation>

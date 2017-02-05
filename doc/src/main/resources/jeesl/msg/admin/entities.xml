@@ -2,24 +2,28 @@
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
 	<s:translation key="RevisionCategory">
 		<s:langs>
+			<s:lang key="de" translation="Revisionskategorie"/>
 			<s:lang key="en" translation="Revision Category"/>
 			<s:lang key="fr" translation="Revision Category"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="RevisionAttributeType">
 		<s:langs>
+			<s:lang key="de" translation="Revision Attributtyp"/>
 			<s:lang key="en" translation="Revision Attribute Type"/>
 			<s:lang key="fr" translation="Revision Attribute Type"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="RevisionScopeType">
 		<s:langs>
+			<s:lang key="de" translation="Revision Bereichstyp"/>
 			<s:lang key="en" translation="Revision Scope Type"/>
 			<s:lang key="fr" translation="Revision Scope Type"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="IoReportRowType">
 		<s:langs>
+			<s:lang key="de" translation="Zeilentyp"/>
 			<s:lang key="en" translation="Row Type"/>
 			<s:lang key="fr" translation="Row Type"/>
 		</s:langs>

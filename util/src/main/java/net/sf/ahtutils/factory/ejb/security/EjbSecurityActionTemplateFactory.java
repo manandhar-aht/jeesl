@@ -1,5 +1,7 @@
 package net.sf.ahtutils.factory.ejb.security;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +47,9 @@ public class EjbSecurityActionTemplateFactory <L extends UtilsLang, D extends Ut
         this.cTemplate = clActionTemplate;
     } 
     
-    public AT build(C category, String code)
+    public AT build(C category, String code, List<AT> list){return build(category,code,list.size()+1);}
+    public AT build(C category, String code){return build(category,code,1);}
+    private AT build(C category, String code, int position)
     {
     	AT ejb = null;
     	
@@ -55,7 +59,8 @@ public class EjbSecurityActionTemplateFactory <L extends UtilsLang, D extends Ut
 			ejb.setCategory(category);
 			ejb.setCode(code);
 			ejb.setPosition(1);
-			ejb.setVisible(true);
+			ejb.setVisible(false);
+			ejb.setDocumentation(false);
 		}
     	catch (InstantiationException e) {e.printStackTrace();}
     	catch (IllegalAccessException e) {e.printStackTrace();}

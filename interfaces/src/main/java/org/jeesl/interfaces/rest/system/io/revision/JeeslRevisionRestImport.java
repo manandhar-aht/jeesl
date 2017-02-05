@@ -19,6 +19,9 @@ public interface JeeslRevisionRestImport
 	@POST @Path("/system/io/revision/attribute/type") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoRevisionAttributeTypes(Container container);
 	
+	@POST @Path("/system/io/revision/scope/type") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
+	DataUpdate importSystemIoRevisionScopeTypes(Container container);
+	
 	@POST @Path("/system/revision/entities") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemRevisionEntities(Entities entities);
 }

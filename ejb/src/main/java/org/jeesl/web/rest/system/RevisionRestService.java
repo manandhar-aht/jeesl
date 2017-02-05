@@ -141,6 +141,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	}
 	
 	@Override public DataUpdate importSystemIoRevisionAttributeTypes(Container categories){return importStatus(cRAT,cL,cD,categories,null);}
+	@Override public DataUpdate importSystemIoRevisionScopeTypes(Container categories){return importStatus(cRST,cL,cD,categories,null);}
 	@Override public DataUpdate importSystemRevisionCategories(org.jeesl.model.xml.jeesl.Container categories){return importStatus(cRC,cL,cD,categories,null);}
 	
 	@Override public DataUpdate importSystemRevisionEntities(Entities entities)

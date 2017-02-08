@@ -1,6 +1,8 @@
 package net.sf.ahtutils.interfaces.model.crud;
 
-public interface EjbPersistable
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+
+public interface EjbPersistable extends EjbWithId
 {
 
 }

@@ -11,6 +11,10 @@
         <source>jeeslPrototype/label.xhtml</source>
     </tag>
     <tag>
+        <tag-name>inputRemark</tag-name>
+        <source>jeeslPrototype/inputRemark.xhtml</source>
+    </tag>
+    <tag>
         <tag-name>statusSymbolizer</tag-name>
         <source>jeeslPrototype/statusSymbolizer.xhtml</source>
     </tag>

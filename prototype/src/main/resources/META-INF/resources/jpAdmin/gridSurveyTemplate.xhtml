@@ -185,6 +185,8 @@
 						</p:panelGrid>
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40" rendered="#{cc.attrs.withOptions}">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectOne}" /><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectOne}"/>
+						</p:panelGrid>
+						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40" rendered="#{false and cc.attrs.withOptions}">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectMulti}" /><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectMulti}"/>
 						</p:panelGrid>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>

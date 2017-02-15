@@ -21,9 +21,9 @@
 						 selection="#{cc.attrs.bean.tblAction}" selectionMode="single" rowKey="#{a.id}">
 			<f:facet name="header">
 				<aht:pfDataTableHeader id="dth" title="#{msg.aupSecurityActions}">
-					<h:graphicImage id="giActionAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['aupAdd']}"/>
+					<h:graphicImage id="giActionAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['jeeslAdd']}"/>
                     <p:tooltip for="giActionAdd" value="#{msg.ttAdd}" />
-                    <aht:icon rendered="#{cc.attrs.withRemove and (not empty cc.attrs.bean.tblAction)}" type="aupRm" mayDisappear="true" listener="#{cc.attrs.bean.opRmAction()}" update="#{cc.attrs.update}" tooltip="#{msg.ttRemove}"/>
+                    <aht:icon rendered="#{cc.attrs.withRemove and (not empty cc.attrs.bean.tblAction)}" type="jeeslRemove" mayDisappear="true" listener="#{cc.attrs.bean.opRmAction()}" update="#{cc.attrs.update}" tooltip="#{msg.ttRemove}"/>
 				</aht:pfDataTableHeader>
 			</f:facet>
 			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.selectTblAction}"/>

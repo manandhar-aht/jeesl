@@ -269,3 +269,10 @@ margin-top: 8px;
 .ui-treetable thead th, .ui-treetable tbody td, .ui-treetable tfoot td {
     white-space: normal;
 }
+
+.jeeslInvisible {
+    visibility:hidden;
+}
+.jeeslVisible {
+    visibility: visible !important;
+}

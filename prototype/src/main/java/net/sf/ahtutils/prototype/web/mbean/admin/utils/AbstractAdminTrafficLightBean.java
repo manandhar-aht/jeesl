@@ -3,6 +3,7 @@ package net.sf.ahtutils.prototype.web.mbean.admin.utils;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jeesl.api.facade.JeeslTrafficLightFacade;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.factory.ejb.util.EjbTrafficLightFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsTrafficLightFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -25,7 +25,7 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTrafficLightBean.class);
 	
-	protected UtilsTrafficLightFacade<L,D,SCOPE,LIGHT> fUtils;
+	protected JeeslTrafficLightFacade<L,D,SCOPE,LIGHT> fUtils;
 	
 	private Class<SCOPE> cScope;
 	private Class<LIGHT> cLight;

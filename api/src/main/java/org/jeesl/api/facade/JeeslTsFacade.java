@@ -1,9 +1,10 @@
-package net.sf.ahtutils.interfaces.facade;
+package org.jeesl.api.facade;
 
 import java.util.List;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -13,7 +14,7 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
-public interface UtilsTsFacade <L extends UtilsLang,
+public interface JeeslTsFacade <L extends UtilsLang,
 								D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
 								SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,

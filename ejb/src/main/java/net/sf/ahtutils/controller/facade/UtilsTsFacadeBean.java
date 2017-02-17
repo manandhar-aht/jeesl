@@ -9,12 +9,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
+import org.jeesl.api.facade.JeeslTsFacade;
+
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.system.ts.EjbTsBridgeFactory;
 import net.sf.ahtutils.factory.ejb.system.ts.EjbTsFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsTsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -37,7 +38,7 @@ public class UtilsTsFacadeBean<L extends UtilsLang,
 							WS extends UtilsStatus<WS,L,D>,
 							QAF extends UtilsStatus<QAF,L,D>>
 					extends UtilsFacadeBean
-					implements UtilsTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>
+					implements JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>
 {	
 	private EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> efTs;
 	private EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> efBridge;

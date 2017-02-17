@@ -1,9 +1,9 @@
 package net.sf.ahtutils.factory.xml.qa;
 
+import org.jeesl.api.facade.JeeslQaFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.facade.UtilsQaFacade;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaCategory;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaGroup;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaResult;
@@ -65,8 +65,8 @@ public class XmlCategoryFactory<L extends UtilsLang,
 	
 	private Class<QAC> cQAC;
 	private Class<QAT> cQAT;
-	private UtilsQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
-	public void lazyLoader(UtilsQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,Class<QAC> cQAC, Class<QAT> cQAT)
+	private JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
+	public void lazyLoader(JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,Class<QAC> cQAC, Class<QAT> cQAT)
 	{
 		this.fQa=fQa;
 		this.cQAC=cQAC;

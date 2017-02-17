@@ -1,7 +1,8 @@
-package net.sf.ahtutils.interfaces.facade;
+package org.jeesl.api.facade;
 
 import java.util.List;
 
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaCategory;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaGroup;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaResult;
@@ -25,7 +26,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 
-public interface UtilsQaFacade
+public interface JeeslQaFacade
 				<L extends UtilsLang,
 				D extends UtilsDescription,
 				C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,

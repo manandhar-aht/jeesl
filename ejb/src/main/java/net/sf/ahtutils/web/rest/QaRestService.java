@@ -1,5 +1,6 @@
 package net.sf.ahtutils.web.rest;
 
+import org.jeesl.api.facade.JeeslQaFacade;
 import org.jeesl.factory.xml.system.security.XmlStaffFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
@@ -11,7 +12,6 @@ import net.sf.ahtutils.factory.xml.qa.XmlCategoryFactory;
 import net.sf.ahtutils.factory.xml.qa.XmlGroupFactory;
 import net.sf.ahtutils.factory.xml.qa.XmlGroupsFactory;
 import net.sf.ahtutils.factory.xml.status.XmlResponsibleFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsQaFacade;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaCategory;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaGroup;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaResult;
@@ -70,7 +70,7 @@ public class QaRestService <L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(QaRestService.class);
 	
-	private UtilsQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
+	private JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
 		
 	private final Class<GROUP> cGroup;
 	private final Class<QA> cQa;
@@ -80,7 +80,7 @@ public class QaRestService <L extends UtilsLang,
 	private XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> xfCategory;
 	private XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> xfFrDuration;
 	
-	private QaRestService(UtilsQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa, final Class<L> cL, final Class<D> cD,final Class<GROUP> cGroup,final Class<QA> cQa,final Class<QAC> cQAC,final Class<QAT> cQAT)
+	private QaRestService(JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa, final Class<L> cL, final Class<D> cD,final Class<GROUP> cGroup,final Class<QA> cQa,final Class<QAC> cQAC,final Class<QAT> cQAT)
 	{
 		this.fQa=fQa;
 		this.cGroup=cGroup;
@@ -120,7 +120,7 @@ public class QaRestService <L extends UtilsLang,
 					QARS extends UtilsStatus<QARS,L,D>,
 					QAUS extends UtilsStatus<QAUS,L,D>>
 		QaRestService<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>
-			factory(UtilsQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,final Class<L> cL,final Class<D> cD,final Class<GROUP> cGroup,final Class<QA> cQa,final Class<QAC> cQAC,final Class<QAT> cQAT)
+			factory(JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,final Class<L> cL,final Class<D> cD,final Class<GROUP> cGroup,final Class<QA> cQa,final Class<QAC> cQAC,final Class<QAT> cQAT)
 	{
 		return new QaRestService<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(fQa,cL,cD,cGroup,cQa,cQAC,cQAT);
 	}

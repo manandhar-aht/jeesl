@@ -1,11 +1,11 @@
 package net.sf.ahtutils.factory.xml.qa;
 
+import org.jeesl.api.facade.JeeslQaFacade;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.factory.xml.status.XmlStatementFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsQaFacade;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaCategory;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaGroup;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaResult;
@@ -61,8 +61,8 @@ QAUS extends UtilsStatus<QAUS,L,D>>
 	private Test q;
 	
 	private Class<QAT> cQAT;
-	private UtilsQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
-	public void lazyLoader(UtilsQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,Class<QAT> cQAT)
+	private JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
+	public void lazyLoader(JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,Class<QAT> cQAT)
 	{
 		this.fQa=fQa;
 		this.cQAT=cQAT;

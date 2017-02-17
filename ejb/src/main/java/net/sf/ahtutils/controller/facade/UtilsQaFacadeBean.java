@@ -10,11 +10,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
+import org.jeesl.api.facade.JeeslQaFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
-import net.sf.ahtutils.interfaces.facade.UtilsQaFacade;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaCategory;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaGroup;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaResult;
@@ -63,7 +63,7 @@ public class UtilsQaFacadeBean <L extends UtilsLang,
 								QATS extends UtilsStatus<QATS,L,D>,
 								QARS extends UtilsStatus<QARS,L,D>,
 								QAUS extends UtilsStatus<QAUS,L,D>> 
-		extends UtilsFacadeBean implements UtilsQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>
+		extends UtilsFacadeBean implements JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>
 {
 	final static Logger logger = LoggerFactory.getLogger(UtilsQaFacadeBean.class);
 	

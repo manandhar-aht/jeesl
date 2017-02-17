@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+    	<groupId>org.jeesl</groupId>
+        <artifactId>jeesl</artifactId>
+        <version>0.2.6-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jeesl-api</artifactId>
+    <packaging>jar</packaging>
+    <name>JEESL - Interfaces</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+	<dependencyManagement>
+		<dependencies>      	         
+			<dependency>
+				<groupId>org.jeesl</groupId>
+				<artifactId>jeesl-bom</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+		   <groupId>org.jboss.spec</groupId>
+		   <artifactId>jboss-javaee-6.0</artifactId>
+		   <type>pom</type>
+		   <scope>provided</scope>
+		</dependency>
+		<dependency>
+	      	<groupId>org.hibernate</groupId>
+	      	<artifactId>hibernate-envers</artifactId>
+	      	<version>4.2.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-xml</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- Json Jackson -->
+		<dependency>
+		   <groupId>com.fasterxml.jackson.core</groupId>
+		   <artifactId>jackson-annotations</artifactId>
+		   <scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+		    </plugin>
+		    <plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>versions-maven-plugin</artifactId>
+		        <configuration>
+					<rulesUri>${maven.ignore}</rulesUri>
+		        </configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

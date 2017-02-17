@@ -12,6 +12,7 @@
 	<description>Utilities and Helper for JavaEE Developments (JavaEE Support Library)</description>
 
 	<modules>
+		<module>api</module>
 		<module>doc</module>
 		<module>ejb</module>
 		<module>entities</module>

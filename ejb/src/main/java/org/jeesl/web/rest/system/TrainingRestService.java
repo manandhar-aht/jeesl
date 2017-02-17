@@ -1,6 +1,6 @@
 package org.jeesl.web.rest.system;
 
-import org.jeesl.interfaces.facade.JeeslTrainingFacade;
+import org.jeesl.api.facade.module.JeeslTrainingFacade;
 import org.jeesl.interfaces.rest.system.training.JeeslTrainingRestExport;
 import org.jeesl.interfaces.rest.system.training.JeeslTrainingRestImport;
 import org.jeesl.model.xml.jeesl.Container;

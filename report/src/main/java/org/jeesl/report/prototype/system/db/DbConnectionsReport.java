@@ -1,6 +1,6 @@
 package org.jeesl.report.prototype.system.db;
 
-import org.jeesl.interfaces.facade.JeeslIoDbFacade;
+import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;

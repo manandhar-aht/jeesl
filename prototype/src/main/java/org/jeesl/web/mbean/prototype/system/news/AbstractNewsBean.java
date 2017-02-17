@@ -3,7 +3,7 @@ package org.jeesl.web.mbean.prototype.system.news;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jeesl.interfaces.facade.JeeslSystemNewsFacade;
+import org.jeesl.api.facade.system.JeeslSystemNewsFacade;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

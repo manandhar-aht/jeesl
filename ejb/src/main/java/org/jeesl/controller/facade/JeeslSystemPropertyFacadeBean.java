@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.jeesl.interfaces.facade.JeeslSystemPropertyFacade;
+import org.jeesl.api.facade.system.JeeslSystemPropertyFacade;
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;

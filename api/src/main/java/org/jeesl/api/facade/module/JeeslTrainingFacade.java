@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.facade;
+package org.jeesl.api.facade.module;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;

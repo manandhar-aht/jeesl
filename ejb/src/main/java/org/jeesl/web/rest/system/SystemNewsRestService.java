@@ -1,6 +1,6 @@
 package org.jeesl.web.rest.system;
 
-import org.jeesl.interfaces.facade.JeeslSystemNewsFacade;
+import org.jeesl.api.facade.system.JeeslSystemNewsFacade;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
 import org.jeesl.interfaces.rest.system.news.JeeslSystemNewsRestExport;
 import org.jeesl.interfaces.rest.system.news.JeeslSystemNewsRestImport;

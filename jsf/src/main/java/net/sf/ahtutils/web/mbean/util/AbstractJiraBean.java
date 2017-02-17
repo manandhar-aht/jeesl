@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.jeesl.interfaces.facade.JeeslSystemPropertyFacade;
+import org.jeesl.api.facade.system.JeeslSystemPropertyFacade;
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

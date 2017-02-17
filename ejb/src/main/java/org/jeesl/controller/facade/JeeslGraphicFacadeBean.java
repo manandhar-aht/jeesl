@@ -8,7 +8,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
-import org.jeesl.interfaces.facade.JeeslGraphicFacade;
+import org.jeesl.api.facade.util.JeeslGraphicFacade;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;

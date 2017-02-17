@@ -1,6 +1,6 @@
 package net.sf.ahtutils.web.rest;
 
-import org.jeesl.api.facade.JeeslQaFacade;
+import org.jeesl.api.facade.module.JeeslQaFacade;
 import org.jeesl.factory.xml.system.security.XmlStaffFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;

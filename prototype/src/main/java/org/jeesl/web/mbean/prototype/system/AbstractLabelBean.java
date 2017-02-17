@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.jeesl.interfaces.facade.JeeslRevisionFacade;
+import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
@@ -34,7 +34,7 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractLabelBean.class);
 	
-	private JeeslRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision;
+	private JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision;
 	
 	private Class<RE> cRE;
 	
@@ -44,7 +44,7 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 	
 	
 	
-	protected void init(JeeslRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RE> cRE)
+	protected void init(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RE> cRE)
 	{
 		this.fRevision=fRevision;
 		this.cRE=cRE;

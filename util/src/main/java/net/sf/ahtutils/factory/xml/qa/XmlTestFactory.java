@@ -1,6 +1,6 @@
 package net.sf.ahtutils.factory.xml.qa;
 
-import org.jeesl.api.facade.JeeslQaFacade;
+import org.jeesl.api.facade.module.JeeslQaFacade;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

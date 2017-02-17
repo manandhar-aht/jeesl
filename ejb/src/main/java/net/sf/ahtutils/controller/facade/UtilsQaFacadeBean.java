@@ -10,7 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
-import org.jeesl.api.facade.JeeslQaFacade;
+import org.jeesl.api.facade.module.JeeslQaFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

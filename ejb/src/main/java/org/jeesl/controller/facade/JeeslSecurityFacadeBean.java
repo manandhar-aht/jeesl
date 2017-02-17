@@ -9,7 +9,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-import org.jeesl.interfaces.facade.JeeslSecurityFacade;
+import org.jeesl.api.facade.module.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

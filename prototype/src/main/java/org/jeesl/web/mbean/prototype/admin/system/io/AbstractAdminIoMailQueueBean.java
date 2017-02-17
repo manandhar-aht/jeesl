@@ -3,7 +3,7 @@ package org.jeesl.web.mbean.prototype.admin.system.io;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jeesl.interfaces.facade.JeeslIoMailFacade;
+import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;

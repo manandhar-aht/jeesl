@@ -1,5 +1,6 @@
 package org.jeesl.factory.factory;
 
+import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.handler.SurveyHandler;
 import org.jeesl.controller.processor.SurveyScoreProcessor;
 import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
@@ -11,7 +12,6 @@ import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.txt.survey.TxtSurveyQuestionFactory;
-import org.jeesl.interfaces.facade.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.survey.JeeslSurveyCorrelation;

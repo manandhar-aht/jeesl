@@ -13,7 +13,7 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.jeesl.interfaces.facade.JeeslSystemNewsFacade;
+import org.jeesl.api.facade.system.JeeslSystemNewsFacade;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;

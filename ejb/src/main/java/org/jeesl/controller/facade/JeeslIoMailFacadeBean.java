@@ -12,9 +12,9 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.factory.ejb.system.io.mail.EjbIoMailFactory;
 import org.jeesl.factory.factory.MailFactoryFactory;
-import org.jeesl.interfaces.facade.JeeslIoMailFacade;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;

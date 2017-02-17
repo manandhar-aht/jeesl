@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.jeesl.api.facade.JeeslTrafficLightFacade;
+import org.jeesl.api.facade.util.JeeslTrafficLightFacade;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;

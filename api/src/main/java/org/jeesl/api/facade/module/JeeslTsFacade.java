@@ -1,4 +1,4 @@
-package org.jeesl.api.facade;
+package org.jeesl.api.facade.module;
 
 import java.util.List;
 

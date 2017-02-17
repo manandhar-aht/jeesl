@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.facade;
+package org.jeesl.api.facade.util;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 

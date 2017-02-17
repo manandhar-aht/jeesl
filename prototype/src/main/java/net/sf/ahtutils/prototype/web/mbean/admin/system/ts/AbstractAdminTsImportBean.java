@@ -16,7 +16,7 @@ import java.util.Random;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.jxpath.JXPathContext;
-import org.jeesl.api.facade.JeeslTsFacade;
+import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.xml.ts.XmlDataFactory;
 import org.jeesl.factory.xml.ts.XmlTimeSeriesFactory;
 import org.joda.time.DateTime;

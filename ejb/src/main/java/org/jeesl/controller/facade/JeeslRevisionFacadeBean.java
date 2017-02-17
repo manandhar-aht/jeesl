@@ -13,8 +13,8 @@ import javax.persistence.TypedQuery;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
+import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.factory.json.system.revision.JsonRevisionFactory;
-import org.jeesl.interfaces.facade.JeeslRevisionFacade;
 import org.jeesl.interfaces.model.system.revision.EjbWithRevisionAttributes;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
@@ -47,7 +47,7 @@ public class JeeslRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 					extends UtilsFacadeBean
-					implements JeeslRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
+					implements JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
 {	
 	private String revisionPrefix;
 	private String revisionTable;
@@ -158,7 +158,7 @@ public class JeeslRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 	}
 	
 	@Override
-	public <T extends EjbWithId> List<Long> ids(Class<T> c, JeeslRevisionFacade.Scope scope)
+	public <T extends EjbWithId> List<Long> ids(Class<T> c, JeeslIoRevisionFacade.Scope scope)
 	{
 		List<Long> result = new ArrayList<Long>();
 		

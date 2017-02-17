@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.facade.system.JeeslSystemNewsFacade;
 import org.jeesl.factory.ejb.system.EjbSystemNewsFactory;
-import org.jeesl.interfaces.facade.JeeslSystemNewsFacade;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;

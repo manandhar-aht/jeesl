@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.interfaces.facade.JeeslIoDbFacade;
+import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

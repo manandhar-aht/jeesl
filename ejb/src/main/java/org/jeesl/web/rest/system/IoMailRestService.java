@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestExport;
 import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestImport;
 import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestSpooler;
 import org.jeesl.factory.xml.mail.XmlMailFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlMailsFactory;
-import org.jeesl.interfaces.facade.JeeslIoMailFacade;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.model.xml.system.io.mail.Mail;

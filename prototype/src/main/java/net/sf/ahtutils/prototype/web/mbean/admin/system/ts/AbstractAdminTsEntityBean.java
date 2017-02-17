@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import org.jeesl.api.facade.JeeslTsFacade;
+import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

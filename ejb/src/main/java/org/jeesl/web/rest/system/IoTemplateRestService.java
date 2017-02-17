@@ -1,5 +1,7 @@
 package org.jeesl.web.rest.system;
 
+import org.jeesl.api.rest.system.io.template.JeeslIoTemplateRestExport;
+import org.jeesl.api.rest.system.io.template.JeeslIoTemplateRestImport;
 import org.jeesl.factory.xml.system.io.template.XmlTemplateFactory;
 import org.jeesl.factory.xml.system.io.template.XmlTemplatesFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
@@ -7,8 +9,6 @@ import org.jeesl.interfaces.facade.JeeslIoTemplateFacade;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
-import org.jeesl.interfaces.rest.system.io.template.JeeslIoTemplateRestExport;
-import org.jeesl.interfaces.rest.system.io.template.JeeslIoTemplateRestImport;
 import org.jeesl.model.xml.system.io.template.Templates;
 import org.jeesl.util.query.xml.StatusQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;

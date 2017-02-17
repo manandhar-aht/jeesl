@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.rest.system.io.revision;
+package org.jeesl.api.rest.system.io.revision;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

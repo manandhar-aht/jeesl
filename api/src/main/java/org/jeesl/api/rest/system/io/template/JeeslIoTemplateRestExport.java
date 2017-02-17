@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.rest.system.io.template;
+package org.jeesl.api.rest.system.io.template;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

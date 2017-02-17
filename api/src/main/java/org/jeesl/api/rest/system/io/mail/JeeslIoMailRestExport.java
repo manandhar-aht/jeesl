@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.rest.system.io.mail;
+package org.jeesl.api.rest.system.io.mail;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

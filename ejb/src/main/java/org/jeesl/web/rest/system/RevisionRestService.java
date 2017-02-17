@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jeesl.api.rest.system.io.revision.JeeslRevisionRestExport;
+import org.jeesl.api.rest.system.io.revision.JeeslRevisionRestImport;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionEntityFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
@@ -18,8 +20,6 @@ import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
-import org.jeesl.interfaces.rest.system.io.revision.JeeslRevisionRestExport;
-import org.jeesl.interfaces.rest.system.io.revision.JeeslRevisionRestImport;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.model.xml.system.revision.Attribute;
 import org.jeesl.model.xml.system.revision.Entities;

@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.rest.system.io.report;
+package org.jeesl.api.rest.system.io.report;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

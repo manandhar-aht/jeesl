@@ -21,7 +21,7 @@
 		<!-- Jeesl -->
 		<dependency>
          	<groupId>org.jeesl</groupId>
-         	<artifactId>jeesl-interfaces</artifactId>
+         	<artifactId>jeesl-api</artifactId>
          </dependency>
 		<dependency>
          	<groupId>org.jeesl</groupId>

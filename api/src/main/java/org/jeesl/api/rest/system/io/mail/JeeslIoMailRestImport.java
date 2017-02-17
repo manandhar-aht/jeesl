@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.rest.system.io.mail;
+package org.jeesl.api.rest.system.io.mail;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

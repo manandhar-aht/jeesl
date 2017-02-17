@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jeesl.api.rest.system.io.db.JeeslDbDumpRest;
+import org.jeesl.api.rest.system.io.db.JeeslDbRestExport;
+import org.jeesl.api.rest.system.io.db.JeeslDbRestImport;
 import org.jeesl.factory.ejb.system.io.db.EjbDbDumpFileFactory;
 import org.jeesl.factory.ejb.system.io.db.EjbIoDumpFactory;
 import org.jeesl.factory.factory.DbFactoryFactory;
 import org.jeesl.interfaces.facade.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
-import org.jeesl.interfaces.rest.system.io.db.JeeslDbDumpRest;
-import org.jeesl.interfaces.rest.system.io.db.JeeslDbRestExport;
-import org.jeesl.interfaces.rest.system.io.db.JeeslDbRestImport;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;

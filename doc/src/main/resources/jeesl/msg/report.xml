@@ -110,7 +110,7 @@
 			<s:lang key="fr" translation="Value"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="aupXpath">
+	<s:translation key="jeeslXpath">
     	<s:langs>
     		<s:lang key="de" translation="XPath"/>
     		<s:lang key="en" translation="XPath"/>

@@ -112,7 +112,7 @@
 									<f:selectItems value="#{cc.attrs.bean.scopeTypes}" var="t" itemLabel="#{t.name[userBean.localeCode].lang}" itemValue="#{t}"/>
 									<p:ajax event="change" listener="#{cc.attrs.bean.changeScopeType()}" update="@form"/>
 								</p:selectOneMenu>
-								<p:outputLabel value="#{msg.aupXpath}"/>
+								<p:outputLabel value="#{msg.jeeslXpath}"/>
 								<h:inputText autocomplete="off" value="#{cc.attrs.bean.mapping.xpath}" styleClass="aupW100"/>
 							</p:panelGrid>
 							<p:panelGrid rendered="#{cc.attrs.bean.uiWithJpqlTree}" columns="2" columnClasses="auPwg20,auPwg80">

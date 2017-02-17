@@ -11,23 +11,40 @@ public class NullNumberBinder
 	{
 		a = "";
 		b = "";
+		c = "";
 	}
 	
 	private String a; 
 	public String getA() {return a;}
 	public void setA(String a) {this.a = a;}
-	public void integerToA(Integer i) {a = toString(i);}
-	public void doubleToA(Double d) {a = toString(d);}
+	public void integerToA(Integer value) {a = toString(value);}
+	public void doubleToA(Double value) {a = toString(value);}
 	public Integer aToInteger() {return integerFromString(a);}
 	public Double aToDouble() {return doubleFromString(a);}
 	
 	private String b;
 	public String getB() {return b;}
 	public void setB(String b) {this.b = b;}
-	public void integerToB(Integer i) {b = toString(i);}
-	public void doubleToB(Double d) {b = toString(d);}
+	public void integerToB(Integer value) {b = toString(value);}
+	public void doubleToB(Double value) {b = toString(value);}
 	public Integer bToInteger() {return integerFromString(b);}
 	public Double bToDouble() {return doubleFromString(b);}
+	
+	private String c;
+	public String getC() {return c;}
+	public void setC(String c) {this.c = c;}
+	public void integerToC(Integer value) {c = toString(value);}
+	public void doubleToC(Double value) {c = toString(value);}
+	public Integer cToInteger() {return integerFromString(c);}
+	public Double cToDouble() {return doubleFromString(c);}
+	
+	private String d;
+	public String getD() {return d;}
+	public void setD(String d) {this.d = d;}
+	public void integerToD(Integer value) {d = toString(value);}
+	public void doubleToD(Double value) {b = toString(value);}
+	public Integer dToInteger() {return integerFromString(d);}
+	public Double dToDouble() {return doubleFromString(d);}
 	
 	private String toString(Integer i)
 	{

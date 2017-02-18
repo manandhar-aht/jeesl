@@ -52,7 +52,7 @@
         	<groupId>org.jeesl</groupId>
         	<artifactId>jeesl-api</artifactId>
         	<type>jar</type>
-        	<scope>compile</scope>
+        	<scope>provided</scope>
         </dependency>
 		<dependency>
         	<groupId>org.jeesl</groupId>

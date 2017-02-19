@@ -3,15 +3,16 @@ package org.jeesl.model.ejb;
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
+import org.jeesl.interfaces.JeeslQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractEjbQuery implements Serializable
+public abstract class AbstractEjbQuery implements Serializable,JeeslQuery
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractEjbQuery.class);
 	private static final long serialVersionUID = 1;
 
-	private String localeCode;public String getLocaleCode() {return localeCode;}
+	private String localeCode; public String getLocaleCode() {return localeCode;}
 
 	public AbstractEjbQuery() {this("en");}
 	public AbstractEjbQuery(String localeCode)
@@ -51,8 +52,8 @@ public abstract class AbstractEjbQuery implements Serializable
 	public boolean withSort(){return (sortBy!=null && sortBy.trim().length()>0);}
 
 
-	protected void debug(boolean debug){debug(debug,0);}
-	protected void debug(boolean debug,int ident)
+	public void debug(boolean debug){debug(debug,0);}
+	public void debug(boolean debug,int ident)
 	{
 		if(debug)
 		{

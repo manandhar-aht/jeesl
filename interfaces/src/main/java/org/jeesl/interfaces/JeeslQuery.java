@@ -4,6 +4,8 @@ public interface JeeslQuery
 {
 	public String getLocaleCode();
 	
+	void reset();
+	
 	boolean isDistinct();
 	void setDistinct(boolean distinct);
 

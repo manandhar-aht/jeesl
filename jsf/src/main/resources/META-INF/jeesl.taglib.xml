@@ -6,6 +6,13 @@
 	<namespace>http://www.jeesl.org/jsf</namespace>
 	<composite-library-name>jeesl</composite-library-name>
 	
+	<tag>
+        <tag-name>outputXpath</tag-name>
+        <component>
+            <component-type>org.jeesl.jsf.components.OutputXpath</component-type>
+        </component>
+    </tag>
+	
 	<function>
 		<function-name>humanFileSize</function-name>
 		<function-class>org.jeesl.jsf.functions.HumanFileSize</function-class>

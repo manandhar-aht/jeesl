@@ -26,8 +26,12 @@
         <tag-name>reportFlat</tag-name>
         <source>jeeslPrototype/reportFlat.xhtml</source>
     </tag>
-        <tag>
+ 	<tag>
         <tag-name>reportTree</tag-name>
         <source>jeeslPrototype/reportTree.xhtml</source>
+    </tag>
+	<tag>
+        <tag-name>reportDomain</tag-name>
+        <source>jeeslPrototype/reportDomain.xhtml</source>
     </tag>
 </facelet-taglib>

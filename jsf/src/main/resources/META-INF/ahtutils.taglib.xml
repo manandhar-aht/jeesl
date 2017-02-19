@@ -43,10 +43,17 @@
         </component>
     </tag>
     
-        <tag>
+	<tag>
         <tag-name>li</tag-name>
         <component>
             <component-type>net.sf.ahtutils.jsf.components.html.Li</component-type>
+        </component>
+    </tag>
+    
+	<tag>
+        <tag-name>outputXpath</tag-name>
+        <component>
+            <component-type>org.jeesl.jsf.components.OutputXpath</component-type>
         </component>
     </tag>
 	

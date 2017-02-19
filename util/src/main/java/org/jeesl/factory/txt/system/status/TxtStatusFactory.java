@@ -18,6 +18,11 @@ public class TxtStatusFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang,
 		this.localeCode=localeCode;
 	}
 	
+	public static <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> TxtStatusFactory<S,L,D> factory(String localeCode)
+	{
+		return new TxtStatusFactory<S,L,D>(localeCode);
+	}
+	
 	public String debug(S status)
 	{
 		StringBuilder sb = new StringBuilder();
@@ -25,6 +30,11 @@ public class TxtStatusFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang,
 		sb.append(" (").append(status.getCode()).append(")");
 		sb.append(" ").append(status.getName().get(localeCode).getLang());
 		return sb.toString();
+	}
+	
+	public String labels (List<S> list)
+	{
+		return label(localeCode,list);
 	}
 	
 	public static <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>

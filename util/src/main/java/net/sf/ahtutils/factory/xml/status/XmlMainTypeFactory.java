@@ -1,5 +1,8 @@
 package net.sf.ahtutils.factory.xml.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,6 +11,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.MainType;
 import net.sf.ahtutils.xml.status.Status;
+import net.sf.ahtutils.xml.status.Type;
 
 public class XmlMainTypeFactory
 {
@@ -94,5 +98,15 @@ public class XmlMainTypeFactory
 		type.setDescriptions(status.getDescriptions());
 		type.setLangs(status.getLangs());
 		return type;
+	}
+	
+	public static List<Long> toIds(List<MainType> list)
+	{
+		List<Long> result = new ArrayList<Long>();
+		for(MainType type : list)
+		{
+			if(type.isSetId()){result.add(type.getId());}
+		}
+		return result;
 	}
 }

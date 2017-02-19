@@ -30,6 +30,12 @@ public class OverlayEntitySelectionHandler <T extends EjbWithId> implements OpEn
         this.bean=bean;
         tbEntites = new ArrayList<T>();
     }
+    public OverlayEntitySelectionHandler(OpEntityBean bean, List<T> opEntites)
+    {
+        this.bean=bean;
+        this.opEntites=opEntites;
+        tbEntites = new ArrayList<T>();
+    }
 
     @Override public void clearTable()
     {

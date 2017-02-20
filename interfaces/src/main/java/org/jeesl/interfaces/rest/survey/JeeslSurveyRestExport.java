@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.rest.survey;
+package org.jeesl.interfaces.rest.survey;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -12,7 +12,7 @@ import net.sf.ahtutils.xml.survey.Survey;
 import net.sf.ahtutils.xml.survey.Surveys;
 import net.sf.ahtutils.xml.survey.Templates;
 
-public interface UtilsSurveyRestExport
+public interface JeeslSurveyRestExport
 {
 	@GET @Path("/survey/template/category") @Produces(MediaType.APPLICATION_XML)
 	Aht exportSurveyTemplateCategory();

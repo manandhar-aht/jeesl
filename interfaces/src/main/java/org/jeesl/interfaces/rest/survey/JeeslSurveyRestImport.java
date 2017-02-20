@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.rest.survey;
+package org.jeesl.interfaces.rest.survey;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -12,7 +12,7 @@ import net.sf.ahtutils.xml.survey.Survey;
 import net.sf.ahtutils.xml.survey.Templates;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
-public interface UtilsSurveyRestImport
+public interface JeeslSurveyRestImport
 {
 	@POST @Path("/survey/template/category") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSurveyTemplateCategory(Aht categories);

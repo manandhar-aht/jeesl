@@ -22,6 +22,8 @@ import org.jeesl.interfaces.model.survey.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.survey.JeeslSurveySection;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.rest.survey.JeeslSurveyRestExport;
+import org.jeesl.interfaces.rest.survey.JeeslSurveyRestImport;
 import org.jeesl.util.query.xml.StatusQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
@@ -36,8 +38,6 @@ import net.sf.ahtutils.factory.xml.sync.XmlMapperFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.rest.survey.UtilsSurveyRestExport;
-import net.sf.ahtutils.interfaces.rest.survey.UtilsSurveyRestImport;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.util.query.xml.SurveyQuery;
 import net.sf.ahtutils.xml.aht.Aht;
@@ -69,7 +69,7 @@ public class SurveyRestService <L extends UtilsLang,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
 				extends AbstractJeeslRestService<L,D>	
-				implements UtilsSurveyRestExport,UtilsSurveyRestImport//,UtilsSurveyRest
+				implements JeeslSurveyRestExport,JeeslSurveyRestImport//,UtilsSurveyRest
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyRestService.class);
 	

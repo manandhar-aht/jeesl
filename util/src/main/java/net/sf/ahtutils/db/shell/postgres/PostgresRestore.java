@@ -1,6 +1,11 @@
 package net.sf.ahtutils.db.shell.postgres;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -100,13 +105,9 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 						}
 						input = br.readLine();
 					}
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch(IOException e1)
-				{
-					e1.printStackTrace();
 				}
+				catch (FileNotFoundException e1) {e1.printStackTrace();}
+				catch(IOException e1) {e1.printStackTrace();}
 			}
 		}
 		
@@ -114,7 +115,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 	}
 	
 	public String restoreTable(String table) throws ExlpUnsupportedOsException
-	{
+	{	
 		if(!pwdSet){setPwd(pDbPwd.getValue());}
 		StringBuffer sb = new StringBuffer();
 		sb.append(pDbRestore.getValue());
@@ -126,7 +127,15 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sb.append(" --no-owner");
 		sb.append(" --data-only");
 		sb.append(" -t " + table.toLowerCase());
-		sb.append(" ").append(pDirRestore.getValue() + File.separator + pDbName.getValue() + ".sql");
+		
+		StringBuilder sbFile = new StringBuilder();
+		sbFile.append(pDirRestore.getValue());
+		sbFile.append(File.separator);
+		sbFile.append(pDbName.getValue());
+		sbFile.append(".sql");
+		
+		sb.append(" ").append(sbFile);
+//		sb.append("'");
 		
 		super.addLine(sb.toString());
 		return sb.toString();

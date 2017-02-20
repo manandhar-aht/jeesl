@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.rest.survey;
+package org.jeesl.interfaces.rest.survey;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -10,14 +10,14 @@ import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.survey.Survey;
 
 @Path("/rest/survey")
-public interface UtilsSurveyRest
+public interface JeeslSurveyXmlRest
 {
-	@GET @Path("/structure/{id:[1-9][0-9]*}") @Produces(MediaType.APPLICATION_XML)
+	@GET @Path("/xml/structure/{id:[1-9][0-9]*}") @Produces(MediaType.APPLICATION_XML)
 	Survey surveyStructure(@PathParam("id") long id);
 	
-	@GET @Path("/answers/{id:[1-9][0-9]*}") @Produces(MediaType.APPLICATION_XML)
+	@GET @Path("/xml/answers/{id:[1-9][0-9]*}") @Produces(MediaType.APPLICATION_XML)
 	Survey surveyAnswers(@PathParam("id") long id);
 	
-	@GET @Path("/question/units") @Produces(MediaType.APPLICATION_XML)
+	@GET @Path("/json/question/units") @Produces(MediaType.APPLICATION_XML)
 	Aht surveyQuestionUnits();
 }

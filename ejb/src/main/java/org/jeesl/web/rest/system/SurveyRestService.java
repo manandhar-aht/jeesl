@@ -8,6 +8,7 @@ import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
+import org.jeesl.factory.json.jeesl.JeeslContainerFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.survey.XmlAnswerFactory;
 import org.jeesl.factory.xml.survey.XmlSurveyFactory;
@@ -28,8 +29,8 @@ import org.jeesl.interfaces.rest.survey.JeeslSurveyRestExport;
 import org.jeesl.interfaces.rest.survey.JeeslSurveyRestImport;
 import org.jeesl.interfaces.rest.survey.JeeslSurveyXmlRest;
 import org.jeesl.model.json.system.status.JsonContainer;
-import org.jeesl.model.json.system.status.JsonStatus;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.util.query.json.JsonStatusQueryProvider;
 import org.jeesl.util.query.xml.StatusQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
@@ -94,6 +95,7 @@ public class SurveyRestService <L extends UtilsLang,
 	private final Class<OPTION> cOption;
 	private final Class<CORRELATION> cCorrelation;
 	
+	private JeeslContainerFactory jfContainer;
 	private XmlContainerFactory xfContainer;
 	private XmlStatusFactory xfStatus;
 	private XmlTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfTemplate;
@@ -125,6 +127,7 @@ public class SurveyRestService <L extends UtilsLang,
 		this.cOption=cOption;
 		this.cCorrelation=cCorrelation;
 	
+		jfContainer = new JeeslContainerFactory(JsonStatusQueryProvider.statusExport());
 		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exTemplate).getTemplate());
@@ -372,14 +375,7 @@ public class SurveyRestService <L extends UtilsLang,
 	@Override
 	public JsonContainer surveyQuestionUnitsJson()
 	{
-		JsonStatus x = new JsonStatus();
-		x.setId(123l);
-		x.setCode("abc");
-		
-		JsonContainer container = new JsonContainer();
-		container.getStatus().add(x);
-		container.getStatus().add(x);
-		return container;
+		return jfContainer.build(fSurvey.allOrderedPosition(cUNIT));
 	}
 
 

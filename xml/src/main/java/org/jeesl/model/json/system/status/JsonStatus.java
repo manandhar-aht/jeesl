@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName(value = "status")
+@JsonRootName(value="status")
 public class JsonStatus implements Serializable
 {
 	public static final long serialVersionUID=1;

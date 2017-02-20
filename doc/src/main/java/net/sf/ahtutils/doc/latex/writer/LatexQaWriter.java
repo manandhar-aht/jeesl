@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.model.xml.jeesl.Container;
 import org.openfuxml.content.table.Table;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.exception.OfxConfigurationException;
@@ -168,6 +169,6 @@ public class LatexQaWriter
 	public void setWithResponsible(boolean withResponsible) {this.withResponsible = withResponsible;}
 	public void setWithOrganisation(boolean withOrganisation) {this.withOrganisation = withOrganisation;}
 	
-	public void setUnits(Aht units){ofNfr.setUnits(units);}
+	public void setUnits(Container units){ofNfr.setUnits(units);}
 	public void setTestConditions(Aht conditions){ofFr.setTestConditions(conditions);}
 }

@@ -6,7 +6,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.survey.Survey;
 
 public interface JeeslSurveyXmlRest
@@ -18,5 +17,5 @@ public interface JeeslSurveyXmlRest
 	Survey surveyAnswers(@PathParam("id") long id);
 	
 	@GET @Path("/json/question/units") @Produces(MediaType.APPLICATION_XML)
-	Aht surveyQuestionUnits();
+	org.jeesl.model.xml.jeesl.Container surveyQuestionUnits();
 }

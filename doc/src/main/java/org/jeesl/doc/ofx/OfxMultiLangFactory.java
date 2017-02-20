@@ -3,6 +3,7 @@ package org.jeesl.doc.ofx;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.model.xml.jeesl.Container;
 import org.openfuxml.content.layout.Font;
 import org.openfuxml.content.list.Item;
 import org.openfuxml.content.ofx.Paragraph;
@@ -100,6 +101,21 @@ public class OfxMultiLangFactory
 		}
 		return OfxCellFactory.createParagraphCell(code);
 	}
+	public static Cell cell(String[] langs, String code, Container container)
+	{
+		if(container!=null)
+		{
+			try
+			{
+				Status status = StatusXpath.getStatus(container.getStatus(), code);
+				return cell(langs,status.getLangs());
+			}
+			catch (ExlpXpathNotFoundException e) {logger.warn(e.getMessage());}
+			catch (ExlpXpathNotUniqueException e) {logger.warn(e.getMessage());}
+		}
+		return OfxCellFactory.createParagraphCell(code);
+	}
+	
 	
 	public static Cell cell(String[] keys, Langs langs){return cell(keys,langs,null);}
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
 import org.jeesl.doc.ofx.OfxMultiLangFactory;
+import org.jeesl.model.xml.jeesl.Container;
 import org.openfuxml.content.table.Body;
 import org.openfuxml.content.table.Columns;
 import org.openfuxml.content.table.Content;
@@ -22,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
-import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.ahtutils.xml.survey.Question;
@@ -119,7 +119,5 @@ public class OfxQaNfrQuestionTableFactory extends AbstractUtilsOfxDocumentationF
 		return row;
 	}
 	
-	private Aht units;
-	public Aht getUnits() {return units;}
-	public void setUnits(Aht units) {this.units = units;}
+	private Container units; public Container getUnits() {return units;} public void setUnits(Container units) {this.units = units;}
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.model.xml.jeesl.Container;
 import org.openfuxml.content.ofx.Comment;
 import org.openfuxml.content.ofx.Paragraph;
 import org.openfuxml.content.ofx.Section;
@@ -24,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
 import net.sf.ahtutils.doc.ofx.qa.table.OfxQaNfrQuestionTableFactory;
 import net.sf.ahtutils.doc.ofx.qa.table.OfxQaNfrResultTableFactory;
-import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.security.Staff;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.ahtutils.xml.survey.Answer;
@@ -47,7 +47,7 @@ public class OfxQaNfrSectionFactory extends AbstractUtilsOfxDocumentationFactory
 		ofxTableAnswers = new OfxQaNfrResultTableFactory(config,langs,translations);
 	}
 	
-	public void setUnits(Aht units) {ofxTableQuestions.setUnits(units);}
+	public void setUnits(Container units) {ofxTableQuestions.setUnits(units);}
 	
 	public Section build(boolean withResults, net.sf.ahtutils.xml.survey.Section mainSection, Survey surveyAnswers, List<Staff> staff) throws OfxAuthoringException
 	{

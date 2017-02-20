@@ -8,6 +8,7 @@ import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
+import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.survey.XmlAnswerFactory;
 import org.jeesl.factory.xml.survey.XmlSurveyFactory;
 import org.jeesl.factory.xml.survey.XmlTemplateFactory;
@@ -28,6 +29,7 @@ import org.jeesl.interfaces.rest.survey.JeeslSurveyRestImport;
 import org.jeesl.interfaces.rest.survey.JeeslSurveyXmlRest;
 import org.jeesl.model.json.system.status.JsonContainer;
 import org.jeesl.model.json.system.status.JsonStatus;
+import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.util.query.xml.StatusQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
@@ -92,6 +94,7 @@ public class SurveyRestService <L extends UtilsLang,
 	private final Class<OPTION> cOption;
 	private final Class<CORRELATION> cCorrelation;
 	
+	private XmlContainerFactory xfContainer;
 	private XmlStatusFactory xfStatus;
 	private XmlTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfTemplate;
 	private XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfSurveys;
@@ -122,6 +125,7 @@ public class SurveyRestService <L extends UtilsLang,
 		this.cOption=cOption;
 		this.cCorrelation=cCorrelation;
 	
+		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exTemplate).getTemplate());
 		xfTemplate.lazyLoad(fSurvey,cSection);
@@ -185,6 +189,7 @@ public class SurveyRestService <L extends UtilsLang,
 		for(UNIT ejb : fSurvey.allOrderedPosition(cUNIT)){aht.getStatus().add(xfStatus.build(ejb));}
 		return aht;
 	}
+	@Override public Container surveyQuestionUnits() {return xfContainer.build(fSurvey.allOrderedPosition(cUNIT));}
 
 	@Override public Aht exportSurveyStatus()
 	{
@@ -362,13 +367,6 @@ public class SurveyRestService <L extends UtilsLang,
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		xml.getData().add(data);
 		return xml;
-	}
-	
-	@Override
-	public Aht surveyQuestionUnits()
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

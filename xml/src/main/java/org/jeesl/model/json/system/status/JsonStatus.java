@@ -20,6 +20,12 @@ public class JsonStatus implements Serializable
 	public String getCode() {return code;}
 	public void setCode(String code) {this.code = code;}
 	
+	@JsonProperty("label")
+	private String label;
+	public String getLabel() {return label;}
+	public void setLabel(String label) {this.label = label;}
+	
+	
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

@@ -27,7 +27,7 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	private Class<SURVEY> cSurvey;
 	
-	private Survey q;
+	private final Survey q;
 	
 	private XmlStatusFactory<SS,L,D> xfStatus;
 	private XmlDataFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfData;

@@ -9,6 +9,7 @@ import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.factory.json.jeesl.JeeslContainerFactory;
+import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.survey.XmlAnswerFactory;
 import org.jeesl.factory.xml.survey.XmlSurveyFactory;
@@ -96,6 +97,8 @@ public class SurveyRestService <L extends UtilsLang,
 	private final Class<CORRELATION> cCorrelation;
 	
 	private JeeslContainerFactory jfContainer;
+	private JsonSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> jfSurvey;
+	
 	private XmlContainerFactory xfContainer;
 	private XmlStatusFactory xfStatus;
 	private XmlTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfTemplate;
@@ -148,6 +151,8 @@ public class SurveyRestService <L extends UtilsLang,
 		efSurvey = ffSurvey.survey();
 		efData = ffSurvey.data();
 		efAnswer = ffSurvey.answer();
+		
+		jfSurvey = ffSurvey.surveyJson();
 	}
 	
 	public static <L extends UtilsLang,
@@ -353,6 +358,14 @@ public class SurveyRestService <L extends UtilsLang,
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		return xml;
+	}
+	
+	@Override
+	public org.jeesl.model.json.survey.Survey surveyStructureJson(String localeCode, long id)
+	{
+		org.jeesl.model.json.survey.Survey survey = JsonSurveyFactory.build();
+		
+		return survey;
 	}
 	
 	public Survey surveyAnswers(long id)

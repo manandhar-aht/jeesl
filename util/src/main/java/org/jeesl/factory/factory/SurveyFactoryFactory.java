@@ -11,6 +11,7 @@ import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
+import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
 import org.jeesl.factory.txt.survey.TxtSurveyQuestionFactory;
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
@@ -141,5 +142,10 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 	public SurveyHandler<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> handler(final JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)
 	{
 		return new SurveyHandler<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(fSurvey,this);
+	}
+	
+	public JsonSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> surveyJson()
+	{
+		return new JsonSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>();
 	}
 }

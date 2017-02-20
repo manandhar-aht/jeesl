@@ -44,7 +44,7 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 		this.fSurvey=fSurvey;
 		this.cSurvey=cSurvey;
 		
-		if(q.isSetData()){xfData.lazyLoad(fSurvey,cSection,cData);}
+		if(q.isSetData()){xfData.lazyLoad(fSurvey,cData);}
 	}
 	
 	public Survey build(SURVEY ejb)

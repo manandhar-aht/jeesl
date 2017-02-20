@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName(value = "question")
-public class SurveyQuestion implements Serializable,JeeslSimpleSurveyQuestion
+public class Question implements Serializable,JeeslSimpleSurveyQuestion
 {
 	public static final long serialVersionUID=1;
 

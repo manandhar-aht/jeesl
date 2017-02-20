@@ -1,14 +1,16 @@
 package org.jeesl.model.json.survey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.jeesl.interfaces.model.survey.JeeslSimpleSurveySection;
+import org.jeesl.interfaces.model.survey.JeeslSimpleSurvey;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName(value="section")
-public class SurveySection implements Serializable,JeeslSimpleSurveySection
+@JsonRootName(value="template")
+public class Template implements Serializable,JeeslSimpleSurvey
 {
 	public static final long serialVersionUID=1;
 
@@ -17,10 +19,11 @@ public class SurveySection implements Serializable,JeeslSimpleSurveySection
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 
-	@JsonProperty("name")
-	private String name;
-	public String getName() {return name;}
-	public void setName(String name) {this.name = name;}
+	@JsonProperty("sections")
+	private List<Section> sections;
+	public List<Section> getSections() {if(sections==null){sections = new ArrayList<Section>();} return sections;}
+	public void setSections(List<Section> sections) {this.sections = sections;}
+	
 	
 	public String toString()
 	{

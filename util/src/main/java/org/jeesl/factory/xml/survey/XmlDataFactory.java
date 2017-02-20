@@ -44,11 +44,11 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 		if(q.isSetSection()){xfSection = new XmlSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSection().get(0));}
 	}
 	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, Class<SECTION> cSection,Class<DATA> cData)
+	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<DATA> cData)
 	{
 		this.fSurvey=fSurvey;
 		this.cData=cData;
-		if(q.isSetSection()){xfSection.lazyLoad(fSurvey, cSection);}
+		if(q.isSetSection()){xfSection.lazyLoad(fSurvey);}
 	}
 	
 	public Data build(DATA ejb)

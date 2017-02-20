@@ -17,6 +17,10 @@ public class Survey implements Serializable,JeeslSimpleSurvey
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 
+	@JsonProperty("template")
+	private Template template;
+	public Template getTemplate() {return template;}
+	public void setTemplate(Template template) {this.template = template;}
 	
 	public String toString()
 	{

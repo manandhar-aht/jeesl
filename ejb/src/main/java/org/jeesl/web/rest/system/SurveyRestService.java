@@ -8,8 +8,9 @@ import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
-import org.jeesl.factory.json.jeesl.JeeslContainerFactory;
+import org.jeesl.factory.json.jeesl.JsonContainerFactory;
 import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
+import org.jeesl.factory.json.system.survey.JsonTemplateFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.survey.XmlAnswerFactory;
 import org.jeesl.factory.xml.survey.XmlSurveyFactory;
@@ -85,7 +86,7 @@ public class SurveyRestService <L extends UtilsLang,
 	
 	private final Class<SURVEY> cSurvey;
 	private final Class<SS> cSS;
-	private final Class<TEMPLATE> cTEMPLATE;
+	private final Class<TEMPLATE> cTemplate;
 	private final Class<VERSION> cVersion;
 	private final Class<TS> cTS;
 	private final Class<TC> cTC;
@@ -96,8 +97,9 @@ public class SurveyRestService <L extends UtilsLang,
 	private final Class<OPTION> cOption;
 	private final Class<CORRELATION> cCorrelation;
 	
-	private JeeslContainerFactory jfContainer;
+	private JsonContainerFactory jfContainer;
 	private JsonSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> jfSurvey;
+	private JsonTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> jfTemplate;
 	
 	private XmlContainerFactory xfContainer;
 	private XmlStatusFactory xfStatus;
@@ -119,7 +121,7 @@ public class SurveyRestService <L extends UtilsLang,
 		this.fSurvey=fSurvey;
 		this.cSurvey=cSurvey;
 		this.cSS=cSS;
-		this.cTEMPLATE=cTEMPLATE;
+		this.cTemplate=cTEMPLATE;
 		this.cVersion=cVersion;
 		this.cTS=cTS;
 		this.cTC=cTC;
@@ -130,11 +132,13 @@ public class SurveyRestService <L extends UtilsLang,
 		this.cOption=cOption;
 		this.cCorrelation=cCorrelation;
 	
-		jfContainer = new JeeslContainerFactory(JsonStatusQueryProvider.statusExport());
+		jfContainer = new JsonContainerFactory(JsonStatusQueryProvider.statusExport());
+		jfTemplate = new JsonTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(JsonStatusQueryProvider.templateExport());
+		
 		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exTemplate).getTemplate());
-		xfTemplate.lazyLoad(fSurvey,cSection);
+		xfTemplate.lazyLoad(fSurvey);
 		
 		xfSurveys = new XmlSurveyFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exSurveys).getSurveys().getSurvey().get(0));
 		
@@ -151,8 +155,6 @@ public class SurveyRestService <L extends UtilsLang,
 		efSurvey = ffSurvey.survey();
 		efData = ffSurvey.data();
 		efAnswer = ffSurvey.answer();
-		
-		jfSurvey = ffSurvey.surveyJson();
 	}
 	
 	public static <L extends UtilsLang,
@@ -210,7 +212,7 @@ public class SurveyRestService <L extends UtilsLang,
 	public Templates exportSurveyTemplates()
 	{
 		Templates xml = new Templates();
-		for(TEMPLATE template : fSurvey.all(cTEMPLATE))
+		for(TEMPLATE template : fSurvey.all(cTemplate))
 		{
 			xml.getTemplate().add(xfTemplate.build(template));
 		}
@@ -270,7 +272,7 @@ public class SurveyRestService <L extends UtilsLang,
 	public DataUpdate importSurveyTemplates(Templates templates)
 	{
 		DataUpdateTracker dut = new DataUpdateTracker(true);
-		dut.setType(XmlTypeFactory.build(cTEMPLATE.getName(),"DB Import"));
+		dut.setType(XmlTypeFactory.build(cTemplate.getName(),"DB Import"));
 		for(Template xTemplate : templates.getTemplate())
 		{
 			try
@@ -279,7 +281,7 @@ public class SurveyRestService <L extends UtilsLang,
 				TC category = fSurvey.fByCode(cTC,xTemplate.getCategory().getCode());
 				TEMPLATE eTemplate = efTemlate.build(category,status,xTemplate);
 				eTemplate = fSurvey.persist(eTemplate);
-				dut.getUpdate().getMapper().add(XmlMapperFactory.create(cTEMPLATE, xTemplate.getId(), eTemplate.getId()));
+				dut.getUpdate().getMapper().add(XmlMapperFactory.create(cTemplate, xTemplate.getId(), eTemplate.getId()));
 				
 				for(Section xSection : xTemplate.getSection())
 				{
@@ -311,7 +313,7 @@ public class SurveyRestService <L extends UtilsLang,
 		try
 		{
 			SS status = fSurvey.fByCode(cSS,survey.getStatus().getCode());
-			TEMPLATE template = fSurvey.find(cTEMPLATE,survey.getTemplate().getId());
+			TEMPLATE template = fSurvey.find(cTemplate,survey.getTemplate().getId());
 			SURVEY eSurvey = efSurvey.build(template,status,survey);
 			eSurvey = fSurvey.persist(eSurvey);
 			
@@ -353,17 +355,21 @@ public class SurveyRestService <L extends UtilsLang,
 		Survey xml = new Survey();
 		try
 		{
-			TEMPLATE ejb = fSurvey.find(cTEMPLATE,id);
+			TEMPLATE ejb = fSurvey.find(cTemplate,id);
 			xml.setTemplate(xfTemplate.build(ejb));
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		return xml;
 	}
-	
-	@Override
-	public org.jeesl.model.json.survey.Survey surveyStructureJson(String localeCode, long id)
+	@Override public org.jeesl.model.json.survey.Survey surveyStructureJson(String localeCode, long id)
 	{
 		org.jeesl.model.json.survey.Survey survey = JsonSurveyFactory.build();
+		try
+		{
+			TEMPLATE ejb = fSurvey.find(cTemplate,id);
+			survey.setTemplate(jfTemplate.build(ejb));
+		}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		
 		return survey;
 	}
@@ -384,12 +390,10 @@ public class SurveyRestService <L extends UtilsLang,
 		xml.getData().add(data);
 		return xml;
 	}
-
+	
 	@Override
 	public JsonContainer surveyQuestionUnitsJson()
 	{
 		return jfContainer.build(fSurvey.allOrderedPosition(cUNIT));
 	}
-
-
 }

@@ -3,6 +3,9 @@ package org.jeesl.util.query.json;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.json.system.survey.JsonSectionFactory;
+import org.jeesl.model.json.survey.Section;
+import org.jeesl.model.json.survey.Template;
 import org.jeesl.model.json.system.status.JsonStatus;
 
 import net.sf.ahtutils.xml.aht.Query;
@@ -36,6 +39,20 @@ public class JsonStatusQueryProvider
 		JsonStatus xml = new JsonStatus();
 		xml.setId(Long.valueOf(0));
 		xml.setCode("");
+		return xml;
+	}
+	
+	public static Template templateExport()
+	{	
+		Section section = JsonSectionFactory.build();
+		section.setId(0);
+		section.setCode("");
+		section.setName("");
+		
+		Template xml = new Template();
+		xml.setId(Long.valueOf(0));
+		xml.getSections().add(section);
+		
 		return xml;
 	}
 }

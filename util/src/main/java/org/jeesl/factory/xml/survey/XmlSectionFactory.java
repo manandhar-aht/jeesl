@@ -25,7 +25,6 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,SU
 	final static Logger logger = LoggerFactory.getLogger(XmlSectionFactory.class);
 		
 	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
-	private Class<SECTION> cSection;
 	
 	private Section q;
 	
@@ -34,10 +33,9 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,SU
 		this.q=q;
 	}
 	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<SECTION> cSection)
+	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)
 	{
 		this.fSurvey=fSurvey;
-		this.cSection=cSection;
 	}
 	
 	public Section build(SECTION ejb)
@@ -62,7 +60,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,SU
 		if(q.isSetSection())
 		{
 			XmlSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> f = new XmlSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSection().get(0));
-			if(fSurvey!=null){f.lazyLoad(fSurvey,cSection);}
+			if(fSurvey!=null){f.lazyLoad(fSurvey);}
 			
 			for(SECTION section : ejb.getSections())
 			{

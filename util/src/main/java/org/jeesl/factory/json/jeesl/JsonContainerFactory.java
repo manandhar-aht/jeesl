@@ -13,13 +13,13 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 @SuppressWarnings("rawtypes")
-public class JeeslContainerFactory
+public class JsonContainerFactory
 {
-	final static Logger logger = LoggerFactory.getLogger(JeeslContainerFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(JsonContainerFactory.class);
 	
 	private JsonStatusFactory jfStatus;
 	
-	public JeeslContainerFactory(JsonStatus query)
+	public JsonContainerFactory(JsonStatus query)
 	{
 		jfStatus = new JsonStatusFactory(query);
 	}

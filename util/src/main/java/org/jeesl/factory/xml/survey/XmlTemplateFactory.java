@@ -28,25 +28,26 @@ public class XmlTemplateFactory<L extends UtilsLang,D extends UtilsDescription,S
 	final static Logger logger = LoggerFactory.getLogger(XmlTemplateFactory.class);
 	
 	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
-	private Class<SECTION> cSection;
 	
 	private final Template q;
 	
 	private XmlStatusFactory<TS,L,D> xfStatus;
 	private XmlCategoryFactory<TC,L,D> xfCategory;
+	private XmlSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> xfSection;
 	
 	public XmlTemplateFactory(QuerySurvey q){this(q.getTemplate());}
 	public XmlTemplateFactory(Template q)
 	{
 		this.q=q;
 		if(q.isSetStatus()) {xfStatus = new XmlStatusFactory<TS,L,D>(q.getStatus());}
-		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory<TC,L,D>(q.getCategory());}
+		if(q.isSetCategory()) {xfCategory = new XmlCategoryFactory<TC,L,D>(q.getCategory());}
+		if(q.isSetSection()) {xfSection  = new XmlSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSection().get(0));}	
 	}
 	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey,Class<SECTION> cSection)
+	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)
 	{
 		this.fSurvey=fSurvey;
-		this.cSection=cSection;
+		xfSection.lazyLoad(fSurvey);
 	}
 	
 	public Template build(TEMPLATE ejb)
@@ -65,7 +66,7 @@ public class XmlTemplateFactory<L extends UtilsLang,D extends UtilsDescription,S
 		if(q.isSetSection())
 		{
 			XmlSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> f = new XmlSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSection().get(0));
-			if(fSurvey!=null){f.lazyLoad(fSurvey,cSection);}
+			if(fSurvey!=null){f.lazyLoad(fSurvey);}
 			
 			for(SECTION section : ejb.getSections())
 			{

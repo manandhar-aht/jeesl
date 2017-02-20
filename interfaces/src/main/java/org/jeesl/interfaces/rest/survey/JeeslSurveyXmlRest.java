@@ -9,7 +9,6 @@ import javax.ws.rs.core.MediaType;
 import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.survey.Survey;
 
-@Path("/rest/survey")
 public interface JeeslSurveyXmlRest
 {
 	@GET @Path("/xml/structure/{id:[1-9][0-9]*}") @Produces(MediaType.APPLICATION_XML)

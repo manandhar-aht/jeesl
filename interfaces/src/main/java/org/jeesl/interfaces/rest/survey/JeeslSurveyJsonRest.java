@@ -7,7 +7,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.jeesl.model.json.system.status.JsonContainer;
 
-@Path("/rest/survey")
 public interface JeeslSurveyJsonRest
 {	
 	@GET @Path("/json/question/units") @Produces(MediaType.APPLICATION_JSON)

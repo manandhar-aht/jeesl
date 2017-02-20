@@ -22,8 +22,12 @@ import org.jeesl.interfaces.model.survey.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.survey.JeeslSurveySection;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.rest.survey.JeeslSurveyJsonRest;
 import org.jeesl.interfaces.rest.survey.JeeslSurveyRestExport;
 import org.jeesl.interfaces.rest.survey.JeeslSurveyRestImport;
+import org.jeesl.interfaces.rest.survey.JeeslSurveyXmlRest;
+import org.jeesl.model.json.system.status.JsonContainer;
+import org.jeesl.model.json.system.status.JsonStatus;
 import org.jeesl.util.query.xml.StatusQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
@@ -69,7 +73,7 @@ public class SurveyRestService <L extends UtilsLang,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
 				extends AbstractJeeslRestService<L,D>	
-				implements JeeslSurveyRestExport,JeeslSurveyRestImport//,UtilsSurveyRest
+				implements JeeslSurveyRestExport,JeeslSurveyRestImport,JeeslSurveyJsonRest,JeeslSurveyXmlRest
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyRestService.class);
 	
@@ -359,4 +363,26 @@ public class SurveyRestService <L extends UtilsLang,
 		xml.getData().add(data);
 		return xml;
 	}
+	
+	@Override
+	public Aht surveyQuestionUnits()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JsonContainer surveyQuestionUnitsJson()
+	{
+		JsonStatus x = new JsonStatus();
+		x.setId(123l);
+		x.setCode("abc");
+		
+		JsonContainer container = new JsonContainer();
+		container.getStatus().add(x);
+		container.getStatus().add(x);
+		return container;
+	}
+
+
 }

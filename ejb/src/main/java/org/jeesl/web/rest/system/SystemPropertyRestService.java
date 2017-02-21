@@ -1,10 +1,10 @@
 package org.jeesl.web.rest.system;
 
 import org.jeesl.api.facade.system.JeeslSystemPropertyFacade;
+import org.jeesl.api.rest.system.property.JeeslSystemPropertyRestExport;
+import org.jeesl.api.rest.system.property.JeeslSystemPropertyRestImport;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
-import org.jeesl.interfaces.rest.system.property.JeeslSystemPropertyRestExport;
-import org.jeesl.interfaces.rest.system.property.JeeslSystemPropertyRestImport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

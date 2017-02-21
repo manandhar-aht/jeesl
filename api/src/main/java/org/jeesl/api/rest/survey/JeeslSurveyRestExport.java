@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.rest.survey;
+package org.jeesl.api.rest.survey;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

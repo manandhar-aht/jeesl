@@ -1,6 +1,10 @@
 package org.jeesl.web.rest.system;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.api.rest.survey.JeeslSurveyJsonRest;
+import org.jeesl.api.rest.survey.JeeslSurveyRestExport;
+import org.jeesl.api.rest.survey.JeeslSurveyRestImport;
+import org.jeesl.api.rest.survey.JeeslSurveyXmlRest;
 import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyFactory;
@@ -26,10 +30,6 @@ import org.jeesl.interfaces.model.survey.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.survey.JeeslSurveySection;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
-import org.jeesl.interfaces.rest.survey.JeeslSurveyJsonRest;
-import org.jeesl.interfaces.rest.survey.JeeslSurveyRestExport;
-import org.jeesl.interfaces.rest.survey.JeeslSurveyRestImport;
-import org.jeesl.interfaces.rest.survey.JeeslSurveyXmlRest;
 import org.jeesl.model.json.system.status.JsonContainer;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.util.query.json.JsonStatusQueryProvider;

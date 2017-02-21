@@ -1,8 +1,8 @@
 package org.jeesl.web.rest.system;
 
 import org.jeesl.api.facade.module.JeeslTrainingFacade;
-import org.jeesl.interfaces.rest.system.training.JeeslTrainingRestExport;
-import org.jeesl.interfaces.rest.system.training.JeeslTrainingRestImport;
+import org.jeesl.api.rest.system.training.JeeslTrainingRestExport;
+import org.jeesl.api.rest.system.training.JeeslTrainingRestImport;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;

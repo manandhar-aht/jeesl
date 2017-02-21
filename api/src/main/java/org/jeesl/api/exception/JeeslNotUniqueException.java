@@ -1,4 +1,4 @@
-package org.jeesl.exception;
+package org.jeesl.api.exception;
 
 import java.io.Serializable;
 import java.util.Date;

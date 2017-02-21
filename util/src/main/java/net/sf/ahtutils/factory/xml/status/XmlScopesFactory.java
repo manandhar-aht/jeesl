@@ -2,12 +2,12 @@ package net.sf.ahtutils.factory.xml.status;
 
 import java.util.List;
 
-import net.sf.ahtutils.exception.xml.UtilsXmlStructureException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Scopes;
 
+import org.jeesl.api.exception.xml.JeeslXmlStructureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class XmlScopesFactory
 		this.lang=lang;
 	}
 	
-	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Scopes build(List<S> ejbs) throws UtilsXmlStructureException
+	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Scopes build(List<S> ejbs) throws JeeslXmlStructureException
 	{
 		Scopes xml = new Scopes();
 		

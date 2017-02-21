@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.rest.system.property;
+package org.jeesl.api.rest.system.property;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

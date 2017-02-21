@@ -1,9 +1,9 @@
 package org.jeesl.web.rest.system;
 
 import org.jeesl.api.facade.system.JeeslSystemNewsFacade;
+import org.jeesl.api.rest.system.news.JeeslSystemNewsRestExport;
+import org.jeesl.api.rest.system.news.JeeslSystemNewsRestImport;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
-import org.jeesl.interfaces.rest.system.news.JeeslSystemNewsRestExport;
-import org.jeesl.interfaces.rest.system.news.JeeslSystemNewsRestImport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

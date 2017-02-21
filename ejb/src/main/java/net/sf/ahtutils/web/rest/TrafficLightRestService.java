@@ -1,5 +1,6 @@
 package net.sf.ahtutils.web.rest;
 
+import org.jeesl.api.exception.xml.JeeslXmlStructureException;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.slf4j.Logger;
@@ -7,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.exception.xml.UtilsXmlStructureException;
 import net.sf.ahtutils.factory.ejb.util.EjbTrafficLightFactory;
 import net.sf.ahtutils.factory.xml.utils.XmlTrafficLightFactory;
 import net.sf.ahtutils.factory.xml.utils.XmlTrafficLightsFactory;
@@ -63,7 +63,7 @@ public class TrafficLightRestService <L extends UtilsLang,D extends UtilsDescrip
 			{
 				xml.getTrafficLight().add(xfLight.build(light));
 			}
-			catch (UtilsXmlStructureException e) {e.printStackTrace();}
+			catch (JeeslXmlStructureException e) {e.printStackTrace();}
 		}
 		return xml;
 	}

@@ -22,7 +22,7 @@ public class Section implements Serializable,JeeslSimpleSurveySection
 	public long getId() {return id;}
 	public void setId(long id) {this.id = id;}
 
-	@JsonProperty("code1")
+	@JsonProperty("code")
 	private String code;
 	public String getCode() {return code;}
 	public void setCode(String code) {this.code = code;}
@@ -32,7 +32,7 @@ public class Section implements Serializable,JeeslSimpleSurveySection
 	private String name;
 	public String getName() {return name;}
 	public void setName(String name) {this.name = name;}
-	@JsonIgnore  public boolean isSetName() {return name!=null;}
+	@JsonIgnore public boolean isSetName() {return name!=null;}
 	
 	@JsonProperty("questions")
 	private List<Question> questions;

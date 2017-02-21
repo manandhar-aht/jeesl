@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.jeesl.interfaces.model.survey.JeeslSimpleSurveyQuestion;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -23,7 +24,7 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	private String question;
 	public String getQuestion() {return question;}
 	public void setQuestion(String question) {this.question = question;}
-	public boolean isSetQuestion() {return question!=null;}
+	@JsonIgnore public boolean isSetQuestion() {return question!=null;}
 	
 	public String toString()
 	{

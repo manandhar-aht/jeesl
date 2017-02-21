@@ -42,7 +42,7 @@ public class JsonQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
 	{
 		Question json = build();
 		
-		if(q.isSetId()){json.setId(ejb.getId());}
+		json.setId(ejb.getId());
 		if(q.isSetQuestion()){json.setQuestion(ejb.getQuestion());}
 		
 		return json;

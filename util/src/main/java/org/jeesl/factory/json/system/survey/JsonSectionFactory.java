@@ -43,7 +43,7 @@ public class JsonSectionFactory<L extends UtilsLang,D extends UtilsDescription,S
 		if(fSurvey!=null){ejb = fSurvey.load(ejb);}
 		Section json = build();
 		
-		if(q.isSetId()){json.setId(ejb.getId());}
+		json.setId(ejb.getId());
 		if(q.isSetCode()){json.setCode(ejb.getCode());}
 		if(q.isSetName()){json.setName(ejb.getName());}
 		

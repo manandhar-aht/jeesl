@@ -1,8 +1,6 @@
 package org.jeesl.interfaces.model.survey;
 
-import org.jeesl.interfaces.model.JeeslWithId;
-
-public interface JeeslSimpleSurveyQuestion extends JeeslWithId
+public interface JeeslSimpleSurveyQuestion
 {
 	String getQuestion();
 	void setQuestion(String question);

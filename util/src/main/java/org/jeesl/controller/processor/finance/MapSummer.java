@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.processor.finance;
+package org.jeesl.controller.processor.finance;
 
 import java.util.Map;
 
@@ -17,4 +17,3 @@ public class MapSummer
 		map.put(key, value+map.get(key));
 	}
 }
-

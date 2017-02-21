@@ -1,8 +1,7 @@
-package net.sf.ahtutils.controller.processor.finance;
+package org.jeesl.controller.processor.finance;
 
 import java.util.List;
 
-import org.jeesl.controller.processor.finance.AmountRounder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

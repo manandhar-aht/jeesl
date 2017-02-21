@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.processor.finance;
+package org.jeesl.controller.processor.finance;
 
 import java.util.List;
 
@@ -46,4 +46,3 @@ public class FigureSummer
 		return a.getValue()-b.getValue();
 	}
 }
-

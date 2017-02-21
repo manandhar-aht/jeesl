@@ -28,7 +28,7 @@ public class JsonTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	public JsonTemplateFactory(Template q)
 	{
-		if(q.getSections()!=null && !q.getSections().isEmpty()){jfSection = new JsonSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSections().get(0));}
+		if(!q.getSections().isEmpty()){jfSection = new JsonSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSections().get(0));}
 	}
 	
 	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)

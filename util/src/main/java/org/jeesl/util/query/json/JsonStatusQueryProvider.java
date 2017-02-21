@@ -3,7 +3,9 @@ package org.jeesl.util.query.json;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.json.system.survey.JsonQuestionFactory;
 import org.jeesl.factory.json.system.survey.JsonSectionFactory;
+import org.jeesl.model.json.survey.Question;
 import org.jeesl.model.json.survey.Section;
 import org.jeesl.model.json.survey.Template;
 import org.jeesl.model.json.system.status.JsonStatus;
@@ -43,11 +45,16 @@ public class JsonStatusQueryProvider
 	}
 	
 	public static Template templateExport()
-	{	
+	{
+		Question question = JsonQuestionFactory.build();
+		question.setId(0);
+		question.setQuestion("");
+		
 		Section section = JsonSectionFactory.build();
 		section.setId(0);
 		section.setCode("");
 		section.setName("");
+		section.getQuestions().add(question);
 		
 		Template xml = new Template();
 		xml.setId(Long.valueOf(0));

@@ -1,6 +1,8 @@
 package org.jeesl.model.json.survey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jeesl.interfaces.model.survey.JeeslSimpleSurveySection;
 
@@ -29,6 +31,11 @@ public class Section implements Serializable,JeeslSimpleSurveySection
 	public String getName() {return name;}
 	public void setName(String name) {this.name = name;}
 	public boolean isSetName() {return name!=null;}
+	
+	@JsonProperty("question")
+	private List<Question> questions;
+	public List<Question> getQuestions() {if(questions==null){questions = new ArrayList<Question>();} return questions;}
+	public void setQuestions(List<Question> questions) {this.questions = questions;}
 	
 	public String toString()
 	{

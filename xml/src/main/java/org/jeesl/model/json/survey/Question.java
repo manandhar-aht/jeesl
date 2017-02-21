@@ -16,11 +16,13 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	private Long id;
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
-
+	public boolean isSetId() {return id!=null;}
+	
 	@JsonProperty("question")
 	private String question;
 	public String getQuestion() {return question;}
 	public void setQuestion(String question) {this.question = question;}
+	public boolean isSetQuestion() {return question!=null;}
 	
 	public String toString()
 	{

@@ -133,8 +133,7 @@ public class SurveyRestService <L extends UtilsLang,
 		this.cCorrelation=cCorrelation;
 	
 		jfContainer = new JsonContainerFactory(JsonStatusQueryProvider.statusExport());
-		jfTemplate = new JsonTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(JsonStatusQueryProvider.templateExport());
-		jfTemplate.lazyLoad(fSurvey);
+		jfTemplate = new JsonTemplateFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(JsonStatusQueryProvider.templateExport(),fSurvey);
 		
 		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());

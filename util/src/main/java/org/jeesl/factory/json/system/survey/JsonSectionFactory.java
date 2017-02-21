@@ -27,15 +27,12 @@ public class JsonSectionFactory<L extends UtilsLang,D extends UtilsDescription,S
 	private JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	private JsonQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> jfQuestion;
 	
-	public JsonSectionFactory(Section q)
+	public JsonSectionFactory(Section q){this(q,null);}
+	public JsonSectionFactory(Section q,JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)
 	{
 		this.q=q;
-		if(!q.getQuestions().isEmpty()){jfQuestion = new JsonQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getQuestions().get(0));}
-	}
-	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)
-	{
 		this.fSurvey=fSurvey;
+		if(!q.getQuestions().isEmpty()){jfQuestion = new JsonQuestionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getQuestions().get(0),fSurvey);}
 	}
 	
 	public Section build(SECTION ejb)

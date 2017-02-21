@@ -48,12 +48,11 @@ public interface JeeslSurveyQuestion<L extends UtilsLang,
 	Boolean getCalculateScore();
 	void setCalculateScore(Boolean calculateScore);
 	
-	Double getMaxScore();
-	void setMaxScore(Double maxScore);
-	
 	Double getMinScore();
 	void setMinScore(Double maxScore);
 	
+	Double getMaxScore();
+	void setMaxScore(Double maxScore);
 	
 	Boolean getShowBoolean();
 	void setShowBoolean(Boolean showBoolean);

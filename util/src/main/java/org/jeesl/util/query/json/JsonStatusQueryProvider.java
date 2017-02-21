@@ -48,7 +48,23 @@ public class JsonStatusQueryProvider
 	{
 		Question question = JsonQuestionFactory.build();
 		question.setId(0);
+		question.setVisible(true);
+		question.setPosition(0);
+		question.setCode("");
+		question.setTopic("");
 		question.setQuestion("");
+		question.setRemark("");
+		question.setCalculateScore(true);
+		question.setMinScore(0d);
+		question.setMaxScore(0d);
+		question.setShowBoolean(true);
+		question.setShowInteger(true);
+		question.setShowDouble(true);
+		question.setShowText(true);
+		question.setShowScore(true);
+		question.setShowRemark(true);
+		question.setShowSelectOne(true);
+		question.setShowSelectMulti(true);
 		
 		Section section = JsonSectionFactory.build();
 		section.setId(0);

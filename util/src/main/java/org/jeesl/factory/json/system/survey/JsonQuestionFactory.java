@@ -11,9 +11,11 @@ import org.jeesl.interfaces.model.survey.JeeslSurveySection;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
 import org.jeesl.model.json.survey.Question;
-import org.jeesl.model.json.survey.Section;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -28,13 +30,10 @@ public class JsonQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	private Question q;
 	
-	public JsonQuestionFactory(Question q)
+	public JsonQuestionFactory(Question q){this(q,null);}
+	public JsonQuestionFactory(Question q, JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)
 	{
 		this.q=q;
-	}
-	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)
-	{
 		this.fSurvey=fSurvey;
 	}
 	
@@ -43,7 +42,25 @@ public class JsonQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
 		Question json = build();
 		
 		json.setId(ejb.getId());
+		json.setVisible(ejb.isVisible());
+		json.setPosition(ejb.getPosition());
+		if(q.isSetCode()){json.setCode(ejb.getCode());}
+		if(q.isSetTopic()){json.setTopic(ejb.getTopic());}
 		if(q.isSetQuestion()){json.setQuestion(ejb.getQuestion());}
+		if(q.isSetRemark()){json.setRemark(ejb.getRemark());}
+		
+		if(q.isSetCalculateScore()){json.setCalculateScore(ejb.getCalculateScore());}
+		if(q.isSetMinScore()){json.setMinScore(ejb.getMinScore());}
+		if(q.isSetMaxScore()){json.setMaxScore(ejb.getMaxScore());}
+		
+		if(q.isSetShowBoolean()){json.setShowBoolean(ejb.getShowBoolean());}
+		if(q.isSetShowInteger()){json.setShowInteger(ejb.getShowInteger());}
+		if(q.setShowDouble()){json.setShowDouble(ejb.getShowDouble());}
+		if(q.isSetShowText()){json.setShowText(ejb.getShowText());}
+		if(q.isSetShowScore()){json.setShowScore(ejb.getShowScore());}
+		if(q.isSetShowRemark()){json.setShowRemark(ejb.getShowRemark());}
+		if(q.isSetShowSelectOne()){json.setShowSelectOne(ejb.getShowSelectOne());}
+		if(q.isSetShowSelectMulti()){json.setShowSelectMulti(ejb.getShowSelectMulti());}
 		
 		return json;
 	}

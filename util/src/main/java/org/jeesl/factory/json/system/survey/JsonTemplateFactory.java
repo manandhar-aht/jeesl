@@ -26,15 +26,11 @@ public class JsonTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	private JsonSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> jfSection;
 	
-	public JsonTemplateFactory(Template q)
-	{
-		if(!q.getSections().isEmpty()){jfSection = new JsonSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSections().get(0));}
-	}
-	
-	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)
+	public JsonTemplateFactory(Template q){this(q,null);}
+	public JsonTemplateFactory(Template q, JeeslSurveyFacade<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey)
 	{
 		this.fSurvey=fSurvey;
-		if(jfSection!=null){jfSection.lazyLoad(fSurvey);}
+		if(!q.getSections().isEmpty()){jfSection = new JsonSectionFactory<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>(q.getSections().get(0),fSurvey);}
 	}
 	
 	public Template build(TEMPLATE ejb)

@@ -2,8 +2,9 @@
 <jeesl:container xmlns:us="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:un="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:jeesl="http://www.jeesl.org">
     <us:status code="hierarchical" visible="true" position="1">
         <us:langs>
+        	<us:lang key="de" translation="Hierarchisch"/>
             <us:lang key="en" translation="Hierarchical"/>
-            <us:lang key="fr" translation=""/>
+            <us:lang key="fr" translation="Hierarchical"/>
         </us:langs>
         <us:descriptions>
             <us:description key="en">The report will generate a hierarchical structure. Cells belonging to the same hierarchy level are left blank.</us:description>
@@ -12,8 +13,9 @@
     </us:status>
     <us:status code="flat" visible="true" position="2">
         <us:langs>
+        	<us:lang key="de" translation="Flach"/>
             <us:lang key="en" translation="Flat"/>
-            <us:lang key="fr" translation=""/>
+            <us:lang key="fr" translation="Flat"/>
         </us:langs>
         <us:descriptions>
             <us:description key="en">The report will generate a 'flat' structure, e.g. all cells in a row are filled.</us:description>

@@ -11,12 +11,12 @@ import javax.persistence.criteria.Root;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.ejb.sync.EjbSyncFactory;
-import net.sf.ahtutils.interfaces.facade.UtilsSyncFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.sync.UtilsSync;
 
+import org.jeesl.api.facade.core.JeeslSyncFacade;
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 
@@ -25,7 +25,7 @@ public class UtilsSyncFacadeBean <L extends UtilsLang,
 									STATUS extends UtilsStatus<STATUS,L,D>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									SYNC extends UtilsSync<L,D,STATUS,CATEGORY>>  
-	extends UtilsFacadeBean implements UtilsSyncFacade<L,D,STATUS,CATEGORY,SYNC>
+	extends UtilsFacadeBean implements JeeslSyncFacade<L,D,STATUS,CATEGORY,SYNC>
 {	
 	public UtilsSyncFacadeBean(EntityManager em)
 	{

@@ -30,26 +30,30 @@
 	</s:translation>
 	<s:translation key="IoReportColumnWidth">
 		<s:langs>
+			<s:lang key="de" translation="Spaltenbreite"/>
 			<s:lang key="en" translation="Column Width"/>
 			<s:lang key="fr" translation="Column Width"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="IoReportSettingFilling">
 		<s:langs>
-			<s:lang key="en" translation="Setting Filling"/>
-			<s:lang key="fr" translation="Setting Filling"/>
+			<s:lang key="de" translation="Report Auffüllung"/>
+			<s:lang key="en" translation="Report Filling"/>
+			<s:lang key="fr" translation="Report Filling"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="IoReportSettingTransformation">
 		<s:langs>
-			<s:lang key="en" translation="Setting Transformation"/>
-			<s:lang key="fr" translation="Setting Transformation"/>
+			<s:lang key="de" translation="Report Transformation"/>
+			<s:lang key="en" translation="Report Transformation"/>
+			<s:lang key="fr" translation="Report Transformation"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="IoReportSettingImplementation">
 		<s:langs>
-			<s:lang key="en" translation="Setting Implementation"/>
-			<s:lang key="fr" translation="Setting Implementation"/>
+			<s:lang key="de" translation="Report Implementierung"/>
+			<s:lang key="en" translation="Report Implementation"/>
+			<s:lang key="fr" translation="Report Implementation"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="IoMailCategory">
@@ -77,4 +81,13 @@
 			<s:lang key="fr" translation="DB Dump Host"/>
 		</s:langs>
 	</s:translation>
+	
+	<s:translation key="IoReportCategory">
+		<s:langs>
+			<s:lang key="de" translation="Report Kategorie"/>
+			<s:lang key="en" translation="Report Category"/>
+			<s:lang key="fr" translation="Report Category"/>
+		</s:langs>
+	</s:translation>
+	
 </s:translations>

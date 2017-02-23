@@ -9,7 +9,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 
-import net.sf.ahtutils.interfaces.facade.UtilsUserFacade;
+import org.jeesl.api.facade.core.JeeslUserFacade;
+
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -30,7 +31,7 @@ public class UtilsUserFacadeBean<L extends UtilsLang,
 									AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 									USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 							extends UtilsFacadeBean
-							implements UtilsUserFacade<L,D,C,R,V,U,A,AT,USER>
+							implements JeeslUserFacade<L,D,C,R,V,U,A,AT,USER>
 {	
 	public UtilsUserFacadeBean(EntityManager em)
 	{

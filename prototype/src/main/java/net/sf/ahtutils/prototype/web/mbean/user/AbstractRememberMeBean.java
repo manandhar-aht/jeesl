@@ -6,12 +6,12 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 
+import org.jeesl.api.facade.core.JeeslUserFacade;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.facade.UtilsUserFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsRememberMe;
@@ -42,7 +42,7 @@ public class AbstractRememberMeBean <L extends UtilsLang,D extends UtilsDescript
 	protected boolean logOnInfo = false;
 	private boolean dummy; public boolean isDummy() {return dummy;} public void setDummy(boolean dummy) {this.dummy = dummy;}
 	
-	protected void readCookie(Class<REM> cRem, UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUser, String cookieName)
+	protected void readCookie(Class<REM> cRem, JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUser, String cookieName)
 	{
 		Map<String,Object> cookies = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();
 		if(cookies.containsKey(cookieName))

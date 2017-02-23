@@ -2,11 +2,11 @@ package net.sf.ahtutils.prototype.web.mbean.user;
 
 import java.io.Serializable;
 
+import org.jeesl.api.facade.core.JeeslUserFacade;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.facade.UtilsUserFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -31,14 +31,14 @@ public class AbstractUserBean <L extends UtilsLang,D extends UtilsDescription,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractUserBean.class);
 	
-	protected UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser;
+	protected JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser;
 	
 	protected USER user;
 	
 	protected String ipAddress;
 	protected String localeCode;
 	
-	public void initSuper(UtilsUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser,final Class<USER> cUser)
+	public void initSuper(JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser,final Class<USER> cUser)
 	{
 		this.fUtilsUser=fUtilsUser;
 	}

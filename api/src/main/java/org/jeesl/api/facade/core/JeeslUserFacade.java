@@ -1,7 +1,8 @@
-package net.sf.ahtutils.interfaces.facade;
+package org.jeesl.api.facade.core;
 
 import java.util.List;
 
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
@@ -12,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 
-public interface UtilsUserFacade <L extends UtilsLang,D extends UtilsDescription,
+public interface JeeslUserFacade <L extends UtilsLang,D extends UtilsDescription,
 									C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 									R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 									V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,

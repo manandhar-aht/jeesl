@@ -139,7 +139,23 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		{
 			Object value = context.getValue(ioRow.getQueryCell());
 			if(value==null){columnNr.add(1);}
-			else{XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(ioRow),value.toString());}
+			else
+			{
+				CellStyle style = xfStyle.get(ioRow);
+				switch(xfStyle.getDataType(ioRow))
+				{
+					case string: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);	break;
+					case dble: 	XlsCellFactory.build(xlsRow,columnNr,style,(Double)value);	break;
+					case intgr:		Integer iValue;
+									if(value instanceof String){iValue = Integer.valueOf((String)value);}
+									else {iValue = (Integer)value;}
+									XlsCellFactory.build(xlsRow,columnNr,style,iValue);	break;
+					case lng: XlsCellFactory.build(xlsRow,columnNr,style,(Long)value);	break;
+					case dte: XlsCellFactory.build(xlsRow,columnNr,style,(XMLGregorianCalendar)value); break;
+					case bool: XlsCellFactory.build(xlsRow,columnNr,style,(Boolean)value); break;
+					default: XlsCellFactory.build(xlsRow,columnNr,style,(String)value);
+				}
+			}
 		}
 		catch (JXPathNotFoundException e){columnNr.add(1);}
 	}
@@ -177,7 +193,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		Cell cell = xlsRow.createCell(columnNr);
         cell.setCellStyle(style);
         
- //       logger.info(value.getClass().getSimpleName()+" "+value.toString()+" style:"+style.toString());
+//        logger.info(value.getClass().getSimpleName()+" "+value.toString()+" style:"+style.toString());
         if(value!=null)
         {
 	        if(value instanceof String){cell.setCellValue((String)value);}

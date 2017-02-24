@@ -541,4 +541,12 @@ public class ObjectFactory {
         return new Process();
     }
 
+    /**
+     * Create an instance of {@link Quarter }
+     * 
+     */
+    public Quarter createQuarter() {
+        return new Quarter();
+    }
+
 }

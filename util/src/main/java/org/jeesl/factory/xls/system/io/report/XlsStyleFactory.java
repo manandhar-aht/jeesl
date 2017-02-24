@@ -49,8 +49,12 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(XlsStyleFactory.class);
 	
 	private Map<STYLE,CellStyle> mapHeader;
+	
 	private Map<COLUMN,CellStyle> mapCell;
+	private Map<ROW,CellStyle> mapRow;
+	
 	private Map<COLUMN,JeeslReportLayout.Data> mapCellDataType;
+	private Map<ROW,JeeslReportLayout.Data> mapRowDataType;
 	
 	private CellStyle styleFallback; public CellStyle getStyleFallback() {return styleFallback;}
 	
@@ -62,7 +66,9 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	{
 		mapHeader = new HashMap<STYLE,CellStyle>();
 		mapCell = new HashMap<COLUMN,CellStyle>();
+		mapRow = new HashMap<ROW,CellStyle>();
 		mapCellDataType = new HashMap<COLUMN,JeeslReportLayout.Data>();
+		mapRowDataType = new HashMap<ROW,JeeslReportLayout.Data>();
 		
 		tfColumn = new TxtIoColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>("en");
 		
@@ -86,6 +92,11 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
         styleLabelLeft.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         styleLabelLeft.setFont(fontItalicBold);
         
+		for(ROW r : ioRows)
+		{
+			mapRow.put(r, buildRow(xlsWorkbook,r));
+			mapRowDataType.put(r,toDataTypeEnum(EjbIoReportColumnFactory.toRowDataType(r)));
+		}
 		for(GROUP g : ioGroups)
 		{
 			if(!mapHeader.containsKey(g.getStyleHeader())){mapHeader.put(g.getStyleHeader(), buildStyle(xlsWorkbook,g.getStyleHeader()));}
@@ -93,21 +104,26 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 		for(COLUMN c : ioColumns)
 		{
 			mapCell.put(c, buildCell(xlsWorkbook,c));
-			
 			CDT cdt = EjbIoReportColumnFactory.toCellDataType(c);
 			logger.trace(tfColumn.position(c));
-			if(cdt.getCode().startsWith("text")){mapCellDataType.put(c,JeeslReportLayout.Data.string);}
-			else if(cdt.getCode().startsWith("numberDouble")){mapCellDataType.put(c,JeeslReportLayout.Data.dble);}
-			else if(cdt.getCode().startsWith("numberInteger")){mapCellDataType.put(c,JeeslReportLayout.Data.intgr);}
-			else if(cdt.getCode().startsWith("numberLong")){mapCellDataType.put(c,JeeslReportLayout.Data.lng);}
-			else if(cdt.getCode().startsWith("date")){mapCellDataType.put(c,JeeslReportLayout.Data.dte);}
-			else if(cdt.getCode().startsWith("bool")){mapCellDataType.put(c,JeeslReportLayout.Data.bool);}
-			else
-			{
-				logger.warn("Unknown Handling for "+cdt.getCode());
-				mapCellDataType.put(c,JeeslReportLayout.Data.string);
-			}	
+			mapCellDataType.put(c,toDataTypeEnum(cdt));
 		}
+	}
+	
+	private JeeslReportLayout.Data toDataTypeEnum(CDT cdt)
+	{
+		if(cdt==null){return JeeslReportLayout.Data.string;}
+		
+		if(cdt.getCode().startsWith("text")){return JeeslReportLayout.Data.string;}
+		else if(cdt.getCode().startsWith("numberDouble")){return JeeslReportLayout.Data.dble;}
+		else if(cdt.getCode().startsWith("numberInteger")){return JeeslReportLayout.Data.intgr;}
+		else if(cdt.getCode().startsWith("numberLong")){return JeeslReportLayout.Data.lng;}
+		else if(cdt.getCode().startsWith("date")){return JeeslReportLayout.Data.dte;}
+		else if(cdt.getCode().startsWith("bool")){return JeeslReportLayout.Data.bool;}
+		else
+		{
+			return JeeslReportLayout.Data.string;
+		}	
 	}
 	
 	private CellStyle buildStyle(Workbook xlsWorkbook, STYLE ioStyle)
@@ -155,6 +171,32 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
         return style;
 	}
 	
+	private CellStyle buildRow(Workbook xlsWorkbook, ROW row)
+	{
+        CellStyle style = xlsWorkbook.createCellStyle();
+       
+        CDT dataType = EjbIoReportColumnFactory.toRowDataType(row);
+        if(dataType!=null)
+        {
+        	if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.text.toString()))
+        	{
+        		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat("text"));
+        	}
+        	else if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.number.toString()))
+        	{
+        		logger.info("Creating Number "+dataType.getSymbol());
+        		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat(transformJavaToPoiPattern(dataType.getSymbol())));
+        	}
+        	else if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.date.toString()))
+        	{
+        		logger.info("Creating Row Date "+dataType.getSymbol());
+        		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat(dataType.getSymbol()));
+        	}
+        }
+        
+        return style;
+	}
+	
 	public CellStyle get(JeeslReportLayout.Style type, GROUP group)
 	{
 		switch(type)
@@ -166,6 +208,8 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	public JeeslReportLayout.Data getDataType(COLUMN column){return mapCellDataType.get(column);}
+	public JeeslReportLayout.Data getDataType(ROW row){return mapRowDataType.get(row);}
+	
 	public CellStyle get(JeeslReportLayout.Style type, COLUMN column)
 	{
 		switch(type)
@@ -183,7 +227,16 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	public CellStyle get(ROW row)
 	{
-		return styleFallback;
+		if(mapRow.containsKey(row))
+		{
+//			logger.info("Found Style for row:"+row.toString());
+			return mapRow.get(row);
+		}
+		else
+		{
+//			logger.info("Fallback for row:"+row.toString());
+			return styleFallback;
+		}
 	}
 	
 	

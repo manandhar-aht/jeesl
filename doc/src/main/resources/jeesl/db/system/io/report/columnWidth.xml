@@ -24,9 +24,20 @@
     </us:status>
     <us:status code="min" visible="true" position="3">
         <us:langs>
-        	<us:lang key="de" translation="Minimum"/>
+        	<us:lang key="de" translation="Minimal"/>
             <us:lang key="en" translation="Minimum"/>
             <us:lang key="fr" translation="Minimum"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="max" visible="true" position="4">
+        <us:langs>
+        	<us:lang key="de" translation="Maximal"/>
+            <us:lang key="en" translation="Maximum"/>
+            <us:lang key="fr" translation="Maximum"/>
         </us:langs>
         <us:descriptions>
             <us:description key="en"></us:description>

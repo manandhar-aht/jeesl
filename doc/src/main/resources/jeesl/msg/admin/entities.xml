@@ -84,10 +84,16 @@
 	
 	<s:translation key="IoReportCategory">
 		<s:langs>
-			<s:lang key="de" translation="Report Kategorie"/>
+			<s:lang key="de" translation="Berichtskategorie"/>
 			<s:lang key="en" translation="Report Category"/>
 			<s:lang key="fr" translation="Report Category"/>
 		</s:langs>
 	</s:translation>
-	
+	<s:translation key="IoReportAggregation">
+		<s:langs>
+			<s:lang key="de" translation="Berichtsaggregierung"/>
+			<s:lang key="en" translation="Report Aggregation"/>
+			<s:lang key="fr" translation="Report Aggregation"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

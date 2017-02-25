@@ -16,6 +16,9 @@ public interface JeeslIoReportRestExport
 	@GET @Path("/system/io/report/category") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemIoReportCategories();
 	
+	@GET @Path("/system/io/report/aggregation") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemIoReportAggregation();
+	
 	@GET @Path("/system/io/reports") @Produces(MediaType.APPLICATION_XML)
 	Reports exportSystemIoReports();
 	

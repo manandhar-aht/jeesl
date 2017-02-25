@@ -20,12 +20,26 @@
 	</s:translation>
 	<s:translation key="aupFmSuccess">
 		<s:langs>
+			<s:lang key="en" translation="Success **"/>
+			<s:lang key="fr" translation="Success **"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="jeeslFmSuccess">
+		<s:langs>
+			<s:lang key="de" translation="Erfolg"/>
 			<s:lang key="en" translation="Success"/>
 			<s:lang key="fr" translation="Success"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="aupFmObjectSaved">
 		<s:langs>
+			<s:lang key="en" translation="Object saved **"/>
+			<s:lang key="fr" translation="Object saved **"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="jeeslFmObjectSaved">
+		<s:langs>
+			<s:lang key="en" translation="Objekt gespeichert"/>
 			<s:lang key="en" translation="Object saved"/>
 			<s:lang key="fr" translation="Object saved"/>
 		</s:langs>

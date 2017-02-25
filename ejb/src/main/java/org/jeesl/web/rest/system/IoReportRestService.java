@@ -191,6 +191,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	}
 	
 	@Override public Container exportSystemIoReportCategories() {return xfContainer.build(fReport.allOrderedPosition(cCategory));}
+	@Override public Container exportSystemIoReportAggregation() {return xfContainer.build(fReport.allOrderedPosition(cCategory));}
 	@Override public Container exportSystemIoReportSettingFilling() {return xfContainer.build(fReport.allOrderedPosition(cFilling));}
 	@Override public Container exportSystemIoReportSettingTransformation() {return xfContainer.build(fReport.allOrderedPosition(cTransformation));}
 	@Override public Container exportSystemIoReportSettingImplementation() {return xfContainer.build(fReport.allOrderedPosition(cImplementation));}
@@ -234,6 +235,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	}
 	
 	@Override public DataUpdate importSystemIoReportCategories(Container categories){return importStatus(cCategory,categories,null);}
+	@Override public DataUpdate importSystemIoReportAggregation(Container container){return importStatus(cCategory,container,null);}
 	@Override public DataUpdate importSystemIoReportSettingFilling(Container types){return importStatus(cFilling,types,null);}
 	@Override public DataUpdate importSystemIoReportSettingTransformation(Container types){return importStatus(cTransformation,types,null);}
 	@Override public DataUpdate importSystemIoReportSettingImplementation(Container types){return importStatus(cImplementation,types,null);}

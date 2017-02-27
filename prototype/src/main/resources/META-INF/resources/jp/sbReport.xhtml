@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+    xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="report" required="true"/>
+		<composite:attribute name="filling" required="false" default="false"/>
+		<composite:attribute name="transformation" required="false" default="false"/>
+		<composite:attribute name="groups" required="false" default="false"/>
+	</composite:interface>
+
+	<composite:implementation>
+
+		<aht:li>
+			<f:attribute name="styleClass" value="aupStatusBarRight"/>
+			<label for="#{cc.id}">
+				<h:graphicImage library="jeeslPrototypeGfx" name="12/sb/report.png"/>
+			</label>
+			<input type="checkbox" id="#{cc.id}" />
+			<ul id="aupStatusBarReports">
+				<li><b><h:outputText value="#{cc.attrs.report.ioReport.name[localeCode].lang}"/></b></li>
+				<li><h:outputText value="#{cc.attrs.report.ioReport.description[localeCode].lang}"/></li>
+				
+				<aht:li rendered="#{cc.attrs.filling}"><b><h:outputText value="Filling"/></b></aht:li>
+				<ui:repeat var="var" value="#{appReportBean.fillings}">
+					<aht:li rendered="#{cc.attrs.filling}">
+						<h:commandLink>
+							<h:outputText value="#{var.name[userBean.localeCode].lang}"/>
+							<aup:sbCheckmark value="#{reportSelectorBean.mapFilling[var]}"/>
+							<p:ajax event="click" update=":fStatusBar" ajax="true" listener="#{reportSelectorBean.toggleFilling(var)}"/>
+						</h:commandLink>
+					</aht:li>
+				</ui:repeat>
+				
+				<aht:li rendered="#{cc.attrs.transformation}"><b><h:outputText value="Column Transformation"/></b></aht:li>
+				<ui:repeat var="var" value="#{appReportBean.columnAggregations}">
+					<aht:li rendered="#{cc.attrs.transformation}">
+						<h:commandLink>
+							<h:outputText value="#{var.name[userBean.localeCode].lang}"/>
+							<aup:sbCheckmark value="#{reportSelectorBean.mapTransformation[var]}"/>
+							<p:ajax event="click" update=":fStatusBar" ajax="true" listener="#{reportSelectorBean.toggleTransformation(var)}"/>
+						</h:commandLink>
+					</aht:li>
+				</ui:repeat>
+				
+				<aht:li rendered="#{cc.attrs.groups}"><b><h:outputText value="Column Groups"/></b></aht:li>
+				<ui:repeat var="var" value="#{cc.attrs.report.groupsAll}">
+					<aht:li rendered="#{cc.attrs.groups}">
+						<h:commandLink>
+							<h:outputText value="#{var.name[userBean.localeCode].lang}"/>
+							<aup:sbCheckmark value="#{cc.attrs.report.mapGroupVisibilityToggle[var]}"/>
+							<p:ajax event="click" update=":fStatusBar" ajax="true" listener="#{cc.attrs.report.toggleGroupVisibility(var)}"/>
+						</h:commandLink>
+					</aht:li>
+				</ui:repeat>
+			</ul>
+		</aht:li>
+	</composite:implementation>
+</html>

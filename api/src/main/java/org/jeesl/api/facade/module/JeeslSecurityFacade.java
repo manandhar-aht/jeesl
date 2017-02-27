@@ -13,6 +13,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithCategory;
+import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithViews;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsStaffPool;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
@@ -33,6 +34,7 @@ public interface JeeslSecurityFacade <L extends UtilsLang,
 	R load(Class<R> cRole, R role);
 	V load(Class<V> cView, V view);
 	U load(Class<U> cUsecase, U usecase);
+//	UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER> load(Class<UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER>> cRole, UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER> sww);
 	
 	List<V> allViewsForUser(Class<USER> cUser, USER user);
 	

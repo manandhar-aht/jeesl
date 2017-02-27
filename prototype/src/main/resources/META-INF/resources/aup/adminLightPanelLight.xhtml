@@ -14,23 +14,22 @@
 	<composite:implementation>
 		<p:panel header="#{msg.Details}" styleClass="auPanelWithGrid"
 							rendered="#{not empty trafficLightsBean.trafficLight}">
-							<f:facet name="actions">
-									<aht:icon type="aupSave" listener="#{trafficLightsBean.save()}" update=":grid" tooltip="#{msg.ttSave}"/>
-									<aht:icon type="aupDelete" ejb="#{trafficLightsBean.trafficLight}" listener="#{trafficLightsBean.rm()}" update=":grid" tooltip="#{msg.ttDelete}"/>
-									
-							</f:facet>
-							<p:panelGrid columns="2" columnClasses="col1, col2" >
-								 <p:outputLabel value="#{msg.aupTrafficLightColorBackground}"/>
-								 <p:colorPicker value="#{trafficLightsBean.trafficLight.colorBackground}" />
-								 
-								 <p:outputLabel value="#{msg.aupTrafficLightColorText}"/>
-								 <p:colorPicker value="#{trafficLightsBean.trafficLight.colorText}" />
-								 
-								 <p:outputLabel value="#{msg.aupTrafficLightThreshold}"/>
-								 <h:inputText id="tresholdText" value="#{trafficLightsBean.trafficLight.threshold}"/>
-							</p:panelGrid>
-			<aht:tabTranslationEditor value="#{trafficLightsBean.trafficLight}"
-													  keys="#{translationBean.langKeys}" withDescription="true"/>
+			<f:facet name="actions">
+					<aht:icon type="aupSave" listener="#{trafficLightsBean.save()}" update=":grid" tooltip="#{msg.ttSave}"/>
+					<aht:icon type="aupDelete" ejb="#{trafficLightsBean.trafficLight}" listener="#{trafficLightsBean.rm()}" update=":grid" tooltip="#{msg.ttDelete}"/>
+					
+			</f:facet>
+			<p:panelGrid columns="2" columnClasses="col1, col2" >
+				 <p:outputLabel value="#{msg.aupTrafficLightColorBackground}"/>
+				 <p:colorPicker value="#{trafficLightsBean.trafficLight.colorBackground}" />
+				 
+				 <p:outputLabel value="#{msg.aupTrafficLightColorText}"/>
+				 <p:colorPicker value="#{trafficLightsBean.trafficLight.colorText}" />
+				 
+				 <p:outputLabel value="#{msg.aupTrafficLightThreshold}"/>
+				 <h:inputText id="tresholdText" value="#{trafficLightsBean.trafficLight.threshold}"/>
+			</p:panelGrid>
+			<aht:tabTranslationEditor value="#{trafficLightsBean.trafficLight}" keys="#{translationBean.langKeys}" withDescription="true"/>
 			<h:messages/>
 		</p:panel>
 	</composite:implementation>

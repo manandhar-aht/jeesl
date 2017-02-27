@@ -118,7 +118,7 @@ public class SecurityInitUsecases <L extends UtilsLang,
 			ebj.setCategory(category);
 			ebj=fSecurity.update(ebj);
 			
-			ebj = iuListViewsSecurity(ebj, usecase.getViews());
+			ebj = iuListViewsSecurity(ebj,usecase.getViews());
 			ebj = iuListActions(ebj, usecase.getActions());
 		}
 		catch (UtilsConstraintViolationException e) {logger.error("",e);}

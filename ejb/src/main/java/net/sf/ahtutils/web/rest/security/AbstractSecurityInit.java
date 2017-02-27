@@ -263,6 +263,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	}
 	protected <T extends UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER>> T iuListViewsSecurity(T ejb, net.sf.ahtutils.xml.security.Views views) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
+//		ejb = fSecurity.load(cView, view);
 		ejb.getViews().clear();
 		ejb = fSecurity.update(ejb);
 		if(views!=null)

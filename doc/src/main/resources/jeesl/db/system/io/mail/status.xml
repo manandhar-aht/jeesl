@@ -2,6 +2,7 @@
 <jeesl:container xmlns:us="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:un="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:jeesl="http://www.jeesl.org">
     <us:status code="queue" visible="true" position="1">
         <us:langs>
+        	<us:lang key="de" translation="Warteschlange"/>
             <us:lang key="en" translation="Queue"/>
             <us:lang key="fr" translation=""/>
         </us:langs>
@@ -12,6 +13,7 @@
     </us:status>
     <us:status code="spooling" visible="true" position="2">
         <us:langs>
+        	<us:lang key="de" translation="Abwicklung"/>
             <us:lang key="en" translation="Spooling"/>
             <us:lang key="fr" translation=""/>
         </us:langs>
@@ -22,6 +24,7 @@
     </us:status>
     <us:status code="sent" visible="true" position="3">
         <us:langs>
+        	<us:lang key="de" translation="Gesendet"/>
             <us:lang key="en" translation="Sent"/>
             <us:lang key="fr" translation=""/>
         </us:langs>
@@ -32,6 +35,7 @@
     </us:status>
     <us:status code="failed" visible="true" position="4">
         <us:langs>
+        	<us:lang key="de" translation="Fehlgeschlagen"/>
             <us:lang key="en" translation="Failed"/>
             <us:lang key="fr" translation=""/>
         </us:langs>

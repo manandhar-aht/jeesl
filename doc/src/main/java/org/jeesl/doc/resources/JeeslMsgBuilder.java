@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import net.sf.ahtutils.doc.UtilsDocumentation;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
+import net.sf.ahtutils.xml.status.Translation;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.exlp.util.io.FileIO;
 import net.sf.exlp.util.io.resourceloader.MultiResourceLoader;
@@ -27,6 +28,7 @@ public class JeeslMsgBuilder
 	public static final String report = "jeesl/msg/report.xml";
 	public static final String query = "aht-utils/msg/query.xml";
 	public static final String entities = "jeesl/msg/admin/entities.xml";
+	public static final String entitiesPrefix = "jeesl/msg/admin/entitiesPrefix.xml";
 	public static final String srcProject = "msg.aht-utils/project.xml";
 	public static final String srcDate = "aht-utils/msg/date.xml";
 	
@@ -83,12 +85,25 @@ public class JeeslMsgBuilder
 	
 	public void copy(String src, String dst) throws UtilsConfigurationException
 	{
+		prefix(null,src,dst);
+	}
+	public void prefix(String prefix, String src, String dst) throws UtilsConfigurationException
+	{
 		try
 		{
 			InputStream is = mrl.searchIs(src);
 			File fTarget = new File(baseMsg,dst);
 			
 			Translations t = JaxbUtil.loadJAXB(is, Translations.class);
+			
+			if(prefix!=null)
+			{
+				for(Translation tl : t.getTranslation())
+				{
+					tl.setKey(prefix+tl.getKey());
+				}
+			}
+
 			Document doc = JaxbUtil.toDocument(t);
 			
 			Comment comment = new Comment("Do not modify this file, it is automatically generated!");

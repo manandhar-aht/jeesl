@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="JobStatus">
+		<s:langs>
+			<s:lang key="de" translation="Job Status"/>
+			<s:lang key="en" translation="Job Status"/>
+			<s:lang key="fr" translation="Job Status"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="JobCategory">
+		<s:langs>
+			<s:lang key="de" translation="Job Kategorie"/>
+			<s:lang key="en" translation="Job Category"/>
+			<s:lang key="fr" translation="Job Category"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="JobStatus">
+		<s:langs>
+			<s:lang key="de" translation="Job Status"/>
+			<s:lang key="en" translation="Job Status"/>
+			<s:lang key="fr" translation="Job Status"/>
+		</s:langs>
+	</s:translation>
+</s:translations>

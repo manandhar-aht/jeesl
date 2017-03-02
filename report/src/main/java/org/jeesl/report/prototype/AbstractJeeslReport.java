@@ -13,7 +13,7 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xls.system.io.report.XlsFactory;
 import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
-import org.jeesl.interfaces.factory.txt.JeeslReportAggregationNameFactory;
+import org.jeesl.interfaces.factory.txt.JeeslReportAggregationLevelFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -203,7 +203,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		else{logger.warn("Trying to super.initIo(), but "+JeeslIoReportFacade.class.getSimpleName()+" is null");}
 	}
 	
-	protected <A extends UtilsStatus<A,L,D>> void applyTransformation(JeeslReportSetting.Transformation transformation, List<EjbWithId> last, String[] localeCodes, JeeslReportAggregationNameFactory pf)
+	protected <A extends UtilsStatus<A,L,D>> void applyTransformation(JeeslReportSetting.Transformation transformation, List<EjbWithId> last, String[] localeCodes, JeeslReportAggregationLevelFactory pf)
 	{
 		if(transformation.equals(JeeslReportSetting.Transformation.last))
 		{

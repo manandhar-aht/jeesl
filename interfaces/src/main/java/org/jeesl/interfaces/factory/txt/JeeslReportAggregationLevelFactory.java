@@ -2,7 +2,7 @@ package org.jeesl.interfaces.factory.txt;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslReportAggregationNameFactory
+public interface JeeslReportAggregationLevelFactory
 {
 	String buildTreeLevelName(String localeCode, EjbWithId ejb);
 }

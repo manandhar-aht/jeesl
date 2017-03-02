@@ -98,7 +98,6 @@
 			<s:lang key="fr" translation="DB Dump Host"/>
 		</s:langs>
 	</s:translation>
-	
 	<s:translation key="IoReportCategory">
 		<s:langs>
 			<s:lang key="de" translation="Berichtskategorie"/>

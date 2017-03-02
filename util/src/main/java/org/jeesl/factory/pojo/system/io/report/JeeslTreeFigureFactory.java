@@ -40,7 +40,7 @@ public class JeeslTreeFigureFactory
 			Figures last = XmlFiguresFactory.build(Type.transformation);
 			for(EjbWithId ejb : dpa.list(pivotFactory.getIndexFor(aggregations.get(aggregations.size()-1))))
 			{
-				last.getFigures().add(XmlFiguresFactory.label(pivotFactory.buildTreeLevelName(localeCode, ejb)));
+				last.getFigures().add(XmlFiguresFactory.label(pivotFactory.getTxtLevelFactory().buildTreeLevelName(localeCode, ejb)));
 			}
 			figures.getFigures().add(last);
 		}
@@ -55,7 +55,7 @@ public class JeeslTreeFigureFactory
 		A aggregation = aggregations.get(lvl);
 		for(EjbWithId ejb : dpa.list(pivotFactory.getIndexFor(aggregation)))
 		{			
-			Figures figures = XmlFiguresFactory.build(ejb.getId(), null, pivotFactory.buildTreeLevelName(localeCode, ejb));
+			Figures figures = XmlFiguresFactory.build(ejb.getId(), null, pivotFactory.getTxtLevelFactory().buildTreeLevelName(localeCode, ejb));
 			
 			List<EjbWithId> path = new ArrayList<EjbWithId>();
 			path.addAll(parents);

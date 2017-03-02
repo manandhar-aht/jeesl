@@ -6,7 +6,6 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface OpEntityBean
 {
-//	void dummy();
 	void addOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException;
 	void rmOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException;
 }

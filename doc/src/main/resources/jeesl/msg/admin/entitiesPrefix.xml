@@ -21,4 +21,18 @@
 			<s:lang key="fr" translation="Job Status"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="GraphicStyle">
+		<s:langs>
+			<s:lang key="de" translation="Graphikstil"/>
+			<s:lang key="en" translation="Graphic Style"/>
+			<s:lang key="fr" translation="Graphic Style"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="GraphicType">
+		<s:langs>
+			<s:lang key="de" translation="Graphiktyp"/>
+			<s:lang key="en" translation="Graphic Type"/>
+			<s:lang key="fr" translation="Graphic Type"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

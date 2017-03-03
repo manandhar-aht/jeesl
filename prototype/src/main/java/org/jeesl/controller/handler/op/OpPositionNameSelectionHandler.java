@@ -17,6 +17,7 @@ public class OpPositionNameSelectionHandler <T extends EjbWithId> extends Abstra
 	final static Logger logger = LoggerFactory.getLogger(OpEntitySelection.class);
 	public static final long serialVersionUID=1;
 
+	@SuppressWarnings("unused")
 	private UtilsFacade facade;
 	
     public OpPositionNameSelectionHandler(UtilsFacade facade, OpEntityBean bean){this(facade,bean,new ArrayList<T>());}

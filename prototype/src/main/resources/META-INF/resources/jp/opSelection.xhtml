@@ -47,7 +47,7 @@
 					 rows="#{cc.attrs.opRows}" rowsPerPageTemplate="#{cc.attrs.rowsPerPageTemplate}" paginator="true" paginatorPosition="bottom" paginatorTemplate="#{cc.attrs.paginatorTemplate}">>
 			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.addEntity()}" oncomplete="PF('wv-#{cc.clientId}').hide();"/>
 			<p:column headerText="#{cc.attrs.colHeaderName}" rendered="#{cc.attrs.handler.showName}">
-				<h:outputText value="#{p.name}" />
+				<h:outputText value="#{var.name}" />
 			</p:column>
 			<p:column headerText="#{msg.colHeaderLang}" rendered="#{cc.attrs.handler.showLang}">
 				<h:outputText value="#{var.name[cc.attrs.localeCode].lang}" />

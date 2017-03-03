@@ -20,26 +20,22 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
     protected T op; @Override public T getOp() {return op;} @Override public void setOp(T opEntity) {this.op = opEntity;}
     protected T tb; @Override public T getTb() {return tb;} @Override public void setTb(T tbEntity) {this.tb = tbEntity;}
 
-    protected List<T> opEntites; @Override public List<T> getOpList() {return opEntites;} @Override public void setOpList(List<T> opEntites) {this.opEntites = opEntites;}
-    protected List<T> tbEntites; @Override public List<T> getTbList() {return tbEntites;} @Override public void setTbList(List<T> tbEntites) {this.tbEntites = tbEntites;}
+    protected List<T> opList; @Override public List<T> getOpList() {return opList;} @Override public void setOpList(List<T> list) {opList.clear(); opList.addAll(list);}
+    protected List<T> tbList; @Override public List<T> getTbList() {return tbList;} @Override public void setTbList(List<T> list) {tbList.clear(); tbList.addAll(list);}
     
     protected OpEntityBean bean;
 
-    protected boolean showName;
-    public boolean isShowName() {
-		return showName;
-	}
-	public boolean isShowLang() {
-		return showLang;
-	}
-	protected boolean showLang;
+    protected boolean showName; public boolean isShowName() {return showName;}
+	protected boolean showLang; public boolean isShowLang() {return showLang;}
     
-    public AbstractOpSelectionHandler(OpEntityBean bean, List<T> opEntites)
+    public AbstractOpSelectionHandler(OpEntityBean bean, List<T> opList)
     {
     	this.bean=bean;
-    	this.opEntites=opEntites;
+    	this.opList=opList;
     	showName=false;
     	showLang=false;
+    	if(opList==null){opList = new ArrayList<T>();}
+    	tbList = new ArrayList<T>(); 
     }
     
     protected void reset(boolean rTb, boolean rOp)
@@ -50,23 +46,23 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
     
     @Override public void clearTable()
     {
-    	tbEntites.clear();
+    	tbList.clear();
     	tb = null;
     }
     
 	@Override public void selectTb() {}
 	
-   @Override public void addEntity(T item) throws UtilsLockingException, UtilsConstraintViolationException
+	@Override public void addEntity(T item) throws UtilsLockingException, UtilsConstraintViolationException
     {
     	op = item;
     	addEntity();
-    }
+	}
 
     @Override public void addEntity() throws UtilsLockingException, UtilsConstraintViolationException
     {
-        if(op!=null && !tbEntites.contains(op))
+        if(op!=null && !tbList.contains(op))
         {
-        	tbEntites.add(op);
+        	tbList.add(op);
         	bean.addOpEntity(op);
         }
         reset(true,true);
@@ -74,9 +70,9 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
 
     @Override public void removeEntity() throws UtilsLockingException, UtilsConstraintViolationException
     {
-        if(tbEntites.contains(tb))
+        if(tbList.contains(tb))
         {
-        	tbEntites.remove(tb);
+        	tbList.remove(tb);
         	bean.rmOpEntity(tb);
         }
         reset(true,true);

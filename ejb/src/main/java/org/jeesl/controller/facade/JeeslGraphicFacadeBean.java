@@ -20,27 +20,30 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class JeeslGraphicFacadeBean<L extends UtilsLang,
 									D extends UtilsDescription,
+									S extends EjbWithId,
 									G extends JeeslGraphic<L,D,G,GT,GS>,
 									GT extends UtilsStatus<GT,L,D>,
 									GS extends UtilsStatus<GS,L,D>>
 					extends UtilsFacadeBean
-					implements JeeslGraphicFacade<L,D,G,GT,GS>
+					implements JeeslGraphicFacade<L,D,S,G,GT,GS>
 {	
+	private final Class<S> cStatus;
 	private final Class<G> cG;
 	
-	public JeeslGraphicFacadeBean(EntityManager em, final Class<G> cG)
+	public JeeslGraphicFacadeBean(EntityManager em, final Class<S> cStatus, final Class<G> cG)
 	{
 		super(em);
+		this.cStatus=cStatus;
 		this.cG=cG;
 	}
 
 	@Override
-	public <T extends EjbWithId> G fGraphic(Class<T> c, long statusId) throws UtilsNotFoundException
+	public G fGraphicForStatus(long statusId) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		
 		CriteriaQuery<G> cQ = cB.createQuery(cG);
-		Root<T> monitoring = cQ.from(c);
+		Root<S> monitoring = cQ.from(cStatus);
 		
 		Path<G> pathProject = monitoring.get("graphic");
 		Path<Long> pId = monitoring.get("id");

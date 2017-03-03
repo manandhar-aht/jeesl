@@ -15,9 +15,12 @@
 	<composite:attribute name="localeCode" required="false" default="#{userBean.localeCode}"/>
 	
 	<composite:attribute name="tableHeader" required="false" default="Entites"/>
-	<composite:attribute name="colHeader" required="false" default="#{msg.aupName}"/>
+	<composite:attribute name="colHeaderName" required="false" default="#{msg.aupName}"/>
+	<composite:attribute name="colHeaderLang" required="false" default="#{msg.aupName}"/>
 	
 	<composite:attribute name="paginatorTemplate" required="false" default="#{appSettingsBean.paginatorTemplate}"/>
+	<composite:attribute name="rowsPerPageTemplate" required="false" default="#{appSettingsBean.rowsPerPageTemplate}"/>
+	<composite:attribute name="opRows" required="false" default="10"/>
 </composite:interface>
 
 <composite:implementation>
@@ -31,18 +34,25 @@
 			</aht:pfDataTableHeader>
 		</f:facet>
 		<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.selectTb}"/>
-				<p:column headerText="#{cc.attrs.colHeader}">
-					<h:outputText value="#{p.name[cc.attrs.localeCode].lang}" />
-				</p:column>
-			</p:dataTable>
-			<p:overlayPanel for=":#{cc.clientId}:dtProject:dth:giProjectSelection" widgetVar="wv-#{cc.clientId}" appendToBody="false">
-				<p:dataTable id="dtOpContact" var="var" value="#{cc.attrs.handler.opList}"
-							 selection="#{cc.attrs.handler.op}" selectionMode="single" rowKey="#{var.id}">
-					<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.addEntity()}" oncomplete="PF('wv-#{cc.clientId}').hide();"/>
-					<p:column headerText="#{msg.aupType}">
-						<h:outputText value="#{var.name[cc.attrs.localeCode].lang}" />
-					</p:column>
-				</p:dataTable>
-			</p:overlayPanel>
+		<p:column headerText="#{cc.attrs.colHeaderName}" rendered="#{cc.attrs.handler.showName}">
+			<h:outputText value="#{p.name}" />
+		</p:column>
+		<p:column headerText="#{cc.attrs.colHeaderLang}" rendered="#{cc.attrs.handler.showLang}">
+			<h:outputText value="#{p.name[cc.attrs.localeCode].lang}" />
+		</p:column>
+	</p:dataTable>
+	<p:overlayPanel for=":#{cc.clientId}:dtProject:dth:giProjectSelection" widgetVar="wv-#{cc.clientId}" appendToBody="false">
+		<p:dataTable id="dtOpContact" var="var" value="#{cc.attrs.handler.opList}"
+					 selection="#{cc.attrs.handler.op}" selectionMode="single" rowKey="#{var.id}"
+					 rows="#{cc.attrs.opRows}" rowsPerPageTemplate="#{cc.attrs.rowsPerPageTemplate}" paginator="true" paginatorPosition="bottom" paginatorTemplate="#{cc.attrs.paginatorTemplate}">>
+			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.addEntity()}" oncomplete="PF('wv-#{cc.clientId}').hide();"/>
+			<p:column headerText="#{cc.attrs.colHeaderName}" rendered="#{cc.attrs.handler.showName}">
+				<h:outputText value="#{p.name}" />
+			</p:column>
+			<p:column headerText="#{msg.colHeaderLang}" rendered="#{cc.attrs.handler.showLang}">
+				<h:outputText value="#{var.name[cc.attrs.localeCode].lang}" />
+			</p:column>
+		</p:dataTable>
+	</p:overlayPanel>
 </composite:implementation>
 </html>

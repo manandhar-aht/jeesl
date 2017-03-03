@@ -24,16 +24,22 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
     protected List<T> tbEntites; @Override public List<T> getTbList() {return tbEntites;} @Override public void setTbList(List<T> tbEntites) {this.tbEntites = tbEntites;}
     
     protected OpEntityBean bean;
-    
-    public AbstractOpSelectionHandler(OpEntityBean bean)
-    {
-        this(bean,new ArrayList<T>());
-    }
+
+    protected boolean showName;
+    public boolean isShowName() {
+		return showName;
+	}
+	public boolean isShowLang() {
+		return showLang;
+	}
+	protected boolean showLang;
     
     public AbstractOpSelectionHandler(OpEntityBean bean, List<T> opEntites)
     {
     	this.bean=bean;
     	this.opEntites=opEntites;
+    	showName=false;
+    	showLang=false;
     }
     
     protected void reset(boolean rTb, boolean rOp)

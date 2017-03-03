@@ -1,5 +1,6 @@
 package org.jeesl.controller.handler.op;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.handler.OpEntitySelection;
@@ -18,14 +19,11 @@ public class OpPositionNameSelectionHandler <T extends EjbWithId> extends Abstra
 
 	private UtilsFacade facade;
 	
-    public OpPositionNameSelectionHandler(UtilsFacade facade, OpEntityBean bean)
-    {
-    	super(bean);
-    	this.facade=facade;
-    }
+    public OpPositionNameSelectionHandler(UtilsFacade facade, OpEntityBean bean){this(facade,bean,new ArrayList<T>());}
     public OpPositionNameSelectionHandler(UtilsFacade facade, OpEntityBean bean, List<T> opEntites)
     {
     	super(bean,opEntites);
     	this.facade=facade;
+    	showName=true;
     }
 }

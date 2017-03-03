@@ -21,6 +21,7 @@
 	<composite:attribute name="colHeader" required="false" default="#{msg.aupName}"/>
 	
 	<composite:attribute name="paginatorTemplate" required="false" default="#{appSettingsBean.paginatorTemplate}"/>
+	<composite:attribute name="rowsPerPageTemplate" required="false" default="#{appSettingsBean.rowsPerPageTemplate}"/>
 </composite:interface>
 
 <composite:implementation>
@@ -40,7 +41,9 @@
 			</p:dataTable>
 			<p:overlayPanel for=":#{cc.clientId}:dtProject:dth:giProjectSelection" widgetVar="wv-#{cc.clientId}" appendToBody="false">
 				<p:dataTable id="dtOpContact" var="var" value="#{cc.attrs.handler.opList}"
-							 selection="#{cc.attrs.handler.op}" selectionMode="single" rowKey="#{var.id}">
+							 selection="#{cc.attrs.handler.op}" selectionMode="single" rowKey="#{var.id}"
+							 
+							 >
 					<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.addEntity()}" oncomplete="PF('wv-#{cc.clientId}').hide();"/>
 					<p:column headerText="#{msg.aupType}">
 						<h:outputText value="#{var.name[cc.attrs.localeCode].lang}" />

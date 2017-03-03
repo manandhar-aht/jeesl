@@ -5,12 +5,12 @@ import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslConstraintsBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.factory.xml.system.XmlConstraintFactory;
 import net.sf.ahtutils.factory.xml.system.XmlConstraintScopeFactory;
-import net.sf.ahtutils.interfaces.bean.ConstraintsBean;
 import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.ahtutils.xml.status.Description;
@@ -21,7 +21,7 @@ import net.sf.ahtutils.xml.system.ConstraintSolution;
 import net.sf.ahtutils.xml.system.Constraints;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-public class PrototypeConstraintsBean implements Serializable,ConstraintsBean
+public class PrototypeConstraintsBean implements Serializable,JeeslConstraintsBean
 {
 	final static Logger logger = LoggerFactory.getLogger(PrototypeConstraintsBean.class);
 	private static final long serialVersionUID = 1L;

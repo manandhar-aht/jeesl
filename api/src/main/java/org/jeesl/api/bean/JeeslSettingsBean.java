@@ -1,6 +1,6 @@
-package net.sf.ahtutils.interfaces.bean;
+package org.jeesl.api.bean;
 
-public interface SettingsBean
+public interface JeeslSettingsBean
 {
 	public String getPaginatorTemplate();
 	public String getRowsPerPageTemplate();

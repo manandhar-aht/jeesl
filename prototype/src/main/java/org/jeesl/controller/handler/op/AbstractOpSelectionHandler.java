@@ -3,18 +3,18 @@ package org.jeesl.controller.handler.op;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.api.handler.OpEntitySelection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.op.OpEntityBean;
-import net.sf.ahtutils.interfaces.controller.handler.op.OpEntitySelectionHandler;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implements OpEntitySelectionHandler<T>
+public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implements OpEntitySelection<T>
 {
-	final static Logger logger = LoggerFactory.getLogger(OpEntitySelectionHandler.class);
+	final static Logger logger = LoggerFactory.getLogger(OpEntitySelection.class);
 	public static final long serialVersionUID=1;
 
     protected T op; @Override public T getOp() {return op;} @Override public void setOp(T opEntity) {this.op = opEntity;}

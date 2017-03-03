@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.controller.handler.op;
+package org.jeesl.api.handler;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface OpEntitySelectionHandler <T extends EjbWithId>
+public interface OpEntitySelection <T extends EjbWithId>
 {
 	public static final long serialVersionUID=1;
 

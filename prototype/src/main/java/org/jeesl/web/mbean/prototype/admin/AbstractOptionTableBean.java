@@ -73,6 +73,8 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	protected List<EjbWithPosition> categories; public List<EjbWithPosition> getCategories(){return categories;}
 	protected List<EjbWithPosition> parents; public List<EjbWithPosition> getParents(){return parents;}
 	protected List<EjbWithPosition> items; public List<EjbWithPosition> getItems() {return items;}
+	private List<GT> graphicTypes; public List<GT> getGraphicTypes() {return graphicTypes;}
+	private List<GS> graphicStyles; public List<GS> getGraphicStyles() {return graphicStyles;}
 	
 	protected Class<?> cStatus;
 	
@@ -106,6 +108,9 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		this.cGS=cGS;
 		
 		efGraphic = EjbGraphicFactory.factory(cG);
+		
+		graphicTypes = fUtils.allOrderedPositionVisible(cGT);
+		graphicStyles = fUtils.allOrderedPositionVisible(cGS);
 	}
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)

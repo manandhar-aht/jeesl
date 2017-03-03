@@ -79,7 +79,7 @@
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{(cc.attrs.bean.supportsGraphic) and (cc.attrs.bean.graphic.type.code eq 'symbol')}">
 								<p:outputLabel value="#{msg.aupGraphicStyle}"/>
 								<p:selectOneMenu styleClass="w100" value="#{cc.attrs.bean.graphic.style}" effect="fade">
-									<f:selectItems value="#{cc.attrs.graphicStyles}" var="s" itemLabel="#{s.name[userBean.localeCode].lang}" itemValue="#{s}"/>
+									<f:selectItems value="#{cc.attrs.bean.graphicStyles}" var="s" itemLabel="#{s.name[userBean.localeCode].lang}" itemValue="#{s}"/>
 								</p:selectOneMenu>
 								
 								<p:outputLabel value="#{msg.aupGraphicSize}"/>
@@ -92,7 +92,7 @@
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.bean.supportsGraphic}">
 								<p:outputLabel value="#{msg.aupGraphicType}"/>
 								<p:selectOneMenu styleClass="w100" value="#{cc.attrs.bean.graphic.type}" effect="fade">
-									<f:selectItems value="#{cc.attrs.graphicTypes}" var="type" itemLabel="#{type.name[userBean.localeCode].lang}" itemValue="#{type}"/>
+									<f:selectItems value="#{cc.attrs.bean.graphicTypes}" var="type" itemLabel="#{type.name[userBean.localeCode].lang}" itemValue="#{type}"/>
 									<p:ajax event="change" listener="#{cc.attrs.bean.changeGraphicType()}" update="@form :#{cc.id}:fUpload"/>
 								</p:selectOneMenu>
 							</p:panelGrid>

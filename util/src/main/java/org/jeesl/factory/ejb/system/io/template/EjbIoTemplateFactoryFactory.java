@@ -13,9 +13,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class EjbIoTemplateFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
-								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
-								DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
-								TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
+								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+								SCOPE extends UtilsStatus<SCOPE,L,D>,
+								DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+								TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoTemplateFactoryFactory.class);
 	
@@ -37,26 +38,27 @@ public class EjbIoTemplateFactoryFactory<L extends UtilsLang,D extends UtilsDesc
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 					TYPE extends UtilsStatus<TYPE,L,D>,
-					TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
-					DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
-					TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
-	EjbIoTemplateFactoryFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> factory(final Class<L> cL,final Class<D> cD,final Class<TEMPLATE> cTemplate, final Class<DEFINITION> cDefinition, final Class<TOKEN> cToken)
+					TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+					SCOPE extends UtilsStatus<SCOPE,L,D>,
+					DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+					TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
+	EjbIoTemplateFactoryFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> factory(final Class<L> cL,final Class<D> cD,final Class<TEMPLATE> cTemplate, final Class<DEFINITION> cDefinition, final Class<TOKEN> cToken)
 	{
-		return new EjbIoTemplateFactoryFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>(cL,cD,cTemplate,cDefinition,cToken);
+		return new EjbIoTemplateFactoryFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>(cL,cD,cTemplate,cDefinition,cToken);
 	}
 	
-	public EjbIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> template()
+	public EjbIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> template()
 	{
-		return new EjbIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>(cL,cD,cTemplate);
+		return new EjbIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>(cL,cD,cTemplate);
 	}
 	
-	public EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> definition()
+	public EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> definition()
 	{
-		return new EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>(cD,cDefinition);
+		return new EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>(cD,cDefinition);
 	}
 	
-	public EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> token()
+	public EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> token()
 	{
-		return new EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>(cL,cD,cToken);
+		return new EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>(cL,cD,cToken);
 	}
 }

@@ -11,13 +11,15 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>,
-								STATUS extends UtilsStatus<STATUS,L,D>
+								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+								STATUS extends UtilsStatus<STATUS,L,D>,
+								RETENTION extends UtilsStatus<RETENTION,L,D>
 								>
 		extends EjbWithId,EjbSaveable,EjbRemoveable
 {	
 	
 	public static enum Status{queue,spooling,sent,failed};
+	public static enum Retention{fully,partially,toDelete};
 	public static enum Attributes{category,status,recordCreation,recordSpool};
 	
 	Long getVersionLock();
@@ -27,6 +29,9 @@ public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 	
 	STATUS getStatus();
 	void setStatus(STATUS status);
+	
+	RETENTION getRetention();
+	void setRetention(RETENTION retention);
 	
 	Date getRecordCreation();
 	void setRecordCreation(Date recordCreation);

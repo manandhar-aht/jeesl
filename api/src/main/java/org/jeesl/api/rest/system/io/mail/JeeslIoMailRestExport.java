@@ -14,4 +14,7 @@ public interface JeeslIoMailRestExport
 	
 	@GET @Path("/system/io/mail/status") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemIoMailStatus();
+	
+	@GET @Path("/system/io/mail/retention") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemIoMailRetention();
 }

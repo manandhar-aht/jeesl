@@ -120,7 +120,7 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	@Override public void setShowSelectMulti(Boolean showSelectMulti) {this.showSelectMulti = showSelectMulti;}
 	@JsonIgnore public boolean isSetShowSelectMulti() {return showSelectMulti!=null;}
 	
-	public String toString()
+	@Override public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
 		return sb.toString();

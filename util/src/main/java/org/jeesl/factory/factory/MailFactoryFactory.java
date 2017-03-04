@@ -11,7 +11,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class MailFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
+								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+								STATUS extends UtilsStatus<STATUS,L,D>,
+								RETENTION extends UtilsStatus<RETENTION,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(MailFactoryFactory.class);
 	
@@ -27,14 +29,16 @@ public class MailFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
-		MailFactoryFactory<L,D,CATEGORY,MAIL,STATUS> factory(final Class<MAIL> cMail)
+					MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+					STATUS extends UtilsStatus<STATUS,L,D>,
+					RETENTION extends UtilsStatus<RETENTION,L,D>>
+		MailFactoryFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION> factory(final Class<MAIL> cMail)
 	{
-		return new MailFactoryFactory<L,D,CATEGORY,MAIL,STATUS>(cMail);
+		return new MailFactoryFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION>(cMail);
 	}
 	
-	public EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS> mail()
+	public EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION> mail()
 	{
-		return new EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS>(cMail);
+		return new EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION>(cMail);
 	}
 }

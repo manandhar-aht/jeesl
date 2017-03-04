@@ -13,8 +13,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public interface JeeslIoMailFacade <L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>,
-									STATUS extends UtilsStatus<STATUS,L,D>>
+									MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+									STATUS extends UtilsStatus<STATUS,L,D>,
+									RETENTION extends UtilsStatus<RETENTION,L,D>>
 			extends UtilsFacade
 {	
 	Integer cQueue();

@@ -43,16 +43,17 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDescription,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 											TYPE extends UtilsStatus<TYPE,L,D>,
-											TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
-											DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>,
-											TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>>
+											TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+											SCOPE extends UtilsStatus<SCOPE,L,D>,
+											DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+											TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoTemplateBean.class);
 	
-	protected JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fTemplate;
+	protected JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate;
 	
 	private Class<TYPE> cType;
 	private Class<CATEGORY> cCategory;
@@ -70,12 +71,12 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	private DEFINITION definition; public DEFINITION getDefinition() {return definition;} public void setDefinition(DEFINITION definition) {this.definition = definition;}
 	private TOKEN token; public TOKEN getToken() {return token;} public void setToken(TOKEN token) {this.token = token;}
 	
-	private EjbIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> efTemplate;
-	private EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> efDefinition;
-	private EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> efToken;
+	private EjbIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> efTemplate;
+	private EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> efDefinition;
+	private EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> efToken;
 	
 	private SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
-	private FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fmEngine;
+	private FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fmEngine;
 	
 	private Comparator<TEMPLATE> comparatorTemplate;
 	private Comparator<TOKEN> comparatorToken;
@@ -84,7 +85,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	private int tabIndex; public int getTabIndex() {return tabIndex;} public void setTabIndex(int tabIndex) {this.tabIndex = tabIndex;}
 	private String preview; public String getPreview() {return preview;}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> fTemplate, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fTemplate=fTemplate;
@@ -94,16 +95,16 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		this.cDefinition=cDefinition;
 		this.cToken=cToken;
 		
-		EjbIoTemplateFactoryFactory<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN> ef = EjbIoTemplateFactoryFactory.factory(cLang,cDescription,cTemplate,cDefinition,cToken);
+		EjbIoTemplateFactoryFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> ef = EjbIoTemplateFactoryFactory.factory(cLang,cDescription,cTemplate,cDefinition,cToken);
 		efTemplate = ef.template();
 		efDefinition = ef.definition();
 		efToken = ef.token();
 		
-		comparatorTemplate = new IoTemplateComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>().factory(IoTemplateComparator.Type.position);
-		comparatorToken = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>().factory(IoTemplateTokenComparator.Type.position);
-		comparatorDefinition = new IoTemplateDefinitionComparator<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>().factory(IoTemplateDefinitionComparator.Type.position);
+		comparatorTemplate = new IoTemplateComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateComparator.Type.position);
+		comparatorToken = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateTokenComparator.Type.position);
+		comparatorDefinition = new IoTemplateDefinitionComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateDefinitionComparator.Type.position);
 		
-		fmEngine = new FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,DEFINITION,TOKEN>();
+		fmEngine = new FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>();
 		
 		types = fTemplate.allOrderedPositionVisible(cType);
 		categories = fTemplate.allOrderedPositionVisible(cCategory);

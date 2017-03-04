@@ -6,14 +6,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import net.sf.ahtutils.xml.aht.Aht;
+import org.jeesl.model.xml.jeesl.Container;
+
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public interface JeeslIoTemplateRestImport
 {
 	@POST @Path("/system/io/template/category") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
-	DataUpdate importSystemIoTemplateCategories(Aht categories);
+	DataUpdate importSystemIoTemplateCategories(Container categories);
 	
 	@POST @Path("/system/io/template/type") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
-	DataUpdate importSystemIoTemplateTypes(Aht types);
+	DataUpdate importSystemIoTemplateTypes(Container types);
+	
+	@POST @Path("/system/io/template/scopes") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
+	DataUpdate importSystemIoTemplateScopes(Container scopes);
 }

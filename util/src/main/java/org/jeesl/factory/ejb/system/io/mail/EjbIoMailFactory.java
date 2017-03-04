@@ -14,7 +14,9 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class EjbIoMailFactory <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
+								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+								STATUS extends UtilsStatus<STATUS,L,D>,
+								RETENTION extends UtilsStatus<RETENTION,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoMailFactory.class);
 	
@@ -25,7 +27,7 @@ public class EjbIoMailFactory <L extends UtilsLang,D extends UtilsDescription,
         this.cMail = cMail;
 	}
  
-	public MAIL build(CATEGORY category, STATUS status, Mail mail)
+	public MAIL build(CATEGORY category, STATUS status, Mail mail, RETENTION retention)
 	{
 		MAIL ejb = null;
 		try

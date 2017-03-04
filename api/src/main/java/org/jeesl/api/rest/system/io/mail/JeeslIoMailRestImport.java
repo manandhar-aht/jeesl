@@ -17,4 +17,7 @@ public interface JeeslIoMailRestImport
 	
 	@POST @Path("/system/io/mail/status") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoMailStatus(Container container);
+	
+	@POST @Path("/system/io/mail/retention") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
+	DataUpdate importSystemIoMailRetention(Container container);
 }

@@ -19,15 +19,16 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDescription,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-											MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>,
-											STATUS extends UtilsStatus<STATUS,L,D>>
+											MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+											STATUS extends UtilsStatus<STATUS,L,D>,
+											RETENTION extends UtilsStatus<RETENTION,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoMailQueueBean.class);
 	
-	protected JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS> fMail;
+	protected JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail;
 	
 	private Class<MAIL> cMail;
 	private Class<CATEGORY> cCategory;
@@ -41,7 +42,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	protected SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
 	protected SbMultiStatusHandler<L,D,STATUS> sbhStatus; public SbMultiStatusHandler<L,D,STATUS> getSbhStatus() {return sbhStatus;}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fMail=fMail;

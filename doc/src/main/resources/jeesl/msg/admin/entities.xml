@@ -70,6 +70,13 @@
 			<s:lang key="fr" translation="Mail Status"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IoMailRetention">
+		<s:langs>
+			<s:lang key="de" translation="Mail Aufbewahrung"/>
+			<s:lang key="en" translation="Mail Retention"/>
+			<s:lang key="fr" translation="Mail Retention"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="IoTemplateCategory">
 		<s:langs>
 			<s:lang key="de" translation="Vorlagen Kategorie"/>
@@ -84,7 +91,13 @@
 			<s:lang key="fr" translation="Template Type"/>
 		</s:langs>
 	</s:translation>
-	
+	<s:translation key="IoTemplateScope">
+		<s:langs>
+			<s:lang key="de" translation="Vorlagen Zweck"/>
+			<s:lang key="en" translation="Template Scope"/>
+			<s:lang key="fr" translation="Template Scope"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="IoDbDumpStatus">
 		<s:langs>
 			<s:lang key="de" translation="DB Sicherung Status"/>

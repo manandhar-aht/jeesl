@@ -29,9 +29,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
+									MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+									STATUS extends UtilsStatus<STATUS,L,D>,
+									RETENTION extends UtilsStatus<RETENTION,L,D>>
 					extends UtilsFacadeBean
-					implements JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS>
+					implements JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoMailFacadeBean.class);
 		
@@ -40,16 +42,18 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 	
 	private final Class<MAIL> cMail;
 	private final Class<STATUS> cStatus;
+	private final Class<RETENTION> cRetention;
 	
-	private EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS> efMail;
+	private EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION> efMail;
 	
-	public JeeslIoMailFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<MAIL> cMail, final Class<STATUS> cStatus)
+	public JeeslIoMailFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<MAIL> cMail, final Class<STATUS> cStatus, final Class<RETENTION> cRetention)
 	{
 		super(em);
 		this.cCategory=cCategory;
 		this.cMail=cMail;
 		this.cStatus=cStatus;
-		MailFactoryFactory<L,D,CATEGORY,MAIL,STATUS> ff = MailFactoryFactory.factory(cMail);
+		this.cRetention=cRetention;
+		MailFactoryFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION> ff = MailFactoryFactory.factory(cMail);
 		efMail = ff.mail();
 	}
 	
@@ -105,7 +109,8 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 	@Override public void queueMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		STATUS status = this.fByCode(cStatus, JeeslIoMail.Status.queue);
-		MAIL ejb = efMail.build(category,status,mail);
+		RETENTION retention = this.fByCode(cRetention, JeeslIoMail.Retention.fully);
+		MAIL ejb = efMail.build(category,status,mail,retention);
 		ejb = this.persist(ejb);
 		logger.info(cMail.getSimpleName()+" spooled with id="+ejb.getId());
 	}

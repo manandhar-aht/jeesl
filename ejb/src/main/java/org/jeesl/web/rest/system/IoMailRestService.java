@@ -30,41 +30,49 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
+								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+								STATUS extends UtilsStatus<STATUS,L,D>,
+								RETENTION extends UtilsStatus<RETENTION,L,D>>
 					extends AbstractJeeslRestService<L,D>
 					implements JeeslIoMailRestExport,JeeslIoMailRestImport,JeeslIoMailRestSpooler
 {
 	final static Logger logger = LoggerFactory.getLogger(IoMailRestService.class);
 	
-	private JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS> fMail;
+	private JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail;
 	
 	private final Class<CATEGORY> cCategory;
 	private final Class<MAIL> cMail;
 	private final Class<STATUS> cStatus;
+	private final Class<RETENTION> cRetention;
 	
-	private IoMailRestService(JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS> fMail,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<MAIL> cMail, final Class<STATUS> cStatus)
+	private IoMailRestService(JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<MAIL> cMail, final Class<STATUS> cStatus, final Class<RETENTION> cRetention)
 	{
 		super(fMail,cL,cD);
 		this.fMail=fMail;
 		this.cCategory=cCategory;
 		this.cMail=cMail;
 		this.cStatus=cStatus;
+		this.cRetention=cRetention;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS>, STATUS extends UtilsStatus<STATUS,L,D>>
-		IoMailRestService<L,D,CATEGORY,MAIL,STATUS>
-		factory(JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS> fMail,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<MAIL> cMail, final Class<STATUS> cStatus)
+					MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+					STATUS extends UtilsStatus<STATUS,L,D>,
+					RETENTION extends UtilsStatus<RETENTION,L,D>>
+		IoMailRestService<L,D,CATEGORY,MAIL,STATUS,RETENTION>
+		factory(JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<MAIL> cMail, final Class<STATUS> cStatus, final Class<RETENTION> cRetention)
 	{
-		return new IoMailRestService<L,D,CATEGORY,MAIL,STATUS>(fMail,cL,cD,cCategory,cMail,cStatus);
+		return new IoMailRestService<L,D,CATEGORY,MAIL,STATUS,RETENTION>(fMail,cL,cD,cCategory,cMail,cStatus,cRetention);
 	}
 	
 	@Override public Container exportSystemIoMailCategories() {return xfContainer.build(fMail.allOrderedPosition(cCategory));}
 	@Override public Container exportSystemIoMailStatus() {return xfContainer.build(fMail.allOrderedPosition(cStatus));}
+	@Override public Container exportSystemIoMailRetention() {return xfContainer.build(fMail.allOrderedPosition(cRetention));}
 	
 	@Override public DataUpdate importSystemIoMailCategories(Container categories){return importStatus(cCategory,categories,null);}
 	@Override public DataUpdate importSystemIoMailStatus(Container categories){return importStatus(cStatus,categories,null);}
+	@Override public DataUpdate importSystemIoMailRetention(Container categories){return importStatus(cRetention,categories,null);}
 
 	@Override public Mails spool()
 	{

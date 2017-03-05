@@ -26,6 +26,8 @@ public interface JeeslIoTemplate<L extends UtilsLang,D extends UtilsDescription,
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,
 				EjbWithLang<L>,EjbWithDescription<D>
 {	
+	public enum Attributes{category,scope,visible}
+	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);
 	

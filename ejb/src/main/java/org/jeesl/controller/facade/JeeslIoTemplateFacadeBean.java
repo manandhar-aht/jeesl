@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.io.JeeslIoTemplateFacade;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
@@ -73,9 +78,25 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 		List<ParentPredicate<CATEGORY>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
 		return allForOrParents(cTemplate,ppCategory);
 	}
+	
+	@Override public List<TEMPLATE> fTemplates(CATEGORY category, SCOPE scope)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(cTemplate);
+		Root<TEMPLATE> template = cQ.from(cTemplate);
+		
+		Path<CATEGORY> pCategory = template.get(JeeslIoTemplate.Attributes.category.toString());
+		Path<SCOPE> pScope = template.get(JeeslIoTemplate.Attributes.scope.toString());
+		Path<Boolean> pVisible = template.get(JeeslIoTemplate.Attributes.visible.toString());	
 
-	@Override
-	public DEFINITION fDefinition(TYPE type, String code) throws UtilsNotFoundException
+		cQ.where(cB.and(cB.equal(pCategory,category),cB.equal(pScope,scope),cB.equal(pVisible,true)));
+		cQ.select(template);
+		
+		TypedQuery<TEMPLATE> tQ = em.createQuery(cQ);
+		return tQ.getResultList();
+	}
+
+	@Override public DEFINITION fDefinition(TYPE type, String code) throws UtilsNotFoundException
 	{
 		TEMPLATE t = this.fByCode(cTemplate, code);
 		for(DEFINITION d : t.getDefinitions())

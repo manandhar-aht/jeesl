@@ -32,15 +32,17 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.bean.sb.SbToggleBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDescription,
+public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDescription,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 											TYPE extends UtilsStatus<TYPE,L,D>,
 											TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
@@ -48,7 +50,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 											DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 											TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
 					extends AbstractAdminBean<L,D>
-					implements Serializable
+					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoTemplateBean.class);
@@ -58,11 +60,13 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	private Class<TYPE> cType;
 	private Class<CATEGORY> cCategory;
 	private Class<TEMPLATE> cTemplate;
+	private Class<SCOPE> cScope;
 	private Class<DEFINITION> cDefinition;
 	private Class<TOKEN> cToken;
 	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
 	private List<TYPE> types; public List<TYPE> getTypes() {return types;}
+	private List<SCOPE> scopes;public List<SCOPE> getScopes() {return scopes;}
 	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
 	private List<DEFINITION> definitions; public List<DEFINITION> getDefinitions() {return definitions;}
 	private List<TOKEN> tokens; public List<TOKEN> getTokens() {return tokens;}
@@ -85,13 +89,14 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	private int tabIndex; public int getTabIndex() {return tabIndex;} public void setTabIndex(int tabIndex) {this.tabIndex = tabIndex;}
 	private String preview; public String getPreview() {return preview;}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<SCOPE> cScope, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fTemplate=fTemplate;
 		this.cCategory=cCategory;
 		this.cType=cType;
 		this.cTemplate=cTemplate;
+		this.cScope=cScope;
 		this.cDefinition=cDefinition;
 		this.cToken=cToken;
 		
@@ -109,8 +114,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		types = fTemplate.allOrderedPositionVisible(cType);
 		categories = fTemplate.allOrderedPositionVisible(cCategory);
 		
-		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
-//		sbhCategory.selectAll();
+		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories,this);
 		reloadTemplates();
 	}
 	
@@ -120,6 +124,12 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 		sbhCategory.multiToggle(o);
 		reloadTemplates();
 		cancelTemplate();
+	}
+	
+	public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.toggled(c));
+		scopes = fTemplate.all(cScope);
 	}
 	
 	//*************************************************************************************
@@ -166,6 +176,7 @@ public class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDes
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(template));}
 		if(template.getCategory()!=null){template.setCategory(fTemplate.find(cCategory, template.getCategory()));}
+		if(template.getScope()!=null){template.setScope(fTemplate.find(cScope, template.getScope()));}
 		template = fTemplate.save(template);
 		reloadTemplates();
 		reloadTemplate();

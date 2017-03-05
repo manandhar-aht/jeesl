@@ -27,4 +27,5 @@ public interface JeeslIoTemplateFacade <L extends UtilsLang,D extends UtilsDescr
 	
 	<E extends Enum<E>> List<TEMPLATE> loadTemplates(E category);
 	List<TEMPLATE> fTemplates(List<CATEGORY> categories, boolean showInvisibleEntities);
+	List<TEMPLATE> fTemplates(CATEGORY category, SCOPE scope);
 }

@@ -9,6 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.interfaces.bean.sb.SbToggleBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -21,15 +24,18 @@ public class SbMultiStatusHandler <L extends UtilsLang,D extends UtilsDescriptio
 	private static final long serialVersionUID = 1L;
 
 	private final Class<T> cT;
+	private final SbToggleBean bean; 
 	
-	private List<T> list;public List<T> getList() {return list;}public void setList(List<T> list) {this.list = list;}
-	private List<T> selected;public List<T> getSelected() {return selected;}
+	private List<T> list;public List<T> getList() {return list;} public void setList(List<T> list) {this.list = list;}
+	private final List<T> selected;public List<T> getSelected() {return selected;}
 	private Map<T,Boolean> map;public Map<T,Boolean> getMap() {return map;}
 
-	public SbMultiStatusHandler(final Class<T> cT, List<T> list)
+	public SbMultiStatusHandler(final Class<T> cT, List<T> list){this(cT,list,null);}
+	public SbMultiStatusHandler(final Class<T> cT, List<T> list, SbToggleBean bean)
 	{
 		this.cT=cT;
 		this.list=list;
+		this.bean=bean;
 		map = new ConcurrentHashMap<T,Boolean>();
 		selected = new ArrayList<T>();
 		refresh();
@@ -77,6 +83,15 @@ public class SbMultiStatusHandler <L extends UtilsLang,D extends UtilsDescriptio
 			if(!map.containsKey(t)) {map.put(t,false);}
 			if(map.get(t)){selected.add(t);}
 		}
+		try
+		{
+			if(bean!=null)
+			{
+				bean.toggled(cT);
+			}
+		}
+		catch (UtilsLockingException e) {e.printStackTrace();}
+		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 	}
 
 	public void debug(boolean debug)

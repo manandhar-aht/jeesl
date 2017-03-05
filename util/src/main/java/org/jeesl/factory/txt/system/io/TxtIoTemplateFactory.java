@@ -45,6 +45,16 @@ public class TxtIoTemplateFactory
 		return sb.toString();
 	}
 	
+	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>, TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,TC extends Enum<TC>>
+		String buildCode(TEMPLATE template, TC typeCode, String localeCode)
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append(template.getCode());
+		sb.append("-").append(typeCode.toString());
+		sb.append("-").append(localeCode);
+		return sb.toString();
+	}
+	
 	public static <TE extends Enum<TE>, TC extends Enum<TC>>
 		String buildCode(TE templateCode, TC typeCode, String localeCode)
 	{

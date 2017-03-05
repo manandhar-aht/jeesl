@@ -28,6 +28,13 @@
     		<s:lang key="fr" translation="Direction"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslScope">
+    	<s:langs>
+    		<s:lang key="de" translation="Scope"/>
+    		<s:lang key="en" translation="Scope"/>
+    		<s:lang key="fr" translation="Scope"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupScope">
     	<s:langs>
     		<s:lang key="de" translation="Scope"/>

@@ -201,6 +201,13 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
         }
         return sb.toString();
 	}
+	public static String toggled(Class<?> c)
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("Toggled ");
+		sb.append(c.getSimpleName());
+		return sb.toString();
+	}
 	 
 	public static <T extends EjbWithId> void infoFilter(boolean debug, Class<?> c, T... entites)
 	{

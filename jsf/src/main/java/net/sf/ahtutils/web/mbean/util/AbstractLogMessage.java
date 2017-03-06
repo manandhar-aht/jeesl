@@ -197,6 +197,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
         sb.append("Toggeling ");
         if(t!=null)
         {
+        	sb.append(t.getClass().getSimpleName());
         	sb.append(" ... ").append(t.toString());
         }
         return sb.toString();

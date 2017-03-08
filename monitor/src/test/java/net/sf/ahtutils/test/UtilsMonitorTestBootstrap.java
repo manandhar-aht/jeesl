@@ -14,8 +14,8 @@ public class UtilsMonitorTestBootstrap
 	public static void init()
 	{
 		LoggerInit loggerInit = new LoggerInit("log4j.xml");
-			loggerInit.addAltPath("config.ahtutils-monitor.test");
-			loggerInit.init();
+		loggerInit.addAltPath("config.ahtutils-monitor.test");
+		loggerInit.init();
 		JaxbUtil.setNsPrefixMapper(new JeeslNsPrefixMapper());
 	}
 }

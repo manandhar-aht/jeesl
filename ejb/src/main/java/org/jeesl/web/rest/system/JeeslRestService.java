@@ -2,11 +2,9 @@ package org.jeesl.web.rest.system;
 
 import org.jeesl.api.facade.util.JeeslGraphicFacade;
 import org.jeesl.api.rest.JeeslExportRest;
-import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.system.symbol.XmlGraphicFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
-import org.jeesl.util.query.xml.StatusQuery;
 import org.jeesl.util.query.xml.SymbolQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
@@ -31,14 +29,12 @@ public class JeeslRestService <L extends UtilsLang,D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(JeeslRestService.class);
 		
 	private final JeeslGraphicFacade<L,D,S,G,GT,GS> fGraphic;
-	private final XmlContainerFactory xfContainer;
 	private final XmlGraphicFactory<L,D,G,GT,GS> xfGraphic;
 	
 	private JeeslRestService(JeeslGraphicFacade<L,D,S,G,GT,GS> fGraphic,final Class<L> cL, final Class<D> cD)
 	{
 		super(fGraphic,cL,cD);
 		this.fGraphic=fGraphic;
-		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfGraphic = new XmlGraphicFactory<L,D,G,GT,GS>(SymbolQuery.get(SymbolQuery.Key.GraphicExport));
 	}
 	

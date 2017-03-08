@@ -11,8 +11,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public interface JeeslExportRest
+public interface JeeslExportRest <L extends UtilsLang,D extends UtilsDescription>
 {	
 	@GET @Path("/status/{code}") @Produces(MediaType.APPLICATION_XML)
-	<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> org.jeesl.model.xml.jeesl.Container exportStatus(@PathParam("code") String code) throws UtilsConfigurationException;
+	<X extends UtilsStatus<X,L,D>> org.jeesl.model.xml.jeesl.Container exportStatus(@PathParam("code") String code) throws UtilsConfigurationException;
 }

@@ -13,7 +13,10 @@ import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.symbol.Graphic;
 import net.sf.exlp.factory.xml.io.XmlFileFactory;
 
-public class XmlGraphicFactory <L extends UtilsLang,D extends UtilsDescription,G extends JeeslGraphic<L,D,G,GT,GS>,GT extends UtilsStatus<GT,L,D>,GS extends UtilsStatus<GS,L,D>>
+public class XmlGraphicFactory <L extends UtilsLang,D extends UtilsDescription,
+								G extends JeeslGraphic<L,D,G,GT,GS>,
+								GT extends UtilsStatus<GT,L,D>,
+								GS extends UtilsStatus<GS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlGraphicFactory.class);
 	

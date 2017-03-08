@@ -8,6 +8,7 @@
                 <xsd:element ref="db:seed" maxOccurs="unbounded"/>
             </xsd:sequence>
             <xsd:attribute name="pathIde" type="xsd:string"/>
+            <xsd:attribute name="pathIdeSvg" type="xsd:string"/>
             <xsd:attribute name="pathExport" type="xsd:string"/>
         </xsd:complexType>    
     </xsd:element>

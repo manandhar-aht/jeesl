@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://ahtutils.aht-group.com/dbseed}seed" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="pathIde" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="pathIdeSvg" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="pathExport" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -47,6 +48,8 @@ public class Db
     protected List<Seed> seed;
     @XmlAttribute(name = "pathIde")
     protected String pathIde;
+    @XmlAttribute(name = "pathIdeSvg")
+    protected String pathIdeSvg;
     @XmlAttribute(name = "pathExport")
     protected String pathExport;
 
@@ -113,6 +116,34 @@ public class Db
 
     public boolean isSetPathIde() {
         return (this.pathIde!= null);
+    }
+
+    /**
+     * Gets the value of the pathIdeSvg property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPathIdeSvg() {
+        return pathIdeSvg;
+    }
+
+    /**
+     * Sets the value of the pathIdeSvg property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPathIdeSvg(String value) {
+        this.pathIdeSvg = value;
+    }
+
+    public boolean isSetPathIdeSvg() {
+        return (this.pathIdeSvg!= null);
     }
 
     /**

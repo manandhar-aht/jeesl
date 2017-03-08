@@ -1,16 +1,22 @@
 package net.sf.ahtutils.db.xml;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.poi.util.IOUtils;
+import org.jeesl.model.xml.jeesl.Container;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.xml.dbseed.Db;
 import net.sf.ahtutils.xml.dbseed.Seed;
+import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.xpath.DbseedXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
@@ -34,7 +40,6 @@ public class UtilsDbXmlSeedUtil
 	protected Db dbSeed;
 	private File fTmp;
 	
-	private String seedPath;
 	protected String pathPrefix;
 	
 	public UtilsDbXmlSeedUtil(Configuration config) throws FileNotFoundException
@@ -44,7 +49,6 @@ public class UtilsDbXmlSeedUtil
 		logger.info("Using seed: "+dbSeedFile);
 		dbSeed = JaxbUtil.loadJAXB(dbSeedFile, Db.class);
 		try{dbSeed.setPathExport(config.getString(configKeyPathExport));} catch (NoSuchElementException e){}
-		seedPath=dbSeed.getPathIde();
 		
 		try{fTmp = new File(config.getString(ConfigKey.dirTmp));}
 		catch (NoSuchElementException e){fTmp = new File(System.getProperty("java.io.tmpdir"));}
@@ -59,7 +63,6 @@ public class UtilsDbXmlSeedUtil
 	public UtilsDbXmlSeedUtil(Db dbSeed, DataSource datasource)
 	{
 		this.dbSeed=dbSeed;
-		seedPath=dbSeed.getPathIde();
 	}
 	
 	public String getContentName(String extractId) throws UtilsConfigurationException
@@ -87,6 +90,20 @@ public class UtilsDbXmlSeedUtil
 		return sb.toString();
 	}
 	
+	public String getPathSvg(DataSource ds)
+	{
+		StringBuffer sb = new StringBuffer();
+		switch(ds)
+		{
+			case ide: sb.append(dbSeed.getPathIdeSvg());break;
+			case path: sb.append(dbSeed.getPathExport());break;
+			case tmp: sb.append(fTmp.getAbsolutePath());break;
+			case jar: break;
+			default: logger.warn("NYI ds="+ds);
+		}
+		return sb.toString();
+	}
+	
 	public String getExtractName(String extractId) throws UtilsConfigurationException {return getExtractName(DataSource.ide,extractId);}
 	public String getExtractName(DataSource ds, String extractId) throws UtilsConfigurationException
 	{
@@ -104,8 +121,27 @@ public class UtilsDbXmlSeedUtil
 			case tmp: checkPath(sb.toString());break;
 			default: ;
 		}
-		
 		return sb.toString();
+	}
+	
+	private String buildSvgPath(DataSource ds, String extractId) throws UtilsConfigurationException
+	{
+		StringBuffer sb = new StringBuffer();
+		if(pathPrefix!=null){sb.append(pathPrefix).append("/");}
+		
+		sb.append(getPathSvg(ds));
+		sb.append("/");
+		sb.append(getContentName(extractId));
+		
+		switch(ds)
+		{
+			case path: checkPath(sb.toString());break;
+			case jar: sb = new StringBuffer();sb.append(getContentName(extractId));break;
+			case tmp: checkPath(sb.toString());break;
+			default: ;
+		}
+		int index = sb.toString().lastIndexOf(".xml");
+		return sb.substring(0,index);
 	}
 	
 	public void setPathPrefix(String pathPrefix) {this.pathPrefix = pathPrefix;}
@@ -122,6 +158,37 @@ public class UtilsDbXmlSeedUtil
 	
 	public void writeXml(DataSource ds, String key, Object o) throws UtilsConfigurationException
 	{
+		String fileName = getExtractName(ds,key);
+		logger.info("Writing "+fileName);
+		if(config.getBoolean(cliDebug)){JaxbUtil.info(o);}
+		if(config.getBoolean(cliSave)){JaxbUtil.save(new File(fileName), o, true);}
+	}
+	
+	public void writeXmlSvg(DataSource ds, String key, Object o) throws UtilsConfigurationException
+	{
+		logger.info(o.getClass().getName());
+		if(o instanceof Container)
+		{
+			Container c = (Container)o;
+			for(Status s : c.getStatus())
+			{
+				if(s.isSetGraphic() && s.getGraphic().isSetFile())
+				{
+					String file = buildSvgPath(ds,key)+File.separator+s.getCode()+".svg";
+					logger.info(file);
+					net.sf.exlp.xml.io.File xFile = s.getGraphic().getFile();
+					s.getGraphic().setFile(null);
+					
+					try
+					{
+						IOUtils.copy(new ByteArrayInputStream(xFile.getData().getValue()), new FileOutputStream(new File(file)));
+					}
+					catch (FileNotFoundException e) {e.printStackTrace();}
+					catch (IOException e) {e.printStackTrace();}
+				}
+			}
+		}
+		
 		String fileName = getExtractName(ds,key);
 		logger.info("Writing "+fileName);
 		if(config.getBoolean(cliDebug)){JaxbUtil.info(o);}

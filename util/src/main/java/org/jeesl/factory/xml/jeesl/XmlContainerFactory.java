@@ -19,6 +19,7 @@ public class XmlContainerFactory
 	
 	private XmlStatusFactory xfStatus;
 	
+	
 	public XmlContainerFactory(Status query)
 	{
 		xfStatus = new XmlStatusFactory(query);
@@ -28,7 +29,10 @@ public class XmlContainerFactory
 	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Container build(List<S> list)
 	{
 		Container xml = build();
-		for(S s : list){xml.getStatus().add(xfStatus.build(s));}
+		for(S s : list)
+		{
+			xml.getStatus().add(xfStatus.build(s));
+		}
 		return xml;
 	}
 	

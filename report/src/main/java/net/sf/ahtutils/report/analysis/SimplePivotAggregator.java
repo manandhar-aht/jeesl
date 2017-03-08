@@ -2,8 +2,10 @@ package net.sf.ahtutils.report.analysis;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -83,5 +85,16 @@ public class SimplePivotAggregator <T extends EjbWithId, P extends EjbWithId>
     		if(d.getT().equals(t)){value=value+d.getValue();}
     	}
     	return value;
+    }
+    
+    public Map<T,Double> toMapT()
+    {
+    	Map<T,Double> map = new HashMap<T,Double>();
+    	for(T t : setT)
+    	{
+    		Double v = sumT(t);
+    		if(v!=null){map.put(t,v);}
+    	}
+    	return map;
     }
 }

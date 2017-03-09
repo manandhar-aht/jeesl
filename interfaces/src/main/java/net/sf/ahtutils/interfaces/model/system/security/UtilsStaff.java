@@ -18,6 +18,8 @@ public interface UtilsStaff<L extends UtilsLang,
 								   DOMAIN extends EjbWithId>
 			extends EjbWithId,EjbSaveable,EjbRemoveable
 {
+	public enum Attributes {role,user,domain};
+	
 	R getRole();
 	void setRole(R role);
 	

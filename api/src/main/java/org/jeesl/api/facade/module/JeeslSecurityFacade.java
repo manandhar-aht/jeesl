@@ -13,7 +13,6 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithCategory;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithViews;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsStaffPool;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;

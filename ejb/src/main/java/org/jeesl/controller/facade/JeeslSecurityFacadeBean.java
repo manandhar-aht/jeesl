@@ -8,6 +8,11 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.JeeslSecurityFacade;
 import org.slf4j.Logger;
@@ -234,45 +239,58 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	
 	// STAFF
 	@Override
-	public < S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
 		List<S> fStaffU(Class<S> clStaff, USER user)
 	{return allForParent(clStaff, "user", user);}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId>
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
 		List<S> fStaffR(Class<S> clStaff, R role)
 	{return allForParent(clStaff, "role", role);}
 	
 	@Override
-	public < S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId>
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
 		List<S> fStaffD(Class<S> clStaff, DOMAIN domain)
-	{return allForParent(clStaff, "domain", domain);}
+	{return allForParent(clStaff, UtilsStaff.Attributes.domain.toString(), domain);}
 	
 	@Override
-	public < S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId>
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
 		List<S> fStaffUR(Class<S> clStaff, USER user, R role)
 	{return allForParent(clStaff, "user", user, "role",role);}
 	
 	@Override
-	public < S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId>
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
 		List<S> fStaffUD(Class<S> clStaff, USER user, DOMAIN domain)
-	{return allForParent(clStaff, "user", user, "domain",domain);}
+	{return allForParent(clStaff, "user", user,UtilsStaff.Attributes.domain.toString(),domain);}
 	
 	@Override
-	public < S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> clStaff, R role, DOMAIN domain)
-	{return allForParent(clStaff, "role", role, "domain",domain);}
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, DOMAIN domain)
+	{return allForParent(cStaff, "role", role,UtilsStaff.Attributes.domain.toString(),domain);}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> clStaff, R role, List<DOMAIN> domains)
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<DOMAIN> domains)
 	{
-		return new ArrayList<S>();
-//		return allForParent(clStaff, "role", role, "domain",domain);
+		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<S> cQ = cB.createQuery(cStaff);
+		Root<S> staff = cQ.from(cStaff);
+
+		Path<DOMAIN> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
+		predicates.add(cB.isTrue(pDomain.in(domains)));
+		
+		Path<R> pRole = staff.get(UtilsStaff.Attributes.role.toString());
+		predicates.add(cB.equal(pRole,role));
+
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(staff);
+		return em.createQuery(cQ).getResultList();
 	}
 	
 	@Override
-	public < S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId> S fStaff(Class<S> clStaff, USER user, R role, DOMAIN domain) throws UtilsNotFoundException
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId> S fStaff(Class<S> clStaff, USER user, R role, DOMAIN domain) throws UtilsNotFoundException
 	{
-		return oneForParents(clStaff,"user",user,"role",role,"domain",domain);
+		return oneForParents(clStaff,"user",user,"role",role,UtilsStaff.Attributes.domain.toString(),domain);
 	}
 	
 	@Override public void grantRole(Class<USER> clUser, Class<R> clRole, USER user, R role, boolean grant)

@@ -1,8 +1,10 @@
 package  net.sf.ahtutils.factory.ejb.security;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -92,5 +94,27 @@ public class EjbStaffFactory <L extends UtilsLang,
     	Set<USER> set = new HashSet<USER>();
     	for(STAFF staff : staffs){set.add(staff.getUser());}
     	return new ArrayList<USER>(set);
+	}
+    
+    public static <L extends UtilsLang,
+			D extends UtilsDescription,
+			C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+			R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+			V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+			U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+			A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+			AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+			USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
+			STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,
+			DOMAIN extends EjbWithId>
+		Map<DOMAIN,List<USER>> toMapDomainUsers(List<STAFF> staffs)
+	{
+    	Map<DOMAIN,List<USER>> map = new HashMap<DOMAIN,List<USER>>();
+		for(STAFF staff : staffs)
+		{
+			if(!map.containsKey(staff.getDomain())){map.put(staff.getDomain(), new ArrayList<USER>());}
+			if(!map.get(staff.getDomain()).contains(staff.getUser())){map.get(staff.getDomain()).add(staff.getUser());}
+		}
+		return map;
 	}
 }

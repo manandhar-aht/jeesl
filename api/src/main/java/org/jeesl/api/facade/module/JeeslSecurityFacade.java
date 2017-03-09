@@ -54,13 +54,14 @@ public interface JeeslSecurityFacade <L extends UtilsLang,
 	
 	<S extends UtilsStaffPool<L,D,C,R,V,U,A,AT,P,E,USER>, P extends EjbWithId, E extends EjbWithId> List<S> fStaffPool(Class<S> clStaff, P pool);
 	
-	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> S fStaff(Class<S> clStaff, USER user, R role, DOMAIN domain) throws UtilsNotFoundException;
-	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffU(Class<S> clStaff, USER user);
-	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffR(Class<S> clStaff, R role);
-	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffD(Class<S> clStaff, DOMAIN domain);
-	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffUR(Class<S> clStaff, USER user, R role);
-	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffUD(Class<S> clStaff, USER user, DOMAIN domain);
-	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> clStaff, R role, DOMAIN domain);
+	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> S fStaff(Class<S> cStaff, USER user, R role, DOMAIN domain) throws UtilsNotFoundException;
+	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffU(Class<S> cStaff, USER user);
+	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffR(Class<S> cStaff, R role);
+	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffD(Class<S> cStaff, DOMAIN domain);
+	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffUR(Class<S> cStaff, USER user, R role);
+	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffUD(Class<S> cStaff, USER user, DOMAIN domain);
+	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, DOMAIN domain);
+	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<DOMAIN> domains);
 	
 	<S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<DOMAIN> fDomains(Class<V> cView, Class<S> cStaff, USER user, V view);
 }

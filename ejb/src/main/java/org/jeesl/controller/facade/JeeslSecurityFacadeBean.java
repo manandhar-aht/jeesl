@@ -263,6 +263,13 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	{return allForParent(clStaff, "role", role, "domain",domain);}
 	
 	@Override
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> clStaff, R role, List<DOMAIN> domains)
+	{
+		return new ArrayList<S>();
+//		return allForParent(clStaff, "role", role, "domain",domain);
+	}
+	
+	@Override
 	public < S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId> S fStaff(Class<S> clStaff, USER user, R role, DOMAIN domain) throws UtilsNotFoundException
 	{
 		return oneForParents(clStaff,"user",user,"role",role,"domain",domain);

@@ -10,8 +10,8 @@ import javax.persistence.EntityManager;
 import net.sf.ahtutils.controller.facade.UtilsMonitoringFacadeBean;
 import net.sf.ahtutils.interfaces.facade.UtilsMonitoringFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
-import net.sf.ahtutils.monitor.result.net.IcmpResult;
 
+import org.jeesl.controller.monitoring.result.net.IcmpResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

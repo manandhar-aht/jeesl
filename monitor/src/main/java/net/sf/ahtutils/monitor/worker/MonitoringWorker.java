@@ -14,9 +14,9 @@ import net.sf.ahtutils.interfaces.controller.monitoring.MonitoringResult;
 import net.sf.ahtutils.interfaces.controller.monitoring.MonitoringResultProcessor;
 import net.sf.ahtutils.monitor.processor.net.DnsResultProcessor;
 import net.sf.ahtutils.monitor.processor.net.IcmpResultProcessor;
-import net.sf.ahtutils.monitor.result.net.DnsResult;
-import net.sf.ahtutils.monitor.result.net.IcmpResults;
 
+import org.jeesl.controller.monitoring.result.net.DnsResult;
+import org.jeesl.controller.monitoring.result.net.IcmpResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

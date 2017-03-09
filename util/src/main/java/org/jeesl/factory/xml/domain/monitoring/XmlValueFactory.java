@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.monitor;
+package org.jeesl.factory.xml.domain.monitoring;
 
 import net.sf.ahtutils.xml.monitoring.Value;
 

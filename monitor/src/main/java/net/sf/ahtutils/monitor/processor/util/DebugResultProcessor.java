@@ -5,8 +5,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import net.sf.ahtutils.interfaces.controller.monitoring.MonitoringResultProcessor;
-import net.sf.ahtutils.monitor.result.util.DebugResult;
 
+import org.jeesl.controller.monitoring.result.DebugResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

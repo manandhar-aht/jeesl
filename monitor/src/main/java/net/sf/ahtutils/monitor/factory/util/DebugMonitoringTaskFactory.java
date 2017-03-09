@@ -3,9 +3,10 @@ package net.sf.ahtutils.monitor.factory.util;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
 
+import org.jeesl.controller.monitoring.result.DebugResult;
+
 import net.sf.ahtutils.interfaces.controller.monitoring.MonitoringTaskFactory;
 import net.sf.ahtutils.interfaces.controller.monitoring.MonitoringResultProcessor;
-import net.sf.ahtutils.monitor.result.util.DebugResult;
 import net.sf.ahtutils.monitor.task.util.DebugTask;
 
 public class DebugMonitoringTaskFactory implements MonitoringTaskFactory<DebugResult>

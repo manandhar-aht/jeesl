@@ -6,10 +6,10 @@ import javax.persistence.EntityManagerFactory;
 import net.sf.ahtutils.bootstrap.UtilsMonitorBootstrap;
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.monitor.result.net.IcmpResult;
 import net.sf.ahtutils.monitor.task.AnalysisTask;
 import net.sf.ahtutils.monitor.worker.MonitoringTaskBuilder;
 
+import org.jeesl.controller.monitoring.result.net.IcmpResult;
 import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,9 +1,9 @@
 package net.sf.ahtutils.monitor.task.net;
 
-import net.sf.ahtutils.monitor.result.net.IcmpResult;
-import net.sf.ahtutils.monitor.result.net.IcmpResults;
 import net.sf.ahtutils.test.UtilsMonitorTestBootstrap;
 
+import org.jeesl.controller.monitoring.result.net.IcmpResult;
+import org.jeesl.controller.monitoring.result.net.IcmpResults;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

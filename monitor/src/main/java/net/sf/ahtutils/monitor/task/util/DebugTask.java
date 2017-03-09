@@ -3,8 +3,7 @@ package net.sf.ahtutils.monitor.task.util;
 import java.util.Date;
 import java.util.concurrent.Callable;
 
-import net.sf.ahtutils.monitor.result.util.DebugResult;
-
+import org.jeesl.controller.monitoring.result.DebugResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

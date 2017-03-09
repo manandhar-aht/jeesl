@@ -1,4 +1,4 @@
-package net.sf.ahtutils.monitor.result.net;
+package org.jeesl.controller.monitoring.result.net;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,34 +13,29 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 @Entity
-public class IcmpResult implements Serializable,MonitoringResult,EjbWithId,EjbWithRecord
+public class DnsResult implements Serializable,MonitoringResult,EjbWithId,EjbWithRecord
 {
 	public static final long serialVersionUID=1;
-	public static enum Code {REACHABLE,TIMEOUT,UNKNOWN_HOST,ERROR}
+	public static enum Code {SUCCESSFUL,UNRECOVERABLE,TRY_AGAIN,HOST_NOT_FOUND,TYPE_NOT_FOUND}
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;	
-	
-	private Date record;
-	
-	private long duration;
-	
-	private Code code;
-			
-	//***********************************//
+	private long id;
 	public long getId() {return id;}
 	public void setId(long id){this.id = id;}
 	
+	private long duration;
 	public long getDuration() {return duration;}
 	public void setDuration(long duration) {this.duration = duration;}
 		
+	private Date record;
 	public Date getRecord() {return record;}
 	public void setRecord(Date record) {this.record = record;}
-		
+	
+	private Code code;	
 	public Code getCode() {return code;}
 	public void setCode(Code code) {this.code = code;}
 	
-	//***********************************//
+	// ***********   Methods   **************
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

@@ -8,10 +8,10 @@ import java.util.concurrent.CompletionService;
 
 import net.sf.ahtutils.interfaces.controller.monitoring.MonitoringResult;
 import net.sf.ahtutils.interfaces.controller.monitoring.MonitoringTaskFactory;
-import net.sf.ahtutils.monitor.result.net.DnsResult;
-import net.sf.ahtutils.monitor.result.net.IcmpResults;
-import net.sf.ahtutils.monitor.result.util.DebugResult;
 
+import org.jeesl.controller.monitoring.result.DebugResult;
+import org.jeesl.controller.monitoring.result.net.DnsResult;
+import org.jeesl.controller.monitoring.result.net.IcmpResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -4,8 +4,7 @@ import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.concurrent.Callable;
 
-import net.sf.ahtutils.monitor.result.net.DnsResult;
-
+import org.jeesl.controller.monitoring.result.net.DnsResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xbill.DNS.Lookup;

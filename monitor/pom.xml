@@ -37,6 +37,11 @@
         	<artifactId>jeesl-interfaces</artifactId>
         	<type>jar</type>
         </dependency>
+		<dependency>
+        	<groupId>org.jeesl</groupId>
+        	<artifactId>jeesl-util</artifactId>
+        	<type>jar</type>
+        </dependency>
         <dependency>
         	<groupId>org.jeesl</groupId>
         	<artifactId>jeesl-xml</artifactId>

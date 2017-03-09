@@ -1,4 +1,4 @@
-package net.sf.ahtutils.monitor.result.net;
+package org.jeesl.controller.monitoring.result.net;
 
 import java.io.Serializable;
 import java.util.ArrayList;

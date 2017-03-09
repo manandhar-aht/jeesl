@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import net.sf.ahtutils.monitor.result.net.IcmpResult;
-import net.sf.ahtutils.monitor.result.net.IcmpResults;
 import net.sf.exlp.core.handler.EhList;
 import net.sf.exlp.interfaces.LogEvent;
 import net.sf.exlp.interfaces.LogEventHandler;
 import net.sf.exlp.shell.spawn.ping.IcmpPing;
 import net.sf.exlp.shell.spawn.ping.PingEvent;
 
+import org.jeesl.controller.monitoring.result.net.IcmpResult;
+import org.jeesl.controller.monitoring.result.net.IcmpResults;
 import org.joda.time.MutableDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

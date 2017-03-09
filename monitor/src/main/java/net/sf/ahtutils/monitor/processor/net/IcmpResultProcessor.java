@@ -6,9 +6,8 @@ import java.util.concurrent.Future;
 
 import javax.persistence.EntityManager;
 
-import net.sf.ahtutils.monitor.result.net.IcmpResult;
-import net.sf.ahtutils.monitor.result.net.IcmpResults;
-
+import org.jeesl.controller.monitoring.result.net.IcmpResult;
+import org.jeesl.controller.monitoring.result.net.IcmpResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

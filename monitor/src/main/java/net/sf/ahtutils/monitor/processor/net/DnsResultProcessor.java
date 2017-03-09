@@ -7,8 +7,8 @@ import java.util.concurrent.Future;
 import javax.persistence.EntityManager;
 
 import net.sf.ahtutils.interfaces.controller.monitoring.MonitoringResultProcessor;
-import net.sf.ahtutils.monitor.result.net.DnsResult;
 
+import org.jeesl.controller.monitoring.result.net.DnsResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

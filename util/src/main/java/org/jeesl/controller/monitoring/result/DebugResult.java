@@ -1,4 +1,4 @@
-package net.sf.ahtutils.monitor.result.util;
+package org.jeesl.controller.monitoring.result;
 
 import java.io.Serializable;
 import java.util.Date;

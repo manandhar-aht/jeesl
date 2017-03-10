@@ -156,7 +156,14 @@
 	</s:translation>
 	<s:translation key="aupCategories">
     	<s:langs>
-    		<s:lang key="de" translation="Categories"/>
+    		<s:lang key="de" translation="***Categories***"/>
+    		<s:lang key="en" translation="***Categories***"/>
+    		<s:lang key="fr" translation="***Categories***"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslCategories">
+    	<s:langs>
+    		<s:lang key="de" translation="Kategorien"/>
     		<s:lang key="en" translation="Categories"/>
     		<s:lang key="fr" translation="Categories"/>
     	</s:langs>

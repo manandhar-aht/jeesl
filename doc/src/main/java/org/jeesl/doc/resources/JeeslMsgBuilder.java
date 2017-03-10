@@ -54,6 +54,10 @@ public class JeeslMsgBuilder
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
 	
 	public static final String tooltip = "aht-utils/msg/tooltip.xml";
+	
+	
+	//Util
+	public static final String srcAdminStatus = "jeesl/msg/util/status.xml";
 
 	public static final String srcWizard = "jeesl/msg/wizard.xml";
 	public static final String srcAdminAuditLog = "msg.aht-utils/admin/system/auditLog.xml";
@@ -65,7 +69,7 @@ public class JeeslMsgBuilder
 	public static final String msgAdminSystemOptionTables = "msg.aht-utils/admin/system/options.xml";
 	public static final String srcAdminSecurity = "aht-utils/msg/module/security.xml";
 	public static final String srcAdminUser = "aht-utils/msg/admin/user.xml";
-	public static final String srcAdminStatus = "aht-utils/msg/admin/status.xml";
+	
 	public static final String revision = "jeesl/msg/admin/system/revision.xml";
 	public static final String srcConstraint = "jeesl/msg/admin/system/constraint.xml";
 	public static final String facesMessages = "jeesl/msg/facesMessages.xml";

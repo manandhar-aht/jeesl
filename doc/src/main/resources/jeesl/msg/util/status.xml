@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslName">
+    	<s:langs>
+    		<s:lang key="de" translation="Name"/>
+    		<s:lang key="en" translation="Name"/>
+    		<s:lang key="fr" translation="Name"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupCode">
     	<s:langs>
     		<s:lang key="de" translation="Code"/>
@@ -57,6 +64,13 @@
     	</s:langs>
     </s:translation>
 	<s:translation key="aupType">
+    	<s:langs>
+    		<s:lang key="de" translation="Type"/>
+    		<s:lang key="en" translation="Type"/>
+    		<s:lang key="fr" translation="Type"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslType">
     	<s:langs>
     		<s:lang key="de" translation="Type"/>
     		<s:lang key="en" translation="Type"/>

@@ -80,8 +80,8 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSheets()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fSheet :#{cc.id}:sGroup :#{cc.id}:row2 :#{cc.id}:row3" listener="#{cc.attrs.bean.selectSheet()}"/>
 							<p:column rendered="true"><h:outputText value="#{sheet.position}"/></p:column>
-							<p:column headerText="#{msg.aupName}"><h:outputText value="#{sheet.name[userBean.localeCode].lang}"/></p:column>
-							<p:column headerText="#{msg.aupName}">  
+							<p:column headerText="#{msg.jeeslName}"><h:outputText value="#{sheet.name[userBean.localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslType}">  
 								<aup:iconCheckmark value="#{sheet.visible}"/>
 								<h:graphicImage rendered="#{sheet.implementation.code eq 'tree'}" style="margin-left: 5px;" name="12/ui/system/io/report/implementation/tree.png"  library="jeeslPrototypeGfx"/>
 								<h:graphicImage rendered="#{sheet.implementation.code eq 'flat'}" style="margin-left: 5px;" name="12/ui/system/io/report/implementation/flat.png"  library="jeeslPrototypeGfx"/>
@@ -125,7 +125,7 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderGroups()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fGroup :#{cc.id}:row2" listener="#{cc.attrs.bean.selectGroup()}"/>
 				         <p:column rendered="true"><h:outputText value="#{group.position}"/></p:column>
-				         <p:column headerText="#{msg.aupName}"><h:outputText value="#{group.name[userBean.localeCode].lang}"/></p:column>
+				         <p:column headerText="#{msg.jeeslName}"><h:outputText value="#{group.name[userBean.localeCode].lang}"/></p:column>
 				         <p:column rendered="true">
 								<aup:iconCheckmark value="#{group.visible}"/>
 								<h:graphicImage rendered="#{group.showLabel}" name="12/ui/system/io/report/label.png"  library="jeeslPrototypeGfx" style="margin-left: 5px;"/>
@@ -170,7 +170,7 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderColumns()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sColumn" listener="#{cc.attrs.bean.selectColumn()}"/>
 				         <p:column rendered="true"><h:outputText value="#{column.position}"/></p:column>
-				         <p:column headerText="#{msg.aupName}"><h:outputText value="#{column.name[userBean.localeCode].lang}"/></p:column>
+				         <p:column headerText="#{msg.jeeslName}"><h:outputText value="#{column.name[userBean.localeCode].lang}"/></p:column>
 				         <p:column>  
 							<aup:iconCheckmark value="#{column.visible}"/>
 							<h:graphicImage rendered="#{column.showLabel}" name="12/ui/system/io/report/label.png"  library="jeeslPrototypeGfx" style="margin-left: 5px;"/>
@@ -280,7 +280,7 @@
 				         <p:column rendered="true">  
 							<h:outputText value="#{row.position}"/>
 				         </p:column>
-				         <p:column headerText="#{msg.aupName}">  
+				         <p:column headerText="#{msg.jeeslName}">  
 							<h:outputText value="#{row.name[userBean.localeCode].lang}"/>
 				         </p:column>
 				         <p:column>  

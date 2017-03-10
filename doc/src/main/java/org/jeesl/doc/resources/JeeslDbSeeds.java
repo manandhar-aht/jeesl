@@ -1,4 +1,4 @@
-package org.jeesl.doc.db;
+package org.jeesl.doc.resources;
 
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportRowType;

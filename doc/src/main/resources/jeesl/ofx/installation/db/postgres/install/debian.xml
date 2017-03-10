@@ -33,7 +33,7 @@ sudo make comments-install</ofx:raw>
 		
 	</ofx:section>
 	
-	<ofx:section container="true" classifier="debianJessi">
+	<ofx:section container="true" classifier="debianJessie">
 		<ofx:title>Debian Jessie</ofx:title>
 		
 		<ofx:listing>

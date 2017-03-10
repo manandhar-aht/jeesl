@@ -37,7 +37,8 @@ public class UtilsDbXmlSeedUtil
     public static String cliSave = "db.export.cli.save";
 	
     private Configuration config;
-	protected Db dbSeed;
+	protected Db dbSeed; public Db getDbSeed() {return dbSeed;}
+
 	private File fTmp;
 	
 	protected String pathPrefix;

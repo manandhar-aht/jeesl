@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 
 public class JeeslMsgBuilder
 {	
+	public static final String jeeslPath = "utils"+File.separator+"jeesl"+File.separator;
+	
 	public static final String generic = "jeesl/msg/generic.xml";
 	public static final String report = "jeesl/msg/report.xml";
 	public static final String query = "aht-utils/msg/query.xml";

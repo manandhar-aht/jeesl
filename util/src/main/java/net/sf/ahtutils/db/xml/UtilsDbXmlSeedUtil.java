@@ -37,7 +37,7 @@ public class UtilsDbXmlSeedUtil
     public static String cliSave = "db.export.cli.save";
 	
     private Configuration config;
-	protected Db dbSeed; public Db getDbSeed() {return dbSeed;}
+	protected Db dbSeed;
 
 	private File fTmp;
 	
@@ -45,15 +45,17 @@ public class UtilsDbXmlSeedUtil
 	
 	public UtilsDbXmlSeedUtil(Configuration config) throws FileNotFoundException
 	{
+		this(config,JaxbUtil.loadJAXB(config.getString(configKeySeed), Db.class));
+	}
+	
+	public UtilsDbXmlSeedUtil(Configuration config, Db dbSeed) throws FileNotFoundException
+	{
 		this.config=config;
-		String dbSeedFile = config.getString(configKeySeed);
-		logger.info("Using seed: "+dbSeedFile);
-		dbSeed = JaxbUtil.loadJAXB(dbSeedFile, Db.class);
-		try{dbSeed.setPathExport(config.getString(configKeyPathExport));} catch (NoSuchElementException e){}
+		this.dbSeed=dbSeed;
+		try{this.dbSeed.setPathExport(config.getString(configKeyPathExport));} catch (NoSuchElementException e){}
 		
 		try{fTmp = new File(config.getString(ConfigKey.dirTmp));}
 		catch (NoSuchElementException e){fTmp = new File(System.getProperty("java.io.tmpdir"));}
-		
 	}
 	
 	public UtilsDbXmlSeedUtil(Db dbSeed)

@@ -1,16 +1,21 @@
-package net.sf.ahtutils.controller.facade;
+package org.jeesl.controller.facade;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
 
+import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -25,7 +30,7 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
-public class UtilsTsFacadeBean<L extends UtilsLang,
+public class JeeslTsFacadeBean<L extends UtilsLang,
 							D extends UtilsDescription,
 							CAT extends UtilsStatus<CAT,L,D>,
 							SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
@@ -40,12 +45,16 @@ public class UtilsTsFacadeBean<L extends UtilsLang,
 					extends UtilsFacadeBean
 					implements JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>
 {	
+	
+	private final Class<DATA> cData;
+	
 	private EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> efTs;
 	private EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> efBridge;
 	
-	public UtilsTsFacadeBean(EntityManager em)
+	public JeeslTsFacadeBean(EntityManager em, final Class<DATA> cData)
 	{
 		super(em);
+		this.cData=cData;
 	}
 
 	@Override public List<SCOPE> findScopes(Class<SCOPE> cScope, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleScopes)
@@ -112,18 +121,25 @@ public class UtilsTsFacadeBean<L extends UtilsLang,
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cTs.getName()+" found for scope/interval/bridge");}
 	}
 	
-	@Override public List<DATA> fData(Class<DATA> cData, WS workspace, TS timeSeries)
+	@Override public List<DATA> fData(WS workspace, TS timeSeries){return fData(workspace,timeSeries,null,null);}
+	@Override
+	public List<DATA> fData(WS workspace, TS timeSeries, Date from, Date to)
 	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<DATA> cQ = cB.createQuery(cData);
-		Root<DATA> from = cQ.from(cData);
+		Root<DATA> data = cQ.from(cData);
 		
-		Path<WS> pWs = from.get("workspace");
-		Path<TS> pTs = from.get("timeSeries");
+		predicates.add(cB.equal(data.<WS>get(UtilsTsData.Attributes.workspace.toString()), workspace));
+		predicates.add(cB.equal(data.<TS>get(UtilsTsData.Attributes.timeSeries.toString()), timeSeries));
 		
-		CriteriaQuery<DATA> select = cQ.select(from);
-		select.where(cB.equal(pWs, workspace),cB.equal(pTs, timeSeries));
+		Expression<Date> eRecord = data.get(UtilsTsData.Attributes.record.toString());
+		if(from!=null){predicates.add(cB.greaterThanOrEqualTo(eRecord, from));}
+		if(to!=null){predicates.add(cB.lessThan(eRecord,to));}
 		
-		return em.createQuery(select).getResultList();
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(data);
+		
+		return em.createQuery(cQ).getResultList();
 	}
 }

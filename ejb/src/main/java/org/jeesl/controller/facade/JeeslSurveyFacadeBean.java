@@ -137,10 +137,10 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	
 	@Override public List<VERSION> fVersions(TC category)
 	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<VERSION> cQ = cB.createQuery(cVersion);
 		Root<VERSION> root = cQ.from(cVersion);
-		List<Predicate> predicates = new ArrayList<Predicate>();
 		
 		Join<VERSION,TEMPLATE> jTemplate = root.join(JeeslSurveyTemplateVersion.Attributes.template.toString());
 		Path<TC> pCategory = jTemplate.get(JeeslSurveyTemplate.Attributes.category.toString());

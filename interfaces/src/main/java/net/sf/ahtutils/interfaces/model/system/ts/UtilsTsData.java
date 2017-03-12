@@ -21,6 +21,8 @@ public interface UtilsTsData <L extends UtilsLang,
 								QAF extends UtilsStatus<QAF,L,D>>
 		extends EjbWithId,EjbWithRecord,EjbSaveable
 {
+	public enum Attributes{timeSeries,workspace,record,value}
+	
 	TS getTimeSeries();
 	void setTimeSeries(TS timeSeries);
 	

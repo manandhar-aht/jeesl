@@ -1,5 +1,6 @@
 package org.jeesl.api.facade.module;
 
+import java.util.Date;
 import java.util.List;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -37,5 +38,6 @@ public interface JeeslTsFacade <L extends UtilsLang,
 	TS fTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException;
 	TS fcTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException;
 	
-	List<DATA> fData(Class<DATA> cData, WS workspace, TS timeSeries);
+	List<DATA> fData(WS workspace, TS timeSeries);
+	List<DATA> fData(WS workspace, TS timeSeries, Date from, Date to);
 }

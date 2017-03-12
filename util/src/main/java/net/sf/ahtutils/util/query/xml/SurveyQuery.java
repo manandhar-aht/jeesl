@@ -4,11 +4,11 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.jeesl.factory.xml.survey.XmlAnswerFactory;
-import org.jeesl.factory.xml.survey.XmlCorrelationFactory;
-import org.jeesl.factory.xml.survey.XmlDataFactory;
-import org.jeesl.factory.xml.survey.XmlSurveyFactory;
-import org.jeesl.factory.xml.survey.XmlTemplateFactory;
+import org.jeesl.factory.xml.module.survey.XmlAnswerFactory;
+import org.jeesl.factory.xml.module.survey.XmlCorrelationFactory;
+import org.jeesl.factory.xml.module.survey.XmlDataFactory;
+import org.jeesl.factory.xml.module.survey.XmlSurveyFactory;
+import org.jeesl.factory.xml.module.survey.XmlTemplateFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.model.xml.jeesl.QuerySurvey;
@@ -133,7 +133,7 @@ public class SurveyQuery
 	private static Answer exAnswer()
 	{
 		Answer xml = XmlAnswerFactory.id();
-		xml.setQuestion(org.jeesl.factory.xml.survey.XmlQuestionFactory.id());
+		xml.setQuestion(org.jeesl.factory.xml.module.survey.XmlQuestionFactory.id());
 		xml.setValueBoolean(true);
 		xml.setValueNumber(0);
 		return xml;
@@ -145,7 +145,7 @@ public class SurveyQuery
 		data.setCorrelation(XmlCorrelationFactory.id());
 		
 		Answer xml = XmlAnswerFactory.id();
-		xml.setQuestion(org.jeesl.factory.xml.survey.XmlQuestionFactory.id());
+		xml.setQuestion(org.jeesl.factory.xml.module.survey.XmlQuestionFactory.id());
 		xml.setValueBoolean(true);
 		xml.setValueNumber(0);
 		xml.setData(data);

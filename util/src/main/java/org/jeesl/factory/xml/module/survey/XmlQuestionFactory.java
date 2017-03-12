@@ -1,4 +1,4 @@
-package org.jeesl.factory.xml.survey;
+package org.jeesl.factory.xml.module.survey;
 
 import net.sf.ahtutils.factory.xml.status.XmlUnitFactory;
 import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;

@@ -1,4 +1,4 @@
-package org.jeesl.factory.xml.survey;
+package org.jeesl.factory.xml.module.survey;
 
 import org.jeesl.interfaces.model.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;

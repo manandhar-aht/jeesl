@@ -1,4 +1,4 @@
-package org.jeesl.controller.report.system;
+package org.jeesl.controller.report.module;
 
 import java.util.Date;
 import java.util.List;
@@ -30,7 +30,7 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.report.Report;
 
-public class TsReport <L extends UtilsLang,D extends UtilsDescription,
+public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 						CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 						REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE>,
 						IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -64,12 +64,12 @@ public class TsReport <L extends UtilsLang,D extends UtilsDescription,
 					extends AbstractJeeslReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>
 //implements JeeslReportHeader//,JeeslFlatReport,JeeslXlsReport
 {
-	final static Logger logger = LoggerFactory.getLogger(TsReport.class);
+	final static Logger logger = LoggerFactory.getLogger(TimeSeriesReport.class);
 
 	private final Class<TS> cTs;
 	private final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs;
 	
-	public TsReport(String localeCode, final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<TS> cTs)
+	public TimeSeriesReport(String localeCode, final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<TS> cTs)
 	{
 		super(localeCode,cL,cD,cCategory,cReport);
 		this.fTs=fTs;

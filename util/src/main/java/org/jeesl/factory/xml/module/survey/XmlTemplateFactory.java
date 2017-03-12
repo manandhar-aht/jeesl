@@ -1,4 +1,4 @@
-package org.jeesl.factory.xml.survey;
+package org.jeesl.factory.xml.module.survey;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;

@@ -66,7 +66,7 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	public Report build(REPORT report)
 	{
-		Report xml = new Report();
+		Report xml = build();
 		
 //		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetCode()){xml.setCode(report.getCode());}
@@ -82,5 +82,10 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetXlsWorkbook() && report.getWorkbook()!=null){xml.setXlsWorkbook(xfWorkbook.build(report.getWorkbook()));}
 		
 		return xml;
+	}
+	
+	public static Report build()
+	{
+		return new Report();
 	}
 }

@@ -1,6 +1,7 @@
-package org.jeesl.report.prototype.system.db;
+package org.jeesl.controller.report.system;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
+import org.jeesl.controller.report.AbstractJeeslReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -10,7 +11,6 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportStyle;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
-import org.jeesl.report.prototype.AbstractJeeslReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

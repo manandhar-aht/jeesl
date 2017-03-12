@@ -1,4 +1,4 @@
-package org.jeesl.report.prototype;
+package org.jeesl.controller.report;
 
 import java.util.ArrayList;
 import java.util.Collections;

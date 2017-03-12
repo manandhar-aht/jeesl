@@ -3,10 +3,9 @@ package net.sf.ahtutils.util.comparator.xml.ts;
 import java.util.Comparator;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
+import org.jeesl.model.xml.module.ts.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.ts.Data;
 
 public class TsDataComparator
 {

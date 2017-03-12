@@ -2,6 +2,7 @@ package net.sf.ahtutils.factory.xml.mc;
 
 import java.util.List;
 
+import org.jeesl.model.xml.module.ts.TimeSeries;
 import org.metachart.xml.chart.Data;
 import org.metachart.xml.chart.DataSet;
 import org.slf4j.Logger;
@@ -15,7 +16,6 @@ import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
-import net.sf.ahtutils.xml.ts.TimeSeries;
 import net.sf.exlp.util.DateUtil;
 
 public class XmlMcDataSetFactory
@@ -27,7 +27,7 @@ public class XmlMcDataSetFactory
 	{
 		DataSet ds = new DataSet();
 		
-		for(net.sf.ahtutils.xml.ts.Data tsD: timeSeries.getData())
+		for(org.jeesl.model.xml.module.ts.Data tsD: timeSeries.getData())
 		{
 			Data cd = new Data();
 			cd.setRecord(tsD.getRecord());

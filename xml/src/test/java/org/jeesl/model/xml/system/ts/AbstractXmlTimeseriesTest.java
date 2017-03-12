@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.ts;
+package org.jeesl.model.xml.system.ts;
 
 import org.jeesl.AbstractXmlTest;
 import org.slf4j.Logger;
@@ -10,6 +10,6 @@ public abstract class AbstractXmlTimeseriesTest <T extends Object> extends Abstr
 
 	public AbstractXmlTimeseriesTest(Class<T> cXml)
 	{
-		super(cXml,"ts");
+		super(cXml,"system/ts");
 	}
 }

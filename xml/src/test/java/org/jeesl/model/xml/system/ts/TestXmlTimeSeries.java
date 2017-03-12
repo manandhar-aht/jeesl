@@ -1,10 +1,9 @@
-package org.jeesl.model.xml.ts;
+package org.jeesl.model.xml.system.ts;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.module.ts.TimeSeries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.ts.TimeSeries;
 
 public class TestXmlTimeSeries extends AbstractXmlTimeseriesTest<TimeSeries>
 {

@@ -17,8 +17,10 @@ import java.util.Random;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.jxpath.JXPathContext;
 import org.jeesl.api.facade.module.JeeslTsFacade;
-import org.jeesl.factory.xml.ts.XmlDataFactory;
-import org.jeesl.factory.xml.ts.XmlTimeSeriesFactory;
+import org.jeesl.factory.xml.module.ts.XmlDataFactory;
+import org.jeesl.factory.xml.module.ts.XmlTimeSeriesFactory;
+import org.jeesl.model.xml.module.ts.Data;
+import org.jeesl.model.xml.module.ts.TimeSeries;
 import org.joda.time.DateTime;
 import org.metachart.xml.chart.DataSet;
 import org.primefaces.event.FileUploadEvent;
@@ -43,8 +45,6 @@ import net.sf.ahtutils.report.revert.excel.ImportStrategy;
 import net.sf.ahtutils.report.revert.excel.importers.ExcelSimpleSerializableImporter;
 import net.sf.ahtutils.util.comparator.xml.ts.TsDataComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
-import net.sf.ahtutils.xml.ts.Data;
-import net.sf.ahtutils.xml.ts.TimeSeries;
 
 public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,

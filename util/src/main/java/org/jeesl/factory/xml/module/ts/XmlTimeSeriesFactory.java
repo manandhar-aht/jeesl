@@ -1,9 +1,8 @@
-package org.jeesl.factory.xml.ts;
+package org.jeesl.factory.xml.module.ts;
 
+import org.jeesl.model.xml.module.ts.TimeSeries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.ts.TimeSeries;
 
 public class XmlTimeSeriesFactory
 {

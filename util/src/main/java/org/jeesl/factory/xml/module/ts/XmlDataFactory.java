@@ -1,11 +1,11 @@
-package org.jeesl.factory.xml.ts;
+package org.jeesl.factory.xml.module.ts;
 
 import java.util.Date;
 
+import org.jeesl.model.xml.module.ts.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.ts.Data;
 import net.sf.exlp.util.DateUtil;
 
 public class XmlDataFactory

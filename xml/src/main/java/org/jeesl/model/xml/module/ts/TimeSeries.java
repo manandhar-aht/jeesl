@@ -1,5 +1,5 @@
 
-package net.sf.ahtutils.xml.ts;
+package org.jeesl.model.xml.module.ts;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,8 +21,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/timeseries}entity"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/timeseries}data" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/timeseries}entity"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/timeseries}data" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;

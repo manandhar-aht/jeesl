@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="handler" required="true"/>
+		<composite:attribute name="update"/>
+	</composite:interface>
+
+	<composite:implementation>
+		<aup:statusBarItem orientation="right">
+            <f:facet name="label">
+                <ui:fragment>
+                    <h:outputText styleClass="aupStatusBarCalendarLabel" value="From"/>
+                    <p:calendar styleClass="aupStatusBarCalendar" value="#{cc.attrs.handler.date1}" pattern="dd.MM.yyyy">
+                        <p:ajax update="#{cc.attrs.update}" event="dateSelect" listener="#{cc.attrs.handler.dateChanged()}"/>
+                        <p:ajax update="#{cc.attrs.update}" event="change" listener="#{cc.attrs.handler.dateChanged()}"/>
+                    </p:calendar>
+
+                    <h:outputText styleClass="aupStatusBarCalendarLabel" value="To"/>
+                    <p:calendar styleClass="aupStatusBarCalendar" value="#{cc.attrs.handler.date2}" pattern="dd.MM.yyyy">
+                        <p:ajax update="#{cc.attrs.update}" event="dateSelect" listener="#{cc.attrs.handler.dateChanged()}"/>
+                        <p:ajax update="#{cc.attrs.update}" event="change" listener="#{cc.attrs.handler.dateChanged()}"/>
+                    </p:calendar>
+                </ui:fragment>
+            </f:facet>
+		</aup:statusBarItem>
+
+	</composite:implementation>
+</html>

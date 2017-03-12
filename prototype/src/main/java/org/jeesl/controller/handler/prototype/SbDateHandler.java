@@ -26,4 +26,9 @@ public class SbDateHandler implements Serializable
 		date2 = dt.toDate();
 		date1 = dt.minusMonths(months).toDate();
 	}
+	
+	public void dateChanged()
+	{
+		logger.info("changed");
+	}
 }

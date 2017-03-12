@@ -9,23 +9,21 @@
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
-	<!-- Deprecated, use jp:sbStatusMulti -->
-
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
 		<composite:attribute name="label" required="false" default="#{msg.aupTypes}"/>
-		<composite:attribute name="handler" required="true"/>
+		<composite:attribute name="list" required="true"/>
 		<composite:attribute name="update" required="true"/>
 	</composite:interface>
 
 	<composite:implementation>
-		<aup:statusBarItem label="#{cc.attrs.label} (#{fn:length(cc.attrs.handler.selected)}/#{fn:length(cc.attrs.handler.list)})"
+		<aup:statusBarItem	rendered="#{not empty cc.attrs.status}"
+							label="#{cc.attrs.status.name[userBean.localeCode].lang}"
 								 orientation="right"
-								 childs="#{cc.attrs.handler.list}">
+								 childs="#{cc.attrs.list}">
 			<h:commandLink>
 				<h:outputText value="#{var.name[userBean.localeCode].lang}"/>
-				<aup:sbCheckmark value="#{cc.attrs.handler.map[var]}"/>
-				<p:ajax event="click" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.multiToggle(var)}"/>
+				<p:ajax event="click" listener="#{cc.attrs.bean.selectSbStatus(var)}" update="@form #{cc.attrs.update}"/>
 			</h:commandLink>
 		</aup:statusBarItem>
 	</composite:implementation>

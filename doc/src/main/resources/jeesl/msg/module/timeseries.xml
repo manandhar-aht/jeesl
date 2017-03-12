@@ -91,7 +91,21 @@
     		<s:lang key="fr" translation="Timeseries"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupTsValue">
+    <s:translation key="jeeslTsData">
+    	<s:langs>
+    		<s:lang key="de" translation="Zeitseriendaten"/>
+    		<s:lang key="en" translation="Timeseries Data"/>
+    		<s:lang key="fr" translation="Timeseries Data"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslTsDateTime">
+    	<s:langs>
+    		<s:lang key="de" translation="Datum/Uhrzeit"/>
+    		<s:lang key="en" translation="Date/Time"/>
+    		<s:lang key="fr" translation="Date/Time"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslTsValue">
     	<s:langs>
     		<s:lang key="de" translation="Wert"/>
     		<s:lang key="en" translation="Value"/>

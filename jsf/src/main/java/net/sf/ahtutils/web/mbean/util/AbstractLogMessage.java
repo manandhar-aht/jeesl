@@ -124,7 +124,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 		String rmEntity(USER user, T t)
 	{
 		 StringBuffer sb = new StringBuffer();
-		 sb.append("Removing").append(t.getClass().getSimpleName());
+		 sb.append("Removing ").append(t.getClass().getSimpleName());
 		 if(user!=null){sb.append(" {").append(user.toString()).append("}");}
 		 sb.append(": ").append(t.toString());
 		 return sb.toString();

@@ -40,7 +40,7 @@ public class JeeslMsgBuilder
 	public static final String financePeriod = "jeesl/msg/finance/period.xml";
 	
 	//Modules
-	public static final String timeseries = "aht-utils/msg/module/timeseries.xml";
+	public static final String timeseries = "jeesl/msg/module/timeseries.xml";
 	public static final String io = "aht-utils/msg/module/io.xml";
 	public static final String monitoring = "aht-utils/msg/module/monitoring.xml";
 	

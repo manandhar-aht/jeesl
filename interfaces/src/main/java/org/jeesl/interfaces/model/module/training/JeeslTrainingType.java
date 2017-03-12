@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.training;
+package org.jeesl.interfaces.model.module.training;
 
 public interface JeeslTrainingType
 {

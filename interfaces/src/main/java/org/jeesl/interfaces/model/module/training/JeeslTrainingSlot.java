@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.training;
+package org.jeesl.interfaces.model.module.training;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;

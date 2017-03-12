@@ -8,16 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
+
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTimeSeries;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Time Series",category="ts",subset="ts")
 public class TimeSeries implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsTimeSeries<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsBridge,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
+								JeeslTimeSeries<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsBridge,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
 {
 	public static final long serialVersionUID=1;
 	

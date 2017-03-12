@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.survey;
+package org.jeesl.interfaces.model.module.survey;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;

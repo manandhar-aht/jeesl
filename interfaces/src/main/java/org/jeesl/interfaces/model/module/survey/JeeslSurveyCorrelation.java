@@ -1,14 +1,11 @@
-package org.jeesl.interfaces.model.survey;
+package org.jeesl.interfaces.model.module.survey;
 
-import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.model.interfaces.with.EjbWithName;
-import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface JeeslSurveyTemplateVersion<L extends UtilsLang,
+public interface JeeslSurveyCorrelation<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -23,10 +20,8 @@ public interface JeeslSurveyTemplateVersion<L extends UtilsLang,
 										DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithRecord,EjbWithName,EjbSaveable
+			extends EjbWithId
 {
-	enum Attributes {template,record}
-	
-	TEMPLATE getTemplate();
-	void setTemplate(TEMPLATE template);
+//	DATA getData();
+//	void setData(DATA data);
 }

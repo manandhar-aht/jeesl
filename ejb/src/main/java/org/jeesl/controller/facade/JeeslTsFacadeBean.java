@@ -14,6 +14,11 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
+import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
+import org.jeesl.interfaces.model.module.ts.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.controller.util.ParentPredicate;
@@ -24,22 +29,17 @@ import net.sf.ahtutils.factory.ejb.system.ts.EjbTsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTimeSeries;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
 public class JeeslTsFacadeBean<L extends UtilsLang,
 							D extends UtilsDescription,
 							CAT extends UtilsStatus<CAT,L,D>,
-							SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+							SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 							UNIT extends UtilsStatus<UNIT,L,D>,
-							TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
-							BRIDGE extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
-							EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+							TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+							BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+							EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 							INT extends UtilsStatus<INT,L,D>,
-							DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+							DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 							WS extends UtilsStatus<WS,L,D>,
 							QAF extends UtilsStatus<QAF,L,D>>
 					extends UtilsFacadeBean
@@ -130,10 +130,10 @@ public class JeeslTsFacadeBean<L extends UtilsLang,
 		CriteriaQuery<DATA> cQ = cB.createQuery(cData);
 		Root<DATA> data = cQ.from(cData);
 		
-		predicates.add(cB.equal(data.<WS>get(UtilsTsData.Attributes.workspace.toString()), workspace));
-		predicates.add(cB.equal(data.<TS>get(UtilsTsData.Attributes.timeSeries.toString()), timeSeries));
+		predicates.add(cB.equal(data.<WS>get(JeeslTsData.Attributes.workspace.toString()), workspace));
+		predicates.add(cB.equal(data.<TS>get(JeeslTsData.Attributes.timeSeries.toString()), timeSeries));
 		
-		Expression<Date> eRecord = data.get(UtilsTsData.Attributes.record.toString());
+		Expression<Date> eRecord = data.get(JeeslTsData.Attributes.record.toString());
 		if(from!=null){predicates.add(cB.greaterThanOrEqualTo(eRecord, from));}
 		if(to!=null){predicates.add(cB.lessThan(eRecord,to));}
 		

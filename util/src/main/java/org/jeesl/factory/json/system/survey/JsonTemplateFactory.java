@@ -1,15 +1,15 @@
 package org.jeesl.factory.json.system.survey;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
-import org.jeesl.interfaces.model.survey.JeeslSurvey;
-import org.jeesl.interfaces.model.survey.JeeslSurveyAnswer;
-import org.jeesl.interfaces.model.survey.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.survey.JeeslSurveyData;
-import org.jeesl.interfaces.model.survey.JeeslSurveyOption;
-import org.jeesl.interfaces.model.survey.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.survey.JeeslSurveySection;
-import org.jeesl.interfaces.model.survey.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyData;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
 import org.jeesl.model.json.survey.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

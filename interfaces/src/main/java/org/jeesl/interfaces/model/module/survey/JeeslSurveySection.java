@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.survey;
+package org.jeesl.interfaces.model.module.survey;
 
 import java.util.List;
 

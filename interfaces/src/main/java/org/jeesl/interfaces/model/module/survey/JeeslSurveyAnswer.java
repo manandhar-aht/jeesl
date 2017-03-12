@@ -1,16 +1,14 @@
-package org.jeesl.interfaces.model.survey;
+package org.jeesl.interfaces.model.module.survey;
 
 import java.util.List;
 
-import net.sf.ahtutils.interfaces.model.date.EjbWithDateRange;
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.utils.UtilsWithStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
-public interface JeeslSurvey<L extends UtilsLang,
+public interface JeeslSurveyAnswer<L extends UtilsLang,
 							D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							SS extends UtilsStatus<SS,L,D>,
@@ -25,12 +23,35 @@ public interface JeeslSurvey<L extends UtilsLang,
 							DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithName,EjbWithDateRange,
-						UtilsWithStatus<L,D,SS>
+			extends EjbWithId,EjbSaveable
 {
-	TEMPLATE getTemplate();
-	void setTemplate(TEMPLATE tempalte);
+	DATA getData();
+	void setData(DATA data);
 	
-	List<DATA> getSurveyData();
-	void setSurveyData(List<DATA> data);
+	QUESTION getQuestion();
+	void setQuestion(QUESTION question);
+	
+	Boolean getValueBoolean();
+	void setValueBoolean(Boolean valueBoolean);
+	
+	Double getValueDouble();
+	void setValueDouble(Double valueDouble);
+	
+	Integer getValueNumber();
+	void setValueNumber(Integer valueNumber);
+	
+	String getValueText();
+	void setValueText(String valueText);
+	
+	List<OPTION> getOptions();
+	void setOptions(List<OPTION> option);
+	
+	Double getScore();
+	void setScore(Double score);
+	
+	String getRemark();
+	void setRemark(String remark);
+	
+	OPTION getOption();
+	void setOption(OPTION option);
 }

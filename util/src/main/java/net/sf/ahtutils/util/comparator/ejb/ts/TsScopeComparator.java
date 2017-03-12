@@ -3,27 +3,27 @@ package net.sf.ahtutils.util.comparator.ejb.ts;
 import java.util.Comparator;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
+import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
+import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
+import org.jeesl.interfaces.model.module.ts.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTimeSeries;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsData;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsBridge;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsScope;
 
 public class TsScopeComparator<L extends UtilsLang, D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
-								SCOPE extends UtilsTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 								UNIT extends UtilsStatus<UNIT,L,D>,
-								TS extends UtilsTimeSeries<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
-								BRIDGE extends UtilsTsBridge<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
-								EC extends UtilsTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 								INT extends UtilsStatus<INT,L,D>,
-								DATA extends UtilsTsData<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
+								DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF>,
 								WS extends UtilsStatus<WS,L,D>,
 								QAF extends UtilsStatus<QAF,L,D>>
 {

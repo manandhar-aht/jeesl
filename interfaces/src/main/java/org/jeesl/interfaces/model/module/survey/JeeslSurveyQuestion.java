@@ -1,14 +1,19 @@
-package org.jeesl.interfaces.model.survey;
+package org.jeesl.interfaces.model.module.survey;
 
 import java.util.List;
 
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.EjbWithRemark;
+import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
+import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
-public interface JeeslSurveyData<L extends UtilsLang,
+public interface JeeslSurveyQuestion<L extends UtilsLang,
 							D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							SS extends UtilsStatus<SS,L,D>,
@@ -23,14 +28,53 @@ public interface JeeslSurveyData<L extends UtilsLang,
 							DATA extends JeeslSurveyData<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithRecord
+			extends EjbWithId,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable
 {
-	SURVEY getSurvey();
-	void setSurvey(SURVEY survey);
+	SECTION getSection();
+	void setSection(SECTION section);
 	
-	CORRELATION getCorrelation();
-	void setCorrelation(CORRELATION correlation);
+	String getTopic();
+	void setTopic(String topic);
 	
-	List<ANSWER> getAnswers();
-	void setAnswers(List<ANSWER> answers);
+	String getQuestion();
+	void setQuestion(String question);
+	
+	UNIT getUnit();
+	void setUnit(UNIT unit); 
+	
+	List<OPTION> getOptions();
+	void setOptions(List<OPTION> options);
+	
+	Boolean getCalculateScore();
+	void setCalculateScore(Boolean calculateScore);
+	
+	Double getMinScore();
+	void setMinScore(Double maxScore);
+	
+	Double getMaxScore();
+	void setMaxScore(Double maxScore);
+	
+	Boolean getShowBoolean();
+	void setShowBoolean(Boolean showBoolean);
+	
+	Boolean getShowInteger();
+	void setShowInteger(Boolean showInteger);
+	
+	Boolean getShowDouble();
+	void setShowDouble(Boolean showDouble);
+	
+	Boolean getShowText();
+	void setShowText(Boolean showText);
+	
+	Boolean getShowScore();
+	void setShowScore(Boolean showScore);
+	
+	Boolean getShowRemark();
+	void setShowRemark(Boolean showRemark);
+	
+	Boolean getShowSelectOne();
+	void setShowSelectOne(Boolean showSelectOne);
+	
+	Boolean getShowSelectMulti();
+	void setShowSelectMulti(Boolean showSelectMulti);
 }

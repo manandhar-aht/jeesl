@@ -10,16 +10,17 @@ import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
+
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.ts.UtilsTsEntityClass;
 import net.sf.ahtutils.model.ejb.status.Description;
 import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Class",category="ts",subset="ts",level=4)
 public class TsEntityClass implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsTsEntityClass<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsBridge,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
+								JeeslTsEntityClass<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsBridge,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;

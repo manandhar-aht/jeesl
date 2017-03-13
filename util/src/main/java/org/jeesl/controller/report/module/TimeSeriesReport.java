@@ -3,8 +3,10 @@ package org.jeesl.controller.report.module;
 import java.util.Date;
 import java.util.List;
 
+import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.report.AbstractJeeslReport;
+import org.jeesl.factory.xml.module.ts.XmlDataFactory;
 import org.jeesl.factory.xml.module.ts.XmlTimeSeriesFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
@@ -71,9 +73,20 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 	private final Class<TS> cTs;
 	private final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs;
 	
-	public TimeSeriesReport(String localeCode, final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs, final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<TS> cTs)
+	public TimeSeriesReport(String localeCode,
+			final JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,
+			final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,BRIDGE,EC,INT,DATA,WS,QAF> fTs,
+			final Class<L> cL,final Class<D> cD,
+			final Class<CATEGORY> cCategory,final Class<REPORT> cReport,
+			final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet,
+			final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow,
+			final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle,
+			final Class<CDT> cDataType,
+			final Class<CW> cColumnWidth, Class<RT> cRowType, final Class<TRANSFORMATION> cTransformation,
+			final Class<TS> cTs)
 	{
 		super(localeCode,cL,cD,cCategory,cReport);
+		super.initIo(fReport,this.getClass(),cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType,cTransformation);
 		this.fTs=fTs;
 		this.cTs=cTs;
 	}
@@ -86,6 +99,11 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 		Report xml = XmlReportFactory.build();
 		
 		TimeSeries xTs = XmlTimeSeriesFactory.build();
+		
+		for(DATA data : tsData)
+		{
+			xTs.getData().add(XmlDataFactory.build(data.getRecord(),data.getValue()));
+		}
 		
 		xml.getTimeSeries().add(xTs);
 		

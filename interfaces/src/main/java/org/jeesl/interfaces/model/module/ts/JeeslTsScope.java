@@ -30,6 +30,8 @@ public interface JeeslTsScope <L extends UtilsLang,
 				EjbWithPositionVisibleParent,EjbWithParentAttributeResolver,EjbWithPositionParent,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
+	public enum Statistic{none}
+	
 	CAT getCategory();
 	void setCategory(CAT category);
 	

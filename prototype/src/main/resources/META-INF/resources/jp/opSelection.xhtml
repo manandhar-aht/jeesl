@@ -14,6 +14,9 @@
 	<composite:attribute name="handler" required="true"/>
 	<composite:attribute name="localeCode" required="false" default="#{userBean.localeCode}"/>
 	
+	<composite:attribute name="allowAdd" required="false" default="true"/>
+	<composite:attribute name="allowRemove" required="false" default="true"/>
+	
 	<composite:attribute name="tableHeader" required="false" default="Entites"/>
 	<composite:attribute name="colHeaderName" required="false" default="#{msg.aupName}"/>
 	<composite:attribute name="colHeaderLang" required="false" default="#{msg.aupName}"/>
@@ -28,9 +31,9 @@
 			selection="#{cc.attrs.handler.tb}" selectionMode="single" rowKey="#{p.id}">
 		<f:facet name="header">
 			<aht:pfDataTableHeader id="dth" title="#{cc.attrs.tableHeader}">
-				<h:graphicImage id="giProjectSelection" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['jeeslAdd']}"/>
+				<h:graphicImage id="giProjectSelection" rendered="#{cc.attrs.allowAdd}" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['jeeslAdd']}"/>
 				<p:tooltip for="giProjectSelection" value="#{msg.ttAdd}"/>
-				<aht:icon type="jeeslRemove" rendered="#{not empty cc.attrs.handler.tb}" listener="#{cc.attrs.handler.removeEntity()}" update="#{cc.attrs.update}" mayDisappear="true"/>
+				<aht:icon type="jeeslRemove" rendered="#{(not empty cc.attrs.handler.tb) and (cc.attrs.allowRemove)}" listener="#{cc.attrs.handler.removeEntity()}" update="#{cc.attrs.update}" mayDisappear="true"/>
 			</aht:pfDataTableHeader>
 		</f:facet>
 		<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.selectTb}"/>

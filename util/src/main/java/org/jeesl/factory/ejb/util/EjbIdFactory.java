@@ -36,6 +36,15 @@ public class EjbIdFactory
 	public static boolean isUnSaved(EjbWithId ejb){return !isSaved(ejb);}
 	public static boolean isSaved(EjbWithId ejb){return (ejb!=null && ejb.getId()>0);}
 	
+	public static boolean isSaved(EjbWithId... ejbs)
+	{
+		for(EjbWithId ejb : ejbs)
+		{
+			if(ejb==null || ejb.getId()==0){return false;}
+		}
+		return true;
+	}
+	
 	public static <T extends EjbWithId> List<Long> toIds(List<T> list){return toIds(list,null);}
 	public static <T extends EjbWithId> List<Long> toIds(List<T> list, Boolean onlySaved)
 	{

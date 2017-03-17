@@ -87,6 +87,26 @@ public class SimplePivotAggregator <T extends EjbWithId, P extends EjbWithId>
     	return value;
     }
     
+    public Double sumP(P p)
+    {
+    	double value = 0;
+    	for(SimplePivotData<T,P> d : list)
+    	{
+    		if(d.getP().equals(p)){value=value+d.getValue();}
+    	}
+    	return value;
+    }
+    
+    public Double sum()
+    {
+    	double value = 0;
+    	for(SimplePivotData<T,P> d : list)
+    	{
+    		value=value+d.getValue();
+    	}
+    	return value;
+    }
+    
     public Map<T,Double> toMapT()
     {
     	Map<T,Double> map = new HashMap<T,Double>();
@@ -94,6 +114,17 @@ public class SimplePivotAggregator <T extends EjbWithId, P extends EjbWithId>
     	{
     		Double v = sumT(t);
     		if(v!=null){map.put(t,v);}
+    	}
+    	return map;
+    }
+    
+    public Map<P,Double> toMapP()
+    {
+    	Map<P,Double> map = new HashMap<P,Double>();
+    	for(P p : setP)
+    	{
+    		Double v = sumP(p);
+    		if(v!=null){map.put(p,v);}
     	}
     	return map;
     }

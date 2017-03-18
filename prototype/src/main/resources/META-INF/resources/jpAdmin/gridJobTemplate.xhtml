@@ -20,7 +20,7 @@
 		<aup:grid id="grid">
 			<aht:row>
 				<aht:slot id="sTemplates" width="5">
-					<h:form id="fStyles">
+					<h:form id="fTemplates">
 						<p:dataTable var="t" value="#{cc.attrs.bean.templates}" draggableRows="true"
 							selection="#{cc.attrs.bean.template}" selectionMode="single" rowKey="#{t.id}">
 							<f:facet name="header">
@@ -28,15 +28,15 @@
 									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addTemplate()}" update=":#{cc.id}:sTemplate" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
-							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderStyles()}" update="@form"/>
-							<p:ajax event="rowSelect" update=":#{cc.id}:sStyle" listener="#{cc.attrs.bean.selectTemplate()}"/>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTemplates()}" update="@form"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sTemplate" listener="#{cc.attrs.bean.selectTemplate()}"/>
 							<p:column headerText="#{msg.Name}"><h:outputText value="#{t.name[userBean.localeCode].lang}"/></p:column>
 						</p:dataTable>
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sTemplate" width="7">
-					<h:form id="fStyle">
-						<p:panel header="#{msg.jeeslIoReportStyle}" rendered="#{not empty cc.attrs.bean.template}" styleClass="auPanelWithGrid">
+					<h:form id="fTemplate">
+						<p:panel header="#{msg.jeeslJobTemplate}" rendered="#{not empty cc.attrs.bean.template}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}" rendered="#{cc.attrs.bean.uiAllowSave}" />
@@ -44,7 +44,7 @@
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.jeeslCode}"/>
-								<p:selectBooleanCheckbox value="#{cc.attrs.bean.template.code}"/>
+								<p:inputText value="#{cc.attrs.bean.template.code}"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.template}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />

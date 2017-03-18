@@ -1,11 +1,14 @@
 package org.jeesl.web.rest.system;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
+import org.jeesl.api.rest.system.job.JeeslJobRest;
 import org.jeesl.api.rest.system.job.JeeslJobRestExport;
 import org.jeesl.api.rest.system.job.JeeslJobRestImport;
+import org.jeesl.factory.xml.module.job.XmlJobsFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.model.xml.module.job.Jobs;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +26,7 @@ public class SystemJobRestService <L extends UtilsLang,D extends UtilsDescriptio
 							STATUS extends UtilsStatus<STATUS,L,D>
 							>
 					extends AbstractJeeslRestService<L,D>
-					implements JeeslJobRestExport,JeeslJobRestImport
+					implements JeeslJobRestExport,JeeslJobRestImport,JeeslJobRest
 {
 	final static Logger logger = LoggerFactory.getLogger(SystemJobRestService.class);
 	
@@ -62,4 +65,12 @@ public class SystemJobRestService <L extends UtilsLang,D extends UtilsDescriptio
 	@Override public DataUpdate importSystemJobCategories(Container container){return importStatus(cCategory,container,null);}
 	@Override public DataUpdate importSystemJobType(Container container){return importStatus(cType,container,null);}
 	@Override public DataUpdate importSystemJobStatus(Container container){return importStatus(cStatus,container,null);}
+
+	@Override public Jobs grab(String type, int max)
+	{
+		logger.info("TYEP: "+type+" MAX:"+max);
+		Jobs xml = XmlJobsFactory.build();
+		
+		return xml;
+	}
 }

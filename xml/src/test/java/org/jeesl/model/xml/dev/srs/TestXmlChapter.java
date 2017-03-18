@@ -1,6 +1,7 @@
 package org.jeesl.model.xml.dev.srs;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.openfuxml.factory.xml.ofx.content.structure.XmlSectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +21,9 @@ public class TestXmlChapter extends AbstractXmlSrsTest<Chapter>
     	{
     		xml.getChapter().add(TestXmlChapter.create(false));
     		xml.getChapter().add(TestXmlChapter.create(false));
+    		
+    		xml.getSection().add(XmlSectionFactory.build("de"));
+    		xml.getSection().add(XmlSectionFactory.build("en"));
     	}
     	
     	return xml;

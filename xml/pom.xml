@@ -28,9 +28,9 @@
 	<dependencies>
 		<!-- XML-JAXB -->
 		<dependency>
-   		<groupId>org.openfuxml</groupId>
-   		<artifactId>ofx-xml</artifactId>
-   	</dependency>
+	   		<groupId>org.openfuxml</groupId>
+	   		<artifactId>ofx-xml</artifactId>
+	   	</dependency>
 
 		<!-- ExLP -->
 		<dependency>
@@ -132,6 +132,11 @@
 			<artifactId>jdom</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+	   		<groupId>org.openfuxml</groupId>
+	   		<artifactId>ofx-util</artifactId>
+	   		<scope>test</scope>
+	   	</dependency>
 	</dependencies>
 	
 	<build>

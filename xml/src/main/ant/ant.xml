@@ -56,5 +56,6 @@
 			</classpath>
 		</java>
 		<delete dir="${src.dir}/net/sf/exlp"/>
+		<delete dir="${src.dir}/org/openfuxml"/>
 	</target>	
 </project>

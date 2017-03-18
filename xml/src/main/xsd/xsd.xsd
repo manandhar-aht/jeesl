@@ -47,7 +47,7 @@
     
     <xsd:import namespace="http://ahtutils.aht-group.com/qa" schemaLocation="aht/qa.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/issue" schemaLocation="aht/issue.xsd"/>
-    <xsd:import namespace="http://ahtutils.aht-group.com/srs" schemaLocation="aht/srs.xsd"/>
+    
     <xsd:import namespace="http://ahtutils.aht-group.com/sync" schemaLocation="aht/sync.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/system" schemaLocation="aht/system.xsd"/>
 	<xsd:import namespace="http://ahtutils.aht-group.com/survey" schemaLocation="aht/survey.xsd"/>

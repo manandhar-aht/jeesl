@@ -61,4 +61,12 @@ public class ObjectFactory {
         return new Product();
     }
 
+    /**
+     * Create an instance of {@link Section }
+     * 
+     */
+    public Section createSection() {
+        return new Section();
+    }
+
 }

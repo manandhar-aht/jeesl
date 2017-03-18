@@ -173,6 +173,12 @@
 		</jxb:schemaBindings>
     </jxb:bindings>
     
+    <jxb:bindings schemaLocation="../../../../../ofx/xml/src/main/xsd/content/ofx.xsd" node="/xsd:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.openfuxml.content.ofx"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>    
+    
     <jxb:bindings schemaLocation="../../../../../exlp/xml/src/main/xsd/util/net.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
             <jxb:package name="net.sf.exlp.xml.net"/>

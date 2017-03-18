@@ -7,10 +7,10 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import org.openfuxml.content.ofx.Sections;
 
 
 /**
@@ -24,7 +24,7 @@ import org.openfuxml.content.ofx.Sections;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}section" maxOccurs="unbounded"/&gt;
- *         &lt;element ref="{http://www.openfuxml.org}sections" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.openfuxml.org}section" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="title" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -36,94 +36,59 @@ import org.openfuxml.content.ofx.Sections;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "section",
-    "sections"
+    "content"
 })
 @XmlRootElement(name = "section")
-public class Section
-    implements Serializable
+public class Section implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlElement(required = true)
-    protected List<Section> section;
-    @XmlElement(namespace = "http://www.openfuxml.org", required = true)
-    protected List<Sections> sections;
+    @XmlElementRefs({
+        @XmlElementRef(name = "section", namespace = "http://www.jeesl.org/dev/srs", type = Section.class, required = false),
+        @XmlElementRef(name = "section", namespace = "http://www.openfuxml.org", type = org.openfuxml.content.ofx.Section.class, required = false)
+    })
+    protected List<Serializable> content;
     @XmlAttribute(name = "title")
     protected String title;
 
     /**
-     * Gets the value of the section property.
+     * Gets the rest of the content model. 
+     * 
+     * <p>
+     * You are getting this "catch-all" property because of the following reason: 
+     * The field name "Section" is used by two different parts of a schema. See: 
+     * line 21 of file:/Users/thorsten/workspace/4.6.2/jeesl/xml/src/main/xsd/jeesl/dev/srs.xsd
+     * line 20 of file:/Users/thorsten/workspace/4.6.2/jeesl/xml/src/main/xsd/jeesl/dev/srs.xsd
+     * <p>
+     * To get rid of this property, apply a property customization to one 
+     * of both of the following declarations to change their names: 
+     * Gets the value of the content property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the section property.
+     * This is why there is not a <CODE>set</CODE> method for the content property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getSection().add(newItem);
+     *    getContent().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Section }
+     * {@link org.openfuxml.content.ofx.Section }
      * 
      * 
      */
-    public List<Section> getSection() {
-        if (section == null) {
-            section = new ArrayList<Section>();
+    public List<Serializable> getContent() {
+        if (content == null) {
+            content = new ArrayList<Serializable>();
         }
-        return this.section;
-    }
-
-    public boolean isSetSection() {
-        return ((this.section!= null)&&(!this.section.isEmpty()));
-    }
-
-    public void unsetSection() {
-        this.section = null;
-    }
-
-    /**
-     * Gets the value of the sections property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sections property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getSections().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Sections }
-     * 
-     * 
-     */
-    public List<Sections> getSections() {
-        if (sections == null) {
-            sections = new ArrayList<Sections>();
-        }
-        return this.sections;
-    }
-
-    public boolean isSetSections() {
-        return ((this.sections!= null)&&(!this.sections.isEmpty()));
-    }
-
-    public void unsetSections() {
-        this.sections = null;
+        return this.content;
     }
 
     /**

@@ -9,16 +9,16 @@
             <xsd:sequence>
 	            <xsd:element ref="srs:version" maxOccurs="1"/>
 	            <xsd:element ref="srs:meta" maxOccurs="1"/>
-	            <xsd:element ref="srs:section" maxOccurs="unbounded"/>
+	            <xsd:element ref="srs:chapter" maxOccurs="unbounded"/>
 			</xsd:sequence>
 
 		</xsd:complexType>
     </xsd:element>
-    <xsd:element name="section">
+    <xsd:element name="chapter">
 	    <xsd:complexType>
             <xsd:sequence>
-	            <xsd:element ref="srs:section" maxOccurs="unbounded"/>
-	            <xsd:element ref="ofx:sections" maxOccurs="unbounded"/>
+	            <xsd:element ref="srs:chapter" maxOccurs="unbounded"/>
+	            <xsd:element ref="ofx:section" maxOccurs="unbounded"/>
 			</xsd:sequence>
 			<xsd:attribute name="title" type="xsd:string"/>
 		</xsd:complexType>

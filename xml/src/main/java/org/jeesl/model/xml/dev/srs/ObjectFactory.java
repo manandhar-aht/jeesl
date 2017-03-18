@@ -62,11 +62,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Section }
+     * Create an instance of {@link Chapter }
      * 
      */
-    public Section createSection() {
-        return new Section();
+    public Chapter createChapter() {
+        return new Chapter();
     }
 
 }

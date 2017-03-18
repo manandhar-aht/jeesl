@@ -19,5 +19,5 @@ public interface JeeslJobFacade <L extends UtilsLang,D extends UtilsDescription,
 								>
 			extends UtilsFacade
 {	
-	List<JOB> fJobs(List<CATEGORY> categories,List<STATUS> stauts);
+	List<JOB> fJobs(List<CATEGORY> categories, List<TYPE> type, List<STATUS> status);
 }

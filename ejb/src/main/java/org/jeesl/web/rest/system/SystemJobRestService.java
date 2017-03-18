@@ -59,8 +59,7 @@ public class SystemJobRestService <L extends UtilsLang,D extends UtilsDescriptio
 	@Override public Container exportSystemJobType() {return xfContainer.build(fJob.allOrderedPosition(cType));}
 	@Override public Container exportSystemJobStatus() {return xfContainer.build(fJob.allOrderedPosition(cStatus));}
 	
-	
 	@Override public DataUpdate importSystemJobCategories(Container container){return importStatus(cCategory,container,null);}
-	@Override public DataUpdate importSystemJobStatus(Container container){return importStatus(cType,container,null);}
-	@Override public DataUpdate importSystemJobType(Container container){return importStatus(cStatus,container,null);}
+	@Override public DataUpdate importSystemJobType(Container container){return importStatus(cType,container,null);}
+	@Override public DataUpdate importSystemJobStatus(Container container){return importStatus(cStatus,container,null);}
 }

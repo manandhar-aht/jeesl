@@ -275,6 +275,15 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 		return sb.toString();
 	}
 	
+	public static <T extends EjbWithId> String multiStatus(Class<T> c, List<T> all, List<T> selected)
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("StatusBar ");
+		sb.append(c.getSimpleName());
+		sb.append(" ").append(selected.size()).append("/").append(all.size());
+		return sb.toString();
+	}
+	
 	public static String time(String msg, ProcessingTimeTracker ptt)
 	{
 		ptt.stop();

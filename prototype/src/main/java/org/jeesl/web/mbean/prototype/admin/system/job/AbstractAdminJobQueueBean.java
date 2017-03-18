@@ -34,6 +34,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	protected JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> fJob;
 	
 	private Class<CATEGORY> cCategory;
+	private Class<TYPE> cType;
 	private Class<JOB> cJob;
 	private Class<STATUS> cStatus;
 
@@ -43,23 +44,24 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	private JOB job; public JOB getJob() {return job;} public void setJob(JOB job) {this.job = job;}
 	
 	protected SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
+	protected SbMultiStatusHandler<L,D,TYPE> sbhType; public SbMultiStatusHandler<L,D,TYPE> getSbhType() {return sbhType;}
 	protected SbMultiStatusHandler<L,D,STATUS> sbhStatus; public SbMultiStatusHandler<L,D,STATUS> getSbhStatus() {return sbhStatus;}
-	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> fJob, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<JOB> cJob, Class<STATUS> cStatus)
+	 
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> fJob, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fJob=fJob;
 		
-		
 		this.cCategory=cCategory;
+		this.cType=cType;
 		this.cJob=cJob;
 		this.cStatus=cStatus;
 		
-		categories = fJob.allOrderedPositionVisible(cCategory);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cCategory,categories));}
-		
-		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
+		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,fJob.allOrderedPositionVisible(cCategory));
 		sbhCategory.selectAll();
+		
+		sbhType = new SbMultiStatusHandler<L,D,TYPE>(cType,fJob.allOrderedPositionVisible(cType));
+		sbhType.selectAll();
 		
 		try
 		{
@@ -68,12 +70,20 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.working));
 		}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
+		
+		if(debugOnInfo)
+		{
+			logger.info(AbstractLogMessage.multiStatus(cCategory,sbhCategory.getSelected(),sbhCategory.getList()));
+			logger.info(AbstractLogMessage.multiStatus(cType,sbhType.getSelected(),sbhType.getList()));
+			logger.info(AbstractLogMessage.multiStatus(cStatus,sbhStatus.getSelected(),sbhStatus.getList()));
+		}
 	}
 	
 	public void multiToggle(UtilsStatus<?,L,D> o)
 	{
 		logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName()+" ");
 		if(cCategory.isAssignableFrom(o.getClass())){sbhCategory.multiToggle(o);}
+		if(cType.isAssignableFrom(o.getClass())){sbhType.multiToggle(o);}
 		if(cStatus.isAssignableFrom(o.getClass())){sbhStatus.multiToggle(o);}
 		else {logger.warn("No Handling for toggle class "+o.getClass().getSimpleName()+": "+o.toString());}
 		reloadJobs();
@@ -88,7 +98,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	//*************************************************************************************
 	protected void reloadJobs()
 	{
-		jobs = fJob.fJobs(sbhCategory.getSelected(),sbhStatus.getSelected());
+		jobs = fJob.fJobs(sbhCategory.getSelected(),sbhType.getSelected(),sbhStatus.getSelected());
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cJob,jobs));}
 //		Collections.sort(templates, comparatorTemplate);
 	}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations xmlns="http://ahtutils.aht-group.com/status">
+	<translation key="jeeslJobQueue">
+		<langs>
+			<lang key="de" translation="Warteschlange" />
+			<lang key="en" translation="Queue" />
+			<lang key="fr" translation="Queue" />
+		</langs>
+	</translation>
+	<translation key="jeeslJobCategory">
+		<langs>
+			<lang key="de" translation="Kategorie" />
+			<lang key="en" translation="Category" />
+			<lang key="fr" translation="Category" />
+		</langs>
+	</translation>
+	<translation key="jeeslJobType">
+		<langs>
+			<lang key="de" translation="Typ" />
+			<lang key="en" translation="Type" />
+			<lang key="fr" translation="Type" />
+		</langs>
+	</translation>
+	<translation key="jeeslJobStatus">
+		<langs>
+			<lang key="de" translation="Status" />
+			<lang key="en" translation="Status" />
+			<lang key="fr" translation="Status" />
+		</langs>
+	</translation>
+	<translation key="jeeslJobCreated">
+		<langs>
+			<lang key="de" translation="Erstellt" />
+			<lang key="en" translation="Created" />
+			<lang key="fr" translation="Created" />
+		</langs>
+	</translation>
+	<translation key="jeeslJobStarted">
+		<langs>
+			<lang key="de" translation="Gestartet" />
+			<lang key="en" translation="Started" />
+			<lang key="fr" translation="Started" />
+		</langs>
+	</translation>
+	<translation key="jeeslJobCompleted">
+		<langs>
+			<lang key="de" translation="Beendet" />
+			<lang key="en" translation="Completed" />
+			<lang key="fr" translation="Completed" />
+		</langs>
+	</translation>
+</translations>

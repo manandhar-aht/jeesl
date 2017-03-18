@@ -21,45 +21,42 @@
 			<aht:row>
 				<aht:slot id="sQueue" width="9">
 					<h:form id="fQueue">
-						<p:dataTable var="m" value="#{cc.attrs.bean.mails}" draggableRows="true"
-							selection="#{cc.attrs.bean.mail}" selectionMode="single" rowKey="#{m.id}">
+						<p:dataTable var="j" value="#{cc.attrs.bean.jobs}" draggableRows="true"
+							selection="#{cc.attrs.bean.job}" selectionMode="single" rowKey="#{j.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslIoMailQueue}"/>
+								<aht:pfDataTableHeader title="#{msg.jeeslJobQueue}"/>
 							</f:facet>
-							<p:ajax event="rowSelect" update=":#{cc.id}:sMail" listener="#{cc.attrs.bean.selectMail()}"/>
-							<p:column rendered="#{cc.attrs.withCategory}" headerText="#{msg.aupCategory}"><h:outputText value="#{m.category.name[userBean.localeCode].lang}"/></p:column>
-							<p:column headerText="#{msg.jeeslIoMailCreated}"><h:outputText value="#{m.recordCreation}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText></p:column>
-							<p:column headerText="#{msg.jeeslIoMailSpooled}"><h:outputText value="#{m.recordSpool}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
-							<p:column headerText="#{msg.jeeslIoMailSent}"><h:outputText value="#{m.recordSent}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
-							<p:column headerText="#{msg.jeeslIoMailStatus}"><h:outputText value="#{m.status.name[userBean.localeCode].lang}"/></p:column>
-							<p:column headerText="#{msg.jeeslIoMailCounter}"><h:outputText value="#{m.counter}"/></p:column>
-							<p:column headerText="#{msg.jeeslIoMailRecipient}"><h:outputText value="#{m.recipient}"/></p:column>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sMail" listener="#{cc.attrs.bean.selectJob()}"/>
+							<p:column rendered="#{cc.attrs.withCategory}" headerText="#{msg.jeeslJobCategory}"><h:outputText value="#{j.category.name[userBean.localeCode].lang}"/></p:column>
+							<p:column rendered="#{cc.attrs.withCategory}" headerText="#{msg.jeeslJobType}"><h:outputText value="#{j.type.name[userBean.localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslJobCreated}"><h:outputText value="#{j.recordCreation}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText></p:column>
+							<p:column headerText="#{msg.jeeslJobStarted}"><h:outputText value="#{j.recordStart}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
+							<p:column headerText="#{msg.jeeslJobCompleted}"><h:outputText value="#{j.recordComplete}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
+							<p:column headerText="#{msg.jeeslJobStatus}"><h:outputText value="#{j.status.name[userBean.localeCode].lang}"/></p:column>
 						</p:dataTable>
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sMail" width="3">
-					<p:panel header="#{msg.jeeslIoMail}" rendered="#{not empty cc.attrs.bean.mail}" styleClass="auPanelWithGrid">
+					<p:panel header="#{msg.jeeslIoMail}" rendered="#{not empty cc.attrs.bean.job}" styleClass="auPanelWithGrid">
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
-							<p:outputLabel value="#{msg.aupCategory}" rendered="#{cc.attrs.withCategory}"/>
-							<h:outputText value="#{cc.attrs.bean.mail.category.name[localeCode].lang}" rendered="#{cc.attrs.withCategory}"/>
+							<p:outputLabel value="#{msg.jeeslJobCategory}" rendered="#{cc.attrs.withCategory}"/>
+							<h:outputText value="#{cc.attrs.bean.job.category.name[localeCode].lang}" rendered="#{cc.attrs.withCategory}"/>
 							
-							<p:outputLabel value="#{msg.jeeslIoMailStatus}"/>
-							<h:outputText value="#{cc.attrs.bean.mail.status.name[localeCode].lang}"/>
-						
-							<p:outputLabel value="#{msg.jeeslIoMailCreated}"/>
-							<h:outputText value="#{cc.attrs.bean.mail.recordCreation}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
+							<p:outputLabel value="#{msg.jeeslJobType}"/>
+							<h:outputText value="#{cc.attrs.bean.job.type.name[localeCode].lang}"/>
 							
-							<p:outputLabel value="#{msg.jeeslIoMailSpooled}"/>
-							<h:outputText value="#{cc.attrs.bean.mail.recordSpool}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
+							<p:outputLabel value="#{msg.jeeslJobCreated}"/>
+							<h:outputText value="#{cc.attrs.bean.job.recordCreation}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
 							
-							<p:outputLabel value="#{msg.jeeslIoMailSent}"/>
-							<h:outputText value="#{cc.attrs.bean.mail.recordSent}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
+							<p:outputLabel value="#{msg.jeeslJobStarted}"/>
+							<h:outputText value="#{cc.attrs.bean.job.recordSpool}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
 							
-							<p:outputLabel value="#{msg.jeeslIoMailCounter}"/>
-							<h:outputText value="#{cc.attrs.bean.mail.counter}"/>
+							<p:outputLabel value="#{msg.jeeslJobCompleted}"/>
+							<h:outputText value="#{cc.attrs.bean.job.recordSent}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
 							
-							<p:outputLabel value="#{msg.jeeslIoMailRecipient}"/>
-							<h:outputText value="#{cc.attrs.bean.mail.recipient}"/>
+							<p:outputLabel value="#{msg.jeeslJobStatus}"/>
+							<h:outputText value="#{cc.attrs.bean.job.status.name[localeCode].lang}"/>
+							
 						</p:panelGrid>
 					</p:panel>
 				</aht:slot>

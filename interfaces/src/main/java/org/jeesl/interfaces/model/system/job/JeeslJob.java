@@ -18,15 +18,15 @@ public interface JeeslJob<L extends UtilsLang,D extends UtilsDescription,
 							>
 		extends EjbWithId,EjbSaveable,EjbRemoveable
 {	
-	
+	public static enum Attributes{template,status,recordCreation,recordStart};
 	public static enum Status{queue,working,completed,failed};
-	public static enum Attributes{category,status,recordCreation,recordStart};
+	
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);
 	
 	STATUS getStatus();
-	void setStatus(STATUS category);
+	void setStatus(STATUS status);
 	
 	Date getRecordCreation();
 	void setRecordCreation(Date recordCreation);

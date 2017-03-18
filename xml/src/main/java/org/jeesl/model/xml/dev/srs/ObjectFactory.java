@@ -38,19 +38,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Frs }
-     * 
-     */
-    public Frs createFrs() {
-        return new Frs();
-    }
-
-    /**
      * Create an instance of {@link Version }
      * 
      */
     public Version createVersion() {
         return new Version();
+    }
+
+    /**
+     * Create an instance of {@link Meta }
+     * 
+     */
+    public Meta createMeta() {
+        return new Meta();
+    }
+
+    /**
+     * Create an instance of {@link Product }
+     * 
+     */
+    public Product createProduct() {
+        return new Product();
     }
 
 }

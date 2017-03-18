@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -19,10 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;sequence&gt;
- *         &lt;element ref="{http://www.jeesl.org/dev/srs}version"/&gt;
- *       &lt;/sequence&gt;
- *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
+ *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -31,78 +28,72 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "version"
-})
-@XmlRootElement(name = "frs")
-public class Frs
+@XmlType(name = "")
+@XmlRootElement(name = "product")
+public class Product
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlElement(required = true)
-    protected Version version;
-    @XmlAttribute(name = "id")
-    protected Long id;
+    @XmlAttribute(name = "code")
+    protected String code;
+    @XmlAttribute(name = "name")
+    protected String name;
 
     /**
-     * Gets the value of the version property.
+     * Gets the value of the code property.
      * 
      * @return
      *     possible object is
-     *     {@link Version }
+     *     {@link String }
      *     
      */
-    public Version getVersion() {
-        return version;
+    public String getCode() {
+        return code;
     }
 
     /**
-     * Sets the value of the version property.
+     * Sets the value of the code property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Version }
+     *     {@link String }
      *     
      */
-    public void setVersion(Version value) {
-        this.version = value;
+    public void setCode(String value) {
+        this.code = value;
     }
 
-    public boolean isSetVersion() {
-        return (this.version!= null);
+    public boolean isSetCode() {
+        return (this.code!= null);
     }
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
-     *     {@link Long }
+     *     {@link String }
      *     
      */
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Long }
+     *     {@link String }
      *     
      */
-    public void setId(long value) {
-        this.id = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
-    public boolean isSetId() {
-        return (this.id!= null);
-    }
-
-    public void unsetId() {
-        this.id = null;
+    public boolean isSetName() {
+        return (this.name!= null);
     }
 
 }

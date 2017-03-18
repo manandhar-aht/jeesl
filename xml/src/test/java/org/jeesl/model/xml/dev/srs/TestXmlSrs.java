@@ -15,11 +15,10 @@ public class TestXmlSrs extends AbstractXmlSrsTest<Srs>
     {
     	Srs xml = new Srs();
     
-    
-    	
     	if(withChildren)
     	{
-    		
+    		xml.setVersion(TestXmlVersion.create(false));
+    		xml.setMeta(TestXmlMeta.create(false));
     	}
     	
     	return xml;

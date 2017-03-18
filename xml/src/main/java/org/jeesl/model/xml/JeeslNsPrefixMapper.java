@@ -24,7 +24,7 @@ public class JeeslNsPrefixMapper extends NamespacePrefixMapper implements NsPref
         if("http://ahtutils.aht-group.com/dbseed".equals(namespaceUri) ){return "db";}
         if("http://ahtutils.aht-group.com/mail".equals(namespaceUri) ){return "m";}
         if("http://ahtutils.aht-group.com/issue".equals(namespaceUri) ){return "it";}
-        if("http://ahtutils.aht-group.com/srs".equals(namespaceUri) ){return "srs";}
+       
         if("http://ahtutils.aht-group.com/survey".equals(namespaceUri) ){return "survey";}
         if("http://ahtutils.aht-group.com/sync".equals(namespaceUri) ){return "sync";}
         if("http://ahtutils.aht-group.com/system".equals(namespaceUri) ){return "sys";}
@@ -43,6 +43,7 @@ public class JeeslNsPrefixMapper extends NamespacePrefixMapper implements NsPref
     	if("http://www.jeesl.org/io/mail".equals(namespaceUri) ){return "mail";}
     	if("http://www.jeesl.org/timeseries".equals(namespaceUri) ){return "ts";}
     	if("http://www.jeesl.org/job".equals(namespaceUri) ){return "job";}
+    	if("http://www.jeesl.org/dev/srs".equals(namespaceUri) ){return "srs";}
         
         if("http://www.openfuxml.org/list".equals(namespaceUri) ){return "ofxL";}
         if("http://www.openfuxml.org".equals(namespaceUri) ){return "ofx";}

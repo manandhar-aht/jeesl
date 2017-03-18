@@ -1,5 +1,7 @@
 package org.jeesl.api.facade.system;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 
@@ -17,5 +19,5 @@ public interface JeeslJobFacade <L extends UtilsLang,D extends UtilsDescription,
 								>
 			extends UtilsFacade
 {	
-
+	List<JOB> fJobs(List<CATEGORY> categories,List<STATUS> stauts);
 }

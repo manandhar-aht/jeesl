@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.job;
 
+import java.util.Date;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -17,12 +19,21 @@ public interface JeeslJob<L extends UtilsLang,D extends UtilsDescription,
 		extends EjbWithId,EjbSaveable,EjbRemoveable
 {	
 	
-	public static enum Status{queue,spooling,sent,failed};
-	public static enum Attributes{category,status,recordCreation,recordSpool};
+	public static enum Status{queue,working,completed,failed};
+	public static enum Attributes{category,status,recordCreation,recordStart};
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);
 	
 	STATUS getStatus();
 	void setStatus(STATUS category);
+	
+	Date getRecordCreation();
+	void setRecordCreation(Date recordCreation);
+	
+	Date getRecordStart();
+	void setRecordStart(Date recordStart);
+	
+	Date getRecordComplete();
+	void setRecordComplete(Date recordComplete);
 }

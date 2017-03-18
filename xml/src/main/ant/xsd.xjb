@@ -136,6 +136,12 @@
         </jxb:schemaBindings>
     </jxb:bindings>
     
+    <jxb:bindings schemaLocation="../xsd/jeesl/module/job.xsd" node="/xsd:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.jeesl.model.xml.module.job"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
+    
    	<jxb:bindings schemaLocation="../xsd/cloud/facebook.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
             <jxb:package name="net.sf.ahtutils.xml.cloud.facebook"/>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.jeesl.org/job"
+    xmlns:job="http://www.jeesl.org/job"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="jobs">
+	    <xsd:complexType>
+            <xsd:sequence>
+	            <xsd:element ref="job:job" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="queue" type="xsd:int"/>
+		</xsd:complexType>    
+    </xsd:element>
+    <xsd:element name="job">
+        <xsd:complexType>
+            <xsd:sequence>
+	           <xsd:element ref="job:template" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+	</xsd:complexType>
+    </xsd:element>
+    <xsd:element name="template">
+        <xsd:complexType>
+			<xsd:attribute name="id" type="xsd:long"/>
+        	<xsd:attribute name="code" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

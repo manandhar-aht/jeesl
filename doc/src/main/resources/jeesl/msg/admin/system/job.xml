@@ -49,4 +49,18 @@
 			<lang key="fr" translation="Completed" />
 		</langs>
 	</translation>
+	<translation key="jeeslJobTemplates">
+		<langs>
+			<lang key="de" translation="Vorlagen" />
+			<lang key="en" translation="Templates" />
+			<lang key="fr" translation="Templates" />
+		</langs>
+	</translation>
+	<translation key="jeeslJobTemplate">
+		<langs>
+			<lang key="de" translation="Vorlage" />
+			<lang key="en" translation="Template" />
+			<lang key="fr" translation="Template" />
+		</langs>
+	</translation>
 </translations>

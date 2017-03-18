@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<job:job xmlns:job="http://www.jeesl.org/job" id="123">
+    <job:template id="123" code="myCode"/>
+</job:job>

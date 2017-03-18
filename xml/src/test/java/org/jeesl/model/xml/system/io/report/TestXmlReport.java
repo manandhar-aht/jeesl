@@ -1,11 +1,11 @@
 package org.jeesl.model.xml.system.io.report;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.module.ts.TestXmlTimeSeries;
 import org.jeesl.model.xml.system.status.TestXmlCategory;
 import org.jeesl.model.xml.system.status.TestXmlDescriptions;
 import org.jeesl.model.xml.system.status.TestXmlImplementation;
 import org.jeesl.model.xml.system.status.TestXmlLangs;
-import org.jeesl.model.xml.system.ts.TestXmlTimeSeries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

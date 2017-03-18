@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.system.ts;
+package org.jeesl.model.xml.system.module.ts;
 
 import org.jeesl.AbstractXmlTest;
 import org.slf4j.Logger;

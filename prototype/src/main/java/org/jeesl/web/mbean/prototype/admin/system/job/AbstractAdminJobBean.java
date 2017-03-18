@@ -17,10 +17,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 
 public class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsDescription,
-									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>,
+									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
-									JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>,
+									JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,FEEDBACK extends UtilsStatus<FEEDBACK,L,D>,
 									STATUS extends UtilsStatus<STATUS,L,D>
 									>
 					extends AbstractAdminBean<L,D>
@@ -29,7 +29,7 @@ public class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsDescriptio
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminJobBean.class);
 	
-	protected JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> fJob;
+	protected JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> fJob;
 	
 	protected Class<TEMPLATE> cTemplate;
 	protected Class<CATEGORY> cCategory;
@@ -37,12 +37,12 @@ public class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsDescriptio
 	protected Class<JOB> cJob;
 	protected Class<STATUS> cStatus;
 
-	protected JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> ffTemplate;
+	protected JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> ffTemplate;
 	
 	protected SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
 	protected SbMultiStatusHandler<L,D,TYPE> sbhType; public SbMultiStatusHandler<L,D,TYPE> getSbhType() {return sbhType;}
 	 
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fJob=fJob;

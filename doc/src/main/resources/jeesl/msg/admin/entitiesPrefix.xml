@@ -21,6 +21,13 @@
 			<s:lang key="fr" translation="Job Type"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="JobFeedback">
+		<s:langs>
+			<s:lang key="de" translation="Job Rückmeldung"/>
+			<s:lang key="en" translation="Job Rückmeldung"/>
+			<s:lang key="fr" translation="Job Rückmeldung"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="GraphicStyle">
 		<s:langs>
 			<s:lang key="de" translation="Graphikstil"/>

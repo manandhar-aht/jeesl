@@ -28,6 +28,13 @@
 			<lang key="fr" translation="Status" />
 		</langs>
 	</translation>
+	<translation key="jeeslJobFeedback">
+		<langs>
+			<lang key="de" translation="Rückmeldung" />
+			<lang key="en" translation="Feedback" />
+			<lang key="fr" translation="Feedback" />
+		</langs>
+	</translation>
 	<translation key="jeeslJobCreated">
 		<langs>
 			<lang key="de" translation="Erstellt" />
@@ -61,6 +68,13 @@
 			<lang key="de" translation="Vorlage" />
 			<lang key="en" translation="Template" />
 			<lang key="fr" translation="Template" />
+		</langs>
+	</translation>
+	<translation key="jeeslJobTimeout">
+		<langs>
+			<lang key="de" translation="Zeitüberschreitung" />
+			<lang key="en" translation="Timeout" />
+			<lang key="fr" translation="Timeout" />
 		</langs>
 	</translation>
 </translations>

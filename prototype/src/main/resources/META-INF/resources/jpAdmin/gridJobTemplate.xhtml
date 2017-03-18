@@ -19,7 +19,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sTemplates" width="5">
+				<aht:slot id="sTemplates" width="8">
 					<h:form id="fTemplates">
 						<p:dataTable var="t" value="#{cc.attrs.bean.templates}" draggableRows="true"
 							selection="#{cc.attrs.bean.template}" selectionMode="single" rowKey="#{t.id}">
@@ -30,11 +30,13 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTemplates()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sTemplate" listener="#{cc.attrs.bean.selectTemplate()}"/>
+							<p:column headerText="#{msg.jeeslJobCategory}"><h:outputText value="#{t.category.name[userBean.localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslJobType}"><h:outputText value="#{t.type.name[userBean.localeCode].lang}"/></p:column>
 							<p:column headerText="#{msg.Name}"><h:outputText value="#{t.name[userBean.localeCode].lang}"/></p:column>
 						</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sTemplate" width="7">
+				<aht:slot id="sTemplate" width="4">
 					<h:form id="fTemplate">
 						<p:panel header="#{msg.jeeslJobTemplate}" rendered="#{not empty cc.attrs.bean.template}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
@@ -43,6 +45,20 @@
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true" rendered="#{cc.attrs.bean.template.id gt 0}" />
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+							
+								<p:outputLabel value="#{msg.jeeslJobCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.template.category}" effect="fade" >
+									<f:selectItems value="#{systemJobTemplateBean.sbhCategory.list}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslJobType}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.template.type}" effect="fade" >
+									<f:selectItems value="#{systemJobTemplateBean.sbhType.list}" var="t" itemLabel="#{t.name[userBean.localeCode].lang}" itemValue="#{t}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslJobTimeout}"/>
+								<p:inputText value="#{cc.attrs.bean.template.timeout}"/>
+							
 								<p:outputLabel value="#{msg.jeeslCode}"/>
 								<p:inputText value="#{cc.attrs.bean.template.code}"/>
 							</p:panelGrid>

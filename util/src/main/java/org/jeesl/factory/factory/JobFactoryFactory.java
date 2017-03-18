@@ -11,10 +11,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
-								TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>,
+								TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
-								JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>,
+								JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,FEEDBACK extends UtilsStatus<FEEDBACK,L,D>,
 								STATUS extends UtilsStatus<STATUS,L,D>
 								>
 {
@@ -31,19 +31,19 @@ public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
-					TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>,
+					TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 					TYPE extends UtilsStatus<TYPE,L,D>,
-					JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>,
+					JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,FEEDBACK extends UtilsStatus<FEEDBACK,L,D>,
 					STATUS extends UtilsStatus<STATUS,L,D>
 					>
-		JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> factory(final Class<TEMPLATE> cTemplate)
+		JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> factory(final Class<TEMPLATE> cTemplate)
 	{
-		return new JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>(cTemplate);
+		return new JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>(cTemplate);
 	}
 	
-	public EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> mail()
+	public EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> mail()
 	{
-		return new EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>(cTemplate);
+		return new EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>(cTemplate);
 	}
 }

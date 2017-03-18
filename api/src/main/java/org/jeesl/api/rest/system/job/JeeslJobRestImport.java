@@ -20,4 +20,7 @@ public interface JeeslJobRestImport
 	
 	@POST @Path("/system/job/type") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemJobType(Container container);
+	
+	@POST @Path("/system/job/feedback") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
+	DataUpdate importSystemJobFeedback(Container container);
 }

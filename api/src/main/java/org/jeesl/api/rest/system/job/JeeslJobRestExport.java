@@ -17,4 +17,7 @@ public interface JeeslJobRestExport
 	
 	@GET @Path("/system/job/type") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemJobType();
+	
+	@GET @Path("/system/job/feedback") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemJobFeedback();
 }

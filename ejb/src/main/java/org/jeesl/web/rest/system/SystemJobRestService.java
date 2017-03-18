@@ -19,10 +19,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class SystemJobRestService <L extends UtilsLang,D extends UtilsDescription,
-							TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>,
+							TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 							TYPE extends UtilsStatus<TYPE,L,D>,
-							JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>,
+							JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,
+							FEEDBACK extends UtilsStatus<FEEDBACK,L,D>,
 							STATUS extends UtilsStatus<STATUS,L,D>
 							>
 					extends AbstractJeeslRestService<L,D>
@@ -30,41 +31,45 @@ public class SystemJobRestService <L extends UtilsLang,D extends UtilsDescriptio
 {
 	final static Logger logger = LoggerFactory.getLogger(SystemJobRestService.class);
 	
-	private JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> fJob;
+	private JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> fJob;
 	
 	private final Class<CATEGORY> cCategory;
 	private final Class<TYPE> cType;
 	private final Class<STATUS> cStatus;
+	private final Class<FEEDBACK> cFeedback;
 	
-	private SystemJobRestService(JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> fJob,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<STATUS> cStatus)
+	private SystemJobRestService(JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> fJob,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<FEEDBACK> cFeedback, final Class<STATUS> cStatus)
 	{
 		super(fJob,cL,cD);
 		this.fJob=fJob;
 		this.cCategory=cCategory;
 		this.cType=cType;
+		this.cFeedback=cFeedback;
 		this.cStatus=cStatus;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
-					TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>,
+					TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 					TYPE extends UtilsStatus<TYPE,L,D>,
-					JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>,
+					JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,FEEDBACK extends UtilsStatus<FEEDBACK,L,D>,
 					STATUS extends UtilsStatus<STATUS,L,D>
 					>
-	SystemJobRestService<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>
-		factory(JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS> fJob,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<STATUS> cStatus)
+	SystemJobRestService<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>
+		factory(JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> fJob,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<FEEDBACK> cFeedback, final Class<STATUS> cStatus)
 	{
-		return new SystemJobRestService<L,D,TEMPLATE,CATEGORY,TYPE,JOB,STATUS>(fJob,cL,cD,cCategory,cType,cStatus);
+		return new SystemJobRestService<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>(fJob,cL,cD,cCategory,cType,cFeedback,cStatus);
 	}
 	
 	@Override public Container exportSystemJobCategories() {return xfContainer.build(fJob.allOrderedPosition(cCategory));}
 	@Override public Container exportSystemJobType() {return xfContainer.build(fJob.allOrderedPosition(cType));}
 	@Override public Container exportSystemJobStatus() {return xfContainer.build(fJob.allOrderedPosition(cStatus));}
+	@Override public Container exportSystemJobFeedback() {return xfContainer.build(fJob.allOrderedPosition(cFeedback));}
 	
 	@Override public DataUpdate importSystemJobCategories(Container container){return importStatus(cCategory,container,null);}
 	@Override public DataUpdate importSystemJobType(Container container){return importStatus(cType,container,null);}
 	@Override public DataUpdate importSystemJobStatus(Container container){return importStatus(cStatus,container,null);}
+	@Override public DataUpdate importSystemJobFeedback(Container container){return importStatus(cFeedback,container,null);}
 
 	@Override public Jobs grab(String type, int max)
 	{

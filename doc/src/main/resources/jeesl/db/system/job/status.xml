@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jeesl:container xmlns:us="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:un="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:jeesl="http://www.jeesl.org">
+    <us:status code="queue" visible="true" position="1">
+        <us:langs>
+            <us:lang key="de" translation="Warteschlange"/>
+            <us:lang key="en" translation="Queue"/>
+            <us:lang key="fr" translation="Queue"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="completed" visible="true" position="2">
+        <us:langs>
+            <us:lang key="de" translation="Abgeschlossen"/>
+            <us:lang key="en" translation="Completed"/>
+            <us:lang key="fr" translation="Completed"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="working" visible="true" position="3">
+        <us:langs>
+            <us:lang key="de" translation="In Bearbeitung"/>
+            <us:lang key="en" translation="In Progress"/>
+            <us:lang key="fr" translation="In Progress"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="failed" visible="true" position="4">
+        <us:langs>
+            <us:lang key="de" translation="Fehlgeschlagen"/>
+            <us:lang key="en" translation="Failed"/>
+            <us:lang key="fr" translation="Failed"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+</jeesl:container>

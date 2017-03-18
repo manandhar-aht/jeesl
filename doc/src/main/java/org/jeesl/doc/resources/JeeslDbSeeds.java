@@ -15,11 +15,13 @@ public class JeeslDbSeeds
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslDbSeeds.class);
 	
-	public static void apply(Db db)
+	public static void apply(String prefix, Db db)
 	{
 		applyRevision(db);
 		applyGraphic(db);
 		applyReport(db);
+		applyMail(db);
+		applySystem(prefix,db);
 	}
 	
 	private static void applyGraphic(Db db)
@@ -41,5 +43,17 @@ public class JeeslDbSeeds
 		db.getSeed().add(XmlSeedFactory.build(JeeslReportSetting.class.getName()+":"+JeeslReportSetting.Type.filling,"jeesl/db/system/io/report/setting/filling.xml"));
 		db.getSeed().add(XmlSeedFactory.build(JeeslReportSetting.class.getName()+":"+JeeslReportSetting.Type.transformation,"jeesl/db/system/io/report/setting/transformation.xml"));
 		db.getSeed().add(XmlSeedFactory.build(JeeslReportSetting.class.getName()+":"+JeeslReportSetting.Type.implementation,"jeesl/db/system/io/report/setting/implementation.xml"));
+	}
+	
+	private static void applyMail(Db db)
+	{
+		db.getSeed().add(XmlSeedFactory.build("IoMailRetention","jeesl/db/system/io/mail/retention.xml"));
+		db.getSeed().add(XmlSeedFactory.build("IoMailStatus","jeesl/db/system/io/mail/status.xml"));
+	}
+	
+	private static void applySystem(String prefix, Db db)
+	{
+		db.getSeed().add(XmlSeedFactory.build(prefix+"JobStatus","jeesl/db/system/job/status.xml"));
+		db.getSeed().add(XmlSeedFactory.build(prefix+"JobType","jeesl/db/system/job/type.xml"));
 	}
 }

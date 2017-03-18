@@ -58,11 +58,6 @@
         </jxb:schemaBindings>
     </jxb:bindings>
     
-	<jxb:bindings schemaLocation="../xsd/aht/srs.xsd" node="/xsd:schema">
-        <jxb:schemaBindings>
-            <jxb:package name="net.sf.ahtutils.xml.srs"/>
-        </jxb:schemaBindings>
-    </jxb:bindings> 
     
     <jxb:bindings schemaLocation="../xsd/aht/security.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
@@ -141,6 +136,12 @@
             <jxb:package name="org.jeesl.model.xml.module.job"/>
         </jxb:schemaBindings>
     </jxb:bindings>
+    
+    <jxb:bindings schemaLocation="../xsd/jeesl/dev/srs.xsd" node="/xsd:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.jeesl.model.xml.dev.srs"/>
+        </jxb:schemaBindings>
+    </jxb:bindings> 
     
    	<jxb:bindings schemaLocation="../xsd/cloud/facebook.xsd" node="/xsd:schema">
         <jxb:schemaBindings>

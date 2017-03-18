@@ -1,15 +1,15 @@
 
-package net.sf.ahtutils.xml.srs;
+package org.jeesl.model.xml.dev.srs;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import net.sf.ahtutils.xml.text.Description;
+import net.sf.ahtutils.xml.text.Remark;
 
 
 /**
@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/srs}srs"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/srs}fr" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/text}description"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/text}remark"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -37,19 +37,19 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "srs",
-    "fr"
+    "description",
+    "remark"
 })
-@XmlRootElement(name = "frGroup")
-public class FrGroup
+@XmlRootElement(name = "fr")
+public class Fr
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlElement(required = true)
-    protected Srs srs;
-    @XmlElement(required = true)
-    protected List<Fr> fr;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/text", required = true)
+    protected Description description;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/text", required = true)
+    protected Remark remark;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "name")
@@ -58,68 +58,59 @@ public class FrGroup
     protected String code;
 
     /**
-     * Gets the value of the srs property.
+     * Gets the value of the description property.
      * 
      * @return
      *     possible object is
-     *     {@link Srs }
+     *     {@link Description }
      *     
      */
-    public Srs getSrs() {
-        return srs;
+    public Description getDescription() {
+        return description;
     }
 
     /**
-     * Sets the value of the srs property.
+     * Sets the value of the description property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Srs }
+     *     {@link Description }
      *     
      */
-    public void setSrs(Srs value) {
-        this.srs = value;
+    public void setDescription(Description value) {
+        this.description = value;
     }
 
-    public boolean isSetSrs() {
-        return (this.srs!= null);
+    public boolean isSetDescription() {
+        return (this.description!= null);
     }
 
     /**
-     * Gets the value of the fr property.
+     * Gets the value of the remark property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the fr property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getFr().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Fr }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link Remark }
+     *     
      */
-    public List<Fr> getFr() {
-        if (fr == null) {
-            fr = new ArrayList<Fr>();
-        }
-        return this.fr;
+    public Remark getRemark() {
+        return remark;
     }
 
-    public boolean isSetFr() {
-        return ((this.fr!= null)&&(!this.fr.isEmpty()));
+    /**
+     * Sets the value of the remark property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Remark }
+     *     
+     */
+    public void setRemark(Remark value) {
+        this.remark = value;
     }
 
-    public void unsetFr() {
-        this.fr = null;
+    public boolean isSetRemark() {
+        return (this.remark!= null);
     }
 
     /**

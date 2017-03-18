@@ -11,6 +11,6 @@ public abstract class AbstractXmlSrsTest <T extends Object> extends AbstractXmlT
 	
 	public AbstractXmlSrsTest(Class<T> cXml)
 	{
-		super(cXml,"srs");
+		super(cXml,"dev/srs");
 	}
 }

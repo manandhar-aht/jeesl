@@ -6,8 +6,6 @@ import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.xml.srs.Fr;
-
 public class TestXmlFr extends AbstractXmlSrsTest<Fr>
 {
 	final static Logger logger = LoggerFactory.getLogger(TestXmlFr.class);

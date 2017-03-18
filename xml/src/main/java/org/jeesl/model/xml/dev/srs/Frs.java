@@ -1,9 +1,7 @@
 
-package net.sf.ahtutils.xml.srs;
+package org.jeesl.model.xml.dev.srs;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -22,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/srs}frGroup" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/dev/srs}version"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *     &lt;/restriction&gt;
@@ -34,54 +32,45 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "frGroup"
+    "version"
 })
-@XmlRootElement(name = "srs")
-public class Srs
+@XmlRootElement(name = "frs")
+public class Frs
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
-    protected List<FrGroup> frGroup;
+    protected Version version;
     @XmlAttribute(name = "id")
     protected Long id;
 
     /**
-     * Gets the value of the frGroup property.
+     * Gets the value of the version property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the frGroup property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getFrGroup().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link FrGroup }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link Version }
+     *     
      */
-    public List<FrGroup> getFrGroup() {
-        if (frGroup == null) {
-            frGroup = new ArrayList<FrGroup>();
-        }
-        return this.frGroup;
+    public Version getVersion() {
+        return version;
     }
 
-    public boolean isSetFrGroup() {
-        return ((this.frGroup!= null)&&(!this.frGroup.isEmpty()));
+    /**
+     * Sets the value of the version property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Version }
+     *     
+     */
+    public void setVersion(Version value) {
+        this.version = value;
     }
 
-    public void unsetFrGroup() {
-        this.frGroup = null;
+    public boolean isSetVersion() {
+        return (this.version!= null);
     }
 
     /**

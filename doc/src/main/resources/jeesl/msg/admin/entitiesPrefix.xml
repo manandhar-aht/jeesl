@@ -14,11 +14,11 @@
 			<s:lang key="fr" translation="Job Category"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="JobStatus">
+	<s:translation key="JobType">
 		<s:langs>
-			<s:lang key="de" translation="Job Status"/>
-			<s:lang key="en" translation="Job Status"/>
-			<s:lang key="fr" translation="Job Status"/>
+			<s:lang key="de" translation="Job Type"/>
+			<s:lang key="en" translation="Job Type"/>
+			<s:lang key="fr" translation="Job Type"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="GraphicStyle">

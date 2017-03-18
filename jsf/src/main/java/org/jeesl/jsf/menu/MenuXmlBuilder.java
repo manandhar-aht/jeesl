@@ -583,6 +583,7 @@ public class MenuXmlBuilder implements MenuBuilder
 		}
 		catch(IllegalArgumentException e)
 		{
+			if(code==null){logger.error("The provided code is NULL");}
 			logger.error("Breadcrumb from "+rootNode+"->"+code+" "+e.getMessage());
 			logger.error(graph.toString());
 		}

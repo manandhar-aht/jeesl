@@ -19,11 +19,7 @@ public interface JeeslJobTemplate<L extends UtilsLang,D extends UtilsDescription
 									>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithLang<L>,EjbWithDescription<D>
-{	
-	
-	public static enum Status{queue,spooling,sent,failed};
-	public static enum Attributes{category,status,recordCreation,recordSpool};
-	
+{
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);
 	

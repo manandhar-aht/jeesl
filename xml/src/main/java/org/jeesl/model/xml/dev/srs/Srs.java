@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}version"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}meta"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/dev/srs}actors"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}chapter" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -36,6 +37,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "version",
     "meta",
+    "actors",
     "chapter"
 })
 @XmlRootElement(name = "srs")
@@ -48,6 +50,8 @@ public class Srs
     protected Version version;
     @XmlElement(required = true)
     protected Meta meta;
+    @XmlElement(required = true)
+    protected Actors actors;
     @XmlElement(required = true)
     protected List<Chapter> chapter;
 
@@ -105,6 +109,34 @@ public class Srs
 
     public boolean isSetMeta() {
         return (this.meta!= null);
+    }
+
+    /**
+     * Gets the value of the actors property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Actors }
+     *     
+     */
+    public Actors getActors() {
+        return actors;
+    }
+
+    /**
+     * Sets the value of the actors property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Actors }
+     *     
+     */
+    public void setActors(Actors value) {
+        this.actors = value;
+    }
+
+    public boolean isSetActors() {
+        return (this.actors!= null);
     }
 
     /**

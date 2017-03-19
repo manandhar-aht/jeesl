@@ -12,19 +12,7 @@
             <us:description key="fr"></us:description>
         </us:descriptions>
     </us:status>
-    <us:status code="completed" visible="true" position="2">
-        <us:langs>
-            <us:lang key="de" translation="Abgeschlossen"/>
-            <us:lang key="en" translation="Completed"/>
-            <us:lang key="fr" translation="Completed"/>
-        </us:langs>
-        <us:descriptions>
-            <us:description key="de"></us:description>
-            <us:description key="en"></us:description>
-            <us:description key="fr"></us:description>
-        </us:descriptions>
-    </us:status>
-    <us:status code="working" visible="true" position="3">
+    <us:status code="working" visible="true" position="2">
         <us:langs>
             <us:lang key="de" translation="In Bearbeitung"/>
             <us:lang key="en" translation="In Progress"/>
@@ -36,7 +24,55 @@
             <us:description key="fr"></us:description>
         </us:descriptions>
     </us:status>
-    <us:status code="failed" visible="true" position="4">
+    <us:status code="processed" visible="true" position="3">
+        <us:langs>
+            <us:lang key="de" translation="Bearbeitet"/>
+            <us:lang key="en" translation="Processed"/>
+            <us:lang key="fr" translation="Processed"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="error" visible="true" position="4">
+        <us:langs>
+            <us:lang key="de" translation="Fehler"/>
+            <us:lang key="en" translation="Error"/>
+            <us:lang key="fr" translation="Error"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="timeout" visible="true" position="5">
+        <us:langs>
+            <us:lang key="de" translation="Timeout"/>
+            <us:lang key="en" translation="Timeout"/>
+            <us:lang key="fr" translation="Timeout"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="completed" visible="true" position="6">
+        <us:langs>
+            <us:lang key="de" translation="Abgeschlossen"/>
+            <us:lang key="en" translation="Completed"/>
+            <us:lang key="fr" translation="Completed"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="failed" visible="true" position="7">
         <us:langs>
             <us:lang key="de" translation="Fehlgeschlagen"/>
             <us:lang key="en" translation="Failed"/>

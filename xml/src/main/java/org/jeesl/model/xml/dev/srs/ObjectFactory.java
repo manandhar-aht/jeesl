@@ -62,6 +62,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Actors }
+     * 
+     */
+    public Actors createActors() {
+        return new Actors();
+    }
+
+    /**
+     * Create an instance of {@link Actor }
+     * 
+     */
+    public Actor createActor() {
+        return new Actor();
+    }
+
+    /**
      * Create an instance of {@link Chapter }
      * 
      */

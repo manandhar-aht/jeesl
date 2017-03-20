@@ -7,7 +7,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElementRefs;
+import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.openfuxml.content.ofx.Section;
@@ -25,6 +27,7 @@ import org.openfuxml.content.ofx.Section;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}chapter" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://www.openfuxml.org}section" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/dev/srs}fr" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="title" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -36,94 +39,61 @@ import org.openfuxml.content.ofx.Section;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "chapter",
-    "section"
+    "content"
 })
 @XmlRootElement(name = "chapter")
-public class Chapter
-    implements Serializable
+public class Chapter implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlElement(required = true)
-    protected List<Chapter> chapter;
-    @XmlElement(namespace = "http://www.openfuxml.org", required = true)
-    protected List<Section> section;
+    @XmlElementRefs({
+        @XmlElementRef(name = "chapter", namespace = "http://www.jeesl.org/dev/srs", type = Chapter.class),
+        @XmlElementRef(name = "section", namespace = "http://www.openfuxml.org", type = Section.class),
+        @XmlElementRef(name = "fr", namespace = "http://www.jeesl.org/dev/srs", type = Fr.class)
+    })
+    @XmlMixed
+    protected List<Serializable> content;
     @XmlAttribute(name = "title")
     protected String title;
 
     /**
-     * Gets the value of the chapter property.
+     * Gets the value of the content property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the chapter property.
+     * This is why there is not a <CODE>set</CODE> method for the content property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getChapter().add(newItem);
+     *    getContent().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Chapter }
-     * 
-     * 
-     */
-    public List<Chapter> getChapter() {
-        if (chapter == null) {
-            chapter = new ArrayList<Chapter>();
-        }
-        return this.chapter;
-    }
-
-    public boolean isSetChapter() {
-        return ((this.chapter!= null)&&(!this.chapter.isEmpty()));
-    }
-
-    public void unsetChapter() {
-        this.chapter = null;
-    }
-
-    /**
-     * Gets the value of the section property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the section property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getSection().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
      * {@link Section }
+     * {@link String }
+     * {@link Fr }
      * 
      * 
      */
-    public List<Section> getSection() {
-        if (section == null) {
-            section = new ArrayList<Section>();
+    public List<Serializable> getContent() {
+        if (content == null) {
+            content = new ArrayList<Serializable>();
         }
-        return this.section;
+        return this.content;
     }
 
-    public boolean isSetSection() {
-        return ((this.section!= null)&&(!this.section.isEmpty()));
+    public boolean isSetContent() {
+        return ((this.content!= null)&&(!this.content.isEmpty()));
     }
 
-    public void unsetSection() {
-        this.section = null;
+    public void unsetContent() {
+        this.content = null;
     }
 
     /**

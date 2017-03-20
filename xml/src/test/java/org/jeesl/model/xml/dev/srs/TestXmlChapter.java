@@ -17,13 +17,11 @@ public class TestXmlChapter extends AbstractXmlSrsTest<Chapter>
     	Chapter xml = new Chapter();
     	xml.setTitle("Functional Requirements");
     	
-    	if(withChildren)
+    	if(withChildren && false)
     	{
-    		xml.getChapter().add(TestXmlChapter.create(false));
-    		xml.getChapter().add(TestXmlChapter.create(false));
-    		
-    		xml.getSection().add(XmlSectionFactory.build("de"));
-    		xml.getSection().add(XmlSectionFactory.build("en"));
+    		xml.getContent().add(TestXmlChapter.create(false));
+    		xml.getContent().add(XmlSectionFactory.build("de"));
+    		xml.getContent().add(XmlSectionFactory.build("en"));
     	}
     	
     	return xml;

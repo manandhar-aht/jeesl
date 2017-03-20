@@ -1,16 +1,18 @@
-package net.sf.ahtutils.doc.latex;
+package org.jeesl.doc.latex;
 
-import net.sf.ahtutils.doc.UtilsDocumentation;
+import java.io.File;
 
 import org.apache.commons.configuration.Configuration;
 import org.openfuxml.exception.OfxConfigurationException;
-import org.openfuxml.renderer.latex.util.OfxLatexDefinitionBuilder;
+import org.openfuxml.renderer.latex.util.OfxLatexResources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UtilsLatexDefinitionBuilder extends OfxLatexDefinitionBuilder
+import net.sf.ahtutils.doc.UtilsDocumentation;
+
+public class JeeslLatexResources extends OfxLatexResources
 {	
-	final static Logger logger = LoggerFactory.getLogger(UtilsLatexDefinitionBuilder.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslLatexResources.class);
 		
 	public static enum Code {colors}
 	
@@ -30,9 +32,14 @@ public class UtilsLatexDefinitionBuilder extends OfxLatexDefinitionBuilder
 	public static String acronymDev = "ofx.aht-utils/editorial/acronym/development.xml";
 	public static String acronymJava = "ofx.aht-utils/editorial/acronym/java.xml";
 	
-	public UtilsLatexDefinitionBuilder(Configuration config)
+	public JeeslLatexResources(Configuration config)
 	{
 		super(config.getString(UtilsDocumentation.keyBaseLatexDir));
+	}
+	
+	public JeeslLatexResources(File fLatexBase)
+	{
+		super(fLatexBase);
 	}
 	
 	public void copyColors() throws OfxConfigurationException {copyResource("tex.aht-utils","colors");}

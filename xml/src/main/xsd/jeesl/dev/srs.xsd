@@ -16,10 +16,11 @@
 		</xsd:complexType>
     </xsd:element>
     <xsd:element name="chapter">
-	    <xsd:complexType>
+	    <xsd:complexType mixed="true">
             <xsd:sequence>
 	            <xsd:element ref="srs:chapter" maxOccurs="unbounded"/>
 	            <xsd:element ref="ofx:section" maxOccurs="unbounded"/>
+	            <xsd:element ref="srs:fr" maxOccurs="unbounded"/>
 			</xsd:sequence>
 			<xsd:attribute name="title" type="xsd:string"/>
 		</xsd:complexType>
@@ -52,6 +53,13 @@
 		</xsd:complexType>   
     </xsd:element>
 	<xsd:element name="actor">
+        <xsd:complexType>
+        	<xsd:attribute name="code" type="xsd:string"/>
+        	<xsd:attribute name="name" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <xsd:element name="fr">
         <xsd:complexType>
         	<xsd:attribute name="code" type="xsd:string"/>
         	<xsd:attribute name="name" type="xsd:string"/>

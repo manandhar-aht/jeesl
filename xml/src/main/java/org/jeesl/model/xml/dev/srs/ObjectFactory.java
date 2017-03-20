@@ -85,4 +85,12 @@ public class ObjectFactory {
         return new Chapter();
     }
 
+    /**
+     * Create an instance of {@link Fr }
+     * 
+     */
+    public Fr createFr() {
+        return new Fr();
+    }
+
 }

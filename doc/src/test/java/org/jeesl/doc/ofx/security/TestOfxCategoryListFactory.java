@@ -14,7 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openfuxml.content.list.List;
 import org.openfuxml.exception.OfxAuthoringException;
-import org.openfuxml.interfaces.renderer.OfxLatexRenderer;
+import org.openfuxml.interfaces.renderer.latex.OfxLatexRenderer;
 import org.openfuxml.renderer.latex.content.list.LatexListRenderer;
 import org.openfuxml.renderer.latex.content.structure.LatexSectionRenderer;
 import org.slf4j.Logger;

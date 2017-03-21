@@ -18,22 +18,22 @@
 <composite:implementation>
 	<h:panelGroup layout="block" styleClass="#{cc.attrs.styleClass}">
 		
-		<h:graphicImage rendered="#{cc.attrs.langEn and userBean.localeCode ne 'en'}" library="ahtutilsGfx" name="12/flags/grey/uk.png">
+		<h:graphicImage rendered="#{cc.attrs.langEn and userBean.localeCode ne 'en'}" library="jeeslGfx" name="12/flags/grey/uk.png">
 			<p:ajax event="click" listener="#{userBean.setLocale('en')}" oncomplete="javascript:location.reload(true)"/>
 		</h:graphicImage>
-		<h:graphicImage rendered="#{cc.attrs.langEn and userBean.localeCode eq 'en'}" library="ahtutilsGfx" name="12/flags/color/uk.png"/>
+		<h:graphicImage rendered="#{cc.attrs.langEn and userBean.localeCode eq 'en'}" library="jeeslGfx" name="12/flags/color/uk.png"/>
 		
 		<p:spacer width="5" rendered="#{cc.attrs.langFr}"/>
-		<h:graphicImage rendered="#{cc.attrs.langFr and userBean.localeCode ne 'fr'}" library="ahtutilsGfx" name="12/flags/grey/fr.png">
+		<h:graphicImage rendered="#{cc.attrs.langFr and userBean.localeCode ne 'fr'}" library="jeeslGfx" name="12/flags/grey/fr.png">
 			<p:ajax event="click" listener="#{userBean.setLocale('fr')}" oncomplete="javascript:location.reload(true)"/>
 		</h:graphicImage>
-		<h:graphicImage rendered="#{cc.attrs.langFr and userBean.localeCode eq 'fr'}" library="ahtutilsGfx" name="12/flags/color/fr.png"/>
+		<h:graphicImage rendered="#{cc.attrs.langFr and userBean.localeCode eq 'fr'}" library="jeeslGfx" name="12/flags/color/fr.png"/>
 	       
 		<p:spacer width="5" rendered="#{cc.attrs.langDe}"/>
-		<h:graphicImage rendered="#{cc.attrs.langDe and userBean.localeCode ne 'de'}" library="ahtutilsGfx" name="12/flags/grey/de.png" >
+		<h:graphicImage rendered="#{cc.attrs.langDe and userBean.localeCode ne 'de'}" library="jeeslGfx" name="12/flags/grey/de.png" >
 	           <p:ajax event="click" listener="#{userBean.setLocale('de')}" oncomplete="javascript:location.reload(true)"/>
 		</h:graphicImage>
-		<h:graphicImage rendered="#{cc.attrs.langDe and userBean.localeCode eq 'de'}" library="ahtutilsGfx" name="12/flags/color/de.png" />
+		<h:graphicImage rendered="#{cc.attrs.langDe and userBean.localeCode eq 'de'}" library="jeeslGfx" name="12/flags/color/de.png" />
 	</h:panelGroup>
 </composite:implementation>
 </html>

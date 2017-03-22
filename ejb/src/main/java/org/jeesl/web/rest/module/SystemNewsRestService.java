@@ -1,4 +1,4 @@
-package org.jeesl.web.rest.system;
+package org.jeesl.web.rest.module;
 
 import org.jeesl.api.facade.system.JeeslSystemNewsFacade;
 import org.jeesl.api.rest.module.news.JeeslNewsRestExport;

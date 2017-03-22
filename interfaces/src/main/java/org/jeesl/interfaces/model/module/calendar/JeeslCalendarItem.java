@@ -14,5 +14,5 @@ public interface JeeslCalendarItem <L extends UtilsLang,
 									>
 		extends EjbWithId
 {
-	
+	public enum Attributes {calendar,startDate,endDate}
 }

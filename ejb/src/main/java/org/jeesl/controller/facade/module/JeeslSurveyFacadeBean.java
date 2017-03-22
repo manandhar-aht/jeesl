@@ -1,4 +1,4 @@
-package org.jeesl.controller.facade;
+package org.jeesl.controller.facade.module;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -12,6 +12,7 @@
 		<composite:attribute name="styleClass" required="false"/>
 		<composite:attribute name="langEn" required="false" default="true"/>
 		<composite:attribute name="langFr" required="false" default="false"/>
+		<composite:attribute name="langIn" required="false" default="false"/>
 		<composite:attribute name="langDe" required="false" default="false"/>
 	</composite:interface>
 	        
@@ -28,6 +29,12 @@
 			<p:ajax event="click" listener="#{userBean.setLocale('fr')}" oncomplete="javascript:location.reload(true)"/>
 		</h:graphicImage>
 		<h:graphicImage rendered="#{cc.attrs.langFr and userBean.localeCode eq 'fr'}" library="jeeslGfx" name="12/flags/color/fr.png"/>
+                
+                <p:spacer width="5" rendered="#{cc.attrs.langIn}"/>
+		<h:graphicImage rendered="#{cc.attrs.langIn and userBean.localeCode ne 'in'}" library="jeeslGfx" name="12/flags/grey/in.png">
+			<p:ajax event="click" listener="#{userBean.setLocale('in')}" oncomplete="javascript:location.reload(true)"/>
+		</h:graphicImage>
+		<h:graphicImage rendered="#{cc.attrs.langIn and userBean.localeCode eq 'in'}" library="jeeslGfx" name="12/flags/color/in.png"/>
 	       
 		<p:spacer width="5" rendered="#{cc.attrs.langDe}"/>
 		<h:graphicImage rendered="#{cc.attrs.langDe and userBean.localeCode ne 'de'}" library="jeeslGfx" name="12/flags/grey/de.png" >

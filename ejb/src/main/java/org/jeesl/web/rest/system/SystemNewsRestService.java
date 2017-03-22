@@ -1,8 +1,8 @@
 package org.jeesl.web.rest.system;
 
 import org.jeesl.api.facade.system.JeeslSystemNewsFacade;
-import org.jeesl.api.rest.system.news.JeeslSystemNewsRestExport;
-import org.jeesl.api.rest.system.news.JeeslSystemNewsRestImport;
+import org.jeesl.api.rest.module.news.JeeslNewsRestExport;
+import org.jeesl.api.rest.module.news.JeeslNewsRestImport;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class SystemNewsRestService <L extends UtilsLang,D extends UtilsDescripti
 									NEWS extends JeeslSystemNews<L,D,CATEGORY,NEWS,USER>,
 									USER extends EjbWithId>
 					extends AbstractUtilsRest<L,D>
-					implements JeeslSystemNewsRestExport,JeeslSystemNewsRestImport
+					implements JeeslNewsRestExport,JeeslNewsRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(SystemNewsRestService.class);
 	

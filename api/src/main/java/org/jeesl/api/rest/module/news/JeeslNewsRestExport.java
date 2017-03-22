@@ -1,4 +1,4 @@
-package org.jeesl.api.rest.system.news;
+package org.jeesl.api.rest.module.news;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -7,7 +7,7 @@ import javax.ws.rs.core.MediaType;
 
 import net.sf.ahtutils.xml.aht.Aht;
 
-public interface JeeslSystemNewsRestExport
+public interface JeeslNewsRestExport
 {
 	@GET @Path("/system/news/category") @Produces(MediaType.APPLICATION_XML)
 	Aht exportSystemNewsCategories();

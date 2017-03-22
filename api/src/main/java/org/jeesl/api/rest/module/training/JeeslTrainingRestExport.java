@@ -1,4 +1,4 @@
-package org.jeesl.api.rest.system.training;
+package org.jeesl.api.rest.module.training;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

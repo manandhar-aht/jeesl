@@ -21,6 +21,13 @@
     		<s:lang key="fr" translation="Name"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslSurveyName">
+    	<s:langs>
+    		<s:lang key="de" translation="Name"/>
+    		<s:lang key="en" translation="Name"/>
+    		<s:lang key="fr" translation="Name"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupSurveySections">
     	<s:langs>
     		<s:lang key="de" translation="Sections"/>
@@ -229,6 +236,34 @@
     		<s:lang key="de" translation="Option"/>
     		<s:lang key="en" translation="Option"/>
     		<s:lang key="fr" translation="Option"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSurveyDateFrom">
+    	<s:langs>
+    		<s:lang key="de" translation="Start Date"/>
+    		<s:lang key="en" translation="Start Date"/>
+    		<s:lang key="fr" translation="Start Date"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSurveyDateEnd">
+    	<s:langs>
+    		<s:lang key="de" translation="End Date"/>
+    		<s:lang key="en" translation="End Date"/>
+    		<s:lang key="fr" translation="End Date"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSurveySectionScoreLimit">
+    	<s:langs>
+    		<s:lang key="de" translation="Punktegrenze"/>
+    		<s:lang key="en" translation="Score Limit"/>
+    		<s:lang key="fr" translation="Score Limit"/>
+    	</s:langs>
+    </s:translation>
+        <s:translation key="jeeslSurveySectionScoreNormalize">
+    	<s:langs>
+    		<s:lang key="de" translation="Punkte Normalisierung"/>
+    		<s:lang key="en" translation="Score Normalize"/>
+    		<s:lang key="fr" translation="Score Normalize"/>
     	</s:langs>
     </s:translation>
 </s:translations>

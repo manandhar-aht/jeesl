@@ -75,7 +75,7 @@ public class JeeslMsgBuilder
 	public static final String srcConstraint = "jeesl/msg/admin/system/constraint.xml";
 	public static final String facesMessages = "jeesl/msg/facesMessages.xml";
 	
-	public static final String survey = "jeesl/msg/admin/system/survey.xml";
+	public static final String survey = "jeesl/msg/module/survey.xml";
 	public static final String devQa = "jeesl/msg/development/qa.xml";
 	
 	final static Logger logger = LoggerFactory.getLogger(JeeslMsgBuilder.class);

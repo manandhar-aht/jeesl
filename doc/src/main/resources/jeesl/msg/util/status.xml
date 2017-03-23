@@ -161,6 +161,13 @@
     		<s:lang key="fr" translation="***Categories***"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslCategory">
+    	<s:langs>
+    		<s:lang key="de" translation="Kategorie"/>
+    		<s:lang key="en" translation="Category"/>
+    		<s:lang key="fr" translation="Category"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslCategories">
     	<s:langs>
     		<s:lang key="de" translation="Kategorien"/>

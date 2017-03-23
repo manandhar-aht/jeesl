@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.admin;
 
 import java.io.Serializable;
 
+import org.jeesl.jsf.util.NullNumberBinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,8 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	protected boolean hasAdministratorAction; public boolean isHasAdministratorAction() {return hasAdministratorAction;}
 	protected boolean hasTranslatorAction;
 	
+	protected NullNumberBinder nnb; public NullNumberBinder getNnb() {return nnb;} public void setNnb(NullNumberBinder nnb) {this.nnb = nnb;}
+
 	public AbstractAdminBean()
 	{
 		debugOnInfo = false;
@@ -46,6 +49,8 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		
 		uiShowInvisible = true;
 		uiShowDocumentation = true;
+		
+		nnb = new NullNumberBinder();
 	}
 	
 	protected void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription, FacesMessageBean bMessage)

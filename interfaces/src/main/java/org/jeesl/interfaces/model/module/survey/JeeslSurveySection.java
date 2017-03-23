@@ -46,4 +46,7 @@ public interface JeeslSurveySection<L extends UtilsLang,
 	
 	String getColumnClasses();
 	void setColumnClasses(String columnClasses);
+	
+	Double getScoreLimit();
+	void setScoreLimit(Double scoreLimit);
 }

@@ -34,4 +34,8 @@
         <tag-name>reportDomain</tag-name>
         <source>jeeslPrototype/reportDomain.xhtml</source>
     </tag>
+    <tag>
+        <tag-name>sbMulti</tag-name>
+        <source>jeeslPrototype/sbMulti.xhtml</source>
+    </tag>
 </facelet-taglib>

@@ -1,0 +1,21 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+>
+
+	<aup:statusBarItem label="#{label} (#{fn:length(handler.selected)}/#{fn:length(handler.list)})"
+								 orientation="right"
+								 childs="#{handler.list}">
+			<h:commandLink>
+				<ui:insert />
+				<aup:sbCheckmark value="#{handler.map[var]}"/>
+				<p:ajax event="click" update="#{update}" listener="#{bean.multiToggle(var)}"/>
+			</h:commandLink>
+		</aup:statusBarItem>
+</ui:composition>

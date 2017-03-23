@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.rest;
+package org.jeesl.web.rest.dev;
 
 import org.jeesl.api.facade.module.JeeslQaFacade;
 import org.jeesl.factory.xml.system.security.XmlStaffFactory;

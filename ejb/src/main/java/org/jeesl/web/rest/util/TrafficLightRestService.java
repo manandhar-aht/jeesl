@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.rest;
+package org.jeesl.web.rest.util;
 
 import org.jeesl.api.exception.xml.JeeslXmlStructureException;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;

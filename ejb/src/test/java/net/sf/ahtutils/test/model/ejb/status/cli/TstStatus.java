@@ -2,10 +2,10 @@ package net.sf.ahtutils.test.model.ejb.status.cli;
 
 import java.util.Random;
 
-import net.sf.ahtutils.model.ejb.status.Status;
 import net.sf.ahtutils.test.AhtUtilsEjbTestBootstrap;
 import net.sf.ahtutils.test.model.ejb.status.TestStatus;
 
+import org.jeesl.model.ejb.system.status.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

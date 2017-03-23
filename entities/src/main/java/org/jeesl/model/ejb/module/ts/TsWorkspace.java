@@ -1,4 +1,4 @@
-package org.jeesl.model.ejb.system.revision;
+package org.jeesl.model.ejb.module.ts;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -12,9 +12,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Type",category="revision",subset="revision",level=4)
-public class RevisionAttributeType implements Serializable,EjbRemoveable,EjbPersistable,
-							UtilsStatus<RevisionAttributeType,Lang,Description>
+@EjbErNode(name="Workspace",category="ts",subset="ts")
+public class TsWorkspace implements Serializable,EjbRemoveable,EjbPersistable,
+							UtilsStatus<TsWorkspace,Lang,Description>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;
@@ -55,10 +55,7 @@ public class RevisionAttributeType implements Serializable,EjbRemoveable,EjbPers
 	@Override public <P extends EjbWithCode> void setParent(P parent) {}
 	
 	
-	public boolean equals(Object object)
-	{
-        return (object instanceof RevisionAttributeType) ? id == ((RevisionAttributeType) object).getId() : (object == this);
-    }
+	public boolean equals(Object object){return (object instanceof TsData) ? id == ((TsData) object).getId() : (object == this);}
 	
 	public String toString()
 	{

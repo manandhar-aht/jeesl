@@ -2,14 +2,14 @@ package net.sf.ahtutils.test.model.ejb.status;
 
 import java.util.Random;
 
+import org.jeesl.model.ejb.system.status.Lang;
+import org.jeesl.model.ejb.system.status.Status;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.model.ejb.status.Lang;
-import net.sf.ahtutils.model.ejb.status.Status;
 import net.sf.ahtutils.test.model.ejb.status.cli.TstStatus;
 
 public class TestStatus

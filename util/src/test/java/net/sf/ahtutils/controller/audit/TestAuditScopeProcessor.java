@@ -5,6 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.jeesl.JeeslUtilTestBootstrap;
+import org.jeesl.model.ejb.system.security.SecurityAction;
+import org.jeesl.model.ejb.system.security.SecurityActionTemplate;
+import org.jeesl.model.ejb.system.security.SecurityCategory;
+import org.jeesl.model.ejb.system.security.SecurityRole;
+import org.jeesl.model.ejb.system.security.SecurityUsecase;
+import org.jeesl.model.ejb.system.security.SecurityView;
+import org.jeesl.model.ejb.system.status.Description;
+import org.jeesl.model.ejb.system.status.Lang;
+import org.jeesl.model.ejb.user.JeeslUser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -16,15 +25,6 @@ import net.sf.ahtutils.factory.xml.audit.XmlChangeFactory;
 import net.sf.ahtutils.factory.xml.audit.XmlRevisionFactory;
 import net.sf.ahtutils.factory.xml.audit.XmlRevisionsFactory;
 import net.sf.ahtutils.factory.xml.audit.XmlScopeFactory;
-import net.sf.ahtutils.model.ejb.status.Description;
-import net.sf.ahtutils.model.ejb.status.Lang;
-import net.sf.ahtutils.model.ejb.system.security.SecurityAction;
-import net.sf.ahtutils.model.ejb.system.security.SecurityActionTemplate;
-import net.sf.ahtutils.model.ejb.system.security.SecurityCategory;
-import net.sf.ahtutils.model.ejb.system.security.SecurityRole;
-import net.sf.ahtutils.model.ejb.system.security.SecurityUsecase;
-import net.sf.ahtutils.model.ejb.system.security.SecurityView;
-import net.sf.ahtutils.model.ejb.user.AhtUtilsUser;
 import net.sf.ahtutils.test.AbstractJeeslTest;
 import net.sf.ahtutils.xml.audit.Change;
 import net.sf.ahtutils.xml.audit.Revision;
@@ -40,13 +40,13 @@ public class TestAuditScopeProcessor extends AbstractJeeslTest
 	private Revisions revisions;
 	
 	private AuditScopeProcessor asp;
-	private XmlRevisionFactory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,AhtUtilsUser> xfRevision;
+	private XmlRevisionFactory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser> xfRevision;
 	
 	@Before
     public void init()
     {
 		asp = new AuditScopeProcessor();
-	    xfRevision = new XmlRevisionFactory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,AhtUtilsUser>();
+	    xfRevision = new XmlRevisionFactory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser>();
 		initScopeList();
 		initRevisions();
     }

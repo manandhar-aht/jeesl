@@ -3,12 +3,13 @@ package org.jeesl.model.ejb.system.revision;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.jeesl.model.ejb.system.status.Description;
+import org.jeesl.model.ejb.system.status.Lang;
+
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
-import net.sf.ahtutils.model.ejb.status.Description;
-import net.sf.ahtutils.model.ejb.status.Lang;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Category",category="revision",subset="revision",level=4)

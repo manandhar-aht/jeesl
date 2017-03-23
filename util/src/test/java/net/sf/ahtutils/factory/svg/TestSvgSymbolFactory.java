@@ -9,15 +9,14 @@ import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.commons.io.FileUtils;
 import org.jeesl.JeeslUtilTestBootstrap;
+import org.jeesl.model.ejb.system.status.Description;
+import org.jeesl.model.ejb.system.status.Lang;
+import org.jeesl.model.ejb.system.symbol.Graphic;
+import org.jeesl.model.ejb.system.symbol.GraphicStyle;
+import org.jeesl.model.ejb.system.symbol.GraphicType;
 import org.openfuxml.media.transcode.Svg2PngTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.model.ejb.status.Description;
-import net.sf.ahtutils.model.ejb.status.Lang;
-import net.sf.ahtutils.model.ejb.symbol.Graphic;
-import net.sf.ahtutils.model.ejb.symbol.GraphicStyle;
-import net.sf.ahtutils.model.ejb.symbol.GraphicType;
 
 public class TestSvgSymbolFactory
 {

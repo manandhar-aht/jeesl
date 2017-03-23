@@ -1,6 +1,9 @@
 package net.sf.ahtutils.test.controller.factory;
 
 import org.jeesl.AbstractJeeslUtilTest;
+import org.jeesl.model.ejb.system.status.Description;
+import org.jeesl.model.ejb.system.status.Lang;
+import org.jeesl.model.ejb.system.status.Status;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,9 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
-import net.sf.ahtutils.model.ejb.status.Description;
-import net.sf.ahtutils.model.ejb.status.Lang;
-import net.sf.ahtutils.model.ejb.status.Status;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.exlp.util.io.LoggerInit;

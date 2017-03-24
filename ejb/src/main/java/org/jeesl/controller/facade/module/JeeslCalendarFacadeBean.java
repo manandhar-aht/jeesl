@@ -55,6 +55,7 @@ public class JeeslCalendarFacadeBean<L extends UtilsLang,
 	@Override
 	public List<ITEM> fCalendarItems(List<CALENDAR> calendars, Date from, Date to)
 	{
+		if(calendars==null || calendars.isEmpty()){return new ArrayList<ITEM>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<ITEM> cQ = cB.createQuery(cItem);

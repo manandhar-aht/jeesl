@@ -29,6 +29,7 @@ public class SbMultiHandler <T extends EjbWithId>
 	private Map<T,Boolean> map;public Map<T,Boolean> getMap() {return map;}
 
 	public SbMultiHandler(final Class<T> cT, List<T> list){this(cT,list,null);}
+	public SbMultiHandler(final Class<T> cT, SbToggleBean bean){this(cT,new ArrayList<T>(),bean);}
 	public SbMultiHandler(final Class<T> cT, List<T> list, SbToggleBean bean)
 	{
 		this.cT=cT;
@@ -37,6 +38,13 @@ public class SbMultiHandler <T extends EjbWithId>
 		map = new ConcurrentHashMap<T,Boolean>();
 		selected = new ArrayList<T>();
 		refresh();
+	}
+	
+	public void clear()
+	{
+		list.clear();
+		selected.clear();
+		map.clear();
 	}
 	
 	public void selectNone()
@@ -81,6 +89,11 @@ public class SbMultiHandler <T extends EjbWithId>
 	public boolean isSelected(T t)
 	{
 		return map.containsKey(t) && map.get(t);
+	}
+	
+	public boolean hasSelected()
+	{
+		return !selected.isEmpty();
 	}
 
 	public void debug(boolean debug)

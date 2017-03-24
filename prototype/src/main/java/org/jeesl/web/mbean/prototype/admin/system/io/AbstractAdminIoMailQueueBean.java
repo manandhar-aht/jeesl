@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoMailFacade;
+import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -11,10 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.bean.sb.SbToggleBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDescription,
@@ -23,7 +24,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 											STATUS extends UtilsStatus<STATUS,L,D>,
 											RETENTION extends UtilsStatus<RETENTION,L,D>>
 					extends AbstractAdminBean<L,D>
-					implements Serializable
+					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoMailQueueBean.class);
@@ -39,8 +40,8 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	
 	private MAIL mail; public MAIL getMail() {return mail;} public void setMail(MAIL mail) {this.mail = mail;}
 	
-	protected SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
-	protected SbMultiStatusHandler<L,D,STATUS> sbhStatus; public SbMultiStatusHandler<L,D,STATUS> getSbhStatus() {return sbhStatus;}
+	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
+	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
 	{
@@ -54,24 +55,23 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 		categories = fMail.allOrderedPositionVisible(cCategory);
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cCategory,categories));}
 		
-		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
+		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,categories,this);
 		sbhCategory.selectAll();
 		
 		try
 		{
-			sbhStatus = new SbMultiStatusHandler<L,D,STATUS>(cStatus,fMail.allOrderedPositionVisible(cStatus));
+			sbhStatus = new SbMultiHandler<STATUS>(cStatus,fMail.allOrderedPositionVisible(cStatus),this);
 			sbhStatus.select(fMail.fByCode(cStatus,JeeslIoMail.Status.queue));
 			sbhStatus.select(fMail.fByCode(cStatus,JeeslIoMail.Status.spooling));
 		}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 	}
 	
-	public void multiToggle(UtilsStatus<?,L,D> o)
+	public void toggled(Class<?> c)
 	{
-		logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName()+" ");
-		if(cCategory.isAssignableFrom(o.getClass())){sbhCategory.multiToggle(o);}
-		if(cStatus.isAssignableFrom(o.getClass())){sbhStatus.multiToggle(o);}
-		else {logger.warn("No Handling for toggle class "+o.getClass().getSimpleName()+": "+o.toString());}
+		logger.info(AbstractLogMessage.toggled(c));
+		if(cCategory.isAssignableFrom(c)){logger.info(cCategory.getName());}
+		else if(cStatus.isAssignableFrom(c)){logger.info(cStatus.getName());}
 		reloadMails();
 		clear(true);
 	}

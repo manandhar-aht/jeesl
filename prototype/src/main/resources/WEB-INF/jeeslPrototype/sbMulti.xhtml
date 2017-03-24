@@ -15,7 +15,7 @@
 			<h:commandLink>
 				<ui:insert />
 				<aup:sbCheckmark value="#{handler.map[var]}"/>
-				<p:ajax event="click" update="#{update}" listener="#{bean.multiToggle(var)}"/>
+				<p:ajax event="click" update="#{update}" listener="#{handler.toggle(var)}"/>
 			</h:commandLink>
 		</aup:statusBarItem>
 </ui:composition>

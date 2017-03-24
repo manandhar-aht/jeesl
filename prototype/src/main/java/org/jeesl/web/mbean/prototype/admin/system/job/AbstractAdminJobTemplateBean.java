@@ -50,12 +50,9 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 	}
 	}
 	
-	public void multiToggle(UtilsStatus<?,L,D> o)
+	@Override public void toggled(Class<?> c)
 	{
-		logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName()+" ");
-		if(cCategory.isAssignableFrom(o.getClass())){sbhCategory.multiToggle(o);}
-		if(cType.isAssignableFrom(o.getClass())){sbhType.multiToggle(o);}
-		else {logger.warn("No Handling for toggle class "+o.getClass().getSimpleName()+": "+o.toString());}
+		logger.info(AbstractLogMessage.toggled(c));
 		reloadTemplates();
 		clear(true);
 	}

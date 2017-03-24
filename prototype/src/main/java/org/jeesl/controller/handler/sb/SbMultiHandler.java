@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.controller.handler.ui;
+package org.jeesl.controller.handler.sb;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,16 +12,13 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.sb.SbToggleBean;
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.exlp.util.io.StringUtil;
 
-@Deprecated //Use SbMultiHandler instead
-public class SbMultiStatusHandler <L extends UtilsLang,D extends UtilsDescription, T extends UtilsStatus<T,L,D>>
+public class SbMultiHandler <T extends EjbWithId>
 		implements Serializable
 {
-	final static Logger logger = LoggerFactory.getLogger(SbMultiStatusHandler.class);
+	final static Logger logger = LoggerFactory.getLogger(SbMultiHandler.class);
 	private static final long serialVersionUID = 1L;
 
 	private final Class<T> cT;
@@ -31,8 +28,8 @@ public class SbMultiStatusHandler <L extends UtilsLang,D extends UtilsDescriptio
 	private final List<T> selected;public List<T> getSelected() {return selected;}
 	private Map<T,Boolean> map;public Map<T,Boolean> getMap() {return map;}
 
-	public SbMultiStatusHandler(final Class<T> cT, List<T> list){this(cT,list,null);}
-	public SbMultiStatusHandler(final Class<T> cT, List<T> list, SbToggleBean bean)
+	public SbMultiHandler(final Class<T> cT, List<T> list){this(cT,list,null);}
+	public SbMultiHandler(final Class<T> cT, List<T> list, SbToggleBean bean)
 	{
 		this.cT=cT;
 		this.list=list;
@@ -59,21 +56,16 @@ public class SbMultiStatusHandler <L extends UtilsLang,D extends UtilsDescriptio
 		map.put(t, true);
 		refresh();
 	}
-	
-	@SuppressWarnings("unchecked")
-	public void multiToggle(Object o)
-	{
-		if(o.getClass().isAssignableFrom(cT)){toggle((T)o);}
-	}
 
 	public void toggle(T type)
 	{
 		if(!map.containsKey(type)){map.put(type,true);}
-		else
-		{
-			{map.put(type,!map.get(type));}
-		}
+		else{map.put(type,!map.get(type));}
 		refresh();
+		
+		try {if(bean!=null){bean.toggled(cT);}}
+		catch (UtilsLockingException e) {e.printStackTrace();}
+		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 	}
 
 	private void refresh()
@@ -84,15 +76,6 @@ public class SbMultiStatusHandler <L extends UtilsLang,D extends UtilsDescriptio
 			if(!map.containsKey(t)) {map.put(t,false);}
 			if(map.get(t)){selected.add(t);}
 		}
-		try
-		{
-			if(bean!=null)
-			{
-				bean.toggled(cT);
-			}
-		}
-		catch (UtilsLockingException e) {e.printStackTrace();}
-		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 	}
 
 	public void debug(boolean debug)
@@ -105,7 +88,7 @@ public class SbMultiStatusHandler <L extends UtilsLang,D extends UtilsDescriptio
 			logger.info("Map "+map.size());
 			for(T t : list)
 			{
-				logger.info("\t"+map.get(t)+" "+t.getCode()+" "+selected.contains(t));
+				logger.info("\t"+map.get(t)+" "+t.toString()+" "+selected.contains(t));
 			}
 		}
 	}

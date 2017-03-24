@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.admin.system.job;
 import java.io.Serializable;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
+import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.factory.JobFactoryFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
@@ -11,12 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.bean.sb.SbToggleBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 
-public class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsDescription,
+public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsDescription,
 									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
@@ -24,7 +25,7 @@ public class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsDescriptio
 									STATUS extends UtilsStatus<STATUS,L,D>
 									>
 					extends AbstractAdminBean<L,D>
-					implements Serializable
+					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminJobBean.class);
@@ -39,8 +40,8 @@ public class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsDescriptio
 
 	protected JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> ffTemplate;
 	
-	protected SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
-	protected SbMultiStatusHandler<L,D,TYPE> sbhType; public SbMultiStatusHandler<L,D,TYPE> getSbhType() {return sbhType;}
+	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
+	protected SbMultiHandler<TYPE> sbhType; public SbMultiHandler<TYPE> getSbhType() {return sbhType;}
 	 
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
 	{
@@ -55,10 +56,10 @@ public class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsDescriptio
 		
 		ffTemplate = JobFactoryFactory.factory(cTemplate);
 		
-		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,fJob.allOrderedPositionVisible(cCategory));
+		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,fJob.allOrderedPositionVisible(cCategory),this);
 		sbhCategory.selectAll();
 		
-		sbhType = new SbMultiStatusHandler<L,D,TYPE>(cType,fJob.allOrderedPositionVisible(cType));
+		sbhType = new SbMultiHandler<TYPE>(cType,fJob.allOrderedPositionVisible(cType),this);
 		sbhType.selectAll();
 	}
 }

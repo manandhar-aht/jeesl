@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
+import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
@@ -42,13 +43,13 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.bean.sb.SbToggleBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends UtilsDescription,
@@ -80,7 +81,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 										RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>
 										>
 					extends AbstractAdminBean<L,D>
-					implements Serializable
+					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoReportDefinitionBean.class);
@@ -124,7 +125,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private COLUMN column; public COLUMN getColumn() {return column;} public void setColumn(COLUMN column) {this.column = column;}
 	
 	private UiHelperIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> uiHelper; public UiHelperIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> getUiHelper() {return uiHelper;}
-	private SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
+	private SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	
 	private Comparator<REPORT> comparatorReport;
 	private Comparator<SHEET> comparatorSheet;
@@ -184,15 +185,14 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		templates = fReport.allOrderedPositionVisible(cTemplate);
 		styles = fReport.allOrderedPositionVisible(cStyle);
 		
-		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories);
+		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,categories,this);
 //		sbhCategory.selectAll();
 		reloadReports();
 	}
 	
-	public void multiToggle(UtilsStatus<?,L,D> o)
+	public void toggled(Class<?> c)
 	{
-		logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());
-		sbhCategory.multiToggle(o);
+		logger.info(AbstractLogMessage.toggled(c));
 		reloadReports();
 		cancelReport();
 	}

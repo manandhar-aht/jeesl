@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
+import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.slf4j.Logger;
@@ -14,7 +15,6 @@ import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescription,
@@ -35,7 +35,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private JOB job; public JOB getJob() {return job;} public void setJob(JOB job) {this.job = job;}
 	
-	protected SbMultiStatusHandler<L,D,STATUS> sbhStatus; public SbMultiStatusHandler<L,D,STATUS> getSbhStatus() {return sbhStatus;}
+	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 	 
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
 	{
@@ -43,7 +43,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 		
 		try
 		{
-			sbhStatus = new SbMultiStatusHandler<L,D,STATUS>(cStatus,fJob.allOrderedPositionVisible(cStatus));
+			sbhStatus = new SbMultiHandler<STATUS>(cStatus,fJob.allOrderedPositionVisible(cStatus),this);
 			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.queue));
 			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.working));
 		}
@@ -57,13 +57,12 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 		}
 	}
 	
-	public void multiToggle(UtilsStatus<?,L,D> o)
+	@Override public void toggled(Class<?> c)
 	{
-		logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName()+" ");
-		if(cCategory.isAssignableFrom(o.getClass())){sbhCategory.multiToggle(o);}
-		if(cType.isAssignableFrom(o.getClass())){sbhType.multiToggle(o);}
-		if(cStatus.isAssignableFrom(o.getClass())){sbhStatus.multiToggle(o);}
-		else {logger.warn("No Handling for toggle class "+o.getClass().getSimpleName()+": "+o.toString());}
+		logger.info(AbstractLogMessage.toggled(c));
+		if(cCategory.isAssignableFrom(c)){logger.info(cCategory.getName());}
+		else if(cType.isAssignableFrom(c)){logger.info(cType.getName());}
+		else if(cStatus.isAssignableFrom(c)){logger.info(cStatus.getName());}
 		reloadJobs();
 		clear(true);
 	}
@@ -73,7 +72,6 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 		if(clearJob){job=null;}
 	}
 	
-	//*************************************************************************************
 	protected void reloadJobs()
 	{
 		jobs = fJob.fJobs(sbhCategory.getSelected(),sbhType.getSelected(),sbhStatus.getSelected());
@@ -84,6 +82,5 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	public void selectJob()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(job));}
-		
 	}
 }

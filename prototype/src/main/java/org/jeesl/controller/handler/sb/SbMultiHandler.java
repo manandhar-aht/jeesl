@@ -77,6 +77,11 @@ public class SbMultiHandler <T extends EjbWithId>
 			if(map.get(t)){selected.add(t);}
 		}
 	}
+	
+	public boolean isSelected(T t)
+	{
+		return map.containsKey(t) && map.get(t);
+	}
 
 	public void debug(boolean debug)
 	{

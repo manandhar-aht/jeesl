@@ -12,7 +12,7 @@
 	<aup:statusBarItem label="#{label}"  orientation="right" childs="#{list}">
 			<h:commandLink>
 				<ui:insert />
-				<p:ajax event="click" update="#{update}" listener="#{handler.sbSingle(var)}"/>
+				<p:ajax event="click" update="#{update}" listener="#{handler.selectSbSingle(var)}"/>
 			</h:commandLink>
 		</aup:statusBarItem>
 </ui:composition>

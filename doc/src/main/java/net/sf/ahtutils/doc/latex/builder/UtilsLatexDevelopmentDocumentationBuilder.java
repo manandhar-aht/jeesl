@@ -3,6 +3,7 @@ package net.sf.ahtutils.doc.latex.builder;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.doc.latex.builder.AbstractLatexDocumentationBuilder;
 import org.openfuxml.content.media.Image;
 import org.openfuxml.content.ofx.Listing;
 import org.openfuxml.content.ofx.Section;

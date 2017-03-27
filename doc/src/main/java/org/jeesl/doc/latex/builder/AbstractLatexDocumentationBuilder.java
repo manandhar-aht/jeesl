@@ -1,4 +1,4 @@
-package net.sf.ahtutils.doc.latex.builder;
+package org.jeesl.doc.latex.builder;
 
 import java.io.File;
 import java.io.FileNotFoundException;

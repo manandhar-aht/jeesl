@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			xmlns:l="http://www.openfuxml.org/list"
+			xmlns:layout="http://www.openfuxml.org/layout"
+			xmlns:t="http://www.openfuxml.org/table"
+			id="section.admin.maintenance.architecture.introduction">
+	
+	<ofx:paragraph lang="en">
+		There are several components required to operate the system. 
+	</ofx:paragraph>
+	
+	<t:table id="table.admin.system.logs.level">
+	    <ofx:title>Logger Levels</ofx:title>
+	    <t:specification>
+	        <t:columns>
+	            <t:column><layout:width unit="percentage" flex="true" narrow="true">25.0</layout:width></t:column>
+				<t:column><layout:width unit="percentage" flex="true" narrow="false">75.0</layout:width></t:column>
+	        </t:columns>
+	    </t:specification>
+	    <t:content>
+	        <t:head>
+	            <t:row>
+	                <t:cell>
+	                    <ofx:paragraph lang="en">Component</ofx:paragraph>
+	                </t:cell>
+	                <t:cell>
+	                    <ofx:paragraph lang="en">Description</ofx:paragraph>
+	                </t:cell>
+	            </t:row>
+	        </t:head>
+	        <t:body>
+	            <t:row>
+	                <t:cell>
+	                    <ofx:paragraph>JBoss AS</ofx:paragraph>
+	                </t:cell>
+	                <t:cell>
+	                    <ofx:paragraph lang="en">The Application Server is the execution environment of the application.</ofx:paragraph>
+	                </t:cell>
+	            </t:row>
+	            <t:row>
+	                <t:cell>
+	                    <ofx:paragraph>PostgreSQL</ofx:paragraph>
+	                </t:cell>
+	                <t:cell>
+	                    <ofx:paragraph lang="en">PostgreSQL is a relational database and provides a engine to store and receive all (non-binary) data.</ofx:paragraph>
+	                </t:cell>
+	            </t:row>
+	            <t:row>
+	                <t:cell>
+	                    <ofx:paragraph>GeoServer</ofx:paragraph>
+	                </t:cell>
+	                <t:cell>
+	                    <ofx:paragraph lang="en">GeoServer is a Web Mapping Server which can process spatial data stored in PostgreSLQ or shapefiles.</ofx:paragraph>
+	                </t:cell>
+	            </t:row>
+	            <t:row>
+	                <t:cell>
+	                    <ofx:paragraph>MongoDB</ofx:paragraph>
+	                </t:cell>
+	                <t:cell>
+	                    <ofx:paragraph lang="en">MongoDB is a database optimized for storing and retrieving binary data.</ofx:paragraph>
+	                </t:cell>
+	            </t:row>
+	        </t:body>
+	    </t:content>
+	</t:table>
+	
+</ofx:section>

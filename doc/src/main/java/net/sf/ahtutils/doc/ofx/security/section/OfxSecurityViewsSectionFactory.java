@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.doc.latex.builder.JeeslLatexAdminDocumentationBuilder;
 import org.jeesl.doc.ofx.OfxMultiLangFactory;
 import org.openfuxml.content.ofx.Comment;
 import org.openfuxml.content.ofx.Paragraph;
@@ -21,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.DocumentationCommentBuilder;
-import net.sf.ahtutils.doc.latex.builder.UtilsLatexAdminDocumentationBuilder;
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
 import net.sf.ahtutils.doc.ofx.security.list.OfxSecurityCategoryListFactory;
 import net.sf.ahtutils.doc.ofx.security.table.OfxSecurityActionTableFactory;
@@ -43,7 +43,7 @@ public class OfxSecurityViewsSectionFactory extends AbstractUtilsOfxDocumentatio
 	private OfxSecurityCategoryListFactory ofSecurityCategoryList;
 	private OfxSecurityViewTableFactory ofSecurityViewTable;
 	private OfxSecurityActionTableFactory ofSecurityActionTable;
-	private UtilsLatexAdminDocumentationBuilder adminDocBuilder;
+	private JeeslLatexAdminDocumentationBuilder adminDocBuilder;
 		
 	public OfxSecurityViewsSectionFactory(Configuration config, String[] langs, Translations translations)
 	{
@@ -52,7 +52,7 @@ public class OfxSecurityViewsSectionFactory extends AbstractUtilsOfxDocumentatio
 		ofSecurityViewTable = new OfxSecurityViewTableFactory(config,langs,translations);
 		ofSecurityActionTable = new OfxSecurityActionTableFactory(config,langs,translations);
 		
-		adminDocBuilder = new UtilsLatexAdminDocumentationBuilder(config,translations,langs,null);
+		adminDocBuilder = new JeeslLatexAdminDocumentationBuilder(config,translations,langs,null);
 	}
 	
 	
@@ -68,11 +68,11 @@ public class OfxSecurityViewsSectionFactory extends AbstractUtilsOfxDocumentatio
 		
 		try
 		{
-			String source = adminDocBuilder.getOfxResource(UtilsLatexAdminDocumentationBuilder.SecurityCode.sActualViews);
+			String source = adminDocBuilder.getOfxResource(JeeslLatexAdminDocumentationBuilder.SecurityCode.sActualViews);
 			Section intro = JaxbUtil.loadJAXB(source, Section.class);
 			
 			Comment cIntro = XmlCommentFactory.build();
-			DocumentationCommentBuilder.configKeyReference(cIntro, config, UtilsLatexAdminDocumentationBuilder.SecurityCode.sActualViews.toString(), "Source file");
+			DocumentationCommentBuilder.configKeyReference(cIntro, config, JeeslLatexAdminDocumentationBuilder.SecurityCode.sActualViews.toString(), "Source file");
 			intro.getContent().add(cIntro);
 			
 			section.getContent().add(intro);
@@ -100,11 +100,11 @@ public class OfxSecurityViewsSectionFactory extends AbstractUtilsOfxDocumentatio
 		
 		try
 		{
-			String source = adminDocBuilder.getOfxResource(UtilsLatexAdminDocumentationBuilder.SecurityCode.sActualViews);
+			String source = adminDocBuilder.getOfxResource(JeeslLatexAdminDocumentationBuilder.SecurityCode.sActualViews);
 			Section intro = JaxbUtil.loadJAXB(source, Section.class);
 			
 			Comment cIntro = XmlCommentFactory.build();
-			DocumentationCommentBuilder.configKeyReference(cIntro, config, UtilsLatexAdminDocumentationBuilder.SecurityCode.sActualViews.toString(), "Source file");
+			DocumentationCommentBuilder.configKeyReference(cIntro, config, JeeslLatexAdminDocumentationBuilder.SecurityCode.sActualViews.toString(), "Source file");
 			intro.getContent().add(cIntro);
 			
 			section.getContent().add(intro);

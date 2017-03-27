@@ -1,6 +1,7 @@
 package net.sf.ahtutils.doc.latex.builder;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.doc.latex.builder.AbstractLatexDocumentationBuilder;
 import org.openfuxml.exception.OfxConfigurationException;
 import org.openfuxml.interfaces.configuration.ConfigurationProvider;
 import org.slf4j.Logger;

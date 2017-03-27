@@ -1,4 +1,4 @@
-package net.sf.ahtutils.doc.latex.builder;
+package org.jeesl.doc.latex.builder;
 
 import org.apache.commons.configuration.Configuration;
 import org.openfuxml.exception.OfxConfigurationException;
@@ -10,13 +10,13 @@ import net.sf.ahtutils.doc.UtilsDocumentation;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.xml.status.Translations;
 
-public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentationBuilder
+public class JeeslLatexAdminDocumentationBuilder extends AbstractLatexDocumentationBuilder
 {	
-	final static Logger logger = LoggerFactory.getLogger(UtilsLatexAdminDocumentationBuilder.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslLatexAdminDocumentationBuilder.class);
 	
 	private static enum Code {accessIntroduction};
 							 
-	public static enum MaintenanceCode {mLoggingIntroduction,mJboss,mDisasterRecovery,mScp}
+	public static enum MaintenanceCode {mArchitectureIntroductionJgPgGeoMg,mLoggingIntroduction,mJboss,mDisasterRecovery,mScp}
 	
 	public static enum BackupCode {bPostgres}
 	
@@ -35,7 +35,7 @@ public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 	
 	public static enum Survey {surveyQuestion,surveySection}
 		
-	public UtilsLatexAdminDocumentationBuilder(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
+	public JeeslLatexAdminDocumentationBuilder(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{
 		super(config,translations,langs,cp);
 	}
@@ -57,7 +57,8 @@ public class UtilsLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 		addConfig(SecurityCode.sActualUsecases.toString(),"ofx.aht-utils/administration/security/actual/usecases.xml");
 				
 		//Maintenance
-		addConfig(MaintenanceCode.mLoggingIntroduction.toString(),"ofx.aht-utils/administration/logging/introduction.xml","admin/system/logging/introduction");
+		addConfig(MaintenanceCode.mArchitectureIntroductionJgPgGeoMg.toString(),"jeesl/ofx/administration/architecture/jb-pg-geo-mg.xml","admin/system/architecture/introduction");
+		addConfig(MaintenanceCode.mLoggingIntroduction.toString(),"jeesl/ofx/administration/logging/introduction.xml","admin/system/logging/introduction");
 		addConfig(MaintenanceCode.mJboss.toString(),"ofx.aht-utils/administration/as/jboss.xml","admin/as/jboss");
 		addConfig(MaintenanceCode.mDisasterRecovery.toString(),"ofx.aht-utils/administration/system/disaster.xml","admin/system/disasterRecovery");
 		addConfig(MaintenanceCode.mScp.toString(),"ofx.aht-utils/maintenance/scp.xml","admin/maintenance/scp");

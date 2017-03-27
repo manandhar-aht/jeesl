@@ -36,4 +36,7 @@ public interface JeeslSurveyOption<L extends UtilsLang,
 	
 	double getScore();
 	void setScore(double score);
+	
+	Boolean getRow();
+	void setRow(Boolean row);
 }

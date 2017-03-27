@@ -77,4 +77,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang,
 	
 	Boolean getShowSelectMulti();
 	void setShowSelectMulti(Boolean showSelectMulti);
+	
+	Boolean getShowMatrix();
+	void setShowMatrix(Boolean showMatrix);
 }

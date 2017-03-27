@@ -9,7 +9,7 @@
     xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 >
 
-	<aup:statusBarItem label="#{label}"  orientation="right" childs="#{list}">
+	<aup:statusBarItem label="#{label}"  orientation="right" childs="#{handler.list}">
 			<h:commandLink>
 				<ui:insert />
 				<p:ajax event="click" update="#{update}" listener="#{handler.selectSbSingle(var)}"/>

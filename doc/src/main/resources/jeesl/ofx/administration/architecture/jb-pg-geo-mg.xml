@@ -10,7 +10,7 @@
 	</ofx:paragraph>
 	
 	<t:table id="table.admin.system.logs.level">
-	    <ofx:title>Logger Levels</ofx:title>
+	    <ofx:title>Components in Deployment Architecture</ofx:title>
 	    <t:specification>
 	        <t:columns>
 	            <t:column><layout:width unit="percentage" flex="true" narrow="true">25.0</layout:width></t:column>

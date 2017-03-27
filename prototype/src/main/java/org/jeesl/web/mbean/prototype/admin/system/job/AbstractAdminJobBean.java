@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.factory.JobFactoryFactory;
+import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
-import net.sf.ahtutils.interfaces.bean.sb.SbToggleBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;

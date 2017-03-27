@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.interfaces.bean.sb.SbToggleBean;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.exlp.util.io.StringUtil;
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
+import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
-import net.sf.ahtutils.interfaces.bean.sb.SbToggleBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;

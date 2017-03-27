@@ -3,9 +3,10 @@ package net.sf.ahtutils.prototype.controller.handler.op.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.interfaces.bean.op.OpUserBean;
+
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.interfaces.bean.op.user.OpUserBean;
 import net.sf.ahtutils.interfaces.controller.handler.op.user.OpUserSelectionHandler;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

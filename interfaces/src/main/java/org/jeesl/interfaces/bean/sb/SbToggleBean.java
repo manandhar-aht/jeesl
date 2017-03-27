@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.bean.sb;
+package org.jeesl.interfaces.bean.sb;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;

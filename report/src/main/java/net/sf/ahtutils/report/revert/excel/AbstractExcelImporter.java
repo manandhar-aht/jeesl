@@ -357,6 +357,13 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 					Number number = (Number) parameters[0];
 					parameters[0] = new Integer(number.intValue());
 				}
+                                
+                                // Needed to correct the Class of the general number
+				else if (parameterClass.equals("java.lang.Double"))
+				{
+					Number number = (Number) parameters[0];
+					parameters[0] = new Double(number.doubleValue());
+				}
 
 				// This is important if the String is a Number, Excel will format the cell to be a "general number"
 				else if (parameterClass.equals("java.lang.String"))
@@ -392,6 +399,10 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				}
 
 				// Now invoke the method with the parameter from the Excel sheet
+                                if (logger.isTraceEnabled())
+                                {
+                                    logger.trace("Parameter Class is " +parameters[0].getClass().getSimpleName() + " and original entity property is " +parameterClass);
+                                }
 				m.invoke(target, parameters);
 
 			}

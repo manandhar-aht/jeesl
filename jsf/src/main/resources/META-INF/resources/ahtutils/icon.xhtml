@@ -18,6 +18,8 @@
 		<composite:attribute name="mayDisappear" required="false" type="java.lang.Boolean" default="false"/>
 		<composite:attribute name="type" required="true"/>
 		<composite:attribute name="tooltip" required="false"/>
+		<composite:attribute name="immediate" required="false" default="false"/>
+		
 	</composite:interface>
 
 	<composite:implementation>
@@ -28,7 +30,9 @@
 				   actionListener="#{cc.listener}"
 				   process="#{cc.attrs.process}" 
 				   onstart="#{cc.attrs.onstart};document.getElementById('#{cc.clientId}:image').style.visibility='hidden';"
-				   oncomplete="#{cc.attrs.oncomplete};document.getElementById('#{cc.clientId}:image').style.visibility='visible';">
+				   oncomplete="#{cc.attrs.oncomplete};document.getElementById('#{cc.clientId}:image').style.visibility='visible';"
+				   immediate="#{cc.attrs.immediate}">
+				   
 				<h:graphicImage id="image"
 						rendered="#{not cc.attrs.disabled}"
 						styleClass="#{cc.attrs.styleClass}"
@@ -44,7 +48,8 @@
 					   actionListener="#{cc.listener}"
 					   process="#{cc.attrs.process}" 
 					   onstart="#{cc.attrs.onstart}"
-					   oncomplete="#{cc.attrs.oncomplete}">
+					   oncomplete="#{cc.attrs.oncomplete}"
+					   immediate="#{cc.attrs.immediate}">
 				<h:graphicImage id="image2"
 						rendered="#{not cc.attrs.disabled}"
 						styleClass="#{cc.attrs.styleClass}"
@@ -59,7 +64,8 @@
 					   actionListener="#{cc.listener}"
 					   process="#{cc.attrs.process}" 
 					   onstart="#{cc.attrs.onstart}"
-					   oncomplete="#{cc.attrs.oncomplete} PF('wvTtDisappear').hide()">
+					   oncomplete="#{cc.attrs.oncomplete} PF('wvTtDisappear').hide()"
+					   immediate="#{cc.attrs.immediate}">
 				<h:graphicImage id="image2"
 						rendered="#{not cc.attrs.disabled}"
 						styleClass="#{cc.attrs.styleClass}"

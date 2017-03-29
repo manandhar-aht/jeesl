@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ofx:section xmlns:ofx="http://www.openfuxml.org"
 			xmlns:l="http://www.openfuxml.org/list"
+			xmlns:media="http://www.openfuxml.org/media"
 			xmlns:layout="http://www.openfuxml.org/layout"
 			xmlns:t="http://www.openfuxml.org/table"
 			id="section.admin.maintenance.architecture.introduction">
@@ -64,5 +65,12 @@
 	        </t:body>
 	    </t:content>
 	</t:table>
+	
+	<media:image id="section.admin.maintenance.architecture.introduction.jbpggeomg">
+		<ofx:title lang="en">Deployment Architecture</ofx:title>
+		<layout:alignment horizontal="center"/>
+		<layout:width unit="percentage">60</layout:width>
+		<media:media lang="en" src="jeesl/svg/administration/architecture/jb-pg-geo-mg.svg" dst="administration/architecture/jb-pg-geo-mg"/>
+	</media:image>
 	
 </ofx:section>

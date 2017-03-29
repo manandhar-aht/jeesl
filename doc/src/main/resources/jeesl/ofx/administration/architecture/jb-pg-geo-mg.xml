@@ -51,7 +51,7 @@
 	                    <ofx:paragraph>GeoServer</ofx:paragraph>
 	                </t:cell>
 	                <t:cell>
-	                    <ofx:paragraph lang="en">GeoServer is a Web Mapping Server which can process spatial data stored in PostgreSLQ or shapefiles.</ofx:paragraph>
+	                    <ofx:paragraph lang="en">GeoServer is a Web Mapping Server which can process spatial data stored in PostgreSQL or shapefiles.</ofx:paragraph>
 	                </t:cell>
 	            </t:row>
 	            <t:row>
@@ -69,8 +69,8 @@
 	<media:image id="section.admin.maintenance.architecture.introduction.jbpggeomg">
 		<ofx:title lang="en">Deployment Architecture</ofx:title>
 		<layout:alignment horizontal="center"/>
-		<layout:width unit="percentage">60</layout:width>
-		<media:media lang="en" src="jeesl/svg/administration/architecture/jb-pg-geo-mg.svg" dst="administration/architecture/jb-pg-geo-mg"/>
+		<layout:width unit="percentage">80</layout:width>
+		<media:media lang="en" src="jeesl/svg/administration/architecture/jb-pg-geo-mg.svg" dst="admin/architecture/jb-pg-geo-mg"/>
 	</media:image>
 	
 </ofx:section>

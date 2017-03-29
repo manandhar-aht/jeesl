@@ -49,4 +49,7 @@ public interface JeeslSurveySection<L extends UtilsLang,
 	
 	Double getScoreLimit();
 	void setScoreLimit(Double scoreLimit);
+	
+	Double getScoreNormalize();
+	void setScoreNormalize(Double scoreNormalize);
 }

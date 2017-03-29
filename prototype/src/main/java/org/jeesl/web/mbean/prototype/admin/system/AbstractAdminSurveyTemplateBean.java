@@ -209,6 +209,14 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	}
 	
 	//Section
+	public void selectSection()
+	{
+		logger.info(AbstractLogMessage.selectEntity(section));
+		loadSection();
+		nnb.doubleToA(section.getScoreLimit());
+		nnb.doubleToB(section.getScoreNormalize());
+	}
+	
 	protected void loadSection()
 	{
 		section = fSurvey.load(section);
@@ -220,19 +228,14 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.addEntity(cSection));
 		section = efSection.build(template,"",0);
 		nnb.doubleToA(section.getScoreLimit());
+		nnb.doubleToB(section.getScoreNormalize());
 	}
-	
-	public void selectSection()
-	{
-		logger.info(AbstractLogMessage.selectEntity(section));
-		loadSection();
-		nnb.doubleToA(section.getScoreLimit());
-	}
-	
+		
 	public void saveSection() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(section));
 		section.setScoreLimit(nnb.aToDouble());
+		section.setScoreNormalize(nnb.bToDouble());
 		section = fSurvey.save(section);
 		reloadTemplate();
 		loadSection();

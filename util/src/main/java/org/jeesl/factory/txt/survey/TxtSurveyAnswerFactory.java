@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.txt.survey;
+package org.jeesl.factory.txt.survey;
 
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyAnswer;

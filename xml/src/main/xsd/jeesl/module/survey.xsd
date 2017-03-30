@@ -4,8 +4,8 @@
     xmlns:us="http://ahtutils.aht-group.com/status"
     xmlns:text="http://ahtutils.aht-group.com/text"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="status.xsd"/>
-    <xsd:import namespace="http://ahtutils.aht-group.com/text" schemaLocation="text.xsd"/>
+    <xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="../../aht/status.xsd"/>
+    <xsd:import namespace="http://ahtutils.aht-group.com/text" schemaLocation="../../aht/text.xsd"/>
 	<xsd:element name="templates">
         <xsd:complexType>
         	<xsd:sequence>
@@ -45,6 +45,7 @@
                 <xsd:element ref="text:question" maxOccurs="1"/>
                 <xsd:element ref="text:remark" maxOccurs="1"/>
                 <xsd:element ref="us:unit" maxOccurs="1"/>
+                <xsd:element ref="survey:score" maxOccurs="1"/>
                 <xsd:element ref="survey:answer" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
@@ -114,6 +115,15 @@
 			<xsd:attribute name="valueNumber" type="xsd:int"/>
 			<xsd:attribute name="valueDouble" type="xsd:double"/>
 			<xsd:attribute name="score" type="xsd:double"/>
+		</xsd:complexType>
+   </xsd:element>
+   <xsd:element name="score">
+		<xsd:complexType>
+        	<xsd:sequence>
+        	
+			</xsd:sequence>
+			<xsd:attribute name="min" type="xsd:double"/>
+			<xsd:attribute name="max" type="xsd:double"/>
 		</xsd:complexType>
    </xsd:element>
 </xsd:schema>

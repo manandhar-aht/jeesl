@@ -7,6 +7,7 @@ import java.util.Map;
 import org.jeesl.factory.xml.module.survey.XmlAnswerFactory;
 import org.jeesl.factory.xml.module.survey.XmlCorrelationFactory;
 import org.jeesl.factory.xml.module.survey.XmlDataFactory;
+import org.jeesl.factory.xml.module.survey.XmlScoreFactory;
 import org.jeesl.factory.xml.module.survey.XmlSurveyFactory;
 import org.jeesl.factory.xml.module.survey.XmlTemplateFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
@@ -20,6 +21,7 @@ import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.survey.Answer;
 import net.sf.ahtutils.xml.survey.Data;
 import net.sf.ahtutils.xml.survey.Question;
+import net.sf.ahtutils.xml.survey.Score;
 import net.sf.ahtutils.xml.survey.Section;
 import net.sf.ahtutils.xml.survey.Survey;
 import net.sf.ahtutils.xml.survey.Surveys;
@@ -97,6 +99,11 @@ public class SurveyQuery
 		xml.setShowText(true);
 		xml.setShowScore(true);
 		xml.setShowRemark(true);
+		
+		Score score = XmlScoreFactory.build();
+		score.setMax(0);
+		
+		xml.setScore(score);
 		
 		return xml;
 	}

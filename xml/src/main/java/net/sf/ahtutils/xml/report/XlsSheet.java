@@ -61,14 +61,14 @@ public class XlsSheet
 
     private final static long serialVersionUID = 1L;
     @XmlElementRefs({
-        @XmlElementRef(name = "implementation", namespace = "http://ahtutils.aht-group.com/status", type = Implementation.class),
-        @XmlElementRef(name = "rows", namespace = "http://ahtutils.aht-group.com/report", type = Rows.class),
-        @XmlElementRef(name = "descriptions", namespace = "http://ahtutils.aht-group.com/status", type = Descriptions.class),
-        @XmlElementRef(name = "columnGroup", namespace = "http://ahtutils.aht-group.com/report", type = ColumnGroup.class),
         @XmlElementRef(name = "xlsColumns", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumns.class),
         @XmlElementRef(name = "xlsColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsColumn.class),
+        @XmlElementRef(name = "implementation", namespace = "http://ahtutils.aht-group.com/status", type = Implementation.class),
+        @XmlElementRef(name = "descriptions", namespace = "http://ahtutils.aht-group.com/status", type = Descriptions.class),
         @XmlElementRef(name = "xlsMultiColumn", namespace = "http://ahtutils.aht-group.com/report", type = XlsMultiColumn.class),
+        @XmlElementRef(name = "rows", namespace = "http://ahtutils.aht-group.com/report", type = Rows.class),
         @XmlElementRef(name = "queries", namespace = "http://ahtutils.aht-group.com/report", type = Queries.class),
+        @XmlElementRef(name = "columnGroup", namespace = "http://ahtutils.aht-group.com/report", type = ColumnGroup.class),
         @XmlElementRef(name = "langs", namespace = "http://ahtutils.aht-group.com/status", type = Langs.class),
         @XmlElementRef(name = "importStructure", namespace = "http://ahtutils.aht-group.com/report", type = ImportStructure.class)
     })
@@ -103,17 +103,17 @@ public class XlsSheet
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Implementation }
-     * {@link Rows }
-     * {@link Descriptions }
-     * {@link ColumnGroup }
      * {@link XlsColumns }
-     * {@link String }
      * {@link XlsColumn }
+     * {@link Implementation }
+     * {@link Descriptions }
      * {@link XlsMultiColumn }
+     * {@link Rows }
      * {@link Queries }
+     * {@link ColumnGroup }
      * {@link Langs }
      * {@link ImportStructure }
+     * {@link String }
      * 
      * 
      */

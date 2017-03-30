@@ -5,7 +5,7 @@
 	xmlns:survey="http://ahtutils.aht-group.com/survey"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="../aht/status.xsd"/>
-	<xsd:import namespace="http://ahtutils.aht-group.com/survey" schemaLocation="../aht/survey.xsd"/>
+	<xsd:import namespace="http://ahtutils.aht-group.com/survey" schemaLocation="module/survey.xsd"/>
 	
 	<xsd:element name="container">
         <xsd:complexType>

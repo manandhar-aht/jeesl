@@ -94,6 +94,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Score }
+     * 
+     */
+    public Score createScore() {
+        return new Score();
+    }
+
+    /**
      * Create an instance of {@link Surveys }
      * 
      */

@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.survey;
+package org.jeesl.model.xml.module.survey;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.slf4j.Logger;

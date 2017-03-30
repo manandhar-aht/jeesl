@@ -29,6 +29,9 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 	private String lang;
 	private Question q;
 	
+	private XmlScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xfScore;
+	
+	
 	//TODO tk: remove this constructor
 	public XmlQuestionFactory(Question q){this(null,q);}
 	
@@ -36,6 +39,8 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 	{
 		this.lang=lang;
 		this.q=q;
+		if(q.isSetScore()){xfScore = new XmlScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(q.getScore());}
+		
 	}
 	
 	public Question build(QUESTION ejb)
@@ -62,7 +67,8 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 		if(q.isSetShowText()){if(ejb.getShowText()!=null){xml.setShowText(ejb.getShowText());}else{xml.setShowText(false);}}
 		if(q.isSetShowScore()){if(ejb.getShowScore()!=null){xml.setShowScore(ejb.getShowScore());}else{xml.setShowScore(false);}}
 		if(q.isSetShowRemark()){if(ejb.getShowRemark()!=null){xml.setShowRemark(ejb.getShowRemark());}else{xml.setShowRemark(false);}}
-
+		if(q.isSetScore()){xml.setScore(xfScore.build(ejb));}
+		
 		return xml;
 	}
 	

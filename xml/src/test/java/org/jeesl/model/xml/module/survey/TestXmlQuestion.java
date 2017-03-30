@@ -1,4 +1,4 @@
-package org.jeesl.model.xml.survey;
+package org.jeesl.model.xml.module.survey;
 
 import org.jeesl.JeeslXmlTestBootstrap;
 import org.jeesl.model.xml.system.status.TestXmlUnit;
@@ -30,6 +30,7 @@ public class TestXmlQuestion extends AbstractXmlSurveyTest<Question>
     		xml.setRemark(TestXmlRemark.create(false));
     		xml.setQuestion(org.jeesl.model.xml.text.TestXmlQuestion.create(false));
     		xml.setAnswer(TestXmlAnswer.create(false));
+    		xml.setScore(TestXmlScore.create(false));
     	}
     	
     	return xml;

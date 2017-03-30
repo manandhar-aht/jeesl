@@ -1,9 +1,9 @@
 package org.jeesl.model.xml.jeesl;
 
 import org.jeesl.JeeslXmlTestBootstrap;
-import org.jeesl.model.xml.survey.TestXmlAnswer;
-import org.jeesl.model.xml.survey.TestXmlData;
-import org.jeesl.model.xml.survey.TestXmlTemplate;
+import org.jeesl.model.xml.module.survey.TestXmlAnswer;
+import org.jeesl.model.xml.module.survey.TestXmlData;
+import org.jeesl.model.xml.module.survey.TestXmlTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

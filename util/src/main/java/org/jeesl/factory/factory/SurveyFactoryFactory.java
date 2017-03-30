@@ -9,6 +9,7 @@ import org.jeesl.factory.ejb.survey.EjbSurveyFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySchemeFactory;
+import org.jeesl.factory.ejb.survey.EjbSurveyScoreFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
@@ -58,18 +59,20 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 	final Class<VERSION> cVersion;
 	final Class<SECTION> cSection;
 	final Class<QUESTION> cQuestion;
+	final Class<SCORE> cScore;
 	final Class<ANSWER> cAnswer;
 	final Class<DATA> cData;
 	final Class<OPTION> cOption;
     
-	public SurveyFactoryFactory(final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
+	public SurveyFactoryFactory(final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		this.cSurvey = cSurvey;
 		this.cScheme = cScheme;
 		this.cTemplate = cTemplate;
 		this.cVersion = cVersion;
 		this.cSection = cSection;
-		this.cQuestion=cQuestion;
+		this.cQuestion = cQuestion;
+		this.cScore = cScore;
         this.cAnswer = cAnswer;
         this.cData = cData;
         this.cOption = cOption;
@@ -92,9 +95,9 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 					OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION>,
 					CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION>>
 		SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION>
-		factory(final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
+		factory(final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
-		return new SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION>(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData,cOption);
+		return new SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION>(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cData,cOption);
 	}
 	
 	public EjbSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> survey()
@@ -125,6 +128,11 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 	public EjbSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> question()
 	{
 		return new EjbSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION>(cQuestion);
+	}
+	
+	public EjbSurveyScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> score()
+	{
+		return new EjbSurveyScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION>(cScore);
 	}
 	
 	public EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> answer()

@@ -102,7 +102,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION>();
 	}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fSurvey = fSurvey;
@@ -116,7 +116,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		this.cUnit = cUnit;
 		this.cOption = cOption;
 		
-		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData,cOption);
+		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cData,cOption);
 		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();
@@ -332,6 +332,13 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cScheme));}
 		scheme = efScheme.build(template, "", schemes);
+		scheme.setName(efLang.createEmpty(langs));
+		scheme.setDescription(efDescription.createEmpty(langs));
+	}
+	
+	public void selectScheme()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(scheme));}
 	}
 	
 	public void saveScheme() throws UtilsConstraintViolationException, UtilsLockingException

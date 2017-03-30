@@ -82,7 +82,11 @@
 						</f:facet>
 						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectScheme()}" update=":#{cc.id}:fSchemes :#{cc.id}:fScheme"/>
 						<p:column>
-							<h:outputText value="#{category.name[userBean.localeCode].lang}" />
+							<h:outputText value="#{scheme.position}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">#{msg.jeeslSurveySchemeName}</f:facet>
+							<h:outputText value="#{scheme.name[userBean.localeCode].lang}" />
 						</p:column>
 					</p:dataTable>
 				</h:form>

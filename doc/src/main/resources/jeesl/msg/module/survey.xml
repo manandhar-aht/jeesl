@@ -280,4 +280,12 @@
     		<s:lang key="fr" translation="Scheme"/>
     	</s:langs>
     </s:translation>
+        <s:translation key="jeeslSurveySchemeName">
+    	<s:langs>
+    		<s:lang key="de" translation="Name"/>
+    		<s:lang key="en" translation="Name"/>
+    		<s:lang key="fr" translation="Name"/>
+    	</s:langs>
+    </s:translation>
+    
 </s:translations>

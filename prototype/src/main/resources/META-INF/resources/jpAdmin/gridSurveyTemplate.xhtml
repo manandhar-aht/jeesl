@@ -91,7 +91,7 @@
 					</p:dataTable>
 				</h:form>
 				<h:form id="fScheme" >
-					<p:panel header="#{msg.jeeslSurveySchemes}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.scheme}">
+					<p:panel header="#{msg.jeeslSurveyScheme}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.scheme}">
 						<f:facet name="actions">
 							<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelScheme()}" update=":#{cc.id}:fSchemes :#{cc.id}:fScheme"/>
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveScheme()}" update=":#{cc.id}:fSchemes :#{cc.id}:fScheme"/>
@@ -165,7 +165,8 @@
                   <p:ajax event="rowSelect" update=":#{cc.id}:sQuestion" listener="#{cc.attrs.bean.selectQuestion()}"/>
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderQuestions()}" update="@form"/>
                   <p:column>
-                      <h:outputText value="#{q.code}" />
+                  	<h:graphicImage rendered="#{not q.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+                     <h:outputText rendered="#{q.visible}" value="#{q.code}" />
                   </p:column>
 						<p:column>
                        <f:facet name="header">#{msg.aupSurveyQuestion}</f:facet>
@@ -182,6 +183,9 @@
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmQuestion()}" update=":#{cc.id}:row1"/>
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+							<p:outputLabel value="#{msg.jeeslVisible}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.visible}" />
+						
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<p:inputText value="#{cc.attrs.bean.question.position}"/>
 						
@@ -213,9 +217,9 @@
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showScore}" />
 							<p:outputLabel value="#{msg.jpSurveyQuestionShowScore}"/>
 							<p:outputLabel value="#{msg.jpSurveyQuestionScoreMax}"/>
-							<p:inputText value="#{cc.attrs.bean.question.maxScore}"/>
-							
+							<p:inputText value="#{cc.attrs.bean.question.maxScore}"/>	
 						</p:panelGrid>
+						
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showBoolean}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowBoolean}"/>
 							<h:outputText value=""/><h:outputText value=""/>
@@ -268,6 +272,50 @@
 						<aht:tabTranslationEditor value="#{cc.attrs.bean.option}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+					</p:panel>
+				</h:form>
+				
+				<h:form id="fScores" rendered="#{cc.attrs.withSchemes and (not empty cc.attrs.bean.question) and (cc.attrs.bean.question.id gt 0)}">
+					<p:dataTable var="score" value="#{cc.attrs.bean.scores}" rowKey="#{scores.id}"
+								 selection="#{cc.attrs.bean.score}" selectionMode="single">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveyScores}">
+								<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addScore()}" update=":#{cc.id}:fScores :#{cc.id}:fScore"/>
+							</aht:pfDataTableHeader>
+						</f:facet>
+						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectScore()}" update=":#{cc.id}:fScores :#{cc.id}:fScore"/>
+						<p:column>
+							<h:outputText value="#{score.scheme.code}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">#{msg.jeeslSurveyScheme}</f:facet>
+							<h:outputText value="#{score.minScore}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">#{msg.jpSurveyQuestionScoreMax}</f:facet>
+							<h:outputText value="#{score.maxScore}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+				<h:form id="fScore" >
+					<p:panel header="#{msg.jeeslSurveyScore}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.score}">
+						<f:facet name="actions">
+							<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelScore()}" update=":#{cc.id}:fScores :#{cc.id}:fScore"/>
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveScore()}" update=":#{cc.id}:fScores :#{cc.id}:fScore"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteScore()}" update=":#{cc.id}:fScores :#{cc.id}:fScore"/>
+						</f:facet>
+						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg30,auPwg20">
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.score.calculateScore}" />
+							<p:outputLabel value="#{msg.jpSurveyQuestionScoreCalculate}"/>
+							
+							<p:outputLabel value="#{msg.jpSurveyQuestionScoreMin}"/>
+							<p:inputText value="#{cc.attrs.bean.score.minScore}"/>
+							
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.score.showScore}" />
+							<p:outputLabel value="#{msg.jpSurveyQuestionShowScore}"/>
+							<p:outputLabel value="#{msg.jpSurveyQuestionScoreMax}"/>
+							<p:inputText value="#{cc.attrs.bean.score.maxScore}"/>	
+						</p:panelGrid>
 					</p:panel>
 				</h:form>
 			</aht:slot>

@@ -69,6 +69,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	private final Class<VERSION> cVersion;
 	private final Class<TS> cTS;
 	private final Class<SECTION> cSection;
+	private final Class<QUESTION> cQuestion;
 	private final Class<ANSWER> cAnswer;
 	private final Class<DATA> cData;
 	private final Class<OPTION> cOption;
@@ -86,6 +87,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		this.cVersion=cVersion;
 		this.cTS=cTS;
 		this.cSection=cSection;
+		this.cQuestion=cQuestion;
 		this.cAnswer=cAnswer;
 		this.cData=cData;
 		this.cOption=cOption;
@@ -120,6 +122,13 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		survey = em.find(cSurvey,survey.getId());
 		survey.getSurveyData().size();
 		return survey;
+	}
+	
+	@Override public QUESTION load(QUESTION question)
+	{
+		question = em.find(cQuestion,question.getId());
+		question.getScores().size();
+		return question;
 	}
 
 	@Override public DATA load(DATA data)

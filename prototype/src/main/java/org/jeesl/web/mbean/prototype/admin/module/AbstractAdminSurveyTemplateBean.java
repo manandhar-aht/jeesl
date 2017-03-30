@@ -135,8 +135,9 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		versions = new ArrayList<VERSION>();
 	}
 	
-	public void cancelScheme(){clear(false,false,false,false,false,true);}
-	protected void clear(boolean cTemplate, boolean cVersion, boolean cSection, boolean cQuestion, boolean cOption, boolean rScheme)
+	public void cancelScheme(){clear(false,false,false,false,false,true,false);}
+	public void calcelScore(){clear(false,false,false,false,false,false,true);}
+	protected void clear(boolean cTemplate, boolean cVersion, boolean cSection, boolean cQuestion, boolean cOption, boolean rScheme, boolean rScore)
 	{
 		if(cTemplate){template = null;}
 		if(cVersion){version = null;}
@@ -144,6 +145,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		if(cQuestion){question = null;}	
 		if(cOption){option=null;}
 		if(rScheme){scheme = null;}
+		if(rScore){score = null;}
 	}
 	
 	public void selectCategory() throws UtilsNotFoundException
@@ -226,7 +228,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.rmEntity(version));
 		fSurvey.rmVersion(version);
-		clear(true,true,true,true,true,true);
+		clear(true,true,true,true,true,true,true);
 		reloadVersions();
 	}
 	
@@ -283,7 +285,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
 		reloadQuestion();
-		clear(false,false,false,false,true,true);
+		clear(false,false,false,false,true,true,true);
 	}
 	
 	private void reloadQuestion()
@@ -304,7 +306,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(question));}
 		fSurvey.rm(question);
-		clear(false,false,false,true,true,true);
+		clear(false,false,false,true,true,true,true);
 		loadSection();
 	}
 	
@@ -333,7 +335,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
 		fSurvey.rmOption(option);
-		clear(false,false,false,false,true,true);
+		clear(false,false,false,false,true,true,true);
 		reloadQuestion();
 		bMessage.growlSuccessRemoved();
 	}
@@ -362,6 +364,14 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cScore));}
 		score = efScore.build(question);
+	}
+	
+	public void saveScore() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(score));}
+		score = fSurvey.save(score);
+		reloadQuestion();
+		bMessage.growlSuccessSaved();
 	}
 	
 	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, sections);}

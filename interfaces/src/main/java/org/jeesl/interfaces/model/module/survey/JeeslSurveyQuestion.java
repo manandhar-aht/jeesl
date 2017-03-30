@@ -80,4 +80,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang,
 	
 	Boolean getShowMatrix();
 	void setShowMatrix(Boolean showMatrix);
+	
+	List<SCORE> getScores();
+	void setScores(List<SCORE> scores);
 }

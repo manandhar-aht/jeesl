@@ -259,11 +259,25 @@
     		<s:lang key="fr" translation="Score Limit"/>
     	</s:langs>
     </s:translation>
-        <s:translation key="jeeslSurveySectionScoreNormalize">
+	<s:translation key="jeeslSurveySectionScoreNormalize">
     	<s:langs>
     		<s:lang key="de" translation="Punkte Normalisierung"/>
     		<s:lang key="en" translation="Score Normalize"/>
     		<s:lang key="fr" translation="Score Normalize"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslSurveySchemes">
+    	<s:langs>
+    		<s:lang key="de" translation="Schemata"/>
+    		<s:lang key="en" translation="Schemes"/>
+    		<s:lang key="fr" translation="Schemes"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSurveyScheme">
+    	<s:langs>
+    		<s:lang key="de" translation="Schema"/>
+    		<s:lang key="en" translation="Scheme"/>
+    		<s:lang key="fr" translation="Scheme"/>
     	</s:langs>
     </s:translation>
 </s:translations>

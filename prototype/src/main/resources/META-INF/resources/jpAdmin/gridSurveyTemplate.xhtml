@@ -17,6 +17,7 @@
 		<composite:attribute name="withCategory" required="false" default="true"/>
 		<composite:attribute name="withVersion" required="false" default="true"/>
 		<composite:attribute name="withOptions" required="false" default="false"/>
+		<composite:attribute name="withSchemes" required="false" default="false"/>
 	</composite:interface>
 	
 <composite:implementation>
@@ -57,8 +58,8 @@
                                  selection="#{cc.attrs.bean.section}" selectionMode="single" draggableRows="true">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.aupSurveySections}">
-                    		<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addSection()}" update=":#{cc.id}:row1"/>
-                     </aht:pfDataTableHeader>
+	                    		<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addSection()}" update=":#{cc.id}:row1"/>
+							</aht:pfDataTableHeader>
 						</f:facet>
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSections()}" update="@form"/>
 						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{cc.attrs.bean.selectSection()}"/>
@@ -70,6 +71,36 @@
 							 <h:outputText value="#{s.name}" />
 						</p:column>
 					</p:dataTable>
+				</h:form>
+				<h:form id="fSchemes" rendered="#{cc.attrs.withSchemes and (not empty cc.attrs.bean.template)}">
+					<p:dataTable var="scheme" value="#{cc.attrs.bean.schemes}" rowKey="#{scheme.id}"
+								 selection="#{cc.attrs.bean.scheme}" selectionMode="single">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveySchemes}">
+								<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addScheme()}" update=":#{cc.id}:fSchemes :#{cc.id}:fScheme"/>
+							</aht:pfDataTableHeader>
+						</f:facet>
+						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectScheme()}" update=":#{cc.id}:fSchemes :#{cc.id}:fScheme"/>
+						<p:column>
+							<h:outputText value="#{category.name[userBean.localeCode].lang}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+				<h:form id="fScheme" >
+					<p:panel header="#{msg.jeeslSurveySchemes}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.scheme}">
+						<f:facet name="actions">
+							<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelScheme()}" update=":#{cc.id}:fSchemes :#{cc.id}:fScheme"/>
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveScheme()}" update=":#{cc.id}:fSchemes :#{cc.id}:fScheme"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteScheme()}" update=":#{cc.id}:fSchemes :#{cc.id}:fScheme" rendered="#{cc.attrs.bean.uiHelper.versionRemoveable}"/>
+						</f:facet>
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+							<p:outputLabel value="#{msg.jeeslCode}"/>
+							<p:inputText value="#{cc.attrs.bean.scheme.code}"/>
+						</p:panelGrid>
+						<aht:tabTranslationEditor value="#{cc.attrs.bean.scheme}" withDescription="true"
+									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+					</p:panel>
 				</h:form>
 			</aht:slot>
 			<aht:slot width="5" >

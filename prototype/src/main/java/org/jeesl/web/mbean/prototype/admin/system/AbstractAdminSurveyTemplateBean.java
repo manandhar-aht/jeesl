@@ -8,6 +8,7 @@ import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.handler.ui.helper.UiHelperSurvey;
 import org.jeesl.factory.ejb.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
+import org.jeesl.factory.ejb.survey.EjbSurveySchemeFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
@@ -62,6 +63,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 
 	protected JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey;
 	
+	private Class<SCHEME> cScheme;
 	private Class<TEMPLATE> cTemplate;
 	private Class<VERSION> cVersion;
 	private Class<TS> cTs;
@@ -69,18 +71,21 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected Class<QUESTION> cQuestion;
 	protected Class<UNIT> cUnit;
 	private Class<OPTION> cOption;
+
 	
 	protected SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> ffSurvey;
 	protected EjbSurveyTemplateVersionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> efVersion;
 	protected EjbSurveySectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> efSection;
 	protected EjbSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> efQuestion;
 	private EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> efOption;
+	private EjbSurveySchemeFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> efScheme;
 
 	protected List<TC> categories; public List<TC> getCategories(){return categories;}
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
 	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
+	protected List<SCHEME> schemes; public List<SCHEME> getSchemes() {return schemes;}
 	
 	protected TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
@@ -88,6 +93,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected SECTION section; public SECTION getSection(){return section;} public void setSection(SECTION section){this.section = section;}
 	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
 	protected OPTION option; public OPTION getOption(){return option;} public void setOption(OPTION option){this.option = option;}
+	private SCHEME scheme; public SCHEME getScheme() {return scheme;} public void setScheme(SCHEME scheme) {this.scheme = scheme;}
 	
 	private UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> uiHelper; public UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> getUiHelper() {return uiHelper;}
 
@@ -96,11 +102,12 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION>();
 	}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fSurvey = fSurvey;
 		
+		this.cScheme = cScheme;
 		this.cTemplate = cTemplate;
 		this.cVersion = cVersion;
 		this.cTs = cTs;
@@ -109,11 +116,12 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		this.cUnit = cUnit;
 		this.cOption = cOption;
 		
-		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData,cOption);
+		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cAnswer,cData,cOption);
 		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();
 		efOption = ffSurvey.option();
+		efScheme = ffSurvey.scheme();
 		
 		categories = new ArrayList<TC>();
 		versions = new ArrayList<VERSION>();
@@ -149,6 +157,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		template = fSurvey.load(template);
 		version = template.getVersion();
 		sections = template.getSections();
+		schemes = template.getSchemes();
 	}
 	
 	protected void initTemplate() throws UtilsNotFoundException{}
@@ -170,7 +179,6 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 			catch (UtilsNotFoundException e) {e.printStackTrace();}
 		}
 	}
-	
 	
 	//Version
 	public void addVersion()
@@ -318,6 +326,19 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		clear(false,false,false,false,true);
 		reloadQuestion();
 		bMessage.growlSuccessRemoved();
+	}
+	
+	public void addScheme()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cScheme));}
+		scheme = efScheme.build(template, "", schemes);
+	}
+	
+	public void saveScheme() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(scheme));}
+		scheme = fSurvey.save(scheme);
+		reloadTemplate();
 	}
 	
 	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, sections);}

@@ -38,4 +38,7 @@ public interface JeeslSurveyTemplate<L extends UtilsLang,
 	
 	List<SECTION> getSections();
 	void setSections(List<SECTION> sections);
+	
+	List<SCHEME> getSchemes();
+	void setSchemes(List<SCHEME> schemes);
 }

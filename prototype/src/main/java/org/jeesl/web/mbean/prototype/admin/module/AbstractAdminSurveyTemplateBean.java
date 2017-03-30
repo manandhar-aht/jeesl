@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system;
+package org.jeesl.web.mbean.prototype.admin.module;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import org.jeesl.controller.handler.ui.helper.UiHelperSurvey;
 import org.jeesl.factory.ejb.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySchemeFactory;
+import org.jeesl.factory.ejb.survey.EjbSurveyScoreFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
@@ -71,16 +72,17 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	private Class<TS> cTs;
 	private Class<SECTION> cSection;
 	protected Class<QUESTION> cQuestion;
+	private Class<SCORE> cScore;
 	protected Class<UNIT> cUnit;
 	private Class<OPTION> cOption;
 
-	
 	protected SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey;
 	protected EjbSurveyTemplateVersionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efVersion;
 	protected EjbSurveySectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efSection;
 	protected EjbSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efQuestion;
 	private EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
 	private EjbSurveySchemeFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efScheme;
+	private EjbSurveyScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efScore;
 
 	protected List<TC> categories; public List<TC> getCategories(){return categories;}
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
@@ -88,6 +90,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
 	protected List<SCHEME> schemes; public List<SCHEME> getSchemes() {return schemes;}
+	protected List<SCORE> scores; public List<SCORE> getScores() {return scores;}
 	
 	protected TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
@@ -96,6 +99,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
 	protected OPTION option; public OPTION getOption(){return option;} public void setOption(OPTION option){this.option = option;}
 	private SCHEME scheme; public SCHEME getScheme() {return scheme;} public void setScheme(SCHEME scheme) {this.scheme = scheme;}
+	private SCORE score; public SCORE getScore() {return score;} public void setScore(SCORE score) {this.score = score;}
 	
 	private UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> uiHelper; public UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getUiHelper() {return uiHelper;}
 
@@ -115,6 +119,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		this.cTs = cTs;
 		this.cSection = cSection;
 		this.cQuestion = cQuestion;
+		this.cScore = cScore;
 		this.cUnit = cUnit;
 		this.cOption = cOption;
 		
@@ -122,6 +127,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();
+		efScore = ffSurvey.score();
 		efOption = ffSurvey.option();
 		efScheme = ffSurvey.scheme();
 		
@@ -129,13 +135,15 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		versions = new ArrayList<VERSION>();
 	}
 	
-	protected void clear(boolean cTemplate, boolean cVersion, boolean cSection, boolean cQuestion, boolean cOption)
+	public void cancelScheme(){clear(false,false,false,false,false,true);}
+	protected void clear(boolean cTemplate, boolean cVersion, boolean cSection, boolean cQuestion, boolean cOption, boolean rScheme)
 	{
 		if(cTemplate){template = null;}
 		if(cVersion){version = null;}
 		if(cSection){section = null;}
 		if(cQuestion){question = null;}	
 		if(cOption){option=null;}
+		if(rScheme){scheme = null;}
 	}
 	
 	public void selectCategory() throws UtilsNotFoundException
@@ -218,7 +226,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.rmEntity(version));
 		fSurvey.rmVersion(version);
-		clear(true,true,true,true,true);
+		clear(true,true,true,true,true,true);
 		reloadVersions();
 	}
 	
@@ -275,7 +283,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
 		reloadQuestion();
-		clear(false,false,false,false,true);
+		clear(false,false,false,false,true,true);
 	}
 	
 	private void reloadQuestion()
@@ -296,7 +304,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(question));}
 		fSurvey.rm(question);
-		clear(false,false,false,true,true);
+		clear(false,false,false,true,true,true);
 		loadSection();
 	}
 	
@@ -325,7 +333,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
 		fSurvey.rmOption(option);
-		clear(false,false,false,false,true);
+		clear(false,false,false,false,true,true);
 		reloadQuestion();
 		bMessage.growlSuccessRemoved();
 	}
@@ -348,6 +356,12 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(scheme));}
 		scheme = fSurvey.save(scheme);
 		reloadTemplate();
+	}
+	
+	public void addScore()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cScore));}
+		score = efScore.build(question);
 	}
 	
 	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, sections);}

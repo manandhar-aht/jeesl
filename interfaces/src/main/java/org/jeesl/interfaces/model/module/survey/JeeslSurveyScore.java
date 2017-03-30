@@ -24,5 +24,21 @@ public interface JeeslSurveyScore<L extends UtilsLang,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 			extends EjbWithId,EjbSaveable
 {
+	QUESTION getQuestion();
+	void setQuestion(QUESTION question);
 	
+	SCHEME getScheme();
+	void setScheme(SCHEME scheme);
+	
+	Boolean getCalculateScore();
+	void setCalculateScore(Boolean calculateScore);
+	
+	Double getMinScore();
+	void setMinScore(Double minScore);
+	
+	Double getMaxScore();
+	void setMaxScore(Double maxScore);
+	
+	Boolean getShowScore();
+	void setShowScore(Boolean showScore);
 }

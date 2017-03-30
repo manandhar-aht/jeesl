@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system;
+package org.jeesl.web.mbean.prototype.admin.module;
 
 import java.io.Serializable;
 import java.util.HashMap;

@@ -8,6 +8,13 @@
     		<s:lang key="fr" translation="ID"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="jeeslVisible">
+		<s:langs>
+    		<s:lang key="de" translation="Sichtbar"/>
+    		<s:lang key="en" translation="Visible"/>
+    		<s:lang key="fr" translation="Visible"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="jeeslCode">
 		<s:langs>
     		<s:lang key="de" translation="Code"/>

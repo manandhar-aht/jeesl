@@ -64,7 +64,8 @@
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSections()}" update="@form"/>
 						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{cc.attrs.bean.selectSection()}"/>
 						<p:column>
-							 <h:outputText value="#{s.code}" />
+							<h:graphicImage rendered="#{not s.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+                     		<h:outputText rendered="#{s.visible}" value="#{s.code}" />
 						</p:column>
 						<p:column>
 							 <f:facet name="header">#{msg.aupSurveySectionName}</f:facet>
@@ -132,6 +133,9 @@
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1"/>
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+							<p:outputLabel value="#{msg.jeeslVisible}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.visible}" />
+							
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<p:inputText value="#{cc.attrs.bean.section.position}"/>
 							
@@ -168,7 +172,7 @@
                   	<h:graphicImage rendered="#{not q.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
                      <h:outputText rendered="#{q.visible}" value="#{q.code}" />
                   </p:column>
-						<p:column>
+					<p:column>
                        <f:facet name="header">#{msg.aupSurveyQuestion}</f:facet>
                        <h:outputText value="#{q.question}" />
                    </p:column>

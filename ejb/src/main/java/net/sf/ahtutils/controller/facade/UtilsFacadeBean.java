@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -588,14 +589,35 @@ public class UtilsFacadeBean implements UtilsFacade
 		return list.get(0);
 	}
 	
-	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParent(Class<T> type, I p1)
+	
+	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParents(Class<T> c, List<I> parents)
+	{
+		T prototype = null;
+		try {prototype = c.newInstance();}
+		catch (InstantiationException e) {e.printStackTrace();parents=null;}
+		catch (IllegalAccessException e) {e.printStackTrace();parents=null;}
+		if(parents==null || parents.isEmpty()){return new ArrayList<T>();}
+		
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<T> cQ = cB.createQuery(c);
+		Root<T> root = cQ.from(c);
+
+		Join<T,I> jComponent = root.join(prototype.resolveParentAttribute());
+
+		cQ.where(cB.isTrue(jComponent.in(parents)));
+		cQ.select(root);
+
+		TypedQuery<T> tQ = em.createQuery(cQ);
+		return tQ.getResultList();
+	}
+	
+	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParent(Class<T> type, I parent)
 	{
 		T prototype = null;
 		try {prototype = type.newInstance();}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
-		
-		return allForParent(type,prototype.resolveParentAttribute(), p1);
+		return allForParent(type,prototype.resolveParentAttribute(), parent);
 	}
 	
 	public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1){return allForParent(type,p1Name, p1,0);}
@@ -737,8 +759,7 @@ public class UtilsFacadeBean implements UtilsFacade
 		catch (NoResultException ex){return new ArrayList<T>();}
 	}
 	
-	@Override
-	public <T extends EjbWithId, P extends EjbWithId> List<T> allForOrParents(Class<T> queryClass, List<ParentPredicate<P>> parents)
+	@Override public <T extends EjbWithId, P extends EjbWithId> List<T> allForOrParents(Class<T> queryClass, List<ParentPredicate<P>> parents)
 	{
 		List<ParentPredicate<P>> lAnd = ParentPredicate.empty();
 		return fForAndOrParents(queryClass,  lAnd,parents);

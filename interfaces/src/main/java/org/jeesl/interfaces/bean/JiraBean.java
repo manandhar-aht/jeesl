@@ -2,7 +2,7 @@ package org.jeesl.interfaces.bean;
 
 import java.util.Map;
 
-public interface JiraConfig
+public interface JiraBean
 {	
 	String netRestJiraUrl  = "net.rest.jira.url";
 	String netRestJiraUser  = "net.rest.jira.user";

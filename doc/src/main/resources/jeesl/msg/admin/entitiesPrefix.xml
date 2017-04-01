@@ -85,4 +85,11 @@
 			<s:lang key="fr" translation="Entity Class" />
     	</s:langs>
 	</s:translation>
+		<s:translation key="PropertyCategory">
+		<s:langs>
+			<s:lang key="de" translation="Eingenschaft Kategorie"/>
+			<s:lang key="en" translation="Property Category"/>
+			<s:lang key="fr" translation="Property Categor"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

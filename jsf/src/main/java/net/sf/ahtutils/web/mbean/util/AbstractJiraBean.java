@@ -5,11 +5,11 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.jeesl.api.facade.system.JeeslSystemPropertyFacade;
+import org.jeesl.interfaces.bean.JiraConfig;
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.controller.interfaces.mbean.JiraConfig;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

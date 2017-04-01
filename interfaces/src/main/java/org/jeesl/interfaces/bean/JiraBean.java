@@ -8,7 +8,8 @@ public interface JiraBean
 	String netRestJiraUser  = "net.rest.jira.user";
 	String netRestJiraPwd  = "net.rest.jira.pwd";
 	
-	enum Code{jiraHost,jiraScriptPath,jiraCollector}
+	enum Code{	jiraUrl,jiraUser,jiraPwd,
+					jiraHost,jiraScriptPath,jiraCollector}
 	
 	String getJiraHost();
 	String getJiraScriptPath();

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations xmlns="http://ahtutils.aht-group.com/status">
+	<translation key="jeeslProperties">
+		<langs>
+			<lang key="de" translation="Eigenschaften" />
+			<lang key="en" translation="Properties" />
+			<lang key="fr" translation="Properties" />
+		</langs>
+	</translation>
+	<translation key="jeeslProperty">
+		<langs>
+			<lang key="de" translation="Eigenschaft" />
+			<lang key="en" translation="Property" />
+			<lang key="fr" translation="Property" />
+		</langs>
+	</translation>
+	<translation key="jeeslPropertyKey">
+		<langs>
+			<lang key="de" translation="Schlüssel" />
+			<lang key="en" translation="Key" />
+			<lang key="fr" translation="Key" />
+		</langs>
+	</translation>
+	<translation key="jeeslPropertyValue">
+		<langs>
+			<lang key="de" translation="Wert" />
+			<lang key="en" translation="Value" />
+			<lang key="fr" translation="Value" />
+		</langs>
+	</translation>
+</translations>

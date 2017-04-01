@@ -23,9 +23,7 @@
 					<h:form id="fQueue">
 						<p:dataTable var="j" value="#{cc.attrs.bean.jobs}" draggableRows="true"
 							selection="#{cc.attrs.bean.job}" selectionMode="single" rowKey="#{j.id}">
-							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslJobQueue}"/>
-							</f:facet>
+							<f:facet name="header"><aht:pfDataTableHeader title="#{msg.jeeslJobQueue}"/></f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sMail" listener="#{cc.attrs.bean.selectJob()}"/>
 							<p:column rendered="#{cc.attrs.withCategory}" headerText="#{msg.jeeslJobCategory}"><h:outputText value="#{j.category.name[userBean.localeCode].lang}"/></p:column>
 							<p:column rendered="#{cc.attrs.withCategory}" headerText="#{msg.jeeslJobType}"><h:outputText value="#{j.type.name[userBean.localeCode].lang}"/></p:column>

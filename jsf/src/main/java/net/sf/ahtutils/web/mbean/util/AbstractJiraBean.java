@@ -18,8 +18,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class AbstractJiraBean <L extends UtilsLang,D extends UtilsDescription,
-								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								P extends JeeslProperty<L,D>> 
+								C extends UtilsStatus<C,L,D>,
+								P extends JeeslProperty<L,D,C,P>> 
 				implements Serializable,JiraBean
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJiraBean.class);
@@ -37,7 +37,7 @@ public class AbstractJiraBean <L extends UtilsLang,D extends UtilsDescription,
 		mapIssue = new HashMap<String,Issue>();
 	}
 	
-    public void init(JeeslSystemPropertyFacade<L,D,CATEGORY,P> fUtils, Class<P> cl, String[] collectorKeys) throws UtilsNotFoundException
+    public void init(JeeslSystemPropertyFacade<L,D,C,P> fUtils, Class<P> cl, String[] collectorKeys) throws UtilsNotFoundException
     {
     	jiraHost = fUtils.valueStringForKey(JiraBean.Code.jiraHost.toString(), null);
     	jiraScriptPath = fUtils.valueStringForKey(JiraBean.Code.jiraScriptPath.toString(), null);

@@ -11,8 +11,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public interface JeeslSystemPropertyFacade <L extends UtilsLang,D extends UtilsDescription,
-											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-											P extends JeeslProperty<L,D>>
+											C extends UtilsStatus<C,L,D>,
+											P extends JeeslProperty<L,D,C,P>>
 			extends UtilsFacade
 {	
 	String valueStringForKey(String key, String defaultValue) throws UtilsNotFoundException;

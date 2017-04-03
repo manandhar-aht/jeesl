@@ -1,4 +1,4 @@
-package org.jeesl.controller.processor;
+package org.jeesl.controller.processor.survey;
 
 import java.util.Map;
 

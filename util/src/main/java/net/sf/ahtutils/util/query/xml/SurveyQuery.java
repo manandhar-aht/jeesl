@@ -74,6 +74,7 @@ public class SurveyQuery
 		Section xml = new Section();
 		xml.setId(0);
 		xml.setCode("");
+		xml.setVisible(true);
 		xml.setPosition(0);
 		xml.setDescription(XmlDescriptionFactory.build(""));
 		xml.setRemark(XmlRemarkFactory.build(""));

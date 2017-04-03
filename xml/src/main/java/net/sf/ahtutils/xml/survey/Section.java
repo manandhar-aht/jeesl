@@ -32,6 +32,7 @@ import net.sf.ahtutils.xml.text.Remark;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="visible" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -66,6 +67,8 @@ public class Section
     protected Integer position;
     @XmlAttribute(name = "code")
     protected String code;
+    @XmlAttribute(name = "visible")
+    protected Boolean visible;
 
     /**
      * Gets the value of the description property.
@@ -287,6 +290,38 @@ public class Section
 
     public boolean isSetCode() {
         return (this.code!= null);
+    }
+
+    /**
+     * Gets the value of the visible property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isVisible() {
+        return visible;
+    }
+
+    /**
+     * Sets the value of the visible property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setVisible(boolean value) {
+        this.visible = value;
+    }
+
+    public boolean isSetVisible() {
+        return (this.visible!= null);
+    }
+
+    public void unsetVisible() {
+        this.visible = null;
     }
 
 }

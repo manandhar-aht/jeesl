@@ -21,6 +21,7 @@ public class TestXmlSection extends AbstractXmlSurveyTest<Section>
     	xml.setId(123);
     	xml.setCode("myCode");
     	xml.setPosition(2);
+    	xml.setVisible(true);
     	
     	if(withChilds)
     	{

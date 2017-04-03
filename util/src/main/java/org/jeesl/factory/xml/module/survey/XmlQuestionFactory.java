@@ -40,7 +40,6 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 		this.lang=lang;
 		this.q=q;
 		if(q.isSetScore()){xfScore = new XmlScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(q.getScore());}
-		
 	}
 	
 	public Question build(QUESTION ejb)

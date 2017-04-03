@@ -62,6 +62,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Score }
+     * 
+     */
+    public Score createScore() {
+        return new Score();
+    }
+
+    /**
      * Create an instance of {@link Answer }
      * 
      */
@@ -91,14 +99,6 @@ public class ObjectFactory {
      */
     public Correlation createCorrelation() {
         return new Correlation();
-    }
-
-    /**
-     * Create an instance of {@link Score }
-     * 
-     */
-    public Score createScore() {
-        return new Score();
     }
 
     /**

@@ -25,8 +25,8 @@ import net.sf.ahtutils.xml.text.Remark;
  *         &lt;element ref="{http://ahtutils.aht-group.com/text}question"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/text}remark"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}unit"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/survey}answer"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}score"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/survey}answer"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
@@ -51,8 +51,8 @@ import net.sf.ahtutils.xml.text.Remark;
     "question",
     "remark",
     "unit",
-    "answer",
-    "score"
+    "score",
+    "answer"
 })
 @XmlRootElement(name = "question")
 public class Question
@@ -67,9 +67,9 @@ public class Question
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Unit unit;
     @XmlElement(required = true)
-    protected Answer answer;
-    @XmlElement(required = true)
     protected Score score;
+    @XmlElement(required = true)
+    protected Answer answer;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "position")
@@ -178,34 +178,6 @@ public class Question
     }
 
     /**
-     * Gets the value of the answer property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Answer }
-     *     
-     */
-    public Answer getAnswer() {
-        return answer;
-    }
-
-    /**
-     * Sets the value of the answer property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Answer }
-     *     
-     */
-    public void setAnswer(Answer value) {
-        this.answer = value;
-    }
-
-    public boolean isSetAnswer() {
-        return (this.answer!= null);
-    }
-
-    /**
      * Gets the value of the score property.
      * 
      * @return
@@ -231,6 +203,34 @@ public class Question
 
     public boolean isSetScore() {
         return (this.score!= null);
+    }
+
+    /**
+     * Gets the value of the answer property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Answer }
+     *     
+     */
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    /**
+     * Sets the value of the answer property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Answer }
+     *     
+     */
+    public void setAnswer(Answer value) {
+        this.answer = value;
+    }
+
+    public boolean isSetAnswer() {
+        return (this.answer!= null);
     }
 
     /**

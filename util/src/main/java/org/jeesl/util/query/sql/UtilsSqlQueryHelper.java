@@ -1,4 +1,4 @@
-package net.sf.ahtutils.util.query.sql;
+package org.jeesl.util.query.sql;
 
 import java.util.List;
 

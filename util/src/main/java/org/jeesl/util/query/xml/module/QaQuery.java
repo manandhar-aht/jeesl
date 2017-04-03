@@ -1,17 +1,17 @@
-package net.sf.ahtutils.util.query.xml;
+package org.jeesl.util.query.xml.module;
 
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Map;
 
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
+import org.jeesl.util.query.xml.SecurityQuery;
 
 import net.sf.ahtutils.factory.xml.qa.XmlGroupFactory;
 import net.sf.ahtutils.factory.xml.qa.XmlGroupsFactory;
 import net.sf.ahtutils.factory.xml.qa.XmlResultFactory;
 import net.sf.ahtutils.factory.xml.status.XmlDescriptionFactory;
 import net.sf.ahtutils.factory.xml.status.XmlStatementFactory;
-import net.sf.ahtutils.util.query.SecurityQuery;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.qa.Category;
 import net.sf.ahtutils.xml.qa.Comment;

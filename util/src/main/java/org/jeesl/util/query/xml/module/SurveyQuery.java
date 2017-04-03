@@ -1,4 +1,4 @@
-package net.sf.ahtutils.util.query.xml;
+package org.jeesl.util.query.xml.module;
 
 import java.util.Date;
 import java.util.Hashtable;

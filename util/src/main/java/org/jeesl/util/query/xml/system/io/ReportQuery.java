@@ -1,4 +1,4 @@
-package org.jeesl.util.query.xml;
+package org.jeesl.util.query.xml.system.io;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -18,6 +18,7 @@ import org.jeesl.factory.xml.system.status.XmlDataTypeFactory;
 import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
+import org.jeesl.util.query.xml.StatusQuery;
 
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.report.Cell;

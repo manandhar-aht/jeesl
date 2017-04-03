@@ -1,9 +1,7 @@
-package net.sf.ahtutils.util.query;
+package org.jeesl.util.query.xml;
 
 import java.util.Hashtable;
 import java.util.Map;
-
-import org.jeesl.util.query.xml.StatusQuery;
 
 import net.sf.ahtutils.factory.xml.status.XmlScopeFactory;
 import net.sf.ahtutils.factory.xml.utils.XmlTrafficLightsFactory;

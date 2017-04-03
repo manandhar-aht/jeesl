@@ -15,6 +15,7 @@ import org.jeesl.factory.xml.system.security.XmlTemplateFactory;
 import org.jeesl.factory.xml.system.security.XmlTemplatesFactory;
 import org.jeesl.factory.xml.system.security.XmlUsecaseFactory;
 import org.jeesl.factory.xml.system.security.XmlUsecasesFactory;
+import org.jeesl.util.query.xml.SecurityQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +37,6 @@ import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityRoleComparator;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityUsecaseComparator;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityViewComparator;
-import net.sf.ahtutils.util.query.SecurityQuery;
 import net.sf.ahtutils.web.rest.security.AbstractSecurityInit;
 import net.sf.ahtutils.web.rest.security.SecurityInitRoles;
 import net.sf.ahtutils.web.rest.security.SecurityInitTemplates;

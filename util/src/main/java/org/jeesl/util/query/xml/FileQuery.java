@@ -1,4 +1,4 @@
-package net.sf.ahtutils.util.query;
+package org.jeesl.util.query.xml;
 
 import java.io.FileFilter;
 

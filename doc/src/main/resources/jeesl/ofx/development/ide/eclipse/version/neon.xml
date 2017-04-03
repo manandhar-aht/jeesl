@@ -101,7 +101,7 @@
 				<ofx:paragraph lang="en">
 					ProjectExplorer - (r.click) New - Other - Maven - Checkout Maven Projects from  - Next
 					Find more SCM connectors in the m2e Marketplace
-					Find: "m2e"
+					Find: "m2e-egit"
 					NOT AVAILABLE ????
 				</ofx:paragraph>
 			</ofx:section>

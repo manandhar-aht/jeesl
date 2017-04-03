@@ -26,6 +26,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.model.xml.module.ts.Data;
 import org.jeesl.model.xml.module.ts.TimeSeries;
+import org.jeesl.util.comparator.xml.ts.TsDataComparator;
 import org.joda.time.DateTime;
 import org.metachart.xml.chart.DataSet;
 import org.primefaces.event.FileUploadEvent;
@@ -43,7 +44,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.report.revert.excel.ImportStrategy;
 import net.sf.ahtutils.report.revert.excel.importers.ExcelSimpleSerializableImporter;
-import net.sf.ahtutils.util.comparator.xml.ts.TsDataComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDescription,

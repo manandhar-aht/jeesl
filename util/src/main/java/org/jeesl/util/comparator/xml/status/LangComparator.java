@@ -1,4 +1,4 @@
-package net.sf.ahtutils.util.comparator.xml.status;
+package org.jeesl.util.comparator.xml.status;
 
 import java.util.Comparator;
 

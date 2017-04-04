@@ -1,4 +1,4 @@
-package org.jeesl.controller.handler.prototype;
+package org.jeesl.controller.handler.sb;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -31,8 +31,15 @@ public class SbDateHandler implements Serializable
 	public void initMonthsToNow(int months)
 	{
 		DateTime dt = new DateTime();
-		date2 = dt.toDate();
 		date1 = dt.minusMonths(months).toDate();
+		date2 = dt.toDate();
+	}
+	
+	public void initWeeks(int minus, int plus)
+	{
+		DateTime dt = new DateTime();
+		date1 = dt.minusWeeks(minus).toDate();
+		date2 = dt.plusWeeks(plus).toDate();
 	}
 	
 	public void dateChanged()

@@ -224,6 +224,14 @@
     		<s:lang key="fr" translation="Multi Options"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslSurveyQuestionShowMatrix">
+    	<s:langs>
+    		<s:lang key="de" translation="Matrix"/>
+    		<s:lang key="en" translation="Matrix"/>
+    		<s:lang key="fr" translation="Matrix"/>
+    	</s:langs>
+    </s:translation>
+    
 	<s:translation key="jeeslSurveyOptions">
     	<s:langs>
     		<s:lang key="de" translation="Optionen"/>
@@ -236,6 +244,13 @@
     		<s:lang key="de" translation="Option"/>
     		<s:lang key="en" translation="Option"/>
     		<s:lang key="fr" translation="Option"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslSurveyOptionRow">
+    	<s:langs>
+    		<s:lang key="de" translation="In Spalte"/>
+    		<s:lang key="en" translation="As Row"/>
+    		<s:lang key="fr" translation="As Row"/>
     	</s:langs>
     </s:translation>
     <s:translation key="jeeslSurveyDateFrom">

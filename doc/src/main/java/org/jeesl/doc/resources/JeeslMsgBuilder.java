@@ -55,6 +55,7 @@ public class JeeslMsgBuilder
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
 	public static final String systemJob = "jeesl/msg/admin/system/job.xml";
 	public static final String systemProperty = "jeesl/msg/admin/system/property.xml";
+	public static final String systemFeature = "jeesl/msg/admin/system/feature.xml";
 	
 	public static final String tooltip = "aht-utils/msg/tooltip.xml";
 	

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations xmlns="http://ahtutils.aht-group.com/status">
+	<translation key="jeeslFeature">
+		<langs>
+			<lang key="de" translation="Merkmal" />
+			<lang key="en" translation="Feature" />
+			<lang key="fr" translation="Feature" />
+		</langs>
+	</translation>
+	<translation key="jeeslFeatures">
+		<langs>
+			<lang key="de" translation="Merkmale" />
+			<lang key="en" translation="Features" />
+			<lang key="fr" translation="Features" />
+		</langs>
+	</translation>
+	<translation key="jeeslFeatureName">
+		<langs>
+			<lang key="de" translation="Name" />
+			<lang key="en" translation="Name" />
+			<lang key="fr" translation="Name" />
+		</langs>
+	</translation>
+	<translation key="jeeslFeatureRemark">
+		<langs>
+			<lang key="de" translation="Anwerkung" />
+			<lang key="en" translation="Remark" />
+			<lang key="fr" translation="Remark" />
+		</langs>
+	</translation>
+</translations>

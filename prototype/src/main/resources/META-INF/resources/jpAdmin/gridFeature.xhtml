@@ -9,6 +9,7 @@
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdm="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
@@ -22,7 +23,7 @@
 				<aht:slot id="sFeatures" width="7">
 					<h:form id="fProperties">
 						<p:dataTable var="f" value="#{cc.attrs.manager.features}"
-							selection="#{cc.attrs.bean.property}" selectionMode="single" rowKey="#{f.id}">
+							selection="#{cc.attrs.bean.feature}" selectionMode="single" rowKey="#{f.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslFeatures}">
 									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addFeature()}" update=":#{cc.id}:grid" tooltip="#{msg.ttNew}"/>
@@ -44,7 +45,13 @@
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 														
 								<p:outputLabel value="#{msg.jeeslCode}"/>
-								<h:outputText value="#{cc.attrs.bean.feature.code}"/>
+								<p:inputText value="#{cc.attrs.bean.feature.code}"/>
+								
+								<p:outputLabel value="#{msg.jeeslFeatureName}"/>
+								<p:inputText value="#{cc.attrs.bean.feature.name}"/>
+							
+								<p:outputLabel value="#{msg.jeeslFeatureRemark}"/>
+								<jtp:inputRemark value="#{cc.attrs.bean.feature.remark}"/>
 							
 							</p:panelGrid>
 						</p:panel>

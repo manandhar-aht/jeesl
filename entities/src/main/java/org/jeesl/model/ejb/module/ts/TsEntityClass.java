@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
+import org.jeesl.model.ejb.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -20,7 +21,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Class",category="ts",subset="ts",level=4)
 public class TsEntityClass implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslTsEntityClass<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsBridge,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
+								JeeslTsEntityClass<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsBridge,TsEntityClass,TsInterval,TsData,JeeslUser,TsWorkspace,TsQaFlag>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;

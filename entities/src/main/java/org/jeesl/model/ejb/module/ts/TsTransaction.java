@@ -17,7 +17,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
-@EjbErNode(name="Data",category="ts",subset="ts",level=2)
+@EjbErNode(name="Transaction",category="ts",subset="ts",level=2)
 public class TsTransaction implements Serializable,EjbRemoveable,EjbPersistable,
 								JeeslTsTransaction<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsBridge,TsEntityClass,TsInterval,TsData,JeeslUser,TsWorkspace,TsQaFlag>
 {

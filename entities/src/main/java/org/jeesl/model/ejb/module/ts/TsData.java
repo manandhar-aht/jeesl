@@ -39,6 +39,11 @@ public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public TsWorkspace getWorkspace() {return workspace;}
 	@Override public void setWorkspace(TsWorkspace workspace) {this.workspace = workspace;}
 
+	@ManyToOne
+	private TsTransaction transaction;
+	@Override public TsTransaction getTransaction() {return transaction;}
+	@Override public void setTransaction(TsTransaction transaction) {this.transaction = transaction;}
+	
 	private Date record;
 	@Override public Date getRecord() {return record;}
 	@Override public void setRecord(java.util.Date record) {this.record=record;}

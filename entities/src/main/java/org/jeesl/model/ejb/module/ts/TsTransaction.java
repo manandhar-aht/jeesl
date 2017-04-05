@@ -32,6 +32,13 @@ public class TsTransaction implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public Date getRecord() {return record;}
 	@Override public void setRecord(java.util.Date record) {this.record=record;}
 	
+	private JeeslUser user;
+	@Override public JeeslUser getUser() {return user;}
+	@Override public void setUser(JeeslUser user) {this.user = user;}
+	
+	private String remark;
+	@Override public String getRemark() {return remark;}
+	@Override public void setRemark(String remark) {this.remark = remark;}
 	
 	@ManyToOne
 	private TsQaFlag flag;

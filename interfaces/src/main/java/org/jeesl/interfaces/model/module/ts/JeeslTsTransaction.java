@@ -23,6 +23,11 @@ public interface JeeslTsTransaction <L extends UtilsLang,
 								QAF extends UtilsStatus<QAF,L,D>>
 		extends EjbWithId,EjbWithRecord,EjbSaveable
 {
-	public enum Attributes{timeSeries,workspace,record,value}
+	public enum Attributes{user,record}
 	
+	USER getUser();
+	void setUser(USER user);
+	
+	String getRemark();
+	void setRemark(String remark);
 }

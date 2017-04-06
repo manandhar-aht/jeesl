@@ -32,7 +32,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(name = "StaffWorkspace",uniqueConstraints = @UniqueConstraint(columnNames = {"domain_id","role_id","user_id"}))
 @EjbErNode(name="Staff",category="ts",level=2,subset="ts")
 public class TsStaffWorkspace implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,EjbSaveable,
-					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser,TsWorkspace>
+					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser,TsWorkspace,TsWorkspace>
 {
 	public static final long serialVersionUID=1;
 

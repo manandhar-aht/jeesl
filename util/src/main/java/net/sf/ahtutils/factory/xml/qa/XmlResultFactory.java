@@ -90,7 +90,7 @@ QAUS extends UtilsStatus<QAUS,L,D>>
 		
 		if(q.isSetStaff())
 		{
-			XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,QA> f = new XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,QA>(q.getStaff());
+			XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,QA,QA> f = new XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,QA,QA>(q.getStaff());
 			xml.setStaff(f.build(result.getStaff()));
 		}
 		

@@ -30,8 +30,8 @@ public class XmlStaffFactory<L extends UtilsLang,
 							A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 							AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 							USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
-							STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,
-							DOMAIN extends EjbWithId>
+							STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
+							D1 extends EjbWithId, D2 extends EjbWithId>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlStaffFactory.class);
 		

@@ -137,9 +137,9 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	public DataUpdate iuSecurityRoles(Security roles){return initRoles.iuSecurityRoles(roles);}
 	public DataUpdate iuSecurityUsecases(Security usecases){return initUsecases.iuSecurityUsecases(usecases);}
 
-	public <STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,DOMAIN extends EjbWithId> Staffs exportStaffs(Class<STAFF> cStaff)
+	public <STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> Staffs exportStaffs(Class<STAFF> cStaff)
 	{
-		XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,DOMAIN> f = new XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,DOMAIN>(SecurityQuery.exStaff());
+		XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2> f = new XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2>(SecurityQuery.exStaff());
 		
 		Staffs staffs = new Staffs();
 		

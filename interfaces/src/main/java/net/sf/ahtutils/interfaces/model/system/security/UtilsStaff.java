@@ -28,4 +28,7 @@ public interface UtilsStaff<L extends UtilsLang,
 	
 	D1 getDomain();
 	void setDomain(D1 domain);
+	
+	D2 getDomain2();
+	void setDomain2(D2 domain2);
 }

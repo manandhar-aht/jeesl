@@ -3,7 +3,7 @@ package org.jeesl.model.ejb;
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
-import org.jeesl.interfaces.JeeslQuery;
+import org.jeesl.interfaces.util.query.JeeslQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

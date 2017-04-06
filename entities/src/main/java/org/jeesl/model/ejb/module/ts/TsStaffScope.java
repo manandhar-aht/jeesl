@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -44,8 +45,13 @@ public class TsStaffScope implements Serializable,EjbWithId,EjbPersistable,EjbRe
 	
 	@NotNull @ManyToOne
 	private TsScope domain;
-	public TsScope getDomain() {return domain;}
-	public void setDomain(TsScope domain) {this.domain = domain;}
+	@Override public TsScope getDomain() {return domain;}
+	@Override public void setDomain(TsScope domain) {this.domain = domain;}
+	
+	@Transient
+	private TsScope domain2;
+	@Override public TsScope getDomain2() {return domain2;}
+	@Override public void setDomain2(TsScope domain2) {this.domain2=domain2;}
 		
 	@NotNull @ManyToOne
 	private SecurityRole role;

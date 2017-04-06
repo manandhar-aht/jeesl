@@ -1,4 +1,4 @@
-package org.jeesl.interfaces;
+package org.jeesl.interfaces.util.query;
 
 public interface JeeslQuery
 {

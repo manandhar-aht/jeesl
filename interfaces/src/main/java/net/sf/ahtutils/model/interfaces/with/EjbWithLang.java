@@ -6,6 +6,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public interface EjbWithLang<L extends UtilsLang>
 {	
-	public Map<String, L> getName();
-	public void setName(Map<String, L> name);
+	public Map<String,L> getName();
+	public void setName(Map<String,L> name);
 }

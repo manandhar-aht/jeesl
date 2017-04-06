@@ -1,17 +1,18 @@
 package net.sf.ahtutils.web.mbean.util;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.image.EjbWithImage;
 import net.sf.ahtutils.jsf.filter.UtilsStatusFilter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AbstractIconBean implements Serializable
 {
@@ -24,6 +25,8 @@ public class AbstractIconBean implements Serializable
 	private Map<String,Map<Long,String>> mapImagesAlt,mapResourceAlternative;
 	protected Map<String,String> mapStatic;
 	
+	protected Map<String,String> svg; public Map<String, String> getSvg() {return svg;}
+	
 	private Map<Integer,Map<String,String>> icon;
 	
 	//******* Methods *******************************
@@ -35,7 +38,9 @@ public class AbstractIconBean implements Serializable
 		mapImagesAlt = new Hashtable<String,Map<Long,String>>();
 		mapResource = new Hashtable<String,Map<Long,String>>();
 		mapResourceAlternative = new Hashtable<String,Map<Long,String>>();
+		
 		mapStatic = new Hashtable<String,String>();
+		svg = new HashMap<String,String>();
 		
 		icon = new Hashtable<Integer,Map<String,String>>();
     }

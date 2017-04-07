@@ -64,7 +64,6 @@ public class EjbStaffFactory <L extends UtilsLang,
     public STAFF build(USER user, R role, D1 domain)
     {
     	STAFF ejb = null;
-    	
     	try
     	{
 			ejb = cStaff.newInstance();

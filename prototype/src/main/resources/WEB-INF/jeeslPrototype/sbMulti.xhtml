@@ -7,11 +7,14 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui"
     xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+    xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 >
 
-	<aup:statusBarItem label="#{label} (#{fn:length(handler.selected)}/#{fn:length(handler.list)})"
-								 orientation="right"
-								 childs="#{handler.list}">
+	<aup:statusBarItem orientation="right" childs="#{handler.list}">
+		<f:facet name="label">
+			<jtp:statusSymbolizer rendered="#{not empty icon}" value="#{icon}" height="12"/>
+			#{label} (#{fn:length(handler.selected)}/#{fn:length(handler.list)})
+		</f:facet>
 			<h:commandLink>
 				<ui:insert />
 				<aup:sbCheckmark value="#{handler.map[var]}"/>

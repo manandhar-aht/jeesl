@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -611,13 +612,32 @@ public class UtilsFacadeBean implements UtilsFacade
 		return tQ.getResultList();
 	}
 	
-	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParent(Class<T> type, I parent)
+	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParent(Class<T> c, I parent)
 	{
 		T prototype = null;
-		try {prototype = type.newInstance();}
+		try {prototype = c.newInstance();}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
-		return allForParent(type,prototype.resolveParentAttribute(), parent);
+		
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+	    CriteriaQuery<T> cQ = cB.createQuery(c);
+	    
+	    Root<T> root = cQ.from(c);
+	    Path<Object> p1Path = root.get(prototype.resolveParentAttribute());
+	    
+	    CriteriaQuery<T> select = cQ.select(root);
+	    select.where(cB.equal(p1Path,parent));
+	    
+	    if(EjbWithPosition.class.isAssignableFrom(c))
+	    {
+	    	Order o1 = cB.asc(root.get(EjbWithPosition.attributePosition));
+	    	select.orderBy(o1);
+	    }
+	    
+		TypedQuery<T> q = em.createQuery(select);
+		
+		try	{return q.getResultList();}
+		catch (NoResultException ex){return new ArrayList<T>();}
 	}
 	
 	public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1){return allForParent(type,p1Name, p1,0);}

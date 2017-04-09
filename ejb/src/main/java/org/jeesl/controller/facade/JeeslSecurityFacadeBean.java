@@ -253,6 +253,22 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		List<S> fStaffD(Class<S> clStaff, D1 domain)
 	{return allForParent(clStaff, UtilsStaff.Attributes.domain.toString(), domain);}
 	
+	@Override public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffD(Class<S> cStaff, List<D1> domains)
+	{
+		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<S> cQ = cB.createQuery(cStaff);
+		Root<S> staff = cQ.from(cStaff);
+
+		Path<D1> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
+		predicates.add(cB.isTrue(pDomain.in(domains)));
+
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(staff);
+		return em.createQuery(cQ).getResultList();
+	}
+	
 	@Override
 	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffUR(Class<S> clStaff, USER user, R role)
@@ -267,8 +283,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, D1 domain)
 	{return allForParent(cStaff, "role", role,UtilsStaff.Attributes.domain.toString(),domain);}
 	
-	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<D1> domains)
+	@Override public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<D1> domains)
 	{
 		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();

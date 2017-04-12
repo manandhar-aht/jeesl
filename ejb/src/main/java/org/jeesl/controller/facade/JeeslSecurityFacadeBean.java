@@ -1,6 +1,7 @@
 package org.jeesl.controller.facade;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -283,19 +284,52 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, D1 domain)
 	{return allForParent(cStaff, "role", role,UtilsStaff.Attributes.domain.toString(),domain);}
 	
+	@SuppressWarnings("unchecked")
+	@Override public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, USER user, R role, List<D1> domains)
+	{
+		List<USER> users = new ArrayList<USER>(Arrays.asList(user));;
+		List<R> roles = new ArrayList<R>(Arrays.asList(role));
+		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
+		return fStaffURD(cStaff,users,roles,domains);
+	}
+	
+	@SuppressWarnings("unchecked")
 	@Override public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<D1> domains)
 	{
+		List<USER> users = null;
+		List<R> roles = new ArrayList<R>(Arrays.asList(role));
 		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
+		return fStaffURD(cStaff,users,roles,domains);
+	}
+	
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, List<USER> users, List<R> roles, List<D1> domains)
+	{
+		if(users!=null && users.isEmpty()){return new ArrayList<S>();}
+		if(roles!=null && roles.isEmpty()){return new ArrayList<S>();}
+		if(domains!=null && domains.isEmpty()){return new ArrayList<S>();}
+		
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<S> cQ = cB.createQuery(cStaff);
 		Root<S> staff = cQ.from(cStaff);
 
-		Path<D1> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
-		predicates.add(cB.isTrue(pDomain.in(domains)));
+		if(users!=null)
+		{
+			Path<D1> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
+			predicates.add(pDomain.in(domains));
+		}
 		
-		Path<R> pRole = staff.get(UtilsStaff.Attributes.role.toString());
-		predicates.add(cB.equal(pRole,role));
+		if(roles!=null)
+		{
+			Path<R> pRole = staff.get(UtilsStaff.Attributes.role.toString());
+			predicates.add(pRole.in(roles));
+		}
+		
+		if(domains!=null)
+		{
+			Path<D1> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
+			predicates.add(pDomain.in(domains));
+		}
 
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(staff);

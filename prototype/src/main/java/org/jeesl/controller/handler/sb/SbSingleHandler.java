@@ -1,6 +1,7 @@
 package org.jeesl.controller.handler.sb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
@@ -23,6 +24,7 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	
 	private T selection; public T getSelection() {return selection;} public void setSelection(T selected) {this.selection = selected;}
 
+	public SbSingleHandler(Class<T> c, SbSingleBean bean){this(c,new ArrayList<T>(),bean);}	
 	public SbSingleHandler(Class<T> c, List<T> list, SbSingleBean bean)
 	{
 		this.c=c;

@@ -149,6 +149,14 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
         }
         return sb.toString();
 	 }
+	 public static <T extends EjbWithId> String selectEntities(Class<?> c, List<T> list)
+	 {
+        StringBuffer sb = new StringBuffer();
+        sb.append("Selecting ").append(c.getClass().getSimpleName());
+        sb.append(": ").append(list.size());
+        return sb.toString();
+	 }
+	 
 	 public static <T extends EjbWithId> String selectOneMenuChange(T t)
 	 {
         StringBuffer sb = new StringBuffer();

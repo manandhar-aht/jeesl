@@ -99,4 +99,11 @@
 			<s:lang key="fr" translation="Icon"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IndicatorType">
+		<s:langs>
+			<s:lang key="de" translation="Indicator Typ"/>
+			<s:lang key="en" translation="Indicator Type"/>
+			<s:lang key="fr" translation="Indicator Type"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

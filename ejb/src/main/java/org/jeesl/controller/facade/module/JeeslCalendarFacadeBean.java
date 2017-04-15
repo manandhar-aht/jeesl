@@ -15,6 +15,7 @@ import javax.persistence.criteria.Root;
 import org.jeesl.api.facade.module.JeeslCalendarFacade;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendar;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendarItem;
+import org.jeesl.interfaces.model.module.calendar.JeeslCalendarTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,13 +26,14 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslCalendarFacadeBean<L extends UtilsLang,
 									D extends UtilsDescription,
-									CALENDAR extends JeeslCalendar<L,D,CALENDAR,CT,ITEM,IT>,
+									CALENDAR extends JeeslCalendar<L,D,CALENDAR,ZONE,CT,ITEM,IT>,
+									ZONE extends JeeslCalendarTimeZone<L,D,CALENDAR,ZONE,CT,ITEM,IT>,
 									CT extends UtilsStatus<CT,L,D>,
-									ITEM extends JeeslCalendarItem<L,D,CALENDAR,CT,ITEM,IT>,
+									ITEM extends JeeslCalendarItem<L,D,CALENDAR,ZONE,CT,ITEM,IT>,
 									IT extends UtilsStatus<IT,L,D>
 									>
 					extends UtilsFacadeBean
-					implements JeeslCalendarFacade<L,D,CALENDAR,CT,ITEM,IT>
+					implements JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslCalendarFacadeBean.class);
 	

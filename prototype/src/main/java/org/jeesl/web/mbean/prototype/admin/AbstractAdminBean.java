@@ -24,6 +24,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	
 	protected boolean debugOnInfo;
 	protected String[] langs; public String[] getLangs() {return langs;}
+	protected String[] localeCodes; public String[] getLocaleCodes() {return localeCodes;}
 	protected EjbLangFactory<L> efLang;
 	protected EjbDescriptionFactory<D> efDescription;
 	
@@ -53,13 +54,14 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		nnb = new NullNumberBinder();
 	}
 	
-	protected void initAdmin(String[] langs, final Class<L> cLang, final Class<D> cDescription, FacesMessageBean bMessage)
-	{	
+	protected void initAdmin(String[] langs, final Class<L> cL, final Class<D> cD, FacesMessageBean bMessage)
+	{
+		this.localeCodes=langs;
 		this.langs=langs;
 		this.bMessage=bMessage;
 		
-		efLang = new EjbLangFactory<L>(cLang);
-		efDescription = new EjbDescriptionFactory<D>(cDescription);
+		efLang = new EjbLangFactory<L>(cL);
+		efDescription = new EjbDescriptionFactory<D>(cD);
 	}
 	
 	//Security Handling

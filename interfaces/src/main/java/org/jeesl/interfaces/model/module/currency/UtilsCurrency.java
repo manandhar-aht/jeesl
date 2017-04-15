@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.finance;
+package org.jeesl.interfaces.model.module.currency;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;

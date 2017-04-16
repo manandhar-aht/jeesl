@@ -17,5 +17,6 @@ public interface JeeslCalendarTimeZone <L extends UtilsLang,
 								IT extends UtilsStatus<IT,L,D>>
 		extends EjbWithId,EjbSaveable,EjbWithCode,EjbWithLang<L>
 {
-
+	public static String tzUtc = "UTC";
+	public static String tzBerlin = "Europe/Berlin";
 }

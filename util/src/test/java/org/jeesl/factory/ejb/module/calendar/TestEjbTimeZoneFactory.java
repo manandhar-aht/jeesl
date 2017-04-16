@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.jeesl.AbstractJeeslUtilTest;
+import org.jeesl.interfaces.model.module.calendar.JeeslCalendarTimeZone;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -12,9 +13,6 @@ import org.slf4j.LoggerFactory;
 public class TestEjbTimeZoneFactory extends AbstractJeeslUtilTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestEjbTimeZoneFactory.class);
-	
-	private static String tzBerlin = "Europe/Berlin";
-	
 	
 	@Test public void pre()
     {	
@@ -31,13 +29,13 @@ public class TestEjbTimeZoneFactory extends AbstractJeeslUtilTest
 	@Test public void wrongId()
 	{
 		Assert.assertFalse(EjbTimeZoneFactory.supportedCode("Europe/Berlin222"));
-		Assert.assertTrue(EjbTimeZoneFactory.supportedCode(tzBerlin));
+		Assert.assertTrue(EjbTimeZoneFactory.supportedCode(JeeslCalendarTimeZone.tzBerlin));
 	}
 	
 	@Test public void timezone()
 	{
 		Date dNow = new Date();
-		Date dUtc = EjbTimeZoneFactory.toUtc(dNow,tzBerlin);
+		Date dUtc = EjbTimeZoneFactory.toUtc(dNow,JeeslCalendarTimeZone.tzBerlin);
 		
 		logger.info(dNow.toString());
 		logger.info(dUtc.toString());

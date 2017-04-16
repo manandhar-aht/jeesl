@@ -35,8 +35,11 @@ public class CalendarItemHandler <L extends UtilsLang,
 	private final Class<ZONE> cZone;
 	private final Class<IT> cItemType;
 	
+	private ZONE timeZone; public ZONE getTimeZone() {return timeZone;} public void setTimeZone(ZONE timeZone) {this.timeZone = timeZone;}
+
 	private ITEM item; public ITEM getItem() {return item;} public void setItem(ITEM item) {this.item = item;}
 
+	
 	public CalendarItemHandler(final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, final Class<ZONE> cZone, final Class<IT> cItemType, EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> efZone)
 	{
 		this.fCalendar=fCalendar;

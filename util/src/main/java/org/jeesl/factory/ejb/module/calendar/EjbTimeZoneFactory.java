@@ -25,8 +25,6 @@ public class EjbTimeZoneFactory<L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbTimeZoneFactory.class);
 	
-	public static String tzUtc = "UTC";
-	
 	private final Class<ZONE> cZone;
     
 	public EjbTimeZoneFactory(final Class<ZONE> cZone)
@@ -60,7 +58,7 @@ public class EjbTimeZoneFactory<L extends UtilsLang,
 	{
 		DateTime dt = new DateTime(d);
 		DateTime srcDateTime = dt.toDateTime(DateTimeZone.forID(tzCode));
-		DateTime utcDateTime = srcDateTime.withZone(DateTimeZone.forID(tzUtc));
+		DateTime utcDateTime = srcDateTime.withZone(DateTimeZone.forID(JeeslCalendarTimeZone.tzUtc));
 		return utcDateTime.toLocalDateTime().toDateTime().toDate();
 	}
 	

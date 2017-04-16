@@ -1,5 +1,8 @@
 package org.jeesl.interfaces.model.module.calendar;
 
+import java.util.Date;
+
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -13,7 +16,22 @@ public interface JeeslCalendarItem <L extends UtilsLang,
 									ITEM extends JeeslCalendarItem<L,D,CALENDAR,ZONE,CT,ITEM,IT>,
 									IT extends UtilsStatus<IT,L,D>
 									>
-		extends EjbWithId
+		extends EjbWithId,EjbSaveable
 {
 	public enum Attributes {calendar,startDate,endDate}
+	
+	IT getType();
+	void setType(IT type);
+	
+	Date getStartDate();
+	void setStartDate(Date startDate);
+
+	ZONE getStartZone();
+	void setStartZone(ZONE startZone);
+	
+	ZONE getEndZone();
+	void setEndZone(ZONE endZone);
+	
+	Date getEndDate();
+	void setEndDate(Date endDate);
 }

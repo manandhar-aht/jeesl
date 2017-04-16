@@ -1,10 +1,13 @@
 package org.jeesl.factory.ejb.module.calendar;
 
+import java.util.Date;
 import java.util.TimeZone;
 
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendar;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendarItem;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendarTimeZone;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +24,8 @@ public class EjbTimeZoneFactory<L extends UtilsLang,
 								IT extends UtilsStatus<IT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbTimeZoneFactory.class);
+	
+	public static String tzUtc = "UTC";
 	
 	private final Class<ZONE> cZone;
     
@@ -42,6 +47,23 @@ public class EjbTimeZoneFactory<L extends UtilsLang,
 		return ejb;
 	}
 	
+	public ITEM toUtc(ITEM item)
+	{
+		item.setStartDate(startToUtc(item));
+		item.setEndDate(endToUtc(item));
+		return item;
+	}
+	public Date startToUtc(ITEM item){return toUtc(item.getStartDate(),item.getStartZone().getCode());}
+	public Date endToUtc(ITEM item){return toUtc(item.getEndDate(),item.getEndZone().getCode());}
+	
+	public static Date toUtc(Date d, String tzCode)
+	{
+		DateTime dt = new DateTime(d);
+		DateTime srcDateTime = dt.toDateTime(DateTimeZone.forID(tzCode));
+		DateTime utcDateTime = srcDateTime.withZone(DateTimeZone.forID(tzUtc));
+		return utcDateTime.toLocalDateTime().toDateTime().toDate();
+	}
+	
 	public static boolean supportedCode(String code)
 	{
 		for(String s : TimeZone.getAvailableIDs())
@@ -50,4 +72,6 @@ public class EjbTimeZoneFactory<L extends UtilsLang,
 		}
 		return false;
 	}
+	
+	
 }

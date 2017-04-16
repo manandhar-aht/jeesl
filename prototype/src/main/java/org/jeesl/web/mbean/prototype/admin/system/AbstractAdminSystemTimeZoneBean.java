@@ -48,13 +48,13 @@ public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
 	private Comparator<ZONE> comparatorTimeZone;
 	private EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> efZone;
 	
-	public void initSuper(JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, FacesMessageBean bMessage, String[] localeCodes, final Class<L> cL, final Class<D> cD, final Class<ZONE> cZone)
+	public void initSuper(JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, FacesMessageBean bMessage, String[] localeCodes, final Class<L> cL, final Class<D> cD, final Class<ZONE> cZone, final Class<IT> cItemType)
 	{
 		super.initAdmin(localeCodes, cL, cD, bMessage);
 		this.fCalendar=fCalendar;
 		this.cZone=cZone;
 
-		CalendarFactoryFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> ffCalendar = CalendarFactoryFactory.factory(cL,cD,cZone);
+		CalendarFactoryFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> ffCalendar = CalendarFactoryFactory.factory(cL,cD,cZone,cItemType);
 		efZone = ffCalendar.zone();
 		
 		comparatorTimeZone = (new TimeZoneComparator<L,D,CALENDAR,ZONE,CT,ITEM,IT>()).factory(TimeZoneComparator.Type.offset);
@@ -84,6 +84,7 @@ public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
 		if(EjbTimeZoneFactory.supportedCode(zone.getCode()))
 		{
 			zone = fCalendar.save(zone);
+			updatePerformed();
 			bMessage.growlSuccessSaved();
 		}
 		else
@@ -93,4 +94,6 @@ public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
 
 		reload();
 	}
+	
+	protected void updatePerformed(){}
 }

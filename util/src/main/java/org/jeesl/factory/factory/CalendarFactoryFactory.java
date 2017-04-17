@@ -3,6 +3,7 @@ package org.jeesl.factory.factory;
 import org.jeesl.api.facade.module.JeeslCalendarFacade;
 import org.jeesl.controller.handler.CalendarItemHandler;
 import org.jeesl.factory.ejb.module.calendar.EjbTimeZoneFactory;
+import org.jeesl.factory.txt.module.calendar.TxtCalendarItemFactory;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendar;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendarItem;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendarTimeZone;
@@ -49,14 +50,9 @@ public class CalendarFactoryFactory<L extends UtilsLang,
 		return new CalendarFactoryFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT>(cL,cD,cZone,cItemType);
 	}
 	
-	public EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> zone()
-	{
-		return new EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT>(cZone);
-	}
+	public EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> zone(){return new EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT>(cZone);}
 	
-	public CalendarItemHandler<L,D,CALENDAR,ZONE,CT,ITEM,IT> itemHandler(final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar)
-	{
-		EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> efZone = zone();
-		return new CalendarItemHandler<L,D,CALENDAR,ZONE,CT,ITEM,IT>(fCalendar,cZone,cItemType,efZone);
-	}
+	public TxtCalendarItemFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> txtItem() {return new TxtCalendarItemFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT>();}
+	
+	public CalendarItemHandler<L,D,CALENDAR,ZONE,CT,ITEM,IT> itemHandler(final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar){return new CalendarItemHandler<L,D,CALENDAR,ZONE,CT,ITEM,IT>(fCalendar,cZone,cItemType,zone(),txtItem());}
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.jeesl.api.facade.module.JeeslCalendarFacade;
 import org.jeesl.factory.ejb.module.calendar.EjbTimeZoneFactory;
+import org.jeesl.factory.txt.module.calendar.TxtCalendarItemFactory;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendar;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendarItem;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendarTimeZone;
@@ -28,9 +29,11 @@ public class CalendarItemHandler <L extends UtilsLang,
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(CalendarItemHandler.class);
+	private boolean debug = true;
 
 	private final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar;
 	private final EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> efZone;
+	private final TxtCalendarItemFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> tfItem;
 
 	private final Class<ZONE> cZone;
 	private final Class<IT> cItemType;
@@ -40,7 +43,7 @@ public class CalendarItemHandler <L extends UtilsLang,
 	private ITEM item; public ITEM getItem() {return item;} public void setItem(ITEM item) {this.item = item;}
 
 	
-	public CalendarItemHandler(final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, final Class<ZONE> cZone, final Class<IT> cItemType, EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> efZone)
+	public CalendarItemHandler(final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, final Class<ZONE> cZone, final Class<IT> cItemType, EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> efZone, final TxtCalendarItemFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> tfItem)
 	{
 		this.fCalendar=fCalendar;
 		
@@ -48,16 +51,36 @@ public class CalendarItemHandler <L extends UtilsLang,
 		this.cItemType=cItemType;
 		
 		this.efZone=efZone;
+		this.tfItem=tfItem;
+	}
+	
+	public void updateItem(ITEM item)
+	{
+		this.item = efZone.utc2Zones(item);
 	}
 	
 	public void saveItem() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info("Saving ...");
+		StringBuilder sb = new StringBuilder();
+
 		item.setStartZone(fCalendar.find(cZone,item.getStartZone()));
 		item.setEndZone(fCalendar.find(cZone,item.getEndZone()));
-		item = efZone.toUtc(item);
 		
+		if(debug)
+		{
+			sb.append("Saving ").append(item.getClass().getSimpleName());
+			sb.append(" ").append(item.getStartZone().getCode());
+			sb.append(" ").append(tfItem.debug(item));
+		}
+		
+		item = efZone.toUtc(item);
 		item.setType(fCalendar.find(cItemType,item.getType()));
 		item = fCalendar.save(item);
+		
+		if(debug)
+		{
+			sb.append(" Converted ").append(tfItem.debug(item));
+			logger.info(sb.toString());
+		}
 	}
 }

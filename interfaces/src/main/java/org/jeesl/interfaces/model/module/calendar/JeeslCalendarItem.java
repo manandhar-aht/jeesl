@@ -34,4 +34,7 @@ public interface JeeslCalendarItem <L extends UtilsLang,
 	
 	Date getEndDate();
 	void setEndDate(Date endDate);
+	
+	boolean isAllDay();
+	void setAllDay(boolean allDay);
 }

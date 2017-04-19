@@ -270,9 +270,7 @@ margin-top: 8px;
     white-space: normal;
 }
 
-.jeeslInvisible {
-    visibility:hidden;
-}
-.jeeslVisible {
-    visibility: visible !important;
-}
+.jeeslItalic {font-style:italic;}
+
+.jeeslInvisible {visibility:hidden;}
+.jeeslVisible {visibility: visible !important;}

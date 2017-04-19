@@ -21,6 +21,13 @@
 			<lang key="fr" translation="Name" />
 		</langs>
 	</translation>
+	<translation key="jeeslFeatureActive">
+		<langs>
+			<lang key="de" translation="Aktiv" />
+			<lang key="en" translation="Active" />
+			<lang key="fr" translation="Active" />
+		</langs>
+	</translation>
 	<translation key="jeeslFeatureRemark">
 		<langs>
 			<lang key="de" translation="Anwerkung" />

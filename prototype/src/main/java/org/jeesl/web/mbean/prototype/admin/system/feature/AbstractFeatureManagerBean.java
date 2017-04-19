@@ -37,8 +37,7 @@ public class AbstractFeatureManagerBean <F extends JeeslFeature>
 	public void realodFeatures()
 	{
 		features = fUtils.all(cFeature);
-		
-//		map.clear();
+		map.clear();
 		for(F feature : features)
 		{
 			map.put(feature.getCode(),feature.isVisible());

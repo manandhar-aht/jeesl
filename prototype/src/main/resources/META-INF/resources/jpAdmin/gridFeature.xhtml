@@ -29,9 +29,15 @@
 									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addFeature()}" update=":#{cc.id}:grid" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
-							<p:ajax event="rowSelect" update=":#{cc.id}:grid" listener="#{cc.attrs.bean.selectFeature()}"/>  
+							<p:ajax event="rowSelect" update=":#{cc.id}:grid" listener="#{cc.attrs.bean.selectFeature()}"/> 
+							<p:column headerText="#{msg.jeeslFeatureActive}">  
+								<aup:iconCheckmark value="#{f.visible}"/>
+							</p:column>
 				            <p:column headerText="#{msg.jeeslCode}">  
 								<h:outputText value="#{f.code}" />  
+				            </p:column>
+				            <p:column headerText="#{msg.jeeslFeatureName}">  
+								<h:outputText value="#{f.name}" />  
 				            </p:column>
 				       	</p:dataTable>
 					</h:form>
@@ -46,6 +52,9 @@
 														
 								<p:outputLabel value="#{msg.jeeslCode}"/>
 								<p:inputText value="#{cc.attrs.bean.feature.code}"/>
+								
+								<p:outputLabel value="#{msg.jeeslFeatureActive}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.feature.visible}"/>
 								
 								<p:outputLabel value="#{msg.jeeslFeatureName}"/>
 								<p:inputText value="#{cc.attrs.bean.feature.name}"/>

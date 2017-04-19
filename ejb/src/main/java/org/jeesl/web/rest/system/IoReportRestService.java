@@ -39,7 +39,7 @@ import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportStyleComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportTemplateComparator;
-import org.jeesl.util.query.xml.ReportQuery;
+import org.jeesl.util.query.xml.system.io.ReportQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

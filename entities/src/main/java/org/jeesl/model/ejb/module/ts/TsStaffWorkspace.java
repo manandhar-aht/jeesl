@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -32,7 +33,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(name = "StaffWorkspace",uniqueConstraints = @UniqueConstraint(columnNames = {"domain_id","role_id","user_id"}))
 @EjbErNode(name="Staff",category="ts",level=2,subset="ts")
 public class TsStaffWorkspace implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,EjbSaveable,
-					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser,TsWorkspace>
+					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser,TsWorkspace,TsWorkspace>
 {
 	public static final long serialVersionUID=1;
 
@@ -44,9 +45,14 @@ public class TsStaffWorkspace implements Serializable,EjbWithId,EjbPersistable,E
 	
 	@NotNull @ManyToOne
 	private TsWorkspace domain;
-	public TsWorkspace getDomain() {return domain;}
-	public void setDomain(TsWorkspace domain) {this.domain = domain;}
-		
+	@Override public TsWorkspace getDomain() {return domain;}
+	@Override public void setDomain(TsWorkspace domain) {this.domain = domain;}
+	
+	@Transient
+	private TsWorkspace domain2;
+	@Override public TsWorkspace getDomain2() {return domain2;}
+	@Override public void setDomain2(TsWorkspace domain2) {this.domain2=domain2;}
+	
 	@NotNull @ManyToOne
 	private SecurityRole role;
 	@Override public SecurityRole getRole() {return role;}

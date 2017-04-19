@@ -3,24 +3,30 @@ package org.jeesl.interfaces.model.system.util;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslProperty <L extends UtilsLang, D extends UtilsDescription>
+public interface JeeslProperty <L extends UtilsLang, D extends UtilsDescription,
+								C extends UtilsStatus<C,L,D>,
+								P extends JeeslProperty<L,D,C,P>>
 		extends EjbSaveable,EjbWithLang<L>,EjbWithDescription<D>
 {
-	public String getKey();
-	public void setKey(String key);
+	C getCategory();
+	void setCategory(C category);
 	
-	public String getValue();
-	public void setValue(String value);
+	String getKey();
+	void setKey(String key);
 	
-	public boolean isFrozen();
-	public void setFrozen(boolean frozen);
+	String getValue();
+	void setValue(String value);
 	
-	public Integer getPosition();
-	public void setPosition(Integer position);
+	boolean isFrozen();
+	void setFrozen(boolean frozen);
 	
-	public Boolean getDocumentation();
-	public void setDocumentation(Boolean documentation);
+	Integer getPosition();
+	void setPosition(Integer position);
+	
+	Boolean getDocumentation();
+	void setDocumentation(Boolean documentation);
 }

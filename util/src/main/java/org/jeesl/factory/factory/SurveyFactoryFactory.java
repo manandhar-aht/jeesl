@@ -2,7 +2,7 @@ package org.jeesl.factory.factory;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.handler.SurveyHandler;
-import org.jeesl.controller.processor.SurveyScoreProcessor;
+import org.jeesl.controller.processor.survey.SurveyScoreProcessor;
 import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyFactory;

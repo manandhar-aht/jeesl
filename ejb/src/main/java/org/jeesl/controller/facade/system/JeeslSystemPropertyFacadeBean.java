@@ -19,10 +19,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslSystemPropertyFacadeBean<L extends UtilsLang,D extends UtilsDescription,
-											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-											P extends JeeslProperty<L,D>>
+											C extends UtilsStatus<C,L,D>,
+											P extends JeeslProperty<L,D,C,P>>
 					extends UtilsFacadeBean
-					implements JeeslSystemPropertyFacade<L,D,CATEGORY,P>
+					implements JeeslSystemPropertyFacade<L,D,C,P>
 {	
 	private final Class<P> cProperty;
 	

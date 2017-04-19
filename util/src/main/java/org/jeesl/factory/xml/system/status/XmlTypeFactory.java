@@ -24,7 +24,7 @@ public class XmlTypeFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D 
 	
 	public XmlTypeFactory(Query q){this(q.getLang(),q.getType());}
 	public XmlTypeFactory(Type q){this(null,q);}
-	public XmlTypeFactory(String localeCode,Type q)
+	public XmlTypeFactory(String localeCode, Type q)
 	{
 		this.localeCode=localeCode;
 		this.q=q;

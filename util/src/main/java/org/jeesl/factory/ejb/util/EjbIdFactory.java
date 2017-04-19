@@ -1,6 +1,7 @@
 package org.jeesl.factory.ejb.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -45,8 +46,8 @@ public class EjbIdFactory
 		return true;
 	}
 	
-	public static <T extends EjbWithId> List<Long> toIds(List<T> list){return toIds(list,null);}
-	public static <T extends EjbWithId> List<Long> toIds(List<T> list, Boolean onlySaved)
+	public static <T extends EjbWithId> List<Long> toIds(Collection<T> list){return toIds(list,null);}
+	public static <T extends EjbWithId> List<Long> toIds(Collection<T> list, Boolean onlySaved)
 	{
 		List<Long> results = new ArrayList<Long>();
 		for(T ejb : list)
@@ -81,11 +82,29 @@ public class EjbIdFactory
 		}
 		ejb.setId(next);
 	}
+	public static <T extends EjbWithId> void setNextNegativeId(T ejb, Map<Long,T> map)
+	{
+		Set<Long> existing = new HashSet<Long>(EjbIdFactory.toIds(map.values()));
+		
+		boolean search = true;
+		long next = 0-existing.size();
+		while(search)
+		{
+			if(next==0){next--;}
+			else if(existing.contains(next)){next--;}
+			else{search=false;}
+		}
+		ejb.setId(next);
+	}
+	
+	
 	public static <T extends EjbWithId> void negativeToZero(List<T> list)
 	{
-		for(T ejb : list)
-		{
-			if(ejb.getId()<0){ejb.setId(0);}
-		}
+		for(T ejb : list) {negativeToZero(ejb);}
+	}
+	
+	public static <T extends EjbWithId> void negativeToZero(T ejb)
+	{
+		if(ejb.getId()<0){ejb.setId(0);}
 	}
 }

@@ -30,7 +30,7 @@ public class XmlFinanceFactory
 	}
 	public static Finance build(String code, String label, double value)
 	{
-		Finance xml = new Finance();
+		Finance xml = build();
 		xml.setCode(code);
 		xml.setLabel(label);
 		xml.setValue(value);
@@ -39,7 +39,7 @@ public class XmlFinanceFactory
 	
 	public static Finance create(String code, String label)
 	{
-		Finance xml = new Finance();
+		Finance xml = build();
 		xml.setCode(code);
 		xml.setLabel(label);
 		return xml;
@@ -64,14 +64,14 @@ public class XmlFinanceFactory
 	
 	public static Finance id(long id)
 	{
-		Finance xml = new Finance();
+		Finance xml = build();
 		xml.setId(id);
 		return xml;
 	}
 	
 	public static Finance id(long id, double value)
 	{
-		Finance xml = new Finance();
+		Finance xml = build();
 		xml.setId(id);
 		xml.setValue(value);
 		return xml;
@@ -79,8 +79,15 @@ public class XmlFinanceFactory
 	
 	public static Finance nr(int nr, double value)
 	{
-		Finance xml = new Finance();
+		Finance xml = build();
 		xml.setNr(nr);
+		xml.setValue(value);
+		return xml;
+	}
+	
+	public static Finance build(double value)
+	{
+		Finance xml = build();
 		xml.setValue(value);
 		return xml;
 	}

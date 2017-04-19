@@ -1,6 +1,7 @@
 package org.jeesl.controller.facade;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -239,36 +240,21 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	
 	// STAFF
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffU(Class<S> clStaff, USER user)
 	{return allForParent(clStaff, "user", user);}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffR(Class<S> clStaff, R role)
 	{return allForParent(clStaff, "role", role);}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
-		List<S> fStaffD(Class<S> clStaff, DOMAIN domain)
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+		List<S> fStaffD(Class<S> clStaff, D1 domain)
 	{return allForParent(clStaff, UtilsStaff.Attributes.domain.toString(), domain);}
 	
-	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
-		List<S> fStaffUR(Class<S> clStaff, USER user, R role)
-	{return allForParent(clStaff, "user", user, "role",role);}
-	
-	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId>
-		List<S> fStaffUD(Class<S> clStaff, USER user, DOMAIN domain)
-	{return allForParent(clStaff, "user", user,UtilsStaff.Attributes.domain.toString(),domain);}
-	
-	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, DOMAIN domain)
-	{return allForParent(cStaff, "role", role,UtilsStaff.Attributes.domain.toString(),domain);}
-	
-	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<DOMAIN> domains)
+	@Override public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffD(Class<S> cStaff, List<D1> domains)
 	{
 		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();
@@ -276,11 +262,8 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		CriteriaQuery<S> cQ = cB.createQuery(cStaff);
 		Root<S> staff = cQ.from(cStaff);
 
-		Path<DOMAIN> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
+		Path<D1> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
 		predicates.add(cB.isTrue(pDomain.in(domains)));
-		
-		Path<R> pRole = staff.get(UtilsStaff.Attributes.role.toString());
-		predicates.add(cB.equal(pRole,role));
 
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(staff);
@@ -288,7 +271,73 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,  DOMAIN extends EjbWithId> S fStaff(Class<S> clStaff, USER user, R role, DOMAIN domain) throws UtilsNotFoundException
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+		List<S> fStaffUR(Class<S> clStaff, USER user, R role)
+	{return allForParent(clStaff, "user", user, "role",role);}
+	
+	@Override
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+		List<S> fStaffUD(Class<S> clStaff, USER user, D1 domain)
+	{return allForParent(clStaff, "user", user,UtilsStaff.Attributes.domain.toString(),domain);}
+	
+	@Override
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, D1 domain)
+	{return allForParent(cStaff, "role", role,UtilsStaff.Attributes.domain.toString(),domain);}
+	
+	@SuppressWarnings("unchecked")
+	@Override public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, USER user, R role, List<D1> domains)
+	{
+		List<USER> users = new ArrayList<USER>(Arrays.asList(user));;
+		List<R> roles = new ArrayList<R>(Arrays.asList(role));
+		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
+		return fStaffURD(cStaff,users,roles,domains);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<D1> domains)
+	{
+		List<USER> users = null;
+		List<R> roles = new ArrayList<R>(Arrays.asList(role));
+		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
+		return fStaffURD(cStaff,users,roles,domains);
+	}
+	
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, List<USER> users, List<R> roles, List<D1> domains)
+	{
+		if(users!=null && users.isEmpty()){return new ArrayList<S>();}
+		if(roles!=null && roles.isEmpty()){return new ArrayList<S>();}
+		if(domains!=null && domains.isEmpty()){return new ArrayList<S>();}
+		
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<S> cQ = cB.createQuery(cStaff);
+		Root<S> staff = cQ.from(cStaff);
+
+		if(users!=null)
+		{
+			Path<D1> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
+			predicates.add(pDomain.in(domains));
+		}
+		
+		if(roles!=null)
+		{
+			Path<R> pRole = staff.get(UtilsStaff.Attributes.role.toString());
+			predicates.add(pRole.in(roles));
+		}
+		
+		if(domains!=null)
+		{
+			Path<D1> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
+			predicates.add(pDomain.in(domains));
+		}
+
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(staff);
+		return em.createQuery(cQ).getResultList();
+	}
+	
+	@Override
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> S fStaff(Class<S> clStaff, USER user, R role, D1 domain) throws UtilsNotFoundException
 	{
 		return oneForParents(clStaff,"user",user,"role",role,UtilsStaff.Attributes.domain.toString(),domain);
 	}
@@ -336,10 +385,10 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>, DOMAIN extends EjbWithId> List<DOMAIN> fDomains(Class<V> cView, Class<S> cStaff, USER user, V view)
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<D1> fDomains(Class<V> cView, Class<S> cStaff, USER user, V view)
 	{
 		List<R> roles = new ArrayList<R>();
-		List<DOMAIN> result = new ArrayList<DOMAIN>();
+		List<D1> result = new ArrayList<D1>();
 		
 		view = this.find(cView, view);
 		roles.addAll(view.getRoles());

@@ -27,7 +27,7 @@ public class SbMultiHandler <T extends EjbWithId>
 	private List<T> list;public List<T> getList() {return list;} public void setList(List<T> list) {this.list = list;}
 	private final List<T> selected;public List<T> getSelected() {return selected;}
 	private Map<T,Boolean> map;public Map<T,Boolean> getMap() {return map;}
-
+	
 	public SbMultiHandler(final Class<T> cT, List<T> list){this(cT,list,null);}
 	public SbMultiHandler(final Class<T> cT, SbToggleBean bean){this(cT,new ArrayList<T>(),bean);}
 	public SbMultiHandler(final Class<T> cT, List<T> list, SbToggleBean bean)
@@ -79,6 +79,7 @@ public class SbMultiHandler <T extends EjbWithId>
 	private void refresh()
 	{
 		selected.clear();
+		
 		for(T t : list)
 		{
 			if(!map.containsKey(t)) {map.put(t,false);}
@@ -91,10 +92,8 @@ public class SbMultiHandler <T extends EjbWithId>
 		return map.containsKey(t) && map.get(t);
 	}
 	
-	public boolean hasSelected()
-	{
-		return !selected.isEmpty();
-	}
+	public boolean hasSelected(){return !selected.isEmpty();}
+	public boolean allSelected(){return selected.size()==list.size();}
 
 	public void debug(boolean debug)
 	{

@@ -12,6 +12,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
+import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.status.Parent;
 import net.sf.ahtutils.xml.status.Status;
 
@@ -22,6 +23,7 @@ public class XmlStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, 
 	private Status q;
 	private String localeCode;
 	
+	public XmlStatusFactory(Query query){this(query.getLang(),query.getStatus());}
 	public XmlStatusFactory(Status q){this(null,q);}
 	public XmlStatusFactory(String localeCode, Status q)
 	{

@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 public class JeeslMsgBuilder
 {	
 	public static final String jeeslPath = "utils"+File.separator+"jeesl"+File.separator;
+	public static final String jeeslIoPath = "utils"+File.separator+"jeesl"+File.separator+"io"+File.separator;
 	
 	public static final String generic = "jeesl/msg/generic.xml";
 	public static final String report = "jeesl/msg/report.xml";
@@ -43,6 +44,7 @@ public class JeeslMsgBuilder
 	public static final String timeseries = "jeesl/msg/module/timeseries.xml";
 	public static final String io = "aht-utils/msg/module/io.xml";
 	public static final String monitoring = "aht-utils/msg/module/monitoring.xml";
+	public static final String calendar = "jeesl/msg/module/calendar.xml";
 	
 	//IO
 	public static final String ioTemplate = "jeesl/msg/admin/system/io/template.xml";
@@ -53,6 +55,8 @@ public class JeeslMsgBuilder
 	//System
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
 	public static final String systemJob = "jeesl/msg/admin/system/job.xml";
+	public static final String systemProperty = "jeesl/msg/admin/system/property.xml";
+	public static final String systemFeature = "jeesl/msg/admin/system/feature.xml";
 	
 	public static final String tooltip = "aht-utils/msg/tooltip.xml";
 	

@@ -10,35 +10,35 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.utils.Property;
 
 public class EjbPropertyFactory<L extends UtilsLang,D extends UtilsDescription,
-								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								PROPERTY extends JeeslProperty<L,D>>
+								C extends UtilsStatus<C,L,D>,
+								P extends JeeslProperty<L,D,C,P>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbPropertyFactory.class);
 	
-	final Class<PROPERTY> cProperty;
+	final Class<P> cProperty;
     
-	public EjbPropertyFactory(final Class<PROPERTY> cProperty)
+	public EjbPropertyFactory(final Class<P> cProperty)
 	{       
         this.cProperty = cProperty;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
-					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					PROPERTY extends JeeslProperty<L,D>>
-			EjbPropertyFactory<L,D,CATEGORY,PROPERTY> factory(final Class<PROPERTY> cProperty)
+					C extends UtilsStatus<C,L,D>,
+					P extends JeeslProperty<L,D,C,P>>
+			EjbPropertyFactory<L,D,C,P> factory(final Class<P> cProperty)
 	{
-		return new EjbPropertyFactory<L,D,CATEGORY,PROPERTY>(cProperty);
+		return new EjbPropertyFactory<L,D,C,P>(cProperty);
 	}
     
-	public PROPERTY build(Property property)
+	public P build(Property property)
 	{
 		return build(property.getKey(),property.getValue(),property.isFrozen());
     }
 	
-	public PROPERTY build(String code, String value){return build(code,value,false);}
-	public PROPERTY build(String code, String value, boolean frozen)
+	public P build(String code, String value){return build(code,value,false);}
+	public P build(String code, String value, boolean frozen)
 	{
-		PROPERTY ejb = null;
+		P ejb = null;
 		try
 		{
 			ejb = cProperty.newInstance();

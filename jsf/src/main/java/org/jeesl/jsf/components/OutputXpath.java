@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.jxpath.JXPathContext;
+import org.apache.commons.jxpath.JXPathNotFoundException;
 
 import net.sf.ahtutils.jsf.util.ComponentAttribute;
 
@@ -45,8 +46,13 @@ public class OutputXpath extends UIOutput
 		
 		ValueExpression ve = this.getValueExpression(Properties.value.toString());
 		JXPathContext ctx = JXPathContext.newContext(ve.getValue(context.getELContext()));
-				
-		writer.write(""+ctx.getValue(xpath));
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("");
+		try{sb.append(ctx.getValue(xpath));}
+		catch (JXPathNotFoundException ex){}
+		
+		writer.write(sb.toString());
 		
 		for(UIComponent uic : this.getChildren())
 		{

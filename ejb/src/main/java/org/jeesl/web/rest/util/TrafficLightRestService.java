@@ -3,6 +3,7 @@ package org.jeesl.web.rest.util;
 import org.jeesl.api.exception.xml.JeeslXmlStructureException;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
+import org.jeesl.util.query.xml.UtilsQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.rest.util.traffic.UtilsTrafficLightRestExport;
 import net.sf.ahtutils.interfaces.rest.util.traffic.UtilsTrafficLightRestImport;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
-import net.sf.ahtutils.util.query.UtilsQuery;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.ahtutils.xml.utils.TrafficLight;
 import net.sf.ahtutils.xml.utils.TrafficLights;

@@ -37,8 +37,8 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 												A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 												AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 												USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
-												STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,
-												DOMAIN extends EjbWithId>
+												STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
+												D1 extends EjbWithId, D2 extends EjbWithId>
 		implements Serializable,OpUserBean<L,D,C,R,V,U,A,AT,USER>
 {
 	private static final long serialVersionUID = 1L;
@@ -53,13 +53,13 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	protected Class<STAFF> cStaff;
 	
 	protected List<R> roles; public List<R> getRoles(){return roles;}
-	protected List<DOMAIN> domains; public List<DOMAIN> getDomains(){return domains;}
+	protected List<D1> domains; public List<D1> getDomains(){return domains;}
 	protected List<STAFF> staffs; public List<STAFF> getStaffs(){return staffs;}
 	
-	protected DOMAIN domain; public DOMAIN getDomain(){return domain;} public void setDomain(DOMAIN domain){this.domain = domain;}
+	protected D1 domain; public D1 getDomain(){return domain;} public void setDomain(D1 domain){this.domain = domain;}
 	protected STAFF staff; public STAFF getStaff(){return staff;} public void setStaff(STAFF staff) {this.staff = staff;}
 	
-	protected EjbStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,DOMAIN> efStaff;
+	protected EjbStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2> efStaff;
 	
 	private OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> opContactHandler;
 	@Override public OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> getOpUserHandler() {return opContactHandler;}

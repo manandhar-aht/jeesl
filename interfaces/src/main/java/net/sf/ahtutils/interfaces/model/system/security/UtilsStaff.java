@@ -15,7 +15,7 @@ public interface UtilsStaff<L extends UtilsLang,
 								   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 								   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 								   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
-								   DOMAIN extends EjbWithId>
+								   D1 extends EjbWithId, D2 extends EjbWithId>
 			extends EjbWithId,EjbSaveable,EjbRemoveable
 {
 	public enum Attributes {role,user,domain};
@@ -26,6 +26,9 @@ public interface UtilsStaff<L extends UtilsLang,
 	USER getUser();
 	void setUser(USER user);
 	
-	DOMAIN getDomain();
-	void setDomain(DOMAIN domain);
+	D1 getDomain();
+	void setDomain(D1 domain);
+	
+	D2 getDomain2();
+	void setDomain2(D2 domain2);
 }

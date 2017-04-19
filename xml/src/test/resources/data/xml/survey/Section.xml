@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<survey:section xmlns:s="http://ahtutils.aht-group.com/status" xmlns:t="http://ahtutils.aht-group.com/text" xmlns:survey="http://ahtutils.aht-group.com/survey" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" id="123" position="2" code="myCode">
+<survey:section xmlns:s="http://ahtutils.aht-group.com/status" xmlns:t="http://ahtutils.aht-group.com/text" xmlns:survey="http://ahtutils.aht-group.com/survey" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:nav="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" id="123" position="2" code="myCode" visible="true">
     <s:description version="1" key="myKey">myValue</s:description>
     <t:remark version="1" key="myKey">myValue</t:remark>
-    <survey:section id="123" position="2" code="myCode"/>
-    <survey:section id="123" position="2" code="myCode"/>
+    <survey:section id="123" position="2" code="myCode" visible="true"/>
+    <survey:section id="123" position="2" code="myCode" visible="true"/>
     <survey:question id="123" position="2" visible="true" code="myCode" topic="myTopic"/>
     <survey:question id="123" position="2" visible="true" code="myCode" topic="myTopic"/>
 </survey:section>

@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
+import org.jeesl.model.ejb.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -19,7 +20,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Data",category="ts",subset="ts",level=2)
 public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslTsData<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsBridge,TsEntityClass,TsInterval,TsData,TsWorkspace,TsQaFlag>
+								JeeslTsData<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsBridge,TsEntityClass,TsInterval,TsData,JeeslUser,TsWorkspace,TsQaFlag>
 {
 	public static final long serialVersionUID=1;
 	
@@ -38,6 +39,11 @@ public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public TsWorkspace getWorkspace() {return workspace;}
 	@Override public void setWorkspace(TsWorkspace workspace) {this.workspace = workspace;}
 
+	@ManyToOne
+	private TsTransaction transaction;
+	@Override public TsTransaction getTransaction() {return transaction;}
+	@Override public void setTransaction(TsTransaction transaction) {this.transaction = transaction;}
+	
 	private Date record;
 	@Override public Date getRecord() {return record;}
 	@Override public void setRecord(java.util.Date record) {this.record=record;}

@@ -47,6 +47,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,SU
 		Section xml = new Section();
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
+		if(q.isSetVisible()){xml.setVisible(ejb.isVisible());}
 		
 		if(q.isSetDescription()){xml.setDescription(XmlDescriptionFactory.build(ejb.getName()));}
 		if(q.isSetRemark() && ejb.getRemark()!=null){xml.setRemark(XmlRemarkFactory.build(ejb.getRemark()));}

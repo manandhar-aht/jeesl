@@ -40,7 +40,7 @@ public interface UtilsQaStaff<L extends UtilsLang,
 					QATS extends UtilsStatus<QATS,L,D>,
 					QARS extends UtilsStatus<QARS,L,D>,
 					QAUS extends UtilsStatus<QAUS,L,D>>
-			extends EjbWithId,UtilsStaff<L,D,C,R,V,U,A,AT,USER,QA>
+			extends EjbWithId,UtilsStaff<L,D,C,R,V,U,A,AT,USER,QA,QA>
 {
 	QASH getStakeholder();
 	void setStakeholder(QASH stakeholder);

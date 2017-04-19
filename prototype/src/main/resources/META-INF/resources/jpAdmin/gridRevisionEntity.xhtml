@@ -24,7 +24,7 @@
 							selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{e.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.aupRevisionEntities}">
-									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addEntity()}" update=":#{cc.id}:sView :#{cc.id}:sAttributes" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addEntity()}" update=":#{cc.id}:sView :#{cc.id}:sAttributes" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderEntites()}" update="@form"/>

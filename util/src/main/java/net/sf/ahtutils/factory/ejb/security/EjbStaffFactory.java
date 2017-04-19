@@ -31,8 +31,8 @@ public class EjbStaffFactory <L extends UtilsLang,
 						A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 						AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 						USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
-						STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,
-						DOMAIN extends EjbWithId>
+						STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
+						D1 extends EjbWithId, D2 extends EjbWithId>
 	extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbStaffFactory.class);
@@ -48,11 +48,11 @@ public class EjbStaffFactory <L extends UtilsLang,
 					A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 					AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 					USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
-					STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,
-					DOMAIN extends EjbWithId>
-    	EjbStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,DOMAIN> factory(final Class<STAFF> cStaff)
+					STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
+					D1 extends EjbWithId, D2 extends EjbWithId>
+    	EjbStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2> factory(final Class<STAFF> cStaff)
     {
-        return new EjbStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,DOMAIN>(cStaff);
+        return new EjbStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2>(cStaff);
     }
     
     public EjbStaffFactory(final Class<STAFF> cStaff)
@@ -61,10 +61,9 @@ public class EjbStaffFactory <L extends UtilsLang,
         this.cStaff = cStaff;
     } 
     
-    public STAFF build(USER user, R role, DOMAIN domain)
+    public STAFF build(USER user, R role, D1 domain)
     {
     	STAFF ejb = null;
-    	
     	try
     	{
 			ejb = cStaff.newInstance();
@@ -87,8 +86,8 @@ public class EjbStaffFactory <L extends UtilsLang,
 					A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 					AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 					USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
-					STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,
-					DOMAIN extends EjbWithId>
+					STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
+					D1 extends EjbWithId, D2 extends EjbWithId>
     	List<USER> toUsers(List<STAFF> staffs)
 	{
     	Set<USER> set = new HashSet<USER>();
@@ -105,16 +104,37 @@ public class EjbStaffFactory <L extends UtilsLang,
 			A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 			AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 			USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
-			STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,DOMAIN>,
-			DOMAIN extends EjbWithId>
-		Map<DOMAIN,List<USER>> toMapDomainUsers(List<STAFF> staffs)
+			STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
+			D1 extends EjbWithId, D2 extends EjbWithId>
+		Map<D1,List<USER>> toMapDomainUsers(List<STAFF> staffs)
 	{
-    	Map<DOMAIN,List<USER>> map = new HashMap<DOMAIN,List<USER>>();
+    	Map<D1,List<USER>> map = new HashMap<D1,List<USER>>();
 		for(STAFF staff : staffs)
 		{
 			if(!map.containsKey(staff.getDomain())){map.put(staff.getDomain(), new ArrayList<USER>());}
 			if(!map.get(staff.getDomain()).contains(staff.getUser())){map.get(staff.getDomain()).add(staff.getUser());}
 		}
 		return map;
+	}
+    
+    public static <L extends UtilsLang,
+			D extends UtilsDescription,
+			C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+			R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+			V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+			U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+			A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+			AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+			USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
+			STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
+			D1 extends EjbWithId, D2 extends EjbWithId>
+		List<D1> toDomains(List<STAFF> staffs)
+	{
+		Set<D1> set = new HashSet<D1>();
+		for(STAFF staff : staffs)
+		{
+			if(!set.contains(staff.getDomain())){set.add(staff.getDomain());}
+		}
+		return new ArrayList<D1>(set);
 	}
 }

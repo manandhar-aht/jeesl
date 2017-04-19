@@ -25,21 +25,21 @@ import net.sf.ahtutils.xml.utils.Property;
 import net.sf.ahtutils.xml.utils.Utils;
 
 public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescription,
-										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-										PROPERTY extends JeeslProperty<L,D>>
+										C extends UtilsStatus<C,L,D>,
+										P extends JeeslProperty<L,D,C,P>>
 					extends AbstractUtilsRest<L,D>
 					implements JeeslSystemPropertyRestExport,JeeslSystemPropertyRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(SystemPropertyRestService.class);
 	
-	private JeeslSystemPropertyFacade<L,D,CATEGORY,PROPERTY> fProperty;
+	private JeeslSystemPropertyFacade<L,D,C,P> fProperty;
 	
-	private final Class<CATEGORY> cCategory;
-	private final Class<PROPERTY> cProperty;
+	private final Class<C> cCategory;
+	private final Class<P> cProperty;
 	
-	private EjbPropertyFactory<L,D,CATEGORY,PROPERTY> efProperty;
+	private EjbPropertyFactory<L,D,C,P> efProperty;
 	
-	private SystemPropertyRestService(JeeslSystemPropertyFacade<L,D,CATEGORY,PROPERTY> fProperty,final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<PROPERTY> cProperty)
+	private SystemPropertyRestService(JeeslSystemPropertyFacade<L,D,C,P> fProperty,final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<C> cCategory, final Class<P> cProperty)
 	{
 		super(fProperty,localeCodes,cL,cD);
 		this.fProperty=fProperty;
@@ -51,12 +51,12 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
-					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					PROPERTY extends JeeslProperty<L,D>>
-		SystemPropertyRestService<L,D,CATEGORY,PROPERTY>
-			factory(JeeslSystemPropertyFacade<L,D,CATEGORY,PROPERTY> fNews, final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<PROPERTY> cProperty)
+					C extends UtilsStatus<C,L,D>,
+					P extends JeeslProperty<L,D,C,P>>
+		SystemPropertyRestService<L,D,C,P>
+			factory(JeeslSystemPropertyFacade<L,D,C,P> fNews, final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<C> cCategory, final Class<P> cProperty)
 	{
-		return new SystemPropertyRestService<L,D,CATEGORY,PROPERTY>(fNews,localeCodes,cL,cD,cCategory,cProperty);
+		return new SystemPropertyRestService<L,D,C,P>(fNews,localeCodes,cL,cD,cCategory,cProperty);
 	}
 	
 	@Override public Container exportSystemPropertyCategories() {return super.exportContainer(cCategory);}
@@ -82,7 +82,7 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 		
 		for(Property property : utils.getProperty())
 		{			
-			PROPERTY ejb;			
+			P ejb;			
 			try
 			{
 				fProperty.valueStringForKey(property.getKey(),null);
@@ -93,7 +93,7 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 				dut.success();
 				try
 				{
-					ejb = (PROPERTY)fUtils.persist(ejb);
+					ejb = (P)fUtils.persist(ejb);
 				}
 				catch (UtilsConstraintViolationException e) {dut.fail(e, true);}
 			}

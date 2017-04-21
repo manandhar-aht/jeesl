@@ -10,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class EjbLogFactory<L extends UtilsLang, D extends UtilsDescription,
+public class EjbLogItemFactory<L extends UtilsLang, D extends UtilsDescription,
 								LOG extends JeeslLog<L,D,LOG,ITEM,IMPACT,SCOPE,USER>,
 								ITEM extends JeeslLogItem<L,D,LOG,ITEM,IMPACT,SCOPE,USER>,
 								IMPACT extends UtilsStatus<IMPACT,L,D>,
@@ -18,21 +18,21 @@ public class EjbLogFactory<L extends UtilsLang, D extends UtilsDescription,
 								USER extends EjbWithId
 								>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbLogFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbLogItemFactory.class);
 	
-	private final Class<LOG> cLog;
+	private final Class<ITEM> cItem;
     
-	public EjbLogFactory(final Class<LOG> cLog)
+	public EjbLogItemFactory(final Class<ITEM> cItem)
 	{  
-        this.cLog = cLog;
+        this.cItem = cItem;
 	}
 	    
-	public LOG build()
+	public ITEM build()
 	{
-		LOG ejb = null;
+		ITEM ejb = null;
 		try
 		{
-			ejb = cLog.newInstance();
+			ejb = cItem.newInstance();
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

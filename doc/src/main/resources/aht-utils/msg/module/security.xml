@@ -43,6 +43,13 @@
     		<s:lang key="fr" translation="Roles"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslSecurityRole">
+    	<s:langs>
+    		<s:lang key="de" translation="Role"/>
+    		<s:lang key="en" translation="Role"/>
+    		<s:lang key="fr" translation="Role"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupSecurityRole">
     	<s:langs>
     		<s:lang key="de" translation="Role"/>

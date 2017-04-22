@@ -1,19 +1,21 @@
 package org.jeesl.api.facade.module;
 
+import java.util.Date;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyData;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.util.JeeslWithSurvey;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
@@ -55,6 +57,7 @@ public interface JeeslSurveyFacade <L extends UtilsLang,
 	TEMPLATE fcSurveyTemplate(TC category, TS status);
 	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status);
 	
+	<W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>> List<W> fSurveys(Class<W> c, List<SS> status, Date date);
 	List<VERSION> fVersions(TC category);
 	
 	List<ANSWER> fcAnswers(DATA data);

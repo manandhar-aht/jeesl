@@ -1,4 +1,11 @@
-package org.jeesl.interfaces.model.module.survey;
+package org.jeesl.interfaces.model.module.survey.data;
+
+import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyScore;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;

@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyData;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveySection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,5 +1,12 @@
 package org.jeesl.interfaces.model.module.survey;
 
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveySection;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

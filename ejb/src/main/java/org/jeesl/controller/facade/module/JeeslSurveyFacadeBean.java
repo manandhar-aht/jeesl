@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -169,6 +172,27 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		cQ.select(root);
 
 		return em.createQuery(cQ).getResultList();
+	}
+	
+	@Override public <W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
+		W fWithSurvey(Class<W> c, long surveyId) throws UtilsNotFoundException
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<W> cQ = cB.createQuery(c);
+		Root<W> root = cQ.from(c);
+		
+		Join<W,SURVEY> jSurvey = root.join(JeeslWithSurvey.Attributes.survey.toString());
+		Expression<Long> eId = jSurvey.get(JeeslSurvey.Attributes.id.toString());
+		
+		predicates.add(cB.equal(eId,surveyId));
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(root);
+	
+		TypedQuery<W> tQ = em.createQuery(cQ);
+		try	{return tQ.getSingleResult();}
+		catch (NoResultException ex){throw new UtilsNotFoundException(c.getSimpleName()+" not found for "+JeeslSurvey.class.getSimpleName()+"."+JeeslSurvey.Attributes.id+"="+surveyId);}
 	}
 	
 	@Override public List<VERSION> fVersions(TC category)

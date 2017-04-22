@@ -1,6 +1,7 @@
 package org.jeesl.model.json.survey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,7 +16,7 @@ public class Surveys implements Serializable
 	
 	@JsonProperty("survey")
 	private List<Survey> survey;
-	public List<Survey> getSurvey() {return survey;}
+	public List<Survey> getSurvey() {if(survey==null){survey = new ArrayList<Survey>();} return survey;}
 	public void setSurvey(List<Survey> survey) {this.survey = survey;}
 	
 	@Override public String toString()

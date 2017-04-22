@@ -12,21 +12,20 @@ public class JsonStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonStatusFactory.class);
 		
-	private JsonStatus q;
+	private final JsonStatus q;
 	
-	public JsonStatusFactory(JsonStatus q)
+	public JsonStatusFactory(String localeCode, JsonStatus q)
 	{
 		this.q=q;
 	}
 		
 	public JsonStatus build(S ejb)
 	{
-		JsonStatus xml = new JsonStatus();
+		JsonStatus json = new JsonStatus();
 	
 //		if(q.isSetId()){xml.setId(ejb.getId());}
-//		if(q.isSetCode()){xml.setCode(ejb.getCode());}
+		if(q.getCode()!=null){json.setCode(ejb.getCode());}
 	
-		return xml;
+		return json;
 	}
-
 }

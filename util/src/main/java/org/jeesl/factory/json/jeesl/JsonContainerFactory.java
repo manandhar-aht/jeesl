@@ -17,11 +17,11 @@ public class JsonContainerFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonContainerFactory.class);
 	
-	private JsonStatusFactory jfStatus;
+	private final JsonStatusFactory jfStatus;
 	
-	public JsonContainerFactory(JsonStatus query)
+	public JsonContainerFactory(String localeCode, JsonStatus query)
 	{
-		jfStatus = new JsonStatusFactory(query);
+		jfStatus = new JsonStatusFactory(localeCode,query);
 	}
 	
 	@SuppressWarnings("unchecked")

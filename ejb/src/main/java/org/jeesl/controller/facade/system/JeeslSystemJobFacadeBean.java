@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
+import org.jeesl.interfaces.model.system.job.JeeslJobConsumer;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
@@ -24,14 +25,16 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescription,
-									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,
+									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
-									JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>,FEEDBACK extends UtilsStatus<FEEDBACK,L,D>,
-									STATUS extends UtilsStatus<STATUS,L,D>
+									JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>,
+									FEEDBACK extends UtilsStatus<FEEDBACK,L,D>,
+									STATUS extends UtilsStatus<STATUS,L,D>,
+									CONSUMER extends JeeslJobConsumer<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>
 									>
 					extends UtilsFacadeBean
-					implements JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS>
+					implements JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>
 {	
 	@SuppressWarnings("unused")
 	private final Class<TEMPLATE> cTemplate;

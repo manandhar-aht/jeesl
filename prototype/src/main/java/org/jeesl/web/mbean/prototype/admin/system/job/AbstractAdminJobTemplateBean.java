@@ -40,11 +40,11 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 
 	private EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> efTemplate;
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<CONSUMER> cConsumer)
 	{
-		super.initSuper(langs,bMessage,fJob,cLang,cDescription,cTemplate,cCategory,cType,cJob,cStatus);
+		super.initSuper(langs,bMessage,fJob,cLang,cDescription,cTemplate,cCategory,cType,cJob,cStatus,cConsumer);
 		
-		efTemplate = ffTemplate.mail();
+		efTemplate = ffJob.template();
 		
 		if(debugOnInfo)
 		{
@@ -56,12 +56,13 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 	@Override public void toggled(Class<?> c)
 	{
 		logger.info(AbstractLogMessage.toggled(c));
+		super.toggled(c);
 		reloadTemplates();
-		clear(true);
+		reset(true);
 	}
 	
-	public void cancelTemplate(){clear(true);}
-	private void clear(boolean rTemplate)
+	public void cancelTemplate(){reset(true);}
+	private void reset(boolean rTemplate)
 	{
 		if(rTemplate){template=null;}
 	}
@@ -94,5 +95,13 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 		template.setType(fJob.find(cType,template.getType()));
 		template = fJob.save(template);
 		reloadTemplates();
+	}
+	
+	public void deleteTemplate() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(template));}
+		fJob.rm(template);
+		reloadTemplates();
+		reset(true);
 	}
 }

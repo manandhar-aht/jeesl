@@ -1,5 +1,6 @@
 package org.jeesl.factory.factory;
 
+import org.jeesl.factory.ejb.system.job.EjbJobRobotFactory;
 import org.jeesl.factory.ejb.system.job.EjbJobTemplateFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobConsumer;
@@ -28,9 +29,12 @@ public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 //	final Class<CATEGORY> cCategory;
 	private final Class<TEMPLATE> cTemplate;
 	
-	private JobFactoryFactory(final Class<TEMPLATE> cTemplate)
+	private final Class<CONSUMER> cConsumer;
+	
+	private JobFactoryFactory(final Class<TEMPLATE> cTemplate, final Class<CONSUMER> cConsumer)
 	{       
 		this.cTemplate = cTemplate;
+		this.cConsumer = cConsumer;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -42,13 +46,18 @@ public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 					STATUS extends UtilsStatus<STATUS,L,D>,
 					CONSUMER extends JeeslJobConsumer<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>
 					>
-		JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> factory(final Class<TEMPLATE> cTemplate)
+		JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> factory(final Class<TEMPLATE> cTemplate, final Class<CONSUMER> cConsumer)
 	{
-		return new JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>(cTemplate);
+		return new JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>(cTemplate,cConsumer);
 	}
 	
-	public EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> mail()
+	public EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> template()
 	{
 		return new EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>(cTemplate);
+	}
+	
+	public EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> consumer()
+	{
+		return new EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>(cConsumer);
 	}
 }

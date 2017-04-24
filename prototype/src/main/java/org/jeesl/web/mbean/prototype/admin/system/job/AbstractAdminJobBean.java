@@ -17,6 +17,7 @@ import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsDescription,
 									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>,
@@ -40,13 +41,14 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 	protected Class<TYPE> cType;
 	protected Class<JOB> cJob;
 	protected Class<STATUS> cStatus;
+	protected Class<CONSUMER> cConsumer;
 
-	protected JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> ffTemplate;
+	protected JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> ffJob;
 	
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	protected SbMultiHandler<TYPE> sbhType; public SbMultiHandler<TYPE> getSbhType() {return sbhType;}
 	 
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<CONSUMER> cConsumer)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fJob=fJob;
@@ -56,13 +58,19 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 		this.cType=cType;
 		this.cJob=cJob;
 		this.cStatus=cStatus;
+		this.cConsumer=cConsumer;
 		
-		ffTemplate = JobFactoryFactory.factory(cTemplate);
+		ffJob = JobFactoryFactory.factory(cTemplate,cConsumer);
 		
 		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,fJob.allOrderedPositionVisible(cCategory),this);
 		sbhCategory.selectAll();
 		
 		sbhType = new SbMultiHandler<TYPE>(cType,fJob.allOrderedPositionVisible(cType),this);
 		sbhType.selectAll();
+	}
+	
+	@Override public void toggled(Class<?> c)
+	{
+		
 	}
 }

@@ -39,9 +39,9 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	
 	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 	 
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<CONSUMER> cConsumer)
 	{
-		super.initSuper(langs,bMessage,fJob,cLang,cDescription,cTemplate,cCategory,cType,cJob,cStatus);
+		super.initSuper(langs,bMessage,fJob,cLang,cDescription,cTemplate,cCategory,cType,cJob,cStatus,cConsumer);
 		
 		try
 		{
@@ -62,6 +62,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	@Override public void toggled(Class<?> c)
 	{
 		logger.info(AbstractLogMessage.toggled(c));
+		super.toggled(c);
 		if(cCategory.isAssignableFrom(c)){logger.info(cCategory.getName());}
 		else if(cType.isAssignableFrom(c)){logger.info(cType.getName());}
 		else if(cStatus.isAssignableFrom(c)){logger.info(cStatus.getName());}

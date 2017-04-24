@@ -6,7 +6,7 @@ import java.util.List;
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.factory.ejb.system.job.EjbJobRobotFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
-import org.jeesl.interfaces.model.system.job.JeeslJobConsumer;
+import org.jeesl.interfaces.model.system.job.JeeslJobRobot;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,30 +20,30 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescription,
-									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>,
+									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
-									JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>,
+									JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT>,
 									FEEDBACK extends UtilsStatus<FEEDBACK,L,D>,
 									STATUS extends UtilsStatus<STATUS,L,D>,
-									CONSUMER extends JeeslJobConsumer<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>
+									ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT>
 									>
-					extends AbstractAdminJobBean<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER>
+					extends AbstractAdminJobBean<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminJobRobotBean.class);
 	
-	private List<CONSUMER> consumers; public List<CONSUMER> getConsumers() {return consumers;}
+	private List<ROBOT> robots; public List<ROBOT> getRobots() {return robots;}
 	
-	private CONSUMER consumer; public CONSUMER getConsumer() {return consumer;} public void setConsumer(CONSUMER consumer) {this.consumer = consumer;}
+	private ROBOT robot; public ROBOT getRobot() {return robot;} public void setRobot(ROBOT robot) {this.robot = robot;}
 	
-	private EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> efConsumer;
+	private EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT> efRobot;
 
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,CONSUMER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
 	{
-		super.initSuper(langs,bMessage,fJob,cLang,cDescription,cTemplate,cCategory,cType,cJob,cStatus,cConsumer);
+		super.initSuper(langs,bMessage,fJob,cLang,cDescription,cTemplate,cCategory,cType,cJob,cStatus,cRobot);
 		
 		if(debugOnInfo)
 		{
@@ -52,36 +52,36 @@ public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescr
 		}
 	}
 	
-	public void cancelConsumer(){reset(true);}
+	public void cancelRobot(){reset(true);}
 	private void reset(boolean clearConsumer)
 	{
-		if(clearConsumer){consumers=null;}
+		if(clearConsumer){robot=null;}
 	}
 	
 	protected void reloadConsumers()
 	{
-		consumers = fJob.all(cConsumer);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cConsumer,consumers));}
+		robots = fJob.all(cRobot);
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cRobot,robots));}
 //		Collections.sort(templates, comparatorTemplate);
 	}
-		
-	public void selectConsumer()
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(consumer));}
-	}
 	
-	public void addConsumer()
+	public void addRobot()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cConsumer));}
-		consumer = efConsumer.build();
-		consumer.setName(efLang.createEmpty(langs));
-		consumer.setDescription(efDescription.createEmpty(langs));
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cRobot));}
+		robot = efRobot.build();
+		robot.setName(efLang.createEmpty(langs));
+		robot.setDescription(efDescription.createEmpty(langs));
+	}
+		
+	public void selectRobot()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(robot));}
 	}
 	
 	public void saveConsumer() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(consumer));}
-		consumer = fJob.save(consumer);
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(robot));}
+		robot = fJob.save(robot);
 		reloadConsumers();
 	}
 }

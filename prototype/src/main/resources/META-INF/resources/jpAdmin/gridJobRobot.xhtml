@@ -19,34 +19,34 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sTemplates" width="8">
+				<aht:slot id="sRobots" width="8">
 					<h:form id="fTemplates">
-						<p:dataTable var="t" value="#{cc.attrs.bean.consumers}" draggableRows="true"
-							selection="#{cc.attrs.bean.consumer}" selectionMode="single" rowKey="#{t.id}">
+						<p:dataTable var="t" value="#{cc.attrs.bean.robots}" draggableRows="true"
+							selection="#{cc.attrs.bean.robot}" selectionMode="single" rowKey="#{t.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslJobTemplates}">
-									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addConsumer()}" update=":#{cc.id}:sTemplate" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addRobot()}" update=":#{cc.id}:sRobot" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderConsumers()}" update="@form"/>
-							<p:ajax event="rowSelect" update=":#{cc.id}:sConsumer" listener="#{cc.attrs.bean.selectTemplate()}"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sRobot" listener="#{cc.attrs.bean.selectRobot()}"/>
 							
 							<p:column headerText="#{msg.Name}"><h:outputText value="#{t.name[userBean.localeCode].lang}"/></p:column>
 						</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sConsumer" width="4">
+				<aht:slot id="sRobot" width="4">
 					<h:form id="fConsumer">
-						<p:panel header="#{msg.jeeslJobConsumer}" rendered="#{not empty cc.attrs.bean.consumer}" styleClass="auPanelWithGrid">
+						<p:panel header="#{msg.jeeslJobConsumer}" rendered="#{not empty cc.attrs.bean.robot}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
-								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelConsumer()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
+								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelRobot()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveConsumer()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}" rendered="#{cc.attrs.bean.uiAllowSave}" />
-								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteConsumer()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true" rendered="#{cc.attrs.bean.consumer.id gt 0}" />
+								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteConsumer()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true" rendered="#{cc.attrs.bean.robot.id gt 0}" />
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 							
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.consumer}" withDescription="true"
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.robot}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
 						</p:panel>
 					</h:form>

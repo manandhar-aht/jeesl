@@ -29,12 +29,12 @@ public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 //	final Class<CATEGORY> cCategory;
 	private final Class<TEMPLATE> cTemplate;
 	
-	private final Class<ROBOT> cConsumer;
+	private final Class<ROBOT> cRobot;
 	
-	private JobFactoryFactory(final Class<TEMPLATE> cTemplate, final Class<ROBOT> cConsumer)
+	private JobFactoryFactory(final Class<TEMPLATE> cTemplate, final Class<ROBOT> cRobot)
 	{       
 		this.cTemplate = cTemplate;
-		this.cConsumer = cConsumer;
+		this.cRobot = cRobot;
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -56,8 +56,8 @@ public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 		return new EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT>(cTemplate);
 	}
 	
-	public EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT> consumer()
+	public EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT> robot()
 	{
-		return new EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT>(cConsumer);
+		return new EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT>(cRobot);
 	}
 }

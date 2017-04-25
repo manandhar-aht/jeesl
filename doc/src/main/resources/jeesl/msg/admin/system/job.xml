@@ -77,4 +77,18 @@
 			<lang key="fr" translation="Timeout" />
 		</langs>
 	</translation>
+	<translation key="jeeslJobRobots">
+		<langs>
+			<lang key="de" translation="Robots" />
+			<lang key="en" translation="Robots" />
+			<lang key="fr" translation="Robots" />
+		</langs>
+	</translation>	
+	<translation key="jeeslJobRobot">
+		<langs>
+			<lang key="de" translation="Robot" />
+			<lang key="en" translation="Robot" />
+			<lang key="fr" translation="Robot" />
+		</langs>
+	</translation>
 </translations>

@@ -14,7 +14,8 @@ public class TestXmlSrs extends AbstractXmlSrsTest<Srs>
     public Srs build(boolean withChildren)
     {
     	Srs xml = new Srs();
-    
+    	xml.setCode("myCode");
+    	
     	if(withChildren)
     	{
     		xml.setVersion(TestXmlVersion.create(false));

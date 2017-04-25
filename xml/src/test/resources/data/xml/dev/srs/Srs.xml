@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<srs:srs xmlns:srs="http://www.jeesl.org/dev/srs" xmlns:ns2="http://www.openfuxml.org/text" xmlns:ofx="http://www.openfuxml.org" xmlns:ns4="http://www.openfuxml.org/editorial" xmlns:ns5="http://www.openfuxml.org/layout" xmlns:ns6="http://www.openfuxml.org/media" xmlns:ofxL="http://www.openfuxml.org/list" xmlns:ns8="http://www.openfuxml.org/table" xmlns:ns9="http://www.openfuxml.org/wiki">
+<srs:srs xmlns:srs="http://www.jeesl.org/dev/srs" xmlns:ns2="http://www.openfuxml.org/text" xmlns:ofx="http://www.openfuxml.org" xmlns:ns4="http://www.openfuxml.org/editorial" xmlns:ns5="http://www.openfuxml.org/layout" xmlns:ns6="http://www.openfuxml.org/media" xmlns:ofxL="http://www.openfuxml.org/list" xmlns:ns8="http://www.openfuxml.org/table" xmlns:ns9="http://www.openfuxml.org/wiki" code="myCode">
     <srs:version id="123" code="myCode"/>
     <srs:meta/>
-    <srs:actors/>
+    <srs:actors code="myCode"/>
     <srs:chapter title="Functional Requirements"/>
     <srs:chapter title="Functional Requirements"/>
 </srs:srs>

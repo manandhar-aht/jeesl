@@ -12,7 +12,7 @@
 	            <xsd:element ref="srs:actors" maxOccurs="1"/>
 	            <xsd:element ref="srs:chapter" maxOccurs="unbounded"/>
 			</xsd:sequence>
-
+			<xsd:attribute name="code" type="xsd:string"/>
 		</xsd:complexType>
     </xsd:element>
     <xsd:element name="chapter">
@@ -48,8 +48,10 @@
 	<xsd:element name="actors">
         <xsd:complexType>
             <xsd:sequence>
+            	<xsd:element ref="srs:actors" maxOccurs="unbounded"/>
 	            <xsd:element ref="srs:actor" maxOccurs="unbounded"/>
 			</xsd:sequence>
+			<xsd:attribute name="code" type="xsd:string"/>
 		</xsd:complexType>   
     </xsd:element>
 	<xsd:element name="actor">

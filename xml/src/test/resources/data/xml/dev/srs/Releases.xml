@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<srs:releases xmlns:srs="http://www.jeesl.org/dev/srs" module="myModule">
+    <srs:releases module="myModule"/>
+    <srs:releases module="myModule"/>
+    <srs:release code="myCode" name="myName"/>
+    <srs:release code="myCode" name="myName"/>
+</srs:releases>

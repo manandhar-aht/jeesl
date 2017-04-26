@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}version"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}meta"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}actors"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/dev/srs}releases"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}chapter" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlType;
     "version",
     "meta",
     "actors",
+    "releases",
     "chapter"
 })
 @XmlRootElement(name = "srs")
@@ -54,6 +56,8 @@ public class Srs
     protected Meta meta;
     @XmlElement(required = true)
     protected Actors actors;
+    @XmlElement(required = true)
+    protected Releases releases;
     @XmlElement(required = true)
     protected List<Chapter> chapter;
     @XmlAttribute(name = "code")
@@ -141,6 +145,34 @@ public class Srs
 
     public boolean isSetActors() {
         return (this.actors!= null);
+    }
+
+    /**
+     * Gets the value of the releases property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Releases }
+     *     
+     */
+    public Releases getReleases() {
+        return releases;
+    }
+
+    /**
+     * Sets the value of the releases property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Releases }
+     *     
+     */
+    public void setReleases(Releases value) {
+        this.releases = value;
+    }
+
+    public boolean isSetReleases() {
+        return (this.releases!= null);
     }
 
     /**

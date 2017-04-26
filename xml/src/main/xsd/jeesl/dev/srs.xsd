@@ -10,6 +10,7 @@
 	            <xsd:element ref="srs:version" maxOccurs="1"/>
 	            <xsd:element ref="srs:meta" maxOccurs="1"/>
 	            <xsd:element ref="srs:actors" maxOccurs="1"/>
+	            <xsd:element ref="srs:releases" maxOccurs="1"/>
 	            <xsd:element ref="srs:chapter" maxOccurs="unbounded"/>
 			</xsd:sequence>
 			<xsd:attribute name="code" type="xsd:string"/>
@@ -22,10 +23,10 @@
 	            <xsd:element ref="ofx:section" maxOccurs="unbounded"/>
 	            <xsd:element ref="srs:fr" maxOccurs="unbounded"/>
 			</xsd:sequence>
+			<xsd:attribute name="code" type="xsd:string"/>
 			<xsd:attribute name="title" type="xsd:string"/>
 		</xsd:complexType>
     </xsd:element>
-    
     <xsd:element name="version">
         <xsd:complexType>
 			<xsd:attribute name="id" type="xsd:long"/>
@@ -51,7 +52,7 @@
             	<xsd:element ref="srs:actors" maxOccurs="unbounded"/>
 	            <xsd:element ref="srs:actor" maxOccurs="unbounded"/>
 			</xsd:sequence>
-			<xsd:attribute name="code" type="xsd:string"/>
+			<xsd:attribute name="module" type="xsd:string"/>
 		</xsd:complexType>   
     </xsd:element>
 	<xsd:element name="actor">
@@ -59,6 +60,24 @@
         	<xsd:attribute name="code" type="xsd:string"/>
         	<xsd:attribute name="name" type="xsd:string"/>
         </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="releases">
+        <xsd:complexType>
+            <xsd:sequence>
+            	<xsd:element ref="srs:releases" maxOccurs="unbounded"/>
+            	<xsd:element ref="srs:release" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="module" type="xsd:string"/>
+		</xsd:complexType>   
+    </xsd:element>
+	<xsd:element name="release">
+        <xsd:complexType>
+            <xsd:sequence>
+
+			</xsd:sequence>
+			<xsd:attribute name="code" type="xsd:string"/>
+        	<xsd:attribute name="name" type="xsd:string"/>
+		</xsd:complexType>   
     </xsd:element>
     
     <xsd:element name="fr">

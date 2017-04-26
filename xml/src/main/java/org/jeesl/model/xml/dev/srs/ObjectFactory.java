@@ -78,6 +78,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Releases }
+     * 
+     */
+    public Releases createReleases() {
+        return new Releases();
+    }
+
+    /**
+     * Create an instance of {@link Release }
+     * 
+     */
+    public Release createRelease() {
+        return new Release();
+    }
+
+    /**
      * Create an instance of {@link Chapter }
      * 
      */

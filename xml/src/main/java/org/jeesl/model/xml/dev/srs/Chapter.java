@@ -29,6 +29,7 @@ import org.openfuxml.content.ofx.Section;
  *         &lt;element ref="{http://www.openfuxml.org}section" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}fr" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
+ *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="title" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -47,12 +48,14 @@ public class Chapter implements Serializable
 
     private final static long serialVersionUID = 1L;
     @XmlElementRefs({
-        @XmlElementRef(name = "section", namespace = "http://www.openfuxml.org", type = Section.class),
+        @XmlElementRef(name = "fr", namespace = "http://www.jeesl.org/dev/srs", type = Fr.class),
         @XmlElementRef(name = "chapter", namespace = "http://www.jeesl.org/dev/srs", type = Chapter.class),
-        @XmlElementRef(name = "fr", namespace = "http://www.jeesl.org/dev/srs", type = Fr.class)
+        @XmlElementRef(name = "section", namespace = "http://www.openfuxml.org", type = Section.class)
     })
     @XmlMixed
     protected List<Serializable> content;
+    @XmlAttribute(name = "code")
+    protected String code;
     @XmlAttribute(name = "title")
     protected String title;
 
@@ -74,10 +77,10 @@ public class Chapter implements Serializable
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Chapter }
+     * {@link String }
      * {@link Fr }
      * {@link Section }
-     * {@link String }
+     * {@link Chapter }
      * 
      * 
      */
@@ -94,6 +97,34 @@ public class Chapter implements Serializable
 
     public void unsetContent() {
         this.content = null;
+    }
+
+    /**
+     * Gets the value of the code property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * Sets the value of the code property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public boolean isSetCode() {
+        return (this.code!= null);
     }
 
     /**

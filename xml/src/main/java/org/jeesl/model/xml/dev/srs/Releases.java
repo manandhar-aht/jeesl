@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{http://www.jeesl.org/dev/srs}actors" maxOccurs="unbounded"/&gt;
- *         &lt;element ref="{http://www.jeesl.org/dev/srs}actor" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/dev/srs}releases" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/dev/srs}release" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="module" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -35,94 +35,94 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "actors",
-    "actor"
+    "releases",
+    "release"
 })
-@XmlRootElement(name = "actors")
-public class Actors
+@XmlRootElement(name = "releases")
+public class Releases
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
-    protected List<Actors> actors;
+    protected List<Releases> releases;
     @XmlElement(required = true)
-    protected List<Actor> actor;
+    protected List<Release> release;
     @XmlAttribute(name = "module")
     protected String module;
 
     /**
-     * Gets the value of the actors property.
+     * Gets the value of the releases property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the actors property.
+     * This is why there is not a <CODE>set</CODE> method for the releases property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getActors().add(newItem);
+     *    getReleases().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Actors }
+     * {@link Releases }
      * 
      * 
      */
-    public List<Actors> getActors() {
-        if (actors == null) {
-            actors = new ArrayList<Actors>();
+    public List<Releases> getReleases() {
+        if (releases == null) {
+            releases = new ArrayList<Releases>();
         }
-        return this.actors;
+        return this.releases;
     }
 
-    public boolean isSetActors() {
-        return ((this.actors!= null)&&(!this.actors.isEmpty()));
+    public boolean isSetReleases() {
+        return ((this.releases!= null)&&(!this.releases.isEmpty()));
     }
 
-    public void unsetActors() {
-        this.actors = null;
+    public void unsetReleases() {
+        this.releases = null;
     }
 
     /**
-     * Gets the value of the actor property.
+     * Gets the value of the release property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the actor property.
+     * This is why there is not a <CODE>set</CODE> method for the release property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getActor().add(newItem);
+     *    getRelease().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Actor }
+     * {@link Release }
      * 
      * 
      */
-    public List<Actor> getActor() {
-        if (actor == null) {
-            actor = new ArrayList<Actor>();
+    public List<Release> getRelease() {
+        if (release == null) {
+            release = new ArrayList<Release>();
         }
-        return this.actor;
+        return this.release;
     }
 
-    public boolean isSetActor() {
-        return ((this.actor!= null)&&(!this.actor.isEmpty()));
+    public boolean isSetRelease() {
+        return ((this.release!= null)&&(!this.release.isEmpty()));
     }
 
-    public void unsetActor() {
-        this.actor = null;
+    public void unsetRelease() {
+        this.release = null;
     }
 
     /**

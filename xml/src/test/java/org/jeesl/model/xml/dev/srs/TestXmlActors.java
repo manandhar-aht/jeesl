@@ -14,7 +14,7 @@ public class TestXmlActors extends AbstractXmlSrsTest<Actors>
     public Actors build(boolean withChildren)
     {
     	Actors xml = new Actors();
-    	xml.setCode("myCode");
+    	xml.setModule("myModule");
     	
     	if(withChildren)
     	{

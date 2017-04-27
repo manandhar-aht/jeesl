@@ -56,6 +56,13 @@
 			<s:lang key="fr" translation="Report Implementation"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IoSmsCategory">
+		<s:langs>
+			<s:lang key="de" translation="SMS Kategorie"/>
+			<s:lang key="en" translation="SMS Category"/>
+			<s:lang key="fr" translation="SMS Category"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="IoMailCategory">
 		<s:langs>
 			<s:lang key="de" translation="Mail Kategorie"/>

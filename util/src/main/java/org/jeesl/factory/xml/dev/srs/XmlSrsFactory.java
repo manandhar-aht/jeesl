@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 public class XmlSrsFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlSrsFactory.class);
-		
+	
+	public enum Chapter {fr}
+	
     public static Srs build()
     {
     	Srs xml = new Srs();

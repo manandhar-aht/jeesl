@@ -4,12 +4,20 @@ import org.jeesl.model.json.JsonFlatFigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 
 public class JsonFlatFigureFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonFlatFigureFactory.class);
+	
+	public static JsonFlatFigure build(EjbWithId ejb, Double...doubles)
+	{
+		JsonFlatFigure json = build(doubles);
+		json.setEjb(ejb);
+		return json;
+	}
 	
 	public static JsonFlatFigure build(Double...doubles)
 	{

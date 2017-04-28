@@ -7,9 +7,15 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+
 public class JsonFlatFigure implements Serializable
 {
 	public static final long serialVersionUID=1;
+
+	private EjbWithId ejb;
+	public EjbWithId getEjb() {return ejb;}
+	public void setEjb(EjbWithId ejb) {this.ejb = ejb;}
 
 	@JsonProperty("S1")
 	private String s1;

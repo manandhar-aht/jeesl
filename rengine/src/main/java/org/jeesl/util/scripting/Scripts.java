@@ -1,7 +1,7 @@
 package org.jeesl.util.scripting;
 
-public class Scripts {
-    
+public class Scripts
+{    
     public static final String weapResultValue = "scripts/vbs/getResultValue.vbs";
     public static final String weapSoftwareVersion = "scripts/vbs/getWeapVersion.vbs";
     public static final String weapAreas = "scripts/vbs/getAreas.vbs";

@@ -14,8 +14,8 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ScriptExecutor {
-    
+public class ScriptExecutor
+{   
     final static Logger logger = LoggerFactory.getLogger(ScriptExecutor.class);
     
     List<String> commands = new ArrayList<String>();
@@ -101,12 +101,12 @@ public class ScriptExecutor {
         return list;
     }
 
-    public static File createScriptFile (InputStream in) throws IOException {
+    public static File createScriptFile (InputStream in) throws IOException
+    {
         final File tempFile = File.createTempFile(UUID.randomUUID().toString(), ".vbs");
  //       tempFile.deleteOnExit();
-        try (FileOutputStream out = new FileOutputStream(tempFile)) {
-            IOUtils.copy(in, out);
-        }
+        FileOutputStream out = new FileOutputStream(tempFile);
+        IOUtils.copy(in, out);
         return tempFile;
     }
 

@@ -1,14 +1,14 @@
 package org.jeesl.connectors.weap;
 
-import org.jeesl.util.scripting.ScriptExecutor;
-import org.jeesl.util.scripting.Scripts;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.control.Alert;
+
 import org.jeesl.util.scripting.Interpreter;
+import org.jeesl.util.scripting.ScriptExecutor;
+import org.jeesl.util.scripting.Scripts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -176,11 +176,13 @@ public class WeapConnector {
         return activeScenario;
     }
     
-    public static void triggerWarning(String header) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("WEAP Connection Error");
-            alert.setHeaderText(header);
-            alert.setContentText("It was not possible to connect to WEAP using its API. Is a full version of WEAP installed and registered as accessible service for other programs? If not please try to launch this command in the directory WEAP is installed to: ' WEAP /regserver '");
+    public static void triggerWarning(String header)
+    {
+    	logger.warn("FX Code deactivated by Thorsten");
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("WEAP Connection Error");
+//        alert.setHeaderText(header);
+//        alert.setContentText("It was not possible to connect to WEAP using its API. Is a full version of WEAP installed and registered as accessible service for other programs? If not please try to launch this command in the directory WEAP is installed to: ' WEAP /regserver '");
     }
     
 }

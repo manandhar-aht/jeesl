@@ -1,6 +1,7 @@
 package org.jeesl.interfaces.model.system.job;
 
 import java.util.Date;
+import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -15,7 +16,8 @@ public interface JeeslJob<L extends UtilsLang,D extends UtilsDescription,
 							TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 							TYPE extends UtilsStatus<TYPE,L,D>,
-							JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>, FEEDBACK extends JeeslJobFeedback<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+							JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+							FEEDBACK extends JeeslJobFeedback<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 							FT extends UtilsStatus<FT,L,D>,
 							STATUS extends UtilsStatus<STATUS,L,D>,
 							ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
@@ -48,4 +50,7 @@ public interface JeeslJob<L extends UtilsLang,D extends UtilsDescription,
 	
 	USER getUser();
 	void setUser(USER user);
+	
+	List<FEEDBACK> getFeedbacks();
+	void setFeedbacks(List<FEEDBACK> feedbacks);
 }

@@ -21,7 +21,13 @@ public interface JeeslJobFeedback<L extends UtilsLang,D extends UtilsDescription
 							USER extends EjbWithEmail
 							>
 		extends EjbWithId,EjbSaveable,EjbRemoveable
-{		
+{
+	JOB getJob();
+	void setJob(JOB job);
+	
+	FT getType();
+	void setType(FT type);
+	
 	USER getUser();
 	void setUser(USER user);
 }

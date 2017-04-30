@@ -5,7 +5,9 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface JeeslJobCache<L extends UtilsLang,D extends UtilsDescription,
 							TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT,CACHE>,
@@ -17,7 +19,11 @@ public interface JeeslJobCache<L extends UtilsLang,D extends UtilsDescription,
 							ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT,CACHE>,
 							CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,STATUS,ROBOT,CACHE>
 							>
-		extends EjbWithId,EjbSaveable,EjbRemoveable
-{	
-
+		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithNonUniqueCode,EjbWithRecord
+{
+	TEMPLATE getTemplate();
+	void setTemplate(TEMPLATE template);
+	
+	byte[] getData();
+	void setData(byte[] data);
 }

@@ -24,4 +24,40 @@
             <us:description key="fr"></us:description>
         </us:descriptions>
     </us:status>
+    <us:status code="reportPdf" visible="true" position="3">
+        <us:langs>
+            <us:lang key="de" translation="Report PDF"/>
+            <us:lang key="en" translation="Report PDF"/>
+            <us:lang key="fr" translation="Report PDF"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="reportXlsx" visible="true" position="4">
+        <us:langs>
+            <us:lang key="de" translation="Report XLSX"/>
+            <us:lang key="en" translation="Report XLSX"/>
+            <us:lang key="fr" translation="Report XLSX"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="reportXml" visible="true" position="5">
+        <us:langs>
+            <us:lang key="de" translation="Report XML"/>
+            <us:lang key="en" translation="Report XML"/>
+            <us:lang key="fr" translation="Report XML"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
 </jeesl:container>

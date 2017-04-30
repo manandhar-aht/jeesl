@@ -7,6 +7,7 @@ import org.jeesl.api.rest.system.job.JeeslJobRestImport;
 import org.jeesl.factory.xml.module.job.XmlJobsFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
+import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
 import org.jeesl.interfaces.model.system.job.JeeslJobRobot;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.jeesl.model.xml.jeesl.Container;
@@ -22,14 +23,15 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class SystemJobRestService <L extends UtilsLang,D extends UtilsDescription,
-							TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER>,
+							TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 							TYPE extends UtilsStatus<TYPE,L,D>,
-							JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER>,
+							JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+							FEEDBACK extends JeeslJobFeedback<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 							FT extends UtilsStatus<FT,L,D>,
 							STATUS extends UtilsStatus<STATUS,L,D>,
-							ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER>,
-							CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER>,
+							ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+							CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 							USER extends EjbWithEmail
 							>
 					extends AbstractJeeslRestService<L,D>
@@ -37,14 +39,14 @@ public class SystemJobRestService <L extends UtilsLang,D extends UtilsDescriptio
 {
 	final static Logger logger = LoggerFactory.getLogger(SystemJobRestService.class);
 	
-	private JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER> fJob;
+	private JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob;
 	
 	private final Class<CATEGORY> cCategory;
 	private final Class<TYPE> cType;
 	private final Class<STATUS> cStatus;
 	private final Class<FT> cFeedbackType;
 	
-	private SystemJobRestService(JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER> fJob,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<FT> cFeedbackType, final Class<STATUS> cStatus)
+	private SystemJobRestService(JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<FT> cFeedbackType, final Class<STATUS> cStatus)
 	{
 		super(fJob,cL,cD);
 		this.fJob=fJob;
@@ -55,20 +57,20 @@ public class SystemJobRestService <L extends UtilsLang,D extends UtilsDescriptio
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
-					TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER>,
+					TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 					TYPE extends UtilsStatus<TYPE,L,D>,
-					JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER>,
+					JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>, FEEDBACK extends JeeslJobFeedback<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 					FT extends UtilsStatus<FT,L,D>,
 					STATUS extends UtilsStatus<STATUS,L,D>,
-					ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER>,
-					CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER>,
+					ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+					CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 					USER extends EjbWithEmail
 					>
-	SystemJobRestService<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER>
-		factory(JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER> fJob,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<FT> cFeedbackType, final Class<STATUS> cStatus)
+	SystemJobRestService<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>
+		factory(JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<FT> cFeedbackType, final Class<STATUS> cStatus)
 	{
-		return new SystemJobRestService<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FT,STATUS,ROBOT,CACHE,USER>(fJob,cL,cD,cCategory,cType,cFeedbackType,cStatus);
+		return new SystemJobRestService<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(fJob,cL,cD,cCategory,cType,cFeedbackType,cStatus);
 	}
 	
 	@Override public Container exportSystemJobCategories() {return xfContainer.build(fJob.allOrderedPosition(cCategory));}

@@ -38,7 +38,7 @@
 				</aht:slot>
 				<aht:slot id="sProperty" width="5">
 					<h:form id="fProperty">
-						<p:panel header="#{msg.jeeslProperty}" rendered="#{not empty cc.attrs.bean.property}" styleClass="auPanelWithGrid">
+						<p:panel id="pProperty"  header="#{msg.jeeslProperty}" rendered="#{not empty cc.attrs.bean.property}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:sProperties" tooltip="#{msg.ttSave}"/>
 							</f:facet>
@@ -57,6 +57,7 @@
 								<h:outputText rendered="#{cc.attrs.bean.property.frozen}" value="#{cc.attrs.bean.property.value}"/>
 							</p:panelGrid>
 						</p:panel>
+						<p:sticky target="pProperty" />
 					</h:form>
 				</aht:slot>
 			</aht:row>

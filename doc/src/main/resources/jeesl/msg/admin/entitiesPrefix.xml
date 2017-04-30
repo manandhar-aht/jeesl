@@ -24,8 +24,8 @@
 	<s:translation key="JobFeedback">
 		<s:langs>
 			<s:lang key="de" translation="Job Rückmeldung"/>
-			<s:lang key="en" translation="Job Rückmeldung"/>
-			<s:lang key="fr" translation="Job Rückmeldung"/>
+			<s:lang key="en" translation="Job Feedback"/>
+			<s:lang key="fr" translation="Job Feedback"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="GraphicStyle">

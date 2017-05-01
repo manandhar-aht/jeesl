@@ -53,7 +53,7 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	protected SbMultiHandler<TYPE> sbhType; public SbMultiHandler<TYPE> getSbhType() {return sbhType;}
 	 
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cConsumer)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fJob=fJob;
@@ -63,9 +63,9 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 		this.cType=cType;
 		this.cJob=cJob;
 		this.cStatus=cStatus;
-		this.cRobot=cConsumer;
+		this.cRobot=cRobot;
 		
-		ffJob = JobFactoryFactory.factory(cTemplate,cConsumer);
+		ffJob = JobFactoryFactory.factory(cTemplate,cRobot,cCache);
 		
 		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,fJob.allOrderedPositionVisible(cCategory),this);
 		sbhCategory.selectAll();

@@ -21,11 +21,11 @@
 			<s:lang key="fr" translation="Job Type"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="JobFeedback">
+	<s:translation key="JobFeedbackType">
 		<s:langs>
-			<s:lang key="de" translation="Job Rückmeldung"/>
-			<s:lang key="en" translation="Job Feedback"/>
-			<s:lang key="fr" translation="Job Feedback"/>
+			<s:lang key="de" translation="Job Rückmeldung Typ"/>
+			<s:lang key="en" translation="Job Feedback Type"/>
+			<s:lang key="fr" translation="Job Feedback Type"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="GraphicStyle">

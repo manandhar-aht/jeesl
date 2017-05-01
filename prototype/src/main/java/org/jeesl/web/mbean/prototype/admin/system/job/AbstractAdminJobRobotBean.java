@@ -47,9 +47,9 @@ public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescr
 	private EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efRobot;
 
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob, final Class<L> cLang, final Class<D> cDescription, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache)
 	{
-		super.initSuper(langs,bMessage,fJob,cLang,cDescription,cTemplate,cCategory,cType,cJob,cStatus,cRobot);
+		super.initSuper(langs,bMessage,fJob,cLang,cDescription,cTemplate,cCategory,cType,cJob,cStatus,cRobot,cCache);
 		efRobot = ffJob.robot();
 		
 		if(debugOnInfo)
@@ -57,6 +57,7 @@ public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescr
 			logger.info(AbstractLogMessage.multiStatus(cCategory,sbhCategory.getSelected(),sbhCategory.getList()));
 			logger.info(AbstractLogMessage.multiStatus(cType,sbhType.getSelected(),sbhType.getList()));
 		}
+		reloadConsumers();
 	}
 	
 	public void cancelRobot(){reset(true);}
@@ -65,7 +66,7 @@ public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescr
 		if(clearConsumer){robot=null;}
 	}
 	
-	protected void reloadConsumers()
+	private void reloadConsumers()
 	{
 		robots = fJob.all(cRobot);
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cRobot,robots));}

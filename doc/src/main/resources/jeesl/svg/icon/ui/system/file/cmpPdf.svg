@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   viewBox="0 0 98.207396 100.31452"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   width="100%"
+   height="100%"
+   sodipodi:docname="cmpPdf.svg"
+   inkscape:export-filename="C:\Users\Yann\Desktop\icon_pdf.png"
+   inkscape:export-xdpi="86"
+   inkscape:export-ydpi="86">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="957"
+     inkscape:window-height="824"
+     id="namedview22"
+     showgrid="false"
+     inkscape:zoom="3.7777195"
+     inkscape:cx="99.266237"
+     inkscape:cy="50.157261"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3046"
+       x1="105"
+       gradientUnits="userSpaceOnUse"
+       y1="123"
+       gradientTransform="translate(2,922.36)"
+       x2="-80"
+       y2="-112">
+      <stop
+         id="stop3602"
+         stop-color="#e6e6e6"
+         offset="0" />
+      <stop
+         id="stop3604"
+         stop-color="#f9f9f9"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3048"
+       x1="93"
+       gradientUnits="userSpaceOnUse"
+       y1="944.35999"
+       gradientTransform="translate(2,-2)"
+       x2="80"
+       y2="957.35999">
+      <stop
+         id="stop3610"
+         stop-color="#ccc"
+         offset="0" />
+      <stop
+         id="stop3616"
+         stop-color="#e6e6e6"
+         offset=".22008" />
+      <stop
+         id="stop3618"
+         stop-color="#fff"
+         offset=".46933" />
+      <stop
+         id="stop3612"
+         stop-color="#e6e6e6"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3046"
+       id="linearGradient3024"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.86046,0,0,0.86207,7.4284633,-6.4659277)"
+       x1="105"
+       y1="123"
+       x2="-80"
+       y2="-112" />
+    <filter
+       inkscape:collect="always"
+       id="filter3859"
+       x="-0.089920893"
+       width="1.1798418"
+       y="-0.18300068"
+       height="1.3660014"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.383279"
+         id="feGaussianBlur3861" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter3881"
+       x="-0.11642573"
+       width="1.2328515"
+       y="-0.12380068"
+       height="1.2476014"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.63841"
+         id="feGaussianBlur3883" />
+    </filter>
+  </defs>
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:url(#linearGradient3024);fill-rule:evenodd;stroke:#808080;stroke-width:0.86126465px;stroke-linejoin:round"
+     d="m 76.265263,0.43063232 h -51.6276 V 99.568682 h 73.1391 v -77.5863 L 76.265263,0.43063232 z"
+     id="path3874" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:#d52f67;fill-rule:evenodd;stroke:#656698;stroke-width:0.86126464999999985px;stroke-linejoin:round;fill-opacity:1;stroke-opacity:1"
+     d="M 97.776763,21.982382 76.265263,0.43063232 c 1.603295,7.18388788 1.835275,14.36812068 0,21.55174968 8.523287,-1.668105 14.737959,-0.489233 21.5115,0 z"
+     id="path3876" />
+  <rect
+     id="rect3878-7"
+     height="31.256001"
+     width="63.61002"
+     y="49.818356"
+     x="-85.075233"
+     style="fill:#000000;fill-opacity:1;stroke-width:0;filter:url(#filter3859)"
+     transform="matrix(0.94724471,0,0,0.97222252,86.005181,-33.188444)" />
+  <rect
+     id="rect3878"
+     height="31.256001"
+     width="63.61002"
+     y="11.724765"
+     x="0.12542455"
+     style="fill:#ff0000;fill-opacity:1;stroke-width:0" />
+  <text
+     id="text3880"
+     style="font-size:23.54243469px;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;font-family:Sans"
+     xml:space="preserve"
+     font-size="24.549px"
+     line-height="125%"
+     y="26.231239"
+     x="13.707592"
+     sodipodi:linespacing="125%"
+     transform="scale(0.95899768,1.0427554)"><tspan
+       id="tspan3882"
+       y="26.231239"
+       x="13.707592" /></text>
+  <text
+     style="font-size:23.54243469000000033px;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#d5ffff;font-family:Sans;fill-opacity:1"
+     xml:space="preserve"
+     font-size="24.549px"
+     line-height="125%"
+     y="34.657314"
+     x="8.8220768"
+     sodipodi:linespacing="125%"
+     transform="scale(0.95899768,1.0427554)"
+     id="text3026"><tspan
+       y="34.657314"
+       x="8.8220768"
+       id="tspan3028"
+       style="fill:#d5ffff;fill-opacity:1">PDF </tspan></text>
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Icon PDF - Ãcone</dc:title>
+        <dc:date>2012-08-23T09:00:35</dc:date>
+        <dc:description>Icon PDF - Ãcone</dc:description>
+        <dc:source>https://openclipart.org/detail/171857/icon-pdf---Ãcone-by-leandrosciola-171857</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>leandrosciola</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>Icon</rdf:li>
+            <rdf:li>Icon PDF</rdf:li>
+            <rdf:li>Ãcone</rdf:li>
+            <rdf:li>Ãcone PDF</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <path
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cccc"
+     d="M 48.245387,43.882822 C 43.946619,42.125216 50.537972,86.100365 66.786813,87.315197 50.728702,84.389129 16.439425,71.651437 12.398631,94.979733 26.230534,89.041123 37.223127,60.829112 48.245387,43.882822 z"
+     style="fill:none;stroke:#000000;stroke-width:3.76976681;stroke-linejoin:bevel;filter:url(#filter3881)"
+     id="path4607-4"
+     transform="matrix(0.9672358,0,0,0.95711153,24.334782,1.5341526)" />
+  <path
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cccc"
+     d="M 68.853392,41.360474 C 64.554624,39.602868 71.145977,83.578017 87.394818,84.792849 71.336707,81.866781 37.047431,69.129089 33.006636,92.457385 46.838539,86.518775 57.831132,58.306764 68.853392,41.360474 z"
+     style="fill:none;stroke:#ff0000;stroke-width:3.76976681;stroke-linejoin:bevel"
+     id="path4607" />
+</svg>

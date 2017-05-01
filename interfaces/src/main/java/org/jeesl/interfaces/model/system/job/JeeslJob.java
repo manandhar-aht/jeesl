@@ -29,6 +29,7 @@ public interface JeeslJob<L extends UtilsLang,D extends UtilsDescription,
 	public static enum Attributes{template,status,recordCreation,recordStart};
 	public static enum Status{queue,working,completed,failed};
 	public static enum Feedback{none,email,box}
+	public static enum Type{reportXml}
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);

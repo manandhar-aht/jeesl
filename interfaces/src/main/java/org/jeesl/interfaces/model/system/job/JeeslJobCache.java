@@ -23,6 +23,8 @@ public interface JeeslJobCache<L extends UtilsLang,D extends UtilsDescription,
 							>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithNonUniqueCode,EjbWithRecord
 {
+	public static enum Attributes{template,code};
+	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);
 	

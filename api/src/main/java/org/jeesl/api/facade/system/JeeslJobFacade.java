@@ -8,6 +8,9 @@ import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
 import org.jeesl.interfaces.model.system.job.JeeslJobRobot;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -28,5 +31,8 @@ public interface JeeslJobFacade <L extends UtilsLang,D extends UtilsDescription,
 								>
 			extends UtilsFacade
 {	
+	<E extends Enum<E>> TEMPLATE fJobTemplate(E type, String code) throws UtilsNotFoundException;
 	List<JOB> fJobs(List<CATEGORY> categories, List<TYPE> type, List<STATUS> status);
+	CACHE fJobCache(TEMPLATE template, String code) throws UtilsNotFoundException;
+	CACHE uJobCache(TEMPLATE template, String code, byte[] data) throws UtilsConstraintViolationException, UtilsLockingException;
 }

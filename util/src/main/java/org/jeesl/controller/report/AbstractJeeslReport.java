@@ -71,6 +71,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	private final Class<CATEGORY> cCategory;
 
 	protected final String localeCode;
+	protected String cacheCode;
 	
 	protected List<String> headers; public List<String> getHeaders() {return headers;}
 	

@@ -13,10 +13,15 @@ public class TxtJobCacheFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(TxtJobCacheFactory.class);
 		
-	public static String cacheCode(EjbWithId... ids)
+	public static String jobCode(String localeCode, EjbWithId... ids)
 	{
 		List<Long> list = new ArrayList<Long>();
 		for(EjbWithId id : ids){list.add(id.getId());}
-		return StringUtils.join(list,"-");
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(localeCode);
+		sb.append(":").append(StringUtils.join(list,"-"));
+		
+		return sb.toString();
 	}
 }

@@ -18,6 +18,7 @@ import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.factory.ejb.system.job.EjbJobCacheFactory;
+import org.jeesl.factory.ejb.system.job.EjbJobFactory;
 import org.jeesl.factory.factory.JobFactoryFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
@@ -51,19 +52,23 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 {	
 	private final Class<TEMPLATE> cTemplate;
 	private final Class<JOB> cJob;
+	private final Class<STATUS> cStatus;
 	private final Class<CACHE> cCache;
 	
 	private EjbJobCacheFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efCache;
+	private EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efJob;
 	
-	public JeeslSystemJobFacadeBean(EntityManager em,final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
+	public JeeslSystemJobFacadeBean(EntityManager em,final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<STATUS> cStatus, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
 	{
 		super(em);
 		this.cTemplate=cTemplate;
 		this.cJob=cJob;
+		this.cStatus=cStatus;
 		this.cCache=cCache;
 		
-		JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> ffJob = JobFactoryFactory.factory(cTemplate,cRobot,cCache);
+		JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> ffJob = JobFactoryFactory.factory(cTemplate,cJob,cRobot,cCache);
 		efCache = ffJob.cache();
+		efJob = ffJob.job();
 	}
 	
 	@Override public <E extends Enum<E>> TEMPLATE fJobTemplate(E type, String code) throws UtilsNotFoundException
@@ -154,6 +159,14 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		cache = this.save(cache);
 		
 		return cache;
+	}
+
+	@Override
+	public JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	{
+		STATUS status = this.fByCode(cStatus,JeeslJob.Status.queue);
+		JOB job = efJob.build(user,template,status,code,name);
+		return this.save(job);
 	}
 
 

@@ -2,5 +2,6 @@ package org.jeesl.interfaces.controller.report;
 
 public interface JeeslCacheReport
 {
-	public String getCacheCode();
+	public String getJobCode();
+	public String getJobName();
 }

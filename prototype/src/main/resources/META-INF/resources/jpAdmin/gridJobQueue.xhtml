@@ -4,8 +4,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
@@ -19,44 +20,21 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sQueue" width="9">
+				<aht:slot id="sQueue" width="12">
 					<h:form id="fQueue">
 						<p:dataTable var="j" value="#{cc.attrs.bean.jobs}" draggableRows="true"
 							selection="#{cc.attrs.bean.job}" selectionMode="single" rowKey="#{j.id}">
 							<f:facet name="header"><aht:pfDataTableHeader title="#{msg.jeeslJobQueue}"/></f:facet>
-							<p:ajax event="rowSelect" update=":#{cc.id}:sMail" listener="#{cc.attrs.bean.selectJob()}"/>
-							<p:column rendered="#{cc.attrs.withCategory}" headerText="#{msg.jeeslJobCategory}"><h:outputText value="#{j.category.name[userBean.localeCode].lang}"/></p:column>
-							<p:column rendered="#{cc.attrs.withCategory}" headerText="#{msg.jeeslJobType}"><h:outputText value="#{j.type.name[userBean.localeCode].lang}"/></p:column>
+							<p:ajax event="rowSelect" update=":#{cc.id}" listener="#{cc.attrs.bean.selectJob()}"/>
+							<p:column rendered="#{cc.attrs.withCategory}" headerText="#{msg.jeeslJobCategory}"><h:outputText value="#{j.template.category.name[localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslJobType}"><jtp:statusSymbolizer value="#{j.template.type}" height="12"/></p:column>
 							<p:column headerText="#{msg.jeeslJobCreated}"><h:outputText value="#{j.recordCreation}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText></p:column>
 							<p:column headerText="#{msg.jeeslJobStarted}"><h:outputText value="#{j.recordStart}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
 							<p:column headerText="#{msg.jeeslJobCompleted}"><h:outputText value="#{j.recordComplete}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
-							<p:column headerText="#{msg.jeeslJobStatus}"><h:outputText value="#{j.status.name[userBean.localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslJobStatus}"><h:outputText value="#{j.status.name[localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslJobDescription}"><h:outputText value="#{j.template.name[localeCode].lang} #{j.name}"/></p:column>
 						</p:dataTable>
 					</h:form>
-				</aht:slot>
-				<aht:slot id="sMail" width="3">
-					<p:panel header="#{msg.jeeslIoMail}" rendered="#{not empty cc.attrs.bean.job}" styleClass="auPanelWithGrid">
-						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
-							<p:outputLabel value="#{msg.jeeslJobCategory}" rendered="#{cc.attrs.withCategory}"/>
-							<h:outputText value="#{cc.attrs.bean.job.category.name[localeCode].lang}" rendered="#{cc.attrs.withCategory}"/>
-							
-							<p:outputLabel value="#{msg.jeeslJobType}"/>
-							<h:outputText value="#{cc.attrs.bean.job.type.name[localeCode].lang}"/>
-							
-							<p:outputLabel value="#{msg.jeeslJobCreated}"/>
-							<h:outputText value="#{cc.attrs.bean.job.recordCreation}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
-							
-							<p:outputLabel value="#{msg.jeeslJobStarted}"/>
-							<h:outputText value="#{cc.attrs.bean.job.recordSpool}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
-							
-							<p:outputLabel value="#{msg.jeeslJobCompleted}"/>
-							<h:outputText value="#{cc.attrs.bean.job.recordSent}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText>
-							
-							<p:outputLabel value="#{msg.jeeslJobStatus}"/>
-							<h:outputText value="#{cc.attrs.bean.job.status.name[localeCode].lang}"/>
-							
-						</p:panelGrid>
-					</p:panel>
 				</aht:slot>
 			</aht:row>
 	    </aup:grid>

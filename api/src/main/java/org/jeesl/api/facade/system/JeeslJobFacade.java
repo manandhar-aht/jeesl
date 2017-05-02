@@ -35,4 +35,5 @@ public interface JeeslJobFacade <L extends UtilsLang,D extends UtilsDescription,
 	List<JOB> fJobs(List<CATEGORY> categories, List<TYPE> type, List<STATUS> status);
 	CACHE fJobCache(TEMPLATE template, String code) throws UtilsNotFoundException;
 	CACHE uJobCache(TEMPLATE template, String code, byte[] data) throws UtilsConstraintViolationException, UtilsLockingException;
+	JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException;
 }

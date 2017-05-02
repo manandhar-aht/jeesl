@@ -65,7 +65,7 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 		this.cStatus=cStatus;
 		this.cRobot=cRobot;
 		
-		ffJob = JobFactoryFactory.factory(cTemplate,cRobot,cCache);
+		ffJob = JobFactoryFactory.factory(cTemplate,cJob,cRobot,cCache);
 		
 		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,fJob.allOrderedPositionVisible(cCategory),this);
 		sbhCategory.selectAll();

@@ -1,6 +1,7 @@
 package org.jeesl.factory.factory;
 
 import org.jeesl.factory.ejb.system.job.EjbJobCacheFactory;
+import org.jeesl.factory.ejb.system.job.EjbJobFactory;
 import org.jeesl.factory.ejb.system.job.EjbJobRobotFactory;
 import org.jeesl.factory.ejb.system.job.EjbJobTemplateFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
@@ -34,13 +35,15 @@ public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 //	final Class<D> cD;
 //	final Class<CATEGORY> cCategory;
 	private final Class<TEMPLATE> cTemplate;
+	private final Class<JOB> cJob;
 	
 	private final Class<ROBOT> cRobot;
 	private final Class<CACHE> cCache;
 	
-	private JobFactoryFactory(final Class<TEMPLATE> cTemplate, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
+	private JobFactoryFactory(final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
 	{       
 		this.cTemplate = cTemplate;
+		this.cJob = cJob;
 		this.cRobot = cRobot;
 		this.cCache = cCache;
 	}
@@ -57,14 +60,19 @@ public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 					CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 					USER extends EjbWithEmail
 					>
-		JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> factory(final Class<TEMPLATE> cTemplate, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
+		JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> factory(final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
 	{
-		return new JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cTemplate,cRobot,cCache);
+		return new JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cTemplate,cJob,cRobot,cCache);
 	}
 	
 	public EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> template()
 	{
 		return new EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cTemplate);
+	}
+	
+	public EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> job()
+	{
+		return new EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cJob);
 	}
 	
 	public EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> robot()

@@ -70,8 +70,9 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	private final Class<REPORT> cReport;
 	private final Class<CATEGORY> cCategory;
 
-	protected final String localeCode;
-	protected String cacheCode;
+	protected String localeCode;
+	protected String jobCode;
+	protected String jobName;
 	
 	protected List<String> headers; public List<String> getHeaders() {return headers;}
 	

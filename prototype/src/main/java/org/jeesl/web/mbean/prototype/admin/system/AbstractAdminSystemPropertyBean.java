@@ -52,12 +52,19 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends Util
 		
 		sbhCategory = new SbMultiHandler<C>(cCategory,fProperty.allOrderedPositionVisible(cCategory),this);
 		sbhCategory.selectAll();
+		if(debugOnInfo)
+		{
+			logger.info(SbMultiHandler.class.getSimpleName()+":"+cCategory.getSimpleName()+" "+sbhCategory.getSelected().size()+"/"+sbhCategory.getList().size());
+		}
 	}
 	
 	@Override
 	public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
-
+		if(debugOnInfo)
+		{
+			logger.info(SbMultiHandler.class.getSimpleName()+" toggled, but NYI");
+		}
 	}
 	
 	protected void refreshList()

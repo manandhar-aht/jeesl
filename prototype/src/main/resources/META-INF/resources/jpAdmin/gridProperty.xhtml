@@ -12,11 +12,11 @@
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
-		<composite:attribute name="bean" required="false" default="#{adminSystemPropertyBean}"/>
+		<composite:attribute name="bean" required="true"/>
 	</composite:interface>
 	
 	<composite:implementation>
-		<aup:grid>
+		<aup:grid id="grid">
 			<aht:row id="row1">
 				<aht:slot id="sProperties" width="7">
 					<h:form id="fProperties">

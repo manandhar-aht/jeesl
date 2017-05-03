@@ -1,6 +1,9 @@
 package org.jeesl.jsf.components;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 import javax.el.ValueExpression;
 import javax.faces.component.FacesComponent;
@@ -11,13 +14,18 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.JXPathNotFoundException;
+import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.ComponentAttribute;
 
 @FacesComponent("org.jeesl.jsf.components.OutputXpath")
 public class OutputXpath extends UIOutput
 {	
-	private static enum Properties {styleClass,value,xpath}
+	final static Logger logger = LoggerFactory.getLogger(OutputXpath.class);
+	private static enum Properties {styleClass,value,xpath,column}
 	
 	@Override public boolean getRendersChildren(){return true;}
 	
@@ -42,15 +50,53 @@ public class OutputXpath extends UIOutput
 	{
 		ResponseWriter writer = context.getResponseWriter();
 		
-		String xpath = ComponentAttribute.get(Properties.xpath.toString(), "", context, this);
-		
+		String xpath = ComponentAttribute.get(Properties.xpath.toString(),"",context,this);
+				
 		ValueExpression ve = this.getValueExpression(Properties.value.toString());
 		JXPathContext ctx = JXPathContext.newContext(ve.getValue(context.getELContext()));
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("");
-		try{sb.append(ctx.getValue(xpath));}
+			
+		try
+		{
+			Object oColumn = ComponentAttribute.getObject(Properties.column.toString(),null,context,this);
+			if(oColumn!=null && JeeslReportColumn.class.isAssignableFrom(oColumn.getClass()))
+			{
+				JeeslReportColumn c = (JeeslReportColumn)oColumn;
+//				logger.info(c.getClass().getName()+" "+c.toString()+" "+c.getCode());
+				if(c.getDataType()!=null)
+				{
+					UtilsStatus dt = c.getDataType();
+//					logger.info("   "+dt.getCode()+" "+dt.getStyle()+" "+dt.getSymbol());
+					
+					if(dt.getCode().startsWith("numberDouble"))
+					{
+						DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());
+						dfs.setDecimalSeparator(',');
+						dfs.setGroupingSeparator('.'); 
+						
+						DecimalFormat df = new DecimalFormat(dt.getSymbol());
+						df.setDecimalFormatSymbols(dfs);
+
+						sb.append(df.format(ctx.getValue(xpath)));
+					}
+					else
+					{
+						// Fallback
+						sb.append(ctx.getValue(xpath));
+					}
+				}
+			}
+			else
+			{
+				// Fallback
+				sb.append(ctx.getValue(xpath));
+			}
+		}
 		catch (JXPathNotFoundException ex){}
+		
+		
 		
 		writer.write(sb.toString());
 		

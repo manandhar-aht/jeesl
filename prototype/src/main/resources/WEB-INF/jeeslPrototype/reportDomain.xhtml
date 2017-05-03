@@ -8,6 +8,6 @@
 	xmlns:jeesl="http://www.jeesl.org/jsf"
 >
 	<c:forEach var="c" items="#{report.columns}">
-		<p:column><jeesl:outputXpath value="#{value}" xpath="#{c.queryCell}"/></p:column>
+		<p:column><jeesl:outputXpath value="#{value}" xpath="#{c.queryCell}" column="#{c}"/></p:column>
 	</c:forEach>
 </ui:composition>

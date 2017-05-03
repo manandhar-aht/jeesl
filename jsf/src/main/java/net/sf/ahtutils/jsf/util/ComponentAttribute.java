@@ -100,6 +100,29 @@ public class ComponentAttribute
 		return value;
 	}
 	
+	public static Object getObject(String attribute, Object defaultValue, FacesContext context, UIComponent component)
+	{
+		Object value = null;
+		if(component.getAttributes().containsKey(attribute))
+		{
+			value = component.getAttributes().get(attribute);
+//			logger.info("Value for "+attribute+" found in component.map: "+value);
+		}
+		else
+		{
+//			logger.info("Searching ValueExpression for "+attribute);
+			ValueExpression ve = component.getValueExpression(attribute);
+			if(ve!=null)
+			{
+				value=ve.getValue(context.getELContext());
+//				logger.info("Found ValuieExpression: "+value);
+			}
+//			logger.info("Value is now: "+value);
+		}
+		if(value==null){value=defaultValue;}
+		return value;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static <T extends EjbWithId> T getObject(Class<T> c, String attribute, FacesContext context, UIComponent component)
 	{

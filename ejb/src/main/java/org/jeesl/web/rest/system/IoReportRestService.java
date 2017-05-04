@@ -201,6 +201,8 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	@Override public Container exportSystemIoReportRowType() {return xfContainer.build(fReport.allOrderedPosition(cRt));}
 	@Override public Container exportSystemIoReportColumnWidth() {return xfContainer.build(fReport.allOrderedPosition(cColumWidth));}
 
+	@Override public Container exportSystemIoReportStyleAlignment() {logger.warn("NYI****************************");return xfContainer.build(fReport.allOrderedPosition(cColumWidth));}
+	
 	@Override public Reports exportSystemIoReports()
 	{
 		Reports reports = XmlReportsFactory.build();
@@ -243,7 +245,9 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 	@Override public DataUpdate importSystemIoReportSettingTransformation(Container types){return importStatus(cTransformation,types,null);}
 	@Override public DataUpdate importSystemIoReportSettingImplementation(Container types){return importStatus(cImplementation,types,null);}
 	@Override public DataUpdate importSystemIoReportRowType(Container types){return importStatus(cRt,types,null);}
-	@Override public DataUpdate importSystemIoReportColumnWidth(Container types){return importStatus(cColumWidth,types,null);}
+	@Override public DataUpdate importSystemIoReportColumnWidth(Container container){return importStatus(cColumWidth,container,null);}
+	
+	@Override public DataUpdate importSystemIoReportStyleAlignment(Container container) {logger.warn("NYI****************************");return importStatus(cColumWidth,container,null);}
 	
 	@Override public DataUpdate importSystemIoReportTemplates(Templates templates)
 	{
@@ -539,4 +543,6 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 
 		return eRow;
 	}
+
+
 }

@@ -30,6 +30,9 @@ public interface JeeslIoReportRestImport
 	@POST @Path("/system/io/report/styles") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoReportStyles(Styles styles);
 	
+	@POST @Path("/system/io/report/style/alignment") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
+	DataUpdate importSystemIoReportStyleAlignment(Container container);
+	
 	@POST @Path("/system/io/report/setting/filling") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemIoReportSettingFilling(Container container);
 	

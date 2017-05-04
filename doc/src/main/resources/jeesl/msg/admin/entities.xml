@@ -28,6 +28,13 @@
 			<s:lang key="fr" translation="Row Type"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IoReportAlignment">
+		<s:langs>
+			<s:lang key="de" translation="Ausrichtung"/>
+			<s:lang key="en" translation="Alignment"/>
+			<s:lang key="fr" translation="Alignment"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="IoReportColumnWidth">
 		<s:langs>
 			<s:lang key="de" translation="Spaltenbreite"/>

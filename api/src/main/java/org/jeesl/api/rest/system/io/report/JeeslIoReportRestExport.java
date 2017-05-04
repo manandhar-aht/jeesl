@@ -28,6 +28,9 @@ public interface JeeslIoReportRestExport
 	@GET @Path("/system/io/report/styles") @Produces(MediaType.APPLICATION_XML)
 	Styles exportSystemIoReportStyles();
 	
+	@GET @Path("/system/io/report/style/alignment") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemIoReportStyleAlignment();
+	
 	@GET @Path("/system/io/report/setting/filling") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemIoReportSettingFilling();
 	

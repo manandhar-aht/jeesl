@@ -60,4 +60,16 @@
             <us:description key="fr"></us:description>
         </us:descriptions>
     </us:status>
+    <us:status code="reportZip" visible="true" position="5">
+        <us:langs>
+            <us:lang key="de" translation="Report ZIP"/>
+            <us:lang key="en" translation="Report ZIP"/>
+            <us:lang key="fr" translation="Report ZIP"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
 </jeesl:container>

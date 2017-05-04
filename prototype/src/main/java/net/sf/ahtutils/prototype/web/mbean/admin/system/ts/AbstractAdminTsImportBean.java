@@ -56,7 +56,8 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 											BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
 											EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, USER extends EjbWithId, 
+											DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
+											USER extends EjbWithId, 
 											WS extends UtilsStatus<WS,L,D>,
 											QAF extends UtilsStatus<QAF,L,D>>
 					extends AbstractAdminTsBean<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>
@@ -79,6 +80,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	private EC clas; public EC getClas() {return clas;} public void setClas(EC clas) {this.clas = clas;}
 	private INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
 	private WS workspace; public WS getWorkspace() {return workspace;} public void setWorkspace(WS workspace) {this.workspace = workspace;}
+	protected USER transactionUser;
 	
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;} public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
 	private DataSet chartDs; public DataSet getChartDs(){return chartDs;}
@@ -243,8 +245,13 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 			TS ts = fTs.fcTimeSeries(cTs, scope, interval, bridge);
 			logger.info("Using TS "+ts.toString());
 			
+			TRANSACTION transaction = efTransaction.build(transactionUser);
+			
 			List<DATA> datas = new ArrayList<DATA>();
-			for(Data data : timeSeries.getData()){datas.add(efData.build(workspace, ts, data));}
+			for(Data data : timeSeries.getData())
+			{
+				datas.add(efData.build(workspace, ts, data));
+			}
 			fTs.save(datas);
 			
 			entities=null;

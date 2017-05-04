@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.factory.ejb.system.ts.EjbTsClassFactory;
 import net.sf.ahtutils.factory.ejb.system.ts.EjbTsDataFactory;
 import net.sf.ahtutils.factory.ejb.system.ts.EjbTsScopeFactory;
+import net.sf.ahtutils.factory.ejb.system.ts.EjbTsTransactionFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -63,6 +64,7 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 	protected EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> efScope;
 	protected EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> efClass;
 	protected EjbTsDataFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> efData;
+	protected EjbTsTransactionFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> efTransaction;
 	
 	protected Comparator<SCOPE> comparatorScope;
 	protected Comparator<EC> comparatorClass;

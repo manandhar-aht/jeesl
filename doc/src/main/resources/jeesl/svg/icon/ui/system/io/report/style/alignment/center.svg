@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4198"
+   sodipodi:docname="center.svg"
+   viewBox="0 0 39.997002 46.002998"
+   sodipodi:version="0.32"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:version="0.91 r13725"
+   version="1.1"
+   width="39.997002"
+   height="46.002998">
+  <defs
+     id="defs4200">
+    <linearGradient
+       id="linearGradient2240"
+       y2="39.599998"
+       gradientUnits="userSpaceOnUse"
+       x2="35.596001"
+       gradientTransform="matrix(1.3427,0,0,1.2354,-8.2196,-6.5772)"
+       y1="18.379"
+       x1="20.794001"
+       inkscape:collect="always">
+      <stop
+         id="stop15220"
+         style="stop-color:#f8f8f7"
+         offset="0" />
+      <stop
+         id="stop2269"
+         style="stop-color:#e8e8e8"
+         offset=".59929" />
+      <stop
+         id="stop15222"
+         style="stop-color:#e2e2de"
+         offset="1" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#bebebe"
+     inkscape:pageshadow="2"
+     inkscape:window-y="30"
+     pagecolor="#ffffff"
+     inkscape:window-height="818"
+     inkscape:grid-bbox="true"
+     inkscape:zoom="5.6568542"
+     inkscape:window-x="154"
+     showgrid="false"
+     borderopacity="1.0000000"
+     inkscape:current-layer="layer1"
+     inkscape:cx="-11.050112"
+     inkscape:cy="17.580711"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1280"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-maximized="0" />
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(-4.0015998,-0.99689996)">
+    <g
+       id="g3358">
+      <rect
+         x="4.5015998"
+         y="1.4969"
+         width="38.997002"
+         height="45.002998"
+         ry="0.56651002"
+         rx="0.56651002"
+         style="fill:url(#linearGradient2240);fill-rule:evenodd;stroke:#888a85"
+         id="rect4238" />
+      <rect
+         x="-37"
+         y="10"
+         width="26"
+         height="2"
+         transform="scale(-1,1)"
+         style="color:#000000;fill:#999999;fill-rule:evenodd"
+         id="rect4248" />
+      <rect
+         x="-35"
+         y="16"
+         width="23"
+         height="2"
+         transform="scale(-1,1)"
+         style="color:#000000;fill:#999999;fill-rule:evenodd"
+         id="rect4250" />
+      <rect
+         x="-34"
+         y="22"
+         width="21"
+         height="2"
+         transform="scale(-1,1)"
+         style="color:#000000;fill:#999999;fill-rule:evenodd"
+         id="rect4252" />
+      <rect
+         x="-37"
+         y="28"
+         width="26"
+         height="2"
+         transform="scale(-1,1)"
+         style="color:#000000;fill:#999999;fill-rule:evenodd"
+         id="rect4254" />
+      <rect
+         x="-32"
+         y="34"
+         width="17"
+         height="2"
+         transform="scale(-1,1)"
+         style="color:#000000;fill:#999999;fill-rule:evenodd"
+         id="rect4256" />
+      <rect
+         x="5.4997001"
+         y="2.4997001"
+         width="37.026001"
+         height="43.021999"
+         ry="0"
+         rx="0"
+         style="fill:none;stroke:#ffffff"
+         id="rect2245" />
+    </g>
+  </g>
+  <metadata
+     id="metadata30">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>tango format justify center</dc:title>
+        <dc:date>2010-03-22T13:08:24</dc:date>
+        <dc:description>&quot;Justify center&quot; icon from &lt;A href=&quot;http://tango.freedesktop.org/Tango_Desktop_Project&quot;&gt; Tango Project &lt;/A&gt; \n&lt;BR&gt;&lt;BR&gt;\nSince version 0.8.90 Tango Project icons are Public Domain: &lt;A href=&quot;http://tango.freedesktop.org/Frequently_Asked_Questions#Terms_of_Use.3F&quot;&gt; Tango Project FAQ &lt;/A&gt;</dc:description>
+        <dc:source>https://openclipart.org/detail/33019/tango-format-justify-center-by-warszawianka</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>warszawianka</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>center</rdf:li>
+            <rdf:li>externalsource</rdf:li>
+            <rdf:li>icon</rdf:li>
+            <rdf:li>justify</rdf:li>
+            <rdf:li>tango</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

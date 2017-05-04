@@ -38,7 +38,9 @@ public class JeeslDbSeeds
 	private static void applyReport(Db db)
 	{
 		db.getSeed().add(XmlSeedFactory.build(JeeslReportRowType.class.getName(),"jeesl/db/system/io/report/rowType.xml"));
-		db.getSeed().add(XmlSeedFactory.build(JeeslReportLayout.class.getName()+":"+JeeslReportLayout.Code.columnWidth.toString(),"jeesl/db/system/io/report/columnWidth.xml"));
+		
+		db.getSeed().add(XmlSeedFactory.build(JeeslReportLayout.class.getName()+":"+JeeslReportLayout.Code.columnWidth.toString(),"jeesl/db/system/io/report/style/alignment.xml"));
+		db.getSeed().add(XmlSeedFactory.build(JeeslReportLayout.class.getName()+":"+JeeslReportLayout.Code.alignment.toString(),"jeesl/db/system/io/report/style/columnWidth.xml"));
 		
 		db.getSeed().add(XmlSeedFactory.build(JeeslReportSetting.class.getName()+":"+JeeslReportSetting.Type.filling,"jeesl/db/system/io/report/setting/filling.xml"));
 		db.getSeed().add(XmlSeedFactory.build(JeeslReportSetting.class.getName()+":"+JeeslReportSetting.Type.transformation,"jeesl/db/system/io/report/setting/transformation.xml"));

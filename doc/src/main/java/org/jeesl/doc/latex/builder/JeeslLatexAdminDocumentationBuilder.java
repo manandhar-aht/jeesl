@@ -68,7 +68,7 @@ public class JeeslLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 		
 		//Installation
 		addConfig(InstallationCode.instIntroduction.toString(),"ofx.aht-utils/installation/introduction.xml","admin/installation/introduction");
-		addConfig(InstallationCode.instDebian.toString(),"ofx.aht-utils/installation/debian/debian.xml","admin/installation/debian");
+		addConfig(InstallationCode.instDebian.toString(),"jeesl/ofx/installation/debian/debian.xml","admin/installation/debian");
 		addConfig(InstallationCode.instJava.toString(),"jeesl/ofx/installation/java/java.xml","admin/installation/java");
 		addConfig(InstallationCode.instJboss.toString(),"jeesl/ofx/installation/jboss/jboss.xml","admin/installation/jboss");
 		addConfig(InstallationCode.instPostGis.toString(),"jeesl/ofx/installation/db/postgres/postgres.xml","admin/installation/postgres");
@@ -84,7 +84,7 @@ public class JeeslLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 		
 		//Tools
 		addConfig(ToolsCode.toolsOsticket.toString(),"aht-utils/ofx/installation/tools/osticket.xml","admin/installation/tools/osticket");
-		addConfig(ToolsCode.toolsApache.toString(),"ofx.aht-utils/installation/tools/apache.xml","admin/installation/tools/apache");
+		addConfig(ToolsCode.toolsApache.toString(),"jeesl/ofx/installation/tools/apache.xml","admin/installation/tools/apache");
 		
 		//System
 		addConfig(SystemCode.systemWs.toString(),"ofx.aht-utils/administration/system/webservice.xml","admin/system/webservice/introduction");

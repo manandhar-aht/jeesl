@@ -1,0 +1,5 @@
+psql -U postgres -c "CREATE USER @@@APP@@@r WITH PASSWORD '@@@APP@@@';"
+psql -U postgres -c "GRANT CONNECT ON DATABASE @@@APP@@@ TO @@@APP@@@r;"
+psql -U postgres -d @@@APP@@@ -c "GRANT USAGE ON SCHEMA public TO @@@APP@@@r;"
+psql -U postgres -d @@@APP@@@ -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO @@@APP@@@r;"
+psql -U postgres -d @@@APP@@@ -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO @@@APP@@@r;"

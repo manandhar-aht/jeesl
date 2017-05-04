@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.system.ts;
+package org.jeesl.factory.ejb.module.ts;
 
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;

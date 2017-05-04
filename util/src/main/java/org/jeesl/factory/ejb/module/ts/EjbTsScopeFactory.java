@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.system.ts;
+package org.jeesl.factory.ejb.module.ts;
 
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
@@ -14,25 +14,26 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class EjbTsClassFactory<L extends UtilsLang, D extends UtilsDescription,
-								CAT extends UtilsStatus<CAT,L,D>,
-								SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
-								UNIT extends UtilsStatus<UNIT,L,D>,
-								TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, 
-								BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
-								EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
-								INT extends UtilsStatus<INT,L,D>,
-								DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, USER extends EjbWithId, 
-								WS extends UtilsStatus<WS,L,D>,
-								QAF extends UtilsStatus<QAF,L,D>>
+public class EjbTsScopeFactory<L extends UtilsLang,
+											D extends UtilsDescription,
+											CAT extends UtilsStatus<CAT,L,D>,
+											SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
+											UNIT extends UtilsStatus<UNIT,L,D>,
+											TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, 
+											BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
+											EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
+											INT extends UtilsStatus<INT,L,D>,
+											DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, USER extends EjbWithId, 
+											WS extends UtilsStatus<WS,L,D>,
+											QAF extends UtilsStatus<QAF,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbTsClassFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbTsScopeFactory.class);
 	
-	final Class<EC> cEc;
+	final Class<SCOPE> cScope;
     
-	public EjbTsClassFactory(final Class<EC> cEc)
+	public EjbTsScopeFactory(final Class<SCOPE> cScope)
 	{       
-        this.cEc=cEc;
+        this.cScope = cScope;
 	}
 	
 	public static <L extends UtilsLang,
@@ -49,20 +50,20 @@ public class EjbTsClassFactory<L extends UtilsLang, D extends UtilsDescription,
 					USER extends EjbWithId, 
 					WS extends UtilsStatus<WS,L,D>,
 					QAF extends UtilsStatus<QAF,L,D>>
-	EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> factory(final Class<EC> cEc)
+	EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> factory(final Class<SCOPE> cScope)
 	{
-		return new EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>(cEc);
+		return new EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>(cScope);
 	}
     
-	public EC build(CAT category)
+	public SCOPE build(UNIT unit)
 	{
-		EC ejb = null;
+		SCOPE ejb = null;
 		try
 		{
-			ejb = cEc.newInstance();
+			ejb = cScope.newInstance();
 			ejb.setPosition(1);
 			ejb.setVisible(true);
-			ejb.setCategory(category);
+			ejb.setUnit(unit);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

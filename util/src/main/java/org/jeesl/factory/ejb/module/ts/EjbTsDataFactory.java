@@ -1,6 +1,4 @@
-package net.sf.ahtutils.factory.ejb.system.ts;
-
-import java.util.Date;
+package org.jeesl.factory.ejb.module.ts;
 
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
@@ -8,6 +6,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsData;
 import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.model.xml.module.ts.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class EjbTsTransactionFactory<L extends UtilsLang, D extends UtilsDescription,
+public class EjbTsDataFactory<L extends UtilsLang, D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
 								SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
 								UNIT extends UtilsStatus<UNIT,L,D>,
@@ -28,23 +27,25 @@ public class EjbTsTransactionFactory<L extends UtilsLang, D extends UtilsDescrip
 								WS extends UtilsStatus<WS,L,D>,
 								QAF extends UtilsStatus<QAF,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbTsTransactionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbTsDataFactory.class);
 	
-	final Class<TRANSACTION> cTransaction;
+	private final Class<DATA> cData;
     
-	public EjbTsTransactionFactory(final Class<TRANSACTION> cTransaction)
+	public EjbTsDataFactory(final Class<DATA> cData)
 	{       
-        this.cTransaction=cTransaction;
+        this.cData=cData;
 	}
 	
-	public TRANSACTION build(USER user)
+	public DATA build(WS workspace, TS timeSeries, Data data)
 	{
-		TRANSACTION ejb = null;
+		DATA ejb = null;
 		try
 		{
-			ejb = cTransaction.newInstance();
-			ejb.setUser(user);
-			ejb.setRecord(new Date());
+			ejb = cData.newInstance();
+			ejb.setWorkspace(workspace);
+			ejb.setTimeSeries(timeSeries);
+			ejb.setRecord(data.getRecord().toGregorianCalendar().getTime());
+			ejb.setValue(data.getValue());
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

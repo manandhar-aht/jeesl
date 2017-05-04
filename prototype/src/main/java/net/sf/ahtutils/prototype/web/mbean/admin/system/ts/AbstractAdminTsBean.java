@@ -5,6 +5,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
+import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
+import org.jeesl.factory.ejb.module.ts.EjbTsScopeFactory;
+import org.jeesl.factory.ejb.module.ts.EjbTsTransactionFactory;
+import org.jeesl.factory.factory.TsFactoryFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -15,10 +20,6 @@ import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.ejb.system.ts.EjbTsClassFactory;
-import net.sf.ahtutils.factory.ejb.system.ts.EjbTsDataFactory;
-import net.sf.ahtutils.factory.ejb.system.ts.EjbTsScopeFactory;
-import net.sf.ahtutils.factory.ejb.system.ts.EjbTsTransactionFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -53,6 +54,7 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 	protected Class<SCOPE> cScope;
 	protected Class<UNIT> cUnit;
 	protected Class<TS> cTs;
+	private final Class<TRANSACTION> cTransaction;
 	protected Class<BRIDGE> cBridge;
 	protected Class<EC> cEc;
 	protected Class<INT> cInt;
@@ -71,6 +73,11 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 
 	protected SbMultiStatusHandler<L,D,CAT> sbhCategory; public SbMultiStatusHandler<L,D,CAT> getSbhCategory() {return sbhCategory;}
 
+	public AbstractAdminTsBean(final Class<TRANSACTION> cTransaction)
+	{
+		this.cTransaction = cTransaction;
+	}
+	
 	protected void initTsSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
@@ -88,9 +95,10 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 		comparatorScope = (new TsScopeComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>()).factory(TsScopeComparator.Type.position);
 		comparatorClass = (new TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>()).factory(TsClassComparator.Type.position);
 		
+		TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> ffTs = TsFactoryFactory.factory(cTransaction, cData);
 		efScope = EjbTsScopeFactory.factory(cScope);
 		efClass = EjbTsClassFactory.factory(cEc);
-		efData = EjbTsDataFactory.factory(cData);
+		efData = ffTs.data();
 		
 		categories = fTs.allOrderedPositionVisible(cCategory);
 		sbhCategory = new SbMultiStatusHandler<L,D,CAT>(cCategory,categories); sbhCategory.selectAll();

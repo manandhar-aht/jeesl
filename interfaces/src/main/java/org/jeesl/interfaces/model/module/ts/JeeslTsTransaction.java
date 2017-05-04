@@ -21,7 +21,7 @@ public interface JeeslTsTransaction <L extends UtilsLang,
 								USER extends EjbWithId, 
 								WS extends UtilsStatus<WS,L,D>,
 								QAF extends UtilsStatus<QAF,L,D>>
-		extends EjbWithId,EjbWithRecord,EjbSaveable
+		extends EjbWithId,EjbSaveable,EjbWithRecord
 {
 	public enum Attributes{user,record}
 	

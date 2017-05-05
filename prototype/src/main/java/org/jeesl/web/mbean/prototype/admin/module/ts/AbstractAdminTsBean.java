@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean.admin.system.ts;
+package org.jeesl.web.mbean.prototype.admin.module.ts;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -98,6 +98,7 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 		
 		TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> ffTs = TsFactoryFactory.factory(cScope,cTransaction,cEc,cData);
 		efScope = ffTs.scope();
+		efTransaction = ffTs.transaction();
 		efClass = ffTs.entityClass();
 		efData = ffTs.data();
 		

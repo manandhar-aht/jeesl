@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean.admin.system.ts;
+package org.jeesl.web.mbean.prototype.admin.module.ts;
 
 import java.io.Serializable;
 import java.util.Collections;

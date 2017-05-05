@@ -8,13 +8,13 @@ import java.util.Map;
 
 import org.jeesl.api.facade.core.JeeslUserFacade;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.ejb.system.security.EjbSecurityUserFactory;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.factory.ejb.security.EjbSecurityUserFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.controller.audit.UtilsRevisionPageFlow;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;

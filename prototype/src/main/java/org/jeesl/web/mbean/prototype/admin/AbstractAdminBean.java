@@ -20,6 +20,9 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminBean.class);
 	
+	protected Class<L> cL;
+	protected Class<D> cD;
+	
 	protected FacesMessageBean bMessage;
 	
 	protected boolean debugOnInfo;
@@ -36,6 +39,9 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 
 	public AbstractAdminBean(final Class<L> cL, final Class<D> cD)
 	{
+		this.cL = cL;
+		this.cD = cD;
+		
 		debugOnInfo = false;
 		
 		hasDeveloperAction = true;

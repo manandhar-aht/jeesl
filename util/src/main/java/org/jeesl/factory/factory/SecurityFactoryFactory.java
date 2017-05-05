@@ -28,18 +28,14 @@ public class SecurityFactoryFactory<L extends UtilsLang,
 									USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityFactoryFactory.class);
-	
-    private final String localeCode;
     
     private final Class<L> cL;
     private final Class<D> cD;
     
     private final Class<A> cAction;
 	
-	public SecurityFactoryFactory(final String localeCode, final Class<L> cL, final Class<D> cD, final Class<A> cAction)
-	{
-		this.localeCode=localeCode;
-		
+	public SecurityFactoryFactory(final Class<L> cL, final Class<D> cD, final Class<A> cAction)
+	{		
 		this.cL=cL;
 		this.cD=cD;
 		
@@ -56,9 +52,9 @@ public class SecurityFactoryFactory<L extends UtilsLang,
 					AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 					USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER>
-		factory(final String localeCode, final Class<L> cL, final Class<D> cD, final Class<A> cAction)
+		factory(final Class<L> cL, final Class<D> cD, final Class<A> cAction)
 	{
-		return new SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER>(localeCode,cL,cD,cAction);
+		return new SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER>(cL,cD,cAction);
 	}
 	
 	public EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> ejbAction()
@@ -67,7 +63,7 @@ public class SecurityFactoryFactory<L extends UtilsLang,
 	}
 	
 	public <STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
-		TxtStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2> txtStaff()
+		TxtStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2> txtStaff(String localeCode)
 	{
 		return new TxtStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2>(localeCode);
 	}

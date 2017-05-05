@@ -108,7 +108,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		this.cAction=cAction;
 		this.cTemplate=cTemplate;
 		
-		SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER> ffSecurity = SecurityFactoryFactory.factory("en",cL,cD,cAction);
+		SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER> ffSecurity = SecurityFactoryFactory.factory(cL,cD,cAction);
 		
 		efCategory = EjbSecurityCategoryFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efView = EjbSecurityViewFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);

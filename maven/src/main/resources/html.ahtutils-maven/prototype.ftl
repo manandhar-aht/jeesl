@@ -319,9 +319,14 @@ ul.aupHeadlineBreadcrumb,
 	text-shadow: none;
 	color: white;
 	height: 8px;
-	width: 7em;
+	width: 55px;
 }
 
-.aupStatusBarCalendarLabel {
-	margin:0 5px 0 5px;
+.aupStatusBarDpFirst > .ui-inputfield {
+	text-alignment: right;
+}
+
+.aupDateGraphic {
+	background: white;
+	margin: 0 5px;
 }

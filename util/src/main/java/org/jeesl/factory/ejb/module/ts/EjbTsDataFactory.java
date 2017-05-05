@@ -36,7 +36,7 @@ public class EjbTsDataFactory<L extends UtilsLang, D extends UtilsDescription,
         this.cData=cData;
 	}
 	
-	public DATA build(WS workspace, TS timeSeries, Data data)
+	public DATA build(WS workspace, TS timeSeries, TRANSACTION transaction, Data data)
 	{
 		DATA ejb = null;
 		try
@@ -44,6 +44,7 @@ public class EjbTsDataFactory<L extends UtilsLang, D extends UtilsDescription,
 			ejb = cData.newInstance();
 			ejb.setWorkspace(workspace);
 			ejb.setTimeSeries(timeSeries);
+			ejb.setTransaction(transaction);
 			ejb.setRecord(data.getRecord().toGregorianCalendar().getTime());
 			ejb.setValue(data.getValue());
 		}

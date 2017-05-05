@@ -255,7 +255,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 			List<DATA> datas = new ArrayList<DATA>();
 			for(Data data : timeSeries.getData())
 			{
-				datas.add(efData.build(workspace, ts, data));
+				datas.add(efData.build(workspace,ts,transaction,data));
 			}
 			fTs.save(datas);
 			

@@ -5,11 +5,13 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsScopeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsTransactionFactory;
 import org.jeesl.factory.factory.TsFactoryFactory;
+import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -20,16 +22,17 @@ import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.util.comparator.ejb.ts.TsClassComparator;
 import net.sf.ahtutils.util.comparator.ejb.ts.TsScopeComparator;
 
-public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescription,
 									CAT extends UtilsStatus<CAT,L,D>,
 									SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
@@ -43,7 +46,7 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 									WS extends UtilsStatus<WS,L,D>,
 									QAF extends UtilsStatus<QAF,L,D>>
 					extends AbstractAdminBean<L,D>
-					implements Serializable
+					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsBean.class);
@@ -71,8 +74,8 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 	protected Comparator<SCOPE> comparatorScope;
 	protected Comparator<EC> comparatorClass;
 
-	protected SbMultiStatusHandler<L,D,CAT> sbhCategory; public SbMultiStatusHandler<L,D,CAT> getSbhCategory() {return sbhCategory;}
-
+	protected SbMultiHandler<CAT> sbhCategory; public SbMultiHandler<CAT> getSbhCategory() {return sbhCategory;}
+	
 	public AbstractAdminTsBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction)
 	{
 		super(cL,cD);
@@ -103,6 +106,11 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 		efData = ffTs.data();
 		
 		categories = fTs.allOrderedPositionVisible(cCategory);
-		sbhCategory = new SbMultiStatusHandler<L,D,CAT>(cCategory,categories); sbhCategory.selectAll();
+		sbhCategory = new SbMultiHandler<CAT>(cCategory,fTs.allOrderedPositionVisible(cCategory),this);sbhCategory.selectAll();
+	}
+	
+	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+
 	}
 }

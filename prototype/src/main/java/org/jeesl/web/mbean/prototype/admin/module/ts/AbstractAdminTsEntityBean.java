@@ -61,12 +61,10 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 		reloadClasses();
 	}
 	
-	public void multiToggle(UtilsStatus<?,L,D> o)
+	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());}
-		sbhCategory.multiToggle(o);
-		reloadClasses();
-		cancel();
+		super.toggled(c);
+		if(cCategory.isAssignableFrom(c)){reloadClasses();cancel();}
 	}
 	
 	public void reloadClasses()

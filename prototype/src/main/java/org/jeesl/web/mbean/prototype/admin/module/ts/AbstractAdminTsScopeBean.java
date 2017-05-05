@@ -77,12 +77,10 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		opClasses = fTs.all(cEc);
 	}
 	
-	public void multiToggle(UtilsStatus<?,L,D> o)
+	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());}
-		sbhCategory.multiToggle(o);
-		reloadScopes();
-		cancel();
+		super.toggled(c);
+		if(cCategory.isAssignableFrom(c)){reloadScopes();cancel();}
 	}
 	
 	public void reloadScopes()

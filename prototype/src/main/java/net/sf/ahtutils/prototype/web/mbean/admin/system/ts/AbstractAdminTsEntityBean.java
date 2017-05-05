@@ -50,9 +50,9 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang,
 	
 	protected EC entity; public void setEntity(EC entityClass) {this.entity = entityClass;} public EC getEntity() {return entity;}
 
-	public AbstractAdminTsEntityBean(final Class<TRANSACTION> cTransaction)
+	public AbstractAdminTsEntityBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction)
 	{
-		super(cTransaction);
+		super(cL,cD,cTransaction);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)

@@ -1,6 +1,8 @@
 package org.jeesl.factory.factory;
 
+import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
+import org.jeesl.factory.ejb.module.ts.EjbTsScopeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsTransactionFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
@@ -20,7 +22,8 @@ public class TsFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
 								SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
 								UNIT extends UtilsStatus<UNIT,L,D>,
-								TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, 
+								TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
+								TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, 
 								BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
 								EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
 								INT extends UtilsStatus<INT,L,D>,
@@ -30,13 +33,17 @@ public class TsFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(TsFactoryFactory.class);
 	
+	private final Class<SCOPE> cScope;
 	private final Class<TRANSACTION> cTransaction;
 	private final Class<DATA> cData;
+	private final Class<EC> cEc;
     
-	public TsFactoryFactory(final Class<TRANSACTION> cTransaction, final Class<DATA> cData)
-	{       
+	public TsFactoryFactory(final Class<SCOPE> cScope, final Class<TRANSACTION> cTransaction, final Class<EC> cEc, final Class<DATA> cData)
+	{
+		this.cScope=cScope;
         this.cTransaction=cTransaction;
         this.cData=cData;
+        this.cEc=cEc;
 	}
 	
 	public static <L extends UtilsLang, D extends UtilsDescription,
@@ -52,9 +59,14 @@ public class TsFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
 					USER extends EjbWithId, 
 					WS extends UtilsStatus<WS,L,D>,
 					QAF extends UtilsStatus<QAF,L,D>>
-	TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> factory(final Class<TRANSACTION> cTransaction, final Class<DATA> cData)
+	TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> factory(final Class<SCOPE> cScope, final Class<TRANSACTION> cTransaction, final Class<EC> cEc, final Class<DATA> cData)
 	{
-		return new TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>(cTransaction, cData);
+		return new TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>(cScope,cTransaction,cEc,cData);
+	}
+	
+	public EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> scope()
+	{
+		return new EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>(cScope);
 	}
 	
 	public EjbTsTransactionFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> transaction()
@@ -65,5 +77,10 @@ public class TsFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
 	public EjbTsDataFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> data()
 	{
 		return new EjbTsDataFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>(cData);
+	}
+	
+	public EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> entityClass()
+	{
+	return new EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>(cEc);
 	}
 }

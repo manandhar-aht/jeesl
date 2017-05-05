@@ -42,6 +42,11 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang,
 	
 	private AT template;public AT getTemplate(){return template;}public void setTemplate(AT template) {this.template = template;}
 	
+	public AbstractAdminSecurityActionBean(final Class<L> cL, final Class<D> cD)
+	{
+		super(cL,cD);
+	}
+	
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
 		categoryType = UtilsSecurityCategory.Type.action;

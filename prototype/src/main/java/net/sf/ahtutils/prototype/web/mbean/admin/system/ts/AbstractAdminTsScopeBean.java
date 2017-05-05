@@ -58,9 +58,9 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected EC opClass;public EC getOpClass() {return opClass;}public void setOpClass(EC opClass) {this.opClass = opClass;}
 	protected EC tbClass;public EC getTbClass() {return tbClass;}public void setTbClass(EC tbClass) {this.tbClass = tbClass;}
 	
-	public AbstractAdminTsScopeBean(final Class<TRANSACTION> cTransaction)
+	public AbstractAdminTsScopeBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction)
 	{
-		super(cTransaction);
+		super(cL,cD,cTransaction);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)

@@ -73,14 +73,14 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 
 	protected SbMultiStatusHandler<L,D,CAT> sbhCategory; public SbMultiStatusHandler<L,D,CAT> getSbhCategory() {return sbhCategory;}
 
-	public AbstractAdminTsBean(final Class<TRANSACTION> cTransaction)
+	public AbstractAdminTsBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction)
 	{
 		this.cTransaction = cTransaction;
 	}
 	
-	protected void initTsSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
+	protected void initTsSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cL, final Class<D> cD, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
-		super.initAdmin(langs,cLang,cDescription,bMessage);
+		super.initAdmin(langs,cL,cD,bMessage);
 		this.fTs=fTs;
 		this.cScope=cScope;
 		this.cUnit=cUnit;
@@ -95,9 +95,9 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 		comparatorScope = (new TsScopeComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>()).factory(TsScopeComparator.Type.position);
 		comparatorClass = (new TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>()).factory(TsClassComparator.Type.position);
 		
-		TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> ffTs = TsFactoryFactory.factory(cTransaction, cData);
-		efScope = EjbTsScopeFactory.factory(cScope);
-		efClass = EjbTsClassFactory.factory(cEc);
+		TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> ffTs = TsFactoryFactory.factory(cScope,cTransaction,cEc,cData);
+		efScope = ffTs.scope();
+		efClass = ffTs.entityClass();
 		efData = ffTs.data();
 		
 		categories = fTs.allOrderedPositionVisible(cCategory);

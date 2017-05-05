@@ -34,6 +34,26 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	
 	protected NullNumberBinder nnb; public NullNumberBinder getNnb() {return nnb;} public void setNnb(NullNumberBinder nnb) {this.nnb = nnb;}
 
+	public AbstractAdminBean(final Class<L> cL, final Class<D> cD)
+	{
+		debugOnInfo = false;
+		
+		hasDeveloperAction = true;
+		hasAdministratorAction = true;
+		hasTranslatorAction = true;
+		
+		uiAllowAdd = true;
+		uiAllowSave = true;
+		uiAllowRemove = true;
+		uiAllowReorder = true;
+		uiAllowCode = true;
+		
+		uiShowInvisible = true;
+		uiShowDocumentation = true;
+		
+		nnb = new NullNumberBinder();
+	}
+	
 	public AbstractAdminBean()
 	{
 		debugOnInfo = false;

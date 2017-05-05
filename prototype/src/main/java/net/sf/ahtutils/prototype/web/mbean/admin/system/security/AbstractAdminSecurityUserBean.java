@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.facade.core.JeeslUserFacade;
-import org.jeesl.api.facade.module.JeeslSecurityFacade;
+import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

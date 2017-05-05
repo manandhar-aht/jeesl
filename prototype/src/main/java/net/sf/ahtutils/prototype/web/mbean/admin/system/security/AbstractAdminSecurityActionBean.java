@@ -3,7 +3,7 @@ package net.sf.ahtutils.prototype.web.mbean.admin.system.security;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jeesl.api.facade.module.JeeslSecurityFacade;
+import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

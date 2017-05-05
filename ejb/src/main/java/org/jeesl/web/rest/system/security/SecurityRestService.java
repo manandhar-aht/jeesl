@@ -3,7 +3,7 @@ package org.jeesl.web.rest.system.security;
 import java.util.Collections;
 import java.util.Comparator;
 
-import org.jeesl.api.facade.module.JeeslSecurityFacade;
+import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.xml.system.security.XmlActionFactory;
 import org.jeesl.factory.xml.system.security.XmlActionsFactory;
 import org.jeesl.factory.xml.system.security.XmlCategoryFactory;

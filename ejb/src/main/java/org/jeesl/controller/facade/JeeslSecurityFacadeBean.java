@@ -15,7 +15,7 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.jeesl.api.facade.module.JeeslSecurityFacade;
+import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -298,6 +298,15 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	{
 		List<USER> users = null;
 		List<R> roles = new ArrayList<R>(Arrays.asList(role));
+		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
+		return fStaffURD(cStaff,users,roles,domains);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffUD(Class<S> cStaff, USER user, List<D1> domains)
+	{
+		List<USER> users = new ArrayList<USER>(Arrays.asList(user));;
+		List<R> roles = null;
 		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
 		return fStaffURD(cStaff,users,roles,domains);
 	}

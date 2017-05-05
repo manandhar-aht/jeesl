@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.facade.core.JeeslUserFacade;
-import org.jeesl.api.facade.module.JeeslSecurityFacade;
+import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.interfaces.bean.op.OpUserBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

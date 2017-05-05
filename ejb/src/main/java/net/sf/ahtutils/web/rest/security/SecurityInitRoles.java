@@ -21,7 +21,7 @@ import net.sf.ahtutils.xml.security.Usecase;
 import net.sf.ahtutils.xml.security.Usecases;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
-import org.jeesl.api.facade.module.JeeslSecurityFacade;
+import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

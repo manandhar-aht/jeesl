@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.txt.security;
+package org.jeesl.factory.txt.system.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 
-public class TxtSecurityActionFactory <L extends UtilsLang,
+public class TxtUserFactory <L extends UtilsLang,
 										 D extends UtilsDescription,
 										 C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 										 R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
@@ -23,18 +23,19 @@ public class TxtSecurityActionFactory <L extends UtilsLang,
 										 AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 										 USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
-	final static Logger logger = LoggerFactory.getLogger(TxtSecurityActionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(TxtUserFactory.class);
     
-    public TxtSecurityActionFactory()
+    public TxtUserFactory()
     {
     	
     } 
     
-    public String code(V view, AT template)
+    public String name(USER user)
     {
     	StringBuffer sb = new StringBuffer();
-    	sb.append(view.getCode());
-    	sb.append(template.getCode().substring(template.getCode().lastIndexOf("."), template.getCode().length()));
+    	sb.append(user.getFirstName());
+    	sb.append(" ");
+    	sb.append(user.getLastName());
     	return sb.toString();
     }
 }

@@ -85,8 +85,9 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	
 	protected EjbGraphicFactory<L,D,G,GT,GS> efGraphic;
 	
-	public AbstractOptionTableBean()
+	public AbstractOptionTableBean(final Class<L> cL, final Class<D> cD)
 	{
+		super(cL,cD);
 		index=1;
 		
 		hasDeveloperAction = false;

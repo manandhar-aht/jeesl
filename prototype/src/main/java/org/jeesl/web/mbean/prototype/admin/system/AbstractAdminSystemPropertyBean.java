@@ -42,6 +42,11 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends Util
 	
 	protected P property;public P getProperty() {return property;}public void setProperty(P property) {this.property = property;}
 	
+	public AbstractAdminSystemPropertyBean(final Class<L> cL, final Class<D> cD)
+	{
+		super(cL,cD);
+	}
+	
 	public void initSuper(JeeslSystemPropertyFacade<L,D,C,P> fProperty, final Class<C> cCategory, final Class<P> cProperty)
 	{
 		this.fProperty=fProperty;

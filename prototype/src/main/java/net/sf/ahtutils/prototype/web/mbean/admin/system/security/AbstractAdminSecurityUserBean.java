@@ -65,6 +65,11 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected UtilsRevisionPageFlow<USER,USER> revision; public UtilsRevisionPageFlow<USER, USER> getRevision() {return revision;}
 	
+	public AbstractAdminSecurityUserBean(final Class<L> cL, final Class<D> cD)
+	{
+		super(cL,cD);
+	}
+	
 	public void initSuper(JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage, final Class<L> cLang, final Class<D> cDescription, final Class<R> cRole, final Class<USER> cUser)
 	{
 		super.initAdmin(langs, cLang, cDescription, bUtilsMessage);

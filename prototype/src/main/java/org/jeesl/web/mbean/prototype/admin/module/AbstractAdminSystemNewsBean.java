@@ -44,6 +44,11 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 	private Map<NEWS,Boolean> active; public Map<NEWS,Boolean> getActive() {return active;}
 	private NEWS news; public NEWS getNews() {return news;} public void setNews(NEWS news) {this.news = news;}
 	protected USER user;
+	
+	public AbstractAdminSystemNewsBean(final Class<L> cL, final Class<D> cD)
+	{
+		super(cL,cD);
+	}
 
 	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, Class<NEWS> cNews, Class<USER> cUser)
 	{

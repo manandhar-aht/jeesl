@@ -38,7 +38,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
@@ -88,6 +87,11 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 
 	private int tabIndex; public int getTabIndex() {return tabIndex;} public void setTabIndex(int tabIndex) {this.tabIndex = tabIndex;}
 	private String preview; public String getPreview() {return preview;}
+	
+	public AbstractAdminIoTemplateBean(final Class<L> cL, final Class<D> cD)
+	{
+		super(cL,cD);
+	}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<SCOPE> cScope, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
 	{

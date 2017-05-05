@@ -43,6 +43,11 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 	
+	public AbstractAdminIoMailQueueBean(final Class<L> cL, final Class<D> cD)
+	{
+		super(cL,cD);
+	}
+	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);

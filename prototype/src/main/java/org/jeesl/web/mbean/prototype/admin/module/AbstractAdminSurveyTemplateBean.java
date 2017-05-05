@@ -103,8 +103,9 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	
 	private UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> uiHelper; public UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getUiHelper() {return uiHelper;}
 
-	public AbstractAdminSurveyTemplateBean()
+	public AbstractAdminSurveyTemplateBean(final Class<L> cL, final Class<D> cD)
 	{
+		super(cL,cD);
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
 	}
 	

@@ -42,6 +42,11 @@ public class AbstractRememberMeBean <L extends UtilsLang,D extends UtilsDescript
 	protected boolean logOnInfo = false;
 	private boolean dummy; public boolean isDummy() {return dummy;} public void setDummy(boolean dummy) {this.dummy = dummy;}
 	
+	public AbstractRememberMeBean(final Class<L> cL, final Class<D> cD)
+	{
+		super(cL,cD);
+	}
+	
 	protected void readCookie(Class<REM> cRem, JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUser, String cookieName)
 	{
 		Map<String,Object> cookies = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();

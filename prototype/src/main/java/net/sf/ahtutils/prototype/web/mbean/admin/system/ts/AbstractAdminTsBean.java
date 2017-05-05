@@ -75,6 +75,7 @@ public class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescriptio
 
 	public AbstractAdminTsBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction)
 	{
+		super(cL,cD);
 		this.cTransaction = cTransaction;
 	}
 	

@@ -38,6 +38,11 @@ public class AbstractUserBean <L extends UtilsLang,D extends UtilsDescription,
 	protected String ipAddress;
 	protected String localeCode;
 	
+	public AbstractUserBean(final Class<L> cL, final Class<D> cD)
+	{
+		super(cL,cD);
+	}
+	
 	public void initSuper(JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser,final Class<USER> cUser)
 	{
 		this.fUtilsUser=fUtilsUser;

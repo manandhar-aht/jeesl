@@ -11,8 +11,6 @@
 	xmlns:aupSec="http://ahtutils.sourceforge.net/prototype/security"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
-	<!-- Deprecated ... only use jpSec -->
-	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
 		<composite:attribute name="users" required="false" default="#{cc.attrs.bean.users}"/>
@@ -67,7 +65,7 @@
 						<p:panel header="User Details" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								  <aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveUser()}" update=":#{cc.id}:grid"/>
-								  <aht:icon type="jeeslRemove" listener="#{cc.attrs.bean.rm(cc.attrs.bean.user)}" tooltip="delete user" update=":#{cc.id}:grid"/>
+								  <aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.rm(cc.attrs.bean.user)}" tooltip="delete user" update=":#{cc.id}:grid"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" >
 								<p:outputLabel for="itFirstName" value="#{msg.aupFirstName}" />

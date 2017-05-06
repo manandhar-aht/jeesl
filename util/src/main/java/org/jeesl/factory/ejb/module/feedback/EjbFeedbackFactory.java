@@ -3,6 +3,7 @@ package org.jeesl.factory.ejb.module.feedback;
 import java.util.Date;
 
 import org.jeesl.interfaces.model.module.feedback.JeeslFeedback;
+import org.jeesl.interfaces.model.module.feedback.JeeslFeedbackThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
 public class EjbFeedbackFactory<L extends UtilsLang, D extends UtilsDescription,
-								FEEDBACK extends JeeslFeedback<L,D,FEEDBACK,STYLE,TYPE,USER>,
+								THREAD extends JeeslFeedbackThread<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>,
+								FEEDBACK extends JeeslFeedback<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>,
 								STYLE extends UtilsStatus<STYLE,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
 								USER extends EjbWithEmail>
@@ -27,13 +29,14 @@ public class EjbFeedbackFactory<L extends UtilsLang, D extends UtilsDescription,
     } 
     
     public static <L extends UtilsLang, D extends UtilsDescription,
-					FEEDBACK extends JeeslFeedback<L,D,FEEDBACK,STYLE,TYPE,USER>,
+					THREAD extends JeeslFeedbackThread<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>,
+					FEEDBACK extends JeeslFeedback<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>,
 					STYLE extends UtilsStatus<STYLE,L,D>,
 					TYPE extends UtilsStatus<TYPE,L,D>,
 					USER extends EjbWithEmail>
-    	EjbFeedbackFactory<L,D,FEEDBACK,STYLE,TYPE,USER> factory(final Class<FEEDBACK> cFeedback)
+    	EjbFeedbackFactory<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER> factory(final Class<FEEDBACK> cFeedback)
     {
-        return new EjbFeedbackFactory<L,D,FEEDBACK,STYLE,TYPE,USER>(cFeedback);
+        return new EjbFeedbackFactory<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>(cFeedback);
     }
 	
 	public FEEDBACK create(TYPE type, USER user)

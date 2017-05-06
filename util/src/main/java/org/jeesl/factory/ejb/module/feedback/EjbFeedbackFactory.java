@@ -12,33 +12,35 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
 public class EjbFeedbackFactory<L extends UtilsLang, D extends UtilsDescription,
-								USER extends EjbWithEmail,
+								FEEDBACK extends JeeslFeedback<L,D,FEEDBACK,STYLE,TYPE,USER>,
+								STYLE extends UtilsStatus<STYLE,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
-								F extends JeeslFeedback<L,D,USER,TYPE>>
+								USER extends EjbWithEmail>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbFeedbackFactory.class);
 	
-	private final Class<F> cFeedback;
+	private final Class<FEEDBACK> cFeedback;
 	
-    public EjbFeedbackFactory(final Class<F> cFeedback)
+    public EjbFeedbackFactory(final Class<FEEDBACK> cFeedback)
     {
         this.cFeedback = cFeedback;
     } 
     
     public static <L extends UtilsLang, D extends UtilsDescription,
-					USER extends EjbWithEmail,
+					FEEDBACK extends JeeslFeedback<L,D,FEEDBACK,STYLE,TYPE,USER>,
+					STYLE extends UtilsStatus<STYLE,L,D>,
 					TYPE extends UtilsStatus<TYPE,L,D>,
-					F extends JeeslFeedback<L,D,USER,TYPE>>
-    	EjbFeedbackFactory<L,D,USER,TYPE,F> factory(final Class<F> clFeedback)
+					USER extends EjbWithEmail>
+    	EjbFeedbackFactory<L,D,FEEDBACK,STYLE,TYPE,USER> factory(final Class<FEEDBACK> cFeedback)
     {
-        return new EjbFeedbackFactory<L,D,USER,TYPE,F>(clFeedback);
+        return new EjbFeedbackFactory<L,D,FEEDBACK,STYLE,TYPE,USER>(cFeedback);
     }
 	
-	public F create(TYPE type, USER user)
+	public FEEDBACK create(TYPE type, USER user)
 	{
 		try
 		{
-			F ejb = cFeedback.newInstance();
+			FEEDBACK ejb = cFeedback.newInstance();
 			ejb.setType(type);
 		    ejb.setUser(user);
 		    ejb.setRecord(new Date());

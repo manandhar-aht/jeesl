@@ -17,5 +17,5 @@ public interface JeeslFeedbackFacade <L extends UtilsLang, D extends UtilsDescri
 									USER extends EjbWithEmail>
 			extends UtilsFacade
 {	
-	
+	THREAD load(THREAD thread);
 }

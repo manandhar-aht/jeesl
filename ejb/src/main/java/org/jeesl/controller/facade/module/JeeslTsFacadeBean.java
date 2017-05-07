@@ -48,8 +48,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang,
 							QAF extends UtilsStatus<QAF,L,D>>
 					extends UtilsFacadeBean
 					implements JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>
-{	
-	
+{
 	private final Class<DATA> cData;
 	
 	private EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> efTs;

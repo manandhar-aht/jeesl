@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.module.feedback;
 
+import java.util.List;
+
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -14,5 +16,6 @@ public interface JeeslFeedbackThread<L extends UtilsLang, D extends UtilsDescrip
 								USER extends EjbWithEmail>
 						extends EjbWithId
 {	
-	
+	List<FEEDBACK> getFeedbacks();
+	void setFeedbacks(List<FEEDBACK> feedbacks);
 }

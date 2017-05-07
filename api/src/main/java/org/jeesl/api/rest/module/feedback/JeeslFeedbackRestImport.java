@@ -13,8 +13,8 @@ import net.sf.ahtutils.xml.sync.DataUpdate;
 public interface JeeslFeedbackRestImport
 {
 	@POST @Path("/module/feedback/style") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
-	DataUpdate importFeedbackStyle(Container types);
+	DataUpdate importFeedbackStyle(Container container);
 	
 	@POST @Path("/module/feedback/type") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
-	DataUpdate importFeedbackType(Container types);
+	DataUpdate importFeedbackType(Container container);
 }

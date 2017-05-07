@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jeesl:container xmlns:us="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:un="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:jeesl="http://www.jeesl.org">
+    <us:status code="txt" visible="true" position="1">
+        <us:langs>
+            <us:lang key="de" translation="Text"/>
+            <us:lang key="en" translation="Text"/>
+            <us:lang key="fr" translation="Text"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="html" visible="true" position="2">
+        <us:langs>
+            <us:lang key="de" translation="HTML"/>
+            <us:lang key="en" translation="HTML"/>
+            <us:lang key="fr" translation="HTML"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="md" visible="false" position="3">
+        <us:langs>
+            <us:lang key="de" translation="Mark Down"/>
+            <us:lang key="en" translation="Mark Down"/>
+            <us:lang key="fr" translation="Mark Down"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+    <us:status code="ofx" visible="false" position="4">
+        <us:langs>
+            <us:lang key="de" translation="OpenFuXML"/>
+            <us:lang key="en" translation="OpenFuXML"/>
+            <us:lang key="fr" translation="OpenFuXML"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
+</jeesl:container>

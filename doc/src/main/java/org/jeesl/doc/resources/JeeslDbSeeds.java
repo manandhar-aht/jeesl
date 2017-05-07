@@ -58,5 +58,6 @@ public class JeeslDbSeeds
 		db.getSeed().add(XmlSeedFactory.build(prefix+"JobStatus","jeesl/db/system/job/status.xml"));
 		db.getSeed().add(XmlSeedFactory.build(prefix+"JobType","jeesl/db/system/job/type.xml"));
 		db.getSeed().add(XmlSeedFactory.build(prefix+"JobFeedbackType","jeesl/db/system/job/feedback.xml"));
+		db.getSeed().add(XmlSeedFactory.build(prefix+"FeedbackStyle","jeesl/db/module/feedback/style.xml"));
 	}
 }

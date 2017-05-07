@@ -16,6 +16,7 @@
 		<composite:attribute name="orientation" required="false" default="left"/>
 		
 		<composite:facet name="label" required="false"/>
+		<composite:facet name="top" required="false"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -30,14 +31,17 @@
 			</label>
 			<input type="checkbox" id="#{cc.id}" />
 			<ul>
+				<c:if test="#{!empty cc.facets.top}">
+                    <li>
+                    	<composite:renderFacet name="top"/>
+                    </li>
+                </c:if>
 				<ui:repeat var="var" value="#{cc.attrs.childs}">
 					<li>
 						<composite:insertChildren/>
 					</li>
 				</ui:repeat>
-				<c:if test="#{!empty cc.facets.top}">
-                    <composite:renderFacet name="top"/>
-                </c:if>
+				
 			</ul>
 		</aht:li>
 	</composite:implementation>

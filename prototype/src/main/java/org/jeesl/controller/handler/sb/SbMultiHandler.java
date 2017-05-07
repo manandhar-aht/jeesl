@@ -47,12 +47,14 @@ public class SbMultiHandler <T extends EjbWithId>
 		map.clear();
 	}
 	
+	public void toggleNone(){selectNone();callbackToggledToBean();}
 	public void selectNone()
 	{
 		for(T t : list){map.put(t,false);}
 		refresh();
 	}
 	
+	public void toggleAll(){selectAll();callbackToggledToBean();}
 	public void selectAll()
 	{
 		for(T t : list){map.put(t,true);}
@@ -70,7 +72,12 @@ public class SbMultiHandler <T extends EjbWithId>
 		if(!map.containsKey(type)){map.put(type,true);}
 		else{map.put(type,!map.get(type));}
 		refresh();
-		
+		callbackToggledToBean();
+
+	}
+	
+	private void callbackToggledToBean()
+	{
 		try {if(bean!=null){bean.toggled(cT);}}
 		catch (UtilsLockingException e) {e.printStackTrace();}
 		catch (UtilsConstraintViolationException e) {e.printStackTrace();}

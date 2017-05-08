@@ -120,4 +120,20 @@
 			<s:lang key="fr" translation="Feedback Type"/>
 		</s:langs>
 	</s:translation>
+	
+	<s:translation key="AttributeType">
+		<s:langs>
+			<s:lang key="de" translation="Attribut Typ"/>
+			<s:lang key="en" translation="Attribute Type"/>
+			<s:lang key="fr" translation="Attribute Type"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="AttributeCategory">
+		<s:langs>
+			<s:lang key="de" translation="Feedback Kategorie"/>
+			<s:lang key="en" translation="Feedback Category"/>
+			<s:lang key="fr" translation="Feedback Category"/>
+		</s:langs>
+	</s:translation>
+	
 </s:translations>

@@ -34,6 +34,9 @@ public interface JeeslTsData <L extends UtilsLang,
 	TRANSACTION getTransaction();
 	void setTransaction(TRANSACTION transaction);
 	
+	SAMPLE getSample();
+	void setSample(SAMPLE sample);
+	
 	Double getValue();
 	void setValue(Double value);
 }

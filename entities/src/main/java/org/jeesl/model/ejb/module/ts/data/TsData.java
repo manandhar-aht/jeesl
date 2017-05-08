@@ -53,6 +53,11 @@ public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public TsTransaction getTransaction() {return transaction;}
 	@Override public void setTransaction(TsTransaction transaction) {this.transaction = transaction;}
 	
+	@ManyToOne
+	private TsSample sample;
+	@Override public TsSample getSample() {return sample;}
+	@Override public void setSample(TsSample sample) {this.sample = sample;}
+	
 	private Date record;
 	@Override public Date getRecord() {return record;}
 	@Override public void setRecord(java.util.Date record) {this.record=record;}

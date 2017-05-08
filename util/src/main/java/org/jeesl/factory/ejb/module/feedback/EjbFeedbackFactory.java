@@ -26,24 +26,15 @@ public class EjbFeedbackFactory<L extends UtilsLang, D extends UtilsDescription,
     public EjbFeedbackFactory(final Class<FEEDBACK> cFeedback)
     {
         this.cFeedback = cFeedback;
-    } 
-    
-    public static <L extends UtilsLang, D extends UtilsDescription,
-					THREAD extends JeeslFeedbackThread<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>,
-					FEEDBACK extends JeeslFeedback<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>,
-					STYLE extends UtilsStatus<STYLE,L,D>,
-					TYPE extends UtilsStatus<TYPE,L,D>,
-					USER extends EjbWithEmail>
-    	EjbFeedbackFactory<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER> factory(final Class<FEEDBACK> cFeedback)
-    {
-        return new EjbFeedbackFactory<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>(cFeedback);
     }
 	
-	public FEEDBACK create(TYPE type, USER user)
+	public FEEDBACK build(THREAD thread, STYLE style, TYPE type, USER user)
 	{
 		try
 		{
 			FEEDBACK ejb = cFeedback.newInstance();
+			ejb.setThread(thread);
+			ejb.setStyle(style);
 			ejb.setType(type);
 		    ejb.setUser(user);
 		    ejb.setRecord(new Date());

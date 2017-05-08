@@ -1,5 +1,6 @@
 package org.jeesl.interfaces.model.module.feedback;
 
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -13,7 +14,8 @@ public interface JeeslFeedback<L extends UtilsLang, D extends UtilsDescription,
 								STYLE extends UtilsStatus<STYLE,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
 								USER extends EjbWithEmail>
-						extends EjbWithId,EjbWithRecord
+						extends EjbWithId, EjbSaveable,
+									EjbWithRecord
 {	
 	THREAD getThread();
 	void setThread(THREAD thread);

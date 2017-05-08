@@ -26,6 +26,7 @@ public class WeapResultValueRequest implements Serializable {
     private String unit;
     private String dimension;
 	private String aggregationType;
+	private String errorMessage;
     
     private Double result;
 
@@ -65,4 +66,7 @@ public class WeapResultValueRequest implements Serializable {
 
 	public String getAggregationType() {return aggregationType;}
 	public void setAggregationType(String aggregationType) {this.aggregationType = aggregationType;}
+
+	public String getErrorMessage() {return errorMessage;}
+	public void setErrorMessage(String errorMessage) {this.errorMessage = errorMessage;}
 }

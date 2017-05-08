@@ -1,4 +1,4 @@
-package org.jeesl.model.ejb.module.ts;
+package org.jeesl.model.ejb.module.ts.qa;
 
 import java.io.Serializable;
 
@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+
+import org.jeesl.model.ejb.module.ts.data.TsData;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;

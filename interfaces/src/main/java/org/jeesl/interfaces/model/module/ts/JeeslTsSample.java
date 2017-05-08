@@ -1,12 +1,13 @@
 package org.jeesl.interfaces.model.module.ts;
 
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.EjbWithRefId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface JeeslTsBridge <L extends UtilsLang,
+public interface JeeslTsSample <L extends UtilsLang,
 								D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
 								SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
@@ -20,8 +21,9 @@ public interface JeeslTsBridge <L extends UtilsLang,
 								SAMPLE extends JeeslTsSample<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,  USER extends EjbWithId, 
 								WS extends UtilsStatus<WS,L,D>,
 								QAF extends UtilsStatus<QAF,L,D>>
-		extends EjbWithId,EjbWithRefId
+		extends EjbWithId,EjbSaveable,EjbWithRecord
 {
-	public EC getEntityClass();
-	void setEntityClass(EC entityClass);
+	public enum Attributes{record}
+	
+
 }

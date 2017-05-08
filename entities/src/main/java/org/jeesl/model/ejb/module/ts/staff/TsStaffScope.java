@@ -1,4 +1,4 @@
-package org.jeesl.model.ejb.module.ts;
+package org.jeesl.model.ejb.module.ts.staff;
 
 import java.io.Serializable;
 
@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.jeesl.model.ejb.module.ts.core.TsScope;
 import org.jeesl.model.ejb.system.security.SecurityAction;
 import org.jeesl.model.ejb.system.security.SecurityActionTemplate;
 import org.jeesl.model.ejb.system.security.SecurityCategory;
@@ -31,9 +32,9 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(name = "StaffWorkspace",uniqueConstraints = @UniqueConstraint(columnNames = {"domain_id","role_id","user_id"}))
-@EjbErNode(name="Staff",category="ts",level=2,subset="ts")
-public class TsStaffWorkspace implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,EjbSaveable,
-					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser,TsWorkspace,TsWorkspace>
+@EjbErNode(name="Staff",subset="ts",category="ts",level=2)
+public class TsStaffScope implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,EjbSaveable,
+					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser,TsScope,TsScope>
 {
 	public static final long serialVersionUID=1;
 
@@ -44,15 +45,15 @@ public class TsStaffWorkspace implements Serializable,EjbWithId,EjbPersistable,E
 	@Override public void setId(long id){this.id = id;}
 	
 	@NotNull @ManyToOne
-	private TsWorkspace domain;
-	@Override public TsWorkspace getDomain() {return domain;}
-	@Override public void setDomain(TsWorkspace domain) {this.domain = domain;}
+	private TsScope domain;
+	@Override public TsScope getDomain() {return domain;}
+	@Override public void setDomain(TsScope domain) {this.domain = domain;}
 	
 	@Transient
-	private TsWorkspace domain2;
-	@Override public TsWorkspace getDomain2() {return domain2;}
-	@Override public void setDomain2(TsWorkspace domain2) {this.domain2=domain2;}
-	
+	private TsScope domain2;
+	@Override public TsScope getDomain2() {return domain2;}
+	@Override public void setDomain2(TsScope domain2) {this.domain2=domain2;}
+		
 	@NotNull @ManyToOne
 	private SecurityRole role;
 	@Override public SecurityRole getRole() {return role;}
@@ -76,5 +77,5 @@ public class TsStaffWorkspace implements Serializable,EjbWithId,EjbPersistable,E
 		return sb.toString();
 	}
 	
-	@Override public boolean equals(Object object) {return (object instanceof TsStaffWorkspace) ? id == ((TsStaffWorkspace) object).getId() : (object == this);}
+	@Override public boolean equals(Object object) {return (object instanceof TsStaffScope) ? id == ((TsStaffScope) object).getId() : (object == this);}
 }

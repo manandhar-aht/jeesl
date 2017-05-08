@@ -1,4 +1,4 @@
-package org.jeesl.model.ejb.module.ts;
+package org.jeesl.model.ejb.module.ts.core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +19,10 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
+import org.jeesl.model.ejb.module.ts.data.TsData;
+import org.jeesl.model.ejb.module.ts.data.TsSample;
+import org.jeesl.model.ejb.module.ts.data.TsTransaction;
+import org.jeesl.model.ejb.module.ts.qa.TsQaFlag;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
 import org.jeesl.model.ejb.user.JeeslUser;
@@ -29,7 +33,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Scope",category="ts",subset="ts")
 public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslTsScope<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsBridge,TsEntityClass,TsInterval,TsData,JeeslUser,TsWorkspace,TsQaFlag>
+								JeeslTsScope<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,JeeslUser,TsWorkspace,TsQaFlag>
 {
 	public static final long serialVersionUID=1;
 	

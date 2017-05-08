@@ -57,7 +57,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	protected Class<SCOPE> cScope;
 	protected Class<UNIT> cUnit;
 	protected Class<TS> cTs;
-	private final Class<TRANSACTION> cTransaction;
+	protected final Class<TRANSACTION> cTransaction;
 	protected Class<BRIDGE> cBridge;
 	protected Class<EC> cEc;
 	protected Class<INT> cInt;

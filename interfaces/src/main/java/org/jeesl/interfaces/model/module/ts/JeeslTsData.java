@@ -23,7 +23,7 @@ public interface JeeslTsData <L extends UtilsLang,
 								QAF extends UtilsStatus<QAF,L,D>>
 		extends EjbWithId,EjbWithRecord,EjbSaveable
 {
-	public enum Attributes{timeSeries,workspace,record,value}
+	public enum Attributes{transaction,timeSeries,workspace,record,value}
 	
 	TS getTimeSeries();
 	void setTimeSeries(TS timeSeries);

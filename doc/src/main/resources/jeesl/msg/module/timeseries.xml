@@ -125,5 +125,34 @@
     		<s:lang key="en" translation="Entity"/>
     		<s:lang key="fr" translation="Entity"/>
     	</s:langs>
-    </s:translation>    
+    </s:translation>
+    
+	<s:translation key="jeeslTsTransactions">
+    	<s:langs>
+    		<s:lang key="de" translation="Transaktionen"/>
+    		<s:lang key="en" translation="Transactions"/>
+    		<s:lang key="fr" translation="Transactions"/>
+    	</s:langs>
+    </s:translation>
+  	<s:translation key="jeeslTsTransaction">
+    	<s:langs>
+    		<s:lang key="de" translation="Transaktion"/>
+    		<s:lang key="en" translation="Transaction"/>
+    		<s:lang key="fr" translation="Transaction"/>
+    	</s:langs>
+    </s:translation>  
+	<s:translation key="jeeslTsTransactionUser">
+    	<s:langs>
+    		<s:lang key="de" translation="Benutzer"/>
+    		<s:lang key="en" translation="User"/>
+    		<s:lang key="fr" translation="User"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslTsTransactionRecord">
+    	<s:langs>
+    		<s:lang key="de" translation="Datum / Uhrzeit"/>
+    		<s:lang key="en" translation="Date / Time"/>
+    		<s:lang key="fr" translation="Date / Time"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

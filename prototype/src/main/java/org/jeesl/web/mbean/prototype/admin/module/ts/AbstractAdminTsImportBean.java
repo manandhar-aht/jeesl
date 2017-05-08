@@ -250,7 +250,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 			TS ts = fTs.fcTimeSeries(cTs, scope, interval, bridge);
 			logger.info("Using TS "+ts.toString());
 			
-			TRANSACTION transaction = efTransaction.build(transactionUser);
+			TRANSACTION transaction = fTs.save(efTransaction.build(transactionUser));
 			
 			List<DATA> datas = new ArrayList<DATA>();
 			for(Data data : timeSeries.getData())

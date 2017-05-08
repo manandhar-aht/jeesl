@@ -124,6 +124,24 @@ public class JeeslTsFacadeBean<L extends UtilsLang,
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cTs.getName()+" found for scope/interval/bridge");}
 	}
 	
+	@Override
+	public List<DATA> fData(TRANSACTION transaction)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<DATA> cQ = cB.createQuery(cData);
+		Root<DATA> data = cQ.from(cData);
+		
+		predicates.add(cB.equal(data.<TRANSACTION>get(JeeslTsData.Attributes.transaction.toString()), transaction));
+		Expression<Date> eRecord = data.get(JeeslTsData.Attributes.record.toString());
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(data);
+		cQ.orderBy(cB.asc(eRecord));
+		
+		return em.createQuery(cQ).getResultList();
+	}
+	
 	@Override public List<DATA> fData(WS workspace, TS timeSeries){return fData(workspace,timeSeries,null,null);}
 	@Override
 	public List<DATA> fData(WS workspace, TS timeSeries, Date from, Date to)
@@ -142,6 +160,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang,
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(data);
+		cQ.orderBy(cB.asc(eRecord));
 		
 		return em.createQuery(cQ).getResultList();
 	}

@@ -68,4 +68,12 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 		logger.info(AbstractLogMessage.selectEntity(transaction));
 		datas = fTs.fData(transaction);
 	}
+	
+	public void deleteTransaction()
+	{
+		logger.info(AbstractLogMessage.rmEntity(transaction));
+		
+		transaction=null;
+		reloadTransactions();
+	}
 }

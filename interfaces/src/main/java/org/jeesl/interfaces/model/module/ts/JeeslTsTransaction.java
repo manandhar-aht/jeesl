@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.module.ts;
 
+import java.util.List;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -30,4 +32,7 @@ public interface JeeslTsTransaction <L extends UtilsLang,
 	
 	String getRemark();
 	void setRemark(String remark);
+	
+//	List<DATA> getDatas();
+//	void setDatas(List<DATA> datas);
 }

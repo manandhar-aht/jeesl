@@ -51,14 +51,16 @@ public class JeeslTsFacadeBean<L extends UtilsLang,
 					extends UtilsFacadeBean
 					implements JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>
 {
+	private final Class<TRANSACTION> cTransaction;
 	private final Class<DATA> cData;
 	
 	private EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efTs;
 	private EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efBridge;
 	
-	public JeeslTsFacadeBean(EntityManager em, final Class<DATA> cData)
+	public JeeslTsFacadeBean(EntityManager em, final Class<TRANSACTION> cTransaction, final Class<DATA> cData)
 	{
 		super(em);
+		this.cTransaction=cTransaction;
 		this.cData=cData;
 	}
 
@@ -165,5 +167,12 @@ public class JeeslTsFacadeBean<L extends UtilsLang,
 		cQ.orderBy(cB.asc(eRecord));
 		
 		return em.createQuery(cQ).getResultList();
+	}
+	
+	@Override
+	public void deleteTransaction(TRANSACTION transaction) throws UtilsConstraintViolationException
+	{
+		transaction = em.find(cTransaction, transaction.getId());
+		this.rmProtected(transaction);
 	}
 }

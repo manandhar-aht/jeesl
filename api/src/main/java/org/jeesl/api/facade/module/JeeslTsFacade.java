@@ -48,4 +48,6 @@ public interface JeeslTsFacade <L extends UtilsLang,
 	List<DATA> fData(TRANSACTION transaction);
 	List<DATA> fData(WS workspace, TS timeSeries);
 	List<DATA> fData(WS workspace, TS timeSeries, Date from, Date to);
+	
+	void deleteTransaction(TRANSACTION transaction) throws UtilsConstraintViolationException;
 }

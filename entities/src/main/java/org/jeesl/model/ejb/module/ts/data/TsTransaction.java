@@ -53,4 +53,6 @@ public class TsTransaction implements Serializable,EjbRemoveable,EjbPersistable,
 	private TsQaFlag flag;
 	public TsQaFlag getFlag() {return flag;}
 	public void setFlag(TsQaFlag flag) {this.flag = flag;}
+	
+	
 }

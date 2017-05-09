@@ -8,9 +8,9 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslGraphic<L extends UtilsLang,
 								D extends UtilsDescription,
-								G extends JeeslGraphic<L,D,G,GT,GS>,
+								G extends JeeslGraphic<L,D,G,GT,FS>,
 								GT extends UtilsStatus<GT,L,D>,
-								GS extends UtilsStatus<GS,L,D>>
+								FS extends UtilsStatus<FS,L,D>>
 		extends EjbWithId,EjbSaveable
 {		
 	Long getVersionLock();
@@ -18,8 +18,8 @@ public interface JeeslGraphic<L extends UtilsLang,
 	GT getType();
 	void setType(GT type);
 	
-	GS getStyle();
-	void setStyle(GS style);
+	FS getStyle();
+	void setStyle(FS style);
 	
 	byte[] getData();
 	void setData(byte[] data);

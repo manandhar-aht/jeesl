@@ -8,9 +8,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public interface EjbWithGraphic<L extends UtilsLang,
 								D extends UtilsDescription,
-								G extends JeeslGraphic<L,D,G,GT,GS>,
+								G extends JeeslGraphic<L,D,G,GT,FS>,
 								GT extends UtilsStatus<GT,L,D>,
-								GS extends UtilsStatus<GS,L,D>>
+								FS extends UtilsStatus<FS,L,D>>
 {
 	G getGraphic();
 	void setGraphic(G graphic) ;

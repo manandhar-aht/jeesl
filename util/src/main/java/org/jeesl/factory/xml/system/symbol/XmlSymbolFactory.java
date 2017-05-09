@@ -13,22 +13,25 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Styles;
 import net.sf.ahtutils.xml.symbol.Symbol;
 
-public class XmlSymbolFactory <L extends UtilsLang,D extends UtilsDescription,G extends JeeslGraphic<L,D,G,GT,GS>,GT extends UtilsStatus<GT,L,D>,GS extends UtilsStatus<GS,L,D>>
+public class XmlSymbolFactory <L extends UtilsLang, D extends UtilsDescription,
+								G extends JeeslGraphic<L,D,G,GT,FS>,
+								GT extends UtilsStatus<GT,L,D>,
+								FS extends UtilsStatus<FS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlSymbolFactory.class);
 		
 	private Symbol q;
 	
-	private XmlStyleFactory<GS,L,D> xfStyle;
-	private XmlColorsFactory<L,D,G,GT,GS> xfColors;
-	private XmlSizesFactory<L,D,G,GT,GS> xfSizes;
+	private XmlStyleFactory<FS,L,D> xfStyle;
+	private XmlColorsFactory<L,D,G,GT,FS> xfColors;
+	private XmlSizesFactory<L,D,G,GT,FS> xfSizes;
 	
 	public XmlSymbolFactory(String localeCode, Symbol q)
 	{
 		this.q=q;
-		if(q.isSetStyles() && q.getStyles().isSetStyle()){xfStyle = new XmlStyleFactory<GS,L,D>(localeCode,q.getStyles().getStyle().get(0));}
-		if(q.isSetColors()){xfColors = new XmlColorsFactory<L,D,G,GT,GS>(q.getColors());}
-		if(q.isSetSizes()){xfSizes = new XmlSizesFactory<L,D,G,GT,GS>(q.getSizes());}
+		if(q.isSetStyles() && q.getStyles().isSetStyle()){xfStyle = new XmlStyleFactory<FS,L,D>(localeCode,q.getStyles().getStyle().get(0));}
+		if(q.isSetColors()){xfColors = new XmlColorsFactory<L,D,G,GT,FS>(q.getColors());}
+		if(q.isSetSizes()){xfSizes = new XmlSizesFactory<L,D,G,GT,FS>(q.getSizes());}
 	}
 	
 	public Symbol build(G graphic)

@@ -10,9 +10,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbGraphicFactory<L extends UtilsLang,
 								D extends UtilsDescription,
-								G extends JeeslGraphic<L,D,G,GT,GS>,
+								G extends JeeslGraphic<L,D,G,GT,FS>,
 								GT extends UtilsStatus<GT,L,D>,
-								GS extends UtilsStatus<GS,L,D>>
+								FS extends UtilsStatus<FS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbGraphicFactory.class);
 	
@@ -23,15 +23,14 @@ public class EjbGraphicFactory<L extends UtilsLang,
         this.cGrpahic = cGrpahic;
     } 
     
-    public static <L extends UtilsLang,
-					D extends UtilsDescription,
-					G extends JeeslGraphic<L,D,G,GT,GS>,
+    public static <L extends UtilsLang, D extends UtilsDescription,
+					G extends JeeslGraphic<L,D,G,GT,FS>,
 					GT extends UtilsStatus<GT,L,D>,
-					GS extends UtilsStatus<GS,L,D>>
-    	EjbGraphicFactory<L,D,G,GT,GS>
+					FS extends UtilsStatus<FS,L,D>>
+    	EjbGraphicFactory<L,D,G,GT,FS>
     	factory(final Class<G> cGrpahic)
     {
-        return new EjbGraphicFactory<L,D,G,GT,GS>(cGrpahic);
+        return new EjbGraphicFactory<L,D,G,GT,FS>(cGrpahic);
     }
     
 	public G build(GT type)
@@ -48,7 +47,7 @@ public class EjbGraphicFactory<L extends UtilsLang,
         return ejb;
     }
 	
-	public G buildSymbol(GT type, GS style)
+	public G buildSymbol(GT type, FS style)
 	{
         G ejb = null;
         try

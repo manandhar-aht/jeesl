@@ -11,7 +11,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.symbol.Color;
 import net.sf.ahtutils.xml.symbol.Colors;
 
-public class XmlColorsFactory <L extends UtilsLang,D extends UtilsDescription,G extends JeeslGraphic<L,D,G,GT,GS>,GT extends UtilsStatus<GT,L,D>,GS extends UtilsStatus<GS,L,D>>
+public class XmlColorsFactory <L extends UtilsLang, D extends UtilsDescription,
+								G extends JeeslGraphic<L,D,G,GT,FS>,
+								GT extends UtilsStatus<GT,L,D>,
+								FS extends UtilsStatus<FS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlColorsFactory.class);
 		

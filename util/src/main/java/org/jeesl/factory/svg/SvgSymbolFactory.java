@@ -24,9 +24,9 @@ import net.sf.ahtutils.xml.symbol.Symbol;
 
 public class SvgSymbolFactory<L extends UtilsLang,
 									D extends UtilsDescription,
-									G extends JeeslGraphic<L,D,G,GT,GS>,
+									G extends JeeslGraphic<L,D,G,GT,FS>,
 									GT extends UtilsStatus<GT,L,D>,
-									GS extends UtilsStatus<GS,L,D>>
+									FS extends UtilsStatus<FS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SvgSymbolFactory.class);
 		
@@ -39,12 +39,12 @@ public class SvgSymbolFactory<L extends UtilsLang,
 	
     public static <L extends UtilsLang,
 					D extends UtilsDescription,
-					G extends JeeslGraphic<L,D,G,GT,GS>,
+					G extends JeeslGraphic<L,D,G,GT,FS>,
 					GT extends UtilsStatus<GT,L,D>,
-					GS extends UtilsStatus<GS,L,D>>
-    	SvgSymbolFactory<L,D,G,GT,GS> factory()
+					FS extends UtilsStatus<FS,L,D>>
+    	SvgSymbolFactory<L,D,G,GT,FS> factory()
 	{
-	    return new SvgSymbolFactory<L,D,G,GT,GS>();
+	    return new SvgSymbolFactory<L,D,G,GT,FS>();
 	}
     
 	public static SVGGraphics2D build()

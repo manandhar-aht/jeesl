@@ -43,9 +43,9 @@ import net.sf.exlp.util.io.StringUtil;
 
 public class AbstractOptionTableBean <L extends UtilsLang,
 										D extends UtilsDescription,
-										G extends JeeslGraphic<L,D,G,GT,GS>,
+										G extends JeeslGraphic<L,D,G,GT,FS>,
 										GT extends UtilsStatus<GT,L,D>,
-										GS extends UtilsStatus<GS,L,D>>
+										FS extends UtilsStatus<FS,L,D>>
 			extends AbstractAdminBean<L,D>
 			implements Serializable
 {
@@ -74,16 +74,16 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	protected List<EjbWithPosition> parents; public List<EjbWithPosition> getParents(){return parents;}
 	protected List<EjbWithPosition> items; public List<EjbWithPosition> getItems() {return items;}
 	private List<GT> graphicTypes; public List<GT> getGraphicTypes() {return graphicTypes;}
-	private List<GS> graphicStyles; public List<GS> getGraphicStyles() {return graphicStyles;}
+	private List<FS> graphicStyles; public List<FS> getGraphicStyles() {return graphicStyles;}
 	
 	protected Class<?> cStatus;
 	
 	private Class<GT> cGT;
-	private Class<GS> cGS;
+	private Class<FS> cGS;
 	
 	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
 	
-	protected EjbGraphicFactory<L,D,G,GT,GS> efGraphic;
+	protected EjbGraphicFactory<L,D,G,GT,FS> efGraphic;
 	
 	public AbstractOptionTableBean(final Class<L> cL, final Class<D> cD)
 	{
@@ -100,7 +100,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		categories = new ArrayList<EjbWithPosition>();
 	}
 	
-	protected void initUtils(String[] langs, UtilsFacade fUtils, FacesMessageBean bMessage, Class<L> cLang, Class<D> cDescription, Class<?> cStatus, Class<G> cG, Class<GT> cGT, Class<GS> cGS)
+	protected void initUtils(String[] langs, UtilsFacade fUtils, FacesMessageBean bMessage, Class<L> cLang, Class<D> cDescription, Class<?> cStatus, Class<G> cG, Class<GT> cGT, Class<FS> cGS)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fUtils=fUtils;
@@ -193,9 +193,9 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		if(supportsGraphic)
 		{
 			GT type = fUtils.fByCode(cGT, JeeslGraphicType.Code.symbol.toString());
-			GS style = fUtils.fByCode(cGS, JeeslGraphicStyle.Code.circle.toString());
+			FS style = fUtils.fByCode(cGS, JeeslGraphicStyle.Code.circle.toString());
 			graphic = efGraphic.buildSymbol(type, style);
-			((EjbWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
+			((EjbWithGraphic<L,D,G,GT,FS>)status).setGraphic(graphic);
 		}
 	}
 	
@@ -215,16 +215,16 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 		
 		if(supportsGraphic)
 		{
-			if(((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic()==null)
+			if(((EjbWithGraphic<L,D,G,GT,FS>)status).getGraphic()==null)
 			{
 				logger.info("Need to create a graphic entity for this status");
 				GT type = fUtils.fByCode(cGT, JeeslGraphicType.Code.symbol.toString());
-				GS style = fUtils.fByCode(cGS, JeeslGraphicStyle.Code.circle.toString());
+				FS style = fUtils.fByCode(cGS, JeeslGraphicStyle.Code.circle.toString());
 				graphic = fUtils.persist(efGraphic.buildSymbol(type, style));
-				((EjbWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
+				((EjbWithGraphic<L,D,G,GT,FS>)status).setGraphic(graphic);
 				status = fUtils.update(status);
 			}
-			graphic = ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic();
+			graphic = ((EjbWithGraphic<L,D,G,GT,FS>)status).getGraphic();
 		}
 		
 		uiAllowCode = hasDeveloperAction || hasAdministratorAction;
@@ -255,12 +255,12 @@ public class AbstractOptionTableBean <L extends UtilsLang,
             }
         	if(supportsGraphic && graphic!=null)
             {
-        		graphic.setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
-            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(cGS, ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getStyle()));}
+        		graphic.setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,FS>)status).getGraphic().getType()));
+            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(cGS, ((EjbWithGraphic<L,D,G,GT,FS>)status).getGraphic().getStyle()));}
         		
 //            	if(debugSave){logger.info("Saving "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
 //           	graphic = fUtils.save(graphic);
-            	((EjbWithGraphic<L,D,G,GT,GS>)status).setGraphic(graphic);
+            	((EjbWithGraphic<L,D,G,GT,FS>)status).setGraphic(graphic);
 //            	if(debugSave){logger.info("Saved "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
             }
 
@@ -269,7 +269,7 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 			status = fUtils.load(cl,(EjbWithId)status);
 			if(supportsGraphic)
 			{
-				graphic = ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic();
+				graphic = ((EjbWithGraphic<L,D,G,GT,FS>)status).getGraphic();
 				if(debugSave){logger.info("Saved "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
 			}
 			if(debugSave){logger.info("Saved "+status.getClass().getSimpleName()+" "+status.toString());}
@@ -324,15 +324,15 @@ public class AbstractOptionTableBean <L extends UtilsLang,
 	{
 		UploadedFile file = event.getFile();
 		logger.info("Received file with a size of " +file.getSize());
-		((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().setData(file.getContents());  
+		((EjbWithGraphic<L,D,G,GT,FS>)status).getGraphic().setData(file.getContents());  
 	}
 	
 //	@Override
 	@SuppressWarnings("unchecked")
 	public void changeGraphicType()
 	{
-		((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType()));
-		logger.info("changeGraphicType to "+((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getType().getCode());
+		((EjbWithGraphic<L,D,G,GT,FS>)status).getGraphic().setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,FS>)status).getGraphic().getType()));
+		logger.info("changeGraphicType to "+((EjbWithGraphic<L,D,G,GT,FS>)status).getGraphic().getType().getCode());
 	}
 	
 	//Revision

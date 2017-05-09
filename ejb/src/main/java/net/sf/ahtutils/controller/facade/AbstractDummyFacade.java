@@ -450,7 +450,7 @@ public class AbstractDummyFacade implements UtilsFacade
 	}
 
 	@Override
-	public <L extends UtilsLang, D extends UtilsDescription, S extends EjbWithId, G extends JeeslGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>, GS extends UtilsStatus<GS,L,D>> S load(Class<S> cS, S status) {
+	public <L extends UtilsLang, D extends UtilsDescription, S extends EjbWithId, G extends JeeslGraphic<L,D,G,GT,FS>, GT extends UtilsStatus<GT,L,D>, FS extends UtilsStatus<FS,L,D>> S load(Class<S> cS, S status) {
 		// TODO Auto-generated method stub
 		return null;
 	}

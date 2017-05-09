@@ -14,9 +14,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public abstract class AbstractAppUtilsBean<L extends UtilsLang,
 									D extends UtilsDescription,
-									G extends JeeslGraphic<L,D,G,GT,GS>,
+									G extends JeeslGraphic<L,D,G,GT,FS>,
 									GT extends UtilsStatus<GT,L,D>,
-									GS extends UtilsStatus<GS,L,D>>
+									FS extends UtilsStatus<FS,L,D>>
 	implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -25,9 +25,9 @@ public abstract class AbstractAppUtilsBean<L extends UtilsLang,
 	protected UtilsFacade fUtils;
 	
 	protected Class<GT> cGraphicType;
-	protected Class<GS> cGraphicStyle;
+	protected Class<FS> cGraphicStyle;
 
-	protected void initSuper(Class<GT> cGraphicType,Class<GS> cGraphicStyle)
+	protected void initSuper(Class<GT> cGraphicType,Class<FS> cGraphicStyle)
 	{
 		this.cGraphicType=cGraphicType;
 		this.cGraphicStyle=cGraphicStyle;
@@ -40,7 +40,7 @@ public abstract class AbstractAppUtilsBean<L extends UtilsLang,
 	public List<GT> getGraphicTypes() {return graphicTypes;}
 	public void reloadGraphicTypes(){graphicTypes = fUtils.allOrderedPositionVisible(cGraphicType);}
 	
-	private List<GS> graphicStyles;
-	public List<GS> getGraphicStyles(){return graphicStyles;}
+	private List<FS> graphicStyles;
+	public List<FS> getGraphicStyles(){return graphicStyles;}
 	public void reloadGraphicStyles(){graphicStyles = fUtils.allOrderedPositionVisible(cGraphicStyle);}	
 }

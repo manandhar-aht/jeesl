@@ -14,9 +14,9 @@ import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class UtilsRestService <L extends UtilsLang,
 							D extends UtilsDescription,
-							G extends JeeslGraphic<L,D,G,GT,GS>,
+							G extends JeeslGraphic<L,D,G,GT,FS>,
 							GT extends UtilsStatus<GT,L,D>,
-							GS extends UtilsStatus<GS,L,D>>
+							FS extends UtilsStatus<FS,L,D>>
 	extends AbstractUtilsRest<L,D>
 	implements UtilsStatusRestImport
 {
@@ -25,9 +25,9 @@ public class UtilsRestService <L extends UtilsLang,
     @SuppressWarnings("unused")
 	private final Class<G> cGraphic;
     private final Class<GT> cGraphicType;
-    private final Class<GS> cGraphicStyle;
+    private final Class<FS> cGraphicStyle;
     
-    public UtilsRestService(UtilsFacade fUtils, String[] localeCodes, final Class<L> cLang, final Class<D> cDescription, final Class<G> cGraphic,final Class<GT> cGraphicType, final Class<GS> cGraphicStyle)
+    public UtilsRestService(UtilsFacade fUtils, String[] localeCodes, final Class<L> cLang, final Class<D> cDescription, final Class<G> cGraphic,final Class<GT> cGraphicType, final Class<FS> cGraphicStyle)
 	{   
     	super(fUtils,localeCodes,cLang,cDescription);
         
@@ -39,13 +39,13 @@ public class UtilsRestService <L extends UtilsLang,
 	}
 	
 	public static <L extends UtilsLang, D extends UtilsDescription,
-				G extends JeeslGraphic<L,D,G,GT,GS>,
+				G extends JeeslGraphic<L,D,G,GT,FS>,
 				GT extends UtilsStatus<GT,L,D>,
-				GS extends UtilsStatus<GS,L,D>> 
-		UtilsRestService<L,D,G,GT,GS>
-		factory(UtilsFacade fUtils,String[] localeCodes,final Class<L> cL, final Class<D> cD, final Class<G> cGraphic,final Class<GT> cGraphicType, final Class<GS> cGraphicStyle)
+				FS extends UtilsStatus<FS,L,D>> 
+		UtilsRestService<L,D,G,GT,FS>
+		factory(UtilsFacade fUtils,String[] localeCodes,final Class<L> cL, final Class<D> cD, final Class<G> cGraphic,final Class<GT> cGraphicType, final Class<FS> cGraphicStyle)
 	{
-		return new UtilsRestService<L,D,G,GT,GS>(fUtils,localeCodes,cL,cD,cGraphic,cGraphicType,cGraphicStyle);
+		return new UtilsRestService<L,D,G,GT,FS>(fUtils,localeCodes,cL,cD,cGraphic,cGraphicType,cGraphicStyle);
 	}
 
 	@Override public DataUpdate importUtilsSymbolGraphicTypes(Aht types) {return super.importStatus(cGraphicType, null, types);}

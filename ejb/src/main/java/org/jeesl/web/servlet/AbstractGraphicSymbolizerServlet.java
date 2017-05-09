@@ -27,14 +27,17 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class AbstractGraphicSymbolizerServlet<L extends UtilsLang,D extends UtilsDescription, G extends JeeslGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>,GS extends UtilsStatus<GS,L,D>>
+public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends UtilsDescription,
+												G extends JeeslGraphic<L,D,G,GT,FS>,
+												GT extends UtilsStatus<GT,L,D>,
+												FS extends UtilsStatus<FS,L,D>>
 	extends HttpServlet
 	implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractGraphicSymbolizerServlet.class);
 	
-	private SvgSymbolFactory<L,D,G,GT,GS> svgF;
+	private SvgSymbolFactory<L,D,G,GT,FS> svgF;
 	
 	public AbstractGraphicSymbolizerServlet()
 	{

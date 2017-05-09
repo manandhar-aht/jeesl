@@ -20,33 +20,33 @@ import net.sf.ahtutils.xml.status.Status;
 
 public class JeeslRestService <L extends UtilsLang,D extends UtilsDescription,
 								S extends EjbWithId,
-								G extends JeeslGraphic<L,D,G,GT,GS>,
+								G extends JeeslGraphic<L,D,G,GT,FS>,
 								GT extends UtilsStatus<GT,L,D>,
-								GS extends UtilsStatus<GS,L,D>>
+								FS extends UtilsStatus<FS,L,D>>
 					extends AbstractJeeslRestService<L,D>
 					implements JeeslExportRest<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslRestService.class);
 		
-	private final JeeslGraphicFacade<L,D,S,G,GT,GS> fGraphic;
-	private final XmlGraphicFactory<L,D,G,GT,GS> xfGraphic;
+	private final JeeslGraphicFacade<L,D,S,G,GT,FS> fGraphic;
+	private final XmlGraphicFactory<L,D,G,GT,FS> xfGraphic;
 	
-	private JeeslRestService(JeeslGraphicFacade<L,D,S,G,GT,GS> fGraphic,final Class<L> cL, final Class<D> cD)
+	private JeeslRestService(JeeslGraphicFacade<L,D,S,G,GT,FS> fGraphic,final Class<L> cL, final Class<D> cD)
 	{
 		super(fGraphic,cL,cD);
 		this.fGraphic=fGraphic;
-		xfGraphic = new XmlGraphicFactory<L,D,G,GT,GS>(SymbolQuery.get(SymbolQuery.Key.GraphicExport));
+		xfGraphic = new XmlGraphicFactory<L,D,G,GT,FS>(SymbolQuery.get(SymbolQuery.Key.GraphicExport));
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 						S extends EjbWithId,
-						G extends JeeslGraphic<L,D,G,GT,GS>,
+						G extends JeeslGraphic<L,D,G,GT,FS>,
 						GT extends UtilsStatus<GT,L,D>,
-						GS extends UtilsStatus<GS,L,D>>
-	JeeslRestService<L,D,S,G,GT,GS>
-		factory(JeeslGraphicFacade<L,D,S,G,GT,GS> fGraphic ,final Class<L> cL, final Class<D> cD)
+						FS extends UtilsStatus<FS,L,D>>
+	JeeslRestService<L,D,S,G,GT,FS>
+		factory(JeeslGraphicFacade<L,D,S,G,GT,FS> fGraphic ,final Class<L> cL, final Class<D> cD)
 	{
-		return new JeeslRestService<L,D,S,G,GT,GS>(fGraphic,cL,cD);
+		return new JeeslRestService<L,D,S,G,GT,FS>(fGraphic,cL,cD);
 	}
 	
 

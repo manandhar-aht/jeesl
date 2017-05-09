@@ -14,6 +14,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -57,7 +58,6 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 		reloadTransactions();
 	}
 	
-	
 	private void reloadTransactions()
 	{
 		transactions = fTs.all(cTransaction);
@@ -69,10 +69,10 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 		datas = fTs.fData(transaction);
 	}
 	
-	public void deleteTransaction()
+	public void deleteTransaction() throws UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.rmEntity(transaction));
-		
+		fTs.deleteTransaction(transaction);
 		transaction=null;
 		reloadTransactions();
 	}

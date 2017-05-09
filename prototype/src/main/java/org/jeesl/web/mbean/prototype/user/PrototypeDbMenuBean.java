@@ -23,6 +23,7 @@ public class PrototypeDbMenuBean implements Serializable
 	final static Logger logger = LoggerFactory.getLogger(PrototypeDbMenuBean.class);
 	private static final long serialVersionUID = 1L;
 	
+	private boolean debugOnInfo;
 	protected static final String rootMain = "root";
 	protected Map<String,Menu> mapMenu;
 	protected Map<String,MenuItem> mapSub;
@@ -40,9 +41,15 @@ public class PrototypeDbMenuBean implements Serializable
 	{
 		userLoggedIn = false;
 		localeCode = "en";
+		debugOnInfo = false;
 	}
 	
-	@Deprecated
+	protected void setLogInfo(boolean log)
+	{
+		debugOnInfo = log;
+	}
+	
+	@Deprecated //This should be done with fSecurity
 	public void initAccess(String views, String menu, String localeCode)
     {
 		this.localeCode=localeCode;
@@ -54,7 +61,7 @@ public class PrototypeDbMenuBean implements Serializable
 			Access xmlAccess = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/"+views, Access.class);
 			Menu xmlMenuMain = JaxbUtil.loadJAXB(this.getClass().getClassLoader(),"/"+menu, Menu.class);
 			
-			if(logger.isTraceEnabled()){logger.info("main.root="+rootMain);}
+			if(debugOnInfo && logger.isInfoEnabled()){logger.info("main.root="+rootMain);}
 
 			mfMain = new MenuXmlBuilder(xmlMenuMain,xmlAccess,getLang(),rootMain);
 			mfMain.setAlwaysUpToLevel(1);
@@ -77,7 +84,7 @@ public class PrototypeDbMenuBean implements Serializable
 	public void clear(String localeCode, boolean userLoggedIn)
 	{
 		this.localeCode=localeCode;
-		logger.trace("Clearing hashtables ... userLoggedIn:"+userLoggedIn);
+		if(debugOnInfo && logger.isInfoEnabled()){logger.info("Clearing hashtables ... userLoggedIn:"+userLoggedIn);}
 		this.userLoggedIn=userLoggedIn;
 		mapMenu.clear();
 		mapSub.clear();
@@ -174,12 +181,12 @@ public class PrototypeDbMenuBean implements Serializable
 	public MenuItem subDyn(MenuXmlBuilder mf, String code, Menu dynamicMenu)
 	{
 		boolean mapSubContaines = mapSub.containsKey(code);
-//		logger.info("Creating sub... dynamic?"+(dynamicMenu!=null)+" mapContains:"+mapSubContaines);
+		if(debugOnInfo && logger.isInfoEnabled()){logger.info("Creating subMenu for '"+code+"' dynamic:"+(dynamicMenu!=null)+" mapSub.contains:"+mapSubContaines);}
 		
 		if(!mapSubContaines)
 		{
 			ProcessingTimeTracker ptt=null;
-			if(logger.isTraceEnabled()){ptt = new ProcessingTimeTracker(true);}
+			if(debugOnInfo && logger.isInfoEnabled()){ptt = new ProcessingTimeTracker(true);}
 			synchronized(mf)
 			{
 				if(!mapMenu.containsKey(code))
@@ -190,9 +197,10 @@ public class PrototypeDbMenuBean implements Serializable
 				Menu m = mapMenu.get(code);
 				mapSub.put(code,mf.subMenu(m,code));
 			}
-//			JaxbUtil.trace(mapSub.get(code));
-			if(logger.isTraceEnabled()){logger.trace(AbstractLogMessage.time("Submenu creation for "+code,ptt));}
+//			JaxbUtil.info(mapSub.get(code));
+			if(debugOnInfo && logger.isInfoEnabled()){logger.info(AbstractLogMessage.time("Submenu creation for "+code,ptt));}
 		}
+		JaxbUtil.info(mapSub.get(code));
 		return mapSub.get(code);
 	}
 	

@@ -50,4 +50,11 @@
     		<s:lang key="fr" translation="Remark"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="jeeslXpath">
+		<s:langs>
+    		<s:lang key="de" translation="XPath"/>
+    		<s:lang key="en" translation="XPath"/>
+    		<s:lang key="fr" translation="XPath"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

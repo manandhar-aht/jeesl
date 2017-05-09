@@ -33,6 +33,6 @@ public interface JeeslTsTransaction <L extends UtilsLang,
 	String getRemark();
 	void setRemark(String remark);
 	
-//	List<DATA> getDatas();
-//	void setDatas(List<DATA> datas);
+	List<DATA> getDatas();
+	void setDatas(List<DATA> datas);
 }

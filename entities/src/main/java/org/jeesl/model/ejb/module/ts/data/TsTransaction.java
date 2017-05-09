@@ -1,12 +1,17 @@
 package org.jeesl.model.ejb.module.ts.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
 import org.jeesl.model.ejb.module.ts.core.TimeSeries;
@@ -54,5 +59,8 @@ public class TsTransaction implements Serializable,EjbRemoveable,EjbPersistable,
 	public TsQaFlag getFlag() {return flag;}
 	public void setFlag(TsQaFlag flag) {this.flag = flag;}
 	
-	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<TsData> datas;
+	@Override public List<TsData> getDatas() {if(datas==null){datas = new ArrayList<TsData>();}return datas;}
+	@Override public void setDatas(List<TsData> datas) {this.datas = datas;}
 }

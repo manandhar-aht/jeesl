@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.svg;
+package org.jeesl.factory.svg;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -85,6 +85,20 @@ public class SvgSymbolFactory<L extends UtilsLang,
 		return build(impl,canvasSize,style,size,color);
 	}
 	
+	public SVGGraphics2D square(int canvasSize, G rule)
+	{
+		int size = 5; if(rule.getSize()!=null){size = rule.getSize();}
+		String color = "000000"; if(rule.getColor()!=null){color = rule.getColor();}
+		
+		JeeslGraphicStyle.Code style = JeeslGraphicStyle.Code.square;
+		if(rule.getStyle()!=null && rule.getStyle().getCode()!=null)
+		{
+			style = JeeslGraphicStyle.Code.valueOf(rule.getStyle().getCode());
+		}
+		
+		return test(impl,canvasSize,style,size,color);
+	}
+	
 	public static SVGGraphics2D build(int canvasSize, Symbol rule)
 	{
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
@@ -129,6 +143,31 @@ public class SvgSymbolFactory<L extends UtilsLang,
 	}
 	
 	private static SVGGraphics2D build(DOMImplementation impl, int canvasSize, JeeslGraphicStyle.Code style, int size, String color)
+	{
+		 SVGDocument doc = (SVGDocument) impl.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", null);
+		    SVGGraphics2D g = new SVGGraphics2D(doc);
+
+		    double cS = canvasSize; double s = size;
+		    double low = (cS - s)/2;
+		    
+		    logger.trace("Canvas: "+canvasSize+" low:"+low+" size:"+size);
+		    
+		    Shape shape = null;
+		    switch(style)
+		    {
+		    	case circle:  shape = new Ellipse2D.Double(low, low, size, size);break;
+		    	case square:  shape = new Rectangle2D.Double(low, low, size, size);break;
+		    }
+		    
+		    g.setPaint(Color.decode("#"+color));
+		    g.fill(shape);
+		      
+		    g.setSVGCanvasSize(new Dimension(canvasSize, canvasSize));
+		    
+		    return g;
+	}
+	
+	private static SVGGraphics2D test(DOMImplementation impl, int canvasSize, JeeslGraphicStyle.Code style, int size, String color)
 	{
 		 SVGDocument doc = (SVGDocument) impl.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", null);
 		    SVGGraphics2D g = new SVGGraphics2D(doc);

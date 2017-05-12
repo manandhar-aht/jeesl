@@ -23,7 +23,7 @@
 						<p:dataTable var="s" value="#{cc.attrs.bean.scopes}" draggableRows="true"
 							selection="#{cc.attrs.bean.scope}" selectionMode="single" rowKey="#{s.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.aupTsScopes}">
+								<aht:pfDataTableHeader title="#{msg.jeeslTsScopes}">
 									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
@@ -38,7 +38,7 @@
 				            <p:column headerText="#{msg.aupCategory}">  
 								<h:outputText value="#{s.category.name[userBean.localeCode].lang}"/>
 				            </p:column>
-				            <p:column headerText="#{msg.aupTsScope}">  
+				            <p:column headerText="#{msg.jeeslTsScope}">  
 								<h:outputText value="#{s.name[userBean.localeCode].lang}"/>
 				            </p:column>
 				            <p:column headerText="#{msg.aupTsUnit}">  
@@ -52,7 +52,7 @@
 				</aht:slot>
 				<aht:slot id="sCategory" width="4">
 					<h:form id="fCategory">
-						<p:panel id="pLang" header="#{msg.aupTsScope}"
+						<p:panel id="pLang" header="#{msg.jeeslTsScope}"
 								 rendered="#{not empty cc.attrs.bean.scope}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancel()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttCancel}"/>
@@ -93,7 +93,7 @@
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fIntervals" listener="#{cc.attrs.bean.selectTbInterval()}"/>
-							<p:column headerText="#{msg.aupTsInterval}">
+							<p:column headerText="#{msg.jeeslTsInterval}">
 								<h:outputText value="#{v.name[userBean.localeCode].lang}" />
 							</p:column>
 						</p:dataTable>				  
@@ -101,7 +101,7 @@
 							<p:dataTable id="dtOpSector" var="v" value="#{cc.attrs.bean.opIntervals}" rowKey="#{v.id}"
 				                         selection="#{cc.attrs.bean.opInterval}" selectionMode="single">
 								<p:ajax event="rowSelect" update=":#{cc.id}:fIntervals" listener="#{cc.attrs.bean.opAddInterval()}" oncomplete="PF('wvOpViewSelection').hide();"/>
-								<p:column headerText="#{msg.aupTsInterval}"
+								<p:column headerText="#{msg.jeeslTsInterval}"
 											sortBy="#{v.name[userBean.localeCode].lang}"
 											filterBy="#{v.name[userBean.localeCode].lang}" filterMatchMode="contains">
 									<h:outputText value="#{v.name[userBean.localeCode].lang}" />
@@ -120,7 +120,7 @@
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fClasses" listener="#{cc.attrs.bean.selectTbClass()}"/>
-							<p:column headerText="#{msg.aupTsClass}">
+							<p:column headerText="#{msg.jeeslTsClass}">
 								<h:outputText value="#{c.name[userBean.localeCode].lang}" />
 							</p:column>
 						</p:dataTable>				  
@@ -128,7 +128,7 @@
 							<p:dataTable id="dtOpSector" var="c" value="#{cc.attrs.bean.opClasses}" rowKey="#{c.id}"
 				                         selection="#{cc.attrs.bean.opClass}" selectionMode="single">
 								<p:ajax event="rowSelect" update=":#{cc.id}:fClasses" listener="#{cc.attrs.bean.opAddClass()}" oncomplete="PF('wvOpClassSelection').hide();"/>
-								<p:column headerText="#{msg.aupTsClass}"
+								<p:column headerText="#{msg.jeeslTsClass}"
 											sortBy="#{c.name[userBean.localeCode].lang}"
 											filterBy="#{c.name[userBean.localeCode].lang}" filterMatchMode="contains">
 									<h:outputText value="#{c.name[userBean.localeCode].lang}" />

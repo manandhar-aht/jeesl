@@ -1,5 +1,6 @@
 package org.jeesl.factory.factory;
 
+import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsScopeFactory;
@@ -39,12 +40,14 @@ public class TsFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
 	private final Class<SCOPE> cScope;
 	private final Class<TRANSACTION> cTransaction;
 	private final Class<DATA> cData;
+	private final Class<BRIDGE> cBridge;
 	private final Class<EC> cEc;
     
-	public TsFactoryFactory(final Class<SCOPE> cScope, final Class<TRANSACTION> cTransaction, final Class<EC> cEc, final Class<DATA> cData)
+	public TsFactoryFactory(final Class<SCOPE> cScope, final Class<TRANSACTION> cTransaction, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<DATA> cData)
 	{
 		this.cScope=cScope;
         this.cTransaction=cTransaction;
+        this.cBridge=cBridge;
         this.cData=cData;
         this.cEc=cEc;
 	}
@@ -62,14 +65,19 @@ public class TsFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
 					USER extends EjbWithId, 
 					WS extends UtilsStatus<WS,L,D>,
 					QAF extends UtilsStatus<QAF,L,D>>
-	TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> factory(final Class<SCOPE> cScope, final Class<TRANSACTION> cTransaction, final Class<EC> cEc, final Class<DATA> cData)
+	TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> factory(final Class<SCOPE> cScope, final Class<TRANSACTION> cTransaction, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<DATA> cData)
 	{
-		return new TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cScope,cTransaction,cEc,cData);
+		return new TsFactoryFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cScope,cTransaction,cBridge,cEc,cData);
 	}
 	
 	public EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> scope()
 	{
 		return new EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cScope);
+	}
+	
+	public EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> bridge()
+	{
+		return new EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cBridge);
 	}
 	
 	public EjbTsTransactionFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> transaction()

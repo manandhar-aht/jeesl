@@ -1,5 +1,10 @@
 package org.jeesl.factory.ejb.module.ts;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -51,5 +56,19 @@ public class EjbTsBridgeFactory<L extends UtilsLang, D extends UtilsDescription,
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		return ejb;
+	}
+	
+	public Map<EC,List<Long>> dataToBridgeIds(List<DATA> datas)
+	{
+		Map<EC,List<Long>> map = new HashMap<EC,List<Long>>();
+		for(DATA data : datas)
+		{
+			EC ec = data.getTimeSeries().getBridge().getEntityClass();
+			Long refId = data.getTimeSeries().getBridge().getRefId();
+			
+			if(!map.containsKey(ec)){map.put(ec, new ArrayList<Long>());}
+			if(!map.get(ec).contains(refId)){map.get(ec).add(refId);}
+		}
+		return map;
 	}
 }

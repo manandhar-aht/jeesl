@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
-	<s:translation key="aupTsScopes">
+	<s:translation key="jeeslTsScopes">
     	<s:langs>
     		<s:lang key="de" translation="Bereiche"/>
     		<s:lang key="en" translation="Scopes"/>
     		<s:lang key="fr" translation="Scopes"/>
     	</s:langs>
     </s:translation>
-    <s:translation key="aupTsScope">
+    <s:translation key="jeeslTsScope">
     	<s:langs>
     		<s:lang key="de" translation="Bereich"/>
     		<s:lang key="en" translation="Scope"/>
@@ -21,7 +21,7 @@
     		<s:lang key="fr" translation="Unit"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupTsInterval">
+	<s:translation key="jeeslTsInterval">
     	<s:langs>
     		<s:lang key="de" translation="Intervall"/>
     		<s:lang key="en" translation="Interval"/>
@@ -42,7 +42,7 @@
     		<s:lang key="fr" translation="Classes"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupTsClass">
+	<s:translation key="jeeslTsClass">
     	<s:langs>
     		<s:lang key="de" translation="Klasse"/>
     		<s:lang key="en" translation="Class"/>
@@ -119,7 +119,7 @@
     		<s:lang key="fr" translation="Entities"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupTsEntity">
+	<s:translation key="jeeslTsEntity">
     	<s:langs>
     		<s:lang key="de" translation="Entität"/>
     		<s:lang key="en" translation="Entity"/>

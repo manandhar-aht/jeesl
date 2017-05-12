@@ -33,17 +33,14 @@
 		</ofx:paragraph>
 	</ofx:section>
 	
-	
-
-	
 	<ofx:section id="section.admin.installation.eclipse.luna.svn.checkout">
 		<ofx:title lang="en">Checkout Project From SVN Repository</ofx:title>
 		
 		<ofx:paragraph lang="en">
 			brew install --with-java --universal subversion
 
-				View add SVN
-				JavaHL 1.9.x
+			View add SVN
+			JavaHL 1.9.x
 		</ofx:paragraph>
 		
 		<ofx:listing id="listing.admin.installation.eclipse.vcs.url">
@@ -51,9 +48,8 @@
 		</ofx:listing>
 		
 		<ofx:paragraph lang="en">
-				Since the Maven build tool is downloading all dependencies for the project while setting it up in eclipse, 
-				this process takes very long when triggered the first time.
-				
+			Since the Maven build tool is downloading all dependencies for the project while setting it up in eclipse, 
+			this process takes very long when triggered the first time.
 		</ofx:paragraph>
 		
 	</ofx:section>

@@ -200,7 +200,7 @@ public class PrototypeDbMenuBean implements Serializable
 //			JaxbUtil.info(mapSub.get(code));
 			if(debugOnInfo && logger.isInfoEnabled()){logger.info(AbstractLogMessage.time("Submenu creation for "+code,ptt));}
 		}
-		JaxbUtil.info(mapSub.get(code));
+		if(debugOnInfo && logger.isInfoEnabled()){JaxbUtil.info(mapSub.get(code));}
 		return mapSub.get(code);
 	}
 	

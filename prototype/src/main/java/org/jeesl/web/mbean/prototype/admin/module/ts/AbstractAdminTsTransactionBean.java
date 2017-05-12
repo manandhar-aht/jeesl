@@ -1,7 +1,9 @@
 package org.jeesl.web.mbean.prototype.admin.module.ts;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
@@ -44,7 +46,8 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	
 	private List<TRANSACTION> transactions; public List<TRANSACTION> getTransactions() {return transactions;}
 	private List<DATA> datas; public List<DATA> getDatas() {return datas;}
-
+	private Map<EC,Map<Long,EjbWithId>> map; public Map<EC, Map<Long, EjbWithId>> getMap() {return map;}
+	
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 
 	public AbstractAdminTsTransactionBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction)
@@ -67,6 +70,24 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	{
 		logger.info(AbstractLogMessage.selectEntity(transaction));
 		datas = fTs.fData(transaction);
+		
+		map = new HashMap<EC,Map<Long,EjbWithId>>();
+		Map<EC,List<Long>> x = efBridge.dataToBridgeIds(datas);
+		for(EC ec : x.keySet())
+		{
+			try
+			{
+				Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(ec.getCode()).asSubclass(EjbWithId.class);
+				Map<Long,EjbWithId> m = new HashMap<Long,EjbWithId>();
+				List<EjbWithId> list = fTs.find(c, x.get(ec));
+				for(EjbWithId e : list)
+				{
+					m.put(e.getId(),e);
+				}
+				map.put(ec,m);
+			}
+			catch (ClassNotFoundException e) {e.printStackTrace();}
+		}
 	}
 	
 	public void deleteTransaction() throws UtilsConstraintViolationException

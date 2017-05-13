@@ -74,6 +74,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	private List<EC> classes; public List<EC> getClasses() {return classes;}
 	private List<INT> intervals; public List<INT> getIntervals() {return intervals;}
 	private List<WS> workspaces; public List<WS> getWorkspaces() {return workspaces;}
+	private List<SOURCE> sources; public List<SOURCE> getSources() {return sources;}
 	
 	private List<EjbWithId> entities; public List<EjbWithId> getEntities() {return entities;}
 	private Map<EjbWithId,String> mapLabels; public Map<EjbWithId,String> getMapLabels() {return mapLabels;}
@@ -85,6 +86,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	private INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
 	private WS workspace; public WS getWorkspace() {return workspace;} public void setWorkspace(WS workspace) {this.workspace = workspace;}
 	protected USER transactionUser;
+	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 	
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;} public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
 	private DataSet chartDs; public DataSet getChartDs(){return chartDs;}
@@ -105,6 +107,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 		this.xlsResolver=xlsResolver;
 		
 		cTsData = TsDataComparator.factory(TsDataComparator.Type.date);
+		sources = fTs.all(cSource);
 	}
 	
 	protected void initLists()
@@ -199,6 +202,8 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 		timeSeries.getData().addAll(data.keySet());
 		Collections.sort(timeSeries.getData(), cTsData);
 		entity=null;
+		
+		transaction = efTransaction.build(transactionUser,sources.get(0));
 		preview();
 	}
 	
@@ -254,7 +259,9 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 			TS ts = fTs.fcTimeSeries(cTs, scope, interval, bridge);
 			logger.info("Using TS "+ts.toString());
 			
-			TRANSACTION transaction = fTs.save(efTransaction.build(transactionUser));
+			if(transaction.getSource()!=null){transaction.setSource(fTs.find(cSource,transaction.getSource()));}
+			transaction.setRecord(new Date());
+			transaction = fTs.save(transaction);
 			
 			List<DATA> datas = new ArrayList<DATA>();
 			for(Data data : timeSeries.getData())

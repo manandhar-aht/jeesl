@@ -21,8 +21,6 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityTemplateImport;
 import net.sf.ahtutils.xml.security.Security;
-import net.sf.ahtutils.xml.security.Usecase;
-import net.sf.ahtutils.xml.security.Usecases;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class SecurityInitTemplates <L extends UtilsLang,

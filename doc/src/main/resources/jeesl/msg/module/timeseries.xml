@@ -155,4 +155,11 @@
     		<s:lang key="fr" translation="Date / Time"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslTsSource">
+    	<s:langs>
+    		<s:lang key="de" translation="Datenquelle"/>
+    		<s:lang key="en" translation="Data Source"/>
+    		<s:lang key="fr" translation="Data Source"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

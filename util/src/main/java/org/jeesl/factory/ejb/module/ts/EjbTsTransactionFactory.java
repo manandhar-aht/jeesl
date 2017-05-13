@@ -43,7 +43,7 @@ public class EjbTsTransactionFactory<L extends UtilsLang, D extends UtilsDescrip
         this.cTransaction=cTransaction;
 	}
 	
-	public TRANSACTION build(USER user)
+	public TRANSACTION build(USER user, SOURCE source)
 	{
 		TRANSACTION ejb = null;
 		try

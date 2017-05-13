@@ -36,6 +36,9 @@ public interface JeeslTsTransaction <L extends UtilsLang,
 	String getRemark();
 	void setRemark(String remark);
 	
+	SOURCE getSource();
+	void setSource(SOURCE source);
+	
 	List<DATA> getDatas();
 	void setDatas(List<DATA> datas);
 }

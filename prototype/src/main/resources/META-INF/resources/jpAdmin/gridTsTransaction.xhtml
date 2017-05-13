@@ -44,12 +44,18 @@
 							<f:facet name="actions">
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteTransaction()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg40">
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.jeeslTsTransactionUser}"/>
 								<h:outputText value="#{cc.attrs.bean.transaction.user.firstName} #{cc.attrs.bean.transaction.user.lastName}"/>
 								
 								<p:outputLabel value="#{msg.jeeslTsTransactionRecord}"/>
 								<jp:outputDate value="#{cc.attrs.bean.transaction.record}" withTime="true"/>
+								
+								<p:outputLabel value="#{msg.jeeslTsSource}"/>
+								<h:outputText value="#{cc.attrs.bean.transaction.source.name[localeCode].lang}"/>
+								
+								<p:outputLabel value="#{msg.jeeslRemark}"/>
+								<h:outputText value="#{cc.attrs.bean.transaction.remark}"/>
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

@@ -55,6 +55,11 @@ public class TsTransaction implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public void setRemark(String remark) {this.remark = remark;}
 	
 	@ManyToOne
+	private TsDataSource source;
+	@Override public TsDataSource getSource() {return source;}
+	@Override public void setSource(TsDataSource source) {this.source = source;}
+
+	@ManyToOne
 	private TsQaFlag flag;
 	public TsQaFlag getFlag() {return flag;}
 	public void setFlag(TsQaFlag flag) {this.flag = flag;}

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.model.ejb.module.ts.data.TsData;
+import org.jeesl.model.ejb.module.ts.data.TsDataSource;
 import org.jeesl.model.ejb.module.ts.data.TsSample;
 import org.jeesl.model.ejb.module.ts.data.TsTransaction;
 import org.jeesl.model.ejb.module.ts.qa.TsQaFlag;
@@ -23,7 +24,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Bridge",category="ts",subset="ts",level=2)
 public class TsBridge implements Serializable,EjbRemoveable,EjbPersistable,
-		JeeslTsBridge<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,JeeslUser,TsWorkspace,TsQaFlag>
+		JeeslTsBridge<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsDataSource,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,JeeslUser,TsWorkspace,TsQaFlag>
 {
 	public static final long serialVersionUID=1;
 	

@@ -53,4 +53,20 @@ public class ObjectFactory {
         return new Entities();
     }
 
+    /**
+     * Create an instance of {@link Revisions }
+     * 
+     */
+    public Revisions createRevisions() {
+        return new Revisions();
+    }
+
+    /**
+     * Create an instance of {@link Revision }
+     * 
+     */
+    public Revision createRevision() {
+        return new Revision();
+    }
+
 }

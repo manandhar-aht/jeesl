@@ -137,12 +137,18 @@
         </jxb:schemaBindings>
     </jxb:bindings>
     
-        <jxb:bindings schemaLocation="../xsd/jeesl/module/calendar.xsd" node="/xsd:schema">
+	<jxb:bindings schemaLocation="../xsd/jeesl/module/calendar.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.jeesl.model.xml.module.calendar"/>
         </jxb:schemaBindings>
     </jxb:bindings>
-    
+
+	<jxb:bindings schemaLocation="../xsd/jeesl/module/pcinventory.xsd" node="/xsd:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.jeesl.model.xml.module.pcinventory"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
+   
     <jxb:bindings schemaLocation="../xsd/jeesl/dev/srs.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.jeesl.model.xml.dev.srs"/>

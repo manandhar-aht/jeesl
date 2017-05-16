@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.jeesl.org/pcinventory"
-    xmlns:pi="http://www.jeesl.org/pcinventory"
+<xsd:schema targetNamespace="http://www.jeesl.org/inventory/pc"
+    xmlns:pc="http://www.jeesl.org/inventory/pc"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:element name="computers">
 	    <xsd:complexType>
             <xsd:sequence>
-	            <xsd:element ref="pi:computer" maxOccurs="unbounded"/>
+	            <xsd:element ref="pc:computer" maxOccurs="unbounded"/>
 			</xsd:sequence>
 		</xsd:complexType>    
     </xsd:element>
     <xsd:element name="computer">
         <xsd:complexType>
             <xsd:sequence>
-	           <xsd:element ref="pi:hardware" maxOccurs="1"/>
-	           <xsd:element ref="pi:software" maxOccurs="1"/>
+	           <xsd:element ref="pc:hardware" maxOccurs="1"/>
+	           <xsd:element ref="pc:software" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
 		</xsd:complexType>
@@ -33,7 +33,7 @@
     <xsd:element name="software">
         <xsd:complexType>
             <xsd:sequence>
-	           <xsd:element ref="pi:updates" maxOccurs="1"/>
+	           <xsd:element ref="pc:updates" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
 		</xsd:complexType>
@@ -41,7 +41,7 @@
     <xsd:element name="updates">
         <xsd:complexType>
             <xsd:sequence>
-	           <xsd:element ref="pi:update" maxOccurs="unbounded"/>
+	           <xsd:element ref="pc:update" maxOccurs="unbounded"/>
             </xsd:sequence>
 		</xsd:complexType>
     </xsd:element>

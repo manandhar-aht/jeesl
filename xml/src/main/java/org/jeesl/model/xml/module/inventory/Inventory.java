@@ -1,5 +1,5 @@
 
-package org.jeesl.model.xml.module.inventory.pc;
+package org.jeesl.model.xml.module.inventory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.jeesl.model.xml.module.inventory.pc.Computer;
 
 
 /**
@@ -34,13 +35,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "computer"
 })
-@XmlRootElement(name = "computers")
-public class Computers
+@XmlRootElement(name = "inventory")
+public class Inventory
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://www.jeesl.org/inventory/pc", required = true)
     protected List<Computer> computer;
 
     /**

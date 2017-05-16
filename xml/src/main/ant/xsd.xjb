@@ -143,6 +143,12 @@
         </jxb:schemaBindings>
     </jxb:bindings>
 
+	<jxb:bindings schemaLocation="../xsd/jeesl/module/inventory/inventory.xsd" node="/xsd:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.jeesl.model.xml.module.inventory"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
+
 	<jxb:bindings schemaLocation="../xsd/jeesl/module/inventory/pc.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.jeesl.model.xml.module.inventory.pc"/>

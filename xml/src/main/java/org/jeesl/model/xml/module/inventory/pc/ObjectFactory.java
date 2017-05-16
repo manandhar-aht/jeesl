@@ -30,14 +30,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Computers }
-     * 
-     */
-    public Computers createComputers() {
-        return new Computers();
-    }
-
-    /**
      * Create an instance of {@link Computer }
      * 
      */

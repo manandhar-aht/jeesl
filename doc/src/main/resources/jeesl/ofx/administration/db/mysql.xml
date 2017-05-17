@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			xmlns:text="http://www.openfuxml.org/text"
+		id="section.admin.db.postgresql">
+	<ofx:title lang="en">MySQL</ofx:title>
+
+	
+	<ofx:section>
+		<ofx:title lang="en">Preparation</ofx:title>
+		
+		<ofx:paragraph lang="en" version="1">
+			launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+
+/usr/local/bin/mysql.server start
+/usr/local/bin/mysql.server restart
+/usr/local/bin/mysql.server stop
+		</ofx:paragraph>
+
+		
+	</ofx:section>
+		
+</ofx:section>

@@ -61,9 +61,13 @@ public class SbMultiHandler <T extends EjbWithId>
 		refresh();
 	}
 	
+	public void preSelect(T t)
+	{
+		map.put(t,true);
+	}
 	public void select(T t)
 	{
-		map.put(t, true);
+		map.put(t,true);
 		refresh();
 	}
 

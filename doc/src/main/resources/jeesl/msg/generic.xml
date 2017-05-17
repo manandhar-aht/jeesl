@@ -57,4 +57,11 @@
     		<s:lang key="fr" translation="XPath"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="jeeslDetails">
+		<s:langs>
+    		<s:lang key="de" translation="Details"/>
+    		<s:lang key="en" translation="Details"/>
+    		<s:lang key="fr" translation="Details"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

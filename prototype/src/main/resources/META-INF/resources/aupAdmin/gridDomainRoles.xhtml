@@ -59,7 +59,7 @@
 		        </aht:slot>
 	            <aht:slot id="sUser" width="4" renderChildrenIfEjb="#{cc.attrs.bean.staff}">
 	                <h:form id="fUser" rendered="#{not empty cc.attrs.bean.staff}">
-	                    <p:panel header="#{msg.aupDetails}" styleClass="auPanelWithGrid">
+	                    <p:panel header="#{msg.jeeslDetails}" styleClass="auPanelWithGrid">
 	                        <f:facet name="actions">
 	                        	<aht:icon type="aupCancel" mayDisappear="true" process="@this" listener="#{cc.attrs.bean.cancel()}" update=":#{cc.id}:sUser" tooltip="#{msg.ttCancel}"/>
 	                        	<aht:icon type="aupSave" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>

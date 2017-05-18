@@ -1,4 +1,365 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:inventory xmlns="http://www.jeesl.org/inventory/pc" xmlns:ns2="http://www.jeesl.org/inventory">
-    <computer id="123"/>
-</ns2:inventory>
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+	<Obj RefId="0">
+		<TN RefId="0">
+			<T>System.Management.Automation.PSCustomObject</T>
+			<T>System.Object</T>
+		</TN>
+		<MS>
+			<S N="ItemOrder">1</S>
+			<S N="RecordNumber">1</S>
+			<S N="CategoryID">300</S>
+			<S N="CategoryName">Systemübersicht</S>
+			<S N="ItemID">301</S>
+			<S N="ItemName">Computer Name</S>
+			<S N="ItemValue">FAKE-PC</S>
+		</MS>
+	</Obj>
+	<Obj RefId="5">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">6</S>
+			<S N="RecordNumber">1</S>
+			<S N="CategoryID">300</S>
+			<S N="CategoryName">Systemübersicht</S>
+			<S N="ItemID">306</S>
+			<S N="ItemName">Operating System</S>
+			<S N="ItemValue">Microsoft Windows 10 Pro 64-Bit</S>
+		</MS>
+	</Obj>
+	<Obj RefId="6">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">7</S>
+			<S N="RecordNumber">1</S>
+			<S N="CategoryID">300</S>
+			<S N="CategoryName">Systemübersicht</S>
+			<S N="ItemID">307</S>
+			<S N="ItemName">Manufacturer</S>
+			<S N="ItemValue">Gigabyte Technology Co., Ltd.</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1231">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1232</S>
+			<S N="RecordNumber">77</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">601</S>
+			<S N="ItemName">Update ID</S>
+			<S N="ItemValue">{AC76BA86-7AD7-0000-2550-AC11094E4C00}</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1232">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1233</S>
+			<S N="RecordNumber">77</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">602</S>
+			<S N="ItemName">Installed On</S>
+			<S N="ItemValue">20170413</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1233">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1234</S>
+			<S N="RecordNumber">77</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">603</S>
+			<S N="ItemName">Description</S>
+			<S N="ItemValue">Adobe Acrobat Reader DC_x000D__x000A_ (17.009.20044)</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1234">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1235</S>
+			<S N="RecordNumber">78</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">601</S>
+			<S N="ItemName">Update ID</S>
+			<S N="ItemValue">0570413b-52d5-4a26-9bee-38ae3544aa08</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1235">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1236</S>
+			<S N="RecordNumber">78</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">602</S>
+			<S N="ItemName">Installed On</S>
+			<S N="ItemValue">2017-05-16</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1236">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1237</S>
+			<S N="RecordNumber">78</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">603</S>
+			<S N="ItemName">Description</S>
+			<S N="ItemValue">Definitionsupdate für Windows Defender – KB2267602 (Definition 1.243.493.0)</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1237">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1238</S>
+			<S N="RecordNumber">79</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">601</S>
+			<S N="ItemName">Update ID</S>
+			<S N="ItemValue">07fcc6ca-7fbb-4010-9daa-21b208403255</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1238">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1239</S>
+			<S N="RecordNumber">79</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">602</S>
+			<S N="ItemName">Installed On</S>
+			<S N="ItemValue">2017-05-16</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1239">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1240</S>
+			<S N="RecordNumber">79</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">603</S>
+			<S N="ItemName">Description</S>
+			<S N="ItemValue">Definitionsupdate für Windows Defender – KB2267602 (Definition 1.243.522.0)</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1240">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1241</S>
+			<S N="RecordNumber">80</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">601</S>
+			<S N="ItemName">Update ID</S>
+			<S N="ItemValue">2137287b-cf74-4c4b-ac54-683162dabc23</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1241">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1242</S>
+			<S N="RecordNumber">80</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">602</S>
+			<S N="ItemName">Installed On</S>
+			<S N="ItemValue">2017-05-17</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1242">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1243</S>
+			<S N="RecordNumber">80</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">603</S>
+			<S N="ItemName">Description</S>
+			<S N="ItemValue">Definitionsupdate für Windows Defender – KB2267602 (Definition 1.243.600.0)</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1243">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1244</S>
+			<S N="RecordNumber">81</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">601</S>
+			<S N="ItemName">Update ID</S>
+			<S N="ItemValue">729a0dcb-df9e-4d02-b603-ed1aee074428</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1244">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1245</S>
+			<S N="RecordNumber">81</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">602</S>
+			<S N="ItemName">Installed On</S>
+			<S N="ItemValue">2017-05-16</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1245">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1246</S>
+			<S N="RecordNumber">81</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">603</S>
+			<S N="ItemName">Description</S>
+			<S N="ItemValue">Sicherheitsupdate für Microsoft Visual C++ 2008 Service Pack 1 Redistributable Package (KB2538243)</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1246">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1247</S>
+			<S N="RecordNumber">82</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">601</S>
+			<S N="ItemName">Update ID</S>
+			<S N="ItemValue">d8d8a625-9967-454e-8a34-90b076713fd0</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1247">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1248</S>
+			<S N="RecordNumber">82</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">602</S>
+			<S N="ItemName">Installed On</S>
+			<S N="ItemValue">2017-05-16</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1248">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1249</S>
+			<S N="RecordNumber">82</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">603</S>
+			<S N="ItemName">Description</S>
+			<S N="ItemValue">Definitionsupdate für Windows Defender – KB2267602 (Definition 1.243.529.0)</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1249">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1250</S>
+			<S N="RecordNumber">83</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">601</S>
+			<S N="ItemName">Update ID</S>
+			<S N="ItemValue">daa352fc-5e31-4452-a40b-20a047b08e31</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1250">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1251</S>
+			<S N="RecordNumber">83</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">602</S>
+			<S N="ItemName">Installed On</S>
+			<S N="ItemValue">2017-05-15</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1251">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1252</S>
+			<S N="RecordNumber">83</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">603</S>
+			<S N="ItemName">Description</S>
+			<S N="ItemValue">Definitionsupdate für Windows Defender – KB2267602 (Definition 1.243.470.0)</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1252">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1253</S>
+			<S N="RecordNumber">84</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">601</S>
+			<S N="ItemName">Update ID</S>
+			<S N="ItemValue">KB4020001</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1253">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1254</S>
+			<S N="RecordNumber">84</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">602</S>
+			<S N="ItemName">Installed On</S>
+			<S N="ItemValue">5/15/2017</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1254">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1255</S>
+			<S N="RecordNumber">84</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">603</S>
+			<S N="ItemName">Description</S>
+			<S N="ItemValue">Update</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1255">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1256</S>
+			<S N="RecordNumber">85</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">601</S>
+			<S N="ItemName">Update ID</S>
+			<S N="ItemValue">KB4020821</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1256">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1257</S>
+			<S N="RecordNumber">85</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">602</S>
+			<S N="ItemName">Installed On</S>
+			<S N="ItemValue">5/15/2017</S>
+		</MS>
+	</Obj>
+	<Obj RefId="1257">
+		<TNRef RefId="0" />
+		<MS>
+			<S N="ItemOrder">1258</S>
+			<S N="RecordNumber">85</S>
+			<S N="CategoryID">600</S>
+			<S N="CategoryName">Software Updates</S>
+			<S N="ItemID">603</S>
+			<S N="ItemName">Description</S>
+			<S N="ItemValue">Security Update</S>
+		</MS>
+	</Obj>
+</Objs>

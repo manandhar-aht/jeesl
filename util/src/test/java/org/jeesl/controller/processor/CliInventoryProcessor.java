@@ -1,6 +1,5 @@
 package org.jeesl.controller.processor;
 
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,16 +40,10 @@ import net.sf.exlp.util.io.resourceloader.MultiResourceLoader;
 import net.sf.exlp.util.xml.JDomUtil;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-
-
-
-
-
 public class CliInventoryProcessor
 {
 	final static Logger logger = LoggerFactory.getLogger(CliInventoryProcessor.class);
 	
-    @SuppressWarnings("null")
 	public static void main(String[] args) throws Exception
     {
     	JeeslUtilTestBootstrap.init();
@@ -64,16 +57,20 @@ public class CliInventoryProcessor
    	
    // 	ContentFilter filter = new ContentFilter(ContentFilter.TEXT);
     	Document doc = JDomUtil.load(mrl.searchIs("data/processor/inventory/winaudit.xml"));
-    	//JDomUtil.debug(doc);
+ //   	JDomUtil.debug(doc);
+    	
+    	Namespace ns = Namespace.getNamespace("power", "http://schemas.microsoft.com/powershell/2004/04");
     	// 	Element root = doc.getRootElement();
     	//   	List <Element> listChildren = root.getChildren();  
     	XPathFactory xFactory = XPathFactory.instance();
 
- //   	XPathExpression<Element> expr = xFactory.compile("//Obj/MS/S/*", Filters.element());
- //       List<Element> links = expr.evaluate(doc);
- //       for (Element linkElement : links) {
- //           System.out.println(linkElement.getValue());
- //       }
+    	XPathExpression<Element> expr = xFactory.compile("//power:Obj",Filters.element(),null,ns);
+    	
+        List<Element> links = expr.evaluate(doc);
+        for (Element e : links)
+        {
+            logger.debug(e.getName());
+        }
     	
     	
    //     Element firstTitle = xFactory.compile("//S::item/descendant::ItemName", Filters.element()).evaluateFirst(doc);
@@ -85,10 +82,9 @@ public class CliInventoryProcessor
    // 	String aName    =  child.getAttribute( "CategoryID" ).getValue();
    // 	System.out.println(albertName);
     	//JaxbUtil.info(listChildren);
-    	JDomUtil.debug(doc);
+//    	JDomUtil.debug(doc);
     	
     	//JaxbUtil.info(doc.getProperty("3"));
 
-    }}
-
-
+    }
+}

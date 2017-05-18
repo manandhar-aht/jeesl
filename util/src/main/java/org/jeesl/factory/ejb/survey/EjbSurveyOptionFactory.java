@@ -1,5 +1,8 @@
 package org.jeesl.factory.ejb.survey;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
@@ -19,8 +22,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class EjbSurveyOptionFactory<L extends UtilsLang,
-										D extends UtilsDescription,
+public class EjbSurveyOptionFactory<L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -62,5 +64,24 @@ public class EjbSurveyOptionFactory<L extends UtilsLang,
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public List<OPTION> toRows(List<OPTION> options)
+	{
+		List<OPTION> rows = new ArrayList<OPTION>();
+		for(OPTION option : options)
+		{
+			if(option.getRow()!=null && option.getRow()){rows.add(option);}
+		}
+		return rows;
+	}
+	public List<OPTION> toColumns(List<OPTION> options)
+	{
+		List<OPTION> columns = new ArrayList<OPTION>();
+		for(OPTION option : options)
+		{
+			if(option.getRow()!=null && !option.getRow()){columns.add(option);}
+		}
+		return columns;
 	}
 }

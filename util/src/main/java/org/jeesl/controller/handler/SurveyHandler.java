@@ -9,6 +9,7 @@ import java.util.Map;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.survey.EjbSurveyDataFactory;
+import org.jeesl.factory.ejb.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
@@ -60,10 +61,13 @@ public class SurveyHandler<L extends UtilsLang,
 	
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efAnswer;
 	private EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
+	private EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
 
 	private List<SECTION> sections; public List<SECTION> getSections() {return sections;}
 	
 	private Map<QUESTION,ANSWER> answers; public Map<QUESTION,ANSWER> getAnswers() {return answers;}
+	private Map<QUESTION,List<OPTION>> matrixRows; public Map<QUESTION,List<OPTION>> getMatrixRows() {return matrixRows;}
+	private Map<QUESTION,List<OPTION>> matrixCols; public Map<QUESTION,List<OPTION>> getMatrixCols() {return matrixCols;}
 	
 	private DATA surveyData; public DATA getSurveyData(){return surveyData;} public void setSurveyData(DATA surveyData) {this.surveyData = surveyData;}
 	private TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
@@ -78,10 +82,13 @@ public class SurveyHandler<L extends UtilsLang,
 		allowAssessment = true;
 		
 		answers = new HashMap<QUESTION,ANSWER>();
+		matrixRows = new HashMap<QUESTION,List<OPTION>>();
+		matrixCols = new HashMap<QUESTION,List<OPTION>>();
 		sections = new ArrayList<SECTION>();
 		
 		efData = ffSurvey.data();
 		efAnswer = ffSurvey.answer();
+		efOption = ffSurvey.option();
 	}
 	
 	public void reset()
@@ -107,10 +114,23 @@ public class SurveyHandler<L extends UtilsLang,
 	private void reloadSections(SURVEY survey)
 	{
 		sections.clear();
+		matrixRows.clear();
+		matrixCols.clear();
+		
 		TEMPLATE template = fSurvey.load(survey.getTemplate());
 		for(SECTION section : template.getSections())
 		{
-			sections.add(fSurvey.load(section));
+			section = fSurvey.load(section);
+			sections.add(section);
+			for(QUESTION question : section.getQuestions())
+			{
+				if(question.getShowMatrix()!=null && question.getShowMatrix())
+				{
+					matrixRows.put(question, efOption.toRows(question.getOptions()));
+					matrixCols.put(question, efOption.toColumns(question.getOptions()));
+				}
+			}
+			
 		}
 	}
 	private void reloadAnswers()

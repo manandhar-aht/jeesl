@@ -148,6 +148,7 @@ public class SurveyHandler<L extends UtilsLang,
 				{
 					answers.put(q, efAnswer.build(q, surveyData));
 				}
+				buildMatrix(answers.get(q));
 			}
 			
 		}
@@ -160,14 +161,20 @@ public class SurveyHandler<L extends UtilsLang,
 		{
 			for(QUESTION q : s.getQuestions())
 			{
-				answers.put(q, efAnswer.build(q, surveyData));
-				if(q.getShowMatrix()!=null && q.getShowMatrix())
-				{
-					
-				}
+				ANSWER a = efAnswer.build(q, surveyData);
+				answers.put(q,a);
+				buildMatrix(a);
+				
 			}
 		}
 		logger.info("Answers build: " + answers.size());
+	}
+	private void buildMatrix(ANSWER answer)
+	{
+		if(answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix())
+		{
+			logger.warn("Building Matrix for "+answer.toString());
+		}
 	}
 	
 	public void save(CORRELATION correlation) throws UtilsConstraintViolationException, UtilsLockingException

@@ -6,6 +6,7 @@ import org.jeesl.controller.processor.survey.SurveyScoreProcessor;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySchemeFactory;
@@ -142,6 +143,11 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 	public EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> answer()
 	{
 		return new EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(cAnswer);
+	}
+	
+	public EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ejbMatrix()
+	{
+		return new EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(cMatrix);
 	}
 	
 	public EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> option()

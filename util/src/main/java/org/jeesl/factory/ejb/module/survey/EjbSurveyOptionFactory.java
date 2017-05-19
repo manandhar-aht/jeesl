@@ -1,6 +1,7 @@
-package org.jeesl.factory.ejb.survey;
+package org.jeesl.factory.ejb.module.survey;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
@@ -21,8 +22,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class EjbSurveyDataFactory<L extends UtilsLang,
-										D extends UtilsDescription,
+public class EjbSurveyOptionFactory<L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -40,28 +40,48 @@ public class EjbSurveyDataFactory<L extends UtilsLang,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDataFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyOptionFactory.class);
 	
-	final Class<DATA> cData;
+	final Class<OPTION> cOption;
     
-	public EjbSurveyDataFactory(final Class<DATA> cData)
+	public EjbSurveyOptionFactory(final Class<OPTION> cOption)
 	{       
-        this.cData = cData;
+        this.cOption = cOption;
 	}
-		
-	public DATA build(SURVEY survey, CORRELATION correlation)
+	    
+	public OPTION build(QUESTION question, String code)
 	{
-		DATA ejb = null;
+		OPTION ejb = null;
 		try
 		{
-			ejb = cData.newInstance();
-			ejb.setSurvey(survey);
-			ejb.setCorrelation(correlation);
-			ejb.setRecord(new Date());
+			ejb = cOption.newInstance();
+			ejb.setQuestion(question);
+			ejb.setCode(code);
+			ejb.setPosition(1);
+
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public List<OPTION> toRows(List<OPTION> options)
+	{
+		List<OPTION> rows = new ArrayList<OPTION>();
+		for(OPTION option : options)
+		{
+			if(option.getRow()!=null && option.getRow()){rows.add(option);}
+		}
+		return rows;
+	}
+	public List<OPTION> toColumns(List<OPTION> options)
+	{
+		List<OPTION> columns = new ArrayList<OPTION>();
+		for(OPTION option : options)
+		{
+			if(option.getRow()!=null && !option.getRow()){columns.add(option);}
+		}
+		return columns;
 	}
 }

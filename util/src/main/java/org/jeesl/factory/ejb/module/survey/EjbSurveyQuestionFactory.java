@@ -1,6 +1,4 @@
-package org.jeesl.factory.ejb.survey;
-
-import java.util.List;
+package org.jeesl.factory.ejb.module.survey;
 
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
@@ -20,8 +18,9 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.xml.survey.Question;
 
-public class EjbSurveySchemeFactory<L extends UtilsLang,
+public class EjbSurveyQuestionFactory<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -40,25 +39,41 @@ public class EjbSurveySchemeFactory<L extends UtilsLang,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveySchemeFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyQuestionFactory.class);
 	
-	final Class<SCHEME> cScheme;
+	final Class<QUESTION> cQuestion;
     
-	public EjbSurveySchemeFactory(final Class<SCHEME> cScheme)
+	public EjbSurveyQuestionFactory(final Class<QUESTION> cQuestion)
 	{       
-        this.cScheme = cScheme;
+        this.cQuestion = cQuestion;
 	}
 	    
-	public SCHEME build(TEMPLATE template, String code, List<SCHEME> list)
+	public QUESTION build(SECTION section,UNIT unit, Question xQuestion)
 	{
-		SCHEME ejb = null;
+		return build(section,unit,
+				xQuestion.getCode(),
+				xQuestion.getPosition(),
+				xQuestion.getTopic(),
+				xQuestion.getQuestion().getValue(),
+				xQuestion.getRemark().getValue());
+	}
+	
+	public QUESTION build(SECTION section){return build(section,null,null,0,null,null,null);}
+	public QUESTION build(SECTION section,UNIT unit){return build(section,unit,null,0,null,null,null);}
+	
+	public QUESTION build(SECTION section,UNIT unit, String code,int position,String topic,String question,String remark)
+	{
+		QUESTION ejb = null;
 		try
 		{
-			ejb = cScheme.newInstance();
-			ejb.setTemplate(template);
+			ejb = cQuestion.newInstance();
+			ejb.setSection(section);
+			ejb.setUnit(unit);
 			ejb.setCode(code);
-			if(list!=null){ejb.setPosition(list.size()+1);}else {ejb.setPosition(1);}
-
+			ejb.setPosition(position);
+			ejb.setTopic(topic);
+			ejb.setQuestion(question);
+			ejb.setRemark(remark);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

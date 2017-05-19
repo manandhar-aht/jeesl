@@ -1,4 +1,4 @@
-package org.jeesl.factory.ejb.survey;
+package org.jeesl.factory.ejb.module.survey;
 
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
@@ -18,9 +18,9 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.survey.Section;
+import net.sf.ahtutils.xml.survey.Template;
 
-public class EjbSurveySectionFactory<L extends UtilsLang,
+public class EjbSurveyTemplateFactory<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -39,46 +39,29 @@ public class EjbSurveySectionFactory<L extends UtilsLang,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveySectionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyTemplateFactory.class);
 	
-	final Class<SECTION> cSection;
+	final Class<TEMPLATE> cTemplate;
     
-	public EjbSurveySectionFactory(final Class<SECTION> cSection)
+	public EjbSurveyTemplateFactory(final Class<TEMPLATE> cTemplate)
 	{       
-        this.cSection = cSection;
+        this.cTemplate = cTemplate;
 	}
-	    
-	public SECTION build(TEMPLATE template,Section xSection)
+    
+	public TEMPLATE build(TC category,TS status, Template xTemplate)
 	{
-		return build(template,xSection.getDescription().getValue(),xSection.getPosition());
-	}
-	
-	public SECTION build(TEMPLATE template,String name, int position)
-	{
-		SECTION ejb = null;
-		try
-		{
-			ejb = cSection.newInstance();
-			ejb.setTemplate(template);
-			ejb.setName(name);
-			ejb.setPosition(position);
-		}
-		catch (InstantiationException e) {e.printStackTrace();}
-		catch (IllegalAccessException e) {e.printStackTrace();}
-		
-		return ejb;
+		return build(category,status,xTemplate.getDescription().getValue());
 	}
 	
-	public SECTION build(SECTION parent, String name){return build(parent,0,name);}
-	public SECTION build(SECTION parent, int position, String name)
+	public TEMPLATE build(TC category,TS status, String name)
 	{
-		SECTION ejb = null;
+		TEMPLATE ejb = null;
 		try
 		{
-			ejb = cSection.newInstance();
-			ejb.setSection(parent);
+			ejb = cTemplate.newInstance();
 			ejb.setName(name);
-			ejb.setPosition(position);
+			ejb.setCategory(category);
+			ejb.setStatus(status);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

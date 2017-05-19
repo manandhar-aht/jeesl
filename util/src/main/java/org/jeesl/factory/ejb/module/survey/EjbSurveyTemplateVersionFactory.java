@@ -1,4 +1,4 @@
-package org.jeesl.factory.ejb.survey;
+package org.jeesl.factory.ejb.module.survey;
 
 import java.util.Date;
 
@@ -20,9 +20,8 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.survey.Survey;
 
-public class EjbSurveyFactory<L extends UtilsLang,
+public class EjbSurveyTemplateVersionFactory<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -41,39 +40,22 @@ public class EjbSurveyFactory<L extends UtilsLang,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveyFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyTemplateVersionFactory.class);
 	
-	final Class<SURVEY> cSurvey;
+	final Class<VERSION> cVersion;
     
-	public EjbSurveyFactory(final Class<SURVEY> cSurvey)
+	public EjbSurveyTemplateVersionFactory(final Class<VERSION> cVersion)
 	{       
-        this.cSurvey = cSurvey;
-	}
-	    
-	public SURVEY build(TEMPLATE template,SS status, Survey survey)
-	{
-		return build(template,status,
-						survey.getName(),
-						survey.getValidFrom().toGregorianCalendar().getTime(),
-						survey.getValidTo().toGregorianCalendar().getTime());
+        this.cVersion = cVersion;
 	}
 	
-	public SURVEY build(TEMPLATE template,SS status, String name)
+	public VERSION build()
 	{
-		return build(template,status,name,null,null);
-	}
-	
-	public SURVEY build(TEMPLATE template,SS status, String name,Date validFrom,Date validTo)
-	{
-		SURVEY ejb = null;
+		VERSION ejb = null;
 		try
 		{
-			ejb = cSurvey.newInstance();
-			ejb.setTemplate(template);
-			ejb.setStatus(status);
-			ejb.setName(name);
-			ejb.setStartDate(validFrom);
-			ejb.setEndDate(validTo);
+			ejb = cVersion.newInstance();
+			ejb.setRecord(new Date());
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

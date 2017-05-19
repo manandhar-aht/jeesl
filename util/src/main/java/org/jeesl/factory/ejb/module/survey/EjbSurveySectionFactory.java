@@ -1,6 +1,4 @@
-package org.jeesl.factory.ejb.survey;
-
-import java.util.Date;
+package org.jeesl.factory.ejb.module.survey;
 
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
@@ -20,8 +18,9 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.xml.survey.Section;
 
-public class EjbSurveyTemplateVersionFactory<L extends UtilsLang,
+public class EjbSurveySectionFactory<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -40,22 +39,46 @@ public class EjbSurveyTemplateVersionFactory<L extends UtilsLang,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveyTemplateVersionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveySectionFactory.class);
 	
-	final Class<VERSION> cVersion;
+	final Class<SECTION> cSection;
     
-	public EjbSurveyTemplateVersionFactory(final Class<VERSION> cVersion)
+	public EjbSurveySectionFactory(final Class<SECTION> cSection)
 	{       
-        this.cVersion = cVersion;
+        this.cSection = cSection;
+	}
+	    
+	public SECTION build(TEMPLATE template,Section xSection)
+	{
+		return build(template,xSection.getDescription().getValue(),xSection.getPosition());
 	}
 	
-	public VERSION build()
+	public SECTION build(TEMPLATE template,String name, int position)
 	{
-		VERSION ejb = null;
+		SECTION ejb = null;
 		try
 		{
-			ejb = cVersion.newInstance();
-			ejb.setRecord(new Date());
+			ejb = cSection.newInstance();
+			ejb.setTemplate(template);
+			ejb.setName(name);
+			ejb.setPosition(position);
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		return ejb;
+	}
+	
+	public SECTION build(SECTION parent, String name){return build(parent,0,name);}
+	public SECTION build(SECTION parent, int position, String name)
+	{
+		SECTION ejb = null;
+		try
+		{
+			ejb = cSection.newInstance();
+			ejb.setSection(parent);
+			ejb.setName(name);
+			ejb.setPosition(position);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

@@ -1,4 +1,4 @@
-package org.jeesl.factory.ejb.survey;
+package org.jeesl.factory.ejb.module.survey;
 
 import java.util.ArrayList;
 import java.util.HashMap;

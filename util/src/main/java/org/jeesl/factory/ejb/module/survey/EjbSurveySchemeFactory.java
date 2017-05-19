@@ -1,4 +1,6 @@
-package org.jeesl.factory.ejb.survey;
+package org.jeesl.factory.ejb.module.survey;
+
+import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
@@ -19,7 +21,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class EjbSurveyScoreFactory<L extends UtilsLang,
+public class EjbSurveySchemeFactory<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -38,21 +40,24 @@ public class EjbSurveyScoreFactory<L extends UtilsLang,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveyScoreFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveySchemeFactory.class);
 	
-	final Class<SCORE> cScore;
+	final Class<SCHEME> cScheme;
     
-	public EjbSurveyScoreFactory(final Class<SCORE> cScore)
+	public EjbSurveySchemeFactory(final Class<SCHEME> cScheme)
 	{       
-        this.cScore = cScore;
+        this.cScheme = cScheme;
 	}
 	    
-	public SCORE build(QUESTION question)
+	public SCHEME build(TEMPLATE template, String code, List<SCHEME> list)
 	{
-		SCORE ejb = null;
+		SCHEME ejb = null;
 		try
 		{
-			ejb = cScore.newInstance();
+			ejb = cScheme.newInstance();
+			ejb.setTemplate(template);
+			ejb.setCode(code);
+			if(list!=null){ejb.setPosition(list.size()+1);}else {ejb.setPosition(1);}
 
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

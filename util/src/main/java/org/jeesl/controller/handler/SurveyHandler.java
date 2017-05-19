@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
-import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyDataFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyOptionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;

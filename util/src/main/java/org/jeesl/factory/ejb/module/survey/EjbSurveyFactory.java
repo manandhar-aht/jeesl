@@ -1,4 +1,6 @@
-package org.jeesl.factory.ejb.survey;
+package org.jeesl.factory.ejb.module.survey;
+
+import java.util.Date;
 
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
@@ -18,9 +20,9 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.survey.Question;
+import net.sf.ahtutils.xml.survey.Survey;
 
-public class EjbSurveyQuestionFactory<L extends UtilsLang,
+public class EjbSurveyFactory<L extends UtilsLang,
 										D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
@@ -39,41 +41,39 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveyQuestionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyFactory.class);
 	
-	final Class<QUESTION> cQuestion;
+	final Class<SURVEY> cSurvey;
     
-	public EjbSurveyQuestionFactory(final Class<QUESTION> cQuestion)
+	public EjbSurveyFactory(final Class<SURVEY> cSurvey)
 	{       
-        this.cQuestion = cQuestion;
+        this.cSurvey = cSurvey;
 	}
 	    
-	public QUESTION build(SECTION section,UNIT unit, Question xQuestion)
+	public SURVEY build(TEMPLATE template,SS status, Survey survey)
 	{
-		return build(section,unit,
-				xQuestion.getCode(),
-				xQuestion.getPosition(),
-				xQuestion.getTopic(),
-				xQuestion.getQuestion().getValue(),
-				xQuestion.getRemark().getValue());
+		return build(template,status,
+						survey.getName(),
+						survey.getValidFrom().toGregorianCalendar().getTime(),
+						survey.getValidTo().toGregorianCalendar().getTime());
 	}
 	
-	public QUESTION build(SECTION section){return build(section,null,null,0,null,null,null);}
-	public QUESTION build(SECTION section,UNIT unit){return build(section,unit,null,0,null,null,null);}
-	
-	public QUESTION build(SECTION section,UNIT unit, String code,int position,String topic,String question,String remark)
+	public SURVEY build(TEMPLATE template,SS status, String name)
 	{
-		QUESTION ejb = null;
+		return build(template,status,name,null,null);
+	}
+	
+	public SURVEY build(TEMPLATE template,SS status, String name,Date validFrom,Date validTo)
+	{
+		SURVEY ejb = null;
 		try
 		{
-			ejb = cQuestion.newInstance();
-			ejb.setSection(section);
-			ejb.setUnit(unit);
-			ejb.setCode(code);
-			ejb.setPosition(position);
-			ejb.setTopic(topic);
-			ejb.setQuestion(question);
-			ejb.setRemark(remark);
+			ejb = cSurvey.newInstance();
+			ejb.setTemplate(template);
+			ejb.setStatus(status);
+			ejb.setName(name);
+			ejb.setStartDate(validFrom);
+			ejb.setEndDate(validTo);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

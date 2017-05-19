@@ -63,6 +63,7 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 	final Class<QUESTION> cQuestion;
 	final Class<SCORE> cScore;
 	final Class<ANSWER> cAnswer;
+	 Class<MATRIX> cMatrix;
 	final Class<DATA> cData;
 	final Class<OPTION> cOption;
     

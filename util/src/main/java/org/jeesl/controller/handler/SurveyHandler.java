@@ -161,6 +161,10 @@ public class SurveyHandler<L extends UtilsLang,
 			for(QUESTION q : s.getQuestions())
 			{
 				answers.put(q, efAnswer.build(q, surveyData));
+				if(q.getShowMatrix()!=null && q.getShowMatrix())
+				{
+					
+				}
 			}
 		}
 		logger.info("Answers build: " + answers.size());

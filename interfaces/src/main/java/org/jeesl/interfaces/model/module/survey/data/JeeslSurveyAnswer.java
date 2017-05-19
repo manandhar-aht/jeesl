@@ -64,4 +64,7 @@ public interface JeeslSurveyAnswer<L extends UtilsLang,
 	
 	OPTION getOption();
 	void setOption(OPTION option);
+	
+	List<MATRIX> getMatrix();
+	void setMatrix(List<MATRIX> matrix);
 }

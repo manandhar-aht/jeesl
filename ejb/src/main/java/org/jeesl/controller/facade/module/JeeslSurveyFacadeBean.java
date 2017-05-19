@@ -134,6 +134,13 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		question.getScores().size();
 		return question;
 	}
+	
+	@Override public ANSWER load(ANSWER answer)
+	{
+		answer = em.find(cAnswer,answer.getId());
+		answer.getMatrix().size();
+		return answer;
+	}
 
 	@Override public DATA load(DATA data)
 	{

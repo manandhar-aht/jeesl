@@ -9,6 +9,7 @@ import java.util.Map;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
@@ -24,6 +25,7 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveySection;
+import org.jeesl.model.pojo.map.Nested3Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +62,7 @@ public class SurveyHandler<L extends UtilsLang,
 	private final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efAnswer;
+	private EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix;
 	private EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
 	private EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
 
@@ -68,7 +71,8 @@ public class SurveyHandler<L extends UtilsLang,
 	private Map<QUESTION,ANSWER> answers; public Map<QUESTION,ANSWER> getAnswers() {return answers;}
 	private Map<QUESTION,List<OPTION>> matrixRows; public Map<QUESTION,List<OPTION>> getMatrixRows() {return matrixRows;}
 	private Map<QUESTION,List<OPTION>> matrixCols; public Map<QUESTION,List<OPTION>> getMatrixCols() {return matrixCols;}
-	
+	private Nested3Map<QUESTION,OPTION,OPTION,MATRIX> matrix; public Nested3Map<QUESTION,OPTION,OPTION,MATRIX> getMatrix() {return matrix;}
+
 	private DATA surveyData; public DATA getSurveyData(){return surveyData;} public void setSurveyData(DATA surveyData) {this.surveyData = surveyData;}
 	private TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	
@@ -82,12 +86,14 @@ public class SurveyHandler<L extends UtilsLang,
 		allowAssessment = true;
 		
 		answers = new HashMap<QUESTION,ANSWER>();
+		matrix = new Nested3Map<QUESTION,OPTION,OPTION,MATRIX>();
 		matrixRows = new HashMap<QUESTION,List<OPTION>>();
 		matrixCols = new HashMap<QUESTION,List<OPTION>>();
 		sections = new ArrayList<SECTION>();
 		
 		efData = ffSurvey.data();
 		efAnswer = ffSurvey.answer();
+		efMatrix = ffSurvey.ejbMatrix();
 		efOption = ffSurvey.option();
 	}
 	
@@ -106,9 +112,7 @@ public class SurveyHandler<L extends UtilsLang,
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		reloadSections(survey);
-		
-		if(EjbIdFactory.isSaved(surveyData)){reloadAnswers();}
-		else {buildAnswers();}
+		reloadAnswers(EjbIdFactory.isSaved(surveyData));
 	}
 	
 	private void reloadSections(SURVEY survey)
@@ -130,16 +134,21 @@ public class SurveyHandler<L extends UtilsLang,
 					matrixCols.put(question, efOption.toColumns(question.getOptions()));
 				}
 			}
-			
 		}
 	}
-	private void reloadAnswers()
+	private void reloadAnswers(boolean dbLookup)
 	{
 		answers.clear();
-		for(ANSWER answer : fSurvey.fcAnswers(surveyData))
+		matrix.clear();
+		
+		if(dbLookup)
 		{
-			answers.put(answer.getQuestion(), answer);
+			for(ANSWER answer : fSurvey.fcAnswers(surveyData))
+			{
+				answers.put(answer.getQuestion(), answer);
+			}
 		}
+
 		for(SECTION s : sections)
 		{
 			for(QUESTION q : s.getQuestions())
@@ -148,31 +157,33 @@ public class SurveyHandler<L extends UtilsLang,
 				{
 					answers.put(q, efAnswer.build(q, surveyData));
 				}
-				buildMatrix(answers.get(q));
+				buildMatrix(dbLookup,answers.get(q));
 			}
 			
 		}
 		logger.info("Answers loaded: " + answers.size());
 	}
-	private void buildAnswers()
-	{
-		answers.clear();
-		for(SECTION s : sections)
-		{
-			for(QUESTION q : s.getQuestions())
-			{
-				ANSWER a = efAnswer.build(q, surveyData);
-				answers.put(q,a);
-				buildMatrix(a);
-				
-			}
-		}
-		logger.info("Answers build: " + answers.size());
-	}
-	private void buildMatrix(ANSWER answer)
+	private void buildMatrix(boolean dbLookup, ANSWER answer)
 	{
 		if(answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix())
 		{
+			if(dbLookup){answer = fSurvey.load(answer);}
+			
+			for(MATRIX m : answer.getMatrix())
+			{
+				matrix.put(answer.getQuestion(),m.getRow(),m.getColumn(),m);
+			}
+			for(OPTION row : matrixRows.get(answer.getQuestion()))
+			{
+				for(OPTION column : matrixCols.get(answer.getQuestion()))
+				{
+					if(!matrix.containsKey(answer.getQuestion(),row,column))
+					{
+						matrix.put(answer.getQuestion(),row,column,efMatrix.build(answer, row, column));
+					}
+				}
+			}
+			
 			logger.warn("Building Matrix for "+answer.toString());
 		}
 	}
@@ -187,7 +198,13 @@ public class SurveyHandler<L extends UtilsLang,
 		for(ANSWER a : answers.values())
 		{
 			a.setData(surveyData);
+			if(a.getQuestion().getShowMatrix()!=null && a.getQuestion().getShowMatrix())
+			{
+				a.setMatrix(matrix.values(a.getQuestion()));
+			}
 			answers.put(a.getQuestion(), fSurvey.saveAnswer(a));
 		}
+		
+		
 	}
 }

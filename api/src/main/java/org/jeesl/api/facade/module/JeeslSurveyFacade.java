@@ -48,8 +48,9 @@ public interface JeeslSurveyFacade <L extends UtilsLang,
 	TEMPLATE load(TEMPLATE template);
 	SECTION load(SECTION section);
 	SURVEY load(SURVEY survey);
-	DATA load(DATA data);
 	QUESTION load(QUESTION question);
+	ANSWER load(ANSWER answer);
+	DATA load(DATA data);
 	
 	void rmVersion(VERSION version) throws UtilsConstraintViolationException;
 	void rmOption(OPTION option) throws UtilsConstraintViolationException;

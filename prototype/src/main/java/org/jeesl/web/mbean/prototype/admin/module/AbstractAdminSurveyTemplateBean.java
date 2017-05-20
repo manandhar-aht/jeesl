@@ -2,6 +2,8 @@ package org.jeesl.web.mbean.prototype.admin.module;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
@@ -38,6 +40,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
+import net.sf.ahtutils.util.comparator.ejb.PositionComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
@@ -103,11 +106,14 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	private SCORE score; public SCORE getScore() {return score;} public void setScore(SCORE score) {this.score = score;}
 	
 	private UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> uiHelper; public UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getUiHelper() {return uiHelper;}
-
+	private Comparator<OPTION> cmpOption;
+	
 	public AbstractAdminSurveyTemplateBean(final Class<L> cL, final Class<D> cD, final Class<MATRIX> cMatrix)
 	{
 		super(cL,cD);
 		this.cMatrix = cMatrix;
+		
+		cmpOption = new PositionComparator<OPTION>();
 		
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
 	}
@@ -296,6 +302,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		question = fSurvey.find(cQuestion,question);
 		options = question.getOptions();
+		Collections.sort(options,cmpOption);
 	}
 	
 	public void saveQuestion() throws UtilsConstraintViolationException, UtilsLockingException

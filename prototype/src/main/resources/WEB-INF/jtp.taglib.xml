@@ -46,4 +46,8 @@
         <tag-name>sbSingle</tag-name>
         <source>jeeslPrototype/sbSingle.xhtml</source>
     </tag>
+	<tag>
+        <tag-name>surveyAnswer</tag-name>
+        <source>jeeslPrototype/survey/answer.xhtml</source>
+    </tag>
 </facelet-taglib>

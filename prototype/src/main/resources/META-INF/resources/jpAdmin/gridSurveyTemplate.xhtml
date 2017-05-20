@@ -259,7 +259,8 @@
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderOptions()}" update="@form"/>
 						<p:column rendered="#{cc.attrs.withMatrix and cc.attrs.bean.question.showMatrix}" styleClass="jeeslPfTcCenter">
 							<h:graphicImage rendered="#{o.row}" name="12/ui/module/survey/row.png"  library="jeeslPrototypeGfx"/>
-							<h:graphicImage rendered="#{not o.row}" name="12/ui/module/survey/column.png"  library="jeeslPrototypeGfx"/>
+							<h:graphicImage rendered="#{o.col}" name="12/ui/module/survey/column.png"  library="jeeslPrototypeGfx"/>
+							<h:graphicImage rendered="#{o.cell}" name="12/ui/module/survey/cell.png"  library="jeeslPrototypeGfx"/>
 						</p:column>
                   		<p:column>
                   			<f:facet name="header">#{msg.jeeslCode}</f:facet>
@@ -283,9 +284,20 @@
 							
 							<p:outputLabel for="itScore" value="#{msg.jeeslSurveyScore}"/>
 							<p:inputText id="itScore" autocomplete="off" value="#{cc.attrs.bean.option.score}"/>
-							
-							<p:outputLabel value="#{msg.jeeslSurveyOptionRow}" rendered="#{cc.attrs.withMatrix}"/>
-							<p:selectBooleanCheckbox value="#{cc.attrs.bean.option.row}" rendered="#{cc.attrs.withMatrix}"/>
+						</p:panelGrid>
+						<p:panelGrid columns="3" columnClasses="auPwg30,auPwg30,auPwg30" rendered="#{cc.attrs.withMatrix}">
+							<ui:fragment>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.option.row}"/>
+								<p:outputLabel value="#{msg.jeeslSurveyOptionRow}"/>
+							</ui:fragment>
+							<ui:fragment>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.option.col}" />
+								<p:outputLabel value="#{msg.jeeslSurveyOptionCol}"/>
+							</ui:fragment>
+							<ui:fragment>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.option.cell}" />
+								<p:outputLabel value="#{msg.jeeslSurveyOptionCell}"/>
+							</ui:fragment>
 						</p:panelGrid>
 						<aht:tabTranslationEditor value="#{cc.attrs.bean.option}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />

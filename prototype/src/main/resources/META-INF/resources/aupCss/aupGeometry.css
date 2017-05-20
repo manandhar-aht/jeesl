@@ -106,13 +106,11 @@ a:hover { color: #333; text-decoration: none; }
 	letter-spacing: -1px;
 	font-weight: bold;
 }
-.maincontent h1 { font-size: 20px;}
-.maincontent h2 { font-size: 18px; }
-.maincontent h3 { font-size: 16px;
-margin-top: 8px;
-}
-.maincontent h4 { font-size: 14px; }
-.maincontent h5 { font-size: 12px; }
+.maincontent h1 {font-size: 20px;}
+.maincontent h2 {font-size: 18px; }
+.maincontent h3 {font-size: 16px; margin-top: 8px;}
+.maincontent h4 {font-size: 14px; }
+.maincontent h5 {font-size: 12px; }
 
 .maincontent blockquote { background: #EEE; border-left: 3px solid #D82B00; padding: 15px; margin: 0 0 15px 0; font-style: italic; line-height: 18px; }
 
@@ -132,9 +130,7 @@ margin-top: 8px;
 
 .aupPfDtColCentered {text-align:center !important;}
 
-.aupContentCenter {
-	float: left;
-}
+.aupContentCenter {float: left;}
 
 .aupContentRight {
 	float: left;
@@ -206,8 +202,11 @@ margin-top: 8px;
 	
 
 .aupBold{font-weight: bold;}
+.jeeslBold{font-weight: bold;}
+
 .aupRemark{color: red;}		
 .w100 {width: 100%;}
+.jeeslW100 {width: 100%;}
 .aupW100 {width: 100%;}
 .aupNbsc {white-space: nowrap;}
 .jeeslNbsc {white-space: nowrap;}

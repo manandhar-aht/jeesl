@@ -41,6 +41,9 @@ public interface JeeslSurveyMatrix<L extends UtilsLang, D extends UtilsDescripti
 	OPTION getColumn();
 	void setColumn(OPTION column);
 	
+	OPTION getOption();
+	void setOption(OPTION column);
+	
 	Boolean getValueBoolean();
 	void setValueBoolean(Boolean valueBoolean);
 	

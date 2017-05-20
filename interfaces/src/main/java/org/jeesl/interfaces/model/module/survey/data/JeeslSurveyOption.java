@@ -46,12 +46,12 @@ public interface JeeslSurveyOption<L extends UtilsLang, D extends UtilsDescripti
 	double getScore();
 	void setScore(double score);
 	
-	Boolean getRow();
-	void setRow(Boolean row);
+	boolean getRow();
+	void setRow(boolean row);
 	
-	Boolean getCol();
-	void setCol(Boolean col);
+	boolean getCol();
+	void setCol(boolean col);
 	
-	Boolean getCell();
-	void setCell(Boolean cell);
+	boolean getCell();
+	void setCell(boolean cell);
 }

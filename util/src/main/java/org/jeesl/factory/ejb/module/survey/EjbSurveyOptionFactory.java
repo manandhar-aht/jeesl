@@ -71,7 +71,7 @@ public class EjbSurveyOptionFactory<L extends UtilsLang, D extends UtilsDescript
 		List<OPTION> rows = new ArrayList<OPTION>();
 		for(OPTION option : options)
 		{
-			if(option.getRow()!=null && option.getRow()){rows.add(option);}
+			if(option.getRow()){rows.add(option);}
 		}
 		return rows;
 	}
@@ -80,7 +80,16 @@ public class EjbSurveyOptionFactory<L extends UtilsLang, D extends UtilsDescript
 		List<OPTION> columns = new ArrayList<OPTION>();
 		for(OPTION option : options)
 		{
-			if(option.getRow()!=null && !option.getRow()){columns.add(option);}
+			if(option.getCol()){columns.add(option);}
+		}
+		return columns;
+	}
+	public List<OPTION> toCells(List<OPTION> options)
+	{
+		List<OPTION> columns = new ArrayList<OPTION>();
+		for(OPTION option : options)
+		{
+			if(option.getCell()){columns.add(option);}
 		}
 		return columns;
 	}

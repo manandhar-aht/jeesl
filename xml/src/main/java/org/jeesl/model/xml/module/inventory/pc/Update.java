@@ -25,7 +25,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="record" type="{http://www.w3.org/2001/XMLSchema}date" /&gt;
- *       &lt;attribute name="description" type="{http://www.w3.org/2001/XMLSchema}date" /&gt;
+ *       &lt;attribute name="description" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -49,8 +49,7 @@ public class Update
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar record;
     @XmlAttribute(name = "description")
-    @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar description;
+    protected String description;
 
     /**
      * Gets the value of the id property.
@@ -145,10 +144,10 @@ public class Update
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link String }
      *     
      */
-    public XMLGregorianCalendar getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -157,10 +156,10 @@ public class Update
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link String }
      *     
      */
-    public void setDescription(XMLGregorianCalendar value) {
+    public void setDescription(String value) {
         this.description = value;
     }
 

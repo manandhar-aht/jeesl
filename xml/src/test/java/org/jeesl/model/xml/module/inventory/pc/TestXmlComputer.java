@@ -15,17 +15,17 @@ public class TestXmlComputer extends AbstractXmlInventoryPcTest<Computer>
     {
     	Computer xml = new Computer();
     	xml.setId(123);
+    	xml.setCode("myCode");
+    	xml.setName("myName");
     	    	
     	if(withChilds)
     	{
     		xml.setHardware(TestXmlHardware.create(false));
         	xml.setSoftware(TestXmlSoftware.create(false));
-        	
     	}
     	
     	return xml;
     }
-	
    
 	public static void main(String[] args)
     {

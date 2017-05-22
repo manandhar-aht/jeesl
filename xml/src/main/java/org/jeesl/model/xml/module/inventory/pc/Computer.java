@@ -24,6 +24,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://www.jeesl.org/inventory/pc}software"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
+ *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -48,6 +50,10 @@ public class Computer
     protected Software software;
     @XmlAttribute(name = "id")
     protected Long id;
+    @XmlAttribute(name = "code")
+    protected String code;
+    @XmlAttribute(name = "name")
+    protected String name;
 
     /**
      * Gets the value of the hardware property.
@@ -135,6 +141,62 @@ public class Computer
 
     public void unsetId() {
         this.id = null;
+    }
+
+    /**
+     * Gets the value of the code property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * Sets the value of the code property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public boolean isSetCode() {
+        return (this.code!= null);
+    }
+
+    /**
+     * Gets the value of the name property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the value of the name property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setName(String value) {
+        this.name = value;
+    }
+
+    public boolean isSetName() {
+        return (this.name!= null);
     }
 
 }

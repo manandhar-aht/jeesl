@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:inventory xmlns="http://www.jeesl.org/inventory/pc" xmlns:ns2="http://www.jeesl.org/inventory">
-    <computer id="123"/>
-</ns2:inventory>
+<ipc:inventory xmlns:i="http://www.jeesl.org/inventory/pc" xmlns:ipc="http://www.jeesl.org/inventory">
+    <i:computer id="123" code="myCode" name="myName"/>
+</ipc:inventory>

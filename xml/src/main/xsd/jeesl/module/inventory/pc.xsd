@@ -9,6 +9,8 @@
 	           <xsd:element ref="pc:software" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+            <xsd:attribute name="name" type="xsd:string"/>
 		</xsd:complexType>
     </xsd:element>
    <xsd:element name="hardware">
@@ -46,7 +48,7 @@
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="code" type="xsd:string"/>
             <xsd:attribute name="record" type="xsd:date"/>
-            <xsd:attribute name="description" type="xsd:date"/>
+            <xsd:attribute name="description" type="xsd:string"/>
 		</xsd:complexType>
     </xsd:element>
 </xsd:schema>

@@ -23,6 +23,7 @@ public class NettyServer
 	public static void main(String args[]) throws Exception
 	{		
 		Bootstrap.init();
+		ServerTrayIcon.renderTrayControl();
 		new NettyServer();
 	}
 }

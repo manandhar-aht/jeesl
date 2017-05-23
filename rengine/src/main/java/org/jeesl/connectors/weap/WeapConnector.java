@@ -178,6 +178,7 @@ public class WeapConnector {
     
     public static void triggerWarning(String header)
     {
+        logger.warn(header);
     	logger.warn("FX Code deactivated by Thorsten");
 //        Alert alert = new Alert(Alert.AlertType.INFORMATION);
 //        alert.setTitle("WEAP Connection Error");

@@ -9,11 +9,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import net.sf.ahtutils.xml.status.Status;
 import org.jeesl.connectors.weap.WeapConnector;
 import org.jeesl.connectors.weap.WeapResultValueRequest;
+import org.jeesl.model.xml.jeesl.Container;
 
 @Path("/rest")
-@Produces("application/xml")
 public class WeapRequestService
 {
 	@POST @Path("/request") @Consumes(MediaType.APPLICATION_XML)
@@ -33,28 +34,25 @@ public class WeapRequestService
 		return request;
 	}
 	
-	@POST @Path("/scenario") @Consumes(MediaType.APPLICATION_XML)
-	public void setScenario(String scenario)
+	@POST @Path("/scenario") @Consumes(MediaType.TEXT_PLAIN) @Produces(MediaType.TEXT_PLAIN)
+	public String setScenario(String scenario)
 	{
 		System.out.println("Setting Scenario to " +scenario);
-		Double result = 120.0;
-		
 		try {
-			WeapConnector.setScenario(scenario);
+			return WeapConnector.setScenario(scenario);
 		} catch (IOException ex) {
-			System.err.println(ex.getMessage());
+			return (ex.getMessage());
 		}
 	}
 	
-	@POST @Path("/area") @Consumes(MediaType.APPLICATION_XML)
-	public void setArea(String area)
+	@POST @Path("/area") @Consumes(MediaType.TEXT_PLAIN) @Produces(MediaType.TEXT_PLAIN)
+	public String setArea(String area)
 	{
 		System.out.println("Setting Area to " +area);
-		
 		try {
-			WeapConnector.setScenario(area);
+			return WeapConnector.setArea(area);
 		} catch (IOException ex) {
-			System.err.println(ex.getMessage());
+			return (ex.getMessage());
 		}
 	}
 	
@@ -70,8 +68,8 @@ public class WeapRequestService
 		}
 	}
 	
-	@GET @Path("/baseYear")
-	public Integer getBaseYear()
+	@GET @Path("/baseYear") @Produces(MediaType.TEXT_PLAIN)
+	public int getBaseYear()
 	{
 		System.out.println("Requesting Base Year ");
 		Integer baseYear = 1900;
@@ -83,8 +81,8 @@ public class WeapRequestService
 		return baseYear;
 	}
 	
-	@GET @Path("/endYear")
-	public Integer getEndYear()
+	@GET @Path("/endYear") @Produces(MediaType.TEXT_PLAIN)
+	public int getEndYear()
 	{
 		System.out.println("Requesting End Year ");
 		Integer endYear = 1900;
@@ -96,30 +94,45 @@ public class WeapRequestService
 		return endYear;
 	}
 	
-	@GET @Path("/areas")
-	public List<String> getAreas()
+	@GET @Path("/areas")@Produces("application/xml")
+	public Container  getAreas()
 	{
 		System.out.println("Requesting Areas");
 		List<String> areas = new ArrayList<String>();
+		Container container = new Container();
 		try {
-			areas = WeapConnector.getAreas();
+                areas.addAll(WeapConnector.getAreas());
+                for (String area : areas)
+                {
+                    Status status = new Status();
+                    status.setLabel(area);
+                    container.getStatus().add(status);
+                }
 		} catch (IOException ex) {
 			System.err.println(ex.getMessage());
 		}
-		return areas;
+		return container;
 	}
 	
 	@GET @Path("/scenarios")
-	public List<String> getScenarios()
+        @Produces("application/xml")
+	public Container getScenarios()
 	{
 		System.out.println("Requesting Scenarios");
 		List<String> scenarios = new ArrayList<String>();
+                Container container = new Container();
 		try {
-			scenarios = WeapConnector.getScenarios();
+                scenarios.addAll(WeapConnector.getScenarios());
+                for (String scenario : scenarios)
+                {
+                    Status status = new Status();
+                    status.setLabel(scenario);
+                    container.getStatus().add(status);
+                }
 		} catch (IOException ex) {
 			System.err.println(ex.getMessage());
 		}
-		return scenarios;
+                return container;
 	}
 	
 	@GET @Path("/version")

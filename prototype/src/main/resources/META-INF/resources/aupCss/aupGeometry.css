@@ -201,8 +201,7 @@ a:hover { color: #333; text-decoration: none; }
 }
 	
 
-.aupBold{font-weight: bold;}
-.jeeslBold{font-weight: bold;}
+
 
 .aupRemark{color: red;}		
 .w100 {width: 100%;}
@@ -271,6 +270,8 @@ a:hover { color: #333; text-decoration: none; }
 }
 
 .jeeslItalic {font-style:italic;}
+.aupBold{font-weight: bold;}
+.jeeslBold{font-weight: bold;}
 
 .jeeslInvisible {visibility:hidden;}
 .jeeslVisible {visibility: visible !important;}

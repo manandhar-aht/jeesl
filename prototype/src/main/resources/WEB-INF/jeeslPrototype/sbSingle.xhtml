@@ -9,9 +9,10 @@
     xmlns:aup="http://ahtutils.sourceforge.net/prototype">
 
 	<aup:statusBarItem label="#{label}"  orientation="right" childs="#{handler.list}">
-			<h:commandLink>
-				<ui:insert />
-				<p:ajax event="click" update="#{update}" listener="#{handler.selectSbSingle(var)}"/>
-			</h:commandLink>
-		</aup:statusBarItem>
+		<h:commandLink>
+			<c:if test="#{handler.selection.id eq var.id}"><f:attribute name="styleClass" value="jeeslBold"/></c:if>
+			<ui:insert />
+			<p:ajax event="click" update="#{update}" listener="#{handler.selectSbSingle(var)}"/>
+		</h:commandLink>
+	</aup:statusBarItem>
 </ui:composition>

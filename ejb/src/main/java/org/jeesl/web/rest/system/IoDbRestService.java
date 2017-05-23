@@ -44,7 +44,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	private JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb;
 	
 	private final Class<DUMP> cDump;
-	private final Class<FILE> cFile;
+	@SuppressWarnings("unused") private final Class<FILE> cFile;
 	private final Class<HOST> cHost;
 	private final Class<STATUS> cStatus;
 	

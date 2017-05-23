@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import freemarker.template.TemplateException;
 
-@SuppressWarnings({"unchecked"})
 public class CssGridBuilder extends AbstractFreemarkerFileFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(CssGridBuilder.class);

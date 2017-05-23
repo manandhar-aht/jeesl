@@ -41,6 +41,8 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 	
 	private RS scope; public RS getScope() {return scope;} public void setScope(RS scope) {this.scope = scope;}
 
+	public AbstractAdminRevisionScopeBean(){}
+	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping,Class<RA> cAttribute,Class<RAT> cRat)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);
@@ -48,10 +50,10 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 		reloadScopes();
 	}
 	
-	public void multiToggle(UtilsStatus<?,L,D> o)
+	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());}
-		sbhCategory.multiToggle(o);
+		super.toggled(c);
+		logger.info(AbstractLogMessage.toggled(c));
 		reloadScopes();
 		cancel();
 	}

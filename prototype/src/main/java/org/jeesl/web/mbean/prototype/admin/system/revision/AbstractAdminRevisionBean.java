@@ -5,12 +5,14 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
+import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionEntityFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionMappingEntityFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionMappingViewFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionScopeFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionViewFactory;
+import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
@@ -21,12 +23,13 @@ import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.util.comparator.ejb.revision.RevisionEntityComparator;
 import net.sf.ahtutils.util.comparator.ejb.revision.RevisionScopeComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
@@ -42,7 +45,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 											RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 											RAT extends UtilsStatus<RAT,L,D>>
 					extends AbstractAdminBean<L,D>
-					implements Serializable
+					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionBean.class);
@@ -79,7 +82,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	protected Comparator<RS> comparatorScope;
 	protected Comparator<RE> comparatorEntity;
 	
-	protected SbMultiStatusHandler<L,D,RC> sbhCategory; public SbMultiStatusHandler<L,D,RC> getSbhCategory() {return sbhCategory;}
+	protected SbMultiHandler<RC> sbhCategory; public SbMultiHandler<RC> getSbhCategory() {return sbhCategory;}
 	
 	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView, Class<RVM> cMappingView, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
 	{
@@ -106,8 +109,12 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
 		
 		categories = fRevision.allOrderedPositionVisible(cCategory);
-		sbhCategory = new SbMultiStatusHandler<L,D,RC>(cCategory,categories);
-//		sbhCategory.selectAll();
+		sbhCategory = new SbMultiHandler<RC>(cCategory,categories,this);
+	}
+	
+	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+
 	}
 	
 	public void addAttribute() throws UtilsNotFoundException

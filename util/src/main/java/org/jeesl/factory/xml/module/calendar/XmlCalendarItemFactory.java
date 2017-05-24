@@ -1,5 +1,6 @@
 package org.jeesl.factory.xml.module.calendar;
 
+import org.jeesl.controller.processor.TimeZoneProcessor;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendar;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendarItem;
@@ -23,11 +24,17 @@ public class XmlCalendarItemFactory <L extends UtilsLang, D extends UtilsDescrip
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlCalendarItemFactory.class);
 	
+	private final TimeZoneProcessor tzp;
 	@SuppressWarnings("unused")
 	private XmlTypeFactory<IT,L,D> xfType;
 	
 	public XmlCalendarItemFactory(String localeCode, Item q)
 	{
+		this(localeCode,q,null);
+	}
+	public XmlCalendarItemFactory(String localeCode, Item q, TimeZoneProcessor tzp)
+	{
+		this.tzp=tzp;
 		if(q.isSetType()){xfType = new XmlTypeFactory<IT,L,D>(localeCode,q.getType());}
 	}
 	
@@ -36,8 +43,13 @@ public class XmlCalendarItemFactory <L extends UtilsLang, D extends UtilsDescrip
 		Item xml = build();		
 //		if(q.isSetType()){xml.setType(xfType.build(calendar.g));
 		xml.setType(XmlTypeFactory.create(item.getType().getCode()));
-		xml.setStart(DateUtil.getXmlGc4D(item.getStartDate()));
-		xml.setEnd(DateUtil.getXmlGc4D(item.getEndDate()));
+		
+		if(tzp==null){xml.setStart(DateUtil.getXmlGc4D(item.getStartDate()));}
+		else{xml.setStart(DateUtil.getXmlGc4D(tzp.project(item.getStartDate())));}
+		
+		if(tzp==null){xml.setEnd(DateUtil.getXmlGc4D(item.getEndDate()));}
+		else{xml.setEnd(DateUtil.getXmlGc4D(tzp.project(item.getEndDate())));}
+		
 		xml.setAllDay(item.isAllDay());
 		
 		return xml;

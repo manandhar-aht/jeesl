@@ -41,6 +41,8 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
         return new EjbStatusFactory<S, L, D>(cStatus, cLang, descriptionClass);
     }
     
+    public <E extends Enum<E>> S build(E code){return create(code.toString());}
+    
 	public S create(Status status) throws InstantiationException, IllegalAccessException, UtilsConstraintViolationException
 	{
 		if(!status.isSetLangs()){throw new UtilsConstraintViolationException("No <langs> available for "+JaxbUtil.toString(status));}

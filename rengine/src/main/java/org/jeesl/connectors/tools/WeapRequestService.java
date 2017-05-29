@@ -17,7 +17,7 @@ import org.jeesl.model.xml.jeesl.Container;
 @Path("/rest")
 public class WeapRequestService
 {
-	@POST @Path("/request") @Consumes(MediaType.APPLICATION_XML)
+	@POST @Path("/request") @Consumes(MediaType.APPLICATION_XML) @Produces(MediaType.APPLICATION_XML)
 	public WeapResultValueRequest getRequest(WeapResultValueRequest request)
 	{
 		System.out.println("Requesting Results for branches " +request.getBranches().get(0));

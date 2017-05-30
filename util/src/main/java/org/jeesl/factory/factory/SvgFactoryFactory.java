@@ -1,5 +1,6 @@
 package org.jeesl.factory.factory;
 
+import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
 import org.jeesl.factory.svg.SvgFigureFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
@@ -21,12 +22,16 @@ public class SvgFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
 	
 	final Class<L> cL;
 	final Class<D> cD;
+	final Class<G> cG;
+	final Class<F> cF;
 	final Class<FS> cFs;
 	
-	private SvgFactoryFactory(final Class<L> cL, final Class<D> cD, final Class<FS> cFs)
+	private SvgFactoryFactory(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<F> cF, final Class<FS> cFs)
 	{       
 		this.cL = cL;
 		this.cD = cD;
+		this.cG = cG;
+		this.cF = cF;
 		this.cFs = cFs;
 	}
 	
@@ -35,10 +40,15 @@ public class SvgFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
 					GT extends UtilsStatus<GT,L,D>,
 					F extends JeeslGraphicFigure<L,D,G,GT,F,FS>,
 					FS extends UtilsStatus<FS,L,D>>
-		SvgFactoryFactory<L,D,G,GT,F,FS> factory(final Class<L> cL, final Class<D> cD, final Class<FS> cFs)
+		SvgFactoryFactory<L,D,G,GT,F,FS> factory(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<F> cF, final Class<FS> cFs)
 	{
-		return new SvgFactoryFactory<L,D,G,GT,F,FS>(cL,cD,cFs);
+		return new SvgFactoryFactory<L,D,G,GT,F,FS>(cL,cD,cG,cF,cFs);
 	}
+	
+    public EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic()
+    {
+    	return new EjbGraphicFactory<L,D,G,GT,F,FS>(cG);
+    }
 	
 	public SvgFigureFactory<L,D,G,GT,F,FS> figure()
 	{

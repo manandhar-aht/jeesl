@@ -6,6 +6,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
+import org.jeesl.factory.factory.SvgFactoryFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicStyle;
@@ -19,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.symbol.EjbGraphicFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -78,15 +79,19 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	protected Class<?> cStatus;
 	
 	private Class<GT> cGT;
-	private Class<FS> cGS;
+	private final Class<F> cF;
+	private final Class<FS> cFS;
 	
 	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
 	
 	protected EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic;
 	
-	public AbstractOptionTableBean(final Class<L> cL, final Class<D> cD)
+	public AbstractOptionTableBean(final Class<L> cL, final Class<D> cD, final Class<F> cF, final Class<FS> cFS)
 	{
 		super(cL,cD);
+		this.cF=cF;
+		this.cFS=cFS;
+		
 		index=1;
 		
 		hasDeveloperAction = false;
@@ -99,18 +104,18 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		categories = new ArrayList<EjbWithPosition>();
 	}
 	
-	protected void initUtils(String[] langs, UtilsFacade fUtils, FacesMessageBean bMessage, Class<L> cLang, Class<D> cDescription, Class<?> cStatus, Class<G> cG, Class<GT> cGT, Class<FS> cGS)
+	protected void initUtils(String[] langs, UtilsFacade fUtils, FacesMessageBean bMessage, Class<L> cLang, Class<D> cDescription, Class<?> cStatus, Class<G> cG, Class<GT> cGT)
 	{
 		super.initAdmin(langs,cLang,cDescription,bMessage);
 		this.fUtils=fUtils;
 		this.cStatus=cStatus;
 		this.cGT=cGT;
-		this.cGS=cGS;
 		
-		efGraphic = EjbGraphicFactory.factory(cG);
+		SvgFactoryFactory<L,D,G,GT,F,FS> ffSvg = SvgFactoryFactory.factory(cLang,cDescription,cG,cF,cFS);
+		efGraphic = ffSvg.efGraphic();
 		
 		graphicTypes = fUtils.allOrderedPositionVisible(cGT);
-		graphicStyles = fUtils.allOrderedPositionVisible(cGS);
+		graphicStyles = fUtils.allOrderedPositionVisible(cFS);
 	}
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
@@ -192,7 +197,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		if(supportsGraphic)
 		{
 			GT type = fUtils.fByCode(cGT, JeeslGraphicType.Code.symbol.toString());
-			FS style = fUtils.fByCode(cGS, JeeslGraphicStyle.Code.circle.toString());
+			FS style = fUtils.fByCode(cFS, JeeslGraphicStyle.Code.circle.toString());
 			graphic = efGraphic.buildSymbol(type, style);
 			((EjbWithGraphic<L,D,G,GT,F,FS>)status).setGraphic(graphic);
 		}
@@ -218,7 +223,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			{
 				logger.info("Need to create a graphic entity for this status");
 				GT type = fUtils.fByCode(cGT, JeeslGraphicType.Code.symbol.toString());
-				FS style = fUtils.fByCode(cGS, JeeslGraphicStyle.Code.circle.toString());
+				FS style = fUtils.fByCode(cFS, JeeslGraphicStyle.Code.circle.toString());
 				graphic = fUtils.persist(efGraphic.buildSymbol(type, style));
 				((EjbWithGraphic<L,D,G,GT,F,FS>)status).setGraphic(graphic);
 				status = fUtils.update(status);
@@ -255,7 +260,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
         	if(supportsGraphic && graphic!=null)
             {
         		graphic.setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType()));
-            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(cGS, ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getStyle()));}
+            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(cFS, ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getStyle()));}
         		
 //            	if(debugSave){logger.info("Saving "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
 //           	graphic = fUtils.save(graphic);

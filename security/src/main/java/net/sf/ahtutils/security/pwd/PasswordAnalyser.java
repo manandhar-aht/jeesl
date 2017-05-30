@@ -48,6 +48,5 @@ public class PasswordAnalyser
 		logger.trace("PWD is valid: "+result.isValid());
 				
 		return xmlPwdAnalyse;
-		
 	}
 }

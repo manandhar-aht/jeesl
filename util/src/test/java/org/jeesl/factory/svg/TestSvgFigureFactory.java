@@ -28,22 +28,31 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 	private SvgFigureFactory<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> svgF;
 	private EjbStatusFactory<GraphicStyle,Lang,Description> efStyle;
 	
-	private GraphicStyle styleCircle,styleSquare; 
+	private GraphicStyle styleCircle,styleSquare;
+	private GraphicFigure f1, f2, f3, f4;
 	
 	public TestSvgFigureFactory()
 	{
-		SvgFactoryFactory<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> ffSvg = SvgFactoryFactory.factory(Lang.class,Description.class,GraphicStyle.class);
+		SvgFactoryFactory<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> ffSvg = SvgFactoryFactory.factory(Lang.class,Description.class,Graphic.class,GraphicFigure.class,GraphicStyle.class);
 		svgF = ffSvg.figure();
 		efStyle = ffSvg.style();
+		
+		 init();
 	}
 	
 	public void init()
 	{
 		styleCircle = efStyle.build(JeeslGraphicFigure.Style.circle);
 		styleSquare = efStyle.build(JeeslGraphicFigure.Style.square);
+		
+//		f1 = svgF.b
 	}
 	
 	
+	public void testA()
+	{
+		
+	}
 	
 	public static void main(String[] args) throws TranscoderException, IOException, ParserConfigurationException
 	{

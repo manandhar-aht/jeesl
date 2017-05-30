@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.symbol;
+package org.jeesl.factory.ejb.system.symbol;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
@@ -21,16 +21,7 @@ public class EjbGraphicFactory<L extends UtilsLang, D extends UtilsDescription,
     {
         this.cGrpahic = cGrpahic;
     } 
-    
-    public static <L extends UtilsLang, D extends UtilsDescription,
-				    G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
-					F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
-    	EjbGraphicFactory<L,D,G,GT,F,FS>
-    	factory(final Class<G> cGrpahic)
-    {
-        return new EjbGraphicFactory<L,D,G,GT,F,FS>(cGrpahic);
-    }
-    
+        
 	public G build(GT type)
 	{
         G ejb = null;

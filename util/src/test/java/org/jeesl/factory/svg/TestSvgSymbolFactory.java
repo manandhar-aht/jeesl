@@ -13,6 +13,7 @@ import org.jeesl.JeeslUtilTestBootstrap;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
 import org.jeesl.model.ejb.system.symbol.Graphic;
+import org.jeesl.model.ejb.system.symbol.GraphicFigure;
 import org.jeesl.model.ejb.system.symbol.GraphicStyle;
 import org.jeesl.model.ejb.system.symbol.GraphicType;
 import org.openfuxml.media.transcode.Svg2SvgTranscoder;
@@ -25,7 +26,7 @@ public class TestSvgSymbolFactory extends AbstractJeeslUtilTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestSvgSymbolFactory.class);
 
-	private SvgSymbolFactory<Lang,Description,Graphic,GraphicType,GraphicStyle> svgF;
+	private SvgSymbolFactory<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> svgF;
 	
 	public TestSvgSymbolFactory()
 	{

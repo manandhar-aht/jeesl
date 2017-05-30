@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -40,7 +41,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface UtilsFacade  extends UtilsIdFacade
 {
-	<L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId,G extends JeeslGraphic<L,D,G,GT,FS>, GT extends UtilsStatus<GT,L,D>, FS extends UtilsStatus<FS,L,D>> S load(Class<S> cS, S status);
+	<L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId,G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>, F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>> S load(Class<S> cS, S status);
 	
 	//NAME
 	<T extends EjbWithName> T fByName(Class<T> type, String name) throws UtilsNotFoundException;

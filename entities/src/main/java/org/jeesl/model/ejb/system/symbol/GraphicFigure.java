@@ -29,6 +29,10 @@ public class GraphicFigure implements EjbRemoveable,Serializable,EjbPersistable,
 	public GraphicStyle getStyle() {return style;}
 	public void setStyle(GraphicStyle style) {this.style = style;}
 	
+	private boolean primary;
+	@Override public boolean isPrimary() {return primary;}
+	@Override public void setPrimary(boolean primary) {this.primary = primary;}
+	
 	private int position;
 	@Override public int getPosition() {return position;}
 	@Override public void setPosition(int position) {this.position = position;}

@@ -2,6 +2,7 @@ package org.jeesl.factory.xml.system.symbol;
 
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,23 +15,22 @@ import net.sf.ahtutils.xml.symbol.Graphic;
 import net.sf.exlp.factory.xml.io.XmlFileFactory;
 
 public class XmlGraphicFactory <L extends UtilsLang,D extends UtilsDescription,
-								G extends JeeslGraphic<L,D,G,GT,FS>,
-								GT extends UtilsStatus<GT,L,D>,
-								FS extends UtilsStatus<FS,L,D>>
+								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlGraphicFactory.class);
 	
 	private Graphic q;
 	
 	private XmlTypeFactory<GT,L,D> xfType;
-	private XmlSymbolFactory<L,D,G,GT,FS> xfSymbol;
+	private XmlSymbolFactory<L,D,G,GT,F,FS> xfSymbol;
 	
 	public XmlGraphicFactory(Query query){this(query.getLang(),query.getGraphic());}
 	public XmlGraphicFactory(String localeCode, Graphic q)
 	{
 		this.q=q;
 		if(q.isSetType()){xfType = new XmlTypeFactory<GT,L,D>(q.getType());}
-		if(q.isSetSymbol()){xfSymbol = new XmlSymbolFactory<L,D,G,GT,FS>(localeCode,q.getSymbol());}
+		if(q.isSetSymbol()){xfSymbol = new XmlSymbolFactory<L,D,G,GT,F,FS>(localeCode,q.getSymbol());}
 	}
 	
 	public Graphic build(G graphic)

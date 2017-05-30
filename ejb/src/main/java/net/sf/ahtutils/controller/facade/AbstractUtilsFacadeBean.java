@@ -8,6 +8,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +52,7 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	protected UtilsFacadeBean fUtils;
 	
 	@Override public <E extends EjbEquals<T>, T extends EjbWithId> boolean equalsAttributes(Class<T> c,E object){return fUtils.equalsAttributes(c,object);}
-	@Override public <L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId,G extends JeeslGraphic<L,D,G,GT,FS>, GT extends UtilsStatus<GT,L,D>, FS extends UtilsStatus<FS,L,D>> S load(Class<S> cS, S status){return fUtils.load(cS,status);}
+	@Override public <L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId,G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>, F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>> S load(Class<S> cS, S status){return fUtils.load(cS,status);}
 	
 	// Persist
 	@Override public <T extends EjbSaveable> void save(List<T> list) throws UtilsConstraintViolationException,UtilsLockingException {fUtils.save(list);}

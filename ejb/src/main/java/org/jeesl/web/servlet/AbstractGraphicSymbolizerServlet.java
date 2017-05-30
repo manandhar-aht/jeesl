@@ -15,6 +15,7 @@ import org.apache.batik.transcoder.TranscoderException;
 import org.apache.commons.io.IOUtils;
 import org.jeesl.factory.svg.SvgSymbolFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicType;
 import org.openfuxml.content.media.Image;
 import org.openfuxml.factory.xml.media.XmlImageFactory;
@@ -28,16 +29,15 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends UtilsDescription,
-												G extends JeeslGraphic<L,D,G,GT,FS>,
-												GT extends UtilsStatus<GT,L,D>,
-												FS extends UtilsStatus<FS,L,D>>
+												G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+												F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
 	extends HttpServlet
 	implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractGraphicSymbolizerServlet.class);
 	
-	private SvgSymbolFactory<L,D,G,GT,FS> svgF;
+	private SvgSymbolFactory<L,D,G,GT,F,FS> svgF;
 	
 	public AbstractGraphicSymbolizerServlet()
 	{

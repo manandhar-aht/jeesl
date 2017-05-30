@@ -1,6 +1,7 @@
 package org.jeesl.factory.xml.system.symbol;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +13,8 @@ import net.sf.ahtutils.xml.symbol.Size;
 import net.sf.ahtutils.xml.symbol.Sizes;
 
 public class XmlSizesFactory <L extends UtilsLang, D extends UtilsDescription,
-								G extends JeeslGraphic<L,D,G,GT,FS>,
-								GT extends UtilsStatus<GT,L,D>,
-								FS extends UtilsStatus<FS,L,D>>
+							G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+							F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlSizesFactory.class);
 		

@@ -9,6 +9,7 @@ import java.awt.geom.Rectangle2D;
 import org.apache.batik.dom.svg.SVGDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +23,9 @@ import net.sf.ahtutils.xml.status.Style;
 import net.sf.ahtutils.xml.symbol.Size;
 import net.sf.ahtutils.xml.symbol.Symbol;
 
-public class SvgSymbolFactory<L extends UtilsLang,
-									D extends UtilsDescription,
-									G extends JeeslGraphic<L,D,G,GT,FS>,
-									GT extends UtilsStatus<GT,L,D>,
-									FS extends UtilsStatus<FS,L,D>>
+public class SvgSymbolFactory<L extends UtilsLang, D extends UtilsDescription,
+								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SvgSymbolFactory.class);
 		
@@ -37,14 +36,12 @@ public class SvgSymbolFactory<L extends UtilsLang,
 		impl = SVGDOMImplementation.getDOMImplementation();
 	}
 	
-    public static <L extends UtilsLang,
-					D extends UtilsDescription,
-					G extends JeeslGraphic<L,D,G,GT,FS>,
-					GT extends UtilsStatus<GT,L,D>,
-					FS extends UtilsStatus<FS,L,D>>
-    	SvgSymbolFactory<L,D,G,GT,FS> factory()
+    public static <L extends UtilsLang, D extends UtilsDescription,
+				    G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+					F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
+    	SvgSymbolFactory<L,D,G,GT,F,FS> factory()
 	{
-	    return new SvgSymbolFactory<L,D,G,GT,FS>();
+	    return new SvgSymbolFactory<L,D,G,GT,F,FS>();
 	}
     
 	public static SVGGraphics2D build()

@@ -3,6 +3,7 @@ package org.jeesl.factory.xml.system.symbol;
 import org.jeesl.factory.xml.system.status.XmlStyleFactory;
 import org.jeesl.factory.xml.system.status.XmlStylesFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,24 +15,23 @@ import net.sf.ahtutils.xml.status.Styles;
 import net.sf.ahtutils.xml.symbol.Symbol;
 
 public class XmlSymbolFactory <L extends UtilsLang, D extends UtilsDescription,
-								G extends JeeslGraphic<L,D,G,GT,FS>,
-								GT extends UtilsStatus<GT,L,D>,
-								FS extends UtilsStatus<FS,L,D>>
+								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlSymbolFactory.class);
 		
 	private Symbol q;
 	
 	private XmlStyleFactory<FS,L,D> xfStyle;
-	private XmlColorsFactory<L,D,G,GT,FS> xfColors;
-	private XmlSizesFactory<L,D,G,GT,FS> xfSizes;
+	private XmlColorsFactory<L,D,G,GT,F,FS> xfColors;
+	private XmlSizesFactory<L,D,G,GT,F,FS> xfSizes;
 	
 	public XmlSymbolFactory(String localeCode, Symbol q)
 	{
 		this.q=q;
 		if(q.isSetStyles() && q.getStyles().isSetStyle()){xfStyle = new XmlStyleFactory<FS,L,D>(localeCode,q.getStyles().getStyle().get(0));}
-		if(q.isSetColors()){xfColors = new XmlColorsFactory<L,D,G,GT,FS>(q.getColors());}
-		if(q.isSetSizes()){xfSizes = new XmlSizesFactory<L,D,G,GT,FS>(q.getSizes());}
+		if(q.isSetColors()){xfColors = new XmlColorsFactory<L,D,G,GT,F,FS>(q.getColors());}
+		if(q.isSetSizes()){xfSizes = new XmlSizesFactory<L,D,G,GT,F,FS>(q.getSizes());}
 	}
 	
 	public Symbol build(G graphic)

@@ -1,6 +1,7 @@
 package net.sf.ahtutils.factory.ejb.symbol;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,11 +9,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class EjbGraphicFactory<L extends UtilsLang,
-								D extends UtilsDescription,
-								G extends JeeslGraphic<L,D,G,GT,FS>,
-								GT extends UtilsStatus<GT,L,D>,
-								FS extends UtilsStatus<FS,L,D>>
+public class EjbGraphicFactory<L extends UtilsLang, D extends UtilsDescription,
+								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbGraphicFactory.class);
 	
@@ -24,13 +23,12 @@ public class EjbGraphicFactory<L extends UtilsLang,
     } 
     
     public static <L extends UtilsLang, D extends UtilsDescription,
-					G extends JeeslGraphic<L,D,G,GT,FS>,
-					GT extends UtilsStatus<GT,L,D>,
-					FS extends UtilsStatus<FS,L,D>>
-    	EjbGraphicFactory<L,D,G,GT,FS>
+				    G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+					F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
+    	EjbGraphicFactory<L,D,G,GT,F,FS>
     	factory(final Class<G> cGrpahic)
     {
-        return new EjbGraphicFactory<L,D,G,GT,FS>(cGrpahic);
+        return new EjbGraphicFactory<L,D,G,GT,F,FS>(cGrpahic);
     }
     
 	public G build(GT type)

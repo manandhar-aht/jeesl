@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -449,11 +450,6 @@ public class AbstractDummyFacade implements UtilsFacade
 		
 	}
 
-	@Override
-	public <L extends UtilsLang, D extends UtilsDescription, S extends EjbWithId, G extends JeeslGraphic<L,D,G,GT,FS>, GT extends UtilsStatus<GT,L,D>, FS extends UtilsStatus<FS,L,D>> S load(Class<S> cS, S status) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public <T extends EjbWithName> List<T> allOrderedName(Class<T> cl) {
@@ -470,6 +466,13 @@ public class AbstractDummyFacade implements UtilsFacade
 	@Override
 	public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParents(Class<T> type,
 			List<I> parents) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <L extends UtilsLang, D extends UtilsDescription, S extends EjbWithId, G extends JeeslGraphic<L, D, G, GT, F, FS>, GT extends UtilsStatus<GT, L, D>, F extends JeeslGraphicFigure<L, D, G, GT, F, FS>, FS extends UtilsStatus<FS, L, D>> S load(
+			Class<S> cS, S status) {
 		// TODO Auto-generated method stub
 		return null;
 	}

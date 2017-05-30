@@ -1,5 +1,7 @@
 package org.jeesl.factory.xml.module.calendar;
 
+import java.util.Date;
+
 import org.jeesl.controller.processor.TimeZoneProcessor;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendar;
@@ -58,6 +60,15 @@ public class XmlCalendarItemFactory <L extends UtilsLang, D extends UtilsDescrip
 	public static Item build()
 	{
 		Item xml = new Item();		
+		return xml;
+	}
+	
+	public static Item build(Date date)
+	{
+		Item xml = build();		
+		xml.setStart(DateUtil.getXmlGc4D(date));
+		xml.setEnd(DateUtil.getXmlGc4D(date));
+		xml.setAllDay(true);
 		return xml;
 	}
 }

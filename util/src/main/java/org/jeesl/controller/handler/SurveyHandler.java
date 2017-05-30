@@ -180,6 +180,7 @@ public class SurveyHandler<L extends UtilsLang,
 		}
 		logger.info("Answers loaded: " + answers.size());
 	}
+	
 	private void buildMatrix(boolean dbLookup, ANSWER answer)
 	{
 		if(answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix())
@@ -195,11 +196,10 @@ public class SurveyHandler<L extends UtilsLang,
 				{
 					if(!matrix.containsKey(answer.getQuestion(),row,column))
 					{
-						matrix.put(answer.getQuestion(),row,column,efMatrix.build(answer, row, column));
+						matrix.put(answer.getQuestion(),row,column,efMatrix.build(answer,row,column));
 					}
 				}
 			}
-			
 			logger.warn("Building Matrix for "+answer.toString());
 		}
 	}
@@ -214,16 +214,21 @@ public class SurveyHandler<L extends UtilsLang,
 		for(ANSWER a : answers.values())
 		{
 			a.setData(surveyData);
+			a = fSurvey.saveAnswer(a);
 			if(a.getQuestion().getShowMatrix()!=null && a.getQuestion().getShowMatrix())
 			{
-				List<MATRIX> list = matrix.values(a.getQuestion());
-				for(MATRIX m : list)
+				List<MATRIX> list = new ArrayList<MATRIX>();;
+				for(MATRIX m : matrix.values(a.getQuestion()))
 				{
 					if(m.getOption()!=null){m.setOption(fSurvey.find(cOption,m.getOption()));}
+					m.setAnswer(a);
+					m = fSurvey.save(m);
+					list.add(m);
+					matrix.put(a.getQuestion(),m.getRow(),m.getColumn(),m);
 				}
 				a.setMatrix(list);
 			}
-			answers.put(a.getQuestion(), fSurvey.saveAnswer(a));
+			answers.put(a.getQuestion(), a);
 		}
 		if(bMessage!=null){bMessage.growlSuccessSaved();}
 	}

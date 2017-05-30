@@ -1,6 +1,7 @@
 package org.jeesl.factory.factory;
 
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
+import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
 import org.jeesl.factory.svg.SvgFigureFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
@@ -49,6 +50,11 @@ public class SvgFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
     {
     	return new EjbGraphicFactory<L,D,G,GT,F,FS>(cG);
     }
+    
+    public EjbGraphicFigureFactory<L,D,G,GT,F,FS> efFigure()
+    {
+    	return new EjbGraphicFigureFactory<L,D,G,GT,F,FS>(cF);
+    }
 	
 	public SvgFigureFactory<L,D,G,GT,F,FS> figure()
 	{
@@ -59,4 +65,6 @@ public class SvgFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
 	{
 		return EjbStatusFactory.createFactory(cFs,cL,cD);
 	}
+	
+	
 }

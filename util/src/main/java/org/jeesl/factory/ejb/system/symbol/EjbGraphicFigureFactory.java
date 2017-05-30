@@ -22,7 +22,7 @@ public class EjbGraphicFigureFactory<L extends UtilsLang, D extends UtilsDescrip
         this.cF = cF;
     } 
         
-	public F build(FS style, boolean primary, double size, String color, double offsetX, double offsetY, double rotation)
+	public F build(FS style, boolean css, double size, String color, double offsetX, double offsetY, double rotation)
 	{
         F ejb = null;
         try
@@ -30,7 +30,7 @@ public class EjbGraphicFigureFactory<L extends UtilsLang, D extends UtilsDescrip
 			ejb=cF.newInstance();
 			ejb.setStyle(style);
 			
-			ejb.setPrimary(primary);
+			ejb.setCss(css);
 			ejb.setSize(size);
 			ejb.setColor(color);
 			ejb.setOffsetX(offsetX);

@@ -17,8 +17,8 @@ public interface JeeslGraphicFigure<L extends UtilsLang, D extends UtilsDescript
 	FS getStyle();
 	void setStyle(FS style);
 	
-	boolean isPrimary();
-	void setPrimary(boolean primary);
+	boolean isCss();
+	void setCss(boolean css);
 	
 	double getSize();
 	void setSize(double size);

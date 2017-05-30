@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.ManyToOne;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
@@ -28,71 +29,41 @@ public class GraphicFigure implements EjbRemoveable,Serializable,EjbPersistable,
 	public GraphicStyle getStyle() {return style;}
 	public void setStyle(GraphicStyle style) {this.style = style;}
 	
-	double size;
+	private int position;
+	@Override public int getPosition() {return position;}
+	@Override public void setPosition(int position) {this.position = position;}
 	
-	public double getSize() {
-		return size;
-	}
-	public void setSize(double size) {
-		this.size = size;
-	}
-	public String getColor() {
-		return color;
-	}
-	public void setColor(String color) {
-		this.color = color;
-	}
-	public double getOffsetX() {
-		return offsetX;
-	}
-	public void setOffsetX(double offsetX) {
-		this.offsetX = offsetX;
-	}
-	public double getOffsetY() {
-		return offsetY;
-	}
-	public void setOffsetY(double offsetY) {
-		this.offsetY = offsetY;
-	}
-	public double getRotation() {
-		return rotation;
-	}
-	public void setRotation(double rotation) {
-		this.rotation = rotation;
-	}
-
+	private boolean visible;
+	@Override public boolean isVisible() {return visible;}
+	@Override public void setVisible(boolean visible) {this.visible = visible;}
+	
+	double size;
+	@Override public double getSize() {return size;}
+	@Override public void setSize(double size) {this.size = size;}
+	
 	String color;
-
+	@Override public String getColor() {return color;}
+	@Override public void setColor(String color) {this.color = color;}
+	
 	double offsetX;
+	@Override public double getOffsetX() {return offsetX;}
+	@Override public void setOffsetX(double offsetX) {this.offsetX = offsetX;}
 	
 	double offsetY;
-	
+	@Override public double getOffsetY() {return offsetY;}
+	@Override public void setOffsetY(double offsetY) {this.offsetY = offsetY;}
+
 	double rotation;
-	
+	@Override public double getRotation() {return rotation;}
+	@Override public void setRotation(double rotation) {this.rotation = rotation;}
+
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-			sb.append(id);
+		sb.append(id);
 		return sb.toString();
 	}
-	@Override
-	public int getPosition() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public void setPosition(int position) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public boolean isVisible() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public void setVisible(boolean visible) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	@Override public boolean equals(Object object){return (object instanceof GraphicFigure) ? id == ((GraphicFigure) object).getId() : (object == this);}
+	@Override public int hashCode(){return new HashCodeBuilder(35,39).append(id).toHashCode();}
 }

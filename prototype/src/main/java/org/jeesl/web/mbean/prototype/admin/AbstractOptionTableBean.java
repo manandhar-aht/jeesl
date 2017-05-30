@@ -76,9 +76,10 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	private List<GT> graphicTypes; public List<GT> getGraphicTypes() {return graphicTypes;}
 	private List<FS> graphicStyles; public List<FS> getGraphicStyles() {return graphicStyles;}
 	
-	protected Class<?> cStatus;
+	protected final Class<?> cStatus;
 	
-	private Class<GT> cGT;
+	private final Class<G> cG;
+	private final Class<GT> cGT;
 	private final Class<F> cF;
 	private final Class<FS> cFS;
 	
@@ -86,11 +87,14 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	protected EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic;
 	
-	public AbstractOptionTableBean(final Class<L> cL, final Class<D> cD, final Class<F> cF, final Class<FS> cFS)
+	public AbstractOptionTableBean(final Class<L> cL, final Class<D> cD, Class<G> cG, Class<GT> cGT, final Class<F> cF, final Class<FS> cFS, final Class<?> cStatus)
 	{
 		super(cL,cD);
+		this.cG=cG;
+		this.cGT=cGT;
 		this.cF=cF;
 		this.cFS=cFS;
+		this.cStatus=cStatus;
 		
 		index=1;
 		
@@ -104,14 +108,12 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		categories = new ArrayList<EjbWithPosition>();
 	}
 	
-	protected void initUtils(String[] langs, UtilsFacade fUtils, FacesMessageBean bMessage, Class<L> cLang, Class<D> cDescription, Class<?> cStatus, Class<G> cG, Class<GT> cGT)
+	protected void initUtils(String[] langs, UtilsFacade fUtils, FacesMessageBean bMessage)
 	{
-		super.initAdmin(langs,cLang,cDescription,bMessage);
+		super.initAdmin(langs,cL,cD,bMessage);
 		this.fUtils=fUtils;
-		this.cStatus=cStatus;
-		this.cGT=cGT;
 		
-		SvgFactoryFactory<L,D,G,GT,F,FS> ffSvg = SvgFactoryFactory.factory(cLang,cDescription,cG,cF,cFS);
+		SvgFactoryFactory<L,D,G,GT,F,FS> ffSvg = SvgFactoryFactory.factory(cL,cD,cG,cF,cFS);
 		efGraphic = ffSvg.efGraphic();
 		
 		graphicTypes = fUtils.allOrderedPositionVisible(cGT);

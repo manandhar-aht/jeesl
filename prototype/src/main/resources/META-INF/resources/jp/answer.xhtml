@@ -1,0 +1,68 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:composite="http://java.sun.com/jsf/composite"
+>
+    <composite:interface>
+		<composite:attribute name="question" required="true"/>
+		<composite:attribute name="surveyHandler" required="true"/>
+	</composite:interface>
+
+	<composite:implementation>
+		<ui:fragment rendered="#{cc.attrs.surveyHandler.allowAssessment}">
+			<p:selectBooleanCheckbox rendered="#{cc.attrs.question.showBoolean and (not cc.attrs.question.showMatrix)}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].valueBoolean}" />
+			<p:inputText rendered="#{cc.attrs.question.showInteger and (not cc.attrs.question.showMatrix)}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].valueNumber}"/>
+			<p:inputText rendered="#{cc.attrs.question.showDouble and (not cc.attrs.question.showMatrix)}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].valueDouble}"/>
+			<p:inputText rendered="#{cc.attrs.question.showText  and (not cc.attrs.question.showMatrix)}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].valueText}"/>
+			<p:inputTextarea id="remarkIta" rows="2" styleClass="w100" rendered="#{cc.attrs.question.showRemark}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].remark}"/>
+			<p:watermark for="remarkIta" value="Remark" id="watermark" />
+			<p:selectOneMenu id="categoryS1" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].option}" effect="fade" rendered="#{cc.attrs.question.showSelectOne and (not cc.attrs.question.showMatrix)}">
+				<f:selectItems value="#{cc.attrs.question.options}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
+			</p:selectOneMenu>
+			<p:dataTable rendered="#{cc.attrs.question.showMatrix}" var="r" value="#{cc.attrs.surveyHandler.matrixRows[cc.attrs.question]}">
+				<p:column styleClass="jeeslBold">
+					<h:outputText value="#{r.name[localeCode].lang}"/>
+				</p:column>
+				<p:columns var="c" value="#{cc.attrs.surveyHandler.matrixCols[cc.attrs.question]}">
+					<f:facet name="header">
+						<h:outputText value="#{c.name[localeCode].lang}" />
+					</f:facet>
+					<p:inplace emptyLabel="-" rendered="#{cc.attrs.question.showBoolean}">
+						<p:selectBooleanCheckbox  value="#{cc.attrs.surveyHandler.matrix.m[cc.attrs.question].m[r][c].valueBoolean}" />
+					</p:inplace>
+					<p:inplace emptyLabel="-" rendered="#{cc.attrs.question.showInteger}">
+						<h:inputText   value="#{cc.attrs.surveyHandler.matrix.m[cc.attrs.question].m[r][c].valueNumber}" />
+					</p:inplace>
+					<p:inplace emptyLabel="-" rendered="#{cc.attrs.question.showDouble}">
+						<h:inputText   value="#{cc.attrs.surveyHandler.matrix.m[cc.attrs.question].m[r][c].valueDouble}" />
+					</p:inplace>
+					<p:inplace emptyLabel="-" rendered="#{cc.attrs.question.showText}">
+						<h:inputText   value="#{cc.attrs.surveyHandler.matrix.m[cc.attrs.question].m[r][c].valueText}" />
+					</p:inplace>
+					<h:selectOneMenu value="#{cc.attrs.surveyHandler.matrix.m[cc.attrs.question].m[r][c].option}" rendered="#{cc.attrs.question.showSelectOne}" styleClass="w100">
+						<f:selectItems value="#{cc.attrs.surveyHandler.matrixCells[cc.attrs.question]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
+					</h:selectOneMenu>
+				</p:columns>
+			</p:dataTable>
+		</ui:fragment>
+		<ui:fragment rendered="#{not cc.attrs.surveyHandler.allowAssessment}">
+			<p:selectBooleanCheckbox disabled="true" rendered="#{cc.attrs.question.showBoolean}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].valueBoolean}" />
+			<h:outputText rendered="#{cc.attrs.question.showInteger}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].valueNumber}"/>
+			<h:outputText rendered="#{cc.attrs.question.showDouble}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].valueDouble}"/>
+			<h:outputText rendered="#{cc.attrs.question.showText}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].valueText}"/>
+			<h:outputText rendered="#{cc.attrs.question.showRemark}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].remark}"/>
+			<h:outputText rendered="#{cc.attrs.question.showSelectOne}" value="#{cc.attrs.surveyHandler.answers[cc.attrs.question].option.name[localeCode].lang}"/>
+			
+			<p:dataTable rendered="#{cc.attrs.question.showMatrix}" var="r" value="#{cc.attrs.surveyHandler.matrixRows[cc.attrs.question]}">
+				<p:column>
+					<h:outputText value="#{r.name[localeCode].lang}"/>
+				</p:column>
+			</p:dataTable>
+			
+		</ui:fragment>
+	</composite:implementation>
+</ui:composition>

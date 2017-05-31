@@ -15,6 +15,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
+import org.jeesl.factory.txt.module.survey.TxtOptionFactory;
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
@@ -39,6 +40,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.util.comparator.ejb.PositionComparator;
+import net.sf.exlp.util.io.StringUtil;
 
 public class SurveyHandler<L extends UtilsLang,
 							D extends UtilsDescription,
@@ -73,6 +75,8 @@ public class SurveyHandler<L extends UtilsLang,
 	private EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
 	private EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
 
+	private final TxtOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> tfOption;
+	
 	private List<SECTION> sections; public List<SECTION> getSections() {return sections;}
 	
 	private Map<QUESTION,ANSWER> answers; public Map<QUESTION,ANSWER> getAnswers() {return answers;}
@@ -108,6 +112,8 @@ public class SurveyHandler<L extends UtilsLang,
 		efAnswer = ffSurvey.answer();
 		efMatrix = ffSurvey.ejbMatrix();
 		efOption = ffSurvey.option();
+		tfOption = ffSurvey.txtOption("en");
+		
 		cmpOption = new PositionComparator<OPTION>();
 	}
 	
@@ -150,6 +156,11 @@ public class SurveyHandler<L extends UtilsLang,
 					matrixCols.put(question, efOption.toColumns(question.getOptions()));
 					matrixCells.put(question, efOption.toCells(question.getOptions()));
 				}
+				logger.info(StringUtil.stars());
+				logger.info(question.getCode());
+				logger.info("\tRows"+tfOption.labels(matrixRows.get(question)));
+				logger.info("\tColumns"+tfOption.labels(matrixCols.get(question)));
+				logger.info("\tCells"+tfOption.labels(matrixCells.get(question)));
 			}
 		}
 	}

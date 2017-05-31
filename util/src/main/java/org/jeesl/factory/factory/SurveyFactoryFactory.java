@@ -15,6 +15,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
+import org.jeesl.factory.txt.module.survey.TxtOptionFactory;
 import org.jeesl.factory.txt.survey.TxtSurveyQuestionFactory;
 import org.jeesl.factory.xls.system.module.XlsSurveyDataFactory;
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
@@ -164,6 +165,11 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 	public TxtSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> txtQuestion()
 	{
 		return new TxtSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
+	}
+	
+	public TxtOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> txtOption(String localeCode)
+	{
+		return new TxtOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode);
 	}
 	
 	public SurveyScoreProcessor<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> scoreProcessor()

@@ -5,12 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
@@ -31,7 +31,7 @@ public class JeeslDbDescriptionUpdater<C extends EjbWithDescription<D>, D extend
         this.cEjb = cEjb;
         this.cD = cD;
         
-        efDescription = EjbDescriptionFactory.createFactory(cD);
+        efDescription = EjbDescriptionFactory.factory(cD);
     } 
 	
 	public static <C extends EjbWithDescription<D>, D extends UtilsDescription> JeeslDbDescriptionUpdater<C,D> factory(final Class<C> cEjb, final Class<D> cD)

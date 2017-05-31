@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.ranking;
+package org.jeesl.factory.ejb.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

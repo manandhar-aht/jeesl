@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.txt.mail;
+package org.jeesl.factory.txt.system.mail;
 
 import org.jeesl.model.xml.system.io.mail.EmailAddress;
 import org.jeesl.model.xml.system.io.mail.Header;
@@ -27,5 +27,4 @@ public class TxtMailHeaderFactory
 		}
 		return sb.toString();
 	}
-	
 }

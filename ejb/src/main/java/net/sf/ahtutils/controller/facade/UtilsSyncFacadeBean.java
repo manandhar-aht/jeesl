@@ -10,13 +10,13 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.sync.EjbSyncFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.sync.UtilsSync;
 
 import org.jeesl.api.facade.core.JeeslSyncFacade;
+import org.jeesl.factory.ejb.system.sync.EjbSyncFactory;
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 

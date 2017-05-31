@@ -1,5 +1,6 @@
 package org.jeesl.factory.ejb.system.io.template;
 
+import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
@@ -8,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
-import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -30,7 +30,7 @@ public class EjbIoTemplateDefinitionFactory<L extends UtilsLang,D extends UtilsD
 	protected EjbIoTemplateDefinitionFactory(final Class<D> cD,final Class<DEFINITION> cDefinition)
 	{       
         this.cDefinition = cDefinition;
-		efDescription = EjbDescriptionFactory.createFactory(cD);
+		efDescription = EjbDescriptionFactory.factory(cD);
 	}
 	
 	public DEFINITION build(TEMPLATE template, TYPE type, Entity xml)

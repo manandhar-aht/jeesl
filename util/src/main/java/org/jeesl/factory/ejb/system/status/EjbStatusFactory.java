@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.status;
+package org.jeesl.factory.ejb.system.status;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -20,25 +20,25 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbStatusFactory.class);
 	
-	final Class<S> cStatus;
-	final Class<D> cDescription;
-    
-    private EjbLangFactory<L> efLang;
-    private EjbDescriptionFactory<D> efDescription;
+	private final Class<D> cD;
+	private final Class<S> cStatus;
+
+    private final EjbLangFactory<L> efLang;
+    private final EjbDescriptionFactory<D> efDescription;
 	
-    public EjbStatusFactory(final Class<S> cStatus, final Class<L> cLang, final Class<D> cDescription)
+    public EjbStatusFactory(final Class<S> cStatus, final Class<L> cL, final Class<D> cD)
     {
         this.cStatus = cStatus;
-        this.cDescription = cDescription;
+        this.cD = cD;
         
-        efLang = EjbLangFactory.createFactory(cLang);
-        efDescription = EjbDescriptionFactory.createFactory(cDescription);
+        efLang = EjbLangFactory.factory(cL);
+        efDescription = EjbDescriptionFactory.factory(cD);
     } 
     
     public static <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> EjbStatusFactory<S, L, D>
     		createFactory(final Class<S> cStatus, final Class<L> cLang, final Class<D> descriptionClass)
     {
-        return new EjbStatusFactory<S, L, D>(cStatus, cLang, descriptionClass);
+        return new EjbStatusFactory<S,L,D>(cStatus, cLang, descriptionClass);
     }
     
     public <E extends Enum<E>> S build(E code){return create(code.toString());}
@@ -100,12 +100,12 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 		}
 	}
 	
-	public Map<String,D> getDescriptionMap(List<Description> descList) throws InstantiationException, IllegalAccessException
+	private Map<String,D> getDescriptionMap(List<Description> descList) throws InstantiationException, IllegalAccessException
 	{
 		Map<String,D> mapDesc = new Hashtable<String,D>();
 		for(Description xmlD : descList)
 		{
-			D d = cDescription.newInstance();
+			D d = cD.newInstance();
 			d.setLkey(xmlD.getKey());
 			d.setLang(xmlD.getValue().trim());
 			mapDesc.put(d.getLkey(), d);

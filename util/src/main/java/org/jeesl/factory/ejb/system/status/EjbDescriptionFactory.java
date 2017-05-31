@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.status;
+package org.jeesl.factory.ejb.system.status;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -20,16 +20,16 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbDescriptionFactory.class);
 	
-    final Class<D> clDescription;
+    private final Class<D> cD;
 	
-    public EjbDescriptionFactory(final Class<D> clDescription)
+    public EjbDescriptionFactory(final Class<D> cD)
     {
-        this.clDescription = clDescription;
+        this.cD = cD;
     } 
     
-    public static <D extends UtilsDescription> EjbDescriptionFactory<D> createFactory(final Class<D> clDescription)
+    public static <D extends UtilsDescription> EjbDescriptionFactory<D> factory(final Class<D> cD)
     {
-        return new EjbDescriptionFactory<D>(clDescription);
+        return new EjbDescriptionFactory<D>(cD);
     }
 	
 	public D create(Description description) throws UtilsConstraintViolationException
@@ -46,7 +46,7 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 		D d = null;
 		try
 		{
-			d = clDescription.newInstance();
+			d = cD.newInstance();
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

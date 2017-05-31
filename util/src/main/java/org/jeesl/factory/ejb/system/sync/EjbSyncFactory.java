@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.sync;
+package org.jeesl.factory.ejb.system.sync;
 
 import java.util.Date;
 

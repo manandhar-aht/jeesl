@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.util;
+package org.jeesl.factory.ejb.system.util;
 
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.slf4j.Logger;
@@ -9,7 +9,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.utils.Property;
 
-public class EjbPropertyFactory<L extends UtilsLang,D extends UtilsDescription,
+public class EjbPropertyFactory<L extends UtilsLang, D extends UtilsDescription,
 								C extends UtilsStatus<C,L,D>,
 								P extends JeeslProperty<L,D,C,P>>
 {
@@ -22,7 +22,7 @@ public class EjbPropertyFactory<L extends UtilsLang,D extends UtilsDescription,
         this.cProperty = cProperty;
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,
+	public static <L extends UtilsLang, D extends UtilsDescription,
 					C extends UtilsStatus<C,L,D>,
 					P extends JeeslProperty<L,D,C,P>>
 			EjbPropertyFactory<L,D,C,P> factory(final Class<P> cProperty)

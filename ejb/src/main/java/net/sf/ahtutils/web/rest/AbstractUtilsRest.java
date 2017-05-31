@@ -3,15 +3,15 @@ package net.sf.ahtutils.web.rest;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
+import org.jeesl.factory.ejb.system.status.EjbLangFactory;
+import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.util.query.xml.StatusQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.db.xml.AhtStatusDbInit;
-import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
-import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
-import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -43,8 +43,8 @@ public class AbstractUtilsRest <L extends UtilsLang, D extends UtilsDescription>
 		this.cL=cL;
 		this.cD=cD;
 		
-        efLang = EjbLangFactory.createFactory(cL);
-        efDescription = EjbDescriptionFactory.createFactory(cD);
+        efLang = EjbLangFactory.factory(cL);
+        efDescription = EjbDescriptionFactory.factory(cD);
         
         mapGroups = new Hashtable<Class<?>, String>();
 	}

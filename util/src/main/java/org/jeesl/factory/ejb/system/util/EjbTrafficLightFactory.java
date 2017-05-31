@@ -1,39 +1,39 @@
-package net.sf.ahtutils.factory.ejb.util;
+package org.jeesl.factory.ejb.system.util;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
-import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
-import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.utils.TrafficLight;
 
+import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
+import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbTrafficLightFactory<L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
+public class EjbTrafficLightFactory<L extends UtilsLang,D extends UtilsDescription,
+									SCOPE extends UtilsStatus<SCOPE,L,D>,
+									LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbTrafficLightFactory.class);
 	
-	final Class<L> cLang;
-	final Class<D> cDescription;
-	final Class<LIGHT> cLight;
+	private final Class<LIGHT> cLight;
 	
-    private EjbLangFactory<L> efLang;
-    private EjbDescriptionFactory<D> efDescription;
+    private final EjbLangFactory<L> efLang;
+    private final EjbDescriptionFactory<D> efDescription;
     
 	public EjbTrafficLightFactory(final Class<L> cLang,final Class<D> cDescription,final Class<LIGHT> cLight)
 	{       
-		this.cLang = cLang;
-		this.cDescription = cDescription;
         this.cLight = cLight;
         
-        efLang = EjbLangFactory.createFactory(cLang);
-        efDescription = EjbDescriptionFactory.createFactory(cDescription);
+        efLang = EjbLangFactory.factory(cLang);
+        efDescription = EjbDescriptionFactory.factory(cDescription);
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
+	public static <L extends UtilsLang,D extends UtilsDescription,
+					SCOPE extends UtilsStatus<SCOPE,L,D>,
+					LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
 		EjbTrafficLightFactory<L,D,SCOPE,LIGHT> factory(final Class<L> cLang,final Class<D> cDescription,final Class<LIGHT> cLight)
 	{
 		return new EjbTrafficLightFactory<L,D,SCOPE,LIGHT>(cLang,cDescription,cLight);
@@ -77,5 +77,4 @@ public class EjbTrafficLightFactory<L extends UtilsLang,D extends UtilsDescripti
 		
 		return ejb;
 	}
-
 }

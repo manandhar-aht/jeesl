@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.issue;
+package org.jeesl.factory.ejb.module.task;
 
 import net.sf.ahtutils.interfaces.model.issue.UtilsTask;
 import net.sf.ahtutils.xml.issue.Task;

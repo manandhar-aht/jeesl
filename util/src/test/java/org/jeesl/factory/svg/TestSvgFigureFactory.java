@@ -9,6 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.batik.transcoder.TranscoderException;
 import org.jeesl.AbstractJeeslUtilTest;
 import org.jeesl.JeeslUtilTestBootstrap;
+import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
 import org.jeesl.factory.factory.SvgFactoryFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
@@ -21,7 +22,6 @@ import org.jeesl.model.ejb.system.symbol.GraphicType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.test.AbstractJeeslTest;
 
 public class TestSvgFigureFactory extends AbstractJeeslUtilTest

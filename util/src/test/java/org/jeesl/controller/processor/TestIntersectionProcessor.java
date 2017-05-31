@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jeesl.AbstractJeeslUtilTest;
+import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
 import org.jeesl.model.ejb.system.status.Status;
@@ -15,8 +16,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 
 public class TestIntersectionProcessor extends AbstractJeeslUtilTest
 {

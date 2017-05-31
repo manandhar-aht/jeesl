@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.ejb.status;
+package org.jeesl.factory.ejb.system.status;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -20,16 +20,16 @@ public class EjbLangFactory<L extends UtilsLang>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbLangFactory.class);
 	
-    final Class<L> langClass;
+    final Class<L> cL;
 	
-    public EjbLangFactory(final Class<L> langClass)
+    public EjbLangFactory(final Class<L> cL)
     {
-        this.langClass = langClass;
+        this.cL = cL;
     } 
     
-    public static <L extends UtilsLang> EjbLangFactory<L> createFactory(final Class<L> langClass)
+    public static <L extends UtilsLang> EjbLangFactory<L> factory(final Class<L> cL)
     {
-        return new EjbLangFactory<L>(langClass);
+        return new EjbLangFactory<L>(cL);
     }
 	
 	public Map<String,L> getLangMap(Langs langs) throws UtilsConstraintViolationException
@@ -81,7 +81,7 @@ public class EjbLangFactory<L extends UtilsLang>
 	{
 		try
 		{
-			L l = langClass.newInstance();
+			L l = cL.newInstance();
 			l.setLkey(key);
 			l.setLang(translation);
 			return l;

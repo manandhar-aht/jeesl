@@ -1,23 +1,24 @@
-package org.jeesl.interfaces.model.module.survey;
+package org.jeesl.interfaces.model.module.survey.core;
+
+import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 
-import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.date.EjbWithDateRange;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
-import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
-import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
+import net.sf.ahtutils.interfaces.model.with.utils.UtilsWithStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
+import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
-public interface JeeslSurveyScheme<L extends UtilsLang,
+public interface JeeslSurvey<L extends UtilsLang,
 							D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							SS extends UtilsStatus<SS,L,D>,
@@ -33,9 +34,14 @@ public interface JeeslSurveyScheme<L extends UtilsLang,
 							DATA extends JeeslSurveyData<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,EjbSaveable,
-					EjbWithLang<L>,EjbWithDescription<D>
+			extends EjbWithId,EjbWithName,EjbWithDateRange,
+						UtilsWithStatus<L,D,SS>
 {
+	public enum Attributes{id,status}
+	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);
+	
+	List<DATA> getSurveyData();
+	void setSurveyData(List<DATA> data);
 }

@@ -325,7 +325,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		{
 			data.setCorrelation(em.find(cCorrelation,data.getCorrelation().getId()));
 		}
-//		logger.info("Now Sabing ...");
+//		logger.info("Now Saving ...");
 		return this.saveProtected(data);
 	}
 

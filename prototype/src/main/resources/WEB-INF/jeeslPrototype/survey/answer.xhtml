@@ -8,7 +8,6 @@
 >
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 
-	<ui:fragment>
 		<ui:fragment rendered="#{surveyHandler.allowAssessment}">
 			<p:selectBooleanCheckbox rendered="#{question.showBoolean and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueBoolean}" />
 			<p:inputText rendered="#{question.showInteger and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueNumber}"/>
@@ -19,6 +18,7 @@
 			<p:selectOneMenu id="categoryS1" value="#{surveyHandler.answers[question].option}" effect="fade" rendered="#{question.showSelectOne and (not question.showMatrix)}">
 				<f:selectItems value="#{question.options}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
 			</p:selectOneMenu>
+			
 			<p:dataTable rendered="#{question.showMatrix}" var="r" value="#{surveyHandler.matrixRows[question]}">
 				<p:column styleClass="jeeslBold">
 					<h:outputText value="#{r.name[loc].lang}"/>
@@ -60,5 +60,4 @@
 			</p:dataTable>
 			
 		</ui:fragment>
-	</ui:fragment>
 </ui:composition>

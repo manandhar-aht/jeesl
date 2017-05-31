@@ -155,12 +155,16 @@ public class SurveyHandler<L extends UtilsLang,
 					matrixRows.put(question, efOption.toRows(question.getOptions()));
 					matrixCols.put(question, efOption.toColumns(question.getOptions()));
 					matrixCells.put(question, efOption.toCells(question.getOptions()));
+					
+					if(logger.isTraceEnabled())
+					{
+						logger.trace(StringUtil.stars());
+						logger.trace(question.getCode());
+						logger.trace("\tRows"+tfOption.labels(matrixRows.get(question)));
+						logger.trace("\tColumns"+tfOption.labels(matrixCols.get(question)));
+						logger.trace("\tCells"+tfOption.labels(matrixCells.get(question)));
+					}
 				}
-				logger.info(StringUtil.stars());
-				logger.info(question.getCode());
-				logger.info("\tRows"+tfOption.labels(matrixRows.get(question)));
-				logger.info("\tColumns"+tfOption.labels(matrixCols.get(question)));
-				logger.info("\tCells"+tfOption.labels(matrixCells.get(question)));
 			}
 		}
 	}

@@ -59,7 +59,7 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends Util
 		sbhCategory.selectAll();
 		if(debugOnInfo)
 		{
-			logger.info(SbMultiHandler.class.getSimpleName()+":"+cCategory.getSimpleName()+" "+sbhCategory.getSelected().size()+"/"+sbhCategory.getList().size());
+			logger.info(SbMultiHandler.class.getSimpleName()+": "+cCategory.getSimpleName()+" "+sbhCategory.getSelected().size()+"/"+sbhCategory.getList().size());
 		}
 	}
 	

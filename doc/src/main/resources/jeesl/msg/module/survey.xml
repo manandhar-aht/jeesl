@@ -323,13 +323,18 @@
     		<s:lang key="fr" translation="Name"/>
     	</s:langs>
     </s:translation>
-        <s:translation key="jeeslSurveyScores">
+	<s:translation key="jeeslSurveyScores">
     	<s:langs>
     		<s:lang key="de" translation="Punkte"/>
     		<s:lang key="en" translation="Scores"/>
     		<s:lang key="fr" translation="Scores"/>
     	</s:langs>
     </s:translation>
-    
-    
+	<s:translation key="jeeslSurveyNested">
+    	<s:langs>
+    		<s:lang key="de" translation="Verknüpft"/>
+    		<s:lang key="en" translation="Nested"/>
+    		<s:lang key="fr" translation="Nested"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

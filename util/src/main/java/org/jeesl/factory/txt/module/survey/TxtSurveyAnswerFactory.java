@@ -1,4 +1,4 @@
-package org.jeesl.factory.txt.survey;
+package org.jeesl.factory.txt.module.survey;
 
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;

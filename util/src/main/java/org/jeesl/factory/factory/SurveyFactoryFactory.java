@@ -16,7 +16,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
 import org.jeesl.factory.txt.module.survey.TxtOptionFactory;
-import org.jeesl.factory.txt.survey.TxtSurveyQuestionFactory;
+import org.jeesl.factory.txt.module.survey.TxtSurveyQuestionFactory;
 import org.jeesl.factory.xls.system.module.XlsSurveyDataFactory;
 import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;

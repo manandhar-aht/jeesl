@@ -1,4 +1,4 @@
-package net.sf.ahtutils.doc.er;
+package org.jeesl.doc.er;
 
 import java.io.File;
 import java.io.IOException;

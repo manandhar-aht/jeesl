@@ -1,4 +1,4 @@
-package org.jeesl.factory.txt.survey;
+package org.jeesl.factory.txt.module.survey;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

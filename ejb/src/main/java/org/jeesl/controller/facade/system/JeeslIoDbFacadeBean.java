@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
-import org.jeesl.factory.json.system.db.JsonDbConnectionFactory;
+import org.jeesl.factory.json.system.io.db.JsonDbConnectionFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.sql.system.db.SqlDbConnectionsFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;

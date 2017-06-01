@@ -131,18 +131,27 @@ public class SurveyHandler<L extends UtilsLang,
 		showAssessment = true;
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
-		reloadSections(survey);
+		reloadSections(survey.getTemplate());
 		reloadAnswers(EjbIdFactory.isSaved(surveyData));
 	}
 	
-	private void reloadSections(SURVEY survey)
+	public void prepareNested(SURVEY survey, CORRELATION correlation)
+	{
+		showAssessment = true;
+		try {surveyData = fSurvey.fData(correlation);}
+		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
+		reloadSections(survey.getTemplate().getNested());
+		reloadAnswers(EjbIdFactory.isSaved(surveyData));
+	}
+	
+	private void reloadSections(TEMPLATE template)
 	{
 		sections.clear();
 		matrixRows.clear();
 		matrixCols.clear();
 		matrixCells.clear();
 		
-		TEMPLATE template = fSurvey.load(survey.getTemplate());
+		template = fSurvey.load(template);
 		for(SECTION section : template.getSections())
 		{
 			section = fSurvey.load(section);

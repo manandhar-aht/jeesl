@@ -56,7 +56,7 @@ public interface JeeslSurveyFacade <L extends UtilsLang,
 	void rmOption(OPTION option) throws UtilsConstraintViolationException;
 	
 	TEMPLATE fcSurveyTemplate(TC category, TS status);
-	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status);
+	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion);
 	
 	<W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>> List<W> fSurveys(Class<W> c, List<SS> status, Date date);
 	<W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>> W fWithSurvey(Class<W> c, long id) throws UtilsNotFoundException;

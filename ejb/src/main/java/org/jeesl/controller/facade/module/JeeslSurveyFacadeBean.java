@@ -46,8 +46,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class JeeslSurveyFacadeBean <L extends UtilsLang,
-									D extends UtilsDescription,
+public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescription,
 									SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 									SS extends UtilsStatus<SS,L,D>,
 									SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -71,6 +70,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	private final Class<SURVEY> cSurvey;
 	private final Class<TEMPLATE> cTemplate;
 	private final Class<VERSION> cVersion;
+	@SuppressWarnings("unused")
 	private final Class<TS> cTS;
 	private final Class<SECTION> cSection;
 	private final Class<QUESTION> cQuestion;
@@ -222,8 +222,8 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		return em.createQuery(cQ).getResultList();
 	}
 	
-	@Override public TEMPLATE fcSurveyTemplate(TC category, TS status){return fcSurveyTemplate(category,null,status);}
-	@Override public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status)
+	@Override public TEMPLATE fcSurveyTemplate(TC category, TS status){return fcSurveyTemplate(category,null,status,null);}
+	@Override public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion)
 	{
 		if(logger.isInfoEnabled())
 		{
@@ -241,6 +241,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 			TEMPLATE template = eTemplate.build(category,status,"");
 			template.setVersion(version);
 			template.getVersion().setTemplate(template);
+			if(nestedVersion!=null){template.setNested(nestedVersion.getTemplate());}
 			em.persist(template);
 			return template;
 		}
@@ -277,6 +278,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		if(list.isEmpty())
 		{
 			TEMPLATE t = eTemplate.build(category,status,"");
+			if(nestedVersion!=null){t.setNested(nestedVersion.getTemplate());}
 			em.persist(t);
 			return t;
 		}

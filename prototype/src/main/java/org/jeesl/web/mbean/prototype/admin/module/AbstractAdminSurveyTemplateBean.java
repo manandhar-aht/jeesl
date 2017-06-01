@@ -90,7 +90,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 
 	protected List<TC> categories; public List<TC> getCategories(){return categories;}
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
-	protected List<VERSION> nested; public List<VERSION> getNested(){return nested;}
+	protected List<VERSION> nestedVersions; public List<VERSION> getNestedVersions(){return nestedVersions;}
 	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
@@ -99,6 +99,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	
 	protected TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
+	protected VERSION nestedVersion; public VERSION getNestedVersion() {return nestedVersion;} public void setNestedVersion(VERSION nestedVersion) {this.nestedVersion = nestedVersion;}
 	protected TEMPLATE template; public TEMPLATE getTemplate(){return template;} public void setTemplate(TEMPLATE template){this.template = template;}
 	protected SECTION section; public SECTION getSection(){return section;} public void setSection(SECTION section){this.section = section;}
 	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
@@ -201,7 +202,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 			try
 			{
 				TS status = fSurvey.fByCode(cTs,statusCode);
-				template = fSurvey.fcSurveyTemplate(category,version,status);
+				template = fSurvey.fcSurveyTemplate(category,version,status,nestedVersion);
 				logger.info("Resolved "+cTemplate.getSimpleName()+": "+template.toString());
 				version = template.getVersion();
 				reloadTemplate();
@@ -223,13 +224,13 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	{
 		versions = fSurvey.fVersions(category);
 		
-		nested = new ArrayList<VERSION>();
+		nestedVersions = new ArrayList<VERSION>();
 		
 		for(TC c : categories)
 		{
 			if(!c.equals(category))
 			{
-				nested.addAll(fSurvey.fVersions(c));
+				nestedVersions.addAll(fSurvey.fVersions(c));
 			}
 		}
 	}
@@ -240,15 +241,21 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 		logger.info(AbstractLogMessage.selectEntity(version));
 		version = fSurvey.find(cVersion, version);
 		initTemplate();
+		if(version.getTemplate()!=null && version.getTemplate().getNested()!=null){nestedVersion = version.getTemplate().getNested().getVersion();}
 		uiHelper.check(version,sections);
 	}
 	
 	protected void saveVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(version));
-		if(version.getTemplate().getNested()!=null){version.getTemplate().setNested(fSurvey.find(cTemplate,version.getTemplate().getNested()));}
+		if(nestedVersion!=null)
+		{
+			nestedVersion = fSurvey.find(cVersion,nestedVersion);
+		}
+		
 		if(EjbIdFactory.isSaved(version))
 		{
+			if(nestedVersion!=null){version.getTemplate().setNested(nestedVersion.getTemplate());}
 			version = fSurvey.save(version);
 		}
 		initTemplate();

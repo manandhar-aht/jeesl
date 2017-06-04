@@ -58,12 +58,14 @@ public class JbossModuleConfigurator
 	
 	public void mysql() throws IOException
 	{
-		File baseDir = buildMobuleBase("com/mysql");
-		File moduleMain = new File(baseDir,"main");
-		File moduleXml = new File(moduleMain,"module.xml");
+		File dirCom = buildMobuleBase("com");
+		File dirMysql = new File(dirCom,"mysql");
+		File dirMain = new File(dirMysql,"main");
+		File moduleXml = new File(dirMain,"module.xml");
 		
-		if(!baseDir.exists()){baseDir.mkdir();}
-		if(!moduleMain.exists()){moduleMain.mkdir();}
+		if(!dirCom.exists()){dirCom.mkdir();}
+		if(!dirMysql.exists()){dirMysql.mkdir();}
+		if(!dirMain.exists()){dirMain.mkdir();}
 		if(!moduleXml.exists())
 		{
 			String src = srcBaseDir+"/"+product+"/"+version+"/mysql.xml";
@@ -74,7 +76,7 @@ public class JbossModuleConfigurator
 		
 		if(version.equals("6.3"))
 		{
-			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:5.1.29"),moduleMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:5.1.29"),dirMain);
 		}
 	}
 	

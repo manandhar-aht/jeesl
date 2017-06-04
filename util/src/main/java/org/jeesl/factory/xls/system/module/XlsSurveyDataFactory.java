@@ -21,8 +21,20 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
+import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
+
+import java.util.HashMap;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.mutable.MutableInt;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
+
 
 public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -46,6 +58,10 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		
 	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	private String localeCode;
+	private Map<Long, HeaderData> sectionHeaders;
+	private Map<Long, HeaderData> questionHeaders;
+	private CellStyle style;
+	String answerTypes[] = {"Yes/No","Number","Natural Number","Score","Option","Text","Remark"};
 	
 	public XlsSurveyDataFactory(String localeCode)
 	{
@@ -57,58 +73,237 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		this.fSurvey = fSurvey;
 	}
 	
-	public void build(SURVEY survey, List<DATA> list)
+	public Workbook build(SURVEY survey, List<DATA> list)
 	{
+		// Reset the section and question overview
+		sectionHeaders  = new HashMap<Long, HeaderData>();
+		questionHeaders = new HashMap<Long, HeaderData>();
+		
+		// Create an Excel workbook to be filled with given data
+		Workbook wb = new XSSFWorkbook();
+		
+		// Create a sheet in the new workbook to write data into
+		Sheet sheet = XlsSheetFactory.getSheet(wb, localeCode);
+		
+		// Create a style for the cells
+		style = wb.createCellStyle();
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+				 
 		//Get data for lazy loading
 		TEMPLATE template = survey.getTemplate();
 		if (fSurvey!=null) {template = fSurvey.load(template);}
 		// The survey object holds information about the structure of the survey
 		logger.info("Using survey: "+survey.getName());
 		
-		// Header Rendering Section
-		// First level header are in the section of the survey template
-		for (SECTION section : template.getSections())
-		{
-			logger.info("Processing first level (section) header " +section.getName());
-			
-			// Secondary header are nested in the individual questions of the sections
-			if (fSurvey!=null) {section = fSurvey.load(section);}
-			for (QUESTION question : section.getQuestions())
-			{
-				if (question.getShowBoolean()!= null && question.getShowBoolean()) {logger.info("Adding X to Boolean answers");}
-				if (question.getShowDouble()!= null && question.getShowDouble()) {logger.info("Adding X to Double answers");}
-				if (question.getShowInteger()!= null && question.getShowInteger()) {logger.info("Adding X to Integer answers");}
-				if (question.getShowMatrix()!= null && question.getShowMatrix()) {logger.info("Adding X to Matrix answers");}
-				if (question.getShowScore()!= null && question.getShowScore()) {logger.info("Adding X to Scores");}
-				if (question.getShowSelectMulti()!= null && question.getShowSelectMulti()) {logger.info("Adding X to multiple selections");}
-				if (question.getShowSelectOne()!= null && question.getShowSelectOne()) {logger.info("Adding X to single selections");}
-				if (question.getShowText()!= null && question.getShowText()) {logger.info("Adding X to textural answers");}
-				if (question.getShowRemark()!= null && question.getShowRemark()) {logger.info("Adding X to Remarks");}
-			}
-		}
-		
 		// Data Rendering Section
 		// Individual Answers
 		for (DATA surveyData : list)
 		{
 			if (fSurvey!=null) {surveyData = fSurvey.load(surveyData);}
-			logger.info("Survey data " +surveyData.getAnswers().size() +" answers.");
 			Map<QUESTION, ANSWER> infoInventory = EjbSurveyAnswerFactory.toQuestionMap(surveyData.getAnswers());
 			for (QUESTION question : infoInventory.keySet())
 			{
-				logger.info("Answer to question: " +question.getQuestion());
 				ANSWER answer = infoInventory.get(question);
-				if (fSurvey!=null) {answer = fSurvey.load(answer);}
-				if (question.getShowBoolean()!= null && question.getShowBoolean() && answer.getValueBoolean()!=null) {logger.info(answer.getValueBoolean().toString());}
-				if (question.getShowDouble()!= null && question.getShowDouble() && answer.getValueDouble()!=null) {logger.info(answer.getValueDouble().toString());}
-				if (question.getShowInteger()!= null && question.getShowInteger() && answer.getValueNumber()!=null) {logger.info(answer.getValueNumber().toString());}
-				if (question.getShowMatrix()!= null && question.getShowMatrix() && answer.getMatrix() != null) {logger.info(answer.getMatrix().toString());}
-				if (question.getShowScore()!= null && question.getShowScore() && answer.getScore()!=null) {logger.info(answer.getScore().toString());}
-				if (question.getShowSelectMulti()!= null && question.getShowSelectMulti() && answer.getOptions()!=null) {logger.info(answer.getOptions().toString());}
-				if (question.getShowSelectOne()!= null && question.getShowSelectOne() && answer.getOption()!=null) {logger.info(answer.getOption().getCode());}
-				if (question.getShowText()!= null && question.getShowText() && answer.getValueText()!=null) {logger.info(answer.getValueText());}
-				if (question.getShowRemark()!= null && question.getShowRemark() && answer.getRemark()!=null) {logger.info(answer.getRemark());}
+				
+				// Add or Update the section info on offset and width in section header map
+				// Use the computed question length for question header rendering
+				int questionLength = addQuestionToSection(answer);
 			}
 		}
+		Row sectionHeaderRow  = sheet.createRow(0);
+		Row questionHeaderRow = sheet.createRow(1);
+		
+		renderHeaderData(sectionHeaderRow, sectionHeaders, false);
+		renderHeaderData(questionHeaderRow, questionHeaders, true);
+		return wb;
+	}
+	
+	public void renderHeaderData(Row row, Map<Long, HeaderData> headerData, boolean renderQuestionHeader)
+	{
+		MutableInt columnNr = new MutableInt(0);
+		Row subRow    = null;
+		Row subsubRow = null;
+		Row answerRow = null;
+		
+		if (renderQuestionHeader) 
+		{
+			subRow    = row.getSheet().createRow(row.getRowNum()+1);
+			subsubRow = row.getSheet().createRow(row.getRowNum()+2);
+			answerRow = row.getSheet().createRow(row.getRowNum()+3);
+		}
+		for (Long id : headerData.keySet())
+		{
+			HeaderData header = headerData.get(id);
+			XlsCellFactory.build(row, columnNr, style, header.name, header.width);
+			
+			if (renderQuestionHeader)
+			{
+				// Render the Option header
+				columnNr.subtract(header.width);
+				columnNr = buildCells(answerTypes, subRow, columnNr);
+				
+				// Render the valid options
+				ANSWER answer = header.answer;
+				if (fSurvey!=null) {answer = fSurvey.load(answer);}
+				QUESTION question = answer.getQuestion();
+				if (fSurvey!=null) {question = fSurvey.load(question);}
+				columnNr = buildValidOptionsCells(answerTypes, subsubRow, columnNr, question);
+
+				// Render the Answers
+				columnNr = buildAnswerCells(answerTypes, answerRow, columnNr, answer);
+				
+				// Get to the begin of the next one
+				columnNr.add(header.width);
+			}
+			
+		}
+		
+		// Finally autosize columns
+		if (renderQuestionHeader)
+		{
+			int lastColumn = columnNr.intValue();
+			for (int i=0; i<lastColumn; i++)
+			{
+				row.getSheet().autoSizeColumn(i);
+			}
+		}
+		
+		
+	}
+	
+	private MutableInt buildCells(String[] answerTypes, Row row, MutableInt columnNr)
+	{
+		for (String s : answerTypes)
+		{
+			XlsCellFactory.build(row, columnNr, style, s, 1);
+		}
+		columnNr.subtract(answerTypes.length);
+		return columnNr;
+	}
+	
+	private MutableInt buildValidOptionsCells(String[] answerTypes, Row row, MutableInt columnNr, QUESTION question)
+	{
+		for (String s : answerTypes)
+		{
+			if (s.equals("Yes/No")){						
+				if (question.getShowBoolean()!= null && question.getShowBoolean()) {XlsCellFactory.build(row, columnNr, style, "X", 1);} else {columnNr.add(1);}}
+			if (s.equals("Number"))
+				{if(question.getShowDouble()!= null && question.getShowDouble()) {XlsCellFactory.build(row, columnNr, style, "X", 1);} else {columnNr.add(1);}}
+			if (s.equals("Natural Number")){
+				if (question.getShowInteger()!= null && question.getShowInteger()) {XlsCellFactory.build(row, columnNr, style, "X", 1);} else {columnNr.add(1);}}
+			if (s.equals("Score")){
+				if (question.getShowScore()!= null && question.getShowScore()) {XlsCellFactory.build(row, columnNr, style, "X", 1);} else {columnNr.add(1);}}
+			if (s.equals("Multi Option")){
+				if (question.getShowSelectMulti()!= null && question.getShowSelectMulti()) {XlsCellFactory.build(row, columnNr, style, "X", 1);} else {columnNr.add(1);}}
+			if (s.equals("Option")){
+				if (question.getShowSelectOne()!= null && question.getShowSelectOne()) {XlsCellFactory.build(row, columnNr, style, "X", 1);} else {columnNr.add(1);}}
+			if (s.equals("Text")){
+				if (question.getShowText()!= null && question.getShowText()) {XlsCellFactory.build(row, columnNr, style, "X", 1);} else {columnNr.add(1);}}
+			if (s.equals("Remark")){
+				if (question.getShowRemark()!= null && question.getShowRemark()) {XlsCellFactory.build(row, columnNr, style, "X", 1);} else {columnNr.add(1);}}
+			if (s.equals("Matrix")){
+				if (question.getShowMatrix()!= null && question.getShowMatrix()) {XlsCellFactory.build(row, columnNr, style, "X", 1);} else {columnNr.add(1);}}
+	
+		}
+		columnNr.subtract(answerTypes.length);
+		return columnNr;
+	}
+	
+	private MutableInt buildAnswerCells(String[] answerTypes, Row row, MutableInt columnNr, ANSWER answer)
+	{
+		QUESTION question = answer.getQuestion();
+		for (String s : answerTypes)
+		{
+			if (s.equals("Yes/No")){
+				if (question.getShowBoolean()!= null && question.getShowBoolean() && answer.getValueBoolean()!=null) {XlsCellFactory.build(row, columnNr, style, answer.getValueBoolean(), 1);} else {columnNr.add(1);}}
+			if (s.equals("Number")){
+				if (question.getShowDouble()!= null && question.getShowDouble() && answer.getValueDouble()!=null) {XlsCellFactory.build(row, columnNr, style, answer.getValueDouble(), 1);} else {columnNr.add(1);}}
+			if (s.equals("Natural Number")){
+				if (question.getShowInteger()!= null && question.getShowInteger() && answer.getValueNumber()!=null) {XlsCellFactory.build(row, columnNr, style, answer.getValueNumber(), 1);} else {columnNr.add(1);}}
+			if (s.equals("Score")){
+				if (question.getShowScore()!= null && question.getShowScore() && answer.getScore()!=null) {XlsCellFactory.build(row, columnNr, style, answer.getScore(), 1);} else {columnNr.add(1);}}
+			if (s.equals("Multi Option")){
+				if (question.getShowSelectMulti()!= null && question.getShowSelectMulti() && answer.getOptions()!=null) {XlsCellFactory.build(row, columnNr, style, renderOptionsSingle(answer.getOptions()), 1);} else {columnNr.add(1);}}
+			if (s.equals("Option")){
+				if (question.getShowSelectOne()!= null && question.getShowSelectOne() && answer.getOption()!=null) {XlsCellFactory.build(row, columnNr, style, renderOptionsSingle(answer.getOption()), 1);} else {columnNr.add(1);}}
+			if (s.equals("Text")){
+				if (question.getShowText()!= null && question.getShowText() && answer.getValueText()!=null) {XlsCellFactory.build(row, columnNr, style, answer.getValueText(), 1);} else {columnNr.add(1);}}
+			if (s.equals("Remark")){
+				if (question.getShowRemark()!= null && question.getShowRemark() && answer.getRemark()!=null) {XlsCellFactory.build(row, columnNr, style, answer.getRemark(), 1);} else {columnNr.add(1);}}
+			if (s.equals("Matrix")){
+				if (question.getShowMatrix()!= null && question.getShowMatrix() && answer.getMatrix()!=null) {XlsCellFactory.build(row, columnNr, style, answer.getMatrix(), 1);} else {columnNr.add(1);}}
+		}
+		columnNr.subtract(answerTypes.length);
+		return columnNr;
+	}
+	
+	
+	public int addQuestionToSection(ANSWER answer)
+	{
+		SECTION section   = answer.getQuestion().getSection();
+		Long    sectionId = section.getId();
+		Long   questionId = answer.getQuestion().getId();
+		HeaderData headerInfo;
+		HeaderData headerInfoForQuestion = new HeaderData();
+		headerInfoForQuestion.name = answer.getQuestion().getQuestion();
+		headerInfoForQuestion.answer = answer;
+		int questionLength = answerTypes.length;
+		
+		// See if section is already present in map
+		if (sectionHeaders.containsKey(sectionId))
+		{
+			headerInfo = sectionHeaders.get(sectionId);
+		}
+		else
+		{
+			headerInfo = new HeaderData();
+			headerInfo.name = section.getName();
+		}
+		
+		if (fSurvey!=null) {answer = fSurvey.load(answer);}
+		// See if Matrix options are to be shown and if so, see if it extends standard range of 9 cells
+		if (answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix() && answer.getMatrix()!=null)
+		{
+			if (answer.getMatrix().size() >= answerTypes.length)
+			{
+				logger.info(answer.getQuestion().getQuestion() +answer.getMatrix().size());
+				for (MATRIX m : answer.getMatrix())
+				{
+					logger.info(answer.getQuestion().getQuestion() + " m: " +m.toString());
+				}
+				questionLength = answer.getMatrix().size() + 1;
+			}
+		}
+		headerInfo.width = headerInfo.width + questionLength;
+		headerInfoForQuestion.width = questionLength;
+		sectionHeaders.put(sectionId, headerInfo);
+		questionHeaders.put(questionId, headerInfoForQuestion);
+		return questionLength;
+	}
+	
+	private String renderOptionsSingle(OPTION o)
+	{
+		return o.getName().get("en").getLang();
+	}
+	
+	private String renderOptionsSingle(List<OPTION> list)
+	{
+		StringBuilder sb = new StringBuilder();
+		for (OPTION o : list)
+		{
+			sb.append("- ");
+			sb.append(renderOptionsSingle(o));
+			sb.append("\n");
+		}
+		String formattedList = sb.toString();
+		StringUtils.trim(formattedList);
+		return formattedList;
+	}
+	
+	private class HeaderData {
+		int offset;
+		int width;
+		String name;
+		ANSWER answer;
 	}
 }

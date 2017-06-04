@@ -28,6 +28,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -188,12 +189,28 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 		columnNr.add(1);
 	}
 	
-	public static void build(Row xlsRow, int columnNr, CellStyle style, Object value)
+	public static void build(Row xlsRow, MutableInt columnNr, CellStyle style, Object value, int width)
+	{
+		build(xlsRow,columnNr.intValue(),style,value, width);
+		columnNr.add(width);
+	}
+	
+	public static void build(Row xlsRow, int columnNr, CellStyle style, Object value, int width)
 	{
 		Cell cell = xlsRow.createCell(columnNr);
         cell.setCellStyle(style);
         
-//        logger.info(value.getClass().getSimpleName()+" "+value.toString()+" style:"+style.toString());
+		// Merge cells if necessary
+		if (width>1)
+		{
+			xlsRow.getSheet().addMergedRegion(new CellRangeAddress(
+			xlsRow.getRowNum(), //first row (0-based)
+			xlsRow.getRowNum(), //last row  (0-based)
+			columnNr, //first column (0-based)
+			columnNr+width-1));  //last column  (0-based)
+		}
+		
+	//	logger.info(value.getClass().getSimpleName()+" "+value.toString()+" style:"+style.toString());
         if(value!=null)
         {
 	        if(value instanceof String){cell.setCellValue((String)value);}
@@ -205,5 +222,10 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 	        else if(value instanceof XMLGregorianCalendar){cell.setCellValue(((XMLGregorianCalendar)value).toGregorianCalendar().getTime());}
 	        else {cell.setCellValue((String)value);}
         }
+	}
+	
+	public static void build(Row xlsRow, int columnNr, CellStyle style, Object value)
+	{
+		build(xlsRow, columnNr, style, value, 1);
 	}
 }

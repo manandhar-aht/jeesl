@@ -3,7 +3,8 @@ package net.sf.ahtutils.util.container;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.ahtutils.factory.xml.finance.XmlFiguresFactory;
+import org.jeesl.factory.xml.domain.finance.XmlFiguresFactory;
+
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 import net.sf.ahtutils.xml.text.Remark;

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.finance;
+package org.jeesl.factory.xml.domain.finance;
 
 import java.util.Hashtable;
 import java.util.List;

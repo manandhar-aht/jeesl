@@ -1,5 +1,6 @@
 package org.jeesl.doc.resources;
 
+import org.jeesl.factory.xml.system.io.db.XmlSeedFactory;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportRowType;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportSetting;
@@ -8,7 +9,6 @@ import org.jeesl.interfaces.model.system.symbol.JeeslGraphicType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.dbseed.XmlSeedFactory;
 import net.sf.ahtutils.xml.dbseed.Db;
 
 public class JeeslDbSeeds

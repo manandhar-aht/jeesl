@@ -3,10 +3,10 @@ package org.jeesl.controller.processor.finance;
 import java.util.List;
 
 import org.apache.commons.jxpath.JXPathContext;
+import org.jeesl.factory.xml.domain.finance.XmlFinanceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.finance.XmlFinanceFactory;
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 

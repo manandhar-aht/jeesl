@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.finance;
+package org.jeesl.factory.xml.domain.finance;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,5 +1,6 @@
 package net.sf.ahtutils.util.query.xpath.dbseed;
 
+import org.jeesl.factory.xml.system.io.db.XmlSeedFactory;
 import org.jeesl.model.xml.system.io.db.TestDb;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,7 +8,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.dbseed.XmlSeedFactory;
 import net.sf.ahtutils.xml.dbseed.Db;
 import net.sf.ahtutils.xml.dbseed.Seed;
 import net.sf.ahtutils.xml.xpath.DbseedXpath;

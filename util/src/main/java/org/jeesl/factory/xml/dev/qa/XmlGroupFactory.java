@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.qa;
+package org.jeesl.factory.xml.dev.qa;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +25,9 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
-import net.sf.ahtutils.xml.qa.Qa;
+import net.sf.ahtutils.xml.qa.Group;
 
-public class XmlQaFactory<L extends UtilsLang,
+public class XmlGroupFactory<L extends UtilsLang,
 D extends UtilsDescription,
 C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
@@ -53,20 +53,30 @@ QATS extends UtilsStatus<QATS,L,D>,
 QARS extends UtilsStatus<QARS,L,D>,
 QAUS extends UtilsStatus<QAUS,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlQaFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlGroupFactory.class);
 		
-	@SuppressWarnings("unused")
-	private Qa q;
+	private Group q;
 	
-	public XmlQaFactory(Qa q)
+	public XmlGroupFactory(Group q)
 	{
 		this.q=q;
 	}
 	
-	public static Qa build()
+	public Group build(GROUP group)
 	{
-		Qa xml = new Qa();
-
+		Group xml = new Group();
+		if(q.isSetId()){xml.setId(group.getId());}
+		
+		if(q.isSetName()){xml.setName(group.getName());}
+		if(q.isSetDescription()){xml.setDescription(net.sf.ahtutils.factory.xml.status.XmlDescriptionFactory.build(group.getDescription()));}
+		
+		return xml;
+	}
+	
+	public static Group build(String name)
+	{
+		Group xml = new Group();
+		xml.setName(name);
 		return xml;
 	}
 }

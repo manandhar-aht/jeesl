@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.qa;
+package org.jeesl.factory.xml.dev.qa;
 
 import net.sf.ahtutils.xml.qa.Steps;
 

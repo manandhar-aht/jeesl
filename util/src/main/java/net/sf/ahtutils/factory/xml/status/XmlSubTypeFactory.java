@@ -11,7 +11,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.status.SubType;
-import net.sf.ahtutils.xml.status.Type;
 
 public class XmlSubTypeFactory
 {

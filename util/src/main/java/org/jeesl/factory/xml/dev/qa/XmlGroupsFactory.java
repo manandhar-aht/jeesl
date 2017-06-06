@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.qa;
+package org.jeesl.factory.xml.dev.qa;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

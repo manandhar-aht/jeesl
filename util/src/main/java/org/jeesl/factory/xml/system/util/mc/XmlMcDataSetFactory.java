@@ -26,7 +26,6 @@ public class XmlMcDataSetFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlMcDataSetFactory.class);
 
-	
 	public static DataSet build(TimeSeries timeSeries)
 	{
 		DataSet ds = new DataSet();

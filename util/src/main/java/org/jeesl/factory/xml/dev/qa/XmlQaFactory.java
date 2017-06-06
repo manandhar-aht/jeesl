@@ -1,6 +1,5 @@
-package net.sf.ahtutils.factory.xml.qa;
+package org.jeesl.factory.xml.dev.qa;
 
-import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +25,9 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
-import net.sf.ahtutils.xml.qa.Comment;
-import net.sf.ahtutils.xml.qa.Info;
+import net.sf.ahtutils.xml.qa.Qa;
 
-public class XmlInfoFactory<L extends UtilsLang,
+public class XmlQaFactory<L extends UtilsLang,
 D extends UtilsDescription,
 C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
@@ -55,32 +53,20 @@ QATS extends UtilsStatus<QATS,L,D>,
 QARS extends UtilsStatus<QARS,L,D>,
 QAUS extends UtilsStatus<QAUS,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XmlInfoFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XmlQaFactory.class);
 		
-	private Info q;
+	@SuppressWarnings("unused")
+	private Qa q;
 	
-	public XmlInfoFactory(Info q)
+	public XmlQaFactory(Qa q)
 	{
 		this.q=q;
 	}
 	
-	public Info build(QATI info)
+	public static Qa build()
 	{
-		Info xml = new Info();
-	
-		if(q.isSetStatus())
-		{
-			XmlStatusFactory f = new XmlStatusFactory(null,q.getStatus());
-			xml.setStatus(f.build(info.getCondition()));
-		}
-		
-		if(q.isSetComment())
-		{
-			xml.setComment(new Comment());
-			xml.getComment().setValue(info.getDescription());
-			if(xml.getComment().getValue()==null){xml.getComment().setValue("");}
-		}
-		
+		Qa xml = new Qa();
+
 		return xml;
 	}
 }

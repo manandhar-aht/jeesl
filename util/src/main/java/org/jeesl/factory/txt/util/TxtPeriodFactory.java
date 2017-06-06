@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.txt;
+package org.jeesl.factory.txt.util;
 
 import org.joda.time.DurationFieldType;
 import org.joda.time.Period;

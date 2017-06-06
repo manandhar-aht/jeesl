@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
 import org.jeesl.doc.ofx.OfxMultiLangFactory;
+import org.jeesl.factory.txt.util.TxtPeriodFactory;
 import org.openfuxml.content.ofx.Comment;
 import org.openfuxml.content.table.Body;
 import org.openfuxml.content.table.Columns;
@@ -26,7 +27,6 @@ import net.sf.ahtutils.doc.DocumentationCommentBuilder;
 import net.sf.ahtutils.doc.UtilsDocumentation;
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.factory.txt.TxtPeriodFactory;
 import net.sf.ahtutils.xml.qa.Category;
 import net.sf.ahtutils.xml.qa.Test;
 import net.sf.ahtutils.xml.status.Translations;

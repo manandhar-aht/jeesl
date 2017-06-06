@@ -231,7 +231,7 @@ a:hover { color: #333; text-decoration: none; }
 .ui-panel-title{top: -5px;position: relative;}
 
 /* PF selectonemenu */ 
-.ui-selectonemenu{width:100% !important;}
+.ui-selectonemenu{width:92% !important;}
 
 /* PF: DONT SET THIS SINCE IT RUINS THE LAYOUT!
 .ui-selectonemenu-label {width:100% !important;}

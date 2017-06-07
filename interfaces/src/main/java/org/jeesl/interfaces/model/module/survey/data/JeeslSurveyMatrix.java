@@ -1,11 +1,13 @@
 package org.jeesl.interfaces.model.module.survey.data;
 
-import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -13,8 +15,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslSurveyMatrix<L extends UtilsLang,
-							D extends UtilsDescription,
+public interface JeeslSurveyMatrix<L extends UtilsLang, D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							SS extends UtilsStatus<SS,L,D>,
 							SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -41,6 +42,9 @@ public interface JeeslSurveyMatrix<L extends UtilsLang,
 	
 	OPTION getColumn();
 	void setColumn(OPTION column);
+	
+	OPTION getOption();
+	void setOption(OPTION column);
 	
 	Boolean getValueBoolean();
 	void setValueBoolean(Boolean valueBoolean);

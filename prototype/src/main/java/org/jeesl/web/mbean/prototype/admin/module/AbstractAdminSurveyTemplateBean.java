@@ -2,30 +2,32 @@ package org.jeesl.web.mbean.prototype.admin.module;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.handler.ui.helper.UiHelperSurvey;
-import org.jeesl.factory.ejb.survey.EjbSurveyOptionFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveySchemeFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyScoreFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveySchemeFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyScoreFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
-import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +40,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
+import net.sf.ahtutils.util.comparator.ejb.PositionComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
-										D extends UtilsDescription,
+public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -70,10 +72,12 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	private Class<TEMPLATE> cTemplate;
 	private Class<VERSION> cVersion;
 	private Class<TS> cTs;
+	private final Class<TC> cTc;
 	private Class<SECTION> cSection;
-	protected Class<QUESTION> cQuestion;
+	private Class<QUESTION> cQuestion;
 	private Class<SCORE> cScore;
 	protected Class<UNIT> cUnit;
+	private final Class<MATRIX> cMatrix;
 	private Class<OPTION> cOption;
 
 	protected SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey;
@@ -86,6 +90,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 
 	protected List<TC> categories; public List<TC> getCategories(){return categories;}
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
+	protected List<VERSION> nestedVersions; public List<VERSION> getNestedVersions(){return nestedVersions;}
 	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
@@ -94,6 +99,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	
 	protected TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
+	protected VERSION nestedVersion; public VERSION getNestedVersion() {return nestedVersion;} public void setNestedVersion(VERSION nestedVersion) {this.nestedVersion = nestedVersion;}
 	protected TEMPLATE template; public TEMPLATE getTemplate(){return template;} public void setTemplate(TEMPLATE template){this.template = template;}
 	protected SECTION section; public SECTION getSection(){return section;} public void setSection(SECTION section){this.section = section;}
 	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
@@ -102,14 +108,20 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	private SCORE score; public SCORE getScore() {return score;} public void setScore(SCORE score) {this.score = score;}
 	
 	private UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> uiHelper; public UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getUiHelper() {return uiHelper;}
-
-	public AbstractAdminSurveyTemplateBean(final Class<L> cL, final Class<D> cD)
+	private Comparator<OPTION> cmpOption;
+	
+	public AbstractAdminSurveyTemplateBean(final Class<L> cL, final Class<D> cD, final Class<TC> cTc, final Class<MATRIX> cMatrix)
 	{
 		super(cL,cD);
+		this.cTc = cTc;
+		this.cMatrix = cMatrix;
+		
+		cmpOption = new PositionComparator<OPTION>();
+		
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
 	}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fSurvey = fSurvey;
@@ -124,7 +136,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		this.cUnit = cUnit;
 		this.cOption = cOption;
 		
-		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cData,cOption);
+		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
 		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();
@@ -134,6 +146,14 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		
 		categories = new ArrayList<TC>();
 		versions = new ArrayList<VERSION>();
+	}
+	
+	protected void selectSbStatus(TC item) throws UtilsNotFoundException
+	{
+		clearSelection();
+		category = fSurvey.find(cTc,item);
+		initTemplate();
+		reloadVersions();
 	}
 	
 	public void cancelScheme(){clear(false,false,false,false,false,true,false);}
@@ -182,7 +202,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 			try
 			{
 				TS status = fSurvey.fByCode(cTs,statusCode);
-				template = fSurvey.fcSurveyTemplate(category,version,status);
+				template = fSurvey.fcSurveyTemplate(category,version,status,nestedVersion);
 				logger.info("Resolved "+cTemplate.getSimpleName()+": "+template.toString());
 				version = template.getVersion();
 				reloadTemplate();
@@ -203,6 +223,16 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	protected void reloadVersions()
 	{
 		versions = fSurvey.fVersions(category);
+		
+		nestedVersions = new ArrayList<VERSION>();
+		
+		for(TC c : categories)
+		{
+			if(!c.equals(category))
+			{
+				nestedVersions.addAll(fSurvey.fVersions(c));
+			}
+		}
 	}
 	
 	protected void selectVersion() throws UtilsNotFoundException
@@ -211,14 +241,21 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.selectEntity(version));
 		version = fSurvey.find(cVersion, version);
 		initTemplate();
+		if(version.getTemplate()!=null && version.getTemplate().getNested()!=null){nestedVersion = version.getTemplate().getNested().getVersion();}
 		uiHelper.check(version,sections);
 	}
 	
 	protected void saveVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(version));
+		if(nestedVersion!=null)
+		{
+			nestedVersion = fSurvey.find(cVersion,nestedVersion);
+		}
+		
 		if(EjbIdFactory.isSaved(version))
 		{
+			if(nestedVersion!=null){version.getTemplate().setNested(nestedVersion.getTemplate());}
 			version = fSurvey.save(version);
 		}
 		initTemplate();
@@ -293,6 +330,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang,
 	{
 		question = fSurvey.find(cQuestion,question);
 		options = question.getOptions();
+		Collections.sort(options,cmpOption);
 	}
 	
 	public void saveQuestion() throws UtilsConstraintViolationException, UtilsLockingException

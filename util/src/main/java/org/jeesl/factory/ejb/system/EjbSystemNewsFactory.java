@@ -1,12 +1,12 @@
 package org.jeesl.factory.ejb.system;
 
+import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
+import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
-import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -30,8 +30,8 @@ public class EjbSystemNewsFactory<L extends UtilsLang,D extends UtilsDescription
 	{  
 		this.localeCodes=localeCodes;
         this.cNews = cNews;
-		efLang = EjbLangFactory.createFactory(cL);
-		efDescription = EjbDescriptionFactory.createFactory(cD);
+		efLang = EjbLangFactory.factory(cL);
+		efDescription = EjbDescriptionFactory.factory(cD);
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,

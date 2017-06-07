@@ -8,14 +8,13 @@
 		container="true" classifier="osx">	
 
 	<ofx:section container="true" >
-		<ofx:title>OSX Yosemite</ofx:title>
+		<ofx:title>MacOS Sierra</ofx:title>
 		<ofx:listing>
 			<ofx:raw>brew install mysql</ofx:raw>
 		</ofx:listing>
 			
 		<ofx:listing>
-			<ofx:raw>ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist</ofx:raw>
+			<ofx:raw>brew services start mysql</ofx:raw>
 		</ofx:listing>
 			
 	</ofx:section>

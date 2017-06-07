@@ -19,6 +19,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,12 +75,15 @@ public class UtilsFacadeBean implements UtilsFacade
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override public <L extends UtilsLang,D extends UtilsDescription, S extends EjbWithId, G extends JeeslGraphic<L,D,G,GT,GS>, GT extends UtilsStatus<GT,L,D>, GS extends UtilsStatus<GS,L,D>> S load(Class<S> cS, S status)
+	@Override public <L extends UtilsLang, D extends UtilsDescription,
+						S extends EjbWithId,
+						G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+						F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>> S load(Class<S> cS, S status)
 	{
 		status = em.find(cS, status.getId());
 		if(EjbWithGraphic.class.isAssignableFrom(cS))
 		{
-			if(((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic()!=null){((EjbWithGraphic<L,D,G,GT,GS>)status).getGraphic().getId();}
+			if(((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic()!=null){((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getId();}
 		}
 		
 		return status;

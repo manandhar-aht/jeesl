@@ -3,7 +3,6 @@ package org.jeesl.web.rest.system;
 import org.jeesl.api.facade.io.JeeslIoTemplateFacade;
 import org.jeesl.api.rest.system.io.template.JeeslIoTemplateRestExport;
 import org.jeesl.api.rest.system.io.template.JeeslIoTemplateRestImport;
-import org.jeesl.factory.xml.system.io.template.XmlTemplateFactory;
 import org.jeesl.factory.xml.system.io.template.XmlTemplatesFactory;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
@@ -35,12 +34,12 @@ public class IoTemplateRestService <L extends UtilsLang,D extends UtilsDescripti
 	
 	private final Class<CATEGORY> cCategory;
 	private final Class<TYPE> cType;
-	private final Class<TEMPLATE> cTemplate;
+	@SuppressWarnings("unused") private final Class<TEMPLATE> cTemplate;
 	private final Class<SCOPE> cScope;
-	private final Class<DEFINITION> cDefinition;
-	private final Class<TOKEN> cToken;
+	@SuppressWarnings("unused") private final Class<DEFINITION> cDefinition;
+	@SuppressWarnings("unused") private final Class<TOKEN> cToken;
 
-	private XmlTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> xfTemplate;
+//	private XmlTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> xfTemplate;
 	
 	private IoTemplateRestService(JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<TEMPLATE> cTemplate, final Class<SCOPE> cScope, final Class<DEFINITION> cDefinition, final Class<TOKEN> cToken)
 	{

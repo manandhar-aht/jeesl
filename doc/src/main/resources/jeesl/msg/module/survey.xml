@@ -255,9 +255,23 @@
     </s:translation>
 	<s:translation key="jeeslSurveyOptionRow">
     	<s:langs>
-    		<s:lang key="de" translation="In Spalte"/>
+    		<s:lang key="de" translation="In Zeile"/>
     		<s:lang key="en" translation="As Row"/>
     		<s:lang key="fr" translation="As Row"/>
+    	</s:langs>
+    </s:translation>
+    	<s:translation key="jeeslSurveyOptionCol">
+    	<s:langs>
+    		<s:lang key="de" translation="In Spalte"/>
+    		<s:lang key="en" translation="As Column"/>
+    		<s:lang key="fr" translation="As Column"/>
+    	</s:langs>
+    </s:translation>
+    	<s:translation key="jeeslSurveyOptionCell">
+    	<s:langs>
+    		<s:lang key="de" translation="In Zelle"/>
+    		<s:lang key="en" translation="As Cell"/>
+    		<s:lang key="fr" translation="As Cell"/>
     	</s:langs>
     </s:translation>
     <s:translation key="jeeslSurveyDateFrom">
@@ -309,13 +323,18 @@
     		<s:lang key="fr" translation="Name"/>
     	</s:langs>
     </s:translation>
-        <s:translation key="jeeslSurveyScores">
+	<s:translation key="jeeslSurveyScores">
     	<s:langs>
     		<s:lang key="de" translation="Punkte"/>
     		<s:lang key="en" translation="Scores"/>
     		<s:lang key="fr" translation="Scores"/>
     	</s:langs>
     </s:translation>
-    
-    
+	<s:translation key="jeeslSurveyNested">
+    	<s:langs>
+    		<s:lang key="de" translation="Verknüpft"/>
+    		<s:lang key="en" translation="Nested"/>
+    		<s:lang key="fr" translation="Nested"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

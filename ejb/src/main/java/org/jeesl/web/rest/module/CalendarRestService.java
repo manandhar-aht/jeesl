@@ -59,5 +59,5 @@ public class CalendarRestService <L extends UtilsLang,
 	@Override public Container exportCalendarItemType() {return xfContainer.build(fCalendar.allOrderedPosition(cItemType));}
 
 	@Override public DataUpdate importCalendarType(Container container){return importStatus(cType,container,null);}
-	@Override public DataUpdate importCalendarItemType(Container container){return importStatus(cType,container,null);}
+	@Override public DataUpdate importCalendarItemType(Container container){return importStatus(cItemType,container,null);}
 }

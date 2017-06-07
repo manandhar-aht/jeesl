@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<i:updates xmlns:i="http://www.jeesl.org/inventory/pc">
+    <i:update id="123" code="KB3365213" record="2011-11-11" description="myDescription"/>
+    <i:update id="123" code="KB3365213" record="2011-11-11" description="myDescription"/>
+</i:updates>

@@ -1,6 +1,9 @@
 package org.jeesl.web.rest.dev;
 
 import org.jeesl.api.facade.module.JeeslQaFacade;
+import org.jeesl.factory.xml.dev.qa.XmlCategoryFactory;
+import org.jeesl.factory.xml.dev.qa.XmlGroupFactory;
+import org.jeesl.factory.xml.dev.qa.XmlGroupsFactory;
 import org.jeesl.factory.xml.system.security.XmlStaffFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
@@ -9,9 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.xml.qa.XmlCategoryFactory;
-import net.sf.ahtutils.factory.xml.qa.XmlGroupFactory;
-import net.sf.ahtutils.factory.xml.qa.XmlGroupsFactory;
 import net.sf.ahtutils.factory.xml.status.XmlResponsibleFactory;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaCategory;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaGroup;

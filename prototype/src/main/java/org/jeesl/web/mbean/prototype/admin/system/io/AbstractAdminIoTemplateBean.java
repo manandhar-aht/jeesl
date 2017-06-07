@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.facade.io.JeeslIoTemplateFacade;
+import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateDefinitionFactory;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateFactory;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateFactoryFactory;
@@ -38,7 +39,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
-import net.sf.ahtutils.prototype.controller.handler.ui.SbMultiStatusHandler;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDescription,
@@ -78,7 +78,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	private EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> efDefinition;
 	private EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> efToken;
 	
-	private SbMultiStatusHandler<L,D,CATEGORY> sbhCategory; public SbMultiStatusHandler<L,D,CATEGORY> getSbhCategory() {return sbhCategory;}
+	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	private FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fmEngine;
 	
 	private Comparator<TEMPLATE> comparatorTemplate;
@@ -118,22 +118,16 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 		types = fTemplate.allOrderedPositionVisible(cType);
 		categories = fTemplate.allOrderedPositionVisible(cCategory);
 		
-		sbhCategory = new SbMultiStatusHandler<L,D,CATEGORY>(cCategory,categories,this);
+		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,categories,this);
 		reloadTemplates();
 	}
 	
-	public void multiToggle(UtilsStatus<?,L,D> o)
-	{
-		logger.info(AbstractLogMessage.toggle(o)+" Class: "+o.getClass().getSimpleName());
-		sbhCategory.multiToggle(o);
-		reloadTemplates();
-		cancelTemplate();
-	}
-	
-	public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
+	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.toggled(c));
 		scopes = fTemplate.all(cScope);
+		reloadTemplates();
+		cancelTemplate();
 	}
 	
 	//*************************************************************************************

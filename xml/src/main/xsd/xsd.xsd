@@ -18,6 +18,7 @@
 	
 	xmlns:ts  ="http://ahtutils.aht-group.com/timeseries"
 	xmlns:cal ="http://www.jeesl.org/calendar"
+	xmlns:inv ="http://www.jeesl.org/inventory"
 	
 	xmlns:rev		="http://www.jeesl.org/revision"
 	xmlns:template	="http://www.jeesl.org/io/template"
@@ -65,6 +66,7 @@
 	<xsd:import namespace="http://www.jeesl.org/io/mail" schemaLocation="jeesl/io/mail.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/job" schemaLocation="jeesl/module/job.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/calendar" schemaLocation="jeesl/module/calendar.xsd"/>
+	<xsd:import namespace="http://www.jeesl.org/inventory" schemaLocation="jeesl/module/inventory/inventory.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/dev/srs" schemaLocation="jeesl/dev/srs.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/timeseries" schemaLocation="jeesl/timeseries.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/revision" schemaLocation="jeesl/revision.xsd"/>

@@ -69,7 +69,7 @@ public class PrototypeXmlMenuBean extends AbstractMenuXmlBean implements Seriali
 	
 	@Override protected void buildViewAllowedMap() {}
 	
-	public void userLoggedIn(Map<String, Boolean> allowedViews)
+	public void userLoggedIn(Map<String,Boolean> allowedViews)
 	{
 		this.clear(true);
 		mapViewAllowed = allowedViews;

@@ -73,7 +73,7 @@ public class JeeslLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 		addConfig(InstallationCode.instJboss.toString(),"jeesl/ofx/installation/jboss/jboss.xml","admin/installation/jboss");
 		addConfig(InstallationCode.instPostGis.toString(),"jeesl/ofx/installation/db/postgres/postgres.xml","admin/installation/postgres");
 		addConfig(InstallationCode.instMySql.toString(),"jeesl/ofx/installation/db/mysql/mysql.xml","admin/installation/mysql");
-		addConfig(InstallationCode.instMaven.toString(),"ofx.aht-utils/installation/maven.xml","admin/installation/maven");
+		addConfig(InstallationCode.instMaven.toString(),"jeesl/ofx/installation/tools/maven.xml","admin/installation/maven");
 //		addConfig(InstallationCode.instGeoserver.toString(),"ofx.aht-utils/installation/geoserver.xml","admin/installation/geoserver");
 		
 		//Requirements

@@ -6,12 +6,12 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.api.facade.module.JeeslSecurityFacade;
+import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.txt.system.security.TxtSecurityActionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.txt.security.TxtSecurityActionFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsIdentity;

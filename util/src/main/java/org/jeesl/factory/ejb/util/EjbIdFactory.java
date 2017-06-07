@@ -62,6 +62,25 @@ public class EjbIdFactory
 		return results;
 	}
 	
+	public static List<Long> toLong(String[] list)
+	{
+		List<Long> results = new ArrayList<Long>();
+		for(String s : list)
+		{
+			results.add(Long.valueOf(s));
+		}
+		return results;
+	}
+	public static List<Long> toLong(List<String> list)
+	{
+		List<Long> results = new ArrayList<Long>();
+		for(String s : list)
+		{
+			results.add(Long.valueOf(s));
+		}
+		return results;
+	}
+	
 	public static <T extends EjbWithId> Map<Long,T> toIdMap(List<T> list)
 	{
 		Map<Long,T> map = new HashMap<Long,T>();
@@ -96,7 +115,6 @@ public class EjbIdFactory
 		}
 		ejb.setId(next);
 	}
-	
 	
 	public static <T extends EjbWithId> void negativeToZero(List<T> list)
 	{

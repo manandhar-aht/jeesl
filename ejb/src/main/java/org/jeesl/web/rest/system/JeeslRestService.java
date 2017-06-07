@@ -4,6 +4,7 @@ import org.jeesl.api.facade.util.JeeslGraphicFacade;
 import org.jeesl.api.rest.JeeslExportRest;
 import org.jeesl.factory.xml.system.symbol.XmlGraphicFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.util.query.xml.SymbolQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
@@ -20,33 +21,31 @@ import net.sf.ahtutils.xml.status.Status;
 
 public class JeeslRestService <L extends UtilsLang,D extends UtilsDescription,
 								S extends EjbWithId,
-								G extends JeeslGraphic<L,D,G,GT,GS>,
-								GT extends UtilsStatus<GT,L,D>,
-								GS extends UtilsStatus<GS,L,D>>
+								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
 					extends AbstractJeeslRestService<L,D>
 					implements JeeslExportRest<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslRestService.class);
 		
-	private final JeeslGraphicFacade<L,D,S,G,GT,GS> fGraphic;
-	private final XmlGraphicFactory<L,D,G,GT,GS> xfGraphic;
+	private final JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic;
+	private final XmlGraphicFactory<L,D,G,GT,F,FS> xfGraphic;
 	
-	private JeeslRestService(JeeslGraphicFacade<L,D,S,G,GT,GS> fGraphic,final Class<L> cL, final Class<D> cD)
+	private JeeslRestService(JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic,final Class<L> cL, final Class<D> cD)
 	{
 		super(fGraphic,cL,cD);
 		this.fGraphic=fGraphic;
-		xfGraphic = new XmlGraphicFactory<L,D,G,GT,GS>(SymbolQuery.get(SymbolQuery.Key.GraphicExport));
+		xfGraphic = new XmlGraphicFactory<L,D,G,GT,F,FS>(SymbolQuery.get(SymbolQuery.Key.GraphicExport));
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 						S extends EjbWithId,
-						G extends JeeslGraphic<L,D,G,GT,GS>,
-						GT extends UtilsStatus<GT,L,D>,
-						GS extends UtilsStatus<GS,L,D>>
-	JeeslRestService<L,D,S,G,GT,GS>
-		factory(JeeslGraphicFacade<L,D,S,G,GT,GS> fGraphic ,final Class<L> cL, final Class<D> cD)
+						G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+						F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
+	JeeslRestService<L,D,S,G,GT,F,FS>
+		factory(JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic ,final Class<L> cL, final Class<D> cD)
 	{
-		return new JeeslRestService<L,D,S,G,GT,GS>(fGraphic,cL,cD);
+		return new JeeslRestService<L,D,S,G,GT,F,FS>(fGraphic,cL,cD);
 	}
 	
 

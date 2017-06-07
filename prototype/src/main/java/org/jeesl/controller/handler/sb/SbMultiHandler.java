@@ -24,7 +24,7 @@ public class SbMultiHandler <T extends EjbWithId>
 	private final Class<T> cT;
 	private final SbToggleBean bean; 
 	
-	private List<T> list;public List<T> getList() {return list;} public void setList(List<T> list) {this.list = list;}
+	private List<T> list; public List<T> getList() {return list;} public void setList(List<T> list) {this.list = list;}
 	private final List<T> selected;public List<T> getSelected() {return selected;}
 	private Map<T,Boolean> map;public Map<T,Boolean> getMap() {return map;}
 	
@@ -47,21 +47,27 @@ public class SbMultiHandler <T extends EjbWithId>
 		map.clear();
 	}
 	
+	public void toggleNone(){selectNone();callbackToggledToBean();}
 	public void selectNone()
 	{
 		for(T t : list){map.put(t,false);}
 		refresh();
 	}
 	
+	public void toggleAll(){selectAll();callbackToggledToBean();}
 	public void selectAll()
 	{
 		for(T t : list){map.put(t,true);}
 		refresh();
 	}
 	
+	public void preSelect(T t)
+	{
+		map.put(t,true);
+	}
 	public void select(T t)
 	{
-		map.put(t, true);
+		map.put(t,true);
 		refresh();
 	}
 
@@ -70,7 +76,12 @@ public class SbMultiHandler <T extends EjbWithId>
 		if(!map.containsKey(type)){map.put(type,true);}
 		else{map.put(type,!map.get(type));}
 		refresh();
-		
+		callbackToggledToBean();
+
+	}
+	
+	private void callbackToggledToBean()
+	{
 		try {if(bean!=null){bean.toggled(cT);}}
 		catch (UtilsLockingException e) {e.printStackTrace();}
 		catch (UtilsConstraintViolationException e) {e.printStackTrace();}

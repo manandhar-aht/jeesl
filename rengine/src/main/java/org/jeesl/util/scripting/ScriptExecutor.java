@@ -107,6 +107,7 @@ public class ScriptExecutor
  //       tempFile.deleteOnExit();
         FileOutputStream out = new FileOutputStream(tempFile);
         IOUtils.copy(in, out);
+        out.close();
         return tempFile;
     }
 

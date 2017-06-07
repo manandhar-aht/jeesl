@@ -3,33 +3,37 @@ package org.jeesl.factory.factory;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.handler.SurveyHandler;
 import org.jeesl.controller.processor.survey.SurveyScoreProcessor;
-import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyDataFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyOptionFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveySchemeFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyScoreFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyTemplateVersionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveySchemeFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyScoreFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
-import org.jeesl.factory.txt.survey.TxtSurveyQuestionFactory;
-import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.factory.txt.module.survey.TxtOptionFactory;
+import org.jeesl.factory.txt.module.survey.TxtSurveyQuestionFactory;
+import org.jeesl.factory.xls.system.module.XlsSurveyDataFactory;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -63,10 +67,11 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 	final Class<QUESTION> cQuestion;
 	final Class<SCORE> cScore;
 	final Class<ANSWER> cAnswer;
+	final Class<MATRIX> cMatrix;
 	final Class<DATA> cData;
-	final Class<OPTION> cOption;
-    
-	public SurveyFactoryFactory(final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
+	final Class<OPTION> cOption; public Class<OPTION> getOptionClass() {return cOption;}
+
+	public SurveyFactoryFactory(final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		this.cSurvey = cSurvey;
 		this.cScheme = cScheme;
@@ -76,12 +81,12 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 		this.cQuestion = cQuestion;
 		this.cScore = cScore;
         this.cAnswer = cAnswer;
+        this.cMatrix = cMatrix;
         this.cData = cData;
         this.cOption = cOption;
 	}
 	
-	public static <L extends UtilsLang,
-					D extends UtilsDescription,
+	public static <L extends UtilsLang, D extends UtilsDescription,
 					SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 					SS extends UtilsStatus<SS,L,D>,
 					SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>, 
@@ -97,9 +102,9 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 					OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 					CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 		SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>
-		factory(final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
+		factory(final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
-		return new SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cData,cOption);
+		return new SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
 	}
 	
 	public EjbSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> survey()
@@ -142,6 +147,11 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 		return new EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(cAnswer);
 	}
 	
+	public EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ejbMatrix()
+	{
+		return new EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(cMatrix);
+	}
+	
 	public EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> option()
 	{
 		return new EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(cOption);
@@ -157,18 +167,28 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 		return new TxtSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
 	}
 	
+	public TxtOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> txtOption(String localeCode)
+	{
+		return new TxtOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode);
+	}
+	
 	public SurveyScoreProcessor<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> scoreProcessor()
 	{
 		return new SurveyScoreProcessor<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
 	}
 	
-	public SurveyHandler<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> handler(final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)
+	public SurveyHandler<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> handler(FacesMessageBean bMessage, final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)
 	{
-		return new SurveyHandler<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(fSurvey,this);
+		return new SurveyHandler<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(bMessage,fSurvey,this);
 	}
 	
 	public JsonSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> surveyJson(String localeCode, org.jeesl.model.json.survey.Survey q)
 	{
 		return new JsonSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,q);
+	}
+	
+	public XlsSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xlsData(String localeCode)
+	{
+		return new XlsSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode);
 	}
 }

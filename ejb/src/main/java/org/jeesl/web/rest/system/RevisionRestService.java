@@ -10,9 +10,11 @@ import org.jeesl.api.rest.system.io.revision.JeeslRevisionRestExport;
 import org.jeesl.api.rest.system.io.revision.JeeslRevisionRestImport;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionEntityFactory;
+import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
+import org.jeesl.factory.ejb.system.status.EjbLangFactory;
+import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.system.revision.XmlEntityFactory;
-import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
@@ -33,9 +35,6 @@ import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
-import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
-import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -63,17 +62,17 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<L> cL;
 	private final Class<D> cD;
 	private final Class<RC> cRC;
-	private final Class<RV> cRV;
-	private final Class<RVM> cRVM;
-	private final Class<RS> cRS;
+	
+	@SuppressWarnings("unused") private final Class<RV> cRV;
+	@SuppressWarnings("unused") private final Class<RVM> cRVM;
+	@SuppressWarnings("unused") private final Class<RS> cRS;
 	private final Class<RST> cRST;
 	private final Class<RE> cRE;
-	private final Class<REM> cREM;
+	@SuppressWarnings("unused") private final Class<REM> cREM;
 	private final Class<RA> cRA;
 	private final Class<RAT> cRAT;
 
 	private XmlContainerFactory xfContainer;
-	private XmlStatusFactory xfStatus;
 	private XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> xfEntity;
 
 	private EjbLangFactory<L> efLang;
@@ -98,11 +97,10 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cRAT=cRAT;
 	
 		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
-		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
 		xfEntity = new XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntity));
 			
-		efLang = EjbLangFactory.createFactory(cL);
-		efDescription = EjbDescriptionFactory.createFactory(cD);
+		efLang = EjbLangFactory.factory(cL);
+		efDescription = EjbDescriptionFactory.factory(cD);
 		efEntity = EjbRevisionEntityFactory.factory(cL,cD,cRE);
 		efAttribute = EjbRevisionAttributeFactory.factory(cRA);
 	}

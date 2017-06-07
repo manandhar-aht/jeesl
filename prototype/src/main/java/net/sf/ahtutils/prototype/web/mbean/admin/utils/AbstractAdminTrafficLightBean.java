@@ -4,13 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.util.JeeslTrafficLightFacade;
+import org.jeesl.factory.ejb.system.util.EjbTrafficLightFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.factory.ejb.util.EjbTrafficLightFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;

@@ -5,12 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
@@ -31,7 +31,7 @@ public class JeeslDbLangUpdater<C extends EjbWithLang<L>, L extends UtilsLang>
         this.cEjb = cEjb;
         this.cL = cL;
         
-        efLang = EjbLangFactory.createFactory(cL);
+        efLang = EjbLangFactory.factory(cL);
     } 
 	
 	public static <C extends EjbWithLang<L>, L extends UtilsLang> JeeslDbLangUpdater<C,L> factory(final Class<C> cEjb, final Class<L> cL)

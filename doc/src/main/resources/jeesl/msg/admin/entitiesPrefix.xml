@@ -99,11 +99,42 @@
 			<s:lang key="fr" translation="Icon"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="IndicatorType">
+		<s:translation key="IndicatorType">
 		<s:langs>
 			<s:lang key="de" translation="Indicator Typ"/>
 			<s:lang key="en" translation="Indicator Type"/>
 			<s:lang key="fr" translation="Indicator Type"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="FeedbackStyle">
+		<s:langs>
+			<s:lang key="de" translation="Feedback Stil"/>
+			<s:lang key="en" translation="Feedback Style"/>
+			<s:lang key="fr" translation="Feedback Style"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="FeedbackType">
+		<s:langs>
+			<s:lang key="de" translation="Feedback Typ"/>
+			<s:lang key="en" translation="Feedback Type"/>
+			<s:lang key="fr" translation="Feedback Type"/>
+		</s:langs>
+	</s:translation>
+	
+	<s:translation key="AttributeCategory">
+		<s:langs>
+			<s:lang key="de" translation="Attribut Kategorie"/>
+			<s:lang key="en" translation="Attribute Category"/>
+			<s:lang key="fr" translation="Attribute Category"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="AttributeType">
+		<s:langs>
+			<s:lang key="de" translation="Attribut Typ"/>
+			<s:lang key="en" translation="Attribute Type"/>
+			<s:lang key="fr" translation="Attribute Type"/>
+		</s:langs>
+	</s:translation>
+	
+	
 </s:translations>

@@ -1,5 +1,6 @@
 package  net.sf.ahtutils.factory.ejb.security;
 
+import org.jeesl.factory.ejb.system.security.AbstractEjbSecurityFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

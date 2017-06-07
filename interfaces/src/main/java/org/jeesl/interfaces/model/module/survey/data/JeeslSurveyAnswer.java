@@ -2,12 +2,14 @@ package org.jeesl.interfaces.model.module.survey.data;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -25,9 +27,11 @@ public interface JeeslSurveyAnswer<L extends UtilsLang,
 							TS extends UtilsStatus<TS,L,D>,
 							TC extends UtilsStatus<TC,L,D>,
 							SECTION extends JeeslSurveySection<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
-							QUESTION extends JeeslSurveyQuestion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>, SCORE extends JeeslSurveyScore<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+							QUESTION extends JeeslSurveyQuestion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+							SCORE extends JeeslSurveyScore<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							UNIT extends UtilsStatus<UNIT,L,D>,
-							ANSWER extends JeeslSurveyAnswer<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>, MATRIX extends JeeslSurveyMatrix<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+							ANSWER extends JeeslSurveyAnswer<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+							MATRIX extends JeeslSurveyMatrix<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							DATA extends JeeslSurveyData<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
@@ -62,4 +66,7 @@ public interface JeeslSurveyAnswer<L extends UtilsLang,
 	
 	OPTION getOption();
 	void setOption(OPTION option);
+	
+	List<MATRIX> getMatrix();
+	void setMatrix(List<MATRIX> matrix);
 }

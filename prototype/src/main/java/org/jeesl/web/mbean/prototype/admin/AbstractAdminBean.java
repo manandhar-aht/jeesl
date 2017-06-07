@@ -2,12 +2,12 @@ package org.jeesl.web.mbean.prototype.admin;
 
 import java.io.Serializable;
 
+import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
+import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.jsf.util.NullNumberBinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.ejb.status.EjbDescriptionFactory;
-import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -19,6 +19,9 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminBean.class);
+	
+	protected Class<L> cL;
+	protected Class<D> cD;
 	
 	protected FacesMessageBean bMessage;
 	
@@ -36,6 +39,9 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 
 	public AbstractAdminBean(final Class<L> cL, final Class<D> cD)
 	{
+		this.cL = cL;
+		this.cD = cD;
+		
 		debugOnInfo = false;
 		
 		hasDeveloperAction = true;

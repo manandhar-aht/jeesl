@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.util.JeeslGraphicFacade;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -18,14 +19,12 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class JeeslGraphicFacadeBean<L extends UtilsLang,
-									D extends UtilsDescription,
+public class JeeslGraphicFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 									S extends EjbWithId,
-									G extends JeeslGraphic<L,D,G,GT,GS>,
-									GT extends UtilsStatus<GT,L,D>,
-									GS extends UtilsStatus<GS,L,D>>
+									G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+									F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
 					extends UtilsFacadeBean
-					implements JeeslGraphicFacade<L,D,S,G,GT,GS>
+					implements JeeslGraphicFacade<L,D,S,G,GT,F,FS>
 {	
 	private final Class<S> cStatus;
 	private final Class<G> cG;

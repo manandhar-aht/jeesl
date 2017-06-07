@@ -3,19 +3,19 @@ package org.jeesl.api.facade.module;
 import java.util.Date;
 import java.util.List;
 
-import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.JeeslWithSurvey;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveySection;
-import org.jeesl.interfaces.model.module.survey.util.JeeslWithSurvey;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
@@ -48,14 +48,15 @@ public interface JeeslSurveyFacade <L extends UtilsLang,
 	TEMPLATE load(TEMPLATE template);
 	SECTION load(SECTION section);
 	SURVEY load(SURVEY survey);
-	DATA load(DATA data);
 	QUESTION load(QUESTION question);
+	ANSWER load(ANSWER answer);
+	DATA load(DATA data);
 	
 	void rmVersion(VERSION version) throws UtilsConstraintViolationException;
 	void rmOption(OPTION option) throws UtilsConstraintViolationException;
 	
 	TEMPLATE fcSurveyTemplate(TC category, TS status);
-	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status);
+	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion);
 	
 	<W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>> List<W> fSurveys(Class<W> c, List<SS> status, Date date);
 	<W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>> W fWithSurvey(Class<W> c, long id) throws UtilsNotFoundException;

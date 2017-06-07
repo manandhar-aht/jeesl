@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<i:computer xmlns:i="http://www.jeesl.org/inventory/pc" id="123" code="myCode" name="myName">
+    <i:hardware id="123" manufacturer="Lasse" model="XYZ" serial="01234-56789"/>
+    <i:software id="123"/>
+</i:computer>

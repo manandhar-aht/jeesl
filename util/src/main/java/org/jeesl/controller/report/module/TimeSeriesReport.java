@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
 import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
@@ -32,6 +33,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.report.Report;
 
@@ -56,14 +58,17 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 						TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 						
 						CAT extends UtilsStatus<CAT,L,D>,
-						SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
+						SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 						UNIT extends UtilsStatus<UNIT,L,D>,
-						TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
-						TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, 
-						BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
-						EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
+						TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						SOURCE extends EjbWithLangDescription<L,D>, 
+						BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 						INT extends UtilsStatus<INT,L,D>,
-						DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, USER extends EjbWithId, 
+						DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						SAMPLE extends JeeslTsSample<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						USER extends EjbWithId, 
 						WS extends UtilsStatus<WS,L,D>,
 						QAF extends UtilsStatus<QAF,L,D>
 						>
@@ -73,11 +78,11 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(TimeSeriesReport.class);
 
 	private final Class<TS> cTs;
-	private final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> fTs;
+	private final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
 	
 	public TimeSeriesReport(String localeCode,
 			final JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport,
-			final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> fTs,
+			final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs,
 			final Class<L> cL,final Class<D> cD,
 			final Class<CATEGORY> cCategory,final Class<REPORT> cReport,
 			final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet,

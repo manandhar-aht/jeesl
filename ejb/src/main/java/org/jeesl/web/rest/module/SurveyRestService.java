@@ -5,12 +5,13 @@ import org.jeesl.api.rest.survey.JeeslSurveyJsonRest;
 import org.jeesl.api.rest.survey.JeeslSurveyRestExport;
 import org.jeesl.api.rest.survey.JeeslSurveyRestImport;
 import org.jeesl.api.rest.survey.JeeslSurveyXmlRest;
-import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyDataFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyQuestionFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveySectionFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
+import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.factory.json.jeesl.JsonContainerFactory;
 import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
@@ -19,20 +20,21 @@ import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.module.survey.XmlAnswerFactory;
 import org.jeesl.factory.xml.module.survey.XmlSurveyFactory;
 import org.jeesl.factory.xml.module.survey.XmlTemplateFactory;
+import org.jeesl.factory.xml.system.io.sync.XmlMapperFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
-import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.model.json.system.status.JsonContainer;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.util.query.json.JsonStatusQueryProvider;
@@ -46,8 +48,6 @@ import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
-import net.sf.ahtutils.factory.xml.sync.XmlMapperFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -121,7 +121,7 @@ public class SurveyRestService <L extends UtilsLang,
 	private EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efAnswer;
 	
-	private SurveyRestService(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS,final Class<SCHEME> cScheme, final Class<TEMPLATE> cTEMPLATE, final Class<VERSION> cVersion,final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSection,final Class<QUESTION> cQuestion,final Class<SCORE> cScore,final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer,final Class<DATA> cData,final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
+	private SurveyRestService(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS,final Class<SCHEME> cScheme, final Class<TEMPLATE> cTEMPLATE, final Class<VERSION> cVersion,final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSection,final Class<QUESTION> cQuestion,final Class<SCORE> cScore,final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData,final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
 	{
 		super(fSurvey,cL,cD);
 		this.fSurvey=fSurvey;
@@ -154,7 +154,7 @@ public class SurveyRestService <L extends UtilsLang,
 		
 		xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.surveyAnswers));
 		
-		SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey = SurveyFactoryFactory.factory(cSurvey,cScheme,cTEMPLATE,cVersion,cSection,cQuestion,cScore,cAnswer,cData,cOption);
+		SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey = SurveyFactoryFactory.factory(cSurvey,cScheme,cTEMPLATE,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
 		
 		efTemlate = ffSurvey.template();
 		efSection = ffSurvey.section();
@@ -181,9 +181,9 @@ public class SurveyRestService <L extends UtilsLang,
 					OT extends UtilsStatus<OT,L,D>,
 					CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 		SurveyRestService<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>
-			factory(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTEMPLATE, final Class<VERSION> cVersion, final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSECTION,final Class<QUESTION> cQuestion,final Class<SCORE> cScore, final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer,final Class<DATA> cData,final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
+			factory(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTEMPLATE, final Class<VERSION> cVersion, final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSECTION,final Class<QUESTION> cQuestion,final Class<SCORE> cScore, final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData,final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
 	{
-		return new SurveyRestService<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(fSurvey,cL,cD,cSurvey,cSS,cScheme,cTEMPLATE,cVersion,cTS,cTC,cSECTION,cQuestion,cScore,cUNIT,cAnswer,cData,cOption,cCorrelation);
+		return new SurveyRestService<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(fSurvey,cL,cD,cSurvey,cSS,cScheme,cTEMPLATE,cVersion,cTS,cTC,cSECTION,cQuestion,cScore,cUNIT,cAnswer,cMatrix,cData,cOption,cCorrelation);
 	}
 
 	@Override public Aht exportSurveyTemplateCategory()

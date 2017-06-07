@@ -10,6 +10,7 @@ import org.jeesl.api.rest.system.io.db.JeeslDbRestExport;
 import org.jeesl.api.rest.system.io.db.JeeslDbRestImport;
 import org.jeesl.factory.ejb.system.io.db.EjbDbDumpFileFactory;
 import org.jeesl.factory.ejb.system.io.db.EjbIoDumpFactory;
+import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.factory.DbFactoryFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
@@ -21,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -44,7 +44,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	private JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb;
 	
 	private final Class<DUMP> cDump;
-	private final Class<FILE> cFile;
+	@SuppressWarnings("unused") private final Class<FILE> cFile;
 	private final Class<HOST> cHost;
 	private final Class<STATUS> cStatus;
 	

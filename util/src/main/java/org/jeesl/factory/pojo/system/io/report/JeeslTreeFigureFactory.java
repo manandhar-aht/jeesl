@@ -3,12 +3,12 @@ package org.jeesl.factory.pojo.system.io.report;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.factory.xml.domain.finance.XmlFiguresFactory;
 import org.jeesl.interfaces.controller.report.JeeslPivotFactory;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportSetting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.finance.XmlFiguresFactory;
 import net.sf.ahtutils.interfaces.controller.report.JeeslPivotAggregator;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

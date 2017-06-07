@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import org.jeesl.api.facade.module.JeeslSecurityFacade;
+import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +56,7 @@ public class AbstractAdminSecurityViewBean <L extends UtilsLang,D extends UtilsD
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate,final Class<USER> cUser)
 	{
 		categoryType = UtilsSecurityCategory.Type.view;
-		initSecuritySuper(langs,fSecurity,bMessage,cLang,cDescription,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		initSecuritySuper(langs,fSecurity,bMessage,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 		
 		templates = fSecurity.allOrderedPositionVisible(cTemplate);
 	}

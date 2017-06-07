@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<!-- Deprecated, us jp:sbItem -->
+	
+	<composite:interface>
+		<composite:attribute name="label" required="false" default=""/>
+		<composite:attribute name="childs" required="false"/>
+		<composite:attribute name="orientation" required="false" default="left"/>
+		
+		<composite:facet name="label" required="false"/>
+		<composite:facet name="top" required="false"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<aht:li>
+			<c:if test="#{cc.attrs.orientation eq 'left'}"><f:attribute name="styleClass" value="aupStatusBarLeft"/></c:if>
+			<c:if test="#{cc.attrs.orientation eq 'right'}"><f:attribute name="styleClass" value="aupStatusBarRight"/></c:if>
+			<label for="#{cc.id}">
+				<h:outputText rendered="#{not empty cc.attrs.label}" value="#{cc.attrs.label}"/>
+				<c:if test="#{not empty cc.facets.label}">
+                    <composite:renderFacet name="label"/>
+                </c:if>
+			</label>
+			<input type="checkbox" id="#{cc.id}" />
+			<ul>
+				<c:if test="#{!empty cc.facets.top}">
+                    <li>
+                    	<composite:renderFacet name="top"/>
+                    </li>
+                </c:if>
+				<ui:repeat var="var" value="#{cc.attrs.childs}">
+					<li>
+						<composite:insertChildren/>
+					</li>
+				</ui:repeat>
+				
+			</ul>
+		</aht:li>
+	</composite:implementation>
+</html>

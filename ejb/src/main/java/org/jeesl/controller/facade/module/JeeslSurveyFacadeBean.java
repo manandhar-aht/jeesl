@@ -18,23 +18,23 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
-import org.jeesl.factory.ejb.survey.EjbSurveyAnswerFactory;
-import org.jeesl.factory.ejb.survey.EjbSurveyTemplateFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
-import org.jeesl.interfaces.model.module.survey.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.JeeslSurveyTemplateVersion;
+import org.jeesl.interfaces.model.module.survey.JeeslWithSurvey;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
+import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveySection;
-import org.jeesl.interfaces.model.module.survey.util.JeeslWithSurvey;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,8 +46,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class JeeslSurveyFacadeBean <L extends UtilsLang,
-									D extends UtilsDescription,
+public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescription,
 									SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 									SS extends UtilsStatus<SS,L,D>,
 									SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -71,6 +70,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	private final Class<SURVEY> cSurvey;
 	private final Class<TEMPLATE> cTemplate;
 	private final Class<VERSION> cVersion;
+	@SuppressWarnings("unused")
 	private final Class<TS> cTS;
 	private final Class<SECTION> cSection;
 	private final Class<QUESTION> cQuestion;
@@ -83,7 +83,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efAnswer;
 	private EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> eTemplate;
 	
-	public JeeslSurveyFacadeBean(EntityManager em, Class<SURVEY> cSurvey, Class<SCHEME> cScheme, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, final Class<SCORE> cScore, Class<ANSWER> cAnswer,  Class<DATA> cData, final Class<OPTION> cOption, final Class<CORRELATION> cCorrelation)
+	public JeeslSurveyFacadeBean(EntityManager em, Class<SURVEY> cSurvey, Class<SCHEME> cScheme, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, final Class<SCORE> cScore, Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, Class<DATA> cData, final Class<OPTION> cOption, final Class<CORRELATION> cCorrelation)
 	{
 		super(em);
 		this.cSurvey=cSurvey;
@@ -97,7 +97,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		this.cOption=cOption;
 		this.cCorrelation=cCorrelation;
 		
-		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cData,cOption);
+		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
 		eTemplate = ffSurvey.template();
 		efAnswer = ffSurvey.answer();
 	}
@@ -133,6 +133,13 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		question = em.find(cQuestion,question.getId());
 		question.getScores().size();
 		return question;
+	}
+	
+	@Override public ANSWER load(ANSWER answer)
+	{
+		answer = em.find(cAnswer,answer.getId());
+		answer.getMatrix().size();
+		return answer;
 	}
 
 	@Override public DATA load(DATA data)
@@ -215,8 +222,8 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		return em.createQuery(cQ).getResultList();
 	}
 	
-	@Override public TEMPLATE fcSurveyTemplate(TC category, TS status){return fcSurveyTemplate(category,null,status);}
-	@Override public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status)
+	@Override public TEMPLATE fcSurveyTemplate(TC category, TS status){return fcSurveyTemplate(category,null,status,null);}
+	@Override public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion)
 	{
 		if(logger.isInfoEnabled())
 		{
@@ -234,6 +241,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 			TEMPLATE template = eTemplate.build(category,status,"");
 			template.setVersion(version);
 			template.getVersion().setTemplate(template);
+			if(nestedVersion!=null){template.setNested(nestedVersion.getTemplate());}
 			em.persist(template);
 			return template;
 		}
@@ -270,6 +278,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		if(list.isEmpty())
 		{
 			TEMPLATE t = eTemplate.build(category,status,"");
+			if(nestedVersion!=null){t.setNested(nestedVersion.getTemplate());}
 			em.persist(t);
 			return t;
 		}
@@ -318,7 +327,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang,
 		{
 			data.setCorrelation(em.find(cCorrelation,data.getCorrelation().getId()));
 		}
-//		logger.info("Now Sabing ...");
+//		logger.info("Now Saving ...");
 		return this.saveProtected(data);
 	}
 

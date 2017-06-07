@@ -3,12 +3,12 @@ package org.jeesl.web.rest.module;
 import org.jeesl.api.facade.system.JeeslSystemNewsFacade;
 import org.jeesl.api.rest.module.news.JeeslNewsRestExport;
 import org.jeesl.api.rest.module.news.JeeslNewsRestImport;
+import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.db.xml.AhtStatusDbInit;
-import net.sf.ahtutils.factory.ejb.status.EjbStatusFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;

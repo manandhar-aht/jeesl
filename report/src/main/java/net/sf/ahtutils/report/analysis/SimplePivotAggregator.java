@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jeesl.factory.ejb.util.EjbRankedResultFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.ejb.ranking.EjbRankedResultFactory;
 import net.sf.ahtutils.interfaces.model.ranking.UtilsRankedResult;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.util.comparator.ejb.RankedResultComparator;

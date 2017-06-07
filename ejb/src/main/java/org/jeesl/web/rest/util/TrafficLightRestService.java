@@ -1,6 +1,7 @@
 package org.jeesl.web.rest.util;
 
 import org.jeesl.api.exception.xml.JeeslXmlStructureException;
+import org.jeesl.factory.ejb.system.util.EjbTrafficLightFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.jeesl.util.query.xml.UtilsQuery;
@@ -9,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.util.EjbTrafficLightFactory;
 import net.sf.ahtutils.factory.xml.utils.XmlTrafficLightFactory;
 import net.sf.ahtutils.factory.xml.utils.XmlTrafficLightsFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;

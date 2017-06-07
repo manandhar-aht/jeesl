@@ -33,6 +33,8 @@ public interface JeeslJobFacade <L extends UtilsLang,D extends UtilsDescription,
 {	
 	<E extends Enum<E>> TEMPLATE fJobTemplate(E type, String code) throws UtilsNotFoundException;
 	List<JOB> fJobs(List<CATEGORY> categories, List<TYPE> type, List<STATUS> status);
+	
+	JOB fActiveJob(TEMPLATE template, String code) throws UtilsNotFoundException;
 	CACHE fJobCache(TEMPLATE template, String code) throws UtilsNotFoundException;
 	CACHE uJobCache(TEMPLATE template, String code, byte[] data) throws UtilsConstraintViolationException, UtilsLockingException;
 	JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException;

@@ -3,7 +3,7 @@ package net.sf.ahtutils.jsf.util;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.jeesl.api.facade.module.JeeslSecurityFacade;
+import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

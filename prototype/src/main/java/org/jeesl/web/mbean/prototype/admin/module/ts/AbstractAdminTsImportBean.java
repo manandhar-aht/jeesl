@@ -19,10 +19,12 @@ import org.apache.commons.jxpath.JXPathContext;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.xml.module.ts.XmlDataFactory;
 import org.jeesl.factory.xml.module.ts.XmlTimeSeriesFactory;
+import org.jeesl.factory.xml.system.util.mc.XmlMcDataSetFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
 import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
 import org.jeesl.model.xml.module.ts.Data;
@@ -36,12 +38,12 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.factory.xml.mc.XmlMcDataSetFactory;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.report.revert.excel.ImportStrategy;
 import net.sf.ahtutils.report.revert.excel.importers.ExcelSimpleSerializableImporter;
@@ -49,18 +51,20 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
-											SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
+											SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
-											TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>, 
-											BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
-											EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
+											TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+											TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+											SOURCE extends EjbWithLangDescription<L,D>, 
+											BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+											EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>,
+											DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+											SAMPLE extends JeeslTsSample<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>, 
 											USER extends EjbWithId, 
 											WS extends UtilsStatus<WS,L,D>,
 											QAF extends UtilsStatus<QAF,L,D>>
-					extends AbstractAdminTsBean<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF>
+					extends AbstractAdminTsBean<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -70,6 +74,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	private List<EC> classes; public List<EC> getClasses() {return classes;}
 	private List<INT> intervals; public List<INT> getIntervals() {return intervals;}
 	private List<WS> workspaces; public List<WS> getWorkspaces() {return workspaces;}
+	private List<SOURCE> sources; public List<SOURCE> getSources() {return sources;}
 	
 	private List<EjbWithId> entities; public List<EjbWithId> getEntities() {return entities;}
 	private Map<EjbWithId,String> mapLabels; public Map<EjbWithId,String> getMapLabels() {return mapLabels;}
@@ -81,6 +86,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	private INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
 	private WS workspace; public WS getWorkspace() {return workspace;} public void setWorkspace(WS workspace) {this.workspace = workspace;}
 	protected USER transactionUser;
+	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 	
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;} public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
 	private DataSet chartDs; public DataSet getChartDs(){return chartDs;}
@@ -90,17 +96,18 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	
 	private Comparator<Data> cTsData;
 	
-	public AbstractAdminTsImportBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction)
+	public AbstractAdminTsImportBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
 	{
-		super(cL,cD,cTransaction);
+		super(cL,cD,cTransaction,cSource);
 	}
 	
-	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,BRIDGE,EC,INT,DATA,USER,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
+	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
 		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cTs,cBridge,cEc,cInt,cData,cWs);
 		this.xlsResolver=xlsResolver;
 		
 		cTsData = TsDataComparator.factory(TsDataComparator.Type.date);
+		sources = fTs.all(cSource);
 	}
 	
 	protected void initLists()
@@ -195,6 +202,8 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 		timeSeries.getData().addAll(data.keySet());
 		Collections.sort(timeSeries.getData(), cTsData);
 		entity=null;
+		
+		transaction = efTransaction.build(transactionUser,sources.get(0));
 		preview();
 	}
 	
@@ -250,7 +259,9 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 			TS ts = fTs.fcTimeSeries(cTs, scope, interval, bridge);
 			logger.info("Using TS "+ts.toString());
 			
-			TRANSACTION transaction = efTransaction.build(transactionUser);
+			if(transaction.getSource()!=null){transaction.setSource(fTs.find(cSource,transaction.getSource()));}
+			transaction.setRecord(new Date());
+			transaction = fTs.save(transaction);
 			
 			List<DATA> datas = new ArrayList<DATA>();
 			for(Data data : timeSeries.getData())

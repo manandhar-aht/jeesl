@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.jeesl.org/inventory/pc"
+    xmlns:pc="http://www.jeesl.org/inventory/pc"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="computer">
+        <xsd:complexType>
+            <xsd:sequence>
+	           <xsd:element ref="pc:hardware" maxOccurs="1"/>
+	           <xsd:element ref="pc:software" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+		</xsd:complexType>
+    </xsd:element>
+   <xsd:element name="hardware">
+        <xsd:complexType>
+            <xsd:sequence>
+
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="manufacturer" type="xsd:string"/>
+            <xsd:attribute name="model" type="xsd:string"/>
+            <xsd:attribute name="serial" type="xsd:string"/>
+            
+		</xsd:complexType>
+    </xsd:element>
+    <xsd:element name="software">
+        <xsd:complexType>
+            <xsd:sequence>
+	           <xsd:element ref="pc:updates" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+		</xsd:complexType>
+    </xsd:element>
+    <xsd:element name="updates">
+        <xsd:complexType>
+            <xsd:sequence>
+	           <xsd:element ref="pc:update" maxOccurs="unbounded"/>
+            </xsd:sequence>
+		</xsd:complexType>
+    </xsd:element>
+     <xsd:element name="update">
+        <xsd:complexType>
+            <xsd:sequence>
+	          
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+            <xsd:attribute name="record" type="xsd:date"/>
+            <xsd:attribute name="description" type="xsd:string"/>
+		</xsd:complexType>
+    </xsd:element>
+</xsd:schema>

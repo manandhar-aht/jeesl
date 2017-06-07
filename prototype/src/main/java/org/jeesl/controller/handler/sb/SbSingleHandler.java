@@ -61,4 +61,10 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	{
 		return selection!=null;
 	}
+	
+	public void selectDefault()
+	{
+		selection=null;
+		if(list!=null && !list.isEmpty()){selection = list.get(0);}
+	}
 }

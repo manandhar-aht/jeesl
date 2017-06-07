@@ -7,18 +7,34 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui"
     xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+    xmlns:jp="http://jsf.jeesl.org/prototype"
     xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 >
 
-	<aup:statusBarItem orientation="right" childs="#{handler.list}">
+	<jp:sbItem orientation="right" childs="#{handler.list}">
 		<f:facet name="label">
 			<jtp:statusSymbolizer rendered="#{not empty icon}" value="#{icon}" height="12"/>
-			#{label} (#{fn:length(handler.selected)}/#{fn:length(handler.list)})
+			#{label}
 		</f:facet>
-			<h:commandLink>
-				<ui:insert />
-				<aup:sbCheckmark value="#{handler.map[var]}"/>
-				<p:ajax event="click" update="#{update}" listener="#{handler.toggle(var)}"/>
-			</h:commandLink>
-		</aup:statusBarItem>
+		
+		<f:facet name="top">
+			<ui:fragment>
+				(#{fn:length(handler.selected)}/#{fn:length(handler.list)})
+				<h:commandLink>
+		            <h:graphicImage library="jeeslPrototypeGfx" name="12/ui/control/select-none.png"/>
+					<p:ajax event="click" listener="#{handler.toggleNone()}" update="#{update}"/>
+				</h:commandLink>
+				<h:commandLink>
+		            <h:graphicImage library="jeeslPrototypeGfx" name="12/ui/control/select-all.png"/>
+					<p:ajax event="click" listener="#{handler.toggleAll()}" update="#{update}"/>
+				</h:commandLink>
+			</ui:fragment>
+		</f:facet>
+		
+		<h:commandLink>
+			<ui:insert />
+			<aup:sbCheckmark value="#{handler.map[var]}"/>
+			<p:ajax event="click" listener="#{handler.toggle(var)}" update="#{update}"/>
+		</h:commandLink>
+	</jp:sbItem>
 </ui:composition>

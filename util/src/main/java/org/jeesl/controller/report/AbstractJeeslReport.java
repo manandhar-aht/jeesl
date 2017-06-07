@@ -10,6 +10,7 @@ import java.util.Map;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
+import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xls.system.io.report.XlsFactory;
 import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
@@ -34,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.status.EjbLangFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -133,7 +133,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		if(fReport!=null)
 		{
 			ffReport = ReportFactoryFactory.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType);
-			efLang = EjbLangFactory.createFactory(cL);
+			efLang = EjbLangFactory.factory(cL);
 			efColumn = ffReport.column();
 			
 			if(reportSettingTransformation==null)

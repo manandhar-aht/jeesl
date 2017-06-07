@@ -5,11 +5,11 @@ import javax.persistence.EntityManager;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.factory.ejb.issue.EjbTaskFactory;
 import net.sf.ahtutils.interfaces.model.issue.UtilsTask;
 import net.sf.ahtutils.interfaces.model.with.EjbWithTask;
 
 import org.jeesl.api.facade.core.JeeslIssueFacade;
+import org.jeesl.factory.ejb.module.task.EjbTaskFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

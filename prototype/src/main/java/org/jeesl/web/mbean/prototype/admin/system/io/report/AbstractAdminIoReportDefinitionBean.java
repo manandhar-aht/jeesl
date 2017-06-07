@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -197,6 +198,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		cancelReport();
 	}
 	
+	
 	private void reset(boolean rReport, boolean rSheet, boolean rRow, boolean rGroup, boolean rColumn)
 	{
 		if(rReport){report=null;}
@@ -345,17 +347,17 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		}
 		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
 	}
-	/*	
-	public void rmToken() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+		
+	public void rmSheet() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(token));}
-		fTemplate.rm(token);
-		token=null;
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(sheet));}
+		fReport.rmSheet(sheet);
+		reset(false,true,true,true,true);
 		bMessage.growlSuccessRemoved();
-		reloadTemplate();
+		reloadReport();
 		updatePerformed();
 	}
-*/	
+	
 	public void cancelSheet()
 	{
 		reset(false,true,true,true,true);

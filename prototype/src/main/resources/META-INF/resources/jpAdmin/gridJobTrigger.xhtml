@@ -43,17 +43,18 @@
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 							
 								<p:outputLabel value="#{msg.jeeslJobCategory}"/>
-								<h:outputText value="#{cc.attrs.bean.template.category.name[localeCode].lang}"/
+								<h:outputText value="#{cc.attrs.bean.template.category.name[localeCode].lang}"/>
 								
 								<p:outputLabel value="#{msg.jeeslJobType}"/>
-								<h:outputText value="#{cc.attrs.bean.template.type.name[localeCode].lang}"/
+								<h:outputText value="#{cc.attrs.bean.template.type.name[localeCode].lang}"/>
+								
+								<p:outputLabel value="#{msg.jeeslJobTemplate}"/>
+								<h:outputText value="#{cc.attrs.bean.template.name[localeCode].lang}"/>
 								
 								<p:outputLabel value="#{msg.jeeslDescription}"/>
-								<h:outputText value="#{cc.attrs.bean.template.name[localeCode].lang}"/
-								
-								<p:outputLabel value="#{msg.jeeslDescription}"/>
-								<h:outputText value="#{cc.attrs.bean.template.description[localeCode].lang}"/
+								<h:outputText value="#{cc.attrs.bean.template.description[localeCode].lang}"/>
 							</p:panelGrid>
+							<p:commandButton value="#{msg.jeeslJobTrigger}" actionListener="#{cc.attrs.bean.trigger()}" update=":#{cc.id}:sTemplate" />
 						</p:panel>
 					</h:form>
 				</aht:slot>

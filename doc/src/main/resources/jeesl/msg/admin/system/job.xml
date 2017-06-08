@@ -98,4 +98,11 @@
 			<lang key="fr" translation="Robot" />
 		</langs>
 	</translation>
+	<translation key="jeeslJobTrigger">
+		<langs>
+			<lang key="de" translation="Starte Auftrag" />
+			<lang key="en" translation="Start Job" />
+			<lang key="fr" translation="Start Job" />
+		</langs>
+	</translation>
 </translations>

@@ -10,6 +10,7 @@ public class JdomElementFactory
 	
 	public static Element simple(String name, boolean content) {return simple(name,Boolean.valueOf(content).toString());}
 	public static Element simple(String name, int content) {return simple(name,Integer.valueOf(content).toString());}
+	public static Element simple(String name, long content) {return simple(name,Long.valueOf(content).toString());}
 	
 	public static Element simple(String name, String content)
 	{		

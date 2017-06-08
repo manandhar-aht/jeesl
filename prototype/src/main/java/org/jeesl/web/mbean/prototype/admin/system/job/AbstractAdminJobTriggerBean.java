@@ -1,10 +1,11 @@
 package org.jeesl.web.mbean.prototype.admin.system.job;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
-import org.jeesl.controller.handler.sb.SbMultiHandler;
+import org.jeesl.factory.ejb.system.job.EjbJobTemplateFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
@@ -13,7 +14,8 @@ import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -21,7 +23,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAdminJobTriggerBean <L extends UtilsLang,D extends UtilsDescription,
 									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
@@ -37,62 +39,38 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminJobQueueBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAdminJobTriggerBean.class);
 	
-	private List<JOB> jobs; public List<JOB> getJobs() {return jobs;}
+	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
 	
-	private JOB job; public JOB getJob() {return job;} public void setJob(JOB job) {this.job = job;}
-	
-	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
+	private TEMPLATE template; public TEMPLATE getTemplate() {return template;} public void setTemplate(TEMPLATE template) {this.template = template;}
 
-	public AbstractAdminJobQueueBean(final Class<L> cL, final Class<D> cD, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache){super(cL,cD,cTemplate,cCategory,cType,cJob,cStatus,cRobot,cCache);}
+	private EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efTemplate;
+	
+	public AbstractAdminJobTriggerBean(final Class<L> cL, final Class<D> cD, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache){super(cL,cD,cTemplate,cCategory,cType,cJob,cStatus,cRobot,cCache);}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
 		super.initSuper(langs,bMessage,fJob);
 		
-		try
-		{
-			sbhStatus = new SbMultiHandler<STATUS>(cStatus,fJob.allOrderedPositionVisible(cStatus),this);
-			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.queue));
-			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.working));
-		}
-		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
+		efTemplate = ffJob.template();
 		
 		if(debugOnInfo)
 		{
 			logger.info(AbstractLogMessage.multiStatus(cCategory,sbhCategory.getSelected(),sbhCategory.getList()));
 			logger.info(AbstractLogMessage.multiStatus(cType,sbhType.getSelected(),sbhType.getList()));
-			logger.info(AbstractLogMessage.multiStatus(cStatus,sbhStatus.getSelected(),sbhStatus.getList()));
 		}
-		reloadJobs();
+		templates = new ArrayList<TEMPLATE>();
 	}
 	
 	@Override public void toggled(Class<?> c)
 	{
 		logger.info(AbstractLogMessage.toggled(c));
 		super.toggled(c);
-		if(cCategory.isAssignableFrom(c)){logger.info(cCategory.getName());}
-		else if(cType.isAssignableFrom(c)){logger.info(cType.getName());}
-		else if(cStatus.isAssignableFrom(c)){logger.info(cStatus.getName());}
-		reloadJobs();
-		clear(true);
 	}
 	
-	private void clear(boolean clearJob)
+	public void selectTemplate()
 	{
-		if(clearJob){job=null;}
-	}
-	
-	private void reloadJobs()
-	{
-		jobs = fJob.fJobs(sbhCategory.getSelected(),sbhType.getSelected(),sbhStatus.getSelected());
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cJob,jobs));}
-//		Collections.sort(templates, comparatorTemplate);
-	}
-		
-	public void selectJob()
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(job));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
 	}
 }

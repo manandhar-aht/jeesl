@@ -330,3 +330,8 @@ ul.aupHeadlineBreadcrumb,
 	background: white;
 	margin: 0 5px;
 }
+
+.jeeslSchedule {
+position: relative;
+z-index: 0;
+}

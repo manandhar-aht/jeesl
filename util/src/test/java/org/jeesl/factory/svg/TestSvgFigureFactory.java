@@ -1,11 +1,13 @@
 package org.jeesl.factory.svg;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderException;
 import org.jeesl.AbstractJeeslUtilTest;
 import org.jeesl.JeeslUtilTestBootstrap;
@@ -19,6 +21,7 @@ import org.jeesl.model.ejb.system.symbol.Graphic;
 import org.jeesl.model.ejb.system.symbol.GraphicFigure;
 import org.jeesl.model.ejb.system.symbol.GraphicStyle;
 import org.jeesl.model.ejb.system.symbol.GraphicType;
+import org.openfuxml.media.transcode.Svg2SvgTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +33,7 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 
 	private EjbStatusFactory<GraphicStyle,Lang,Description> efStyle;
 	private EjbGraphicFigureFactory<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> efFigure;
-	private SvgFigureFactory<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> svgF;
+	private static SvgFigureFactory<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> svgF;
 	
 	private String colorRed = "FFFFFF";
 	private String colorBlue = "FFFFFF";
@@ -57,27 +60,32 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 		f1 = efFigure.build(styleCircle, true, 10, colorRed, 0, 0, 0);
 		f2 = efFigure.build(styleCircle, false, 5, colorBlue, -5, 0, 0);
 		f3 = efFigure.build(styleCircle, false, 5, colorGreen, 5, 0, 0);
-		f4 = efFigure.build(styleSquare, false, 5, colorRed, 0, 0, 45);
+		f4 = efFigure.build(styleSquare, false, 5, colorGreen, 0, 0, 45);
 	}
 	
-	public void testA()
+	public void testA() throws IOException, TranscoderException
 	{
 		List<GraphicFigure> list = Arrays.asList(f1,f4);
-		svgF.build(list);
+		SVGGraphics2D g = svgF.build(list);
+		
+		File f = new File(fTarget,"a.svg");
+		Svg2SvgTranscoder.transcode(g,f);
 	}
 	
-	public void testB()
+	public void testB() throws IOException, TranscoderException
 	{
 		List<GraphicFigure> list = Arrays.asList(f1,f2,f3);
-		svgF.build(list);
+		SVGGraphics2D g = svgF.build(list);
+		
+		File f = new File(fTarget,"a.svg");
+		Svg2SvgTranscoder.transcode(g,f);
 	}
-	
+		
 	public static void main(String[] args) throws TranscoderException, IOException, ParserConfigurationException
 	{
 		AbstractJeeslTest.initTargetDirectory();
 		JeeslUtilTestBootstrap.init();
 		TestSvgFigureFactory test = new TestSvgFigureFactory();
-		AbstractJeeslTest.initTargetDirectory();
 		
 		test.testA();
 		test.testB();

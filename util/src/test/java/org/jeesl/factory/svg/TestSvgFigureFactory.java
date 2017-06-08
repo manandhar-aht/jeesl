@@ -9,7 +9,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderException;
-import org.apache.commons.io.FileUtils;
 import org.jeesl.AbstractJeeslUtilTest;
 import org.jeesl.JeeslUtilTestBootstrap;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
@@ -22,7 +21,6 @@ import org.jeesl.model.ejb.system.symbol.Graphic;
 import org.jeesl.model.ejb.system.symbol.GraphicFigure;
 import org.jeesl.model.ejb.system.symbol.GraphicStyle;
 import org.jeesl.model.ejb.system.symbol.GraphicType;
-import org.jeesl.test.AbstractJeeslXmlTest;
 import org.openfuxml.media.transcode.Svg2SvgTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,34 +63,31 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 		f4 = efFigure.build(styleSquare, false, 5, colorGreen, 0, 0, 45);
 	}
 	
-	public SVGGraphics2D testA()
+	public void testA() throws IOException, TranscoderException
 	{
 		List<GraphicFigure> list = Arrays.asList(f1,f4);
 		SVGGraphics2D g = svgF.build(list);
-		return g;
+		
+		File f = new File(fTarget,"a.svg");
+		Svg2SvgTranscoder.transcode(g,f);
 	}
 	
-	public SVGGraphics2D testB()
+	public void testB() throws IOException, TranscoderException
 	{
 		List<GraphicFigure> list = Arrays.asList(f1,f2,f3);
 		SVGGraphics2D g = svgF.build(list);
-		return g;
+		
+		File f = new File(fTarget,"a.svg");
+		Svg2SvgTranscoder.transcode(g,f);
 	}
 		
-	public void createFile (SVGGraphics2D g, String filename) throws IOException, TranscoderException
-	{	
-		byte[] bytes = Svg2SvgTranscoder.transcode(g);
-		FileUtils.writeByteArrayToFile(new File(fTarget,filename+".svg"), bytes);
-	}
-	
 	public static void main(String[] args) throws TranscoderException, IOException, ParserConfigurationException
 	{
 		AbstractJeeslTest.initTargetDirectory();
 		JeeslUtilTestBootstrap.init();
 		TestSvgFigureFactory test = new TestSvgFigureFactory();
 		
-		test.createFile(test.testA(),"TestA");
-		test.createFile(test.testB(),"TestB");
-		
+		test.testA();
+		test.testB();
 	}
 }

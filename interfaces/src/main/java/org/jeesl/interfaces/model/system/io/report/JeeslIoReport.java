@@ -39,4 +39,7 @@ public interface JeeslIoReport<L extends UtilsLang,D extends UtilsDescription,
 	
 	WORKBOOK getWorkbook();
 	void setWorkbook(WORKBOOK workbook);
+	
+	String getXmlExample();
+	void setXmlExample(String xmlExample);
 }

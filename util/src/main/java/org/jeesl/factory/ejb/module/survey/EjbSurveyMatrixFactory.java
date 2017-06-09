@@ -1,5 +1,6 @@
 package org.jeesl.factory.ejb.module.survey;
 
+import java.util.List;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import org.jeesl.model.pojo.map.Nested2Map;
 
 public class EjbSurveyMatrixFactory<L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -60,5 +62,15 @@ public class EjbSurveyMatrixFactory<L extends UtilsLang, D extends UtilsDescript
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public Nested2Map<OPTION,OPTION,MATRIX> build(List<MATRIX> matrix)
+	{
+		Nested2Map<OPTION,OPTION,MATRIX> map = new Nested2Map<OPTION,OPTION,MATRIX>();
+		for (MATRIX m : matrix)
+		{
+			map.put(m.getRow(), m.getColumn(), m);
+		}
+		return map;
 	}
 }

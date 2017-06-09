@@ -33,7 +33,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
+import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
+import org.jeesl.model.pojo.map.Nested2Map;
 
 
 public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescription,
@@ -57,15 +61,19 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 	final static Logger logger = LoggerFactory.getLogger(XlsSurveyDataFactory.class);
 		
 	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
-	private String localeCode;
+	private final String localeCode;
+	private final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
+	
+	
 	private Map<Long, HeaderData> sectionHeaders;
 	private Map<Long, HeaderData> questionHeaders;
 	private CellStyle style;
 	String answerTypes[] = {"Yes/No","Number","Natural Number","Score","Option","Text","Remark"};
 	
-	public XlsSurveyDataFactory(String localeCode)
+	public XlsSurveyDataFactory(String localeCode, SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
 	{
 		this.localeCode = localeCode;
+		efOption = ffSurvey.option();
 	}
 	
 	public void lazy(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)
@@ -124,12 +132,14 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		Row subRow    = null;
 		Row subsubRow = null;
 		Row answerRow = null;
+		Row matrixRow = null;
 		
 		if (renderQuestionHeader) 
 		{
 			subRow    = row.getSheet().createRow(row.getRowNum()+1);
 			subsubRow = row.getSheet().createRow(row.getRowNum()+2);
 			answerRow = row.getSheet().createRow(row.getRowNum()+3);
+			matrixRow = row.getSheet().createRow(row.getRowNum()+4);
 		}
 		for (Long id : headerData.keySet())
 		{
@@ -151,6 +161,9 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 
 				// Render the Answers
 				columnNr = buildAnswerCells(answerTypes, answerRow, columnNr, answer);
+				
+				// Render the Matrix
+				columnNr = buildMatrixCells(answerTypes, answerRow, columnNr, answer);
 				
 				// Get to the begin of the next one
 				columnNr.add(header.width);
@@ -237,6 +250,57 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		return columnNr;
 	}
 	
+	
+	private MutableInt buildMatrixCells(String[] answerTypes, Row firstRow, MutableInt columnNr, ANSWER answer)
+	{
+		QUESTION question = answer.getQuestion();
+		if (fSurvey!=null) {answer = fSurvey.load(answer);}
+		if (fSurvey!=null) {question = fSurvey.load(question);}
+		if (question.getShowMatrix()!=null && question.getShowMatrix() && answer.getMatrix() != null && !answer.getMatrix().isEmpty())
+		{
+			EjbSurveyMatrixFactory eSMF = new EjbSurveyMatrixFactory(answer.getMatrix().get(0).getClass());
+			Nested2Map<OPTION,OPTION,MATRIX> map = eSMF.build(answer.getMatrix());
+			// Build a Map to get cell data based on the Row and Column
+			for (OPTION column : efOption.toColumns(question.getOptions()))
+			{
+				for (OPTION row : efOption.toRows(question.getOptions()))
+				{
+					MATRIX m = map.get(row, column);
+					if (m!= null && m.getAnswer()!=null)
+					{
+						logger.info("Row " +row.getCode() +": " +row.getName().get(localeCode).getLang() 
+								+" ----- Column " +column.getCode() +": " +column.getName().get(localeCode).getLang() 
+								+" ----- with answer in cell: " +buildAnswer(m.getAnswer()).toString());
+					}
+				}
+			}
+		columnNr.subtract(answerTypes.length);
+		}
+		
+		return columnNr;
+	}
+	
+	public Object buildAnswer(ANSWER answer)
+	{
+		Object value = null;
+		if (fSurvey!=null) {answer = fSurvey.load(answer);}
+		QUESTION question = answer.getQuestion();
+		if (fSurvey!=null) {question = fSurvey.load(question);}
+		for (String s : answerTypes)
+		{
+			if (s.equals("Yes/No") && question.getShowBoolean()!= null && question.getShowBoolean() && answer.getValueBoolean()!=null) {value = answer.getValueBoolean();}
+			if (s.equals("Number") && question.getShowDouble()!= null && question.getShowDouble() && answer.getValueDouble()!=null) {value = answer.getValueDouble();}
+			if (s.equals("Natural Number") && question.getShowInteger()!= null && question.getShowInteger() && answer.getValueNumber()!=null) {value = answer.getValueNumber();}
+			if (s.equals("Score") && question.getShowScore()!= null && question.getShowScore() && answer.getScore()!=null) {value = answer.getScore();}
+			if (s.equals("Multi Option") && question.getShowSelectMulti()!= null && question.getShowSelectMulti() && answer.getOptions()!=null) {value = renderOptionsSingle(answer.getOptions());}
+			if (s.equals("Option") && question.getShowSelectOne()!= null && question.getShowSelectOne() && answer.getOption()!=null) {value = renderOptionsSingle(answer.getOption());}
+			if (s.equals("Text") && question.getShowText()!= null && question.getShowText() && answer.getValueText()!=null) {value = answer.getValueText();}
+			if (s.equals("Remark") && question.getShowRemark()!= null && question.getShowRemark() && answer.getRemark()!=null) {value = answer.getRemark();}
+			if (s.equals("Matrix") && question.getShowMatrix()!= null && question.getShowMatrix() && answer.getMatrix()!=null) {value = answer.getMatrix();}
+		}
+		if (value==null) {value="not set";}
+		return value;
+	}	
 	
 	public int addQuestionToSection(ANSWER answer)
 	{

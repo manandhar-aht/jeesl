@@ -64,7 +64,7 @@ public class GraphicFigure implements EjbRemoveable,Serializable,EjbPersistable,
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-		sb.append(id);
+		sb.append("[").append(id).append("]");
 		return sb.toString();
 	}
 	

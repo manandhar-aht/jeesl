@@ -54,13 +54,19 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 	
 	public void init()
 	{
-		styleCircle = efStyle.build(JeeslGraphicFigure.Style.circle);
-		styleSquare = efStyle.build(JeeslGraphicFigure.Style.square);
+		styleCircle = efStyle.build(JeeslGraphicFigure.Style.circle); styleCircle.setId(1);
+		styleSquare = efStyle.build(JeeslGraphicFigure.Style.square); styleCircle.setId(2);
 		
-		f1 = efFigure.build(styleCircle, true, 10, colorRed, 0, 0, 0);
-		f2 = efFigure.build(styleCircle, false, 5, colorBlue, -5, 0, 0);
-		f3 = efFigure.build(styleCircle, false, 5, colorGreen, 5, 0, 0);
-		f4 = efFigure.build(styleSquare, false, 5, colorGreen, 0, 0, 45);
+		f1 = efFigure.build(styleCircle, true, 10, colorRed, 0, 0, 0);		f1.setId(1);
+		f2 = efFigure.build(styleCircle, false, 5, colorBlue, -5, 0, 0);	f2.setId(2);
+		f3 = efFigure.build(styleCircle, false, 5, colorGreen, 5, 0, 0);	f3.setId(3);
+		f4 = efFigure.build(styleSquare, false, 5, colorGreen, 0, 0, 45);	f4.setId(4);
+	}
+	
+	public void testF1()
+	{
+		logger.info(f1.toString());
+		logger.info(f1.getStyle().toString());
 	}
 	
 	public void testA() throws IOException, TranscoderException
@@ -85,9 +91,10 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 	{
 		AbstractJeeslTest.initTargetDirectory();
 		JeeslUtilTestBootstrap.init();
-		TestSvgFigureFactory test = new TestSvgFigureFactory();
+		TestSvgFigureFactory cli = new TestSvgFigureFactory();
 		
-		test.testA();
-		test.testB();
+		cli.testF1();
+		cli.testA();
+		cli.testB();
 	}
 }

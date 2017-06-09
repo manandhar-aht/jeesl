@@ -27,33 +27,40 @@ public class GraphicStyle implements Serializable,EjbRemoveable,EjbPersistable,
 	public String getSymbol(){return symbol;}
 	public void setSymbol(String symbol){this.symbol = symbol;}
 	
-	@Override public String getCode() {return null;}
-	@Override public void setCode(String code) {}
+	protected String code;
+	@Override public String getCode() {return code;}
+	@Override public void setCode(String code) {this.code = code;}
 	
-	@Override public int getPosition() {return 0;}
-	@Override public void setPosition(int position) {}
+	protected boolean visible;
+	@Override public boolean isVisible() {return visible;}
+	@Override public void setVisible(boolean visible) {this.visible = visible;}
 	
-	@Override public boolean isVisible() {return false;}
-	@Override public void setVisible(boolean visible) {}
+	protected String image;
+	@Override public String getImage() {return image;}
+	@Override public void setImage(String image) {this.image = image;}
 	
-	@Override public Map<String, Lang> getName() {return null;}
-	@Override public void setName(Map<String, Lang> name) {}
+	protected String imageAlt;
+	@Override public String getImageAlt() {return imageAlt;}
+	@Override public void setImageAlt(String imageAlt) {this.imageAlt=imageAlt;}
 	
-	@Override public Map<String, Description> getDescription() {return null;}
-	@Override public void setDescription(Map<String, Description> description) {}
+	protected String style;
+	public String getStyle() {return style;}
+	public void setStyle(String style) {this.style = style;}
 	
-	@Override public String getStyle() {return null;}
-	@Override public void setStyle(String style) {}
+	protected int position;
+	@Override public int getPosition() {return position;}
+	@Override public void setPosition(int position) {this.position = position;}
 	
-	@Override public String getImage() {return null;}
-	@Override public void setImage(String image) {}
+	protected Map<String,Lang> name;
+	@Override public Map<String,Lang> getName() {return name;}
+	@Override public void setName(Map<String,Lang> name) {this.name = name;}
 	
-	@Override public String getImageAlt() {return null;}
-	@Override public void setImageAlt(String image) {}
+	protected Map<String,Description> description;
+	@Override public Map<String,Description> getDescription() {return description;}
+	@Override public void setDescription(Map<String,Description> description) {this.description = description;}
 	
 	@Override public <P extends EjbWithCode> P getParent() {return null;}
 	@Override public <P extends EjbWithCode> void setParent(P parent) {}
-	
 	
 	public boolean equals(Object object)
 	{
@@ -63,7 +70,8 @@ public class GraphicStyle implements Serializable,EjbRemoveable,EjbPersistable,
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-			sb.append(id);
+		sb.append("[").append(id).append("]");
+		sb.append(" ").append(code);
 		return sb.toString();
 	}
 }

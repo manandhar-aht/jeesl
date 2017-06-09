@@ -43,4 +43,9 @@ public class Nested2Map <L1 extends EjbWithId, L2 extends EjbWithId, VALUE exten
     	}
     	return list;
     }
+	
+	public VALUE get(L1 l1, L2 l2)
+	{
+		return m.get(l1).get(l2);
+	}
 }

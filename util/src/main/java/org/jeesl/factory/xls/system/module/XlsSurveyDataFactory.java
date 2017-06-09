@@ -29,6 +29,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -253,6 +254,8 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 	
 	private MutableInt buildMatrixCells(String[] answerTypes, Row firstRow, MutableInt columnNr, ANSWER answer)
 	{
+		//logger.info("Starting MATRIX --------- ");
+		final int offset = columnNr.intValue();
 		QUESTION question = answer.getQuestion();
 		if (fSurvey!=null) {answer = fSurvey.load(answer);}
 		if (fSurvey!=null) {question = fSurvey.load(question);}
@@ -261,42 +264,99 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 			EjbSurveyMatrixFactory eSMF = new EjbSurveyMatrixFactory(answer.getMatrix().get(0).getClass());
 			Nested2Map<OPTION,OPTION,MATRIX> map = eSMF.build(answer.getMatrix());
 			// Build a Map to get cell data based on the Row and Column
-			for (OPTION column : efOption.toColumns(question.getOptions()))
-			{
-				for (OPTION row : efOption.toRows(question.getOptions()))
+			
+			// Get a sorted collection of rows and columns (OPTION objects to request MATRIX CELL)
+			TreeMap<Integer, OPTION> rowData    = new TreeMap<Integer, OPTION>();
+			TreeMap<Integer, OPTION> columnData = new TreeMap<Integer, OPTION>();
+			for (OPTION row : efOption.toRows(question.getOptions()))
 				{
-					MATRIX m = map.get(row, column);
+					rowData.put(row.getPosition(), row);
+				}
+			for (OPTION column : efOption.toColumns(question.getOptions()))
+				{
+					columnData.put(column.getPosition(), column);
+				}
+			
+			// Iterate the row and column keys (maybe with gaps like 1, 8, 9, 10) and fill cells
+			Row row = firstRow;
+			final int startRow = firstRow.getRowNum();
+			boolean firstIteration = true;
+			for (Integer rowKey : rowData.keySet())
+			{
+				if (!firstIteration ) {row = row.getSheet().createRow(startRow +rowKey);}
+				for (Integer columnKey : columnData.keySet())
+				{
+					columnNr = new MutableInt(offset + columnKey);
+					MATRIX m = map.get(rowData.get(rowKey), columnData.get(columnKey));
 					if (m!= null && m.getAnswer()!=null)
 					{
-						logger.info("Row " +row.getCode() +": " +row.getName().get(localeCode).getLang() 
-								+" ----- Column " +column.getCode() +": " +column.getName().get(localeCode).getLang() 
-								+" ----- with answer in cell: " +buildAnswer(m.getAnswer()).toString());
+						Object cellContent = buildAnswer(m);
+						logger.info("Row " +rowKey +" : Column " +columnKey +" will be set to " +cellContent.toString());
+						XlsCellFactory.build(row, columnNr, style, cellContent, 1);
 					}
 				}
+				firstIteration = false;
 			}
-		columnNr.subtract(answerTypes.length);
 		}
-		
-		return columnNr;
+		return new MutableInt(offset);
 	}
 	
-	public Object buildAnswer(ANSWER answer)
+	public Object buildAnswer(MATRIX m)
 	{
 		Object value = null;
+		ANSWER answer = m.getAnswer();
 		if (fSurvey!=null) {answer = fSurvey.load(answer);}
 		QUESTION question = answer.getQuestion();
 		if (fSurvey!=null) {question = fSurvey.load(question);}
 		for (String s : answerTypes)
 		{
-			if (s.equals("Yes/No") && question.getShowBoolean()!= null && question.getShowBoolean() && answer.getValueBoolean()!=null) {value = answer.getValueBoolean();}
-			if (s.equals("Number") && question.getShowDouble()!= null && question.getShowDouble() && answer.getValueDouble()!=null) {value = answer.getValueDouble();}
-			if (s.equals("Natural Number") && question.getShowInteger()!= null && question.getShowInteger() && answer.getValueNumber()!=null) {value = answer.getValueNumber();}
-			if (s.equals("Score") && question.getShowScore()!= null && question.getShowScore() && answer.getScore()!=null) {value = answer.getScore();}
-			if (s.equals("Multi Option") && question.getShowSelectMulti()!= null && question.getShowSelectMulti() && answer.getOptions()!=null) {value = renderOptionsSingle(answer.getOptions());}
-			if (s.equals("Option") && question.getShowSelectOne()!= null && question.getShowSelectOne() && answer.getOption()!=null) {value = renderOptionsSingle(answer.getOption());}
-			if (s.equals("Text") && question.getShowText()!= null && question.getShowText() && answer.getValueText()!=null) {value = answer.getValueText();}
-			if (s.equals("Remark") && question.getShowRemark()!= null && question.getShowRemark() && answer.getRemark()!=null) {value = answer.getRemark();}
-			if (s.equals("Matrix") && question.getShowMatrix()!= null && question.getShowMatrix() && answer.getMatrix()!=null) {value = answer.getMatrix();}
+			if (s.equals("Yes/No") && question.getShowBoolean()!= null && question.getShowBoolean() && m.getValueBoolean()!=null) 
+			{
+				if (value==null)
+				{
+					value = m.getValueBoolean();
+				} else
+				{
+					value = value.toString();
+					value = value + ", " +m.getValueBoolean().toString();
+				}
+			}
+			if (s.equals("Number") && question.getShowDouble()!= null && question.getShowDouble() && m.getValueDouble()!=null)
+				if (value==null)
+				{
+					value = m.getValueDouble();
+				} else
+				{
+					value = value.toString();
+					value = value + ", " +m.getValueDouble().toString();
+				}
+			if (s.equals("Natural Number") && question.getShowInteger()!= null && question.getShowInteger() && m.getValueNumber()!=null)
+				if (value==null)
+				{
+					value = m.getValueNumber();
+				} else
+				{
+					value = value.toString();
+					value = value + ", " +m.getValueNumber().toString();
+				}
+			if (s.equals("Option") && question.getShowSelectOne()!= null && question.getShowSelectOne() && m.getOption()!=null) 
+				if (value==null)
+				{
+					value = renderOptionsSingle(m.getOption());
+				} else
+				{
+					value = value.toString();
+					value = value + ", " +renderOptionsSingle(m.getOption());
+				}
+			if (s.equals("Text") && question.getShowText()!= null && question.getShowText() && m.getValueText()!=null)
+				if (value==null)
+				{
+					value = m.getValueText();
+				} else
+				{
+					value = value.toString();
+					value = value + ", " +m.getValueText();
+				}
 		}
 		if (value==null) {value="not set";}
 		return value;
@@ -326,16 +386,12 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		
 		if (fSurvey!=null) {answer = fSurvey.load(answer);}
 		// See if Matrix options are to be shown and if so, see if it extends standard range of 9 cells
+		
 		if (answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix() && answer.getMatrix()!=null)
 		{
-			if (answer.getMatrix().size() >= answerTypes.length)
+			if (efOption.toColumns(answer.getQuestion().getOptions()).size() >= answerTypes.length)
 			{
-				logger.info(answer.getQuestion().getQuestion() +answer.getMatrix().size());
-				for (MATRIX m : answer.getMatrix())
-				{
-					logger.info(answer.getQuestion().getQuestion() + " m: " +m.toString());
-				}
-				questionLength = answer.getMatrix().size() + 1;
+				questionLength = efOption.toColumns(answer.getQuestion().getOptions()).size();
 			}
 		}
 		headerInfo.width = headerInfo.width + questionLength;

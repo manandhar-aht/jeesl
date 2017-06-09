@@ -50,4 +50,9 @@
         <tag-name>surveyAnswer</tag-name>
         <source>jeeslPrototype/survey/answer.xhtml</source>
     </tag>
+    
+    <tag>
+        <tag-name>schedule</tag-name>
+        <source>jeeslPrototype/calendar/schedule.xhtml</source>
+    </tag>
 </facelet-taglib>

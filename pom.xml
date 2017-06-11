@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 	<version>0.2.6-SNAPSHOT</version>
     
-	<name>JEESL - JavaEE Support Library</name>
+	<name>JEESL JavaEE Support Library</name>
 	<url>https://github.com/aht-group/jeesl</url>
 	<description>Utilities and Helper for JavaEE Developments (JavaEE Support Library)</description>
 

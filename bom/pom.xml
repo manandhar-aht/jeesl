@@ -10,7 +10,7 @@
     
     <artifactId>jeesl-bom</artifactId>
     <packaging>pom</packaging>
-    <name>UTILS - BOM</name>
+    <name>JEESL - BOM</name>
 
     <dependencyManagement>
         <dependencies>

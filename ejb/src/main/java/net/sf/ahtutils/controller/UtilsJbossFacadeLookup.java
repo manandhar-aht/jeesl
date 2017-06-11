@@ -1,7 +1,8 @@
 package net.sf.ahtutils.controller;
 
 import java.security.Security;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.naming.Context;
@@ -68,7 +69,7 @@ public class UtilsJbossFacadeLookup
         final String beanName = facade.getSimpleName()+"Bean";
         final String viewClassName = facade.getName();
         
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("ejb:");
         sb.append(appName).append("/");
         sb.append(moduleName).append("/");
@@ -81,7 +82,7 @@ public class UtilsJbossFacadeLookup
    
    private Context createContext() throws NamingException
    {
-       final Hashtable<String,String> jndiProperties = new Hashtable<String,String>();
+       final Map<String,String> jndiProperties = new HashMap<String,String>();
        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 //       jndiProperties.put(Context.PROVIDER_URL, "remote://" +host +":4447");
 //       if(username!=null){jndiProperties.put(Context.SECURITY_PRINCIPAL, username);}

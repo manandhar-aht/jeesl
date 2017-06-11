@@ -10,7 +10,7 @@
 
     <artifactId>jeesl-interfaces</artifactId>
     <packaging>jar</packaging>
-    <name>UTILS - Interfaces</name>
+    <name>JEESL - Interfaces</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

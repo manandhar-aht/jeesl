@@ -10,7 +10,7 @@
 
     <artifactId>jeesl-ejb</artifactId>
     <packaging>jar</packaging>
-    <name>UTILS - EJB</name>
+    <name>JEESL - EJB</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

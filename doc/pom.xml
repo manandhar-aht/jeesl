@@ -10,7 +10,7 @@
 
     <artifactId>jeesl-doc</artifactId>
     <packaging>jar</packaging>
-    <name>UTILS - Documentation</name>
+    <name>JEESL - Documentation</name>
 
 	<dependencies>
 

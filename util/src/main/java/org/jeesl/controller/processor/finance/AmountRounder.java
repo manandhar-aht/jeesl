@@ -16,4 +16,10 @@ public class AmountRounder
 	{
 		return Math.round(value*100)/100.0d;
 	}
+	
+	public static double percentTwo(int a, int b)
+	{
+		double ratio = Integer.valueOf(a).doubleValue()/Integer.valueOf(b).doubleValue();
+		return two(100d*ratio);
+	}
 }

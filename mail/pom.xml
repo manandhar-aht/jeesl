@@ -11,7 +11,7 @@
 	
     <artifactId>jeesl-mail</artifactId>
     <packaging>jar</packaging>
-    <name>UTILS - Mail</name>
+    <name>JEESL - Mail</name>
 		
 	<dependencies>
 		<dependency>

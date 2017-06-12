@@ -11,7 +11,7 @@
 
 	<artifactId>jeesl-maven</artifactId>
 	<packaging>maven-plugin</packaging>
-	<name>UTILS - Maven Plugins</name>
+	<name>JEESL - Maven Plugins</name>
 	<url>http://sourceforge.net/projects/ahtutils</url>
 	
 	<dependencyManagement>

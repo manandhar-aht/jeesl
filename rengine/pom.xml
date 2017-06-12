@@ -11,7 +11,7 @@
 	
     <artifactId>jeesl-rengine</artifactId>
     <packaging>jar</packaging>
-    <name>UTILS - R-Engine</name>
+    <name>JEESL - Connectors</name>
 	
 	<properties>
 		<version.jetty>9.2.12.v20150709</version.jetty>

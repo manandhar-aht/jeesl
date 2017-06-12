@@ -11,7 +11,7 @@
 	
     <artifactId>jeesl-xml</artifactId>
     <packaging>jar</packaging>
-    <name>UTILS - XML</name>
+    <name>JEESL - XML</name>
     
 	<dependencyManagement>
 		<dependencies>      	         

@@ -11,7 +11,7 @@
 	
     <artifactId>jeesl-test</artifactId>
     <packaging>jar</packaging>
-    <name>UTILS - Test</name>
+    <name>JEESL - Test</name>
 
 	<dependencyManagement>
 		<dependencies>      	         

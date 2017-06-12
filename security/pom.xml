@@ -10,7 +10,7 @@
 
     <artifactId>jeesl-security</artifactId>
     <packaging>jar</packaging>
-    <name>UTILS - Security</name>
+    <name>JEESL - Security</name>
 
 	<dependencies>
 		<dependency>

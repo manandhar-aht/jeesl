@@ -10,7 +10,7 @@
 	</parent>
 	
     <artifactId>jeesl-prototype</artifactId>
-    <name>UTILS - Prototype</name>
+    <name>JEESL - Prototype</name>
 	<packaging>jar</packaging>
 		
 	<dependencies>

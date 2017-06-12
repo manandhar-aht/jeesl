@@ -10,7 +10,7 @@
 
     <artifactId>jeesl-entities</artifactId>
     <packaging>jar</packaging>
-    <name>JEESL - EJB</name>
+    <name>JEESL - Entities</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

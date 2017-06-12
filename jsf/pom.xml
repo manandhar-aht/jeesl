@@ -10,7 +10,7 @@
 	</parent>
 	
     <artifactId>jeesl-jsf</artifactId>
-    <name>UTILS - JSF</name>
+    <name>JEESL - JSF</name>
 	<packaging>jar</packaging>
 	
 	<dependencyManagement>

@@ -15,6 +15,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.status.Parent;
 import net.sf.ahtutils.xml.status.Status;
+import net.sf.ahtutils.xml.status.SubType;
 
 public class XmlStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
 {
@@ -118,5 +119,15 @@ public class XmlStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, 
 		Status xml = new Status();
 		xml.setId(id);
 		return xml;
+	}
+	
+	public static List<Long> toIds(List<Status> list)
+	{
+		List<Long> result = new ArrayList<Long>();
+		for(Status type : list)
+		{
+			if(type.isSetId()){result.add(type.getId());}
+		}
+		return result;
 	}
 }

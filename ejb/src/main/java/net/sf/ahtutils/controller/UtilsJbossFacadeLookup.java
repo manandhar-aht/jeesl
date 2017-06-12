@@ -23,7 +23,7 @@ public class UtilsJbossFacadeLookup
 	
 	private String appName;
 	private String moduleName;
-	private Properties properties = new Properties();
+	private final Properties properties = new Properties();
 	
 	public UtilsJbossFacadeLookup(String appName, String moduleName)
 	{

@@ -22,38 +22,38 @@ public abstract class AbstractEjbQuery implements Serializable,JeeslQuery
 	}
 	
 	private boolean distinct;
-	public boolean isDistinct() {return distinct;}
-	public void setDistinct(boolean distinct) {this.distinct = distinct;}
+	@Override public boolean isDistinct() {return distinct;}
+	@Override public void setDistinct(boolean distinct) {this.distinct = distinct;}
 
 	private Integer firstResult;
-	public Integer getFirstResult() {return firstResult;}
-	public void setFirstResult(Integer firstResult) {this.firstResult = firstResult;}
+	@Override public Integer getFirstResult() {return firstResult;}
+	@Override public void setFirstResult(Integer firstResult) {this.firstResult = firstResult;}
 
 	private Integer maxResults;
-	public Integer getMaxResults() {return maxResults;}
-	public void setMaxResults(Integer maxResults) {this.maxResults = maxResults;}
+	@Override public Integer getMaxResults() {return maxResults;}
+	@Override public void setMaxResults(Integer maxResults) {this.maxResults = maxResults;}
 	
 	//Sorting
 	private String sortBy;
-	public String getSortBy() {return sortBy;}
+	@Override public String getSortBy() {return sortBy;}
 
 	private boolean sortAscending;
-	public boolean isSortAscending() {return sortAscending;}
+	@Override public boolean isSortAscending() {return sortAscending;}
 	
-	public void sort(String sortBy, boolean sortAscending)
+	@Override public void sort(String sortBy, boolean sortAscending)
 	{
 		this.sortBy=sortBy;
 		this.sortAscending=sortAscending;
 	}
-	public void noSort()
+	@Override public void noSort()
 	{
 		sortBy=null;
 	}
-	public boolean withSort(){return (sortBy!=null && sortBy.trim().length()>0);}
+	@Override public boolean withSort(){return (sortBy!=null && sortBy.trim().length()>0);}
 
 
-	public void debug(boolean debug){debug(debug,0);}
-	public void debug(boolean debug,int ident)
+	@Override public void debug(boolean debug){debug(debug,0);}
+	@Override public void debug(boolean debug,int ident)
 	{
 		if(debug)
 		{

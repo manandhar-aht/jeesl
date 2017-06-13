@@ -19,7 +19,12 @@ public class AmountRounder
 	
 	public static double percentTwo(int a, int b)
 	{
-		double ratio = Integer.valueOf(a).doubleValue()/Integer.valueOf(b).doubleValue();
+		return percentTwo(Integer.valueOf(a).doubleValue(),Integer.valueOf(b).doubleValue());
+	}
+	
+	public static double percentTwo(double a, double b)
+	{
+		double ratio = a/b;
 		return two(100d*ratio);
 	}
 }

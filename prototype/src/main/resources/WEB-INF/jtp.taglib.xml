@@ -32,7 +32,7 @@
     </tag>
 	<tag>
         <tag-name>reportDomain</tag-name>
-        <source>jeeslPrototype/reportDomain.xhtml</source>
+        <source>jeeslPrototype/report/domain.xhtml</source>
     </tag>
 	<tag>
         <tag-name>sbDateInterval</tag-name>

@@ -36,7 +36,7 @@ public class OutputXpath extends UIOutput
 	
 	public OutputXpath()
 	{
-		logger.info("New Instance of "+this.getClass().getSimpleName()+" "+this.hashCode());
+//		logger.info("New Instance of "+this.getClass().getSimpleName()+" "+this.hashCode());
 	}
 	
 	@Override public boolean getRendersChildren(){return true;}
@@ -73,7 +73,7 @@ public class OutputXpath extends UIOutput
 		try
 		{
 			Object value = ctx.getValue(xpath);
-			logger.info("Object: Type "+value.getClass().getName());
+//			logger.info("Object: Type "+value.getClass().getName());
 			
 			Object oColumn = ComponentAttribute.getObject(Properties.column.toString(),null,context,this);
 			if(oColumn!=null && JeeslReportColumn.class.isAssignableFrom(oColumn.getClass()))
@@ -83,7 +83,7 @@ public class OutputXpath extends UIOutput
 				if(c.getDataType()!=null)
 				{
 					UtilsStatus dt = c.getDataType();
-					logger.info("   DataType  code:"+dt.getCode()+" style:"+dt.getStyle()+" symbol:"+dt.getSymbol());
+//					logger.info("   DataType  code:"+dt.getCode()+" style:"+dt.getStyle()+" symbol:"+dt.getSymbol());
 					
 					if(dt.getCode().startsWith("numberDouble"))
 					{
@@ -100,7 +100,7 @@ public class OutputXpath extends UIOutput
 					{
 						SimpleDateFormat sdf = getSimpleDateFormat(c,dt);
 						
-						logger.info("Checking SimpleDateFormat");
+//						logger.info("Checking SimpleDateFormat");
 						if(value instanceof XMLGregorianCalendar)
 						{
 							XMLGregorianCalendar xmlGc = (XMLGregorianCalendar)value;

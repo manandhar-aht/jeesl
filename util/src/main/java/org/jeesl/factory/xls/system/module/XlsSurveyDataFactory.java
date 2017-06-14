@@ -1,8 +1,23 @@
 package org.jeesl.factory.xls.system.module;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.mutable.MutableInt;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
+import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
+import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -15,31 +30,13 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.model.pojo.map.Nested2Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
-import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
-
-import java.util.HashMap;
-import java.util.TreeMap;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.mutable.MutableInt;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
-import org.jeesl.factory.factory.SurveyFactoryFactory;
-import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
-import org.jeesl.model.pojo.map.Nested2Map;
-
 
 public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -65,16 +62,16 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 	private final String localeCode;
 	private final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
 	
-	
 	private Map<Long, HeaderData> sectionHeaders;
 	private Map<Long, HeaderData> questionHeaders;
 	private CellStyle style;
 	String answerTypes[] = {"Yes/No","Number","Natural Number","Score","Option","Text","Remark"};
 	
-	public XlsSurveyDataFactory(String localeCode, SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
+	public XlsSurveyDataFactory(String localeCode, EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption)
 	{
 		this.localeCode = localeCode;
-		efOption = ffSurvey.option();
+		this.efOption = efOption;
+//		efOption = ffSurvey.option();
 	}
 	
 	public void lazy(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)

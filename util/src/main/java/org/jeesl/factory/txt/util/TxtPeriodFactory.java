@@ -12,9 +12,9 @@ public class TxtPeriodFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(TxtPeriodFactory.class);
 	
-	public static enum UNITS{hourMinute}
+	public static enum UNITS{hourMinute,minuteSecondMilli}
 	
-	private PeriodFormatter periodFormatter;
+	private final PeriodFormatter periodFormatter;
 	
 	PeriodType pt;
 	
@@ -25,7 +25,11 @@ public class TxtPeriodFactory
 			    .appendDays().appendSuffix(" day", " days").appendSeparator(" ")
 			    .appendHours().appendSuffix("hr", "hrs").appendSeparator(" ")
 			    .appendMinutes().appendSuffix("min", "mins").appendSeparator(" ")
-			    .appendSeconds().appendSuffix(" second", " secs").toFormatter();
+			    .appendSeconds().appendSuffix(" second", " secs").appendSeparator(" ")
+				.appendMillis().appendSuffix(" ms", " ms")
+				.toFormatter();
+				
+				//appendSuffix(" second", " secs").toFormatter();
 		setUnits(UNITS.hourMinute);
 	}
 	
@@ -35,6 +39,7 @@ public class TxtPeriodFactory
 		switch(units)
 		{
 			case hourMinute: types = new DurationFieldType[]{DurationFieldType.hours(),DurationFieldType.minutes()};break;
+			case minuteSecondMilli: types = new DurationFieldType[]{DurationFieldType.minutes(),DurationFieldType.seconds(),DurationFieldType.millis()};break;
 		}
 		pt = PeriodType.forFields(types);
 	}
@@ -45,5 +50,9 @@ public class TxtPeriodFactory
 		return periodFormatter.print(p.normalizedStandard(pt));
 	}
 	
-	
+	public String debugMillis(long millies)
+	{
+		Period p = Period.millis(Long.valueOf(millies).intValue());
+		return periodFormatter.print(p.normalizedStandard(pt));
+	}
 }

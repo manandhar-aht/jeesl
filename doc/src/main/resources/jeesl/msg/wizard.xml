@@ -7,4 +7,11 @@
     		<s:lang key="fr" translation="Wizard"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslWizard">
+    	<s:langs>
+    		<s:lang key="de" translation="Wizard"/>
+    		<s:lang key="en" translation="Wizard"/>
+    		<s:lang key="fr" translation="Wizard"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

@@ -2,6 +2,7 @@ package net.sf.ahtutils.monitor;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jeesl.factory.txt.util.TxtPeriodFactory;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -15,7 +16,10 @@ public class ProcessingTimeTracker
 	
 	private long start;
 	private long stop;
+	private long previousEvent;
 	private int counter;
+	
+	private final TxtPeriodFactory tfPeriod;
 	
 	public ProcessingTimeTracker()
 	{
@@ -25,7 +29,10 @@ public class ProcessingTimeTracker
 	{
 		counter=0;
 		start=0;
+		previousEvent=0;
 		stop=0;
+		tfPeriod = new TxtPeriodFactory();
+		tfPeriod.setUnits(TxtPeriodFactory.UNITS.minuteSecondMilli);
 		if(autoStart){start();}
 	}
 	
@@ -42,9 +49,25 @@ public class ProcessingTimeTracker
 	public String toTotalTime()
 	{
 		if(stop==0){stop();}
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append(stop-start);
 		sb.append(" ms");
+		return sb.toString();
+	}
+	
+	public String debugEvent(String event)
+	{
+		long now = System.currentTimeMillis();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[");
+		sb.append(tfPeriod.debugMillis(now-previousEvent));
+		sb.append("] total [");
+		sb.append(tfPeriod.debugMillis(now-start));
+		sb.append("] for ");
+		sb.append(event);
+		previousEvent = now;
 		return sb.toString();
 	}
 	
@@ -57,7 +80,6 @@ public class ProcessingTimeTracker
 	
 	public String buildDefaultDebug(String prefix)
 	{
-
 		StringBuffer sb = new StringBuffer();
 		sb.append(prefix);
 		sb.append(" ").append(counter).append(" times");

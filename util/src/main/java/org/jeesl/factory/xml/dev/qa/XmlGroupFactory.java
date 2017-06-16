@@ -68,7 +68,7 @@ QAUS extends UtilsStatus<QAUS,L,D>>
 		if(q.isSetId()){xml.setId(group.getId());}
 		
 		if(q.isSetName()){xml.setName(group.getName());}
-		if(q.isSetDescription()){xml.setDescription(net.sf.ahtutils.factory.xml.status.XmlDescriptionFactory.build(group.getDescription()));}
+		if(q.isSetDescription()){xml.setDescription(org.jeesl.factory.xml.system.lang.XmlDescriptionFactory.build(group.getDescription()));}
 		
 		return xml;
 	}

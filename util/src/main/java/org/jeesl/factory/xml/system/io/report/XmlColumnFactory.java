@@ -1,5 +1,7 @@
 package org.jeesl.factory.xml.system.io.report;
 
+import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.jeesl.factory.xml.system.status.XmlDataTypeFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
@@ -14,8 +16,6 @@ import org.jeesl.interfaces.model.system.io.report.type.JeeslReportQueryType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
-import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;

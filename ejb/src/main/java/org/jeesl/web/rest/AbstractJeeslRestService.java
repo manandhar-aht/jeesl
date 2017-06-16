@@ -3,7 +3,7 @@ package org.jeesl.web.rest;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.model.xml.jeesl.Container;
-import org.jeesl.util.query.xml.StatusQuery;
+import org.jeesl.util.query.xml.XmlStatusQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +32,7 @@ public abstract class AbstractJeeslRestService <L extends UtilsLang,D extends Ut
 		this.cL=cL;
 		this.cD=cD;
 		
-		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
+		xfContainer = new XmlContainerFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
 	}
 		
     @SuppressWarnings({ "rawtypes", "unchecked" })

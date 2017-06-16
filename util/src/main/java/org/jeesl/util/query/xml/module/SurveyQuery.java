@@ -10,11 +10,11 @@ import org.jeesl.factory.xml.module.survey.XmlDataFactory;
 import org.jeesl.factory.xml.module.survey.XmlScoreFactory;
 import org.jeesl.factory.xml.module.survey.XmlSurveyFactory;
 import org.jeesl.factory.xml.module.survey.XmlTemplateFactory;
+import org.jeesl.factory.xml.system.lang.XmlDescriptionFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.model.xml.jeesl.QuerySurvey;
 
-import net.sf.ahtutils.factory.xml.status.XmlDescriptionFactory;
 import net.sf.ahtutils.factory.xml.status.XmlUnitFactory;
 import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;
 import net.sf.ahtutils.xml.aht.Query;

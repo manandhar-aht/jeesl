@@ -27,7 +27,7 @@ import org.jeesl.model.xml.system.revision.Attribute;
 import org.jeesl.model.xml.system.revision.Entities;
 import org.jeesl.model.xml.system.revision.Entity;
 import org.jeesl.util.query.xml.RevisionQuery;
-import org.jeesl.util.query.xml.StatusQuery;
+import org.jeesl.util.query.xml.XmlStatusQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,7 +96,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cRA=cRA;
 		this.cRAT=cRAT;
 	
-		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
+		xfContainer = new XmlContainerFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
 		xfEntity = new XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntity));
 			
 		efLang = EjbLangFactory.factory(cL);

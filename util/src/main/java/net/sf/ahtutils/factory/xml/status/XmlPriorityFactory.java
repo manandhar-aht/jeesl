@@ -1,5 +1,7 @@
 package net.sf.ahtutils.factory.xml.status;
 
+import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

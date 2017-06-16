@@ -3,6 +3,7 @@ package net.sf.ahtutils.factory.xml.status;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

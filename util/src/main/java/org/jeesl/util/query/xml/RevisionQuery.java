@@ -42,8 +42,8 @@ public class RevisionQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		xml.setCategory(XmlCategoryFactory.create(""));
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		xml.setRemark(XmlRemarkFactory.build(""));
 		xml.getAttribute().add(exAttribute());
 		return xml;
@@ -66,8 +66,8 @@ public class RevisionQuery
 		
 		xml.setType(XmlTypeFactory.create(""));
 		
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		xml.setRemark(XmlRemarkFactory.build(""));
 		
 		return xml;

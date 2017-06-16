@@ -7,6 +7,7 @@ import net.sf.ahtutils.xml.status.Capability;
 import net.sf.ahtutils.xml.status.Copy;
 import net.sf.ahtutils.xml.status.Status;
 
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

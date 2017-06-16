@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.status;
+package org.jeesl.factory.xml.system.lang;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.xml.status.Description;

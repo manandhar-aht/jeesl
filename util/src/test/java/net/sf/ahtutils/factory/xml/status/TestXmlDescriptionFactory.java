@@ -4,6 +4,7 @@ import net.sf.ahtutils.test.AbstractFileProcessingTest;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.factory.xml.system.lang.XmlDescriptionFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

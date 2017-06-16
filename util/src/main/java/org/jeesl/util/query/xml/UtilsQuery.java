@@ -51,8 +51,8 @@ public class UtilsQuery
 		xml.setColorBackground("");
 		xml.setColorText("");
 		
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		
 		return xml;
 	}

@@ -1,5 +1,7 @@
 package org.jeesl.factory.xml.system.revision;
 
+import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
@@ -11,8 +13,6 @@ import org.jeesl.model.xml.system.revision.Attribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
-import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

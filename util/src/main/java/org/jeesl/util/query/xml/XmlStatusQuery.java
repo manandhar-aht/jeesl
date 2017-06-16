@@ -19,9 +19,9 @@ import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.status.SubType;
 import net.sf.ahtutils.xml.status.Type;
 
-public class StatusQuery
+public class XmlStatusQuery
 {
-	public static enum Key {StatusExport,Langs,extractType,statusLabel,typeLabel,categoryLabel}
+	public static enum Key {StatusExport,Langs,extractType,statusLabel,typeLabel,categoryLabel,modelLabel}
 	
 	private static Map<Key,Query> mQueries;
 	
@@ -40,7 +40,7 @@ public class StatusQuery
 				case statusLabel: q.setStatus(statusLabel());break;
 				case typeLabel: q.setType(typeLabel());break;
 				case categoryLabel: q.setType(typeLabel());break;
-//				case categoryLabel: q.setModel(modelLabel());break;
+				case modelLabel: q.setModel(modelLabel());break;
 			}
 			mQueries.put(key, q);
 		}

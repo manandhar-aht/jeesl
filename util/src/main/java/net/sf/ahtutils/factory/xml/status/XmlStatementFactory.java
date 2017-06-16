@@ -5,6 +5,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Statement;
 
+import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

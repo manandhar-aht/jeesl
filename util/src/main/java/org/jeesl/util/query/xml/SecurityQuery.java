@@ -52,8 +52,8 @@ public class SecurityQuery
 		Role xml = new Role();
 		xml.setId(0);
 		xml.setCode("");
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		return xml;
 	}
 	
@@ -110,8 +110,8 @@ public class SecurityQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		xml.setDocumentation(true);
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		
 		return xml;
 	}
@@ -131,8 +131,8 @@ public class SecurityQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		xml.setDocumentation(true);
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		
 		xml.setPublic(true);
 		xml.setOnlyLoginRequired(true);
@@ -150,8 +150,8 @@ public class SecurityQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		xml.setDocumentation(true);
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		
 		xml.setAccess(XmlAccessFactory.build(true,true));
 		xml.setNavigation(new Navigation());
@@ -170,8 +170,8 @@ public class SecurityQuery
 		xml.setVisible(true);
 		xml.setDocumentation(true);
 		xml.setCode("");
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		xml.setActions(XmlActionsFactory.build());xml.getActions().getAction().add(XmlActionFactory.build(""));
 		xml.setViews(XmlViewsFactory.build());xml.getViews().getView().add(XmlViewFactory.build(""));
 		xml.setUsecases(XmlUsecasesFactory.build());xml.getUsecases().getUsecase().add(XmlUsecaseFactory.build(""));
@@ -182,8 +182,8 @@ public class SecurityQuery
 	{
 		net.sf.ahtutils.xml.security.Template xml = new net.sf.ahtutils.xml.security.Template();
 		xml.setCode("");
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		return xml;
 	}
 	
@@ -194,8 +194,8 @@ public class SecurityQuery
 		
 		net.sf.ahtutils.xml.access.Action xml = new net.sf.ahtutils.xml.access.Action();
 		xml.setCode("");
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		xml.setTemplate(template);
 		return xml;
 	}
@@ -207,8 +207,8 @@ public class SecurityQuery
 		
 		net.sf.ahtutils.xml.security.Action xml = new net.sf.ahtutils.xml.security.Action();
 		xml.setCode("");
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		xml.setTemplate(template);
 		return xml;
 	}
@@ -217,13 +217,13 @@ public class SecurityQuery
 	{
 		net.sf.ahtutils.xml.security.Template template = new net.sf.ahtutils.xml.security.Template();
 		template.setCode("");
-		template.setLangs(StatusQuery.langs());
-		template.setDescriptions(StatusQuery.descriptions());
+		template.setLangs(XmlStatusQuery.langs());
+		template.setDescriptions(XmlStatusQuery.descriptions());
 		
 		net.sf.ahtutils.xml.access.Action xml = new net.sf.ahtutils.xml.access.Action();
 		xml.setCode("");
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		xml.setTemplate(template);
 		return xml;
 	}
@@ -238,8 +238,8 @@ public class SecurityQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		xml.setDocumentation(true);
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		xml.setActions(XmlActionsFactory.build());xml.getActions().getAction().add(action);
 		xml.setViews(XmlViewsFactory.build());xml.getViews().getView().add(view);
 		
@@ -250,8 +250,8 @@ public class SecurityQuery
 	{
 		net.sf.ahtutils.xml.security.Template template = new net.sf.ahtutils.xml.security.Template();
 		template.setCode("");
-		template.setLangs(StatusQuery.langs());
-		template.setDescriptions(StatusQuery.descriptions());
+		template.setLangs(XmlStatusQuery.langs());
+		template.setDescriptions(XmlStatusQuery.descriptions());
 		
 		net.sf.ahtutils.xml.security.View viewCode = new net.sf.ahtutils.xml.security.View();
 		viewCode.setCode("");
@@ -259,8 +259,8 @@ public class SecurityQuery
 		net.sf.ahtutils.xml.security.Action action = new net.sf.ahtutils.xml.security.Action();
 		action.setCode("");
 		action.setView(viewCode);
-		action.setLangs(StatusQuery.langs());
-		action.setDescriptions(StatusQuery.descriptions());
+		action.setLangs(XmlStatusQuery.langs());
+		action.setDescriptions(XmlStatusQuery.descriptions());
 		action.setTemplate(template);
 		
 		Usecase xml = new Usecase();
@@ -268,8 +268,8 @@ public class SecurityQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		xml.setDocumentation(true);
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		xml.setActions(XmlActionsFactory.build());xml.getActions().getAction().add(action);
 		xml.setViews(XmlViewsFactory.build());xml.getViews().getView().add(SecurityQuery.exView());
 		

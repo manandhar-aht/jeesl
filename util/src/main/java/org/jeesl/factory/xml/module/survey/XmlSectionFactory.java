@@ -1,6 +1,7 @@
 package org.jeesl.factory.xml.module.survey;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.factory.xml.system.lang.XmlDescriptionFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -16,7 +17,6 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.status.XmlDescriptionFactory;
 import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

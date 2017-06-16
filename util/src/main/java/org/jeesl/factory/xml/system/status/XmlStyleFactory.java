@@ -1,13 +1,13 @@
 package org.jeesl.factory.xml.system.status;
 
-import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
-import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.status.Style;
 
+import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

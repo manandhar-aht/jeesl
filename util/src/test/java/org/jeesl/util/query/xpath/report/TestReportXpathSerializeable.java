@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.AbstractJeeslUtilTest;
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;

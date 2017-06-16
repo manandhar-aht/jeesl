@@ -18,7 +18,7 @@ import org.jeesl.factory.xml.system.status.XmlDataTypeFactory;
 import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
-import org.jeesl.util.query.xml.StatusQuery;
+import org.jeesl.util.query.xml.XmlStatusQuery;
 
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.report.Cell;
@@ -64,8 +64,8 @@ public class ReportQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		
 		xml.setCategory(XmlCategoryFactory.create(""));
 		xml.setImplementation(XmlImplementationFactory.build(""));
@@ -82,8 +82,8 @@ public class ReportQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		
 		xml.getCell().add(exCell());
 		
@@ -97,8 +97,8 @@ public class ReportQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		
 		xml.setLayout(XmlLayoutFactory.build());
 		xml.getLayout().setFont(exFont());
@@ -123,8 +123,8 @@ public class ReportQuery
 		xml.setColNr(1);
 		xml.setRowNr(1);
 		
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		
 		return xml;
 	}
@@ -144,8 +144,8 @@ public class ReportQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		
-		xml.getContent().add(StatusQuery.langs());
-		xml.getContent().add(StatusQuery.descriptions());
+		xml.getContent().add(XmlStatusQuery.langs());
+		xml.getContent().add(XmlStatusQuery.descriptions());
 		xml.getContent().add(exportColumnGroup());
 		xml.getContent().add(XmlQueriesFactory.build());
 		xml.getContent().add(XmlRowsFactory.build(exportRow()));
@@ -164,8 +164,8 @@ public class ReportQuery
 		xml.setShowLabel(true);
 		xml.setShowWeb(true);
 		
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		xml.setLayout(layout());
 		xml.getXlsColumn().add(exportColumn());
 		return xml;
@@ -178,8 +178,8 @@ public class ReportQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		xml.setType(XmlTypeFactory.create(""));
 		xml.setDataType(XmlDataTypeFactory.build(""));
 		xml.setTemplate(XmlTemplateFactory.build(""));
@@ -213,8 +213,8 @@ public class ReportQuery
 		xml.setQueries(XmlQueriesFactory.build());
 		xml.setLayout(layout());
 		
-		xml.setLangs(StatusQuery.langs());
-		xml.setDescriptions(StatusQuery.descriptions());
+		xml.setLangs(XmlStatusQuery.langs());
+		xml.setDescriptions(XmlStatusQuery.descriptions());
 		return xml;
 	}
 }

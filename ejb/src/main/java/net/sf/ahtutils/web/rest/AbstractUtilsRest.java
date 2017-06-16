@@ -7,7 +7,7 @@ import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
-import org.jeesl.util.query.xml.StatusQuery;
+import org.jeesl.util.query.xml.XmlStatusQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +56,7 @@ public class AbstractUtilsRest <L extends UtilsLang, D extends UtilsDescription>
 	
 	protected <S extends UtilsStatus<S,L,D>> Aht exportStatus(Class<S> c)
 	{
-		XmlStatusFactory f = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
+		XmlStatusFactory f = new XmlStatusFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
 		
 		Aht xml = new Aht();
 		for(S s : fUtils.all(c))
@@ -70,7 +70,7 @@ public class AbstractUtilsRest <L extends UtilsLang, D extends UtilsDescription>
 	
 	protected <S extends UtilsStatus<S,L,D>> Container exportContainer(Class<S> c)
 	{
-		XmlStatusFactory f = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
+		XmlStatusFactory f = new XmlStatusFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
 		
 		Container xml = new Container();
 		for(S s : fUtils.all(c))

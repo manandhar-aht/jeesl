@@ -38,7 +38,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.model.json.system.status.JsonContainer;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.util.query.json.JsonStatusQueryProvider;
-import org.jeesl.util.query.xml.StatusQuery;
+import org.jeesl.util.query.xml.XmlStatusQuery;
 import org.jeesl.util.query.xml.module.SurveyQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
@@ -142,8 +142,8 @@ public class SurveyRestService <L extends UtilsLang,
 		jfContainer = new JsonContainerFactory("en",JsonStatusQueryProvider.statusExport());
 		jfTemplate = new JsonTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(JsonStatusQueryProvider.templateExport(),fSurvey);
 		
-		xfContainer = new XmlContainerFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
-		xfStatus = new XmlStatusFactory(StatusQuery.get(StatusQuery.Key.StatusExport).getStatus());
+		xfContainer = new XmlContainerFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
+		xfStatus = new XmlStatusFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
 		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exTemplate).getTemplate());
 		xfTemplate.lazyLoad(fSurvey);
 		

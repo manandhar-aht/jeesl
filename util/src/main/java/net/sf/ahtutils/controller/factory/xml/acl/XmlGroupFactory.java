@@ -1,7 +1,5 @@
 package net.sf.ahtutils.controller.factory.xml.acl;
 
-import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
-import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.acl.UtilsAclCategoryGroup;
@@ -10,6 +8,8 @@ import net.sf.ahtutils.model.interfaces.acl.UtilsAclGroup;
 import net.sf.ahtutils.model.interfaces.acl.UtilsAclView;
 import net.sf.ahtutils.xml.access.Group;
 
+import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

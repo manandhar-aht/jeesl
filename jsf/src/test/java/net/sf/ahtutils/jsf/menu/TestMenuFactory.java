@@ -3,6 +3,7 @@ package net.sf.ahtutils.jsf.menu;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.lang.XmlLangFactory;
 import org.jeesl.jsf.menu.MenuXmlBuilder;
 import org.jeesl.model.xml.system.navigation.Menu;
 import org.jeesl.model.xml.system.navigation.MenuItem;
@@ -14,7 +15,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.status.XmlLangFactory;
 import net.sf.ahtutils.test.AbstractAhtUtilsJsfTst;
 import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.access.Category;

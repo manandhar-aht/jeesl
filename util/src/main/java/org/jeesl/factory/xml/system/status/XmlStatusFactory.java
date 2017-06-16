@@ -3,11 +3,12 @@ package org.jeesl.factory.xml.system.status;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
+import org.jeesl.factory.xml.system.lang.XmlLangFactory;
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.factory.xml.status.XmlDescriptionsFactory;
-import net.sf.ahtutils.factory.xml.status.XmlLangsFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -15,14 +16,16 @@ import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.status.Parent;
 import net.sf.ahtutils.xml.status.Status;
-import net.sf.ahtutils.xml.status.SubType;
 
 public class XmlStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlStatusFactory.class);
+	
+	private final String localeCode;
+	private final Status q;
 		
-	private Status q;
-	private String localeCode;
+	private XmlLangsFactory<L> xfLangs;
+	private XmlDescriptionsFactory<D> xfDescriptions;
 	
 	public XmlStatusFactory(Query query){this(query.getLang(),query.getStatus());}
 	public XmlStatusFactory(Status q){this(null,q);}
@@ -30,6 +33,9 @@ public class XmlStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, 
 	{
 		this.localeCode=localeCode;
 		this.q=q;
+		
+		if(q.isSetLangs()) {xfLangs = new XmlLangsFactory<L>(q.getLangs());}
+		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 	}
 	
 	public List<Status> build(List<S> list)
@@ -52,36 +58,10 @@ public class XmlStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, 
 		if(q.isSetSymbol() && (ejb instanceof UtilsWithSymbol)){xml.setSymbol(ejb.getSymbol());}
 		if(q.isSetVisible()){xml.setVisible(ejb.isVisible());}
 		
-		if(q.isSetLangs())
-		{
-			XmlLangsFactory<L> f = new XmlLangsFactory<L>(q.getLangs());
-			xml.setLangs(f.getUtilsLangs(ejb.getName()));
-		}
-		if(q.isSetDescriptions())
-		{
-			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(q.getDescriptions());
-			xml.setDescriptions(f.create(ejb.getDescription()));
-		}
+		if(q.isSetLangs()) {xml.setLangs(xfLangs.getUtilsLangs(ejb.getName()));}
+		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(ejb.getDescription()));}
 		
-		if(q.isSetLabel() && localeCode!=null)
-		{
-			if(ejb.getName()!=null)
-			{
-				if(ejb.getName().containsKey(localeCode)){xml.setLabel(ejb.getName().get(localeCode).getLang());}
-				else
-				{
-					String msg = "No translation "+localeCode+" available in "+ejb;
-					logger.warn(msg);
-					xml.setLabel(msg);
-				}
-			}
-			else
-			{
-				String msg = "No @name available in "+ejb;
-				logger.warn(msg);
-				xml.setLabel(msg);
-			}
-		}
+		if(q.isSetLabel() && localeCode!=null){xml.setLabel(XmlLangFactory.label(localeCode,ejb));}
 		
 		if(q.isSetParent() && ejb.getParent()!=null)
 		{

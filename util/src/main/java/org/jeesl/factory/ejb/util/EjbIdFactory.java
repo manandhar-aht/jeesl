@@ -125,4 +125,11 @@ public class EjbIdFactory
 	{
 		if(ejb.getId()<0){ejb.setId(0);}
 	}
+	
+	public static <T extends EjbWithId> List<EjbWithId> toEjbIdList(List<T> list)
+	{
+		List<EjbWithId> result = new ArrayList<EjbWithId>();
+		for(T l : list){result.add(l);}
+		return result;
+	}
 }

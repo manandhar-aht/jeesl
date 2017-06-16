@@ -14,6 +14,7 @@ import net.sf.ahtutils.xml.report.Report;
 import net.sf.ahtutils.xml.security.Category;
 import net.sf.ahtutils.xml.security.Staff;
 import net.sf.ahtutils.xml.status.Langs;
+import net.sf.ahtutils.xml.status.Model;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.status.Type;
 import net.sf.ahtutils.xml.survey.Answer;
@@ -41,6 +42,7 @@ import org.jeesl.model.xml.system.revision.Entity;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}status"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}type"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/status}model"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/qa}test"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}category"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}staff"/&gt;
@@ -69,6 +71,7 @@ import org.jeesl.model.xml.system.revision.Entity;
     "langs",
     "status",
     "type",
+    "model",
     "test",
     "category",
     "staff",
@@ -97,6 +100,8 @@ public class Query
     protected Status status;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Type type;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
+    protected Model model;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/qa", required = true)
     protected Test test;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
@@ -236,6 +241,34 @@ public class Query
 
     public boolean isSetType() {
         return (this.type!= null);
+    }
+
+    /**
+     * Gets the value of the model property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Model }
+     *     
+     */
+    public Model getModel() {
+        return model;
+    }
+
+    /**
+     * Sets the value of the model property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Model }
+     *     
+     */
+    public void setModel(Model value) {
+        this.model = value;
+    }
+
+    public boolean isSetModel() {
+        return (this.model!= null);
     }
 
     /**

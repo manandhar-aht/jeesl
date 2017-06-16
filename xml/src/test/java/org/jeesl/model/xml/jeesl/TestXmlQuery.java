@@ -12,6 +12,7 @@ import org.jeesl.model.xml.system.revision.TestXmlEntity;
 import org.jeesl.model.xml.system.security.TestXmlCategory;
 import org.jeesl.model.xml.system.security.TestXmlStaff;
 import org.jeesl.model.xml.system.status.TestXmlLangs;
+import org.jeesl.model.xml.system.status.TestXmlModel;
 import org.jeesl.model.xml.system.status.TestXmlStatus;
 import org.jeesl.model.xml.system.status.TestXmlType;
 import org.jeesl.model.xml.system.symbol.TestXmlGraphic;
@@ -41,6 +42,7 @@ public class TestXmlQuery extends AbstractXmlAhtTest<Query>
     		xml.setLangs(TestXmlLangs.create(false));
     		xml.setStatus(TestXmlStatus.create(false));
     		xml.setType(TestXmlType.create(false));
+    		xml.setModel(TestXmlModel.create(false));
     		
     		xml.setTest(TestXmlTest.create(false));
     		

@@ -103,6 +103,7 @@
         	    <xsd:element ref="s:langs" maxOccurs="1"/>
         	    <xsd:element ref="s:status" maxOccurs="1"/>
         	    <xsd:element ref="s:type" maxOccurs="1"/>
+        	    <xsd:element ref="s:model" maxOccurs="1"/>
         	    
         	    <xsd:element ref="qa:test" maxOccurs="1"/>
         	    

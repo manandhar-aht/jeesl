@@ -166,6 +166,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Model }
+     * 
+     */
+    public Model createModel() {
+        return new Model();
+    }
+
+    /**
      * Create an instance of {@link Category }
      * 
      */
@@ -299,14 +307,6 @@ public class ObjectFactory {
      */
     public Condition createCondition() {
         return new Condition();
-    }
-
-    /**
-     * Create an instance of {@link Model }
-     * 
-     */
-    public Model createModel() {
-        return new Model();
     }
 
     /**

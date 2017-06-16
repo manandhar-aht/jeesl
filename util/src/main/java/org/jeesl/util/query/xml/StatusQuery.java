@@ -10,6 +10,7 @@ import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.status.Level;
+import net.sf.ahtutils.xml.status.Model;
 import net.sf.ahtutils.xml.status.Parent;
 import net.sf.ahtutils.xml.status.Result;
 import net.sf.ahtutils.xml.status.Scope;
@@ -39,6 +40,7 @@ public class StatusQuery
 				case statusLabel: q.setStatus(statusLabel());break;
 				case typeLabel: q.setType(typeLabel());break;
 				case categoryLabel: q.setType(typeLabel());break;
+//				case categoryLabel: q.setModel(modelLabel());break;
 			}
 			mQueries.put(key, q);
 		}
@@ -117,6 +119,14 @@ public class StatusQuery
 	{		
 		Category xml = new Category();
 //		xml.setId(0);
+		xml.setCode("");
+		xml.setLabel("");
+		return xml;
+	}
+	
+	private static Model modelLabel()
+	{		
+		Model xml = new Model();
 		xml.setCode("");
 		xml.setLabel("");
 		return xml;

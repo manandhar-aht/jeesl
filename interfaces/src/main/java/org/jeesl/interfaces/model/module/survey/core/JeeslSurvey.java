@@ -38,6 +38,7 @@ public interface JeeslSurvey<L extends UtilsLang,
 						UtilsWithStatus<L,D,SS>
 {
 	public enum Attributes{id,status}
+	public enum Status{open,preparation};
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);

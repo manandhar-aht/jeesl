@@ -29,6 +29,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.model.pojo.map.Nested3Map;
+import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -251,12 +252,22 @@ public class SurveyHandler<L extends UtilsLang,
 		for(ANSWER a : answers.values())
 		{
 			a.setData(surveyData);
-			if(a.getQuestion().getShowSelectMulti()!=null && a.getQuestion().getShowSelectMulti())
+			boolean withMulti = BooleanComparator.active(a.getQuestion().getShowSelectMulti());
+			
+			if(withMulti)
 			{
-				logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).getClass().getName());
-				logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).toString());
+				boolean mapHasMulti = multiOptions.containsKey(a.getQuestion());
+				
+				logger.info("Multi-Options:"+withMulti+" map:"+mapHasMulti+" for Question "+a.getQuestion().toString());
 				a.getOptions().clear();
-				a.getOptions().addAll(multiOptions.get(a.getQuestion()));
+				if(mapHasMulti)
+				{
+					logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).getClass().getName());
+					logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).toString());
+					a.getOptions().addAll(multiOptions.get(a.getQuestion()));
+				}
+				else{logger.warn("No Multi-Options for Questison "+a.getQuestion().getCode());}
+				
 				logger.info("Multi: "+a.getOptions().size());
 			}
 			a = fSurvey.saveAnswer(a);

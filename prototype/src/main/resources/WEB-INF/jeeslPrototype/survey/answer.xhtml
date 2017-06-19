@@ -18,7 +18,9 @@
 			<p:selectOneMenu id="categoryS1" value="#{surveyHandler.answers[question].option}" effect="fade" rendered="#{question.showSelectOne and (not question.showMatrix)}">
 				<f:selectItems value="#{question.options}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
 			</p:selectOneMenu>
-			<p:selectManyMenu id="advanced" value="#{surveyHandler.multiOptions[question]}" var="o" showCheckbox="true" rendered="#{question.showSelectMulti and (not question.showMatrix)}">
+			<p:selectManyMenu showCheckbox="true" rendered="#{question.showSelectMulti and (not question.showMatrix)}"
+								value="#{surveyHandler.multiOptions[question]}" var="o"
+								 converter="surveyOptionExplicitConverter">
 	           	<f:selectItems value="#{question.options}" var="opt" itemLabel="#{opt.name[localeCode].lang}" itemValue="#{opt}" />
 	            <p:column>
 	                <h:outputText value="#{o.name[localeCode].lang}" />

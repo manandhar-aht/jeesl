@@ -18,6 +18,7 @@
 		<composite:attribute name="withVersion" required="false" default="true"/>
 		<composite:attribute name="withNested" required="false" default="false"/>
 		<composite:attribute name="withOptions" required="false" default="false"/>
+		<composite:attribute name="withMultiOptions" required="false" default="false"/>
 		<composite:attribute name="withSchemes" required="false" default="false"/>
 		<composite:attribute name="withMatrix" required="false" default="false"/>
 	</composite:interface>
@@ -244,20 +245,17 @@
 						</p:panelGrid>
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40" rendered="#{cc.attrs.withOptions}">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectOne}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectOne}"/>
-							<h:outputText value=""/><h:outputText value=""/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectMulti}" rendered="#{cc.attrs.withMultiOptions}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectMulti}" rendered="#{cc.attrs.withMultiOptions}"/>
 						</p:panelGrid>
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40" rendered="#{cc.attrs.withMatrix}">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showMatrix}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowMatrix}"/>
 							<h:outputText value=""/><h:outputText value=""/>
 						</p:panelGrid>
-						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40" rendered="#{false and cc.attrs.withOptions}">						
-							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectMulti}" /><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectMulti}"/>
-						</p:panelGrid>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 					</p:panel>
 				</h:form>
 				<h:form id="fOptions" rendered="#{(not empty cc.attrs.bean.question) and (cc.attrs.bean.question.id gt 0)}">
-					<p:dataTable var="o" value="#{cc.attrs.bean.options}" rowKey="#{o.id}" rendered="#{cc.attrs.withOptions}"
+					<p:dataTable var="o" value="#{cc.attrs.bean.options}" rowKey="#{o.id}" rendered="#{cc.attrs.withOptions or cc.attrs.withMultiOptions}"
                                  selection="#{cc.attrs.bean.option}" selectionMode="single" draggableRows="true">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.jeeslSurveyOptions}">

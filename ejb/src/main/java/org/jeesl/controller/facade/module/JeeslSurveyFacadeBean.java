@@ -139,6 +139,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	{
 		answer = em.find(cAnswer,answer.getId());
 		answer.getMatrix().size();
+		answer.getOptions().size();
 		return answer;
 	}
 

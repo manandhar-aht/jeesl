@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			 xmlns:media="http://www.openfuxml.org/media"
+			 xmlns:table="http://www.openfuxml.org/table"
+			 xmlns:layout="http://www.openfuxml.org/layout"
+			 xmlns:text="http://www.openfuxml.org/text"
+			 xmlns:l="http://www.openfuxml.org/list">
+	<ofx:title>Apache Webserver</ofx:title>
+				
+			<ofx:paragraph lang="en">
+				
+			</ofx:paragraph>
+		
+			<ofx:section container="true" classifier="debian">
+				<ofx:title lang="none">Linux Debian: 6 Squeeze and 7 Wheezy)</ofx:title>
+	
+			 	<ofx:listing>
+					<ofx:raw>apt-get install proftpd-basic
+ftpasswd --passwd --name myuser --uid 1000 --home /home/dev/ftp --shell /bin/false</ofx:raw>
+				</ofx:listing>
+				
+			</ofx:section>
+
+
+</ofx:section>

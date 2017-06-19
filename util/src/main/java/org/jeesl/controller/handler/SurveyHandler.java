@@ -80,6 +80,7 @@ public class SurveyHandler<L extends UtilsLang,
 	private List<SECTION> sections; public List<SECTION> getSections() {return sections;}
 	
 	private Map<QUESTION,ANSWER> answers; public Map<QUESTION,ANSWER> getAnswers() {return answers;}
+	private Map<QUESTION,List<OPTION>> multiOptions; public Map<QUESTION,List<OPTION>> getMultiOptions() {return multiOptions;}
 	private Map<QUESTION,List<OPTION>> matrixRows; public Map<QUESTION,List<OPTION>> getMatrixRows() {return matrixRows;}
 	private Map<QUESTION,List<OPTION>> matrixCols; public Map<QUESTION,List<OPTION>> getMatrixCols() {return matrixCols;}
 	private Map<QUESTION,List<OPTION>> matrixCells; public Map<QUESTION,List<OPTION>> getMatrixCells() {return matrixCells;}
@@ -105,6 +106,7 @@ public class SurveyHandler<L extends UtilsLang,
 		matrixRows = new HashMap<QUESTION,List<OPTION>>();
 		matrixCols = new HashMap<QUESTION,List<OPTION>>();
 		matrixCells = new HashMap<QUESTION,List<OPTION>>();
+		multiOptions = new HashMap<QUESTION,List<OPTION>>();
 		sections = new ArrayList<SECTION>();
 		
 		cOption = ffSurvey.getOptionClass();
@@ -181,6 +183,7 @@ public class SurveyHandler<L extends UtilsLang,
 	{
 		answers.clear();
 		matrix.clear();
+		multiOptions.clear();
 		
 		if(dbLookup)
 		{
@@ -193,23 +196,32 @@ public class SurveyHandler<L extends UtilsLang,
 		for(SECTION s : sections)
 		{
 			for(QUESTION q : s.getQuestions())
-			{
-				if(!answers.containsKey(q))
-				{
-					answers.put(q, efAnswer.build(q, surveyData));
-				}
-				buildMatrix(dbLookup,answers.get(q));
+			{	
+				ANSWER a;
+				if(!answers.containsKey(q)){a = efAnswer.build(q, surveyData);}
+				else {a = answers.get(q);}
+				a = buildMatrix(dbLookup,a);
+				answers.put(q, efAnswer.build(q,surveyData));
 			}
 			
 		}
 		logger.info("Answers loaded: " + answers.size());
 	}
 	
-	private void buildMatrix(boolean dbLookup, ANSWER answer)
+	private ANSWER buildMatrix(boolean dbLookup, ANSWER answer)
 	{
-		if(answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix())
+		boolean isMulti = answer.getQuestion().getShowSelectMulti()!=null && answer.getQuestion().getShowSelectMulti();
+		boolean isMatrix = answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix();
+
+		if(dbLookup && (isMulti || isMatrix)){answer = fSurvey.load(answer);}
+		
+		if(isMulti)
 		{
-			if(dbLookup){answer = fSurvey.load(answer);}			
+			multiOptions.put(answer.getQuestion(),answer.getOptions());
+		}
+		
+		if(isMatrix)
+		{
 			for(MATRIX m : answer.getMatrix())
 			{
 				matrix.put(answer.getQuestion(),m.getRow(),m.getColumn(),m);
@@ -226,6 +238,7 @@ public class SurveyHandler<L extends UtilsLang,
 			}
 			logger.warn("Building Matrix for "+answer.toString());
 		}
+		return answer;
 	}
 	
 	public void save(CORRELATION correlation) throws UtilsConstraintViolationException, UtilsLockingException
@@ -238,10 +251,18 @@ public class SurveyHandler<L extends UtilsLang,
 		for(ANSWER a : answers.values())
 		{
 			a.setData(surveyData);
+			if(a.getQuestion().getShowSelectMulti()!=null && a.getQuestion().getShowSelectMulti())
+			{
+				logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).getClass().getName());
+				logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).toString());
+				a.getOptions().clear();
+				a.getOptions().addAll(multiOptions.get(a.getQuestion()));
+				logger.info("Multi: "+a.getOptions().size());
+			}
 			a = fSurvey.saveAnswer(a);
 			if(a.getQuestion().getShowMatrix()!=null && a.getQuestion().getShowMatrix())
 			{
-				List<MATRIX> list = new ArrayList<MATRIX>();;
+				List<MATRIX> list = new ArrayList<MATRIX>();
 				for(MATRIX m : matrix.values(a.getQuestion()))
 				{
 					if(m.getOption()!=null){m.setOption(fSurvey.find(cOption,m.getOption()));}
@@ -252,6 +273,7 @@ public class SurveyHandler<L extends UtilsLang,
 				}
 				a.setMatrix(list);
 			}
+			
 			answers.put(a.getQuestion(), a);
 		}
 		if(bMessage!=null){bMessage.growlSuccessSaved();}

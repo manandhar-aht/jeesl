@@ -29,6 +29,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.model.pojo.map.Nested3Map;
+import org.jeesl.util.comparator.ejb.module.survey.SurveyAnswerComparator;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +69,8 @@ public class SurveyHandler<L extends UtilsLang,
 	
 	private final FacesMessageBean bMessage;
 	final Class<OPTION> cOption;
+	
+	private final Comparator<ANSWER> cpAnswer;
 
 	private final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	
@@ -80,8 +83,10 @@ public class SurveyHandler<L extends UtilsLang,
 	
 	private List<SECTION> sections; public List<SECTION> getSections() {return sections;}
 	
+	private List<OPTION> districts; public List<OPTION> getDistricts() {return districts;} public void setDistricts(List<OPTION> districts) {this.districts = districts;}
+	
 	private Map<QUESTION,ANSWER> answers; public Map<QUESTION,ANSWER> getAnswers() {return answers;}
-	private Map<QUESTION,List<OPTION>> multiOptions; public Map<QUESTION,List<OPTION>> getMultiOptions() {return multiOptions;}
+	private Map<QUESTION,Object> multiOptions; public Map<QUESTION,Object> getMultiOptions() {return multiOptions;}
 	private Map<QUESTION,List<OPTION>> matrixRows; public Map<QUESTION,List<OPTION>> getMatrixRows() {return matrixRows;}
 	private Map<QUESTION,List<OPTION>> matrixCols; public Map<QUESTION,List<OPTION>> getMatrixCols() {return matrixCols;}
 	private Map<QUESTION,List<OPTION>> matrixCells; public Map<QUESTION,List<OPTION>> getMatrixCells() {return matrixCells;}
@@ -107,7 +112,7 @@ public class SurveyHandler<L extends UtilsLang,
 		matrixRows = new HashMap<QUESTION,List<OPTION>>();
 		matrixCols = new HashMap<QUESTION,List<OPTION>>();
 		matrixCells = new HashMap<QUESTION,List<OPTION>>();
-		multiOptions = new HashMap<QUESTION,List<OPTION>>();
+		multiOptions = new HashMap<QUESTION,Object>();
 		sections = new ArrayList<SECTION>();
 		
 		cOption = ffSurvey.getOptionClass();
@@ -118,6 +123,9 @@ public class SurveyHandler<L extends UtilsLang,
 		tfOption = ffSurvey.txtOption("en");
 		
 		cmpOption = new PositionComparator<OPTION>();
+		
+		SurveyAnswerComparator<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> cfAnswer = new SurveyAnswerComparator<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
+		cpAnswer = cfAnswer.factory(SurveyAnswerComparator.Type.position);
 	}
 	
 	public void reset()
@@ -135,6 +143,7 @@ public class SurveyHandler<L extends UtilsLang,
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		reloadSections(survey.getTemplate());
+		logger.info("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());
 		reloadAnswers(EjbIdFactory.isSaved(surveyData));
 	}
 	
@@ -157,24 +166,27 @@ public class SurveyHandler<L extends UtilsLang,
 		template = fSurvey.load(template);
 		for(SECTION section : template.getSections())
 		{
-			section = fSurvey.load(section);
-			sections.add(section);
-			for(QUESTION question : section.getQuestions())
+			if(section.isVisible())
 			{
-				if(question.getShowMatrix()!=null && question.getShowMatrix())
+				section = fSurvey.load(section);
+				sections.add(section);
+				for(QUESTION question : section.getQuestions())
 				{
-					Collections.sort(question.getOptions(),cmpOption);
-					matrixRows.put(question, efOption.toRows(question.getOptions()));
-					matrixCols.put(question, efOption.toColumns(question.getOptions()));
-					matrixCells.put(question, efOption.toCells(question.getOptions()));
-					
-					if(logger.isTraceEnabled())
+					if(question.isVisible() && question.getShowMatrix()!=null && question.getShowMatrix())
 					{
-						logger.trace(StringUtil.stars());
-						logger.trace(question.getCode());
-						logger.trace("\tRows"+tfOption.labels(matrixRows.get(question)));
-						logger.trace("\tColumns"+tfOption.labels(matrixCols.get(question)));
-						logger.trace("\tCells"+tfOption.labels(matrixCells.get(question)));
+						Collections.sort(question.getOptions(),cmpOption);
+						matrixRows.put(question, efOption.toRows(question.getOptions()));
+						matrixCols.put(question, efOption.toColumns(question.getOptions()));
+						matrixCells.put(question, efOption.toCells(question.getOptions()));
+						
+						if(logger.isTraceEnabled())
+						{
+							logger.trace(StringUtil.stars());
+							logger.trace(question.getCode());
+							logger.trace("\tRows"+tfOption.labels(matrixRows.get(question)));
+							logger.trace("\tColumns"+tfOption.labels(matrixCols.get(question)));
+							logger.trace("\tCells"+tfOption.labels(matrixCells.get(question)));
+						}
 					}
 				}
 			}
@@ -186,25 +198,38 @@ public class SurveyHandler<L extends UtilsLang,
 		matrix.clear();
 		multiOptions.clear();
 		
+		if(logger.isTraceEnabled()){logger.info("Reloading Answers");}
 		if(dbLookup)
 		{
-			for(ANSWER answer : fSurvey.fcAnswers(surveyData))
+			List<ANSWER> l = fSurvey.fcAnswers(surveyData);
+			Collections.sort(l,cpAnswer);
+			for(ANSWER answer : l)
 			{
-				answers.put(answer.getQuestion(), answer);
+				if(logger.isTraceEnabled()){logger.info("\tAnswer: "+answer.toString());}
+				if(answer.getQuestion().getSection().isVisible() && answer.getQuestion().isVisible())
+				{
+					answers.put(answer.getQuestion(), answer);
+				}
 			}
 		}
 
 		for(SECTION s : sections)
 		{
-			for(QUESTION q : s.getQuestions())
-			{	
-				ANSWER a;
-				if(!answers.containsKey(q)){a = efAnswer.build(q, surveyData);}
-				else {a = answers.get(q);}
-				a = buildMatrix(dbLookup,a);
-				answers.put(q, efAnswer.build(q,surveyData));
+			if(s.isVisible())
+			{
+				for(QUESTION q : s.getQuestions())
+				{	
+					if(q.isVisible())
+					{
+						if(logger.isTraceEnabled()){logger.info("Building answer for "+q.toString());}
+						ANSWER a;
+						if(!answers.containsKey(q)){a = efAnswer.build(q, surveyData);}
+						else {a = answers.get(q);}
+						a = buildMatrix(dbLookup,a);
+						answers.put(q,a);
+					}
+				}
 			}
-			
 		}
 		logger.info("Answers loaded: " + answers.size());
 	}
@@ -218,7 +243,9 @@ public class SurveyHandler<L extends UtilsLang,
 		
 		if(isMulti)
 		{
-			multiOptions.put(answer.getQuestion(),answer.getOptions());
+			List<OPTION> list = new ArrayList<OPTION>();
+			list.addAll(answer.getOptions());
+			multiOptions.put(answer.getQuestion(),list);
 		}
 		
 		if(isMatrix)
@@ -252,40 +279,50 @@ public class SurveyHandler<L extends UtilsLang,
 		for(ANSWER a : answers.values())
 		{
 			a.setData(surveyData);
-			boolean withMulti = BooleanComparator.active(a.getQuestion().getShowSelectMulti());
-			
-			if(withMulti)
+			if(a.getQuestion().getSection().isVisible() && a.getQuestion().isVisible())
 			{
-				boolean mapHasMulti = multiOptions.containsKey(a.getQuestion());
+				logger.info("Saving: "+a.getId()+" for question: "+a.getQuestion().toString()+" ");
+				boolean withMulti = BooleanComparator.active(a.getQuestion().getShowSelectMulti());
 				
-				logger.info("Multi-Options:"+withMulti+" map:"+mapHasMulti+" for Question "+a.getQuestion().toString());
-				a.getOptions().clear();
-				if(mapHasMulti)
+				if(withMulti)
 				{
-					logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).getClass().getName());
-					logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).toString());
-					a.getOptions().addAll(multiOptions.get(a.getQuestion()));
+					boolean mapHasMulti = multiOptions.containsKey(a.getQuestion());
+					
+					logger.info("Multi-Options:"+withMulti+" map:"+mapHasMulti+" for Question "+a.getQuestion().toString());
+					a.getOptions().clear();
+					if(mapHasMulti)
+					{
+	/*					logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).getClass().getName());
+						Object obj = multiOptions.get(a.getQuestion());
+						List<OPTION> list = (List<OPTION>)obj;
+						
+						logger.info("toString:" +obj.toString());
+						
+						logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).getClass().getName());
+						logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).toString());
+						a.getOptions().addAll(list);
+	*/				}
+					else{logger.warn("No Multi-Options for Questison "+a.getQuestion().getCode());}
+					
+					logger.info("Multi: "+a.getOptions().size());
 				}
-				else{logger.warn("No Multi-Options for Questison "+a.getQuestion().getCode());}
+				a = fSurvey.saveAnswer(a);
+				if(a.getQuestion().getShowMatrix()!=null && a.getQuestion().getShowMatrix())
+				{
+					List<MATRIX> list = new ArrayList<MATRIX>();
+					for(MATRIX m : matrix.values(a.getQuestion()))
+					{
+						if(m.getOption()!=null){m.setOption(fSurvey.find(cOption,m.getOption()));}
+						m.setAnswer(a);
+						m = fSurvey.save(m);
+						list.add(m);
+						matrix.put(a.getQuestion(),m.getRow(),m.getColumn(),m);
+					}
+					a.setMatrix(list);
+				}
 				
-				logger.info("Multi: "+a.getOptions().size());
+				answers.put(a.getQuestion(), a);
 			}
-			a = fSurvey.saveAnswer(a);
-			if(a.getQuestion().getShowMatrix()!=null && a.getQuestion().getShowMatrix())
-			{
-				List<MATRIX> list = new ArrayList<MATRIX>();
-				for(MATRIX m : matrix.values(a.getQuestion()))
-				{
-					if(m.getOption()!=null){m.setOption(fSurvey.find(cOption,m.getOption()));}
-					m.setAnswer(a);
-					m = fSurvey.save(m);
-					list.add(m);
-					matrix.put(a.getQuestion(),m.getRow(),m.getColumn(),m);
-				}
-				a.setMatrix(list);
-			}
-			
-			answers.put(a.getQuestion(), a);
 		}
 		if(bMessage!=null){bMessage.growlSuccessSaved();}
 	}

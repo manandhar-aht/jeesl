@@ -18,17 +18,19 @@
 		</f:facet>
 		
 		<f:facet name="top">
+            <span>
 			<ui:fragment>
-				(#{fn:length(handler.selected)}/#{fn:length(handler.list)})
-				<h:commandLink>
-		            <h:graphicImage library="jeeslPrototypeGfx" name="12/ui/control/select-none.png"/>
-					<p:ajax event="click" listener="#{handler.toggleNone()}" update="#{update}"/>
-				</h:commandLink>
-				<h:commandLink>
-		            <h:graphicImage library="jeeslPrototypeGfx" name="12/ui/control/select-all.png"/>
-					<p:ajax event="click" listener="#{handler.toggleAll()}" update="#{update}"/>
-				</h:commandLink>
+                    <h:commandLink>
+                        <h:graphicImage  library="jeeslPrototypeGfx" name="12/ui/control/select-all.png"/>
+                        <p:ajax event="click" listener="#{handler.toggleAll()}" update="#{update}"/>
+                    </h:commandLink>
+                    <h:commandLink>
+                        <h:graphicImage library="jeeslPrototypeGfx" name="12/ui/control/select-none.png"/>
+                        <p:ajax event="click" listener="#{handler.toggleNone()}" update="#{update}"/>
+                    </h:commandLink>
+                    (#{fn:length(handler.selected)}/#{fn:length(handler.list)})
 			</ui:fragment>
+            </span>
 		</f:facet>
 		
 		<h:commandLink>

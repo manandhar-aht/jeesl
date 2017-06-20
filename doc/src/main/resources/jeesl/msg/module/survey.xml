@@ -337,4 +337,11 @@
     		<s:lang key="fr" translation="Nested"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslSurveyDataStatus">
+    	<s:langs>
+    		<s:lang key="de" translation="Status"/>
+    		<s:lang key="en" translation="Status"/>
+    		<s:lang key="fr" translation="Status"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

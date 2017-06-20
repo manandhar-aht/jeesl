@@ -139,4 +139,13 @@
 			<s:lang key="fr" translation="Report Aggregation"/>
 		</s:langs>
 	</s:translation>
+	
+	<s:translation key="SurveyDataStatus">
+		<s:langs>
+			<s:lang key="de" translation="Data Status"/>
+			<s:lang key="en" translation="Data Status"/>
+			<s:lang key="fr" translation="Data Status"/>
+		</s:langs>
+	</s:translation>
+	
 </s:translations>

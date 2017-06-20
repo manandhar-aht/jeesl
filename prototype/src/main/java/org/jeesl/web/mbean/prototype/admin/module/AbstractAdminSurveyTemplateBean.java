@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.handler.ui.helper.UiHelperSurvey;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
@@ -67,6 +68,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyTemplateBean.class);
 
 	protected JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
+	private JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey;
 	
 	private Class<SCHEME> cScheme;
 	private Class<TEMPLATE> cTemplate;
@@ -118,10 +120,12 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 		
 		cmpOption = new PositionComparator<OPTION>();
 		
+		options = new ArrayList<OPTION>();
+		
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
 	}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey, final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fSurvey = fSurvey;
@@ -163,7 +167,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 		if(cTemplate){template = null;}
 		if(cVersion){version = null;}
 		if(cSection){section = null;}
-		if(cQuestion){question = null;}	
+		if(cQuestion){question = null;options.clear();}	
 		if(cOption){option=null;}
 		if(rScheme){scheme = null;}
 		if(rScore){score = null;}
@@ -329,8 +333,11 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	private void reloadQuestion()
 	{
 		question = fSurvey.find(cQuestion,question);
-		options = question.getOptions();
-		Collections.sort(options,cmpOption);
+		question = fSurvey.load(question);
+		options.clear();
+		Collections.sort(question.getOptions(),cmpOption);
+		options.addAll(question.getOptions());
+		bSurvey.updateOptions(question);
 	}
 	
 	public void saveQuestion() throws UtilsConstraintViolationException, UtilsLockingException

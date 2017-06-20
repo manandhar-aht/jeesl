@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
@@ -41,11 +42,9 @@ import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.util.comparator.ejb.PositionComparator;
 import net.sf.exlp.util.io.StringUtil;
 
-public class SurveyHandler<L extends UtilsLang,
-							D extends UtilsDescription,
+public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							SS extends UtilsStatus<SS,L,D>,
 							SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -68,9 +67,11 @@ public class SurveyHandler<L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	
 	private final FacesMessageBean bMessage;
-	final Class<OPTION> cOption;
+	private final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey;
+	private final Class<OPTION> cOption;
 	
 	private final Comparator<ANSWER> cpAnswer;
+
 
 	private final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	
@@ -95,15 +96,17 @@ public class SurveyHandler<L extends UtilsLang,
 	private DATA surveyData; public DATA getSurveyData(){return surveyData;} public void setSurveyData(DATA surveyData) {this.surveyData = surveyData;}
 	private TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	
-	private Comparator<OPTION> cmpOption;
+
 	
 	private boolean showAssessment; public boolean isShowAssessment() {return showAssessment;}
 	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
 	
-	public SurveyHandler(FacesMessageBean bMessage, final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, final SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
+	public SurveyHandler(FacesMessageBean bMessage, final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey, final SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
 	{
 		this.bMessage=bMessage;
 		this.fSurvey=fSurvey;
+		this.bSurvey=bSurvey;
+		
 		showAssessment = false;
 		allowAssessment = true;
 		
@@ -121,8 +124,7 @@ public class SurveyHandler<L extends UtilsLang,
 		efMatrix = ffSurvey.ejbMatrix();
 		efOption = ffSurvey.option();
 		tfOption = ffSurvey.txtOption("en");
-		
-		cmpOption = new PositionComparator<OPTION>();
+
 		
 		SurveyAnswerComparator<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> cfAnswer = new SurveyAnswerComparator<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
 		cpAnswer = cfAnswer.factory(SurveyAnswerComparator.Type.position);
@@ -174,10 +176,9 @@ public class SurveyHandler<L extends UtilsLang,
 				{
 					if(question.isVisible() && question.getShowMatrix()!=null && question.getShowMatrix())
 					{
-						Collections.sort(question.getOptions(),cmpOption);
-						matrixRows.put(question, efOption.toRows(question.getOptions()));
-						matrixCols.put(question, efOption.toColumns(question.getOptions()));
-						matrixCells.put(question, efOption.toCells(question.getOptions()));
+						matrixRows.put(question, efOption.toRows(bSurvey.getMapOption().get(question)));
+						matrixCols.put(question, efOption.toColumns(bSurvey.getMapOption().get(question)));
+						matrixCells.put(question, efOption.toCells(bSurvey.getMapOption().get(question)));
 						
 						if(logger.isTraceEnabled())
 						{

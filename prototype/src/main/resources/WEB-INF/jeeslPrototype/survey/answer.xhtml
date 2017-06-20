@@ -27,11 +27,11 @@
 	            </p:column>
 	        </p:selectManyMenu>
 			
-			<p:dataTable rendered="#{question.showMatrix}" var="r" value="#{surveyHandler.matrixRows[question]}">
+			<p:dataTable rendered="#{question.showMatrix}" var="r" value="#{appSurveyBean.matrixRows[question]}">
 				<p:column styleClass="jeeslBold">
 					<h:outputText value="#{r.name[loc].lang}"/>
 				</p:column>
-				<p:columns var="c" value="#{surveyHandler.matrixCols[question]}">
+				<p:columns var="c" value="#{appSurveyBean.matrixCols[question]}">
 					<f:facet name="header">
 						<h:outputText value="#{c.name[loc].lang}" />
 					</f:facet>
@@ -48,7 +48,7 @@
 						<h:inputText   value="#{surveyHandler.matrix.m[question].m[r][c].valueText}" />
 					</p:inplace>
 					<h:selectOneMenu value="#{surveyHandler.matrix.m[question].m[r][c].option}" rendered="#{question.showSelectOne}" styleClass="w100">
-						<f:selectItems value="#{surveyHandler.matrixCells[question]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
+						<f:selectItems value="#{appSurveyBean.matrixCells[question]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
 					</h:selectOneMenu>
 				</p:columns>
 			</p:dataTable>

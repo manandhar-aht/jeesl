@@ -129,6 +129,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fSurvey = fSurvey;
+		this.bSurvey = bSurvey;
 		
 		this.cScheme = cScheme;
 		this.cTemplate = cTemplate;
@@ -334,8 +335,8 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	{
 		question = fSurvey.find(cQuestion,question);
 		question = fSurvey.load(question);
-		options.clear();
 		Collections.sort(question.getOptions(),cmpOption);
+		options.clear();
 		options.addAll(question.getOptions());
 		bSurvey.updateOptions(question);
 	}
@@ -422,5 +423,5 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	
 	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, sections);}
 	protected void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, questions);}
-	protected void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, options);}
+	protected void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, options);reloadQuestion();}
 }

@@ -19,7 +19,7 @@
 				<f:selectItems value="#{question.options}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
 			</p:selectOneMenu>
 			<p:selectManyMenu showCheckbox="true" rendered="#{question.showSelectMulti and (not question.showMatrix)}"
-								value="#{surveyHandler.districts}" var="o"
+								value="#{surveyHandler.answers[question].options}" var="o"
 								 converter="surveyOptionExplicitConverter">
 	           	<f:selectItems value="#{question.options}" var="opt" itemLabel="#{opt.name[localeCode].lang}" itemValue="#{opt}" />
 	            <p:column>

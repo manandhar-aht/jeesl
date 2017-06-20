@@ -22,8 +22,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class EjbStaffFactory <L extends UtilsLang,
-						D extends UtilsDescription,
+public class EjbStaffFactory <L extends UtilsLang, D extends UtilsDescription,
 						C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 						R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 						V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -39,8 +38,7 @@ public class EjbStaffFactory <L extends UtilsLang,
 	
 	final Class<STAFF> cStaff;
 	
-    public static <L extends UtilsLang,
-					D extends UtilsDescription,
+    public static <L extends UtilsLang, D extends UtilsDescription,
 					C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 					R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 					V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -117,8 +115,7 @@ public class EjbStaffFactory <L extends UtilsLang,
 		return map;
 	}
     
-    public static <L extends UtilsLang,
-			D extends UtilsDescription,
+    public static <L extends UtilsLang, D extends UtilsDescription,
 			C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 			R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 			V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -136,5 +133,25 @@ public class EjbStaffFactory <L extends UtilsLang,
 			if(!set.contains(staff.getDomain())){set.add(staff.getDomain());}
 		}
 		return new ArrayList<D1>(set);
+	}
+    
+    public static <L extends UtilsLang, D extends UtilsDescription,
+			C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+			R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+			V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+			U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+			A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+			AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+			USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
+			STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
+			D1 extends EjbWithId, D2 extends EjbWithId>
+		Set<D1> toDomainSet(List<STAFF> staffs)
+	{
+		Set<D1> set = new HashSet<D1>();
+		for(STAFF staff : staffs)
+		{
+			if(!set.contains(staff.getDomain())){set.add(staff.getDomain());}
+		}
+		return set;
 	}
 }

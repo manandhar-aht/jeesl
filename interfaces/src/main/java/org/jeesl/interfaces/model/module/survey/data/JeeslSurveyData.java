@@ -34,6 +34,8 @@ public interface JeeslSurveyData<L extends UtilsLang, D extends UtilsDescription
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 			extends EjbWithId,EjbWithRecord
 {
+	public enum Status{empty,partial,fully}
+	
 	SURVEY getSurvey();
 	void setSurvey(SURVEY survey);
 	

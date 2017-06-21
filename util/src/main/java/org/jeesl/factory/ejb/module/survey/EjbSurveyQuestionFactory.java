@@ -80,4 +80,17 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang,
 		
 		return ejb;
 	}
+	
+	public QUESTION id(long id)
+	{
+		QUESTION ejb = null;
+		try
+		{
+			ejb = cQuestion.newInstance();
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		return ejb;
+	}
 }

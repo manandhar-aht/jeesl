@@ -1,4 +1,4 @@
-package org.jeesl.model.pojo.map;
+package org.jeesl.model.pojo.map.generic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,14 @@ public class Nested2Map <L1 extends EjbWithId, L2 extends EjbWithId, VALUE exten
 		m = new HashMap<L1,Map<L2,VALUE>>();
     }
     
-    public void clear(){m.clear();}
+    public void clear()
+    {
+    	for(Map<L2,VALUE> m : m.values())
+    	{
+    		m.clear();
+    	}
+    	m.clear();
+    }
     
     public void put(L1 l1, L2 l2, VALUE value)
 	{

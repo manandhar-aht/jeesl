@@ -36,18 +36,18 @@
 						<h:outputText value="#{c.name[loc].lang}" />
 					</f:facet>
 					<p:inplace emptyLabel="-" rendered="#{question.showBoolean}">
-						<p:selectBooleanCheckbox  value="#{surveyHandler.matrix.m[question].m[r][c].valueBoolean}" />
+						<p:selectBooleanCheckbox  value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueBoolean}" />
 					</p:inplace>
 					<p:inplace emptyLabel="-" rendered="#{question.showInteger}">
-						<h:inputText   value="#{surveyHandler.matrix.m[question].m[r][c].valueNumber}" />
+						<h:inputText   value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueNumber}" />
 					</p:inplace>
 					<p:inplace emptyLabel="-" rendered="#{question.showDouble}">
-						<h:inputText   value="#{surveyHandler.matrix.m[question].m[r][c].valueDouble}" />
+						<h:inputText   value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueDouble}" />
 					</p:inplace>
 					<p:inplace emptyLabel="-" rendered="#{question.showText}">
-						<h:inputText   value="#{surveyHandler.matrix.m[question].m[r][c].valueText}" />
+						<h:inputText   value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueText}" />
 					</p:inplace>
-					<h:selectOneMenu value="#{surveyHandler.matrix.m[question].m[r][c].option}" rendered="#{question.showSelectOne}" styleClass="w100">
+					<h:selectOneMenu value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].option}" rendered="#{question.showSelectOne}" styleClass="w100">
 						<f:selectItems value="#{appSurveyBean.matrixCells[question]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
 					</h:selectOneMenu>
 				</p:columns>

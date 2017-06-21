@@ -30,7 +30,7 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.model.pojo.map.Nested2Map;
+import org.jeesl.model.pojo.map.generic.Nested2Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

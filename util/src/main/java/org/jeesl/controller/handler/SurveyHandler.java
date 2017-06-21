@@ -27,7 +27,8 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.model.pojo.map.Nested3Map;
+import org.jeesl.model.pojo.map.generic.Nested3Map;
+import org.jeesl.model.pojo.map.id.Nested3IdMap;
 import org.jeesl.util.comparator.ejb.module.survey.SurveyAnswerComparator;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
@@ -71,15 +72,16 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 
 	private final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	
-	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efAnswer;
-	private EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix;
-	private EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
+//	private final EjbSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efQuestion;
+	private final EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efAnswer;
+	private final EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix;
+	private final EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
 	
 	private List<OPTION> districts; public List<OPTION> getDistricts() {return districts;} public void setDistricts(List<OPTION> districts) {this.districts = districts;}
 	
 	private Map<QUESTION,ANSWER> answers; public Map<QUESTION,ANSWER> getAnswers() {return answers;}
 	private Map<QUESTION,Object> multiOptions; public Map<QUESTION,Object> getMultiOptions() {return multiOptions;}
-	private Nested3Map<QUESTION,OPTION,OPTION,MATRIX> matrix; public Nested3Map<QUESTION,OPTION,OPTION,MATRIX> getMatrix() {return matrix;}
+	private Nested3IdMap<MATRIX> matrix; public Nested3IdMap<MATRIX> getMatrix() {return matrix;}
 
 	private TEMPLATE template; public TEMPLATE getTemplate() {return template;}
 	private DATA surveyData; public DATA getSurveyData(){return surveyData;} public void setSurveyData(DATA surveyData) {this.surveyData = surveyData;}
@@ -98,10 +100,12 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		allowAssessment = true;
 		
 		answers = new HashMap<QUESTION,ANSWER>();
-		matrix = new Nested3Map<QUESTION,OPTION,OPTION,MATRIX>();
+		matrix = new Nested3IdMap<MATRIX>();
 		multiOptions = new HashMap<QUESTION,Object>();
 		
 		cOption = ffSurvey.getOptionClass();
+		
+//		efQuestion = ffSurvey.question();
 		efData = ffSurvey.data();
 		efAnswer = ffSurvey.answer();
 		efMatrix = ffSurvey.ejbMatrix();
@@ -139,7 +143,8 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private void reloadAnswers(boolean dbLookup)
 	{
 		answers.clear();
-		matrix.clear();
+		matrix = null;
+		matrix = new Nested3IdMap<MATRIX>();
 		multiOptions.clear();
 		
 		if(logger.isTraceEnabled()){logger.info("Reloading Answers");}
@@ -196,15 +201,15 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		{
 			for(MATRIX m : answer.getMatrix())
 			{
-				matrix.put(answer.getQuestion(),m.getRow(),m.getColumn(),m);
+				matrix.put(answer.getQuestion().getId(),m.getRow().getId(),m.getColumn().getId(),m);
 			}
 			for(OPTION row : bSurvey.getMatrixRows().get(answer.getQuestion()))
 			{
 				for(OPTION column : bSurvey.getMatrixCols().get(answer.getQuestion()))
 				{
-					if(!matrix.containsKey(answer.getQuestion(),row,column))
+					if(!matrix.containsKey(answer.getQuestion().getId(),row.getId(),column.getId()))
 					{
-						matrix.put(answer.getQuestion(),row,column,efMatrix.build(answer,row,column));
+						matrix.put(answer.getQuestion().getId(),row.getId(),column.getId(),efMatrix.build(answer,row,column));
 					}
 				}
 			}
@@ -254,13 +259,13 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 				if(a.getQuestion().getShowMatrix()!=null && a.getQuestion().getShowMatrix())
 				{
 					List<MATRIX> list = new ArrayList<MATRIX>();
-					for(MATRIX m : matrix.values(a.getQuestion()))
+					for(MATRIX m : matrix.values(a.getQuestion().getId()))
 					{
 						if(m.getOption()!=null){m.setOption(fSurvey.find(cOption,m.getOption()));}
 						m.setAnswer(a);
 						m = fSurvey.save(m);
 						list.add(m);
-						matrix.put(a.getQuestion(),m.getRow(),m.getColumn(),m);
+						matrix.put(a.getQuestion().getId(),m.getRow().getId(),m.getColumn().getId(),m);
 					}
 					a.setMatrix(list);
 				}

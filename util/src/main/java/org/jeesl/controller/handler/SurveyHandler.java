@@ -75,14 +75,13 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix;
 	private EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
 	
-	private List<SECTION> sections; public List<SECTION> getSections() {return sections;}
-	
 	private List<OPTION> districts; public List<OPTION> getDistricts() {return districts;} public void setDistricts(List<OPTION> districts) {this.districts = districts;}
 	
 	private Map<QUESTION,ANSWER> answers; public Map<QUESTION,ANSWER> getAnswers() {return answers;}
 	private Map<QUESTION,Object> multiOptions; public Map<QUESTION,Object> getMultiOptions() {return multiOptions;}
 	private Nested3Map<QUESTION,OPTION,OPTION,MATRIX> matrix; public Nested3Map<QUESTION,OPTION,OPTION,MATRIX> getMatrix() {return matrix;}
 
+	private TEMPLATE template; public TEMPLATE getTemplate() {return template;}
 	private DATA surveyData; public DATA getSurveyData(){return surveyData;} public void setSurveyData(DATA surveyData) {this.surveyData = surveyData;}
 	private TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	
@@ -101,7 +100,6 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		answers = new HashMap<QUESTION,ANSWER>();
 		matrix = new Nested3Map<QUESTION,OPTION,OPTION,MATRIX>();
 		multiOptions = new HashMap<QUESTION,Object>();
-		sections = new ArrayList<SECTION>();
 		
 		cOption = ffSurvey.getOptionClass();
 		efData = ffSurvey.data();
@@ -115,8 +113,6 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	public void reset()
 	{
 		showAssessment = false;
-		
-		sections.clear();
 		answers.clear();
 		surveyData = null;
 	}
@@ -126,7 +122,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		showAssessment = true;
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
-		reloadSections(survey.getTemplate());
+		template = survey.getTemplate();
 		logger.info("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());
 		reloadAnswers(EjbIdFactory.isSaved(surveyData));
 	}
@@ -136,24 +132,10 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		showAssessment = true;
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
-		reloadSections(survey.getTemplate().getNested());
+		template = survey.getTemplate().getNested();
 		reloadAnswers(EjbIdFactory.isSaved(surveyData));
 	}
 	
-	private void reloadSections(TEMPLATE template)
-	{
-		sections.clear();
-		
-		template = fSurvey.load(template);
-		for(SECTION section : template.getSections())
-		{
-			if(section.isVisible())
-			{
-				section = fSurvey.load(section);
-				sections.add(section);
-			}
-		}
-	}
 	private void reloadAnswers(boolean dbLookup)
 	{
 		answers.clear();
@@ -175,11 +157,11 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 			}
 		}
 
-		for(SECTION s : sections)
+		for(SECTION s : bSurvey.getMapSection().get(template))
 		{
 			if(s.isVisible())
 			{
-				for(QUESTION q : s.getQuestions())
+				for(QUESTION q : bSurvey.getMapQuestion().get(s))
 				{	
 					if(q.isVisible())
 					{

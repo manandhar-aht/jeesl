@@ -287,6 +287,32 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		else{return list.get(0);}
 	}
 	
+	public List<ANSWER> fVisibleAnswers(DATA data)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<ANSWER> cQ = cB.createQuery(cAnswer);
+		Root<ANSWER> answer = cQ.from(cAnswer);
+		
+		Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
+		predicates.add(cB.equal(jData,data));
+		
+		Join<ANSWER,QUESTION> jQuestion = answer.join(JeeslSurveyAnswer.Attributes.question.toString());
+		predicates.add(cB.equal(jQuestion.<Boolean>get(JeeslSurveyQuestion.Attributes.visible.toString()),true));
+		Expression<Integer> eQuestionPosition = jQuestion.get(JeeslSurveyQuestion.Attributes.position.toString());
+		
+		Join<QUESTION,SECTION> jSection = answer.join(JeeslSurveyQuestion.Attributes.section.toString());
+		predicates.add(cB.equal(jSection.<Boolean>get(JeeslSurveySection.Attributes.visible.toString()),true));
+		Expression<Integer> eSectionPosition = jSection.get(JeeslSurveySection.Attributes.position.toString());
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(answer);
+		cQ.orderBy(cB.asc(eSectionPosition),cB.asc(eQuestionPosition));
+		
+		TypedQuery<ANSWER> tQ = em.createQuery(cQ);
+		return tQ.getResultList();
+	}
+	
 	@Override public List<ANSWER> fcAnswers(DATA data)
 	{
 		data = em.find(cData,data.getId());

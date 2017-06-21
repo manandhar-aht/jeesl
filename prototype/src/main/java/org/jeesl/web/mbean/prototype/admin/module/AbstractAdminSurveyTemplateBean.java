@@ -193,6 +193,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	{
 		logger.info("Reloading "+template.toString());
 		template = fSurvey.load(template);
+		bSurvey.updateTemplate(template);
 		version = template.getVersion();
 		sections = template.getSections();
 		schemes = template.getSchemes();
@@ -288,6 +289,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	{
 		section = fSurvey.load(section);
 		questions = section.getQuestions();
+		bSurvey.updateSection(section);
 	}
 	
 	public void addSection()

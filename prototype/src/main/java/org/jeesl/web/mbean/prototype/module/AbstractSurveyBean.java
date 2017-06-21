@@ -52,6 +52,9 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 
 	protected final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
 	
+	protected Map<TEMPLATE,List<SECTION>> mapSection; @Override public Map<TEMPLATE,List<SECTION>> getMapSection() {return mapSection;}
+	protected Map<SECTION,List<QUESTION>> mapQuestion; @Override public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
+
 	protected Map<QUESTION,List<OPTION>> mapOption; @Override public Map<QUESTION,List<OPTION>> getMapOption() {return mapOption;}
 
 	protected Map<QUESTION,List<OPTION>> matrixRows; @Override public Map<QUESTION,List<OPTION>> getMatrixRows() {return matrixRows;}
@@ -61,6 +64,10 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	public AbstractSurveyBean(SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
 	{
 		efOption = ffSurvey.option();
+		
+		mapSection = new HashMap<TEMPLATE,List<SECTION>>();
+		mapQuestion = new HashMap<SECTION,List<QUESTION>>();
+		
 		
 		mapOption = new HashMap<QUESTION,List<OPTION>>();
 		matrixRows = new HashMap<QUESTION,List<OPTION>>();

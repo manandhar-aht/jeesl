@@ -38,9 +38,14 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 								OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 								CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {	
+	Map<TEMPLATE,List<SECTION>> getMapSection();
+	Map<SECTION,List<QUESTION>> getMapQuestion();
+	
 	Map<QUESTION,List<OPTION>> getMapOption();
 	Map<QUESTION,List<OPTION>> getMatrixRows();
-	public Map<QUESTION,List<OPTION>> getMatrixCols();
-	
-	void updateOptions(QUESTION q);
+	Map<QUESTION,List<OPTION>> getMatrixCols();
+		
+	void updateTemplate(TEMPLATE template);
+	void updateSection(SECTION section);
+	void updateOptions(QUESTION question);
 }

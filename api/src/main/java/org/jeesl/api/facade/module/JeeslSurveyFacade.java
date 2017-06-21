@@ -64,6 +64,7 @@ public interface JeeslSurveyFacade <L extends UtilsLang,
 	
 	List<ANSWER> fcAnswers(DATA data);
 	List<ANSWER> fAnswers(SURVEY survey);
+	List<ANSWER> fAnswers(DATA data, Boolean visible, List<SECTION> sections);
 	
 	DATA fData(CORRELATION correlation) throws UtilsNotFoundException;
 	DATA saveData(DATA data) throws UtilsConstraintViolationException, UtilsLockingException;

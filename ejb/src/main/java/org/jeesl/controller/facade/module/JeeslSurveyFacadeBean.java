@@ -287,7 +287,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		else{return list.get(0);}
 	}
 	
-	public List<ANSWER> fVisibleAnswers(DATA data)
+	@Override public List<ANSWER> fAnswers(DATA data, Boolean visible, List<SECTION> sections)
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();

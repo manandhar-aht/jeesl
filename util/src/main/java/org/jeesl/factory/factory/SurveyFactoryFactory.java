@@ -64,7 +64,7 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 	final Class<SCHEME> cScheme;
 	final Class<TEMPLATE> cTemplate;
 	final Class<VERSION> cVersion;
-	final Class<SECTION> cSection;
+	final Class<SECTION> cSection; public Class<SECTION> getClassSection() {return cSection;}
 	final Class<QUESTION> cQuestion;
 	final Class<SCORE> cScore;
 	final Class<ANSWER> cAnswer;

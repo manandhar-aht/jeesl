@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.module;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,5 +74,19 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		matrixRows = new HashMap<QUESTION,List<OPTION>>();
 		matrixCols = new HashMap<QUESTION,List<OPTION>>();
 		matrixCells = new HashMap<QUESTION,List<OPTION>>();
+	}
+	
+	@Override public void updateTemplate(TEMPLATE template)
+	{
+		if(!mapSection.containsKey(template)){mapSection.put(template,new ArrayList<SECTION>());}
+		mapSection.get(template).clear();
+		for(SECTION section : template.getSections())
+		{
+			if(section.isVisible())
+			{
+				mapSection.get(template).add(section);
+			}
+			
+		}
 	}
 }

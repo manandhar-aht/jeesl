@@ -45,6 +45,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescription,
 									SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -289,25 +290,28 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	
 	@Override public List<ANSWER> fAnswers(DATA data, Boolean visible, List<SECTION> sections)
 	{
+		if(sections!=null && sections.isEmpty()){return new ArrayList<ANSWER>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<ANSWER> cQ = cB.createQuery(cAnswer);
 		Root<ANSWER> answer = cQ.from(cAnswer);
+		Expression<Long> eAnswerId = answer.get(EjbWithId.attribute);
 		
 		Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
 		predicates.add(cB.equal(jData,data));
 		
 		Join<ANSWER,QUESTION> jQuestion = answer.join(JeeslSurveyAnswer.Attributes.question.toString());
-		predicates.add(cB.equal(jQuestion.<Boolean>get(JeeslSurveyQuestion.Attributes.visible.toString()),true));
+		if(visible!=null){predicates.add(cB.equal(jQuestion.<Boolean>get(JeeslSurveyQuestion.Attributes.visible.toString()),visible));}
 		Expression<Integer> eQuestionPosition = jQuestion.get(JeeslSurveyQuestion.Attributes.position.toString());
 		
-		Join<QUESTION,SECTION> jSection = answer.join(JeeslSurveyQuestion.Attributes.section.toString());
-		predicates.add(cB.equal(jSection.<Boolean>get(JeeslSurveySection.Attributes.visible.toString()),true));
+		Join<QUESTION,SECTION> jSection = jQuestion.join(JeeslSurveyQuestion.Attributes.section.toString());
+		if(visible!=null){predicates.add(cB.equal(jSection.<Boolean>get(JeeslSurveySection.Attributes.visible.toString()),visible));}
 		Expression<Integer> eSectionPosition = jSection.get(JeeslSurveySection.Attributes.position.toString());
+		if(sections!=null){predicates.add(jSection.in(sections));}
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(answer);
-		cQ.orderBy(cB.asc(eSectionPosition),cB.asc(eQuestionPosition));
+		cQ.orderBy(cB.asc(eSectionPosition),cB.asc(eQuestionPosition),cB.asc(eAnswerId));
 		
 		TypedQuery<ANSWER> tQ = em.createQuery(cQ);
 		return tQ.getResultList();

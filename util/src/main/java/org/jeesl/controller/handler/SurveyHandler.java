@@ -2,11 +2,11 @@ package org.jeesl.controller.handler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
@@ -28,7 +28,6 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.model.pojo.map.id.Nested3IdMap;
-import org.jeesl.util.comparator.ejb.module.survey.SurveyAnswerComparator;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +68,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private final Class<SECTION> cSection;
 	private final Class<OPTION> cOption;
 	
-	private final Comparator<ANSWER> cpAnswer;
+//	private final Comparator<ANSWER> cpAnswer;
 
 	private final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	
@@ -78,8 +77,6 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private final EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix;
 	private final EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
 	
-	private List<SECTION> sections; public List<SECTION> getSections() {return sections;} public void setSections(List<SECTION> sections) {this.sections = sections;}
-
 	private List<OPTION> districts; public List<OPTION> getDistricts() {return districts;} public void setDistricts(List<OPTION> districts) {this.districts = districts;}
 	
 	private Map<QUESTION,ANSWER> answers; public Map<QUESTION,ANSWER> getAnswers() {return answers;}
@@ -90,6 +87,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private DATA surveyData; public DATA getSurveyData(){return surveyData;} public void setSurveyData(DATA surveyData) {this.surveyData = surveyData;}
 	private TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	
+	private Set<SECTION> activeSections;
 	private SECTION activeSection; public SECTION getActiveSection() {return activeSection;} public void setActiveSection(SECTION activeSection) {this.activeSection = activeSection;}
 
 	private boolean showAssessment; public boolean isShowAssessment() {return showAssessment;}
@@ -104,7 +102,6 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		showAssessment = false;
 		allowAssessment = true;
 		
-		sections = new ArrayList<SECTION>();
 		answers = new HashMap<QUESTION,ANSWER>();
 		matrix = new Nested3IdMap<MATRIX>();
 		multiOptions = new HashMap<QUESTION,Object>();
@@ -116,8 +113,9 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		efAnswer = ffSurvey.answer();
 		efMatrix = ffSurvey.ejbMatrix();
 		
-		SurveyAnswerComparator<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> cfAnswer = new SurveyAnswerComparator<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
-		cpAnswer = cfAnswer.factory(SurveyAnswerComparator.Type.position);
+//		cpAnswer = ffSurvey.cmpAnswer().factory(SurveyAnswerComparator.Type.position);
+		
+		activeSections = new HashSet<SECTION>();
 	}
 	
 	public void reset()
@@ -125,6 +123,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		answers.clear();
 		matrix.clear();
 		multiOptions.clear();
+		activeSections.clear();
 		surveyData = null;
 		showAssessment = false;
 	}
@@ -135,7 +134,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate();
-		initSections();
+		activeSections.addAll(bSurvey.getMapSection().get(template));
 		logger.info("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());
 		reloadAnswers(EjbIdFactory.isSaved(surveyData));
 	}
@@ -146,20 +145,8 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate().getNested();
-		initSections();
+		activeSections.addAll(bSurvey.getMapSection().get(template));
 		reloadAnswers(EjbIdFactory.isSaved(surveyData));
-	}
-	
-	private void initSections()
-	{
-		sections.clear();
-		for(SECTION s : bSurvey.getMapSection().get(template))
-		{
-			if(s.isVisible())
-			{
-				sections.add(s);
-			}
-		}
 	}
 	
 	private void reloadAnswers(boolean dbLookup)
@@ -172,7 +159,11 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		if(logger.isTraceEnabled()){logger.info("Reloading Answers");}
 		if(dbLookup)
 		{
-			List<ANSWER> l = fSurvey.fcAnswers(surveyData);
+			List<SECTION> filterSection = null;
+			if(activeSections!=null && !activeSections.isEmpty()){filterSection = new ArrayList<SECTION>(activeSections);}
+			answers = EjbSurveyAnswerFactory.toQuestionMap(fSurvey.fAnswers(surveyData, true, filterSection));
+			
+/*			List<ANSWER> l = fSurvey.fcAnswers(surveyData);
 			Collections.sort(l,cpAnswer);
 			for(ANSWER answer : l)
 			{
@@ -182,9 +173,9 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 					answers.put(answer.getQuestion(), answer);
 				}
 			}
-		}
+*/		}
 
-		for(SECTION s : sections)
+		for(SECTION s : bSurvey.getMapSection().get(template))
 		{
 			if(processSection(s))
 			{
@@ -302,6 +293,8 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	{
 		logger.info("onSectionChange" + (activeSection!=null));
 		activeSection = fSurvey.find(cSection,activeSection);
+		activeSections.clear();
+		activeSections.add(activeSection);
 		logger.info("Section "+activeSection.toString());
 		reloadAnswers(EjbIdFactory.isSaved(surveyData));
 	}

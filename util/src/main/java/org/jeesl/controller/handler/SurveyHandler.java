@@ -15,6 +15,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
+import org.jeesl.factory.txt.module.survey.TxtSurveySectionFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -76,6 +77,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private final EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efAnswer;
 	private final EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix;
 	private final EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
+	private final TxtSurveySectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> tfSection;
 	
 	private List<OPTION> districts; public List<OPTION> getDistricts() {return districts;} public void setDistricts(List<OPTION> districts) {this.districts = districts;}
 	
@@ -93,7 +95,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private boolean showAssessment; public boolean isShowAssessment() {return showAssessment;}
 	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
 	
-	public static boolean debugPerformance = true;
+	public static boolean debugPerformance = false;
 	public static int debugDelay = 1000;
 	
 	public SurveyHandler(FacesMessageBean bMessage, final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey, final SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
@@ -115,6 +117,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		efData = ffSurvey.data();
 		efAnswer = ffSurvey.answer();
 		efMatrix = ffSurvey.ejbMatrix();
+		tfSection = ffSurvey.txtSection();
 		
 //		cpAnswer = ffSurvey.cmpAnswer().factory(SurveyAnswerComparator.Type.position);
 		
@@ -134,12 +137,12 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	public void prepare(SURVEY survey, CORRELATION correlation)
 	{
 		showAssessment = true;
+		if(SurveyHandler.debugPerformance){logger.warn("prepare fData()");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate();
 		activeSections.addAll(bSurvey.getMapSection().get(template));
 		logger.info("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());
-		reloadAnswers(EjbIdFactory.isSaved(surveyData));
 	}
 	
 	public void prepareNested(SURVEY survey, CORRELATION correlation)
@@ -149,11 +152,11 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate().getNested();
 		activeSections.addAll(bSurvey.getMapSection().get(template));
-		reloadAnswers(EjbIdFactory.isSaved(surveyData));
 	}
 	
-	private void reloadAnswers(boolean dbLookup)
+	public void reloadAnswers()
 	{
+		boolean dbLookup = EjbIdFactory.isSaved(surveyData);
 		answers.clear();
 		matrix = null;
 		matrix = new Nested3IdMap<MATRIX>();
@@ -164,6 +167,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		{
 			List<SECTION> filterSection = null;
 			if(activeSections!=null && !activeSections.isEmpty()){filterSection = new ArrayList<SECTION>(activeSections);}
+			if(SurveyHandler.debugPerformance){logger.warn("fAnswers for "+tfSection.codes(filterSection));try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 			answers = EjbSurveyAnswerFactory.toQuestionMap(fSurvey.fAnswers(surveyData, true, filterSection));
 			
 /*			List<ANSWER> l = fSurvey.fcAnswers(surveyData);
@@ -186,7 +190,6 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 				{	
 					if(q.isVisible())
 					{
-						if(logger.isTraceEnabled()){logger.info("Building answer for "+q.toString());}
 						ANSWER a;
 						if(!answers.containsKey(q)){a = efAnswer.build(q, surveyData);}
 						else {a = answers.get(q);}
@@ -196,12 +199,12 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 				}
 			}
 		}
-		logger.info("Answers loaded: " + answers.size());
+		logger.trace("Answers loaded: " + answers.size());
 	}
 	
 	private ANSWER buildMatrix(boolean dbLookup, ANSWER answer)
 	{
-		if(SurveyHandler.debugPerformance){logger.warn("buildMatrix");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		if(SurveyHandler.debugPerformance){logger.warn("buildMatrix for answer: "+answer.toString());try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		boolean isMulti = answer.getQuestion().getShowSelectMulti()!=null && answer.getQuestion().getShowSelectMulti();
 		boolean isMatrix = answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix();
 
@@ -230,7 +233,6 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 					}
 				}
 			}
-			logger.warn("Building Matrix for "+answer.toString());
 		}
 		return answer;
 	}
@@ -295,12 +297,12 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	
 	public void onSectionChange()
 	{
-		logger.info("onSectionChange" + (activeSection!=null));
+		if(SurveyHandler.debugPerformance){logger.warn("onSectionChange "+(activeSection!=null));try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		activeSection = fSurvey.find(cSection,activeSection);
 		activeSections.clear();
 		activeSections.add(activeSection);
 		logger.info("Section "+activeSection.toString());
-		reloadAnswers(EjbIdFactory.isSaved(surveyData));
+		reloadAnswers();
 	}
 	
 	private boolean processSection(SECTION s)

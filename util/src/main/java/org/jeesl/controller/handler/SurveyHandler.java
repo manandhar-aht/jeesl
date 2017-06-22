@@ -93,6 +93,9 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private boolean showAssessment; public boolean isShowAssessment() {return showAssessment;}
 	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
 	
+	public static boolean debugPerformance = true;
+	public static int debugDelay = 1000;
+	
 	public SurveyHandler(FacesMessageBean bMessage, final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey, final SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
 	{
 		this.bMessage=bMessage;
@@ -198,6 +201,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	
 	private ANSWER buildMatrix(boolean dbLookup, ANSWER answer)
 	{
+		if(SurveyHandler.debugPerformance){logger.warn("buildMatrix");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		boolean isMulti = answer.getQuestion().getShowSelectMulti()!=null && answer.getQuestion().getShowSelectMulti();
 		boolean isMatrix = answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix();
 
@@ -233,8 +237,8 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	
 	public void save(CORRELATION correlation) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info("Saving "+correlation.toString()+ " "+answers.size());
-		logger.info("CORR.saved: "+EjbIdFactory.isSaved(correlation));
+		if(SurveyHandler.debugPerformance){logger.warn("save");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		logger.info("Saving "+correlation.toString()+ " "+answers.size()+" answers  CORR.saved: "+EjbIdFactory.isSaved(correlation));
 		
 		surveyData.setCorrelation(correlation);
 		surveyData = fSurvey.saveData(surveyData);

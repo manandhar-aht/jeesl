@@ -19,9 +19,8 @@
 				<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
 			</p:selectOneMenu>
 			<p:selectManyMenu showCheckbox="true" rendered="#{question.showSelectMulti and (not question.showMatrix)}"
-								value="#{surveyHandler.districts}" var="o"
-								 converter="surveyOptionExplicitConverter">
-	           	<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="opt" itemLabel="#{opt.name[localeCode].lang}" itemValue="#{opt}" />
+								value="#{surveyHandler.districts}" var="o">
+	           	<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="opt" itemLabel="#{opt.name[localeCode].lang}" itemValue="#{opt.id}" />
 	            <p:column>
 	                <h:outputText value="#{o.name[localeCode].lang}" />
 	            </p:column>

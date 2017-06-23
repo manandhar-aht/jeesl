@@ -67,20 +67,16 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey;
 	
 	private final Class<SECTION> cSection;
-	private final Class<OPTION> cOption;
-	
-//	private final Comparator<ANSWER> cpAnswer;
 
 	private final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	
-//	private final EjbSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efQuestion;
 	private final EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efAnswer;
 	private final EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix;
 	private final EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
 	private final TxtSurveySectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> tfSection;
 	
 	private List<OPTION> districts; public List<OPTION> getDistricts() {return districts;} public void setDistricts(List<OPTION> districts) {this.districts = districts;}
-	
+
 	private Map<QUESTION,ANSWER> answers; public Map<QUESTION,ANSWER> getAnswers() {return answers;}
 	private Map<QUESTION,Object> multiOptions; public Map<QUESTION,Object> getMultiOptions() {return multiOptions;}
 	private Nested3IdMap<MATRIX> matrix; public Nested3IdMap<MATRIX> getMatrix() {return matrix;}
@@ -96,7 +92,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
 	
 	public static boolean debugPerformance = false;
-	public static int debugDelay = 1000;
+	public static int debugDelay = 5000;
 	
 	public SurveyHandler(FacesMessageBean bMessage, final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey, final SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
 	{
@@ -112,14 +108,11 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		multiOptions = new HashMap<QUESTION,Object>();
 		
 		cSection = ffSurvey.getClassSection();
-		cOption = ffSurvey.getOptionClass();
 		
 		efData = ffSurvey.data();
 		efAnswer = ffSurvey.answer();
 		efMatrix = ffSurvey.ejbMatrix();
 		tfSection = ffSurvey.txtSection();
-		
-//		cpAnswer = ffSurvey.cmpAnswer().factory(SurveyAnswerComparator.Type.position);
 		
 		activeSections = new HashSet<SECTION>();
 	}
@@ -154,12 +147,11 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		activeSections.addAll(bSurvey.getMapSection().get(template));
 	}
 	
-	public void reloadAnswers()
+	public void reloadAnswers(){reloadAnswers(true);}
+	public void reloadAnswers(boolean withMatrix)
 	{
 		boolean dbLookup = EjbIdFactory.isSaved(surveyData);
 		answers.clear();
-		matrix = null;
-		matrix = new Nested3IdMap<MATRIX>();
 		multiOptions.clear();
 		
 		if(logger.isTraceEnabled()){logger.info("Reloading Answers");}
@@ -169,19 +161,10 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 			if(activeSections!=null && !activeSections.isEmpty()){filterSection = new ArrayList<SECTION>(activeSections);}
 			if(SurveyHandler.debugPerformance){logger.warn("fAnswers for "+tfSection.codes(filterSection));try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 			answers = EjbSurveyAnswerFactory.toQuestionMap(fSurvey.fAnswers(surveyData, true, filterSection));
-			
-/*			List<ANSWER> l = fSurvey.fcAnswers(surveyData);
-			Collections.sort(l,cpAnswer);
-			for(ANSWER answer : l)
-			{
-				if(logger.isTraceEnabled()){logger.info("\tAnswer: "+answer.toString());}
-				if(answer.getQuestion().getSection().isVisible() && answer.getQuestion().isVisible() && activeSection!=null && answer.getQuestion().getSection().equals(activeSection))
-				{
-					answers.put(answer.getQuestion(), answer);
-				}
-			}
-*/		}
+		}
 
+		List<ANSWER> loadMatrix = new ArrayList<ANSWER>();
+		
 		for(SECTION s : bSurvey.getMapSection().get(template))
 		{
 			if(processSection(s))
@@ -193,13 +176,45 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 						ANSWER a;
 						if(!answers.containsKey(q)){a = efAnswer.build(q, surveyData);}
 						else {a = answers.get(q);}
-						a = buildMatrix(dbLookup,a);
+						if(BooleanComparator.active(q.getShowMatrix())){loadMatrix.add(a);}
+//						a = buildMatrix(dbLookup,a);
 						answers.put(q,a);
 					}
 				}
 			}
 		}
+		if(withMatrix){matrixLoader(loadMatrix);}
+		
 		logger.trace("Answers loaded: " + answers.size());
+	}
+	
+	private void matrixLoader(List<ANSWER> loadMatrix)
+	{
+		matrix = null;
+		matrix = new Nested3IdMap<MATRIX>();
+		
+		List<ANSWER> savedAnswer = new ArrayList<ANSWER>();
+		for(ANSWER a : loadMatrix){if(EjbIdFactory.isSaved(a)){savedAnswer.add(a);}}
+		
+		List<MATRIX> list = fSurvey.fCells(savedAnswer);
+		logger.info("MATRIX.Cells: "+list.size());
+		for(MATRIX m : list)
+		{
+			matrix.put(m.getAnswer().getQuestion().getId(),m.getRow().getId(),m.getColumn().getId(),m);
+		}
+		for(ANSWER a : loadMatrix)
+		{
+			for(OPTION row : bSurvey.getMatrixRows().get(a.getQuestion()))
+			{
+				for(OPTION column : bSurvey.getMatrixCols().get(a.getQuestion()))
+				{
+					if(!matrix.containsKey(a.getQuestion().getId(),row.getId(),column.getId()))
+					{
+						matrix.put(a.getQuestion().getId(),row.getId(),column.getId(),efMatrix.build(a,row,column));
+					}
+				}
+			}
+		}
 	}
 	
 	private ANSWER buildMatrix(boolean dbLookup, ANSWER answer)
@@ -208,7 +223,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		boolean isMulti = answer.getQuestion().getShowSelectMulti()!=null && answer.getQuestion().getShowSelectMulti();
 		boolean isMatrix = answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix();
 
-		if(dbLookup && (isMulti || isMatrix)){answer = fSurvey.load(answer);}
+		if(dbLookup && (isMulti || isMatrix) && EjbIdFactory.isSaved(answer)){answer = fSurvey.load(answer);}
 		
 		if(isMulti)
 		{
@@ -244,54 +259,41 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		
 		surveyData.setCorrelation(correlation);
 		surveyData = fSurvey.saveData(surveyData);
+		
+		List<ANSWER> answersToSave = new ArrayList<ANSWER>();
 		for(ANSWER a : answers.values())
 		{
 			a.setData(surveyData);
-			if(a.getQuestion().isVisible() && processSection(a.getQuestion().getSection()))
+			answersToSave.add(a);
+		}
+		if(SurveyHandler.debugPerformance){logger.warn("Save answers");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		fSurvey.save(answersToSave);
+		
+		if(SurveyHandler.debugPerformance){logger.warn("Reload answers");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		reloadAnswers(false);
+		
+		List<MATRIX> matrixToSave = new ArrayList<MATRIX>();
+		for(ANSWER a : answers.values())
+		{
+			if(BooleanComparator.active(a.getQuestion().getShowMatrix()))
 			{
-				logger.info("Saving: "+a.getId()+" for question: "+a.getQuestion().toString()+" ");
-				boolean withMulti = BooleanComparator.active(a.getQuestion().getShowSelectMulti());
-				
-				if(withMulti)
+				for(MATRIX m : matrix.values(a.getQuestion().getId()))
 				{
-					boolean mapHasMulti = multiOptions.containsKey(a.getQuestion());
-					
-					logger.info("Multi-Options:"+withMulti+" map:"+mapHasMulti+" for Question "+a.getQuestion().toString());
-					a.getOptions().clear();
-					if(mapHasMulti)
-					{
-	/*					logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).getClass().getName());
-						Object obj = multiOptions.get(a.getQuestion());
-						List<OPTION> list = (List<OPTION>)obj;
-						
-						logger.info("toString:" +obj.toString());
-						
-						logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).getClass().getName());
-						logger.info("Content of MultiOPtions:" +multiOptions.get(a.getQuestion()).toString());
-						a.getOptions().addAll(list);
-	*/				}
-					else{logger.warn("No Multi-Options for Questison "+a.getQuestion().getCode());}
-					
-					logger.info("Multi: "+a.getOptions().size());
+					if(m.getOption()!=null){m.setOption(bSurvey.getMapOptionId().get(m.getOption().getId()));}
+					m.setAnswer(a);
+					matrixToSave.add(m);
 				}
-				a = fSurvey.saveAnswer(a);
-				if(a.getQuestion().getShowMatrix()!=null && a.getQuestion().getShowMatrix())
-				{
-					List<MATRIX> list = new ArrayList<MATRIX>();
-					for(MATRIX m : matrix.values(a.getQuestion().getId()))
-					{
-						if(m.getOption()!=null){m.setOption(fSurvey.find(cOption,m.getOption()));}
-						m.setAnswer(a);
-						m = fSurvey.save(m);
-						list.add(m);
-						matrix.put(a.getQuestion().getId(),m.getRow().getId(),m.getColumn().getId(),m);
-					}
-					a.setMatrix(list);
-				}
-				
-				answers.put(a.getQuestion(), a);
 			}
 		}
+		if(SurveyHandler.debugPerformance){logger.warn("Save Matrix");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		fSurvey.save(matrixToSave);
+		
+		if(SurveyHandler.debugPerformance){logger.warn("Load Matrix");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		for(MATRIX m : fSurvey.fCells(new ArrayList<ANSWER>(answers.values())))
+		{
+			matrix.put(m.getAnswer().getQuestion().getId(),m.getRow().getId(),m.getColumn().getId(),m);
+		}
+		
 		if(bMessage!=null){bMessage.growlSuccessSaved();}
 	}
 	
@@ -311,4 +313,10 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		
 		return s.isVisible() && processActiveSection;
 	}
+	
+	public String multiKey(ANSWER a)
+	{
+		return "x";
+	}
+
 }

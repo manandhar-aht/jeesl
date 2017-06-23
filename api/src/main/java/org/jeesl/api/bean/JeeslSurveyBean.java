@@ -41,6 +41,7 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 	Map<TEMPLATE,List<SECTION>> getMapSection();
 	Map<SECTION,List<QUESTION>> getMapQuestion();
 	
+	Map<Long,OPTION> getMapOptionId();
 	Map<QUESTION,List<OPTION>> getMapOption();
 	Map<QUESTION,List<OPTION>> getMatrixRows();
 	Map<QUESTION,List<OPTION>> getMatrixCols();

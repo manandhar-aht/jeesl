@@ -56,6 +56,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected Map<TEMPLATE,List<SECTION>> mapSection; @Override public Map<TEMPLATE,List<SECTION>> getMapSection() {return mapSection;}
 	protected Map<SECTION,List<QUESTION>> mapQuestion; @Override public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
 
+	protected Map<Long,OPTION> mapOptionId; @Override public Map<Long,OPTION> getMapOptionId(){return mapOptionId;}
 	protected Map<QUESTION,List<OPTION>> mapOption; @Override public Map<QUESTION,List<OPTION>> getMapOption() {return mapOption;}
 
 	protected Map<QUESTION,List<OPTION>> matrixRows; @Override public Map<QUESTION,List<OPTION>> getMatrixRows() {return matrixRows;}
@@ -69,9 +70,10 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		mapSection = new HashMap<TEMPLATE,List<SECTION>>();
 		mapQuestion = new HashMap<SECTION,List<QUESTION>>();
 		
-		
+		mapOptionId = new HashMap<Long,OPTION>();
 		mapOption = new HashMap<QUESTION,List<OPTION>>();
 		matrixRows = new HashMap<QUESTION,List<OPTION>>();
+		
 		matrixCols = new HashMap<QUESTION,List<OPTION>>();
 		matrixCells = new HashMap<QUESTION,List<OPTION>>();
 	}

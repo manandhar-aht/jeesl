@@ -34,9 +34,7 @@
 					<f:facet name="header">
 						<h:outputText value="#{c.name[loc].lang}" />
 					</f:facet>
-					<p:inplace emptyLabel="-" rendered="#{question.showBoolean}">
-						<p:selectBooleanCheckbox  value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueBoolean}" />
-					</p:inplace>
+					<p:selectBooleanCheckbox  value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueBoolean}" rendered="#{question.showBoolean}"/>
 					<p:inplace emptyLabel="-" rendered="#{question.showInteger}">
 						<h:inputText   value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueNumber}" />
 					</p:inplace>

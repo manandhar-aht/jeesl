@@ -25,8 +25,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public interface JeeslSurveyFacade <L extends UtilsLang,
-									D extends UtilsDescription,
+public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescription,
 									SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 									SS extends UtilsStatus<SS,L,D>,
 									SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -65,6 +64,7 @@ public interface JeeslSurveyFacade <L extends UtilsLang,
 	List<ANSWER> fcAnswers(DATA data);
 	List<ANSWER> fAnswers(SURVEY survey);
 	List<ANSWER> fAnswers(DATA data, Boolean visible, List<SECTION> sections);
+	List<MATRIX> fCells(List<ANSWER> answers);
 	
 	DATA fData(CORRELATION correlation) throws UtilsNotFoundException;
 	DATA saveData(DATA data) throws UtilsConstraintViolationException, UtilsLockingException;

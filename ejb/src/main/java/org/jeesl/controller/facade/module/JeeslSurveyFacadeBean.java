@@ -76,6 +76,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	private final Class<SECTION> cSection;
 	private final Class<QUESTION> cQuestion;
 	private final Class<ANSWER> cAnswer;
+	private final Class<MATRIX> cMatrix;
 	private final Class<DATA> cData;
 	private final Class<OPTION> cOption;
 	private final Class<CORRELATION> cCorrelation;
@@ -94,6 +95,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		this.cSection=cSection;
 		this.cQuestion=cQuestion;
 		this.cAnswer=cAnswer;
+		this.cMatrix=cMatrix;
 		this.cData=cData;
 		this.cOption=cOption;
 		this.cCorrelation=cCorrelation;
@@ -314,6 +316,24 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		cQ.orderBy(cB.asc(eSectionPosition),cB.asc(eQuestionPosition),cB.asc(eAnswerId));
 		
 		TypedQuery<ANSWER> tQ = em.createQuery(cQ);
+		return tQ.getResultList();
+	}
+	
+	@Override public List<MATRIX> fCells(List<ANSWER> answers) 
+	{
+		if(answers!=null && answers.isEmpty()){return new ArrayList<MATRIX>();}
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<MATRIX> cQ = cB.createQuery(cMatrix);
+		Root<MATRIX> matrix = cQ.from(cMatrix);
+		
+		Join<MATRIX,ANSWER> jAnswer = matrix.join(JeeslSurveyMatrix.Attributes.answer.toString());
+		predicates.add(jAnswer.in(answers));
+
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(matrix);
+		
+		TypedQuery<MATRIX> tQ = em.createQuery(cQ);
 		return tQ.getResultList();
 	}
 	

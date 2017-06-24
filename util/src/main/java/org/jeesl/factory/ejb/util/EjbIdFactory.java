@@ -65,9 +65,12 @@ public class EjbIdFactory
 	public static List<Long> toLong(String[] list)
 	{
 		List<Long> results = new ArrayList<Long>();
-		for(String s : list)
+		if(list!=null)
 		{
-			results.add(Long.valueOf(s));
+			for(String s : list)
+			{
+				results.add(Long.valueOf(s));
+			}
 		}
 		return results;
 	}

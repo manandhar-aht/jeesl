@@ -37,7 +37,7 @@ public interface JeeslSurvey<L extends UtilsLang,
 			extends EjbWithId,EjbWithName,EjbWithDateRange,
 						UtilsWithStatus<L,D,SS>
 {
-	public enum Attributes{id,status}
+	public enum Attributes{id,template,status}
 	public enum Status{open,preparation};
 	
 	TEMPLATE getTemplate();

@@ -51,6 +51,8 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	ANSWER load(ANSWER answer);
 	DATA load(DATA data);
 	
+	List<SURVEY> fSurveysForCategories(List<TC> categories);
+	
 	void rmVersion(VERSION version) throws UtilsConstraintViolationException;
 	void rmOption(OPTION option) throws UtilsConstraintViolationException;
 	

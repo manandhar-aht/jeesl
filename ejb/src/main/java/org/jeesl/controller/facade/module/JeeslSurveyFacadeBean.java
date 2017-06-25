@@ -154,6 +154,26 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		return data;
 	}
 	
+	@Override
+	public List<SURVEY> fSurveysForCategories(List<TC> categories)
+	{
+		if(categories==null || categories.isEmpty()){return new ArrayList<SURVEY>();}
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<SURVEY> cQ = cB.createQuery(cSurvey);
+		Root<SURVEY> survey = cQ.from(cSurvey);
+		
+		Join<SURVEY,TEMPLATE> jTemplate = survey.join(JeeslSurvey.Attributes.template.toString());
+		Path<TC> pCategory = jTemplate.get(JeeslSurveyTemplate.Attributes.category.toString());
+		
+		predicates.add(pCategory.in(categories));
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(survey);
+
+		return em.createQuery(cQ).getResultList();
+	}
+	
 	@Override public void rmVersion(VERSION version) throws UtilsConstraintViolationException
 	{
 		version = em.find(cVersion, version.getId());

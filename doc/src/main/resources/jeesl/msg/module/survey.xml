@@ -344,4 +344,11 @@
     		<s:lang key="fr" translation="Status"/>
     	</s:langs>
     </s:translation>
+    	<s:translation key="jeeslSurveyCriteria">
+    	<s:langs>
+    		<s:lang key="de" translation="Kriterium"/>
+    		<s:lang key="en" translation="Criteria"/>
+    		<s:lang key="fr" translation="Criteria"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

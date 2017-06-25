@@ -206,6 +206,26 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		return em.createQuery(cQ).getResultList();
 	}
 	
+	@Override public List<SURVEY> fSurveys(TC category, SS status, Date date)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<SURVEY> cQ = cB.createQuery(cSurvey);
+		Root<SURVEY> survey = cQ.from(cSurvey);
+		
+		Join<SURVEY,TEMPLATE> jTemplate = survey.join(JeeslSurvey.Attributes.template.toString());
+		Path<TC> pCategory = jTemplate.get(JeeslSurveyTemplate.Attributes.category.toString());
+		Path<SS> pStatus = survey.get(JeeslSurvey.Attributes.status.toString());
+		
+		predicates.add(cB.equal(pCategory, category));
+		predicates.add(cB.equal(pStatus, status));
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(survey);
+
+		return em.createQuery(cQ).getResultList();
+	}
+	
 	@Override public <W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 		W fWithSurvey(Class<W> c, long surveyId) throws UtilsNotFoundException
 	{
@@ -419,4 +439,6 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		if(answer.getOption()!=null){answer.setOption(this.find(cOption,answer.getOption()));}
 		return this.saveProtected(answer);
 	}
+
+
 }

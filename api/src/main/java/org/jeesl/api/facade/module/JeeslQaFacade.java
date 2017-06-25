@@ -27,8 +27,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 
 public interface JeeslQaFacade
-				<L extends UtilsLang,
-				D extends UtilsDescription,
+				<L extends UtilsLang, D extends UtilsDescription,
 				C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 				R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 				V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,

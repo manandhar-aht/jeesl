@@ -55,4 +55,9 @@
         <tag-name>schedule</tag-name>
         <source>jeeslPrototype/calendar/schedule.xhtml</source>
     </tag>
+    
+    <tag>
+        <tag-name>ioFiles</tag-name>
+        <source>jeeslPrototype/io/files.xhtml</source>
+    </tag>
 </facelet-taglib>

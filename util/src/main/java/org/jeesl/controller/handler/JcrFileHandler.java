@@ -29,18 +29,22 @@ public class JcrFileHandler<L extends UtilsLang,D extends UtilsDescription, T ex
 	
 	private File file; public File getFile() {return file;} public void setFile(File file) {this.file = file;}
 	private EjbWithId ejb; public EjbWithId getEjb() {return ejb;} public void setEjb(EjbWithId ejb) {this.ejb = ejb;}
+	private T type; public T getType() {return type;} public void setType(T type) {this.type = type;}
+	
+	private Class<T> cType;
 	private boolean withTypes; public boolean isWithTypes() {return withTypes;}
 	
 	private final JeeslIoJcrFacade<L,D> fJcr;
 	private final JcrBean bean; public JcrBean getBean() {return bean;}
 	
-	public JcrFileHandler(JcrBean bean, JeeslIoJcrFacade<L,D> fJcr){this(bean,fJcr,null);}
-	public JcrFileHandler(JcrBean bean, JeeslIoJcrFacade<L,D> fJcr, List<T> types)
+	public JcrFileHandler(JcrBean bean, JeeslIoJcrFacade<L,D> fJcr){this(bean,fJcr,null,null);}
+	public JcrFileHandler(JcrBean bean, JeeslIoJcrFacade<L,D> fJcr, List<T> types, Class<T> cType)
 	{
 		this.bean=bean;
 		this.fJcr=fJcr;
 		this.types=types;
-		withTypes = types!=null && types.isEmpty();
+		this.cType=cType;
+		withTypes = types!=null && !types.isEmpty();
 		
 		files = new ArrayList<File>();
 	}
@@ -56,6 +60,7 @@ public class JcrFileHandler<L extends UtilsLang,D extends UtilsDescription, T ex
 	{
 		this.ejb=ejb;
 		files = fJcr.jcrFiles(ejb);
+		file = null;
 	}
 	
 	public void loadFile() throws UtilsNotFoundException
@@ -79,6 +84,14 @@ public class JcrFileHandler<L extends UtilsLang,D extends UtilsDescription, T ex
 		logger.info("Save (existing:"+alreadyAvailable+")");
 		if(!alreadyAvailable)
 		{
+			if(type!=null)
+			{
+				type = fJcr.find(cType,type);
+				file.setCategory(type.getCode());
+			}
+			
+			logger.info("Using type:" +type.toString());
+			
 			fJcr.jcrUpload(ejb,file);
 			reload(ejb);
 		}

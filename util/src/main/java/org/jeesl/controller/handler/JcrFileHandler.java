@@ -88,9 +88,8 @@ public class JcrFileHandler<L extends UtilsLang,D extends UtilsDescription, T ex
 			{
 				type = fJcr.find(cType,type);
 				file.setCategory(type.getCode());
+				logger.info("Using type:" +type.toString());
 			}
-			
-			logger.info("Using type:" +type.toString());
 			
 			fJcr.jcrUpload(ejb,file);
 			reload(ejb);

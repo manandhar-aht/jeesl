@@ -440,5 +440,11 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		return this.saveProtected(answer);
 	}
 
-
+	
+	@Override public void rmAnswer(ANSWER answer) throws UtilsConstraintViolationException
+	{
+		answer = em.find(cAnswer, answer.getId());
+		answer.getData().getAnswers().remove(answer);
+		this.rmProtected(answer);
+	}
 }

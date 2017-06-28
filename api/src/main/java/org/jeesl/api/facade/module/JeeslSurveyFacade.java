@@ -73,4 +73,5 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	DATA saveData(DATA data) throws UtilsConstraintViolationException, UtilsLockingException;
 	
 	ANSWER saveAnswer(ANSWER answer) throws UtilsConstraintViolationException, UtilsLockingException;
+	void rmAnswer(ANSWER answer) throws UtilsConstraintViolationException;
 }

@@ -42,7 +42,7 @@ public class JeeslMsgBuilder
 	
 	//Modules
 	public static final String timeseries = "jeesl/msg/module/timeseries.xml";
-	public static final String io = "aht-utils/msg/module/io.xml";
+	public static final String io = "jeesl/msg/module/io.xml";
 	public static final String monitoring = "aht-utils/msg/module/monitoring.xml";
 	public static final String calendar = "jeesl/msg/module/calendar.xml";
 	

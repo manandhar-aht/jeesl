@@ -60,4 +60,8 @@
         <tag-name>ioFiles</tag-name>
         <source>jeeslPrototype/io/files.xhtml</source>
     </tag>
+    <tag>
+        <tag-name>ioUpload</tag-name>
+        <source>jeeslPrototype/io/upload.xhtml</source>
+    </tag>
 </facelet-taglib>

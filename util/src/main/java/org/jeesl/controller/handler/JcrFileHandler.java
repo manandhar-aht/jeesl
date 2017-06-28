@@ -32,7 +32,7 @@ public class JcrFileHandler<L extends UtilsLang,D extends UtilsDescription, T ex
 	private boolean withTypes; public boolean isWithTypes() {return withTypes;}
 	
 	private final JeeslIoJcrFacade<L,D> fJcr;
-	private final JcrBean bean;
+	private final JcrBean bean; public JcrBean getBean() {return bean;}
 	
 	public JcrFileHandler(JcrBean bean, JeeslIoJcrFacade<L,D> fJcr){this(bean,fJcr,null);}
 	public JcrFileHandler(JcrBean bean, JeeslIoJcrFacade<L,D> fJcr, List<T> types)

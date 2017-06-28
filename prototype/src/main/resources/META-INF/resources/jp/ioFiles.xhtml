@@ -24,7 +24,7 @@
 						<aht:icon type="jeeslAdd" listener="#{cc.attrs.handler.addFile()}" update=":opUpload" oncomplete="PF('wvUpload').show();"/>
 					</aht:pfDataTableHeader>
 				</f:facet>
-				<p:ajax event="rowSelect" listener="#{cc.attrs.handler.selectFile()}" update=":fDownload" />
+				<p:ajax event="rowSelect" listener="#{cc.attrs.handler.selectFile()}" update=":#{cc.id}:fDownload" />
 				<p:column>
 					<h:graphicImage library="gfx" name="#{iconBean.map12Files[f.symbol]}"/>
 				</p:column>

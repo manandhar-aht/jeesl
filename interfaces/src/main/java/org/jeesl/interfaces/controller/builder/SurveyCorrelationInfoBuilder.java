@@ -35,5 +35,7 @@ public interface SurveyCorrelationInfoBuilder<L extends UtilsLang, D extends Uti
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
-
+	void init(CORRELATION c);
+	int getDataFields();
+	String get(int i);
 }

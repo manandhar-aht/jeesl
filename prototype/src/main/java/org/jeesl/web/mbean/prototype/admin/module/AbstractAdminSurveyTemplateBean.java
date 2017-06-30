@@ -192,7 +192,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	protected void reloadTemplate()
 	{
 		logger.info("Reloading "+template.toString());
-		template = fSurvey.load(template);
+		template = fSurvey.load(template,false,false);
 		bSurvey.updateTemplate(template);
 		version = template.getVersion();
 		sections = template.getSections();

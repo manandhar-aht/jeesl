@@ -38,7 +38,7 @@ public class JsonTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	public Template build(TEMPLATE ejb)
 	{
-		if(fSurvey!=null){ejb = fSurvey.load(ejb);}
+		if(fSurvey!=null){ejb = fSurvey.load(ejb,false,false);}
 		
 		Template json = build();
 		

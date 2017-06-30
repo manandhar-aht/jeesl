@@ -75,7 +75,7 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,SURVE
 		if(q.isSetSection())
 		{
 			TEMPLATE template = ejb.getSurvey().getTemplate();
-			if(fSurvey!=null){template = fSurvey.load(template);}
+			if(fSurvey!=null){template = fSurvey.load(template,false,false);}
 			for(SECTION section : template.getSections())
 			{
 				xml.getSection().add(xfSection.build(section));

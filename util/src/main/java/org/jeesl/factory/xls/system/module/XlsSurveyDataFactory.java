@@ -101,7 +101,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 				 
 		//Get data for lazy loading
 		TEMPLATE template = survey.getTemplate();
-		if (fSurvey!=null) {template = fSurvey.load(template);}
+		if (fSurvey!=null) {template = fSurvey.load(template,false,false);}
 		List<SECTION> sections = template.getSections();
 		for (SECTION section : sections)
 		{

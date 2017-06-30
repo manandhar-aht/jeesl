@@ -55,7 +55,7 @@ public class XmlTemplateFactory<L extends UtilsLang,D extends UtilsDescription,S
 	
 	public Template build(TEMPLATE ejb)
 	{
-		if(fSurvey!=null){ejb = fSurvey.load(ejb);}
+		if(fSurvey!=null){ejb = fSurvey.load(ejb,false,false);}
 		
 		Template xml = new Template();
 		if(q.isSetId()){xml.setId(ejb.getId());}

@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import org.jeesl.interfaces.controller.builder.SurveyCorrelationInfoBuilder;
 
 public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -67,10 +68,13 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 	private CellStyle style;
 	String answerTypes[] = {"Yes/No","Number","Natural Number","Score","Option","Text","Remark"};
 	
-	public XlsSurveyDataFactory(String localeCode, EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption)
+	private SurveyCorrelationInfoBuilder correlationBuilder;
+	
+	public XlsSurveyDataFactory(String localeCode, EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption, SurveyCorrelationInfoBuilder builder)
 	{
 		this.localeCode = localeCode;
 		this.efOption = efOption;
+		this.correlationBuilder = builder;
 //		efOption = ffSurvey.option();
 	}
 	
@@ -98,35 +102,136 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		//Get data for lazy loading
 		TEMPLATE template = survey.getTemplate();
 		if (fSurvey!=null) {template = fSurvey.load(template);}
+		List<SECTION> sections = template.getSections();
+		for (SECTION section : sections)
+		{
+			if (fSurvey!=null) {section = fSurvey.load(section);}
+		}
+		
 		// The survey object holds information about the structure of the survey
 		logger.info("Using survey: "+survey.getName());
+		logger.info("Processing Data");
 		
-		// Data Rendering Section
-		// Individual Answers
-		for (DATA surveyData : list)
+		// Define the current row and column of the processing
+		Row row = sheet.createRow(0);
+		MutableInt columnNr = new MutableInt(1);
+		
+		// Iterate all sections available in the template
+		for (SECTION section : sections)
 		{
-			if (fSurvey!=null) {surveyData = fSurvey.load(surveyData);}
-			Map<QUESTION, ANSWER> infoInventory = EjbSurveyAnswerFactory.toQuestionMap(surveyData.getAnswers());
-			for (QUESTION question : infoInventory.keySet())
+			if (fSurvey!=null) {section = fSurvey.load(section);}
+			// Keep in digital mind the width of the section as a sum of all question lengths
+			int sectionWidth = 0;
+			
+			// Handle the individual questions in the section
+			for (QUESTION question : section.getQuestions())
 			{
-				ANSWER answer = infoInventory.get(question);
+				if (fSurvey!=null) {question = fSurvey.load(question);}
+				// First, render the headers of the question based on the width
+				// Then add that width to the width of the section
+				int questionWidth = calculateWidth(question);
+				sectionWidth = sectionWidth + questionWidth;
 				
-				// Add or Update the section info on offset and width in section header map
-				// Use the computed question length for question header rendering
-				int questionLength = addQuestionToSection(answer);
+				// Render the standard header based on the options named in the answerTypes String Array
+				columnNr = buildCells(answerTypes, row, columnNr);
+				
+				// The buildCells returns to the columnNr where it started after rendering the String Array
+				// Next, build the valid options rendered with X in the next row to indicate if answer type is set for the question
+				row = sheet.createRow(row.getRowNum()+1);
+				columnNr = buildValidOptionsCells(answerTypes, row, columnNr, question);
+				
+				// Get back to the previous row
+				row = sheet.createRow(row.getRowNum()-1);
+				// The buildValidOptionsCells also returns to the columnNr where it started after rendering the String Array
+				
 			}
+			
+			
+			
+			//TODO: Render the section header
 		}
-		Row sectionHeaderRow  = sheet.createRow(0);
-		Row questionHeaderRow = sheet.createRow(1);
 		
-		renderHeaderData(sectionHeaderRow, sectionHeaders, false);
-		renderHeaderData(questionHeaderRow, questionHeaders, true);
+		// Now shift the row to the first data row by skipping the valid option row in first iteration
+		row = sheet.createRow(row.getRowNum()+1);
+		
+		// Reset the column number to be at the very beginning to start with correlation data
+		columnNr = new MutableInt(0);
+		
+		//for (DATA data : survey.getSurveyData())
+		//{
+			row = sheet.createRow(row.getRowNum()+1);
+			// Do the lazy loading of the data object
+			DATA data = survey.getSurveyData().get(0);
+			if (fSurvey!=null) {data = fSurvey.load(data);}
+
+			// Initialize the correlation builder with the given data objects correlation object
+			correlationBuilder.init(data.getCorrelation());
+
+			// Prepare a list of all questions and related answers
+			Map<QUESTION, ANSWER> answers = EjbSurveyAnswerFactory.toQuestionMap(data.getAnswers());
+
+			// Render the correlation objects info
+			for (int c = 0; c<correlationBuilder.getDataFields(); c++)
+			{
+				XlsCellFactory.build(row, columnNr, style, correlationBuilder.get(c+1), 1);
+			}
+			
+			// Render the Answers
+			for (SECTION section : sections)
+			{
+				if (fSurvey!=null) {section = fSurvey.load(section);}
+				
+				// Handle the individual questions in the section
+				for (QUESTION question : section.getQuestions())
+				{
+					if (fSurvey!=null) {question = fSurvey.load(question);}
+					ANSWER answer = answers.get(question);
+					if (fSurvey!=null) {answer = fSurvey.load(answer);}
+					String titleCell = correlationBuilder.get(1);
+					logger.info("Rendering answer of " +titleCell +" at " +row.getRowNum() +"," +columnNr);
+					columnNr = buildAnswerCells(answerTypes, row, columnNr, answer);
+				}
+			}
+			// Reset the columnNr 
+			// Shift the row
+		//}
 		return wb;
 	}
 	
-	public void renderHeaderData(Row row, Map<Long, HeaderData> headerData, boolean renderQuestionHeader)
+	public void renderData(Row startRow, List<DATA> surveyData)
 	{
-		MutableInt columnNr = new MutableInt(0);
+		int rowIterator = startRow.getRowNum();
+		for (int i=0; i<6; i++)
+		{
+			MutableInt columnNr = new MutableInt(0);
+			Row currentRow    = startRow.getSheet().createRow(rowIterator);
+			
+			logger.info("Iteration " +i);
+			DATA data = surveyData.get(i);
+			correlationBuilder.init(data.getCorrelation());
+			if (fSurvey!=null) {data = fSurvey.load(data);}
+			logger.info("Using " +data.getAnswers().size() +" answers. IN ROW "+rowIterator);
+			for (int c = 0; c<correlationBuilder.getDataFields(); c++)
+			{
+				XlsCellFactory.build(currentRow, columnNr, style, correlationBuilder.get(c+1), 1);
+			}
+			Map<QUESTION, ANSWER> infoInventory = EjbSurveyAnswerFactory.toQuestionMap(data.getAnswers());
+			logger.info("No of questions in inventory Map: " +infoInventory.size());
+			for (QUESTION question : infoInventory.keySet())
+			{
+				ANSWER answer = infoInventory.get(question);
+				String titleCell = correlationBuilder.get(1);
+				logger.info("Rendering answer of " +titleCell +" at " +rowIterator +"," +columnNr);
+				
+				columnNr = buildAnswerCells(answerTypes, currentRow, columnNr, answer);
+			}
+			rowIterator++;
+		}
+	}
+	
+	public int renderHeaderData(Row row, Map<Long, HeaderData> headerData, boolean renderQuestionHeader)
+	{
+		MutableInt columnNr = new MutableInt(correlationBuilder.getDataFields());
 		Row subRow    = null;
 		Row subsubRow = null;
 		Row answerRow = null;
@@ -158,14 +263,18 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 				columnNr = buildValidOptionsCells(answerTypes, subsubRow, columnNr, question);
 
 				// Render the Answers
-				columnNr = buildAnswerCells(answerTypes, answerRow, columnNr, answer);
+				//columnNr = buildAnswerCells(answerTypes, answerRow, columnNr, answer);
 				
 				// Render the Matrix
-				columnNr = buildMatrixCells(answerTypes, answerRow, columnNr, answer);
+				//columnNr = buildMatrixCells(answerTypes, answerRow, columnNr, answer);
+				
+				// Get to the begin of the next one
+				//columnNr.add(header.width);
 				
 				// Get to the begin of the next one
 				columnNr.add(header.width);
 			}
+			
 			
 		}
 		
@@ -178,7 +287,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 				row.getSheet().autoSizeColumn(i);
 			}
 		}
-		
+		if (renderQuestionHeader) {return answerRow.getRowNum();} else {return row.getRowNum();} 
 		
 	}
 	
@@ -216,7 +325,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 				if (question.getShowMatrix()!= null && question.getShowMatrix()) {XlsCellFactory.build(row, columnNr, style, "X", 1);} else {columnNr.add(1);}}
 	
 		}
-		columnNr.subtract(answerTypes.length);
+		//columnNr.subtract(answerTypes.length);
 		return columnNr;
 	}
 	
@@ -244,7 +353,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 			if (s.equals("Matrix")){
 				if (question.getShowMatrix()!= null && question.getShowMatrix() && answer.getMatrix()!=null) {XlsCellFactory.build(row, columnNr, style, answer.getMatrix(), 1);} else {columnNr.add(1);}}
 		}
-		columnNr.subtract(answerTypes.length);
+		//columnNr.subtract(answerTypes.length);
 		return columnNr;
 	}
 	
@@ -384,11 +493,13 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		if (fSurvey!=null) {answer = fSurvey.load(answer);}
 		// See if Matrix options are to be shown and if so, see if it extends standard range of 9 cells
 		
-		if (answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix() && answer.getMatrix()!=null)
+		QUESTION question = answer.getQuestion();
+		if (fSurvey!=null) {question = fSurvey.load(question);}
+		if (question.getShowMatrix()!=null && question.getShowMatrix() && answer.getMatrix()!=null)
 		{
-			if (efOption.toColumns(answer.getQuestion().getOptions()).size() >= answerTypes.length)
+			if (efOption.toColumns(question.getOptions()).size() >= answerTypes.length)
 			{
-				questionLength = efOption.toColumns(answer.getQuestion().getOptions()).size();
+			//	questionLength = efOption.toColumns(question.getOptions()).size();
 			}
 		}
 		headerInfo.width = headerInfo.width + questionLength;
@@ -415,6 +526,19 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		String formattedList = sb.toString();
 		StringUtils.trim(formattedList);
 		return formattedList;
+	}
+	
+	private int calculateWidth(QUESTION question)
+	{
+		int questionLength = answerTypes.length;
+		if (question.getShowMatrix()!=null && question.getShowMatrix())
+		{
+			if (efOption.toColumns(question.getOptions()).size() >= answerTypes.length)
+			{
+				questionLength = efOption.toColumns(question.getOptions()).size();
+			}
+		}
+		return questionLength;
 	}
 	
 	private class HeaderData {

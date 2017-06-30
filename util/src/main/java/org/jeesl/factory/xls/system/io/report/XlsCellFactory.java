@@ -192,6 +192,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 	public static void build(Row xlsRow, MutableInt columnNr, CellStyle style, Object value, int width)
 	{
 		build(xlsRow,columnNr.intValue(),style,value, width);
+		//logger.info("Writing " +value.toString() +" to " +xlsRow.getRowNum() +", " +columnNr.toString());
 		columnNr.add(width);
 	}
 	

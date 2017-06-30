@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
+import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
 import org.jeesl.factory.factory.SvgFactoryFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
@@ -77,7 +78,9 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	protected List<EjbWithPosition> items; public List<EjbWithPosition> getItems() {return items;}
 	private List<GT> graphicTypes; public List<GT> getGraphicTypes() {return graphicTypes;}
 	private List<FS> graphicStyles; public List<FS> getGraphicStyles() {return graphicStyles;}
-	
+	private List<F> figures; public List<F> getFigures() {return figures;}
+	private F figure; public F getFigure() {return figure;} public void setFigure(F figure) {this.figure = figure;}
+
 	protected final Class<?> cStatus;
 	
 	private final Class<G> cG;
@@ -88,6 +91,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
 	
 	protected EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic;
+	private final EjbGraphicFigureFactory<L,D,G,GT,F,FS> efFigure;
 	
 	public AbstractOptionTableBean(final Class<L> cL, final Class<D> cD, Class<G> cG, Class<GT> cGT, final Class<F> cF, final Class<FS> cFS, final Class<?> cStatus)
 	{
@@ -97,6 +101,11 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		this.cF=cF;
 		this.cFS=cFS;
 		this.cStatus=cStatus;
+		
+		SvgFactoryFactory<L,D,G,GT,F,FS> ffSvg = SvgFactoryFactory.factory(cL,cD,cG,cF,cFS);
+		efGraphic = ffSvg.efGraphic();
+		
+		efFigure = new EjbGraphicFigureFactory<L,D,G,GT,F,FS>(cF);
 		
 		index=1;
 		
@@ -114,10 +123,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fUtils=fUtils;
-		
-		SvgFactoryFactory<L,D,G,GT,F,FS> ffSvg = SvgFactoryFactory.factory(cL,cD,cG,cF,cFS);
-		efGraphic = ffSvg.efGraphic();
-		
+			
 		graphicTypes = fUtils.allOrderedPositionVisible(cGT);
 		graphicStyles = fUtils.allOrderedPositionVisible(cFS);
 	}
@@ -133,14 +139,6 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		supportsGraphic = EjbWithGraphic.class.isAssignableFrom(cl);
 		supportsSymbol = UtilsWithSymbol.class.isAssignableFrom(cl);
 		supportsFigure = EjbWithGraphicFigure.class.isAssignableFrom(cl);
-		
-		if(logger.isInfoEnabled())
-		{
-			logger.info("Image? "+supportsImage);
-			logger.info("Graphic? "+supportsGraphic);
-			logger.info("Symbol? "+supportsSymbol);
-			logger.info("Figure? "+supportsFigure);
-		} 
 	}
 	
 	protected void debugUi(boolean debug)
@@ -153,6 +151,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			logger.info("\tImage? "+supportsImage);
 			logger.info("\tGraphic? "+supportsGraphic);
 			logger.info("\tSymbol? "+supportsSymbol);
+			logger.info("\tFigure? "+supportsFigure);
 		}
 	}
 	
@@ -212,6 +211,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void selectStatus() throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
+		figures = null; figure=null;
 		status = fUtils.find(cl,(EjbWithId)status);
 		status = fUtils.load(cl,(EjbWithId)status);
 		logger.debug("selectStatus");
@@ -235,6 +235,11 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 				status = fUtils.update(status);
 			}
 			graphic = ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic();
+			
+			if(supportsFigure)
+			{
+				figures = fUtils.allForParent(cF,graphic);
+			}
 		}
 		
 		uiAllowCode = hasDeveloperAction || hasAdministratorAction;
@@ -249,6 +254,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 				}
 			}
 		}
+				
 		debugUi(false);
 		pageFlowPrimarySelect(status);
 	}
@@ -343,6 +349,17 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	{
 		((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType()));
 		logger.info("changeGraphicType to "+((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType().getCode());
+	}
+	
+	public void addFigure()
+	{
+		logger.info("Add "+cF.getSimpleName());
+		figure = efFigure.build(graphic);
+	}
+	
+	public void selectFigure()
+	{
+		logger.info("Select "+figure.toString());
 	}
 	
 	//Revision

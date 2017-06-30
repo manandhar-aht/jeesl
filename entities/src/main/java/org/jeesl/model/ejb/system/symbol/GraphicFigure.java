@@ -24,6 +24,12 @@ public class GraphicFigure implements EjbRemoveable,Serializable,EjbPersistable,
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 	
+	@Override public String resolveParentAttribute() {return JeeslGraphicFigure.Attributes.graphic.toString();}
+	@ManyToOne
+	private Graphic graphic;
+	@Override public Graphic getGraphic() {return graphic;}
+	@Override public void setGraphic(Graphic graphic) {this.graphic = graphic;}
+	
 	@ManyToOne
 	private GraphicStyle style;
 	public GraphicStyle getStyle() {return style;}

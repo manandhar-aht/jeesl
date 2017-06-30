@@ -63,4 +63,25 @@
     		<s:lang key="fr" translation="Symbol"/>
     	</s:langs>
 	</s:translation>
+	<s:translation key="jeeslOptionGraphicFigures">
+    	<s:langs>
+    		<s:lang key="de" translation="Graphik Figuren"/>
+    		<s:lang key="en" translation="Graphic Figures"/>
+    		<s:lang key="fr" translation="Graphic Figures"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslOptionGraphicFigure">
+    	<s:langs>
+    		<s:lang key="de" translation="Graphik Figur"/>
+    		<s:lang key="en" translation="Graphic Figure"/>
+    		<s:lang key="fr" translation="Graphic Figure"/>
+    	</s:langs>
+    </s:translation>
+        <s:translation key="jeeslOptionGraphicFigureCss">
+    	<s:langs>
+    		<s:lang key="de" translation="CSS"/>
+    		<s:lang key="en" translation="CSS"/>
+    		<s:lang key="fr" translation="CSS"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

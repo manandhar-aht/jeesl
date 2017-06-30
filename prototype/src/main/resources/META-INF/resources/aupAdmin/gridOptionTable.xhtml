@@ -79,7 +79,7 @@
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{(cc.attrs.bean.supportsGraphic) and (cc.attrs.bean.graphic.type.code eq 'symbol')}">
 								<p:outputLabel value="#{msg.aupGraphicStyle}"/>
 								<p:selectOneMenu styleClass="w100" value="#{cc.attrs.bean.graphic.style}" effect="fade">
-									<f:selectItems value="#{cc.attrs.bean.graphicStyles}" var="s" itemLabel="#{s.name[userBean.localeCode].lang}" itemValue="#{s}"/>
+									<f:selectItems value="#{cc.attrs.bean.graphicStyles}" var="s" itemLabel="#{s.name[localeCode].lang}" itemValue="#{s}"/>
 								</p:selectOneMenu>
 								
 								<p:outputLabel value="#{msg.aupGraphicSize}"/>
@@ -92,7 +92,7 @@
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.bean.supportsGraphic}">
 								<p:outputLabel value="#{msg.aupGraphicType}"/>
 								<p:selectOneMenu styleClass="w100" value="#{cc.attrs.bean.graphic.type}" effect="fade">
-									<f:selectItems value="#{cc.attrs.bean.graphicTypes}" var="type" itemLabel="#{type.name[userBean.localeCode].lang}" itemValue="#{type}"/>
+									<f:selectItems value="#{cc.attrs.bean.graphicTypes}" var="type" itemLabel="#{type.name[localeCode].lang}" itemValue="#{type}"/>
 									<p:ajax event="change" listener="#{cc.attrs.bean.changeGraphicType()}" update="@form :#{cc.id}:fUpload"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
@@ -104,6 +104,51 @@
 							</c:if>
 						</p:panel>
 					</h:form>
+					
+					<h:form id="fFigures" rendered="#{(not empty cc.attrs.bean.status) and cc.attrs.bean.supportsFigure}">
+						<p:dataTable var="f" value="#{cc.attrs.bean.figures}" draggableRows="#{cc.attrs.bean.uiAllowReorder}"
+					          selection="#{cc.attrs.bean.figure}" selectionMode="single" rowKey="#{f.id}">
+							<f:facet name="header">
+					          	<aht:pfDataTableHeader title="#{msg.jeeslOptionGraphicFigures}">
+					          		<aht:icon rendered="#{cc.attrs.bean.uiAllowAdd}" type="jeeslAdd" listener="#{cc.attrs.bean.addFigure()}" update=":#{cc.id}:fFigure" tooltip="#{msg.ttNew}"/>
+					          	</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderFigures()}" update="@form"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectFigure()}" update=":#{cc.id}:fFigure"/>
+							<p:column>
+					             <f:facet name="header">#{msg.aupOptionCode}</f:facet>  
+					             <h:outputText value="#{f.id}" />
+							</p:column>
+						</p:dataTable>
+					</h:form>
+					<h:form id="fFigure">
+						<p:panel id="pLang" header="#{msg.jeeslOptionGraphicFigure}"
+							 rendered="#{not empty cc.attrs.bean.figure}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelFigure()}" update=":#{cc.id}:fFigures :#{cc.id}:fFigure" mayDisappear="true" tooltip="#{msg.ttCancel}"/>
+								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveFigure()}"   update=":#{cc.id}:fFigures :#{cc.id}:fFigure" tooltip="#{msg.ttSave}" rendered="#{cc.attrs.bean.uiAllowSave}"/>
+								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteFigure()}" update=":#{cc.id}:fFigures :#{cc.id}:fFigure" mayDisappear="true" tooltip="#{msg.ttDelete}" rendered="#{cc.attrs.bean.uiAllowRemove and cc.attrs.bean.uiAllowCode}" />
+							</f:facet>
+							<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+							
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+								<p:outputLabel value="#{msg.jeeslOptionGraphicFigureCss}" />
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.figure.css}" />
+								
+								<p:outputLabel value="#{msg.aupGraphicStyle}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.figure.style}" effect="fade">
+									<f:selectItems value="#{cc.attrs.bean.graphicStyles}" var="s" itemLabel="#{s.name[localeCode].lang}" itemValue="#{s}"/>
+								</p:selectOneMenu>
+								
+							</p:panelGrid>
+							
+							
+							
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.status}" keys="#{cc.attrs.langKeys}" withDescription="true"/>
+	
+						</p:panel>
+					</h:form>
+					
 					<p:panel header="#{msg.aupGraphicPreview}" rendered="#{(not empty cc.attrs.bean.status) and (cc.attrs.bean.supportsGraphic)}" styleClass="auPanelWithGrid">
 						<p:panelGrid columns="1" columnClasses="auPwg100">
 							<p:outputLabel value="12px"/>

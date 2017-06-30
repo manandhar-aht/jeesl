@@ -22,12 +22,13 @@ public class EjbGraphicFigureFactory<L extends UtilsLang, D extends UtilsDescrip
         this.cF = cF;
     } 
         
-	public F build(FS style, boolean css, double size, String color, double offsetX, double offsetY, double rotation)
+	public F build(G graphic, FS style, boolean css, double size, String color, double offsetX, double offsetY, double rotation)
 	{
         F ejb = null;
         try
         {
 			ejb=cF.newInstance();
+			ejb.setGraphic(graphic);
 			ejb.setStyle(style);
 			
 			ejb.setCss(css);
@@ -36,6 +37,20 @@ public class EjbGraphicFigureFactory<L extends UtilsLang, D extends UtilsDescrip
 			ejb.setOffsetX(offsetX);
 			ejb.setOffsetY(offsetY);
 			ejb.setRotation(rotation);
+		}
+        catch (InstantiationException e) {}
+        catch (IllegalAccessException e) {}
+        
+        return ejb;
+    }
+	
+	public F build(G graphic)
+	{
+        F ejb = null;
+        try
+        {
+			ejb=cF.newInstance();
+			ejb.setGraphic(graphic);
 		}
         catch (InstantiationException e) {}
         catch (IllegalAccessException e) {}

@@ -4,15 +4,20 @@ import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslGraphicFigure<L extends UtilsLang, D extends UtilsDescription,
 								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
 								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
-		extends EjbWithId,EjbSaveable,EjbWithPositionVisible
+		extends EjbWithId,EjbSaveable,EjbWithPositionVisible,EjbWithParentAttributeResolver
 {
+	public enum Attributes{graphic}
 	public static enum Style{circle,square}
+	
+	G getGraphic();
+	void setGraphic(G graphic);
 	
 	FS getStyle();
 	void setStyle(FS style);

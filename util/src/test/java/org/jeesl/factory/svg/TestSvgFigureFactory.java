@@ -57,10 +57,12 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 		styleCircle = efStyle.build(JeeslGraphicFigure.Style.circle); styleCircle.setId(1);
 		styleSquare = efStyle.build(JeeslGraphicFigure.Style.square); styleCircle.setId(2);
 		
-		f1 = efFigure.build(styleCircle, true, 10, colorRed, 0, 0, 0);		f1.setId(1);
-		f2 = efFigure.build(styleCircle, false, 5, colorBlue, -5, 0, 0);	f2.setId(2);
-		f3 = efFigure.build(styleCircle, false, 5, colorGreen, 5, 0, 0);	f3.setId(3);
-		f4 = efFigure.build(styleSquare, false, 5, colorGreen, 0, 0, 45);	f4.setId(4);
+		Graphic graphic = null;
+		
+		f1 = efFigure.build(graphic, styleCircle, true, 10, colorRed, 0, 0, 0);		f1.setId(1);
+		f2 = efFigure.build(graphic, styleCircle, false, 5, colorBlue, -5, 0, 0);	f2.setId(2);
+		f3 = efFigure.build(graphic, styleCircle, false, 5, colorGreen, 5, 0, 0);	f3.setId(3);
+		f4 = efFigure.build(graphic, styleSquare, false, 5, colorGreen, 0, 0, 45);	f4.setId(4);
 	}
 	
 	public void testF1()

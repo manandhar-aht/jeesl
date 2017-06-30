@@ -191,12 +191,21 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 	 
 	 public static <T extends EjbWithId> String reorder(Class<T> c, List<T> list)
 	 {
-	        StringBuffer sb = new StringBuffer();
-	        sb.append("Reordering ");
-	        sb.append(" ").append(c.getSimpleName());
-	        if(list!=null){sb.append(" ").append(list.size()).append(" elements");}
-	        return sb.toString();
-		 }
+        StringBuffer sb = new StringBuffer();
+        sb.append("Reordering ");
+        sb.append(" ").append(c.getSimpleName());
+        if(list!=null){sb.append(" ").append(list.size()).append(" elements");}
+        return sb.toString();
+	}
+	 
+	 public static <T extends EjbWithId> String wizard(T t, String description)
+	 {
+        StringBuffer sb = new StringBuffer();
+        sb.append("Wizard ").append(t.getClass().getSimpleName());
+        sb.append(" (").append(t.toString()).append(")");
+        sb.append(": ").append(description);
+        return sb.toString();
+	 }
 	 
 	 //Toggle
 	 public static <T extends EjbWithId> String toggle(T t)

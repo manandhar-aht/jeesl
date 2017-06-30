@@ -70,8 +70,8 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	List<ANSWER> fAnswers(List<DATA> datas);
 	List<MATRIX> fCells(List<ANSWER> answers);
 	
-	
 	DATA fData(CORRELATION correlation) throws UtilsNotFoundException;
+	List<DATA> fDatas(List<CORRELATION> correlations);
 	DATA saveData(DATA data) throws UtilsConstraintViolationException, UtilsLockingException;
 	
 	ANSWER saveAnswer(ANSWER answer) throws UtilsConstraintViolationException, UtilsLockingException;

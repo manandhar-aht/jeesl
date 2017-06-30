@@ -133,8 +133,6 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		supportsGraphic = EjbWithGraphic.class.isAssignableFrom(cl);
 		supportsSymbol = UtilsWithSymbol.class.isAssignableFrom(cl);
 		supportsFigure = EjbWithGraphicFigure.class.isAssignableFrom(cl);
-
-
 		
 		if(logger.isInfoEnabled())
 		{

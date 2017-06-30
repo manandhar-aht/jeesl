@@ -468,10 +468,27 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		return this.allForGrandParent(cAnswer, cData, "data", survey, "survey");
 	}
 
-	@Override
-	public DATA fData(CORRELATION correlation) throws UtilsNotFoundException
+	@Override public DATA fData(CORRELATION correlation) throws UtilsNotFoundException
 	{
 		return this.oneForParent(cData, "correlation", correlation);
+	}
+	
+	@Override public List<DATA> fDatas(List<CORRELATION> correlations)
+	{
+		if(correlations!=null && correlations.isEmpty()){return new ArrayList<DATA>();}
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<DATA> cQ = cB.createQuery(cData);
+		Root<DATA> data = cQ.from(cData);
+		
+		Join<DATA,CORRELATION> jCorrelation = data.join(JeeslSurveyData.Attributes.correlation.toString());
+		predicates.add(jCorrelation.in(correlations));
+
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(data);
+		
+		TypedQuery<DATA> tQ = em.createQuery(cQ);
+		return tQ.getResultList();
 	}
 	
 	@Override public ANSWER saveAnswer(ANSWER answer) throws UtilsConstraintViolationException, UtilsLockingException

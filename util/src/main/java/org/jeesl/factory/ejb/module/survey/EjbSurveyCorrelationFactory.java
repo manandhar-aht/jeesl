@@ -21,9 +21,8 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.survey.Template;
 
-public class EjbSurveyTemplateFactory<L extends UtilsLang, D extends UtilsDescription,
+public class EjbSurveyCorrelationFactory<L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -41,64 +40,29 @@ public class EjbSurveyTemplateFactory<L extends UtilsLang, D extends UtilsDescri
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveyTemplateFactory.class);
-	
-	final Class<TEMPLATE> cTemplate;
-    
-	public EjbSurveyTemplateFactory(final Class<TEMPLATE> cTemplate)
-	{       
-        this.cTemplate = cTemplate;
-	}
-    
-	public TEMPLATE build(TC category,TS status, Template xTemplate)
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyCorrelationFactory.class);
+
+	public static <L extends UtilsLang, D extends UtilsDescription,
+					SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					SS extends UtilsStatus<SS,L,D>,
+					SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					TEMPLATE extends JeeslSurveyTemplate<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					VERSION extends JeeslSurveyTemplateVersion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					TS extends UtilsStatus<TS,L,D>,
+					TC extends UtilsStatus<TC,L,D>,
+					SECTION extends JeeslSurveySection<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					QUESTION extends JeeslSurveyQuestion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					SCORE extends JeeslSurveyScore<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					UNIT extends UtilsStatus<UNIT,L,D>,
+					ANSWER extends JeeslSurveyAnswer<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					MATRIX extends JeeslSurveyMatrix<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					DATA extends JeeslSurveyData<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
+					CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
+		List<CORRELATION> toList(List<?> list)
 	{
-		return build(category,status,xTemplate.getDescription().getValue());
-	}
-	
-	public TEMPLATE build(TC category,TS status, String name)
-	{
-		TEMPLATE ejb = null;
-		try
-		{
-			ejb = cTemplate.newInstance();
-			ejb.setName(name);
-			ejb.setCategory(category);
-			ejb.setStatus(status);
-		}
-		catch (InstantiationException e) {e.printStackTrace();}
-		catch (IllegalAccessException e) {e.printStackTrace();}
+		List<CORRELATION> correlations = new ArrayList<CORRELATION>();
 		
-		return ejb;
-	}
-	
-	public TEMPLATE toVisible(TEMPLATE template, boolean withQuestions)
-	{
-		List<SECTION> sections = new ArrayList<SECTION>();
-		for(SECTION section : template.getSections())
-		{
-			if(section.isVisible())
-			{
-				if(withQuestions)
-				{
-					List<QUESTION> questions = new ArrayList<QUESTION>();
-					for(QUESTION question : section.getQuestions())
-					{
-						if(question.isVisible())
-						{
-							questions.add(question);
-						}
-					}
-					section.getQuestions().clear();
-					section.setQuestions(questions);
-					
-				}
-				
-				sections.add(section);
-			}
-		}
-		
-		template.getSections().clear();
-		template.setSections(sections);
-		return template;
+		return correlations;
 	}
 }

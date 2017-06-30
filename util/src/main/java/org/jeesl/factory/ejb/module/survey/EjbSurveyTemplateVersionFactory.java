@@ -1,6 +1,8 @@
 package org.jeesl.factory.ejb.module.survey;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;

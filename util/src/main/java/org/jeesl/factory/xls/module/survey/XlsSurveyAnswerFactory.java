@@ -1,8 +1,9 @@
-package org.jeesl.factory.xls.system.module;
+package org.jeesl.factory.xls.module.survey;
 
-import java.util.List;
-
-import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
+import org.apache.commons.lang.mutable.MutableInt;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -23,7 +24,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class XlsSurveyQuestionFactory <L extends UtilsLang, D extends UtilsDescription,
+public class XlsSurveyAnswerFactory <L extends UtilsLang, D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							SS extends UtilsStatus<SS,L,D>,
 							SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -41,26 +42,47 @@ public class XlsSurveyQuestionFactory <L extends UtilsLang, D extends UtilsDescr
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(XlsSurveyQuestionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(XlsSurveyAnswerFactory.class);
+
+	private final CellStyle style;
 	
-	private final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
-	
-	public XlsSurveyQuestionFactory(EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption)
+	public XlsSurveyAnswerFactory(CellStyle style)
 	{
-		this.efOption = efOption;
+		this.style=style;
 	}
 	
-	public  int toSize(QUESTION question)
+	public void build(Row row, MutableInt colNr, ANSWER answer)
 	{
-		if(BooleanComparator.active(question.getShowMatrix()))
+		if(BooleanComparator.active(answer.getQuestion().getShowBoolean())){XlsCellFactory.build(row, colNr, style, answer.getValueBoolean(), 1);}
+		else if(BooleanComparator.active(answer.getQuestion().getShowDouble())){XlsCellFactory.build(row, colNr, style, answer.getValueDouble(), 1);}
+		else if(BooleanComparator.active(answer.getQuestion().getShowInteger())){XlsCellFactory.build(row, colNr, style, answer.getValueNumber(), 1);}
+		else if(BooleanComparator.active(answer.getQuestion().getShowText())){XlsCellFactory.build(row, colNr, style, answer.getValueText(), 1);}
+		else if(BooleanComparator.active(answer.getQuestion().getShowSelectOne()))
 		{
-			List<OPTION> oRows = efOption.toRows(question.getOptions());
-			List<OPTION> oCols = efOption.toColumns(question.getOptions());
-			return oRows.size()*oCols.size();
+			if(answer.getOption()!=null){XlsCellFactory.build(row, colNr, style, answer.getOption().getCode(), 1);}
+			else{XlsCellFactory.build(row, colNr, style, "", 1);}
 		}
 		else
 		{
-			return 1;
+			XlsCellFactory.build(row, colNr, style, "XXXXX", 1);
+		}
+		
+	}
+	
+	public void build(Row row, MutableInt colNr, QUESTION question, MATRIX matrix)
+	{
+		if(BooleanComparator.active(question.getShowBoolean())){XlsCellFactory.build(row, colNr, style, matrix.getValueBoolean(), 1);}
+		else if(BooleanComparator.active(question.getShowDouble())){XlsCellFactory.build(row, colNr, style, matrix.getValueDouble(), 1);}
+		else if(BooleanComparator.active(question.getShowInteger())){XlsCellFactory.build(row, colNr, style, matrix.getValueNumber(), 1);}
+		else if(BooleanComparator.active(question.getShowText())){XlsCellFactory.build(row, colNr, style, matrix.getValueText(), 1);}
+		else if(BooleanComparator.active(question.getShowSelectOne()))
+		{
+			if(matrix.getOption()!=null){XlsCellFactory.build(row, colNr, style, matrix.getOption().getCode(), 1);}
+			else{XlsCellFactory.build(row, colNr, style, "", 1);}
+		}
+		else
+		{
+			XlsCellFactory.build(row, colNr, style, "XXXXX", 1);
 		}
 		
 	}

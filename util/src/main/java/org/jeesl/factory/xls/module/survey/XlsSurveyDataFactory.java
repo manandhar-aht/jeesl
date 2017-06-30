@@ -1,4 +1,4 @@
-package org.jeesl.factory.xls.system.module;
+package org.jeesl.factory.xls.module.survey;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +16,11 @@ import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
+import org.jeesl.factory.xls.system.io.report.XlsRowFactory;
 import org.jeesl.factory.xls.system.io.report.XlsSheetFactory;
+import org.jeesl.interfaces.controller.builder.SurveyCorrelationInfoBuilder;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -31,13 +34,13 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.model.pojo.map.generic.Nested2Map;
+import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import org.jeesl.interfaces.controller.builder.SurveyCorrelationInfoBuilder;
 
 public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -58,29 +61,176 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XlsSurveyDataFactory.class);
-		
-	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
-	private final String localeCode;
-	private final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
 	
+	private final String localeCode;
+	
+	private final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
+	private final EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efTemplate;
+	private final EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix;
+	private final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
+	private final XlsSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xlfQuestion;
+	private XlsSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xlfAnswer;
+	
+	private SurveyCorrelationInfoBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> correlationBuilder;
+	
+	//Simple
+	private final Map<SECTION,Integer> mapSizeSection;
+	private final Map<QUESTION,Integer> mapSizeQuestion;
+	private final Map<QUESTION,List<OPTION>> mapOptions;
+	
+	//Full
 	private Map<Long, HeaderData> sectionHeaders;
 	private Map<Long, HeaderData> questionHeaders;
 	private CellStyle style;
 	String answerTypes[] = {"Yes/No","Number","Natural Number","Score","Option","Text","Remark"};
 	
-	private SurveyCorrelationInfoBuilder correlationBuilder;
 	
-	public XlsSurveyDataFactory(String localeCode, EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption, SurveyCorrelationInfoBuilder builder)
+	public XlsSurveyDataFactory(String localeCode, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efTemplate, EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix, EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption, SurveyCorrelationInfoBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> builder)
 	{
 		this.localeCode = localeCode;
+		this.fSurvey = fSurvey;
+		this.efTemplate = efTemplate;
+		this.efMatrix = efMatrix;
 		this.efOption = efOption;
 		this.correlationBuilder = builder;
-//		efOption = ffSurvey.option();
+
+		xlfQuestion = new XlsSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(efOption);
+		
+		mapSizeSection = new HashMap<SECTION,Integer>();
+		mapSizeQuestion = new HashMap<QUESTION,Integer>();
+		mapOptions = new HashMap<QUESTION,List<OPTION>>();
 	}
 	
-	public void lazy(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)
+	public Workbook buildSimple(SURVEY survey, List<DATA> list)
+	{		
+		// Create an Excel workbook to be filled with given data
+		Workbook wb = new XSSFWorkbook();
+		
+		// Create a sheet in the new workbook to write data into
+		Sheet sheet = XlsSheetFactory.getSheet(wb, localeCode);
+		
+		// Create a style for the cells
+		style = wb.createCellStyle();
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+		xlfAnswer = new XlsSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(style);
+				 
+		//Get data for lazy loading
+		TEMPLATE template = efTemplate.toVisible(fSurvey.load(survey.getTemplate(),true,true),true);
+		simpleCalculateSizes(template);
+		
+		MutableInt rowNr = new MutableInt(0);
+		simpleHeader(sheet,template,rowNr);
+		simpleData(sheet,template,rowNr,list);
+		
+		return wb;
+	}
+	
+	private void simpleCalculateSizes(TEMPLATE template)
 	{
-		this.fSurvey = fSurvey;
+		for(SECTION section : template.getSections())
+		{
+			int sizeSection = 0;
+			for(QUESTION question : section.getQuestions())
+			{
+				if(BooleanComparator.active(question.getShowMatrix()))
+				{
+					mapOptions.put(question,question.getOptions());
+				}
+				int sizeQuestion = xlfQuestion.toSize(question);
+				mapSizeQuestion.put(question,sizeQuestion);
+				sizeSection = sizeSection + sizeQuestion;
+			}			
+			mapSizeSection.put(section,sizeSection);
+		}
+	}
+	
+	private void simpleHeader(Sheet sheet, TEMPLATE template, MutableInt rowNr)
+	{
+		MutableInt colNrSection = new MutableInt(0);
+		MutableInt colNrQuestion = new MutableInt(0);
+		MutableInt colNrMatrix = new MutableInt(0);
+		
+		Row rowSection = XlsRowFactory.build(sheet,rowNr);
+		Row rowQuestion = XlsRowFactory.build(sheet,rowNr);
+		Row rowMatrix = XlsRowFactory.build(sheet,rowNr);
+		
+		colNrSection.add(correlationBuilder.getDataFields());
+		colNrQuestion.add(correlationBuilder.getDataFields());
+		colNrMatrix.add(correlationBuilder.getDataFields());
+		
+		for(SECTION section : template.getSections())	
+		{
+			logger.info("Size: "+mapSizeSection.get(section));
+			XlsCellFactory.build(rowSection, colNrSection, style, section.getCode(), mapSizeSection.get(section));
+			
+			for(QUESTION question : section.getQuestions())
+			{
+				XlsCellFactory.build(rowQuestion, colNrQuestion, style, question.getCode(), mapSizeQuestion.get(question));
+				if(BooleanComparator.active(question.getShowMatrix()))
+				{
+					List<OPTION> oRows = efOption.toRows(mapOptions.get(question));
+					List<OPTION> oCols = efOption.toColumns(mapOptions.get(question));
+					for(OPTION oRow : oRows)
+					{
+						for(OPTION oCol : oCols)
+						{
+							XlsCellFactory.build(rowMatrix, colNrMatrix, style, oRow.getCode()+"-"+oCol.getCode(), 1);
+						}
+					}
+				}
+				else{colNrMatrix.add(mapSizeQuestion.get(question));}
+			}
+		}
+	}
+	
+	private void simpleData(Sheet sheet, TEMPLATE template, MutableInt rowNr, List<DATA> list)
+	{
+		MutableInt colNr = new MutableInt(0);
+		for(DATA data : list)
+		{
+			Row row = XlsRowFactory.build(sheet,rowNr);
+			colNr.setValue(0);
+			correlationBuilder.init(data.getCorrelation());
+			for(int i=0;i<correlationBuilder.getDataFields();i++)
+			{
+				XlsCellFactory.build(row, colNr, style, correlationBuilder.get(i), 1);
+			}
+			
+			data = fSurvey.load(data);
+			Nested2Map<OPTION,OPTION,MATRIX> matrix = efMatrix.build(fSurvey.fCells(data.getAnswers()));
+ 			Map<QUESTION,ANSWER> map = EjbSurveyAnswerFactory.toQuestionMap(data.getAnswers());
+			
+			
+			for(SECTION section : template.getSections())	
+			{
+				for(QUESTION question : section.getQuestions())
+				{
+					if(!map.containsKey(question)){mapSizeQuestion.get(question);}
+					else
+					{
+						ANSWER answer = map.get(question);
+						if(BooleanComparator.active(question.getShowMatrix()))
+						{
+							List<OPTION> oRows = efOption.toRows(mapOptions.get(question));
+							List<OPTION> oCols = efOption.toColumns(mapOptions.get(question));
+							for(OPTION oRow : oRows)
+							{
+								for(OPTION oCol : oCols)
+								{
+									if(matrix.containsKey(oRow,oCol)){xlfAnswer.build(row, colNr, answer.getQuestion(), matrix.get(oRow,oCol));}
+									else{XlsCellFactory.build(row, colNr, style, "", 1);}
+								}
+							}
+						}
+						else
+						{
+							
+							xlfAnswer.build(row, colNr, answer);
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	public Workbook build(SURVEY survey, List<DATA> list)

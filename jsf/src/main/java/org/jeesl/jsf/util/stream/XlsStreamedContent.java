@@ -17,4 +17,9 @@ public class XlsStreamedContent extends DefaultStreamedContent implements Stream
 	{
 		super(is,mimeType,fileName);
 	}
+	
+	public XlsStreamedContent(InputStream is, String fileName)
+	{
+		this(is,JeeslXlsReport.mimeType,fileName);
+	}
 }

@@ -96,8 +96,7 @@ public class EjbSurveyAnswerFactory<L extends UtilsLang,
 		return list;
 	}
 	
-	public static <L extends UtilsLang,
-					D extends UtilsDescription,
+	public static <L extends UtilsLang, D extends UtilsDescription,
 					SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 					SS extends UtilsStatus<SS,L,D>,
 					SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>, TEMPLATE extends JeeslSurveyTemplate<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -117,8 +116,7 @@ public class EjbSurveyAnswerFactory<L extends UtilsLang,
 		for(ANSWER a : list){map.put(a.getQuestion(),a);}
 		return map;
 	}
-	public static <L extends UtilsLang,
-					D extends UtilsDescription,
+	public static <L extends UtilsLang, D extends UtilsDescription,
 					SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 					SS extends UtilsStatus<SS,L,D>,
 					SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>, TEMPLATE extends JeeslSurveyTemplate<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,

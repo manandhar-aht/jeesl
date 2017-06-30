@@ -12,11 +12,15 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.exlp.util.io.StringUtil;
 
-public class SbMultiHandler <T extends EjbWithId>
-		implements Serializable
+public class SbMultiHandler <T extends EjbWithId> implements Serializable
 {
 	final static Logger logger = LoggerFactory.getLogger(SbMultiHandler.class);
 	private static final long serialVersionUID = 1L;
@@ -45,6 +49,21 @@ public class SbMultiHandler <T extends EjbWithId>
 		list.clear();
 		selected.clear();
 		map.clear();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <E extends Enum<E>, S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> void add(UtilsFacade fUtils, Class<S> c, E code)
+	{
+		try
+		{
+			S status = fUtils.fByCode(c,code);
+			list.add((T)status);
+		}
+		catch (UtilsNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void toggleNone(){selectNone();callbackToggledToBean();}

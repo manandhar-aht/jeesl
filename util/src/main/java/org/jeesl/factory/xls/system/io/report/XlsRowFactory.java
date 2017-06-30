@@ -215,4 +215,13 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
             cellNr++;
         }
     }
+	
+	public static Row build(Sheet sheet, MutableInt nr)
+	{
+		Row row;
+		row = sheet.getRow(nr.intValue());
+		if(row==null){row = sheet.createRow(nr.intValue());}
+		nr.add(1);
+		return row;
+	}
 }

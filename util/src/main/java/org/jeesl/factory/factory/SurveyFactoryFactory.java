@@ -19,6 +19,7 @@ import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
 import org.jeesl.factory.txt.module.survey.TxtOptionFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveyQuestionFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveySectionFactory;
+import org.jeesl.factory.xls.system.module.XlsSurveyData2Factory;
 import org.jeesl.factory.xls.system.module.XlsSurveyDataFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
@@ -195,9 +196,14 @@ public class SurveyFactoryFactory<L extends UtilsLang,
 		return new JsonSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,q);
 	}
 	
-	public XlsSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xlsData(String localeCode)
+	public XlsSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xlsData0(String localeCode)
 	{
 		return new XlsSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,option());
+	}
+	
+	public XlsSurveyData2Factory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xlsData2(String localeCode)
+	{
+		return new XlsSurveyData2Factory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,template(),option());
 	}
 	
 	public SurveyAnswerComparator<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> cmpAnswer()

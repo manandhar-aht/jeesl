@@ -359,6 +359,25 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		return tQ.getResultList();
 	}
 	
+	@Override public List<ANSWER> fAnswers(List<DATA> datas)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<ANSWER> cQ = cB.createQuery(cAnswer);
+		Root<ANSWER> answer = cQ.from(cAnswer);
+		Expression<Long> eAnswerId = answer.get(EjbWithId.attribute);
+		
+		Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
+		predicates.add(jData.in(datas));
+			
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(answer);
+//		cQ.orderBy(cB.asc(eSectionPosition),cB.asc(eQuestionPosition),cB.asc(eAnswerId));
+		
+		TypedQuery<ANSWER> tQ = em.createQuery(cQ);
+		return tQ.getResultList();
+	}
+	
 	@Override public List<MATRIX> fCells(List<ANSWER> answers) 
 	{
 		if(answers!=null && answers.isEmpty()){return new ArrayList<MATRIX>();}

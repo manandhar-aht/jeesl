@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicStyle;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicType;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
+import org.jeesl.interfaces.model.system.with.EjbWithGraphicFigure;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
@@ -59,7 +60,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	protected boolean supportsSymbol; public boolean getSupportsSymbol(){return supportsSymbol;}
 	protected boolean supportsImage; public boolean getSupportsImage() {return supportsImage;}
 	protected boolean supportsGraphic; public boolean getSupportsGraphic() {return supportsGraphic;}
-		
+	protected boolean supportsFigure; public boolean isSupportsFigure() {return supportsFigure;}
+
 	protected long index;
 	protected Map<Long,Boolean> allowAdditionalElements; public Map<Long, Boolean> getAllowAdditionalElements(){return allowAdditionalElements;}
 	
@@ -129,13 +131,17 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	{
 		supportsImage = UtilsWithImage.class.isAssignableFrom(cl);
 		supportsGraphic = EjbWithGraphic.class.isAssignableFrom(cl);
-		supportsSymbol = UtilsWithSymbol.class.isAssignableFrom(cl);		
+		supportsSymbol = UtilsWithSymbol.class.isAssignableFrom(cl);
+		supportsFigure = EjbWithGraphicFigure.class.isAssignableFrom(cl);
+
+
 		
 		if(logger.isInfoEnabled())
 		{
 			logger.info("Image? "+supportsImage);
 			logger.info("Graphic? "+supportsGraphic);
 			logger.info("Symbol? "+supportsSymbol);
+			logger.info("Figure? "+supportsFigure);
 		} 
 	}
 	

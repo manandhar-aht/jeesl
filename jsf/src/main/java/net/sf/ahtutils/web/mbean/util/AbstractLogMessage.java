@@ -145,7 +145,9 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
         sb.append(": ").append(a.toString());
         if(b!=null)
         {
-        	sb.append(" ... ").append(b.toString());
+        	sb.append(" --- ");
+        	sb.append(b.getClass().getSimpleName()).append(": ");
+        	sb.append(b.toString());
         }
         return sb.toString();
 	 }

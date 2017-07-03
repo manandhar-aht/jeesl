@@ -236,10 +236,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			}
 			graphic = ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic();
 			
-			if(supportsFigure)
-			{
-				figures = fUtils.allForParent(cF,graphic);
-			}
+			if(supportsFigure){reloadFigures();}
 		}
 		
 		uiAllowCode = hasDeveloperAction || hasAdministratorAction;
@@ -288,7 +285,10 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 				graphic = ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic();
 				if(debugSave){logger.info("Saved "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
 			}
+			if(supportsFigure){reloadFigures();}
 			if(debugSave){logger.info("Saved "+status.getClass().getSimpleName()+" "+status.toString());}
+			
+			
 			
 			updateAppScopeBean2(status);
 			selectCategory(false);
@@ -322,18 +322,18 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		}
 	}
 	
-	public void cancel()
+	public void cancelStatus() {reset(true,true);}
+	public void cancelFigure() {reset(false,true);reloadFigures();}
+	private void reset(boolean rStatus, boolean rFigure)
 	{
-		status=null;
+		if(rStatus){status=null;}
+		if(rFigure){figure=null;}
 	}
 	
 	protected void updateAppScopeBean2(Object o){}
 	
-	public void reorder() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info("updateOrder "+items.size());
-		PositionListReorderer.reorder(fUtils, items);
-	}
+	public void reorder() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fUtils, items);}
+	public void reorderFigures() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fUtils,figures);}
 	
 	@SuppressWarnings("unchecked")
 	public void handleFileUpload(FileUploadEvent event)
@@ -351,6 +351,11 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		logger.info("changeGraphicType to "+((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType().getCode());
 	}
 	
+	private void reloadFigures()
+	{
+		figures = fUtils.allForParent(cF,graphic);
+	}
+	
 	public void addFigure()
 	{
 		logger.info("Add "+cF.getSimpleName());
@@ -360,6 +365,21 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	public void selectFigure()
 	{
 		logger.info("Select "+figure.toString());
+	}
+	
+	public void saveFigure() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info("Select "+figure.toString());
+		figure.setStyle(fUtils.find(cFS,figure.getStyle()));
+		figure = fUtils.save(figure);
+		reloadFigures();
+	}
+	
+	public void deleteFigure() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		fUtils.rm(figure);
+		reset(false,true);
+		reloadFigures();
 	}
 	
 	//Revision

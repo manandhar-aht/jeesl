@@ -14,7 +14,7 @@ public interface JeeslGraphicFigure<L extends UtilsLang, D extends UtilsDescript
 		extends EjbWithId,EjbSaveable,EjbWithPositionVisible,EjbWithParentAttributeResolver
 {
 	public enum Attributes{graphic}
-	public static enum Style{circle,square}
+	public static enum Style{circle,square,triangle}
 	
 	G getGraphic();
 	void setGraphic(G graphic);

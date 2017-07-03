@@ -35,12 +35,15 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 	private EjbGraphicFigureFactory<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> efFigure;
 	private static SvgFigureFactory<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> svgF;
 	
-	private String colorRed = "FFFFFF";
-	private String colorBlue = "FFFFFF";
-	private String colorGreen = "FFFFFF";
+	private String colorRed = "FF0000";
+	private String colorBlue = "0000FF";
+	private String colorGreen = "00FF00";
+	private String colorWhite = "FFFFFF";
+	private String colorBlack = "000000";
+	private String colorPink = "FF88FF";
 	
-	private GraphicStyle styleCircle,styleSquare;
-	private GraphicFigure f1, f2, f3, f4;
+	private GraphicStyle styleCircle,styleSquare,styleTriangle;
+	private GraphicFigure f1, f2, f3, f4, f5, f6, f7, f8, f9, f10;
 	
 	public TestSvgFigureFactory()
 	{
@@ -55,14 +58,19 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 	public void init()
 	{
 		styleCircle = efStyle.build(JeeslGraphicFigure.Style.circle); styleCircle.setId(1);
-		styleSquare = efStyle.build(JeeslGraphicFigure.Style.square); styleCircle.setId(2);
+		styleSquare = efStyle.build(JeeslGraphicFigure.Style.square); styleSquare.setId(2);
+		styleTriangle = efStyle.build(JeeslGraphicFigure.Style.triangle); styleTriangle.setId(3);
 		
-		Graphic graphic = null;
-		
-		f1 = efFigure.build(graphic, styleCircle, true, 10, colorRed, 0, 0, 0);		f1.setId(1);
-		f2 = efFigure.build(graphic, styleCircle, false, 5, colorBlue, -5, 0, 0);	f2.setId(2);
-		f3 = efFigure.build(graphic, styleCircle, false, 5, colorGreen, 5, 0, 0);	f3.setId(3);
-		f4 = efFigure.build(graphic, styleSquare, false, 5, colorGreen, 0, 0, 45);	f4.setId(4);
+		f1 	 = efFigure.build(    null,   styleCircle,	 true, 	15, 	colorGreen, 0, 0,   0);		f1.setId(1);
+		f2   = efFigure.build( 	  null,   styleCircle,	 false, 14, 	colorBlue, -5, 0,   0);		f2.setId(2);
+		f3	 = efFigure.build(    null,  styleCircle,	 false, 13, 	colorGreen, 5, 0,   0);		f3.setId(3);
+		f4 	 = efFigure.build(    null, styleSquare,	 false, 12, 	colorPink, 	1, 0,  15);		f4.setId(4);
+		f5	 = efFigure.build(    null,  styleSquare,	 false, 11, 	colorWhite, 2, 0,  30);		f5.setId(5);
+		f6	 = efFigure.build(    null,  styleSquare,	 false, 10, 	colorBlack, 3, 0,  45);		f6.setId(6);
+		f7	 = efFigure.build(    null,  styleSquare,	 false,  9, 	colorPink, 	4, 0,  60);		f7.setId(7);
+		f8	 = efFigure.build(    null,   styleSquare, 	 false,  8, 	colorBlue, 	5, 0,  75);		f8.setId(8);
+		f9	 = efFigure.build(    null, styleTriangle,	 false,  7,		colorRed,	6, 0,  90);		f9.setId(9);
+		f10  = efFigure.build(    null, styleTriangle,	 false,  6, 	colorGreen,	7, 0, 105);	  f10.setId(10);
 	}
 	
 	public void testF1()
@@ -73,8 +81,8 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 	
 	public void testA() throws IOException, TranscoderException
 	{
-		List<GraphicFigure> list = Arrays.asList(f1,f4);
-		SVGGraphics2D g = svgF.build(list);
+		List<GraphicFigure> list = Arrays.asList(f1,f4,f5,f6,f7,f8);
+		SVGGraphics2D g = svgF.build(list, 20);
 		
 		File f = new File(fTarget,"a.svg");
 		Svg2SvgTranscoder.transcode(g,f);
@@ -83,9 +91,18 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 	public void testB() throws IOException, TranscoderException
 	{
 		List<GraphicFigure> list = Arrays.asList(f1,f2,f3);
-		SVGGraphics2D g = svgF.build(list);
+		SVGGraphics2D g = svgF.build(list,20);
 		
-		File f = new File(fTarget,"a.svg");
+		File f = new File(fTarget,"b.svg");
+		Svg2SvgTranscoder.transcode(g,f);
+	}
+	
+	public void testC() throws IOException, TranscoderException
+	{
+		List<GraphicFigure> list = Arrays.asList(f1,f2,f3,f4,f5,f6,f7,f8,f9,f10);
+		SVGGraphics2D g = svgF.build(list,20);
+		
+		File f = new File(fTarget,"c.svg");
 		Svg2SvgTranscoder.transcode(g,f);
 	}
 		
@@ -98,5 +115,6 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 		cli.testF1();
 		cli.testA();
 		cli.testB();
+		cli.testC();
 	}
 }

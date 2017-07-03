@@ -6,19 +6,21 @@
 			xmlns:text="http://www.openfuxml.org/text"
 			xmlns:l="http://www.openfuxml.org/list">
 	
-	<ofx:title lang="en">Visual VM</ofx:title>
+	<ofx:title lang="de">Visual VM</ofx:title>
 	
-	<ofx:paragraph lang="en">
-			In computer programming, Eclipse is an integrated development environment (IDE).
-			It contains a base workspace and an extensible plug-in system for customizing the environment.
-			Written mostly in Java, Eclipse can be used to develop applications in many different programming languages.
+	<ofx:paragraph lang="de">
+			Das Java-Programm mit folgender Befehlszeile ausführen:
+			java -Xmx512M -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.port=8991 -Dcom.sun.management.jmxremote.rmi.port=8991 -Djava.rmi.server.hostname=%HOST-IP% -jar XXX.jar (-options)
+			
+			VisualVM starten, den RemoteHost auswählen und dann JMX-Connection hinzufügen. Dafür folgende jmxremote Einstellung nehmen:
+			service:jmx:rmi:///jndi/rmi://%HOST-IP%:8991/jmxrmi
 	</ofx:paragraph>
 	
 
 		
 	<ofx:section>
-		<ofx:title lang="en">JMX</ofx:title>
-		<ofx:paragraph lang="en">
+		<ofx:title lang="de">JMX</ofx:title>
+		<ofx:paragraph lang="de">
 			
 		</ofx:paragraph>
 	</ofx:section>

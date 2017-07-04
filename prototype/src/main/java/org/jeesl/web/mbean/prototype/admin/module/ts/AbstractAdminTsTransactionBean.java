@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.api.handler.sb.SbDateIntervalSelection;
+import org.jeesl.controller.handler.sb.SbDateHandler;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -41,10 +44,12 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 											WS extends UtilsStatus<WS,L,D>,
 											QAF extends UtilsStatus<QAF,L,D>>
 					extends AbstractAdminTsBean<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>
-					implements Serializable
+					implements Serializable,SbDateIntervalSelection
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsTransactionBean.class);
+	
+	private SbDateHandler sbDateHandler; public SbDateHandler getSbDateHandler() {return sbDateHandler;}
 	
 	private List<TRANSACTION> transactions; public List<TRANSACTION> getTransactions() {return transactions;}
 	private List<DATA> datas; public List<DATA> getDatas() {return datas;}
@@ -55,11 +60,19 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	public AbstractAdminTsTransactionBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
 	{
 		super(cL,cD,cTransaction,cSource);
+		
+		sbDateHandler = new SbDateHandler(this);
+		sbDateHandler.initMonthsToNow(2);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
 		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cTs,cBridge,cEc,cInt,cData,cWs);
+		reloadTransactions();
+	}
+	
+	@Override public void callbackDateChanged()
+	{
 		reloadTransactions();
 	}
 	

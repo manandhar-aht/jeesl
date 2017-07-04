@@ -77,11 +77,46 @@
     		<s:lang key="fr" translation="Graphic Figure"/>
     	</s:langs>
     </s:translation>
-        <s:translation key="jeeslOptionGraphicFigureCss">
+	<s:translation key="jeeslOptionGraphicFigureCss">
     	<s:langs>
     		<s:lang key="de" translation="CSS"/>
     		<s:lang key="en" translation="CSS"/>
     		<s:lang key="fr" translation="CSS"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslOptionGraphicFigureSize">
+    	<s:langs>
+    		<s:lang key="de" translation="Größe"/>
+    		<s:lang key="en" translation="Size"/>
+    		<s:lang key="fr" translation="Size"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslOptionGraphicFigureColor">
+    	<s:langs>
+    		<s:lang key="de" translation="Farbe"/>
+    		<s:lang key="en" translation="Color"/>
+    		<s:lang key="fr" translation="Color"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslOptionGraphicFigureRotation">
+    	<s:langs>
+    		<s:lang key="de" translation="Rotation"/>
+    		<s:lang key="en" translation="Rotation"/>
+    		<s:lang key="fr" translation="Rotation"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslOptionGraphicFigureOffsetX">
+    	<s:langs>
+    		<s:lang key="de" translation="Verschiebung X"/>
+    		<s:lang key="en" translation="Offset X"/>
+    		<s:lang key="fr" translation="Offset X"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslOptionGraphicFigureOffsetY">
+    	<s:langs>
+    		<s:lang key="de" translation="Verschiebung Y"/>
+    		<s:lang key="en" translation="Offset Y"/>
+    		<s:lang key="fr" translation="Offset Y"/>
     	</s:langs>
     </s:translation>
 </s:translations>

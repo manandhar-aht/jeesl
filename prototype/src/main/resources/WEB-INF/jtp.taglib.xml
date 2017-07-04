@@ -16,7 +16,7 @@
     </tag>
     <tag>
         <tag-name>statusSymbolizer</tag-name>
-        <source>jeeslPrototype/statusSymbolizer.xhtml</source>
+        <source>jeeslPrototype/symbolizer/status.xhtml</source>
     </tag>
     <tag>
         <tag-name>reportHeader</tag-name>

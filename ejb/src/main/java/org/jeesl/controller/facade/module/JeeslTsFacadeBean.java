@@ -177,4 +177,23 @@ public class JeeslTsFacadeBean<L extends UtilsLang,
 		transaction = em.find(cTransaction, transaction.getId());
 		this.rmProtected(transaction);
 	}
+
+	@Override
+	public List<TRANSACTION> fTransactions(List<USER> users, Date from, Date to)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<TRANSACTION> cQ = cB.createQuery(cTransaction);
+		Root<TRANSACTION> data = cQ.from(cTransaction);
+		
+		Expression<Date> eRecord = data.get(JeeslTsTransaction.Attributes.record.toString());
+		if(from!=null){predicates.add(cB.greaterThanOrEqualTo(eRecord, from));}
+		if(to!=null){predicates.add(cB.lessThan(eRecord,to));}
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(data);
+		cQ.orderBy(cB.asc(eRecord));
+		
+		return em.createQuery(cQ).getResultList();
+	}
 }

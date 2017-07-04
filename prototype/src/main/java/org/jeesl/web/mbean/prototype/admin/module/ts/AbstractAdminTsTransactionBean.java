@@ -19,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -78,7 +77,7 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	
 	private void reloadTransactions()
 	{
-		transactions = fTs.all(cTransaction);
+		transactions = fTs.fTransactions(null,sbDateHandler.getDate1(),sbDateHandler.getDate2());
 	}
 	
 	public void selectTransaction()

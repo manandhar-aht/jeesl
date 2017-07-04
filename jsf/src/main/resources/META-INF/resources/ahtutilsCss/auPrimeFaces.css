@@ -52,6 +52,8 @@
 	
 /* Make the PanelGrid fill the whole Panel */
 .auPanelWithGrid .ui-panelgrid {width: 100%;}
+
+.auPanelWithGrid .ui-spinner-button {left:0!important}
 /***********************************************************************************/
 
 /* Defines the columns for multi-column standard layouts */

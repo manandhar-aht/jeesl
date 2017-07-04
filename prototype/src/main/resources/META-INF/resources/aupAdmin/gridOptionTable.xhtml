@@ -127,6 +127,9 @@
 					             <f:facet name="header">#{msg.jeeslOptionGraphicFigureSize}</f:facet>  
 					             <h:outputText value="#{f.size}"/>
 							</p:column>
+							<p:column rendered="#{cc.attrs.bean.supportsGraphic}" styleClass="aupPfDtColCentered">
+								<jtp:figureSymbolizer value="#{f}"/>
+							</p:column>
 						</p:dataTable>
 					</h:form>
 					<h:form id="fFigure">

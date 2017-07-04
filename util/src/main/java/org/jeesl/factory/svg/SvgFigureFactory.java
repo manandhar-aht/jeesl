@@ -25,15 +25,25 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class SvgFigureFactory<L extends UtilsLang, D extends UtilsDescription, G extends JeeslGraphic<L, D, G, GT, F, FS>, GT extends UtilsStatus<GT, L, D>, F extends JeeslGraphicFigure<L, D, G, GT, F, FS>, FS extends UtilsStatus<FS, L, D>>
+public class SvgFigureFactory<L extends UtilsLang, D extends UtilsDescription,
+								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS, L, D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SvgFigureFactory.class);
 	
 	private DOMImplementation impl;
 	
-	public SvgFigureFactory()
+	private SvgFigureFactory()
 	{
 		impl = SVGDOMImplementation.getDOMImplementation();
+	}
+	
+    public static <L extends UtilsLang, D extends UtilsDescription,
+    			G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+    			F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
+		SvgFigureFactory<L,D,G,GT,F,FS> factory()
+	{
+    	return new SvgFigureFactory<L,D,G,GT,F,FS>();
 	}
 	
 	public SVGGraphics2D build(List<F> list, int canvasSize)

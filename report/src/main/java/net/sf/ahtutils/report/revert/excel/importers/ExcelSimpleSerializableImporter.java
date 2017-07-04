@@ -7,6 +7,7 @@ import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 
 import net.sf.ahtutils.report.revert.excel.AbstractExcelImporter;
 import net.sf.ahtutils.report.revert.excel.ImportStrategy;
+import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
@@ -28,7 +29,19 @@ public class ExcelSimpleSerializableImporter <S extends Serializable, I extends 
 	{
 		// Initialize the Abstract class with the given inputstream
 		super(resolver, code, is);
-	}	
+	}
+
+	public ExcelSimpleSerializableImporter(XlsSheet definition, String filename) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		// Initialize the Abstract class with the given filename
+		super(definition, filename);
+	}
+	
+	public ExcelSimpleSerializableImporter(XlsSheet definition, InputStream is) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		// Initialize the Abstract class with the given inputstream
+		super(definition, is);
+	}		
 	/**
 	* Because the ExcelStatusImporter is highly parameterized with classes to implement certain aspects, this method
 	* can be used to get an instance that is configured correctly according to your use case
@@ -53,5 +66,17 @@ public class ExcelSimpleSerializableImporter <S extends Serializable, I extends 
 	ExcelSimpleSerializableImporter<S,I> factory(UtilsXlsDefinitionResolver resolver, String code, InputStream is) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
 		return new ExcelSimpleSerializableImporter<S,I>(resolver, code, is);
+	}
+	
+	public static <S extends Serializable, C extends Serializable, I extends ImportStrategy>
+	ExcelSimpleSerializableImporter<S,I> factory(XlsSheet definition, String filename) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		return new ExcelSimpleSerializableImporter<S,I>(definition, filename);
+	}
+	
+	public static <S extends Serializable, C extends Serializable, I extends ImportStrategy>
+	ExcelSimpleSerializableImporter<S,I> factory(XlsSheet definition, InputStream is) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		return new ExcelSimpleSerializableImporter<S,I>(definition, is);
 	}
 }

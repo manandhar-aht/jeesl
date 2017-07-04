@@ -57,11 +57,21 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	
 	public AbstractExcelImporter(UtilsXlsDefinitionResolver resolver, String reportCode, InputStream is) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
+		this(resolver.definition(reportCode).getXlsSheet().get(0),is);
+	}
+	
+	public AbstractExcelImporter(UtilsXlsDefinitionResolver resolver, String reportCode, String filename) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		this(resolver.definition(reportCode).getXlsSheet().get(0),filename);
+	}
+	
+	public AbstractExcelImporter(XlsSheet definition, InputStream is) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
 		// Read Excel workbook from given file(name)
 		this.workbook       = new XSSFWorkbook(is);
 		
 		// Read information to import taken from Resolver
-		definition = resolver.definition(reportCode).getXlsSheet().get(0);
+		this.definition = definition;
 		structure = ReportXpath.getImportStructure(definition.getContent());
 		
 		// Prepare the row import definitions
@@ -90,7 +100,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		}
 	}
 	
-	public AbstractExcelImporter(UtilsXlsDefinitionResolver resolver, String reportCode, String filename) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	public AbstractExcelImporter(XlsSheet definition, String filename) throws IOException, ClassNotFoundException, ExlpXpathNotFoundException, ExlpXpathNotUniqueException
 	{
 		// Prepare file to be read
 		this.excelFile      = new File(filename);
@@ -100,7 +110,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		this.workbook       = new XSSFWorkbook(fis);
 		
 		// Read information to import taken from Resolver
-		definition = resolver.definition(reportCode).getXlsSheet().get(0);
+		this.definition = definition;
 		structure = ReportXpath.getImportStructure(definition.getContent());
 		
 		// Prepare the row import definitions

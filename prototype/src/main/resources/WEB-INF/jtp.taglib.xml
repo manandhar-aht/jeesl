@@ -14,6 +14,10 @@
         <tag-name>inputRemark</tag-name>
         <source>jeeslPrototype/inputRemark.xhtml</source>
     </tag>
+        <tag>
+        <tag-name>inputMultiLangRows</tag-name>
+        <source>jeeslPrototype/langs/inputRows.xhtml</source>
+    </tag>
     <tag>
         <tag-name>reportHeader</tag-name>
         <source>jeeslPrototype/reportHeader.xhtml</source>

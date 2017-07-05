@@ -77,6 +77,16 @@ public class EjbLangFactory<L extends UtilsLang>
 		return map;
 	}
 	
+	public Map<String,L> clone(Map<String,L> original) 
+	{
+		Map<String,L> map = new Hashtable<String,L>();
+		for(String key : original.keySet())
+		{
+			map.put(key, createLang(key, original.get(key).getLang()));
+		}
+		return map;
+	}
+	
 	public L createLang(String key, String translation)
 	{
 		try

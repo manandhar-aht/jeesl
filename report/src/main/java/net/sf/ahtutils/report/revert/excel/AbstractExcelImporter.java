@@ -10,6 +10,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
@@ -166,7 +167,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	public Map<C,ArrayList<String>> execute(Boolean skipTitle) throws Exception
 	{
 		// Create a list to hold the Entity classes to be created
-		Hashtable<C,ArrayList<String>> importedEntities = new Hashtable<C,ArrayList<String>>();
+		LinkedHashMap<C,ArrayList<String>> importedEntities = new LinkedHashMap<C,ArrayList<String>>();
                 
         // Define the rows to begin with and to end with, whether with or without first row
 		Integer end   = activeSheet.getLastRowNum();
@@ -241,7 +242,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			}
                         
 			//facade.save(entity);
-			importedEntities.put(entity, failedValidations);
+                        importedEntities.put(entity, failedValidations);
 			if (hasPrimaryKey)
 			{
 				String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));

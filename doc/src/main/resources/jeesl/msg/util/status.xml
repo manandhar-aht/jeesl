@@ -14,6 +14,13 @@
     		<s:lang key="fr" translation="Code"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslCode">
+    	<s:langs>
+    		<s:lang key="de" translation="Code"/>
+    		<s:lang key="en" translation="Code"/>
+    		<s:lang key="fr" translation="Code"/>
+    	</s:langs>
+    </s:translation>
     <s:translation key="aupExternalCode">
         <s:langs>
             <s:lang key="de" translation="Externer Code"/>

@@ -25,6 +25,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="record" type="{http://www.w3.org/2001/XMLSchema}date" /&gt;
+ *       &lt;attribute name="version" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="description" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -48,6 +49,8 @@ public class Update
     @XmlAttribute(name = "record")
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar record;
+    @XmlAttribute(name = "version")
+    protected String version;
     @XmlAttribute(name = "description")
     protected String description;
 
@@ -137,6 +140,34 @@ public class Update
 
     public boolean isSetRecord() {
         return (this.record!= null);
+    }
+
+    /**
+     * Gets the value of the version property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * Sets the value of the version property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setVersion(String value) {
+        this.version = value;
+    }
+
+    public boolean isSetVersion() {
+        return (this.version!= null);
     }
 
     /**

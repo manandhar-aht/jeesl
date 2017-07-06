@@ -7,9 +7,9 @@
 	<xsd:element name="dataUpdate">
         <xsd:complexType>
         	<xsd:sequence>
+        		<xsd:element ref="sync:result" maxOccurs="1"/>
                 <xsd:element ref="sync:mapper" maxOccurs="unbounded"/>
                 <xsd:element ref="us:type" maxOccurs="1"/>
-                <xsd:element ref="sync:result" maxOccurs="1"/>
                 <xsd:element ref="sync:sync" maxOccurs="unbounded"/>
                 <xsd:element ref="sync:exceptions" maxOccurs="1"/>
             </xsd:sequence>
@@ -41,6 +41,7 @@
             <xsd:attribute name="class" type="xsd:string"/>
             <xsd:attribute name="oldCode" type="xsd:string"/>
             <xsd:attribute name="newCode" type="xsd:string"/>
+            <xsd:attribute name="code" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
 	<xsd:element name="entity">

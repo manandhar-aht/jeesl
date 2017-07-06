@@ -21,6 +21,7 @@ public class TestXmlMapper extends AbstractXmlSyncTest<Mapper>
     	xml.setNewId(345);
     	xml.setOldCode("mc1");
     	xml.setNewCode("mc2");
+    	xml.setCode("myCode");
     	
     	return xml;
     }

@@ -38,19 +38,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Mapper }
-     * 
-     */
-    public Mapper createMapper() {
-        return new Mapper();
-    }
-
-    /**
      * Create an instance of {@link Result }
      * 
      */
     public Result createResult() {
         return new Result();
+    }
+
+    /**
+     * Create an instance of {@link Mapper }
+     * 
+     */
+    public Mapper createMapper() {
+        return new Mapper();
     }
 
     /**

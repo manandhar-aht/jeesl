@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <sync:mappings xmlns:sync="http://ahtutils.aht-group.com/sync">
-    <sync:mapper oldId="123" newId="345" class="org.jeesl.model.xml.system.io.sync.TestXmlMapper" oldCode="mc1" newCode="mc2"/>
-    <sync:mapper oldId="123" newId="345" class="org.jeesl.model.xml.system.io.sync.TestXmlMapper" oldCode="mc1" newCode="mc2"/>
+    <sync:mapper oldId="123" newId="345" class="org.jeesl.model.xml.system.io.sync.TestXmlMapper" oldCode="mc1" newCode="mc2" code="myCode"/>
+    <sync:mapper oldId="123" newId="345" class="org.jeesl.model.xml.system.io.sync.TestXmlMapper" oldCode="mc1" newCode="mc2" code="myCode"/>
 </sync:mappings>

@@ -34,4 +34,12 @@ public class XmlMapperFactory
 		xml.setNewCode(newCode);
 		return xml;
 	}
+	
+	public static Mapper build(String c, String code)
+	{
+		Mapper xml = new Mapper();
+		xml.setClazz(c);
+		xml.setCode(code); 
+		return xml;
+	}
 }

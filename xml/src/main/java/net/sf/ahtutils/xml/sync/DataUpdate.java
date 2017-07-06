@@ -25,9 +25,9 @@ import net.sf.ahtutils.xml.status.Type;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/sync}result"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/sync}mapper" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}type"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/sync}result"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/sync}sync" maxOccurs="unbounded"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/sync}exceptions"/&gt;
  *       &lt;/sequence&gt;
@@ -42,9 +42,9 @@ import net.sf.ahtutils.xml.status.Type;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "result",
     "mapper",
     "type",
-    "result",
     "sync",
     "exceptions"
 })
@@ -55,11 +55,11 @@ public class DataUpdate
 
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
+    protected Result result;
+    @XmlElement(required = true)
     protected List<Mapper> mapper;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Type type;
-    @XmlElement(required = true)
-    protected Result result;
     @XmlElement(required = true)
     protected List<Sync> sync;
     @XmlElement(required = true)
@@ -70,6 +70,34 @@ public class DataUpdate
     @XmlAttribute(name = "finished")
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar finished;
+
+    /**
+     * Gets the value of the result property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Result }
+     *     
+     */
+    public Result getResult() {
+        return result;
+    }
+
+    /**
+     * Sets the value of the result property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Result }
+     *     
+     */
+    public void setResult(Result value) {
+        this.result = value;
+    }
+
+    public boolean isSetResult() {
+        return (this.result!= null);
+    }
 
     /**
      * Gets the value of the mapper property.
@@ -134,34 +162,6 @@ public class DataUpdate
 
     public boolean isSetType() {
         return (this.type!= null);
-    }
-
-    /**
-     * Gets the value of the result property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Result }
-     *     
-     */
-    public Result getResult() {
-        return result;
-    }
-
-    /**
-     * Sets the value of the result property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Result }
-     *     
-     */
-    public void setResult(Result value) {
-        this.result = value;
-    }
-
-    public boolean isSetResult() {
-        return (this.result!= null);
     }
 
     /**

@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="class" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="oldCode" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="newCode" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -48,6 +49,8 @@ public class Mapper
     protected String oldCode;
     @XmlAttribute(name = "newCode")
     protected String newCode;
+    @XmlAttribute(name = "code")
+    protected String code;
 
     /**
      * Gets the value of the oldId property.
@@ -195,6 +198,34 @@ public class Mapper
 
     public boolean isSetNewCode() {
         return (this.newCode!= null);
+    }
+
+    /**
+     * Gets the value of the code property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * Sets the value of the code property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public boolean isSetCode() {
+        return (this.code!= null);
     }
 
 }

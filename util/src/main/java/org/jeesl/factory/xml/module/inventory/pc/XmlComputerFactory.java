@@ -10,6 +10,7 @@ public class XmlComputerFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlComputerFactory.class);
 		
+	public static Computer build(){return build(null,null,null);}
 	public static Computer build(Long id){return build(id,null,null);}
 	
 	public static Computer build(Hardware hardware, Software software){return build(null,hardware,software);}

@@ -23,6 +23,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *       &lt;sequence&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
+ *       &lt;attribute name="uuid" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="record" type="{http://www.w3.org/2001/XMLSchema}date" /&gt;
  *       &lt;attribute name="version" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -44,6 +45,8 @@ public class Update
     private final static long serialVersionUID = 1L;
     @XmlAttribute(name = "id")
     protected Long id;
+    @XmlAttribute(name = "uuid")
+    protected String uuid;
     @XmlAttribute(name = "code")
     protected String code;
     @XmlAttribute(name = "record")
@@ -84,6 +87,34 @@ public class Update
 
     public void unsetId() {
         this.id = null;
+    }
+
+    /**
+     * Gets the value of the uuid property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getUuid() {
+        return uuid;
+    }
+
+    /**
+     * Sets the value of the uuid property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setUuid(String value) {
+        this.uuid = value;
+    }
+
+    public boolean isSetUuid() {
+        return (this.uuid!= null);
     }
 
     /**

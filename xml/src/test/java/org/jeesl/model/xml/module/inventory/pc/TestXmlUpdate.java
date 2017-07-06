@@ -10,7 +10,7 @@ public class TestXmlUpdate extends AbstractXmlInventoryPcTest<Update>
 	
 	public TestXmlUpdate(){super(Update.class);}
 	public static Update create(boolean withChildren){return (new TestXmlUpdate()).build(withChildren);}
-    
+
     public Update build(boolean withChilds)
     { 
     	Update xml = new Update();
@@ -18,6 +18,8 @@ public class TestXmlUpdate extends AbstractXmlInventoryPcTest<Update>
     	xml.setCode("KB3365213");
     	xml.setDescription("myDescription");
     	xml.setVersion("myVersion");
+    	xml.setUuid("myUuid");
+    	
     	xml.setRecord(getDefaultXmlDate());
     	
     	if(withChilds)

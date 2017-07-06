@@ -17,6 +17,7 @@ public class TestXmlComputer extends AbstractXmlInventoryPcTest<Computer>
     	xml.setId(123);
     	xml.setCode("myCode");
     	xml.setName("myName");
+    	xml.setUuid("myUuid");
     	    	
     	if(withChilds)
     	{

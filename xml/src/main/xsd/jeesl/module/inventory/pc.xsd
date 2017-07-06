@@ -11,6 +11,7 @@
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="code" type="xsd:string"/>
             <xsd:attribute name="name" type="xsd:string"/>
+            <xsd:attribute name="uuid" type="xsd:string"/>
 		</xsd:complexType>
     </xsd:element>
    <xsd:element name="hardware">
@@ -46,6 +47,7 @@
 	          
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="uuid" type="xsd:string"/>
             <xsd:attribute name="code" type="xsd:string"/>
             <xsd:attribute name="record" type="xsd:date"/>
             <xsd:attribute name="version" type="xsd:string"/>

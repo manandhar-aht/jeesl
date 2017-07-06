@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="uuid" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -54,6 +55,8 @@ public class Computer
     protected String code;
     @XmlAttribute(name = "name")
     protected String name;
+    @XmlAttribute(name = "uuid")
+    protected String uuid;
 
     /**
      * Gets the value of the hardware property.
@@ -197,6 +200,34 @@ public class Computer
 
     public boolean isSetName() {
         return (this.name!= null);
+    }
+
+    /**
+     * Gets the value of the uuid property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getUuid() {
+        return uuid;
+    }
+
+    /**
+     * Sets the value of the uuid property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setUuid(String value) {
+        this.uuid = value;
+    }
+
+    public boolean isSetUuid() {
+        return (this.uuid!= null);
     }
 
 }

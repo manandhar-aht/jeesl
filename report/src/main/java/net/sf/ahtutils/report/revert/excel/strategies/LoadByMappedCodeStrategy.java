@@ -22,8 +22,8 @@ public class LoadByMappedCodeStrategy implements ImportStrategy {
 	public Object handleObject(Object object, String parameterClass, String property) {
 		String code          = object.toString();
 		Class<?>  lutClass   = null;
-    	Object lookupEntity  = null;
-
+                Object lookupEntity  = null;
+                if (logger.isTraceEnabled()) {logger.info("Searching for mapped " +parameterClass +" with code " +code);}
     	
     	try {
     		lutClass = (Class<?>) Class.forName(parameterClass);
@@ -36,7 +36,7 @@ public class LoadByMappedCodeStrategy implements ImportStrategy {
 		if (mapper.isObjectMapped(lutClass, code))
 		{
 			lookupEntity = mapper.getMappedObject(lutClass, code);
-		}
+                }
 		else
 		{
 			try {

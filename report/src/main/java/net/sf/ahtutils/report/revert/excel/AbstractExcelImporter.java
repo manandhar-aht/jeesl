@@ -40,6 +40,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	final static Logger logger = LoggerFactory.getLogger(AbstractExcelImporter.class);
 	
 	protected File                       excelFile;
+        protected Integer                    startRow;
 	protected XSSFWorkbook               workbook;
 	protected Sheet                      activeSheet;
 	protected String                     activeColumn;
@@ -175,7 +176,8 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		
 		logger.info("Sheet goes from " +start +" to " +end);
 		if (skipTitle) {start++;}
-		
+                if (startRow!=null) {start = startRow;}
+		logger.info("Starting at " +start);
 		// Iterate through all given rows
 		for (int i = start; i < end+1; i++)
 		{
@@ -296,14 +298,15 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				if (method.getName().equals(methodName))
 				{
 					parameter = method.getParameterTypes()[0];
+                                        if (Modifier.isPrivate(method.getModifiers()))
+                                        {
+                                                method.setAccessible(true);
+                                        }
 					m = method;
 				}
 			}
 			
-			if (Modifier.isPrivate(m.getModifiers()))
-			{
-				m.setAccessible(true);
-			}
+			
 
 			// Determine parameter type of setter
 			// Type t = m.getGenericParameterTypes()[0];
@@ -414,7 +417,11 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
                                 {
                                     logger.trace("Parameter Class is " +parameters[0].getClass().getSimpleName() + " and original entity property is " +parameterClass);
                                 }
-				m.invoke(target, parameters);
+                            try {
+                                m.invoke(target, parameters[0]);
+                            } catch (Throwable ex) {
+                                ex.printStackTrace();
+                            }
 
 			}
 			else
@@ -453,4 +460,6 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	 
 	public Hashtable<String, Object> getTempPropertyStore() {return tempPropertyStore;}
 	public void setTempPropertyStore(Hashtable<String, Object> tempPropertyStore) {this.tempPropertyStore = tempPropertyStore;}
+        
+        public void setStartRow(Integer c) {startRow = c;}
 }

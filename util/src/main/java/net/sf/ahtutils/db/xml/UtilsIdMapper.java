@@ -183,13 +183,19 @@ public class UtilsIdMapper
 	 */
 	public void addObjectForCode(String code, Object o)
 	{
-		if (mapObjectByCode.get(o.getClass()) == null)
+                Map<String, Object> objectMap = null;
+		if (mapObjectByCode!= null && o !=null && mapObjectByCode.get(o.getClass())!= null)
 		{
-			Hashtable<String,Object> map = new Hashtable<String,Object>();
-			mapObjectByCode.put(o.getClass(), map);
+                    objectMap = mapObjectByCode.get(o.getClass());
+                    objectMap.put(code, o);
 		}
-		Map<String, Object> objectMap = mapObjectByCode.get(o.getClass());
-		objectMap.put(code, o);
+                else if (o != null)
+                {
+                    Hashtable<String,Object> map = new Hashtable<String,Object>();
+                    mapObjectByCode.put(o.getClass(), map);
+                    objectMap = mapObjectByCode.get(o.getClass());
+                    objectMap.put(code, o);
+                }
 	}
 	
 	/**

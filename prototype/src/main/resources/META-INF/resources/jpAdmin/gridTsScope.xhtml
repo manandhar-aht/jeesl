@@ -113,7 +113,7 @@
 						<p:dataTable id="dtClasses" var="c" value="#{cc.attrs.bean.scope.classes}"
 						 selection="#{cc.attrs.bean.tbClass}" selectionMode="single" rowKey="#{c.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader id="dth" title="#{msg.aupTsClasses}">
+								<aht:pfDataTableHeader id="dth" title="#{msg.jeeslTsClasses}">
 									<h:graphicImage id="giAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['aupAdd']}"/>
 			                        <p:tooltip for="giAdd" value="Add an item!" />
 			                        <aht:icon rendered="#{not empty cc.attrs.bean.tbClass}" type="aupRm" mayDisappear="true" listener="#{cc.attrs.bean.opRmClass()}" update=":#{cc.id}:fClasses" tooltip="#{msg.ttRemove}"/>

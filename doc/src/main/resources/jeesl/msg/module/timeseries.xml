@@ -35,7 +35,7 @@
     		<s:lang key="fr" translation="Intervals"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupTsClasses">
+	<s:translation key="jeeslTsClasses">
     	<s:langs>
     		<s:lang key="de" translation="Klassen"/>
     		<s:lang key="en" translation="Classes"/>

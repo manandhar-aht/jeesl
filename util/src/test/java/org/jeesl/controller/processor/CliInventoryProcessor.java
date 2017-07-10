@@ -1,119 +1,43 @@
 
 package org.jeesl.controller.processor;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.JAXB;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
-import org.jdom2.filter.Filters;
-import org.jdom2.xpath.XPathExpression;
-import org.jdom2.xpath.XPathFactory;
 import org.jeesl.JeeslUtilTestBootstrap;
+import org.jeesl.controller.processor.pcinventory.PcInventoryPostProcessor;
+import org.jeesl.controller.processor.pcinventory.PcInventoryProcessor;
 import org.jeesl.model.xml.module.inventory.Inventory;
-import org.jeesl.model.xml.module.inventory.pc.Computer;
-import org.jeesl.model.xml.module.inventory.pc.Hardware;
-import org.jeesl.model.xml.module.inventory.pc.Software;
-import org.jeesl.model.xml.module.inventory.pc.Update;
-import org.jeesl.model.xml.module.inventory.pc.Updates;
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import net.sf.exlp.util.io.resourceloader.MultiResourceLoader;
-import net.sf.exlp.util.xml.JDomUtil;
+
+import net.sf.exlp.util.io.StringIO;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-
-public class CliInventoryProcessor {
+public class CliInventoryProcessor
+{
 	
 	final static Logger logger = LoggerFactory.getLogger(CliInventoryProcessor.class);
 	static Document doc;
 	static Namespace ns;
-	static List<Element> sW,sys,upds,uItem;
-	
-	public static String getItem(List<Element>type,String expression){String rtn=null;XPathFactory xFactory=XPathFactory.instance();XPathExpression<Element> exprCN=xFactory.compile(expression,Filters.element(),null,ns);List<Element>listCN=exprCN.evaluate(type);for(Element eCN:listCN){List<Element>lCN=eCN.getParentElement().getChildren();rtn=lCN.get(6).getValue();}return rtn;}
+	static List<Element> sW, sys, upds, uItem;
 		
-	public static List<String>getItems(List<Element>type,String expression){List<String>rtn= new ArrayList<String>();XPathFactory xFactory = XPathFactory.instance();XPathExpression<Element>exprCN=xFactory.compile(expression,Filters.element(),null,ns);List<Element> listCN = exprCN.evaluate(type);for(Element eCN:listCN){List<Element> lCN=eCN.getParentElement().getChildren();rtn.add(lCN.get(6).getValue().toString());}return rtn;}
-			
-	public static List<Element>getCategory(String expression){List<Element>rtn=null;XPathFactory xFactory=XPathFactory.instance();XPathExpression<Element>exprCN=xFactory.compile(expression,Filters.element(),null,ns);List<Element>listCN=exprCN.evaluate(doc);for(Element eCN:listCN){List<Element>lCN=eCN.getParentElement().getChildren();rtn=lCN;}return rtn;}
-
-	public Computer inventoryPC(String xmlFile) throws DatatypeConfigurationException, FileNotFoundException
-	{
-		MultiResourceLoader mrl = new MultiResourceLoader();
-//		Inventory i = JaxbUtil.loadJAXB(mrl.searchIs("data/processor/inventory/_report.xml"), Inventory.class);
-		doc = JDomUtil.load(mrl.searchIs(xmlFile));
-		ns = Namespace.getNamespace("power", "http://schemas.microsoft.com/powershell/2004/04");
-		sys = getCategory("//power:Obj/power:MS/power:S[@N='CategoryID' and text()='300']");
-		sW = getCategory("//power:Obj/power:MS/power:S[@N='CategoryID' and text()='500']");
-		upds = getCategory("//power:Obj/power:MS/power:S[@N='CategoryID' and text()='600']");
-		
-		Hardware hardware = new Hardware();
-//      hardware.setId();
-		hardware.setManufacturer(getItem(sys,"//power:Obj/power:MS/power:S[@N='ItemID' and text()='307']"));
-		hardware.setModel(getItem(sys,"//power:Obj/power:MS/power:S[@N='ItemID' and text()='308']"));
-		hardware.setSerial(getItem(sys,"//power:Obj/power:MS/power:S[@N='ItemID' and text()='309']"));
-				
-		Updates updates =new Updates();
-
-		List<String> uNameList = getItems(upds,"//power:Obj/power:MS/power:S[@N='ItemID' and text()='601']");
-		List<String> uDescritionList = getItems(upds,"//power:Obj/power:MS/power:S[@N='ItemID' and text()='603']");
-		List<String> uRecordlist = getItems(upds,"//power:Obj/power:MS/power:S[@N='ItemID' and text()='602']");
-		
-		for (int i=0;i<uNameList.size();i++)
-		{ 
-			Update update = new Update();update.setId(i+1);
-			update.setCode(uNameList.get(i).replace("{","").replace("}",""));
-			update.setDescription(uDescritionList.get(i));
-			
-			if (uRecordlist.get(i).length() == 0){XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("")).toString());update.setRecord((x));}
-
-			if (uRecordlist.get(i).length() == 8){XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("yyyyMMdd")).toString());update.setRecord((x));}
-			if (uRecordlist.get(i).length() == 9)
-			{	
-				if (uRecordlist.get(i).contains("/")){XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("M/dd/yyyy")).toString());update.setRecord((x));}
-			}
-			if (uRecordlist.get(i).length() == 10)
-			{	
-				if (uRecordlist.get(i).contains("/")){XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("MM/dd/yyyy")).toString());update.setRecord((x));}
-				if (uRecordlist.get(i).contains("-")){
-				XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("yyyy-MM-dd")).toString());update.setRecord((x));}
-			}
-			updates.getUpdate().add(i, update);
-		}
-		
-		Software software=new Software();software.setUpdates(updates);Computer computer=new Computer();
-		
-		try {computer.setId(computer.getId()+1);}catch(Exception e){computer.setId(0);}
-		computer.setName(getItem(sys,"//power:Obj/power:MS/power:S[@N='ItemName' and text()='Computer Name']"));
-		computer.setHardware(hardware);
-		computer.setSoftware(software);
-		computer.setCode(getItem(sys,"//power:Obj/power:MS/power:S[@N='ItemName' and text()='Universal Unique ID']").replace("{","").replace("}",""));
-	
-		return computer;
-	}
-	
- 
-	
-	public static void main(String[] args) throws Exception 
+	public static void main(String[] args) throws Exception
 	{
 		JeeslUtilTestBootstrap.init();
-		CliInventoryProcessor clip = new CliInventoryProcessor();
-		Inventory inventory=new Inventory();
-		for(File file:new File("D:\\WAReport\\XML").listFiles()){inventory.getComputer().add(clip.inventoryPC(file.getPath()));}
-		JaxbUtil.info(inventory);	   
-		FileOutputStream fos = new FileOutputStream("D:\\WAReport\\testinventory.xml");
-		JAXB.marshal(inventory, fos);	
+		PcInventoryProcessor clip = new PcInventoryProcessor();
+		Inventory inventory = new Inventory();
+		
+		String s = StringIO.loadTxt("data/txt/inventory.txt");
+		
+//		inventory.getComputer().add(clip.inventoryPC("F:/etc/wa/NBTK_report_10.01.2008.xml"));
+		inventory.getComputer().add(PcInventoryPostProcessor.postProcess(clip.inventoryPC(s)));
+		
+		JaxbUtil.info(inventory);
+		
+//		FileOutputStream fos = new FileOutputStream("F:\\testinventory.xml");
+//		JAXB.marshal(inventory, fos);
 	}
 }
-
-	
-		
-

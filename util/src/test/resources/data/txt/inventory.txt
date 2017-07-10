@@ -1,0 +1,1385 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="ItemOrder">1</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">301</S>
+      <S N="ItemName">Computer Name</S>
+      <S N="ItemValue">NBRE15</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">2</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">302</S>
+      <S N="ItemName">Domain Name</S>
+      <S N="ItemValue">WORKGROUP</S>
+    </MS>
+  </Obj>
+  <Obj RefId="2">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">3</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">303</S>
+      <S N="ItemName">Site Name</S>
+      <S N="ItemValue"></S>
+    </MS>
+  </Obj>
+  <Obj RefId="3">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">4</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">304</S>
+      <S N="ItemName">Roles</S>
+      <S N="ItemValue">Workstation, Server</S>
+    </MS>
+  </Obj>
+  <Obj RefId="4">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">5</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">305</S>
+      <S N="ItemName">Description</S>
+      <S N="ItemValue"></S>
+    </MS>
+  </Obj>
+  <Obj RefId="5">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">6</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">306</S>
+      <S N="ItemName">Operating System</S>
+      <S N="ItemValue">Microsoft Windows 10 Pro 64-Bit</S>
+    </MS>
+  </Obj>
+  <Obj RefId="6">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">7</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">307</S>
+      <S N="ItemName">Manufacturer</S>
+      <S N="ItemValue">LENOVO</S>
+    </MS>
+  </Obj>
+  <Obj RefId="7">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">8</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">308</S>
+      <S N="ItemName">Model</S>
+      <S N="ItemValue">33474PG</S>
+    </MS>
+  </Obj>
+  <Obj RefId="8">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">9</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">309</S>
+      <S N="ItemName">Serial Number</S>
+      <S N="ItemValue">MP2MAXC</S>
+    </MS>
+  </Obj>
+  <Obj RefId="9">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">10</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">310</S>
+      <S N="ItemName">Asset Tag</S>
+      <S N="ItemValue">No Asset Information</S>
+    </MS>
+  </Obj>
+  <Obj RefId="10">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">11</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">311</S>
+      <S N="ItemName">Number of Processors</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="11">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">12</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">312</S>
+      <S N="ItemName">Processor Description</S>
+      <S N="ItemValue">Intel(R) Core(TM) i3-3217U CPU @ 1.80GHz</S>
+    </MS>
+  </Obj>
+  <Obj RefId="12">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">13</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">313</S>
+      <S N="ItemName">Total Memory</S>
+      <S N="ItemValue">4096MB</S>
+    </MS>
+  </Obj>
+  <Obj RefId="13">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">14</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">314</S>
+      <S N="ItemName">Total Hard Drive</S>
+      <S N="ItemValue">320.4GB</S>
+    </MS>
+  </Obj>
+  <Obj RefId="14">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">15</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">315</S>
+      <S N="ItemName">Display</S>
+      <S N="ItemValue">@oem39.inf,%tpwhdf%;Wide viewing angle &amp; High density FlexView Display 1366x768, 12.7" (28cm x 16cm)</S>
+    </MS>
+  </Obj>
+  <Obj RefId="15">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">16</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">316</S>
+      <S N="ItemName">BIOS Version</S>
+      <S N="ItemValue">LENOVO - 1680</S>
+    </MS>
+  </Obj>
+  <Obj RefId="16">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">17</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">317</S>
+      <S N="ItemName">User Account</S>
+      <S N="ItemValue">Ruth</S>
+    </MS>
+  </Obj>
+  <Obj RefId="17">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">18</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">318</S>
+      <S N="ItemName">System Uptime</S>
+      <S N="ItemValue">3 Days 0 Hours 4 Minutes</S>
+    </MS>
+  </Obj>
+  <Obj RefId="18">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">19</S>
+      <S N="RecordNumber">1</S>
+      <S N="CategoryID">300</S>
+      <S N="CategoryName">Systemübersicht</S>
+      <S N="ItemID">319</S>
+      <S N="ItemName">Local Time</S>
+      <S N="ItemValue">2017-06-02 13:54:27</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1495">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1496</S>
+      <S N="RecordNumber">129</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">601</S>
+      <S N="ItemName">Update ID</S>
+      <S N="ItemValue">c51fee63-c2bd-48ef-a703-9278f04800aa</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1496">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1497</S>
+      <S N="RecordNumber">129</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">602</S>
+      <S N="ItemName">Installed On</S>
+      <S N="ItemValue">2016-05-20</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1497">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1498</S>
+      <S N="RecordNumber">129</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">603</S>
+      <S N="ItemName">Description</S>
+      <S N="ItemValue">Definitionsupdate für Windows Defender – KB2267602 (Definition 1.221.14.0)</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1498">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1499</S>
+      <S N="RecordNumber">130</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">601</S>
+      <S N="ItemName">Update ID</S>
+      <S N="ItemValue">c58511b5-1938-4ad3-9520-4e9b7507873d</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1499">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1500</S>
+      <S N="RecordNumber">130</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">602</S>
+      <S N="ItemName">Installed On</S>
+      <S N="ItemValue">2016-03-23</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1500">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1501</S>
+      <S N="RecordNumber">130</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">603</S>
+      <S N="ItemName">Description</S>
+      <S N="ItemValue">Definitionsupdate für Windows Defender – KB2267602 (Definition 1.215.2653.0)</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1501">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1502</S>
+      <S N="RecordNumber">131</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">601</S>
+      <S N="ItemName">Update ID</S>
+      <S N="ItemValue">c692cb36-55c6-47f4-97d2-67b43a576182</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1502">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1503</S>
+      <S N="RecordNumber">131</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">602</S>
+      <S N="ItemName">Installed On</S>
+      <S N="ItemValue">2016-09-07</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1503">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1504</S>
+      <S N="RecordNumber">131</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">603</S>
+      <S N="ItemName">Description</S>
+      <S N="ItemValue">Update für Windows 10 Version 1511 für x64-Systeme (KB3150513)</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1504">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1505</S>
+      <S N="RecordNumber">132</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">601</S>
+      <S N="ItemName">Update ID</S>
+      <S N="ItemValue">ca3f7b00-4ebf-4bc3-ab8e-68e38b8fa1ce</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1505">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1506</S>
+      <S N="RecordNumber">132</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">602</S>
+      <S N="ItemName">Installed On</S>
+      <S N="ItemValue">2016-03-31</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1506">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1507</S>
+      <S N="RecordNumber">132</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">603</S>
+      <S N="ItemName">Description</S>
+      <S N="ItemValue">Definitionsupdate für Windows Defender – KB2267602 (Definition 1.217.295.0)</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1507">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1508</S>
+      <S N="RecordNumber">133</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">601</S>
+      <S N="ItemName">Update ID</S>
+      <S N="ItemValue">cb6b0699-5872-4f64-afb9-26e566fcdf41</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1508">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1509</S>
+      <S N="RecordNumber">133</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">602</S>
+      <S N="ItemName">Installed On</S>
+      <S N="ItemValue">2016-03-28</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1509">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1510</S>
+      <S N="RecordNumber">133</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">603</S>
+      <S N="ItemName">Description</S>
+      <S N="ItemValue">Update für Windows 10 Version 1511 für x64-Systeme (KB3140741)</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1510">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1511</S>
+      <S N="RecordNumber">134</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">601</S>
+      <S N="ItemName">Update ID</S>
+      <S N="ItemValue">cc1113f1-f8f8-460b-8135-e211a8f43f47</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1511">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1512</S>
+      <S N="RecordNumber">134</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">602</S>
+      <S N="ItemName">Installed On</S>
+      <S N="ItemValue">2017-05-30</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1512">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1513</S>
+      <S N="RecordNumber">134</S>
+      <S N="CategoryID">600</S>
+      <S N="CategoryName">Software Updates</S>
+      <S N="ItemID">603</S>
+      <S N="ItemName">Description</S>
+      <S N="ItemValue">Definitionsupdate für Windows Defender – KB2267602 (Definition 1.245.225.0)</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1543">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1544</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6001</S>
+      <S N="ItemName">SMBIOS Version</S>
+      <S N="ItemValue">2.7</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1544">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1545</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6002</S>
+      <S N="ItemName">BIOS Vendor</S>
+      <S N="ItemValue">LENOVO</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1545">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1546</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6003</S>
+      <S N="ItemName">BIOS Version</S>
+      <S N="ItemValue">GDETA8WW (1.68 )</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1546">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1547</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6004</S>
+      <S N="ItemName">Start Address</S>
+      <S N="ItemValue">0xE000</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1547">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1548</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6005</S>
+      <S N="ItemName">Release Date</S>
+      <S N="ItemValue">08/27/2014</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1548">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1549</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6006</S>
+      <S N="ItemName">ROM Size</S>
+      <S N="ItemValue">12288KB</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1549">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1550</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6007</S>
+      <S N="ItemName">BIOS Characteristics</S>
+      <S N="ItemValue">0x031200007D099A80</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1550">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1551</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6008</S>
+      <S N="ItemName">Characteristics Ext. 1</S>
+      <S N="ItemValue">0x03</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1551">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1552</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6009</S>
+      <S N="ItemName">Characteristics Ext. 2</S>
+      <S N="ItemValue">0x0D</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1552">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1553</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6010</S>
+      <S N="ItemName">System BIOS Major</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1553">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1554</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6011</S>
+      <S N="ItemName">System BIOS Minor</S>
+      <S N="ItemValue">68</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1554">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1555</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6012</S>
+      <S N="ItemName">Firmware Major</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1555">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1556</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6013</S>
+      <S N="ItemName">Firmware Minor</S>
+      <S N="ItemValue">68</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1556">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1557</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6014</S>
+      <S N="ItemName">BIOS Charac. not supported</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1557">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1558</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6015</S>
+      <S N="ItemName">ISA Support</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1558">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1559</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6016</S>
+      <S N="ItemName">MCA Support</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1559">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1560</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6017</S>
+      <S N="ItemName">EISA Support</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1560">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1561</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6018</S>
+      <S N="ItemName">PCI Support</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1561">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1562</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6019</S>
+      <S N="ItemName">PCMCIA Support</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1562">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1563</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6020</S>
+      <S N="ItemName">PnP Support</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1563">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1564</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6021</S>
+      <S N="ItemName">APM Support</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1564">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1565</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6022</S>
+      <S N="ItemName">BIOS Upgradeable</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1565">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1566</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6023</S>
+      <S N="ItemName">BIOS Shadowing</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1566">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1567</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6024</S>
+      <S N="ItemName">VL-VESA Support</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1567">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1568</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6025</S>
+      <S N="ItemName">ESCD Support</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1568">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1569</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6026</S>
+      <S N="ItemName">CD Boot</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1569">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1570</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6027</S>
+      <S N="ItemName">Selectable Boot</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1570">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1571</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6028</S>
+      <S N="ItemName">ROM Socketed</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1571">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1572</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6029</S>
+      <S N="ItemName">PCMCIA Boot</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1572">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1573</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6030</S>
+      <S N="ItemName">EDD Support</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1573">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1574</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6031</S>
+      <S N="ItemName">Floppy NEC 1.2MB</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1574">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1575</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6032</S>
+      <S N="ItemName">Floppy Toshiba 1.2MB</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1575">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1576</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6033</S>
+      <S N="ItemName">Floppy 360 KB</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1576">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1577</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6034</S>
+      <S N="ItemName">Floppy 1.2MB</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1577">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1578</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6035</S>
+      <S N="ItemName">Floppy 720KB</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1578">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1579</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6036</S>
+      <S N="ItemName">Floppy 2.88MB</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1579">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1580</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6037</S>
+      <S N="ItemName">Print Screen</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1580">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1581</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6038</S>
+      <S N="ItemName">Keyboard 8042</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1581">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1582</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6039</S>
+      <S N="ItemName">Serial Services</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1582">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1583</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6040</S>
+      <S N="ItemName">Printer Services</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1583">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1584</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6041</S>
+      <S N="ItemName">CGA-Mono Video</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1584">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1585</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6042</S>
+      <S N="ItemName">NEC PC-98</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1585">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1586</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6043</S>
+      <S N="ItemName">ACPI Support</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1586">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1587</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6044</S>
+      <S N="ItemName">USB Support</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1587">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1588</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6045</S>
+      <S N="ItemName">AGP Support</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1588">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1589</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6046</S>
+      <S N="ItemName">I2O Boot</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1589">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1590</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6047</S>
+      <S N="ItemName">LS-120 Boot</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1590">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1591</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6048</S>
+      <S N="ItemName">ATAPI ZIP Boot</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1591">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1592</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6049</S>
+      <S N="ItemName">Firewire Boot</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1592">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1593</S>
+      <S N="RecordNumber">146</S>
+      <S N="CategoryID">6000</S>
+      <S N="CategoryName">BIOS Details</S>
+      <S N="ItemID">6050</S>
+      <S N="ItemName">Smart Battery</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1593">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1594</S>
+      <S N="RecordNumber">147</S>
+      <S N="CategoryID">6100</S>
+      <S N="CategoryName">System Information</S>
+      <S N="ItemID">6101</S>
+      <S N="ItemName">Manufacturer</S>
+      <S N="ItemValue">LENOVO</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1594">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1595</S>
+      <S N="RecordNumber">147</S>
+      <S N="CategoryID">6100</S>
+      <S N="CategoryName">System Information</S>
+      <S N="ItemID">6102</S>
+      <S N="ItemName">Product Name</S>
+      <S N="ItemValue">33474PG</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1595">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1596</S>
+      <S N="RecordNumber">147</S>
+      <S N="CategoryID">6100</S>
+      <S N="CategoryName">System Information</S>
+      <S N="ItemID">6103</S>
+      <S N="ItemName">Version</S>
+      <S N="ItemValue">ThinkPad Twist</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1596">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1597</S>
+      <S N="RecordNumber">147</S>
+      <S N="CategoryID">6100</S>
+      <S N="CategoryName">System Information</S>
+      <S N="ItemID">6104</S>
+      <S N="ItemName">Serial Number</S>
+      <S N="ItemValue">MP2MAXC</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1597">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1598</S>
+      <S N="RecordNumber">147</S>
+      <S N="CategoryID">6100</S>
+      <S N="CategoryName">System Information</S>
+      <S N="ItemID">6105</S>
+      <S N="ItemName">Universal Unique ID</S>
+      <S N="ItemValue">{68F56881-5325-11CB-A56D-DBB23A8F9CFC}</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1598">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1599</S>
+      <S N="RecordNumber">147</S>
+      <S N="CategoryID">6100</S>
+      <S N="CategoryName">System Information</S>
+      <S N="ItemID">6106</S>
+      <S N="ItemName">Wake-Up Type</S>
+      <S N="ItemValue">Power Switch</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1599">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1600</S>
+      <S N="RecordNumber">147</S>
+      <S N="CategoryID">6100</S>
+      <S N="CategoryName">System Information</S>
+      <S N="ItemID">6107</S>
+      <S N="ItemName">SKU Number</S>
+      <S N="ItemValue">LENOVO_MT_33474PG</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1600">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1601</S>
+      <S N="RecordNumber">147</S>
+      <S N="CategoryID">6100</S>
+      <S N="CategoryName">System Information</S>
+      <S N="ItemID">6108</S>
+      <S N="ItemName">Product Family</S>
+      <S N="ItemValue">ThinkPad Twist</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1601">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1602</S>
+      <S N="RecordNumber">148</S>
+      <S N="CategoryID">6200</S>
+      <S N="CategoryName">Base Board</S>
+      <S N="ItemID">6201</S>
+      <S N="ItemName">Board Number</S>
+      <S N="ItemValue">1</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1602">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1603</S>
+      <S N="RecordNumber">148</S>
+      <S N="CategoryID">6200</S>
+      <S N="CategoryName">Base Board</S>
+      <S N="ItemID">6202</S>
+      <S N="ItemName">Manufacturer</S>
+      <S N="ItemValue">LENOVO</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1603">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1604</S>
+      <S N="RecordNumber">148</S>
+      <S N="CategoryID">6200</S>
+      <S N="CategoryName">Base Board</S>
+      <S N="ItemID">6203</S>
+      <S N="ItemName">Product</S>
+      <S N="ItemValue">33474PG</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1604">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1605</S>
+      <S N="RecordNumber">148</S>
+      <S N="CategoryID">6200</S>
+      <S N="CategoryName">Base Board</S>
+      <S N="ItemID">6204</S>
+      <S N="ItemName">Version</S>
+      <S N="ItemValue">Win8 Pro DPK TPG</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1605">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1606</S>
+      <S N="RecordNumber">148</S>
+      <S N="CategoryID">6200</S>
+      <S N="CategoryName">Base Board</S>
+      <S N="ItemID">6205</S>
+      <S N="ItemName">Serial Number</S>
+      <S N="ItemValue">1ZP7C319701</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1606">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1607</S>
+      <S N="RecordNumber">148</S>
+      <S N="CategoryID">6200</S>
+      <S N="CategoryName">Base Board</S>
+      <S N="ItemID">6206</S>
+      <S N="ItemName">Asset Tag</S>
+      <S N="ItemValue">Not Available</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1607">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1608</S>
+      <S N="RecordNumber">148</S>
+      <S N="CategoryID">6200</S>
+      <S N="CategoryName">Base Board</S>
+      <S N="ItemID">6207</S>
+      <S N="ItemName">Features</S>
+      <S N="ItemValue">Motherboard, Replacable</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1608">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1609</S>
+      <S N="RecordNumber">148</S>
+      <S N="CategoryID">6200</S>
+      <S N="CategoryName">Base Board</S>
+      <S N="ItemID">6208</S>
+      <S N="ItemName">Board Type</S>
+      <S N="ItemValue">Mother Board</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1609">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1610</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6301</S>
+      <S N="ItemName">Manufacturer</S>
+      <S N="ItemValue">LENOVO</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1610">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1611</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6302</S>
+      <S N="ItemName">Chassis Type</S>
+      <S N="ItemValue">Notebook</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1611">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1612</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6303</S>
+      <S N="ItemName">Version</S>
+      <S N="ItemValue">Not Available</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1612">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1613</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6304</S>
+      <S N="ItemName">Serial Number</S>
+      <S N="ItemValue">MP2MAXC</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1613">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1614</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6305</S>
+      <S N="ItemName">Asset Tag</S>
+      <S N="ItemValue">No Asset Information</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1614">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1615</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6306</S>
+      <S N="ItemName">Boot Up State</S>
+      <S N="ItemValue">Unknown</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1615">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1616</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6307</S>
+      <S N="ItemName">Power State</S>
+      <S N="ItemValue">Unknown</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1616">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1617</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6308</S>
+      <S N="ItemName">Thermal State</S>
+      <S N="ItemValue">Unknown</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1617">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1618</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6309</S>
+      <S N="ItemName">Security Status</S>
+      <S N="ItemValue">Unknown</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1618">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1619</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6310</S>
+      <S N="ItemName">OEM Defined</S>
+      <S N="ItemValue">0</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1619">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1620</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6311</S>
+      <S N="ItemName">Height</S>
+      <S N="ItemValue"></S>
+    </MS>
+  </Obj>
+  <Obj RefId="1620">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="ItemOrder">1621</S>
+      <S N="RecordNumber">149</S>
+      <S N="CategoryID">6300</S>
+      <S N="CategoryName">Chassis</S>
+      <S N="ItemID">6312</S>
+      <S N="ItemName">Number Of Power Cords</S>
+      <S N="ItemValue"></S>
+    </MS>
+  </Obj>
+</Objs>

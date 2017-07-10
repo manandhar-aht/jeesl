@@ -2,8 +2,9 @@ package net.sf.ahtutils.report.revert.excel.strategies;
 
 import java.util.Hashtable;
 
+import org.jeesl.api.controller.ImportStrategy;
+
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.report.revert.excel.ImportStrategy;
 
 public class ReturnNullStrategy implements ImportStrategy {
 

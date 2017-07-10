@@ -6,8 +6,8 @@ import java.util.List;
 
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.report.revert.excel.ImportStrategy;
 
+import org.jeesl.api.controller.ImportStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

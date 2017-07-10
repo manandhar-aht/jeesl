@@ -2,11 +2,11 @@ package net.sf.ahtutils.report.revert.excel.strategies;
 
 import java.util.Hashtable;
 
+import org.jeesl.api.controller.ImportStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.report.revert.excel.ImportStrategy;
 import net.sf.ahtutils.util.reflection.ReflectionsUtil;
 
 public class LoadByCodeStrategy implements ImportStrategy

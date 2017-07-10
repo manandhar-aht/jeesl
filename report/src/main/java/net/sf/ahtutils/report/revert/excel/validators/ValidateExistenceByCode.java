@@ -3,9 +3,9 @@ package net.sf.ahtutils.report.revert.excel.validators;
 import java.util.Hashtable;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.report.revert.excel.ValidationStrategy;
 import net.sf.ahtutils.util.reflection.ReflectionsUtil;
 
+import org.jeesl.api.controller.ValidationStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

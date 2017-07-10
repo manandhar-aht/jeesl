@@ -24,7 +24,7 @@
 							selection="#{cc.attrs.bean.scope}" selectionMode="single" rowKey="#{s.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslTsScopes}">
-									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderScopes()}" update="@form"/>
@@ -55,15 +55,15 @@
 						<p:panel id="pLang" header="#{msg.jeeslTsScope}"
 								 rendered="#{not empty cc.attrs.bean.scope}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
-								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancel()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttCancel}"/>
-								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.scope.id gt 0}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttDelete}"/>
+								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancel()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttCancel}"/>
+								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslDelete" rendered="#{cc.attrs.bean.scope.id gt 0}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.aupCode}"/>
 								<h:inputText autocomplete="off" value="#{cc.attrs.bean.scope.code}"/>
 								
-								<p:outputLabel value="#{msg.aupCategory}"/>
+								<p:outputLabel value="#{msg.jeeslCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.scope.category}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.categories}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
@@ -73,7 +73,7 @@
 									<f:selectItems value="#{cc.attrs.bean.units}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
-							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80" rendered="#{cc.attrs.bean.uiShowInvisible}" >
+							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80" rendered="#{cc.attrs.bean.uiShowInvisible}" >
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.scope.visible}"/>
 							</p:panelGrid>
@@ -89,7 +89,7 @@
 								<aht:pfDataTableHeader id="dth" title="#{msg.aupTsIntervals}">
 									<h:graphicImage id="giViewAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['aupAdd']}"/>
 			                        <p:tooltip for="giViewAdd" value="Add an item!" />
-			                        <aht:icon rendered="#{not empty cc.attrs.bean.tbInterval}" type="aupRm" mayDisappear="true" listener="#{cc.attrs.bean.opRmInterval()}" update=":#{cc.id}:fIntervals" tooltip="#{msg.ttRemove}"/>
+			                        <aht:icon rendered="#{not empty cc.attrs.bean.tbInterval}" type="jeeslRemove" mayDisappear="true" listener="#{cc.attrs.bean.opRmInterval()}" update=":#{cc.id}:fIntervals" tooltip="#{msg.ttRemove}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fIntervals" listener="#{cc.attrs.bean.selectTbInterval()}"/>
@@ -116,7 +116,7 @@
 								<aht:pfDataTableHeader id="dth" title="#{msg.jeeslTsClasses}">
 									<h:graphicImage id="giAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['aupAdd']}"/>
 			                        <p:tooltip for="giAdd" value="Add an item!" />
-			                        <aht:icon rendered="#{not empty cc.attrs.bean.tbClass}" type="aupRm" mayDisappear="true" listener="#{cc.attrs.bean.opRmClass()}" update=":#{cc.id}:fClasses" tooltip="#{msg.ttRemove}"/>
+			                        <aht:icon rendered="#{not empty cc.attrs.bean.tbClass}" type="jeeslRemove" mayDisappear="true" listener="#{cc.attrs.bean.opRmClass()}" update=":#{cc.id}:fClasses" tooltip="#{msg.ttRemove}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fClasses" listener="#{cc.attrs.bean.selectTbClass()}"/>

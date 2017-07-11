@@ -255,7 +255,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 		
 		try
 		{
-			BRIDGE bridge = fTs.fcBridge(cBridge, clas, entity.getId());
+			BRIDGE bridge = fTs.fcBridge(cBridge, clas, entity);
 			TS ts = fTs.fcTimeSeries(cTs, scope, interval, bridge);
 			logger.info("Using TS "+ts.toString());
 			

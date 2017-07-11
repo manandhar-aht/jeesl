@@ -78,17 +78,17 @@ public class JeeslTsFacadeBean<L extends UtilsLang,
 		return allForOrParents(cClass,ppCategory);
 	}
 	
-	@Override public BRIDGE fcBridge(Class<BRIDGE> cBridge, EC entityClass, long refId) throws UtilsConstraintViolationException
+	@Override public <T extends EjbWithId> BRIDGE fcBridge(Class<BRIDGE> cBridge, EC entityClass, T ejb) throws UtilsConstraintViolationException
 	{
-		try {return fBridge(cBridge, entityClass, refId);}
+		try {return fBridge(cBridge, entityClass, ejb);}
 		catch (UtilsNotFoundException ex)
 		{
 			if(efBridge==null){efBridge = new EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cBridge);}
-			BRIDGE bridge = efBridge.build(entityClass, refId);
+			BRIDGE bridge = efBridge.build(entityClass, ejb.getId());
 			return this.persist(bridge);
 		}
 	}
-	@Override public BRIDGE fBridge(Class<BRIDGE> cBridge, EC entityClass, long refId) throws UtilsNotFoundException
+	@Override public <T extends EjbWithId> BRIDGE fBridge(Class<BRIDGE> cBridge, EC entityClass, T ejb) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<BRIDGE> cQ = cB.createQuery(cBridge);
@@ -98,7 +98,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang,
 		Path<Long> pRef = from.get("refId");
 		
 		CriteriaQuery<BRIDGE> select = cQ.select(from);
-		select.where(cB.equal(pClass, entityClass),cB.equal(pRef, refId));
+		select.where(cB.equal(pClass, entityClass),cB.equal(pRef, ejb.getId()));
 		try	{return em.createQuery(select).getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cBridge.getName()+" found for entityClass/refId");}
 	}

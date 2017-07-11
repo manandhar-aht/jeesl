@@ -3,4 +3,5 @@
     <s:type id="123" key="myKey" code="myCode" group="myGroup" label="myLabel" visible="true" image="test/green.png" position="1"/>
     <io:file/>
     <symbol:symbol/>
+    <symbol:figures/>
 </symbol:graphic>

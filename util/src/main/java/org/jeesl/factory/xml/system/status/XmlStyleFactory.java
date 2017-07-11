@@ -15,12 +15,12 @@ public class XmlStyleFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlStyleFactory.class);
 		
-	private String lang;
+	private String localeCode;
 	private Style q;
 		
-	public XmlStyleFactory(String lang, Style q)
+	public XmlStyleFactory(String localeCode, Style q)
 	{
-		this.lang=lang;
+		this.localeCode=localeCode;
 		this.q=q;
 	}
 	
@@ -45,12 +45,12 @@ public class XmlStyleFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D
 			xml.setDescriptions(f.create(ejb.getDescription()));
 		}
 		
-		if(q.isSetLabel() && lang!=null)
+		if(q.isSetLabel() && localeCode!=null)
 		{
 			if(ejb.getName()!=null)
 			{
-				if(ejb.getName().containsKey(lang)){xml.setLabel(ejb.getName().get(lang).getLang());}
-				else{logger.warn("No translation "+lang+" available in "+ejb);}
+				if(ejb.getName().containsKey(localeCode)){xml.setLabel(ejb.getName().get(localeCode).getLang());}
+				else{logger.warn("No translation "+localeCode+" available in "+ejb);}
 			}
 			else{logger.warn("No @name available in "+ejb);}
 		}

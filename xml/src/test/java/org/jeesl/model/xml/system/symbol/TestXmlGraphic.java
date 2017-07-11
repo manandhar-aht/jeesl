@@ -25,6 +25,7 @@ public class TestXmlGraphic extends AbstractXmlSymbolTest<Graphic>
     		xml.setFile(new File());
     		xml.setType(TestXmlType.create(false));
     		xml.setSymbol(TestXmlSymbol.create(false));
+    		xml.setFigures(TestXmlFigures.create(false));
     	}
     	
     	return xml;

@@ -77,4 +77,20 @@ public class ObjectFactory {
         return new Size();
     }
 
+    /**
+     * Create an instance of {@link Figures }
+     * 
+     */
+    public Figures createFigures() {
+        return new Figures();
+    }
+
+    /**
+     * Create an instance of {@link Figure }
+     * 
+     */
+    public Figure createFigure() {
+        return new Figure();
+    }
+
 }

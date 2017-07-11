@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<symbol:figures xmlns:s="http://ahtutils.aht-group.com/status" xmlns:symbol="http://www.jeesl.org/symbol">
+    <symbol:figure id="123" css="true" color="abcfef" size="2" rotation="3" offsetX="2" offsetY="4">
+        <s:style/>
+    </symbol:figure>
+    <symbol:figure id="123" css="true" color="abcfef" size="2" rotation="3" offsetX="2" offsetY="4">
+        <s:style/>
+    </symbol:figure>
+</symbol:figures>

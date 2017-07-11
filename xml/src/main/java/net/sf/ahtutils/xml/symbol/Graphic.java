@@ -25,6 +25,7 @@ import net.sf.exlp.xml.io.File;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}type"/&gt;
  *         &lt;element ref="{http://exlp.sf.net/io}file"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/symbol}symbol"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/symbol}figures"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *     &lt;/restriction&gt;
@@ -38,7 +39,8 @@ import net.sf.exlp.xml.io.File;
 @XmlType(name = "", propOrder = {
     "type",
     "file",
-    "symbol"
+    "symbol",
+    "figures"
 })
 @XmlRootElement(name = "graphic")
 public class Graphic
@@ -52,6 +54,8 @@ public class Graphic
     protected File file;
     @XmlElement(required = true)
     protected Symbol symbol;
+    @XmlElement(required = true)
+    protected Figures figures;
     @XmlAttribute(name = "id")
     protected Long id;
 
@@ -137,6 +141,34 @@ public class Graphic
 
     public boolean isSetSymbol() {
         return (this.symbol!= null);
+    }
+
+    /**
+     * Gets the value of the figures property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Figures }
+     *     
+     */
+    public Figures getFigures() {
+        return figures;
+    }
+
+    /**
+     * Sets the value of the figures property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Figures }
+     *     
+     */
+    public void setFigures(Figures value) {
+        this.figures = value;
+    }
+
+    public boolean isSetFigures() {
+        return (this.figures!= null);
     }
 
     /**

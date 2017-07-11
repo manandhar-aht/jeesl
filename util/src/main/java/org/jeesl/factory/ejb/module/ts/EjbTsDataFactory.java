@@ -1,5 +1,7 @@
 package org.jeesl.factory.ejb.module.ts;
 
+import java.util.Date;
+
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -44,6 +46,11 @@ public class EjbTsDataFactory<L extends UtilsLang, D extends UtilsDescription,
 	
 	public DATA build(WS workspace, TS timeSeries, TRANSACTION transaction, Data data)
 	{
+		return build(workspace,timeSeries,transaction,data.getRecord().toGregorianCalendar().getTime(),data.getValue());
+	}
+	
+	public DATA build(WS workspace, TS timeSeries, TRANSACTION transaction, Date date, double value)
+	{
 		DATA ejb = null;
 		try
 		{
@@ -51,8 +58,8 @@ public class EjbTsDataFactory<L extends UtilsLang, D extends UtilsDescription,
 			ejb.setWorkspace(workspace);
 			ejb.setTimeSeries(timeSeries);
 			ejb.setTransaction(transaction);
-			ejb.setRecord(data.getRecord().toGregorianCalendar().getTime());
-			ejb.setValue(data.getValue());
+			ejb.setRecord(date);
+			ejb.setValue(value);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

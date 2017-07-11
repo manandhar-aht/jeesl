@@ -34,8 +34,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class JeeslTsFacadeBean<L extends UtilsLang,
-							D extends UtilsDescription,
+public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 							CAT extends UtilsStatus<CAT,L,D>,
 							SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 							UNIT extends UtilsStatus<UNIT,L,D>,

@@ -1,5 +1,6 @@
 package net.sf.ahtutils.report.revert.excel;
 
+import freemarker.template.utility.StringUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -287,7 +288,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		{
 		
 			Boolean validated		= false;
-			String methodName		= "set" +property;
+			String methodName		= "set" +StringUtil.capitalize(property);
 			String valueFromCell	= parameters[0].toString();
 			logger.trace("Invoking " +methodName);
 

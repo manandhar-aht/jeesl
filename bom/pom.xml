@@ -456,7 +456,12 @@
   	   	</dependency>
 			
 			<!-- JSON https://github.com/FasterXML/jackson-docs/wiki/Using-Jackson2-with-Maven -->
-			
+            <!-- For working with beans e.g. to set properties -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

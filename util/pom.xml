@@ -297,6 +297,18 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+	 <dependency>
+	  <groupId>commons-beanutils</groupId>
+	  <artifactId>commons-beanutils</artifactId>
+          <exclusions>
+            <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+            </exclusion>
+          </exclusions>
+	  <type>jar</type>
+          <scope>provided</scope>
+	 </dependency>
 	</dependencies>
 	
 	<build>

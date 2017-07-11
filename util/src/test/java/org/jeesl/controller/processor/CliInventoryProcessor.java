@@ -13,16 +13,19 @@ import net.sf.exlp.util.xml.JaxbUtil;
 public class CliInventoryProcessor
 {
 	final static Logger logger = LoggerFactory.getLogger(CliInventoryProcessor.class);
-		
+	
 	public static void main(String[] args) throws Exception
 	{
 		JeeslUtilTestBootstrap.init();
+		
 		Inventory inventory = new Inventory();
+		String s = StringIO.loadTxt("src/test/resources/data/txt/inventory.txt");
 		
-		String s = StringIO.loadTxt("data/txt/inventory.txt");
+		PcInventoryProcessor pcIP = new PcInventoryProcessor();
+		PcInventoryPostProcessor pcIPP = new PcInventoryPostProcessor();
 		
-		inventory.getComputer().add(PcInventoryPostProcessor.postProcess(PcInventoryProcessor.transform(s)));
-		
+		inventory.getComputer().add(pcIPP.postProcess(pcIP.transform(s)));
+
 		JaxbUtil.info(inventory);
 	}
 }

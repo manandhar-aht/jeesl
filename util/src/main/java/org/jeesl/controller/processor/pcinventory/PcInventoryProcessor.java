@@ -31,12 +31,11 @@ public class PcInventoryProcessor
 {
 	final static Logger logger = LoggerFactory.getLogger(PcInventoryProcessor.class);
 	
-	static Document doc;
-	static Namespace ns;
-	static List<Element> sW, sys, upds, uItem;
-	private static ByteArrayInputStream stream;
-	
-	private static String getItem(List<Element> type, String expression)
+	private static Document doc;
+	private static Namespace ns;
+	List<Element> sW, sys, upds, uItem;
+		
+	private String getItem(List<Element> type, String expression)
 	{
 		String rtn = null;
 		XPathFactory xFactory = XPathFactory.instance();
@@ -50,7 +49,7 @@ public class PcInventoryProcessor
 		return rtn;
 	}
 	
-	private static List<String> getItems(List<Element> type, String expression)
+	private List<String> getItems(List<Element> type, String expression)
 	{
 		List<String> rtn = new ArrayList<String>();
 		XPathFactory xFactory = XPathFactory.instance();
@@ -64,7 +63,7 @@ public class PcInventoryProcessor
 		return rtn;
 	}
 	
-	public static List<Element> getCategory(String expression)
+	private List<Element> getCategory(String expression)
 	{
 		List<Element> rtn = null;
 		XPathFactory xFactory = XPathFactory.instance();
@@ -78,9 +77,9 @@ public class PcInventoryProcessor
 		return rtn;
 	}
 
-	public static Computer transform(String xmlFile) throws DatatypeConfigurationException
+	public Computer transform(String xmlFile) throws DatatypeConfigurationException
 	{
-		stream = new ByteArrayInputStream(xmlFile.getBytes());
+		ByteArrayInputStream stream = new ByteArrayInputStream(xmlFile.getBytes());
 		doc = JDomUtil.load(stream);
 		
 		ns = Namespace.getNamespace("power", "http://schemas.microsoft.com/powershell/2004/04");

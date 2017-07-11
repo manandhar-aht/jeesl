@@ -5,7 +5,7 @@ import org.jeesl.model.xml.module.inventory.pc.Update;
 
 public class PcInventoryPostProcessor
 {
-	public static Computer postProcess(Computer computer)
+	public Computer postProcess(Computer computer)
 	{
 		computer.getSoftware().getUpdates();
 		

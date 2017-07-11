@@ -5,8 +5,6 @@ import org.jeesl.model.xml.module.inventory.pc.Update;
 
 public class PcInventoryPostProcessor
 {
-	public PcInventoryPostProcessor(){}
-	
 	public static Computer postProcess(Computer computer)
 	{
 		computer.getSoftware().getUpdates();
@@ -20,8 +18,8 @@ public class PcInventoryPostProcessor
 						.replaceAll("\\)", ""));
 				update.setCode("KB2267602");
 				update.setDescription("Definitionsupdate für Windows Defender");
-				
-			} else
+			}
+			else
 			{
 				if (update.getDescription().contains("KB"))
 				{
@@ -51,12 +49,8 @@ public class PcInventoryPostProcessor
 				{
 					update.setVersion("-");
 				}
-				
 			}
-			
 		}
-		
 		return computer;
 	}
-	
 }

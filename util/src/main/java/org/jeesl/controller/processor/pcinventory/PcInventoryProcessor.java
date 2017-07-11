@@ -2,7 +2,6 @@
 package org.jeesl.controller.processor.pcinventory;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +29,8 @@ import net.sf.exlp.util.xml.JDomUtil;
 
 public class PcInventoryProcessor
 {
-	
 	final static Logger logger = LoggerFactory.getLogger(PcInventoryProcessor.class);
+	
 	static Document doc;
 	static Namespace ns;
 	static List<Element> sW, sys, upds, uItem;
@@ -79,7 +78,7 @@ public class PcInventoryProcessor
 		return rtn;
 	}
 
-	public static Computer inventoryPC(String xmlFile) throws DatatypeConfigurationException, FileNotFoundException
+	public static Computer transform(String xmlFile) throws DatatypeConfigurationException
 	{
 		stream = new ByteArrayInputStream(xmlFile.getBytes());
 		doc = JDomUtil.load(stream);
@@ -162,8 +161,7 @@ public class PcInventoryProcessor
 		computer.setName(getItem(sys, "//power:Obj/power:MS/power:S[@N='ItemName' and text()='Computer Name']"));
 		computer.setHardware(hardware);
 		computer.setSoftware(software);
-		computer.setCode(getItem(sys, "//power:Obj/power:MS/power:S[@N='ItemName' and text()='Universal Unique ID']")
-				.replace("{", "").replace("}", ""));
+		computer.setCode(getItem(sys, "//power:Obj/power:MS/power:S[@N='ItemName' and text()='Universal Unique ID']").replace("{", "").replace("}", ""));
 		
 		return computer;
 	}

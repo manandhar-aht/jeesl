@@ -116,7 +116,7 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderFigures()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectFigure()}" update=":#{cc.id}:fFigure"/>
 							<p:column>
-					             <f:facet name="header">#{msg.jeeslOptionGraphicFigureCss}</f:facet>  
+					             <aup:iconCheckmark value="#{f.visible}"/>
 					             <aup:iconCheckmark value="#{f.css}"/>
 							</p:column>
 							<p:column>
@@ -143,6 +143,9 @@
 							<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 							
 							<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60">
+								<p:outputLabel value="#{msg.jeeslVisible}" />
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.figure.visible}" />
+							
 								<p:outputLabel value="#{msg.jeeslOptionGraphicFigureCss}" />
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.figure.css}" />
 								

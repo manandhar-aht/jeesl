@@ -177,7 +177,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			parents=null;
 		}
 		reloadStatusEntries();
-		if(reset){status = null;}
+		if(reset){reset(true,true);}
 		debugUi(true);
 	}
 	

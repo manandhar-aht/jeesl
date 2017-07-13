@@ -66,6 +66,7 @@ public class JeeslGraphicFacadeBean<L extends UtilsLang, D extends UtilsDescript
 		for(T ejb : list)
 		{
 			ejb.getGraphic().getId();
+			ejb.getGraphic().getFigures().size();
 		}
 		return this.all(c);
 	}

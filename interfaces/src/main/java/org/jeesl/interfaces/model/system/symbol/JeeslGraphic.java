@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.symbol;
 
+import java.util.List;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -33,4 +35,7 @@ public interface JeeslGraphic<L extends UtilsLang, D extends UtilsDescription,
 	
 	String getColorBorder();
 	void setColorBorder(String color);
+	
+	List<F> getFigures();
+	void setFigures(List<F> figures);
 }

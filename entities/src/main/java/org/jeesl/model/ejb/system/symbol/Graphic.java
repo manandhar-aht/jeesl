@@ -1,6 +1,7 @@
 package org.jeesl.model.ejb.system.symbol;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.ManyToOne;
 
@@ -55,6 +56,10 @@ public class Graphic implements EjbRemoveable,Serializable,EjbPersistable,
 	private String colorBorder;
 	public String getColorBorder() {return colorBorder;}
 	public void setColorBorder(String colorBorder) {this.colorBorder = colorBorder;}
+	
+	private List<GraphicFigure> figures;
+	public List<GraphicFigure> getFigures() {return figures;}
+	public void setFigures(List<GraphicFigure> figures) {this.figures = figures;}
 	
 	public String toString()
 	{

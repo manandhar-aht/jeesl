@@ -1,5 +1,9 @@
 package org.jeesl.controller.facade;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -11,6 +15,7 @@ import javax.persistence.criteria.Root;
 import org.jeesl.api.facade.util.JeeslGraphicFacade;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
+import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -53,5 +58,15 @@ public class JeeslGraphicFacadeBean<L extends UtilsLang, D extends UtilsDescript
 		try	{return em.createQuery(cQ).getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("No Graphic found for status.id"+statusId);}
 		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("Multiple Results for status.id"+statusId);}
+	}
+
+	@Override public <T extends EjbWithGraphic<L,D,G,GT,F,FS>> List<T> allWithGraphicFigures(Class<T> c)
+	{
+		List<T> list = this.all(c);
+		for(T ejb : list)
+		{
+			ejb.getGraphic().getId();
+		}
+		return this.all(c);
 	}
 }

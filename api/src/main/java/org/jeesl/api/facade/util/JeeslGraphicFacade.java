@@ -1,7 +1,10 @@
 package org.jeesl.api.facade.util;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
+import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
@@ -17,4 +20,5 @@ public interface JeeslGraphicFacade <L extends UtilsLang, D extends UtilsDescrip
 			extends UtilsFacade
 {	
 	G fGraphicForStatus(long statusId) throws UtilsNotFoundException;
+	<T extends EjbWithGraphic<L,D,G,GT,F,FS>> List<T> allWithGraphicFigures(Class<T> c);
 }

@@ -1,5 +1,7 @@
 package org.jeesl.factory.css;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.slf4j.Logger;
@@ -25,5 +27,14 @@ public class CssColorFactory<L extends UtilsLang, D extends UtilsDescription,
 		StringBuilder sb = new StringBuilder();
 		sb.append("#").append(figure.getColor());
 		return sb.toString();
+	}
+	
+	public String firstCss(List<F> figures)
+	{
+		for(F f : figures)
+		{
+			if(f.isCss()){return build(f);}
+		}
+		return "";
 	}
 }

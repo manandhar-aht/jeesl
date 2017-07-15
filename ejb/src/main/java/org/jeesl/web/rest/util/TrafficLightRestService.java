@@ -1,6 +1,8 @@
 package org.jeesl.web.rest.util;
 
 import org.jeesl.api.exception.xml.JeeslXmlStructureException;
+import org.jeesl.api.rest.system.traffic.JeeslTrafficLightRestExport;
+import org.jeesl.api.rest.system.traffic.JeeslTrafficLightRestImport;
 import org.jeesl.factory.ejb.system.util.EjbTrafficLightFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
@@ -16,15 +18,13 @@ import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.rest.util.traffic.UtilsTrafficLightRestExport;
-import net.sf.ahtutils.interfaces.rest.util.traffic.UtilsTrafficLightRestImport;
 import net.sf.ahtutils.monitor.DataUpdateTracker;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.ahtutils.xml.utils.TrafficLight;
 import net.sf.ahtutils.xml.utils.TrafficLights;
 
 public class TrafficLightRestService <L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
-		implements UtilsTrafficLightRestExport,UtilsTrafficLightRestImport
+		implements JeeslTrafficLightRestExport,JeeslTrafficLightRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(TrafficLightRestService.class);
 	

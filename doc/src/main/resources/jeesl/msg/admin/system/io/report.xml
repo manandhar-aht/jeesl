@@ -240,5 +240,11 @@
 			<lang key="fr" translation="Italic" />
 		</langs>
 	</translation>	
-	
+	<translation key="jeeslIoReportXmlExample">
+		<langs>
+			<lang key="de" translation="XML Beispiel" />
+			<lang key="en" translation="XML Example" />
+			<lang key="fr" translation="XML Example" />
+		</langs>
+	</translation>	
 </translations>

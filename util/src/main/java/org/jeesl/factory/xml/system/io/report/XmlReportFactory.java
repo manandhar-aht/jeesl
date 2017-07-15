@@ -50,7 +50,6 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
 	private XmlCategoryFactory<CATEGORY,L,D> xfCategory;
-	private XmlImplementationFactory<IMPLEMENTATION,L,D> xfImplementation;
 	private XmlWorkbookFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xfWorkbook;
 
 	public XmlReportFactory(Query q){this(q.getLang(), q.getReport());}
@@ -60,8 +59,8 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory<CATEGORY,L,D>(localeCode,q.getCategory());}
-		if(q.isSetImplementation()){xfImplementation = new XmlImplementationFactory<IMPLEMENTATION,L,D>(localeCode,q.getImplementation());}
 		if(q.isSetXlsWorkbook()){xfWorkbook = new XmlWorkbookFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION>(localeCode,q.getXlsWorkbook());}
+		
 	}
 	
 	public Report build(REPORT report)
@@ -72,9 +71,9 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetCode()){xml.setCode(report.getCode());}
 		if(q.isSetVisible()){xml.setVisible(report.isVisible());}
 		if(q.isSetPosition()){xml.setPosition(report.getPosition());}
+		if(q.isSetXmlExample()){xml.setXmlExample(report.getXmlExample());}
 		
 		if(q.isSetCategory()){xml.setCategory(xfCategory.build(report.getCategory()));}
-		if(q.isSetImplementation()){xml.setImplementation(xfImplementation.build(report.getImplementation()));}
 		
 		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(report.getName()));}
 		if(q.isSetDescriptions()){xml.setDescriptions(xfDescriptions.create(report.getDescription()));}

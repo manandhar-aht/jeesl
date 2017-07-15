@@ -265,7 +265,6 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(report));}
 		if(report.getCategory()!=null){report.setCategory(fReport.find(cCategory, report.getCategory()));}
-		if(report.getImplementation()!=null){report.setImplementation(fReport.find(cImplementation, report.getImplementation()));}
 		report = fReport.save(report);
 		reloadReports();
 		reloadReport();

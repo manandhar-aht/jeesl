@@ -98,12 +98,11 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 	public REPORT update (JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> fReport, REPORT eReport, Report xReport) throws UtilsNotFoundException
 	{
 		CATEGORY eCategory = fReport.fByCode(cCategory, xReport.getCategory().getCode());
-		IMPLEMENTATION eImplementation = fReport.fByCode(cImplementation, xReport.getImplementation().getCode());
-		
+
 		eReport.setCategory(eCategory);
-		eReport.setImplementation(eImplementation);
 		eReport.setPosition(xReport.getPosition());
 		eReport.setVisible(xReport.isVisible());
+		eReport.setXmlExample(xReport.getXmlExample());
 		return eReport;
 	}
 	

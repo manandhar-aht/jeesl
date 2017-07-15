@@ -473,7 +473,7 @@ public class OfxStatusTableFactory extends AbstractUtilsOfxDocumentationFactory
 		{
 			if(code.equals(Code.parent))
 			{
-				headerKey = "auStatusTableParent"+StringUtil.dash2Camel(parentKey);
+				headerKey = "auStatusTableParent"+StringUtil.slash2Camel(parentKey);
 				head.getRow().get(0).getCell().add(OfxMultiLangFactory.cell(langs, translations, headerKey));
 				specs.getColumns().getColumn().add(OfxColumnFactory.flex(20,code.equals(narrowColumn)));
 			}

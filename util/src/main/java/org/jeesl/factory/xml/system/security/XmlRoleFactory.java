@@ -17,33 +17,32 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.xml.security.Role;
 import net.sf.exlp.util.io.StringUtil;
 
-public class XmlRoleFactory<L extends UtilsLang,
-	D extends UtilsDescription, 
-	C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-	R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-	V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-	U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-	A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
-	USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+public class XmlRoleFactory<L extends UtilsLang, D extends UtilsDescription, 
+							C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+							R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+							V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
+							U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+							A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+							AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+							USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlRoleFactory.class);
 		
-	private String lang;
+	private String localeCode;
 	private Role q;
 	
 	public XmlRoleFactory(Role q)
 	{
 		this.q=q;
 	}
-	public XmlRoleFactory(String lang, Role q)
+	public XmlRoleFactory(String localeCode, Role q)
 	{
-		this.lang=lang;
+		this.localeCode=localeCode;
 		this.q=q;
 	}
-	public XmlRoleFactory(Role q,String lang)
+	public XmlRoleFactory(Role q,String localeCode)
 	{
-		this.lang=lang;
+		this.localeCode=localeCode;
 		this.q=q;
 	}
 	
@@ -103,9 +102,9 @@ public class XmlRoleFactory<L extends UtilsLang,
 			xml.setUsecases(f.build(role.getUsecases()));
 		}
 		
-		if(q.isSetLabel() && lang!=null && role.getName().containsKey(lang))
+		if(q.isSetLabel() && localeCode!=null && role.getName().containsKey(localeCode))
 		{
-			xml.setLabel(role.getName().get(lang).getLang());
+			xml.setLabel(role.getName().get(localeCode).getLang());
 		}
 			
 		return xml;

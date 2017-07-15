@@ -17,6 +17,8 @@ public class CssColorFactory<L extends UtilsLang, D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(CssColorFactory.class);
     
+	public static String colorGrey = "#F8F8FF";
+	
 	public CssColorFactory()
 	{  
 
@@ -29,12 +31,22 @@ public class CssColorFactory<L extends UtilsLang, D extends UtilsDescription,
 		return sb.toString();
 	}
 	
-	public String firstCss(List<F> figures)
+	public String firstCss(G graphic)
 	{
-		for(F f : figures)
+		return css(0,graphic.getFigures(),"");
+	}
+	
+	public String css(int index, G graphic, String fallback)
+	{
+		return css(index,graphic.getFigures(),fallback);
+	}
+	
+	private String css(int index, List<F> figures, String fallback)
+	{
+		if(figures.size()>index)
 		{
-			if(f.isCss()){return build(f);}
+			return build(figures.get(index));
 		}
-		return "";
+		return fallback;
 	}
 }

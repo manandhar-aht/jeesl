@@ -45,6 +45,13 @@ public class XmlFinanceFactory
 		return xml;
 	}
 	
+	public static void addId(Figures figures, EjbWithId ejb, Double[] values, int index)
+	{
+		if(values!=null)
+		{
+			addId(figures,ejb,values[index]);
+		}
+	}
 	public static void addId(Figures figures, EjbWithId ejb, Double value){addId(figures,ejb.getId(),value);}
 	public static void addId(Figures figures, long id, Double value)
 	{

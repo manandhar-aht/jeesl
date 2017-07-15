@@ -39,7 +39,6 @@ public class RestUrlDelay
 			delay=true;
 		}
 		
-		
 		if(delay)
 		{
 			logger.warn(sb.toString());

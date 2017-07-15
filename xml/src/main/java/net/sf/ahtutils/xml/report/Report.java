@@ -49,6 +49,7 @@ import org.jeesl.model.xml.module.ts.TimeSeries;
  *       &lt;attribute name="ltr" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="rtl" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="test" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="xmlExample" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -105,6 +106,8 @@ public class Report
     protected Boolean rtl;
     @XmlAttribute(name = "test")
     protected String test;
+    @XmlAttribute(name = "xmlExample")
+    protected String xmlExample;
 
     /**
      * Gets the value of the media property.
@@ -586,6 +589,34 @@ public class Report
 
     public boolean isSetTest() {
         return (this.test!= null);
+    }
+
+    /**
+     * Gets the value of the xmlExample property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getXmlExample() {
+        return xmlExample;
+    }
+
+    /**
+     * Sets the value of the xmlExample property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setXmlExample(String value) {
+        this.xmlExample = value;
+    }
+
+    public boolean isSetXmlExample() {
+        return (this.xmlExample!= null);
     }
 
 }

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.rest.util.traffic;
+package org.jeesl.api.rest.system.traffic;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -7,7 +7,7 @@ import javax.ws.rs.core.MediaType;
 
 import net.sf.ahtutils.xml.utils.TrafficLights;
 
-public interface UtilsTrafficLightRestExport
+public interface JeeslTrafficLightRestExport
 {
 	@GET @Path("/utils/trafficLights") @Produces(MediaType.APPLICATION_XML)
 	TrafficLights exportTrafficLights();

@@ -28,6 +28,7 @@ public class TestXmlReport extends AbstractXmlReportTest<Report>
     	
     	xml.setDir("testDir");
     	xml.setExample("testExampleXmlFile");
+    	xml.setXmlExample("xmlExampleFile");
     	xml.getMedia().add(TestXmlMedia.create(false));
     	xml.getMedia().add(TestXmlMedia.create(false));
     	xml.setLtr(true);

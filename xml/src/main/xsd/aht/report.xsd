@@ -43,6 +43,7 @@
 			<xsd:attribute name="ltr" type="xsd:boolean"/>
 			<xsd:attribute name="rtl" type="xsd:boolean"/>
 			<xsd:attribute name="test" type="xsd:string"/>
+			<xsd:attribute name="xmlExample" type="xsd:string"/>
 		</xsd:complexType>
 	</xsd:element>
     <xsd:element name="resources">

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.xml.finance.Counter;
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 import net.sf.ahtutils.xml.text.Remark;
@@ -28,6 +29,13 @@ public class XmlFiguresFactory
 		if(id!=null){xml.setId(id);}
 		if(code!=null){xml.setCode(code);}
 		if(label!=null){xml.setLabel(label);}
+		return xml;
+	}
+	
+	public static Figures build(Counter counter)
+	{
+		Figures xml = new Figures();
+		xml.getCounter().add(counter);
 		return xml;
 	}
 	

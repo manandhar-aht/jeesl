@@ -43,15 +43,22 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
     
     public <E extends Enum<E>> S build(E code){return create(code.toString());}
     
-	public S create(Status status) throws InstantiationException, IllegalAccessException, UtilsConstraintViolationException
+	public S create(Status status) throws UtilsConstraintViolationException
 	{
 		if(!status.isSetLangs()){throw new UtilsConstraintViolationException("No <langs> available for "+JaxbUtil.toString(status));}
-        S s = cStatus.newInstance();
-        s.setCode(status.getCode());
-        if(status.isSetPosition()){s.setPosition(status.getPosition());}
-        else{s.setPosition(0);}
-        s.setName(efLang.getLangMap(status.getLangs()));
-        s.setDescription(efDescription.create(status.getDescriptions()));
+        S s=null;
+		try
+		{
+			s = cStatus.newInstance();
+			s.setCode(status.getCode());
+			if(status.isSetPosition()){s.setPosition(status.getPosition());}
+			else{s.setPosition(0);}
+			s.setName(efLang.getLangMap(status.getLangs()));
+			s.setDescription(efDescription.create(status.getDescriptions()));
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
         return s;
     }
 	

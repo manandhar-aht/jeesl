@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.finance.UtilsFinance;
+import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
@@ -50,6 +51,13 @@ public class XmlFinanceFactory
 		if(values!=null)
 		{
 			addId(figures,ejb,values[index]);
+		}
+	}
+	public static void addCode(Figures figures, EjbWithCode ejb, Double[] values, int index)
+	{
+		if(values!=null)
+		{
+			addCode(figures,ejb.getCode(),values[index]);
 		}
 	}
 	public static void addId(Figures figures, EjbWithId ejb, Double value){addId(figures,ejb.getId(),value);}

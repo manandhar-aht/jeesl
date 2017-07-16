@@ -54,10 +54,10 @@
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.report.visible}"/>
 								
 								<p:outputLabel value="#{msg.aupCode}"/>
-								<h:inputText autocomplete="off" value="#{cc.attrs.bean.report.code}"/>
+								<p:inputText autocomplete="off" value="#{cc.attrs.bean.report.code}"/>
 								
 								<p:outputLabel value="#{msg.jeeslIoReportXmlExample}"/>
-								<h:inputText autocomplete="off" value="#{cc.attrs.bean.report.xmlExample}" />
+								<p:inputText autocomplete="off" value="#{cc.attrs.bean.report.xmlExample}" />
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.report}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />

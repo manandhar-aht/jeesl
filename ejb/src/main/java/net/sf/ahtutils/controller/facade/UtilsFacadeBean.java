@@ -634,8 +634,11 @@ public class UtilsFacadeBean implements UtilsFacade
 	    
 	    if(EjbWithPosition.class.isAssignableFrom(c))
 	    {
-	    	Order o1 = cB.asc(root.get(EjbWithPosition.attributePosition));
-	    	select.orderBy(o1);
+	    	select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));
+	    }
+	    else if(EjbWithRecord.class.isAssignableFrom(c))
+	    {
+	    	select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));
 	    }
 	    
 		TypedQuery<T> q = em.createQuery(select);

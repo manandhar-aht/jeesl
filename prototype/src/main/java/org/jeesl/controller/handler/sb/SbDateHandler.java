@@ -35,6 +35,13 @@ public class SbDateHandler implements Serializable
 		date2 = dt.toDate();
 	}
 	
+	public void initWeeksToNow(int weeks)
+	{
+		DateTime dt = new DateTime();
+		date1 = dt.minusWeeks(weeks).toDate();
+		date2 = dt.toDate();
+	}
+	
 	public void initWeeks(int minus, int plus)
 	{
 		DateTime dt = new DateTime();

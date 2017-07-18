@@ -298,7 +298,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			logger.trace("Invoking " +methodName);
 
 			// Now find the correct method
-			Method[] methods = targetClass.getMethods();
+			Method[] methods = targetClass.getDeclaredMethods();
 			Class parameter  = null;
 			Method m         = null;
 			for (Method method : methods)

@@ -62,6 +62,16 @@
 			</xsd:simpleContent>
 		</xsd:complexType>
 	</xsd:element>
+	<xsd:element name="period">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:string">
+					<xsd:attribute name="version" type="xsd:int"/>
+					<xsd:attribute name="key" type="xsd:string"/>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
 	<xsd:element name="team">
 		<xsd:complexType>
 			<xsd:simpleContent>

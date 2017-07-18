@@ -36,7 +36,7 @@ public interface JeeslSurveyAnswer<L extends UtilsLang, D extends UtilsDescripti
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 			extends EjbWithId,EjbSaveable
 {
-	public enum Attributes{data,question}
+	public enum Attributes{data,question,option}
 	
 	DATA getData();
 	void setData(DATA data);

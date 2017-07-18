@@ -78,6 +78,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Period }
+     * 
+     */
+    public Period createPeriod() {
+        return new Period();
+    }
+
+    /**
      * Create an instance of {@link Team }
      * 
      */

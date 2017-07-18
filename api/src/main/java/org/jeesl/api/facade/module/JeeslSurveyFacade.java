@@ -16,6 +16,7 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.model.json.JsonFlatFigures;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
@@ -76,4 +77,6 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	
 	ANSWER saveAnswer(ANSWER answer) throws UtilsConstraintViolationException, UtilsLockingException;
 	void rmAnswer(ANSWER answer) throws UtilsConstraintViolationException;
+	
+	JsonFlatFigures surveyOneOptionStatistic(List<QUESTION> questions);
 }

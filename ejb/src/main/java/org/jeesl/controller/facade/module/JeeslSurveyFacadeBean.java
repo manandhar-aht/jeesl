@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -22,6 +23,8 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
+import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
+import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.interfaces.model.module.survey.JeeslWithSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
@@ -35,6 +38,8 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.model.json.JsonFlatFigure;
+import org.jeesl.model.json.JsonFlatFigures;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -503,5 +508,36 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		answer = em.find(cAnswer, answer.getId());
 		answer.getData().getAnswers().remove(answer);
 		this.rmProtected(answer);
+	}
+	
+	@Override public JsonFlatFigures surveyOneOptionStatistic(List<QUESTION> questions)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
+        
+        Root<ANSWER> answer = cQ.from(cAnswer);
+        
+        Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
+        Path<OPTION> pOption = answer.get(JeeslSurveyAnswer.Attributes.option.toString());
+        
+        Expression<Long> eTa = cB.count(answer.<Long>get(JeeslSurveyAnswer.Attributes.option.toString()));
+      
+        cQ.groupBy(pQuestion.get("id"),pOption.get("id"));
+        cQ.multiselect(pQuestion.get("id"),pOption.get("id"),eTa);
+        
+        cQ.where(pQuestion.in(questions));
+        TypedQuery<Tuple> tQ = em.createQuery(cQ);
+        List<Tuple> tuples = tQ.getResultList();
+        
+        JsonFlatFigures result = JsonFlatFiguresFactory.build();
+        for(Tuple t : tuples)
+        {
+        	JsonFlatFigure f = JsonFlatFigureFactory.build();
+        	f.setL1((Long)t.get(0));
+        	f.setL2((Long)t.get(1));
+        	result.getFigures().add(f);
+        }
+        
+        return result;
 	}
 }

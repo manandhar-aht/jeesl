@@ -4,7 +4,6 @@ import org.jeesl.model.xml.text.Remark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class XmlRemarkFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlRemarkFactory.class);

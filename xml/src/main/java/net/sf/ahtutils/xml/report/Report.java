@@ -12,7 +12,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.status.Category;
 import net.sf.ahtutils.xml.status.Descriptions;
-import net.sf.ahtutils.xml.status.Implementation;
 import net.sf.ahtutils.xml.status.Langs;
 import org.jeesl.model.xml.module.ts.TimeSeries;
 
@@ -37,7 +36,6 @@ import org.jeesl.model.xml.module.ts.TimeSeries;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}category"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/status}implementation"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsWorkbook"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/timeseries}timeSeries" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
@@ -64,7 +62,6 @@ import org.jeesl.model.xml.module.ts.TimeSeries;
     "langs",
     "descriptions",
     "category",
-    "implementation",
     "xlsWorkbook",
     "timeSeries"
 })
@@ -84,8 +81,6 @@ public class Report
     protected Descriptions descriptions;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Category category;
-    @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
-    protected Implementation implementation;
     @XmlElement(required = true)
     protected XlsWorkbook xlsWorkbook;
     @XmlElement(namespace = "http://www.jeesl.org/timeseries", required = true)
@@ -256,34 +251,6 @@ public class Report
 
     public boolean isSetCategory() {
         return (this.category!= null);
-    }
-
-    /**
-     * Gets the value of the implementation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Implementation }
-     *     
-     */
-    public Implementation getImplementation() {
-        return implementation;
-    }
-
-    /**
-     * Sets the value of the implementation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Implementation }
-     *     
-     */
-    public void setImplementation(Implementation value) {
-        this.implementation = value;
-    }
-
-    public boolean isSetImplementation() {
-        return (this.implementation!= null);
     }
 
     /**

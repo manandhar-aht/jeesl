@@ -32,6 +32,7 @@
             </xsd:simpleContent>
         </xsd:complexType>
     </xsd:element>
+
     <xsd:element name="solution">
         <xsd:complexType>
             <xsd:simpleContent>

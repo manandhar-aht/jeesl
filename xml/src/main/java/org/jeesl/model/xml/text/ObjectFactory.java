@@ -46,6 +46,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Challenge }
+     * 
+     */
+    public Challenge createChallenge() {
+        return new Challenge();
+    }
+
+    /**
+     * Create an instance of {@link Solution }
+     * 
+     */
+    public Solution createSolution() {
+        return new Solution();
+    }
+
+    /**
      * Create an instance of {@link Description }
      * 
      */

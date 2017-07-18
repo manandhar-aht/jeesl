@@ -68,7 +68,6 @@ public class ReportQuery
 		xml.setDescriptions(XmlStatusQuery.descriptions());
 		
 		xml.setCategory(XmlCategoryFactory.create(""));
-		xml.setImplementation(XmlImplementationFactory.build(""));
 		
 		xml.setXlsWorkbook(exportWorkbook());
 		

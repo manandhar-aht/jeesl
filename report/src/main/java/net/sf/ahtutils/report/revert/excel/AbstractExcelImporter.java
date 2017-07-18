@@ -220,16 +220,20 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				Cell cell = row.getCell(j);
 				activeColumn = j +"";
 				
-				// Get the Cell Value as Object
+				
+			
+			    // Assign the data to the entity using the setter
+                            if (propertyRelations.containsKey(j +""))
+                            {
+                                // Get the Cell Value as Object
 				Object object = DataUtil.getCellValue(cell);
 				
 				// Read the name of the property that should be filled with the data from this column
 				String propertyName = propertyRelations.get(j +"");
-			
-			    // Assign the data to the entity using the setter
-				logger.trace("Cell " +row.getRowNum() +"," +j +" should store " +propertyName +", value as String is " +object.toString());
-				if (propertyName!=null && !object.getClass().getCanonicalName().endsWith("java.lang.Object"))
+                                if (propertyName!=null && !object.getClass().getCanonicalName().endsWith("java.lang.Object"))
 				{
+                                    logger.trace("Cell " +row.getRowNum() +"," +j +" should store " +propertyName +", value as String is " +object.toString());
+				
 					String property = propertyName;
 					if(logger.isTraceEnabled()){logger.trace("Setting " +property + " to " +object.toString() +" type: " +object.getClass().getCanonicalName() +")");}
 					tempPropertyStore.put(property, object.toString());
@@ -244,6 +248,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 						failedValidations.add(property);
 					}
 				}
+                            }
 			}
                         
 			//facade.save(entity);
@@ -288,7 +293,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		{
 		
 			Boolean validated		= false;
-			String methodName		= "set" +StringUtil.capitalize(property);
+			String methodName		= "set" +property;
 			String valueFromCell	= parameters[0].toString();
 			logger.trace("Invoking " +methodName);
 
@@ -351,7 +356,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 
 					// Add the current property/value pair, can be useful when inspecting IDs (overwritten for new lines for examples)
 					if(logger.isTraceEnabled()){logger.trace("Set " +property + " to " + value.toString());}
-					tempPropertyStore.put(property, value);
+					if (value!=null) {tempPropertyStore.put(property, value);}
 				} 
 
 				// Needed to correct the Class of the general number

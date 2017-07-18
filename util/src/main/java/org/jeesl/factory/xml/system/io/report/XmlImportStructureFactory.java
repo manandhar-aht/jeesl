@@ -60,9 +60,9 @@ public class XmlImportStructureFactory <L extends UtilsLang,D extends UtilsDescr
         Object test = targetClass.newInstance();
         for (DataAssociation association : associations)
         {
+            associationsContainer.getDataAssociation().add(association);
             if (propertyUtil.isWriteable(test, association.getProperty())) 
             {
-                associationsContainer.getDataAssociation().add(association);
                 logger.info("Added " +association.getProperty() + " to be imported from column " +association.getColumn());
             }
             else

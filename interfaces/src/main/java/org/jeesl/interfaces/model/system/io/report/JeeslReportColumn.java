@@ -42,6 +42,9 @@ public interface JeeslReportColumn<L extends UtilsLang,D extends UtilsDescriptio
 	Boolean getShowWeb();
 	void setShowWeb(Boolean showWeb);
 	
+	Boolean getShowHint();
+	void setShowHint(Boolean showHint);
+	
 	CDT getDataType();
 	void setDataType(CDT dataType);
 	

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
+import org.jeesl.api.handler.sb.SbDateIntervalSelection;
+import org.jeesl.controller.handler.sb.SbDateHandler;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
@@ -34,7 +36,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 									USER extends EjbWithEmail
 									>
 					extends AbstractAdminJobBean<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>
-					implements Serializable
+					implements Serializable,SbDateIntervalSelection
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminJobQueueBean.class);
@@ -43,6 +45,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private JOB job; public JOB getJob() {return job;} public void setJob(JOB job) {this.job = job;}
 	
+	private SbDateHandler sbDateHandler; public SbDateHandler getSbDateHandler() {return sbDateHandler;}
 	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 
 	public AbstractAdminJobQueueBean(final Class<L> cL, final Class<D> cD, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache){super(cL,cD,cTemplate,cCategory,cType,cJob,cStatus,cRobot,cCache);}
@@ -50,6 +53,9 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
 		super.initSuper(langs,bMessage,fJob);
+		
+		sbDateHandler = new SbDateHandler(this);
+		sbDateHandler.initWeeksToNow(2);
 		
 		try
 		{
@@ -70,11 +76,17 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	
 	@Override public void toggled(Class<?> c)
 	{
-		logger.info(AbstractLogMessage.toggled(c));
+		logger.trace(AbstractLogMessage.toggled(c));
 		super.toggled(c);
-		if(cCategory.isAssignableFrom(c)){logger.info(cCategory.getName());}
-		else if(cType.isAssignableFrom(c)){logger.info(cType.getName());}
-		else if(cStatus.isAssignableFrom(c)){logger.info(cStatus.getName());}
+		if(cCategory.isAssignableFrom(c)){logger.trace(cCategory.getName());}
+		else if(cType.isAssignableFrom(c)){logger.trace(cType.getName());}
+		else if(cStatus.isAssignableFrom(c)){logger.trace(cStatus.getName());}
+		reloadJobs();
+		clear(true);
+	}
+	
+	@Override public void callbackDateChanged()
+	{
 		reloadJobs();
 		clear(true);
 	}
@@ -86,7 +98,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private void reloadJobs()
 	{
-		jobs = fJob.fJobs(sbhCategory.getSelected(),sbhType.getSelected(),sbhStatus.getSelected());
+		jobs = fJob.fJobs(sbhCategory.getSelected(),sbhType.getSelected(),sbhStatus.getSelected(),sbDateHandler.getDate1(),sbDateHandler.getDate2());
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cJob,jobs));}
 //		Collections.sort(templates, comparatorTemplate);
 	}

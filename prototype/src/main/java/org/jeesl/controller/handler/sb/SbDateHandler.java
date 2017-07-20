@@ -14,7 +14,7 @@ public class SbDateHandler implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	private SbDateIntervalSelection bean;
-	private boolean enforceStartOfDay; public void setEnforceStartOfDay(boolean enforceStartOfDay) {this.enforceStartOfDay = enforceStartOfDay;}
+	private boolean enforceStartOfDay;
 	
 	private Date date1; public Date getDate1() {return date1;} 
 	private Date date2; public Date getDate2() {return date2;}
@@ -27,6 +27,7 @@ public class SbDateHandler implements Serializable
 	public SbDateHandler(SbDateIntervalSelection bean)
 	{
 		this.bean=bean;
+		enforceStartOfDay = true;
 	}
 	
 	public void initMonthsToNow(int months)

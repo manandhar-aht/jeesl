@@ -510,7 +510,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		this.rmProtected(answer);
 	}
 	
-	@Override public JsonFlatFigures surveyCountAnswer(SURVEY survey, List<QUESTION> questions)
+	@Override public JsonFlatFigures surveyCountAnswer(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
         CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
@@ -521,7 +521,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
      
         Expression<Long> eTa = cB.count(answer.<Long>get("id"));
       
-        cQ.groupBy(pQuestion.get("id"),eTa);
+        cQ.groupBy(pQuestion.get("id"));
         cQ.multiselect(pQuestion.get("id"),eTa);
         
         cQ.where(pQuestion.in(questions));
@@ -540,7 +540,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
         return result;
 	}
 	
-	@Override public JsonFlatFigures surveyCountOption(SURVEY survey, List<QUESTION> questions)
+	@Override public JsonFlatFigures surveyCountOption(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
         CriteriaQuery<Tuple> cQ = cB.createTupleQuery();

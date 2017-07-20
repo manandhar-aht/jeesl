@@ -25,6 +25,7 @@ import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
 import org.jeesl.interfaces.model.system.job.JeeslJobRobot;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
+import org.joda.time.DateTime;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -94,7 +95,7 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("No unique results in "+cTemplate.getSimpleName()+" for type="+type.toString()+" and code="+code);}
 	}
 	
-	@Override public List<JOB> fJobs(List<CATEGORY> categories, List<TYPE> types, List<STATUS> status)
+	@Override public List<JOB> fJobs(List<CATEGORY> categories, List<TYPE> types, List<STATUS> status, Date from, Date to)
 	{
 		if(categories==null || categories.isEmpty()){return new ArrayList<JOB>();}
 		if(status==null || status.isEmpty()){return new ArrayList<JOB>();}
@@ -111,6 +112,9 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		
 		Path<Date> pRecordCreation = job.get(JeeslJob.Attributes.recordCreation.toString());
 		Path<STATUS> pStatus = job.get(JeeslJob.Attributes.status.toString());
+		
+		if(from!=null){predicates.add(cB.greaterThanOrEqualTo(pRecordCreation, (new DateTime(from)).withTimeAtStartOfDay().toDate()));}
+		if(to!=null){predicates.add(cB.lessThan(pRecordCreation, (new DateTime(to)).withTimeAtStartOfDay().plusDays(1).toDate()));}
 		
 		predicates.add(pCategory.in(categories));
 		predicates.add(pType.in(types));

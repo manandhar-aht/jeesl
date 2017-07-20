@@ -1,5 +1,6 @@
 package org.jeesl.api.facade.system;
 
+import java.util.Date;
 import java.util.List;
 
 import org.jeesl.interfaces.model.system.job.JeeslJob;
@@ -32,7 +33,7 @@ public interface JeeslJobFacade <L extends UtilsLang,D extends UtilsDescription,
 			extends UtilsFacade
 {	
 	<E extends Enum<E>> TEMPLATE fJobTemplate(E type, String code) throws UtilsNotFoundException;
-	List<JOB> fJobs(List<CATEGORY> categories, List<TYPE> type, List<STATUS> status);
+	List<JOB> fJobs(List<CATEGORY> categories, List<TYPE> type, List<STATUS> status, Date from, Date to);
 	
 	JOB fActiveJob(TEMPLATE template, String code) throws UtilsNotFoundException;
 	CACHE fJobCache(TEMPLATE template, String code) throws UtilsNotFoundException;

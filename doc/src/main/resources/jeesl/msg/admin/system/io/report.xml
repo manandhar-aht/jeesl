@@ -56,11 +56,18 @@
 			<lang key="fr" translation="Show Label" />
 		</langs>
 	</translation>
-		<translation key="jeeslIoReportShowWeb">
+	<translation key="jeeslIoReportShowWeb">
 		<langs>
 			<lang key="de" translation="Web Anzeigen" />
 			<lang key="en" translation="Show Web" />
 			<lang key="fr" translation="Show Web" />
+		</langs>
+	</translation>
+	<translation key="jeeslIoReportShowHint">
+		<langs>
+			<lang key="de" translation="Hinweis Anzeigen" />
+			<lang key="en" translation="Show Hint" />
+			<lang key="fr" translation="Show Hint" />
 		</langs>
 	</translation>
 	<translation key="jeeslIoReportColumns">

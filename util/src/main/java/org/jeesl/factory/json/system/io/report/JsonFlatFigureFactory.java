@@ -21,7 +21,7 @@ public class JsonFlatFigureFactory
 	
 	public static JsonFlatFigure build(Double...doubles)
 	{
-		JsonFlatFigure json = new JsonFlatFigure();
+		JsonFlatFigure json = build();
 		for(int i=1;i<=doubles.length;i++)
 		{
 			double value = doubles[i-1];
@@ -36,7 +36,7 @@ public class JsonFlatFigureFactory
 	
 	public static JsonFlatFigure build(Figures figures)
 	{
-		JsonFlatFigure json = new JsonFlatFigure();
+		JsonFlatFigure json = build();
 		for(Finance f : figures.getFinance())
 		{
 			if(f.getNr()==1){json.setD1(f.getValue());}
@@ -46,5 +46,10 @@ public class JsonFlatFigureFactory
 			else {logger.warn("No Handling for double.index="+f.getNr());}
 		}
 		return json;
+	}
+	
+	public static JsonFlatFigure build()
+	{
+		return new JsonFlatFigure();
 	}
 }

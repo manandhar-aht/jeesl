@@ -114,7 +114,6 @@ public class JsonFlatFigure implements Serializable
 	public Map<Integer, Double> getData() {return data;}
 	public void setData(Map<Integer, Double> data) {this.data = data;}
 	
-	
 	@JsonProperty("List1")
 	private List<Double> list1;
 	public List<Double> getList1() {return list1;}
@@ -135,6 +134,10 @@ public class JsonFlatFigure implements Serializable
 	public List<Double> getList4() {return list4;}
 	public void setList4(List<Double> list4) {this.list4 = list4;}
 	
+	@JsonProperty("Ids1")
+	private List<Long> ids1;
+	public List<Long> getIds1() {return ids1;}
+	public void setIds1(List<Long> ids1) {this.ids1 = ids1;}
 	
 	@JsonProperty("Data1")
 	private Double d1;

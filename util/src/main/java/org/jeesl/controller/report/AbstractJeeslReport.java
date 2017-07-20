@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
+import org.jeesl.controller.processor.JobCodeProcessor;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
@@ -98,6 +99,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,FILLING,TRANSFORMATION> xlsFactory;
 	
 	protected JeeslComparatorProvider<EjbWithId> cProvider;
+	protected final JobCodeProcessor jobCodeProcessor;
 	
 	protected JsonFlatFigures flats; public JsonFlatFigures getFlats() {return flats;}
 	
@@ -124,6 +126,8 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		
 		mapGroupVisibilityToggle = new HashMap<GROUP,Boolean>();
 		showHeaderGroup = true;
+		
+		jobCodeProcessor = new JobCodeProcessor();
 		
 		buildHeaders();
 	}

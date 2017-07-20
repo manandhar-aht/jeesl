@@ -14,13 +14,14 @@ public class SbDateHandler implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	private SbDateIntervalSelection bean;
+	private boolean enforceStartOfDay; public void setEnforceStartOfDay(boolean enforceStartOfDay) {this.enforceStartOfDay = enforceStartOfDay;}
 	
-	private Date date1; public Date getDate1() {return date1;} public void setDate1(Date date1) {this.date1 = date1;}
-	private Date date2; public Date getDate2() {return date2;} public void setDate2(Date date2) {this.date2 = date2;}
+	private Date date1; public Date getDate1() {return date1;} 
+	private Date date2; public Date getDate2() {return date2;}
 
 	public SbDateHandler()
 	{
-		
+		enforceStartOfDay = false;
 	}
 	
 	public SbDateHandler(SbDateIntervalSelection bean)
@@ -31,22 +32,42 @@ public class SbDateHandler implements Serializable
 	public void initMonthsToNow(int months)
 	{
 		DateTime dt = new DateTime();
-		date1 = dt.minusMonths(months).toDate();
-		date2 = dt.toDate();
+		setDate1(dt.minusMonths(months).toDate());
+		setDate2(dt.toDate());
 	}
 	
 	public void initWeeksToNow(int weeks)
 	{
 		DateTime dt = new DateTime();
-		date1 = dt.minusWeeks(weeks).toDate();
-		date2 = dt.toDate();
+		setDate1(dt.minusWeeks(weeks).toDate());
+		setDate2(dt.toDate());
 	}
 	
 	public void initWeeks(int minus, int plus)
 	{
 		DateTime dt = new DateTime();
-		date1 = dt.minusWeeks(minus).toDate();
-		date2 = dt.plusWeeks(plus).toDate();
+		setDate1(dt.minusWeeks(minus).toDate());
+		setDate2(dt.plusWeeks(plus).toDate());
+	}
+	
+	public void setDate1(Date date1)
+	{
+		if(enforceStartOfDay)
+		{
+			DateTime dt = new DateTime(date1);
+			this.date1 = dt.withTimeAtStartOfDay().toDate();
+		}
+		else {this.date1 = date1;}
+	}
+	
+	public void setDate2(Date date2)
+	{
+		if(enforceStartOfDay)
+		{
+			DateTime dt = new DateTime(date2);
+			this.date2 = dt.withTimeAtStartOfDay().toDate();
+		}
+		else {this.date2 = date2;}
 	}
 	
 	public void dateChanged()

@@ -140,6 +140,13 @@
 			<lang key="fr" translation="Query Table" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoReportColumGroupQuery">
+		<langs>
+			<lang key="de" translation="Abfrage Spalten" />
+			<lang key="en" translation="Query Columns" />
+			<lang key="fr" translation="Query Columns" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoReportQueryHeader">
 		<langs>
 			<lang key="de" translation="Abfrage Kopf" />

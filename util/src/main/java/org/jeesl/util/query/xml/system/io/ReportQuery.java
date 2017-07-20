@@ -162,6 +162,7 @@ public class ReportQuery
 		
 		xml.setShowLabel(true);
 		xml.setShowWeb(true);
+		xml.setQuery("");
 		
 		xml.setLangs(XmlStatusQuery.langs());
 		xml.setDescriptions(XmlStatusQuery.descriptions());

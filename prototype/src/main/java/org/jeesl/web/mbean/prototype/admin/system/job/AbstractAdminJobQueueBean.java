@@ -55,7 +55,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 		super.initSuper(langs,bMessage,fJob);
 		
 		sbDateHandler = new SbDateHandler(this);
-		sbDateHandler.initWeeksToNow(2);
+		sbDateHandler.initDaysToNow(2);
 		
 		try
 		{

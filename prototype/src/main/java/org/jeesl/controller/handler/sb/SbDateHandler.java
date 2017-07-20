@@ -44,6 +44,13 @@ public class SbDateHandler implements Serializable
 		setDate2(dt.toDate());
 	}
 	
+	public void initDaysToNow(int days)
+	{
+		DateTime dt = new DateTime();
+		setDate1(dt.minusDays(days).toDate());
+		setDate2(dt.toDate());
+	}
+	
 	public void initWeeks(int minus, int plus)
 	{
 		DateTime dt = new DateTime();

@@ -510,7 +510,37 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		this.rmProtected(answer);
 	}
 	
-	@Override public JsonFlatFigures surveyOneOptionStatistic(List<QUESTION> questions)
+	@Override public JsonFlatFigures surveyCountAnswer(SURVEY survey, List<QUESTION> questions)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
+        
+        Root<ANSWER> answer = cQ.from(cAnswer);
+        
+        Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
+     
+        Expression<Long> eTa = cB.count(answer.<Long>get("id"));
+      
+        cQ.groupBy(pQuestion.get("id"),eTa);
+        cQ.multiselect(pQuestion.get("id"),eTa);
+        
+        cQ.where(pQuestion.in(questions));
+        TypedQuery<Tuple> tQ = em.createQuery(cQ);
+        List<Tuple> tuples = tQ.getResultList();
+        
+        JsonFlatFigures result = JsonFlatFiguresFactory.build();
+        for(Tuple t : tuples)
+        {
+        	JsonFlatFigure f = JsonFlatFigureFactory.build();
+        	f.setL1((Long)t.get(0));
+        	f.setL2((Long)t.get(1));
+        	result.getFigures().add(f);
+        }
+        
+        return result;
+	}
+	
+	@Override public JsonFlatFigures surveyCountOption(SURVEY survey, List<QUESTION> questions)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
         CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
@@ -535,6 +565,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
         	JsonFlatFigure f = JsonFlatFigureFactory.build();
         	f.setL1((Long)t.get(0));
         	f.setL2((Long)t.get(1));
+        	f.setL3((Long)t.get(2));
         	result.getFigures().add(f);
         }
         

@@ -78,5 +78,6 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	ANSWER saveAnswer(ANSWER answer) throws UtilsConstraintViolationException, UtilsLockingException;
 	void rmAnswer(ANSWER answer) throws UtilsConstraintViolationException;
 	
-	JsonFlatFigures surveyOneOptionStatistic(List<QUESTION> questions);
+	JsonFlatFigures surveyCountOption(SURVEY survey, List<QUESTION> questions);
+	JsonFlatFigures surveyCountAnswer(SURVEY survey, List<QUESTION> questions);
 }

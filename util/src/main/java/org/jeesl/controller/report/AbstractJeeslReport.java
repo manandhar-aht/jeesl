@@ -219,7 +219,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 				{
 					COLUMN original = group.getColumns().get(0);
 					group.getColumns().clear();
-					group.setQueryCell(original.getQueryCell().replaceAll("d","list"));
+					group.setQueryColumns(original.getQueryCell().replaceAll("d","list"));
 					int arrayIndex = 0;
 					for(EjbWithId ejb : last)
 					{

@@ -45,6 +45,6 @@ public interface JeeslReportColumnGroup<L extends UtilsLang,D extends UtilsDescr
 	STYLE getStyleHeader();
 	void setStyleHeader(STYLE styleHeader);
 	
-	String getQueryCell();
-	void setQueryCell(String queryCell);
+	String getQueryColumns();
+	void setQueryColumns(String queryColumns);
 }

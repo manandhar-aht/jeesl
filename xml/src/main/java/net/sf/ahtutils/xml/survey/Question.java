@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.status.Unit;
 import net.sf.ahtutils.xml.text.Remark;
 
@@ -27,6 +28,7 @@ import net.sf.ahtutils.xml.text.Remark;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}unit"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}score"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}answer"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/finance}figures"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="position" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
@@ -52,7 +54,8 @@ import net.sf.ahtutils.xml.text.Remark;
     "remark",
     "unit",
     "score",
-    "answer"
+    "answer",
+    "figures"
 })
 @XmlRootElement(name = "question")
 public class Question
@@ -70,6 +73,8 @@ public class Question
     protected Score score;
     @XmlElement(required = true)
     protected Answer answer;
+    @XmlElement(namespace = "http://www.jeesl.org/finance", required = true)
+    protected Figures figures;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "position")
@@ -231,6 +236,34 @@ public class Question
 
     public boolean isSetAnswer() {
         return (this.answer!= null);
+    }
+
+    /**
+     * Gets the value of the figures property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Figures }
+     *     
+     */
+    public Figures getFigures() {
+        return figures;
+    }
+
+    /**
+     * Sets the value of the figures property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Figures }
+     *     
+     */
+    public void setFigures(Figures value) {
+        this.figures = value;
+    }
+
+    public boolean isSetFigures() {
+        return (this.figures!= null);
     }
 
     /**

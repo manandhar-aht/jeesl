@@ -30,7 +30,7 @@ import net.sf.exlp.util.DateUtil;
 
 public class SurveyQuery
 {
-	public static enum Key {exTemplate,exSurveys,exSurvey,surveyAnswers}
+	public static enum Key {exTemplate,exSurveys,exSurvey,surveyAnswers,rSection}
 	
 	private static Map<Key,Query> mQueries;
 	
@@ -71,6 +71,13 @@ public class SurveyQuery
 	
 	public static Section exSection()
 	{		
+		Section xml = rSection();
+		xml.getQuestion().add(exQuestion());
+		return xml;
+	}
+	
+	public static Section rSection()
+	{		
 		Section xml = new Section();
 		xml.setId(0);
 		xml.setCode("");
@@ -78,7 +85,6 @@ public class SurveyQuery
 		xml.setPosition(0);
 		xml.setDescription(XmlDescriptionFactory.build(""));
 		xml.setRemark(XmlRemarkFactory.build(""));
-		xml.getQuestion().add(exQuestion());
 		return xml;
 	}
 	

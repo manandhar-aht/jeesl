@@ -1,7 +1,9 @@
 package org.jeesl.factory.ejb.module.survey;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
@@ -92,5 +94,15 @@ public class EjbSurveyOptionFactory<L extends UtilsLang, D extends UtilsDescript
 			if(option.getCell()){columns.add(option);}
 		}
 		return columns;
+	}
+	
+	public Map<Long,OPTION> toIdMap(List<OPTION> options)
+	{
+		Map<Long,OPTION> map = new HashMap<Long,OPTION>();
+		for(OPTION option : options)
+		{
+			map.put(option.getId(),option);
+		}
+		return map;
 	}
 }

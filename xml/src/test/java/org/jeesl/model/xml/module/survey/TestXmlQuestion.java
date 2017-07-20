@@ -1,6 +1,7 @@
 package org.jeesl.model.xml.module.survey;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.domain.finance.TestXmlFigures;
 import org.jeesl.model.xml.system.status.TestXmlUnit;
 import org.jeesl.model.xml.text.TestXmlRemark;
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ public class TestXmlQuestion extends AbstractXmlSurveyTest<Question>
     		xml.setQuestion(org.jeesl.model.xml.text.TestXmlQuestion.create(false));
     		xml.setAnswer(TestXmlAnswer.create(false));
     		xml.setScore(TestXmlScore.create(false));
+    		xml.setFigures(TestXmlFigures.create(false));
     	}
     	
     	return xml;

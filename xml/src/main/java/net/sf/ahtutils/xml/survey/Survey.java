@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.status.Status;
 
 
@@ -28,6 +29,9 @@ import net.sf.ahtutils.xml.status.Status;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}template"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}status"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}data" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/finance}figures"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/survey}section" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/survey}question" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -44,7 +48,10 @@ import net.sf.ahtutils.xml.status.Status;
 @XmlType(name = "", propOrder = {
     "template",
     "status",
-    "data"
+    "data",
+    "figures",
+    "section",
+    "question"
 })
 @XmlRootElement(name = "survey")
 public class Survey
@@ -58,6 +65,12 @@ public class Survey
     protected Status status;
     @XmlElement(required = true)
     protected List<Data> data;
+    @XmlElement(namespace = "http://www.jeesl.org/finance", required = true)
+    protected Figures figures;
+    @XmlElement(required = true)
+    protected List<Section> section;
+    @XmlElement(required = true)
+    protected List<Question> question;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "name")
@@ -160,6 +173,108 @@ public class Survey
 
     public void unsetData() {
         this.data = null;
+    }
+
+    /**
+     * Gets the value of the figures property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Figures }
+     *     
+     */
+    public Figures getFigures() {
+        return figures;
+    }
+
+    /**
+     * Sets the value of the figures property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Figures }
+     *     
+     */
+    public void setFigures(Figures value) {
+        this.figures = value;
+    }
+
+    public boolean isSetFigures() {
+        return (this.figures!= null);
+    }
+
+    /**
+     * Gets the value of the section property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the section property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getSection().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Section }
+     * 
+     * 
+     */
+    public List<Section> getSection() {
+        if (section == null) {
+            section = new ArrayList<Section>();
+        }
+        return this.section;
+    }
+
+    public boolean isSetSection() {
+        return ((this.section!= null)&&(!this.section.isEmpty()));
+    }
+
+    public void unsetSection() {
+        this.section = null;
+    }
+
+    /**
+     * Gets the value of the question property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the question property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getQuestion().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Question }
+     * 
+     * 
+     */
+    public List<Question> getQuestion() {
+        if (question == null) {
+            question = new ArrayList<Question>();
+        }
+        return this.question;
+    }
+
+    public boolean isSetQuestion() {
+        return ((this.question!= null)&&(!this.question.isEmpty()));
+    }
+
+    public void unsetQuestion() {
+        this.question = null;
     }
 
     /**

@@ -45,7 +45,7 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 									CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 	extends UtilsFacade
 {	
-	TEMPLATE load(TEMPLATE template, boolean withQuestions, boolean withCells);
+	TEMPLATE load(TEMPLATE template, boolean withQuestions, boolean withOptions);
 	SECTION load(SECTION section);
 	SURVEY load(SURVEY survey);
 	QUESTION load(QUESTION question);

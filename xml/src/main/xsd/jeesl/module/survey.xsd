@@ -3,9 +3,11 @@
     xmlns:survey="http://ahtutils.aht-group.com/survey"
     xmlns:us="http://ahtutils.aht-group.com/status"
     xmlns:text="http://ahtutils.aht-group.com/text"
+    xmlns:jf="http://www.jeesl.org/finance"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="../../aht/status.xsd"/>
     <xsd:import namespace="http://ahtutils.aht-group.com/text" schemaLocation="../../aht/text.xsd"/>
+    <xsd:import namespace="http://www.jeesl.org/finance" schemaLocation="../../aht/finance.xsd"/>
 	<xsd:element name="templates">
         <xsd:complexType>
         	<xsd:sequence>
@@ -48,6 +50,7 @@
                 <xsd:element ref="us:unit" maxOccurs="1"/>
                 <xsd:element ref="survey:score" maxOccurs="1"/>
                 <xsd:element ref="survey:answer" maxOccurs="1"/>
+                <xsd:element ref="jf:figures" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="position" type="xsd:int"/>
@@ -76,6 +79,9 @@
         		<xsd:element ref="survey:template" maxOccurs="1"/>
 				<xsd:element ref="us:status" maxOccurs="1"/>
 				<xsd:element ref="survey:data" maxOccurs="unbounded"/>
+				<xsd:element ref="jf:figures" maxOccurs="1"/>
+				<xsd:element ref="survey:section" maxOccurs="unbounded"/> <!-- Required to looping with JSF-EL over sections -->
+				<xsd:element ref="survey:question" maxOccurs="unbounded"/> <!-- Required to looping with JSF-EL over questions -->
 			</xsd:sequence>
 			<xsd:attribute name="id" type="xsd:long"/>
 			<xsd:attribute name="name" type="xsd:string"/>

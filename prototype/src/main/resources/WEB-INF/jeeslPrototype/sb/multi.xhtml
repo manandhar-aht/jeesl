@@ -10,8 +10,9 @@
     xmlns:jp="http://jsf.jeesl.org/prototype"
     xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 >
+	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
 
-	<jp:sbItem orientation="right" childs="#{handler.list}">
+	<jp:sbItem orientation="right" childs="#{handler.list}" rendered="#{rendered}">
 		<f:facet name="label">
 			<jtp:statusSymbolizer rendered="#{not empty icon}" value="#{icon}" height="12"/>
 			#{label}

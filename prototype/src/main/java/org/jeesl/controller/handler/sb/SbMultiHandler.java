@@ -122,6 +122,8 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 		return map.containsKey(t) && map.get(t);
 	}
 	
+	public boolean getHasSelected(){return hasSelected();}
+	public boolean getHasMore(){return list.size()>1;}
 	public boolean hasSelected(){return !selected.isEmpty();}
 	public boolean allSelected(){return selected.size()==list.size();}
 

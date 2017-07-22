@@ -5,6 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:composite="http://java.sun.com/jsf/composite">
     
@@ -20,6 +21,8 @@
 	<composite:attribute name="tableHeader" required="false" default="Entites"/>
 	<composite:attribute name="colHeaderName" required="false" default="#{msg.aupName}"/>
 	<composite:attribute name="colHeaderLang" required="false" default="#{msg.aupName}"/>
+	
+	<composite:attribute name="showStatusSymbol" required="false" default="false"/>
 	
 	<composite:attribute name="paginatorTemplate" required="false" default="#{appSettingsBean.paginatorTemplate}"/>
 	<composite:attribute name="rowsPerPageTemplate" required="false" default="#{appSettingsBean.rowsPerPageTemplate}"/>
@@ -37,6 +40,9 @@
 			</aht:pfDataTableHeader>
 		</f:facet>
 		<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.selectTb}"/>
+		<p:column rendered="#{cc.attrs.showStatusSymbol}">
+			<jtp:statusSymbolizer value="#{p}"/>
+		</p:column>
 		<p:column headerText="#{cc.attrs.colHeaderName}" rendered="#{cc.attrs.handler.showName}">
 			<h:outputText value="#{p.name}" />
 		</p:column>
@@ -49,6 +55,9 @@
 					 selection="#{cc.attrs.handler.op}" selectionMode="single" rowKey="#{var.id}"
 					 rows="#{cc.attrs.opRows}" rowsPerPageTemplate="#{cc.attrs.rowsPerPageTemplate}" paginator="true" paginatorPosition="bottom" paginatorTemplate="#{cc.attrs.paginatorTemplate}">>
 			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.addEntity()}" oncomplete="PF('wv-#{cc.clientId}').hide();"/>
+			<p:column rendered="#{cc.attrs.showStatusSymbol}">
+				<jtp:statusSymbolizer value="#{var}"/>
+			</p:column>
 			<p:column headerText="#{cc.attrs.colHeaderName}" rendered="#{cc.attrs.handler.showName}">
 				<h:outputText value="#{var.name}" />
 			</p:column>

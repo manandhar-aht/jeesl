@@ -7,7 +7,7 @@
 >
 	<c:set var="maxlength"  value="#{not empty maxlength ? maxlength : 255}" />
 
-	<p:inputTextarea rows="#{rows}" styleClass="w100" value="#{value}">
+	<p:inputText rows="#{rows}" value="#{value}" autocomplete="off">
 		<c:set var="id" value="#{id}" />
-	</p:inputTextarea>
+	</p:inputText>
 </ui:composition>

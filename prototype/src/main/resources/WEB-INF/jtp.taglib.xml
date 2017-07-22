@@ -12,9 +12,13 @@
     </tag>
     <tag>
         <tag-name>inputRemark</tag-name>
-        <source>jeeslPrototype/inputRemark.xhtml</source>
+        <source>jeeslPrototype/input/remark.xhtml</source>
     </tag>
-        <tag>
+    <tag>
+        <tag-name>inputText</tag-name>
+        <source>jeeslPrototype/input/text.xhtml</source>
+    </tag>
+	<tag>
         <tag-name>inputMultiLangRows</tag-name>
         <source>jeeslPrototype/langs/inputRows.xhtml</source>
     </tag>

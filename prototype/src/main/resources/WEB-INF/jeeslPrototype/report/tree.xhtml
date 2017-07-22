@@ -10,7 +10,7 @@
 
 	<c:forEach var="g" items="#{report.groups}" >
 
-		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{empty g.queryCell}">
+		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{empty g.queryColumns}">
 			<h:outputText rendered="#{col.queryCell eq 'g1'}" value="#{flat.g1}"/>
 		
 			<h:outputText rendered="#{col.queryCell eq 'd1'}" value="#{flat.d1}">
@@ -31,31 +31,29 @@
 			</h:outputText>
 		</p:columns>
 		
-		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{g.queryCell eq 'list1'}">
+		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{g.queryColumns eq 'list1'}">
 			<h:outputText value="#{flat.list1[col.position]}">
 				<f:attribute name="styleClass" value="aupNbsc aupRight"/>
 				<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
 			</h:outputText>
 		</p:columns>
-		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{g.queryCell eq 'list2'}">
+		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{g.queryColumns eq 'list2'}">
 			<h:outputText value="#{flat.list2[col.position]}">
 				<f:attribute name="styleClass" value="aupNbsc aupRight"/>
 				<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
 			</h:outputText>
 		</p:columns>
-		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{g.queryCell eq 'list3'}">
+		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{g.queryColumns eq 'list3'}">
 			<h:outputText value="#{flat.list3[col.position]}">
 				<f:attribute name="styleClass" value="aupNbsc aupRight"/>
 				<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
 			</h:outputText>
 		</p:columns>
-		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{g.queryCell eq 'list4'}">
+		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{g.queryColumns eq 'list4'}">
 			<h:outputText value="#{flat.list4[col.position]}">
 				<f:attribute name="styleClass" value="aupNbsc aupRight"/>
 				<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
 			</h:outputText>
 		</p:columns>
 	</c:forEach>
-
-	
 </ui:composition>

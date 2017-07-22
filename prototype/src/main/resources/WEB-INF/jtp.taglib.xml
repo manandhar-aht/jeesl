@@ -20,15 +20,15 @@
     </tag>
     <tag>
         <tag-name>reportHeader</tag-name>
-        <source>jeeslPrototype/reportHeader.xhtml</source>
+        <source>jeeslPrototype/report/header.xhtml</source>
     </tag>
     <tag>
         <tag-name>reportFlat</tag-name>
-        <source>jeeslPrototype/reportFlat.xhtml</source>
+        <source>jeeslPrototype/report/flat.xhtml</source>
     </tag>
  	<tag>
         <tag-name>reportTree</tag-name>
-        <source>jeeslPrototype/reportTree.xhtml</source>
+        <source>jeeslPrototype/report/tree.xhtml</source>
     </tag>
 	<tag>
         <tag-name>reportDomain</tag-name>

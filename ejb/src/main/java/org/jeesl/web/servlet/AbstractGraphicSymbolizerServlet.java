@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderException;
-import org.jeesl.api.facade.util.JeeslGraphicFacade;
+import org.jeesl.api.facade.system.graphic.JeeslGraphicFacade;
 import org.jeesl.factory.svg.SvgFigureFactory;
 import org.jeesl.factory.svg.SvgSymbolFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;

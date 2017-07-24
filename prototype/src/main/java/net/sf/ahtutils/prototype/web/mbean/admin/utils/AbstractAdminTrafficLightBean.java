@@ -3,7 +3,7 @@ package net.sf.ahtutils.prototype.web.mbean.admin.utils;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jeesl.api.facade.util.JeeslTrafficLightFacade;
+import org.jeesl.api.facade.system.graphic.JeeslTrafficLightFacade;
 import org.jeesl.factory.ejb.system.util.EjbTrafficLightFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.slf4j.Logger;

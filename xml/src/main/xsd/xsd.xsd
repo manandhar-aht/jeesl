@@ -22,9 +22,9 @@
 	
 	xmlns:rev		="http://www.jeesl.org/revision"
 	xmlns:template	="http://www.jeesl.org/io/template"
-	xmlns:m 		= "http://www.jeesl.org/io/mail"
-	xmlns:text ="http://www.jeesl.org/text"
-	xmlns:symbol ="http://www.jeesl.org/symbol"
+	xmlns:m 		="http://www.jeesl.org/io/mail"
+	xmlns:text		="http://www.jeesl.org/text"
+	xmlns:symbol	="http://www.jeesl.org/symbol"
 	xmlns:srs		="http://www.jeesl.org/srs"
 	
 	xmlns:sec="http://ahtutils.aht-group.com/security"

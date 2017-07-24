@@ -11,8 +11,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class UtilsTrafficLightFacadeBean <L extends UtilsLang,D extends UtilsDescription,SCOPE extends UtilsStatus<SCOPE,L,D>,LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
-	extends UtilsFacadeBean implements JeeslTrafficLightFacade<L,D,SCOPE,LIGHT>
+public class UtilsTrafficLightFacadeBean <L extends UtilsLang,D extends UtilsDescription,
+											LIGHT extends JeeslTrafficLight<L,D,SCOPE>,
+											SCOPE extends UtilsStatus<SCOPE,L,D>>
+	extends UtilsFacadeBean implements JeeslTrafficLightFacade<L,D,LIGHT,SCOPE>
 {		
 	public UtilsTrafficLightFacadeBean(EntityManager em)
 	{

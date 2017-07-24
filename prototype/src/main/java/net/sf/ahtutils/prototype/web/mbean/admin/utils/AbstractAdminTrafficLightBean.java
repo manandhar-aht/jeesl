@@ -16,16 +16,15 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminTrafficLightBean <L extends UtilsLang,
-											D extends UtilsDescription,
-											SCOPE extends UtilsStatus<SCOPE,L,D>,
-											LIGHT extends JeeslTrafficLight<L,D,SCOPE>>
+public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends UtilsDescription,
+											LIGHT extends JeeslTrafficLight<L,D,SCOPE>,
+											SCOPE extends UtilsStatus<SCOPE,L,D>>
 	implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTrafficLightBean.class);
 	
-	protected JeeslTrafficLightFacade<L,D,SCOPE,LIGHT> fUtils;
+	protected JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fUtils;
 	
 	private Class<SCOPE> cScope;
 	private Class<LIGHT> cLight;

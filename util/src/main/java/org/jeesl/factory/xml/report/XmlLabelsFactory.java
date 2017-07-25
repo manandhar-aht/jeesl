@@ -1,8 +1,15 @@
 package org.jeesl.factory.xml.report;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
+import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,5 +56,40 @@ public class XmlLabelsFactory
 			Label label = XmlLabelFactory.build("financeLevel"+i, header.get(header.size()-i));
 			labels.getLabel().add(label);
 		}
+	}
+	
+	public static <L extends UtilsLang,D extends UtilsDescription,
+					RC extends UtilsStatus<RC,L,D>,
+					RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RST extends UtilsStatus<RST,L,D>,
+					RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RAT extends UtilsStatus<RAT,L,D>>
+		Labels build(RE entity, String localeCode, String scope)
+	{
+		Labels xml = build();
+		for(RA attribute : entity.getAttributes())
+		{
+			if(attribute.getName().containsKey(localeCode))
+			{
+				xml.getLabel().add(XmlLabelFactory.build(scope,attribute.getCode(),attribute.getName().get(localeCode).getLang()));
+			}
+		}
+		return xml;
+	}
+	
+	public static Map<String,String> toMap(Labels labels){return toMap(labels,null);}
+	public static Map<String,String> toMap(Labels labels, String scope)
+	{
+		Map<String,String> map = new HashMap<String,String>();
+		for(Label label : labels.getLabel())
+		{
+			if(scope==null){map.put(label.getKey(),label.getValue());}
+			else if(label.getScope().equals(scope)){map.put(label.getKey(),label.getValue());}
+		}
+		return map;
 	}
 }

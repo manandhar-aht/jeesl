@@ -20,7 +20,6 @@ public class UtilsLatexUserDocumentationBuilder extends AbstractLatexDocumentati
 	
 	public static enum Code {uiInterface,uiIcons,uiExport,uiRevision,uiApprovals,uiConstraints,uiWizard}
 	
-	public static enum Tools {toolOsTicket}
 		
 	public UtilsLatexUserDocumentationBuilder(Configuration config, Translations translations,String[] langs,ConfigurationProvider cp)
 	{
@@ -42,11 +41,8 @@ public class UtilsLatexUserDocumentationBuilder extends AbstractLatexDocumentati
 		addConfig(Code.uiConstraints.toString(), "ofx.aht-utils/user/components/constraints.xml","user/components/constraints");
 		addConfig(Code.uiWizard.toString(),"ofx.aht-utils/user/ui/wizard.xml","user/ui/wizard");
 		
-		addConfig(Tools.toolOsTicket.toString(),"ofx.aht-utils/user/tools/osticket.xml","user/tools/osticket");
+		
 	}
-
-	public void render(Tools code) throws UtilsConfigurationException, OfxConfigurationException{render(1,code);}
-	public void render(int lvl, Tools code) throws UtilsConfigurationException, OfxConfigurationException{render(lvl,code.toString());}
 	
 	public void render(Code code) throws UtilsConfigurationException, OfxConfigurationException{render(1,code);}
 	public void render(int lvl, Code code) throws UtilsConfigurationException, OfxConfigurationException{render(lvl,code.toString());}

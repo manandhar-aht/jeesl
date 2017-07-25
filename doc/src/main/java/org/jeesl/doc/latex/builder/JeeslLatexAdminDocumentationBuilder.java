@@ -83,7 +83,7 @@ public class JeeslLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 		addConfig(RequirementsCode.reqDeveloper.toString(),"ofx.aht-utils/requirements/developer.xml","admin/requirements/developer");
 		
 		//Tools
-		addConfig(ToolsCode.toolsOsticket.toString(),"aht-utils/ofx/installation/tools/osticket.xml","admin/installation/tools/osticket");
+		addConfig(ToolsCode.toolsOsticket.toString(),"jeesl/ofx/installation/tools/osticket.xml","admin/installation/tools/osticket");
 		addConfig(ToolsCode.toolsApache.toString(),"jeesl/ofx/installation/tools/apache.xml","admin/installation/tools/apache");
 		
 		//System

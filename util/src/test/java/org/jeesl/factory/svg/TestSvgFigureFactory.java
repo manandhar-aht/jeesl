@@ -85,7 +85,8 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 		SVGGraphics2D g = svgF.build(list, 20);
 		
 		File f = new File(fTarget,"a.svg");
-		Svg2SvgTranscoder.transcode(g,f);
+//		@tk Reactive
+//		Svg2SvgTranscoder.transcode(g,f);
 	}
 	
 	public void testB() throws IOException, TranscoderException
@@ -94,7 +95,8 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 		SVGGraphics2D g = svgF.build(list,20);
 		
 		File f = new File(fTarget,"b.svg");
-		Svg2SvgTranscoder.transcode(g,f);
+//		@tk Reactive
+//		Svg2SvgTranscoder.transcode(g,f);
 	}
 	
 	public void testC() throws IOException, TranscoderException
@@ -103,7 +105,8 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 		SVGGraphics2D g = svgF.build(list,20);
 		
 		File f = new File(fTarget,"c.svg");
-		Svg2SvgTranscoder.transcode(g,f);
+//		@tk Reactive
+//		Svg2SvgTranscoder.transcode(g,f);
 	}
 		
 	public static void main(String[] args) throws TranscoderException, IOException, ParserConfigurationException

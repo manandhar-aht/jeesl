@@ -25,12 +25,6 @@
 						<p:panel id="pLang" header="#{msg.aupTsImport} MULTI" styleClass="auPanelWithGrid">
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								
-								<p:outputLabel value="#{msg.jeeslTsScope}" rendered="#{not empty cc.attrs.bean.scope and not cc.attrs.bean.multi}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.scope}" effect="fade" rendered="#{not empty cc.attrs.bean.scope and not cc.attrs.bean.multi}">
-									<f:selectItems value="#{cc.attrs.bean.scopes}" var="s" itemLabel="#{s.name[userBean.localeCode].lang}" itemValue="#{s}"/>
-									<p:ajax event="change" listener="#{cc.attrs.bean.changeScope()}" update="@form"/>
-								</p:selectOneMenu>
-								
 								<p:outputLabel value="#{msg.jeeslTsClass}" rendered="#{not empty cc.attrs.bean.clas}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.clas}" effect="fade" rendered="#{not empty cc.attrs.bean.clas}">
 									<f:selectItems value="#{cc.attrs.bean.classes}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>

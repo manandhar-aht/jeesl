@@ -24,11 +24,6 @@
 					<h:form id="fCategories">
 						<p:panel id="pLang" header="#{msg.aupTsImport} MULTI" styleClass="auPanelWithGrid">
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
-								<p:outputLabel value="#{msg.aupCategory}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.category}" effect="fade" >
-									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
-									<p:ajax event="change" listener="#{cc.attrs.bean.changeCategory()}" update="@form"/>
-								</p:selectOneMenu>
 								
 								<p:outputLabel value="#{msg.jeeslTsScope}" rendered="#{not empty cc.attrs.bean.scope and not cc.attrs.bean.multi}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.scope}" effect="fade" rendered="#{not empty cc.attrs.bean.scope and not cc.attrs.bean.multi}">
@@ -52,7 +47,7 @@
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sImport" width="7">
-					<h:form id="fUpload" rendered="#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval)}">
+					<h:form id="fUpload" rendered="#{empty cc.attrs.bean.timeSeriesMap}">
 						<p:panel id="pLang" header="#{msg.aupTsUpload}" styleClass="auPanelWithGrid">
 							<p:fileUpload fileUploadListener="#{cc.attrs.bean.uploadData}" mode="advanced" dragDropSupport="false"
                                                             update=":#{cc.id}:rowVis :#{cc.id}:sImport" sizeLimit="10000000"  process="@form" fileLimit="1" allowTypes="/(\.|\/)(xlsx)$/" />
@@ -80,8 +75,8 @@
 							</p:panelGrid>
 						</p:panel>
                                         </h:form>
-                                        <p:panel id="pFeedback" rendered="#{cc.attrs.saved}" header="#{msg.aupTsImport}">
-                                            <h:outputText value="#{cc.attrs.successMessage}"/>
+                                        <p:panel id="pFeedback" rendered="#{cc.attrs.bean.saved}" header="#{msg.aupTsImport}">
+                                            <h:outputText value="#{cc.attrs.bean.successMessage}"/>
                                         </p:panel>
 				</aht:slot>
 			</aht:row>

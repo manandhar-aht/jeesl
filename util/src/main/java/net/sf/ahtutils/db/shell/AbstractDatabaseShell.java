@@ -124,7 +124,9 @@ public class AbstractDatabaseShell
 			opScope = WordUtils.capitalize(scope.toString());
 		}
 		
-		return new File(pDirShell.getValue(),config.getString("db."+operation.toString()+".shell")+opScope+extension);
+		String key = "db."+operation.toString()+".shell";
+		logger.error(key);
+		return new File(pDirShell.getValue(),config.getString(key)+opScope+extension);
 	}
 	
 	protected void save() throws ExlpUnsupportedOsException

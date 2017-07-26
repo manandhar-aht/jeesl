@@ -72,7 +72,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	
 	private List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	private List<EC> classes; public List<EC> getClasses() {return classes;}
-	private List<INT> intervals; public List<INT> getIntervals() {return intervals;}
+	protected List<INT> intervals; public List<INT> getIntervals() {return intervals;}
 	private List<WS> workspaces; public List<WS> getWorkspaces() {return workspaces;}
 	private List<SOURCE> sources; public List<SOURCE> getSources() {return sources;}
 	
@@ -83,7 +83,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	private CAT category;public CAT getCategory() {return category;}public void setCategory(CAT category) {this.category = category;}
 	private SCOPE scope; public SCOPE getScope() {return scope;} public void setScope(SCOPE scope) {this.scope = scope;}
 	private EC clas; public EC getClas() {return clas;} public void setClas(EC clas) {this.clas = clas;}
-	private INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
+	protected INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
 	private WS workspace; public WS getWorkspace() {return workspace;} public void setWorkspace(WS workspace) {this.workspace = workspace;}
 	protected USER transactionUser;
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
@@ -95,6 +95,15 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	protected File importRoot;
 	
 	private Comparator<Data> cTsData;
+        
+        protected HashMap<SCOPE, List<DATA>> timeSeriesMap;
+        public HashMap<SCOPE, List<DATA>> getTimeSeriesMap() {return timeSeriesMap;}
+        public void setTimeSeriesMap(HashMap<SCOPE, List<DATA>> timeSeriesMap) {this.timeSeriesMap = timeSeriesMap;}
+        
+        protected String successMessage; public String getSuccessMessage() {return successMessage;} public void setSuccessMessage(String successMessage) {this.successMessage = successMessage;}
+        protected boolean saved; public boolean isSaved() {return saved;} public void setSaved(boolean saved) {this.saved = saved;}
+        
+        private List<DATA> dataList; public List<DATA> getDataList() {return dataList;} public void setDataList(List<DATA> dataList) {this.dataList = dataList;}
 	
 	public AbstractAdminTsImportBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
 	{
@@ -190,20 +199,26 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 		
 		// Instantiate and configure the importer
 		// ATTENTION: Do not use the primary key option here (would cause bad results)
-		ExcelSimpleSerializableImporter<Data,ImportStrategy> statusImporter = ExcelSimpleSerializableImporter.factory(xlsResolver, "TimeSeries", f.getAbsolutePath());
+		ExcelSimpleSerializableImporter<DATA,ImportStrategy> statusImporter = ExcelSimpleSerializableImporter.factory(xlsResolver, "TimeSeries", f.getAbsolutePath());
 		statusImporter.selectFirstSheet();
 		statusImporter.setFacade(fTs);
 		statusImporter.getTempPropertyStore().put("createEntityForUnknown", true);
 		statusImporter.getTempPropertyStore().put("lookup", false);
 		  
-		Map<Data,ArrayList<String>> data  = statusImporter.execute(true);
+		Map<DATA,ArrayList<String>> data  = statusImporter.execute(true);
 		
 		if(debugOnInfo){logger.info("Loaded " +data.size() +" time series data entries to be saved in the database.");}
-		timeSeries.getData().addAll(data.keySet());
+		//timeSeries.getData().addAll(data.keySet());
+                dataList = new ArrayList<DATA>();
+                
+                for (DATA dataItem : data.keySet())
+                {
+                    dataList.add(dataItem);
+                }
 		Collections.sort(timeSeries.getData(), cTsData);
 		entity=null;
-		
 		transaction = efTransaction.build(transactionUser,sources.get(0));
+                logger.info("Imported set with " +dataList.size() +" entries.");
 		preview();
 	}
 	
@@ -278,4 +293,41 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 		catch (UtilsLockingException e) {e.printStackTrace();}
 	}
+        
+        public void importDataList()
+        {
+            workspace = fTs.find(cWs, workspace);
+            logger.info("Import Data to "+workspace);
+
+            try
+            {
+                    
+                    if(transaction.getSource()!=null){transaction.setSource(fTs.find(cSource,transaction.getSource()));}
+                    transaction.setRecord(new Date());
+                    transaction = fTs.save(transaction);
+
+                    for(DATA data : dataList)
+                    {
+                        data.setWorkspace(workspace);
+                        data.setTransaction(transaction);
+                        if (logger.isTraceEnabled()) {logger.warn("Saving data point for reference ID " +data.getTimeSeries().getBridge().getRefId()+ " in transaction source " +transaction.getSource().getName().get("en"));}
+                        
+                        fTs.save(data);
+                    }
+
+                    entities=null;
+                    entity=null;
+                    timeSeries=null;
+                    chartDs=null;
+                    
+                    successMessage = "Imported set with " +getDataList().size() +" entries.";
+                    logger.info(successMessage);
+                    logger.info("Reseting list");
+                    setSaved(true);
+                    setDataList(new ArrayList<DATA>());
+                    timeSeriesMap.clear();
+            }
+            catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+            catch (UtilsLockingException e) {e.printStackTrace();}
+        }
 }

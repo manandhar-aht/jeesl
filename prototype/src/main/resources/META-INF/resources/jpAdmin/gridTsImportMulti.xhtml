@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mc="http://www.metachart.org/chart"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aupSec="http://ahtutils.sourceforge.net/prototype/security"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="bean" required="false" default="#{adminTsImportBean}"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<aup:grid>
+			<aht:row>
+				<aht:slot id="sCategories" width="5">
+					<h:form id="fCategories">
+						<p:panel id="pLang" header="#{msg.aupTsImport} MULTI" styleClass="auPanelWithGrid">
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								
+								<p:outputLabel value="#{msg.jeeslTsClass}" rendered="false"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.clas}" effect="fade" rendered="false">
+									<f:selectItems value="#{cc.attrs.bean.classes}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeClass()}" update="@form"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslTsInterval}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.interval}" effect="fade">
+									<f:selectItems value="#{cc.attrs.bean.intervals}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeInterval()}" update="@form"/>
+								</p:selectOneMenu>
+							</p:panelGrid>
+						</p:panel>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sImport" width="7">
+					<h:form id="fUpload" rendered="#{empty cc.attrs.bean.timeSeriesMap}">
+						<p:panel id="pLang" header="#{msg.aupTsUpload}" styleClass="auPanelWithGrid">
+							<p:fileUpload fileUploadListener="#{cc.attrs.bean.uploadData}" mode="advanced" dragDropSupport="false"
+                                                            update=":#{cc.id}:rowVis :#{cc.id}:sImport" sizeLimit="10000000"  process="@form" fileLimit="1" allowTypes="/(\.|\/)(xlsx)$/" />
+						</p:panel>
+					</h:form>
+					<h:form id="fImport" rendered="#{(not empty cc.attrs.bean.interval) and (not empty cc.attrs.bean.dataList)}">
+						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
+							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+								<p:outputLabel value="#{msg.aupTsWorkspace}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.workspace}" effect="fade">
+									<f:selectItems value="#{cc.attrs.bean.workspaces}" var="w" itemLabel="#{w.name[userBean.localeCode].lang}" itemValue="#{w}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslTsSource}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.transaction.source}" effect="fade">
+									<f:selectItems value="#{cc.attrs.bean.sources}" var="s" itemLabel="#{s.name[userBean.localeCode].lang}" itemValue="#{s}"/>
+								</p:selectOneMenu>
+								<p:outputLabel value="#{msg.jeeslRemark}"/>
+								<jtp:inputRemark value="#{cc.attrs.bean.transaction.remark}"/>
+								
+								<h:outputText value=""/>
+								<p:commandButton value="Import" type="button">
+									<p:ajax event="click" update=":#{cc.id}:rowVis :#{cc.id}:sImport" listener="#{cc.attrs.bean.importDataList()}" process="@form"/>
+								</p:commandButton>
+							</p:panelGrid>
+						</p:panel>
+                                        </h:form>
+                                        <p:panel id="pFeedback" rendered="#{cc.attrs.bean.saved}" header="#{msg.aupTsImport}">
+                                            <h:outputText value="#{cc.attrs.bean.successMessage}"/>
+                                        </p:panel>
+				</aht:slot>
+			</aht:row>
+			<aht:row id="rowVis">
+				<aht:slot id="sTs" width="6">
+                                    <ui:repeat value="#{cc.attrs.bean.scopes}" var="tsScope">
+					<p:dataTable var="d" value="#{cc.attrs.bean.timeSeriesMap[tsScope]}" rendered="#{not empty cc.attrs.bean.timeSeriesMap[tsScope]}"
+                                                        rows="5"
+                                                        paginator="true"
+                                                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                        rowsPerPageTemplate="5,10,15">
+                                            <f:facet name="header">
+                                                    <aht:pfDataTableHeader title="#{msg.aupTsTimeSerie} #{tsScope.code}"/>
+                                            </f:facet>
+                                            <p:column rendered="true" headerText="#{msg.jeeslTsBridgeRef}">  
+                                                <h:outputText value="#{d.timeSeries.bridge.refId}" rendered="#{not empty d.timeSeries and not empty d.timeSeries.bridge}"/>
+                                            </p:column>
+                                            <p:column rendered="true" headerText="#{msg.aupDate}">  
+                                                <h:outputText value="#{d.record}">
+                                                <f:convertDateTime type="both" pattern="dd.MM.yy HH:mm" dateStyle="short" timeStyle="medium" />
+                                                </h:outputText>
+                                            </p:column>
+                                            <p:column rendered="true" headerText="#{msg.jeeslTsValue}">  
+                                                <h:outputText value="#{d.value}" rendered="#{not empty d.value}"/>
+                                                <h:outputText value="No value given" rendered="#{empty d.value}"/>
+                                            </p:column>
+                                            <p:column rendered="true" headerText="#{msg.jeeslTsInterval}">  
+                                                <h:outputText value="#{d.timeSeries.interval.code}" rendered="#{not empty d.timeSeries and not empty d.timeSeries.interval}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                        </ui:repeat>
+				</aht:slot>
+			</aht:row>
+	    </aup:grid>
+	</composite:implementation>
+</html>

@@ -105,11 +105,18 @@
     		<s:lang key="fr" translation="Date/Time"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="jeeslTsValue">
+    <s:translation key="jeeslTsValue">
     	<s:langs>
     		<s:lang key="de" translation="Wert"/>
     		<s:lang key="en" translation="Value"/>
     		<s:lang key="fr" translation="Value"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslTsBridgeRef">
+    	<s:langs>
+    		<s:lang key="de" translation="Bridge Ref"/>
+    		<s:lang key="en" translation="Bridge Ref"/>
+    		<s:lang key="fr" translation="Bridge Ref"/>
     	</s:langs>
     </s:translation>
 	<s:translation key="aupTsEntities">

@@ -33,13 +33,13 @@ public class UtilsLatexUserDocumentationBuilder extends AbstractLatexDocumentati
 	
 	@Override protected void applyConfigCodes()
 	{		
-		addConfig(Code.uiInterface.toString(),"ofx.aht-utils/user/ui/interface.xml","user/ui/interface");
-		addConfig(Code.uiIcons.toString(),"ofx.aht-utils/user/ui/icons.xml","user/ui/icons");
-		addConfig(Code.uiExport.toString(),"ofx.aht-utils/user/ui/export.xml","user/ui/fileExport");
-		addConfig(Code.uiRevision.toString(),"ofx.aht-utils/user/ui/revisions.xml","user/ui/revisions");
-		addConfig(Code.uiApprovals.toString(), "ofx.aht-utils/user/components/approval.xml","user/components/approval");
-		addConfig(Code.uiConstraints.toString(), "ofx.aht-utils/user/components/constraints.xml","user/components/constraints");
-		addConfig(Code.uiWizard.toString(),"ofx.aht-utils/user/ui/wizard.xml","user/ui/wizard");
+		addConfig(Code.uiInterface.toString(),"jeesl/ofx/user/ui/interface.xml","user/ui/interface");
+		addConfig(Code.uiIcons.toString(),"jeesl/ofx/user/ui/icons.xml","user/ui/icons");
+		addConfig(Code.uiExport.toString(),"jeesl/ofx/user/ui/export.xml","user/ui/fileExport");
+		addConfig(Code.uiRevision.toString(),"jeesl/ofx/user/ui/revisions.xml","user/ui/revisions");
+		addConfig(Code.uiApprovals.toString(), "jeesl/ofx/user/components/approval.xml","user/components/approval");
+		addConfig(Code.uiConstraints.toString(), "jeesl/ofx/user/components/constraints.xml","user/components/constraints");
+		addConfig(Code.uiWizard.toString(),"jeesl/ofx/user/ui/wizard.xml","user/ui/wizard");
 		
 		
 	}

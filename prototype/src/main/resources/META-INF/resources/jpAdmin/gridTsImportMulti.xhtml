@@ -25,14 +25,14 @@
 						<p:panel id="pLang" header="#{msg.aupTsImport} MULTI" styleClass="auPanelWithGrid">
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								
-								<p:outputLabel value="#{msg.jeeslTsClass}" rendered="#{not empty cc.attrs.bean.clas}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.clas}" effect="fade" rendered="#{not empty cc.attrs.bean.clas}">
+								<p:outputLabel value="#{msg.jeeslTsClass}" rendered="false"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.clas}" effect="fade" rendered="false">
 									<f:selectItems value="#{cc.attrs.bean.classes}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 									<p:ajax event="change" listener="#{cc.attrs.bean.changeClass()}" update="@form"/>
 								</p:selectOneMenu>
 								
-								<p:outputLabel value="#{msg.jeeslTsInterval}" rendered="#{not empty cc.attrs.bean.interval}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.interval}" effect="fade" rendered="#{not empty cc.attrs.bean.interval}">
+								<p:outputLabel value="#{msg.jeeslTsInterval}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.interval}" effect="fade">
 									<f:selectItems value="#{cc.attrs.bean.intervals}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
 									<p:ajax event="change" listener="#{cc.attrs.bean.changeInterval()}" update="@form"/>
 								</p:selectOneMenu>
@@ -47,7 +47,7 @@
                                                             update=":#{cc.id}:rowVis :#{cc.id}:sImport" sizeLimit="10000000"  process="@form" fileLimit="1" allowTypes="/(\.|\/)(xlsx)$/" />
 						</p:panel>
 					</h:form>
-					<h:form id="fImport" rendered="#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval) and (not empty cc.attrs.bean.dataList)}">
+					<h:form id="fImport" rendered="#{(not empty cc.attrs.bean.interval) and (not empty cc.attrs.bean.dataList)}">
 						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupTsWorkspace}"/>

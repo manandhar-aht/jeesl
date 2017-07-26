@@ -72,7 +72,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	
 	private List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	private List<EC> classes; public List<EC> getClasses() {return classes;}
-	private List<INT> intervals; public List<INT> getIntervals() {return intervals;}
+	protected List<INT> intervals; public List<INT> getIntervals() {return intervals;}
 	private List<WS> workspaces; public List<WS> getWorkspaces() {return workspaces;}
 	private List<SOURCE> sources; public List<SOURCE> getSources() {return sources;}
 	
@@ -83,7 +83,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 	private CAT category;public CAT getCategory() {return category;}public void setCategory(CAT category) {this.category = category;}
 	private SCOPE scope; public SCOPE getScope() {return scope;} public void setScope(SCOPE scope) {this.scope = scope;}
 	private EC clas; public EC getClas() {return clas;} public void setClas(EC clas) {this.clas = clas;}
-	private INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
+	protected INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
 	private WS workspace; public WS getWorkspace() {return workspace;} public void setWorkspace(WS workspace) {this.workspace = workspace;}
 	protected USER transactionUser;
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}

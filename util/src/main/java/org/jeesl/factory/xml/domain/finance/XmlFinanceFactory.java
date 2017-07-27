@@ -4,22 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.interfaces.model.module.currency.UtilsCurrency;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.finance.UtilsFinance;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 
-public class XmlFinanceFactory
+public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlFinanceFactory.class);
 	
+	
+	public XmlFinanceFactory()
+	{
+		
+	}
+	
+	public <E extends Enum<E>> Finance build(E code, double value, C currency)
+	{
+		Finance xml = build();
+		xml.setCode(code.toString());
+		xml.setValue(value);
+		return xml;
+	}
+	
 	public static <F extends UtilsFinance> Finance create(F ejb)
 	{
-		Finance xml = new Finance();
+		Finance xml = build();
 		xml.setValue(ejb.getValue());
 		return xml;
 	}

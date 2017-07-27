@@ -26,6 +26,7 @@
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref="f:finance" maxOccurs="unbounded"/>
+				<xsd:element ref="f:currency" maxOccurs="1"/>
 			</xsd:sequence>	
             <xsd:attribute name="id" type="xsd:long"/>
             <xsd:attribute name="nr" type="xsd:int"/>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<f:finance xmlns:f="http://www.jeesl.org/finance" id="123" nr="1" code="myCode" label="myLabel" value="567.89" symbol="mySymbol">
-    <f:finance id="123" nr="1" code="myCode" label="myLabel" value="567.89" symbol="mySymbol"/>
-    <f:finance id="123" nr="1" code="myCode" label="myLabel" value="567.89" symbol="mySymbol"/>
-</f:finance>
+<jf:finance xmlns:jf="http://www.jeesl.org/finance" xmlns:s="http://ahtutils.aht-group.com/status" id="123" nr="1" code="myCode" label="myLabel" value="567.89" symbol="mySymbol">
+    <jf:finance id="123" nr="1" code="myCode" label="myLabel" value="567.89" symbol="mySymbol"/>
+    <jf:finance id="123" nr="1" code="myCode" label="myLabel" value="567.89" symbol="mySymbol"/>
+    <jf:currency id="123" code="myCode" symbol="mySymbol" label="myLabel"/>
+</jf:finance>

@@ -27,6 +27,7 @@ public class TestXmlFinance extends AbstractXmlFinanceTest<Finance>
     	{
     		xml.getFinance().add(TestXmlFinance.create(false));
     		xml.getFinance().add(TestXmlFinance.create(false));
+    		xml.setCurrency(TestXmlCurrency.create(false));
     	}
     	
     	return xml;

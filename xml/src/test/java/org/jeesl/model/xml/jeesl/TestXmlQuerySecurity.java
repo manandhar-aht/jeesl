@@ -1,6 +1,8 @@
 package org.jeesl.model.xml.jeesl;
 
 import org.jeesl.JeeslXmlTestBootstrap;
+import org.jeesl.model.xml.system.security.TestXmlRole;
+import org.jeesl.model.xml.system.security.TestXmlStaff;
 import org.jeesl.model.xml.system.security.TestXmlUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,8 @@ public class TestXmlQuerySecurity extends AbstractXmlJeeslTest<QuerySecurity>
 	    	if(withChilds)
 	    	{
 	    		xml.setUser(TestXmlUser.create(false));
+	    		xml.setStaff(TestXmlStaff.create(false));
+	    		xml.setRole(TestXmlRole.create(false));
 	    	}
 	    	
 	    	return xml;

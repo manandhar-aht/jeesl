@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import net.sf.ahtutils.xml.security.Role;
 import net.sf.ahtutils.xml.security.Staff;
 import net.sf.ahtutils.xml.security.User;
 
@@ -24,6 +25,7 @@ import net.sf.ahtutils.xml.security.User;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}user"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}staff"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/security}role"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="localeCode" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -36,7 +38,8 @@ import net.sf.ahtutils.xml.security.User;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "user",
-    "staff"
+    "staff",
+    "role"
 })
 @XmlRootElement(name = "querySecurity")
 public class QuerySecurity
@@ -48,6 +51,8 @@ public class QuerySecurity
     protected User user;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
     protected Staff staff;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
+    protected Role role;
     @XmlAttribute(name = "localeCode")
     protected String localeCode;
 
@@ -105,6 +110,34 @@ public class QuerySecurity
 
     public boolean isSetStaff() {
         return (this.staff!= null);
+    }
+
+    /**
+     * Gets the value of the role property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Role }
+     *     
+     */
+    public Role getRole() {
+        return role;
+    }
+
+    /**
+     * Sets the value of the role property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Role }
+     *     
+     */
+    public void setRole(Role value) {
+        this.role = value;
+    }
+
+    public boolean isSetRole() {
+        return (this.role!= null);
     }
 
     /**

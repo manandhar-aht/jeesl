@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.interfaces.model.module.currency.UtilsCurrency;
+import org.jeesl.model.xml.jeesl.QueryFinance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,10 +20,14 @@ public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlFinanceFactory.class);
 	
+	private final Finance q;
+	private XmlCurrencyFactory<L,C> xfCurrency;
 	
-	public XmlFinanceFactory()
+	public XmlFinanceFactory(QueryFinance query) {this(query.getLocaleCode(),query.getFinance());}
+	public XmlFinanceFactory(String localeCode, Finance q)
 	{
-		
+		this.q=q;
+		if(q.getCurrency()!=null) {xfCurrency = new XmlCurrencyFactory<L,C>(localeCode,q.getCurrency());}
 	}
 	
 	public <E extends Enum<E>> Finance build(E code, double value, C currency)
@@ -30,6 +35,7 @@ public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 		Finance xml = build();
 		xml.setCode(code.toString());
 		xml.setValue(value);
+		if(q.isSetCurrency()) {xml.setCurrency(xfCurrency.build(currency));}
 		return xml;
 	}
 	

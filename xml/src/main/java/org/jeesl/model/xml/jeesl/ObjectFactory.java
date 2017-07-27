@@ -45,4 +45,12 @@ public class ObjectFactory {
         return new QuerySurvey();
     }
 
+    /**
+     * Create an instance of {@link QueryFinance }
+     * 
+     */
+    public QueryFinance createQueryFinance() {
+        return new QueryFinance();
+    }
+
 }

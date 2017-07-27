@@ -16,16 +16,16 @@ public class TestXmlQuerySurvey extends AbstractXmlJeeslTest<QuerySurvey>
     
     public QuerySurvey build(boolean withChilds)
     {
-    	QuerySurvey xml = new QuerySurvey();
-        	
-    	if(withChilds)
-    	{
-    		xml.setTemplate(TestXmlTemplate.create(false));
-    		xml.setData(TestXmlData.create(false));
-    		xml.setAnswer(TestXmlAnswer.create(false));
-    	}
-    	
-    	return xml;
+	    	QuerySurvey xml = new QuerySurvey();
+	        	
+	    	if(withChilds)
+	    	{
+	    		xml.setTemplate(TestXmlTemplate.create(false));
+	    		xml.setData(TestXmlData.create(false));
+	    		xml.setAnswer(TestXmlAnswer.create(false));
+	    	}
+	    	
+	    	return xml;
     }
 	
 	public static void main(String[] args)

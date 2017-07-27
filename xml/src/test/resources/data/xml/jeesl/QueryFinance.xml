@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jeesl:queryFinance xmlns:jf="http://www.jeesl.org/finance" xmlns:s="http://ahtutils.aht-group.com/status" xmlns:jeesl="http://www.jeesl.org">
+    <jf:finance id="123" nr="1" code="myCode" label="myLabel" value="567.89" symbol="mySymbol"/>
+</jeesl:queryFinance>

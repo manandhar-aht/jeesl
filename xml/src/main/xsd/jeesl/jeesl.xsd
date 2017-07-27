@@ -3,8 +3,10 @@
 	xmlns:jeesl="http://www.jeesl.org"
 	xmlns:us="http://ahtutils.aht-group.com/status"
 	xmlns:survey="http://ahtutils.aht-group.com/survey"
+	xmlns:f="http://www.jeesl.org/finance"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="../aht/status.xsd"/>
+	<xsd:import namespace="http://www.jeesl.org/finance" schemaLocation="../aht/finance.xsd"/>
 	<xsd:import namespace="http://ahtutils.aht-group.com/survey" schemaLocation="module/survey.xsd"/>
 	
 	<xsd:element name="container">
@@ -21,6 +23,15 @@
 				<xsd:element ref="survey:template" maxOccurs="1"/>
 				<xsd:element ref="survey:data" maxOccurs="1"/>
 				<xsd:element ref="survey:answer" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="localeCode" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+		<xsd:element name="queryFinance">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="f:finance" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="localeCode" type="xsd:string"/>
 		</xsd:complexType>

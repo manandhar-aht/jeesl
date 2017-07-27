@@ -53,4 +53,12 @@ public class ObjectFactory {
         return new QueryFinance();
     }
 
+    /**
+     * Create an instance of {@link QuerySecurity }
+     * 
+     */
+    public QuerySecurity createQuerySecurity() {
+        return new QuerySecurity();
+    }
+
 }

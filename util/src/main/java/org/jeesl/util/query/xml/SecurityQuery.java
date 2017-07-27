@@ -12,6 +12,7 @@ import org.jeesl.factory.xml.system.security.XmlUsecaseFactory;
 import org.jeesl.factory.xml.system.security.XmlUsecasesFactory;
 import org.jeesl.factory.xml.system.security.XmlViewFactory;
 import org.jeesl.factory.xml.system.security.XmlViewsFactory;
+import org.jeesl.model.xml.jeesl.QuerySecurity;
 import org.jeesl.model.xml.system.navigation.Navigation;
 
 import net.sf.ahtutils.xml.access.View;
@@ -25,9 +26,10 @@ import net.sf.ahtutils.xml.status.Domain;
 
 public class SecurityQuery
 {
-	public static enum Key {role,roleLabel,exStaff,categoryLabel}
+	public static enum Key {role,roleLabel,exStaff,categoryLabel,staff,user}
 	
 	private static Map<Key,Query> mQueries;
+	private static Map<Key,QuerySecurity> map;
 	
 	public static Query get(Key key,String lang)
 	{
@@ -44,6 +46,25 @@ public class SecurityQuery
 		}
 		Query q = mQueries.get(key);
 		q.setLang(lang);
+		return q;
+	}
+	
+	public static QuerySecurity get(String localeCode, Key key)
+	{
+		if(map==null){map = new Hashtable<Key,QuerySecurity>();}
+		if(!map.containsKey(key))
+		{
+			QuerySecurity q = new QuerySecurity();
+			switch(key)
+			{
+				case staff: q.setStaff(staffUserRole());
+				case user: q.setUser(user());
+				default: break;
+			}
+			map.put(key, q);
+		}
+		QuerySecurity q = map.get(key);
+		q.setLocaleCode(localeCode);
 		return q;
 	}
 	
@@ -72,6 +93,7 @@ public class SecurityQuery
 		xml.setId(0);
 		xml.setFirstName("");
 		xml.setLastName("");
+		xml.setName("");
 		return xml;
 	}
 	

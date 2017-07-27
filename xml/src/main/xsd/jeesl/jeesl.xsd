@@ -3,11 +3,13 @@
 	xmlns:jeesl="http://www.jeesl.org"
 	xmlns:us="http://ahtutils.aht-group.com/status"
 	xmlns:survey="http://ahtutils.aht-group.com/survey"
+	xmlns:sec="http://ahtutils.aht-group.com/security"
 	xmlns:f="http://www.jeesl.org/finance"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="../aht/status.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/finance" schemaLocation="../aht/finance.xsd"/>
 	<xsd:import namespace="http://ahtutils.aht-group.com/survey" schemaLocation="module/survey.xsd"/>
+	<xsd:import namespace="http://ahtutils.aht-group.com/security" schemaLocation="../aht/security.xsd"/>
 	
 	<xsd:element name="container">
         <xsd:complexType>
@@ -28,10 +30,20 @@
 		</xsd:complexType>
 	</xsd:element>
 	
-		<xsd:element name="queryFinance">
+	<xsd:element name="queryFinance">
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref="f:finance" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="localeCode" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="querySecurity">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sec:user" maxOccurs="1"/>
+				<xsd:element ref="sec:staff" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="localeCode" type="xsd:string"/>
 		</xsd:complexType>

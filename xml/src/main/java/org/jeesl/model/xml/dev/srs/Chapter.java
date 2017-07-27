@@ -77,10 +77,10 @@ public class Chapter implements Serializable
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Section }
      * {@link Chapter }
-     * {@link Fr }
+     * {@link Section }
      * {@link String }
+     * {@link Fr }
      * 
      * 
      */

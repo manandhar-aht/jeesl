@@ -1,0 +1,13 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+>
+	<p:tabView var="t" value="#{localeCodes}">  
+  		<p:tab title="#{t}">
+  			<p:inputTextarea value="#{value[t].lang}" style="w100" autocomplete="off"/>
+  		</p:tab>  
+  	</p:tabView> 
+</ui:composition>

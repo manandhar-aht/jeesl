@@ -23,6 +23,10 @@
         <source>jeeslPrototype/langs/inputRows.xhtml</source>
     </tag>
     <tag>
+        <tag-name>inputMultiLangTab</tag-name>
+        <source>jeeslPrototype/langs/inputTabDescription.xhtml</source>
+    </tag>
+    <tag>
         <tag-name>reportHeader</tag-name>
         <source>jeeslPrototype/report/header.xhtml</source>
     </tag>

@@ -1,5 +1,6 @@
 package org.jeesl.factory.xml.system.security;
 
+import org.jeesl.model.xml.jeesl.QuerySecurity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +15,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.xml.security.User;
 
-public class XmlUserFactory<L extends UtilsLang,
-							D extends UtilsDescription, 
+public class XmlUserFactory<L extends UtilsLang, D extends UtilsDescription, 
 							C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 							R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 							V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -26,12 +26,30 @@ public class XmlUserFactory<L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlUserFactory.class);
 		
+	private final User q;
 	
-	private User q;
-	
+	public XmlUserFactory(QuerySecurity query){this(query.getUser());}
 	public XmlUserFactory(User q)
 	{
 		this.q=q;
+	}
+	
+	public User build(USER user)
+	{
+		User xml = new User();
+		if(q.isSetId()){xml.setId(user.getId());}
+		if(q.isSetFirstName()){xml.setFirstName(user.getFirstName());}
+		if(q.isSetLastName()){xml.setLastName(user.getLastName());}
+		if(q.isSetName())
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.append(user.getFirstName());
+			sb.append(" ");
+			sb.append(user.getLastName());
+			xml.setName(sb.toString().trim());
+		}
+		
+		return xml;
 	}
 	
 	public static User create(String firstName, String lastName)
@@ -48,16 +66,6 @@ public class XmlUserFactory<L extends UtilsLang,
 		xml.setFirstName(firstName);
 		xml.setLastName(lastName);
 		xml.setEmail(email);
-		return xml;
-	}
-	
-	public User build(USER user)
-	{
-		User xml = new User();
-		if(q.isSetId()){xml.setId(user.getId());}
-		if(q.isSetFirstName()){xml.setFirstName(user.getFirstName());}
-		if(q.isSetLastName()){xml.setLastName(user.getLastName());}
-		
 		return xml;
 	}
 }

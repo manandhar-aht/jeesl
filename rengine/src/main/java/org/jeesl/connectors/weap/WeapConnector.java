@@ -55,7 +55,7 @@ public class WeapConnector {
         {
             int years = (Integer.parseInt(request.getEndYear()) - Integer.parseInt(request.getYear()) +1);
             logger.info("Applying average calculation, dividing by " +years +" years. (" +request.getYear() +" to " +request.getEndYear() +")");
-            resultValue = resultValue.divide(new BigDecimal(years));
+            resultValue = resultValue.divide(new BigDecimal(years), RoundingMode.HALF_UP);
         }
         resultValue = resultValue.setScale(2, RoundingMode.HALF_UP);
         logger.debug("Final Result " +resultValue);

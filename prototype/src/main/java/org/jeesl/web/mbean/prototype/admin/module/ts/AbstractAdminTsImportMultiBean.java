@@ -49,7 +49,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.report.revert.excel.importers.ExcelSimpleSerializableImporter;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDescription,
+public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
 											SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
@@ -68,7 +68,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsImportBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsImportMultiBean.class);
 	
 	private List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	private List<EC> classes; public List<EC> getClasses() {return classes;}
@@ -105,7 +105,7 @@ public class AbstractAdminTsImportBean <L extends UtilsLang, D extends UtilsDesc
         
         private List<DATA> dataList; public List<DATA> getDataList() {return dataList;} public void setDataList(List<DATA> dataList) {this.dataList = dataList;}
 	
-	public AbstractAdminTsImportBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
+	public AbstractAdminTsImportMultiBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
 	{
 		super(cL,cD,cTransaction,cSource);
 	}

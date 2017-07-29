@@ -16,11 +16,9 @@ import java.util.Random;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.jxpath.JXPathContext;
-import org.jeesl.api.controller.ImportStrategy;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.xml.module.ts.XmlDataFactory;
 import org.jeesl.factory.xml.module.ts.XmlTimeSeriesFactory;
-import org.jeesl.factory.xml.system.util.mc.XmlMcDataSetFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -48,6 +46,8 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.report.revert.excel.importers.ExcelSimpleSerializableImporter;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
+import org.jeesl.api.controller.ImportStrategy;
+import org.jeesl.factory.xml.system.util.mc.XmlMcDataSetFactory;
 
 public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
@@ -68,7 +68,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsImportMultiBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsImportSingleBean.class);
 	
 	private List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	private List<EC> classes; public List<EC> getClasses() {return classes;}

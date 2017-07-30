@@ -608,10 +608,13 @@ public class UtilsFacadeBean implements UtilsFacade
 
 		Join<T,I> jComponent = root.join(prototype.resolveParentAttribute());
 
-		cQ.where(cB.isTrue(jComponent.in(parents)));
-		cQ.select(root);
+		CriteriaQuery<T> select = cQ.select(root);
+		select.where(cB.isTrue(jComponent.in(parents)));
+		
+	    if(EjbWithPosition.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
+	    else if(EjbWithRecord.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));}
 
-		TypedQuery<T> tQ = em.createQuery(cQ);
+		TypedQuery<T> tQ = em.createQuery(select);
 		return tQ.getResultList();
 	}
 	
@@ -631,17 +634,10 @@ public class UtilsFacadeBean implements UtilsFacade
 	    CriteriaQuery<T> select = cQ.select(root);
 	    select.where(cB.equal(p1Path,parent));
 	    
-	    if(EjbWithPosition.class.isAssignableFrom(c))
-	    {
-	    	select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));
-	    }
-	    else if(EjbWithRecord.class.isAssignableFrom(c))
-	    {
-	    	select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));
-	    }
+	    if(EjbWithPosition.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
+	    else if(EjbWithRecord.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));}
 	    
 		TypedQuery<T> q = em.createQuery(select);
-		
 		try	{return q.getResultList();}
 		catch (NoResultException ex){return new ArrayList<T>();}
 	}

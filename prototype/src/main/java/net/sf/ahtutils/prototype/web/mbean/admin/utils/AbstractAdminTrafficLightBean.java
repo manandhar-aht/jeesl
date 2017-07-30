@@ -26,19 +26,26 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	
 	protected JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fUtils;
 	
-	private Class<SCOPE> cScope;
-	private Class<LIGHT> cLight;
+	private final Class<SCOPE> cScope;
+	private final Class<LIGHT> cLight;
 	
 	private String[] defaultLangs;
 	
 	protected EjbTrafficLightFactory<L,D,SCOPE,LIGHT> efLight;
 	
-	public void initSuper(String[] defaultLangs,Class<L> cLang,Class<D> cDescription,Class<SCOPE> cScope,Class<LIGHT> cLight)
+	public AbstractAdminTrafficLightBean(Class<L> cLang,Class<D> cDescription,Class<SCOPE> cScope,Class<LIGHT> cLight)
 	{
-		this.defaultLangs=defaultLangs;
 		this.cScope=cScope;
 		this.cLight=cLight;
+		
 		efLight = EjbTrafficLightFactory.factory(cLang,cDescription,cLight);
+	}
+	
+	public void initSuper(String[] defaultLangs)
+	{
+		this.defaultLangs=defaultLangs;
+
+		
 	}
 	
 	//Scopes

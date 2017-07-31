@@ -24,7 +24,7 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTrafficLightBean.class);
 	
-	protected JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fUtils;
+	protected JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fTl;
 	
 	private final Class<SCOPE> cScope;
 	private final Class<LIGHT> cLight;
@@ -41,11 +41,10 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 		efLight = EjbTrafficLightFactory.factory(cLang,cDescription,cLight);
 	}
 	
-	public void initSuper(String[] defaultLangs)
+	public void initSuper(String[] defaultLangs, JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fTl)
 	{
 		this.defaultLangs=defaultLangs;
-
-		
+		this.fTl=fTl;
 	}
 	
 	//Scopes
@@ -54,7 +53,7 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	
 	protected void reloadTrafficLightScopes()
 	{
-		trafficLightScopes = fUtils.all(cScope);
+		trafficLightScopes = fTl.all(cScope);
 		logger.trace("Results: " + trafficLightScopes.size() +" scopes loaded.");
 	}
 	
@@ -75,7 +74,7 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	
 	protected void reloadTrafficLights()
 	{
-		trafficLights = fUtils.allOrderedTrafficLights(cLight,scope);
+		trafficLights = fTl.allOrderedTrafficLights(scope);
 		logger.debug("Results: " + trafficLights.size());
 	}
 	
@@ -98,7 +97,7 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	public void save() throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		logger.debug(AbstractLogMessage.saveEntity(trafficLight));
-		trafficLight = fUtils.save(trafficLight);
+		trafficLight = fTl.save(trafficLight);
 		reloadTrafficLights();
 		fireUpdate();
 	}
@@ -106,7 +105,7 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	public void rm() throws UtilsConstraintViolationException
 	{
 		logger.debug(AbstractLogMessage.rmEntity(trafficLight));
-		fUtils.rm(trafficLight);
+		fTl.rm(trafficLight);
 		trafficLight=null;
 		reloadTrafficLights();
 	}

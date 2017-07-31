@@ -168,7 +168,13 @@
 			<lang key="fr" translation="Query Footer" />
 		</langs>
 	</translation>
-	
+	<translation key="jeeslIoReportQueryTrafficLight">
+		<langs>
+			<lang key="de" translation="Abfrage Ampel" />
+			<lang key="en" translation="Query Light" />
+			<lang key="fr" translation="Query Light" />
+		</langs>
+	</translation>	
 	<translation key="jeeslIoReportTemplates">
 		<langs>
 			<lang key="de" translation="Vorlagen" />

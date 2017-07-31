@@ -15,14 +15,22 @@ public class UtilsTrafficLightFacadeBean <L extends UtilsLang,D extends UtilsDes
 											LIGHT extends JeeslTrafficLight<L,D,SCOPE>,
 											SCOPE extends UtilsStatus<SCOPE,L,D>>
 	extends UtilsFacadeBean implements JeeslTrafficLightFacade<L,D,LIGHT,SCOPE>
-{		
-	public UtilsTrafficLightFacadeBean(EntityManager em)
+{	
+	private final Class<LIGHT> cLight;
+	
+	public UtilsTrafficLightFacadeBean(EntityManager em, final Class<LIGHT> cLight)
 	{
 		super(em);
+		this.cLight=cLight;
 	}
 
-	public List<LIGHT> allOrderedTrafficLights(Class<LIGHT> cLight,SCOPE scope)
+	public List<LIGHT> allOrderedTrafficLights(SCOPE scope)
 	{
 		return this.allOrderedParent(cLight, "threshold", true, "scope", scope);
+	}
+	
+	public List<LIGHT> allOrderedTrafficLights()
+	{
+		return this.allOrdered(cLight, "threshold", true);
 	}
 }

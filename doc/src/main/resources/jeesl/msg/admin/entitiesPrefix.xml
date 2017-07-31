@@ -135,6 +135,12 @@
 			<s:lang key="fr" translation="Attribute Type"/>
 		</s:langs>
 	</s:translation>
-	
+	<s:translation key="TrafficLightScope">
+		<s:langs>
+			<s:lang key="de" translation="Ampel"/>
+			<s:lang key="en" translation="Traffic Light"/>
+			<s:lang key="fr" translation="Traffic Light"/>
+		</s:langs>
+	</s:translation>
 	
 </s:translations>

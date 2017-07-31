@@ -13,6 +13,7 @@ public interface JeeslTrafficLightFacade <L extends UtilsLang,D extends UtilsDes
 											LIGHT extends JeeslTrafficLight<L,D,SCOPE>,
 											SCOPE extends UtilsStatus<SCOPE,L,D>>
 					extends UtilsFacade
-{		
-	List<LIGHT> allOrderedTrafficLights(Class<LIGHT> cLight,SCOPE scope);
+{	
+	public List<LIGHT> allOrderedTrafficLights();
+	List<LIGHT> allOrderedTrafficLights(SCOPE scope);
 }

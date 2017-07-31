@@ -483,8 +483,9 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(column));}
 		try
 		{
-			if(column.getDataType()!=null){column.setDataType(fReport.find(cDataType,column.getDataType()));}
-			if(column.getColumWidth()!=null){column.setColumWidth(fReport.find(cColumnWidth,column.getColumWidth()));}
+			if(column.getDataType()!=null) {column.setDataType(fReport.find(cDataType,column.getDataType()));}
+			if(column.getColumWidth()!=null) {column.setColumWidth(fReport.find(cColumnWidth,column.getColumWidth()));}
+			if(column.getTrafficLightScope()!=null) {column.setTrafficLightScope(fReport.find(cTls,column.getTrafficLightScope()));}
 			column.setGroup(fReport.find(cGroup,column.getGroup()));
 			column = fReport.save(column);
 			reloadReport();

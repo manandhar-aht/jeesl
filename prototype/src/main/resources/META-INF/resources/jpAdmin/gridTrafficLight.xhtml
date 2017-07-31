@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="bean" required="true"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<aup:grid id="grid">
+			<aht:row>
+				<aht:slot width="2">
+					<h:form id="fScopes">
+						<p:dataTable var="scope" value="#{cc.attrs.bean.trafficLightScopes}"
+							selection="#{cc.attrs.bean.scope}" selectionMode="single" rowKey="#{scope.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslTrafficLightScopes}"/>
+							</f:facet>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sLights :#{cc.id}:sLight" listener="#{cc.attrs.bean.selectScope()}"/>
+							<p:column headerText="#{msg.jeeslName}">
+								<h:outputText value="#{scope.name[localeCode].lang}"/>
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sLights" width="6">
+					<h:form id="fLights">
+						<p:dataTable var="trafficLight" value="#{cc.attrs.bean.trafficLights}" rendered="#{not empty cc.attrs.bean.scope}"
+								selection="#{cc.attrs.bean.trafficLight}" selectionMode="single" rowKey="#{trafficLight.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslTrafficLights}">
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addTrafficLight()}" update=":#{cc.id}:sLight" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sLight" listener="#{cc.attrs.bean.selectTrafficLight()}"/>
+							<p:column headerText="#{msg.jeeslName}">
+								<h:outputText value="#{trafficLight.name[localeCode].lang}"/>
+							</p:column>
+							<p:column headerText="#{msg.jeeslTrafficLightThreshold}"
+										style="background: ##{trafficLight.colorBackground}; text-align: center;">
+								<h:outputText style="color: ##{trafficLight.colorText};" value="#{trafficLight.threshold}"/>
+							</p:column>
+				                  
+						</p:dataTable>
+           			</h:form>
+				</aht:slot>
+				<aht:slot id="sLight" width="4">
+					<h:form id="fLang" >
+						<p:panel header="#{msg.Details}" styleClass="auPanelWithGrid"
+							rendered="#{not empty cc.attrs.bean.trafficLight}">
+							<f:facet name="actions">
+									<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+									<aht:icon type="jeeslDelete" ejb="#{cc.attrs.bean.trafficLight}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="col1, col2" >
+								 <p:outputLabel value="#{msg.jeeslTrafficLightColorBackground}"/>
+								 <p:colorPicker value="#{cc.attrs.bean.trafficLight.colorBackground}" />
+								 
+								 <p:outputLabel value="#{msg.jeeslTrafficLightColorText}"/>
+								 <p:colorPicker value="#{cc.attrs.bean.trafficLight.colorText}" />
+								 
+								 <p:outputLabel value="#{msg.jeeslTrafficLightThreshold}"/>
+								 <h:inputText id="tresholdText" value="#{cc.attrs.bean.trafficLight.threshold}"/>
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.trafficLight}" keys="#{translationBean.langKeys}" withDescription="true"/>
+							<h:messages/>
+						</p:panel>
+					 </h:form>
+				</aht:slot>
+			</aht:row>
+	    </aup:grid>
+	</composite:implementation>
+</html>

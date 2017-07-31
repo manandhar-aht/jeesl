@@ -18,7 +18,7 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<aup:grid>
+		<aup:grid id="grid">
 			<aht:row>
 				<aht:slot id="sCategories" width="5">
 					<h:form id="fCategories">
@@ -26,26 +26,26 @@
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.category}" effect="fade" >
-									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
-									<p:ajax event="change" listener="#{cc.attrs.bean.changeCategory()}" update="@form"/>
+									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeCategory()}" update=":#{cc.id}:grid"/>
 								</p:selectOneMenu>
 								
 								<p:outputLabel value="#{msg.jeeslTsScope}" rendered="#{not empty cc.attrs.bean.scope}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.scope}" effect="fade" rendered="#{not empty cc.attrs.bean.scope}">
-									<f:selectItems value="#{cc.attrs.bean.scopes}" var="s" itemLabel="#{s.name[userBean.localeCode].lang}" itemValue="#{s}"/>
-									<p:ajax event="change" listener="#{cc.attrs.bean.changeScope()}" update="@form"/>
+									<f:selectItems value="#{cc.attrs.bean.scopes}" var="s" itemLabel="#{s.name[localeCode].lang}" itemValue="#{s}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeScope()}" update=":#{cc.id}:grid"/>
 								</p:selectOneMenu>
 								
 								<p:outputLabel value="#{msg.jeeslTsClass}" rendered="#{not empty cc.attrs.bean.clas}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.clas}" effect="fade" rendered="#{not empty cc.attrs.bean.clas}">
-									<f:selectItems value="#{cc.attrs.bean.classes}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
-									<p:ajax event="change" listener="#{cc.attrs.bean.changeClass()}" update="@form"/>
+									<f:selectItems value="#{cc.attrs.bean.classes}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeClass()}" update=":#{cc.id}:grid"/>
 								</p:selectOneMenu>
 								
 								<p:outputLabel value="#{msg.jeeslTsInterval}" rendered="#{not empty cc.attrs.bean.interval}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.interval}" effect="fade" rendered="#{not empty cc.attrs.bean.interval}">
-									<f:selectItems value="#{cc.attrs.bean.intervals}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
-									<p:ajax event="change" listener="#{cc.attrs.bean.changeInterval()}" update="@form"/>
+									<f:selectItems value="#{cc.attrs.bean.intervals}" var="i" itemLabel="#{i.name[localeCode].lang}" itemValue="#{i}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeInterval()}" update=":#{cc.id}:grid"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
 						</p:panel>
@@ -55,7 +55,7 @@
 					<h:form id="fUpload" rendered="#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval)}">
 						<p:panel id="pLang" header="#{msg.aupTsUpload}" styleClass="auPanelWithGrid">
 							<p:fileUpload fileUploadListener="#{cc.attrs.bean.uploadData}" mode="advanced" dragDropSupport="false"
-                               update=":#{cc.id}:rowVis :#{cc.id}:sImport" sizeLimit="10000000"  process="@form" fileLimit="1" allowTypes="/(\.|\/)(xlsx)$/" />
+                               update=":#{cc.id}:rowVis :#{cc.id}:sImport" sizeLimit="10000000" process="@form" fileLimit="1" allowTypes="/(\.|\/)(xlsx)$/" />
 						</p:panel>
 					</h:form>
 					<h:form id="fImport" rendered="#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval) and (not empty cc.attrs.bean.entity)}">

@@ -260,5 +260,14 @@
 			<lang key="en" translation="XML Example" />
 			<lang key="fr" translation="XML Example" />
 		</langs>
-	</translation>	
+	</translation>
+	<translation key="jeeslIoReportTrafficLight">
+		<langs>
+			<lang key="de" translation="Ampel" />
+			<lang key="en" translation="Traffic Light" />
+			<lang key="fr" translation="Traffic Light" />
+		</langs>
+	</translation>
+	
+	
 </translations>

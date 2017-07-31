@@ -60,6 +60,9 @@ public interface JeeslReportColumn<L extends UtilsLang,D extends UtilsDescriptio
 	
 	String getQueryFooter();
 	void setQueryFooter(String queryFooter);
+
+	String getQueryTrafficLight();
+	void setQueryTrafficLight(String queryTrafficLight);
 	
 	CW getColumWidth();
 	void setColumWidth(CW columWidth);
@@ -75,4 +78,7 @@ public interface JeeslReportColumn<L extends UtilsLang,D extends UtilsDescriptio
 	
 	STYLE getStyleFooter();
 	void setStyleFooter(STYLE styleFooter);
+	
+	TLS getTrafficLightScope();
+	void setTrafficLightScope(TLS trafficLightScope);
 }

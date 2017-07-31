@@ -102,6 +102,9 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private Class<ROW> cRow;
 	private Class<TEMPLATE> cTemplate;
 	private Class<STYLE> cStyle;
+	
+	private final Class<TLS> cTls;
+	
 	private Class<CDT> cDataType;
 	private Class<CW> cColumnWidth;
 	private Class<RT> cRowType;
@@ -120,6 +123,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private List<COLUMN> columns; public List<COLUMN> getColumns() {return columns;}
 	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
 	private List<STYLE> styles; public List<STYLE> getStyles() {return styles;}
+	private List<TLS> trafficLightScopes; public List<TLS> getTrafficLightScopes() {return trafficLightScopes;}
 	
 	private RC revisionCategory; public RC getRevisionCategory() {return revisionCategory;} public void setRevisionCategory(RC revisionCategory) {this.revisionCategory = revisionCategory;}
 	private REPORT report; public REPORT getReport() {return report;} public void setReport(REPORT report) {this.report = report;}
@@ -143,6 +147,11 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efGroup;
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efColumn;
 	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efRow;
+	
+	protected AbstractAdminIoReportDefinitionBean(final Class<TLS> cTls)
+	{
+		this.cTls = cTls;
+	}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<TEMPLATE> cTemplate, Class<CELL> cCell, Class<STYLE> cStyle, Class<CDT> cDataType, Class<CW> cColumnWidth, Class<RT> cRowType, Class<RC> cRevisionCategory)
 	{
@@ -188,6 +197,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		rowTypes = fReport.allOrderedPositionVisible(cRowType);
 		templates = fReport.allOrderedPositionVisible(cTemplate);
 		styles = fReport.allOrderedPositionVisible(cStyle);
+		trafficLightScopes = fReport.allOrderedPositionVisible(cTls);
 		
 		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,categories,this);
 //		sbhCategory.selectAll();

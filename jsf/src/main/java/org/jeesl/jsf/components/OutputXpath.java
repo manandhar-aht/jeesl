@@ -31,7 +31,7 @@ import net.sf.ahtutils.jsf.util.ComponentAttribute;
 public class OutputXpath extends UIOutput
 {	
 	final static Logger logger = LoggerFactory.getLogger(OutputXpath.class);
-	private static enum Properties {styleClass,value,xpath,column}
+	private static enum Properties {value,xpath,column,styleClass}
 	
 
 	private Map<JeeslReportColumn,SimpleDateFormat> mapDateFormatter;
@@ -49,7 +49,7 @@ public class OutputXpath extends UIOutput
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("span", this);
 		
-		writer.writeAttribute("class",ComponentAttribute.get(Properties.styleClass.toString(), "", context, this),null);
+		writer.writeAttribute("class",ComponentAttribute.get(Properties.styleClass, "", context, this),null);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class OutputXpath extends UIOutput
 	{
 		ResponseWriter writer = context.getResponseWriter();
 		
-		String xpath = ComponentAttribute.get(Properties.xpath.toString(),"",context,this);
+		String xpath = ComponentAttribute.get(Properties.xpath,"",context,this);
 				
 		ValueExpression ve = this.getValueExpression(Properties.value.toString());
 		JXPathContext ctx = JXPathContext.newContext(ve.getValue(context.getELContext()));
@@ -77,7 +77,7 @@ public class OutputXpath extends UIOutput
 			Object value = ctx.getValue(xpath);
 //			logger.info("Object: Type "+value.getClass().getName());
 			
-			Object oColumn = ComponentAttribute.getObject(Properties.column.toString(),null,context,this);
+			Object oColumn = ComponentAttribute.getObject(Properties.column,null,context,this);
 			if(oColumn!=null && JeeslReportColumn.class.isAssignableFrom(oColumn.getClass()))
 			{
 				JeeslReportColumn c = (JeeslReportColumn)oColumn;

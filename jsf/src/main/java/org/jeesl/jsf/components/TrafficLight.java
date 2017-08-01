@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-@FacesComponent(value="org.jeesl.jsf.components.TrafficLight")
+@FacesComponent("org.jeesl.jsf.components.TrafficLight")
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class TrafficLight extends UIOutput 
 {

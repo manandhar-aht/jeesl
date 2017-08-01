@@ -17,6 +17,7 @@ import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.exlp.util.io.StringUtil;
 
@@ -80,10 +81,29 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 		refresh();
 	}
 	
+	public <E extends Enum<E>> void preSelect(E... codes)
+	{
+		if(EjbWithCode.class.isAssignableFrom(cT))
+		{
+			for(T t : list)
+			{
+				EjbWithCode c = (EjbWithCode)t;
+				for(E code : codes)
+				{
+					if(c.getCode().equals(code.toString()))
+					{
+						map.put(t,true);
+					}
+				}
+			}
+		}
+		else {logger.error(cT.getSimpleName()+" is not a "+EjbWithCode.class.getSimpleName());}
+	}
 	public void preSelect(T t)
 	{
 		map.put(t,true);
 	}
+	
 	public void select(T t)
 	{
 		map.put(t,true);

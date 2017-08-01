@@ -1,18 +1,15 @@
-package org.jeesl.jsf.components;
+package org.jeesl.jsf.components.xpath;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.el.ValueExpression;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -26,44 +23,32 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.ComponentAttribute;
 
-@FacesComponent("org.jeesl.jsf.components.OutputXpath")
+@FacesComponent("org.jeesl.jsf.components.xpath.TrafficLightXpath")
 @SuppressWarnings("rawtypes")
-public class OutputXpath extends UIOutput
+public class TrafficLightXpath extends AbstractXpath
 {	
-	final static Logger logger = LoggerFactory.getLogger(OutputXpath.class);
-	private static enum Properties {value,xpath,column,styleClass}
-	
-
-	private Map<JeeslReportColumn,SimpleDateFormat> mapDateFormatter;
-	
-	public OutputXpath()
-	{
-//		logger.info("New Instance of "+this.getClass().getSimpleName()+" "+this.hashCode());
-	}
-	
+	final static Logger logger = LoggerFactory.getLogger(TrafficLightXpath.class);
+	private static enum Properties {value,xpath,column,styleClass,scope,style}
+		
 	@Override public boolean getRendersChildren(){return true;}
 	
 	@Override
 	public void encodeBegin(FacesContext context) throws IOException
 	{
-		ResponseWriter writer = context.getResponseWriter();
-		writer.startElement("span", this);
-		
-		writer.writeAttribute("class",ComponentAttribute.get(Properties.styleClass, "", context, this),null);
+		context.getResponseWriter().startElement("div", this);
 	}
 
 	@Override
 	public void encodeEnd(FacesContext context) throws IOException
 	{
 		ResponseWriter responseWriter = context.getResponseWriter();
-		responseWriter.endElement("span");
+		responseWriter.endElement("div");
 	}
+	
 	
 	@Override
 	public void encodeChildren(FacesContext context) throws IOException
-	{
-		ResponseWriter writer = context.getResponseWriter();
-		
+	{		
 		String xpath = ComponentAttribute.get(Properties.xpath,"",context,this);
 				
 		ValueExpression ve = this.getValueExpression(Properties.value.toString());
@@ -100,7 +85,7 @@ public class OutputXpath extends UIOutput
 					}
 					else if(dt.getCode().equals("date"))
 					{
-						SimpleDateFormat sdf = getSimpleDateFormat(c,dt);
+						SimpleDateFormat sdf = super.getSimpleDateFormat(c,dt);
 						
 //						logger.info("Checking SimpleDateFormat");
 						if(value instanceof XMLGregorianCalendar)
@@ -131,22 +116,10 @@ public class OutputXpath extends UIOutput
 		}
 		catch (JXPathNotFoundException ex){}
 		
-		writer.write(sb.toString());
+		context.getResponseWriter().write(sb.toString());
 		for(UIComponent uic : this.getChildren())
 		{
 			uic.encodeAll(context);
-		}
-	}
-	
-	private SimpleDateFormat getSimpleDateFormat(JeeslReportColumn c, UtilsStatus dt)
-	{
-		if(mapDateFormatter==null){mapDateFormatter = new HashMap<JeeslReportColumn,SimpleDateFormat>();}
-		if(mapDateFormatter.containsKey(c)){return mapDateFormatter.get(c);}
-		else
-		{
-			SimpleDateFormat sdf = new SimpleDateFormat(dt.getSymbol());
-			mapDateFormatter.put(c,sdf);
-			return sdf;
 		}
 	}
 }

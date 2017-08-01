@@ -9,7 +9,7 @@
 	<tag>
         <tag-name>outputXpath</tag-name>
         <component>
-            <component-type>org.jeesl.jsf.components.OutputXpath</component-type>
+            <component-type>org.jeesl.jsf.components.xpath.OutputXpath</component-type>
         </component>
     </tag>
     	<tag>
@@ -21,7 +21,7 @@
 		<tag>
         <tag-name>trafficLightXpath</tag-name>
         <component>
-            <component-type>org.jeesl.jsf.components.TrafficLightXpath</component-type>
+            <component-type>org.jeesl.jsf.components.xpath.TrafficLightXpath</component-type>
         </component>
     </tag>
 	

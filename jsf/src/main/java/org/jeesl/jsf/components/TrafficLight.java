@@ -1,7 +1,6 @@
 package org.jeesl.jsf.components;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIOutput;
@@ -9,15 +8,20 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.jeesl.api.bean.JeeslTrafficLightBean;
+import org.jeesl.factory.css.CssColorFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
+import org.jeesl.jsf.util.TrafficLightProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 @FacesComponent("org.jeesl.jsf.components.TrafficLight")
-@SuppressWarnings({ "unchecked", "rawtypes" })
-public class TrafficLight extends UIOutput 
+public class TrafficLight <L extends UtilsLang,D extends UtilsDescription,
+							LIGHT extends JeeslTrafficLight<L,D,SCOPE>,SCOPE extends UtilsStatus<SCOPE,L,D>>
+							extends UIOutput 
 {
     final static Logger logger = LoggerFactory.getLogger(TrafficLight.class);
 	
@@ -41,7 +45,8 @@ public class TrafficLight extends UIOutput
 	@Override
 	public void encodeChildren(FacesContext context) throws IOException
 	{
-		JeeslTrafficLightBean appBean = (JeeslTrafficLightBean) context.getApplication().evaluateExpressionGet(context, "#{appTrafficLightsBean}", JeeslTrafficLightBean.class);
+		@SuppressWarnings("unchecked")
+		JeeslTrafficLightBean<L,D,LIGHT,SCOPE> appBean = (JeeslTrafficLightBean<L,D,LIGHT,SCOPE>) context.getApplication().evaluateExpressionGet(context, "#{appTrafficLightsBean}", JeeslTrafficLightBean.class);
 		
 		Object o =  this.getAttributes().get(Attribute.value.toString());
 		Double value = null;
@@ -50,56 +55,18 @@ public class TrafficLight extends UIOutput
 		
 		if (value!=null)
 		{
-            String text  = value.toString();
-            String color = "";
-            String originalStyle = "";
+            StringBuilder sb = new StringBuilder();
 			if (this.getAttributes().containsKey("style"))
 			{
-				originalStyle = this.getAttributes().get(Attribute.style.toString()).toString();
+				sb.append(this.getAttributes().get(Attribute.style.toString()).toString());
 			}
+			sb.append(" text-align: center;");
+           
+            String scope = TrafficLightProcessor.findScope(this.getAttributes().get(Attribute.scope.toString()));			
+			CssColorFactory.addColor(sb, TrafficLightProcessor.findLight(appBean.getTrafficLights(scope), value));
 			
-            String style = "text-align: center; " +originalStyle;
-            Object scopeAttribute = this.getAttributes().get(Attribute.scope.toString());
-            String scope = "";
-			if(logger.isTraceEnabled()){logger.info("scope has class " +scopeAttribute.getClass().toString());}
-			
-			if (scopeAttribute instanceof UtilsStatus)
-			{
-				UtilsStatus scopeObj = (UtilsStatus) scopeAttribute;
-				if(logger.isTraceEnabled()){logger.info("Scope is given as object" +scopeObj.getCode());}
-				scope = scopeObj.getCode();
-			}
-			else
-			{
-				if(logger.isTraceEnabled()){logger.info("Scope is not given as Object. To String results in " +scopeAttribute.toString());}
-				scope = scopeAttribute.toString();
-			}
-
-
-			ArrayList<JeeslTrafficLight> trafficLightDefinitions = (ArrayList<JeeslTrafficLight>) appBean.getTrafficLights(scope);
-			if(logger.isTraceEnabled()){logger.info("Loaded " + trafficLightDefinitions.size() + " Traffic Light Definitions from Application Scoped Bean.");}
-
-			for (JeeslTrafficLight trafficLightDefinition : trafficLightDefinitions)
-			{
-				if(logger.isTraceEnabled()){logger.info("Comparing " +value +">=" +trafficLightDefinition.getThreshold());}
-				if (value >= trafficLightDefinition.getThreshold())
-				{
-					color = trafficLightDefinition.getColorBackground();
-					if(logger.isTraceEnabled()){logger.info("true.");}
-				}
-			}
-                    
-			if (!color.equals(""))
-			{
-				 style = style + "background: #" +color +"; ";
-			}
-
-			if(logger.isTraceEnabled()){logger.info("Setting style: " + style);}
-			
-			context.getResponseWriter().writeAttribute("style", style, null);
-			context.getResponseWriter().write(text);
+			context.getResponseWriter().writeAttribute("style", sb.toString(), null);
+			context.getResponseWriter().write(value.toString());
 		}
 	}
-	
-//	@Override public String getFamily() {return null;}
 }

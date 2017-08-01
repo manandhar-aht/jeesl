@@ -8,7 +8,9 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:aup="http://ahtutils.sourceforge.net/prototype">
 
-	<aup:statusBarItem label="#{label}"  orientation="right" childs="#{handler.list}">
+	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
+
+	<aup:statusBarItem label="#{label}"  orientation="right" childs="#{handler.list}" rendered="#{rendered}">
 		<h:commandLink>
 			<c:if test="#{handler.selection.id eq var.id}"><f:attribute name="styleClass" value="jeeslBold"/></c:if>
 			<ui:insert />

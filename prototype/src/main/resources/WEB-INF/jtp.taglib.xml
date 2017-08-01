@@ -52,7 +52,7 @@
     </tag>
 	<tag>
         <tag-name>sbSingle</tag-name>
-        <source>jeeslPrototype/sbSingle.xhtml</source>
+        <source>jeeslPrototype/sb/single.xhtml</source>
     </tag>
 	<tag>
         <tag-name>surveyAnswer</tag-name>

@@ -57,10 +57,14 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		}
 	}
 	
-	public boolean isSelected()
+	public void clear()
 	{
-		return selection!=null;
+		list.clear();
+		selection = null;
 	}
+	
+	public boolean getHasMore(){return list.size()>1;}
+	public boolean isSelected(){return selection!=null;}
 	
 	public void selectDefault()
 	{

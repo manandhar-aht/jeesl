@@ -98,6 +98,7 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 			}
 		}
 		else {logger.error(cT.getSimpleName()+" is not a "+EjbWithCode.class.getSimpleName());}
+		refresh();
 	}
 	public void preSelect(T t)
 	{

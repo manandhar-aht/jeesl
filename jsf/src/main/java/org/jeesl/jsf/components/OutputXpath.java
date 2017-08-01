@@ -27,11 +27,13 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.ComponentAttribute;
 
 @FacesComponent("org.jeesl.jsf.components.OutputXpath")
+@SuppressWarnings("rawtypes")
 public class OutputXpath extends UIOutput
 {	
 	final static Logger logger = LoggerFactory.getLogger(OutputXpath.class);
 	private static enum Properties {styleClass,value,xpath,column}
 	
+
 	private Map<JeeslReportColumn,SimpleDateFormat> mapDateFormatter;
 	
 	public OutputXpath()
@@ -69,7 +71,7 @@ public class OutputXpath extends UIOutput
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("");
-			
+
 		try
 		{
 			Object value = ctx.getValue(xpath);
@@ -130,7 +132,6 @@ public class OutputXpath extends UIOutput
 		catch (JXPathNotFoundException ex){}
 		
 		writer.write(sb.toString());
-		
 		for(UIComponent uic : this.getChildren())
 		{
 			uic.encodeAll(context);

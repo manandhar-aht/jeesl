@@ -12,6 +12,18 @@
             <component-type>org.jeesl.jsf.components.OutputXpath</component-type>
         </component>
     </tag>
+    	<tag>
+        <tag-name>trafficLight</tag-name>
+        <component>
+            <component-type>org.jeesl.jsf.components.TrafficLight</component-type>
+        </component>
+    </tag>
+		<tag>
+        <tag-name>trafficLightXpath</tag-name>
+        <component>
+            <component-type>org.jeesl.jsf.components.TrafficLightXpath</component-type>
+        </component>
+    </tag>
 	
 	<function>
 		<function-name>humanFileSize</function-name>

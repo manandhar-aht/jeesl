@@ -24,14 +24,19 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTrafficLightBean.class);
 	
-	protected JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fTl;
+	private JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fTl;
 	
 	private final Class<SCOPE> cScope;
 	private final Class<LIGHT> cLight;
 	
 	private String[] defaultLangs;
 	
-	protected EjbTrafficLightFactory<L,D,SCOPE,LIGHT> efLight;
+	private EjbTrafficLightFactory<L,D,SCOPE,LIGHT> efLight;
+	
+	private List<SCOPE> trafficLightScopes; public List<SCOPE> getTrafficLightScopes(){return trafficLightScopes;}
+	protected List<LIGHT> trafficLights; public List<LIGHT> getTrafficLights(){return trafficLights;}
+	
+	protected SCOPE scope; public SCOPE getScope(){return scope;} public void setScope(SCOPE scope){this.scope = scope;}
 	
 	public AbstractAdminTrafficLightBean(Class<L> cLang,Class<D> cDescription,Class<SCOPE> cScope,Class<LIGHT> cLight)
 	{
@@ -45,34 +50,25 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	{
 		this.defaultLangs=defaultLangs;
 		this.fTl=fTl;
+		
+		 reloadTrafficLightScopes();
 	}
+
 	
-	//Scopes
-	protected List<SCOPE> trafficLightScopes;
-	public List<SCOPE> getTrafficLightScopes(){return trafficLightScopes;}
-	
-	protected void reloadTrafficLightScopes()
+	private void reloadTrafficLightScopes()
 	{
 		trafficLightScopes = fTl.all(cScope);
 		logger.trace("Results: " + trafficLightScopes.size() +" scopes loaded.");
 	}
-	
-	//Scope
-	protected SCOPE scope;
-	public SCOPE getScope(){return scope;}
-	public void setScope(SCOPE scope){this.scope = scope;}
+		
 	
 	public void selectScope()
 	{
 		logger.info(AbstractLogMessage.selectEntity(scope));
 		reloadTrafficLights();
 	}
-	
-	//Lights
-	protected List<LIGHT> trafficLights;
-	public List<LIGHT> getTrafficLights(){return trafficLights;}
-	
-	protected void reloadTrafficLights()
+
+	private void reloadTrafficLights()
 	{
 		trafficLights = fTl.allOrderedTrafficLights(scope);
 		logger.debug("Results: " + trafficLights.size());

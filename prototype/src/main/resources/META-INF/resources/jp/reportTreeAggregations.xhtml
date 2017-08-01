@@ -18,7 +18,7 @@
 		<p:dataTable id="dtTreeAggregation" var="p" value="#{cc.attrs.bean.opAggregationHandler.tbList}"
 					 selection="#{cc.attrs.bean.opAggregationHandler.tb}" selectionMode="single" rowKey="#{p.id}" draggableRows="true">
 			<f:facet name="header">
-				<aht:pfDataTableHeader id="dth" title="#{msg.ReportAggregations}">
+				<aht:pfDataTableHeader id="dth" title="#{msg.jeeslIoReportAggregations}">
 					<aht:icon type="jeeslFilter" listener="#{cc.attrs.bean.applyFilter()}" update="#{cc.attrs.update}" tooltip="Apply Filter"/>
 					<h:graphicImage id="giAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['jeeslAdd']}"/>
 					<p:tooltip for="giAdd" value="#{msg.ttAdd}"/>

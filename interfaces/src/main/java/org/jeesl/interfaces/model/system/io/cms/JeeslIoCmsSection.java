@@ -9,7 +9,7 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
+public interface JeeslIoCmsSection<L extends UtilsLang,D extends UtilsDescription,
 								C extends UtilsStatus<C,L,D>,
 								CMS extends JeeslIoCms<L,D,C,CMS,V,S,E,T>,
 								V extends JeeslIoCmsVisiblity<L,D,C,CMS,V,S,E,T>,

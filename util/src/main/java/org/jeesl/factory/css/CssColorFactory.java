@@ -49,7 +49,7 @@ public class CssColorFactory
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription, LIGHT extends JeeslTrafficLight<L,D,SCOPE>,SCOPE extends UtilsStatus<SCOPE,L,D>>
-		void addColor(StringBuilder sb, LIGHT light)
+		void appendColor(StringBuilder sb, LIGHT light)
 	{
 		if(sb!=null && light!=null)
 		{

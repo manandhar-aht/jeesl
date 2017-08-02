@@ -39,6 +39,7 @@ public class TrafficLightProcessor
 		
 		if (scopeAttribute instanceof UtilsStatus)
 		{
+			@SuppressWarnings("unchecked")
 			SCOPE scopeObj = (SCOPE) scopeAttribute;
 			if(logger.isTraceEnabled()){logger.info("Scope is given as object" +scopeObj.getCode());}
 			scope = scopeObj.getCode();

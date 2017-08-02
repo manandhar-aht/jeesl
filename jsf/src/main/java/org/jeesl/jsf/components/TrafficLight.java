@@ -5,9 +5,9 @@ import java.io.IOException;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 
 import org.jeesl.api.bean.JeeslTrafficLightBean;
+import org.jeesl.factory.css.CssAlignmentFactory;
 import org.jeesl.factory.css.CssColorFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.jeesl.jsf.util.TrafficLightProcessor;
@@ -38,8 +38,7 @@ public class TrafficLight <L extends UtilsLang,D extends UtilsDescription,
 	@Override
 	public void encodeEnd(FacesContext context) throws IOException
 	{
-		ResponseWriter responseWriter = context.getResponseWriter();
-		responseWriter.endElement("div");
+		context.getResponseWriter().endElement("div");
 	}
 
 	@Override
@@ -56,16 +55,16 @@ public class TrafficLight <L extends UtilsLang,D extends UtilsDescription,
 		if (value!=null)
 		{
             StringBuilder sb = new StringBuilder();
-			if (this.getAttributes().containsKey("style"))
+			if (this.getAttributes().containsKey(Attribute.style.toString()))
 			{
 				sb.append(this.getAttributes().get(Attribute.style.toString()).toString());
 			}
-			sb.append(" text-align: center;");
+			CssAlignmentFactory.appendTextCenter(sb);
            
             String scope = TrafficLightProcessor.findScope(this.getAttributes().get(Attribute.scope.toString()));			
-			CssColorFactory.addColor(sb, TrafficLightProcessor.findLight(appBean.getTrafficLights(scope), value));
+			CssColorFactory.appendColor(sb, TrafficLightProcessor.findLight(appBean.getTrafficLights(scope), value));
 			
-			context.getResponseWriter().writeAttribute("style", sb.toString(), null);
+			context.getResponseWriter().writeAttribute(Attribute.style.toString(), sb.toString(), null);
 			context.getResponseWriter().write(value.toString());
 		}
 	}

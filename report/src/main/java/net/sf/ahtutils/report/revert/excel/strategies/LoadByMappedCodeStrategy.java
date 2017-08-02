@@ -42,7 +42,7 @@ public class LoadByMappedCodeStrategy implements ImportStrategy {
 			try {
 				lookupEntity = lutClass.newInstance();
 			} catch (Exception e) {
-				logger.error(e.getMessage());
+				logger.error("Could not create new class instance of " +lutClass.getCanonicalName() +": " +e.getMessage());
 			}
 			try {
 				ReflectionsUtil.simpleInvokeMethod("setCode",
@@ -50,7 +50,7 @@ public class LoadByMappedCodeStrategy implements ImportStrategy {
 					      lutClass,
 					      lookupEntity);
 			} catch (Exception e) {
-				logger.error("Could not set ID for created " +lutClass.getSimpleName());
+				logger.error("Could not set Code for created " +lutClass.getSimpleName());
 				logger.error(e.getMessage());
 			}
 			mapper.addObjectForCode(code, lookupEntity);

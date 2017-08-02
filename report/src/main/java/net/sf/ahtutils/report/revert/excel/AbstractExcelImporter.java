@@ -186,7 +186,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		{
 			// Get the next row
 			Row row = activeSheet.getRow(i);
-			
+			if (row==null) {continue;}
 			// Create a new Entity
 			C entity = (C) Class.forName(structure.getTargetClass()).newInstance();
             if (entity instanceof EjbWithId)
@@ -332,19 +332,19 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			{
 				if (isHandled)
 				{
-					logger.trace("Loading import strategy for " +parameterClass +": " +handler.getCanonicalName() +".");
+				    if (targetClasses.containsKey(activeColumn)) {parameterClass = targetClasses.get(activeColumn).getCanonicalName();}
+				    if (logger.isTraceEnabled()) {logger.trace("Loading import strategy for " +parameterClass +": " +handler.getCanonicalName() +".");}
+				    // Instantiate new strategy to handle import
+				    ImportStrategy strategy = (ImportStrategy) handler.newInstance();
 
-					// Instantiate new strategy to handle import
-					ImportStrategy strategy = (ImportStrategy) handler.newInstance();
+				    // Pass database connection and current set of temporary properties
 
-					// Pass database connection and current set of temporary properties
+				    strategy.setFacade(facade);
+				    strategy.setTempPropertyStore(tempPropertyStore);
 
-					strategy.setFacade(facade);
-					strategy.setTempPropertyStore(tempPropertyStore);
-
-					// Process import step
-					Object value  = strategy.handleObject(parameters[0], parameterClass, property);
-					parameters[0] =  value;
+				    // Process import step
+				    Object value  = strategy.handleObject(parameters[0], parameterClass, property);
+				    parameters[0] =  value;
 
 
 

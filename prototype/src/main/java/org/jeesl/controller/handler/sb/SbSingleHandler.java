@@ -23,13 +23,15 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	private List<T> list;public List<T> getList() {return list;} public void setList(List<T> list) {this.list = list;}
 	
 	private T selection; public T getSelection() {return selection;} public void setSelection(T selected) {this.selection = selected;}
-
+	private T previous;
+	
 	public SbSingleHandler(Class<T> c, SbSingleBean bean){this(c,new ArrayList<T>(),bean);}	
 	public SbSingleHandler(Class<T> c, List<T> list, SbSingleBean bean)
 	{
 		this.c=c;
 		this.bean=bean;
 		update(list);
+		previous = null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -38,6 +40,7 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	{
 		if(c.isAssignableFrom(item.getClass()))
 		{
+//			previous=selection;
 			selection=(T)item;
 			if(bean!=null){bean.selectSbSingle(item);}
 		}
@@ -65,10 +68,21 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	
 	public boolean getHasMore(){return list.size()>1;}
 	public boolean isSelected(){return selection!=null;}
+	public boolean getTwiceSelected() {return (previous!=null && previous.equals(selection));}
 	
 	public void selectDefault()
 	{
 		selection=null;
 		if(list!=null && !list.isEmpty()){selection = list.get(0);}
+	}
+	
+	public void silentCallback()
+	{
+		try
+		{
+			if(isSelected()) {selectSbSingle(selection);}
+		}
+		catch (UtilsLockingException e) {}
+		catch (UtilsConstraintViolationException e) {}
 	}
 }

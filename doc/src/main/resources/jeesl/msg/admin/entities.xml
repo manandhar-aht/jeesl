@@ -70,6 +70,20 @@
 			<s:lang key="fr" translation="SMS Category"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IoCmsCategory">
+		<s:langs>
+			<s:lang key="de" translation="CMS Kategorie"/>
+			<s:lang key="en" translation="CMS Category"/>
+			<s:lang key="fr" translation="CMS Category"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoCmsCategory">
+		<s:langs>
+			<s:lang key="de" translation="CMS Typ"/>
+			<s:lang key="en" translation="CMS Type"/>
+			<s:lang key="fr" translation="CMS Type"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="IoMailCategory">
 		<s:langs>
 			<s:lang key="de" translation="Mail Kategorie"/>

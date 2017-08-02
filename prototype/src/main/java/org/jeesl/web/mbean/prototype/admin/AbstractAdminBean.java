@@ -25,7 +25,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	
 	protected FacesMessageBean bMessage;
 	
-	protected boolean debugOnInfo;
+	protected boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo){this.debugOnInfo=debugOnInfo;}
 	protected String[] langs; public String[] getLangs() {return langs;}
 	protected String[] localeCodes; public String[] getLocaleCodes() {return localeCodes;}
 	protected EjbLangFactory<L> efLang;

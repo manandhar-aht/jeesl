@@ -69,7 +69,6 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fCms=fCms;
 		reloadCms();
-		sbhCms.selectDefault();
 		sbhCms.silentCallback();
 	}
 	
@@ -81,7 +80,6 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.toggled(c));
-		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -111,6 +109,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	
 	public void saveCms() throws UtilsConstraintViolationException, UtilsLockingException
 	{
+		logger.info("Save "+cms.toString());
 		cms = fCms.save(cms);
 		reloadCms();
 	}

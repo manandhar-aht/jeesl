@@ -19,14 +19,13 @@
 		<aup:grid id="grid">
 			<aht:row>
 				<aht:slot width="3">
-					<h:form id="fRow">
+					<h:form id="fRow" rendered="#{cc.attrs.bean.sbhCms.twiceSelected or (cc.attrs.bean.cms.id eq 0)}">
 						<p:panel header="#{msg.jeeslIoReportRow}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveCms()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
-								<aht:tabTranslationEditor value="#{cc.attrs.bean.cms}" withDescription="false"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.bean.localeCodes}" />
+							<p:panelGrid columns="2" columnClasses="jeeslGrid20,JeeslGrid80">
+								<h:outputText value="#{cc.attrs.bean.cms.id}" />
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

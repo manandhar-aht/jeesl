@@ -6,10 +6,9 @@ import javax.faces.component.FacesComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 
-import org.jeesl.api.bean.JeeslTrafficLightBean;
 import org.jeesl.factory.css.CssAlignmentFactory;
-import org.jeesl.factory.css.CssColorFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
+import org.jeesl.jsf.util.ComponentAttributeProcessor;
 import org.jeesl.jsf.util.TrafficLightProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,28 +43,27 @@ public class TrafficLight <L extends UtilsLang,D extends UtilsDescription,
 	@Override
 	public void encodeChildren(FacesContext context) throws IOException
 	{
-		@SuppressWarnings("unchecked")
-		JeeslTrafficLightBean<L,D,LIGHT,SCOPE> appBean = (JeeslTrafficLightBean<L,D,LIGHT,SCOPE>) context.getApplication().evaluateExpressionGet(context, "#{appTrafficLightsBean}", JeeslTrafficLightBean.class);
+		StringBuilder sbStyle = new StringBuilder();
+		ComponentAttributeProcessor.defaultStyle(sbStyle, this.getAttributes());
+		CssAlignmentFactory.appendTextCenter(sbStyle);
 		
 		Object o =  this.getAttributes().get(Attribute.value.toString());
+		
+		String s = null; 
 		Double value = null;
-		if(o instanceof Double) {value=(Double)o;}
-		else if(o instanceof Integer) {value=((Integer)o).doubleValue();}
+		if(o instanceof Double) {value=(Double)o;s=value.toString();}
+		else if(o instanceof Integer)
+		{
+			Integer i = (Integer)o;
+			s = i.toString();
+			value = i.doubleValue();
+		}
 		
 		if (value!=null)
 		{
-            StringBuilder sb = new StringBuilder();
-			if (this.getAttributes().containsKey(Attribute.style.toString()))
-			{
-				sb.append(this.getAttributes().get(Attribute.style.toString()).toString());
-			}
-			CssAlignmentFactory.appendTextCenter(sb);
-           
-            String scope = TrafficLightProcessor.findScope(this.getAttributes().get(Attribute.scope.toString()));			
-			CssColorFactory.appendColor(sb, TrafficLightProcessor.findLight(appBean.getTrafficLights(scope), value));
-			
-			context.getResponseWriter().writeAttribute(Attribute.style.toString(), sb.toString(), null);
-			context.getResponseWriter().write(value.toString());
+			TrafficLightProcessor.appendStyle(sbStyle,context,this.getAttributes(),value);
+			if(sbStyle.length()>0) {context.getResponseWriter().writeAttribute(Attribute.style.toString(),sbStyle.toString(), null);}
+			context.getResponseWriter().write(s);
 		}
 	}
 }

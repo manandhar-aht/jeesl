@@ -26,7 +26,7 @@ public class AbstractTrafficLightBean <L extends UtilsLang,D extends UtilsDescri
 	private JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fLight;
 		
 	
-	private Hashtable<String,List<LIGHT>> trafficLightCache;
+	private Hashtable<String,List<LIGHT>> cache;
 	
 	protected void init(JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fLight)
 	{
@@ -38,29 +38,30 @@ public class AbstractTrafficLightBean <L extends UtilsLang,D extends UtilsDescri
 	
 	public void refreshTrafficLights()
 	{
-	    trafficLightCache = new Hashtable<String,List<LIGHT>>();
+	    cache = new Hashtable<String,List<LIGHT>>();
 	    
 	    trafficLights = fLight.allOrderedTrafficLights();
 	    for (LIGHT light : trafficLights)
 	    {
 	    		SCOPE scope = light.getScope();
-			if (trafficLightCache.containsKey(scope.getCode()))
+			if (cache.containsKey(scope.getCode()))
 			{
-			    trafficLightCache.get(scope.getCode()).add(light);
+			    cache.get(scope.getCode()).add(light);
 			}
 			else
 			{
 			    ArrayList<LIGHT> scopeLights = new ArrayList<LIGHT>();
 			    scopeLights.add(light);
-			    trafficLightCache.put(scope.getCode(), scopeLights);
+			    cache.put(scope.getCode(), scopeLights);
 			}
 	    }
 	}
 	
 	@Override public List<LIGHT> getTrafficLights(String scope)
 	{
-	    if (trafficLightCache == null) {refreshTrafficLights();}
-	    logger.info("Found " +trafficLightCache.get(scope).size() +" lights definitions in scope " +scope);
-	    return trafficLightCache.get(scope);
+	    if (cache == null) {refreshTrafficLights();}
+	    if(scope==null || scope.length()==0 || !cache.containsKey(scope)) {return null;}
+	    if(logger.isTraceEnabled()){logger.info("Found " +cache.get(scope).size() +" lights definitions in scope " +scope);}
+	    return cache.get(scope);
 	}
 }

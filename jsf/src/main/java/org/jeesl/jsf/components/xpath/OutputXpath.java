@@ -1,17 +1,11 @@
 package org.jeesl.jsf.components.xpath;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import javax.el.ValueExpression;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.jxpath.JXPathContext;
@@ -29,23 +23,18 @@ public class OutputXpath extends AbstractXpath
 {	
 	final static Logger logger = LoggerFactory.getLogger(OutputXpath.class);
 	private static enum Properties {value,xpath,column,styleClass}
-		
-	@Override public boolean getRendersChildren(){return true;}
 	
 	@Override
 	public void encodeBegin(FacesContext context) throws IOException
 	{
-		ResponseWriter writer = context.getResponseWriter();
-		writer.startElement("span", this);
-		
-		writer.writeAttribute("class",ComponentAttribute.get(Properties.styleClass, "", context, this),null);
+		context.getResponseWriter().startElement("span", this);
+		context.getResponseWriter().writeAttribute("class",ComponentAttribute.get(Properties.styleClass, "", context, this),null);
 	}
 
 	@Override
 	public void encodeEnd(FacesContext context) throws IOException
 	{
-		ResponseWriter responseWriter = context.getResponseWriter();
-		responseWriter.endElement("span");
+		context.getResponseWriter().endElement("span");
 	}
 	
 	@Override
@@ -56,8 +45,7 @@ public class OutputXpath extends AbstractXpath
 		ValueExpression ve = this.getValueExpression(Properties.value.toString());
 		JXPathContext ctx = JXPathContext.newContext(ve.getValue(context.getELContext()));
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("");
+		StringBuilder sbValue = new StringBuilder("");
 
 		try
 		{
@@ -76,49 +64,29 @@ public class OutputXpath extends AbstractXpath
 					
 					if(dt.getCode().startsWith("numberDouble"))
 					{
-						DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());
-						dfs.setDecimalSeparator(',');
-						dfs.setGroupingSeparator('.'); 
-						
-						DecimalFormat df = new DecimalFormat(dt.getSymbol());
-						df.setDecimalFormatSymbols(dfs);
-
-						sb.append(df.format(value));
+						sbValue.append(super.getDecimalFormat(dt.getSymbol()).format(value));
 					}
 					else if(dt.getCode().equals("date"))
-					{
-						SimpleDateFormat sdf = super.getSimpleDateFormat(c,dt);
-						
-//						logger.info("Checking SimpleDateFormat");
+					{						
 						if(value instanceof XMLGregorianCalendar)
 						{
 							XMLGregorianCalendar xmlGc = (XMLGregorianCalendar)value;
-							
-							Date d = (Date)xmlGc.toGregorianCalendar().getTime();
-							sb.append(sdf.format(d));
+							sbValue.append(super.getSimpleDateFormat(c,dt).format(xmlGc.toGregorianCalendar().getTime()));
 						}
-						else {logger.warn("Fallback, XMLGC");sb.append(value);}
+						else {logger.warn("Fallback, XMLGC");sbValue.append(value);}
 					}
 					else
 					{
-						// Fallback
-						sb.append(value);
+						logger.warn("NYI Handling of "+dt.getCode());sbValue.append(value);
 					}
 				}
-				else
-				{
-					logger.warn("DataType is NULL");
-				}
+				else{logger.warn("DataType of "+JeeslReportColumn.class.getSimpleName()+" NULL");}
 			}
-			else
-			{
-				logger.warn("Fallback, column==null or not assignable");
-				sb.append(value);
-			}
+			else {logger.warn("Fallback, column==null or not assignable");sbValue.append(value);}
 		}
 		catch (JXPathNotFoundException ex){}
 		
-		context.getResponseWriter().write(sb.toString());
+		context.getResponseWriter().write(sbValue.toString());
 		for(UIComponent uic : this.getChildren())
 		{
 			uic.encodeAll(context);

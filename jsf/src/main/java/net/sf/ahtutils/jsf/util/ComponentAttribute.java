@@ -92,7 +92,8 @@ public class ComponentAttribute
 			ValueExpression ve = component.getValueExpression(attribute);
 			if(ve!=null)
 			{
-				value=ve.getValue(context.getELContext()).toString();
+				Object o = ve.getValue(context.getELContext());
+				if(o!=null) {value = o.toString();}
 //				logger.info("Found ValuieExpression: "+value);
 			}
 //			logger.info("Value is now: "+value);

@@ -249,14 +249,12 @@ a:hover { color: #333; text-decoration: none; }
     table-layout: fixed !important;
 }
 
-.aupTrafficLightColumn {
-    padding: 0px !important;
-    vertical-align: middle;
-}
+/* TODO Remove */
+.aupTrafficLightColumn {padding: 0px !important; vertical-align: middle;}
+.aupTrafficLightColumn th{padding: 4px 10px !important;}
 
-.aupTrafficLightColumn th{
-   padding: 4px 10px !important;
-}
+.jeeslDtColumnTrafficLight {padding: 0px !important; vertical-align: middle;}
+.jeeslDtColumnTrafficLight div{padding: 4px 6px !important;}
 
 .aupPfTableSingleLine {
 	text-wrap:none;

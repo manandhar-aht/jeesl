@@ -1,22 +1,19 @@
 package org.jeesl.jsf.components.xpath;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import javax.el.ValueExpression;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.JXPathNotFoundException;
+import org.jeesl.factory.css.CssAlignmentFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
+import org.jeesl.jsf.util.ComponentAttributeProcessor;
+import org.jeesl.jsf.util.TrafficLightProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,10 +25,8 @@ import net.sf.ahtutils.jsf.util.ComponentAttribute;
 public class TrafficLightXpath extends AbstractXpath
 {	
 	final static Logger logger = LoggerFactory.getLogger(TrafficLightXpath.class);
-	private static enum Properties {value,xpath,column,styleClass,scope,style}
+	private static enum Properties {value,xpath,xpathref,column,style,styleClass}
 		
-	@Override public boolean getRendersChildren(){return true;}
-	
 	@Override
 	public void encodeBegin(FacesContext context) throws IOException
 	{
@@ -41,25 +36,38 @@ public class TrafficLightXpath extends AbstractXpath
 	@Override
 	public void encodeEnd(FacesContext context) throws IOException
 	{
-		ResponseWriter responseWriter = context.getResponseWriter();
-		responseWriter.endElement("div");
+		context.getResponseWriter().endElement("div");
 	}
-	
 	
 	@Override
 	public void encodeChildren(FacesContext context) throws IOException
 	{		
 		String xpath = ComponentAttribute.get(Properties.xpath,"",context,this);
-				
-		ValueExpression ve = this.getValueExpression(Properties.value.toString());
-		JXPathContext ctx = JXPathContext.newContext(ve.getValue(context.getELContext()));
+		String xpathref = ComponentAttribute.get(Properties.xpathref,"",context,this);
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("");
+		ValueExpression ve = this.getValueExpression(Properties.value.toString());
+		JXPathContext xpathContext = JXPathContext.newContext(ve.getValue(context.getELContext()));
+		
+		StringBuilder sbStyle = new StringBuilder();
+		ComponentAttributeProcessor.defaultStyle(sbStyle, this.getAttributes());
+		
+		StringBuilder sbValue = new StringBuilder("");
 
+		Double refValue = null;
+		if(xpathref!=null && xpathref.length()>0)
+		{
+			try
+			{
+				Object o = xpathContext.getValue(xpathref);
+				if(o instanceof Double) {refValue = (Double)o;}
+				else if(o instanceof Integer) {refValue = ((Integer)o).doubleValue();}
+			}
+			catch (JXPathNotFoundException ex){}
+		}
+		
 		try
 		{
-			Object value = ctx.getValue(xpath);
+			Object value = xpathContext.getValue(xpath);
 //			logger.info("Object: Type "+value.getClass().getName());
 			
 			Object oColumn = ComponentAttribute.getObject(Properties.column,null,context,this);
@@ -74,49 +82,52 @@ public class TrafficLightXpath extends AbstractXpath
 					
 					if(dt.getCode().startsWith("numberDouble"))
 					{
-						DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());
-						dfs.setDecimalSeparator(',');
-						dfs.setGroupingSeparator('.'); 
-						
-						DecimalFormat df = new DecimalFormat(dt.getSymbol());
-						df.setDecimalFormatSymbols(dfs);
-
-						sb.append(df.format(value));
+						Double d = (Double)value;
+						sbValue.append(super.getDecimalFormat(dt.getSymbol()).format(d));
+						TrafficLightProcessor.appendStyle(sbStyle,context,this.getAttributes(),d,refValue);
+					}
+					else if(dt.getCode().startsWith("numberInteger"))
+					{
+						Integer i = null;
+						if(value instanceof Double){i = ((Double)value).intValue();}
+						else {i = (Integer)value;}
+						sbValue.append(super.getDecimalFormat(dt.getSymbol()).format(i));
+						TrafficLightProcessor.appendStyle(sbStyle,context,this.getAttributes(),i.doubleValue(),refValue);
 					}
 					else if(dt.getCode().equals("date"))
-					{
-						SimpleDateFormat sdf = super.getSimpleDateFormat(c,dt);
-						
-//						logger.info("Checking SimpleDateFormat");
+					{						
 						if(value instanceof XMLGregorianCalendar)
 						{
 							XMLGregorianCalendar xmlGc = (XMLGregorianCalendar)value;
-							
-							Date d = (Date)xmlGc.toGregorianCalendar().getTime();
-							sb.append(sdf.format(d));
+							sbValue.append(super.getSimpleDateFormat(c,dt).format(xmlGc.toGregorianCalendar().getTime()));
 						}
-						else {logger.warn("Fallback, XMLGC");sb.append(value);}
+						else {logger.warn("Fallback, XMLGC");sbValue.append(value);}
 					}
+					else if(dt.getCode().startsWith("text")) {sbValue.append(value);}
 					else
 					{
-						// Fallback
-						sb.append(value);
+						logger.warn("NYI Handling of "+dt.getCode());sbValue.append(value);
 					}
 				}
-				else
+				else{logger.warn("DataType of "+JeeslReportColumn.class.getSimpleName()+" NULL");}
+				
+				if(c.getStyleCell()!=null)
 				{
-					logger.warn("DataType is NULL");
+					CssAlignmentFactory.appendTextCenter(sbStyle);
 				}
+				else {CssAlignmentFactory.appendTextCenter(sbStyle);}
 			}
 			else
 			{
+				CssAlignmentFactory.appendTextCenter(sbStyle);
 				logger.warn("Fallback, column==null or not assignable");
-				sb.append(value);
+				sbValue.append(value);
 			}
 		}
 		catch (JXPathNotFoundException ex){}
 		
-		context.getResponseWriter().write(sb.toString());
+		if(sbStyle.length()>0) {context.getResponseWriter().writeAttribute(Properties.style.toString(), sbStyle.toString(), null);}
+		context.getResponseWriter().write(sbValue.toString());
 		for(UIComponent uic : this.getChildren())
 		{
 			uic.encodeAll(context);

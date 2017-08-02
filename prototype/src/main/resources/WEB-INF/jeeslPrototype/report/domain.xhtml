@@ -7,6 +7,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:jeesl="http://www.jeesl.org/jsf">
 	<c:forEach var="c" items="#{report.columns}">
-		<p:column><jeesl:outputXpath value="#{value}" xpath="#{c.queryCell}" column="#{c}"/></p:column>
+		<p:column styleClass="jeeslDtColumnTrafficLight"><jeesl:trafficLightXpath value="#{value}" xpath="#{c.queryCell}" xpathref="#{c.queryTrafficLight}" column="#{c}" scope="#{c.trafficLightScope}"/></p:column>
 	</c:forEach>
 </ui:composition>

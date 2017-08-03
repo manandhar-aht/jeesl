@@ -19,6 +19,10 @@ public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
 								C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M>,
 								M extends UtilsStatus<M,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPosition,EjbWithLang<L>
-{		
+{	
+	CAT getCategory();
+	void setCategory(CAT category);
 	
+	S getRoot();
+	void setRoot(S section);
 }

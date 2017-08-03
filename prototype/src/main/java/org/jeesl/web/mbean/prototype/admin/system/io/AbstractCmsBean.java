@@ -1,13 +1,12 @@
 package org.jeesl.web.mbean.prototype.admin.system.io;
 
 import java.io.Serializable;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsFactory;
+import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsSectionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
@@ -17,6 +16,9 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
+import org.primefaces.event.NodeCollapseEvent;
+import org.primefaces.event.NodeExpandEvent;
+import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.event.TreeDragDropEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
@@ -51,38 +53,29 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M> fCms;
 	
 	private final Class<CMS> cCms;
+	private final Class<S> cSection;
 	
 	private final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M> efCms;
+	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M> efS;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
 //	protected SbMultiHandler<CMS> sbhCms; public SbMultiHandler<CMS> getSbhCms() {return sbhCms;}
 	
 	protected CMS cms; public CMS getCms() {return cms;} public void setCms(CMS cms) {this.cms = cms;}
 	protected CAT category;
-	
-	private TreeNode root1;
+	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 
-     
-    private TreeNode selectedNode1;
-    public TreeNode getRoot1() {
-        return root1;
-    }
- 
-    public TreeNode getSelectedNode1() {
-        return selectedNode1;
-    }
- 
-    public void setSelectedNode1(TreeNode selectedNode1) {
-        this.selectedNode1 = selectedNode1;
-    }
-     
+	private TreeNode tree; public TreeNode getTree() {return tree;}
+    private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CMS> cCms)
+	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CMS> cCms, final Class<S> cSection)
 	{
 		super(cL,cD);
 		this.cCms=cCms;
+		this.cSection=cSection;
 		
 		efCms = new EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M>(cCms);
+		efS = new EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M>(cSection);
 		
 		sbhCms = new SbSingleHandler<CMS>(cCms,this);
 	}
@@ -92,24 +85,6 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fCms=fCms;
 		reloadCms();
-		
-		root1 = new DefaultTreeNode("Root", null);
-        TreeNode node0 = new DefaultTreeNode("Node 0", root1);
-        TreeNode node1 = new DefaultTreeNode("Node 1", root1);
-        TreeNode node2 = new DefaultTreeNode("Node 2", root1);
-         
-        TreeNode node00 = new DefaultTreeNode("Node 0.0", node0);
-        TreeNode node01 = new DefaultTreeNode("Node 0.1", node0);
-         
-        TreeNode node10 = new DefaultTreeNode("Node 1.0", node1);
-        TreeNode node11 = new DefaultTreeNode("Node 1.1", node1);
-         
-        TreeNode node000 = new DefaultTreeNode("Node 0.0.0", node00);
-        TreeNode node001 = new DefaultTreeNode("Node 0.0.1", node00);
-        TreeNode node010 = new DefaultTreeNode("Node 0.1.0", node01);
-         
-        TreeNode node100 = new DefaultTreeNode("Node 1.0.0", node10);
-		
 		
 		sbhCms.silentCallback();
 	}
@@ -133,6 +108,8 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 			if(EjbIdFactory.isSaved(cms))
 			{
 				cms = efLang.persistMissingLangs(fCms,localeCodes,cms);
+				reloadTree();
+				
 			}
 			logger.info("Twice:"+sbhCms.getTwiceSelected()+" for "+cms.toString());
 		}
@@ -145,23 +122,91 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	public void addCms() throws UtilsNotFoundException
 	{
 //		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cTemplate));}
-		cms = efCms.build(null);
+		cms = efCms.build(category,efS.build());
 		cms.setName(efLang.createEmpty(localeCodes));
 	}
 	
 	public void saveCms() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info("Save "+cms.toString());
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(cms));}
 		cms = fCms.save(cms);
+		sbhCms.selectSbSingle(cms);
 		reloadCms();
+		reloadTree();
 	}
 	
-	public void onDragDrop(TreeDragDropEvent event) {
+	private void reloadTree()
+	{
+		S root = fCms.load(cms.getRoot(),true);
+		tree = new DefaultTreeNode(root, null);
+		buildTree(tree,root.getSections());
+	}
+	
+	private void buildTree(TreeNode parent, List<S> sections)
+	{
+		for(S s : sections)
+		{
+			TreeNode n = new DefaultTreeNode(s, parent);
+			if(!s.getSections().isEmpty()) {buildTree(n,s.getSections());}
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void onDragDrop(TreeDragDropEvent event) throws UtilsConstraintViolationException, UtilsLockingException
+	{
         TreeNode dragNode = event.getDragNode();
         TreeNode dropNode = event.getDropNode();
         int dropIndex = event.getDropIndex();
-         
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Dragged " + dragNode.getData(), "Dropped on " + dropNode.getData() + " at " + dropIndex);
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        logger.info("Dragged " + dragNode.getData() + "Dropped on " + dropNode.getData() + " at " + dropIndex);
+        
+        logger.info("Childs of "+dropNode.getData());
+        S parent = (S)dropNode.getData();
+        int index=1;
+        for(TreeNode n : dropNode.getChildren())
+        {
+        		S child =(S)n.getData();
+        		S db = fCms.load(child,false);
+        		efS.update(db,child);
+        		child.setSection(parent);
+        		child.setPosition(index);
+        		fCms.save(child);
+        		index++;
+        }  
     }
+	
+	public void onNodeExpand(NodeExpandEvent event)
+	{
+		logger.info("Expanded "+event.getTreeNode().toString());
+    }
+ 
+    public void onNodeCollapse(NodeCollapseEvent event)
+    {
+    	logger.info("Collapsed "+event.getTreeNode().toString());
+    }
+	
+    @SuppressWarnings("unchecked")
+	public void onSectionSelect(NodeSelectEvent event)
+    {
+    		logger.info("Selected "+event.getTreeNode().toString());
+    		section = (S)event.getTreeNode().getData();
+    		S db = fCms.load(section,false);
+    		efS.update(db,section);
+    }
+    
+	public void addSection() 
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cSection));}
+		section = efS.build(cms.getRoot());
+		section.setName(efLang.createEmpty(localeCodes));
+		for(String k : section.getName().keySet()){section.getName().get(k).setLang("XXX");}
+	}
+	
+	public void saveSection() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(section));}
+		boolean appendToTree = EjbIdFactory.isUnSaved(section);
+		
+		section = fCms.save(section);
+		if(appendToTree) {new DefaultTreeNode(section, tree);}
+	}
 }

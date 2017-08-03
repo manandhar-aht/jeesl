@@ -22,5 +22,5 @@ public interface JeeslIoCmsFacade <L extends UtilsLang,D extends UtilsDescriptio
 									M extends UtilsStatus<M,L,D>>
 						extends UtilsFacade
 {
-
+	S load(S section, boolean recursive);
 }

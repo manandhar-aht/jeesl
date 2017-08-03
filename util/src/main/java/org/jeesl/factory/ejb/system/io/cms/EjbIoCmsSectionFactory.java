@@ -12,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class EjbIoCmsFactory <L extends UtilsLang,D extends UtilsDescription,
+public class EjbIoCmsSectionFactory <L extends UtilsLang,D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
 								CMS extends JeeslIoCms<L,D,CAT,CMS,V,S,E,T,C,M>,
 								V extends JeeslIoCmsVisiblity<L,D,CAT,CMS,V,S,E,T,C,M>,
@@ -22,27 +22,34 @@ public class EjbIoCmsFactory <L extends UtilsLang,D extends UtilsDescription,
 								C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M>,
 								M extends UtilsStatus<M,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbIoCmsFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbIoCmsSectionFactory.class);
 	
-	private final Class<CMS> cCms;
+	private final Class<S> cS;
 
-	public EjbIoCmsFactory(final Class<CMS> cCms)
+	public EjbIoCmsSectionFactory(final Class<S> cS)
 	{
-        this.cCms = cCms;
+        this.cS = cS;
 	}
  
-	public CMS build(CAT category, S root)
+	public S build() {return build(null);}
+	public S build(S parent)
 	{
-		CMS ejb = null;
+		S ejb = null;
 		try
 		{
-			ejb = cCms.newInstance();
-			ejb.setRoot(root);
-//			ejb.setCategory(category);
+			ejb = cS.newInstance();
+			ejb.setSection(parent);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public void update(S src, S dst)
+	{
+		dst.setSection(src.getSection());
+		dst.setPosition(src.getPosition());
+		dst.setName(src.getName());
 	}
 }

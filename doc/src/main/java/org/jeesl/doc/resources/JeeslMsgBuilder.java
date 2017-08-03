@@ -45,6 +45,7 @@ public class JeeslMsgBuilder
 	public static final String io = "jeesl/msg/module/io.xml";
 	public static final String monitoring = "aht-utils/msg/module/monitoring.xml";
 	public static final String calendar = "jeesl/msg/module/calendar.xml";
+	public static final String cms = "jeesl/msg/module/cms.xml";
 	
 	//IO
 	public static final String ioTemplate = "jeesl/msg/admin/system/io/template.xml";

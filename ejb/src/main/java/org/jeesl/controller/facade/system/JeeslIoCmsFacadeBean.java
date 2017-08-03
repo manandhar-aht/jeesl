@@ -29,10 +29,25 @@ public class JeeslIoCmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 					implements JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoCmsFacadeBean.class);
-		
 	
-	public JeeslIoCmsFacadeBean(EntityManager em)
+	private final Class<S> cSection;
+	
+	public JeeslIoCmsFacadeBean(EntityManager em,final Class<S> cSection)
 	{
 		super(em);
+		this.cSection=cSection;
+	}
+	
+	@Override public S load(S section, boolean recursive)
+	{
+		section = em.find(cSection, section.getId());
+		if(recursive)
+		{
+			for(S s : section.getSections())
+			{
+				s = this.load(s,recursive);
+			}
+		}
+		return section;
 	}
 }

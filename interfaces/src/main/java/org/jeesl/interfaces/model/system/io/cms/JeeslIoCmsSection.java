@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.io.cms;
 
+import java.util.List;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -24,4 +26,7 @@ public interface JeeslIoCmsSection<L extends UtilsLang,D extends UtilsDescriptio
 	
 	S getSection();
 	void setSection(S section);
+	
+	List<S> getSections();
+	void setSections(List<S> columns);
 }

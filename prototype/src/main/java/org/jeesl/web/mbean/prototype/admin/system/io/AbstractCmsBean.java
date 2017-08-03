@@ -52,6 +52,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	
 	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M> fCms;
 	
+	private final Class<CAT> cCat;
 	private final Class<CMS> cCms;
 	private final Class<S> cSection;
 	
@@ -59,7 +60,6 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M> efS;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
-//	protected SbMultiHandler<CMS> sbhCms; public SbMultiHandler<CMS> getSbhCms() {return sbhCms;}
 	
 	protected CMS cms; public CMS getCms() {return cms;} public void setCms(CMS cms) {this.cms = cms;}
 	protected CAT category;
@@ -68,9 +68,10 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CMS> cCms, final Class<S> cSection)
+	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCat, final Class<CMS> cCms, final Class<S> cSection)
 	{
 		super(cL,cD);
+		this.cCat=cCat;
 		this.cCms=cCms;
 		this.cSection=cSection;
 		
@@ -84,14 +85,19 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fCms=fCms;
-		reloadCms();
-		
-		sbhCms.silentCallback();
 	}
 	
-	private void reloadCms()
+	protected <EN extends Enum<EN>> void initCategory(EN code)
 	{
-		sbhCms.setList(fCms.all(cCms));
+		try {category = fCms.fByCode(cCat, code);}
+		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
+	}
+	
+	protected void reloadCmsDocuments() {}
+	
+	protected void reloadCmsDocumentsForCategory()
+	{
+		sbhCms.setList(fCms.allForCategory(cCms,category));
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
@@ -131,7 +137,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(cms));}
 		cms = fCms.save(cms);
 		sbhCms.selectSbSingle(cms);
-		reloadCms();
+		reloadCmsDocuments();
 		reloadTree();
 	}
 	

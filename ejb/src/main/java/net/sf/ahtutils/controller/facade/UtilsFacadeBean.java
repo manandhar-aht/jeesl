@@ -20,6 +20,7 @@ import javax.persistence.criteria.Root;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -490,15 +491,35 @@ public class UtilsFacadeBean implements UtilsFacade
 		}
 	}
 	
-	public <T extends EjbWithType> List<T> allForType(Class<T> clazz, String type)
+	@Override public <T extends EjbWithType> List<T> allForType(Class<T> c, String type)
 	{
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(clazz);
-        Root<T> root = criteriaQuery.from(clazz);
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(c);
+        Root<T> root = criteriaQuery.from(c);
         criteriaQuery = criteriaQuery.where(root.<T>get("type").in(type));
         
 		TypedQuery<T> typedQuery = em.createQuery(criteriaQuery);
 		return typedQuery.getResultList();
+	}
+	
+	@Override
+	public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C, L, D>, W extends JeeslWithCategory<L, D, C>>
+		List<W> allForCategory(Class<W> w, C category)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<W> cQ = cB.createQuery(w);
+		Root<W> root = cQ.from(w);
+
+		Path<C> pCategory = root.get(JeeslWithCategory.attributeCategory);
+
+		CriteriaQuery<W> select = cQ.select(root);
+		select.where(cB.equal(pCategory,category));
+		
+	    if(EjbWithPosition.class.isAssignableFrom(w)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
+	    else if(EjbWithRecord.class.isAssignableFrom(w)){select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));}
+
+		TypedQuery<W> tQ = em.createQuery(select);
+		return tQ.getResultList();
 	}
 	
 	public <T extends EjbWithName> T fByName(Class<T> type, String name) throws UtilsNotFoundException
@@ -700,7 +721,6 @@ public class UtilsFacadeBean implements UtilsFacade
 		
 		return select;
 	}
-	
 	
 	public <T extends EjbWithRecord, AND extends EjbWithId, OR extends EjbWithId> List<T> allOrderedForParents(Class<T> queryClass, List<ParentPredicate<AND>> lpAnd, List<ParentPredicate<OR>> lpOr,boolean ascending)
 	{

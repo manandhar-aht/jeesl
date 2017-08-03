@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -57,7 +58,8 @@ public interface UtilsFacade  extends UtilsIdFacade
 	
 	<T extends EjbWithNr, P extends EjbWithId> T fByNr(Class<T> type, String parentName, P parent, long nr) throws UtilsNotFoundException;
 		
-	<T extends EjbWithType> List<T> allForType(Class<T> clazz, String type);
+	<T extends EjbWithType> List<T> allForType(Class<T> c, String type);
+	<L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C,L,D>, W extends JeeslWithCategory<L,D,C>> List<W> allForCategory(Class<W> w, C category);
 	
 	// ORDERING
 	<T extends Object> List<T> allOrdered(Class<T> cl, String by, boolean ascending);

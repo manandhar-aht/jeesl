@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.io.cms;
 
+import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -18,7 +20,7 @@ public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
 								T extends UtilsStatus<T,L,D>,
 								C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M>,
 								M extends UtilsStatus<M,L,D>>
-		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPosition,EjbWithLang<L>
+		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPosition,EjbWithLang<L>,JeeslWithCategory<L,D,CAT>
 {	
 	CAT getCategory();
 	void setCategory(CAT category);

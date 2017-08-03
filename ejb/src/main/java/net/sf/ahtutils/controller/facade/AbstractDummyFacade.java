@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -473,6 +474,13 @@ public class AbstractDummyFacade implements UtilsFacade
 	@Override
 	public <L extends UtilsLang, D extends UtilsDescription, S extends EjbWithId, G extends JeeslGraphic<L, D, G, GT, F, FS>, GT extends UtilsStatus<GT, L, D>, F extends JeeslGraphicFigure<L, D, G, GT, F, FS>, FS extends UtilsStatus<FS, L, D>> S load(
 			Class<S> cS, S status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C, L, D>, W extends JeeslWithCategory<L, D, C>> List<W> allForCategory(
+			Class<W> w, C c) {
 		// TODO Auto-generated method stub
 		return null;
 	}

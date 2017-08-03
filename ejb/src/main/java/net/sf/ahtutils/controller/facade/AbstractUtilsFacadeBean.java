@@ -9,6 +9,7 @@ import javax.ejb.TransactionAttributeType;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +100,8 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	// All
 	@Override public <T extends Object> List<T> all(Class<T> type) {return fUtils.all(type);}
 	@Override public <T extends Object> List<T> all(Class<T> type,int maxResults) {return fUtils.all(type,maxResults);}
-	public <T extends EjbWithType> List<T> allForType(Class<T> cl, String type) {return fUtils.allForType(cl, type);}
+	@Override public <T extends EjbWithType> List<T> allForType(Class<T> cl, String type) {return fUtils.allForType(cl, type);}
+	@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C, L, D>, W extends JeeslWithCategory<L, D, C>> List<W> allForCategory(Class<W> w, C category) {return fUtils.allForCategory(w, category);}
 	
 	// Ordering
 	public <T extends EjbWithPosition> List<T> allOrderedPosition(Class<T> type) {return fUtils.allOrderedPosition(type);}
@@ -154,6 +156,7 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	
 	//Year
 	public <T extends EjbWithYear, P extends EjbWithId> T fByYear(Class<T> type, String p1Name, P p, int year) throws UtilsNotFoundException {return fUtils.fByYear(type, p1Name, p, year);}
+	
 
 
 

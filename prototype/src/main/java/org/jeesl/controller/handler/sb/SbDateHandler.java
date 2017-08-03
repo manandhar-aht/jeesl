@@ -37,6 +37,13 @@ public class SbDateHandler implements Serializable
 		setDate2(dt.toDate());
 	}
 	
+	public void initMonths(int from, int to)
+	{
+		DateTime dt = new DateTime();
+		setDate1(dt.minusMonths(from).toDate());
+		setDate2(dt.plusMonths(to).toDate());
+	}
+	
 	public void initWeeksToNow(int weeks)
 	{
 		DateTime dt = new DateTime();

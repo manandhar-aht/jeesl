@@ -101,28 +101,17 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		mapOptions = new HashMap<QUESTION,List<OPTION>>();
 	}
 	
-	public Workbook buildSimple(SURVEY survey, List<DATA> list)
+	public void buildSimple(Sheet sheet, TEMPLATE t, List<DATA> list)
 	{		
-		// Create an Excel workbook to be filled with given data
-		Workbook wb = new XSSFWorkbook();
-		
-		// Create a sheet in the new workbook to write data into
-		Sheet sheet = XlsSheetFactory.getSheet(wb, localeCode);
-		
-		// Create a style for the cells
-		style = wb.createCellStyle();
+		style = sheet.getWorkbook().createCellStyle();
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		xlfAnswer = new XlsSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(style);
-				 
-		//Get data for lazy loading
-		TEMPLATE template = efTemplate.toVisible(fSurvey.load(survey.getTemplate(),true,true),true);
-		simpleCalculateSizes(template);
+
+		simpleCalculateSizes(t);
 		
 		MutableInt rowNr = new MutableInt(0);
-		simpleHeader(sheet,template,rowNr);
-		simpleData(sheet,template,rowNr,list);
-		
-		return wb;
+		simpleHeader(sheet,t,rowNr);
+		simpleData(sheet,t,rowNr,list);
 	}
 	
 	private void simpleCalculateSizes(TEMPLATE template)
@@ -186,8 +175,10 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 	private void simpleData(Sheet sheet, TEMPLATE template, MutableInt rowNr, List<DATA> list)
 	{
 		MutableInt colNr = new MutableInt(0);
-		for(DATA data : list)
+		for(int index=0;index<list.size();index++)
 		{
+//			logger.info(index+" / "+list.size()); if(index>5) {break;}
+			DATA data = list.get(index);
 			Row row = XlsRowFactory.build(sheet,rowNr);
 			colNr.setValue(0);
 			correlationBuilder.init(data.getCorrelation());
@@ -199,7 +190,6 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 			data = fSurvey.load(data);
 			Nested2Map<OPTION,OPTION,MATRIX> matrix = efMatrix.build(fSurvey.fCells(data.getAnswers()));
  			Map<QUESTION,ANSWER> map = EjbSurveyAnswerFactory.toQuestionMap(data.getAnswers());
-			
 			
 			for(SECTION section : template.getSections())	
 			{
@@ -224,7 +214,6 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 						}
 						else
 						{
-							
 							xlfAnswer.build(row, colNr, answer);
 						}
 					}

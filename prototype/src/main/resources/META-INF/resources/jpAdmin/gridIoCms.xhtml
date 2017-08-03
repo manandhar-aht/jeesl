@@ -13,6 +13,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="updateStatusBar" required="false"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -22,12 +23,22 @@
 					<h:form id="fRow" rendered="#{cc.attrs.bean.sbhCms.twiceSelected or (cc.attrs.bean.cms.id eq 0)}">
 						<p:panel header="#{msg.jeeslIoReportRow}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
-								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveCms()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveCms()}" update=":#{cc.id}:grid #{cc.attrs.updateStatusBar}" tooltip="#{msg.ttSave}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,JeeslGrid80">
-								<h:outputText value="#{cc.attrs.bean.cms.id}" />
+								<aht:tabTranslationEditor value="#{cc.attrs.bean.cms}" withDescription="false"
+									labelTranslation="#{msg.Name}" keys="#{cc.attrs.bean.localeCodes}" />
 							</p:panelGrid>
 						</p:panel>
+					</h:form>
+					<h:form id="fTree">
+						<p:tree id="tree1" value="#{cc.attrs.bean.root1}" var="node" selectionMode="single" selection="#{cc.attrs.bean.selectedNode1}"
+			                draggable="true" droppable="true" dragdropScope="demo">
+			            <p:ajax event="dragdrop" listener="#{cc.attrs.bean.onDragDrop}" update=":#{cc.id}:fRow" />
+			            <p:treeNode>
+			                <h:outputText value="#{node}" />
+			            </p:treeNode>
+			        </p:tree>
 					</h:form>
 				</aht:slot>
 			</aht:row>

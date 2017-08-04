@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.rest;
+package org.jeesl.util.web;
 
 import org.apache.commons.configuration.Configuration;
 import org.slf4j.Logger;

@@ -9,6 +9,8 @@ import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -488,6 +490,20 @@ public class AbstractDummyFacade implements UtilsFacade
 
 	@Override
 	public <T extends EjbWithNrString> T fByNr(Class<T> type, String nr) throws UtilsNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S, L, D>, W extends JeeslWithStatus<L, D, S>> List<W> allForStatus(
+			Class<W> w, S status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <L extends UtilsLang, D extends UtilsDescription, T extends UtilsStatus<T, L, D>, W extends JeeslWithType<L, D, T>> List<W> allForType(
+			Class<W> w, T type) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -12,6 +12,8 @@ import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,7 +105,10 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	@Override public <T extends Object> List<T> all(Class<T> type) {return fUtils.all(type);}
 	@Override public <T extends Object> List<T> all(Class<T> type,int maxResults) {return fUtils.all(type,maxResults);}
 	@Override public <T extends EjbWithType> List<T> allForType(Class<T> cl, String type) {return fUtils.allForType(cl, type);}
+	
 	@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C, L, D>, W extends JeeslWithCategory<L, D, C>> List<W> allForCategory(Class<W> w, C category) {return fUtils.allForCategory(w, category);}
+	@Override public <L extends UtilsLang, D extends UtilsDescription, T extends UtilsStatus<T, L, D>, W extends JeeslWithType<L, D, T>> List<W> allForType(Class<W> w, T type) {return fUtils.allForType(w, type);}
+	@Override public <L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S, L, D>, W extends JeeslWithStatus<L, D, S>> List<W> allForStatus(Class<W> w, S status) {return fUtils.allForStatus(w, status);}
 	
 	// Ordering
 	public <T extends EjbWithPosition> List<T> allOrderedPosition(Class<T> type) {return fUtils.allOrderedPosition(type);}
@@ -158,6 +163,7 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	
 	//Year
 	public <T extends EjbWithYear, P extends EjbWithId> T fByYear(Class<T> type, String p1Name, P p, int year) throws UtilsNotFoundException {return fUtils.fByYear(type, p1Name, p, year);}
+
 	
 
 	//@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsSecurityCategory<L, D, C, R, V, U, A, USER>, R extends UtilsSecurityRole<L, D, C, R, V, U, A, USER>, V extends UtilsSecurityView<L, D, C, R, V, U, A, USER>, U extends UtilsSecurityUsecase<L, D, C, R, V, U, A, USER>, A extends UtilsSecurityAction<L, D, C, R, V, U, A, USER>, USER extends UtilsUser<L, D, C, R, V, U, A, USER>> List<USER> likeNameFirstLast(Class<USER> c, String query) {return fUtils.likeNameFirstLast(c,query);}

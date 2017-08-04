@@ -9,6 +9,8 @@ import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -64,6 +66,8 @@ public interface UtilsFacade  extends UtilsIdFacade
 	
 	//Category,Type,Status ...
 	<L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C,L,D>, W extends JeeslWithCategory<L,D,C>> List<W> allForCategory(Class<W> w, C category);
+	<L extends UtilsLang, D extends UtilsDescription, T extends UtilsStatus<T,L,D>, W extends JeeslWithType<L,D,T>> List<W> allForType(Class<W> w, T type);
+	<L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S,L,D>, W extends JeeslWithStatus<L,D,S>> List<W> allForStatus(Class<W> w, S status);
 	
 	// ORDERING
 	<T extends Object> List<T> allOrdered(Class<T> cl, String by, boolean ascending);

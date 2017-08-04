@@ -23,6 +23,8 @@ import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -516,9 +518,7 @@ public class UtilsFacadeBean implements UtilsFacade
 		return typedQuery.getResultList();
 	}
 	
-	@Override
-	public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C, L, D>, W extends JeeslWithCategory<L, D, C>>
-		List<W> allForCategory(Class<W> w, C category)
+	@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C, L, D>, W extends JeeslWithCategory<L, D, C>> List<W> allForCategory(Class<W> w, C category)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<W> cQ = cB.createQuery(w);
@@ -528,6 +528,42 @@ public class UtilsFacadeBean implements UtilsFacade
 
 		CriteriaQuery<W> select = cQ.select(root);
 		select.where(cB.equal(pCategory,category));
+		
+	    if(EjbWithPosition.class.isAssignableFrom(w)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
+	    else if(EjbWithRecord.class.isAssignableFrom(w)){select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));}
+
+		TypedQuery<W> tQ = em.createQuery(select);
+		return tQ.getResultList();
+	}
+	
+	@Override public <L extends UtilsLang, D extends UtilsDescription, T extends UtilsStatus<T,L,D>, W extends JeeslWithType<L,D,T>> List<W> allForType(Class<W> w, T type)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<W> cQ = cB.createQuery(w);
+		Root<W> root = cQ.from(w);
+
+		Path<T> pType = root.get(JeeslWithType.attributeType);
+
+		CriteriaQuery<W> select = cQ.select(root);
+		select.where(cB.equal(pType,type));
+		
+	    if(EjbWithPosition.class.isAssignableFrom(w)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
+	    else if(EjbWithRecord.class.isAssignableFrom(w)){select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));}
+
+		TypedQuery<W> tQ = em.createQuery(select);
+		return tQ.getResultList();
+	}
+	
+	@Override public <L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S,L,D>, W extends JeeslWithStatus<L,D,S>> List<W> allForStatus(Class<W> w, S status)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<W> cQ = cB.createQuery(w);
+		Root<W> root = cQ.from(w);
+
+		Path<S> pStatus = root.get(JeeslWithStatus.attributeStatus);
+
+		CriteriaQuery<W> select = cQ.select(root);
+		select.where(cB.equal(pStatus,status));
 		
 	    if(EjbWithPosition.class.isAssignableFrom(w)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
 	    else if(EjbWithRecord.class.isAssignableFrom(w)){select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));}

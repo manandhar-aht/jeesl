@@ -1,8 +1,9 @@
 package net.sf.ahtutils.model.interfaces.acl;
 
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.with.code;
+package org.jeesl.interfaces.model.system.with.code;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 

@@ -9,6 +9,8 @@ import javax.ejb.TransactionAttributeType;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +33,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.interfaces.model.with.EjbWithNr;
-import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithType;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithTypeCode;
@@ -92,11 +93,12 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	@Override public <T extends EjbWithId> List<T> find(Class<T> cl, Set<Long> ids){return fUtils.find(cl, ids);}
 	
 	//Code
-	@Override public <T extends EjbWithCode, E extends Enum<E>> T fByCode(Class<T> type, E code) throws UtilsNotFoundException {return fUtils.fByCode(type, code);}
-	@Override public <T extends EjbWithCode> T fByCode(Class<T> type, String code) throws UtilsNotFoundException {return fUtils.fByCode(type, code);}
+	@Override public <T extends EjbWithCode, E extends Enum<E>> T fByCode(Class<T> c, E code) throws UtilsNotFoundException {return fUtils.fByCode(c, code);}
+	@Override public <T extends EjbWithCode> T fByCode(Class<T> c, String code) throws UtilsNotFoundException {return fUtils.fByCode(c, code);}
+	@Override public <T extends EjbWithNrString> T fByNr(Class<T> c, String nr) throws UtilsNotFoundException {return fUtils.fByNr(c, nr);}
 	@Override public <T extends EjbWithTypeCode> T fByTypeCode(Class<T> c, String type, String code) throws UtilsNotFoundException {return fUtils.fByTypeCode(c,type,code);}
-	@Override public <T extends EjbWithNonUniqueCode> List<T> allByCode(Class<T> type, String code) {return fUtils.allByCode(type,code);}
-		
+	@Override public <T extends EjbWithNonUniqueCode> List<T> allByCode(Class<T> c, String code) {return fUtils.allByCode(c,code);}
+	
 	// All
 	@Override public <T extends Object> List<T> all(Class<T> type) {return fUtils.all(type);}
 	@Override public <T extends Object> List<T> all(Class<T> type,int maxResults) {return fUtils.all(type,maxResults);}
@@ -157,12 +159,6 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	//Year
 	public <T extends EjbWithYear, P extends EjbWithId> T fByYear(Class<T> type, String p1Name, P p, int year) throws UtilsNotFoundException {return fUtils.fByYear(type, p1Name, p, year);}
 	
-
-
-
-	
-
-
 
 	//@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsSecurityCategory<L, D, C, R, V, U, A, USER>, R extends UtilsSecurityRole<L, D, C, R, V, U, A, USER>, V extends UtilsSecurityView<L, D, C, R, V, U, A, USER>, U extends UtilsSecurityUsecase<L, D, C, R, V, U, A, USER>, A extends UtilsSecurityAction<L, D, C, R, V, U, A, USER>, USER extends UtilsUser<L, D, C, R, V, U, A, USER>> List<USER> likeNameFirstLast(Class<USER> c, String query) {return fUtils.likeNameFirstLast(c,query);}
 }

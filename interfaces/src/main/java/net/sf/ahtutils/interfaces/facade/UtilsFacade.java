@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
@@ -25,7 +27,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.interfaces.model.with.EjbWithNr;
-import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithType;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithTypeCode;
@@ -51,14 +52,17 @@ public interface UtilsFacade  extends UtilsIdFacade
 	<E extends EjbEquals<T>,T extends EjbWithId> boolean equalsAttributes(Class<T> c,E object); 
 	
 	//CODE
-	<T extends EjbWithCode, E extends Enum<E>> T fByCode(Class<T> type, E code) throws UtilsNotFoundException;
-	<T extends EjbWithCode> T fByCode(Class<T> type, String code) throws UtilsNotFoundException;
+	<T extends EjbWithCode, E extends Enum<E>> T fByCode(Class<T> c, E code) throws UtilsNotFoundException;
+	<T extends EjbWithCode> T fByCode(Class<T> c, String code) throws UtilsNotFoundException;
+	<T extends EjbWithNrString> T fByNr(Class<T> c, String nr) throws UtilsNotFoundException;
 	<T extends EjbWithTypeCode> T fByTypeCode(Class<T> c, String type, String code) throws UtilsNotFoundException;
-	<T extends EjbWithNonUniqueCode> List<T> allByCode(Class<T> type, String code);
+	<T extends EjbWithNonUniqueCode> List<T> allByCode(Class<T> c, String code);
 	
 	<T extends EjbWithNr, P extends EjbWithId> T fByNr(Class<T> type, String parentName, P parent, long nr) throws UtilsNotFoundException;
 		
 	<T extends EjbWithType> List<T> allForType(Class<T> c, String type);
+	
+	//Category,Type,Status ...
 	<L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C,L,D>, W extends JeeslWithCategory<L,D,C>> List<W> allForCategory(Class<W> w, C category);
 	
 	// ORDERING
@@ -124,7 +128,6 @@ public interface UtilsFacade  extends UtilsIdFacade
 	<T extends EjbWithValidFrom> T fFirstValidFrom(Class<T> type, String parentName, long id, Date validFrom) throws UtilsNotFoundException;
 	
 	//Timeline
-	
 	<T extends EjbWithTimeline> List<T> between(Class<T> clTracker, Date from, Date to);
 	<T extends EjbWithTimeline, AND extends EjbWithId, OR extends EjbWithId> List<T> between(Class<T> clTimeline,Date from, Date to, List<ParentPredicate<AND>> lpAnd, List<ParentPredicate<OR>> lpOr);
 	

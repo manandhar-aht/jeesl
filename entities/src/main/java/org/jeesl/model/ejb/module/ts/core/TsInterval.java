@@ -3,6 +3,7 @@ package org.jeesl.model.ejb.module.ts.core;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.ejb.module.ts.data.TsData;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
@@ -10,7 +11,6 @@ import org.jeesl.model.ejb.system.status.Lang;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Interval",category="ts",subset="ts",level=4)

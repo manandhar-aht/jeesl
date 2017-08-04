@@ -20,6 +20,8 @@ import javax.persistence.criteria.Root;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +45,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.interfaces.model.with.EjbWithNr;
-import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithType;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithTypeCode;
@@ -253,6 +254,19 @@ public class UtilsFacadeBean implements UtilsFacade
 		try	{return q.getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found "+type.getSimpleName()+" for code="+code);}
 		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("Results for "+type.getSimpleName()+" and code="+code+" not unique");}
+	}
+	
+	@Override public <T extends EjbWithNrString> T fByNr(Class<T> c, String nr) throws UtilsNotFoundException
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+        CriteriaQuery<T> cQ = cB.createQuery(c);
+        Root<T> root = cQ.from(c);
+        cQ = cQ.where(root.<T>get(EjbWithNrString.attributeNr).in(nr));
+
+		TypedQuery<T> q = em.createQuery(cQ); 
+		try	{return q.getSingleResult();}
+		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found "+c.getSimpleName()+" for nr="+nr);}
+		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("Results for "+c.getSimpleName()+" and code="+nr+" not unique");}
 	}
 	
 	@Override public <T extends EjbWithTypeCode> T fByTypeCode(Class<T> c, String type, String code) throws UtilsNotFoundException

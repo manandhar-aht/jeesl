@@ -1,8 +1,9 @@
 package net.sf.ahtutils.interfaces.model.status;
 
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
-import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
 import net.sf.ahtutils.interfaces.model.with.image.EjbWithImage;
 import net.sf.ahtutils.interfaces.model.with.image.EjbWithImageAlt;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParent;

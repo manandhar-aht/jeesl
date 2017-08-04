@@ -2,7 +2,8 @@ package org.jeesl.util.query.sql;
 
 import java.util.List;
 
-import net.sf.ahtutils.interfaces.model.with.code.EjbWithCode;
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class UtilsSqlQueryHelper

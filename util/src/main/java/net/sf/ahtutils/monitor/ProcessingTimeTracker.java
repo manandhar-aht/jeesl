@@ -112,7 +112,7 @@ public class ProcessingTimeTracker
 	
 	public void debugTicker()
 	{
-		logger.info("Ticker: "+ticker);
+		logger.info("Debugging Ticker: "+ticker);
 		for(int i=0;i<ticksTime.size();i++)
 		{
 			StringBuffer sb = new StringBuffer();

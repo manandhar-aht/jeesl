@@ -15,7 +15,7 @@ Set stderr = fso.GetStandardStream (2)
 'stdout.WriteLine tempDir
 
 'WEAP.ActiveArea ="WEAPversion02"
-
+WEAP.Verbose = 0
 IF WScript.Arguments(3) = "NOTSET" Then
     stdout.WriteLine WEAP.ResultValue(WScript.Arguments(0) & ":" & WScript.Arguments(1) & "[" & WScript.Arguments(2) & "]",WScript.Arguments(4),WScript.Arguments(5),WScript.Arguments(6),WScript.Arguments(7),WScript.Arguments(8))
 ELSE

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.monitor;
+package org.jeesl.controller.monitor;
 
 import java.util.Date;
 import java.util.HashMap;

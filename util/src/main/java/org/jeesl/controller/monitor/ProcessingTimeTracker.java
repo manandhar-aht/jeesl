@@ -1,4 +1,4 @@
-package net.sf.ahtutils.monitor;
+package org.jeesl.controller.monitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +21,7 @@ public class ProcessingTimeTracker
 	
 	private final TxtPeriodFactory tfPeriod;
 	
-	public ProcessingTimeTracker()
-	{
-		this(false);
-	}
+	public ProcessingTimeTracker() {this(false);}
 	public ProcessingTimeTracker(boolean autoStart)
 	{
 		counter=0;
@@ -112,7 +109,7 @@ public class ProcessingTimeTracker
 	
 	public void debugTicker()
 	{
-		logger.info("Debugging Ticker: "+ticker);
+		logger.info("Debugging Ticker ("+ticksTime.size()+"): "+ticker);
 		for(int i=0;i<ticksTime.size();i++)
 		{
 			StringBuffer sb = new StringBuffer();

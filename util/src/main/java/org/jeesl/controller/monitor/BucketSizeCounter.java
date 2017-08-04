@@ -1,4 +1,4 @@
-package net.sf.ahtutils.monitor;
+package org.jeesl.controller.monitor;
 
 import java.util.Hashtable;
 import java.util.Map;

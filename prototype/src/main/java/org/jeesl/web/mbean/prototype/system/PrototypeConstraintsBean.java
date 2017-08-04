@@ -6,12 +6,12 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslConstraintsBean;
+import org.jeesl.controller.monitor.ProcessingTimeTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.factory.xml.system.XmlConstraintFactory;
 import net.sf.ahtutils.factory.xml.system.XmlConstraintScopeFactory;
-import net.sf.ahtutils.monitor.ProcessingTimeTracker;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Lang;

@@ -98,6 +98,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	protected void reloadCmsDocumentsForCategory()
 	{
 		sbhCms.setList(fCms.allForCategory(cCms,category));
+		logger.info(AbstractLogMessage.reloaded(cCms, sbhCms.getList()));
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
@@ -122,6 +123,19 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		else
 		{
 			logger.info("NOT Assignable");
+		}
+	}
+	
+	public void addFirstCmsDocument()
+	{
+		if(cms==null)
+		{
+			try
+			{
+				logger.info("Adding first Cms Document");
+				addCms();
+			}
+			catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 		}
 	}
 	

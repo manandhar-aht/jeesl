@@ -68,6 +68,15 @@ public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 		return xml;
 	}
 	
+	public static <E extends Enum<E>> void add(Figures figures, E code, Integer value)
+	{
+		if(value!=null){figures.getFinance().add(XmlFinanceFactory.build(code, value));}
+	}
+	public static <E extends Enum<E>> void add(Figures figures, E code, Double value)
+	{
+		if(value!=null){figures.getFinance().add(XmlFinanceFactory.build(code, value));}
+	}
+	
 	public static void addId(Figures figures, EjbWithId ejb, Double[] values, int index)
 	{
 		if(values!=null)

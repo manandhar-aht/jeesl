@@ -7,4 +7,47 @@
 	    		<s:lang key="fr" translation="Section"/>
 	    	</s:langs>
     </s:translation>
+    <s:translation key="jeeslCmsElements">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Elemente"/>
+	    		<s:lang key="en" translation="Elements"/>
+	    		<s:lang key="fr" translation="Elements"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslCmsElement">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Element"/>
+	    		<s:lang key="en" translation="Element"/>
+	    		<s:lang key="fr" translation="Element"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslCmsElementType">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Typ"/>
+	    		<s:lang key="en" translation="Type"/>
+	    		<s:lang key="fr" translation="Type"/>
+	    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslCmsElementParagraph">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Paragraf"/>
+	    		<s:lang key="en" translation="Paragraph"/>
+	    		<s:lang key="fr" translation="Paragraph"/>
+	    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslCmsElementImage">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Bild"/>
+	    		<s:lang key="en" translation="Image"/>
+	    		<s:lang key="fr" translation="Image"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslCmsLanguages">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Sprachen"/>
+	    		<s:lang key="en" translation="Languages"/>
+	    		<s:lang key="fr" translation="Languages"/>
+	    	</s:langs>
+    </s:translation>  
+    
 </s:translations>

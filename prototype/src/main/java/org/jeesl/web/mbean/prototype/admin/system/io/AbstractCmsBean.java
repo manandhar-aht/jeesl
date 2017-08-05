@@ -1,10 +1,12 @@
 package org.jeesl.web.mbean.prototype.admin.system.io;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
+import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsElementFactory;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsFactory;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsSectionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
@@ -56,36 +58,49 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final Class<CAT> cCat;
 	private final Class<CMS> cCms;
 	private final Class<S> cSection;
+	private final Class<E> cElement;
+	private final Class<T> cType;
 	
 	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M> efCms;
 	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M> efS;
+	private final EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M> efElement;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
 	
+	private List<E> elements; public List<E> getElements() {return elements;}
+	private final List<T> types; public List<T> getTypes() {return types;}
+
 	protected CMS cms; public CMS getCms() {return cms;} public void setCms(CMS cms) {this.cms = cms;}
 	protected CAT category;
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
+	private E element; public E getElement() {return element;} public void setElement(E element) {this.element = element;}
 
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCat, final Class<CMS> cCms, final Class<S> cSection)
+	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCat, final Class<CMS> cCms, final Class<S> cSection, final Class<E> cElement, final Class<T> cType)
 	{
 		super(cL,cD);
 		this.cCat=cCat;
 		this.cCms=cCms;
 		this.cSection=cSection;
+		this.cElement=cElement;
+		this.cType=cType;
 		
 		efCms = new EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M>(cCms);
 		efS = new EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M>(cSection);
+		efElement = new EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M>(cElement);
 		
 		sbhCms = new SbSingleHandler<CMS>(cCms,this);
+		types = new ArrayList<T>();
 	}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M> fCms)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fCms=fCms;
+		
+		types.addAll(fCms.allOrderedPositionVisible(cType));
 	}
 	
 	protected <EN extends Enum<EN>> void initCategory(EN code)
@@ -124,6 +139,12 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		{
 			logger.info("NOT Assignable");
 		}
+		reset(true);
+	}
+	
+	private void reset(boolean rElement)
+	{
+		if(rElement) {element=null;}
 	}
 	
 	protected abstract void addDocument();
@@ -209,6 +230,8 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
     		section = (S)event.getTreeNode().getData();
     		S db = fCms.load(section,false);
     		efS.update(db,section);
+    		reloadSection();
+    		reset(true);
     }
     
 	public void addSection() 
@@ -226,7 +249,33 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		
 		section = fCms.save(section);
 		if(appendToTree) {new DefaultTreeNode(section, tree);}
+		reloadSection();
+	}
+	
+	private void reloadSection()
+	{
+		elements = fCms.allForParent(cElement,section);
+	}
+	
+	public void addElement() 
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cElement));}
+		element = efElement.build(section,elements);
+	}
+	
+	public void selectElement() 
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(element));}
+	}
+	
+	public void saveElement() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(element));}
+		element.setType(fCms.find(cType,element.getType()));
+		element = fCms.save(element);
+		reloadSection();
 	}
 	
 	protected void reorderDocuments() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCms, sbhCms.getList());}
+	protected void reorderElements() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCms, elements);}
 }

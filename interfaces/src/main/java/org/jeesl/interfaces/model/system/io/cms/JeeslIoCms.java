@@ -29,4 +29,7 @@ public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
 	
 	S getRoot();
 	void setRoot(S section);
+	
+	String getLanguages();
+	void setLanguages(String languages);
 }

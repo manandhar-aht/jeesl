@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.io.cms;
 
+import java.util.Map;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -27,4 +29,7 @@ public interface JeeslIoCmsElement<L extends UtilsLang,D extends UtilsDescriptio
 	
 	T getType();
 	void setType(T type);
+	
+	public Map<String,C> getContent();
+	public void setContent(Map<String,C> content);
 }

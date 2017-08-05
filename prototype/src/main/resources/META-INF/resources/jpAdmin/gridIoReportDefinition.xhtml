@@ -48,7 +48,7 @@
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.aupCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.report.category}" effect="fade" >
-									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
 								</p:selectOneMenu>
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.report.visible}"/>
@@ -273,7 +273,7 @@
 										<p:outputLabel value="#{msg.aupCategory}" rendered="#{empty cc.attrs.bean.column.dataType}"/>
 										<p:selectOneMenu value="#{cc.attrs.bean.revisionCategory}" effect="fade" rendered="#{empty cc.attrs.bean.column.dataType}">
 											<f:selectItems value="#{cc.attrs.bean.revisionCategories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
-											<p:ajax update="pgColumnData" event="change" listener="#{cc.attrs.bean.changeRevisionCategory()}"/>
+											<p:ajax event="change" listener="#{cc.attrs.bean.changeRevisionCategory()}" update="pgColumnData"/>
 										</p:selectOneMenu>
 									</p:panelGrid>
 									

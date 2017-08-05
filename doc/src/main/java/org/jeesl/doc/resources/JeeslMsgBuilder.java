@@ -59,7 +59,7 @@ public class JeeslMsgBuilder
 	public static final String systemProperty = "jeesl/msg/admin/system/property.xml";
 	public static final String systemFeature = "jeesl/msg/admin/system/feature.xml";
 	
-	public static final String tooltip = "aht-utils/msg/tooltip.xml";
+	public static final String tooltip = "jeesl/msg/tooltip.xml";
 	
 	
 	//Util

@@ -44,7 +44,13 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	@Override
 	public void selectSbSingle(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
 	{
-		if(c.isAssignableFrom(item.getClass()))
+		if(item==null)
+		{
+			previous.setId(-1);
+			selection = null;
+			if(bean!=null){bean.selectSbSingle(null);}
+		}
+		else if(c.isAssignableFrom(item.getClass()))
 		{
 			if(selection!=null) {previous.setId(selection.getId());}
 			selection=(T)item;
@@ -91,8 +97,12 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	{
 		try
 		{
-			if(isSelected()) {selectSbSingle(selection);}
-			else if(!list.isEmpty()) {selectSbSingle(list.get(0));}
+			if (list.isEmpty()){selectSbSingle(null);}
+			else
+			{
+				if(list.contains(selection)) {selectSbSingle(selection);}
+				else{selectSbSingle(list.get(0));}	
+			}
 		}
 		catch (UtilsLockingException e) {}
 		catch (UtilsConstraintViolationException e) {}

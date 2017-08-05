@@ -18,24 +18,44 @@
 	
 	<composite:implementation>
 		<aup:grid id="grid">
-			<aht:row>
-				<aht:slot width="3">
-					<h:form id="fRow" rendered="#{cc.attrs.bean.sbhCms.twiceSelected or (cc.attrs.bean.cms.id eq 0)}">
+			<aht:row id="rowDocuments" rendered="#{(cc.attrs.bean.sbhCms.twiceSelected) or (empty cc.attrs.bean.cms) or  (cc.attrs.bean.cms.id eq 0)}">
+				<aht:slot id="sDocuments" width="7">
+					<h:form id="fDocuments">
+						<p:dataTable var="d" value="#{cc.attrs.bean.sbhCms.list}" draggableRows="true"
+							selection="#{cc.attrs.bean.cms}" selectionMode="single" rowKey="#{d.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslIoReports}">
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addDocument()}" update=":#{cc.id}:sDocuments :#{cc.id}:sDocument" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderDocuments()}" update="@form"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectDocument()}" update=":#{cc.id}:fDocument"/>
+							<p:column rendered="true"><h:outputText value="#{d.position}"/></p:column>
+							<p:column headerText="#{msg.jeeslIoReport}"><h:outputText value="#{d.name[localeCode].lang}"/></p:column>
+						</p:dataTable>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sDocument" width="5">
+					<h:form id="fDocument" rendered="#{not empty cc.attrs.bean.cms}">
 						<p:panel header="#{msg.jeeslIoReportRow}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
-								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveCms()}" update=":#{cc.id}:grid #{cc.attrs.updateStatusBar}" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveDocument()}" update=":#{cc.id}:grid #{cc.attrs.updateStatusBar}" tooltip="#{msg.ttSave}" mayDisappear="true"/>
 							</f:facet>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.cms}" withDescription="false" labelTranslation="#{msg.Name}" keys="#{cc.attrs.bean.localeCodes}" />
 						</p:panel>
 					</h:form>
-					<h:form id="fTree" rendered="#{(not empty cc.attrs.bean.cms) and (cc.attrs.bean.cms.id gt 0)}">
+				</aht:slot>
+			</aht:row>
+			<aht:row rendered="#{(not empty cc.attrs.bean.cms) and (cc.attrs.bean.cms.id gt 0)}">
+				<aht:slot width="3">
+					<h:form id="fTree" >
 						<p:tree id="tree1" value="#{cc.attrs.bean.tree}" var="node" 
 							selection="#{cc.attrs.bean.node}" selectionMode="single"
 			                draggable="true" droppable="true" dragdropScope="demo">
-			            <p:ajax event="dragdrop" listener="#{cc.attrs.bean.onDragDrop}" update=":#{cc.id}:fRow" />
+			            <p:ajax event="dragdrop" listener="#{cc.attrs.bean.onDragDrop}" update=":#{cc.id}:sSection"/>
 			            <p:ajax event="select" listener="#{cc.attrs.bean.onSectionSelect}" update=":#{cc.id}:sSection"/>
 			            <p:ajax event="expand" listener="#{cc.attrs.bean.onNodeExpand}" />
-						<p:ajax event="collapse" listener="#{cc.attrs.bean.onNodeCollapse}" />
+							<p:ajax event="collapse" listener="#{cc.attrs.bean.onNodeCollapse}" />
 			            <p:treeNode>
 			                <h:outputText value="#{node.name[localeCode].lang}" />
 			            </p:treeNode>
@@ -43,7 +63,7 @@
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sSection" width="8">
-					<h:form id="fSection" rendered="#{(not empty cc.attrs.bean.cms) and (cc.attrs.bean.cms.id gt 0)}">
+					<h:form id="fSection">
 						<p:panel header="#{msg.jeeslCmsSection}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addSection()}" update=":#{cc.id}:sSection" tooltip="#{msg.ttCancel}"/>

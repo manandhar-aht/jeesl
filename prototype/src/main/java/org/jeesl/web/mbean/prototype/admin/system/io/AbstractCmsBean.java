@@ -32,6 +32,7 @@ import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
@@ -56,7 +57,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final Class<CMS> cCms;
 	private final Class<S> cSection;
 	
-	private final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M> efCms;
+	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M> efCms;
 	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M> efS;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
@@ -93,8 +94,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 	}
 	
-	protected void reloadCmsDocuments() {}
-	
+	protected abstract void reloadCmsDocuments();
 	protected void reloadCmsDocumentsForCategory()
 	{
 		sbhCms.setList(fCms.allForCategory(cCms,category));
@@ -109,14 +109,14 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	@SuppressWarnings("unchecked")
 	@Override public void selectSbSingle(EjbWithId ejb)
 	{
-		if(JeeslIoCms.class.isAssignableFrom(ejb.getClass()))
+		if(ejb==null) {cms=null;}
+		else if(JeeslIoCms.class.isAssignableFrom(ejb.getClass()))
 		{
 			cms = (CMS)ejb;
 			if(EjbIdFactory.isSaved(cms))
 			{
 				cms = efLang.persistMissingLangs(fCms,localeCodes,cms);
 				reloadTree();
-				
 			}
 			logger.info("Twice:"+sbhCms.getTwiceSelected()+" for "+cms.toString());
 		}
@@ -126,33 +126,31 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		}
 	}
 	
-	public void addFirstCmsDocument()
+	protected abstract void addDocument();
+	public void addDocumentForCategory()
 	{
-		if(cms==null)
-		{
-			try
-			{
-				logger.info("Adding first Cms Document");
-				addCms();
-			}
-			catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
-		}
-	}
-	
-	public void addCms() throws UtilsNotFoundException
-	{
-//		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cTemplate));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cCms));}
 		cms = efCms.build(category,efS.build());
 		cms.setName(efLang.createEmpty(localeCodes));
 	}
 	
+	protected abstract void saveDocument() throws UtilsConstraintViolationException, UtilsLockingException;
 	public void saveCms() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(cms));}
 		cms = fCms.save(cms);
+		savedCms();
+	}
+	protected void savedCms() throws UtilsLockingException, UtilsConstraintViolationException
+	{
 		sbhCms.selectSbSingle(cms);
 		reloadCmsDocuments();
 		reloadTree();
+	}
+	
+	public void selectDocument()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(cms));}
 	}
 	
 	private void reloadTree()
@@ -229,4 +227,6 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		section = fCms.save(section);
 		if(appendToTree) {new DefaultTreeNode(section, tree);}
 	}
+	
+	protected void reorderDocuments() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCms, sbhCms.getList());}
 }

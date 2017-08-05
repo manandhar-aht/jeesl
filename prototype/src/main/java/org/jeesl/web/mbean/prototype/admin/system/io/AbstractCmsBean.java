@@ -17,6 +17,7 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
+import org.jeesl.interfaces.model.system.lang.JeeslLocale;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
@@ -40,20 +41,21 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescription,
 										CAT extends UtilsStatus<CAT,L,D>,
-										CMS extends JeeslIoCms<L,D,CAT,CMS,V,S,E,T,C,M>,
-										V extends JeeslIoCmsVisiblity<L,D,CAT,CMS,V,S,E,T,C,M>,
-										S extends JeeslIoCmsSection<L,D,CAT,CMS,V,S,E,T,C,M>,
-										E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,E,T,C,M>,
+										CMS extends JeeslIoCms<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
+										V extends JeeslIoCmsVisiblity<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
+										S extends JeeslIoCmsSection<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
+										E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
 										T extends UtilsStatus<T,L,D>,
-										C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M>,
-										M extends UtilsStatus<M,L,D>>
+										C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
+										M extends UtilsStatus<M,L,D>,
+										LOC extends JeeslLocale<L>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractCmsBean.class);
 	
-	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M> fCms;
+	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms;
 	
 	private final Class<CAT> cCat;
 	private final Class<CMS> cCms;
@@ -61,9 +63,9 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final Class<E> cElement;
 	private final Class<T> cType;
 	
-	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M> efCms;
-	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M> efS;
-	private final EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M> efElement;
+	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efCms;
+	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efS;
+	private final EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efElement;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
 	
@@ -87,15 +89,15 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		this.cElement=cElement;
 		this.cType=cType;
 		
-		efCms = new EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M>(cCms);
-		efS = new EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M>(cSection);
-		efElement = new EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M>(cElement);
+		efCms = new EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC>(cCms);
+		efS = new EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC>(cSection);
+		efElement = new EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC>(cElement);
 		
 		sbhCms = new SbSingleHandler<CMS>(cCms,this);
 		types = new ArrayList<T>();
 	}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M> fCms)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fCms=fCms;

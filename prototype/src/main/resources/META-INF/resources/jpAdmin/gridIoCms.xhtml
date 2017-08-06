@@ -6,6 +6,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
@@ -47,7 +48,7 @@
 				</aht:slot>
 				<aht:slot id="sLangs" width="2">
 					<h:form id="fLangs" rendered="#{(not empty cc.attrs.bean.cms) and (cc.attrs.bean.cms.id gt 0)}">
-						<jp:opSelection handler="#{itSrsFrBean.opActor}" update=":#{cc.id}:fLangs" tableHeader="xxx"/>
+						<jp:opSelection handler="#{cc.attrs.bean.opLocale}" update=":#{cc.id}:fLangs" tableHeader="#{msg.jeeslCmsLanguages}"/>
 					</h:form>
 				</aht:slot>
 				

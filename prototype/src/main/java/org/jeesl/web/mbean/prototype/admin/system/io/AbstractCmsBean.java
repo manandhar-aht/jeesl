@@ -11,6 +11,7 @@ import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsElementFactory;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsFactory;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsSectionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
+import org.jeesl.interfaces.bean.op.OpEntityBean;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
@@ -18,7 +19,6 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
-import org.jeesl.interfaces.model.system.lang.JeeslLocale;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
@@ -49,9 +49,9 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 										T extends UtilsStatus<T,L,D>,
 										C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
 										M extends UtilsStatus<M,L,D>,
-										LOC extends JeeslLocale<L>>
+										LOC extends UtilsStatus<LOC,L,D>>
 					extends AbstractAdminBean<L,D>
-					implements Serializable,SbToggleBean,SbSingleBean
+					implements Serializable,SbToggleBean,SbSingleBean,OpEntityBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractCmsBean.class);
@@ -63,15 +63,14 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final Class<S> cSection;
 	private final Class<E> cElement;
 	private final Class<T> cType;
+	private final Class<LOC> cLoc;
 	
 	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efCms;
 	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efS;
 	private final EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efElement;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
-	private OpStatusSelectionHandler<LOC> opLocale; public OpStatusSelectionHandler<LOC> getOpLocale() {return opLocale;}
-
-	private List<LOC> locales; public List<LOC> getLocales() {return locales;}
+	private final OpStatusSelectionHandler<LOC> opLocale; public OpStatusSelectionHandler<LOC> getOpLocale() {return opLocale;}
 
 	private List<E> elements; public List<E> getElements() {return elements;}
 	private final List<T> types; public List<T> getTypes() {return types;}
@@ -84,7 +83,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCat, final Class<CMS> cCms, final Class<S> cSection, final Class<E> cElement, final Class<T> cType)
+	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCat, final Class<CMS> cCms, final Class<S> cSection, final Class<E> cElement, final Class<T> cType, final Class<LOC> cLoc)
 	{
 		super(cL,cD);
 		this.cCat=cCat;
@@ -92,20 +91,24 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		this.cSection=cSection;
 		this.cElement=cElement;
 		this.cType=cType;
+		this.cLoc=cLoc;
 		
 		efCms = new EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC>(cCms);
 		efS = new EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC>(cSection);
 		efElement = new EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC>(cElement);
 		
 		sbhCms = new SbSingleHandler<CMS>(cCms,this);
+		opLocale = new OpStatusSelectionHandler<LOC>(this);
+		
 		types = new ArrayList<T>();
 	}
 	
 	protected void initSuper(String[] langs, List<LOC> locales, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
-		this.locales=locales;
 		this.fCms=fCms;
+		
+		opLocale.setOpList(locales);
 		
 		types.addAll(fCms.allOrderedPositionVisible(cType));
 	}
@@ -138,6 +141,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 			if(EjbIdFactory.isSaved(cms))
 			{
 				cms = efLang.persistMissingLangs(fCms,localeCodes,cms);
+				reloadCms();
 				reloadTree();
 			}
 			logger.info("Twice:"+sbhCms.getTwiceSelected()+" for "+cms.toString());
@@ -168,6 +172,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(cms));}
 		cms = fCms.save(cms);
 		savedCms();
+		reloadCms();
 	}
 	protected void savedCms() throws UtilsLockingException, UtilsConstraintViolationException
 	{
@@ -179,6 +184,13 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	public void selectDocument()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(cms));}
+		reloadCms();
+	}
+	
+	private void reloadCms()
+	{
+		cms = fCms.find(cCms,cms);
+		opLocale.setTbList(cms.getLocales());
 	}
 	
 	private void reloadTree()
@@ -240,6 +252,37 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
     		reloadSection();
     		reset(true);
     }
+    
+	@Override public void addOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addOpEntity(item));}
+		if(cLoc.isAssignableFrom(item.getClass()))
+		{
+			LOC locale = (LOC)item;
+			if(!cms.getLocales().contains(locale))
+			{
+				cms.getLocales().add(locale);
+				cms = fCms.save(cms);
+				reloadCms();
+			}
+		}
+	}
+	@Override public void rmOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmOpEntity(item));}
+		if(cLoc.isAssignableFrom(item.getClass()))
+		{
+			LOC locale = (LOC)item;
+			if(cms.getLocales().contains(locale))
+			{
+				cms.getLocales().remove(locale);
+				cms = fCms.save(cms);
+				reloadCms();
+			}
+		}
+	}
+
+    
     
 	public void addSection() 
 	{

@@ -2,7 +2,6 @@ package org.jeesl.interfaces.model.system.io.cms;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.lang.JeeslLocale;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -23,7 +22,7 @@ public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
 								T extends UtilsStatus<T,L,D>,
 								C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
 								M extends UtilsStatus<M,L,D>,
-								LOC extends JeeslLocale<L>>
+								LOC extends UtilsStatus<LOC,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPosition,EjbWithLang<L>,JeeslWithCategory<L,D,CAT>
 {	
 	public enum Attributes{category,position}

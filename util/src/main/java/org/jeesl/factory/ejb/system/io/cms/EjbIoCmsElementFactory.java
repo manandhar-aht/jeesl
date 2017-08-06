@@ -7,7 +7,6 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
-import org.jeesl.interfaces.model.system.lang.JeeslLocale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +23,7 @@ public class EjbIoCmsElementFactory <L extends UtilsLang,D extends UtilsDescript
 								T extends UtilsStatus<T,L,D>,
 								C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
 								M extends UtilsStatus<M,L,D>,
-								LOC extends JeeslLocale<L>>
+								LOC extends UtilsStatus<LOC,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoCmsElementFactory.class);
 	

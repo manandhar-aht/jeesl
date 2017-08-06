@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.io.cms;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.system.lang.JeeslLocale;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 
@@ -32,6 +34,6 @@ public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
 	S getRoot();
 	void setRoot(S section);
 	
-	String getLanguages();
-	void setLanguages(String languages);
+	List<LOC> getLocales();
+	void setLocales(List<LOC> locales);
 }

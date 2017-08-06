@@ -18,7 +18,7 @@ public class OpStatusSelectionHandler <T extends EjbWithId> extends AbstractOpSe
     public OpStatusSelectionHandler(OpEntityBean bean) {this(bean,new ArrayList<T>());}
     public OpStatusSelectionHandler(OpEntityBean bean, List<T> opEntites)
     {
-    	super(bean,opEntites);
-    	showLang=true;
+	    	super(bean,opEntites);
+	    	showLang=true;
     }
 }

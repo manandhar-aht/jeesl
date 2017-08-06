@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
+import org.jeesl.controller.handler.op.OpStatusSelectionHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsElementFactory;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsFactory;
@@ -68,7 +69,10 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efElement;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
-	
+	private OpStatusSelectionHandler<LOC> opLocale; public OpStatusSelectionHandler<LOC> getOpLocale() {return opLocale;}
+
+	private List<LOC> locales; public List<LOC> getLocales() {return locales;}
+
 	private List<E> elements; public List<E> getElements() {return elements;}
 	private final List<T> types; public List<T> getTypes() {return types;}
 
@@ -97,9 +101,10 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		types = new ArrayList<T>();
 	}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms)
+	protected void initSuper(String[] langs, List<LOC> locales, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
+		this.locales=locales;
 		this.fCms=fCms;
 		
 		types.addAll(fCms.allOrderedPositionVisible(cType));

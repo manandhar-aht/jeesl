@@ -30,12 +30,12 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
     
     public AbstractOpSelectionHandler(OpEntityBean bean, List<T> opList)
     {
-    	this.bean=bean;
-    	this.opList=opList;
-    	showName=false;
-    	showLang=false;
-    	if(opList==null){opList = new ArrayList<T>();}
-    	tbList = new ArrayList<T>(); 
+	    	this.bean=bean;
+	    	this.opList=opList;
+	    	showName=false;
+	    	showLang=false;
+	    	if(opList==null){opList = new ArrayList<T>();}
+	    	tbList = new ArrayList<T>(); 
     }
     
     protected void reset(boolean rTb, boolean rOp)

@@ -23,8 +23,8 @@ public class OpPositionNameSelectionHandler <T extends EjbWithId> extends Abstra
     public OpPositionNameSelectionHandler(UtilsFacade facade, OpEntityBean bean){this(facade,bean,new ArrayList<T>());}
     public OpPositionNameSelectionHandler(UtilsFacade facade, OpEntityBean bean, List<T> opEntites)
     {
-    	super(bean,opEntites);
-    	this.facade=facade;
-    	showName=true;
+	    	super(bean,opEntites);
+	    	this.facade=facade;
+	    	showName=true;
     }
 }

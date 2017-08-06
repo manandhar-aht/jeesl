@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslCmsDocuments">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Dokumente"/>
+	    		<s:lang key="en" translation="Documents"/>
+	    		<s:lang key="fr" translation="Documents"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslCmsDocument">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Dokument"/>
+	    		<s:lang key="en" translation="Document"/>
+	    		<s:lang key="fr" translation="Document"/>
+	    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslCmsSection">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Abschnitt"/>

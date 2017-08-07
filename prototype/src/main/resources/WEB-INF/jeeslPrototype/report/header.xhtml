@@ -1,27 +1,35 @@
 <ui:composition
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
 >
-	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
-	
-	<p:columnGroup type="header">
-	
-		<p:row rendered="#{report.showHeaderGroup}">
-			<c:forEach var="g" items="#{report.groups}" >
-				<p:column rendered="#{g.showLabel}" colspan="#{report.mapGroupChilds[g]}" headerText="#{g.name[loc].lang}" />
-				<p:column rendered="#{not g.showLabel}" colspan="#{report.mapGroupChilds[g]}" headerText="" />
-			</c:forEach>
-		</p:row>
-		<p:row rendered="#{report.showHeaderColumn}">
-			<c:forEach var="c" items="#{report.columns}">
-				<p:column colspan="1" rendered="#{c.showLabel}" headerText="#{c.name[loc].lang}" />
-				<p:column colspan="1" rendered="#{not c.showLabel}" headerText="" />
-			</c:forEach>
-		</p:row>
-	
-	</p:columnGroup>
+    <c:set var="loc" value="#{not empty loc ? loc : localeCode}"/>
+    <c:set var="title" value="#{title}"/>
+
+    <p:columnGroup type="header">
+
+        <p:row rendered="#{report.showHeaderGroup}">
+            <c:forEach var="g" items="#{report.groups}">
+                <p:column rendered="#{g.showLabel}" colspan="#{report.mapGroupChilds[g]}"
+                          headerText="#{g.name[loc].lang}"/>
+                <p:column rendered="#{not g.showLabel}" colspan="#{report.mapGroupChilds[g]}" headerText=""/>
+            </c:forEach>
+        </p:row>
+        <p:row rendered="#{report.showHeaderColumn}">
+            <p:tooltip/>
+            <c:forEach var="c" items="#{report.columns}">
+                <p:column colspan="1" rendered="#{c.showLabel}" headerText="">
+                    <f:facet name="header">
+                        <h:outputText value="#{c.name[loc].lang}" title="#{c.description[loc].lang}" rendered="#{c.showHint}"/>
+                        <h:outputText value="#{c.name[loc].lang}" rendered="#{not c.showHint}"/>
+                    </f:facet>
+                </p:column>
+                <p:column colspan="1" rendered="#{not c.showLabel}" headerText=""/>
+            </c:forEach>
+        </p:row>
+
+    </p:columnGroup>
 </ui:composition>

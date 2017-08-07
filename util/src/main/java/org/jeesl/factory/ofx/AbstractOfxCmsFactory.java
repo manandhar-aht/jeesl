@@ -18,7 +18,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public abstract class OfxCmsSectionFactory <L extends UtilsLang,D extends UtilsDescription,
+public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
 								CMS extends JeeslIoCms<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
 								V extends JeeslIoCmsVisiblity<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
@@ -29,12 +29,12 @@ public abstract class OfxCmsSectionFactory <L extends UtilsLang,D extends UtilsD
 								M extends UtilsStatus<M,L,D>,
 								LOC extends UtilsStatus<LOC,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(OfxCmsSectionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractOfxCmsFactory.class);
 	
 	protected final String localeCode;
-	private final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms;
+	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms;
 	
-	public OfxCmsSectionFactory(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms)
+	public AbstractOfxCmsFactory(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms)
 	{
 		this.localeCode=localeCode;
 		this.fCms = fCms;

@@ -5,9 +5,12 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui"
 >
+	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
 	<c:set var="rows"  value="#{not empty rows ? rows : 3}" />
 
-	<p:inputTextarea rows="#{rows}" styleClass="w100" value="#{value}">
+
+	<p:inputTextarea rendered="#{rendered and (not empty value)}"
+					rows="#{rows}" styleClass="w100" value="#{value}">
 		<c:set var="id" value="#{id}" />
 	</p:inputTextarea>
 </ui:composition>

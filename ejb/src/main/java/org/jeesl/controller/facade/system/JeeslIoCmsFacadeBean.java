@@ -1,5 +1,7 @@
 package org.jeesl.controller.facade.system;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
@@ -32,11 +34,13 @@ public class JeeslIoCmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoCmsFacadeBean.class);
 	
 	private final Class<S> cSection;
+	private final Class<E> cElement;
 	
-	public JeeslIoCmsFacadeBean(EntityManager em,final Class<S> cSection)
+	public JeeslIoCmsFacadeBean(EntityManager em, final Class<S> cSection, final Class<E> cElement)
 	{
 		super(em);
 		this.cSection=cSection;
+		this.cElement=cElement;
 	}
 	
 	@Override public S load(S section, boolean recursive)
@@ -51,4 +55,6 @@ public class JeeslIoCmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 		}
 		return section;
 	}
+
+	@Override public List<E> fCmsElements(S section) {return this.allForParent(cElement,section);}
 }

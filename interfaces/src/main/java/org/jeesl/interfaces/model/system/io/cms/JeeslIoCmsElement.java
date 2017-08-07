@@ -33,4 +33,7 @@ public interface JeeslIoCmsElement<L extends UtilsLang,D extends UtilsDescriptio
 	
 	public Map<String,C> getContent();
 	public void setContent(Map<String,C> content);
+	
+	String getJson();
+	void setJson(String json);
 }

@@ -66,6 +66,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final Class<LOC> cLoc;
 	
 	private String currentLocaleCode;
+	protected String[] cmsLocales; public String[] getCmsLocales() {return cmsLocales;}
 	
 	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efCms;
 	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efS;
@@ -81,7 +82,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	protected CMS cms; public CMS getCms() {return cms;} public void setCms(CMS cms) {this.cms = cms;}
 	protected CAT category;
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
-	private E element; public E getElement() {return element;} public void setElement(E element) {this.element = element;}
+	protected E element; public E getElement() {return element;} public void setElement(E element) {this.element = element;}
 
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
@@ -196,6 +197,10 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	{
 		cms = fCms.find(cCms,cms);
 		opLocale.setTbList(cms.getLocales());
+		
+		cmsLocales = new String[cms.getLocales().size()];
+		for(int i=0;i<cms.getLocales().size();i++) {cmsLocales[i]=cms.getLocales().get(i).getCode();}
+		
 		sbhLocale.setList(cms.getLocales());
 		sbhLocale.setSelection(null);
 		for(LOC l : cms.getLocales())
@@ -251,7 +256,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
  
     public void onNodeCollapse(NodeCollapseEvent event)
     {
-    	logger.info("Collapsed "+event.getTreeNode().toString());
+    		logger.info("Collapsed "+event.getTreeNode().toString());
     }
 	
     @SuppressWarnings("unchecked")
@@ -259,6 +264,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
     {
     		logger.info("Selected "+event.getTreeNode().toString());
     		section = (S)event.getTreeNode().getData();
+    		section = efLang.persistMissingLangs(fCms, cmsLocales, section);
     		S db = fCms.load(section,false);
     		efS.update(db,section);
     		reloadSection();
@@ -293,14 +299,12 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 			}
 		}
 	}
-
-    
     
 	public void addSection() 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cSection));}
 		section = efS.build(cms.getRoot());
-		section.setName(efLang.createEmpty(localeCodes));
+		section.setName(efLang.createEmpty(cmsLocales));
 		for(String k : section.getName().keySet()){section.getName().get(k).setLang("XXX");}
 	}
 	
@@ -314,9 +318,10 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		reloadSection();
 	}
 	
-	private void reloadSection()
+	protected void reloadSection()
 	{
 		elements = fCms.allForParent(cElement,section);
+		elements = fCms.fCmsElements(section);
 	}
 	
 	public void addElement() 

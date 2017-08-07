@@ -7,6 +7,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:jp="http://jsf.jeesl.org/prototype"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
@@ -64,7 +65,7 @@
 			            <p:ajax event="expand" listener="#{cc.attrs.bean.onNodeExpand}" />
 							<p:ajax event="collapse" listener="#{cc.attrs.bean.onNodeCollapse}" />
 			            <p:treeNode>
-			                <h:outputText value="#{node.name[localeCode].lang}" />
+			                <h:outputText value="#{node.name[itSrsReportBean.sbhLocale.selection.code].lang}" />
 			            </p:treeNode>
 			        </p:tree>
 					</h:form>
@@ -78,9 +79,9 @@
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:fTree :#{cc.id}:sSection" rendered="#{not empty cc.attrs.bean.section}" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:sSection" rendered="#{cc.attrs.bean.cms.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.section}" withDescription="false" labelTranslation="#{msg.Name}" keys="#{cc.attrs.bean.localeCodes}" rendered="#{not empty cc.attrs.bean.section}"/>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80" rendered="#{not empty cc.attrs.bean.section}">
-								
+								<p:outputLabel value="#{msg.jeeslCmsSectionHeader}"/>
+								<jtp:inputText value="#{cc.attrs.bean.section.name[itSrsReportBean.sbhLocale.selection.code].lang}"/>
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

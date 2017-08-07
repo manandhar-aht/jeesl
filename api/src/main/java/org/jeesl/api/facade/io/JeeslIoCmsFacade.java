@@ -1,5 +1,7 @@
 package org.jeesl.api.facade.io;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
@@ -24,4 +26,5 @@ public interface JeeslIoCmsFacade <L extends UtilsLang,D extends UtilsDescriptio
 						extends UtilsFacade
 {
 	S load(S section, boolean recursive);
+	List<E> fCmsElements(S section);
 }

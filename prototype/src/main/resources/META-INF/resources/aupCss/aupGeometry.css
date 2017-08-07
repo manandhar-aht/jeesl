@@ -129,6 +129,8 @@ a:hover { color: #333; text-decoration: none; }
 }
 
 .aupPfDtColCentered {text-align:center !important;}
+.jeeslColumnCentered {text-align:center !important;}
+
 
 .aupContentCenter {float: left;}
 
@@ -249,12 +251,15 @@ a:hover { color: #333; text-decoration: none; }
     table-layout: fixed !important;
 }
 
-/* TODO Remove */
+/* TODO Remove, replaced by jeeslDtColumnTrafficLight*/
 .aupTrafficLightColumn {padding: 0px !important; vertical-align: middle;}
 .aupTrafficLightColumn th{padding: 4px 10px !important;}
 
 .jeeslDtColumnTrafficLight {padding: 0px !important; vertical-align: middle;}
 .jeeslDtColumnTrafficLight div{padding: 4px 6px !important;}
+
+/* Margin from the grpah to text for statusbar-childs*/
+.jeeslStatusBarItemSymbol {margin-right: 10px;}
 
 .aupPfTableSingleLine {
 	text-wrap:none;

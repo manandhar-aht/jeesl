@@ -72,11 +72,15 @@
         <tag-name>ioUpload</tag-name>
         <source>jeeslPrototype/io/upload.xhtml</source>
     </tag>
-    
+
+	<tag>
+        <tag-name>symbolizer</tag-name>
+        <source>jeeslPrototype/symbolizer/graphic.xhtml</source>
+	</tag>
 	<tag>
         <tag-name>statusSymbolizer</tag-name>
         <source>jeeslPrototype/symbolizer/status.xhtml</source>
-    </tag>
+	</tag>
 	<tag>
         <tag-name>figureSymbolizer</tag-name>
         <source>jeeslPrototype/symbolizer/figure.xhtml</source>

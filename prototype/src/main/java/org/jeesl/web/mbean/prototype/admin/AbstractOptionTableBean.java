@@ -90,7 +90,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
 	
-	protected EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic;
+	protected final EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic;
 	private final EjbGraphicFigureFactory<L,D,G,GT,F,FS> efFigure;
 	
 	public AbstractOptionTableBean(final Class<L> cL, final Class<D> cD, Class<G> cG, Class<GT> cGT, final Class<F> cF, final Class<FS> cFS, final Class<?> cStatus)

@@ -48,7 +48,7 @@
 				</aht:slot>
 				<aht:slot id="sLangs" width="2">
 					<h:form id="fLangs" rendered="#{(not empty cc.attrs.bean.cms) and (cc.attrs.bean.cms.id gt 0)}">
-						<jp:opSelection handler="#{cc.attrs.bean.opLocale}" update=":#{cc.id}:fLangs" tableHeader="#{msg.jeeslCmsLanguages}"/>
+						<jp:opSelection handler="#{cc.attrs.bean.opLocale}" update=":#{cc.id}:fLangs :fStatusBar" tableHeader="#{msg.jeeslCmsLanguages}"/>
 					</h:form>
 				</aht:slot>
 				

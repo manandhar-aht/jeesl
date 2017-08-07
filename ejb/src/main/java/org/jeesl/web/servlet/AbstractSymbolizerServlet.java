@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.exlp.util.io.StringUtil;
 
 public abstract class AbstractSymbolizerServlet<L extends UtilsLang, D extends UtilsDescription,
 												G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
@@ -42,8 +43,13 @@ public abstract class AbstractSymbolizerServlet<L extends UtilsLang, D extends U
         String path = URLDecoder.decode(request.getPathInfo(), "UTF-8");
         if(path.length()<1)
         {
-        	response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        	return null;
+	        	response.sendError(HttpServletResponse.SC_NOT_FOUND);
+	        	return null;
+        }
+        
+        if(logger.isInfoEnabled())
+        {
+        		logger.trace("Path " +path);
         }
         
         String[] pathElements = path.split("/");
@@ -52,10 +58,45 @@ public abstract class AbstractSymbolizerServlet<L extends UtilsLang, D extends U
         
         if(logger.isTraceEnabled())
         {
-        	logger.trace("Requested size " +size+" id:"+id);
+        		logger.trace("Requested size " +size+" id:"+id);
         }
         
         return XmlImageFactory.idHeight(id,size);
+	}
+	
+	protected Image getGraphicInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		if (request.getPathInfo() == null)
+		{
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+
+        String path = URLDecoder.decode(request.getPathInfo(), "UTF-8");
+        if(path.length()<1)
+        {
+	        	response.sendError(HttpServletResponse.SC_NOT_FOUND);
+	        	return null;
+        }
+        
+        if(logger.isTraceEnabled()){logger.trace("Path " +path);}
+        
+        String[] pathElements = path.split("/");
+        String className = pathElements[1];
+        Integer size = new Integer(pathElements[2]);
+        Long id = new Long(pathElements[3]);
+        
+        if(logger.isTraceEnabled())
+        {
+        		logger.trace(StringUtil.stars());
+        		logger.trace("\tclass:"+className);
+        		logger.trace("\tsize:"+size);
+        		logger.trace("\tid:"+id);
+        }
+        Image image = XmlImageFactory.idHeight(id,size);
+        image.setVersion(className);
+        
+        return image;
 	}
 	
 	protected void respond(HttpServletRequest request, HttpServletResponse response,byte[] bytes, String suffix) throws ServletException, IOException

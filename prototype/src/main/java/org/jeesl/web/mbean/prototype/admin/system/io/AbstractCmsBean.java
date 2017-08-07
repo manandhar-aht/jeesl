@@ -65,11 +65,14 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final Class<T> cType;
 	private final Class<LOC> cLoc;
 	
+	private String currentLocaleCode;
+	
 	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efCms;
 	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efS;
 	private final EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efElement;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
+	private final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	private final OpStatusSelectionHandler<LOC> opLocale; public OpStatusSelectionHandler<LOC> getOpLocale() {return opLocale;}
 
 	private List<E> elements; public List<E> getElements() {return elements;}
@@ -98,14 +101,16 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		efElement = new EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC>(cElement);
 		
 		sbhCms = new SbSingleHandler<CMS>(cCms,this);
+		sbhLocale = new SbSingleHandler<LOC>(cLoc,this);
 		opLocale = new OpStatusSelectionHandler<LOC>(this);
 		
 		types = new ArrayList<T>();
 	}
 	
-	protected void initSuper(String[] langs, List<LOC> locales, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms)
+	protected void initSuper(String[] langs, String currentLocaleCode, List<LOC> locales, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
+		this.currentLocaleCode=currentLocaleCode;
 		this.fCms=fCms;
 		
 		opLocale.setOpList(locales);
@@ -191,6 +196,13 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	{
 		cms = fCms.find(cCms,cms);
 		opLocale.setTbList(cms.getLocales());
+		sbhLocale.setList(cms.getLocales());
+		sbhLocale.setSelection(null);
+		for(LOC l : cms.getLocales())
+		{
+			if(l.getCode().equals(currentLocaleCode)) {sbhLocale.setSelection(l);break;}
+		}
+		if(!sbhLocale.isSelected() && !cms.getLocales().isEmpty()) {sbhLocale.setSelection(cms.getLocales().get(0));}
 	}
 	
 	private void reloadTree()

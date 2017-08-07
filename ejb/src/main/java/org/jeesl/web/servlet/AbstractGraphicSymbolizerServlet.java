@@ -16,11 +16,13 @@ import org.jeesl.factory.svg.SvgSymbolFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicType;
+import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.openfuxml.content.media.Image;
 import org.openfuxml.media.transcode.Svg2SvgTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -80,26 +82,56 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 		
 		if(graphic==null){throw new UtilsProcessingException("graphic is null");}
 		if(graphic.getType()==null){throw new UtilsProcessingException("graphic.type is null");}
-    	if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
+	    	if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
 		{
-    		logger.info("Build SVG: size " + size + " id:" + id);
-    		List<F> figures = fGraphic.allForParent(cF,graphic);
+	    		logger.info("Build SVG: size " + size + " id:" + id);
+	    		List<F> figures = fGraphic.allForParent(cF,graphic);
 			if(figures.isEmpty())
 			{
-		    	SVGGraphics2D g = fSvgGraphic.build(size,graphic);
-		    	bytes = Svg2SvgTranscoder.transcode(g);
-		    	respond(request,response,bytes,"svg");
+			    	SVGGraphics2D g = fSvgGraphic.build(size,graphic);
+			    	bytes = Svg2SvgTranscoder.transcode(g);
+			    	respond(request,response,bytes,"svg");
 			}
 			else
 			{
 				SVGGraphics2D g = fSvgFigure.build(figures,size);
-		    	bytes = Svg2SvgTranscoder.transcode(g);
-		    	respond(request,response,bytes,"svg");
+			    	bytes = Svg2SvgTranscoder.transcode(g);
+			    	respond(request,response,bytes,"svg");
 			}
 		}
-    	else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.svg.toString()))
-    	{
-    		respond(request,response,graphic.getData(),"svg");
-    	}
+	    	else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.svg.toString()))
+	    	{
+	    		respond(request,response,graphic.getData(),"svg");
+	    	}
 	}
+	
+    @SuppressWarnings("unchecked")
+	protected void symbolizer(JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic , HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+		Image m = getGraphicInfo(request,response);
+		
+	    	if(m == null)
+	    	{
+	    		response.sendError(HttpServletResponse.SC_NOT_FOUND);
+	    		return;
+	    	}
+	    	else
+	    	{
+	    		try
+	    		{
+	    			Class<EjbWithGraphic<L,D,G,GT,F,FS>> c = (Class<EjbWithGraphic<L,D,G,GT,F,FS>>)Class.forName(m.getVersion()).asSubclass(EjbWithGraphic.class);
+	    			if(EjbWithGraphic.class.isAssignableFrom(c))
+	    			{
+	    				G g = fGraphic.fGraphic(c,Long.valueOf(m.getId()));
+		            	process(request,response,fGraphic,g,m);
+	    			}
+	    			else {logger.error("Class "+c.getName()+" not assingable from "+EjbWithGraphic.class.getName());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
+
+	    		}
+	    		catch (TranscoderException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
+	    		catch (UtilsNotFoundException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
+	    		catch (UtilsProcessingException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
+	    		catch (ClassNotFoundException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
+	    	}
+    }
 }

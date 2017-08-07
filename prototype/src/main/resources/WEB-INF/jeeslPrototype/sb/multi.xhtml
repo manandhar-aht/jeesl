@@ -1,14 +1,14 @@
 <ui:composition
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
-    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:aup="http://ahtutils.sourceforge.net/prototype"
-    xmlns:jp="http://jsf.jeesl.org/prototype"
-    xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
+  	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 >
 	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
 
@@ -19,19 +19,19 @@
 		</f:facet>
 		
 		<f:facet name="top">
-            <span>
-			<ui:fragment>
-                    <h:commandLink>
-                        <h:graphicImage  library="jeeslPrototypeGfx" name="12/ui/control/select-all.png"/>
-                        <p:ajax event="click" listener="#{handler.toggleAll()}" update="#{update}"/>
-                    </h:commandLink>
-                    <h:commandLink>
-                        <h:graphicImage library="jeeslPrototypeGfx" name="12/ui/control/select-none.png"/>
-                        <p:ajax event="click" listener="#{handler.toggleNone()}" update="#{update}"/>
-                    </h:commandLink>
-                    (#{fn:length(handler.selected)}/#{fn:length(handler.list)})
-			</ui:fragment>
-            </span>
+			<span>
+				<ui:fragment>
+                  <h:commandLink>
+                      <h:graphicImage  library="jeeslPrototypeGfx" name="12/ui/control/select-all.png"/>
+                      <p:ajax event="click" listener="#{handler.toggleAll()}" update="#{update}"/>
+                  </h:commandLink>
+                  <h:commandLink>
+                      <h:graphicImage library="jeeslPrototypeGfx" name="12/ui/control/select-none.png"/>
+                      <p:ajax event="click" listener="#{handler.toggleNone()}" update="#{update}"/>
+                  </h:commandLink>
+                  (#{fn:length(handler.selected)}/#{fn:length(handler.list)})
+				</ui:fragment>
+			</span>
 		</f:facet>
 		
 		<h:commandLink>

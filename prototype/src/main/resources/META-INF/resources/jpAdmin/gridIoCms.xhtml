@@ -80,6 +80,9 @@
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:sSection" rendered="#{cc.attrs.bean.cms.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80" rendered="#{not empty cc.attrs.bean.section}">
+								<p:outputLabel value="#{msg.jeeslCmsVisible}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.visible}"/>
+								
 								<p:outputLabel value="#{msg.jeeslCmsSectionHeader}"/>
 								<jtp:inputText value="#{cc.attrs.bean.section.name[itSrsReportBean.sbhLocale.selection.code].lang}"/>
 							</p:panelGrid>

@@ -9,7 +9,9 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.openfuxml.content.ofx.Section;
+import org.openfuxml.content.ofx.Sections;
 import org.openfuxml.factory.xml.ofx.content.structure.XmlSectionFactory;
+import org.openfuxml.factory.xml.ofx.content.structure.XmlSectionsFactory;
 import org.openfuxml.factory.xml.ofx.content.text.XmlTitleFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +41,24 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 		this.localeCode=localeCode;
 		this.fCms = fCms;
 	}
+	
+	public Sections build(CMS cms)
+	{
+		logger.info("Rendering "+cms.toString());
+		S root = fCms.load(cms.getRoot(),true);
+		
+		Sections xml = XmlSectionsFactory.build();
+		for(S section : root.getSections())
+		{
+			if(section.isVisible())
+			{
+				xml.getContent().add(build(section));
+			}
+		}
+		return xml;
+	}
  
-	public Section build(S section)
+	private Section build(S section)
 	{
 		Section xml = XmlSectionFactory.build();
 		xml.getContent().add(XmlTitleFactory.build(section.getName().get(localeCode).getLang()));
@@ -53,7 +71,10 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 		
 		for(S child : section.getSections())
 		{
-			xml.getContent().add(this.build(child));
+			if(child.isVisible())
+			{
+				xml.getContent().add(this.build(child));
+			}
 		}
 		
 		return xml;

@@ -62,6 +62,26 @@
 	    		<s:lang key="en" translation="Languages"/>
 	    		<s:lang key="fr" translation="Languages"/>
 	    	</s:langs>
+    </s:translation>
+    	<s:translation key="jeeslCmsSectionHeader">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Überschrift"/>
+	    		<s:lang key="en" translation="Header"/>
+	    		<s:lang key="fr" translation="Header"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslCmsVisible">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Sichtbar"/>
+	    		<s:lang key="en" translation="Visible"/>
+	    		<s:lang key="fr" translation="Visible"/>
+	    	</s:langs>
+    </s:translation>
+  	<s:translation key="jeeslCmsElementJson">
+	    	<s:langs>
+	    		<s:lang key="de" translation="JSON"/>
+	    		<s:lang key="en" translation="JSON"/>
+	    		<s:lang key="fr" translation="JSON"/>
+	    	</s:langs>
     </s:translation>  
-    
 </s:translations>

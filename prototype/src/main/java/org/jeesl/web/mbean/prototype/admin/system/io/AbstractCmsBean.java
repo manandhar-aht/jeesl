@@ -342,6 +342,8 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		element = fCms.save(element);
 		reloadSection();
 	}
+	protected abstract void savedElement();
+	
 	
 	protected void reorderDocuments() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCms, sbhCms.getList());}
 	protected void reorderElements() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCms, elements);}

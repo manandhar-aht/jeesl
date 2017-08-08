@@ -22,21 +22,22 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
-								CMS extends JeeslIoCms<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-								V extends JeeslIoCmsVisiblity<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-								S extends JeeslIoCmsSection<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-								E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-								T extends UtilsStatus<T,L,D>,
-								C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
+								CMS extends JeeslIoCms<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+								V extends JeeslIoCmsVisiblity<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+								S extends JeeslIoCmsSection<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+								E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+								EC extends UtilsStatus<EC,L,D>,
+								ET extends UtilsStatus<ET,L,D>,
+								C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
 								M extends UtilsStatus<M,L,D>,
 								LOC extends UtilsStatus<LOC,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractOfxCmsFactory.class);
 	
 	protected final String localeCode;
-	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms;
+	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> fCms;
 	
-	public AbstractOfxCmsFactory(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms)
+	public AbstractOfxCmsFactory(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> fCms)
 	{
 		this.localeCode=localeCode;
 		this.fCms = fCms;

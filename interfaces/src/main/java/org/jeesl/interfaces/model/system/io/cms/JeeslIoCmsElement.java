@@ -11,15 +11,16 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslIoCmsElement<L extends UtilsLang,D extends UtilsDescription,
-								CAT extends UtilsStatus<CAT,L,D>,
-								CMS extends JeeslIoCms<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-								V extends JeeslIoCmsVisiblity<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-								S extends JeeslIoCmsSection<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-								E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-								T extends UtilsStatus<T,L,D>,
-								C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-								M extends UtilsStatus<M,L,D>,
-								LOC extends UtilsStatus<LOC,L,D>>
+									CAT extends UtilsStatus<CAT,L,D>,
+									CMS extends JeeslIoCms<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+									V extends JeeslIoCmsVisiblity<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+									S extends JeeslIoCmsSection<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+									E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+									EC extends UtilsStatus<EC,L,D>,
+									ET extends UtilsStatus<ET,L,D>,
+									C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+									M extends UtilsStatus<M,L,D>,
+									LOC extends UtilsStatus<LOC,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPositionParent
 {	
 	public enum Attributes{section}
@@ -28,8 +29,8 @@ public interface JeeslIoCmsElement<L extends UtilsLang,D extends UtilsDescriptio
 	S getSection();
 	void setSection(S section);
 	
-	T getType();
-	void setType(T type);
+	ET getType();
+	void setType(ET type);
 	
 	public Map<String,C> getContent();
 	public void setContent(Map<String,C> content);

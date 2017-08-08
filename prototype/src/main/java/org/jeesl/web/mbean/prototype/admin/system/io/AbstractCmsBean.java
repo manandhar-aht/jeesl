@@ -42,12 +42,13 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescription,
 										CAT extends UtilsStatus<CAT,L,D>,
-										CMS extends JeeslIoCms<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-										V extends JeeslIoCmsVisiblity<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-										S extends JeeslIoCmsSection<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-										E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
-										T extends UtilsStatus<T,L,D>,
-										C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,T,C,M,LOC>,
+										CMS extends JeeslIoCms<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+										V extends JeeslIoCmsVisiblity<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+										S extends JeeslIoCmsSection<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+										E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+										EC extends UtilsStatus<EC,L,D>,
+										ET extends UtilsStatus<ET,L,D>,
+										C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
 										M extends UtilsStatus<M,L,D>,
 										LOC extends UtilsStatus<LOC,L,D>>
 					extends AbstractAdminBean<L,D>
@@ -56,28 +57,28 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractCmsBean.class);
 	
-	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms;
+	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> fCms;
 	
 	private final Class<CAT> cCat;
 	private final Class<CMS> cCms;
 	private final Class<S> cSection;
 	private final Class<E> cElement;
-	private final Class<T> cType;
+	private final Class<ET> cType;
 	private final Class<LOC> cLoc;
 	
 	private String currentLocaleCode;
 	protected String[] cmsLocales; public String[] getCmsLocales() {return cmsLocales;}
 	
-	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efCms;
-	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efS;
-	private final EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC> efElement;
+	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> efCms;
+	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> efS;
+	private final EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> efElement;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
 	private final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	private final OpStatusSelectionHandler<LOC> opLocale; public OpStatusSelectionHandler<LOC> getOpLocale() {return opLocale;}
 
 	private List<E> elements; public List<E> getElements() {return elements;}
-	private final List<T> types; public List<T> getTypes() {return types;}
+	private final List<ET> types; public List<ET> getTypes() {return types;}
 
 	protected CMS cms; public CMS getCms() {return cms;} public void setCms(CMS cms) {this.cms = cms;}
 	protected CAT category;
@@ -87,7 +88,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCat, final Class<CMS> cCms, final Class<S> cSection, final Class<E> cElement, final Class<T> cType, final Class<LOC> cLoc)
+	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCat, final Class<CMS> cCms, final Class<S> cSection, final Class<E> cElement, final Class<ET> cType, final Class<LOC> cLoc)
 	{
 		super(cL,cD);
 		this.cCat=cCat;
@@ -97,18 +98,18 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		this.cType=cType;
 		this.cLoc=cLoc;
 		
-		efCms = new EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC>(cCms);
-		efS = new EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC>(cSection);
-		efElement = new EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,T,C,M,LOC>(cElement);
+		efCms = new EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>(cCms);
+		efS = new EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>(cSection);
+		efElement = new EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>(cElement);
 		
 		sbhCms = new SbSingleHandler<CMS>(cCms,this);
 		sbhLocale = new SbSingleHandler<LOC>(cLoc,this);
 		opLocale = new OpStatusSelectionHandler<LOC>(this);
 		
-		types = new ArrayList<T>();
+		types = new ArrayList<ET>();
 	}
 	
-	protected void initSuper(String[] langs, String currentLocaleCode, List<LOC> locales, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,T,C,M,LOC> fCms)
+	protected void initSuper(String[] langs, String currentLocaleCode, List<LOC> locales, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> fCms)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.currentLocaleCode=currentLocaleCode;

@@ -39,7 +39,7 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class OfxQaDurationGroupTable extends AbstractUtilsOfxDocumentationFactory
 {
-	final static Logger logger = LoggerFactory.getLogger(OfxQaNfrQuestionTableFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(OfxQaDurationGroupTable.class);
 	private static String keyCaptionPrefix = "auTableQaDurationGroup";
 	
 	private TxtPeriodFactory tfPeriod;

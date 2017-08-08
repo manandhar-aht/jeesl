@@ -37,7 +37,7 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class OfxQaDurationFrSummaryTable extends AbstractUtilsOfxDocumentationFactory
 {
-	final static Logger logger = LoggerFactory.getLogger(OfxQaNfrQuestionTableFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(OfxQaDurationFrSummaryTable.class);
 	private static String keyCaptionPrefix = "auTableQaSummaryDuration";
 	
 	private TxtPeriodFactory tfPeriod;

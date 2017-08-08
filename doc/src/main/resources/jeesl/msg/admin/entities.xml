@@ -77,11 +77,18 @@
 			<s:lang key="fr" translation="CMS Category"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="IoCmsType">
+	<s:translation key="IoCmsElementType">
 		<s:langs>
-			<s:lang key="de" translation="CMS Typ"/>
-			<s:lang key="en" translation="CMS Type"/>
-			<s:lang key="fr" translation="CMS Type"/>
+			<s:lang key="de" translation="CMS Element Typ"/>
+			<s:lang key="en" translation="CMS Element Type"/>
+			<s:lang key="fr" translation="CMS Element Type"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoCmsElementCategory">
+		<s:langs>
+			<s:lang key="de" translation="CMS Element Category"/>
+			<s:lang key="en" translation="CMS Element Category"/>
+			<s:lang key="fr" translation="CMS Element Category"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="IoMailCategory">

@@ -41,9 +41,7 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 	protected Map<String,Map<String,L>> entities; public Map<String,Map<String,L>> getEntities() {return entities;}
 	protected Map<String,Map<String,Map<String,L>>> labels; public Map<String, Map<String, Map<String,L>>> getLabels() {return labels;}
 	protected Map<String,Map<String,Map<String,D>>> descriptions;public Map<String, Map<String, Map<String,D>>> getDescriptions() {return descriptions;}
-	
-	
-	
+
 	protected void init(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RE> cRE)
 	{
 		this.fRevision=fRevision;

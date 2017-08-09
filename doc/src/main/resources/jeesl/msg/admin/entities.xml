@@ -169,4 +169,19 @@
 		</s:langs>
 	</s:translation>
 	
+	<s:translation key="SystemConstraintCategory">
+		<s:langs>
+			<s:lang key="de" translation="Nebenbedingung Kategorie"/>
+			<s:lang key="en" translation="Constraint Category"/>
+			<s:lang key="fr" translation="Constraint Category"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="SystemConstraintType">
+		<s:langs>
+			<s:lang key="de" translation="Nebenbedingung Typ"/>
+			<s:lang key="en" translation="Constraint Type"/>
+			<s:lang key="fr" translation="Constraint Type"/>
+		</s:langs>
+	</s:translation>
+	
 </s:translations>

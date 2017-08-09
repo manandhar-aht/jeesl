@@ -79,6 +79,7 @@ public class PcInventoryProcessor
 
 	public Computer transform(String xmlFile) throws DatatypeConfigurationException
 	{
+		logger.error("Hallo");
 		ByteArrayInputStream stream = new ByteArrayInputStream(xmlFile.getBytes());
 		doc = JDomUtil.load(stream);
 		
@@ -106,42 +107,57 @@ public class PcInventoryProcessor
 			update.setCode(uNameList.get(i).replace("{", "").replace("}", ""));
 			update.setDescription(uDescritionList.get(i));
 			
-			if (uRecordlist.get(i).length() == 0)
+			try
 			{
-				XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(
-						LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("")).toString());
-				update.setRecord((x));
-			}
-			
-			if (uRecordlist.get(i).length() == 8)
-			{
-				XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(
-						LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("yyyyMMdd")).toString());
-				update.setRecord((x));
-			}
-			if (uRecordlist.get(i).length() == 9)
-			{
-				if (uRecordlist.get(i).contains("/"))
+				if (uRecordlist.get(i).length() == 0)
 				{
 					XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(
-							LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("M/dd/yyyy")).toString());
+							LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("")).toString());
 					update.setRecord((x));
 				}
-			}
-			if (uRecordlist.get(i).length() == 10)
+				
+				if (uRecordlist.get(i).length() == 8)
+				{
+					if (uRecordlist.get(i).contains("/"))
+					{
+						XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(
+								LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("M/d/yyyy")).toString());
+						update.setRecord((x));
+					}
+					else
+					{
+					XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(
+							LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("yyyyMMdd")).toString());
+					update.setRecord((x));
+					}
+				}
+				if (uRecordlist.get(i).length() == 9)
+				{
+					if (uRecordlist.get(i).contains("/"))
+					{
+						XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(
+								LocalDateTime.parse(uRecordlist.get(i), DateTimeFormat.forPattern("M/dd/yyyy")).toString());
+						update.setRecord((x));
+					}
+				}
+				if (uRecordlist.get(i).length() == 10)
+				{
+					if (uRecordlist.get(i).contains("/"))
+					{
+						XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDateTime
+								.parse(uRecordlist.get(i), DateTimeFormat.forPattern("MM/dd/yyyy")).toString());
+						update.setRecord((x));
+					}
+					if (uRecordlist.get(i).contains("-"))
+					{
+						XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDateTime
+								.parse(uRecordlist.get(i), DateTimeFormat.forPattern("yyyy-MM-dd")).toString());
+						update.setRecord((x));
+					}
+				}
+			} catch (Exception e)
 			{
-				if (uRecordlist.get(i).contains("/"))
-				{
-					XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDateTime
-							.parse(uRecordlist.get(i), DateTimeFormat.forPattern("MM/dd/yyyy")).toString());
-					update.setRecord((x));
-				}
-				if (uRecordlist.get(i).contains("-"))
-				{
-					XMLGregorianCalendar x = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDateTime
-							.parse(uRecordlist.get(i), DateTimeFormat.forPattern("yyyy-MM-dd")).toString());
-					update.setRecord((x));
-				}
+				logger.error("wrong dateformat: "+ e.getStackTrace());
 			}
 			updates.getUpdate().add(i, update);
 		}

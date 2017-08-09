@@ -7,6 +7,7 @@ import java.util.List;
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
 import org.jeesl.controller.handler.op.OpStatusSelectionHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
+import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsContentFactory;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsElementFactory;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsFactory;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsSectionFactory;
@@ -63,7 +64,9 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final Class<CMS> cCms;
 	private final Class<S> cSection;
 	private final Class<E> cElement;
+	private final Class<EC> cElementCategory;
 	private final Class<ET> cType;
+	private final Class<M> cMarkup;
 	private final Class<LOC> cLoc;
 	
 	private String currentLocaleCode;
@@ -72,35 +75,43 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> efCms;
 	private final EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> efS;
 	private final EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> efElement;
+	private final EjbIoCmsContentFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> efContent;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
 	private final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	private final OpStatusSelectionHandler<LOC> opLocale; public OpStatusSelectionHandler<LOC> getOpLocale() {return opLocale;}
 
 	private List<E> elements; public List<E> getElements() {return elements;}
-	private final List<ET> types; public List<ET> getTypes() {return types;}
+	private List<EC> elementCategories; public List<EC> getElementCategories() {return elementCategories;}
+	private List<ET> types; public List<ET> getTypes() {return types;}
 
 	protected CMS cms; public CMS getCms() {return cms;} public void setCms(CMS cms) {this.cms = cms;}
 	protected CAT category;
+	protected EC elementCategory; public EC getElementCategory() {return elementCategory;} public void setElementCategory(EC elementCategory) {this.elementCategory = elementCategory;}
+	
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 	protected E element; public E getElement() {return element;} public void setElement(E element) {this.element = element;}
-
+	private M markupHtml;
+	
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCat, final Class<CMS> cCms, final Class<S> cSection, final Class<E> cElement, final Class<ET> cType, final Class<LOC> cLoc)
+	public AbstractCmsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCat, final Class<CMS> cCms, final Class<S> cSection, final Class<E> cElement, Class<EC> cElementCategory, final Class<ET> cType, final Class<C> cContent, final Class<M> cMarkup, final Class<LOC> cLoc)
 	{
 		super(cL,cD);
 		this.cCat=cCat;
 		this.cCms=cCms;
 		this.cSection=cSection;
 		this.cElement=cElement;
+		this.cElementCategory=cElementCategory;
 		this.cType=cType;
+		this.cMarkup=cMarkup;
 		this.cLoc=cLoc;
 		
 		efCms = new EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>(cCms);
 		efS = new EjbIoCmsSectionFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>(cSection);
 		efElement = new EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>(cElement);
+		efContent = EjbIoCmsContentFactory.factory(cContent);
 		
 		sbhCms = new SbSingleHandler<CMS>(cCms,this);
 		sbhLocale = new SbSingleHandler<LOC>(cLoc,this);
@@ -117,7 +128,11 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		
 		opLocale.setOpList(locales);
 		
+		elementCategories=fCms.allOrderedPositionVisible(cElementCategory);
 		types.addAll(fCms.allOrderedPositionVisible(cType));
+		
+		try {markupHtml = fCms.fByCode(cMarkup, JeeslIoCmsContent.Markup.html);}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 	
 	protected <EN extends Enum<EN>> void initCategory(EN code)
@@ -337,6 +352,11 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		selectedElement();
 	}
 	
+	public void changeElementCategory()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(elementCategory));}
+	}
+	
 	public void saveElement() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(element));}
@@ -345,8 +365,23 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		reloadSection();
 		selectedElement();
 	}
-	protected abstract void selectedElement();
 	
+	protected void selectedElement()
+	{
+		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString()))
+		{
+			if(!element.getContent().containsKey(sbhLocale.getSelection().getCode()))
+			{
+				element.getContent().put(sbhLocale.getSelection().getCode(), efContent.build(sbhLocale.getSelection(), "", markupHtml));
+			}
+		}
+	}
+	
+	public void saveParagraph() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(element)+" "+element.getContent().size());}
+		element = fCms.save(element);
+	}
 	
 	protected void reorderDocuments() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCms, sbhCms.getList());}
 	protected void reorderElements() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCms, elements);}

@@ -109,24 +109,27 @@
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveElement()}" update=":#{cc.id}:sSection" tooltip="#{msg.ttSave}" mayDisappear="true"/>
 							</f:facet>
-							
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+								<p:outputLabel value="#{msg.jeeslCmsElementCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.elementCategory}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.elementCategories}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeElementCategory()}" update=":#{cc.id}:fElement"/>
+								</p:selectOneMenu>
 								<p:outputLabel value="#{msg.jeeslCmsElementType}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.element.type}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.types}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
-
 						</p:panel>
 					</h:form>
 					<h:panelGroup id="pgElements">
 						<h:form id="fParagrpah" rendered="#{cc.attrs.bean.element.type.code eq 'paragraph'}">
 							<p:panel header="#{msg.jeeslCmsElementParagraph}" styleClass="auPanelWithGrid">
 								<f:facet name="actions">
-									<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveElement()}" update="@form" tooltip="#{msg.ttSave}" mayDisappear="false"/>
+									<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveParagraph()}" update="@form" tooltip="#{msg.ttSave}" mayDisappear="false"/>
 								</f:facet>
 								
-								<p:textEditor widgetVar="editor2" height="300" style="margin-bottom:10px" placeholder="Enter your content">
+								<p:textEditor value="#{cc.attrs.bean.element.content[itSrsReportBean.sbhLocale.selection.code].txt}" widgetVar="editor2" height="300" style="margin-bottom:10px" placeholder="Enter your content">
 						        <f:facet name="toolbar">
 						             <span class="ql-formats">
 						                <button class="ql-bold"></button>

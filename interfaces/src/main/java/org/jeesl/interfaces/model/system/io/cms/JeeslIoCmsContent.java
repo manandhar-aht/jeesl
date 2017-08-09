@@ -22,6 +22,7 @@ public interface JeeslIoCmsContent<L extends UtilsLang,D extends UtilsDescriptio
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithParentAttributeResolver
 {	
 	public enum Attributes{element}
+	public enum Markup{html}
 	
 	E getElement();
 	void setElement(E element);

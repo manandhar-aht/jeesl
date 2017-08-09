@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
 	<s:translation key="jeeslName">
-    	<s:langs>
-    		<s:lang key="de" translation="Name"/>
-    		<s:lang key="en" translation="Name"/>
-    		<s:lang key="fr" translation="Name"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Name"/>
+	    		<s:lang key="en" translation="Name"/>
+	    		<s:lang key="fr" translation="Name"/>
+	    	</s:langs>
     </s:translation>
+    <s:translation key="jeeslOptionTables">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Tabellen"/>
+	    		<s:lang key="en" translation="Tables"/>
+	    		<s:lang key="fr" translation="Tables"/>
+	    	</s:langs>
+    </s:translation>
+    	<s:translation key="jeeslStatusSuperior">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Übergeordnet"/>
+	    		<s:lang key="en" translation="Superior"/>
+	    		<s:lang key="fr" translation="Superior"/>
+	    	</s:langs>
+    </s:translation>
+    
 	<s:translation key="aupCode">
     	<s:langs>
     		<s:lang key="de" translation="Code"/>
@@ -183,24 +198,24 @@
     	</s:langs>
     </s:translation>
 	<s:translation key="aupPriority">
-    	<s:langs>
-    		<s:lang key="de" translation="Priorität"/>
-    		<s:lang key="en" translation="Priority"/>
-    		<s:lang key="fr" translation="Priority"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Priorität"/>
+	    		<s:lang key="en" translation="Priority"/>
+	    		<s:lang key="fr" translation="Priority"/>
+	    	</s:langs>
     </s:translation>
 	<s:translation key="aupCategory">
-    	<s:langs>
-    		<s:lang key="de" translation="Category"/>
-    		<s:lang key="en" translation="Category"/>
-    		<s:lang key="fr" translation="Category"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Category"/>
+	    		<s:lang key="en" translation="Category"/>
+	    		<s:lang key="fr" translation="Category"/>
+	    	</s:langs>
     </s:translation>
 	<s:translation key="aupStage">
-    	<s:langs>
-    		<s:lang key="de" translation="Stufe"/>
-    		<s:lang key="en" translation="Stage"/>
-    		<s:lang key="fr" translation="Stage"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Stufe"/>
+	    		<s:lang key="en" translation="Stage"/>
+	    		<s:lang key="fr" translation="Stage"/>
+	    	</s:langs>
     </s:translation>
 </s:translations>

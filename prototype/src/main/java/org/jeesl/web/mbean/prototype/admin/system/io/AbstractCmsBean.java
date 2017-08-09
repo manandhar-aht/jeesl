@@ -334,6 +334,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	public void selectElement() 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(element));}
+		selectedElement();
 	}
 	
 	public void saveElement() throws UtilsConstraintViolationException, UtilsLockingException
@@ -342,8 +343,9 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		element.setType(fCms.find(cType,element.getType()));
 		element = fCms.save(element);
 		reloadSection();
+		selectedElement();
 	}
-	protected abstract void savedElement();
+	protected abstract void selectedElement();
 	
 	
 	protected void reorderDocuments() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCms, sbhCms.getList());}

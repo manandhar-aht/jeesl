@@ -15,6 +15,8 @@ import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -46,7 +48,6 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	private JOB job; public JOB getJob() {return job;} public void setJob(JOB job) {this.job = job;}
 	
 	private SbDateHandler sbDateHandler; public SbDateHandler getSbDateHandler() {return sbDateHandler;}
-	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 
 	public AbstractAdminJobQueueBean(final Class<L> cL, final Class<D> cD, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache){super(cL,cD,cTemplate,cCategory,cType,cJob,cStatus,cRobot,cCache);}
 	
@@ -59,8 +60,8 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 		
 		try
 		{
-			sbhStatus = new SbMultiHandler<STATUS>(cStatus,fJob.allOrderedPositionVisible(cStatus),this);
 			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.queue));
+			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.timeout));
 			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.working));
 		}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
@@ -106,5 +107,13 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	public void selectJob()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(job));}
+	}
+	
+	public void saveJob() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(job));}
+		job.setStatus(fJob.find(cStatus,job.getStatus()));
+		job = fJob.save(job);
+		reloadJobs();
 	}
 }

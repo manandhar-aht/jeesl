@@ -12,7 +12,7 @@
 
 	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
 
-	<jp:sbItem orientation="right" childs="#{handler.list}" rendered="#{rendered}">
+	<jp:sbItem orientation="right" childs="#{handler.list}" rendered="#{rendered and (not empty handler.selection)}">
 		<f:facet name="label">
 			<jtp:statusSymbolizer rendered="#{not empty icon}" value="#{icon}" height="12"/>
 			#{label}

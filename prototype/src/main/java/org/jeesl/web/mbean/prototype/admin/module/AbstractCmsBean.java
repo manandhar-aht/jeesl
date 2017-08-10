@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.io;
+package org.jeesl.web.mbean.prototype.admin.module;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,6 +40,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
+import net.sf.exlp.util.io.StringUtil;
 
 public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescription,
 										CAT extends UtilsStatus<CAT,L,D>,
@@ -224,11 +225,26 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 			if(l.getCode().equals(currentLocaleCode)) {sbhLocale.setSelection(l);break;}
 		}
 		if(!sbhLocale.isSelected() && !cms.getLocales().isEmpty()) {sbhLocale.setSelection(cms.getLocales().get(0));}
+		logger.info("SBHLocale.selection==null:"+(sbhLocale.getSelection()==null));
 	}
 	
 	private void reloadTree()
 	{
 		S root = fCms.load(cms.getRoot(),true);
+		
+		if(debugOnInfo)
+		{
+			logger.info(StringUtil.stars());
+			if(sbhLocale.getSelection()!=null)
+			{
+				for(S s : root.getSections())
+				{
+					logger.info(s.toString()+" "+s.getName().get(sbhLocale.getSelection().getCode()).getLang());
+				}
+			}
+			else {logger.info("No Sections, because sbhLocale is null");}
+		}
+		
 		tree = new DefaultTreeNode(root, null);
 		buildTree(tree,root.getSections());
 	}

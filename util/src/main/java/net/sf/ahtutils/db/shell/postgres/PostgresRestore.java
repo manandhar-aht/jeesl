@@ -129,10 +129,12 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sb.append(" -t " + table.toLowerCase());
 		
 		StringBuilder sbFile = new StringBuilder();
+		sbFile.append("'");
 		sbFile.append(pDirRestore.getValue());
 		sbFile.append(File.separator);
 		sbFile.append(pDbName.getValue());
 		sbFile.append(".sql");
+		sbFile.append("'");
 		
 		sb.append(" ").append(sbFile);
 //		sb.append("'");

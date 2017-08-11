@@ -14,15 +14,12 @@ public class SbDateHandler implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	private SbDateIntervalSelection bean;
-	private boolean enforceStartOfDay;
+	private boolean enforceStartOfDay; public void setEnforceStartOfDay(boolean enforceStartOfDay) {this.enforceStartOfDay = enforceStartOfDay;}
 	
 	private Date date1; public Date getDate1() {return date1;} 
 	private Date date2; public Date getDate2() {return date2;}
 
-	public SbDateHandler()
-	{
-		enforceStartOfDay = false;
-	}
+	public SbDateHandler(){this(null);}
 	
 	public SbDateHandler(SbDateIntervalSelection bean)
 	{

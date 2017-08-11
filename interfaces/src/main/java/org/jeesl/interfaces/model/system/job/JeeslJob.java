@@ -27,7 +27,7 @@ public interface JeeslJob<L extends UtilsLang,D extends UtilsDescription,
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithNonUniqueCode
 {	
 	public static enum Attributes{template,status,recordCreation,recordStart,code};
-	public static enum Status{queue,timeout,working,completed,failed};
+	public static enum Status{queue,timeout,working,completed,error,failed};
 	public static enum Feedback{none,email,box}
 	public static enum Type{reportXml,reportXlsx}
 	
@@ -51,6 +51,9 @@ public interface JeeslJob<L extends UtilsLang,D extends UtilsDescription,
 	
 	USER getUser();
 	void setUser(USER user);
+	
+	Integer getAttempts();
+	void setAttempts(Integer attempts);
 	
 	List<FEEDBACK> getFeedbacks();
 	void setFeedbacks(List<FEEDBACK> feedbacks);

@@ -105,4 +105,18 @@
 			<lang key="fr" translation="Start Job" />
 		</langs>
 	</translation>
+	<translation key="jeeslJobAttempts">
+		<langs>
+			<lang key="de" translation="Versuche" />
+			<lang key="en" translation="Attempts" />
+			<lang key="fr" translation="Attempts" />
+		</langs>
+	</translation>
+	<translation key="jeeslJobUser">
+		<langs>
+			<lang key="de" translation="Benutzer" />
+			<lang key="en" translation="User" />
+			<lang key="fr" translation="User" />
+		</langs>
+	</translation>
 </translations>

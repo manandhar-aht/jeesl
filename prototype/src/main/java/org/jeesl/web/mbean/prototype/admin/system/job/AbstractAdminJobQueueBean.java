@@ -55,12 +55,13 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 		super.initSuper(langs,bMessage,fJob);
 		
 		sbDateHandler = new SbDateHandler(this);
-		sbDateHandler.initDaysToNow(2);
+		sbDateHandler.initWeeksToNow(2);
 		
 		try
 		{
 			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.queue));
 			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.timeout));
+			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.error));
 			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.working));
 		}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}

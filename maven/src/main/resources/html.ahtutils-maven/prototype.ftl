@@ -43,8 +43,8 @@ color: ${colorDark};
 }
 
 .sidemenu ul {
-    margin: 0;
-    padding: 0;
+    margin: -10px 0 0 10px;
+    padding: 0 3px 0 0;
 }
 .sidemenu > ul > li {
     list-style: none outside none;

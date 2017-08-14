@@ -45,4 +45,12 @@ public class TxtStatusFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang,
 		for(S ejb : list){result.add(ejb.getName().get(lang).getLang());}
 		return StringUtils.join(result, ", ");
 	}
+	
+	public static <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
+		List<String> toCodes(List<S> list)
+	{
+		List<String> result = new ArrayList<String>();
+		for(S ejb : list){result.add(ejb.getCode());}
+		return result;
+	}
 }

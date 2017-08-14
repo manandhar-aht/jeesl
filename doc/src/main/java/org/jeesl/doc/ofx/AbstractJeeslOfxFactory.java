@@ -5,8 +5,12 @@ import java.util.List;
 
 import org.openfuxml.content.ofx.Paragraph;
 import org.openfuxml.content.table.Cell;
+import org.openfuxml.content.table.Head;
 import org.openfuxml.content.table.Row;
+import org.openfuxml.factory.xml.ofx.content.structure.XmlParagraphFactory;
 import org.openfuxml.factory.xml.table.OfxCellFactory;
+import org.openfuxml.factory.xml.table.OfxHeadFactory;
+import org.openfuxml.interfaces.configuration.TranslationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,13 +22,15 @@ import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 public class AbstractJeeslOfxFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslOfxFactory.class);
-		
-	protected final List<String> localeCodes;
-	protected final List<String> tableHeaderKeys;
+	
+	protected TranslationProvider tp;
+	protected List<String> localeCodes;
+	protected List<String> tableHeaderKeys;
 	
 	protected Translations translations;
 //	protected String imagePathPrefix;
 	
+	@Deprecated
 	public AbstractJeeslOfxFactory(List<String> localeCodes, Translations translations)
 	{
 		this.localeCodes=localeCodes;
@@ -33,6 +39,35 @@ public class AbstractJeeslOfxFactory
 		tableHeaderKeys = new ArrayList<String>();
 	}
 	
+	public AbstractJeeslOfxFactory(TranslationProvider tp)
+	{	
+		this.tp=tp;
+		tableHeaderKeys = new ArrayList<String>();
+	}
+	
+	protected <E extends Enum<E>>void addHeaderKey(E code)
+	{
+		tableHeaderKeys.add(code.toString());
+	}
+	
+	protected Head buildHead()
+	{
+		Row row = new Row();
+		logger.info("Building Head with keys:"+tableHeaderKeys.size()+" locales:"+tp.getLocaleCodes().size());
+		for(String headerKey : tableHeaderKeys)
+		{
+			Cell cell = OfxCellFactory.build();
+			for(String localeCode : tp.getLocaleCodes())
+			{
+				cell.getContent().add(XmlParagraphFactory.build(localeCode,tp.toTranslation(localeCode, headerKey)));
+			}
+			row.getCell().add(cell);
+		}
+		
+		return OfxHeadFactory.build(row);
+	}
+	
+	@Deprecated
 	protected Row createHeaderRow(List<String> headerKeys)
 	{
 		Row row = new Row();

@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.controller.monitor.ProcessingTimeTracker;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
@@ -64,6 +65,18 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 	
 	private final String localeCode;
 	
+	public static enum PttBucket {surveyDataLoad,surveyCellLoad}
+	
+	private ProcessingTimeTracker ptt;
+	
+	public ProcessingTimeTracker getPtt() {
+		return ptt;
+	}
+
+	public void setPtt(ProcessingTimeTracker ptt) {
+		this.ptt = ptt;
+	}
+
 	private final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	private final EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efTemplate;
 	private final EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix;
@@ -177,7 +190,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		MutableInt colNr = new MutableInt(0);
 		for(int index=0;index<list.size();index++)
 		{
-//			logger.info(index+" / "+list.size()); if(index>5) {break;}
+			logger.info(index+" / "+list.size());
 			DATA data = list.get(index);
 			Row row = XlsRowFactory.build(sheet,rowNr);
 			colNr.setValue(0);
@@ -187,8 +200,15 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 				XlsCellFactory.build(row, colNr, style, correlationBuilder.get(i), 1);
 			}
 			
+			ptt.pB(PttBucket.surveyDataLoad);
 			data = fSurvey.load(data);
-			Nested2Map<OPTION,OPTION,MATRIX> matrix = efMatrix.build(fSurvey.fCells(data.getAnswers()));
+			ptt.rB(PttBucket.surveyDataLoad);
+			
+			ptt.pB(PttBucket.surveyCellLoad);
+			List<MATRIX> cells = fSurvey.fCells(data.getAnswers());
+			ptt.rB(PttBucket.surveyCellLoad);
+			
+			Nested2Map<OPTION,OPTION,MATRIX> matrix = efMatrix.build(cells);
  			Map<QUESTION,ANSWER> map = EjbSurveyAnswerFactory.toQuestionMap(data.getAnswers());
 			
 			for(SECTION section : template.getSections())	

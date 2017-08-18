@@ -1,16 +1,19 @@
 package org.jeesl.controller.monitor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import org.jeesl.factory.txt.util.TxtPeriodFactory;
+import java.util.Map;
 
+import org.jeesl.factory.txt.util.TxtPeriodFactory;
+import org.jeesl.interfaces.controller.ProgressTimeTracker;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ProcessingTimeTracker
+public class ProcessingTimeTracker implements ProgressTimeTracker
 {
 	final static Logger logger = LoggerFactory.getLogger(ProcessingTimeTracker.class);
 	
@@ -21,6 +24,9 @@ public class ProcessingTimeTracker
 	
 	private final TxtPeriodFactory tfPeriod;
 	
+	private Map<String,Long> buckets;
+	private Map<String,Long> bucketStart;
+	
 	public ProcessingTimeTracker() {this(false);}
 	public ProcessingTimeTracker(boolean autoStart)
 	{
@@ -30,10 +36,14 @@ public class ProcessingTimeTracker
 		stop=0;
 		tfPeriod = new TxtPeriodFactory();
 		tfPeriod.setUnits(TxtPeriodFactory.UNITS.minuteSecondMilli);
+		
+		buckets = new HashMap<String,Long>();
+		bucketStart = new HashMap<String,Long>();
+		
 		if(autoStart){start();}
 	}
 	
-	public void start() {start = System.currentTimeMillis();}
+	public void start() {start = System.currentTimeMillis();previousEvent=start;}
 	public void stop() {stop = System.currentTimeMillis();}
 	
 	public void round()
@@ -119,6 +129,32 @@ public class ProcessingTimeTracker
 			long ms = ticksTime.get(i)-start;
 			sb.append(": ").append(ms);
 			logger.info(sb.toString());
+		}
+	}
+	
+	public <E extends Enum<E>> void pB(E code)
+	{
+		bucketStart.put(code.toString(), System.currentTimeMillis());
+	}
+	
+	public <E extends Enum<E>> void rB(E code)
+	{
+		String key = code.toString();
+		if(bucketStart.containsKey(key))
+		{
+			if(!buckets.containsKey(key)) {buckets.put(key,0l);}
+			long start = bucketStart.get(key);
+			
+			long diff = System.currentTimeMillis()-start;
+			buckets.put(key,buckets.get(key)+diff);
+		}
+	}
+	
+	public <E extends Enum<E>> void debugBucket(E... codes)
+	{
+		for(E code : codes)
+		{
+			logger.info(code.toString()+" "+buckets.get(code.toString()));
 		}
 	}
 }

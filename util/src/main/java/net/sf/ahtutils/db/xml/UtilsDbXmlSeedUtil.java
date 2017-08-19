@@ -163,8 +163,8 @@ public class UtilsDbXmlSeedUtil
 	{
 		String fileName = getExtractName(ds,key);
 		logger.info("Writing "+fileName);
-		if(config.getBoolean(cliDebug)){JaxbUtil.info(o);}
-		if(config.getBoolean(cliSave)){JaxbUtil.save(new File(fileName), o, true);}
+		if(config.getBoolean(cliDebug,false)){JaxbUtil.info(o);}
+		if(config.getBoolean(cliSave,true)){JaxbUtil.save(new File(fileName), o, true);}
 	}
 	
 	public void writeXmlSvg(DataSource ds, String key, Object o) throws UtilsConfigurationException

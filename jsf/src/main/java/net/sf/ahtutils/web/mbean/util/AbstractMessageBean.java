@@ -24,10 +24,27 @@ public class AbstractMessageBean implements Serializable
 	}
 	
 	public void growlSuccessSaved(){growlSuccess("jeeslFmObjectSaved");}
+	public void growlSuccessRemoved(){growlSuccess("fmObjectRemoved");}
 	public <T extends EjbWithId> void growlSuccessSaved(T t){growlSuccess("jeeslFmObjectSaved");}
+	
+	public void growlError(String key)
+	{
+		FacesContextMessage.info("growl", jeeslTranslationBean.get(jeeslLocaleCode, "fmError"), jeeslTranslationBean.get(jeeslLocaleCode, key));
+	}
 	
 	public void growlSuccess(String key)
 	{
 		FacesContextMessage.info("growl", jeeslTranslationBean.get(jeeslLocaleCode, "jeeslFmSuccess"), jeeslTranslationBean.get(jeeslLocaleCode, key));
+	}
+	
+	public void errorConstraintViolationDuplicateObject() {FacesContextMessage.error(jeeslTranslationBean.get(jeeslLocaleCode,"fmConstraintViolationDuplicateObject"),"");}
+	public void errorConstraintViolationInUse() {errorConstraintViolationInUse(null);}
+	public void errorConstraintViolationInUse(String id) {errorText(id,jeeslTranslationBean.get(jeeslLocaleCode,"fmConstraintViolationInUse"));}
+	public void errorText(String text){errorTextWithId(null,text);}
+	public <E extends Enum<E>> void errorText(E id, String text) {errorTextWithId(id.toString(),text);}
+	public void errorText(String id, String text){errorTextWithId(id,text);}
+	private void errorTextWithId(String id, String text)
+	{
+		FacesContextMessage.error(id, jeeslTranslationBean.get(jeeslLocaleCode, "fmError"), text);
 	}
 }

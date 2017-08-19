@@ -32,6 +32,7 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
+import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityViewImport;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityRoleComparator;
@@ -62,7 +63,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 								A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
-				implements JeeslSecurityRestExport
+				implements JeeslSecurityRestExport,UtilsSecurityViewImport
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityRestService.class);
 	

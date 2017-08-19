@@ -7,20 +7,20 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
-import net.sf.ahtutils.controller.facade.UtilsMonitoringFacadeBean;
-import net.sf.ahtutils.interfaces.facade.UtilsMonitoringFacade;
-import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
-
+import org.jeesl.api.facade.module.JeeslMonitoringFacade;
 import org.jeesl.controller.monitoring.result.net.IcmpResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.controller.facade.UtilsMonitoringFacadeBean;
+import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public class DbCleaner
 {
 	final static Logger logger = LoggerFactory.getLogger(DbCleaner.class);
 	
 	private EntityManager em;
-	private UtilsMonitoringFacade fUm;
+	private JeeslMonitoringFacade fUm;
 	private Map<String,List<Long>> map;
 	
 	public DbCleaner(EntityManager em)

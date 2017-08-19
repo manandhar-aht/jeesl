@@ -16,6 +16,15 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,26 +32,17 @@ import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithCategory;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsStaffPool;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
+import net.sf.ahtutils.interfaces.model.util.UtilsStaffPool;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class JeeslSecurityFacadeBean<L extends UtilsLang,
 									D extends UtilsDescription,
-									C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-									R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-									V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-									U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-									A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-									AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+									C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+									R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+									V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+									U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+									A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+									AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 									USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 							extends UtilsFacadeBean
 							implements JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER>
@@ -210,22 +210,22 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		return user.getRoles();
 	}
 	
-	@Override public <WC extends UtilsSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>> List<WC> allForCategory(Class<WC> clWc, Class<C> clC, String code) throws UtilsNotFoundException
+	@Override public <WC extends JeeslSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>> List<WC> allForCategory(Class<WC> clWc, Class<C> clC, String code) throws UtilsNotFoundException
 	{
 		if(logger.isTraceEnabled())
 		{
 			logger.info(clWc.getName());
-			logger.info(UtilsSecurityRole.class.getSimpleName()+" ");
-			logger.info(UtilsSecurityRole.class.getSimpleName()+" "+clWc.isAssignableFrom(UtilsSecurityRole.class));
-			logger.info(UtilsSecurityView.class.getSimpleName()+" "+clWc.isAssignableFrom(UtilsSecurityView.class));
-			logger.info(UtilsSecurityUsecase.class.getSimpleName()+" "+clWc.isAssignableFrom(UtilsSecurityUsecase.class));
+			logger.info(JeeslSecurityRole.class.getSimpleName()+" ");
+			logger.info(JeeslSecurityRole.class.getSimpleName()+" "+clWc.isAssignableFrom(JeeslSecurityRole.class));
+			logger.info(JeeslSecurityView.class.getSimpleName()+" "+clWc.isAssignableFrom(JeeslSecurityView.class));
+			logger.info(JeeslSecurityUsecase.class.getSimpleName()+" "+clWc.isAssignableFrom(JeeslSecurityUsecase.class));
 		}
 	
 		String type = null;
-		if(clWc.getSimpleName().contains("Usecase")){type=UtilsSecurityCategory.Type.usecase.toString();}
-		else if(clWc.getSimpleName().contains("Role")){type=UtilsSecurityCategory.Type.role.toString();}
-		else if(clWc.getSimpleName().contains("View")){type=UtilsSecurityCategory.Type.view.toString();}
-		else if(clWc.getSimpleName().contains("Action")){type=UtilsSecurityCategory.Type.action.toString();}
+		if(clWc.getSimpleName().contains("Usecase")){type=JeeslSecurityCategory.Type.usecase.toString();}
+		else if(clWc.getSimpleName().contains("Role")){type=JeeslSecurityCategory.Type.role.toString();}
+		else if(clWc.getSimpleName().contains("View")){type=JeeslSecurityCategory.Type.view.toString();}
+		else if(clWc.getSimpleName().contains("Action")){type=JeeslSecurityCategory.Type.action.toString();}
 		
 		C category = this.fByTypeCode(clC, type, code);
 		
@@ -240,21 +240,21 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	
 	// STAFF
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffU(Class<S> clStaff, USER user)
 	{return allForParent(clStaff, "user", user);}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffR(Class<S> clStaff, R role)
 	{return allForParent(clStaff, "role", role);}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffD(Class<S> clStaff, D1 domain)
-	{return allForParent(clStaff, UtilsStaff.Attributes.domain.toString(), domain);}
+	{return allForParent(clStaff, JeeslStaff.Attributes.domain.toString(), domain);}
 	
-	@Override public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffD(Class<S> cStaff, List<D1> domains)
+	@Override public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffD(Class<S> cStaff, List<D1> domains)
 	{
 		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();
@@ -262,7 +262,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		CriteriaQuery<S> cQ = cB.createQuery(cStaff);
 		Root<S> staff = cQ.from(cStaff);
 
-		Path<D1> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
+		Path<D1> pDomain = staff.get(JeeslStaff.Attributes.domain.toString());
 		predicates.add(cB.isTrue(pDomain.in(domains)));
 
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
@@ -271,21 +271,21 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffUR(Class<S> clStaff, USER user, R role)
 	{return allForParent(clStaff, "user", user, "role",role);}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffUD(Class<S> clStaff, USER user, D1 domain)
-	{return allForParent(clStaff, "user", user,UtilsStaff.Attributes.domain.toString(),domain);}
+	{return allForParent(clStaff, "user", user,JeeslStaff.Attributes.domain.toString(),domain);}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, D1 domain)
-	{return allForParent(cStaff, "role", role,UtilsStaff.Attributes.domain.toString(),domain);}
+	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, D1 domain)
+	{return allForParent(cStaff, "role", role,JeeslStaff.Attributes.domain.toString(),domain);}
 	
 	@SuppressWarnings("unchecked")
-	@Override public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, USER user, R role, List<D1> domains)
+	@Override public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, USER user, R role, List<D1> domains)
 	{
 		List<USER> users = new ArrayList<USER>(Arrays.asList(user));;
 		List<R> roles = new ArrayList<R>(Arrays.asList(role));
@@ -294,7 +294,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<D1> domains)
+	@Override public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<D1> domains)
 	{
 		List<USER> users = null;
 		List<R> roles = new ArrayList<R>(Arrays.asList(role));
@@ -303,7 +303,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffUD(Class<S> cStaff, USER user, List<D1> domains)
+	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffUD(Class<S> cStaff, USER user, List<D1> domains)
 	{
 		List<USER> users = new ArrayList<USER>(Arrays.asList(user));;
 		List<R> roles = null;
@@ -311,7 +311,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		return fStaffURD(cStaff,users,roles,domains);
 	}
 	
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, List<USER> users, List<R> roles, List<D1> domains)
+	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, List<USER> users, List<R> roles, List<D1> domains)
 	{
 		if(users!=null && users.isEmpty()){return new ArrayList<S>();}
 		if(roles!=null && roles.isEmpty()){return new ArrayList<S>();}
@@ -324,19 +324,19 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 
 		if(users!=null)
 		{
-			Path<D1> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
+			Path<D1> pDomain = staff.get(JeeslStaff.Attributes.domain.toString());
 			predicates.add(pDomain.in(domains));
 		}
 		
 		if(roles!=null)
 		{
-			Path<R> pRole = staff.get(UtilsStaff.Attributes.role.toString());
+			Path<R> pRole = staff.get(JeeslStaff.Attributes.role.toString());
 			predicates.add(pRole.in(roles));
 		}
 		
 		if(domains!=null)
 		{
-			Path<D1> pDomain = staff.get(UtilsStaff.Attributes.domain.toString());
+			Path<D1> pDomain = staff.get(JeeslStaff.Attributes.domain.toString());
 			predicates.add(pDomain.in(domains));
 		}
 
@@ -346,9 +346,9 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> S fStaff(Class<S> clStaff, USER user, R role, D1 domain) throws UtilsNotFoundException
+	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> S fStaff(Class<S> clStaff, USER user, R role, D1 domain) throws UtilsNotFoundException
 	{
-		return oneForParents(clStaff,"user",user,"role",role,UtilsStaff.Attributes.domain.toString(),domain);
+		return oneForParents(clStaff,"user",user,"role",role,JeeslStaff.Attributes.domain.toString(),domain);
 	}
 	
 	@Override public void grantRole(Class<USER> clUser, Class<R> clRole, USER user, R role, boolean grant)
@@ -394,7 +394,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 
 	@Override
-	public <S extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<D1> fDomains(Class<V> cView, Class<S> cStaff, USER user, V view)
+	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<D1> fDomains(Class<V> cView, Class<S> cStaff, USER user, V view)
 	{
 		List<R> roles = new ArrayList<R>();
 		List<D1> result = new ArrayList<D1>();

@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.jeesl.interfaces.model.system.security.user.UtilsUser;
 import org.jeesl.model.ejb.system.security.SecurityAction;
 import org.jeesl.model.ejb.system.security.SecurityActionTemplate;
 import org.jeesl.model.ejb.system.security.SecurityCategory;
@@ -28,7 +29,6 @@ import org.jeesl.model.ejb.system.status.Lang;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 

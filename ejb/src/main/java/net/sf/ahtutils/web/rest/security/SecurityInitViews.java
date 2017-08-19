@@ -6,6 +6,13 @@ import org.jeesl.controller.monitor.DataUpdateTracker;
 import org.jeesl.factory.xml.system.io.sync.XmlDataUpdateFactory;
 import org.jeesl.factory.xml.system.io.sync.XmlResultFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,13 +22,6 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.access.Action;
 import net.sf.ahtutils.xml.access.Category;
@@ -30,12 +30,12 @@ import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class SecurityInitViews <L extends UtilsLang,
  								D extends UtilsDescription, 
- 								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
- 								R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
- 								V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
- 								U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
- 								A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
- 								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+ 								C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+ 								R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+ 								V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+ 								U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+ 								A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+ 								AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
  								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		extends AbstractSecurityInit<L,D,C,R,V,U,A,AT,USER>
 {
@@ -61,7 +61,7 @@ public class SecurityInitViews <L extends UtilsLang,
 		DataUpdate du = XmlDataUpdateFactory.build();
 		try
 		{
-			iuCategory(access, UtilsSecurityCategory.Type.view);
+			iuCategory(access, JeeslSecurityCategory.Type.view);
 			du.setResult(XmlResultFactory.buildOk());
 		}
 		catch (UtilsConfigurationException e)

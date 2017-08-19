@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
@@ -23,14 +24,13 @@ import org.jeesl.model.ejb.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"type","code"}))
 @EjbErNode(name="Category",category="security",subset="security")
 public class SecurityCategory implements Serializable, EjbWithCode,EjbRemoveable,EjbPersistable,
-	UtilsSecurityCategory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser>
+	JeeslSecurityCategory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser>
 {
 	public static final long serialVersionUID=1;
 	

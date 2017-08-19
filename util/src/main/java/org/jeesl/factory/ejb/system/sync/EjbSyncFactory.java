@@ -5,8 +5,8 @@ import java.util.Date;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.sync.UtilsSync;
 
+import org.jeesl.interfaces.model.system.io.db.JeeslSync;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,7 @@ public class EjbSyncFactory<L extends UtilsLang,
 							D extends UtilsDescription,
 							STATUS extends UtilsStatus<STATUS,L,D>,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-							SYNC extends UtilsSync<L,D,STATUS,CATEGORY>>
+							SYNC extends JeeslSync<L,D,STATUS,CATEGORY>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSyncFactory.class);
 	
@@ -25,7 +25,7 @@ public class EjbSyncFactory<L extends UtilsLang,
         this.cSync = cSync;
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,STATUS extends UtilsStatus<STATUS,L,D>,CATEGORY extends UtilsStatus<CATEGORY,L,D>,SYNC extends UtilsSync<L,D,STATUS,CATEGORY>>  EjbSyncFactory<L,D,STATUS,CATEGORY,SYNC>
+	public static <L extends UtilsLang,D extends UtilsDescription,STATUS extends UtilsStatus<STATUS,L,D>,CATEGORY extends UtilsStatus<CATEGORY,L,D>,SYNC extends JeeslSync<L,D,STATUS,CATEGORY>>  EjbSyncFactory<L,D,STATUS,CATEGORY,SYNC>
 		factory(final Class<SYNC> cSync)
 	{
 		return new EjbSyncFactory<L,D,STATUS,CATEGORY,SYNC>(cSync);

@@ -1,29 +1,29 @@
 package net.sf.ahtutils.controller.factory.utils.security;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.user.JeeslIdentity;
+import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsIdentity;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 
-public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER>,
+public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER>,
 								   L extends UtilsLang,
 								   D extends UtilsDescription,
-								   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-								   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-								   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-								   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-								   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-								   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+								   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+								   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+								   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+								   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+								   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+								   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 								   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
 
@@ -60,15 +60,15 @@ public class UtilsIdentityFactory <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER
 		this.cUser = cUser;
 	} 
 
-	public static <I extends UtilsIdentity<L,D,C,R,V,U,A,AT,USER>,
+	public static <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER>,
 	   			   L extends UtilsLang,
 	   			   D extends UtilsDescription,
-	   			   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-	   			   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-	   			   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-	   			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-	   			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	   			AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+	   			   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+	   			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+	   			   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+	   			   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+	   			AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 	   			USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 	UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER> factory(final Class<I> clIdentity,
 													 final Class<L> clLang,

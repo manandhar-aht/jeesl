@@ -1,17 +1,17 @@
 package net.sf.ahtutils.monitor.util;
 
-import net.sf.ahtutils.interfaces.facade.UtilsMonitoringFacade;
-import net.sf.ahtutils.xml.monitoring.Transmission;
-import net.sf.exlp.util.xml.JaxbUtil;
-
+import org.jeesl.api.facade.module.JeeslMonitoringFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.xml.monitoring.Transmission;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class RestTransmission
 {
 	final static Logger logger = LoggerFactory.getLogger(RestTransmission.class);
 	
-	public RestTransmission(UtilsMonitoringFacade fUm)
+	public RestTransmission(JeeslMonitoringFacade fUm)
 	{
 		
 	}

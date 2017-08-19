@@ -16,6 +16,14 @@ import org.jeesl.factory.xml.system.security.XmlTemplateFactory;
 import org.jeesl.factory.xml.system.security.XmlTemplatesFactory;
 import org.jeesl.factory.xml.system.security.XmlUsecaseFactory;
 import org.jeesl.factory.xml.system.security.XmlUsecasesFactory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.util.query.xml.SecurityQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +32,6 @@ import net.sf.ahtutils.controller.factory.xml.acl.XmlViewsFactory;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityViewImport;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
@@ -56,12 +56,12 @@ import net.sf.ahtutils.xml.security.Tmp;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription,
-								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-								R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-								V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-								U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-								A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+								C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+								R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+								V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+								U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+								A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+								AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 				implements JeeslSecurityRestExport,UtilsSecurityViewImport
 {
@@ -126,7 +126,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		initUsecases = AbstractSecurityInit.factoryUsecases(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityRestService<L,D,C,R,V,U,A,AT,USER>
 		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<L> cL,final Class<D> cD,final Class<C> cCategory, final Class<V> cView, final Class<R> cRole, final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
 	{
@@ -138,7 +138,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	public DataUpdate iuSecurityRoles(Security roles){return initRoles.iuSecurityRoles(roles);}
 	public DataUpdate iuSecurityUsecases(Security usecases){return initUsecases.iuSecurityUsecases(usecases);}
 
-	public <STAFF extends UtilsStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> Staffs exportStaffs(Class<STAFF> cStaff)
+	public <STAFF extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> Staffs exportStaffs(Class<STAFF> cStaff)
 	{
 		XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2> f = new XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2>(SecurityQuery.exStaff());
 		
@@ -157,7 +157,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		Security xml = XmlSecurityFactory.build();		
 		for(C category : fSecurity.allOrderedPosition(cCategory))
 		{
-			if(category.getType().equals(UtilsSecurityCategory.Type.view.toString()))
+			if(category.getType().equals(JeeslSecurityCategory.Type.view.toString()))
 			{
 				try
 				{
@@ -190,7 +190,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		Security xml = XmlSecurityFactory.build();		
 		for(C category : fSecurity.allOrderedPosition(cCategory))
 		{
-			if(category.getType().equals(UtilsSecurityCategory.Type.view.toString()))
+			if(category.getType().equals(JeeslSecurityCategory.Type.view.toString()))
 			{
 				try
 				{
@@ -222,7 +222,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		Security xml = XmlSecurityFactory.build();
 		for(C category : fSecurity.allOrderedPosition(cCategory))
 		{
-			if(category.getType().equals(UtilsSecurityCategory.Type.role.toString()))
+			if(category.getType().equals(JeeslSecurityCategory.Type.role.toString()))
 			{
 				try
 				{
@@ -248,7 +248,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		Security xml = XmlSecurityFactory.build();
 		for(C category : fSecurity.allOrderedPosition(cCategory))
 		{
-			if(category.getType().equals(UtilsSecurityCategory.Type.action.toString()))
+			if(category.getType().equals(JeeslSecurityCategory.Type.action.toString()))
 			{
 				try
 				{
@@ -273,7 +273,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 
 		for(C category : fSecurity.allOrderedPosition(cCategory))
 		{
-			if(category.getType().equals(UtilsSecurityCategory.Type.usecase.toString()))
+			if(category.getType().equals(JeeslSecurityCategory.Type.usecase.toString()))
 			{
 				try
 				{
@@ -299,7 +299,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		Security xml = XmlSecurityFactory.build();		
 		for(C category : fSecurity.allOrderedPosition(cCategory))
 		{
-			if(category.getType().equals(UtilsSecurityCategory.Type.view.toString()))
+			if(category.getType().equals(JeeslSecurityCategory.Type.view.toString()))
 			{
 				try
 				{
@@ -339,7 +339,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		Security xml = XmlSecurityFactory.build();
 		for(C category : fSecurity.allOrderedPosition(cCategory))
 		{
-			if(category.getType().equals(UtilsSecurityCategory.Type.view.toString()))
+			if(category.getType().equals(JeeslSecurityCategory.Type.view.toString()))
 			{
 				try
 				{
@@ -382,7 +382,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 
 		for(C category : fSecurity.allOrderedPosition(cCategory))
 		{
-			if(category.getType().equals(UtilsSecurityCategory.Type.usecase.toString()))
+			if(category.getType().equals(JeeslSecurityCategory.Type.usecase.toString()))
 			{
 				try
 				{

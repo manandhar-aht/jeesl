@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
 import org.jeesl.model.ejb.module.ts.core.TsScope;
 import org.jeesl.model.ejb.system.security.SecurityAction;
 import org.jeesl.model.ejb.system.security.SecurityActionTemplate;
@@ -26,7 +27,6 @@ import org.jeesl.model.ejb.user.JeeslUser;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
@@ -34,7 +34,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(name = "StaffWorkspace",uniqueConstraints = @UniqueConstraint(columnNames = {"domain_id","role_id","user_id"}))
 @EjbErNode(name="Staff",subset="ts",category="ts",level=2)
 public class TsStaffScope implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,EjbSaveable,
-					UtilsStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser,TsScope,TsScope>
+					JeeslStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser,TsScope,TsScope>
 {
 	public static final long serialVersionUID=1;
 

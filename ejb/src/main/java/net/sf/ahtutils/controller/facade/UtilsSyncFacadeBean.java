@@ -13,10 +13,10 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.sync.UtilsSync;
 
 import org.jeesl.api.facade.core.JeeslSyncFacade;
 import org.jeesl.factory.ejb.system.sync.EjbSyncFactory;
+import org.jeesl.interfaces.model.system.io.db.JeeslSync;
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 
@@ -24,7 +24,7 @@ public class UtilsSyncFacadeBean <L extends UtilsLang,
 									D extends UtilsDescription,
 									STATUS extends UtilsStatus<STATUS,L,D>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									SYNC extends UtilsSync<L,D,STATUS,CATEGORY>>  
+									SYNC extends JeeslSync<L,D,STATUS,CATEGORY>>  
 	extends UtilsFacadeBean implements JeeslSyncFacade<L,D,STATUS,CATEGORY,SYNC>
 {	
 	public UtilsSyncFacadeBean(EntityManager em)
@@ -66,7 +66,7 @@ public class UtilsSyncFacadeBean <L extends UtilsLang,
 		{
 			try
 			{
-				STATUS status = this.fByCode(cStatus,UtilsSync.Code.never.toString());
+				STATUS status = this.fByCode(cStatus,JeeslSync.Code.never.toString());
 				
 				EjbSyncFactory<L,D,STATUS,CATEGORY,SYNC> ef = EjbSyncFactory.factory(cSync);
 				sync = ef.build(category,status,code);
@@ -86,7 +86,7 @@ public class UtilsSyncFacadeBean <L extends UtilsLang,
 		DateTime dtNow = new DateTime(sync.getRecord());
 		
 		boolean diffOk = Seconds.secondsBetween(dtSync,dtNow).getSeconds()<seconds;
-		boolean statusOk = sync.getStatus().getCode().equals(UtilsSync.Code.success.toString());
+		boolean statusOk = sync.getStatus().getCode().equals(JeeslSync.Code.success.toString());
 		return (diffOk && statusOk);
 	}
 

@@ -34,7 +34,7 @@
         </dependency>
         <dependency>
         	<groupId>org.jeesl</groupId>
-        	<artifactId>jeesl-interfaces</artifactId>
+        	<artifactId>jeesl-api</artifactId>
         	<type>jar</type>
         </dependency>
 		<dependency>

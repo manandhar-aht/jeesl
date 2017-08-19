@@ -4,6 +4,15 @@ import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
 import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithActions;
+import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithViews;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,15 +22,6 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithActions;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityWithViews;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.access.Action;
 import net.sf.ahtutils.xml.access.Actions;
@@ -32,12 +32,12 @@ import net.sf.ahtutils.xml.security.Security;
 
 public class AbstractSecurityInit <L extends UtilsLang,
  								D extends UtilsDescription, 
- 								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
- 								R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
- 								V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
- 								U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
- 								A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
- 								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+ 								C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+ 								R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+ 								V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+ 								U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+ 								A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+ 								AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
  								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractSecurityInit.class);
@@ -58,12 +58,12 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	
 	public static <L extends UtilsLang,
 	   			   D extends UtilsDescription, 
-	   			   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-	   			   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-	   			   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-	   			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-	   			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	   			   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+	   			   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+	   			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+	   			   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+	   			   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+	   			   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 	   			   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitRoles<L,D,C,R,V,U,A,AT,USER>
 		factoryRoles(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
@@ -73,12 +73,12 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	
 	public static <L extends UtilsLang,
 	   			   D extends UtilsDescription, 
-	   			   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-	   			   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-	   			   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-	   			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-	   			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	   			   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+	   			   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+	   			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+	   			   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+	   			   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+	   			   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 	   			   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitViews<L,D,C,R,V,U,A,AT,USER>
 		factoryViews(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
@@ -88,12 +88,12 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	
 	public static <L extends UtilsLang,
 	   			   D extends UtilsDescription, 
-	   			   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-	   			   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-	   			   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-	   			   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-	   			   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	   			   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+	   			   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+	   			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+	   			   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+	   			   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+	   			   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 	   			   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER>
 		factoryUsecases(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
@@ -103,12 +103,12 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	
 	public static <L extends UtilsLang,
 				   D extends UtilsDescription, 
-				   C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-				   R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-				   V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-				   U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-				   A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-				   AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+				   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+				   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+				   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+				   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+				   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+				   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 				   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER>
 		factoryTemplates(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
@@ -134,7 +134,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		ejbDescriptionFactory = EjbDescriptionFactory.factory(cD);
 	}
 	
-	@Deprecated protected void iuCategory(Access access, UtilsSecurityCategory.Type type) throws UtilsConfigurationException
+	@Deprecated protected void iuCategory(Access access, JeeslSecurityCategory.Type type) throws UtilsConfigurationException
 	{
 		logger.info("i/u "+type+" with "+access.getCategory().size()+" categories");
 		
@@ -185,7 +185,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		updateCategory.remove(fSecurity);
 		logger.trace("initUpdateUsecaseCategories finished");
 	}
-	protected void iuCategory(Security security, UtilsSecurityCategory.Type type) throws UtilsConfigurationException
+	protected void iuCategory(Security security, JeeslSecurityCategory.Type type) throws UtilsConfigurationException
 	{
 		logger.info("i/u "+type+" with "+security.getCategory().size()+" categories");
 		
@@ -246,7 +246,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		logger.error("This method *must* be overridden!");
 	}
 	
-	@Deprecated protected <T extends UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER>> T iuListViews(T ejb, Views views) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
+	@Deprecated protected <T extends JeeslSecurityWithViews<L,D,C,R,V,U,A,AT,USER>> T iuListViews(T ejb, Views views) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
 		ejb.getViews().clear();
 		ejb = fSecurity.update(ejb);
@@ -261,7 +261,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		}
 		return ejb;
 	}
-	protected <T extends UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER>> T iuListViewsSecurity(T ejb, net.sf.ahtutils.xml.security.Views views) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
+	protected <T extends JeeslSecurityWithViews<L,D,C,R,V,U,A,AT,USER>> T iuListViewsSecurity(T ejb, net.sf.ahtutils.xml.security.Views views) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
 //		ejb = fSecurity.load(cView, view);
 		ejb.getViews().clear();
@@ -279,7 +279,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		return ejb;
 	}
 	
-	@Deprecated protected <T extends UtilsSecurityWithActions<L,D,C,R,V,U,A,AT,USER>> T iuListActions(T ejb, Actions actions) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
+	@Deprecated protected <T extends JeeslSecurityWithActions<L,D,C,R,V,U,A,AT,USER>> T iuListActions(T ejb, Actions actions) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
 		ejb.getActions().clear();
 		ejb = fSecurity.update(ejb);
@@ -294,7 +294,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		}
 		return ejb;
 	}
-	protected <T extends UtilsSecurityWithActions<L,D,C,R,V,U,A,AT,USER>> T iuListActions(T ejb, net.sf.ahtutils.xml.security.Actions actions) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
+	protected <T extends JeeslSecurityWithActions<L,D,C,R,V,U,A,AT,USER>> T iuListActions(T ejb, net.sf.ahtutils.xml.security.Actions actions) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
 		ejb.getActions().clear();
 		ejb = fSecurity.update(ejb);

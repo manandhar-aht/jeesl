@@ -4,6 +4,13 @@ import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
 import org.jeesl.factory.xml.system.io.sync.XmlDataUpdateFactory;
 import org.jeesl.factory.xml.system.io.sync.XmlResultFactory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,25 +20,18 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityUsecaseImport;
 import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class SecurityInitUsecases <L extends UtilsLang,
  								D extends UtilsDescription, 
- 								C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
- 								R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
- 								V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
- 								U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
- 								A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
- 								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+ 								C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+ 								R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+ 								V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+ 								U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+ 								A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+ 								AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
  								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		extends AbstractSecurityInit<L,D,C,R,V,U,A,AT,USER>
 		implements UtilsSecurityUsecaseImport
@@ -47,14 +47,14 @@ public class SecurityInitUsecases <L extends UtilsLang,
 	
 	@Override public DataUpdate iuSecurityUsecases(Security usecases)
 	{
-		logger.trace("iuSecurityUsecases starting ..."+fSecurity.allForType(cC,UtilsSecurityCategory.Type.usecase.toString()).size());
+		logger.trace("iuSecurityUsecases starting ..."+fSecurity.allForType(cC,JeeslSecurityCategory.Type.usecase.toString()).size());
 		updateUsecases = JeeslDbCodeEjbUpdater.createFactory(cU);
 		updateUsecases.dbEjbs(fSecurity.all(cU));
 
 		DataUpdate du = XmlDataUpdateFactory.build();
 		try
 		{
-			iuCategory(usecases, UtilsSecurityCategory.Type.usecase);
+			iuCategory(usecases, JeeslSecurityCategory.Type.usecase);
 			du.setResult(XmlResultFactory.buildOk());
 		}
 		catch (UtilsConfigurationException e)
@@ -66,7 +66,7 @@ public class SecurityInitUsecases <L extends UtilsLang,
 		logger.trace("Before: UC "+fSecurity.all(cU).size());
 		updateUsecases.remove(fSecurity);
 		logger.trace("After: UC "+fSecurity.all(cU).size());
-		logger.trace("iuSecurityUsecases finished "+fSecurity.allForType(cC,UtilsSecurityCategory.Type.usecase.toString()).size());
+		logger.trace("iuSecurityUsecases finished "+fSecurity.allForType(cC,JeeslSecurityCategory.Type.usecase.toString()).size());
 
 		return du;
 	}

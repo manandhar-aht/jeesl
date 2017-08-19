@@ -12,19 +12,19 @@ import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
 import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityAction;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityActionTemplate;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityCategory;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityRole;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
 
 public class RevisionEngineFactory
 {
@@ -41,12 +41,12 @@ public class RevisionEngineFactory
 					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>,
 					REV extends UtilsRevision,
-					C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-					R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-					V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-					U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-					A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-					AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+					C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+					R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+					V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+					U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+					A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+					AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 					USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		RevisionEngine<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> engine(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity, final Class<RAT> cRat)
 	{
@@ -64,12 +64,12 @@ public class RevisionEngineFactory
 					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>,
 					REV extends UtilsRevision,
-					C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-					R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-					V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-					U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-					A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-					AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+					C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+					R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+					V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+					U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+					A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+					AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 					USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> attribute(Map<RAT,DecimalFormat> mapDecimalFormatter, Map<RAT,SimpleDateFormat> mapDateFormatter)
 	{
@@ -87,12 +87,12 @@ public class RevisionEngineFactory
 					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>,
 					REV extends UtilsRevision,
-					C extends UtilsSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-					R extends UtilsSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-					V extends UtilsSecurityView<L,D,C,R,V,U,A,AT,USER>,
-					U extends UtilsSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-					A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-					AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
+					C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+					R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
+					V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
+					U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+					A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+					AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 					USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
 		RevisionEngineScopeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> scope(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> rear)
 	{

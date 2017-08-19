@@ -20,6 +20,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
@@ -27,7 +28,6 @@ import org.jeesl.model.ejb.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
@@ -35,7 +35,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @EjbErNode(name="View",category="security",subset="security")
 
 public class SecurityView implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-		UtilsSecurityView<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser>
+		JeeslSecurityView<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser>
 {
 	public static enum Code {welcome}
 	public static enum CodeSeries {seriesAll,series,season,episode}

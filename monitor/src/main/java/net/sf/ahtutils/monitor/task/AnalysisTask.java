@@ -5,10 +5,17 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.jeesl.api.facade.module.JeeslMonitoringFacade;
+import org.jeesl.controller.monitoring.result.net.IcmpResult;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.MutableDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.bootstrap.UtilsMonitorBootstrap;
 import net.sf.ahtutils.controller.facade.UtilsMonitoringFacadeBean;
 import net.sf.ahtutils.exception.processing.UtilsProcessingException;
-import net.sf.ahtutils.interfaces.facade.UtilsMonitoringFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 import net.sf.ahtutils.monitor.factory.TransmissionFactory;
 import net.sf.ahtutils.monitor.factory.net.TxIcmpFactory;
@@ -18,13 +25,6 @@ import net.sf.ahtutils.monitor.util.RestTransmission;
 import net.sf.ahtutils.xml.monitoring.Indicator;
 import net.sf.ahtutils.xml.monitoring.Transmission;
 
-import org.jeesl.controller.monitoring.result.net.IcmpResult;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.MutableDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class AnalysisTask  implements Runnable 
 {
 	final static Logger logger = LoggerFactory.getLogger(AnalysisTask.class);
@@ -33,7 +33,7 @@ public class AnalysisTask  implements Runnable
 	private Duration sleep;
 	
 	private EntityManager em;
-	private UtilsMonitoringFacade fUm;
+	private JeeslMonitoringFacade fUm;
 	
 	private TxIcmpFactory fIcmp;
 	private List<Indicator> listIndicators;

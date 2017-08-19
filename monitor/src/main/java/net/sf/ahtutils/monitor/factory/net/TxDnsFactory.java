@@ -3,15 +3,8 @@ package net.sf.ahtutils.monitor.factory.net;
 import java.util.Date;
 import java.util.List;
 
-import net.sf.ahtutils.interfaces.facade.UtilsMonitoringFacade;
-import net.sf.ahtutils.monitor.factory.AbstractTransmissionFactory;
-import net.sf.ahtutils.monitor.util.DbCleaner;
-import net.sf.ahtutils.xml.monitoring.Data;
-import net.sf.ahtutils.xml.monitoring.DataSet;
-import net.sf.ahtutils.xml.monitoring.Indicator;
-import net.sf.ahtutils.xml.monitoring.Value;
-
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
+import org.jeesl.api.facade.module.JeeslMonitoringFacade;
 import org.jeesl.controller.monitoring.result.net.DnsResult;
 import org.jeesl.controller.monitoring.result.net.IcmpResult;
 import org.joda.time.DateTime;
@@ -20,11 +13,18 @@ import org.joda.time.MutableDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.monitor.factory.AbstractTransmissionFactory;
+import net.sf.ahtutils.monitor.util.DbCleaner;
+import net.sf.ahtutils.xml.monitoring.Data;
+import net.sf.ahtutils.xml.monitoring.DataSet;
+import net.sf.ahtutils.xml.monitoring.Indicator;
+import net.sf.ahtutils.xml.monitoring.Value;
+
 public class TxDnsFactory extends AbstractTransmissionFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(TxDnsFactory.class);
 	
-	public TxDnsFactory(UtilsMonitoringFacade fUm,DbCleaner dbCleaner)
+	public TxDnsFactory(JeeslMonitoringFacade fUm,DbCleaner dbCleaner)
 	{
 		super(fUm,dbCleaner);
 	}

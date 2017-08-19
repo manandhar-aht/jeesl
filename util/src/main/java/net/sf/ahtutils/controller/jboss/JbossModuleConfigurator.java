@@ -15,7 +15,7 @@ public class JbossModuleConfigurator
 {
 	final static Logger logger = LoggerFactory.getLogger(JbossModuleConfigurator.class);
 	
-	private static final String srcBaseDir = "listing.aht-utils/admin/installation/jboss/modules";
+	private static final String srcBaseDir = "jeesl/listing/admin/installation/jboss/modules";
 	
 	public static enum Product {eap}
 	
@@ -77,6 +77,10 @@ public class JbossModuleConfigurator
 		if(version.equals("6.3"))
 		{
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:5.1.29"),dirMain);
+		}
+		else if(version.equals("7.0"))
+		{
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:5.1.43"),dirMain);
 		}
 	}
 	

@@ -309,6 +309,15 @@
 	  <type>jar</type>
           <scope>provided</scope>
 	 </dependency>
+	 
+	<!-- JBoss Wildfly -->
+		<dependency>
+		    <groupId>org.wildfly.core</groupId>
+		    <artifactId>wildfly-controller-client</artifactId>
+		    <version>2.1.13.Final-redhat-1</version>
+			<scope>provided</scope>
+		</dependency>
+	 
 	</dependencies>
 	
 	<build>

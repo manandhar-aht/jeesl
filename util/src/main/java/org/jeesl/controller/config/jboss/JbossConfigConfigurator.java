@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.jboss;
+package org.jeesl.controller.config.jboss;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,10 +14,10 @@ import org.jdom2.filter.Filters;
 import org.jdom2.output.Format;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
+import org.jeesl.controller.config.jboss.JbossModuleConfigurator.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.controller.jboss.JbossModuleConfigurator.Product;
 import net.sf.exlp.util.io.resourceloader.MultiResourceLoader;
 import net.sf.exlp.util.xml.JDomUtil;
 

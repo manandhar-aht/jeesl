@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.jboss;
+package org.jeesl.controller.config.jboss;
 
 import java.io.File;
 import java.io.IOException;

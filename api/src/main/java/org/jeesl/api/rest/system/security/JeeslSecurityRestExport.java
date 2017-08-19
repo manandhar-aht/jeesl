@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.rest.security;
+package org.jeesl.api.rest.system.security;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -7,7 +7,7 @@ import javax.ws.rs.core.MediaType;
 
 import net.sf.ahtutils.xml.security.Security;
 
-public interface UtilsSecurityRestExport
+public interface JeeslSecurityRestExport
 {
 	@GET @Path("/security/actions")
 	@Produces(MediaType.APPLICATION_XML)

@@ -1,9 +1,10 @@
-package org.jeesl.web.rest.system.security;
+package org.jeesl.web.rest.system;
 
 import java.util.Collections;
 import java.util.Comparator;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.api.rest.system.security.JeeslSecurityRestExport;
 import org.jeesl.factory.xml.system.security.XmlActionFactory;
 import org.jeesl.factory.xml.system.security.XmlActionsFactory;
 import org.jeesl.factory.xml.system.security.XmlCategoryFactory;
@@ -31,7 +32,6 @@ import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityUsecase;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsSecurityView;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsStaff;
 import net.sf.ahtutils.interfaces.model.system.security.UtilsUser;
-import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityRestExport;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityRoleComparator;
@@ -62,7 +62,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 								A extends UtilsSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 								AT extends UtilsSecurityActionTemplate<L,D,C,R,V,U,A,AT,USER>,
 								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
-				implements UtilsSecurityRestExport
+				implements JeeslSecurityRestExport
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityRestService.class);
 	

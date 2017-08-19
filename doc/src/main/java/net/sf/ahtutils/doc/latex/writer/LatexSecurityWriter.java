@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.api.rest.system.security.JeeslSecurityRestExport;
 import org.jeesl.model.xml.system.navigation.Menu;
 import org.openfuxml.content.graph.Node;
 import org.openfuxml.content.ofx.Section;
@@ -25,7 +26,6 @@ import net.sf.ahtutils.doc.ofx.security.section.OfxSecurityRolesSectionFactory;
 import net.sf.ahtutils.doc.ofx.security.section.OfxSecurityUsecasesSectionFactory;
 import net.sf.ahtutils.doc.ofx.security.section.OfxSecurityViewsSectionFactory;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityRestExport;
 import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.status.Translations;
@@ -149,7 +149,7 @@ public class LatexSecurityWriter extends AbstractDocumentationLatexWriter
 		}
 	}
 	
-	public void usecases(int lvl, UtilsSecurityRestExport rest) throws OfxAuthoringException, OfxConfigurationException, IOException, UtilsConfigurationException {usecases(lvl,rest.documentationSecurityUsecases());}
+	public void usecases(int lvl, JeeslSecurityRestExport rest) throws OfxAuthoringException, OfxConfigurationException, IOException, UtilsConfigurationException {usecases(lvl,rest.documentationSecurityUsecases());}
 	public void usecases(Security security) throws UtilsConfigurationException, OfxAuthoringException, OfxConfigurationException, IOException{usecases(2,security);}
 	public void usecases(int lvl, Security security) throws UtilsConfigurationException, OfxAuthoringException, OfxConfigurationException, IOException
 	{
@@ -158,7 +158,7 @@ public class LatexSecurityWriter extends AbstractDocumentationLatexWriter
 		ofxMlw.section(lvl,"/admin/security/actual/usecases",section);
 	}
 	
-	public void roles(int lvl, UtilsSecurityRestExport rest) throws OfxAuthoringException, OfxConfigurationException, IOException, UtilsConfigurationException{roles(lvl,rest.exportSecurityRoles());}
+	public void roles(int lvl, JeeslSecurityRestExport rest) throws OfxAuthoringException, OfxConfigurationException, IOException, UtilsConfigurationException{roles(lvl,rest.exportSecurityRoles());}
 	public void roles(Security security) throws UtilsConfigurationException, OfxAuthoringException, OfxConfigurationException, IOException{roles(2,security);}
 	public void roles(int lvl, Security security) throws OfxAuthoringException, OfxConfigurationException, IOException, UtilsConfigurationException
 	{
@@ -167,7 +167,7 @@ public class LatexSecurityWriter extends AbstractDocumentationLatexWriter
 		ofxMlw.section(lvl,"/admin/security/actual/roles",section);
 	}
 	
-	public void views(int lvl, UtilsSecurityRestExport rest) throws OfxAuthoringException, OfxConfigurationException, IOException, UtilsConfigurationException{views(lvl,rest.documentationSecurityViews());}
+	public void views(int lvl, JeeslSecurityRestExport rest) throws OfxAuthoringException, OfxConfigurationException, IOException, UtilsConfigurationException{views(lvl,rest.documentationSecurityViews());}
 	public void views(Access security) throws UtilsConfigurationException, OfxAuthoringException, OfxConfigurationException, IOException{views(2,security);}
 	public void views(int lvl, Access security) throws UtilsConfigurationException, OfxAuthoringException, OfxConfigurationException, IOException
 	{
@@ -181,7 +181,7 @@ public class LatexSecurityWriter extends AbstractDocumentationLatexWriter
 		ofxMlw.section(lvl,"/admin/security/actual/views",section);
 	}
 	
-	public void pageActions(UtilsSecurityRestExport rest) throws OfxAuthoringException, OfxConfigurationException, IOException
+	public void pageActions(JeeslSecurityRestExport rest) throws OfxAuthoringException, OfxConfigurationException, IOException
 	{
 		Security security = rest.documentationSecurityPageActions();
 		

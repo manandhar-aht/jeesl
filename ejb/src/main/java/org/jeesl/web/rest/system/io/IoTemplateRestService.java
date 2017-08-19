@@ -1,4 +1,4 @@
-package org.jeesl.web.rest.system;
+package org.jeesl.web.rest.system.io;
 
 import org.jeesl.api.facade.io.JeeslIoTemplateFacade;
 import org.jeesl.api.rest.system.io.template.JeeslIoTemplateRestExport;

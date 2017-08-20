@@ -1,6 +1,6 @@
 package org.jeesl.web.rest.system;
 
-import org.jeesl.api.facade.system.JeeslConstraintFacade;
+import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.api.rest.system.constraint.JeeslConstraintRestExport;
 import org.jeesl.api.rest.system.constraint.JeeslConstraintRestImport;
 import org.jeesl.controller.monitor.DataUpdateTracker;
@@ -34,7 +34,7 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 {
 	final static Logger logger = LoggerFactory.getLogger(ConstraintRestService.class);
 	
-	private JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint;
+	private JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint;
 	
 	private final Class<SCOPE> cScope;
 	private final Class<CATEGORY> cCategory;
@@ -44,7 +44,7 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 	private final EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> efScope;
 	private final EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> efConstraint;
 	
-	private ConstraintRestService(final String[] localeCodes, JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, final Class<L> cL, final Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
+	private ConstraintRestService(final String[] localeCodes, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, final Class<L> cL, final Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
 	{
 		super(fConstraint,cL,cD);
 		this.fConstraint=fConstraint;
@@ -52,8 +52,7 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 		this.cCategory=cCategory;
 		this.cConstraint=cConstraint;
 		this.cType=cType;
-		
-//		xfLight = new XmlTrafficLightFactory<L,D,SCOPE,LIGHT>(UtilsQuery.get(UtilsQuery.Key.exTrafficLight));
+
 		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(cL,cD,cScope,cCategory);
 		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(cL,cD,cConstraint,cType);
 	}
@@ -64,7 +63,7 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 						CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>,
 						TYPE extends UtilsStatus<TYPE,L,D>>
 	ConstraintRestService<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>
-			factory(String[] localeCodes, JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
+			factory(String[] localeCodes, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
 	{
 		return new ConstraintRestService<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(localeCodes,fConstraint,cL,cD,cScope,cCategory,cConstraint,cType);
 	}
@@ -107,6 +106,6 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 			catch (UtilsConstraintViolationException e) {dut.createFail(cScope,e);}
 			catch (UtilsLockingException e) {dut.createFail(cScope,e);}
 		}
-		return null;
+		return dut.toDataUpdate();
 	}
 }

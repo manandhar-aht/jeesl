@@ -3,7 +3,7 @@ package org.jeesl.web.mbean.prototype.admin.system;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jeesl.api.facade.system.JeeslConstraintFacade;
+import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.ejb.system.constraint.EjbConstraintScopeFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
@@ -33,7 +33,7 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSettingsConstraintBean.class);
 	
-	private JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint;
+	private JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint;
 	
 	private final Class<SCOPE> cScope;
 	private final Class<CATEGORY> cCategory;
@@ -55,7 +55,7 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(cL,cD,cScope,cCategory);
 	}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint)
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fConstraint=fConstraint;

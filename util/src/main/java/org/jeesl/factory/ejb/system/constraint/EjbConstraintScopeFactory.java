@@ -1,6 +1,6 @@
 package org.jeesl.factory.ejb.system.constraint;
 
-import org.jeesl.api.facade.system.JeeslConstraintFacade;
+import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
 import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
@@ -53,7 +53,7 @@ public class EjbConstraintScopeFactory <L extends UtilsLang, D extends UtilsDesc
 		return ejb;
 	}
 	
-	public SCOPE importOrUpdate(JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, ConstraintScope xScope) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	public SCOPE importOrUpdate(JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, ConstraintScope xScope) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
 		SCOPE eScope;	
 		try {eScope = fConstraint.fByCode(cScope,xScope.getCode());}
@@ -66,6 +66,7 @@ public class EjbConstraintScopeFactory <L extends UtilsLang, D extends UtilsDesc
 	
 	private SCOPE update(SCOPE eScope, ConstraintScope xScope)
 	{
+		eScope.setCode(xScope.getCode());
 		eScope.setPosition(0);
 		return eScope;
 	}

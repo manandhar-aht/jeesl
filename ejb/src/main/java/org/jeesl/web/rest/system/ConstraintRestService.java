@@ -28,21 +28,21 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 	
 	private JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint;
 	
-	private Class<SCOPE> cScope;
-	private Class<CATEGORY> cCategory;
-	private Class<CONSTRAINT> cConstraint;
+	private final Class<SCOPE> cScope;
+	private final Class<CATEGORY> cCategory;
+	private final Class<CONSTRAINT> cConstraint;
 	private final Class<TYPE> cType;
 	
 //	private XmlTrafficLightFactory<L,D,SCOPE,LIGHT> xfLight;//
 //	private EjbTrafficLightFactory<L,D,SCOPE,LIGHT> efLight;
 	
-	private ConstraintRestService(final String[] localeCodes, JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, final Class<L> cL, final Class<D> cD,   Class<TYPE> cType)
+	private ConstraintRestService(final String[] localeCodes, JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, final Class<L> cL, final Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
 	{
 		super(fConstraint,cL,cD);
 		this.fConstraint=fConstraint;
-//		this.cScope=cScope;
-//		this.cCategory=cCategory;
-//		this.cConstraint=cConstraint;
+		this.cScope=cScope;
+		this.cCategory=cCategory;
+		this.cConstraint=cConstraint;
 		this.cType=cType;
 		
 //		xfLight = new XmlTrafficLightFactory<L,D,SCOPE,LIGHT>(UtilsQuery.get(UtilsQuery.Key.exTrafficLight));
@@ -57,7 +57,7 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 	ConstraintRestService<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>
 			factory(String[] localeCodes, JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
 	{
-		return new ConstraintRestService<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(localeCodes,fConstraint,cL,cD,cType);
+		return new ConstraintRestService<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(localeCodes,fConstraint,cL,cD,cScope,cCategory,cConstraint,cType);
 	}
 	
 	@Override public Container exportSystemConstraintCategories() {return xfContainer.build(fConstraint.allOrderedPosition(cCategory));}

@@ -3,6 +3,9 @@ package org.jeesl.web.rest.system;
 import org.jeesl.api.facade.system.JeeslConstraintFacade;
 import org.jeesl.api.rest.system.constraint.JeeslConstraintRestExport;
 import org.jeesl.api.rest.system.constraint.JeeslConstraintRestImport;
+import org.jeesl.controller.monitor.DataUpdateTracker;
+import org.jeesl.factory.ejb.system.constraint.EjbConstraintFactory;
+import org.jeesl.factory.ejb.system.constraint.EjbConstraintScopeFactory;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintScope;
 import org.jeesl.model.xml.jeesl.Container;
@@ -10,10 +13,15 @@ import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.sync.DataUpdate;
+import net.sf.ahtutils.xml.system.Constraint;
+import net.sf.ahtutils.xml.system.ConstraintScope;
 import net.sf.ahtutils.xml.system.Constraints;
 
 public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescription,
@@ -33,8 +41,8 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 	private final Class<CONSTRAINT> cConstraint;
 	private final Class<TYPE> cType;
 	
-//	private XmlTrafficLightFactory<L,D,SCOPE,LIGHT> xfLight;//
-//	private EjbTrafficLightFactory<L,D,SCOPE,LIGHT> efLight;
+	private final EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> efScope;
+	private final EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> efConstraint;
 	
 	private ConstraintRestService(final String[] localeCodes, JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, final Class<L> cL, final Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
 	{
@@ -46,7 +54,8 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 		this.cType=cType;
 		
 //		xfLight = new XmlTrafficLightFactory<L,D,SCOPE,LIGHT>(UtilsQuery.get(UtilsQuery.Key.exTrafficLight));
-//		efLight = EjbTrafficLightFactory.factory(cLang,cDescription,cLight);
+		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(cL,cD,cScope,cCategory);
+		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(cL,cD,cConstraint,cType);
 	}
 	
 	public static <L extends UtilsLang, D extends UtilsDescription,
@@ -62,19 +71,42 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 	
 	@Override public Container exportSystemConstraintCategories() {return xfContainer.build(fConstraint.allOrderedPosition(cCategory));}
 	@Override public Container exportSystemConstraintTypes() {return xfContainer.build(fConstraint.allOrderedPosition(cType));}
-
-	@Override public DataUpdate importSystemConstraintCategories(Container categories) {return super.importStatus(cCategory,categories,null);}
-	@Override public DataUpdate importSystemConstraintTypes(Container categories) {return super.importStatus(cType,categories,null);}
-	
-	@Override public DataUpdate importConstraints(Constraints constraints)
+	@Override public Constraints exportConstraints()
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override public DataUpdate importSystemConstraintCategories(Container categories) {return super.importStatus(cCategory,categories,null);}
+	@Override public DataUpdate importSystemConstraintTypes(Container categories) {return super.importStatus(cType,categories,null);}
 
-	@Override public Constraints exportConstraints()
+	@Override public DataUpdate importConstraints(Constraints constraints)
 	{
-		// TODO Auto-generated method stub
+		DataUpdateTracker dut = new DataUpdateTracker(true);
+		for(ConstraintScope xScope : constraints.getConstraintScope())
+		{
+			try
+			{
+				SCOPE eScope = efScope.importOrUpdate(fConstraint, xScope);
+				dut.createSuccess(cScope);
+				
+				for(Constraint xConstraint : xScope.getConstraint())
+				{
+					try
+					{
+						efConstraint.importOrUpdate(fConstraint,eScope,xConstraint);
+						dut.createSuccess(cConstraint);
+					}
+					catch (UtilsNotFoundException e) {dut.createFail(cConstraint,e);}
+					catch (UtilsConstraintViolationException e) {dut.createFail(cConstraint,e);}
+					catch (UtilsLockingException e) {dut.createFail(cConstraint,e);}
+				}
+				
+			}
+			catch (UtilsNotFoundException e) {dut.createFail(cScope,e);}
+			catch (UtilsConstraintViolationException e) {dut.createFail(cScope,e);}
+			catch (UtilsLockingException e) {dut.createFail(cScope,e);}
+		}
 		return null;
 	}
 }

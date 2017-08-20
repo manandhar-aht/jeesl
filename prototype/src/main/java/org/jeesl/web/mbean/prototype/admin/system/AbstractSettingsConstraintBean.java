@@ -52,7 +52,7 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 		this.cScope=cScope;
 		this.cCategory=cCategory;
 		
-		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(cScope);
+		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(cL,cD,cScope,cCategory);
 	}
 	
 	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint)

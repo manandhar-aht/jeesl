@@ -1,5 +1,8 @@
 package org.jeesl.interfaces.model.system.constraint;
 
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -14,10 +17,12 @@ public interface JeeslConstraint<L extends UtilsLang, D extends UtilsDescription
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>>
-			extends EjbWithId,
+			extends EjbWithId,EjbWithCode,
 					EjbSaveable,EjbRemoveable,
 					EjbWithPosition,
-					EjbWithLangDescription<L,D>
+					EjbWithLangDescription<L,D>,
+					JeeslWithType<L,D,TYPE>
 {
-
+	SCOPE getScope();
+	void setScope(SCOPE scope);
 }

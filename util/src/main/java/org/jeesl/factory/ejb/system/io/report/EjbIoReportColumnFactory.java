@@ -63,16 +63,16 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 	final Class<CDT> cDataType;
 	final Class<CW> cColumnWidth;
 	
-	private JeeslDbLangUpdater<COLUMN,L> dbuLang;
-	private JeeslDbDescriptionUpdater<COLUMN,D> dbuDescription;
+	private final JeeslDbLangUpdater<COLUMN,L> dbuLang;
+	private final JeeslDbDescriptionUpdater<COLUMN,D> dbuDescription;
     
 	public EjbIoReportColumnFactory(final Class<L> cL,final Class<D> cD,final Class<COLUMN> cColumn, Class<CDT> cDataType, Class<CW> cColumnWidth)
 	{       
         this.cColumn = cColumn;
         this.cDataType=cDataType;
         this.cColumnWidth=cColumnWidth;
-        dbuLang = JeeslDbLangUpdater.factory(cColumn, cL);
-        dbuDescription = JeeslDbDescriptionUpdater.factory(cColumn, cD);
+        dbuLang = JeeslDbLangUpdater.factory(cColumn,cL);
+        dbuDescription = JeeslDbDescriptionUpdater.factory(cColumn,cD);
 	}
 	    
 	public COLUMN build(GROUP group)
@@ -154,9 +154,9 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 	
 	public COLUMN updateLD(UtilsFacade fUtils, COLUMN eColumn, XlsColumn xColumn) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		eColumn=dbuLang.handle(fUtils, eColumn, xColumn.getLangs());
+		eColumn = dbuLang.handle(fUtils, eColumn, xColumn.getLangs());
 		eColumn = fUtils.save(eColumn);
-		eColumn=dbuDescription.handle(fUtils, eColumn, xColumn.getDescriptions());
+		eColumn = dbuDescription.handle(fUtils, eColumn, xColumn.getDescriptions());
 		eColumn = fUtils.save(eColumn);
 		return eColumn;
 	}

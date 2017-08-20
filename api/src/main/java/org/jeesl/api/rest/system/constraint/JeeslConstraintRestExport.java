@@ -5,7 +5,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import net.sf.ahtutils.xml.aht.Container;
+import org.jeesl.model.xml.jeesl.Container;
+
 import net.sf.ahtutils.xml.system.Constraints;
 
 public interface JeeslConstraintRestExport

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<aht:aht xmlns:us="http://ahtutils.aht-group.com/status" xmlns:aht="http://ahtutils.aht-group.com">
+<jeesl:container xmlns:us="http://ahtutils.aht-group.com/status" xmlns:sec="http://ahtutils.aht-group.com/security" xmlns:un="http://ahtutils.aht-group.com/navigation" xmlns:io="http://exlp.sf.net/io" xmlns:symbol="http://www.jeesl.org/symbol" xmlns:jeesl="http://www.jeesl.org">
     <us:status code="notNull" position="1">
         <us:langs>
             <us:lang key="de" translation="Not Leer"/>
@@ -133,4 +133,4 @@
             <us:description key="en">The item cannot be deleted because it is in use.</us:description>
         </us:descriptions>
     </us:status>
-</aht:aht>
+</jeesl:container>

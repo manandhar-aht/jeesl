@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
 import org.jeesl.doc.ofx.OfxMultiLangFactory;
+import org.jeesl.model.xml.jeesl.Container;
 import org.openfuxml.content.ofx.Comment;
 import org.openfuxml.content.table.Body;
 import org.openfuxml.content.table.Columns;
@@ -25,7 +26,6 @@ import net.sf.ahtutils.doc.DocumentationCommentBuilder;
 import net.sf.ahtutils.doc.UtilsDocumentation;
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.ahtutils.xml.system.Constraint;
 import net.sf.ahtutils.xml.system.ConstraintScope;
@@ -38,11 +38,9 @@ public class OfxConstraintTableFactory extends AbstractUtilsOfxDocumentationFact
 	private List<String> headerKeys;
 	
 	@SuppressWarnings("unused")
-	private String imagePathPrefix;
-	public void setImagePathPrefix(String imagePathPrefix) {this.imagePathPrefix = imagePathPrefix;}
+	private String imagePathPrefix; public void setImagePathPrefix(String imagePathPrefix) {this.imagePathPrefix = imagePathPrefix;}
 	
-	private Aht constraintTypes;
-	public void setConstraintTypes(Aht constraintTypes) {this.constraintTypes = constraintTypes;}
+	private Container constraintTypes; public void setConstraintTypes(Container constraintTypes) {this.constraintTypes = constraintTypes;}
 	
 	public OfxConstraintTableFactory(Configuration config, String[] langs, Translations translations)
 	{

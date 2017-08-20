@@ -27,8 +27,6 @@ public class LatexStatusWriter extends AbstractDocumentationLatexWriter
 {	
 	final static Logger logger = LoggerFactory.getLogger(LatexStatusWriter.class);
 	
-	public static String systemConstraintsType = "db.aht-utils/system/constraints/type.xml";
-	
 	private OfxMultiLangLatexWriter ofxMlw;
 	private UtilsDbXmlSeedUtil seedUtil;
 	
@@ -60,7 +58,7 @@ public class LatexStatusWriter extends AbstractDocumentationLatexWriter
 		buildStatusTable(seedKeyStatus, 10,30,40);
 	}
 		
-	@Deprecated public void table(boolean withIcon,Aht ahtStatus,String texName) throws UtilsConfigurationException
+	@Deprecated public void table(boolean withIcon, Aht ahtStatus, String texName) throws UtilsConfigurationException
 	{
 		this.withIcon=withIcon;
 		if(withIcon){table(ahtStatus,null,texName,15,10,30,40);}

@@ -2,6 +2,7 @@ package org.jeesl.doc.ofx.constraints;
 
 import org.apache.commons.configuration.Configuration;
 import org.jeesl.doc.ofx.OfxMultiLangFactory;
+import org.jeesl.model.xml.jeesl.Container;
 import org.openfuxml.content.layout.Layout;
 import org.openfuxml.content.media.Image;
 import org.openfuxml.content.media.Media;
@@ -24,7 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.ahtutils.xml.system.Constraint;
 import net.sf.ahtutils.xml.system.ConstraintScope;
@@ -36,7 +36,7 @@ public class OfxConstraintScopeSectionFactory extends AbstractUtilsOfxDocumentat
 	private OfxConstraintTableFactory ofTable;
 	private Layout layout;
 		
-	public void setConstraintTypes(Aht constraintTypes) {ofTable.setConstraintTypes(constraintTypes);}
+	public void setConstraintTypes(Container constraintTypes) {ofTable.setConstraintTypes(constraintTypes);}
 	
 	public OfxConstraintScopeSectionFactory(Configuration config, String[] langs, Translations translations)
 	{

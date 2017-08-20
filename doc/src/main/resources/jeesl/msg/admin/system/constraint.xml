@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
-	<s:translation key="aupConstraint">
+	<s:translation key="jeeslConstraintScopes">
     	<s:langs>
-    		<s:lang key="de" translation="Constraint"/>
-    		<s:lang key="en" translation="Constraint"/>
-    		<s:lang key="fr" translation="Constraint"/>
+    		<s:lang key="de" translation="Bereiche"/>
+    		<s:lang key="en" translation="Scopes"/>
+    		<s:lang key="fr" translation="Scopes"/>
     	</s:langs>
     </s:translation>
-    	<s:translation key="aupConstraints">
+    	<s:translation key="jeeslConstraintScope">
     	<s:langs>
-    		<s:lang key="de" translation="Constraints"/>
-    		<s:lang key="en" translation="Constraints"/>
-    		<s:lang key="fr" translation="Constraints"/>
+    		<s:lang key="de" translation="Bereich"/>
+    		<s:lang key="en" translation="Scope"/>
+    		<s:lang key="fr" translation="Scope"/>
     	</s:langs>
     </s:translation>
 </s:translations>

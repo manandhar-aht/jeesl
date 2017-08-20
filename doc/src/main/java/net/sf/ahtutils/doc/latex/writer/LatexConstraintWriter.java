@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import org.apache.commons.configuration.Configuration;
 import org.jeesl.doc.ofx.constraints.OfxConstraintScopeSectionFactory;
+import org.jeesl.interfaces.model.system.constraint.JeeslConstraintType;
+import org.jeesl.model.xml.jeesl.Container;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.exception.OfxConfigurationException;
@@ -16,7 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.UtilsDocumentation;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.ahtutils.xml.system.ConstraintScope;
 import net.sf.ahtutils.xml.system.Constraints;
@@ -38,7 +39,7 @@ public class LatexConstraintWriter extends AbstractDocumentationLatexWriter
 		ofxMlw = new OfxMultiLangLatexWriter(baseDir,langs,cp);
 		
 		ofConstraint = new OfxConstraintScopeSectionFactory(config,langs,translations);
-		try{ofConstraint.setConstraintTypes(JaxbUtil.loadJAXB(LatexStatusWriter.systemConstraintsType, Aht.class));}
+		try{ofConstraint.setConstraintTypes(JaxbUtil.loadJAXB(JeeslConstraintType.xmlResourceContainer, Container.class));}
 		catch (FileNotFoundException e) {e.printStackTrace();}
 		
 	}

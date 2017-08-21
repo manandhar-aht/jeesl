@@ -54,6 +54,10 @@ public class JeeslDbDescriptionUpdater<C extends EjbWithDescription<D>, D extend
 		return ejb;
 	}
 	
+	public C handle(UtilsFacade fUtils, C ejb, String[] localeCodes)
+	{
+		return efDescription.persistMissingLangs(fUtils, localeCodes, ejb);
+	}
 	
 	private C remove(UtilsFacade fUtils,C ejb, Descriptions descriptions) throws UtilsConstraintViolationException
 	{

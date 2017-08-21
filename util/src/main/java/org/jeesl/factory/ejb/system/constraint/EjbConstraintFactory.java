@@ -18,9 +18,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.system.Constraint;
 
 public class EjbConstraintFactory <L extends UtilsLang, D extends UtilsDescription,
-										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>,
+										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>,
+										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>, LEVEL extends UtilsStatus<LEVEL,L,D>,
 										TYPE extends UtilsStatus<TYPE,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbConstraintFactory.class);
@@ -57,7 +57,7 @@ public class EjbConstraintFactory <L extends UtilsLang, D extends UtilsDescripti
 		return ejb;
 	}
 	
-	public CONSTRAINT importOrUpdate(JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, SCOPE eScope, Constraint xConstraint) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	public CONSTRAINT importOrUpdate(JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> fConstraint, SCOPE eScope, Constraint xConstraint) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
 		CONSTRAINT eConstraint;	
 		try {eConstraint = fConstraint.fSystemConstraint(eScope,xConstraint.getCode());}
@@ -81,6 +81,13 @@ public class EjbConstraintFactory <L extends UtilsLang, D extends UtilsDescripti
 		eConstraint = fUtils.save(eConstraint);
 		eConstraint = dbuDescription.handle(fUtils, eConstraint, xConstraint.getDescriptions());
 		eConstraint = fUtils.save(eConstraint);
+		return eConstraint;
+	}
+	
+	public CONSTRAINT updateLD(UtilsFacade fUtils, CONSTRAINT eConstraint, String[] localeCodes)
+	{
+		eConstraint = dbuLang.handle(fUtils, eConstraint, localeCodes);
+		eConstraint = dbuDescription.handle(fUtils, eConstraint, localeCodes);
 		return eConstraint;
 	}
 }

@@ -19,4 +19,7 @@ public interface JeeslConstraintRestExport
 	
 	@GET @Path("/system/constraint/type") @Produces(MediaType.APPLICATION_XML)
 	Container exportSystemConstraintTypes();
+	
+	@GET @Path("/system/constraint/level") @Produces(MediaType.APPLICATION_XML)
+	Container exportSystemConstraintLevel();
 }

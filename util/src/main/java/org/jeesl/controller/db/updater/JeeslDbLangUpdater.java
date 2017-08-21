@@ -54,6 +54,10 @@ public class JeeslDbLangUpdater<C extends EjbWithLang<L>, L extends UtilsLang>
 		return ejb;
 	}
 	
+	public C handle(UtilsFacade fUtils, C ejb, String[] localeCodes)
+	{
+		return efLang.persistMissingLangs(fUtils, localeCodes, ejb);
+	}
 	
 	private C remove(UtilsFacade fUtils,C ejb, Langs langs) throws UtilsConstraintViolationException
 	{

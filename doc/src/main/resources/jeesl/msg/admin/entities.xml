@@ -178,10 +178,16 @@
 	</s:translation>
 	<s:translation key="SystemConstraintType">
 		<s:langs>
-			<s:lang key="de" translation="Nebenbedingung Typ"/>
+			<s:lang key="de" translation="Randbedingung Typ"/>
 			<s:lang key="en" translation="Constraint Type"/>
 			<s:lang key="fr" translation="Constraint Type"/>
 		</s:langs>
 	</s:translation>
-	
+	<s:translation key="SystemConstraintLevel">
+		<s:langs>
+			<s:lang key="de" translation="Randbedingung Stufe"/>
+			<s:lang key="en" translation="Constraint Level"/>
+			<s:lang key="fr" translation="Constraint Level"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

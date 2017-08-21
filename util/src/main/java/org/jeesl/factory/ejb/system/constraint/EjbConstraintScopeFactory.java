@@ -18,9 +18,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.system.ConstraintScope;
 
 public class EjbConstraintScopeFactory <L extends UtilsLang, D extends UtilsDescription,
-										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>,
+										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>,
+										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>, LEVEL extends UtilsStatus<LEVEL,L,D>,
 										TYPE extends UtilsStatus<TYPE,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbConstraintScopeFactory.class);
@@ -53,7 +53,7 @@ public class EjbConstraintScopeFactory <L extends UtilsLang, D extends UtilsDesc
 		return ejb;
 	}
 	
-	public SCOPE importOrUpdate(JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint, ConstraintScope xScope) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	public SCOPE importOrUpdate(JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> fConstraint, ConstraintScope xScope) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
 		SCOPE eScope;	
 		try {eScope = fConstraint.fByCode(cScope,xScope.getCode());}
@@ -77,6 +77,13 @@ public class EjbConstraintScopeFactory <L extends UtilsLang, D extends UtilsDesc
 		eScope = fUtils.save(eScope);
 		eScope = dbuDescription.handle(fUtils, eScope, xScope.getDescriptions());
 		eScope = fUtils.save(eScope);
+		return eScope;
+	}
+	
+	public SCOPE updateLD(UtilsFacade fUtils, SCOPE eScope, String[] localeCodes)
+	{
+		eScope = dbuLang.handle(fUtils, eScope, localeCodes);
+		eScope = dbuDescription.handle(fUtils, eScope, localeCodes);
 		return eScope;
 	}
 }

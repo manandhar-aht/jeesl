@@ -25,12 +25,12 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslSystemConstraintFacadeBean<L extends UtilsLang, D extends UtilsDescription,
-												SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>,
+												SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>,
 												CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-												CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>,
+												CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>, LEVEL extends UtilsStatus<LEVEL,L,D>,
 												TYPE extends UtilsStatus<TYPE,L,D>>
 					extends UtilsFacadeBean
-					implements JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>
+					implements JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>
 {	
 //	private final Class<SCOPE> cScope;
 	private final Class<CONSTRAINT> cConstraint;

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
+import org.jeesl.controller.handler.ui.helper.UiTwiceClickHelper;
+import org.jeesl.factory.ejb.system.constraint.EjbConstraintFactory;
 import org.jeesl.factory.ejb.system.constraint.EjbConstraintScopeFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
@@ -23,9 +25,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends UtilsDescription,
-										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>,
+										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>,
+										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>, LEVEL extends UtilsStatus<LEVEL,L,D>,
 										TYPE extends UtilsStatus<TYPE,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean
@@ -33,33 +35,45 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSettingsConstraintBean.class);
 	
-	private JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint;
+	private JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> fConstraint;
 	
 	private final Class<SCOPE> cScope;
 	private final Class<CATEGORY> cCategory;
+	private final Class<CONSTRAINT> cConstraint;
+	private final Class<TYPE> cType;
 	
 	private List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
+	private List<CONSTRAINT> constraints; public List<CONSTRAINT> getConstraints() {return constraints;}
+	private List<TYPE> types; public List<TYPE> getTypes() {return types;}
 	
 	private SCOPE scope; public SCOPE getScope() {return scope;} public void setScope(SCOPE scope) {this.scope = scope;}
-
-	private final EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> efScope;
+	private CONSTRAINT constraint; public CONSTRAINT getConstraint() {return constraint;} public void setConstraint(CONSTRAINT constraint) {this.constraint = constraint;}
+	
+	private final EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> efScope;
+	private final EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> efConstraint;
 	
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
+	private final UiTwiceClickHelper ui2; public UiTwiceClickHelper getUi2() {return ui2;}
 
 	public AbstractSettingsConstraintBean(Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
 	{
 		super(cL,cD);
 		this.cScope=cScope;
 		this.cCategory=cCategory;
+		this.cConstraint=cConstraint;
+		this.cType=cType;
 		
-		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE>(cL,cD,cScope,cCategory);
+		ui2 = new UiTwiceClickHelper();
+		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>(cL,cD,cScope,cCategory);
+		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>(cL,cD,cConstraint,cType);
 	}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,TYPE> fConstraint)
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> fConstraint)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fConstraint=fConstraint;
 		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,fConstraint.allOrderedPosition(cCategory),this);
+		types = fConstraint.allOrderedPosition(cType);
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
@@ -67,9 +81,10 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 		reloadScopes();
 	}
 	
-	private void reset()
+	private void reset(boolean rScope, boolean rConstraint)
 	{
-		
+		if(rScope){scope=null;ui2.checkA(scope);}
+		if(rConstraint){constraint=null;ui2.checkB(constraint);}
 	}
 
 	private void reloadScopes()
@@ -82,21 +97,60 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cScope));}
 		scope = efScope.build(null);
-		scope.setName(efLang.createEmpty(langs));
-		scope.setDescription(efDescription.createEmpty(langs));
-		reset();
+		scope.setName(efLang.createEmpty(localeCodes));
+		scope.setDescription(efDescription.createEmpty(localeCodes));
+		reset(false,true);
+		ui2.checkA(scope);
 	}
 	
 	public void selectScope() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(scope));}
+		scope = fConstraint.find(cScope,scope);
+		scope = efScope.updateLD(fConstraint, scope, localeCodes);
+		reloadConstraints();
+		ui2.checkA(scope);
+	}
+	
+	public void saveScope() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(scope));}
 		scope.setCategory(fConstraint.find(cCategory,scope.getCategory()));
-		scope = efLang.persistMissingLangs(fConstraint,langs,scope);
-		scope = efDescription.persistMissingLangs(fConstraint,langs,scope);
 		scope = fConstraint.save(scope);
 		reloadScopes();
+		reloadConstraints();
 	}
 	
 //	protected void reorderEntites() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, cEntity, entities);Collections.sort(entities, comparatorEntity);}
-
+	
+	public void reloadConstraints()
+	{
+		constraints = fConstraint.allForParent(cConstraint,scope);
+	}
+	
+	public void addConstraint() throws UtilsNotFoundException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cConstraint));}
+		constraint = efConstraint.build(scope,null);
+		constraint.setName(efLang.createEmpty(localeCodes));
+		constraint.setDescription(efDescription.createEmpty(localeCodes));
+		reset(false,false);
+		ui2.checkB(constraint);
+	}
+	
+	public void saveConstraint() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(constraint));}
+		constraint.setType(fConstraint.find(cType,constraint.getType()));
+		constraint = fConstraint.save(constraint);
+		reloadConstraints();
+	}
+	
+	public void selectConstraint() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(constraint));}
+		constraint = fConstraint.find(cConstraint,constraint);
+		efConstraint.updateLD(fConstraint, constraint, localeCodes);
+		ui2.checkB(constraint);
+	}
 }

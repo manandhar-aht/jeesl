@@ -7,11 +7,25 @@
     		<s:lang key="fr" translation="Scopes"/>
     	</s:langs>
     </s:translation>
-    	<s:translation key="jeeslConstraintScope">
+	<s:translation key="jeeslConstraintScope">
     	<s:langs>
     		<s:lang key="de" translation="Bereich"/>
     		<s:lang key="en" translation="Scope"/>
     		<s:lang key="fr" translation="Scope"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslConstraints">
+    	<s:langs>
+    		<s:lang key="de" translation="Randbedingungen"/>
+    		<s:lang key="en" translation="Constraints"/>
+    		<s:lang key="fr" translation="Constraints"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslConstraint">
+    	<s:langs>
+    		<s:lang key="de" translation="Randbedingung"/>
+    		<s:lang key="en" translation="Constraint"/>
+    		<s:lang key="fr" translation="Constraint"/>
     	</s:langs>
     </s:translation>
 </s:translations>

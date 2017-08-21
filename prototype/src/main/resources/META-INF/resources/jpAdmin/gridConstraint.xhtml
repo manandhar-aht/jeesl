@@ -18,7 +18,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sScopes" width="5">
+				<aht:slot id="sScopes" width="3">
 					<h:form id="fCategories">
 						<p:dataTable var="s" value="#{cc.attrs.bean.scopes}" draggableRows="true"
 							selection="#{cc.attrs.bean.scope}" selectionMode="single" rowKey="#{s.id}">
@@ -28,9 +28,9 @@
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderScopes()}" update="@form"/>
-							<p:ajax event="rowSelect" update=":#{cc.id}:sScope" listener="#{cc.attrs.bean.selectScope()}"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectScope()}" update=":#{cc.id}:sScope :#{cc.id}:sConstraint"/>
 							<p:column rendered="true">  
-								<h:outputText value="#{e.category.position}.#{e.position}"/>
+								<h:outputText value="#{s.category.position}.#{s.position}"/>
 				            </p:column>
 				            <p:column headerText="#{msg.jeeslCategory}">  
 								<h:outputText value="#{s.category.name[localeCode].lang}"/>
@@ -42,12 +42,12 @@
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sScope" width="4">
-					<h:form id="fScope" rendered="#{not empty cc.attrs.bean.scope}">
+					<h:form id="fScope" rendered="#{(not empty cc.attrs.bean.scope) and (cc.attrs.bean.ui2.showA)}">
 						<p:panel id="pView" header="#{msg.jeeslConstraintScope}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelScope()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}"/>
-								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveEntity()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.rmScope()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" rendered="#{cc.attrs.bean.scope.id gt 0}"/>
+								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveScope()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteScope()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" rendered="#{cc.attrs.bean.scope.id gt 0}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslCategory}"/>
@@ -60,6 +60,49 @@
 								
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.scope}" keys="#{cc.attrs.bean.localeCodes}"
+													labelTranslation="#{msg.Name}"
+													withDescription="true" labelDescription="#{msg.Description}"/>
+						</p:panel>
+					</h:form>
+					<h:form id="fConstraints" rendered="#{(not empty cc.attrs.bean.scope) and (cc.attrs.bean.scope.id gt 0)}">
+						<p:dataTable var="c" value="#{cc.attrs.bean.constraints}" draggableRows="true"
+							selection="#{cc.attrs.bean.constraint}" selectionMode="single" rowKey="#{c.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslConstraints}">
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addConstraint()}" update=":#{cc.id}:sConstraint" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderScopes()}" update="@form"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectConstraint()}" update=":#{cc.id}:sConstraint"/>
+							
+				            <p:column headerText="#{msg.jeeslType}">  
+								<h:outputText value="#{c.type.name[localeCode].lang}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.jeeslConstraint}">  
+								<h:outputText value="#{c.name[localeCode].lang}"/>
+				            </p:column>
+				       	</p:dataTable>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sConstraint" width="5">
+					<h:form id="fConstraint" rendered="#{not empty cc.attrs.bean.constraint}">
+						<p:panel header="#{msg.jeeslConstraint}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelScope()}" update=":#{cc.id}:sScope :#{cc.id}:sConstraint" tooltip="#{msg.ttCancel}"/>
+								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveConstraint()}" update=":#{cc.id}:sScope :#{cc.id}:sConstraint" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteScope()}" update=":#{cc.id}:sScope :#{cc.id}:sConstraint" tooltip="#{msg.ttDelete}" rendered="#{cc.attrs.bean.scope.id gt 0}"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+								<p:outputLabel value="#{msg.jeeslType}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.constraint.type}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.types}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslCode}"/>
+								<p:inputText value="#{cc.attrs.bean.constraint.code}" autocomplete="off"/>
+								
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.constraint}" keys="#{cc.attrs.bean.localeCodes}"
 													labelTranslation="#{msg.Name}"
 													withDescription="true" labelDescription="#{msg.Description}"/>
 						</p:panel>

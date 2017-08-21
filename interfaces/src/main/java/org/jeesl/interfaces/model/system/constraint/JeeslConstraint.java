@@ -14,10 +14,11 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslConstraint<L extends UtilsLang, D extends UtilsDescription,
-									SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>,
+									SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>, LEVEL extends UtilsStatus<LEVEL,L,D>,
-									TYPE extends UtilsStatus<TYPE,L,D>>
+									CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>, LEVEL extends UtilsStatus<LEVEL,L,D>,
+									TYPE extends UtilsStatus<TYPE,L,D>,
+									RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
 			extends EjbWithId,EjbWithNonUniqueCode,
 					EjbSaveable,EjbRemoveable,
 					EjbWithPosition,

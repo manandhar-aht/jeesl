@@ -4,6 +4,7 @@ import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
 import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
+import org.jeesl.interfaces.model.system.constraint.JeeslConstraintResolution;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +19,12 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.system.ConstraintScope;
 
 public class EjbConstraintScopeFactory <L extends UtilsLang, D extends UtilsDescription,
-										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>,
+										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>, LEVEL extends UtilsStatus<LEVEL,L,D>,
-										TYPE extends UtilsStatus<TYPE,L,D>>
+										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
+										LEVEL extends UtilsStatus<LEVEL,L,D>,
+										TYPE extends UtilsStatus<TYPE,L,D>,
+										RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbConstraintScopeFactory.class);
 	
@@ -53,7 +56,7 @@ public class EjbConstraintScopeFactory <L extends UtilsLang, D extends UtilsDesc
 		return ejb;
 	}
 	
-	public SCOPE importOrUpdate(JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> fConstraint, ConstraintScope xScope) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	public SCOPE importOrUpdate(JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint, ConstraintScope xScope) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
 		SCOPE eScope;	
 		try {eScope = fConstraint.fByCode(cScope,xScope.getCode());}

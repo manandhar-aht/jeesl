@@ -10,6 +10,7 @@ import org.jeesl.factory.ejb.system.constraint.EjbConstraintFactory;
 import org.jeesl.factory.ejb.system.constraint.EjbConstraintScopeFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
+import org.jeesl.interfaces.model.system.constraint.JeeslConstraintResolution;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintScope;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -25,17 +26,19 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends UtilsDescription,
-										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>,
+										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>, LEVEL extends UtilsStatus<LEVEL,L,D>,
-										TYPE extends UtilsStatus<TYPE,L,D>>
+										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
+										LEVEL extends UtilsStatus<LEVEL,L,D>,
+										TYPE extends UtilsStatus<TYPE,L,D>,
+										RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSettingsConstraintBean.class);
 	
-	private JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> fConstraint;
+	private JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint;
 	
 	private final Class<SCOPE> cScope;
 	private final Class<CATEGORY> cCategory;
@@ -49,8 +52,8 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 	private SCOPE scope; public SCOPE getScope() {return scope;} public void setScope(SCOPE scope) {this.scope = scope;}
 	private CONSTRAINT constraint; public CONSTRAINT getConstraint() {return constraint;} public void setConstraint(CONSTRAINT constraint) {this.constraint = constraint;}
 	
-	private final EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> efScope;
-	private final EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> efConstraint;
+	private final EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> efScope;
+	private final EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> efConstraint;
 	
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	private final UiTwiceClickHelper ui2; public UiTwiceClickHelper getUi2() {return ui2;}
@@ -64,11 +67,11 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 		this.cType=cType;
 		
 		ui2 = new UiTwiceClickHelper();
-		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>(cL,cD,cScope,cCategory);
-		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>(cL,cD,cConstraint,cType);
+		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(cL,cD,cScope,cCategory);
+		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(cL,cD,cConstraint,cType);
 	}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> fConstraint)
+	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fConstraint=fConstraint;

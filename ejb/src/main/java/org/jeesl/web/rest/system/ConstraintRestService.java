@@ -7,6 +7,7 @@ import org.jeesl.controller.monitor.DataUpdateTracker;
 import org.jeesl.factory.ejb.system.constraint.EjbConstraintFactory;
 import org.jeesl.factory.ejb.system.constraint.EjbConstraintScopeFactory;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
+import org.jeesl.interfaces.model.system.constraint.JeeslConstraintResolution;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintScope;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.web.rest.AbstractJeeslRestService;
@@ -25,27 +26,28 @@ import net.sf.ahtutils.xml.system.ConstraintScope;
 import net.sf.ahtutils.xml.system.Constraints;
 
 public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescription,
-									SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>,
+									SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>,
+									CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
 									LEVEL extends UtilsStatus<LEVEL,L,D>,
-									TYPE extends UtilsStatus<TYPE,L,D>>
+									TYPE extends UtilsStatus<TYPE,L,D>,
+									RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
 		extends AbstractJeeslRestService<L,D>
 		implements JeeslConstraintRestExport,JeeslConstraintRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(ConstraintRestService.class);
 	
-	private JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> fConstraint;
+	private JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint;
 	
 	private final Class<SCOPE> cScope;
 	private final Class<CATEGORY> cCategory;
 	private final Class<CONSTRAINT> cConstraint;
 	private final Class<TYPE> cType;
 	
-	private final EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> efScope;
-	private final EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> efConstraint;
+	private final EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> efScope;
+	private final EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> efConstraint;
 	
-	private ConstraintRestService(final String[] localeCodes, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> fConstraint, final Class<L> cL, final Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
+	private ConstraintRestService(final String[] localeCodes, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint, final Class<L> cL, final Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
 	{
 		super(fConstraint,cL,cD);
 		this.fConstraint=fConstraint;
@@ -54,19 +56,21 @@ public class ConstraintRestService <L extends UtilsLang, D extends UtilsDescript
 		this.cConstraint=cConstraint;
 		this.cType=cType;
 
-		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>(cL,cD,cScope,cCategory);
-		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>(cL,cD,cConstraint,cType);
+		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(cL,cD,cScope,cCategory);
+		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(cL,cD,cConstraint,cType);
 	}
 	
 	public static <L extends UtilsLang, D extends UtilsDescription,
-						SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>,
+						SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
 						CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-						CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>, LEVEL extends UtilsStatus<LEVEL,L,D>,
-						TYPE extends UtilsStatus<TYPE,L,D>>
-	ConstraintRestService<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>
-			factory(String[] localeCodes, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE> fConstraint, Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
+						CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
+						LEVEL extends UtilsStatus<LEVEL,L,D>,
+						TYPE extends UtilsStatus<TYPE,L,D>,
+						RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
+	ConstraintRestService<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>
+			factory(String[] localeCodes, JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint, Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
 	{
-		return new ConstraintRestService<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE>(localeCodes,fConstraint,cL,cD,cScope,cCategory,cConstraint,cType);
+		return new ConstraintRestService<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(localeCodes,fConstraint,cL,cD,cScope,cCategory,cConstraint,cType);
 	}
 	
 	@Override public Container exportSystemConstraintCategories() {return xfContainer.build(fConstraint.allOrderedPosition(cCategory));}

@@ -13,10 +13,6 @@
 	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
 	<c:set var="for" value="#{for}" />
 	
-	<ui:remove>
-		<c:set var="id" value="#{id}" />
-		<c:set var="info"  value="#{not empty info ? info : false}" />
-	</ui:remove>
 	<p:outputLabel rendered="#{rendered and (not empty code)}" value="#{appLabelBean.labels[entity][code][loc].lang}" title="#{appLabelBean.descriptions[entity][code][loc].lang}">
 		<c:if test="#{not empty id}"><f:attribute name="id" value="#{id}"/></c:if>
 		<c:if test="#{not empty for}"><f:attribute name="for" value="#{for}"/></c:if>

@@ -1,6 +1,7 @@
 package org.jeesl.doc.resources;
 
 import org.jeesl.factory.xml.system.io.db.XmlSeedFactory;
+import org.jeesl.interfaces.model.system.constraint.JeeslConstraintLevel;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintType;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportRowType;
@@ -57,6 +58,7 @@ public class JeeslDbSeeds
 	private static void applySystem(String prefix, Db db)
 	{
 		db.getSeed().add(XmlSeedFactory.build("SystemConstraintType",JeeslConstraintType.xmlResourceContainer));
+		db.getSeed().add(XmlSeedFactory.build("SystemConstraintLevel",JeeslConstraintLevel.xmlResourceContainer));
 		db.getSeed().add(XmlSeedFactory.build(prefix+"JobStatus","jeesl/db/system/job/status.xml"));
 		db.getSeed().add(XmlSeedFactory.build(prefix+"JobType","jeesl/db/system/job/type.xml"));
 		db.getSeed().add(XmlSeedFactory.build(prefix+"JobFeedbackType","jeesl/db/system/job/feedback.xml"));

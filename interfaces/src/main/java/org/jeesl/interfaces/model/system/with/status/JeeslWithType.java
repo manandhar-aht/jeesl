@@ -11,5 +11,5 @@ public interface JeeslWithType<L extends UtilsLang, D extends UtilsDescription, 
 	public static String attributeType = "type";
 	
 	TYPE getType();
-	void setType(TYPE category);
+	void setType(TYPE type);
 }

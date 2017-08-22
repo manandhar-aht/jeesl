@@ -43,11 +43,13 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 	private final Class<SCOPE> cScope;
 	private final Class<CATEGORY> cCategory;
 	private final Class<CONSTRAINT> cConstraint;
+	private final Class<LEVEL> cLevel;
 	private final Class<TYPE> cType;
 	
 	private List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	private List<CONSTRAINT> constraints; public List<CONSTRAINT> getConstraints() {return constraints;}
 	private List<TYPE> types; public List<TYPE> getTypes() {return types;}
+	private List<LEVEL> levels; public List<LEVEL> getLevels() {return levels;}
 	
 	private SCOPE scope; public SCOPE getScope() {return scope;} public void setScope(SCOPE scope) {this.scope = scope;}
 	private CONSTRAINT constraint; public CONSTRAINT getConstraint() {return constraint;} public void setConstraint(CONSTRAINT constraint) {this.constraint = constraint;}
@@ -58,12 +60,13 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	private final UiTwiceClickHelper ui2; public UiTwiceClickHelper getUi2() {return ui2;}
 
-	public AbstractSettingsConstraintBean(Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<TYPE> cType)
+	public AbstractSettingsConstraintBean(Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<LEVEL> cLevel, Class<TYPE> cType)
 	{
 		super(cL,cD);
 		this.cScope=cScope;
 		this.cCategory=cCategory;
 		this.cConstraint=cConstraint;
+		this.cLevel=cLevel;
 		this.cType=cType;
 		
 		ui2 = new UiTwiceClickHelper();
@@ -77,6 +80,7 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 		this.fConstraint=fConstraint;
 		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,fConstraint.allOrderedPosition(cCategory),this);
 		types = fConstraint.allOrderedPosition(cType);
+		levels = fConstraint.allOrderedPosition(cLevel);
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
@@ -145,6 +149,7 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(constraint));}
 		constraint.setType(fConstraint.find(cType,constraint.getType()));
+		constraint.setLevel(fConstraint.find(cLevel,constraint.getLevel()));
 		constraint = fConstraint.save(constraint);
 		reloadConstraints();
 	}

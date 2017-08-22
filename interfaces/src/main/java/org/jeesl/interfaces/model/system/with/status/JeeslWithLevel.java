@@ -5,11 +5,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslWithStatus<L extends UtilsLang, D extends UtilsDescription, STATUS extends UtilsStatus<STATUS,L,D>>
+public interface JeeslWithLevel<L extends UtilsLang, D extends UtilsDescription, LEVEL extends UtilsStatus<LEVEL,L,D>>
 						extends EjbWithId
 {
-	public static String attributeStatus = "status";
+	public static String attributeLevel = "level";
 	
-	STATUS getStatus();
-	void setStatus(STATUS status);
+	LEVEL getLevel();
+	void setLevel(LEVEL level);
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.FilenameUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.filter.Filters;
@@ -129,15 +130,12 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sb.append(" -t " + table.toLowerCase());
 		
 		StringBuilder sbFile = new StringBuilder();
-		sbFile.append("'");
 		sbFile.append(pDirRestore.getValue());
 		sbFile.append(File.separator);
 		sbFile.append(pDbName.getValue());
 		sbFile.append(".sql");
-		sbFile.append("'");
 		
-		sb.append(" ").append(sbFile);
-//		sb.append("'");
+		sb.append(" '").append(FilenameUtils.separatorsToSystem(sbFile.toString())).append("'");
 		
 		super.addLine(sb.toString());
 		return sb.toString();

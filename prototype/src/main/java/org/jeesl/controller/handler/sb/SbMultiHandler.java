@@ -70,6 +70,7 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 	public void toggleNone(){selectNone();callbackToggledToBean();}
 	public void selectNone()
 	{
+		map.clear();
 		for(T t : list){map.put(t,false);}
 		refresh();
 	}
@@ -77,7 +78,18 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 	public void toggleAll(){selectAll();callbackToggledToBean();}
 	public void selectAll()
 	{
+		map.clear();
 		for(T t : list){map.put(t,true);}
+		refresh();
+	}
+	
+	
+	public void preSelect(List<T> items)
+	{
+		for(T t : items)
+		{
+			if(list.contains(t)){map.put(t,true);}
+		}
 		refresh();
 	}
 	
@@ -117,7 +129,6 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 		else{map.put(type,!map.get(type));}
 		refresh();
 		callbackToggledToBean();
-
 	}
 	
 	private void callbackToggledToBean()
@@ -130,7 +141,6 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 	private void refresh()
 	{
 		selected.clear();
-		
 		for(T t : list)
 		{
 			if(!map.containsKey(t)) {map.put(t,false);}

@@ -52,6 +52,8 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected JeeslSecurityCategory.Type categoryType;
 	
+	protected final SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER> ffSecurity;
+	
 	protected EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> efCategory;
 	protected EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> efView;
 	protected EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> efRole;
@@ -102,14 +104,14 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		this.cAction=cAction;
 		this.cTemplate=cTemplate;
 		this.cUser=cUser;
+		
+		ffSecurity = SecurityFactoryFactory.factory(cL,cD,cAction);
 	}
 	
 	public void initSecuritySuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fSecurity=fSecurity;
-		
-		SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER> ffSecurity = SecurityFactoryFactory.factory(cL,cD,cAction);
 		
 		efCategory = EjbSecurityCategoryFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efView = EjbSecurityViewFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);

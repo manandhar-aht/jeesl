@@ -63,7 +63,7 @@ public class SecurityFactoryFactory<L extends UtilsLang, D extends UtilsDescript
 		return new EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>(cL,cD,cAction);
 	}
 	
-	public <M extends JeeslSecurityMenu<L,D,C,R,V,U,A,AT,USER>> EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> ejbMenu(Class<M> cM)
+	public <M extends JeeslSecurityMenu<L,D,C,R,V,U,A,AT,M,USER>> EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> ejbMenu(Class<M> cM)
 	{
 		return new EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cM);
 	}

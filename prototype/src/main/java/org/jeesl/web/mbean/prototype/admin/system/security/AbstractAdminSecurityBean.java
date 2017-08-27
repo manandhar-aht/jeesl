@@ -171,10 +171,13 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	
 	protected void reloadCategories()
 	{
-		logger.info("reloadCategories");
 		
-		if(uiShowInvisible){categories = fSecurity.allOrderedPosition(cCategory,categoryType);}
-		else{categories = fSecurity.allOrderedPositionVisible(cCategory,categoryType);}
+		if(categoryType!=null)
+		{
+			if(uiShowInvisible){categories = fSecurity.allOrderedPosition(cCategory,categoryType);}
+			else{categories = fSecurity.allOrderedPositionVisible(cCategory,categoryType);}
+			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cCategory,categories));}
+		}
 	}
 	
 	protected void reorderCategories() throws UtilsConstraintViolationException, UtilsLockingException

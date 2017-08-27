@@ -258,6 +258,9 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		}
 	}
 	
+	public void onNodeExpand(NodeExpandEvent event) {if(debugOnInfo) {logger.info("Expanded "+event.getTreeNode().toString());}}
+    public void onNodeCollapse(NodeCollapseEvent event) {if(debugOnInfo) {logger.info("Collapsed "+event.getTreeNode().toString());}}
+	
 	@SuppressWarnings("unchecked")
 	public void onDragDrop(TreeDragDropEvent event) throws UtilsConstraintViolationException, UtilsLockingException
 	{
@@ -280,17 +283,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
         		index++;
         }  
     }
-	
-	public void onNodeExpand(NodeExpandEvent event)
-	{
-		logger.info("Expanded "+event.getTreeNode().toString());
-    }
- 
-    public void onNodeCollapse(NodeCollapseEvent event)
-    {
-    		logger.info("Collapsed "+event.getTreeNode().toString());
-    }
-	
+
     @SuppressWarnings("unchecked")
 	public void onSectionSelect(NodeSelectEvent event)
     {

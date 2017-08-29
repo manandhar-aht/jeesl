@@ -12,6 +12,13 @@ public class NullNumberBinder
 		a = "";
 		b = "";
 		c = "";
+		d = "";
+		e = "";
+		f = "";
+		g = "";
+		h = "";
+		i = "";
+		
 	}
 	
 	private String a; 
@@ -42,9 +49,49 @@ public class NullNumberBinder
 	public String getD() {return d;}
 	public void setD(String d) {this.d = d;}
 	public void integerToD(Integer value) {d = toString(value);}
-	public void doubleToD(Double value) {b = toString(value);}
+	public void doubleToD(Double value) {d = toString(value);}
 	public Integer dToInteger() {return integerFromString(d);}
 	public Double dToDouble() {return doubleFromString(d);}
+	
+	private String e;
+	public String getE() {return e;}
+	public void setE(String e) {this.e = e;}
+	public void integerToE(Integer value) {e = toString(value);}
+	public void doubleToE(Double value) {e = toString(value);}
+	public Integer eToInteger() {return integerFromString(e);}
+	public Double eToDouble() {return doubleFromString(e);}
+	
+	private String f;
+	public String getF() {return f;}
+	public void setF(String f) {this.f = f;}
+	public void integerToF(Integer value) {f = toString(value);}
+	public void doubleToF(Double value) {f = toString(value);}
+	public Integer fToInteger() {return integerFromString(f);}
+	public Double fToDouble() {return doubleFromString(f);}
+	
+	private String g;
+	public String getG() {return g;}
+	public void setG(String g) {this.g = g;}
+	public void integerToG(Integer value) {g = toString(value);}
+	public void doubleToG(Double value) {g = toString(value);}
+	public Integer gToInteger() {return integerFromString(g);}
+	public Double gToDouble() {return doubleFromString(g);}
+	
+	private String h;
+	public String getH() {return h;}
+	public void setH(String h) {this.h = h;}
+	public void integerToH(Integer value) {h = toString(value);}
+	public void doubleToH(Double value) {h = toString(value);}
+	public Integer hToInteger() {return integerFromString(h);}
+	public Double hToDouble() {return doubleFromString(h);}
+	
+	private String i;
+	public String getI() {return i;}
+	public void setI(String i) {this.i = i;}
+	public void integerToI(Integer value) {i = toString(value);}
+	public void doubleToI(Double value) {i = toString(value);}
+	public Integer iToInteger() {return integerFromString(i);}
+	public Double iToDouble() {return doubleFromString(i);}
 	
 	private String toString(Integer i)
 	{

@@ -55,6 +55,7 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 	@SuppressWarnings("unchecked")
 	public <E extends Enum<E>, S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> void add(UtilsFacade fUtils, Class<S> c, E code)
 	{
+		if(list==null) {list = new ArrayList<T>();}
 		try
 		{
 			S status = fUtils.fByCode(c,code);
@@ -64,7 +65,6 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 		{
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void toggleNone(){selectNone();callbackToggledToBean();}

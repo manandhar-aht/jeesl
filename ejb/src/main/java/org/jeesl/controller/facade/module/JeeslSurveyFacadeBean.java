@@ -523,18 +523,18 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
       
         cQ.groupBy(pQuestion.get("id"));
         cQ.multiselect(pQuestion.get("id"),eTa);
-        
         cQ.where(pQuestion.in(questions));
+        
         TypedQuery<Tuple> tQ = em.createQuery(cQ);
         List<Tuple> tuples = tQ.getResultList();
         
         JsonFlatFigures result = JsonFlatFiguresFactory.build();
         for(Tuple t : tuples)
         {
-        	JsonFlatFigure f = JsonFlatFigureFactory.build();
-        	f.setL1((Long)t.get(0));
-        	f.setL2((Long)t.get(1));
-        	result.getFigures().add(f);
+	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
+	        	f.setL1((Long)t.get(0));
+	        	f.setL2((Long)t.get(1));
+	        	result.getFigures().add(f);
         }
         
         return result;

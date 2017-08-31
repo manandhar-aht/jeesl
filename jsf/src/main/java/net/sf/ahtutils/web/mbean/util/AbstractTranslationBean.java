@@ -22,28 +22,34 @@ public class AbstractTranslationBean implements Serializable,JeeslTranslationBea
 	protected List<String> langKeys; public List<String> getLangKeys(){return langKeys;}
 	
  
-	public void initMap(ClassLoader cl, String fXml) throws FileNotFoundException
+	protected void initMap(ClassLoader cl, String fXml)
     {
 		logger.info("Init "+TranslationMap.class.getSimpleName()+" with "+fXml);
-		Dir dir = JaxbUtil.loadJAXB(cl,fXml, Dir.class);
-		
-		TranslationFactory tFactory = new TranslationFactory();
-		for(net.sf.exlp.xml.io.File f : dir.getFile())
+		try
 		{
-			tFactory.add(cl,dir.getName()+"/"+f.getName());
+			Dir dir = JaxbUtil.loadJAXB(cl,fXml, Dir.class);
+			TranslationFactory tFactory = new TranslationFactory();
+			for(net.sf.exlp.xml.io.File f : dir.getFile())
+			{
+				tFactory.add(cl,dir.getName()+"/"+f.getName());
+			}
+			tm = tFactory.gettMap();
+			langKeys = tm.getLangKeys();
 		}
-		tm = tFactory.gettMap();
-		langKeys = tm.getLangKeys();
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
     }
 	
-	 public void overrideLangKeys(String... key)
-	    {
+	public void overrideLangKeys(String... key)
+	{
 	    	langKeys.clear();
 	    	for(String s : key)
 	    	{
 	    		langKeys.add(s);
 	    	}
-	    }
+	}
     
     @Override public String get(String lang, String key){return tm.translate(lang, key);}
 }

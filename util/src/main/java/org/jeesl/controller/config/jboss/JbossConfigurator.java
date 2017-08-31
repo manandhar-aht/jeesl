@@ -89,7 +89,7 @@ public class JbossConfigurator
 		client.execute(new OperationBuilder(request).build());
 	}
 	
-	public void createMysqlDatasource(String name, String host, String db, String username, String password) throws IOException
+	public void createMysqlDatasource(String name, String host, String db, String jdbcParamter, String username, String password) throws IOException
 	{		
 		ModelNode request = new ModelNode();
 		request.get(ClientConstants.OP).set(ClientConstants.ADD);
@@ -101,7 +101,12 @@ public class JbossConfigurator
 		  request.get("use-java-context").set(true);
 		  request.get("use-ccm").set(true);
 
-		  request.get("connection-url").set("jdbc:mysql://"+host+"/"+db);
+		  StringBuilder sb = new StringBuilder();
+		  sb.append("jdbc:mysql://").append(host);
+		  sb.append("/").append(db);
+		  if(jdbcParamter!=null) {sb.append(jdbcParamter);}
+		  
+		  request.get("connection-url").set(sb.toString());
 		  request.get("driver-name").set("mysql");
 		  request.get("transaction-isolation").set("TRANSACTION_READ_COMMITTED");
 		 

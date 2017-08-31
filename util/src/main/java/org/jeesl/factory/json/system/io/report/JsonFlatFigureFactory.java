@@ -15,7 +15,15 @@ public class JsonFlatFigureFactory
 	public static JsonFlatFigure build(EjbWithId ejb, Double...doubles)
 	{
 		JsonFlatFigure json = build(doubles);
-		json.setEjb(ejb);
+		json.setEjb1(ejb);
+		return json;
+	}
+	
+	public static JsonFlatFigure build(EjbWithId ejb1, EjbWithId ejb2, Double...doubles)
+	{
+		JsonFlatFigure json = build(doubles);
+		json.setEjb1(ejb1);
+		json.setEjb2(ejb2);
 		return json;
 	}
 	

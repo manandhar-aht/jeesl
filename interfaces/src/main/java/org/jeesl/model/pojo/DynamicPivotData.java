@@ -22,19 +22,19 @@ public class DynamicPivotData
 	public DynamicPivotData(int size)
     {
 		this.size=size;
-    	entities = new ArrayList<EjbWithId>();
+		entities = new ArrayList<EjbWithId>();
     }
     
     public void setData(double value, EjbWithId... entities)
     {
-    	this.value=value;
-    	this.entities.addAll(new ArrayList<EjbWithId>(Arrays.asList(entities)));
+	    	this.value=value;
+	    	this.entities.addAll(new ArrayList<EjbWithId>(Arrays.asList(entities)));
     }
     
     public void setData(double[] values, EjbWithId... entities)
     {
-    	this.values=values;
-    	this.entities.addAll(new ArrayList<EjbWithId>(Arrays.asList(entities)));
+	    	this.values=values;
+	    	this.entities.addAll(new ArrayList<EjbWithId>(Arrays.asList(entities)));
     }
     
     public EjbWithId getEntity(int index)

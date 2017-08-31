@@ -13,9 +13,13 @@ public class JsonFlatFigure implements Serializable
 {
 	public static final long serialVersionUID=1;
 
-	private EjbWithId ejb;
-	public EjbWithId getEjb() {return ejb;}
-	public void setEjb(EjbWithId ejb) {this.ejb = ejb;}
+	private EjbWithId ejb1;
+	public EjbWithId getEjb1() {return ejb1;}
+	public void setEjb1(EjbWithId ejb1) {this.ejb1 = ejb1;}
+	
+	private EjbWithId ejb2;
+	public EjbWithId getEjb2() {return ejb2;}
+	public void setEjb2(EjbWithId ejb2) {this.ejb2 = ejb2;}
 
 	@JsonProperty("S1")
 	private String s1;

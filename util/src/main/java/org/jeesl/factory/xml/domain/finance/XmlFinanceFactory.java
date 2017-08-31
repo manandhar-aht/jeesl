@@ -46,6 +46,7 @@ public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 		return xml;
 	}
 	
+	public static <C extends EjbWithCode> Finance build(C code, double value){return create(code.getCode(),value);}
 	public static <E extends Enum<E>> Finance build(E code, double value){return create(code.toString(),value);}
 	public static Finance create(String code, double value)
 	{

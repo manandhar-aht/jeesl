@@ -132,4 +132,6 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 		}
 		return status;
 	}
+	
+	
 }

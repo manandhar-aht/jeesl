@@ -132,7 +132,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	public void selectTblView() {logger.info(AbstractLogMessage.selectEntity(tblView));}
 	public void selectTblUsecase() {logger.info(AbstractLogMessage.selectEntity(tblUsecase));}
 	
-	protected void selectCategory() throws UtilsNotFoundException
+	public void selectCategory() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(category));
 		category = efLang.persistMissingLangs(fSecurity,langs,category);

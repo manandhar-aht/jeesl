@@ -21,11 +21,11 @@
 			selection="#{cc.attrs.bean.category}" selectionMode="single" rowKey="#{c.id}">
 			<f:facet name="header">
 				<aht:pfDataTableHeader title="#{msg.aupSecurityCategories}">
-					<aht:icon type="aupAdd" rendered="#{cc.attrs.withAdd}" listener="#{cc.attrs.bean.addCategory()}" update="#{cc.attrs.update}" tooltip="#{cc.attrs.tooltip}"/>
+					<aht:icon type="jeeslAdd" rendered="#{cc.attrs.withAdd}" listener="#{cc.attrs.bean.addCategory()}" update="#{cc.attrs.update}" tooltip="#{cc.attrs.tooltip}"/>
 				</aht:pfDataTableHeader>
 			</f:facet>
 			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCategories()}" update="@form"/>
-			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.selectCategory}"/>  
+			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.selectCategory()}"/>  
             <p:column>  
 				<h:outputText value="#{c.position}"/>
             </p:column>
@@ -33,11 +33,11 @@
 				<h:outputText value="#{c.name[userBean.localeCode].lang}"/>
             </p:column>
             <p:column rendered="#{cc.attrs.bean.uiShowInvisible}">  
-				<h:graphicImage rendered="#{c.visible}" name="#{iconBean.icon12['aupSecurityVisible']}" library="gfx"/>
-                <h:graphicImage rendered="#{not c.visible}" name="#{iconBean.icon12['aupSecurityInvisible']}" library="gfx"/>
+				<h:graphicImage rendered="#{c.visible}" name="#{iconBean.icon12['jeeslSecurityVisible']}" library="gfx"/>
+                <h:graphicImage rendered="#{not c.visible}" name="#{iconBean.icon12['jeeslSecurityInvisible']}" library="gfx"/>
             </p:column>
             <p:column rendered="#{cc.attrs.bean.uiShowDocumentation}">  
-				<h:graphicImage rendered="#{c.documentation}" name="#{iconBean.icon12['aupSecurityDocumentation']}" library="gfx"/>
+				<h:graphicImage rendered="#{c.documentation}" name="#{iconBean.icon12['jeeslSecurityDocumentation']}" library="gfx"/>
             </p:column>
        	</p:dataTable>
 	</composite:implementation>

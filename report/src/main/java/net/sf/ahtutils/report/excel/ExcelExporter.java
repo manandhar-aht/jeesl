@@ -548,8 +548,16 @@ public class ExcelExporter
 				{
 					headerRow.createCell(s);
 				}
-			
-				xlsSheet.addMergedRegion(new CellRangeAddress(rowNr, rowNr, columnNr, (short) (columnNr+list.size()-1)));
+				short columnMergeEnd	= (short) (columnNr+list.size()-1);
+				logger.trace("Trying to create merged cells in row " +rowNr +" ranging from " +columnNr +"To " +columnMergeEnd);
+				if (columnMergeEnd<=columnNr)
+				{
+				    logger.trace("No merging necessary or possible.");
+				}
+				else
+				{
+				    xlsSheet.addMergedRegion(new CellRangeAddress(rowNr, rowNr, columnNr, columnMergeEnd));
+				}
 				columnNr = columnNr + list.size();
 			}
         }

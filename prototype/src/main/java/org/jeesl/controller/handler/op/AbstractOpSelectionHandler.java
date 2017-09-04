@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implements OpEntitySelection<T>
@@ -46,24 +47,29 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
     
     @Override public void clearTable()
     {
-    	tbList.clear();
-    	tb = null;
+	    	tbList.clear();
+	    	tb = null;
     }
     
 	@Override public void selectTb() {}
 	
 	@Override public void addEntity(T item) throws UtilsLockingException, UtilsConstraintViolationException
     {
-    	op = item;
-    	addEntity();
+	    	op = item;
+	    	addEntity();
+	}
+	
+	private <E extends Enum<E>> void addEntity(UtilsFacade fUtils, E code) throws UtilsLockingException, UtilsConstraintViolationException
+    {
+		
 	}
 
     @Override public void addEntity() throws UtilsLockingException, UtilsConstraintViolationException
     {
         if(op!=null && !tbList.contains(op))
         {
-        	tbList.add(op);
-        	bean.addOpEntity(op);
+	        	tbList.add(op);
+	        	bean.addOpEntity(op);
         }
         reset(true,true);
     }

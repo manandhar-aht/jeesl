@@ -116,7 +116,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		
 		sbhCms = new SbSingleHandler<CMS>(cCms,this);
 		sbhLocale = new SbSingleHandler<LOC>(cLoc,this);
-		opLocale = new OpStatusSelectionHandler<LOC>(cLoc,this);
+		opLocale = new OpStatusSelectionHandler<LOC>(this);
 		
 		types = new ArrayList<ET>();
 	}

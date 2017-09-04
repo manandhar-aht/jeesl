@@ -15,6 +15,6 @@ public class OpEntitySelectionHandler <T extends EjbWithId> extends AbstractOpSe
 	final static Logger logger = LoggerFactory.getLogger(OpEntitySelection.class);
 	public static final long serialVersionUID=1;
 
-    public OpEntitySelectionHandler(Class<T> c, OpEntityBean bean) {this(c,bean,new ArrayList<T>());}
-    public OpEntitySelectionHandler(Class<T> c, OpEntityBean bean, List<T> opEntites) {super(bean,opEntites);}
+    public OpEntitySelectionHandler(OpEntityBean bean) {this(bean,new ArrayList<T>());}
+    public OpEntitySelectionHandler(OpEntityBean bean, List<T> opEntites) {super(bean,opEntites);}
 }

@@ -20,8 +20,8 @@ public class OpPositionNameSelectionHandler <T extends EjbWithId> extends Abstra
 	@SuppressWarnings("unused")
 	private UtilsFacade facade;
 	
-    public OpPositionNameSelectionHandler(Class<T> c, UtilsFacade facade, OpEntityBean bean){this(c,facade,bean,new ArrayList<T>());}
-    public OpPositionNameSelectionHandler(Class<T> c, UtilsFacade facade, OpEntityBean bean, List<T> opEntites)
+    public OpPositionNameSelectionHandler(UtilsFacade facade, OpEntityBean bean){this(facade,bean,new ArrayList<T>());}
+    public OpPositionNameSelectionHandler(UtilsFacade facade, OpEntityBean bean, List<T> opEntites)
     {
 	    	super(bean,opEntites);
 	    	this.facade=facade;

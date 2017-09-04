@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.jeesl.api.handler.OpEntitySelection;
 import org.jeesl.interfaces.bean.op.OpEntityBean;
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
@@ -17,7 +19,7 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
 {
 	final static Logger logger = LoggerFactory.getLogger(OpEntitySelection.class);
 	public static final long serialVersionUID=1;
-
+	
     protected T op; @Override public T getOp() {return op;} @Override public void setOp(T opEntity) {this.op = opEntity;}
     protected T tb; @Override public T getTb() {return tb;} @Override public void setTb(T tbEntity) {this.tb = tbEntity;}
 
@@ -31,12 +33,12 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
     
     public AbstractOpSelectionHandler(OpEntityBean bean, List<T> opList)
     {
-	    	this.bean=bean;
-	    	this.opList=opList;
-	    	showName=false;
-	    	showLang=false;
-	    	if(opList==null){opList = new ArrayList<T>();}
-	    	tbList = new ArrayList<T>(); 
+    	this.bean=bean;
+    	this.opList=opList;
+    	showName=false;
+    	showLang=false;
+    	if(opList==null){opList = new ArrayList<T>();}
+    	tbList = new ArrayList<T>(); 
     }
     
     protected void reset(boolean rTb, boolean rOp)
@@ -59,9 +61,16 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
 	    	addEntity();
 	}
 	
-	private <E extends Enum<E>> void addEntity(UtilsFacade fUtils, E code) throws UtilsLockingException, UtilsConstraintViolationException
+	@SuppressWarnings({"unchecked" })
+	public <C extends EjbWithCode, E extends Enum<E>> void addEntity(UtilsFacade fUtils, Class<C> c, E code)
     {
-		
+		try
+		{
+			addEntity((T)fUtils.fByCode(c, code));
+		}
+		catch (UtilsLockingException e) {e.printStackTrace();}
+		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 
     @Override public void addEntity() throws UtilsLockingException, UtilsConstraintViolationException

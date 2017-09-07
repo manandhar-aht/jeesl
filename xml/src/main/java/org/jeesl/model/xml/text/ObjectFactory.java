@@ -86,6 +86,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Finding }
+     * 
+     */
+    public Finding createFinding() {
+        return new Finding();
+    }
+
+    /**
      * Create an instance of {@link Team }
      * 
      */

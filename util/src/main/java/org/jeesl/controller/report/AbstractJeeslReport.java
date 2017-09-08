@@ -68,6 +68,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslReport.class);
 	
 	protected boolean debugOnInfo;
+	protected boolean developmentMode; public void activateDevelopmenetMode() {developmentMode=true;}
 	
 	private final Class<L> cL;
 	private final Class<D> cD;
@@ -120,6 +121,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		this.cReport=cReport;
 		this.localeCode=localeCode;
 		debugOnInfo = false;
+		developmentMode = false;
 		
 		comparatorSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>().factory(IoReportSheetComparator.Type.position);
 		comparatorGroup = new IoReportGroupComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>().factory(IoReportGroupComparator.Type.position);

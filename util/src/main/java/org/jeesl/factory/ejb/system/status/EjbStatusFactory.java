@@ -1,5 +1,6 @@
 package org.jeesl.factory.ejb.system.status;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Status;
@@ -133,5 +135,11 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 		return status;
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	public List<S> toList(List<EjbWithId> years)
+	{
+		List<S> list = new ArrayList<S>();
+		for(EjbWithId year : years) {list.add((S)year);}
+		return list;
+	}
 }

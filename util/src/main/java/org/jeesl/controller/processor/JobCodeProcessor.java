@@ -1,6 +1,7 @@
 package org.jeesl.controller.processor;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +39,10 @@ public class JobCodeProcessor
 		if(dates.length>2){throw new UtilsConfigurationException("Date handling for more than 2 dates not implemented");}
 	}
 	
+	public void setId1(Long id)
+	{
+		json.setIds1(Arrays.asList(id));
+	}
 	public void setIds1(List<Long> list)
 	{
 		json.setIds1(list);

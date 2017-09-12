@@ -79,7 +79,7 @@ public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 	}
 	public static <C extends EjbWithCode> void add(Figures figures, C code, int index, Double[] values)
 	{
-		if(values.length>index && values[index]!=null)
+		if(values!=null && values.length>index && values[index]!=null)
 		{
 			figures.getFinance().add(build(code,values[index]));
 		}

@@ -22,7 +22,7 @@
 			</f:facet>
 			<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 				<p:outputLabel value="#{msg.aupSecurityCategory}"/>
-				<p:selectOneMenu value="#{adminSecurityViewsBean.view.category}" effect="fade" >
+				<p:selectOneMenu value="#{adminSecurityViewsBean.view.category}" effect="fade" autoWidth="false">
 					<f:selectItems value="#{adminSecurityViewsBean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 				</p:selectOneMenu>
 								

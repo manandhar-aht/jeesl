@@ -84,7 +84,7 @@
                             	<aup:outputEmail id="otEmail" user="#{cc.attrs.bean.staff.user}"/>
                             
 								<p:outputLabel value="#{msg.aupSecurityRole}"/>
-	                            <p:selectOneMenu value="#{cc.attrs.bean.staff.role}" effect="fade" >
+	                            <p:selectOneMenu value="#{cc.attrs.bean.staff.role}" effect="fade" autoWidth="false">
 	                                <f:selectItems value="#{cc.attrs.bean.roles}" var="r" itemLabel="#{r.name[userBean.localeCode].lang}" itemValue="#{r}"/>
 	                            </p:selectOneMenu>
 	

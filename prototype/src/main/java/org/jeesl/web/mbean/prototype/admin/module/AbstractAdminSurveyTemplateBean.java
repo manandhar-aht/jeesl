@@ -47,7 +47,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.util.comparator.ejb.PositionComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -73,6 +73,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	protected JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	private JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey;
 	
+	private final Class<LOC> cLoc;
 	private Class<SCHEME> cScheme;
 	private Class<TEMPLATE> cTemplate;
 	private Class<VERSION> cVersion;
@@ -113,13 +114,15 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	private SCORE score; public SCORE getScore() {return score;} public void setScore(SCORE score) {this.score = score;}
 	
 	protected SbSingleHandler<TC> sbhCategory; public SbSingleHandler<TC> getSbhCategory() {return sbhCategory;}
+	protected SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	
 	private UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> uiHelper; public UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getUiHelper() {return uiHelper;}
 	private Comparator<OPTION> cmpOption;
 	
-	public AbstractAdminSurveyTemplateBean(final Class<L> cL, final Class<D> cD, final Class<TC> cTc, final Class<MATRIX> cMatrix)
+	public AbstractAdminSurveyTemplateBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<TC> cTc, final Class<MATRIX> cMatrix)
 	{
 		super(cL,cD);
+		this.cLoc=cLoc;
 		this.cTc = cTc;
 		this.cMatrix = cMatrix;
 		
@@ -128,11 +131,12 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		options = new ArrayList<OPTION>();
 		
 		sbhCategory = new SbSingleHandler<TC>(cTc,this);
+		sbhLocale = new SbSingleHandler<LOC>(cLoc,this);
 		
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
 	}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey, final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
+	protected void initSuper(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey, final Class<SURVEY> cSurvey, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, Class<TS> cTs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fSurvey = fSurvey;
@@ -159,8 +163,23 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		categories = new ArrayList<TC>();
 		versions = new ArrayList<VERSION>();
 		
-		initCategories();
-		sbhCategory.selectDefault();
+		initSettings();
+		if(sbhLocale.getList().isEmpty())
+		{
+			List<LOC> list = new ArrayList<LOC>();
+			try
+			{
+				list.add(fSurvey.fByCode(cLoc, localeCodes[0]));
+			}
+			catch (UtilsNotFoundException e) {e.printStackTrace();}
+			sbhLocale.setList(list);
+		}
+		for(LOC loc : sbhLocale.getList())
+		{
+			if(loc.getCode().equals(userLocale)) {sbhLocale.setSelection(loc);}
+		}
+
+		sbhLocale.selectDefault();
 		sbhCategory.silentCallback();
 	}
 	
@@ -179,7 +198,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		}
 	}
 	
-	protected abstract void initCategories();
+	protected abstract void initSettings();
 	
 	public void cancelScheme(){clear(false,false,false,false,false,true,false);}
 	public void calcelScore(){clear(false,false,false,false,false,false,true);}

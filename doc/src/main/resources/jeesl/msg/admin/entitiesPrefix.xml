@@ -142,5 +142,11 @@
 			<s:lang key="fr" translation="Traffic Light"/>
 		</s:langs>
 	</s:translation>
-	
+	<s:translation key="Language">
+		<s:langs>
+			<s:lang key="de" translation="Sprache"/>
+			<s:lang key="en" translation="Language"/>
+			<s:lang key="fr" translation="Language"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

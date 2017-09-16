@@ -52,7 +52,6 @@
 							<h:outputText value="#{version.record}"><f:convertDateTime pattern="dd.MM.yyyy" /></h:outputText>
 						</p:column>
 						<p:column headerText="#{msg.jpSurveyTemplateVersion}">
-							<h:outputText value="#{version.lbl}" />
 							<h:outputText value="#{version.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						</p:column>
 					</p:dataTable>
@@ -73,7 +72,6 @@
 						</p:column>
 						<p:column>
 							 <f:facet name="header">#{msg.aupSurveySectionName}</f:facet>
-							 <h:outputText value="#{s.lbl}" />
 							 <h:outputText value="#{s.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						</p:column>
 					</p:dataTable>
@@ -121,8 +119,6 @@
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmVersion()}" update=":#{cc.id}:row1" rendered="#{cc.attrs.bean.uiHelper.versionRemoveable}"/>
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
-							<p:outputLabel value="#{msg.aupName}"/>
-							<p:inputText value="#{cc.attrs.bean.version.lbl}"/>
 							<p:outputLabel value="#{msg.jeeslName}"/>
 							<p:inputText value="#{cc.attrs.bean.version.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 							<p:outputLabel value="#{msg.jeeslDate}"/>
@@ -135,7 +131,7 @@
 							<p:outputLabel value="#{msg.jeeslSurveyNested}"/>
 							<p:selectOneMenu value="#{cc.attrs.bean.nestedVersion}" effect="fade" >
 								<f:selectItem itemLabel="---"/>
-								<f:selectItems value="#{cc.attrs.bean.nestedVersions}" var="v" itemLabel="#{v.record} #{v.lbl}" itemValue="#{v}"/>
+								<f:selectItems value="#{cc.attrs.bean.nestedVersions}" var="v" itemLabel="#{v.record} #{v.name[cc.attrs.bean.sbhLocale.selection.code].lang}" itemValue="#{v}"/>
 							</p:selectOneMenu>
 						</p:panelGrid>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
@@ -156,9 +152,6 @@
 							
 							<p:outputLabel value="#{msg.jpSurveySectionCode}"/>
 							<p:inputText value="#{cc.attrs.bean.section.code}"/>
-						
-							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
-							<p:inputText value="#{cc.attrs.bean.section.lbl}"/>
 							
 							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
 							<p:inputText value="#{cc.attrs.bean.section.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />

@@ -34,9 +34,6 @@ public interface JeeslSurveyTemplateVersion<L extends UtilsLang, D extends Utils
 {
 	enum Attributes {template,record}
 	
-	public String getLbl();
-	public void setLbl(String lbl);
-	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);
 }

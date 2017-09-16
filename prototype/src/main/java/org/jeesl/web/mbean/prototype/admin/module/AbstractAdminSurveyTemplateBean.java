@@ -102,7 +102,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	protected List<SCHEME> schemes; public List<SCHEME> getSchemes() {return schemes;}
 	protected List<SCORE> scores; public List<SCORE> getScores() {return scores;}
 	
-	protected TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
+//	protected TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
 	protected VERSION nestedVersion; public VERSION getNestedVersion() {return nestedVersion;} public void setNestedVersion(VERSION nestedVersion) {this.nestedVersion = nestedVersion;}
 	protected TEMPLATE template; public TEMPLATE getTemplate(){return template;} public void setTemplate(TEMPLATE template){this.template = template;}
@@ -159,7 +159,9 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		categories = new ArrayList<TC>();
 		versions = new ArrayList<VERSION>();
 		
-		try {initCategories();} catch (UtilsNotFoundException e) {e.printStackTrace();}
+		initCategories();
+		sbhCategory.selectDefault();
+		sbhCategory.silentCallback();
 	}
 	
 	@Override public void selectSbSingle(EjbWithId ejb)
@@ -169,8 +171,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		{
 			try
 			{
-				logger.info("Yeas");
-				category = sbhCategory.getSelection();
+				clearSelection();
 				initTemplate();
 				reloadVersions();
 			}
@@ -178,23 +179,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		}
 	}
 	
-	protected abstract void initCategories() throws UtilsNotFoundException;
-	protected <E extends Enum<E>> void addCategory(E code)
-	{
-		try
-		{
-			categories.add(fSurvey.fByCode(cTc, code));
-		}
-		catch (UtilsNotFoundException e) {e.printStackTrace();}
-	}
-	
-	protected void selectCategory(TC item) throws UtilsNotFoundException
-	{
-		clearSelection();
-		category = fSurvey.find(cTc,item);
-		initTemplate();
-		reloadVersions();
-	}
+	protected abstract void initCategories();
 	
 	public void cancelScheme(){clear(false,false,false,false,false,true,false);}
 	public void calcelScore(){clear(false,false,false,false,false,false,true);}
@@ -207,12 +192,6 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		if(cOption){option=null;}
 		if(rScheme){scheme = null;}
 		if(rScore){score = null;}
-	}
-	
-	public void selectCategory() throws UtilsNotFoundException
-	{
-		clearSelection();
-		initTemplate();
 	}
 	
 	protected void clearSelection()
@@ -237,12 +216,12 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	protected <E extends Enum<E>> void initTemplate(boolean withVersion, E statusCode)
 	{
-		if(category!=null && version!=null)
+		if(sbhCategory.isSelected() && version!=null)
 		{
 			try
 			{
 				TS status = fSurvey.fByCode(cTs,statusCode);
-				template = fSurvey.fcSurveyTemplate(category,version,status,nestedVersion);
+				template = fSurvey.fcSurveyTemplate(sbhCategory.getSelection(),version,status,nestedVersion);
 				logger.info("Resolved "+cTemplate.getSimpleName()+": "+template.toString());
 				version = template.getVersion();
 				reloadTemplate();
@@ -262,13 +241,13 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	protected void reloadVersions()
 	{
-		versions = fSurvey.fVersions(category);
+		versions = fSurvey.fVersions(sbhCategory.getSelection());
 		
 		nestedVersions = new ArrayList<VERSION>();
 		
 		for(TC c : categories)
 		{
-			if(!c.equals(category))
+			if(!c.equals(sbhCategory.getSelection()))
 			{
 				nestedVersions.addAll(fSurvey.fVersions(c));
 			}

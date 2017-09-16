@@ -10,6 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSingleBean
@@ -74,6 +79,21 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		if(selection==null && list!=null && !list.isEmpty())
 		{
 			selection=list.get(0);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <E extends Enum<E>, S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> void add(UtilsFacade fUtils, Class<S> c, E code)
+	{
+		if(list==null) {list = new ArrayList<T>();}
+		try
+		{
+			S status = fUtils.fByCode(c,code);
+			list.add((T)status);
+		}
+		catch (UtilsNotFoundException e)
+		{
+			e.printStackTrace();
 		}
 	}
 	

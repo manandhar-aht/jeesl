@@ -48,7 +48,7 @@
 		                     </aht:pfDataTableHeader>
 						</f:facet>
 						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{cc.attrs.bean.selectVersion()}"/>
-						<p:column headerText="#{msg.aupDate}">  
+						<p:column headerText="#{msg.jeeslDate}">  
 							<h:outputText value="#{version.record}"><f:convertDateTime pattern="dd.MM.yyyy" /></h:outputText>
 						</p:column>
 						<p:column headerText="#{msg.jpSurveyTemplateVersion}">
@@ -121,7 +121,7 @@
 						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 							<p:outputLabel value="#{msg.aupName}"/>
 							<p:inputText value="#{cc.attrs.bean.version.name}"/>
-							<p:outputLabel value="#{msg.aupDate}"/>
+							<p:outputLabel value="#{msg.jeeslDate}"/>
 							<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%">
 								<p:calendar value="#{cc.attrs.bean.version.record}" showOn="button" pattern="dd.MM.yyyy"/>
 							</h:panelGroup>

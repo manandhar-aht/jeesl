@@ -300,10 +300,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		{
 			logger.info("Query:");
 			logger.info("\tCategory: "+category.getCode());
-			if(version!=null)
-			{
-				logger.info("\tVersion: "+version.toString()+" (unsaved:"+EjbIdFactory.isUnSaved(version)+")");
-			}
+			if(version!=null) {logger.info("\tVersion: "+version.toString()+" (unsaved:"+EjbIdFactory.isUnSaved(version)+")");}
 			logger.info("\tStatus: "+status.getCode());
 		}
 		

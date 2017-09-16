@@ -88,7 +88,6 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 			{
 				mapSection.get(template).add(section);
 			}
-			
 		}
 	}
 }

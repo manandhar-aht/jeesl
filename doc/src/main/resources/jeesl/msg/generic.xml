@@ -3,9 +3,16 @@
 
 	<s:translation key="jeeslId">
 		<s:langs>
-    		<s:lang key="de" translation="ID"/>
-    		<s:lang key="en" translation="ID"/>
-    		<s:lang key="fr" translation="ID"/>
+	    		<s:lang key="de" translation="ID"/>
+	    		<s:lang key="en" translation="ID"/>
+	    		<s:lang key="fr" translation="ID"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="jeeslDate">
+		<s:langs>
+	    		<s:lang key="de" translation="Datum"/>
+	    		<s:lang key="en" translation="Date"/>
+	    		<s:lang key="fr" translation="Date"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="jeeslVisible">

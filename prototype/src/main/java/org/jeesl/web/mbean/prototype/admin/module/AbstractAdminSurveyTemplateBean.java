@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.controller.handler.ui.helper.UiHelperSurvey;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
@@ -17,6 +18,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
+import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -41,10 +43,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.util.comparator.ejb.PositionComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -62,7 +65,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 					extends AbstractAdminBean<L,D>
-					implements Serializable
+					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyTemplateBean.class);
@@ -109,6 +112,8 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	private SCHEME scheme; public SCHEME getScheme() {return scheme;} public void setScheme(SCHEME scheme) {this.scheme = scheme;}
 	private SCORE score; public SCORE getScore() {return score;} public void setScore(SCORE score) {this.score = score;}
 	
+	protected SbSingleHandler<TC> sbhCategory; public SbSingleHandler<TC> getSbhCategory() {return sbhCategory;}
+	
 	private UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> uiHelper; public UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getUiHelper() {return uiHelper;}
 	private Comparator<OPTION> cmpOption;
 	
@@ -121,6 +126,8 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 		cmpOption = new PositionComparator<OPTION>();
 		
 		options = new ArrayList<OPTION>();
+		
+		sbhCategory = new SbSingleHandler<TC>(cTc,this);
 		
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>();
 	}
@@ -151,9 +158,37 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 		
 		categories = new ArrayList<TC>();
 		versions = new ArrayList<VERSION>();
+		
+		try {initCategories();} catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 	
-	protected void selectSbStatus(TC item) throws UtilsNotFoundException
+	@Override public void selectSbSingle(EjbWithId ejb)
+	{
+		logger.info(ejb.toString());
+		if(cTc.isAssignableFrom(ejb.getClass()))
+		{
+			try
+			{
+				logger.info("Yeas");
+				category = sbhCategory.getSelection();
+				initTemplate();
+				reloadVersions();
+			}
+			catch (UtilsNotFoundException e) {e.printStackTrace();}
+		}
+	}
+	
+	protected abstract void initCategories() throws UtilsNotFoundException;
+	protected <E extends Enum<E>> void addCategory(E code)
+	{
+		try
+		{
+			categories.add(fSurvey.fByCode(cTc, code));
+		}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
+	}
+	
+	protected void selectCategory(TC item) throws UtilsNotFoundException
 	{
 		clearSelection();
 		category = fSurvey.find(cTc,item);
@@ -191,7 +226,6 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 	//Template
 	protected void reloadTemplate()
 	{
-		logger.info("Reloading "+template.toString());
 		template = fSurvey.load(template,false,false);
 		bSurvey.updateTemplate(template);
 		version = template.getVersion();
@@ -264,6 +298,7 @@ public class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D extends Uti
 			if(nestedVersion!=null){version.getTemplate().setNested(nestedVersion.getTemplate());}
 			version = fSurvey.save(version);
 		}
+		
 		initTemplate();
 		reloadVersions();
 	}

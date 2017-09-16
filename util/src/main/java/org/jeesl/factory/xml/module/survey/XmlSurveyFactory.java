@@ -30,15 +30,17 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	private Class<SURVEY> cSurvey;
 	
+	private final String localeCode;
 	private final Survey q;
 	
 	private XmlStatusFactory<SS,L,D> xfStatus;
 	private XmlDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xfData;
 	
-	public XmlSurveyFactory(Survey q)
+	public XmlSurveyFactory(String localeCode, Survey q)
 	{
+		this.localeCode=localeCode;
 		this.q=q;
-		if(q.isSetData()){xfData = new XmlDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(q.getData().get(0));}
+		if(q.isSetData()){xfData = new XmlDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,q.getData().get(0));}
 		if(q.isSetStatus()){xfStatus = new XmlStatusFactory<SS,L,D>(q.getStatus());}
 	}
 	
@@ -64,7 +66,7 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 		
 		if(q.isSetTemplate())
 		{
-			XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> f = new XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(q.getTemplate());
+			XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> f = new XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,q.getTemplate());
 //			if(fSurvey!=null){f.lazyLoad(fSurvey,cSection);}
 			xml.setTemplate(f.build(ejb.getTemplate()));
 		}

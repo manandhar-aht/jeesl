@@ -44,8 +44,8 @@ public interface JeeslSurveySection<L extends UtilsLang, D extends UtilsDescript
 {
 	public enum Attributes{template,visible,position}
 	
-	public String getLbl();
-	public void setLbl(String lbl);
+//	public String getLbl();
+//	public void setLbl(String lbl);
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);

@@ -331,7 +331,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void addSection()
 	{
 		logger.info(AbstractLogMessage.addEntity(cSection));
-		section = efSection.build(template,"",0);
+		section = efSection.build(template,0);
 		section.setName(efLang.createEmpty(sbhLocale.getList()));
 		nnb.doubleToA(section.getScoreLimit());
 		nnb.doubleToB(section.getScoreNormalize());

@@ -29,10 +29,12 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,SU
 		
 	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	
-	private Section q;
+	private final String localeCode;
+	private final Section q;
 	
-	public XmlSectionFactory(Section q)
+	public XmlSectionFactory(String localeCode, Section q)
 	{
+		this.localeCode=localeCode;
 		this.q=q;
 	}
 	
@@ -49,7 +51,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,SU
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
 		if(q.isSetVisible()){xml.setVisible(ejb.isVisible());}
 		
-		if(q.isSetDescription()){xml.setDescription(XmlDescriptionFactory.build(ejb.getLbl()));}
+		if(q.isSetDescription()){xml.setDescription(XmlDescriptionFactory.build(ejb.getName().get(localeCode).getLang()));}
 		if(q.isSetRemark() && ejb.getRemark()!=null){xml.setRemark(XmlRemarkFactory.build(ejb.getRemark()));}
 		
 		if(q.isSetQuestion())
@@ -63,7 +65,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,SU
 		
 		if(q.isSetSection())
 		{
-			XmlSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> f = new XmlSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(q.getSection().get(0));
+			XmlSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> f = new XmlSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,q.getSection().get(0));
 			if(fSurvey!=null){f.lazyLoad(fSurvey);}
 			
 			for(SECTION section : ejb.getSections())

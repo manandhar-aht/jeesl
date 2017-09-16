@@ -32,14 +32,14 @@ public class XmlAnswerFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 	private XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xfQuestion;
 	private XmlDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xfData;
 	
-	public XmlAnswerFactory(Query q){this(q.getAnswer());}
-	public XmlAnswerFactory(QuerySurvey q){this(q.getAnswer());}
-	public XmlAnswerFactory(Answer q)
+	public XmlAnswerFactory(Query q){this(q.getLang(),q.getAnswer());}
+	public XmlAnswerFactory(QuerySurvey q){this(q.getLocaleCode(),q.getAnswer());}
+	public XmlAnswerFactory(String localeCode, Answer q)
 	{
 		this.q=q;
 		
 		if(q.isSetData()){xfQuestion = new XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(q.getQuestion());}
-		if(q.isSetData()){xfData = new XmlDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(q.getData());}
+		if(q.isSetData()){xfData = new XmlDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,q.getData());}
 	}
 	
 	public Answer build(ANSWER ejb)

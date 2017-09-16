@@ -25,14 +25,16 @@ public class JsonSectionFactory<L extends UtilsLang,D extends UtilsDescription,S
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonSectionFactory.class);
 	
-	private Section q;
+	private final String localeCode;
+	private final Section q;
 	
 	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	private JsonQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> jfQuestion;
 	
-	public JsonSectionFactory(Section q){this(q,null);}
-	public JsonSectionFactory(Section q,JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)
+	public JsonSectionFactory(String localeCode, Section q){this(localeCode,q,null);}
+	public JsonSectionFactory(String localeCode, Section q, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)
 	{
+		this.localeCode=localeCode;
 		this.q=q;
 		this.fSurvey=fSurvey;
 		if(!q.getQuestions().isEmpty()){jfQuestion = new JsonQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(q.getQuestions().get(0),fSurvey);}
@@ -45,7 +47,7 @@ public class JsonSectionFactory<L extends UtilsLang,D extends UtilsDescription,S
 		
 		json.setId(ejb.getId());
 		if(q.isSetCode()){json.setCode(ejb.getCode());}
-		if(q.isSetName()){json.setName(ejb.getLbl());}
+		if(q.isSetName()){json.setName(ejb.getName().get(localeCode).getLang());}
 		
 		for(QUESTION q : ejb.getQuestions())
 		{

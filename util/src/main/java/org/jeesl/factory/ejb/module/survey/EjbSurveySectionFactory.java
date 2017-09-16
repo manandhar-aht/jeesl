@@ -50,17 +50,17 @@ public class EjbSurveySectionFactory<L extends UtilsLang,
 	    
 	public SECTION build(TEMPLATE template,Section xSection)
 	{
-		return build(template,xSection.getDescription().getValue(),xSection.getPosition());
+		SECTION eSection = build(template,xSection.getPosition());
+		return eSection;
 	}
 	
-	public SECTION build(TEMPLATE template, String label, int position)
+	public SECTION build(TEMPLATE template, int position)
 	{
 		SECTION ejb = null;
 		try
 		{
 			ejb = cSection.newInstance();
 			ejb.setTemplate(template);
-			ejb.setLbl(label);
 			ejb.setPosition(position);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
@@ -69,15 +69,14 @@ public class EjbSurveySectionFactory<L extends UtilsLang,
 		return ejb;
 	}
 	
-	public SECTION build(SECTION parent, String name){return build(parent,0,name);}
-	public SECTION build(SECTION parent, int position, String label)
+	public SECTION build(SECTION parent){return build(parent,0);}
+	public SECTION build(SECTION parent, int position)
 	{
 		SECTION ejb = null;
 		try
 		{
 			ejb = cSection.newInstance();
 			ejb.setSection(parent);
-			ejb.setLbl(label);
 			ejb.setPosition(position);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

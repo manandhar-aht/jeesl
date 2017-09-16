@@ -139,17 +139,18 @@ public class SurveyRestService <L extends UtilsLang,
 		this.cOption=cOption;
 		this.cCorrelation=cCorrelation;
 	
-		jfContainer = new JsonContainerFactory("en",JsonStatusQueryProvider.statusExport());
-		jfTemplate = new JsonTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(JsonStatusQueryProvider.templateExport(),fSurvey);
+		String localeCode = "en";
+		jfContainer = new JsonContainerFactory(localeCode,JsonStatusQueryProvider.statusExport());
+		jfTemplate = new JsonTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,JsonStatusQueryProvider.templateExport(),fSurvey);
 		
 		xfContainer = new XmlContainerFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
 		xfStatus = new XmlStatusFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
-		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exTemplate).getTemplate());
+		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,SurveyQuery.get(SurveyQuery.Key.exTemplate).getTemplate());
 		xfTemplate.lazyLoad(fSurvey);
 		
-		xfSurveys = new XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exSurveys).getSurveys().getSurvey().get(0));
+		xfSurveys = new XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,SurveyQuery.get(SurveyQuery.Key.exSurveys).getSurveys().getSurvey().get(0));
 		
-		xfSurvey = new XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.exSurvey).getSurvey());
+		xfSurvey = new XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,SurveyQuery.get(SurveyQuery.Key.exSurvey).getSurvey());
 		xfSurvey.lazyLoad(fSurvey,cSurvey,cSection,cData);
 		
 		xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.surveyAnswers));

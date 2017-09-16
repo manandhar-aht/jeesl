@@ -29,11 +29,11 @@ public class JsonTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	private JsonSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> jfSection;
 	
-	public JsonTemplateFactory(Template q){this(q,null);}
-	public JsonTemplateFactory(Template q, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)
+	public JsonTemplateFactory(String localeCode, Template q){this(localeCode,q,null);}
+	public JsonTemplateFactory(String localeCode, Template q, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)
 	{
 		this.fSurvey=fSurvey;
-		if(!q.getSections().isEmpty()){jfSection = new JsonSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(q.getSections().get(0),fSurvey);}
+		if(!q.getSections().isEmpty()){jfSection = new JsonSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,q.getSections().get(0),fSurvey);}
 	}
 	
 	public Template build(TEMPLATE ejb)

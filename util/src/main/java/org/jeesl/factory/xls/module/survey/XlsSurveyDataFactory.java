@@ -68,14 +68,8 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 	public static enum PttBucket {surveyDataLoad,surveyCellLoad}
 	
 	private ProcessingTimeTracker ptt;
-	
-	public ProcessingTimeTracker getPtt() {
-		return ptt;
-	}
-
-	public void setPtt(ProcessingTimeTracker ptt) {
-		this.ptt = ptt;
-	}
+	public ProcessingTimeTracker getPtt() {return ptt;}
+	public void setPtt(ProcessingTimeTracker ptt) {this.ptt = ptt;}
 
 	private final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	private final EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efTemplate;
@@ -646,7 +640,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		else
 		{
 			headerInfo = new HeaderData();
-			headerInfo.name = section.getLbl();
+			headerInfo.name = section.getName().get(localeCode).getLang();
 		}
 		
 		if (fSurvey!=null) {answer = fSurvey.load(answer);}

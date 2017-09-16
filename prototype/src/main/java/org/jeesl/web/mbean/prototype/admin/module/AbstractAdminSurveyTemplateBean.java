@@ -245,7 +245,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		
 		nestedVersions = new ArrayList<VERSION>();
 		
-		for(TC c : categories)
+		for(TC c : sbhCategory.getList())
 		{
 			if(!c.equals(sbhCategory.getSelection()))
 			{

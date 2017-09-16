@@ -52,7 +52,7 @@
 							<h:outputText value="#{version.record}"><f:convertDateTime pattern="dd.MM.yyyy" /></h:outputText>
 						</p:column>
 						<p:column headerText="#{msg.jpSurveyTemplateVersion}">
-							<h:outputText value="#{version.name}" />
+							<h:outputText value="#{version.lbl}" />
 						</p:column>
 					</p:dataTable>
 				</h:form>
@@ -120,7 +120,7 @@
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 							<p:outputLabel value="#{msg.aupName}"/>
-							<p:inputText value="#{cc.attrs.bean.version.name}"/>
+							<p:inputText value="#{cc.attrs.bean.version.lbl}"/>
 							<p:outputLabel value="#{msg.jeeslDate}"/>
 							<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%">
 								<p:calendar value="#{cc.attrs.bean.version.record}" showOn="button" pattern="dd.MM.yyyy"/>
@@ -131,7 +131,7 @@
 							<p:outputLabel value="#{msg.jeeslSurveyNested}"/>
 							<p:selectOneMenu value="#{cc.attrs.bean.nestedVersion}" effect="fade" >
 								<f:selectItem itemLabel="---"/>
-								<f:selectItems value="#{cc.attrs.bean.nestedVersions}" var="v" itemLabel="#{v.record} #{v.name}" itemValue="#{v}"/>
+								<f:selectItems value="#{cc.attrs.bean.nestedVersions}" var="v" itemLabel="#{v.record} #{v.lbl}" itemValue="#{v}"/>
 							</p:selectOneMenu>
 						</p:panelGrid>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>

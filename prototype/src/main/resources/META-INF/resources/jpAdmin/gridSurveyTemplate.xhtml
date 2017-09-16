@@ -53,6 +53,7 @@
 						</p:column>
 						<p:column headerText="#{msg.jpSurveyTemplateVersion}">
 							<h:outputText value="#{version.lbl}" />
+							<h:outputText value="#{version.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						</p:column>
 					</p:dataTable>
 				</h:form>
@@ -73,6 +74,7 @@
 						<p:column>
 							 <f:facet name="header">#{msg.aupSurveySectionName}</f:facet>
 							 <h:outputText value="#{s.lbl}" />
+							 <h:outputText value="#{s.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						</p:column>
 					</p:dataTable>
 				</h:form>
@@ -121,6 +123,8 @@
 						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 							<p:outputLabel value="#{msg.aupName}"/>
 							<p:inputText value="#{cc.attrs.bean.version.lbl}"/>
+							<p:outputLabel value="#{msg.jeeslName}"/>
+							<p:inputText value="#{cc.attrs.bean.version.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 							<p:outputLabel value="#{msg.jeeslDate}"/>
 							<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%">
 								<p:calendar value="#{cc.attrs.bean.version.record}" showOn="button" pattern="dd.MM.yyyy"/>
@@ -155,6 +159,9 @@
 						
 							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
 							<p:inputText value="#{cc.attrs.bean.section.lbl}"/>
+							
+							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
+							<p:inputText value="#{cc.attrs.bean.section.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 
 							<p:outputLabel value="#{msg.jpSurveySectionColumnClasses}"/>
 							<p:inputText value="#{cc.attrs.bean.section.columnClasses}"/>

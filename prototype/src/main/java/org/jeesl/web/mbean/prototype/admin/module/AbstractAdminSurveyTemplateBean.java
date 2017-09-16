@@ -256,6 +256,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.addEntity(cVersion));
 		version = efVersion.build();
+		version.setName(efLang.createEmpty(sbhLocale.getList()));
 	}
 	
 	protected void reloadVersions()
@@ -277,6 +278,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		clearSelection();
 		logger.info(AbstractLogMessage.selectEntity(version));
+		efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), version);
 		version = fSurvey.find(cVersion, version);
 		initTemplate();
 		if(version.getTemplate()!=null && version.getTemplate().getNested()!=null){nestedVersion = version.getTemplate().getNested().getVersion();}
@@ -313,6 +315,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void selectSection()
 	{
 		logger.info(AbstractLogMessage.selectEntity(section));
+		efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), section);
 		loadSection();
 		nnb.doubleToA(section.getScoreLimit());
 		nnb.doubleToB(section.getScoreNormalize());
@@ -329,6 +332,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.addEntity(cSection));
 		section = efSection.build(template,"",0);
+		section.setName(efLang.createEmpty(sbhLocale.getList()));
 		nnb.doubleToA(section.getScoreLimit());
 		nnb.doubleToB(section.getScoreNormalize());
 	}

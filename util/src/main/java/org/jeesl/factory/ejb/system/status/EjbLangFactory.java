@@ -7,7 +7,9 @@ import java.util.Map;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
@@ -46,6 +48,16 @@ public class EjbLangFactory<L extends UtilsLang>
 		{
 			L l = createLang(lang);
 			map.put(l.getLkey(), l);
+		}
+		return map;
+	}
+	
+	public <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> Map<String,L> createEmpty(List<S> locales)
+	{
+		Map<String,L> map = new Hashtable<String,L>();
+		for(S key : locales)
+		{
+			map.put(key.getCode(), createLang(key.getCode(),""));
 		}
 		return map;
 	}
@@ -107,6 +119,26 @@ public class EjbLangFactory<L extends UtilsLang>
 		if(lang.getKey()==null){throw new UtilsConstraintViolationException("Key not set for: "+JaxbUtil.toString(lang));}
 		if(lang.getTranslation()==null){throw new UtilsConstraintViolationException("Translation not set for: "+JaxbUtil.toString(lang));}
 		return createLang(lang.getKey(), lang.getTranslation());
+	}
+	
+	
+	public <T extends EjbWithLang<L>, LOC extends UtilsStatus<LOC,L,D>, D extends UtilsDescription> T persistMissingLangs(UtilsFacade fUtils, List<LOC> locales, T ejb)
+	{
+		for(LOC key : locales)
+		{
+			if(!ejb.getName().containsKey(key.getCode()))
+			{
+				try
+				{
+					L l = fUtils.persist(createLang(key.getCode(), ""));
+					ejb.getName().put(key.getCode(), l);
+					ejb = fUtils.update(ejb);
+				}
+				catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+				catch (UtilsLockingException e) {e.printStackTrace();}
+			}
+		}
+		return ejb;
 	}
 	
 	public <T extends EjbWithLang<L>> T persistMissingLangs(UtilsFacade fUtils, String[] keys, T ejb)

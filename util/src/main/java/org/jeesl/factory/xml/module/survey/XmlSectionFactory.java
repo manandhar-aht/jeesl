@@ -49,7 +49,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,SU
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
 		if(q.isSetVisible()){xml.setVisible(ejb.isVisible());}
 		
-		if(q.isSetDescription()){xml.setDescription(XmlDescriptionFactory.build(ejb.getName()));}
+		if(q.isSetDescription()){xml.setDescription(XmlDescriptionFactory.build(ejb.getLbl()));}
 		if(q.isSetRemark() && ejb.getRemark()!=null){xml.setRemark(XmlRemarkFactory.build(ejb.getRemark()));}
 		
 		if(q.isSetQuestion())

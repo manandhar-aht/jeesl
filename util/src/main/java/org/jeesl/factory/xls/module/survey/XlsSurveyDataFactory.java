@@ -646,7 +646,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		else
 		{
 			headerInfo = new HeaderData();
-			headerInfo.name = section.getName();
+			headerInfo.name = section.getLbl();
 		}
 		
 		if (fSurvey!=null) {answer = fSurvey.load(answer);}

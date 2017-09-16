@@ -22,7 +22,6 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithLevel;
 import net.sf.ahtutils.interfaces.model.with.EjbWithRemark;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
 public interface JeeslSurveySection<L extends UtilsLang,
@@ -40,9 +39,12 @@ public interface JeeslSurveySection<L extends UtilsLang,
 							DATA extends JeeslSurveyData<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithName,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithLevel,EjbWithVisible,EjbSaveable,EjbRemoveable
+			extends EjbWithId,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithLevel,EjbWithVisible,EjbSaveable,EjbRemoveable
 {
 	public enum Attributes{template,visible,position}
+	
+	public String getLbl();
+	public void setLbl(String lbl);
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);

@@ -45,7 +45,7 @@ public class JsonSectionFactory<L extends UtilsLang,D extends UtilsDescription,S
 		
 		json.setId(ejb.getId());
 		if(q.isSetCode()){json.setCode(ejb.getCode());}
-		if(q.isSetName()){json.setName(ejb.getName());}
+		if(q.isSetName()){json.setName(ejb.getLbl());}
 		
 		for(QUESTION q : ejb.getQuestions())
 		{

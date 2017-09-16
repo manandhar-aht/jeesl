@@ -72,7 +72,7 @@
 						</p:column>
 						<p:column>
 							 <f:facet name="header">#{msg.aupSurveySectionName}</f:facet>
-							 <h:outputText value="#{s.name}" />
+							 <h:outputText value="#{s.lbl}" />
 						</p:column>
 					</p:dataTable>
 				</h:form>
@@ -154,7 +154,7 @@
 							<p:inputText value="#{cc.attrs.bean.section.code}"/>
 						
 							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
-							<p:inputText value="#{cc.attrs.bean.section.name}"/>
+							<p:inputText value="#{cc.attrs.bean.section.lbl}"/>
 
 							<p:outputLabel value="#{msg.jpSurveySectionColumnClasses}"/>
 							<p:inputText value="#{cc.attrs.bean.section.columnClasses}"/>

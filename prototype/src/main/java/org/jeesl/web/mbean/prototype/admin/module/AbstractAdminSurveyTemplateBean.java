@@ -361,11 +361,32 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.addEntity(cQuestion));
 		question = efQuestion.build(section,null);
+		question.setName(efLang.createEmpty(sbhLocale.getList()));
+		question.setText(efDescription.createEmpty(sbhLocale.getList()));
+		question.setDescription(efDescription.createEmpty(sbhLocale.getList()));
 	}
 	
 	public void selectQuestion()
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
+		question = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), question);
+		question = efDescription.persistMissingLangs(fSurvey, sbhLocale.getList(), question);
+		if(question.getText()==null) {question.setText(efDescription.createEmpty(sbhLocale.getList()));}
+		for(LOC loc : sbhLocale.getList())
+		{
+			if(!question.getText().containsKey(loc.getCode()))
+			{
+				try
+				{
+					D d = fSurvey.persist(efDescription.create(loc.getCode(), ""));
+					question.getText().put(loc.getCode(), d);
+					question = fSurvey.update(question);
+				}
+				catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+				catch (UtilsLockingException e) {e.printStackTrace();}
+			}
+		}
+		
 		reloadQuestion();
 		clear(false,false,false,false,true,true,true);
 	}

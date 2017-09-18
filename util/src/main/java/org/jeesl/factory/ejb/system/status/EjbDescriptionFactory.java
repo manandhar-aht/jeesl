@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.factory.txt.system.status.TxtStatusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +12,8 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Descriptions;
@@ -72,6 +75,11 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 		return map;
 	}
 	
+	public <S extends UtilsStatus<S,L,D>, L extends UtilsLang> Map<String,D> createEmpty(List<S> locales)
+	{
+		return createEmpty(TxtStatusFactory.toCodes(locales).toArray(new String[0]));
+	}
+	
 	public Map<String,D> createEmpty(String[] keys)
 	{
 		Map<String,D> map = new Hashtable<String,D>();
@@ -103,6 +111,11 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 				catch (UtilsConstraintViolationException e) {logger.error("",e);}
 			}
 		}
+	}
+	
+	public <T extends EjbWithDescription<D>, S extends UtilsStatus<S,L,D>, L extends UtilsLang> T persistMissingLangs(UtilsFacade fUtils, List<S> locales, T ejb)
+	{
+		return persistMissingLangs(fUtils,TxtStatusFactory.toCodes(locales).toArray(new String[0]),ejb);
 	}
 	
 	public <T extends EjbWithDescription<D>> T persistMissingLangs(UtilsFacade fUtils, String[] keys, T ejb)

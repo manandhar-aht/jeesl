@@ -15,6 +15,7 @@ import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.exlp.util.xml.JaxbUtil;
 
+import org.jeesl.factory.txt.system.status.TxtStatusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,12 +55,7 @@ public class EjbLangFactory<L extends UtilsLang>
 	
 	public <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> Map<String,L> createEmpty(List<S> locales)
 	{
-		Map<String,L> map = new Hashtable<String,L>();
-		for(S key : locales)
-		{
-			map.put(key.getCode(), createLang(key.getCode(),""));
-		}
-		return map;
+		return createEmpty(TxtStatusFactory.toCodes(locales).toArray(new String[0]));
 	}
 	
 	public Map<String,L> createEmpty(String[] keys)
@@ -124,21 +120,7 @@ public class EjbLangFactory<L extends UtilsLang>
 	
 	public <T extends EjbWithLang<L>, LOC extends UtilsStatus<LOC,L,D>, D extends UtilsDescription> T persistMissingLangs(UtilsFacade fUtils, List<LOC> locales, T ejb)
 	{
-		for(LOC key : locales)
-		{
-			if(!ejb.getName().containsKey(key.getCode()))
-			{
-				try
-				{
-					L l = fUtils.persist(createLang(key.getCode(), ""));
-					ejb.getName().put(key.getCode(), l);
-					ejb = fUtils.update(ejb);
-				}
-				catch (UtilsConstraintViolationException e) {e.printStackTrace();}
-				catch (UtilsLockingException e) {e.printStackTrace();}
-			}
-		}
-		return ejb;
+		return persistMissingLangs(fUtils,TxtStatusFactory.toCodes(locales).toArray(new String[0]),ejb);
 	}
 	
 	public <T extends EjbWithLang<L>> T persistMissingLangs(UtilsFacade fUtils, String[] keys, T ejb)

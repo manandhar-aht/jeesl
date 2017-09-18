@@ -1,6 +1,7 @@
 package org.jeesl.interfaces.model.module.survey.question;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
@@ -20,7 +21,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithRemark;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
+import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
 public interface JeeslSurveyQuestion<L extends UtilsLang,
@@ -38,7 +41,8 @@ public interface JeeslSurveyQuestion<L extends UtilsLang,
 							DATA extends JeeslSurveyData<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable
+			extends EjbWithId,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable,
+					EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{section,visible,position}
 	
@@ -47,6 +51,9 @@ public interface JeeslSurveyQuestion<L extends UtilsLang,
 	
 	String getTopic();
 	void setTopic(String topic);
+	
+	public Map<String,D> getText();
+	public void setText(Map<String,D> name);
 	
 	String getQuestion();
 	void setQuestion(String question);

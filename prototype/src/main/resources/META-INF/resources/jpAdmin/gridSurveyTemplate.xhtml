@@ -5,6 +5,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
@@ -210,16 +211,24 @@
 							<p:outputLabel rendered="false" value="#{msg.aupSurveyQuestionTopic}"/>
 							<p:inputText rendered="false" value="#{cc.attrs.bean.question.topic}"/>
 						
+							<p:outputLabel value="#{msg.jeeslName}"/>
+							<p:inputText value="#{cc.attrs.bean.question.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						
 							<p:outputLabel value="#{msg.aupSurveyQuestion}"/>
-							<p:inputTextarea rows="3" styleClass="w100" value="#{cc.attrs.bean.question.question}"/>
-													
+							<h:outputText value="#{cc.attrs.bean.question.question}"/>
+							<h:outputText value=""/>
+							<jtp:inputRemark value="#{cc.attrs.bean.question.text[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+							
+					
 							<p:outputLabel rendered="false" value="#{msg.aupSurveyQuestionUnit}"/>
 							<p:selectOneMenu rendered="false" value="#{cc.attrs.bean.question.unit}" effect="fade" >
 							  <f:selectItems value="#{appSurveyBean.units}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 							</p:selectOneMenu>
 							 
 							<p:outputLabel value="#{msg.aupSurveyRemark}"/>
-							<p:inputTextarea rows="3" styleClass="w100" value="#{cc.attrs.bean.question.remark}"/>
+							<h:outputText value="#{cc.attrs.bean.question.remark}"/>
+							<h:outputText value=""/>
+							<jtp:inputRemark value="#{cc.attrs.bean.question.description[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						</p:panelGrid>
 						
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg30,auPwg20">

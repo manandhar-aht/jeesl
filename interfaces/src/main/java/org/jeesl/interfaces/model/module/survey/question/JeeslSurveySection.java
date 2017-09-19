@@ -21,6 +21,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithLevel;
 import net.sf.ahtutils.interfaces.model.with.EjbWithRemark;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
+import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
@@ -40,12 +41,9 @@ public interface JeeslSurveySection<L extends UtilsLang, D extends UtilsDescript
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 			extends EjbWithId,EjbWithVisible,EjbSaveable,EjbRemoveable,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithLevel,
-					EjbWithLang<L>
+					EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{template,visible,position}
-	
-//	public String getLbl();
-//	public void setLbl(String lbl);
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);

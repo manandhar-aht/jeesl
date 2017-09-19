@@ -45,7 +45,7 @@
 								 selection="#{cc.attrs.bean.version}" selectionMode="single">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.jpSurveyTemplateVersions}">
-		                         <aht:icon type="aupAdd" listener="#{cc.attrs.bean.addVersion()}" update=":#{cc.id}:row1"/>
+		                         <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addVersion()}" update=":#{cc.id}:row1"/>
 		                     </aht:pfDataTableHeader>
 						</f:facet>
 						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{cc.attrs.bean.selectVersion()}"/>
@@ -126,6 +126,9 @@
 							<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%">
 								<p:calendar value="#{cc.attrs.bean.version.record}" showOn="button" pattern="dd.MM.yyyy"/>
 							</h:panelGroup>
+							
+							<p:outputLabel value="#{msg.jeeslDescription}"/>
+							<jtp:inputRemark value="#{cc.attrs.bean.version.description[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						</p:panelGrid>
 						
 						<p:panelGrid columns="2" columnClasses="jeeslGrid20,eeslGrid80" rendered="#{cc.attrs.withNested}">
@@ -175,7 +178,7 @@
                                  selection="#{cc.attrs.bean.question}" selectionMode="single" draggableRows="true">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.aupSurveyQuestions}">
-                          <aht:icon type="aupAdd" listener="#{cc.attrs.bean.addQuestion()}" update=":#{cc.id}:sQuestion"/>
+                          <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addQuestion()}" update=":#{cc.id}:sQuestion"/>
                       </aht:pfDataTableHeader>
                   </f:facet>
                   <p:ajax event="rowSelect" update=":#{cc.id}:sQuestion" listener="#{cc.attrs.bean.selectQuestion()}"/>
@@ -195,16 +198,11 @@
 				<h:form id="fQuestion">
 					<p:panel header="#{msg.aupSurveyQuestion}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
-							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveQuestion()}" update=":#{cc.id}:row1"/>
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveQuestion()}" update=":#{cc.id}:row1"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmQuestion()}" update=":#{cc.id}:row1"/>
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
-							<p:outputLabel value="#{msg.jeeslVisible}"/>
-							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.visible}" />
-						
-							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
-							<p:inputText value="#{cc.attrs.bean.question.position}"/>
-						
+
 							<p:outputLabel value="#{msg.aupSurveyQuestionCode}"/>
 							<p:inputText value="#{cc.attrs.bean.question.code}"/>
 							
@@ -217,7 +215,6 @@
 							<p:outputLabel value="#{msg.aupSurveyQuestion}"/>
 							<jtp:inputRemark value="#{cc.attrs.bean.question.text[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 							
-					
 							<p:outputLabel rendered="false" value="#{msg.aupSurveyQuestionUnit}"/>
 							<p:selectOneMenu rendered="false" value="#{cc.attrs.bean.question.unit}" effect="fade" >
 							  <f:selectItems value="#{appSurveyBean.units}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
@@ -228,6 +225,12 @@
 						</p:panelGrid>
 						
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg30,auPwg20">
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.visible}" />
+							<p:outputLabel value="#{msg.jeeslVisible}"/>
+							
+							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
+							<h:outputText value="#{cc.attrs.bean.question.position}"/>
+							
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.calculateScore}" />
 							<p:outputLabel value="#{msg.jpSurveyQuestionScoreCalculate}"/>
 							
@@ -264,7 +267,7 @@
                                  selection="#{cc.attrs.bean.option}" selectionMode="single" draggableRows="true">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.jeeslSurveyOptions}">
-                          		<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addOption()}" update=":#{cc.id}:fOption"/>
+                          		<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addOption()}" update=":#{cc.id}:fOption"/>
                       		</aht:pfDataTableHeader>
                   		</f:facet>
                   		<p:ajax event="rowSelect" update=":#{cc.id}:sQuestion" listener="#{cc.attrs.bean.selectOption()}"/>
@@ -287,7 +290,7 @@
 				<h:form id="fOption" >
 					<p:panel header="#{msg.jeeslSurveyOption}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.option}">
 						<f:facet name="actions">
-							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveOption()}" update=":#{cc.id}:sQuestion"/>
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveOption()}" update=":#{cc.id}:sQuestion"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmOption()}" update=":#{cc.id}:sQuestion"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>

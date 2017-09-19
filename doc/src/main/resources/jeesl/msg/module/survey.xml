@@ -32,6 +32,7 @@
     	<s:langs>
     		<s:lang key="de" translation="Name"/>
     		<s:lang key="en" translation="Name"/>
+    		<s:lang key="kin" translation="Name"/>
     		<s:lang key="fr" translation="Name"/>
     	</s:langs>
     </s:translation>
@@ -42,10 +43,11 @@
     		<s:lang key="fr" translation="Sections"/>
     	</s:langs>
     </s:translation>
-    	<s:translation key="aupSurveySection">
+    	<s:translation key="jeeslSurveySection">
     	<s:langs>
     		<s:lang key="de" translation="Section"/>
     		<s:lang key="en" translation="Section"/>
+    		<s:lang key="kin" translation="Section"/>
     		<s:lang key="fr" translation="Section"/>
     	</s:langs>
     </s:translation>
@@ -98,7 +100,7 @@
     		<s:lang key="fr" translation="Unit"/>
     	</s:langs>
     </s:translation>
- 	<s:translation key="aupSurveyRemark">
+ 	<s:translation key="jeeslSurveyRemark">
     	<s:langs>
     		<s:lang key="de" translation="Remark"/>
     		<s:lang key="en" translation="Remark"/>
@@ -278,6 +280,7 @@
     	<s:langs>
     		<s:lang key="de" translation="Start Date"/>
     		<s:lang key="en" translation="Start Date"/>
+    		<s:lang key="kin" translation="Start Date"/>
     		<s:lang key="fr" translation="Start Date"/>
     	</s:langs>
     </s:translation>
@@ -285,6 +288,7 @@
     	<s:langs>
     		<s:lang key="de" translation="End Date"/>
     		<s:lang key="en" translation="End Date"/>
+    		<s:lang key="kin" translation="End Date"/>
     		<s:lang key="fr" translation="End Date"/>
     	</s:langs>
     </s:translation>

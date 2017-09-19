@@ -139,7 +139,7 @@
 					</p:panel>
 				</h:form>
 				<h:form id="fSection" rendered="#{not empty cc.attrs.bean.section}">
-					<p:panel header="#{msg.aupSurveySection}" styleClass="auPanelWithGrid">
+					<p:panel header="#{msg.jeeslSurveySection}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:row1"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1"/>
@@ -184,10 +184,10 @@
                   	<h:graphicImage rendered="#{not q.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
                      <h:outputText rendered="#{q.visible}" value="#{q.code}" />
                   </p:column>
-					<p:column>
-                       <f:facet name="header">#{msg.aupSurveyQuestion}</f:facet>
-                       <h:outputText value="#{q.question}" />
-                   </p:column>
+						<p:column>
+	                       <f:facet name="header">#{msg.aupSurveyQuestion}</f:facet>
+	                       <h:outputText value="#{q.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+	                   </p:column>
 					</p:dataTable>
 				</h:form>
 			</aht:slot>
@@ -215,8 +215,6 @@
 							<p:inputText value="#{cc.attrs.bean.question.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						
 							<p:outputLabel value="#{msg.aupSurveyQuestion}"/>
-							<h:outputText value="#{cc.attrs.bean.question.question}"/>
-							<h:outputText value=""/>
 							<jtp:inputRemark value="#{cc.attrs.bean.question.text[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 							
 					
@@ -225,9 +223,7 @@
 							  <f:selectItems value="#{appSurveyBean.units}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 							</p:selectOneMenu>
 							 
-							<p:outputLabel value="#{msg.aupSurveyRemark}"/>
-							<h:outputText value="#{cc.attrs.bean.question.remark}"/>
-							<h:outputText value=""/>
+							<p:outputLabel value="#{msg.jeeslSurveyRemark}"/>
 							<jtp:inputRemark value="#{cc.attrs.bean.question.description[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						</p:panelGrid>
 						
@@ -284,7 +280,7 @@
                   		</p:column>
 						<p:column>
 							<f:facet name="header">#{msg.jeeslName}</f:facet>
-							<h:outputText value="#{o.name[localeCode].lang}" />
+							<h:outputText value="#{o.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						</p:column>
 					</p:dataTable>
 				</h:form>
@@ -294,6 +290,7 @@
 							<aht:icon type="aupSave" listener="#{cc.attrs.bean.saveOption()}" update=":#{cc.id}:sQuestion"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmOption()}" update=":#{cc.id}:sQuestion"/>
 						</f:facet>
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 							<p:outputLabel value="#{msg.aupCode}"/>
 							<p:inputText autocomplete="off" value="#{cc.attrs.bean.option.code}"/>
@@ -315,9 +312,13 @@
 								<p:outputLabel value="#{msg.jeeslSurveyOptionCell}"/>
 							</ui:fragment>
 						</p:panelGrid>
-						<aht:tabTranslationEditor value="#{cc.attrs.bean.option}" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
-						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							<p:outputLabel value="#{msg.jeeslName}"/>
+							<p:inputText autocomplete="off" value="#{cc.attrs.bean.option.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+							
+							<p:outputLabel value="#{msg.jeeslDescription}"/>
+							<jtp:inputRemark value="#{cc.attrs.bean.option.description[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:panelGrid>
 					</p:panel>
 				</h:form>
 				

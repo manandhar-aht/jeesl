@@ -187,6 +187,7 @@
     	<s:langs>
     		<s:lang key="de" translation="Kategorie"/>
     		<s:lang key="en" translation="Category"/>
+    		<s:lang key="kin" translation="Category"/>
     		<s:lang key="fr" translation="Category"/>
     	</s:langs>
     </s:translation>

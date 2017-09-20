@@ -7,7 +7,7 @@
     		<s:lang key="fr" translation="Template"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupSurveyCategory">
+	<s:translation key="jeeslSurveyCategory">
     	<s:langs>
     		<s:lang key="de" translation="Kategorie"/>
     		<s:lang key="en" translation="Category"/>

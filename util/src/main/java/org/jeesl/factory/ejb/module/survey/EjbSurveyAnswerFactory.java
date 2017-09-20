@@ -136,4 +136,12 @@ public class EjbSurveyAnswerFactory<L extends UtilsLang,
 		for(ANSWER a : list){map.put(a.getQuestion().getId(),a);}
 		return map;
 	}
+	
+	public boolean belongsToSection(ANSWER answer, SECTION section, boolean defaultResult)
+	{
+		if(section==null){return defaultResult;}
+		{
+			return answer.getQuestion().getSection().equals(section);
+		}
+	}
 }

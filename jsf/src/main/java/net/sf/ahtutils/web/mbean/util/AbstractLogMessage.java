@@ -252,6 +252,16 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
         sb.append(": ").append(t.toString());
         return sb.toString();
     }
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId, X extends EjbWithId>
+	String saveEntity(USER user, T t, X x)
+{
+    StringBuffer sb = new StringBuffer();
+    sb.append(user(user));
+    sb.append(" Save ").append(t.getClass().getSimpleName());
+    sb.append(": ").append(t.toString());
+    sb.append(" (").append(x.toString()).append(")");
+    return sb.toString();
+}
     public static <T extends EjbWithId> String savedEntity(T t)
     {
         StringBuffer sb = new StringBuffer();

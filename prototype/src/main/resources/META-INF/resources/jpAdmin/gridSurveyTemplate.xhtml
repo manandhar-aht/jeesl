@@ -32,7 +32,7 @@
 					<p:dataTable var="category" value="#{cc.attrs.bean.categories}" rowKey="#{category.id}"
 								 selection="#{cc.attrs.bean.category}" selectionMode="single">
 						<f:facet name="header">
-							<aht:pfDataTableHeader title="#{msg.aupSurveyCategory}"/>
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveyCategory}"/>
 						</f:facet>
 						<p:ajax event="rowSelect" update=":#{cc.id}:row1" listener="#{cc.attrs.bean.selectCategory()}"/>
 						<p:column>

@@ -15,6 +15,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
+import org.jeesl.factory.txt.module.survey.TxtSurveyAnswerFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveySectionFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
@@ -74,6 +75,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private final EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efMatrix;
 	private final EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efData;
 	private final TxtSurveySectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> tfSection;
+	private final TxtSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> tfAnswer;
 	
 	private List<OPTION> districts; public List<OPTION> getDistricts() {return districts;} public void setDistricts(List<OPTION> districts) {this.districts = districts;}
 
@@ -92,7 +94,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
 	
 	public static boolean debugPerformance = false;
-	public static int debugDelay = 5000;
+	public static int debugDelay = 1000;
 	
 	public SurveyHandler(FacesMessageBean bMessage, final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey, JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey, final SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
 	{
@@ -113,6 +115,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		efAnswer = ffSurvey.answer();
 		efMatrix = ffSurvey.ejbMatrix();
 		tfSection = ffSurvey.txtSection();
+		tfAnswer = ffSurvey.txtAnswer();
 		
 		activeSections = new HashSet<SECTION>();
 	}
@@ -135,7 +138,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate();
 		activeSections.addAll(bSurvey.getMapSection().get(template));
-		logger.info("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());
+		if(SurveyHandler.debugPerformance){logger.warn("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());}
 	}
 	
 	public void prepareNested(SURVEY survey, CORRELATION correlation)
@@ -154,12 +157,12 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		answers.clear();
 		multiOptions.clear();
 		
-		if(logger.isTraceEnabled()){logger.info("Reloading Answers");}
+		if(SurveyHandler.debugPerformance){logger.warn("Reloading Answers (dbLookup:"+dbLookup+")");}
 		if(dbLookup)
 		{
 			List<SECTION> filterSection = null;
 			if(activeSections!=null && !activeSections.isEmpty()){filterSection = new ArrayList<SECTION>(activeSections);}
-			if(SurveyHandler.debugPerformance){logger.warn("fAnswers for "+tfSection.codes(filterSection));try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+			if(SurveyHandler.debugPerformance){logger.warn("fAnswers for "+filterSection.size()+" "+JeeslSurveySection.class.getSimpleName()+": "+tfSection.codes(filterSection));try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 			answers = EjbSurveyAnswerFactory.toQuestionMap(fSurvey.fAnswers(surveyData, true, filterSection));
 		}
 
@@ -174,10 +177,17 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 					if(q.isVisible())
 					{
 						ANSWER a;
-						if(!answers.containsKey(q)){a = efAnswer.build(q, surveyData);}
-						else {a = answers.get(q);}
+						if(!answers.containsKey(q))
+						{
+							if(SurveyHandler.debugPerformance){logger.warn("Building new Answer for Question"+q.toString());}
+							a = efAnswer.build(q, surveyData);
+						}
+						else
+						{
+							a = answers.get(q);
+							if(SurveyHandler.debugPerformance){logger.warn("Using Answer "+a.getId()+" for Question "+q.toString()+" "+tfAnswer.build(a));}
+						}
 						if(BooleanComparator.active(q.getShowMatrix())){loadMatrix.add(a);}
-//						a = buildMatrix(dbLookup,a);
 						answers.put(q,a);
 					}
 				}
@@ -204,55 +214,27 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		}
 		for(ANSWER a : loadMatrix)
 		{
-			for(OPTION row : bSurvey.getMatrixRows().get(a.getQuestion()))
+			if(bSurvey.getMatrixRows().get(a.getQuestion())!=null && bSurvey.getMatrixCols().get(a.getQuestion())!=null)
 			{
-				for(OPTION column : bSurvey.getMatrixCols().get(a.getQuestion()))
+				for(OPTION row : bSurvey.getMatrixRows().get(a.getQuestion()))
 				{
-					if(!matrix.containsKey(a.getQuestion().getId(),row.getId(),column.getId()))
+					for(OPTION column : bSurvey.getMatrixCols().get(a.getQuestion()))
 					{
-						matrix.put(a.getQuestion().getId(),row.getId(),column.getId(),efMatrix.build(a,row,column));
+						if(!matrix.containsKey(a.getQuestion().getId(),row.getId(),column.getId()))
+						{
+							matrix.put(a.getQuestion().getId(),row.getId(),column.getId(),efMatrix.build(a,row,column));
+						}
 					}
 				}
 			}
 		}
-	}
-	
-	private ANSWER buildMatrix(boolean dbLookup, ANSWER answer)
-	{
-		if(SurveyHandler.debugPerformance){logger.warn("buildMatrix for answer: "+answer.toString());try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
-		boolean isMulti = answer.getQuestion().getShowSelectMulti()!=null && answer.getQuestion().getShowSelectMulti();
-		boolean isMatrix = answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix();
-
-		if(dbLookup && (isMulti || isMatrix) && EjbIdFactory.isSaved(answer)){answer = fSurvey.load(answer);}
-		
-		if(isMulti)
-		{
-			List<OPTION> list = new ArrayList<OPTION>();
-			list.addAll(answer.getOptions());
-			multiOptions.put(answer.getQuestion(),list);
-		}
-		
-		if(isMatrix)
-		{
-			for(MATRIX m : answer.getMatrix())
-			{
-				matrix.put(answer.getQuestion().getId(),m.getRow().getId(),m.getColumn().getId(),m);
-			}
-			for(OPTION row : bSurvey.getMatrixRows().get(answer.getQuestion()))
-			{
-				for(OPTION column : bSurvey.getMatrixCols().get(answer.getQuestion()))
-				{
-					if(!matrix.containsKey(answer.getQuestion().getId(),row.getId(),column.getId()))
-					{
-						matrix.put(answer.getQuestion().getId(),row.getId(),column.getId(),efMatrix.build(answer,row,column));
-					}
-				}
-			}
-		}
-		return answer;
 	}
 	
 	public void save(CORRELATION correlation) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		save(correlation,null);
+	}
+	public void save(CORRELATION correlation, SECTION section) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(SurveyHandler.debugPerformance){logger.warn("save");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		logger.info("Saving "+correlation.toString()+ " "+answers.size()+" answers  CORR.saved: "+EjbIdFactory.isSaved(correlation));
@@ -264,18 +246,22 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		for(ANSWER a : answers.values())
 		{
 			a.setData(surveyData);
-			answersToSave.add(a);
+			if(efAnswer.belongsToSection(a, section, true));
+			{
+				answersToSave.add(a);
+				if(SurveyHandler.debugPerformance){logger.warn("\tQueing "+JeeslSurveyAnswer.class.getSimpleName()+" for Save: "+tfAnswer.build(a));}
+			}
+			
 		}
-		if(SurveyHandler.debugPerformance){logger.warn("Save answers");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		if(SurveyHandler.debugPerformance){logger.warn("Starting to save "+answersToSave.size()+" "+JeeslSurveyAnswer.class.getSimpleName());try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		fSurvey.save(answersToSave);
 		
-		if(SurveyHandler.debugPerformance){logger.warn("Reload answers");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		reloadAnswers(false);
 		
 		List<MATRIX> matrixToSave = new ArrayList<MATRIX>();
 		for(ANSWER a : answers.values())
 		{
-			if(BooleanComparator.active(a.getQuestion().getShowMatrix()))
+			if(BooleanComparator.active(a.getQuestion().getShowMatrix()) && efAnswer.belongsToSection(a, section, true))
 			{
 				for(MATRIX m : matrix.values(a.getQuestion().getId()))
 				{
@@ -309,8 +295,9 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	
 	private boolean processSection(SECTION s)
 	{
-		boolean processActiveSection = activeSection!=null && s.equals(activeSection);
+		if(activeSection==null) {return s.isVisible();}
 		
+		boolean processActiveSection = activeSection!=null && s.equals(activeSection);
 		return s.isVisible() && processActiveSection;
 	}
 	

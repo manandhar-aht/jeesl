@@ -71,7 +71,7 @@ public class EjbSurveyFactory<L extends UtilsLang,
 			ejb = cSurvey.newInstance();
 			ejb.setTemplate(template);
 			ejb.setStatus(status);
-			ejb.setName(name);
+			ejb.setLbl(name);
 			ejb.setStartDate(validFrom);
 			ejb.setEndDate(validTo);
 		}

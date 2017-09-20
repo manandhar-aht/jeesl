@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.JeeslWithSurvey;
+import org.jeesl.interfaces.model.module.survey.JeeslWithSurveyType;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -16,6 +17,7 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.jeesl.model.json.JsonFlatFigures;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -60,8 +62,10 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	TEMPLATE fcSurveyTemplate(TC category, TS status);
 	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion);
 	
+	SURVEY fSurvey(CORRELATION correlation);
 	List<SURVEY> fSurveys(TC category, SS status, Date date);
 	<W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>> List<W> fSurveys(Class<W> c, List<SS> status, Date date);
+	<TYPE extends UtilsStatus<TYPE,L,D>, WT extends JeeslWithType<L,D,TYPE>, W extends JeeslWithSurveyType<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION,WT,TYPE>> List<W> fSurveys(Class<W> c, List<SS> status, TYPE type, Date date);
 	<W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>> W fWithSurvey(Class<W> c, long id) throws UtilsNotFoundException;
 	List<VERSION> fVersions(TC category);
 	

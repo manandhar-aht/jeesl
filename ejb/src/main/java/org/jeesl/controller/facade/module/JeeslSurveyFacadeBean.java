@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -26,6 +27,7 @@ import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.interfaces.model.module.survey.JeeslWithSurvey;
+import org.jeesl.interfaces.model.module.survey.JeeslWithSurveyType;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -38,6 +40,7 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.jeesl.model.json.JsonFlatFigure;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.slf4j.Logger;
@@ -181,6 +184,24 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	}
 	
 	@Override
+	public SURVEY fSurvey(CORRELATION correlation)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<SURVEY> cQ = cB.createQuery(cSurvey);
+		Root<DATA> data = cQ.from(cData);
+		
+		Path<SURVEY> pathSurvey = data.get(JeeslSurveyData.Attributes.survey.toString());
+		Join<DATA,CORRELATION> jCorrelation = data.join(JeeslSurveyData.Attributes.correlation.toString());
+		
+		cQ.where(cB.equal(jCorrelation,correlation));
+		cQ.select(pathSurvey);
+		
+		try	{return em.createQuery(cQ).getSingleResult();}
+		catch (NoResultException e){e.printStackTrace();return null;}
+		catch (NonUniqueResultException e){e.printStackTrace();return null;}
+	}
+	
+	@Override
 	public List<SURVEY> fSurveysForCategories(List<TC> categories)
 	{
 		if(categories==null || categories.isEmpty()){return new ArrayList<SURVEY>();}
@@ -211,6 +232,27 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		option = em.find(cOption, option.getId());
 		option.getQuestion().getOptions().remove(option);
 		this.rmProtected(option);
+	}
+	
+	@Override public <TYPE extends UtilsStatus<TYPE,L,D>, WT extends JeeslWithType<L,D,TYPE>, W extends JeeslWithSurveyType<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION,WT,TYPE>>
+		List<W> fSurveys(Class<W> c, List<SS> status, TYPE type, Date date)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<W> cQ = cB.createQuery(c);
+		Root<W> with = cQ.from(c);
+		
+		Join<W,SURVEY> jSurvey = with.join(JeeslWithSurvey.Attributes.survey.toString());
+		Path<SS> pStatus = jSurvey.get(JeeslSurvey.Attributes.status.toString());
+		Path<TYPE> pType = with.get(JeeslWithType.attributeType);
+		
+		predicates.add(pStatus.in(status));
+		predicates.add(cB.equal(pType,type));
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(with);
+
+		return em.createQuery(cQ).getResultList();
 	}
 	
 	@Override public <W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>

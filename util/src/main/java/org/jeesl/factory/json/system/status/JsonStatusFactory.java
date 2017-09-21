@@ -11,11 +11,13 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class JsonStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonStatusFactory.class);
-		
+	
+	private final String localeCode;
 	private final JsonStatus q;
 	
 	public JsonStatusFactory(String localeCode, JsonStatus q)
 	{
+		this.localeCode=localeCode;
 		this.q=q;
 	}
 		
@@ -24,7 +26,9 @@ public class JsonStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang,
 		JsonStatus json = new JsonStatus();
 	
 //		if(q.isSetId()){xml.setId(ejb.getId());}
-		if(q.getCode()!=null){json.setCode(ejb.getCode());}
+		if(q.isSetCode()){json.setCode(ejb.getCode());}
+		if(q.isSetLabel()){json.setLabel(ejb.getName().get(localeCode).getLang());}
+		if(q.isSetDescription()){json.setDescription(ejb.getDescription().get(localeCode).getLang());}
 	
 		return json;
 	}

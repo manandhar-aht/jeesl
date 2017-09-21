@@ -4,7 +4,6 @@ import org.jeesl.model.json.system.status.JsonStatus;
 
 public class JsonStatusQueryProvider
 {
-	
 	public static JsonStatus statusExport()
 	{				
 		JsonStatus xml = new JsonStatus();

@@ -30,11 +30,14 @@ public class JsonQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	private Question q;
 	
-	public JsonQuestionFactory(Question q){this(q,null);}
-	public JsonQuestionFactory(Question q, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)
+	private JsonOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> jfOption;
+	
+	public JsonQuestionFactory(String localeCode, Question q){this(localeCode, q,null);}
+	public JsonQuestionFactory(String localeCode, Question q, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey)
 	{
 		this.q=q;
 		this.fSurvey=fSurvey;
+		if(q.isSetOptions()) {jfOption = new JsonOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,q.getOptions().get(0));}
 	}
 	
 	public Question build(QUESTION ejb)
@@ -61,6 +64,16 @@ public class JsonQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetShowRemark()){json.setShowRemark(ejb.getShowRemark());}
 		if(q.isSetShowSelectOne()){json.setShowSelectOne(ejb.getShowSelectOne());}
 		if(q.isSetShowSelectMulti()){json.setShowSelectMulti(ejb.getShowSelectMulti());}
+		if(q.isSetShowMatrix()){json.setShowMatrix(ejb.getShowMatrix());}
+		
+		if(q.isSetOptions())
+		{
+			ejb = fSurvey.load(ejb);
+			for(OPTION option : ejb.getOptions())
+			{
+				json.getOptions().add(jfOption.build(option));
+			}
+		}
 		
 		return json;
 	}

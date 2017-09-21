@@ -44,4 +44,7 @@ public interface JeeslSimpleSurveyQuestion
 	
 	Boolean getShowSelectMulti();
 	void setShowSelectMulti(Boolean showSelectMulti);
+	
+	Boolean getShowMatrix();
+	void setShowMatrix(Boolean showMatrix);
 }

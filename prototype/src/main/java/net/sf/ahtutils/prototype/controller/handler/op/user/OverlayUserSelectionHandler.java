@@ -18,8 +18,7 @@ import net.sf.ahtutils.interfaces.controller.handler.op.user.OpUserSelectionHand
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
-public class OverlayUserSelectionHandler <L extends UtilsLang,
-											D extends UtilsDescription,
+public class OverlayUserSelectionHandler <L extends UtilsLang, D extends UtilsDescription,
 											C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 											R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 											V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,

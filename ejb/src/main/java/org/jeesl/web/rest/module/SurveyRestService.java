@@ -39,6 +39,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.model.json.system.status.JsonContainer;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.util.query.json.JsonStatusQueryProvider;
+import org.jeesl.util.query.json.JsonSurveyQueryProvider;
 import org.jeesl.util.query.xml.XmlStatusQuery;
 import org.jeesl.util.query.xml.module.SurveyQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
@@ -105,10 +106,11 @@ public class SurveyRestService <L extends UtilsLang,
 	
 	private JsonContainerFactory jfContainer;
 	private JsonSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> jfSurvey;
-	private JsonTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> jfTemplate;
 	
 	private XmlContainerFactory xfContainer;
 	private XmlStatusFactory xfStatus;
+	private final XmlStatusFactory<TC,L,D> xfTemplateCategory;
+	private final XmlStatusFactory<TS,L,D> xfTemplateStatus;
 	private XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xfTemplate;
 	private XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xfSurveys;
 	private XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> xfSurvey;
@@ -141,10 +143,13 @@ public class SurveyRestService <L extends UtilsLang,
 	
 		String localeCode = "en";
 		jfContainer = new JsonContainerFactory(localeCode,JsonStatusQueryProvider.statusExport());
-		jfTemplate = new JsonTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,JsonStatusQueryProvider.templateExport(),fSurvey);
 		
 		xfContainer = new XmlContainerFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
+		
+		xfTemplateCategory = new XmlStatusFactory<TC,L,D>(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
+		xfTemplateStatus = new XmlStatusFactory<TS,L,D>(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
 		xfStatus = new XmlStatusFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
+		
 		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,SurveyQuery.get(SurveyQuery.Key.exTemplate).getTemplate());
 		xfTemplate.lazyLoad(fSurvey);
 		
@@ -190,14 +195,14 @@ public class SurveyRestService <L extends UtilsLang,
 	@Override public Aht exportSurveyTemplateCategory()
 	{
 		Aht aht = new Aht();
-		for(TC ejb : fSurvey.allOrderedPosition(cTC)){aht.getStatus().add(xfStatus.build(ejb));}
+		for(TC ejb : fSurvey.allOrderedPosition(cTC)){aht.getStatus().add(xfTemplateCategory.build(ejb));}
 		return aht;
 	}
 
 	@Override public Aht exportSurveyTemplateStatus()
 	{
 		Aht aht = new Aht();
-		for(TS ejb : fSurvey.allOrderedPosition(cTS)){aht.getStatus().add(xfStatus.build(ejb));}
+		for(TS ejb : fSurvey.allOrderedPosition(cTS)){aht.getStatus().add(xfTemplateStatus.build(ejb));}
 		return aht;
 	}
 
@@ -371,15 +376,20 @@ public class SurveyRestService <L extends UtilsLang,
 	}
 	@Override public org.jeesl.model.json.survey.Survey surveyStructureJson(String localeCode, long id)
 	{
-		org.jeesl.model.json.survey.Survey survey = JsonSurveyFactory.build();
+		JsonSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> jfSurvey = new JsonSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,JsonSurveyQueryProvider.survey());
+		JsonTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> jfTemplate = new JsonTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,JsonSurveyQueryProvider.templateExport(),fSurvey); 
+		
+		org.jeesl.model.json.survey.Survey jSurvey = JsonSurveyFactory.build();
 		try
 		{
-			TEMPLATE ejb = fSurvey.find(cTemplate,id);
-			survey.setTemplate(jfTemplate.build(ejb));
+			SURVEY eSurvey = fSurvey.find(cSurvey, id);
+			jSurvey = jfSurvey.build(eSurvey);
+			TEMPLATE ejb = fSurvey.find(cTemplate,eSurvey.getTemplate());
+			jSurvey.setTemplate(jfTemplate.build(ejb));
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		
-		return survey;
+		return jSurvey;
 	}
 	
 	public Survey surveyAnswers(long id)

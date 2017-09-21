@@ -1,6 +1,8 @@
 package org.jeesl.model.json.survey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jeesl.interfaces.model.survey.JeeslSimpleSurveyQuestion;
 
@@ -119,6 +121,18 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	@Override public Boolean getShowSelectMulti() {return showSelectMulti;}
 	@Override public void setShowSelectMulti(Boolean showSelectMulti) {this.showSelectMulti = showSelectMulti;}
 	@JsonIgnore public boolean isSetShowSelectMulti() {return showSelectMulti!=null;}
+
+	@JsonProperty("showMatrix")
+	private Boolean showMatrix;
+	@Override public Boolean getShowMatrix() {return showMatrix;}
+	@Override public void setShowMatrix(Boolean showMatrix) {this.showSelectMulti = showMatrix;}
+	@JsonIgnore public boolean isSetShowMatrix() {return showMatrix!=null;}
+	
+	@JsonProperty("options")
+	private List<Option> options;
+	public List<Option> getOptions() {if(options==null){options = new ArrayList<Option>();} return options;}
+	public void setOptions(List<Option> options) {this.options = options;}
+	@JsonIgnore public boolean isSetOptions() {return (options!=null && !options.isEmpty());}
 	
 	@Override public String toString()
 	{

@@ -37,7 +37,7 @@ public class JsonSectionFactory<L extends UtilsLang,D extends UtilsDescription,S
 		this.localeCode=localeCode;
 		this.q=q;
 		this.fSurvey=fSurvey;
-		if(!q.getQuestions().isEmpty()){jfQuestion = new JsonQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(q.getQuestions().get(0),fSurvey);}
+		if(!q.getQuestions().isEmpty()){jfQuestion = new JsonQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(localeCode,q.getQuestions().get(0),fSurvey);}
 	}
 	
 	public Section build(SECTION ejb)

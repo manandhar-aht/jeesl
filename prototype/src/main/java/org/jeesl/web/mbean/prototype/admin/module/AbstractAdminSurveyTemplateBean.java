@@ -152,7 +152,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		this.cUnit = cUnit;
 		this.cOption = cOption;
 		
-		ffSurvey = SurveyFactoryFactory.factory(cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
+		ffSurvey = SurveyFactoryFactory.factory(cL,cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
 		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();

@@ -137,7 +137,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate();
-		activeSections.addAll(bSurvey.getMapSection().get(template));
+		if(bSurvey.getMapSection().containsKey(template)){activeSections.addAll(bSurvey.getMapSection().get(template));}
 		if(SurveyHandler.debugPerformance){logger.warn("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());}
 	}
 	

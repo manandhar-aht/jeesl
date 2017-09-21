@@ -25,11 +25,13 @@ public class JsonSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SU
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonSurveyFactory.class);
 	
+	private final String localeCode;
 	private final Survey q;
 	private JsonStatusFactory<SS,L,D> jfStatus;
 	
 	public JsonSurveyFactory(String localeCode, Survey q)
 	{
+		this.localeCode=localeCode;
 		this.q=q;
 		if(q.getStatus()!=null){jfStatus = new JsonStatusFactory<SS,L,D>(localeCode,q.getStatus());}
 	}
@@ -38,7 +40,7 @@ public class JsonSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SU
 	{
 		Survey json = build();
 		if(q.getId()!=0){json.setId(survey.getId());}
-		if(q.getName()!=null){json.setName(survey.getLbl());}
+		if(q.getName()!=null){json.setName(survey.getName().get(localeCode).getLang());}
 		if(q.getDateStart()!=null){json.setDateStart(survey.getStartDate());}
 		if(q.getDateEnd()!=null){json.setDateEnd(survey.getEndDate());}
 		if(q.getStatus()!=null){json.setStatus(jfStatus.build(survey.getStatus()));}

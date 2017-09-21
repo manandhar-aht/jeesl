@@ -16,7 +16,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.utils.UtilsWithStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.model.interfaces.with.EjbWithName;
+import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurvey<L extends UtilsLang,
 							D extends UtilsDescription,
@@ -35,14 +35,10 @@ public interface JeeslSurvey<L extends UtilsLang,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>>
 			extends EjbWithId,EjbWithDateRange,
-						UtilsWithStatus<L,D,SS>
-//	,EjbWithName
+						UtilsWithStatus<L,D,SS>,EjbWithLang<L>
 {
 	public enum Attributes{id,template,status}
 	public enum Status{open,preparation};
-	
-	String getLbl();
-	void setLbl(String lbl);
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);

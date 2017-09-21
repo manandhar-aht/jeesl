@@ -2,6 +2,7 @@ package org.jeesl.factory.ejb.module.survey;
 
 import java.util.Date;
 
+import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -43,35 +44,40 @@ public class EjbSurveyFactory<L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyFactory.class);
 	
-	final Class<SURVEY> cSurvey;
+	private final Class<SURVEY> cSurvey;
     
-	public EjbSurveyFactory(final Class<SURVEY> cSurvey)
+	private final EjbLangFactory<L> efLang;
+	
+	public EjbSurveyFactory(final Class<L> cL, final Class<SURVEY> cSurvey)
 	{       
         this.cSurvey = cSurvey;
+        
+        efLang = EjbLangFactory.factory(cL);
 	}
 	    
 	public SURVEY build(TEMPLATE template,SS status, Survey survey)
 	{
-		return build(template,status,
-						survey.getName(),
+		String[] locales = {"en"};
+		logger.warn("NYI handling of lcoales");
+		return build(locales,template,status,
 						survey.getValidFrom().toGregorianCalendar().getTime(),
 						survey.getValidTo().toGregorianCalendar().getTime());
 	}
 	
-	public SURVEY build(TEMPLATE template,SS status, String name)
+	public SURVEY build(String[] locales, TEMPLATE template,SS status)
 	{
-		return build(template,status,name,null,null);
+		return build(locales,template,status,null,null);
 	}
 	
-	public SURVEY build(TEMPLATE template,SS status, String name,Date validFrom,Date validTo)
+	public SURVEY build(String[] locales, TEMPLATE template,SS status, Date validFrom,Date validTo)
 	{
 		SURVEY ejb = null;
 		try
 		{
 			ejb = cSurvey.newInstance();
+			ejb.setName(efLang.createEmpty(locales));
 			ejb.setTemplate(template);
 			ejb.setStatus(status);
-			ejb.setLbl(name);
 			ejb.setStartDate(validFrom);
 			ejb.setEndDate(validTo);
 		}

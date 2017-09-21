@@ -58,7 +58,7 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SUR
 		
 		Survey xml = new Survey();
 		if(q.isSetId()){xml.setId(ejb.getId());}
-		if(q.isSetName()){xml.setName(ejb.getLbl());}
+		if(q.isSetName()){xml.setName(ejb.getName().get(localeCode).getLang());}
 		if(q.isSetValidFrom()){xml.setValidFrom(DateUtil.toXmlGc(ejb.getStartDate()));}
 		if(q.isSetValidTo()){xml.setValidTo(DateUtil.toXmlGc(ejb.getEndDate()));}
 		

@@ -262,7 +262,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 		}
 		
 		// The survey object holds information about the structure of the survey
-		logger.info("Using survey: "+survey.getLbl());
+		logger.info("Using survey: "+survey.getName().get(localeCode).getLang());
 		logger.info("Processing Data");
 		
 		// Define the current row and column of the processing

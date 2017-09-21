@@ -40,7 +40,7 @@ public class JsonSurveyFactory<L extends UtilsLang,D extends UtilsDescription,SU
 	{
 		Survey json = build();
 		if(q.getId()!=0){json.setId(survey.getId());}
-		if(q.getName()!=null){json.setName(survey.getName().get(localeCode).getLang());}
+		if(q.getLabel()!=null){json.setLabel(survey.getName().get(localeCode).getLang());}
 		if(q.getDateStart()!=null){json.setDateStart(survey.getStartDate());}
 		if(q.getDateEnd()!=null){json.setDateEnd(survey.getEndDate());}
 		if(q.getStatus()!=null){json.setStatus(jfStatus.build(survey.getStatus()));}

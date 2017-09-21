@@ -26,10 +26,10 @@ public class Survey implements Serializable,JeeslSimpleSurvey
 	public Template getTemplate() {return template;}
 	public void setTemplate(Template template) {this.template = template;}
 	
-	@JsonProperty("name")
-	private String name;
-	public String getName() {return name;}
-	public void setName(String name) {this.name = name;}
+	@JsonProperty("label")
+	private String label;
+	public String getLabel() {return label;}
+	public void setLabel(String label) {this.label = label;}
 	
 	@JsonProperty("dateStart")
 	private Date dateStart;

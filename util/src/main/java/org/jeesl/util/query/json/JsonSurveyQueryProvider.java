@@ -17,7 +17,7 @@ public class JsonSurveyQueryProvider
 	{				
 		Survey json = new Survey();
 		json.setId(Long.valueOf(1));
-		json.setName("");
+		json.setLabel("");
 		json.setDateStart(new Date());
 		json.setDateEnd(new Date());
 		json.setStatus(JsonStatusQueryProvider.statusLabel());

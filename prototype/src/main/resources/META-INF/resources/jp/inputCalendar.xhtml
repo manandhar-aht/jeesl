@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+    
+	<composite:interface>
+		<composite:attribute name="value" required="true" />
+		<composite:attribute name="mindate" required="false" />
+		<composite:attribute name="maxdate" required="false" />
+		<composite:attribute name="required" required="false" default="false"/>
+        <composite:attribute name="update" required="false" />
+        <composite:clientBehavior name="change" targets="pCalendar" event="change" />
+        <composite:clientBehavior name="dateSelect" targets="pCalendar" event="dateSelect" />
+	</composite:interface>
+
+	<composite:implementation>
+		<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%">
+			<p:calendar id="pCalendar"
+						value="#{cc.attrs.value}"
+						showOn="button"
+						pattern="#{appSettingsBean.calendarFormat}"
+						mindate="#{cc.attrs.mindate}"
+						maxdate="#{cc.attrs.maxdate}"
+						required="#{cc.attrs.required}">
+                <p:ajax event="dateSelect" update="#{cc.attrs.update}"/>
+            </p:calendar>
+		</h:panelGroup>
+	</composite:implementation>
+</html>

@@ -33,7 +33,7 @@ public class JeeslMsgBuilder
 	public static final String entities = "jeesl/msg/admin/entities.xml";
 	public static final String entitiesPrefix = "jeesl/msg/admin/entitiesPrefix.xml";
 	public static final String srcProject = "msg.aht-utils/project.xml";
-	public static final String srcDate = "aht-utils/msg/date.xml";
+	public static final String srcDate = "jeesl/msg/date.xml";
 	
 	//Finance
 	public static final String srcFinance = "jeesl/msg/finance/finance.xml";

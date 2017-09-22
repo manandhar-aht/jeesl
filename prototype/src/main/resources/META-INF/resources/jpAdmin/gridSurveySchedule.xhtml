@@ -4,40 +4,94 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdm="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
 	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
-		<composite:attribute name="manager" required="true"/>
+		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
+		<composite:attribute name="datePattern" required="false" default="dd.MM.yyyy" />
 	</composite:interface>
 	
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row id="row1">
-				<aht:slot id="sSurvey" width="8">
-					<h:form id="fProperties">
-						<p:dataTable var="v" value="#{cc.attrs.versions}"
-							selection="#{cc.attrs.bean.version}" selectionMode="single" rowKey="#{v.id}">
+				<aht:slot width="8">
+					<h:form id="fProjects">
+						<p:dataTable var="survey" value="#{cc.attrs.bean.surveys}" rowKey="#{survey.id}"
+									 selection="#{cc.attrs.bean.survey}" selectionMode="single">
+							<p:ajax event="rowSelect" update=":#{cc.id}:sSurvey" listener="#{cc.attrs.bean.selectSurvey}"/>
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslFeatures}">
-									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addFeature()}" update=":#{cc.id}:grid" tooltip="#{msg.ttNew}"/>
+								<aht:pfDataTableHeader title="#{msg.jeeslListOfSurvey}">
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addSurvey()}" update=":#{cc.id}:sSurvey"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
-							<p:ajax event="rowSelect" update=":#{cc.id}:grid" listener="#{cc.attrs.bean.selectVersion()}"/> 
-							<p:column headerText="#{msg.jeeslFeatureActive}">  
-								<h:outputText value="#{v.id}"/>
-							
-				       	</p:dataTable>
+							<p:column>
+								<f:facet name="header">#{msg.jeeslSurveyCategory}</f:facet>
+								<h:outputText value="#{survey.template.category.name[userBean.localeCode].lang}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">#{msg.jeeslSurvey}</f:facet>
+								<h:outputText value="#{survey.name[localeCode].lang}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">#{msg.jeeslDateFrom}</f:facet>
+								<h:outputText value="#{survey.startDate}" ><f:convertDateTime pattern="#{cc.attrs.datePattern}" /></h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">#{msg.jeeslDateUntil}</f:facet>
+								<h:outputText value="#{survey.endDate}" ><f:convertDateTime pattern="#{cc.attrs.datePattern}" /></h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">#{msg.jeeslSurveyStatus}</f:facet>
+								<h:outputText value="#{survey.status.name[userBean.localeCode].lang}" />
+							</p:column>
+						</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sFeature" width="4">
-					
+				<aht:slot id="sSurvey" width="4" renderChildren="#{not empty cc.attrs.bean.survey}">
+					<h:form id="fQuestion">
+						<p:panel header="#{msg.jeeslSurvey}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSurvey()}" update=":#{cc.id}:grid"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70" >
+	
+								<p:outputLabel value="#{msg.jeeslSurveyCategory}"/>
+								 <p:selectOneMenu autoWidth="false" value="#{cc.attrs.bean.survey.template.category}" effect="fade" >
+								 	<p:ajax event="change" listener="#{cc.attrs.bean.reloadAvailableSurveVersions()}" update="@form"/>
+									<f:selectItems value="#{cc.attrs.bean.sbhCategory.list}" var="l" itemLabel="#{l.name[userBean.localeCode].lang}" itemValue="#{l}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslSurveyCriteria}"/>
+								 <p:selectOneMenu autoWidth="false" id="criteriaS1" value="#{cc.attrs.bean.template.version}" effect="fade">
+									<f:selectItems value="#{cc.attrs.bean.versions}" var="c" itemLabel="#{of:formatDate(c.record, 'dd.MM.yyyy')} - #{c.name[localeCode].lang}" itemValue="#{c}"/>
+								</p:selectOneMenu>
+	
+								<p:outputLabel value="#{msg.jeeslSurveyStatus}"/>
+								 <p:selectOneMenu autoWidth="false" value="#{cc.attrs.bean.survey.status}" effect="fade" >
+									<f:selectItems value="#{appSurveyBean.surveyStatus}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
+								</p:selectOneMenu>
+	
+								<p:outputLabel value="#{msg.jeeslDateFrom}"/>
+								<jp:inputCalendar value="#{cc.attrs.bean.survey.startDate}" />
+	
+								<p:outputLabel value="#{msg.jeeslDateUntil}"/>
+								<jp:inputCalendar value="#{cc.attrs.bean.survey.endDate}" />
+	
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.survey}" withDescription="false"
+									labelTranslation="#{msg.jeeslName}" keys="#{cc.attrs.localeKeys}" />
+							<p:messages redisplay="false"/>
+						</p:panel>
+					</h:form>
 				</aht:slot>
 			</aht:row>
 	    </aup:grid>

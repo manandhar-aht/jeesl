@@ -28,7 +28,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -49,7 +49,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 								JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractSurveyBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAppSurveyBean.class);
 
 	protected final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> efOption;
 	
@@ -63,7 +63,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected Map<QUESTION,List<OPTION>> matrixCols; @Override public Map<QUESTION,List<OPTION>> getMatrixCols() {return matrixCols;}
 	protected Map<QUESTION,List<OPTION>> matrixCells; public Map<QUESTION,List<OPTION>> getMatrixCells() {return matrixCells;}
 
-	public AbstractSurveyBean(SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
+	public AbstractAppSurveyBean(SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey)
 	{
 		efOption = ffSurvey.option();
 		

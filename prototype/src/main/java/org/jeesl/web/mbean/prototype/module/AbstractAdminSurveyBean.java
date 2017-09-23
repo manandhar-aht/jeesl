@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.module.survey;
+package org.jeesl.web.mbean.prototype.module;
 
 import java.io.Serializable;
 import java.util.ArrayList;

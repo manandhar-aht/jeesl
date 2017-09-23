@@ -64,6 +64,7 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	
 	SURVEY fSurvey(CORRELATION correlation);
 	List<SURVEY> fSurveys(TC category, SS status, Date date);
+	List<SURVEY> fSurveys(List<TC> categories, SS status, Date date);
 	<W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>> List<W> fSurveys(Class<W> c, List<SS> status, Date date);
 	<TYPE extends UtilsStatus<TYPE,L,D>, WT extends JeeslWithType<L,D,TYPE>, W extends JeeslWithSurveyType<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION,WT,TYPE>> List<W> fSurveys(Class<W> c, List<SS> status, TYPE type, Date date);
 	<W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>> W fWithSurvey(Class<W> c, long id) throws UtilsNotFoundException;

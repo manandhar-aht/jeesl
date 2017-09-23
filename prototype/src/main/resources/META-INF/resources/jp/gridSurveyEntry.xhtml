@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aupAdm="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
+		<composite:attribute name="datePattern" required="false" default="dd.MM.yyyy" />
+	</composite:interface>
+	
+	<composite:implementation>
+		<aup:grid id="grid">
+			<aht:row id="row1">
+				<aht:slot width="7">
+					<h:form id="fSurveys">
+						<p:dataTable var="survey" value="#{cc.attrs.bean.surveys}" rowKey="#{survey.id}"
+									 selection="#{cc.attrs.bean.survey}" selectionMode="single">
+							<p:ajax event="rowSelect" update=":#{cc.id}:sSurvey :#{cc.id}:row2" listener="#{cc.attrs.bean.selectSurvey}"/>
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslListOfSurvey}">
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:column>
+								<f:facet name="header">#{msg.jeeslSurvey}</f:facet>
+								<h:outputText value="#{survey.name[localeCode].lang}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">#{msg.jeeslDateFrom}</f:facet>
+								<h:outputText value="#{survey.startDate}" ><f:convertDateTime pattern="#{cc.attrs.datePattern}" /></h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">#{msg.jeeslDateUntil}</f:facet>
+								<h:outputText value="#{survey.endDate}" ><f:convertDateTime pattern="#{cc.attrs.datePattern}" /></h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">#{msg.jeeslSurveyStatus}</f:facet>
+								<h:outputText value="#{survey.status.name[userBean.localeCode].lang}" />
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sSurvey" width="5" >
+					<p:panel header="#{msg.jeeslSurvey}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.survey}">
+							
+							<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60" >
+	
+								<p:outputLabel value="#{msg.jeeslSurveyCategory}"/>
+								<h:outputText value="#{cc.attrs.bean.survey.template.category.name[userBean.localeCode].lang}"/>
+								
+								<p:outputLabel value="#{cc.attrs.bean.survey.name[userBean.localeCode].lang}"/>
+								<h:outputText value="#{cc.attrs.bean.survey.description[userBean.localeCode].lang}"/>
+	
+							</p:panelGrid>
+						</p:panel>
+				</aht:slot>
+			</aht:row>
+			<aht:row id="row2">
+				<aht:slot>
+					<h:form id="fSection">
+						<ui:repeat id="repeatSections" value="#{appSurveyBean.mapSection[cc.attrs.bean.handler.template]}" var="section">
+							<p:panel id="pQuestions" styleClass="auPanelWithGrid"
+									header="#{section.code}: #{section.name[localeCode].lang}"
+									rendered="#{cc.attrs.bean.handler.showAssessment}">
+								<f:facet name="actions">
+									<aht:icon id="btSave" type="jeeslSave" listener="#{cc.attrs.bean.saveData(section)}" update="@form"/>
+									<p:blockUI trigger="btSave:link" block="pQuestions" />
+								</f:facet>
+								<p:panelGrid columns="1" columnClasses="jeeslGrid100">
+									<h:outputText value="#{section.description[localeCode].lang}"/>
+								</p:panelGrid>
+								<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+								<p:panelGrid columns="3" columnClasses="#{section.columnClasses}">
+									<jtp:label entity="MeisLcfUserEvaluation" code="question"/>
+									<jtp:label entity="MeisLcfUserEvaluation" code="answer"/>
+									<jtp:label entity="MeisLcfUserEvaluation" code="remark"/>
+								</p:panelGrid>
+								<ui:repeat value="#{appSurveyBean.mapQuestion[section]}" id="repeatQuestions" var="q">
+									<p:panelGrid columns="2" columnClasses="#{section.columnClasses}" rendered="#{q.visible}">
+										<h:panelGroup>
+											<h:outputText value="#{q.code} #{q.text[localeCode].lang}" styleClass="jeeslBold"/>
+											<br/>
+											<h:outputText value="#{q.description[localeCode].lang}" styleClass="jeeslItalic"/>
+										</h:panelGroup>
+										<jtp:surveyAnswer question="#{q}" surveyHandler="#{cc.attrs.bean.handler}"/>
+										<ui:remove><ui:fragment><h:outputText value="#{q.remark}"/></ui:fragment></ui:remove>
+									</p:panelGrid>
+								</ui:repeat>
+							</p:panel>
+						</ui:repeat>
+					</h:form>
+				</aht:slot>
+			</aht:row>
+		</aup:grid>
+	</composite:implementation>
+</html>

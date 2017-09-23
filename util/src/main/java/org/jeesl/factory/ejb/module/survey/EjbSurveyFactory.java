@@ -2,6 +2,7 @@ package org.jeesl.factory.ejb.module.survey;
 
 import java.util.Date;
 
+import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
@@ -47,12 +48,14 @@ public class EjbSurveyFactory<L extends UtilsLang,
 	private final Class<SURVEY> cSurvey;
     
 	private final EjbLangFactory<L> efLang;
+	private final EjbDescriptionFactory<D> efDescription;
 	
-	public EjbSurveyFactory(final Class<L> cL, final Class<SURVEY> cSurvey)
+	public EjbSurveyFactory(final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey)
 	{       
         this.cSurvey = cSurvey;
         
         efLang = EjbLangFactory.factory(cL);
+        efDescription = EjbDescriptionFactory.factory(cD);
 	}
 	    
 	public SURVEY build(TEMPLATE template,SS status, Survey survey)
@@ -76,6 +79,7 @@ public class EjbSurveyFactory<L extends UtilsLang,
 		{
 			ejb = cSurvey.newInstance();
 			ejb.setName(efLang.createEmpty(locales));
+			ejb.setDescription(efDescription.createEmpty(locales));
 			ejb.setTemplate(template);
 			ejb.setStatus(status);
 			ejb.setStartDate(validFrom);

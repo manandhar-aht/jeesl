@@ -160,7 +160,7 @@ public class SurveyRestService <L extends UtilsLang,
 		
 		xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.surveyAnswers));
 		
-		SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey = SurveyFactoryFactory.factory(cL,cSurvey,cScheme,cTEMPLATE,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
+		SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> ffSurvey = SurveyFactoryFactory.factory(cL,cD,cSurvey,cScheme,cTEMPLATE,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
 		
 		efTemlate = ffSurvey.template();
 		efSection = ffSurvey.section();

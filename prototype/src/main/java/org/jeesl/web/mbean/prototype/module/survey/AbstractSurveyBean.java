@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.module;
+package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public abstract class AbstractAdminSurveyBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
+public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION>,
@@ -59,7 +59,7 @@ public abstract class AbstractAdminSurveyBean <L extends UtilsLang, D extends Ut
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractSurveyBean.class);
 	
 	protected JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> fSurvey;
 	protected JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTION,CORRELATION> bSurvey;
@@ -95,10 +95,12 @@ public abstract class AbstractAdminSurveyBean <L extends UtilsLang, D extends Ut
 	
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
 	protected List<TC> categories2; public List<TC> getCategories2(){return categories2;}
+	protected List<SURVEY> surveys; public List<SURVEY> getSurveys() {return surveys;}
 	
+	protected SURVEY survey; public SURVEY getSurvey() {return survey;} public void setSurvey(SURVEY survey) {this.survey = survey;}
 	protected TEMPLATE template; public TEMPLATE getTemplate(){return template;} public void setTemplate(TEMPLATE template){this.template = template;}
 	
-	public AbstractAdminSurveyBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit,final Class<ANSWER> cAnswer,final Class<MATRIX> cMatrix,final Class<DATA> cData, final Class<OPTION> cOption)
+	public AbstractSurveyBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit,final Class<ANSWER> cAnswer,final Class<MATRIX> cMatrix,final Class<DATA> cData, final Class<OPTION> cOption)
 	{
 		super(cL,cD);
 		
@@ -118,7 +120,7 @@ public abstract class AbstractAdminSurveyBean <L extends UtilsLang, D extends Ut
 		this.cData = cData;
 		this.cOption = cOption;
 		
-		ffSurvey = SurveyFactoryFactory.factory(cL,cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
+		ffSurvey = SurveyFactoryFactory.factory(cL,cD,cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
 		efSurvey = ffSurvey.survey();
 		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();

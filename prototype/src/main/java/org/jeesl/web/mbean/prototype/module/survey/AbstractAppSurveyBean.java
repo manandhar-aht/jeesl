@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.module;
+package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -89,5 +89,12 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 				mapSection.get(template).add(section);
 			}
 		}
+	}
+	
+	protected String statistics()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Sections: ").append(mapSection.size());
+		return sb.toString();
 	}
 }

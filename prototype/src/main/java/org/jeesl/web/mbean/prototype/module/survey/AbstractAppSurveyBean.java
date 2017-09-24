@@ -66,6 +66,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 
 	protected Map<Long,OPTION> mapOptionId; @Override public Map<Long,OPTION> getMapOptionId(){return mapOptionId;}
 	protected Map<QUESTION,List<OPTION>> mapOption; @Override public Map<QUESTION,List<OPTION>> getMapOption() {return mapOption;}
+	protected Map<OPTIONS,List<OPTION>> mapOptionSet;
 
 	protected Map<QUESTION,List<OPTION>> matrixRows; @Override public Map<QUESTION,List<OPTION>> getMatrixRows() {return matrixRows;}
 	protected Map<QUESTION,List<OPTION>> matrixCols; @Override public Map<QUESTION,List<OPTION>> getMatrixCols() {return matrixCols;}
@@ -82,6 +83,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		
 		mapOptionId = new HashMap<Long,OPTION>();
 		mapOption = new HashMap<QUESTION,List<OPTION>>();
+		mapOptionSet = new HashMap<OPTIONS,List<OPTION>>();
 		matrixRows = new HashMap<QUESTION,List<OPTION>>();
 		
 		matrixCols = new HashMap<QUESTION,List<OPTION>>();
@@ -96,6 +98,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		
 		//Cache
 		reloadSections();
+		reloadSets();
 		reloadQuestions();
 //		reloadOptions();
 	}
@@ -118,6 +121,17 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 			{
 				mapSection.get(template).add(section);
 			}
+		}
+	}
+	
+	private void reloadSets()
+	{
+		mapOptionSet.clear();
+		for(OPTIONS set : fSurvey.allOrderedPosition(ffSurvey.getOptionSetClass()))
+		{
+			set = fSurvey.load(set);
+			if(!mapOptionSet.containsKey(set)){mapOptionSet.put(set,new ArrayList<OPTION>());}
+			mapOptionSet.get(set).addAll(set.getOptions());
 		}
 	}
 	
@@ -192,14 +206,37 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	
 	@Override public void updateOptions(QUESTION question)
 	{
-		for(OPTION o : question.getOptions()){mapOptionId.put(o.getId(),o);}
 		if(!mapOption.containsKey(question)){mapOption.put(question,new ArrayList<OPTION>());}
 		mapOption.get(question).clear();
-		mapOption.get(question).addAll(question.getOptions());
 		
-		matrixRows.put(question, efOption.toRows(question.getOptions()));
-		matrixCols.put(question, efOption.toColumns(question.getOptions()));
-		matrixCells.put(question, efOption.toCells(question.getOptions()));
+		if(question.getOptionSet()==null)
+		{
+			for(OPTION o : question.getOptions()){mapOptionId.put(o.getId(),o);}
+			mapOption.get(question).addAll(question.getOptions());
+			matrixRows.put(question, efOption.toRows(question.getOptions()));
+			matrixCols.put(question, efOption.toColumns(question.getOptions()));
+			matrixCells.put(question, efOption.toCells(question.getOptions()));
+		}
+		else
+		{
+			mapOption.get(question).addAll(mapOptionSet.get(question.getOptionSet()));
+			matrixRows.put(question, efOption.toRows(mapOptionSet.get(question.getOptionSet())));
+			matrixCols.put(question, efOption.toColumns(mapOptionSet.get(question.getOptionSet())));
+			matrixCells.put(question, efOption.toCells(mapOptionSet.get(question.getOptionSet())));
+		}
+	}
+	
+	@Override public void updateOptions(OPTIONS set)
+	{
+		for(OPTION o : set.getOptions()){mapOptionId.put(o.getId(),o);}
+		if(!mapOptionSet.containsKey(set)){mapOptionSet.put(set,new ArrayList<OPTION>());}
+		mapOptionSet.get(set).clear();
+		mapOptionSet.get(set).addAll(set.getOptions());
+		for(QUESTION question : fSurvey.allForParent(ffSurvey.getClassQuestion(), JeeslSurveyQuestion.Attributes.optionSet.toString(), set))
+		{
+			question = fSurvey.load(question);
+			updateOptions(question);
+		}
 	}
 	
 	protected String statistics()

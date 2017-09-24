@@ -54,6 +54,9 @@ public interface JeeslSurveyTemplate<L extends UtilsLang, D extends UtilsDescrip
 	List<SCHEME> getSchemes();
 	void setSchemes(List<SCHEME> schemes);
 	
+	List<OPTIONS> getOptionSets();
+	void setOptionSets(List<OPTIONS> optionSets);
+	
 	TEMPLATE getNested();
 	void setNested(TEMPLATE nested);
 }

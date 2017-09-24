@@ -26,8 +26,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
-public interface JeeslSurveyQuestion<L extends UtilsLang,
-							D extends UtilsDescription,
+public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescription,
 							SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 							SS extends UtilsStatus<SS,L,D>,
 							SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
@@ -48,7 +47,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang,
 			extends EjbWithId,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
-	public enum Attributes{section,visible,position}
+	public enum Attributes{section,visible,position,optionSet}
 	
 	SECTION getSection();
 	void setSection(SECTION section);

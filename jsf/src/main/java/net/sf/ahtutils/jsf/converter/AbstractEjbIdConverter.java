@@ -16,6 +16,7 @@ public abstract class AbstractEjbIdConverter <I extends EjbWithId> implements Co
 	final static Logger logger = LoggerFactory.getLogger(AbstractEjbIdConverter.class);
 	
 	private Class<I> clEjb;
+	private static boolean jeeslDebug = false;
 
 	public AbstractEjbIdConverter(final Class<I> clEjb)
 	{
@@ -27,8 +28,8 @@ public abstract class AbstractEjbIdConverter <I extends EjbWithId> implements Co
 	
     public Object getAsObject(FacesContext facesContext, UIComponent component, String submittedValue)
     {
-    	submittedValue = submittedValue.trim();
-//    	logger.warn(clEjb.getSimpleName()+" getAsObject submittedValue: "+submittedValue);
+    		submittedValue = submittedValue.trim();
+    		if(jeeslDebug) {logger.warn(clEjb.getSimpleName()+" getAsObject submittedValue: "+submittedValue);}
         if (submittedValue.equals("")) {return null;}
         else
         {  
@@ -37,43 +38,43 @@ public abstract class AbstractEjbIdConverter <I extends EjbWithId> implements Co
                 long id = Long.valueOf(submittedValue);
                 I ejb = clEjb.newInstance();
                 ejb.setId(id);
-//                logger.warn(clEjb.getSimpleName()+" getAsObject return "+ejb.toString());
+                if(jeeslDebug) {logger.warn(clEjb.getSimpleName()+" getAsObject return "+ejb.toString());}
                 return ejb;
             }
             catch(NumberFormatException e)
             {
-            	String errMsg = "NumberFormatException for "+clEjb.getSimpleName()+", not a valid id (submitted: "+submittedValue+")";
-            	logger.error(errMsg);
-            	throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", errMsg));
+	            	String errMsg = "NumberFormatException for "+clEjb.getSimpleName()+", not a valid id (submitted: "+submittedValue+")";
+	            	logger.error(errMsg);
+	            	throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", errMsg));
             }
             catch (InstantiationException e)
             {
-            	String errMsg = "InstantiationException for "+clEjb.getSimpleName()+": "+e.getMessage()+" (submitted: "+submittedValue+")";
-            	logger.error(errMsg);
-            	throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", errMsg));
+	            	String errMsg = "InstantiationException for "+clEjb.getSimpleName()+": "+e.getMessage()+" (submitted: "+submittedValue+")";
+	            	logger.error(errMsg);
+	            	throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", errMsg));
             }
             catch (IllegalAccessException e)
             {
-            	String errMsg = "IllegalAccessException for "+clEjb.getSimpleName()+": "+e.getMessage()+" (submitted: "+submittedValue+")";
-            	logger.error(errMsg);
-            	throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", errMsg));
+	            	String errMsg = "IllegalAccessException for "+clEjb.getSimpleName()+": "+e.getMessage()+" (submitted: "+submittedValue+")";
+	            	logger.error(errMsg);
+	            	throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", errMsg));
             }
-       }
+        }
     }  
   
-    public String getAsString(FacesContext facesContext, UIComponent component, Object value)
+	public String getAsString(FacesContext facesContext, UIComponent component, Object value)
     { 
-//  	logger.warn(clEjb.getSimpleName()+" value: "+value);
+		if(jeeslDebug) {logger.warn(clEjb.getSimpleName()+" value: "+value);}
         if (value == null || value.equals(""))
         {
-        	logger.warn("Returning NULL");
-        	return "";
+	        	logger.warn("Returning NULL");
+	        	return "";
         }
         else
         {
-        	EjbWithId ejb = (EjbWithId)value;
- //       	logger.warn(clEjb.getSimpleName()+" return: "+ejb.getId());
-        	return ""+ejb.getId(); 
+        		EjbWithId ejb = (EjbWithId)value;
+        		if(jeeslDebug) {logger.warn(clEjb.getSimpleName()+" return: "+ejb.getId());}
+        		return ""+ejb.getId(); 
         }  
     }  
 }  

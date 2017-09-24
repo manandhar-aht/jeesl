@@ -148,9 +148,9 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	protected abstract void initSettings();
 	
-	public void cancelScheme(){clear(false,false,false,false,false,true,false);}
-	public void calcelScore(){clear(false,false,false,false,false,false,true);}
-	protected void clear(boolean cTemplate, boolean cVersion, boolean cSection, boolean cQuestion, boolean cOption, boolean rScheme, boolean rScore)
+	public void cancelScheme(){clear(false,false,false,false,false,true,false,true);}
+	public void calcelScore(){clear(false,false,false,false,false,false,true,true);}
+	protected void clear(boolean cTemplate, boolean cVersion, boolean cSection, boolean cQuestion, boolean cOption, boolean rScheme, boolean rScore, boolean rSet)
 	{
 		if(cTemplate){template = null;}
 		if(cVersion){version = null;}
@@ -159,6 +159,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		if(cOption){option=null;}
 		if(rScheme){scheme = null;}
 		if(rScore){score = null;}
+		if(rSet){optionSet = null;}
 	}
 	
 	protected void clearSelection()
@@ -177,6 +178,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		version = template.getVersion();
 		sections = template.getSections();
 		schemes = template.getSchemes();
+		optionSets = template.getOptionSets();
 	}
 	
 	protected void initTemplate() throws UtilsNotFoundException{}
@@ -257,7 +259,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.rmEntity(version));
 		fSurvey.rmVersion(version);
-		clear(true,true,true,true,true,true,true);
+		clear(true,true,true,true,true,true,true,true);
 		reloadVersions();
 	}
 	
@@ -312,33 +314,27 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void addSet()
 	{
 		logger.info(AbstractLogMessage.addEntity(cOptions));
+		clear(false,false,true,true,true,true,true,false);
 		optionSet = efOptionSet.build(template,optionSets);
 		optionSet.setName(efLang.createEmpty(sbhLocale.getList()));
 	}
 	
 	public void saveSet() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info(AbstractLogMessage.saveEntity(section));
+		logger.info(AbstractLogMessage.saveEntity(optionSet));
 		optionSet = fSurvey.save(optionSet);
 		reloadTemplate();
+		reloadOptionSet(true);
 	}
-	
 	
 	public void selectSet()
 	{
 		logger.info(AbstractLogMessage.selectEntity(optionSet));
+		clear(false,false,true,true,true,true,true,false);
 		optionSet = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), optionSet);
+		reloadOptionSet(false);
 	}
-	/*	
-	protected void loadSection()
-	{
-		section = fSurvey.load(section);
-		questions = section.getQuestions();
-		bSurvey.updateSection(section);
-	}
-		
-
-	
+/*	
 	public void rmSection() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.rmEntity(section));
@@ -380,7 +376,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		}
 		
 		reloadQuestion();
-		clear(false,false,false,false,true,true,true);
+		clear(false,false,false,false,true,true,true,true);
 	}
 	
 	private void reloadQuestion()
@@ -400,14 +396,26 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		if(question.getOptionSet()!=null){question.setOptionSet(fSurvey.find(cOptions,question.getOptionSet()));}
 		question = fSurvey.save(question);
 		loadSection();
+		reloadQuestion();
 	}
 	
 	public void rmQuestion() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(question));}
 		fSurvey.rm(question);
-		clear(false,false,false,true,true,true,true);
+		clear(false,false,false,true,true,true,true,true);
 		loadSection();
+	}
+	
+	//Option
+	private void reloadOptionSet(boolean updateBean)
+	{
+		optionSet = fSurvey.find(cOptions,optionSet);
+		optionSet = fSurvey.load(optionSet);
+		Collections.sort(optionSet.getOptions(),cmpOption);
+		options.clear();
+		options.addAll(optionSet.getOptions());
+		if(updateBean) {bSurvey.updateOptions(optionSet);}
 	}
 	
 	public void addOption()
@@ -432,16 +440,31 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		reloadQuestion();
 		bMessage.growlSuccessSaved();
 	}
+	public void saveSetOption() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(option));}
+		option = fSurvey.saveOption(optionSet,option);
+		reloadOptionSet(true);
+		bMessage.growlSuccessSaved();
+	}
 	
 	public void rmQuestionOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
-		fSurvey.rmOption(question,option);
-		clear(false,false,false,false,true,true,true);
+		fSurvey.rmOption(optionSet,option);
 		reloadQuestion();
 		bMessage.growlSuccessRemoved();
 	}
+	public void rmSetOption() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
+		fSurvey.rmOption(optionSet,option);
+		clear(false,false,true,true,true,true,true,false);
+		reloadOptionSet(true);
+		bMessage.growlSuccessRemoved();
+	}
 	
+	//Scheme
 	public void addScheme()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cScheme));}
@@ -478,5 +501,10 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, sections);}
 	protected void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, questions);}
-	protected void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, options);reloadQuestion();}
+	protected void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		PositionListReorderer.reorder(fSurvey, options);
+		if(questions!=null) {reloadQuestion();}
+		if(optionSet!=null) {reloadOptionSet(true);}
+	}
 }

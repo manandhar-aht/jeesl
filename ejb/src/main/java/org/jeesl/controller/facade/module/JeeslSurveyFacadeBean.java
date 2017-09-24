@@ -120,6 +120,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		template = em.find(cTemplate,template.getId());
 		
 		template.getSchemes().size();
+		template.getOptionSets().size();
 		if(withQuestions)
 		{
 			for(SECTION section : template.getSections())
@@ -183,6 +184,13 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		data = em.find(cData,data.getId());
 		data.getAnswers().size();
 		return data;
+	}
+	
+	@Override public OPTIONS load(OPTIONS optionSet)
+	{
+		optionSet = em.find(ffSurvey.getOptionSetClass(),optionSet.getId());
+		optionSet.getOptions().size();
+		return optionSet;
 	}
 	
 	@Override
@@ -265,6 +273,17 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		}
 		return option;
 	}
+	@Override public OPTION saveOption(OPTIONS set, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		set = em.find(ffSurvey.getOptionSetClass(), set.getId());
+		option = this.saveProtected(option);
+		if(!set.getOptions().contains(option))
+		{
+			set.getOptions().add(option);
+			this.save(set);
+		}
+		return option;
+	}
 	
 	@Override public void rmOption(QUESTION question, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException
 	{
@@ -275,7 +294,17 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 			question.getOptions().remove(option);
 			this.save(question);
 		}
-
+		this.rmProtected(option);
+	}
+	@Override public void rmOption(OPTIONS set, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		set = em.find(ffSurvey.getOptionSetClass(), set.getId());
+		option = em.find(cOption, option.getId());
+		if(set.getOptions().contains(option))
+		{
+			set.getOptions().remove(option);
+			this.save(set);
+		}
 		this.rmProtected(option);
 	}
 	

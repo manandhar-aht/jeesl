@@ -51,4 +51,5 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 	void updateTemplate(TEMPLATE template);
 	void updateSection(SECTION section);
 	void updateOptions(QUESTION question);
+	void updateOptions(OPTIONS set);
 }

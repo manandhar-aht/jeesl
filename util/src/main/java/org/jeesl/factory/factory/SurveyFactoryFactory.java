@@ -77,8 +77,8 @@ public class SurveyFactoryFactory<L extends UtilsLang, D extends UtilsDescriptio
 	private final Class<UNIT> cUnit; public Class<UNIT> getClassUnit() {return cUnit;}
 	private final Class<ANSWER> cAnswer;
 	private final Class<MATRIX> cMatrix;
-	private final Class<DATA> cData;
-	private final Class<OPTIONS> cOptions;
+	private final Class<DATA> cData; 
+	private final Class<OPTIONS> cOptions; public Class<OPTIONS> getOptionSetClass() {return cOptions;}
 	private final Class<OPTION> cOption; public Class<OPTION> getOptionClass() {return cOption;}
 
 	public SurveyFactoryFactory(final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)

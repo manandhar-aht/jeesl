@@ -22,6 +22,7 @@
 		<composite:attribute name="withMultiOptions" required="false" default="false"/>
 		<composite:attribute name="withSchemes" required="false" default="false"/>
 		<composite:attribute name="withMatrix" required="false" default="false"/>
+		<composite:attribute name="withOptionSets" required="false" default="false"/>
 	</composite:interface>
 	
 <composite:implementation>
@@ -111,8 +112,28 @@
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 					</p:panel>
 				</h:form>
+				<h:form id="fSets" rendered="#{cc.attrs.withOptionSets and (not empty cc.attrs.bean.template)}">
+					<p:dataTable var="os" value="#{cc.attrs.bean.optionSets}" rowKey="#{os.id}"
+                                 selection="#{cc.attrs.bean.optionSet}" selectionMode="single" draggableRows="true">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveyOptionSets}">
+                          <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addSet()}" update=":#{cc.id}:sCenter"/>
+                      </aht:pfDataTableHeader>
+                  </f:facet>
+                  <p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectSet()}" update=":#{cc.id}:sCenter" />
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSets()}" update="@form"/>
+                  <p:column>
+                  		<h:graphicImage rendered="#{not os.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+                     <h:outputText rendered="#{os.visible}" value="#{os.position}" />
+                  </p:column>
+						<p:column>
+                      <f:facet name="header">#{msg.jeeslName}</f:facet>
+                      <h:outputText value="#{os.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+                  </p:column>
+					</p:dataTable>
+				</h:form>
 			</aht:slot>
-			<aht:slot width="5" >
+			<aht:slot id="sCenter" width="5" >
 				<h:form id="fVersion" rendered="#{not empty cc.attrs.bean.version}">
 					<p:panel header="#{msg.jpSurveyTemplateVersion}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
@@ -147,7 +168,8 @@
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:row1"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1"/>
 						</f:facet>
-						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 							<p:outputLabel value="#{msg.jeeslVisible}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.visible}" />
 							
@@ -170,7 +192,19 @@
 							<p:inputText rendered="true" value="#{cc.attrs.bean.nnb.b}"/>
 
 						</p:panelGrid>
+					</p:panel>
+				</h:form>
+				<h:form id="fSet" rendered="#{not empty cc.attrs.bean.optionSet}">
+					<p:panel header="#{msg.jeeslSurveyOptionSet}" styleClass="auPanelWithGrid">
+						<f:facet name="actions">
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSet()}" update=":#{cc.id}:row1"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSet()}" update=":#{cc.id}:row1"/>
+						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">							
+							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
+							<p:inputText value="#{cc.attrs.bean.optionSet.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:panelGrid>
 					</p:panel>
 				</h:form>
 				<h:form id="fQuestions" rendered="#{(not empty cc.attrs.bean.section) and (cc.attrs.bean.section.id gt 0)}">
@@ -324,7 +358,7 @@
 						</p:panelGrid>
 					</p:panel>
 				</h:form>
-				
+
 				<h:form id="fScores" rendered="#{cc.attrs.withSchemes and (not empty cc.attrs.bean.question) and (cc.attrs.bean.question.id gt 0)}">
 					<p:dataTable var="score" value="#{cc.attrs.bean.scores}" rowKey="#{scores.id}"
 								 selection="#{cc.attrs.bean.score}" selectionMode="single">

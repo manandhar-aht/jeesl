@@ -70,6 +70,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	protected List<VERSION> nestedVersions; public List<VERSION> getNestedVersions(){return nestedVersions;}
 	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
+	protected List<OPTIONS> optionSets; public List<OPTIONS> getOptionSets(){return optionSets;}
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
 	protected List<SCHEME> schemes; public List<SCHEME> getSchemes() {return schemes;}
 	protected List<SCORE> scores; public List<SCORE> getScores() {return scores;}
@@ -78,20 +79,21 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
 	protected VERSION nestedVersion; public VERSION getNestedVersion() {return nestedVersion;} public void setNestedVersion(VERSION nestedVersion) {this.nestedVersion = nestedVersion;}
 	
+	private SCHEME scheme; public SCHEME getScheme() {return scheme;} public void setScheme(SCHEME scheme) {this.scheme = scheme;}
 	protected SECTION section; public SECTION getSection(){return section;} public void setSection(SECTION section){this.section = section;}
 	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
-	protected OPTION option; public OPTION getOption(){return option;} public void setOption(OPTION option){this.option = option;}
-	private SCHEME scheme; public SCHEME getScheme() {return scheme;} public void setScheme(SCHEME scheme) {this.scheme = scheme;}
+	protected OPTIONS optionSet; public OPTIONS getOptionSet() {return optionSet;} public void setOptionSet(OPTIONS optionSet) {this.optionSet = optionSet;}
 	private SCORE score; public SCORE getScore() {return score;} public void setScore(SCORE score) {this.score = score;}
+	protected OPTION option; public OPTION getOption(){return option;} public void setOption(OPTION option){this.option = option;}
 	
 	protected SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	
 	private UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> uiHelper; public UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> getUiHelper() {return uiHelper;}
 	private Comparator<OPTION> cmpOption;
 	
-	public AbstractAdminSurveyTemplateBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTION> cOption)
+	public AbstractAdminSurveyTemplateBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
 	{
-		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOption);
+		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
 		this.cLoc=cLoc;
 
 		cmpOption = new PositionComparator<OPTION>();
@@ -306,6 +308,46 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		reloadTemplate();
 	}
 	
+	//Option Sets
+	public void addSet()
+	{
+		logger.info(AbstractLogMessage.addEntity(cOptions));
+		optionSet = efOptionSet.build(template,optionSets);
+		optionSet.setName(efLang.createEmpty(sbhLocale.getList()));
+	}
+	
+	public void saveSet() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(section));
+		optionSet = fSurvey.save(optionSet);
+		reloadTemplate();
+	}
+	
+	
+	public void selectSet()
+	{
+		logger.info(AbstractLogMessage.selectEntity(optionSet));
+		optionSet = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), optionSet);
+	}
+	/*	
+	protected void loadSection()
+	{
+		section = fSurvey.load(section);
+		questions = section.getQuestions();
+		bSurvey.updateSection(section);
+	}
+		
+
+	
+	public void rmSection() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.rmEntity(section));
+		fSurvey.rm(section);
+		section=null;
+		question=null;
+		reloadTemplate();
+	}
+*/	
 	//Question
 	public void addQuestion()
 	{

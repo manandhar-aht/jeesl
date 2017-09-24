@@ -9,6 +9,7 @@ import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionSetFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySchemeFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyScoreFactory;
@@ -81,6 +82,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected final Class<ANSWER> cAnswer;
 	protected final Class<MATRIX> cMatrix;
 	protected final Class<DATA> cData;
+	protected final Class<OPTIONS> cOptions;
 	protected final Class<OPTION> cOption;
 	
 	protected final SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> ffSurvey;
@@ -88,6 +90,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected final EjbSurveyTemplateVersionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efVersion;
 	protected final EjbSurveySectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efSection;
 	protected final EjbSurveyQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efQuestion;
+	protected final EjbSurveyOptionSetFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efOptionSet;
 	protected final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efOption;
 	protected final EjbSurveySchemeFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efScheme;
 	protected final EjbSurveyScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efScore;
@@ -102,7 +105,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected SURVEY survey; public SURVEY getSurvey() {return survey;} public void setSurvey(SURVEY survey) {this.survey = survey;}
 	protected TEMPLATE template; public TEMPLATE getTemplate(){return template;} public void setTemplate(TEMPLATE template){this.template = template;}
 	
-	public AbstractSurveyBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit,final Class<ANSWER> cAnswer,final Class<MATRIX> cMatrix,final Class<DATA> cData, final Class<OPTION> cOption)
+	public AbstractSurveyBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit,final Class<ANSWER> cAnswer,final Class<MATRIX> cMatrix,final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
 	{
 		super(cL,cD);
 		
@@ -120,14 +123,16 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		this.cAnswer = cAnswer;
 		this.cMatrix = cMatrix;
 		this.cData = cData;
+		this.cOptions = cOptions;
 		this.cOption = cOption;
 		
-		ffSurvey = SurveyFactoryFactory.factory(cL,cD,cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
+		ffSurvey = SurveyFactoryFactory.factory(cL,cD,cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOptions,cOption);
 		efSurvey = ffSurvey.survey();
 		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();
 		efScore = ffSurvey.score();
+		efOptionSet = ffSurvey.optionSet();
 		efOption = ffSurvey.option();
 		efScheme = ffSurvey.scheme();
 		efTemplate = ffSurvey.template();

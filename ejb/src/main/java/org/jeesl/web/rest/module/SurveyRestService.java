@@ -103,7 +103,6 @@ public class SurveyRestService <L extends UtilsLang,
 	private final Class<UNIT> cUNIT;
 	private final Class<ANSWER> cAnswer;
 	private final Class<DATA> cData;
-	private final Class<OPTION> cOption;
 	private final Class<CORRELATION> cCorrelation;
 	
 	private JsonContainerFactory jfContainer;
@@ -125,7 +124,7 @@ public class SurveyRestService <L extends UtilsLang,
 	private EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efData;
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efAnswer;
 	
-	private SurveyRestService(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS,final Class<SCHEME> cScheme, final Class<TEMPLATE> cTEMPLATE, final Class<VERSION> cVersion,final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSection,final Class<QUESTION> cQuestion,final Class<SCORE> cScore,final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData,final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
+	private SurveyRestService(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS,final Class<SCHEME> cScheme, final Class<TEMPLATE> cTEMPLATE, final Class<VERSION> cVersion,final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSection,final Class<QUESTION> cQuestion,final Class<SCORE> cScore,final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
 	{
 		super(fSurvey,cL,cD);
 		this.fSurvey=fSurvey;
@@ -140,7 +139,6 @@ public class SurveyRestService <L extends UtilsLang,
 		this.cUNIT=cUNIT;
 		this.cAnswer=cAnswer;
 		this.cData=cData;
-		this.cOption=cOption;
 		this.cCorrelation=cCorrelation;
 	
 		String localeCode = "en";
@@ -162,7 +160,7 @@ public class SurveyRestService <L extends UtilsLang,
 		
 		xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.surveyAnswers));
 		
-		SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> ffSurvey = SurveyFactoryFactory.factory(cL,cD,cSurvey,cScheme,cTEMPLATE,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOption);
+		SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> ffSurvey = SurveyFactoryFactory.factory(cL,cD,cSurvey,cScheme,cTEMPLATE,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOptions,cOption);
 		
 		efTemlate = ffSurvey.template();
 		efSection = ffSurvey.section();
@@ -189,9 +187,9 @@ public class SurveyRestService <L extends UtilsLang,
 					OT extends UtilsStatus<OT,L,D>,
 					CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>>
 		SurveyRestService<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>
-			factory(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTEMPLATE, final Class<VERSION> cVersion, final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSECTION,final Class<QUESTION> cQuestion,final Class<SCORE> cScore, final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData,final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
+			factory(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey,final Class<L> cL,final Class<D> cD,final Class<SURVEY> cSurvey,final Class<SS> cSS, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTEMPLATE, final Class<VERSION> cVersion, final Class<TS> cTS,final Class<TC> cTC,final Class<SECTION> cSECTION,final Class<QUESTION> cQuestion,final Class<SCORE> cScore, final Class<UNIT> cUNIT,final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption,final Class<CORRELATION> cCorrelation)
 	{
-		return new SurveyRestService<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(fSurvey,cL,cD,cSurvey,cSS,cScheme,cTEMPLATE,cVersion,cTS,cTC,cSECTION,cQuestion,cScore,cUNIT,cAnswer,cMatrix,cData,cOption,cCorrelation);
+		return new SurveyRestService<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(fSurvey,cL,cD,cSurvey,cSS,cScheme,cTEMPLATE,cVersion,cTS,cTC,cSECTION,cQuestion,cScore,cUNIT,cAnswer,cMatrix,cData,cOptions,cOption,cCorrelation);
 	}
 
 	@Override public Aht exportSurveyTemplateCategory()

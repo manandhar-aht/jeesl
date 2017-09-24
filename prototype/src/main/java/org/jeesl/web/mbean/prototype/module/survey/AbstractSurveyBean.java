@@ -126,7 +126,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		this.cOptions = cOptions;
 		this.cOption = cOption;
 		
-		ffSurvey = SurveyFactoryFactory.factory(cL,cD,cSurvey,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cAnswer,cMatrix,cData,cOptions,cOption);
+		ffSurvey = SurveyFactoryFactory.factory(cL,cD,cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
 		efSurvey = ffSurvey.survey();
 		efVersion = ffSurvey.version();
 		efSection = ffSurvey.section();

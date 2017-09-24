@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
+import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
@@ -53,6 +54,9 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAppSurveyBean.class);
 
+	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
+	private final SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> ffSurvey;
+		
 	protected final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efOption;
 	
 	protected Map<TEMPLATE,List<SECTION>> mapSection; @Override public Map<TEMPLATE,List<SECTION>> getMapSection() {return mapSection;}
@@ -65,8 +69,11 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	protected Map<QUESTION,List<OPTION>> matrixCols; @Override public Map<QUESTION,List<OPTION>> getMatrixCols() {return matrixCols;}
 	protected Map<QUESTION,List<OPTION>> matrixCells; public Map<QUESTION,List<OPTION>> getMatrixCells() {return matrixCells;}
 
+
+	
 	public AbstractAppSurveyBean(SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> ffSurvey)
 	{
+		this.ffSurvey=ffSurvey;
 		efOption = ffSurvey.option();
 		
 		mapSection = new HashMap<TEMPLATE,List<SECTION>>();
@@ -80,6 +87,26 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		matrixCells = new HashMap<QUESTION,List<OPTION>>();
 	}
 	
+	public void initSuper(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
+	{
+		this.fSurvey=fSurvey;
+		refreshUnits();
+		refreshSurveyStatus();
+		
+		//Cache
+		reloadSections();
+		reloadQuestions();
+		reloadOptions();
+	}
+	
+	private List<UNIT> units;
+	public List<UNIT> getUnits(){return units;}
+	public void refreshUnits(){units=fSurvey.allOrderedPositionVisible(ffSurvey.getClassUnit());}
+	
+	private List<SS> surveyStatus;
+	public List<SS> getSurveyStatus(){return surveyStatus;}
+	public void refreshSurveyStatus(){surveyStatus=fSurvey.allOrderedPositionVisible(ffSurvey.getClassSurveyStatus());}
+	
 	@Override public void updateTemplate(TEMPLATE template)
 	{
 		if(!mapSection.containsKey(template)){mapSection.put(template,new ArrayList<SECTION>());}
@@ -91,6 +118,75 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 				mapSection.get(template).add(section);
 			}
 		}
+	}
+	
+	private void reloadSections()
+	{
+		mapSection.clear();
+		for(SECTION s : fSurvey.allOrderedPosition(ffSurvey.getClassSection()))
+		{
+			if(!mapSection.containsKey(s.getTemplate())){mapSection.put(s.getTemplate(),new ArrayList<SECTION>());}
+			if(s.isVisible())
+			{
+				mapSection.get(s.getTemplate()).add(s);
+			}
+		}
+	}
+	
+	private void reloadQuestions()
+	{
+		mapQuestion.clear();
+		for(QUESTION q : fSurvey.allOrderedPosition(ffSurvey.getClassQuestion()))
+		{
+			if(!mapQuestion.containsKey(q.getSection())){mapQuestion.put(q.getSection(),new ArrayList<QUESTION>());}
+			mapQuestion.get(q.getSection()).add(q);
+		}
+	}
+	
+	public void reloadOptions()
+	{
+		mapOption.clear();
+		for(OPTION o : fSurvey.allOrderedPosition(ffSurvey.getOptionClass()))
+		{
+			mapOptionId.put(o.getId(),o);
+			if(!mapOption.containsKey(o.getQuestion())){mapOption.put(o.getQuestion(),new ArrayList<OPTION>());}
+			mapOption.get(o.getQuestion()).add(o);
+			
+			if(o.getRow())
+			{
+				if(!matrixRows.containsKey(o.getQuestion())){matrixRows.put(o.getQuestion(),new ArrayList<OPTION>());}
+				matrixRows.get(o.getQuestion()).add(o);
+			}
+			if(o.getCol())
+			{
+				if(!matrixCols.containsKey(o.getQuestion())){matrixCols.put(o.getQuestion(),new ArrayList<OPTION>());}
+				matrixCols.get(o.getQuestion()).add(o);
+			}
+			if(o.getCell())
+			{
+				if(!matrixCells.containsKey(o.getQuestion())){matrixCells.put(o.getQuestion(),new ArrayList<OPTION>());}
+				matrixCells.get(o.getQuestion()).add(o);
+			}
+		}
+	}
+	
+	@Override public void updateSection(SECTION section)
+	{
+		if(!mapQuestion.containsKey(section)){mapQuestion.put(section,new ArrayList<QUESTION>());}
+		mapQuestion.get(section).clear();
+		mapQuestion.get(section).addAll(section.getQuestions());
+	}
+	
+	@Override public void updateOptions(QUESTION question)
+	{
+		for(OPTION o : question.getOptions()){mapOptionId.put(o.getId(),o);}
+		if(!mapOption.containsKey(question)){mapOption.put(question,new ArrayList<OPTION>());}
+		mapOption.get(question).clear();
+		mapOption.get(question).addAll(question.getOptions());
+		
+		matrixRows.put(question, efOption.toRows(question.getOptions()));
+		matrixCols.put(question, efOption.toColumns(question.getOptions()));
+		matrixCells.put(question, efOption.toCells(question.getOptions()));
 	}
 	
 	protected String statistics()

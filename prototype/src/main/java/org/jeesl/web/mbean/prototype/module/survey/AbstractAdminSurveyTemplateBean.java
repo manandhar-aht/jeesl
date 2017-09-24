@@ -397,6 +397,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.saveEntity(question));
 		if(question.getUnit()!=null){question.setUnit(fSurvey.find(cUnit,question.getUnit()));}
+		if(question.getOptionSet()!=null){question.setOptionSet(fSurvey.find(cOptions,question.getOptionSet()));}
 		question = fSurvey.save(question);
 		loadSection();
 	}

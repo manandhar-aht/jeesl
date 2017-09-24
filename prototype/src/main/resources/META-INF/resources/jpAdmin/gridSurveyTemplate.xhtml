@@ -169,13 +169,15 @@
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
-						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
+						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid20,jeeslGrid30,jeeslGrid20">
 							<p:outputLabel value="#{msg.jeeslVisible}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.visible}" />
 							
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<p:inputText value="#{cc.attrs.bean.section.position}"/>
-							
+						</p:panelGrid>
+						
+						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 							<p:outputLabel value="#{msg.jpSurveySectionCode}"/>
 							<p:inputText value="#{cc.attrs.bean.section.code}"/>
 							
@@ -235,6 +237,7 @@
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveQuestion()}" update=":#{cc.id}:row1"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmQuestion()}" update=":#{cc.id}:row1"/>
 						</f:facet>
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 
 							<p:outputLabel value="#{msg.aupSurveyQuestionCode}"/>
@@ -293,7 +296,13 @@
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showMatrix}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowMatrix}"/>
 							<h:outputText value=""/><h:outputText value=""/>
 						</p:panelGrid>
-						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.withOptionSets}">
+							<p:outputLabel value="#{msg.jeeslSurveyOptionSet}"/>
+							<p:selectOneMenu value="#{cc.attrs.bean.question.optionSet}" effect="fade" autoWidth="false">
+								<f:selectItem itemLabel="--"/>
+								<f:selectItems value="#{cc.attrs.bean.optionSets}" var="s" itemLabel="#{s.name[userBean.localeCode].lang}" itemValue="#{s}"/>
+							</p:selectOneMenu>
+						</p:panelGrid>
 					</p:panel>
 				</h:form>
 				<h:form id="fOptions" rendered="#{(not empty cc.attrs.bean.question) and (cc.attrs.bean.question.id gt 0)}">

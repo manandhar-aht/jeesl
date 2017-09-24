@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.controller.monitor.ProcessingTimeTracker;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
@@ -29,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
@@ -70,7 +72,6 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	protected Map<QUESTION,List<OPTION>> matrixCells; public Map<QUESTION,List<OPTION>> getMatrixCells() {return matrixCells;}
 
 
-	
 	public AbstractAppSurveyBean(SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> ffSurvey)
 	{
 		this.ffSurvey=ffSurvey;
@@ -96,7 +97,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		//Cache
 		reloadSections();
 		reloadQuestions();
-		reloadOptions();
+//		reloadOptions();
 	}
 	
 	private List<UNIT> units;
@@ -135,41 +136,53 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	
 	private void reloadQuestions()
 	{
+		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
 		mapQuestion.clear();
+		mapOption.clear();
 		for(QUESTION q : fSurvey.allOrderedPosition(ffSurvey.getClassQuestion()))
 		{
+			q = fSurvey.load(q);
 			if(!mapQuestion.containsKey(q.getSection())){mapQuestion.put(q.getSection(),new ArrayList<QUESTION>());}
 			mapQuestion.get(q.getSection()).add(q);
+			updateOptions(q);
 		}
+		logger.info(ffSurvey.getClassQuestion().getSimpleName()+" loaded in "+AbstractLogMessage.postConstruct(ptt));
 	}
-	
-	public void reloadOptions()
+/*	
+	private void reloadOptions()
 	{
+		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
 		mapOption.clear();
 		for(OPTION o : fSurvey.allOrderedPosition(ffSurvey.getOptionClass()))
 		{
-			mapOptionId.put(o.getId(),o);
-			if(!mapOption.containsKey(o.getQuestion())){mapOption.put(o.getQuestion(),new ArrayList<OPTION>());}
-			mapOption.get(o.getQuestion()).add(o);
-			
-			if(o.getRow())
-			{
-				if(!matrixRows.containsKey(o.getQuestion())){matrixRows.put(o.getQuestion(),new ArrayList<OPTION>());}
-				matrixRows.get(o.getQuestion()).add(o);
-			}
-			if(o.getCol())
-			{
-				if(!matrixCols.containsKey(o.getQuestion())){matrixCols.put(o.getQuestion(),new ArrayList<OPTION>());}
-				matrixCols.get(o.getQuestion()).add(o);
-			}
-			if(o.getCell())
-			{
-				if(!matrixCells.containsKey(o.getQuestion())){matrixCells.put(o.getQuestion(),new ArrayList<OPTION>());}
-				matrixCells.get(o.getQuestion()).add(o);
-			}
+			updateCache(o);
 		}
+		logger.info("Options loaded in "+AbstractLogMessage.postConstruct(ptt));
 	}
 	
+	private void updateCache(OPTION o)
+	{
+		mapOptionId.put(o.getId(),o);
+		if(!mapOption.containsKey(o.getQuestion())){mapOption.put(o.getQuestion(),new ArrayList<OPTION>());}
+		mapOption.get(o.getQuestion()).add(o);
+		
+		if(o.getRow())
+		{
+			if(!matrixRows.containsKey(o.getQuestion())){matrixRows.put(o.getQuestion(),new ArrayList<OPTION>());}
+			matrixRows.get(o.getQuestion()).add(o);
+		}
+		if(o.getCol())
+		{
+			if(!matrixCols.containsKey(o.getQuestion())){matrixCols.put(o.getQuestion(),new ArrayList<OPTION>());}
+			matrixCols.get(o.getQuestion()).add(o);
+		}
+		if(o.getCell())
+		{
+			if(!matrixCells.containsKey(o.getQuestion())){matrixCells.put(o.getQuestion(),new ArrayList<OPTION>());}
+			matrixCells.get(o.getQuestion()).add(o);
+		}
+	}
+*/	
 	@Override public void updateSection(SECTION section)
 	{
 		if(!mapQuestion.containsKey(section)){mapQuestion.put(section,new ArrayList<QUESTION>());}

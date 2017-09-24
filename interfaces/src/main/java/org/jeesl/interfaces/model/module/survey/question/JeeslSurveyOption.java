@@ -10,7 +10,6 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 
-import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -37,14 +36,14 @@ public interface JeeslSurveyOption<L extends UtilsLang, D extends UtilsDescripti
 							DATA extends JeeslSurveyData<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>, OPTIONS extends JeeslSurveyOptionSet<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>>
-			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,EjbSaveable,
+			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,//EjbSaveable,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
 	public static enum Units{yn,number,txt};
 	public static enum Status{open};
 	
-	QUESTION getQuestion();
-	void setQuestion(QUESTION question);
+//	QUESTION getQuestion();
+//	void setQuestion(QUESTION question);
 	
 	double getScore();
 	void setScore(double score);

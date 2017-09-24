@@ -254,10 +254,28 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		this.rmProtected(version);
 	}
 	
-	@Override public void rmOption(OPTION option) throws UtilsConstraintViolationException
+	@Override public OPTION saveOption(QUESTION question, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException
 	{
+		question = em.find(cQuestion, question.getId());
+		option = this.saveProtected(option);
+		if(!question.getOptions().contains(option))
+		{
+			question.getOptions().add(option);
+			this.save(question);
+		}
+		return option;
+	}
+	
+	@Override public void rmOption(QUESTION question, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		question = em.find(cQuestion, question.getId());
 		option = em.find(cOption, option.getId());
-		option.getQuestion().getOptions().remove(option);
+		if(question.getOptions().contains(option))
+		{
+			question.getOptions().remove(option);
+			this.save(question);
+		}
+
 		this.rmProtected(option);
 	}
 	

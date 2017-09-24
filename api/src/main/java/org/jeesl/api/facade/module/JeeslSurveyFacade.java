@@ -58,8 +58,10 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	
 	List<SURVEY> fSurveysForCategories(List<TC> categories);
 	
+	OPTION saveOption(QUESTION question, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException;
+	
 	void rmVersion(VERSION version) throws UtilsConstraintViolationException;
-	void rmOption(OPTION option) throws UtilsConstraintViolationException;
+	void rmOption(QUESTION question, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException;
 	
 	TEMPLATE fcSurveyTemplate(TC category, TS status);
 	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion);

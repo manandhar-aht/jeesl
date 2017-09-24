@@ -324,8 +324,8 @@
 				<h:form id="fOption" >
 					<p:panel header="#{msg.jeeslSurveyOption}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.option}">
 						<f:facet name="actions">
-							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveOption()}" update=":#{cc.id}:sQuestion"/>
-							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmOption()}" update=":#{cc.id}:sQuestion"/>
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveQuestionOption()}" update=":#{cc.id}:sQuestion"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmQuestionOption()}" update=":#{cc.id}:sQuestion"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">

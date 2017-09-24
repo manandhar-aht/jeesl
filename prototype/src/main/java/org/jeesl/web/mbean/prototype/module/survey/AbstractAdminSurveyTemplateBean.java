@@ -424,18 +424,18 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		option = efDescription.persistMissingLangs(fSurvey, sbhLocale.getList(), option);
 	}
 	
-	public void saveOption() throws UtilsConstraintViolationException, UtilsLockingException
+	public void saveQuestionOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(option));}
-		option = fSurvey.save(option);
+		option = fSurvey.saveOption(question,option);
 		reloadQuestion();
 		bMessage.growlSuccessSaved();
 	}
 	
-	public void rmOption() throws UtilsConstraintViolationException, UtilsLockingException
+	public void rmQuestionOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
-		fSurvey.rmOption(option);
+		fSurvey.rmOption(question,option);
 		clear(false,false,false,false,true,true,true);
 		reloadQuestion();
 		bMessage.growlSuccessRemoved();

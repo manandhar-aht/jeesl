@@ -59,7 +59,7 @@ public class EjbSurveyOptionFactory<L extends UtilsLang, D extends UtilsDescript
 		try
 		{
 			ejb = cOption.newInstance();
-			ejb.setQuestion(question);
+//			ejb.setQuestion(question);
 			ejb.setCode(code);
 			ejb.setPosition(1);
 

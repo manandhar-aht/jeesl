@@ -36,11 +36,14 @@ import org.jeesl.util.comparator.ejb.system.io.report.IoReportSheetComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.exlp.util.io.JsonUtil;
 import net.sf.exlp.util.io.StringUtil;
 
 public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDescription,
@@ -106,6 +109,8 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected final JobCodeProcessor jobCodeProcessor;
 	
 	protected JsonFlatFigures flats; public JsonFlatFigures getFlats() {return flats;}
+	protected List<Object> jsonDataList; public List<Object> getJsonDataList() {return jsonDataList;} public void setJsonDataList(List<Object> jsonDataList) {this.jsonDataList = jsonDataList;}
+	protected String jsonStream; public String getJsonStream() {return jsonStream;}
 	
 	private Comparator<SHEET> comparatorSheet;
 	private Comparator<GROUP> comparatorGroup;
@@ -292,5 +297,12 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	private void buildHeaders()
 	{
 		headers = new ArrayList<String>();
+	}
+	
+	public void buildJson()
+	{
+		jsonStream = "";
+		try {jsonStream = JsonUtil.toString(jsonDataList);}
+		catch (JsonProcessingException e) {e.printStackTrace();}
 	}
 }

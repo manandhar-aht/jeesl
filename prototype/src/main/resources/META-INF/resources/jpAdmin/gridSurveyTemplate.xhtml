@@ -22,6 +22,7 @@
 		<composite:attribute name="withMultiOptions" required="false" default="false"/>
 		<composite:attribute name="withSchemes" required="false" default="false"/>
 		<composite:attribute name="withMatrix" required="false" default="false"/>
+		<composite:attribute name="withOptionSets" required="false" default="false"/>
 	</composite:interface>
 	
 <composite:implementation>
@@ -111,8 +112,31 @@
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 					</p:panel>
 				</h:form>
+				<h:form id="fSets" rendered="#{cc.attrs.withOptionSets and (not empty cc.attrs.bean.template)}">
+					<p:dataTable var="os" value="#{cc.attrs.bean.optionSets}" rowKey="#{os.id}"
+                                 selection="#{cc.attrs.bean.optionSet}" selectionMode="single" draggableRows="true">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveyOptionSets}">
+                          <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addSet()}" update=":#{cc.id}:grid"/>
+                      </aht:pfDataTableHeader>
+                  </f:facet>
+                  <p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectSet()}" update=":#{cc.id}:grid" />
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderSets()}" update="@form"/>
+                  <p:column rendered="false">
+                  		<h:graphicImage rendered="#{not os.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+                     <h:outputText rendered="#{os.visible}" value="#{os.position}" />
+                  </p:column>
+                  <p:column rendered="true">
+                     <h:outputText value="#{os.position}" />
+                  </p:column>
+						<p:column>
+                      <f:facet name="header">#{msg.jeeslName}</f:facet>
+                      <h:outputText value="#{os.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+                  </p:column>
+					</p:dataTable>
+				</h:form>
 			</aht:slot>
-			<aht:slot width="5" >
+			<aht:slot id="sCenter" width="5" >
 				<h:form id="fVersion" rendered="#{not empty cc.attrs.bean.version}">
 					<p:panel header="#{msg.jpSurveyTemplateVersion}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
@@ -147,13 +171,16 @@
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:row1"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1"/>
 						</f:facet>
-						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="4" columnClasses="jeeslGrid30,jeeslGrid20,jeeslGrid30,jeeslGrid20">
 							<p:outputLabel value="#{msg.jeeslVisible}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.visible}" />
 							
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
-							<p:inputText value="#{cc.attrs.bean.section.position}"/>
-							
+							<h:outputText value="#{cc.attrs.bean.section.position}"/>
+						</p:panelGrid>
+						
+						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 							<p:outputLabel value="#{msg.jpSurveySectionCode}"/>
 							<p:inputText value="#{cc.attrs.bean.section.code}"/>
 							
@@ -170,7 +197,26 @@
 							<p:inputText rendered="true" value="#{cc.attrs.bean.nnb.b}"/>
 
 						</p:panelGrid>
+					</p:panel>
+				</h:form>
+				<h:form id="fSet" rendered="#{not empty cc.attrs.bean.optionSet}">
+					<p:panel header="#{msg.jeeslSurveyOptionSet}" styleClass="auPanelWithGrid">
+						<f:facet name="actions">
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSet()}" update=":#{cc.id}:row1"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSet()}" update=":#{cc.id}:row1"/>
+						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="4" columnClasses="jeeslGrid30,jeeslGrid20,jeeslGrid30,jeeslGrid20" rendered="false">
+							<p:outputLabel value="#{msg.jeeslVisible}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.optionSet.visible}" />
+							
+							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
+							<p:inputText value="#{cc.attrs.bean.optionSet.position}"/>
+						</p:panelGrid>
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">							
+							<p:outputLabel value="#{msg.aupSurveySectionName}"/>
+							<p:inputText value="#{cc.attrs.bean.optionSet.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:panelGrid>
 					</p:panel>
 				</h:form>
 				<h:form id="fQuestions" rendered="#{(not empty cc.attrs.bean.section) and (cc.attrs.bean.section.id gt 0)}">
@@ -194,13 +240,14 @@
 					</p:dataTable>
 				</h:form>
 			</aht:slot>
-			<aht:slot id="sQuestion" width="4" renderChildren="#{not empty cc.attrs.bean.question}">
-				<h:form id="fQuestion">
+			<aht:slot id="sQuestion" width="4" >
+				<h:form id="fQuestion" rendered="#{not empty cc.attrs.bean.question}">
 					<p:panel header="#{msg.aupSurveyQuestion}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveQuestion()}" update=":#{cc.id}:row1"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmQuestion()}" update=":#{cc.id}:row1"/>
 						</f:facet>
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 
 							<p:outputLabel value="#{msg.aupSurveyQuestionCode}"/>
@@ -259,7 +306,13 @@
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showMatrix}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowMatrix}"/>
 							<h:outputText value=""/><h:outputText value=""/>
 						</p:panelGrid>
-						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.withOptionSets}">
+							<p:outputLabel value="#{msg.jeeslSurveyOptionSet}"/>
+							<p:selectOneMenu id="optionsS1" value="#{cc.attrs.bean.question.optionSet}" effect="fade" autoWidth="false">
+								<f:selectItem itemLabel="--"/>
+								<f:selectItems value="#{cc.attrs.bean.optionSets}" var="os" itemLabel="#{os.name[cc.attrs.bean.sbhLocale.selection.code].lang}" itemValue="#{os}"/>
+							</p:selectOneMenu>
+						</p:panelGrid>
 					</p:panel>
 				</h:form>
 				<h:form id="fOptions" rendered="#{(not empty cc.attrs.bean.question) and (cc.attrs.bean.question.id gt 0)}">
@@ -267,10 +320,35 @@
                                  selection="#{cc.attrs.bean.option}" selectionMode="single" draggableRows="true">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.jeeslSurveyOptions}">
-                          		<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addOption()}" update=":#{cc.id}:fOption"/>
+                          		<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addOption()}" update=":#{cc.id}:sQuestion"/>
                       		</aht:pfDataTableHeader>
                   		</f:facet>
-                  		<p:ajax event="rowSelect" update=":#{cc.id}:sQuestion" listener="#{cc.attrs.bean.selectOption()}"/>
+                  		<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectOption()}" update=":#{cc.id}:sQuestion"/>
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderOptions()}" update="@form"/>
+						<p:column rendered="#{cc.attrs.withMatrix and cc.attrs.bean.question.showMatrix}" styleClass="jeeslPfTcCenter">
+							<h:graphicImage rendered="#{o.row}" name="12/ui/module/survey/row.png"  library="jeeslPrototypeGfx"/>
+							<h:graphicImage rendered="#{o.col}" name="12/ui/module/survey/column.png"  library="jeeslPrototypeGfx"/>
+							<h:graphicImage rendered="#{o.cell}" name="12/ui/module/survey/cell.png"  library="jeeslPrototypeGfx"/>
+						</p:column>
+                  		<p:column>
+                  			<f:facet name="header">#{msg.jeeslCode}</f:facet>
+                      		<h:outputText value="#{o.code}" />
+                  		</p:column>
+						<p:column>
+							<f:facet name="header">#{msg.jeeslName}</f:facet>
+							<h:outputText value="#{o.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+				<h:form id="fSetOptions" rendered="#{(not empty cc.attrs.bean.optionSet) and (cc.attrs.bean.optionSet.id gt 0)}">
+					<p:dataTable var="o" value="#{cc.attrs.bean.options}" rowKey="#{o.id}" rendered="#{cc.attrs.withOptions or cc.attrs.withMultiOptions}"
+                                 selection="#{cc.attrs.bean.option}" selectionMode="single" draggableRows="true">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveyOptions}">
+                       		<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addOption()}" update=":#{cc.id}:sQuestion"/>
+                   	</aht:pfDataTableHeader>
+                  		</f:facet>
+                  		<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectOption()}" update=":#{cc.id}:sQuestion"/>
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderOptions()}" update="@form"/>
 						<p:column rendered="#{cc.attrs.withMatrix and cc.attrs.bean.question.showMatrix}" styleClass="jeeslPfTcCenter">
 							<h:graphicImage rendered="#{o.row}" name="12/ui/module/survey/row.png"  library="jeeslPrototypeGfx"/>
@@ -288,10 +366,10 @@
 					</p:dataTable>
 				</h:form>
 				<h:form id="fOption" >
-					<p:panel header="#{msg.jeeslSurveyOption}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.option}">
+					<p:panel header="#{msg.jeeslSurveyOption}" styleClass="auPanelWithGrid" rendered="#{(not empty cc.attrs.bean.question) and (not empty cc.attrs.bean.option)}">
 						<f:facet name="actions">
-							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveOption()}" update=":#{cc.id}:sQuestion"/>
-							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmOption()}" update=":#{cc.id}:sQuestion"/>
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveQuestionOption()}" update=":#{cc.id}:sQuestion"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmQuestionOption()}" update=":#{cc.id}:sQuestion"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
@@ -324,7 +402,43 @@
 						</p:panelGrid>
 					</p:panel>
 				</h:form>
-				
+				<h:form id="fSetOption" >
+					<p:panel header="#{msg.jeeslSurveyOption}" styleClass="auPanelWithGrid" rendered="#{(not empty cc.attrs.bean.optionSet) and (not empty cc.attrs.bean.option)}">
+						<f:facet name="actions">
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSetOption()}" update=":#{cc.id}:sQuestion"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSetOption()}" update=":#{cc.id}:sQuestion"/>
+						</f:facet>
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+							<p:outputLabel value="#{msg.aupCode}"/>
+							<p:inputText autocomplete="off" value="#{cc.attrs.bean.option.code}"/>
+							
+							<p:outputLabel for="itScore" value="#{msg.jeeslSurveyScore}"/>
+							<p:inputText id="itScore" autocomplete="off" value="#{cc.attrs.bean.option.score}"/>
+						</p:panelGrid>
+						<p:panelGrid columns="3" columnClasses="auPwg30,auPwg30,auPwg30">
+							<ui:fragment>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.option.row}"/>
+								<p:outputLabel value="#{msg.jeeslSurveyOptionRow}"/>
+							</ui:fragment>
+							<ui:fragment>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.option.col}" />
+								<p:outputLabel value="#{msg.jeeslSurveyOptionCol}"/>
+							</ui:fragment>
+							<ui:fragment>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.option.cell}" />
+								<p:outputLabel value="#{msg.jeeslSurveyOptionCell}"/>
+							</ui:fragment>
+						</p:panelGrid>
+						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							<p:outputLabel value="#{msg.jeeslName}"/>
+							<p:inputText autocomplete="off" value="#{cc.attrs.bean.option.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+							
+							<p:outputLabel value="#{msg.jeeslDescription}"/>
+							<jtp:inputRemark value="#{cc.attrs.bean.option.description[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
 				<h:form id="fScores" rendered="#{cc.attrs.withSchemes and (not empty cc.attrs.bean.question) and (cc.attrs.bean.question.id gt 0)}">
 					<p:dataTable var="score" value="#{cc.attrs.bean.scores}" rowKey="#{scores.id}"
 								 selection="#{cc.attrs.bean.score}" selectionMode="single">

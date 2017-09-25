@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslSurvey">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Umfrage"/>
+	    		<s:lang key="en" translation="Survey"/>
+	    		<s:lang key="fr" translation="Survey"/>
+	    	</s:langs>
+    </s:translation>
+    	<s:translation key="jeeslListOfSurvey">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Umfragen"/>
+	    		<s:lang key="en" translation="Surveys"/>
+	    		<s:lang key="fr" translation="Surveys"/>
+	    	</s:langs>
+    </s:translation>
 	<s:translation key="aupSurveyTemplate">
-    	<s:langs>
-    		<s:lang key="de" translation="Template"/>
-    		<s:lang key="en" translation="Template"/>
-    		<s:lang key="fr" translation="Template"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Template"/>
+	    		<s:lang key="en" translation="Template"/>
+	    		<s:lang key="fr" translation="Template"/>
+	    	</s:langs>
     </s:translation>
 	<s:translation key="jeeslSurveyCategory">
     	<s:langs>
@@ -348,11 +362,26 @@
     		<s:lang key="fr" translation="Status"/>
     	</s:langs>
     </s:translation>
-    	<s:translation key="jeeslSurveyCriteria">
+	<s:translation key="jeeslSurveyCriteria">
     	<s:langs>
     		<s:lang key="de" translation="Kriterium"/>
     		<s:lang key="en" translation="Criteria"/>
     		<s:lang key="fr" translation="Criteria"/>
+    	</s:langs>
+    </s:translation>
+    
+	<s:translation key="jeeslSurveyOptionSets">
+    	<s:langs>
+    		<s:lang key="de" translation="Auswahl Sets"/>
+    		<s:lang key="en" translation="Option Sets"/>
+    		<s:lang key="fr" translation="Option Sets"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslSurveyOptionSet">
+    	<s:langs>
+    		<s:lang key="de" translation="Auswahl Set"/>
+    		<s:lang key="en" translation="Option Set"/>
+    		<s:lang key="fr" translation="Option Set"/>
     	</s:langs>
     </s:translation>
 </s:translations>

@@ -1,6 +1,10 @@
 package org.jeesl.factory.ejb.module.survey;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
@@ -15,7 +19,6 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.model.pojo.map.generic.Nested2Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +26,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class EjbSurveyMatrixFactory<L extends UtilsLang, D extends UtilsDescription,
+public class EjbSurveyOptionSetFactory<L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
@@ -42,38 +45,30 @@ public class EjbSurveyMatrixFactory<L extends UtilsLang, D extends UtilsDescript
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveyMatrixFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyOptionSetFactory.class);
 	
-	private final Class<MATRIX> cMatrix;
+	final Class<OPTIONS> cOptions;
     
-	public EjbSurveyMatrixFactory(final Class<MATRIX> cMatrix)
+	public EjbSurveyOptionSetFactory(final Class<OPTIONS> cOptions)
 	{       
-        this.cMatrix = cMatrix;
+        this.cOptions = cOptions;
 	}
-		
-	public MATRIX build(ANSWER answer, OPTION row, OPTION column)
+	    
+	public OPTIONS build(TEMPLATE template, List<OPTIONS> list)
 	{
-		MATRIX ejb = null;
+		OPTIONS ejb = null;
 		try
 		{
-			ejb = cMatrix.newInstance();
-			ejb.setAnswer(answer);
-			ejb.setRow(row);
-			ejb.setColumn(column);
+			ejb = cOptions.newInstance();
+			ejb.setCode(UUID.randomUUID().toString());
+			ejb.setTemplate(template);
+			
+			if(list==null) {ejb.setPosition(1);}
+			else {ejb.setPosition(list.size()+1);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
-	}
-	
-	public Nested2Map<OPTION,OPTION,MATRIX> build(List<MATRIX> matrix)
-	{
-		Nested2Map<OPTION,OPTION,MATRIX> map = new Nested2Map<OPTION,OPTION,MATRIX>();
-		for (MATRIX m : matrix)
-		{
-			map.put(m.getRow(), m.getColumn(), m);
-		}
-		return map;
 	}
 }

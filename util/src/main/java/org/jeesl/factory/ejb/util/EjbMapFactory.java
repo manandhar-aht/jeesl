@@ -14,11 +14,11 @@ public class EjbMapFactory
 	    
     public static <T extends EjbWithCode> Map<String,T> byCode(List<T> list)
     {
-    	Map<String,T> map = new Hashtable<String,T>();
-    	for(T s : list)
-    	{
-    		map.put(s.getCode(), s);
-    	}
+	    	Map<String,T> map = new Hashtable<String,T>();
+	    	for(T s : list)
+	    	{
+	    		map.put(s.getCode(), s);
+	    	}
         return map;
     }
 }

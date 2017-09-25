@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:mc="http://www.metachart.org/chart"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aupAdm="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
+		<composite:attribute name="datePattern" required="false" default="dd.MM.yyyy" />
+	</composite:interface>
+	
+	<composite:implementation>
+		<aup:grid id="grid">
+			<aht:row id="row1" rendered="#{not empty cc.attrs.bean.sbhSurvey.selected}">
+				<aht:slot id="sSurvey" width="4" renderChildren="#{not empty cc.attrs.bean.sbhSurvey.selected}">
+					<p:panel header="#{msg.jeeslSurvey}" styleClass="auPanelWithGrid">
+							
+						<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60" >
+							<p:outputLabel value="#{msg.jeeslSurveyCategory}"/>
+							<h:outputText value="#{cc.attrs.bean.survey.template.category.name[userBean.localeCode].lang}"/>
+							
+							<p:outputLabel value="#{cc.attrs.bean.survey.name[userBean.localeCode].lang}"/>
+							<h:outputText value="#{cc.attrs.bean.survey.description[userBean.localeCode].lang}"/>
+
+						</p:panelGrid>
+					</p:panel>
+				</aht:slot>
+			</aht:row>
+			<aht:row id="row2" rendered="#{not empty cc.attrs.bean.sbhSurvey.selected}">
+				<aht:slot>
+					<ui:repeat id="repeatSections" value="#{appSurveyBean.mapSection[cc.attrs.bean.template]}" var="section">
+							<p:panel id="pQuestions" styleClass="auPanelWithGrid"
+									header="#{section.code}: #{section.name[localeCode].lang}">
+								
+								<ui:repeat value="#{appSurveyBean.mapQuestion[section]}" id="repeatQuestions" var="q">
+									<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80" rendered="#{q.visible}">
+										<h:panelGroup>
+											<h:outputText value="#{q.code} " styleClass="jeeslBold"/> <h:outputText value="#{q.text[localeCode].lang}"/>
+										</h:panelGroup>
+										<mc:chart type="column" rendered="#{q.showSelectOne}">  
+						                    <mc:axis code="x" categories="#{cc.attrs.bean.mapDsOption[q].dataSet[0]}">
+						                        <mc:labels rotation="0"/>
+						                    </mc:axis>
+						                    <mc:axis code="y" min="0" >
+						    
+						                    </mc:axis>
+						                    <mc:tooltip shared="true"/>
+						                    <mc:series>
+						                        <mc:dataSet value="#{cc.attrs.bean.mapDsOption[q].dataSet[1]}"/>
+						                    </mc:series>
+						                </mc:chart>
+									</p:panelGrid>
+								</ui:repeat>
+							</p:panel>
+						</ui:repeat>
+				</aht:slot>
+			</aht:row>
+	    </aup:grid>
+	</composite:implementation>
+</html>

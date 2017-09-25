@@ -1,5 +1,8 @@
 package org.jeesl.factory.ejb.module.survey;
 
+import java.util.List;
+
+import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -21,8 +24,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.survey.Question;
 
-public class EjbSurveyQuestionFactory<L extends UtilsLang,
-										D extends UtilsDescription,
+public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
@@ -45,8 +47,13 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang,
 	
 	final Class<QUESTION> cQuestion;
     
-	public EjbSurveyQuestionFactory(final Class<QUESTION> cQuestion)
-	{       
+	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
+	
+	public EjbSurveyQuestionFactory(final Class<QUESTION> cQuestion){this(null,cQuestion);}
+	
+	public EjbSurveyQuestionFactory(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey, final Class<QUESTION> cQuestion)
+	{
+		this.fSurvey = fSurvey;
         this.cQuestion = cQuestion;
 	}
 	    
@@ -94,5 +101,17 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang,
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public List<OPTION> toOptions(QUESTION question)
+	{
+		if(fSurvey!=null) {question = fSurvey.load(question);}
+		if(question.getOptionSet()==null) {return question.getOptions();}
+		else
+		{
+			OPTIONS set = question.getOptionSet();
+			if(fSurvey!=null) {set = fSurvey.load(set);}
+			return set.getOptions();
+		}
 	}
 }

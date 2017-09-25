@@ -67,7 +67,6 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
 	protected JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> bSurvey;
 
-	
 	protected final Class<SURVEY> cSurvey;
 	protected final Class<SS> cSs;
 	protected final Class<SCHEME> cScheme;
@@ -97,10 +96,10 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected final EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efTemplate;
 	
 	protected final SbSingleHandler<TC> sbhCategory; public SbSingleHandler<TC> getSbhCategory() {return sbhCategory;}
+	protected final SbSingleHandler<SURVEY> sbhSurvey; public SbSingleHandler<SURVEY> getSbhSurvey() {return sbhSurvey;}
 	
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
-	protected List<TC> categories2; public List<TC> getCategories2(){return categories2;}
-	protected List<SURVEY> surveys; public List<SURVEY> getSurveys() {return surveys;}
+	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
 	
 	protected SURVEY survey; public SURVEY getSurvey() {return survey;} public void setSurvey(SURVEY survey) {this.survey = survey;}
 	protected TEMPLATE template; public TEMPLATE getTemplate(){return template;} public void setTemplate(TEMPLATE template){this.template = template;}
@@ -137,10 +136,11 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		efScheme = ffSurvey.scheme();
 		efTemplate = ffSurvey.template();
 		
-		categories2 = new ArrayList<TC>();
-		
 		sbhCategory = new SbSingleHandler<TC>(cTc,this);
+		sbhSurvey = new SbSingleHandler<SURVEY>(cSurvey,this);
 	}
+	
+	protected abstract void initSettings();
 	
 	protected void initSuperSurvey(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> bSurvey)
 	{

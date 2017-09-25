@@ -81,10 +81,8 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	
 	protected void reloadSurveys()
 	{
-		surveys = fSurvey.fSurveysForCategories(sbhCategory.getList());
+		sbhSurvey.setList(fSurvey.fSurveysForCategories(sbhCategory.getList()));
 	}
-	
-	protected abstract void initSettings();
 	
 	public void addSurvey() throws UtilsNotFoundException
 	{

@@ -40,8 +40,8 @@ public interface JeeslSurveyOption<L extends UtilsLang, D extends UtilsDescripti
 			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,EjbSaveable,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
-	public static enum Units{yn,number,txt};
-	public static enum Status{open};
+	enum Units{yn,number,txt}
+	enum Status{open}
 	
 	QUESTION getQuestion();
 	void setQuestion(QUESTION question);

@@ -10,8 +10,7 @@ import net.sf.ahtutils.interfaces.model.with.utils.UtilsWithStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface JeeslSync<L extends UtilsLang,
-							D extends UtilsDescription,
+public interface JeeslSync<L extends UtilsLang, D extends UtilsDescription,
 							STATUS extends UtilsStatus<STATUS,L,D>,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>>
 			extends EjbWithId,EjbWithCode,EjbWithRecord,

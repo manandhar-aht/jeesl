@@ -212,8 +212,10 @@ public class SurveyRestService <L extends UtilsLang,
 		for(UNIT ejb : fSurvey.allOrderedPosition(cUNIT)){aht.getStatus().add(xfStatus.build(ejb));}
 		return aht;
 	}
+//	@Override public Container exportSurveyAnalysisType() {return xfContainer.build(fSurvey.allOrderedPosition(cType));}
 	@Override public Container surveyQuestionUnits() {return xfContainer.build(fSurvey.allOrderedPosition(cUNIT));}
-
+	
+	
 	@Override public Aht exportSurveyStatus()
 	{
 		Aht aht = new Aht();

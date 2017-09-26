@@ -34,6 +34,17 @@
 								<h:outputText value="#{p.value}" />  
 				            </p:column>
 				       	</p:dataTable>
+				       	
+				       	<p:dataTable var="c" value="#{cc.attrs.bean.sbhCategory.selected}" rowKey="#{c.id}" rendered="false">
+							<f:facet name="header"><aht:pfDataTableHeader title="#{msg.jeeslProperties}"/></f:facet>
+							
+				            <p:column headerText="#{msg.jeeslCategory}">  
+								<h:outputText value="#{c.name[localeCode].lang}" />  
+				            </p:column>
+				            <p:column headerText="#{msg.jeeslPropertyKey}">  
+								<h:outputText value="#{c.id}" />  
+				            </p:column>
+				       	</p:dataTable>
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sProperty" width="5">
@@ -42,11 +53,12 @@
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:sProperties" tooltip="#{msg.ttSave}"/>
 							</f:facet>
+							<p:messages redisplay="false" severity="warn,error" showSummary="false" showDetail="true" closable="true"/>
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
 							
 								<p:outputLabel value="#{msg.jeeslCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.property.category}" effect="fade" >
-									<f:selectItems value="#{cc.attrs.bean.sbhCategory.list}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
+									<f:selectItems value="#{cc.attrs.bean.sbhCategory.selected}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
 								</p:selectOneMenu>
 							
 								<p:outputLabel value="#{msg.jeeslPropertyKey}"/>

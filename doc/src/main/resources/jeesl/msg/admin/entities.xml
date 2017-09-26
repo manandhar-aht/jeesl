@@ -196,7 +196,13 @@
 			<s:lang key="fr" translation="Data Status"/>
 		</s:langs>
 	</s:translation>
-	
+	<s:translation key="SurveyAnalysisType">
+		<s:langs>
+			<s:lang key="de" translation="Umfrage Analyse Typ"/>
+			<s:lang key="en" translation="Survey Analysis Type"/>
+			<s:lang key="fr" translation="Survey Analysis Type"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="SystemConstraintCategory">
 		<s:langs>
 			<s:lang key="de" translation="Nebenbedingung Kategorie"/>

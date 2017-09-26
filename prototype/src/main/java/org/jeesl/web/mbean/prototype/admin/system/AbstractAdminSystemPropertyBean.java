@@ -32,8 +32,8 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends Util
 	
 	private JeeslSystemPropertyFacade<L,D,C,P> fProperty;
 	
-	private SbMultiHandler<C> sbhCategory; public SbMultiHandler<C> getSbhCategory() {return sbhCategory;}
-	private Comparator<P> comparatorProperty;
+	private final SbMultiHandler<C> sbhCategory; public SbMultiHandler<C> getSbhCategory() {return sbhCategory;}
+	private final Comparator<P> comparatorProperty;
 	
 	private Class<P> cProperty;
 	private Class<C> cCategory;
@@ -45,6 +45,8 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends Util
 	public AbstractAdminSystemPropertyBean(final Class<L> cL, final Class<D> cD)
 	{
 		super(cL,cD);
+		sbhCategory = new SbMultiHandler<C>(cCategory,this);
+		comparatorProperty = (new PropertyComparator<L,D,C,P>()).factory(PropertyComparator.Type.category);
 	}
 	
 	public void initSuper(JeeslSystemPropertyFacade<L,D,C,P> fProperty, final Class<C> cCategory, final Class<P> cProperty)
@@ -52,15 +54,20 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends Util
 		this.fProperty=fProperty;
 		this.cProperty=cProperty;
 		this.cCategory=cCategory;
-		
-		comparatorProperty = (new PropertyComparator<L,D,C,P>()).factory(PropertyComparator.Type.category);
-		
-		sbhCategory = new SbMultiHandler<C>(cCategory,fProperty.allOrderedPositionVisible(cCategory),this);
+
+		sbhCategory.setList(fProperty.allOrderedPositionVisible(cCategory));
 		sbhCategory.selectAll();
 		if(debugOnInfo)
 		{
 			logger.info(SbMultiHandler.class.getSimpleName()+": "+cCategory.getSimpleName()+" "+sbhCategory.getSelected().size()+"/"+sbhCategory.getList().size());
 		}
+		refreshList();
+	}
+	
+	private void refreshList()
+	{
+		properties = fProperty.all(cProperty);
+		Collections.sort(properties,comparatorProperty);
 	}
 	
 	@Override
@@ -70,12 +77,6 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends Util
 		{
 			logger.info(SbMultiHandler.class.getSimpleName()+" toggled, but NYI");
 		}
-	}
-	
-	protected void refreshList()
-	{
-		properties = fProperty.all(cProperty);
-		Collections.sort(properties,comparatorProperty);
 	}
 	
 	public void selectProperty() throws UtilsNotFoundException

@@ -23,7 +23,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row id="row1">
-				<aht:slot width="7">
+				<aht:slot width="5">
 					<h:form id="fSurveys">
 						<p:dataTable var="survey" value="#{cc.attrs.bean.sbhSurvey.list}" rowKey="#{survey.id}"
 									 selection="#{cc.attrs.bean.survey}" selectionMode="single">
@@ -36,7 +36,7 @@
 								<f:facet name="header">#{msg.jeeslSurvey}</f:facet>
 								<h:outputText value="#{survey.name[localeCode].lang}" />
 							</p:column>
-							<p:column>
+							<p:column rendered="false">
 								<f:facet name="header">#{msg.jeeslDateFrom}</f:facet>
 								<h:outputText value="#{survey.startDate}" ><f:convertDateTime pattern="#{cc.attrs.datePattern}" /></h:outputText>
 							</p:column>
@@ -44,22 +44,24 @@
 								<f:facet name="header">#{msg.jeeslDateUntil}</f:facet>
 								<h:outputText value="#{survey.endDate}" ><f:convertDateTime pattern="#{cc.attrs.datePattern}" /></h:outputText>
 							</p:column>
-							<p:column>
+							<p:column rendered="false">
 								<f:facet name="header">#{msg.jeeslSurveyStatus}</f:facet>
 								<h:outputText value="#{survey.status.name[userBean.localeCode].lang}" />
 							</p:column>
 						</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sSurvey" width="5" >
-					<p:panel header="#{msg.jeeslSurvey}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.survey}">
+				<aht:slot id="sSurvey" width="7" >
+					<p:panel header="#{msg.jeeslSurvey}: #{cc.attrs.bean.survey.name[userBean.localeCode].lang}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.survey}">
 							
-							<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60" >
+							<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60" rendered="false">
 	
 								<p:outputLabel value="#{msg.jeeslSurveyCategory}"/>
 								<h:outputText value="#{cc.attrs.bean.survey.template.category.name[userBean.localeCode].lang}"/>
-								
-								<p:outputLabel value="#{cc.attrs.bean.survey.name[userBean.localeCode].lang}"/>
+							
+							</p:panelGrid>
+							<p:panelGrid columns="1" columnClasses="jeeslGrid100" >
+								<p:outputLabel value=""/>
 								<h:outputText value="#{cc.attrs.bean.survey.description[userBean.localeCode].lang}"/>
 	
 							</p:panelGrid>

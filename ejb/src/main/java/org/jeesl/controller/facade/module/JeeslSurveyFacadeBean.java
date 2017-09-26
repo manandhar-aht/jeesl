@@ -673,12 +673,19 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	
 	@Override public JsonFlatFigures surveyCountOption(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations)
 	{
+		if(questions==null || questions.isEmpty() || correlations==null || correlations.isEmpty()) {return JsonFlatFiguresFactory.build();} 
+		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
         CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
-        
         Root<ANSWER> answer = cQ.from(cAnswer);
         
         Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
+        predicates.add(pQuestion.in(questions));
+        
+        Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
+        Join<DATA,CORRELATION> jCorrelation = jData.join(JeeslSurveyData.Attributes.correlation.toString());
+        predicates.add(jCorrelation.in(correlations));
+        
         Path<OPTION> pOption = answer.get(JeeslSurveyAnswer.Attributes.option.toString());
         
         Expression<Long> eTa = cB.count(answer.<Long>get(JeeslSurveyAnswer.Attributes.option.toString()));
@@ -686,7 +693,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
         cQ.groupBy(pQuestion.get("id"),pOption.get("id"));
         cQ.multiselect(pQuestion.get("id"),pOption.get("id"),eTa);
         
-        cQ.where(pQuestion.in(questions));
+        cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
         TypedQuery<Tuple> tQ = em.createQuery(cQ);
         List<Tuple> tuples = tQ.getResultList();
         

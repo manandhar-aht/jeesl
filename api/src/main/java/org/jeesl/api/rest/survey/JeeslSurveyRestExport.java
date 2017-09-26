@@ -26,6 +26,9 @@ public interface JeeslSurveyRestExport
 	@GET @Path("/survey/status") @Produces(MediaType.APPLICATION_XML)
 	Aht exportSurveyStatus();
 	
+//	@GET @Path("/survey/analysis/type") @Produces(MediaType.APPLICATION_XML)
+//	Container exportSurveyAnalysisType();
+	
 	@GET @Path("/survey/templates") @Produces(MediaType.APPLICATION_XML)
 	Templates exportSurveyTemplates();
 	
@@ -34,6 +37,8 @@ public interface JeeslSurveyRestExport
 	
 	@GET @Path("/surveys") @Produces(MediaType.APPLICATION_XML)
 	Surveys exportSurveys();
+	
+
 	
 	@GET @Path("/survey/{id:[1-9][0-9]*}") @Produces(MediaType.APPLICATION_XML)
 	Survey exportSurvey(@PathParam("id") long id);

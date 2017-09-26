@@ -25,7 +25,7 @@
 			<aht:row id="row1">
 				<aht:slot width="7">
 					<h:form id="fSurveys">
-						<p:dataTable var="survey" value="#{cc.attrs.bean.surveys}" rowKey="#{survey.id}"
+						<p:dataTable var="survey" value="#{cc.attrs.bean.sbhSurvey.list}" rowKey="#{survey.id}"
 									 selection="#{cc.attrs.bean.survey}" selectionMode="single">
 							<p:ajax event="rowSelect" update=":#{cc.id}:sSurvey :#{cc.id}:row2" listener="#{cc.attrs.bean.selectSurvey}"/>
 							<f:facet name="header">

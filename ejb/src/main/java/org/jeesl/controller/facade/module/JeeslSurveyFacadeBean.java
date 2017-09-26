@@ -633,6 +633,44 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
         return result;
 	}
 	
+	@Override public JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
+        
+        Root<ANSWER> answer = cQ.from(cAnswer);
+        Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
+        Join<DATA,SURVEY> jSurvey = jData.join(JeeslSurveyData.Attributes.survey.toString());
+        predicates.add(jSurvey.in(survey));
+        
+        Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
+        predicates.add(cB.equal(pQuestion,question));
+        
+        Path<OPTION> pOption = answer.get(JeeslSurveyAnswer.Attributes.option.toString());
+        
+        Expression<Long> eTa = cB.count(answer.<Long>get(JeeslSurveyAnswer.Attributes.option.toString()));
+      
+        cQ.groupBy(pQuestion.get("id"),pOption.get("id"));
+        cQ.multiselect(pQuestion.get("id"),pOption.get("id"),eTa);
+
+        cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+        TypedQuery<Tuple> tQ = em.createQuery(cQ);
+        List<Tuple> tuples = tQ.getResultList();
+        
+        JsonFlatFigures result = JsonFlatFiguresFactory.build();
+        for(Tuple t : tuples)
+        {
+	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
+	        	f.setL1((Long)t.get(0));
+	        	f.setL2((Long)t.get(1));
+	        	f.setL3((Long)t.get(2));
+	        	result.getFigures().add(f);
+        }
+        
+        return result;
+	}
+	
 	@Override public JsonFlatFigures surveyCountOption(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
@@ -655,11 +693,11 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
         JsonFlatFigures result = JsonFlatFiguresFactory.build();
         for(Tuple t : tuples)
         {
-        	JsonFlatFigure f = JsonFlatFigureFactory.build();
-        	f.setL1((Long)t.get(0));
-        	f.setL2((Long)t.get(1));
-        	f.setL3((Long)t.get(2));
-        	result.getFigures().add(f);
+	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
+	        	f.setL1((Long)t.get(0));
+	        	f.setL2((Long)t.get(1));
+	        	f.setL3((Long)t.get(2));
+	        	result.getFigures().add(f);
         }
         
         return result;

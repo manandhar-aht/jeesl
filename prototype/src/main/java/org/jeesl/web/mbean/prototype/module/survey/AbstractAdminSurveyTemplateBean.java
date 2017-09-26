@@ -68,14 +68,12 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	private final Class<LOC> cLoc;
 	
 	protected List<VERSION> nestedVersions; public List<VERSION> getNestedVersions(){return nestedVersions;}
-	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
 	protected List<OPTIONS> optionSets; public List<OPTIONS> getOptionSets(){return optionSets;}
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
 	protected List<SCHEME> schemes; public List<SCHEME> getSchemes() {return schemes;}
 	protected List<SCORE> scores; public List<SCORE> getScores() {return scores;}
 	
-//	protected TC category; public TC getCategory() {return category;} public void setCategory(TC category) {this.category = category;}
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
 	protected VERSION nestedVersion; public VERSION getNestedVersion() {return nestedVersion;} public void setNestedVersion(VERSION nestedVersion) {this.nestedVersion = nestedVersion;}
 	
@@ -145,8 +143,6 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 			catch (UtilsNotFoundException e) {e.printStackTrace();}
 		}
 	}
-	
-	protected abstract void initSettings();
 	
 	public void cancelScheme(){clear(false,false,false,false,false,true,false,true);}
 	public void calcelScore(){clear(false,false,false,false,false,false,true,true);}

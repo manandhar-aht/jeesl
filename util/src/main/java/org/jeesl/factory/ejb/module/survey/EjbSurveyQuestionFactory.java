@@ -1,6 +1,9 @@
 package org.jeesl.factory.ejb.module.survey;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
@@ -113,5 +116,16 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 			if(fSurvey!=null) {set = fSurvey.load(set);}
 			return set.getOptions();
 		}
+	}
+	
+	public Map<SECTION,List<QUESTION>> loadMap(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
+	{
+		Map<SECTION,List<QUESTION>> map = new HashMap<SECTION,List<QUESTION>>();
+		for(QUESTION q : fSurvey.allOrderedPosition(cQuestion))
+		{
+			if(!map.containsKey(q.getSection())){map.put(q.getSection(),new ArrayList<QUESTION>());}
+			map.get(q.getSection()).add(q);
+		}
+		return map;
 	}
 }

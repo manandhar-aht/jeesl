@@ -26,6 +26,7 @@ import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
+import org.jeesl.factory.txt.system.status.TxtStatusFactory;
 import org.jeesl.interfaces.model.module.survey.JeeslWithSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslWithSurveyType;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
@@ -194,7 +195,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	}
 	
 	@Override
-	public SURVEY fSurvey(CORRELATION correlation)
+	public SURVEY fSurvey(CORRELATION correlation) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<SURVEY> cQ = cB.createQuery(cSurvey);
@@ -207,8 +208,8 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		cQ.select(pathSurvey);
 		
 		try	{return em.createQuery(cQ).getSingleResult();}
-		catch (NoResultException e){e.printStackTrace();return null;}
-		catch (NonUniqueResultException e){e.printStackTrace();return null;}
+		catch (NoResultException e){e.printStackTrace(); throw new UtilsNotFoundException("No survey found for this correlation");}
+		catch (NonUniqueResultException e){e.printStackTrace(); throw new UtilsNotFoundException("Multiple surveys found for this correlation");}
 	}
 	
 	@Override
@@ -309,23 +310,23 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	}
 	
 	@Override public <TYPE extends UtilsStatus<TYPE,L,D>, WT extends JeeslWithType<L,D,TYPE>, W extends JeeslWithSurveyType<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,WT,TYPE>>
-		List<W> fSurveys(Class<W> c, List<SS> status, TYPE type, Date date)
+		List<W> fWithSurveys(Class<W> c, List<SS> status, TYPE type, Date date)
 	{
+		logger.info("Looking für wSurvey for type="+type.getCode()+" and status="+TxtStatusFactory.toCodes(status)+" and c="+c.getSimpleName());
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<W> cQ = cB.createQuery(c);
 		Root<W> with = cQ.from(c);
 		
 		Join<W,SURVEY> jSurvey = with.join(JeeslWithSurvey.Attributes.survey.toString());
-		Path<SS> pStatus = jSurvey.get(JeeslSurvey.Attributes.status.toString());
+		Join<SURVEY,SS> jStatus = jSurvey.join(JeeslSurvey.Attributes.status.toString());
 		Path<TYPE> pType = with.get(JeeslWithType.attributeType);
 		
-		predicates.add(pStatus.in(status));
+		predicates.add(jStatus.in(status));
 		predicates.add(cB.equal(pType,type));
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(with);
-
 		return em.createQuery(cQ).getResultList();
 	}
 	

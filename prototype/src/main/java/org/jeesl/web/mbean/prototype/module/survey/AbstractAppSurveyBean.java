@@ -10,6 +10,7 @@ import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.monitor.ProcessingTimeTracker;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.factory.SurveyFactoryFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
@@ -60,6 +61,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	private final SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> ffSurvey;
 		
 	protected final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efOption;
+	protected final EjbSurveySectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> efSection;
 	
 	protected Map<TEMPLATE,List<SECTION>> mapSection; @Override public Map<TEMPLATE,List<SECTION>> getMapSection() {return mapSection;}
 	protected Map<SECTION,List<QUESTION>> mapQuestion; @Override public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
@@ -72,11 +74,11 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	protected Map<QUESTION,List<OPTION>> matrixCols; @Override public Map<QUESTION,List<OPTION>> getMatrixCols() {return matrixCols;}
 	protected Map<QUESTION,List<OPTION>> matrixCells; public Map<QUESTION,List<OPTION>> getMatrixCells() {return matrixCells;}
 
-
 	public AbstractAppSurveyBean(SurveyFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> ffSurvey)
 	{
 		this.ffSurvey=ffSurvey;
 		efOption = ffSurvey.option();
+		efSection = ffSurvey.section();
 		
 		mapSection = new HashMap<TEMPLATE,List<SECTION>>();
 		mapQuestion = new HashMap<SECTION,List<QUESTION>>();
@@ -97,7 +99,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		refreshSurveyStatus();
 		
 		//Cache
-		reloadSections();
+		mapSection.clear();mapSection.putAll(efSection.loadMap(fSurvey));
 		reloadSets();
 		reloadQuestions();
 //		reloadOptions();
@@ -134,22 +136,10 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 			mapOptionSet.get(set).addAll(set.getOptions());
 		}
 	}
-	
-	private void reloadSections()
-	{
-		mapSection.clear();
-		for(SECTION s : fSurvey.allOrderedPosition(ffSurvey.getClassSection()))
-		{
-			if(!mapSection.containsKey(s.getTemplate())){mapSection.put(s.getTemplate(),new ArrayList<SECTION>());}
-			if(s.isVisible())
-			{
-				mapSection.get(s.getTemplate()).add(s);
-			}
-		}
-	}
-	
+		
 	private void reloadQuestions()
 	{
+		// A similar method is available in EjbQuestionFactory
 		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
 		mapQuestion.clear();
 		mapOption.clear();

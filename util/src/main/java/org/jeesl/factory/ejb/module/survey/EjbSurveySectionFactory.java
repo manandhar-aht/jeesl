@@ -1,5 +1,11 @@
 package org.jeesl.factory.ejb.module.survey;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -21,8 +27,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.survey.Section;
 
-public class EjbSurveySectionFactory<L extends UtilsLang,
-										D extends UtilsDescription,
+public class EjbSurveySectionFactory<L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
@@ -85,5 +90,19 @@ public class EjbSurveySectionFactory<L extends UtilsLang,
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public Map<TEMPLATE,List<SECTION>> loadMap(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
+	{
+		Map<TEMPLATE,List<SECTION>> map = new HashMap<TEMPLATE,List<SECTION>>();
+		for(SECTION s : fSurvey.allOrderedPosition(cSection))
+		{
+			if(!map.containsKey(s.getTemplate())){map.put(s.getTemplate(),new ArrayList<SECTION>());}
+			if(s.isVisible())
+			{
+				map.get(s.getTemplate()).add(s);
+			}
+		}
+		return map;
 	}
 }

@@ -20,7 +20,7 @@
 			<aht:row>
 				<aht:slot id="sCategories" width="3">
 					<h:form id="fCategories"><jpSec:tableCategories bean="#{cc.attrs.bean}" update=":#{cc.id}:sCategories :#{cc.id}:sUsecases :#{cc.id}:sUsecase" withAdd="true" tooltip="#{msg.ttNew}"/></h:form>
-					<h:form id="fCategory"><aupSec:panelCategory bean="#{cc.attrs.bean}" update=":#{cc.id}:sCategories :#{cc.id}:sUsecases :#{cc.id}:sUsecase" withAdd="true" tooltip="#{msg.ttSave}"/></h:form>
+					<h:form id="fCategory"><jpSec:panelCategory bean="#{cc.attrs.bean}" update=":#{cc.id}:sCategories :#{cc.id}:sUsecases :#{cc.id}:sUsecase" withAdd="true" tooltip="#{msg.ttSave}"/></h:form>
 				</aht:slot>
 				<aht:slot id="sUsecases" width="3" renderChildren="#{(not empty cc.attrs.bean.category) and (cc.attrs.bean.category.id gt 0)}">
 					<h:form id="fUsecases"><aupSec:tableUsecases bean="#{cc.attrs.bean}" update=":#{cc.id}:fUsecase :#{cc.id}:sUsecase"/></h:form>

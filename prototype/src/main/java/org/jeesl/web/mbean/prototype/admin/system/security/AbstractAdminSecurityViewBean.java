@@ -139,7 +139,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		bMessage.growlSuccessSaved();
 	}
 	
-	public void rmView() throws UtilsConstraintViolationException, UtilsNotFoundException
+	public void deleteView() throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(view));
 		fSecurity.rm(view);

@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,8 @@ public class AbstractTranslationBean implements Serializable,JeeslTranslationBea
  
 	protected void initMap(ClassLoader cl, String fXml)
     {
-		logger.info("Init "+TranslationMap.class.getSimpleName()+" with "+fXml);
+		StringBuilder sb = new StringBuilder();
+		sb.append("Init "+TranslationMap.class.getSimpleName()+" with "+fXml);
 		try
 		{
 			Dir dir = JaxbUtil.loadJAXB(cl,fXml, Dir.class);
@@ -35,10 +37,14 @@ public class AbstractTranslationBean implements Serializable,JeeslTranslationBea
 			}
 			tm = tFactory.gettMap();
 			langKeys = tm.getLangKeys();
+			sb.append(" ").append(StringUtils.join(langKeys, ", " ));
+			logger.info(sb.toString());
 		}
 		catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
+			sb.append(" ").append(e.getMessage());
+			logger.error(sb.toString());
 		}
     }
 	

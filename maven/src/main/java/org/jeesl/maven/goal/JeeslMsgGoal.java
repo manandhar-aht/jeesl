@@ -1,88 +1,55 @@
-package net.sf.ahtutils.maven;
+package org.jeesl.maven.goal;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.msgbundle.TranslationFactory;
 import net.sf.exlp.util.xml.JaxbUtil;
 import net.sf.exlp.xml.io.Dir;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.jeesl.maven.goal.JeeslMsgGoal;
-
-/**
- * Goal which compiles a set of JasperReports jrxml files to .jasper file. Creates a rtl language and a ltr language version of all reports.
- *
- * @goal msgBundle0
- * 
- * @phase initialize
- */
-public class UtilsMsgBundleGoal extends AbstractMojo
+@Mojo(name="msgBundle")
+public class JeeslMsgGoal extends AbstractMojo
 {
-	/**
-     * Location of the file.
-     * @parameter expression="${project.groupId}"
-     * @required
-     */
+	@Parameter(defaultValue = "WARN")
+    private String log;
+    
+	@Parameter(defaultValue="${project.groupId}")
     private String groupId;
-    
-	/**
-     * Location of the file.
-     * @parameter expression="${project.parent.artifactId}"
-     * @required
-     */
+	
+	@Parameter(defaultValue="${project.parent.artifactId}")
     private String projectArtifactId;
-    
-	/**
-     * Location of the file.
-     * @parameter expression="${project.artifactId}"
-     * @required
-     */
+	
+	@Parameter(defaultValue="${project.artifactId}")
     private String artifactId;
-    
-	/**
-     * Location of the file.
-     * @parameter expression="${project.build.directory}"
-     * @required
-     */
-    private String projectBuildDirectory;
-    
-    /**
-     * Location of the file.
-     * This the deprecated location: ${basedir}/src/main/resources/msg.${project.artifactId}
-     * @parameter expression="${basedir}/../doc/src/main/resources/msg.${project.parent.artifactId}"
-     * @required
-     */
+	
+	@Parameter(defaultValue="${basedir}/../doc/src/main/resources/msg.${project.parent.artifactId}")
     private String msgSource;
-    
-    /**
-     * Location of the file.
-     * This the deprecated location: ${project.build.directory}/msg.${project.artifactId}
-     * @parameter expression="${basedir}/src/main/resources/msg.${project.artifactId}"
-     * @required
-     */
+	
+	@Parameter(defaultValue="${project.build.directory}")
+    private String projectBuildDirectory;
+	
+	@Parameter(defaultValue="${basedir}/src/main/resources/msg.${project.artifactId}")
     private String targetDir;
-    
-    /**
-     * Location of the file.
-     */
-    @Parameter(property = "translationXml", defaultValue = "translation.xml" )
+	
+	@Parameter(defaultValue="translation.xml")
     private String translationXml;
 	
-    
+	@Parameter(defaultValue="msg.${project.artifactId}")
+    private String prefixXml;
+    	
     public void execute() throws MojoExecutionException
     {
-	    	if(translationXml==null){translationXml = "translation.xml";}
-	    	
 	    	BasicConfigurator.configure();
-	    	Logger.getRootLogger().setLevel(Level.ERROR);
-	    	 
+	    	org.apache.log4j.Logger.getRootLogger().setLevel(Level.toLevel(log));
+    	
 	    	getLog().info("groupId: "+groupId);
 	    	getLog().info("projectArtifactId: "+projectArtifactId);
 	    	getLog().info("artifactId: "+artifactId);
@@ -105,7 +72,7 @@ public class UtilsMsgBundleGoal extends AbstractMojo
 		try
 		{
 			Dir dir = tFactory.rekursiveDirectory(fRoot.getAbsolutePath());
-			dir.setName("msg."+projectArtifactId);
+			dir.setName(prefixXml);
 			getLog().info("Saving XML summary file to"+fTranslationsXml.getAbsolutePath());
 			JaxbUtil.save(fTranslationsXml,dir,true);
 			
@@ -117,5 +84,26 @@ public class UtilsMsgBundleGoal extends AbstractMojo
 		}
 		catch (FileNotFoundException e) {e.printStackTrace();}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
+    }
+    
+    public static File createTargetDir(String td) throws MojoExecutionException
+    {
+	    	File fTarget = new File(td);
+	    	
+	    	if(!fTarget.exists())
+	    	{
+	    		if(!fTarget.getParentFile().exists()){throw new MojoExecutionException("Parent directory (of target) does not exist: "+fTarget.getParentFile().getAbsolutePath());}
+	    		else if(!fTarget.getParentFile().isDirectory()){throw new MojoExecutionException("Parent (of target) is not a directory: "+fTarget.getParentFile().getAbsolutePath());}
+	    		else
+	    		{
+	    			fTarget.mkdir();
+	    		}
+	    	}
+	    	else if(!fTarget.isDirectory())
+	    	{
+	    		throw new MojoExecutionException("Target is not a directory: "+fTarget.getAbsolutePath());
+	    	}
+	    	
+	    	return fTarget;
     }
 }

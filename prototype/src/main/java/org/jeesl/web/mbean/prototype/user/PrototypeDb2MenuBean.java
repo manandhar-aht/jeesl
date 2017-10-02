@@ -2,12 +2,13 @@ package org.jeesl.web.mbean.prototype.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
+import org.jeesl.factory.txt.system.security.TxtSecurityMenuFactory;
 import org.jeesl.factory.xml.system.navigation.XmlBreadcrumbFactory;
 import org.jeesl.factory.xml.system.navigation.XmlMenuFactory;
 import org.jeesl.factory.xml.system.navigation.XmlMenuItemFactory;
@@ -48,15 +49,15 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	private JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	
 	private XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER> xfMenuItem;
+	private final EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> efMenu;
+	private final TxtSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> tfMenu;
 	
 	private final Map<String,M> mapKey;
 	private final Map<M,List<M>> mapChild;
 	private final Map<M,Menu> mapMenu;
 	private final Map<M,MenuItem> mapSub;
 	private final Map<M,Breadcrumb> mapBreadcrumb;
-	
-	private final List<M> rootList;
-	private Menu rootMenu;
+
 	private boolean debugOnInfo; protected void setLogInfo(boolean log) {debugOnInfo = log;}
 	
 	private Map<String,Boolean> mapViewAllowed;
@@ -65,7 +66,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	
 	private String localeCode;
 
-	public PrototypeDb2MenuBean(final Class<M> cMenu)
+	public PrototypeDb2MenuBean(final Class<L> cL, final Class<D> cD, final Class<M> cMenu)
 	{
 		this.cMenu=cMenu;
 		
@@ -74,7 +75,9 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		mapChild = new HashMap<M,List<M>>();
 		mapSub = new HashMap<M,MenuItem>();
 		mapBreadcrumb = new HashMap<M,Breadcrumb>();
-		rootList = new ArrayList<M>();
+		
+		efMenu = new EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cMenu);
+		tfMenu = new TxtSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>();
 		
 		userLoggedIn = false;
 		localeCode = "en";
@@ -86,20 +89,19 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		this.fSecurity=fSecurity;
 		clear();
 		
-		rootMenu = XmlMenuFactory.build();
+		M root = efMenu.build();
+		mapKey.put(JeeslSecurityMenu.keyRoot, root);
 		for(M m : fSecurity.allOrderedPosition(cMenu))
 		{
-			mapKey.put(m.getView().getCode(), m);
-			if(m.getParent()!=null)
+			if(m.getView().isVisible())
 			{
-				if(!mapChild.containsKey(m.getParent())) {mapChild.put(m.getParent(),new ArrayList<M>());}
-				if(debugOnInfo) {logger.info("Child: "+m.getParent().getView().getCode()+" -> "+m.getView().getCode());}
-				mapChild.get(m.getParent()).add(m);
-			}
-			else
-			{
-				rootList.add(m);
-				rootMenu.getMenuItem().add(xfMenuItem.build(m));
+				M parent = null;
+				if(m.getParent()!=null) {parent = m.getParent();}
+				else {parent=root;}
+				
+				mapKey.put(m.getView().getCode(), m);
+				if(!mapChild.containsKey(parent)) {mapChild.put(parent,new ArrayList<M>());}
+				mapChild.get(parent).add(m);
 			}
 		}
 	}
@@ -117,7 +119,6 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	}
 	
 	protected String getLang(){return localeCode;}
-	public Menu build() {return rootMenu;}
 	public Menu build(String code){if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuFactory.build();} else {return menu(mapKey.get(code));}}
 	public MenuItem sub(String code) {if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}
 	public MenuItem subDyn(String code, boolean dyn) {if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}
@@ -129,14 +130,18 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		if(!mapMenu.containsKey(m))
 		{
 			Menu menu = XmlMenuFactory.build();
-			for(M mi : rootList)
+			M root = mapKey.get(JeeslSecurityMenu.keyRoot);
+			if(mapChild.containsKey(root))
 			{
-				MenuItem xml = xfMenuItem.build(mi);
-				xml.setActive(isParent(mi,m));
-				if(xml.isActive() && mapChild.containsKey(mi)) {xml.getMenuItem().addAll(childs(mi));}
-				menu.getMenuItem().add(xml);
-			}
-			if(debugOnInfo) {logger.info("Menu for: "+m.getView().getCode());JaxbUtil.info(menu);}
+				for(M mi : mapChild.get(root))
+				{
+					MenuItem xml = xfMenuItem.build(mi);
+					xml.setActive(isParent(mi,m));
+					if(xml.isActive() && mapChild.containsKey(mi)) {xml.getMenuItem().addAll(childs(mi));}
+					menu.getMenuItem().add(xml);
+				}
+			}	
+			if(debugOnInfo){logger.info("Menu for: "+tfMenu.code(m));JaxbUtil.info(menu);}
 			mapMenu.put(m,menu);
 		}
 		return mapMenu.get(m);
@@ -160,11 +165,14 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		if(!mapSub.containsKey(m))
 		{
 			MenuItem mi = XmlMenuItemFactory.build();
-			for(M child : mapChild.get(m))
+			if(mapChild.containsKey(m))
 			{
-				mi.getMenuItem().add(xfMenuItem.build(child));
+				for(M child : mapChild.get(m))
+				{
+					mi.getMenuItem().add(xfMenuItem.build(child));
+				}
 			}
-			if(debugOnInfo) {logger.info("Sub for: "+m.getView().getCode()+" childs:"+mapChild.get(m).size());JaxbUtil.info(mi);}
+			if(debugOnInfo) {logger.info("Sub for: "+tfMenu.code(m)+" childs:"+mi.getMenuItem().size());JaxbUtil.info(mi);}
 			mapSub.put(m,mi);
 		}
 		return mapSub.get(m);

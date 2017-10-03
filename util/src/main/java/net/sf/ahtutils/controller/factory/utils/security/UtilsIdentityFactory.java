@@ -16,8 +16,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER>,
-								   L extends UtilsLang,
-								   D extends UtilsDescription,
+								   L extends UtilsLang,  D extends UtilsDescription,
 								   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 								   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 								   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -29,9 +28,9 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 
 	final static Logger logger = LoggerFactory.getLogger(UtilsIdentityFactory.class);
 
-	final Class<I>  clIdentity;
-	final Class<L>  clLang;
-	final Class<D>  clDescription;
+	final Class<I>  cIdentity;
+	final Class<L>  cL;
+	final Class<D>  cD;
 	final Class<C>  clCategory;
 	final Class<R>  clRole;
 	final Class<V>  clView;
@@ -39,9 +38,8 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 	final Class<A> 	clAction;
 	final Class<USER>  cUser;
 
-	public UtilsIdentityFactory(final Class<I> clIdentity,
-								final Class<L> clLang,
-								final Class<D> clDescription,
+	public UtilsIdentityFactory(final Class<I> cIdentity,
+								final Class<L> cL, final Class<D> cD,
 								final Class<C> clCategory,
 								final Class<R> clRole,
 								final Class<V> clView,
@@ -49,9 +47,9 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 								final Class<A> clAction,
 								final Class<USER> cUser)
 	{
-		this.clIdentity=clIdentity;
-		this.clLang=clLang;
-		this.clDescription=clDescription;
+		this.cIdentity=cIdentity;
+		this.cL=cL;
+		this.cD=cD;
 		this.clCategory=clCategory;
 		this.clRole=clRole;
 		this.clView=clView;
@@ -61,8 +59,7 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 	} 
 
 	public static <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER>,
-	   			   L extends UtilsLang,
-	   			   D extends UtilsDescription,
+	   			   L extends UtilsLang, D extends UtilsDescription,
 	   			   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 	   			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 	   			   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -89,12 +86,26 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 		
 		try
 		{
-			identity = clIdentity.newInstance();
+			identity = cIdentity.newInstance();
 			identity.setUser(user);
 			
 			for(A a : fSecurity.allActionsForUser(cUser, user)){identity.allowAction(a);}		
 			for(R r : fSecurity.allRolesForUser(cUser,user)){identity.allowRole(r);}
 			for(V v : fSecurity.allViewsForUser(cUser,user)){identity.allowView(v);}
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		return identity;
+	}
+	
+	public I build()
+	{		
+		I identity = null;
+		
+		try
+		{
+			identity = cIdentity.newInstance();
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

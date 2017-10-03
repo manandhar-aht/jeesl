@@ -35,6 +35,9 @@ public class AbstractIdentityUser <L extends UtilsLang,
 	
 	private Map<String,Boolean> mapViews;
 	
+	private boolean loggedIn; public boolean isLoggedIn() {return loggedIn;}  public void setLoggedIn(boolean loggedIn) {this.loggedIn = loggedIn;}
+
+	
 	public AbstractIdentityUser()
 	{		
 		mapUsecases = new Hashtable<String,Boolean>();
@@ -42,6 +45,8 @@ public class AbstractIdentityUser <L extends UtilsLang,
 		mapSystemViews = new Hashtable<String,Boolean>();
 		mapRoles = new Hashtable<String,Boolean>();
 		mapActions = new Hashtable<String,Boolean>();
+		
+		loggedIn = false;
 	}
 	
 	public void allowUsecase(U usecase) {mapUsecases.put(usecase.getCode(), true);}

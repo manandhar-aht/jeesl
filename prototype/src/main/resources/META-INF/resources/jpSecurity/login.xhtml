@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aupSec="http://ahtutils.sourceforge.net/prototype/security"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		
+	</composite:interface>
+	
+	<composite:implementation>
+		
+		<p:panel header="#{msg.jeeslSecurityLogin}" styleClass="auPanelWithGrid">
+			<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+				<p:outputLabel for="name" value="#{msg.jeeslSecurityEmail}"/>
+				<h:inputText id="name" value="#{userBean.identity.loginName}"/>
+				<p:outputLabel for="password" value="#{msg.jeeslSecurityPassword}"/>
+				<h:inputSecret id="password" value="#{userBean.identity.loginPassword}" redisplay="true"/>
+				<h:outputText value=""/>
+				<p:commandButton id="cbLogin" value="#{msg.jeeslSecurityLoginButton}" action="#{userBean.login}"/>
+			</p:panelGrid>
+      		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		</p:panel>
+		
+	</composite:implementation>
+</html>

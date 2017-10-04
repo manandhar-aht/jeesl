@@ -192,5 +192,33 @@
     		<s:lang key="fr" translation="Used in this Roles"/>
     	</s:langs>
     </s:translation>
-    
+
+	<s:translation key="jeeslSecurityLogin">
+    	<s:langs>
+    		<s:lang key="de" translation="Anmeldung"/>
+    		<s:lang key="en" translation="Login"/>
+    		<s:lang key="fr" translation="Login"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSecurityLoginButton">
+    	<s:langs>
+    		<s:lang key="de" translation="Anmelden"/>
+    		<s:lang key="en" translation="Login"/>
+    		<s:lang key="fr" translation="Login"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSecurityEmail">
+    	<s:langs>
+    		<s:lang key="de" translation="E-Mail"/>
+    		<s:lang key="en" translation="E-Mail"/>
+    		<s:lang key="fr" translation="E-Mail"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSecurityPassword">
+    	<s:langs>
+    		<s:lang key="de" translation="Kennwort"/>
+    		<s:lang key="en" translation="Password"/>
+    		<s:lang key="fr" translation="Password"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

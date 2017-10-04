@@ -74,7 +74,7 @@ public class JeeslMsgBuilder
 	public static final String srcAdminSystemDbStatistic = "msg.aht-utils/admin/system/dbStatistic.xml";
 	
 	public static final String msgAdminSystemOptionTables = "jeesl/msg/admin/system/options.xml";
-	public static final String srcAdminSecurity = "aht-utils/msg/module/security.xml";
+	public static final String srcAdminSecurity = "jeesl/msg/module/security.xml";
 	public static final String srcAdminUser = "aht-utils/msg/admin/user.xml";
 	
 	public static final String revision = "jeesl/msg/admin/system/revision.xml";

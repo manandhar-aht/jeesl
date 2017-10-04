@@ -135,8 +135,8 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	
 	public Menu build(String code){setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuFactory.build();} else {return menu(mapKey.get(code));}}
 	public MenuItem sub(String code) {setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}
-	public MenuItem subDyn(String code, boolean dyn) {setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}
-	public Breadcrumb breadcrumbDyn(String code, boolean dyn){setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlBreadcrumbFactory.build();} else {return breadcrumb(mapKey.get(code));}}
+	public MenuItem subDyn(String code, Boolean dyn) {setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}
+	public Breadcrumb breadcrumbDyn(String code, Boolean dyn){setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlBreadcrumbFactory.build();} else {return breadcrumb(mapKey.get(code));}}
 	public Breadcrumb breadcrumb(String code){setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlBreadcrumbFactory.build();} else {return breadcrumb(mapKey.get(code));}}
 	
 	private Menu menu(M m)

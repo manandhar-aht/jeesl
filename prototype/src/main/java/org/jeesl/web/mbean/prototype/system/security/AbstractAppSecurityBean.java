@@ -43,8 +43,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	protected Class<A> cAction;
 	protected Class<AT> cTemplate;
 	protected final Class<USER> cUser;
-		
-	
+
 	private List<V> views; public List<V> getViews() {return views;}
 	private final Map<String,V> urlPattern;
 
@@ -63,12 +62,24 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	
 	protected void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
 	{
+		this.fSecurity=fSecurity;
+		reload();
+	}
+	
+	public void reload()
+	{
 		views = fSecurity.all(cView);
 		for(V v : views)
 		{
 			urlPattern.put(v.getViewPattern(),v);
 		}
 		logger.info(views.size()+" "+cView);
+	}
+	
+	public V findView(String pattern)
+	{
+		if(urlPattern.containsKey(pattern)) {return urlPattern.get(pattern);}
+		else {return null;}
 	}
 	
 	public String findCode(String pattern)

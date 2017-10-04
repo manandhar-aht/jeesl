@@ -19,7 +19,7 @@ import org.jeesl.maven.goal.JeeslMsgGoal;
 /**
  * Goal which compiles a set of JasperReports jrxml files to .jasper file. Creates a rtl language and a ltr language version of all reports.
  *
- * @goal msgBundle
+ * @goal msgBundle9
  * 
  * @phase initialize
  */

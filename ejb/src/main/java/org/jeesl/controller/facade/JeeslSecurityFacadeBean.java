@@ -204,9 +204,10 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		return result;
 	}
 	
-	@Override public List<R> allRolesForUser(Class<USER> clUser, USER user)
+	@Override public List<R> allRolesForUser(Class<USER> cUser, USER user)
 	{
-		user = em.find(clUser, user.getId());
+		user = em.find(cUser, user.getId());
+		logger.warn("ROLES "+user.getRoles().size());
 		return user.getRoles();
 	}
 	

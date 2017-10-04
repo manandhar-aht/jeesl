@@ -19,6 +19,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.user.JeeslIdentity;
 import org.jeesl.interfaces.model.system.security.user.UtilsUser;
 import org.jeesl.model.xml.system.navigation.Breadcrumb;
 import org.jeesl.model.xml.system.navigation.Menu;
@@ -38,7 +39,8 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 									A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 									AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 									M extends JeeslSecurityMenu<L,D,C,R,V,U,A,AT,M,USER>,
-									USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+									USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
+									I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER>>
 		implements Serializable
 {
 	final static Logger logger = LoggerFactory.getLogger(PrototypeDb2MenuBean.class);
@@ -59,12 +61,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	private final Map<M,Breadcrumb> mapBreadcrumb;
 
 	private boolean debugOnInfo; protected void setLogInfo(boolean log) {debugOnInfo = log;}
-	
-	private Map<String,Boolean> mapViewAllowed;
-	private boolean userLoggedIn;
-	
-	
-	private String localeCode;
+
 
 	public PrototypeDb2MenuBean(final Class<L> cL, final Class<D> cD, final Class<M> cMenu)
 	{
@@ -79,21 +76,32 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		efMenu = new EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cMenu);
 		tfMenu = new TxtSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>();
 		
-		userLoggedIn = false;
-		localeCode = "en";
 		debugOnInfo = false;
 	}
 	
-	public void initSuper(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
+	public void initSuper(String localeCode, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, I identity)
 	{
 		this.fSecurity=fSecurity;
-		clear();
+		build(localeCode, identity);
+	}
+	
+	public void build(String localeCode, I identity)
+	{
+		mapKey.clear();
+		mapMenu.clear();
+		mapChild.clear();
+		mapSub.clear();
+		mapBreadcrumb.clear();
+		
+		xfMenuItem = new XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER>(localeCode);
 		
 		M root = efMenu.build();
 		mapKey.put(JeeslSecurityMenu.keyRoot, root);
 		for(M m : fSecurity.allOrderedPosition(cMenu))
 		{
-			if(m.getView().isVisible())
+			boolean visible = m.getView().isVisible() && (m.getView().getAccessPublic() || (identity.isLoggedIn() && (m.getView().getAccessLogin() || identity.hasView(m.getView()))));
+//			logger.info(m.getView().getCode()+" "+visible);
+			if(visible)
 			{
 				M parent = null;
 				if(m.getParent()!=null) {parent = m.getParent();}
@@ -106,19 +114,6 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		}
 	}
 	
-	public void userLoggedIn(Map<String, Boolean> allowedViews)
-	{
-		this.clear(localeCode,true);
-		mapViewAllowed = allowedViews;
-	}
-	
-	public void clear(){clear(localeCode,false);}
-	public void clear(String localeCode, boolean userLoggedIn)
-	{
-		xfMenuItem = new XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER>(localeCode);
-	}
-	
-	protected String getLang(){return localeCode;}
 	public Menu build(String code){if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuFactory.build();} else {return menu(mapKey.get(code));}}
 	public MenuItem sub(String code) {if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}
 	public MenuItem subDyn(String code, boolean dyn) {if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}

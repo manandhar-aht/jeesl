@@ -27,6 +27,7 @@ public interface JeeslIdentity <L extends UtilsLang, D extends UtilsDescription,
 	
 	boolean hasUsecase(String usecaseCode);
 	boolean hasView(String code);
+	boolean hasView(V view);
 	boolean hasRole(String code);
 	boolean hasAction(String code);
 	

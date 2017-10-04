@@ -89,8 +89,13 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 			identity = cIdentity.newInstance();
 			identity.setUser(user);
 			
-			for(A a : fSecurity.allActionsForUser(cUser, user)){identity.allowAction(a);}		
-			for(R r : fSecurity.allRolesForUser(cUser,user)){identity.allowRole(r);}
+			for(A a : fSecurity.allActionsForUser(cUser,user)){identity.allowAction(a);}
+			
+			logger.info("Roles");
+			for(R r : fSecurity.allRolesForUser(cUser,user))
+			{
+				identity.allowRole(r);
+			}
 			for(V v : fSecurity.allViewsForUser(cUser,user)){identity.allowView(v);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

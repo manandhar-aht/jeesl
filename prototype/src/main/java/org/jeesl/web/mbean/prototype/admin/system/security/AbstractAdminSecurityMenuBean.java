@@ -152,6 +152,9 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
         		child.setPosition(index);
         		fSecurity.save(child);
         		index++;
-        }  
+        }
+        propagateChanges();
 	}
+	
+	protected abstract void propagateChanges();
 }

@@ -27,6 +27,7 @@ import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import groovy.transform.Synchronized;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.exlp.util.xml.JaxbUtil;
@@ -60,8 +61,10 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	private final Map<M,MenuItem> mapSub;
 	private final Map<M,Breadcrumb> mapBreadcrumb;
 
+	private I identity;
+	private String localeCode;
+	private boolean setupRequired=false;
 	private boolean debugOnInfo; protected void setLogInfo(boolean log) {debugOnInfo = log;}
-
 
 	public PrototypeDb2MenuBean(final Class<L> cL, final Class<D> cD, final Class<M> cMenu)
 	{
@@ -77,48 +80,64 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		tfMenu = new TxtSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>();
 		
 		debugOnInfo = false;
+		setupRequired = false;
 	}
 	
 	public void initSuper(String localeCode, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, I identity)
 	{
 		this.fSecurity=fSecurity;
-		build(localeCode, identity);
+		prepare(localeCode, identity);
 	}
 	
-	public void build(String localeCode, I identity)
+	public void prepare(String localeCode, I identity)
+	{
+		this.localeCode=localeCode;
+		this.identity=identity;
+		reset();
+	}
+	
+	public void reset()
 	{
 		mapKey.clear();
 		mapMenu.clear();
 		mapChild.clear();
 		mapSub.clear();
 		mapBreadcrumb.clear();
-		
-		xfMenuItem = new XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER>(localeCode);
-		
-		M root = efMenu.build();
-		mapKey.put(JeeslSecurityMenu.keyRoot, root);
-		for(M m : fSecurity.allOrderedPosition(cMenu))
+		setupRequired = true;
+	}
+	
+	private synchronized void setup()
+	{
+		if(setupRequired)
 		{
-			boolean visible = m.getView().isVisible() && (m.getView().getAccessPublic() || (identity.isLoggedIn() && (m.getView().getAccessLogin() || identity.hasView(m.getView()))));
-//			logger.info(m.getView().getCode()+" "+visible);
-			if(visible)
+			xfMenuItem = new XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER>(localeCode);
+			
+			M root = efMenu.build();
+			mapKey.put(JeeslSecurityMenu.keyRoot, root);
+			for(M m : fSecurity.allOrderedPosition(cMenu))
 			{
-				M parent = null;
-				if(m.getParent()!=null) {parent = m.getParent();}
-				else {parent=root;}
-				
-				mapKey.put(m.getView().getCode(), m);
-				if(!mapChild.containsKey(parent)) {mapChild.put(parent,new ArrayList<M>());}
-				mapChild.get(parent).add(m);
+				boolean visible = m.getView().isVisible() && (m.getView().getAccessPublic() || (identity.isLoggedIn() && (m.getView().getAccessLogin() || identity.hasView(m.getView()))));
+//				logger.info(m.getView().getCode()+" "+visible);
+				if(visible)
+				{
+					M parent = null;
+					if(m.getParent()!=null) {parent = m.getParent();}
+					else {parent=root;}
+					
+					mapKey.put(m.getView().getCode(), m);
+					if(!mapChild.containsKey(parent)) {mapChild.put(parent,new ArrayList<M>());}
+					mapChild.get(parent).add(m);
+				}
 			}
+			setupRequired = false;
 		}
 	}
 	
-	public Menu build(String code){if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuFactory.build();} else {return menu(mapKey.get(code));}}
-	public MenuItem sub(String code) {if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}
-	public MenuItem subDyn(String code, boolean dyn) {if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}
-	public Breadcrumb breadcrumbDyn(String code, boolean dyn){if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlBreadcrumbFactory.build();} else {return breadcrumb(mapKey.get(code));}}
-	public Breadcrumb breadcrumb(String code){if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlBreadcrumbFactory.build();} else {return breadcrumb(mapKey.get(code));}}
+	public Menu build(String code){setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuFactory.build();} else {return menu(mapKey.get(code));}}
+	public MenuItem sub(String code) {setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}
+	public MenuItem subDyn(String code, boolean dyn) {setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlMenuItemFactory.build();} else {return sub(mapKey.get(code));}}
+	public Breadcrumb breadcrumbDyn(String code, boolean dyn){setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlBreadcrumbFactory.build();} else {return breadcrumb(mapKey.get(code));}}
+	public Breadcrumb breadcrumb(String code){setup();if(!mapKey.containsKey(code)) {logger.warn("Code "+code+" not defined");return XmlBreadcrumbFactory.build();} else {return breadcrumb(mapKey.get(code));}}
 	
 	private Menu menu(M m)
 	{

@@ -33,14 +33,14 @@
 								paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="#{appSettingsBean.paginatorTemplate}" rowsPerPageTemplate="#{appSettingsBean.rowsPerPageTemplate}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.aupUsers}">
-									<aht:icon type="add" listener="#{cc.attrs.bean.addUser()}" update=":#{cc.id}:sDetail"/>
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addUser()}" update=":#{cc.id}:sDetail"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sDetail" listener="#{cc.attrs.bean.selectUser}"/>
 							<p:column rendered="#{cc.attrs.withPermit}" sortBy="#{u.permitLogin}">
-	                        	<h:graphicImage rendered="#{u.permitLogin}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx"/>
-	                            <h:graphicImage rendered="#{not u.permitLogin}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx"/>
-	                        </p:column>
+	                  		<h:graphicImage rendered="#{u.permitLogin}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx"/>
+	                  		<h:graphicImage rendered="#{not u.permitLogin}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx"/>
+	                  </p:column>
 							<p:column headerText="#{msg.aupFirstName}"
 									sortBy="#{u.firstName}"
 									filterBy="#{u.firstName}" filterMatchMode="contains">
@@ -67,7 +67,7 @@
 								  <aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveUser()}" update=":#{cc.id}:grid"/>
 								  <aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.rm(cc.attrs.bean.user)}" tooltip="delete user" update=":#{cc.id}:grid"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" >
+							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70" >
 								<p:outputLabel for="itFirstName" value="#{msg.aupFirstName}" />
 								<p:inputText id="itFirstName" required="true" value="#{cc.attrs.bean.user.firstName}" />
 								<p:outputLabel for="itLastName" value="#{msg.aupLastName}" />

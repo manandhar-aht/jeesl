@@ -22,8 +22,12 @@ public interface JeeslIdentity <L extends UtilsLang, D extends UtilsDescription,
 	USER getUser();
 	void setUser(USER user);
 		
+	boolean isLoggedIn();
+	void setLoggedIn(boolean loggedIn);
+	
 	boolean hasUsecase(String usecaseCode);
 	boolean hasView(String code);
+	boolean hasView(V view);
 	boolean hasRole(String code);
 	boolean hasAction(String code);
 	

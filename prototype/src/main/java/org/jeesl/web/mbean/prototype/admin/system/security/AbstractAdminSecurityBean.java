@@ -180,7 +180,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		}
 	}
 	
-	protected void reorderCategories() throws UtilsConstraintViolationException, UtilsLockingException
+	public void reorderCategories() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info("updateOrder "+categories.size());
 		int i=1;

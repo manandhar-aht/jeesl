@@ -45,6 +45,20 @@ public class EjbSecurityMenuFactory <L extends UtilsLang, D extends UtilsDescrip
         comparator = new PositionComparator<M>();
     } 
     
+    
+    public M build()
+    {
+	    	M ejb = null;
+	    	
+	    	try
+	    	{
+			ejb = cM.newInstance();
+		}
+	    	catch (InstantiationException e) {e.printStackTrace();}
+	    	catch (IllegalAccessException e) {e.printStackTrace();}
+	    	
+	    	return ejb;
+    }
     public M create(V view)
     {
 		M ejb = null;

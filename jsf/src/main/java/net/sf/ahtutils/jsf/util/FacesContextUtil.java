@@ -6,10 +6,15 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
 public class FacesContextUtil
 {
+	final static Logger logger = LoggerFactory.getLogger(FacesContextUtil.class);
+
 	public static String get(String key) throws UtilsNotFoundException
 	{
 		if(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().containsKey(key))
@@ -20,6 +25,13 @@ public class FacesContextUtil
 		{
 			throw new UtilsNotFoundException("HTTP Request Paramater '"+key+"' not available");
 		}
+	}
+	
+	public static String url()
+	{
+		FacesContext ctx = FacesContext.getCurrentInstance();	
+		HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
+		return request.getRequestURI().substring(request.getContextPath().length());
 	}
 	
 	public static HttpServletRequest getHttpServletRequest(final FacesContext facesContext)

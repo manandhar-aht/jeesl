@@ -7,8 +7,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 
-public interface JeeslSecurityMenu<L extends UtilsLang,
-								   D extends UtilsDescription,
+public interface JeeslSecurityMenu<L extends UtilsLang, D extends UtilsDescription,
 								   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 								   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 								   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -20,6 +19,7 @@ public interface JeeslSecurityMenu<L extends UtilsLang,
 			extends EjbSaveable,EjbWithPosition
 {
 	public static final String extractId = "securityMenu";
+	public static final String keyRoot = "root";
 	
 	M getParent();
 	void setParent(M menu);

@@ -26,18 +26,18 @@
 			</f:facet>
 			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCategories()}" update="@form"/>
 			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.selectCategory()}"/>  
-            <p:column>  
+         <p:column>  
 				<h:outputText value="#{c.position}"/>
-            </p:column>
+         </p:column>
             <p:column headerText="#{msg.aupSecurityCategory}">  
 				<h:outputText value="#{c.name[userBean.localeCode].lang}"/>
             </p:column>
-            <p:column rendered="#{cc.attrs.bean.uiShowInvisible}">  
-				<h:graphicImage rendered="#{c.visible}" name="#{iconBean.icon12['jeeslSecurityVisible']}" library="gfx"/>
-                <h:graphicImage rendered="#{not c.visible}" name="#{iconBean.icon12['jeeslSecurityInvisible']}" library="gfx"/>
+            <p:column rendered="#{cc.attrs.bean.uiShowInvisible}" styleClass="jeeslPfTcCenter">  
+				<h:graphicImage rendered="#{c.visible}" name="#{appIconBean.icon12['jeeslSecurityVisible']}" library="gfx"/>
+                <h:graphicImage rendered="#{not c.visible}" name="#{appIconBean.icon12['jeeslSecurityInvisible']}" library="gfx"/>
             </p:column>
-            <p:column rendered="#{cc.attrs.bean.uiShowDocumentation}">  
-				<h:graphicImage rendered="#{c.documentation}" name="#{iconBean.icon12['jeeslSecurityDocumentation']}" library="gfx"/>
+            <p:column rendered="#{cc.attrs.bean.uiShowDocumentation}" styleClass="jeeslPfTcCenter">  
+				<h:graphicImage rendered="#{c.documentation}" name="#{appIconBean.icon12['jeeslSecurityDocumentation']}" library="gfx"/>
             </p:column>
        	</p:dataTable>
 	</composite:implementation>

@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
-public class AbstractIdentityUser <L extends UtilsLang,
-								   D extends UtilsDescription,
+public class AbstractIdentityUser <L extends UtilsLang, D extends UtilsDescription,
 								   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 								   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 								   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -29,11 +28,35 @@ public class AbstractIdentityUser <L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(AbstractIdentityUser.class);
 	public static final long serialVersionUID=1;
 	
+	private String loginName;
+	
+	private String loginPassword;
+	public String getLoginName() {
+		return loginName;
+	}
+
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+
+	public String getLoginPassword() {
+		return loginPassword;
+	}
+
+
+	public void setLoginPassword(String loginPassword) {
+		this.loginPassword = loginPassword;
+	}
 	private Map<String,Boolean> mapUsecases,mapRoles,mapActions;
 	
 	private Map<String,Boolean> mapSystemViews; //Only systems views, domain views not included
 	
 	private Map<String,Boolean> mapViews;
+	
+	private boolean loggedIn; public boolean isLoggedIn() {return loggedIn;}  public void setLoggedIn(boolean loggedIn) {this.loggedIn = loggedIn;}
+
 	
 	public AbstractIdentityUser()
 	{		
@@ -42,6 +65,8 @@ public class AbstractIdentityUser <L extends UtilsLang,
 		mapSystemViews = new Hashtable<String,Boolean>();
 		mapRoles = new Hashtable<String,Boolean>();
 		mapActions = new Hashtable<String,Boolean>();
+		
+		loggedIn = false;
 	}
 	
 	public void allowUsecase(U usecase) {mapUsecases.put(usecase.getCode(), true);}
@@ -58,6 +83,11 @@ public class AbstractIdentityUser <L extends UtilsLang,
 		return false;
 	}
 	
+	public boolean hasView(V view)
+	{
+		if(mapViews.containsKey(view.toString())){return mapViews.get(view.toString());}
+		return false;
+	}
 	public boolean hasView(String code)
 	{
 		if(mapViews.containsKey(code)){return mapViews.get(code);}
@@ -102,4 +132,11 @@ public class AbstractIdentityUser <L extends UtilsLang,
 	public Map<String, Boolean> getMapViews() {return mapViews;}
 	public Map<String, Boolean> getMapSystemViews() {return mapSystemViews;}
 	public void setMapSystemViews(Map<String, Boolean> mapSystemViews) {this.mapSystemViews = mapSystemViews;}
+	
+	@Override public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("loggedIn:"+loggedIn);
+		return sb.toString();
+	}
 }

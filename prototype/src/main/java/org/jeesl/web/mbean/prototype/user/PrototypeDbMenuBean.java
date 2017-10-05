@@ -23,7 +23,7 @@ public class PrototypeDbMenuBean implements Serializable
 	final static Logger logger = LoggerFactory.getLogger(PrototypeDbMenuBean.class);
 	private static final long serialVersionUID = 1L;
 	
-	private boolean debugOnInfo;
+	private boolean debugOnInfo; protected void setLogInfo(boolean log) {debugOnInfo = log;}
 	protected static final String rootMain = "root";
 	protected Map<String,Menu> mapMenu;
 	protected Map<String,MenuItem> mapSub;
@@ -42,11 +42,6 @@ public class PrototypeDbMenuBean implements Serializable
 		userLoggedIn = false;
 		localeCode = "en";
 		debugOnInfo = false;
-	}
-	
-	protected void setLogInfo(boolean log)
-	{
-		debugOnInfo = log;
 	}
 	
 	@Deprecated //This should be done with fSecurity
@@ -111,7 +106,13 @@ public class PrototypeDbMenuBean implements Serializable
 			if(logger.isTraceEnabled()){ptt = new ProcessingTimeTracker(true);}
 			synchronized(mf)
 			{
-				mapMenu.put(code, mf.build(mapViewAllowed,code,loggedIn));
+				Menu m = mf.build(mapViewAllowed,code,loggedIn);
+				if(debugOnInfo)
+				{
+					logger.info("Menu for: "+code);
+					JaxbUtil.info(m);
+				}
+				mapMenu.put(code, m);
 			}
 			if(logger.isTraceEnabled()){logger.trace(AbstractLogMessage.time("Menu creation for "+code,ptt));}
 		}
@@ -164,6 +165,7 @@ public class PrototypeDbMenuBean implements Serializable
 						}
 					}
 				}
+				if(debugOnInfo) {JaxbUtil.info(bClone);}
 				mapBreadcrumb.put(code,bClone);
 				if(logger.isTraceEnabled())
 				{

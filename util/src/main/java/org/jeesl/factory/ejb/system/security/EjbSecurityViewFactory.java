@@ -26,8 +26,7 @@ extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityViewFactory.class);
 	
-    public static <L extends UtilsLang,
-	 			   D extends UtilsDescription,
+    public static <L extends UtilsLang, D extends UtilsDescription,
 	 			   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 	 			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 	 			   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -42,7 +41,7 @@ extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
     
     public EjbSecurityViewFactory(final Class<L> cLang,final Class<D> cDescription,final Class<C> cCategory,final Class<R> cRole,final Class<V> cView,final Class<U> cUsecase,final Class<A> cAction,final Class<USER> cUser)
     {
-    	super(cLang,cDescription);
+    		super(cLang,cDescription);
         this.cCategory = cCategory;
         this.cRole = cRole;
         this.cView = cView;

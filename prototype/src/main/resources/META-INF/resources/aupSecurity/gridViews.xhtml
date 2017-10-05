@@ -9,24 +9,92 @@
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupSec="http://ahtutils.sourceforge.net/prototype/security"
+	xmlns:jpSec="http://jsf.jeesl.org/prototype/security"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="false" default="#{adminSecurityViewsBean}"/>
+		<composite:attribute name="localeCodes" required="false" default="#{appTranslationBean.langKeys}"/>
 	</composite:interface>
 	
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
 				<aht:slot id="sCategories" width="4">
-					<h:form id="fCategories"><aupSec:tableCategories bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategory :#{cc.id}:fViews :#{cc.id}:sActions"/></h:form>
-					<h:form id="fCategory"><aupSec:panelCategory bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategories :#{cc.id}:fCategory"/></h:form>
+					<h:form id="fCategories"><jpSec:tableCategories bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategory :#{cc.id}:fViews :#{cc.id}:sActions"/></h:form>
+					<h:form id="fCategory"><jpSec:panelCategory bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategories :#{cc.id}:fCategory"/></h:form>
 				</aht:slot>
 				<aht:slot id="sViews" width="4">
-					<h:form id="fViews"><aupSec:tableViews bean="#{cc.attrs.bean}" update=":#{cc.id}:sActions"/></h:form>
+					<h:form id="fViews">
+						<p:dataTable var="v" value="#{cc.attrs.bean.views}" draggableRows="true"
+						rendered="#{not empty cc.attrs.bean.category}"
+						selection="#{cc.attrs.bean.view}" selectionMode="single" rowKey="#{v.id}">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.aupSecurityViews}">
+								<aht:icon type="jeeslAdd" rendered="#{cc.attrs.bean.uiAllowAdd}" listener="#{cc.attrs.bean.addView()}" update=":#{cc.id}:sActions" tooltip="#{msg.ttAdd}"/>
+							</aht:pfDataTableHeader>
+						</f:facet>
+						<p:ajax event="rowSelect"  listener="#{cc.attrs.bean.selectView}" update=":#{cc.id}:sActions"/>
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderViews()}" update="@form"/>
+						<p:column>  
+							<h:outputText value="#{v.position}" />  
+			         </p:column>  
+			         <p:column headerText="#{msg.aupSecurityView}">  
+							<h:outputText value="#{v.name[localeCode].lang}" />  
+			            </p:column>
+						<p:column rendered="#{cc.attrs.bean.uiShowInvisible}" styleClass="jeeslPfTcCenter">  
+							<h:graphicImage rendered="#{v.visible}" name="#{appIconBean.icon12['jeeslSecurityVisible']}" library="gfx"/>
+			                <h:graphicImage rendered="#{not v.visible}" name="#{appIconBean.icon12['jeeslSecurityInvisible']}" library="gfx"/>
+			         </p:column>
+						<p:column rendered="#{cc.attrs.bean.uiShowDocumentation}"  styleClass="jeeslPfTcCenter">  
+							<h:graphicImage rendered="#{v.documentation}" name="#{appIconBean.icon12['jeeslSecurityDocumentation']}" library="gfx"/>
+			            </p:column>
+			       	</p:dataTable>
+					</h:form>
 				</aht:slot>
 				<aht:slot id="sActions" width="4" renderChildren="#{not empty cc.attrs.bean.view}">
-					<h:form id="fView"><aupSec:panelView rendered="#{not empty cc.attrs.bean.view}" update=":#{cc.id}:sViews :#{cc.id}:sActions"/></h:form>
+					<h:form id="fView">
+						<p:panel rendered="#{not empty cc.attrs.bean.view}" header="#{msg.aupSecurityView}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveView()}" update=":#{cc.id}:sViews :#{cc.id}:sActions" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteView()}" update=":#{cc.id}:sViews :#{cc.id}:sActions" rendered="#{cc.attrs.bean.hasDeveloperAction}" mayDisappear="true" tooltip="#{msg.ttDelete}"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+								<p:outputLabel value="#{msg.aupSecurityCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.view.category}" effect="fade" autoWidth="false">
+									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+								</p:selectOneMenu>
+												
+								<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{cc.attrs.bean.view.visible}"/>
+								
+								<p:outputLabel value="#{msg.aupSecurityCode}"/>
+								<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.view.code}"/>
+								<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.view.code}"/>
+								
+								<p:outputLabel rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
+								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{cc.attrs.bean.view.documentation}"/>
+							</p:panelGrid>
+							<p:panelGrid rendered="#{cc.attrs.bean.hasDeveloperAction}" columns="2" columnClasses="auPwg30,auPwg70">
+								<p:outputLabel value="#{msg.aupSecurityAccessPublic}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.view.accessPublic}"/>
+								<p:outputLabel value="#{msg.aupSecurityAccessLogin}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.view.accessLogin}"/>
+								<p:outputLabel value="#{msg.aupSecurityJavaPackage}"/>
+								<p:inputText value="#{cc.attrs.bean.view.packageName}"/>
+								<p:outputLabel value="#{msg.aupSecurityViewPattern}"/>
+								<p:inputText value="#{cc.attrs.bean.view.viewPattern}"/>
+								<p:outputLabel value="#{msg.aupSecurityViewMapping}"/>
+								<p:inputText value="#{cc.attrs.bean.view.urlMapping}"/>
+								<p:outputLabel value="#{msg.aupSecurityViewUrlBase}"/>
+								<p:inputText value="#{cc.attrs.bean.view.urlBase}"/>
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.view}"
+									labelTranslation="#{msg.jeeslName}" labelDescription="#{msg.jeeslDescription}"
+				       			keys="#{cc.attrs.localeCodes}" withDescription="true"/>
+						</p:panel>
+					</h:form>
+					
 					<h:form id="fActions"><aupSec:tableActions update=":#{cc.id}:sActions"/></h:form>
 					<h:form id="fAction"><aupSec:panelAction rendered="#{not empty cc.attrs.bean.action}" update=":#{cc.id}:sActions"/></h:form>
 					

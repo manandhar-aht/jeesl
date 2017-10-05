@@ -78,7 +78,6 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		return views.isEmpty();
 	}
 	
-	
 	private void reloadViews() throws UtilsNotFoundException
 	{
 		views = fSecurity.allForCategory(cView,cCategory,category.getCode());
@@ -137,15 +136,19 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		reloadView();
 		reloadViews();
 		bMessage.growlSuccessSaved();
+		propagateChanges();
 	}
 	
-	public void rmView() throws UtilsConstraintViolationException, UtilsNotFoundException
+	protected abstract void propagateChanges();
+	
+	public void deleteView() throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(view));
 		fSecurity.rm(view);
 		view=null;
 		action=null;
 		reloadViews();
+		propagateChanges();
 		bMessage.growlSuccessRemoved();
 	}
 	
@@ -170,6 +173,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		if(!descriptions.isEmpty()){fSecurity.rm(descriptions);}
 		reloadView();
 		reloadActions();
+		propagateChanges();
 		bMessage.growlSuccessSaved();
 	}
 	
@@ -189,6 +193,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		action=null;
 		reloadView();
 		reloadActions();
+		propagateChanges();
 		bMessage.growlSuccessRemoved();
 	}
 	
@@ -207,6 +212,6 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		}
 	}
 	
-	protected void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, views);}
-	protected void reorderActions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, actions);}
+	public void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, views);}
+	public void reorderActions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, actions);}
 }

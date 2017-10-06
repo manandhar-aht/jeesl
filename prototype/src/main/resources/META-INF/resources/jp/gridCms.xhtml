@@ -98,14 +98,14 @@
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderElements()}" update="@form"/>
-							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectElement()}" update=":#{cc.id}:fElement :#{cc.id}:pgElements"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectElement()}" update=":#{cc.id}:sSection"/>
 							<p:column rendered="true"><h:outputText value="#{e.position}"/></p:column>
 							<p:column headerText="#{msg.jeeslCmsElementType}"><h:outputText value="#{e.type.name[localeCode].lang}"/></p:column>
-							<p:column headerText="#{msg.jeeslCmsElement}"><h:outputText value="#{e.id}"/></p:column>
+							<p:column headerText="#{msg.jeeslCmsElement} ID"><h:outputText value="#{e.id}"/></p:column>
 						</p:dataTable>
 					</h:form>
-					<h:form id="fElement">
-						<p:panel header="#{msg.jeeslCmsElement}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.element}">
+					<h:form id="fElement" rendered="#{not empty cc.attrs.bean.element}">
+						<p:panel header="#{msg.jeeslCmsElement}"  styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveElement()}" update=":#{cc.id}:sSection" tooltip="#{msg.ttSave}" mayDisappear="true"/>
 							</f:facet>
@@ -122,7 +122,7 @@
 							</p:panelGrid>
 						</p:panel>
 					</h:form>
-					<h:panelGroup id="pgElements">
+					<h:panelGroup id="pgElements" rendered="#{(not empty cc.attrs.bean.element) and (cc.attrs.bean.element.id gt 0)}">
 						<h:form id="fParagrpah" rendered="#{cc.attrs.bean.element.type.code eq 'paragraph'}">
 							<p:panel header="#{msg.jeeslCmsElementParagraph}" styleClass="auPanelWithGrid">
 								<f:facet name="actions">

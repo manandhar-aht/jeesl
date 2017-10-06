@@ -3,6 +3,7 @@ package org.jeesl.doc.ofx;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.model.json.system.translation.JsonTranslation;
 import org.openfuxml.content.ofx.Paragraph;
 import org.openfuxml.content.table.Cell;
 import org.openfuxml.content.table.Head;
@@ -14,12 +15,13 @@ import org.openfuxml.interfaces.configuration.TranslationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.ahtutils.xml.xpath.StatusXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
-public class AbstractJeeslOfxFactory
+public class AbstractJeeslOfxFactory<L extends UtilsLang>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslOfxFactory.class);
 	
@@ -27,8 +29,12 @@ public class AbstractJeeslOfxFactory
 	protected List<String> localeCodes;
 	protected List<String> tableHeaderKeys;
 	
+	protected final List<JsonTranslation> tableHeaders;
+	
 	protected Translations translations;
 //	protected String imagePathPrefix;
+	
+	protected final OfxMultiLangFactory<L> ofxMultiLang;
 	
 	@Deprecated
 	public AbstractJeeslOfxFactory(List<String> localeCodes, Translations translations)
@@ -37,12 +43,31 @@ public class AbstractJeeslOfxFactory
 		this.translations=translations;
 		
 		tableHeaderKeys = new ArrayList<String>();
+		tableHeaders = new ArrayList<JsonTranslation>();
+		
+		ofxMultiLang = new OfxMultiLangFactory<L>(localeCodes);
 	}
 	
 	public AbstractJeeslOfxFactory(TranslationProvider tp)
 	{	
 		this.tp=tp;
 		tableHeaderKeys = new ArrayList<String>();
+		tableHeaders = new ArrayList<JsonTranslation>();
+		ofxMultiLang = new OfxMultiLangFactory<L>(tp.getLocaleCodes());
+	}
+	
+	protected <E extends Enum<E>>void addHeaderKey(Class<?> c)
+	{
+		JsonTranslation json = new JsonTranslation();
+		json.setEntity(c.getSimpleName());
+		tableHeaders.add(json);
+	}
+	protected <E extends Enum<E>>void addHeaderKey(Class<?> c, E code)
+	{
+		JsonTranslation json = new JsonTranslation();
+		json.setEntity(c.getSimpleName());
+		json.setCode(code.toString());
+		tableHeaders.add(json);
 	}
 	
 	protected <E extends Enum<E>>void addHeaderKey(E code)
@@ -60,6 +85,23 @@ public class AbstractJeeslOfxFactory
 			for(String localeCode : tp.getLocaleCodes())
 			{
 				cell.getContent().add(XmlParagraphFactory.build(localeCode,tp.toTranslation(localeCode, headerKey)));
+			}
+			row.getCell().add(cell);
+		}
+		
+		return OfxHeadFactory.build(row);
+	}
+	
+	protected Head buildTableHeader()
+	{
+		Row row = new Row();
+		logger.info("Building Head with keys:"+tableHeaderKeys.size()+" locales:"+tp.getLocaleCodes().size());
+		for(JsonTranslation json : tableHeaders)
+		{
+			Cell cell = OfxCellFactory.build();
+			for(String localeCode : tp.getLocaleCodes())
+			{
+				cell.getContent().add(XmlParagraphFactory.build(localeCode,tp.toTranslation(localeCode,json.getEntity(),json.getCode())));
 			}
 			row.getCell().add(cell);
 		}

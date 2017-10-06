@@ -15,7 +15,7 @@ import net.sf.ahtutils.msgbundle.TranslationFactory;
 import net.sf.exlp.util.xml.JaxbUtil;
 import net.sf.exlp.xml.io.Dir;
 
-@Mojo(name="msgBundle")
+@Mojo(name="msgBundle2")
 public class JeeslMsgGoal extends AbstractMojo
 {
 	@Parameter(defaultValue = "WARN")

@@ -36,4 +36,7 @@ public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
 	
 	List<LOC> getLocales();
 	void setLocales(List<LOC> locales);
+	
+	Boolean getToc();
+	void setToc(Boolean toc);
 }

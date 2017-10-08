@@ -49,12 +49,13 @@ public class EjbIoCmsContentFactory<L extends UtilsLang,D extends UtilsDescripti
         return new EjbIoCmsContentFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>(cC);
     }
 	
-	public C build(LOC locale, String value, M markup)
+	public C build(E element, LOC locale, String value, M markup)
 	{
 		C c = null;
 		try
 		{
 			c = cC.newInstance();
+			c.setElement(element);
 			c.setLkey(locale.getCode());
 		 	c.setLang(value);
 		 	c.setMarkup(markup);

@@ -88,10 +88,13 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 
 	protected CMS cms; public CMS getCms() {return cms;} public void setCms(CMS cms) {this.cms = cms;}
 	protected CAT category;
+	private C content; public C getContent() {return content;} public void setContent(C content) {this.content = content;}
+
 	protected EC elementCategory; public EC getElementCategory() {return elementCategory;} public void setElementCategory(EC elementCategory) {this.elementCategory = elementCategory;}
 	
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 	protected E element; public E getElement() {return element;} public void setElement(E element) {this.element = element;}
+	
 	private M markupHtml;
 	
 	private TreeNode tree; public TreeNode getTree() {return tree;}
@@ -163,6 +166,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 			cms = (CMS)ejb;
 			if(EjbIdFactory.isSaved(cms))
 			{
+				cmsSelected();
 				cms = efLang.persistMissingLangs(fCms,localeCodes,cms);
 				reloadCms();
 				reloadTree();
@@ -175,6 +179,8 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		}
 		reset(true);
 	}
+	
+	protected void cmsSelected(){}
 	
 	private void reset(boolean rElement)
 	{
@@ -296,6 +302,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
     		reset(true);
     }
     
+	@SuppressWarnings("unchecked")
 	@Override public void addOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addOpEntity(item));}
@@ -310,6 +317,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 			}
 		}
 	}
+	@SuppressWarnings("unchecked")
 	@Override public void rmOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmOpEntity(item));}
@@ -375,13 +383,21 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		selectedElement();
 	}
 	
+	public void deleteElement() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(element));}
+		fCms.rm(element);
+		reset(true);
+		reloadSection();
+	}
+	
 	protected void selectedElement()
 	{
 		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString()))
 		{
 			if(!element.getContent().containsKey(sbhLocale.getSelection().getCode()))
 			{
-				element.getContent().put(sbhLocale.getSelection().getCode(), efContent.build(sbhLocale.getSelection(), "", markupHtml));
+				element.getContent().put(sbhLocale.getSelection().getCode(), efContent.build(element,sbhLocale.getSelection(), "", markupHtml));
 			}
 		}
 	}
@@ -389,6 +405,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	public void saveParagraph() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(element)+" "+element.getContent().size());}
+		
 		element = fCms.save(element);
 	}
 	

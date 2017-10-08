@@ -43,6 +43,16 @@ public class OfxMultiLangFactory<L extends UtilsLang>
 		this.localeCodes=localeCodes;
 	}
 	
+	public <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> Title title(String localeCode, UtilsStatus<S,L,D> status) {return title(localeCode,status,null);}
+	public <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> Title title(String localeCode, UtilsStatus<S,L,D> status, String suffix)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append(status.getName().get(localeCode).getLang());
+		if(suffix!=null) {sb.append(" ").append(suffix);}
+		
+		return XmlTitleFactory.build(localeCode, sb.toString());
+	}
+	
 	public <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> Cell cellLabel(UtilsStatus<S,L,D> status)
 	{
 		Cell cell = OfxCellFactory.build();

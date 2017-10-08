@@ -39,10 +39,14 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 	protected final String localeCode;
 	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> fCms;
 	
+	private final OfxParagraphFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> ofParagraph;
+	
 	public AbstractOfxCmsFactory(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> fCms)
 	{
 		this.localeCode=localeCode;
 		this.fCms = fCms;
+		
+		ofParagraph = new OfxParagraphFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>(localeCode);
 	}
 	
 	public Sections build(CMS cms) throws OfxAuthoringException
@@ -69,7 +73,8 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 		List<E> elements = fCms.fCmsElements(section);
 		for(E e : elements)
 		{
-			xml.getContent().add(build(e));
+			build(xml.getContent(),e);
+//			xml.getContent().add(build(e));
 		}
 		
 		for(S child : section.getSections())
@@ -83,5 +88,11 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 		return xml;
 	}
 	
-	protected abstract Serializable build(E element) throws OfxAuthoringException;
+	protected abstract void build(List<Serializable> list, E element) throws OfxAuthoringException;
+	
+	protected void buildJeesl(List<Serializable> list, E element) throws OfxAuthoringException
+	{
+		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString())) {list.add(ofParagraph.build(element));}
+		else {logger.warn("Unhandled "+element.getType().getCode());}
+	}
 }

@@ -41,6 +41,7 @@ import net.sf.ahtutils.xml.text.Remark;
  *       &lt;attribute name="showText" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="showScore" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *       &lt;attribute name="showRemark" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="showSelectOne" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -97,6 +98,8 @@ public class Question
     protected Boolean showScore;
     @XmlAttribute(name = "showRemark")
     protected Boolean showRemark;
+    @XmlAttribute(name = "showSelectOne")
+    protected Boolean showSelectOne;
 
     /**
      * Gets the value of the question property.
@@ -608,6 +611,38 @@ public class Question
 
     public void unsetShowRemark() {
         this.showRemark = null;
+    }
+
+    /**
+     * Gets the value of the showSelectOne property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isShowSelectOne() {
+        return showSelectOne;
+    }
+
+    /**
+     * Sets the value of the showSelectOne property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setShowSelectOne(boolean value) {
+        this.showSelectOne = value;
+    }
+
+    public boolean isSetShowSelectOne() {
+        return (this.showSelectOne!= null);
+    }
+
+    public void unsetShowSelectOne() {
+        this.showSelectOne = null;
     }
 
 }

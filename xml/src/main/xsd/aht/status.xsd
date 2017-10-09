@@ -41,7 +41,30 @@
 	<xsd:element name="status">
         <xsd:complexType>
             <xsd:sequence>
-            	<xsd:element ref="us:parent" maxOccurs="1"/>
+            		<xsd:element ref="us:parent" maxOccurs="1"/>
+                <xsd:element ref="us:langs" maxOccurs="1"/>
+                <xsd:element ref="us:descriptions" maxOccurs="1"/>
+                <xsd:element ref="us:lang" maxOccurs="unbounded"/>
+                <xsd:element ref="us:transistions" maxOccurs="1"/>
+                <xsd:element ref="us:tracked" maxOccurs="unbounded"/>
+                <xsd:element ref="symbol:graphic" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+            <xsd:attribute name="group" type="xsd:string"/>
+            <xsd:attribute name="label" type="xsd:string"/>
+            <xsd:attribute name="symbol" type="xsd:string"/>
+            <xsd:attribute name="visible" type="xsd:boolean"/>
+            <xsd:attribute name="image" type="xsd:string"/>
+            <xsd:attribute name="style" type="xsd:string"/>
+            <xsd:attribute name="position" type="xsd:int"/>
+        </xsd:complexType>
+    </xsd:element>
+    
+    	<xsd:element name="option">
+        <xsd:complexType>
+			<xsd:sequence>
+            		<xsd:element ref="us:parent" maxOccurs="1"/>
                 <xsd:element ref="us:langs" maxOccurs="1"/>
                 <xsd:element ref="us:descriptions" maxOccurs="1"/>
                 <xsd:element ref="us:lang" maxOccurs="unbounded"/>

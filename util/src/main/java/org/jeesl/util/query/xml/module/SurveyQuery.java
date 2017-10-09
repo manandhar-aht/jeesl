@@ -19,8 +19,13 @@ import net.sf.ahtutils.factory.xml.status.XmlUnitFactory;
 import net.sf.ahtutils.factory.xml.text.XmlRemarkFactory;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.survey.Answer;
+import net.sf.ahtutils.xml.survey.Cell;
+import net.sf.ahtutils.xml.survey.Column;
 import net.sf.ahtutils.xml.survey.Data;
+import net.sf.ahtutils.xml.survey.Matrix;
+import net.sf.ahtutils.xml.survey.Option;
 import net.sf.ahtutils.xml.survey.Question;
+import net.sf.ahtutils.xml.survey.Row;
 import net.sf.ahtutils.xml.survey.Score;
 import net.sf.ahtutils.xml.survey.Section;
 import net.sf.ahtutils.xml.survey.Survey;
@@ -106,6 +111,7 @@ public class SurveyQuery
 		xml.setShowText(true);
 		xml.setShowScore(true);
 		xml.setShowRemark(true);
+		xml.setShowSelectOne(true);
 		
 		Score score = XmlScoreFactory.build();
 		score.setMax(0);
@@ -217,6 +223,20 @@ public class SurveyQuery
 		xml.setScore(0);
 		xml.setAnswer(net.sf.ahtutils.factory.xml.text.XmlAnswerFactory.build(""));
 		xml.setRemark(XmlRemarkFactory.build(""));
+		
+		Option option = new Option();
+		option.setId(0);
+		option.setCode("");
+		option.setLabel("");
+		xml.setOption(option);
+		
+		Cell cell = new Cell();cell.setLabel("");
+		Column column = new Column();column.setLabel("");column.setCell(cell);
+		Row row = new Row();row.setLabel("");row.getColumn().add(column);
+		Matrix matrix = new Matrix();
+		matrix.getRow().add(row);
+		xml.setMatrix(matrix);
+		
 		return xml;
 	}
 }

@@ -25,6 +25,8 @@ import net.sf.ahtutils.xml.text.Remark;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}question"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/text}answer"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/text}remark"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/survey}option"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/survey}matrix"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
  *       &lt;attribute name="valueBoolean" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
@@ -43,7 +45,9 @@ import net.sf.ahtutils.xml.text.Remark;
     "data",
     "question",
     "answer",
-    "remark"
+    "remark",
+    "option",
+    "matrix"
 })
 @XmlRootElement(name = "answer")
 public class Answer
@@ -59,6 +63,10 @@ public class Answer
     protected net.sf.ahtutils.xml.text.Answer answer;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/text", required = true)
     protected Remark remark;
+    @XmlElement(required = true)
+    protected Option option;
+    @XmlElement(required = true)
+    protected Matrix matrix;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "valueBoolean")
@@ -180,6 +188,62 @@ public class Answer
 
     public boolean isSetRemark() {
         return (this.remark!= null);
+    }
+
+    /**
+     * Gets the value of the option property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Option }
+     *     
+     */
+    public Option getOption() {
+        return option;
+    }
+
+    /**
+     * Sets the value of the option property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Option }
+     *     
+     */
+    public void setOption(Option value) {
+        this.option = value;
+    }
+
+    public boolean isSetOption() {
+        return (this.option!= null);
+    }
+
+    /**
+     * Gets the value of the matrix property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Matrix }
+     *     
+     */
+    public Matrix getMatrix() {
+        return matrix;
+    }
+
+    /**
+     * Sets the value of the matrix property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Matrix }
+     *     
+     */
+    public void setMatrix(Matrix value) {
+        this.matrix = value;
+    }
+
+    public boolean isSetMatrix() {
+        return (this.matrix!= null);
     }
 
     /**

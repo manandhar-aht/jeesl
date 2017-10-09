@@ -64,6 +64,7 @@
             <xsd:attribute name="showText" type="xsd:boolean"/>
             <xsd:attribute name="showScore" type="xsd:boolean"/>
             <xsd:attribute name="showRemark" type="xsd:boolean"/>
+            <xsd:attribute name="showSelectOne" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="surveys">
@@ -75,8 +76,8 @@
     </xsd:element>
     <xsd:element name="survey">
         <xsd:complexType>
-        	<xsd:sequence>
-        		<xsd:element ref="survey:template" maxOccurs="1"/>
+	        	<xsd:sequence>
+	        		<xsd:element ref="survey:template" maxOccurs="1"/>
 				<xsd:element ref="us:status" maxOccurs="1"/>
 				<xsd:element ref="survey:data" maxOccurs="unbounded"/>
 				<xsd:element ref="jf:figures" maxOccurs="1"/>
@@ -99,7 +100,7 @@
 			</xsd:sequence>
 			<xsd:attribute name="id" type="xsd:long"/>
 		</xsd:complexType>
-   </xsd:element>
+	</xsd:element>
 	<xsd:element name="correlation">
 		<xsd:complexType>
 			<xsd:sequence>
@@ -109,13 +110,57 @@
 			<xsd:attribute name="type" type="xsd:string"/>
 		</xsd:complexType>
     </xsd:element>
+    	<xsd:element name="matrix">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="survey:row" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+    </xsd:element>
+	<xsd:element name="row">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="survey:column" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="label" type="xsd:string"/>
+		</xsd:complexType>
+    </xsd:element>
+    <xsd:element name="column">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="survey:cell" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="label" type="xsd:string"/>
+		</xsd:complexType>
+    </xsd:element>
+	<xsd:element name="cell">
+		<xsd:complexType>
+			<xsd:sequence>
+
+			</xsd:sequence>
+			<xsd:attribute name="label" type="xsd:string"/>
+		</xsd:complexType>
+    </xsd:element>
+    
+    	<xsd:element name="option">
+		<xsd:complexType>
+			<xsd:sequence>
+				
+			</xsd:sequence>
+			<xsd:attribute name="id" type="xsd:long"/>
+			<xsd:attribute name="code" type="xsd:string"/>
+			<xsd:attribute name="label" type="xsd:string"/>
+		</xsd:complexType>
+    </xsd:element>
     <xsd:element name="answer">
 		<xsd:complexType>
-        	<xsd:sequence>
-        		<xsd:element ref="survey:data" maxOccurs="1"/>
+	        	<xsd:sequence>
+				<xsd:element ref="survey:data" maxOccurs="1"/>
 				<xsd:element ref="survey:question" maxOccurs="1"/>
 				<xsd:element ref="text:answer" maxOccurs="1"/>
 				<xsd:element ref="text:remark" maxOccurs="1"/>
+				<xsd:element ref="survey:option" maxOccurs="1"/>
+				<xsd:element ref="survey:matrix" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="id" type="xsd:long"/>
 			<xsd:attribute name="valueBoolean" type="xsd:boolean"/>

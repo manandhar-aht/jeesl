@@ -2,6 +2,7 @@ package net.sf.ahtutils.web.mbean.util;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -20,9 +21,13 @@ public class AbstractTranslationBean implements Serializable,JeeslTranslationBea
 	private static final long serialVersionUID = 1L;
 	
 	private TranslationMap tm;
-	protected List<String> langKeys; public List<String> getLangKeys(){return langKeys;}
+	protected final List<String> langKeys; public List<String> getLangKeys(){return langKeys;}
 	
- 
+	public AbstractTranslationBean()
+	{
+		langKeys = new ArrayList<String>();
+	}
+	
 	protected void initMap(ClassLoader cl, String fXml)
     {
 		StringBuilder sb = new StringBuilder();
@@ -36,7 +41,8 @@ public class AbstractTranslationBean implements Serializable,JeeslTranslationBea
 				tFactory.add(cl,dir.getName()+"/"+f.getName());
 			}
 			tm = tFactory.gettMap();
-			langKeys = tm.getLangKeys();
+			langKeys.clear();
+			langKeys.addAll(tm.getLangKeys());
 			sb.append(" ").append(StringUtils.join(langKeys, ", " ));
 			logger.info(sb.toString());
 		}

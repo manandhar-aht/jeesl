@@ -36,10 +36,14 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,
 	private final String localeCode;
 	private final Section q;
 	
+	private XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> xfQuestion;
+	
 	public XmlSectionFactory(String localeCode, Section q)
 	{
 		this.localeCode=localeCode;
 		this.q=q;
+		
+		if(q.isSetQuestion()){xfQuestion = new XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(q.getQuestion().get(0));}
 	}
 	
 	public void lazyLoad(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
@@ -52,6 +56,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,
 		if(fSurvey!=null){ejb = fSurvey.load(ejb);}
 		Section xml = new Section();
 		if(q.isSetId()){xml.setId(ejb.getId());}
+		if(q.isSetCode()) {xml.setCode(ejb.getCode());}
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
 		if(q.isSetVisible()){xml.setVisible(ejb.isVisible());}
 		
@@ -60,10 +65,9 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,
 		
 		if(q.isSetQuestion())
 		{
-			XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> f = new XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(q.getQuestion().get(0));
 			for(QUESTION question : ejb.getQuestions())
 			{
-				xml.getQuestion().add(f.build(question));
+				xml.getQuestion().add(xfQuestion.build(question));
 			}
 		}
 		

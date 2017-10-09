@@ -102,6 +102,46 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Option }
+     * 
+     */
+    public Option createOption() {
+        return new Option();
+    }
+
+    /**
+     * Create an instance of {@link Matrix }
+     * 
+     */
+    public Matrix createMatrix() {
+        return new Matrix();
+    }
+
+    /**
+     * Create an instance of {@link Row }
+     * 
+     */
+    public Row createRow() {
+        return new Row();
+    }
+
+    /**
+     * Create an instance of {@link Column }
+     * 
+     */
+    public Column createColumn() {
+        return new Column();
+    }
+
+    /**
+     * Create an instance of {@link Cell }
+     * 
+     */
+    public Cell createCell() {
+        return new Cell();
+    }
+
+    /**
      * Create an instance of {@link Surveys }
      * 
      */

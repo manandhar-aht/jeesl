@@ -18,6 +18,9 @@ import org.openfuxml.factory.xml.text.OfxTextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Descriptions;
@@ -29,9 +32,51 @@ import net.sf.ahtutils.xml.xpath.StatusXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
-public class OfxMultiLangFactory
+public class OfxMultiLangFactory<L extends UtilsLang>
 {	
 	final static Logger logger = LoggerFactory.getLogger(OfxMultiLangFactory.class);
+	
+	private final List<String> localeCodes;
+	
+	public OfxMultiLangFactory(List<String> localeCodes)
+	{
+		this.localeCodes=localeCodes;
+	}
+	
+	public <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> Title title(String localeCode, UtilsStatus<S,L,D> status) {return title(localeCode,status,null);}
+	public <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> Title title(String localeCode, UtilsStatus<S,L,D> status, String suffix)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append(status.getName().get(localeCode).getLang());
+		if(suffix!=null) {sb.append(" ").append(suffix);}
+		
+		return XmlTitleFactory.build(localeCode, sb.toString());
+	}
+	
+	public <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> Cell cellLabel(UtilsStatus<S,L,D> status)
+	{
+		Cell cell = OfxCellFactory.build();
+//		if(font!=null){cell.getContent().add(font);}
+		cell.getContent().addAll(paragraphLabels(status));
+		return cell;
+	}
+	
+	private <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> List<Paragraph> paragraphLabels(UtilsStatus<S,L,D> status)
+	{
+		List<Paragraph> paragraphs = new ArrayList<Paragraph>();
+		
+		for(String key : localeCodes)
+		{
+			Paragraph p = XmlParagraphFactory.build(key);
+//			p.getContent().add(font);
+			if(status.getName()!=null && status.getName().containsKey(key)) {p.getContent().add(status.getName().get(key).getLang());}
+			else {p.getContent().add("-!-");}
+			paragraphs.add(p);
+			
+		}
+		return paragraphs;
+	}
+	
 	
 	
 	public static Title title(String[] keys, Translations translations, String captionKey) throws OfxAuthoringException

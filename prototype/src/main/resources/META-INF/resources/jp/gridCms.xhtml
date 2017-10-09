@@ -33,7 +33,7 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderDocuments()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectDocument()}" update=":#{cc.id}:sDocument :#{cc.id}:sLangs"/>
 							<p:column rendered="true"><h:outputText value="#{d.position}"/></p:column>
-							<p:column headerText="#{msg.jeeslIoReport}"><h:outputText value="#{d.name[localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslIoReport}"><h:outputText value="#{d.name[cc.attrs.bean.sbhLocale.selection.code].lang}"/></p:column>
 						</p:dataTable>
 					</h:form>
 				</aht:slot>
@@ -43,6 +43,10 @@
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveDocument()}" update=":#{cc.id}:grid #{cc.attrs.updateStatusBar}" tooltip="#{msg.ttSave}" mayDisappear="true"/>
 							</f:facet>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+								<p:outputLabel value="#{msg.jeeslCmsDocumentToc}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.cms.toc}"/>
+							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.cms}" withDescription="false" labelTranslation="#{msg.Name}" keys="#{cc.attrs.bean.localeCodes}" />
 						</p:panel>
 					</h:form>
@@ -52,7 +56,6 @@
 						<jp:opSelection handler="#{cc.attrs.bean.opLocale}" update=":#{cc.id}:fLangs :fStatusBar" tableHeader="#{msg.jeeslCmsLanguages}"/>
 					</h:form>
 				</aht:slot>
-				
 			</aht:row>
 			<aht:row rendered="#{(not empty cc.attrs.bean.cms) and (cc.attrs.bean.cms.id gt 0) and (not empty cc.attrs.bean.sbhLocale.selection)}">
 				<aht:slot width="3">
@@ -98,16 +101,17 @@
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderElements()}" update="@form"/>
-							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectElement()}" update=":#{cc.id}:fElement :#{cc.id}:pgElements"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectElement()}" update=":#{cc.id}:sSection"/>
 							<p:column rendered="true"><h:outputText value="#{e.position}"/></p:column>
 							<p:column headerText="#{msg.jeeslCmsElementType}"><h:outputText value="#{e.type.name[localeCode].lang}"/></p:column>
-							<p:column headerText="#{msg.jeeslCmsElement}"><h:outputText value="#{e.id}"/></p:column>
+							<p:column headerText="#{msg.jeeslCmsElement} ID"><h:outputText value="#{e.id}"/></p:column>
 						</p:dataTable>
 					</h:form>
-					<h:form id="fElement">
-						<p:panel header="#{msg.jeeslCmsElement}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.element}">
+					<h:form id="fElement" rendered="#{not empty cc.attrs.bean.element}">
+						<p:panel header="#{msg.jeeslCmsElement}"  styleClass="auPanelWithGrid">
 							<f:facet name="actions">
-								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveElement()}" update=":#{cc.id}:sSection" tooltip="#{msg.ttSave}" mayDisappear="true"/>
+								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveElement()}" update=":#{cc.id}:sSection" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteElement()}" update=":#{cc.id}:sSection" tooltip="#{msg.ttSave}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslCmsElementCategory}"/>
@@ -122,14 +126,13 @@
 							</p:panelGrid>
 						</p:panel>
 					</h:form>
-					<h:panelGroup id="pgElements">
+					<h:panelGroup id="pgElements" rendered="#{(not empty cc.attrs.bean.element) and (cc.attrs.bean.element.id gt 0)}">
 						<h:form id="fParagrpah" rendered="#{cc.attrs.bean.element.type.code eq 'paragraph'}">
 							<p:panel header="#{msg.jeeslCmsElementParagraph}" styleClass="auPanelWithGrid">
 								<f:facet name="actions">
-									<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveParagraph()}" update="@form" tooltip="#{msg.ttSave}" mayDisappear="false"/>
+									<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveParagraph()}" update="@form" tooltip="#{msg.ttSave}"/>
 								</f:facet>
-								
-								<p:textEditor value="#{cc.attrs.bean.element.content[cc.attrs.bean.sbhLocale.selection.code].txt}" widgetVar="editor2" height="300" style="margin-bottom:10px" placeholder="Enter your content">
+								<p:textEditor value="#{cc.attrs.bean.element.content[cc.attrs.bean.sbhLocale.selection.code].lang}" widgetVar="editor2" height="300" style="margin-bottom:10px" placeholder="Enter your content">
 						        <f:facet name="toolbar">
 						             <span class="ql-formats">
 						                <button class="ql-bold"></button>
@@ -143,7 +146,6 @@
 						            </span>
 						        </f:facet>
 						    </p:textEditor>
-								
 							</p:panel>
 						</h:form>
 						<composite:insertChildren/>

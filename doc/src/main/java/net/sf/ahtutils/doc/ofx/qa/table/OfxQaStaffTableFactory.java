@@ -107,12 +107,12 @@ public class OfxQaStaffTableFactory extends AbstractUtilsOfxDocumentationFactory
 		Columns cols = new Columns();
 		if(this.columns.length==2)
 		{
-			cols.getColumn().add(OfxColumnFactory.build(XmlAlignmentFactory.Horizontal.left));
+			OfxColumnFactory.add(cols,XmlAlignmentFactory.Horizontal.left);
 			cols.getColumn().add(OfxColumnFactory.flex(60));
 		}
 		else if(this.columns.length==3)
 		{
-			cols.getColumn().add(OfxColumnFactory.build(XmlAlignmentFactory.Horizontal.left));
+			OfxColumnFactory.add(cols,XmlAlignmentFactory.Horizontal.left);
 			cols.getColumn().add(OfxColumnFactory.flex(35));
 			cols.getColumn().add(OfxColumnFactory.flex(40));
 		}

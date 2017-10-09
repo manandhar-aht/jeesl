@@ -69,6 +69,8 @@ TEMPLATE extends JeeslSurveyTemplate<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC
 		if(q.isSetShowText()){if(ejb.getShowText()!=null){xml.setShowText(ejb.getShowText());}else{xml.setShowText(false);}}
 		if(q.isSetShowScore()){if(ejb.getShowScore()!=null){xml.setShowScore(ejb.getShowScore());}else{xml.setShowScore(false);}}
 		if(q.isSetShowRemark()){if(ejb.getShowRemark()!=null){xml.setShowRemark(ejb.getShowRemark());}else{xml.setShowRemark(false);}}
+		if(q.isSetShowSelectOne()){if(ejb.getShowSelectOne()!=null){xml.setShowSelectOne(ejb.getShowSelectOne());}else{xml.setShowSelectOne(false);}}
+		
 		if(q.isSetScore()){xml.setScore(xfScore.build(ejb));}
 		
 		return xml;

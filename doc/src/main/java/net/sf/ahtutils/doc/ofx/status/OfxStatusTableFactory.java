@@ -297,12 +297,12 @@ public class OfxStatusTableFactory extends AbstractUtilsOfxDocumentationFactory
 		
 		if(renderColumn.get(Code.icon))
 		{
-			cols.getColumn().add(OfxColumnFactory.build(XmlAlignmentFactory.Horizontal.center));
+			OfxColumnFactory.add(cols,XmlAlignmentFactory.Horizontal.center);
 		}
 		
 		if(renderColumn.get(Code.code))
 		{
-			cols.getColumn().add(OfxColumnFactory.build(XmlAlignmentFactory.Horizontal.left));
+			OfxColumnFactory.add(cols,XmlAlignmentFactory.Horizontal.left);
 		}
 		
 		Code code = Code.name;
@@ -481,7 +481,7 @@ public class OfxStatusTableFactory extends AbstractUtilsOfxDocumentationFactory
 			{
 				headerKey = null;
 				head.getRow().get(0).getCell().add(OfxCellFactory.build());
-				specs.getColumns().getColumn().add(OfxColumnFactory.build(XmlAlignmentFactory.Horizontal.center));
+				OfxColumnFactory.add(specs.getColumns(),XmlAlignmentFactory.Horizontal.center);
 			}
 			else if(code.equals(Code.code))
 			{

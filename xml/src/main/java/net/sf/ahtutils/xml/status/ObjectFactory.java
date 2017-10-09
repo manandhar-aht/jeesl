@@ -230,6 +230,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Option }
+     * 
+     */
+    public Option createOption() {
+        return new Option();
+    }
+
+    /**
      * Create an instance of {@link Results }
      * 
      */

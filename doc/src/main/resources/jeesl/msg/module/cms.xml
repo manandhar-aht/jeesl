@@ -90,5 +90,12 @@
 	    		<s:lang key="en" translation="JSON"/>
 	    		<s:lang key="fr" translation="JSON"/>
 	    	</s:langs>
-    </s:translation>  
+    </s:translation>
+	<s:translation key="jeeslCmsDocumentToc">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Inhaltsverzeichnis"/>
+	    		<s:lang key="en" translation="Table of Content"/>
+	    		<s:lang key="fr" translation="Table of Content"/>
+	    	</s:langs>
+    </s:translation>
 </s:translations>

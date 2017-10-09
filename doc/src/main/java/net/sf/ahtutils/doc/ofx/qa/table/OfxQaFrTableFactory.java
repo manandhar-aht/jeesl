@@ -64,7 +64,7 @@ public class OfxQaFrTableFactory extends AbstractUtilsOfxDocumentationFactory
 	private Specification createTableSpecifications()
 	{
 		Columns cols = new Columns();
-		cols.getColumn().add(OfxColumnFactory.build(XmlAlignmentFactory.Horizontal.left));
+		OfxColumnFactory.add(cols,XmlAlignmentFactory.Horizontal.left);
 		cols.getColumn().add(OfxColumnFactory.flex(80));
 		
 		Specification specification = new Specification();

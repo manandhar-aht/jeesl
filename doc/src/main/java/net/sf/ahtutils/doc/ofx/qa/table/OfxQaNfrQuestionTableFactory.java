@@ -80,9 +80,9 @@ public class OfxQaNfrQuestionTableFactory extends AbstractUtilsOfxDocumentationF
 		spec.setFloat(XmlFloatFactory.build(false));
 		
 		spec.setColumns(new Columns());
-		spec.getColumns().getColumn().add(OfxColumnFactory.build(XmlAlignmentFactory.Horizontal.left));
+		OfxColumnFactory.add(spec.getColumns(),XmlAlignmentFactory.Horizontal.left);
 		spec.getColumns().getColumn().add(OfxColumnFactory.flex(80));
-		spec.getColumns().getColumn().add(OfxColumnFactory.build(XmlAlignmentFactory.Horizontal.center));
+		OfxColumnFactory.add(spec.getColumns(),XmlAlignmentFactory.Horizontal.center);
 		
 		return spec;
 	}

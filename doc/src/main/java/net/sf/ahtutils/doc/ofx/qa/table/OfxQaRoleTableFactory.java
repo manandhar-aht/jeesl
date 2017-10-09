@@ -85,7 +85,7 @@ public class OfxQaRoleTableFactory extends AbstractUtilsOfxDocumentationFactory
 	{
 		Specification specification = new Specification();
 		Columns cols = new Columns();
-		cols.getColumn().add(OfxColumnFactory.build(XmlAlignmentFactory.Horizontal.left));
+		OfxColumnFactory.add(cols,XmlAlignmentFactory.Horizontal.left);
 		cols.getColumn().add(OfxColumnFactory.flex(80));
 		specification.setColumns(cols);
 		specification.setFloat(XmlFloatFactory.build(false));

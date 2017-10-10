@@ -26,8 +26,8 @@ public class XmlScoreFactory<L extends UtilsLang,D extends UtilsDescription,SURV
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlScoreFactory.class);
 	
-	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
-	private Class<SURVEY> cSurvey;
+//	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
+//	private Class<SURVEY> cSurvey;
 	
 	private final Score q;
 		

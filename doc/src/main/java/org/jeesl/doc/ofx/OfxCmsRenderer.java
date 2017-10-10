@@ -87,7 +87,7 @@ public class OfxCmsRenderer<L extends UtilsLang,D extends UtilsDescription,
 		srcBook.hyphenation();
 		
 		srcBook.beginDocument();
-		srcBook.toc();
+		if(cms.getToc()) {srcBook.toc();}
 		
 		for(Section section : XmlSectionsFactory.toList(sections))
 		{

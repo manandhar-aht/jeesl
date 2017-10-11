@@ -13,8 +13,10 @@ import net.sf.ahtutils.xml.finance.Finance;
 
 public interface JeeslPivotFactory <L extends UtilsLang, D extends UtilsDescription, A extends UtilsStatus<A,L,D>> //extends JeeslReportAggregationLevelFactory
 {	
-	JeeslReportAggregationLevelFactory getTxtLevelFactory();
+	int getSizeAggregation();
+	int getSizeValue();
 	int getIndexFor(A aggregation);
+	JeeslReportAggregationLevelFactory getTxtLevelFactory();
 	List<Finance> buildFinance(JeeslPivotAggregator dpa, List<EjbWithId> path);
 	List<Finance> buildFinance(JeeslPivotAggregator dpa, List<EjbWithId> path, List<EjbWithId> last);
 }

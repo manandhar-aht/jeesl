@@ -21,7 +21,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class AbstractAdminSystemPropertyBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAdminSystemPropertyBean <L extends UtilsLang, D extends UtilsDescription,
 												C extends UtilsStatus<C,L,D>,
 												P extends JeeslProperty<L,D,C,P>>
 		extends AbstractAdminBean<L,D>

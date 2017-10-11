@@ -4,6 +4,7 @@ import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.handler.SurveyHandler;
 import org.jeesl.controller.processor.survey.SurveyScoreProcessor;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyFactory;
@@ -133,6 +134,11 @@ public class SurveyFactoryFactory<L extends UtilsLang, D extends UtilsDescriptio
 		return new EjbSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>(cL,cD,cSurvey);
 	}
 	
+	public EjbSurveyAnalysisFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> ejbAnalysis(Class<ANALYSIS> cAnalysis)
+	{
+		return new EjbSurveyAnalysisFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>(cAnalysis);
+	}
+	
 	public EjbSurveySchemeFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> scheme()
 	{
 		return new EjbSurveySchemeFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>(cScheme);
@@ -222,6 +228,7 @@ public class SurveyFactoryFactory<L extends UtilsLang, D extends UtilsDescriptio
 	{
 		return new JsonSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>(localeCode,q);
 	}
+
 	
 	/*
 	public XlsSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> xlsData0(String localeCode)

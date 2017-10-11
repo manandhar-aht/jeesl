@@ -66,9 +66,6 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyTemplateBean.class);
-
-	
-	private final Class<LOC> cLoc;
 	
 	protected List<VERSION> nestedVersions; public List<VERSION> getNestedVersions(){return nestedVersions;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
@@ -95,14 +92,10 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public AbstractAdminSurveyTemplateBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
 	{
 		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
-		this.cLoc=cLoc;
 
 		cmpOption = new PositionComparator<OPTION>();
-		
 		options = new ArrayList<OPTION>();
-		
 		sbhLocale = new SbSingleHandler<LOC>(cLoc,this);
-		
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>();
 	}
 	

@@ -141,6 +141,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		{
 			set = fSurvey.load(set);
 			if(!mapOptionSet.containsKey(set)){mapOptionSet.put(set,new ArrayList<OPTION>());}
+			for(OPTION o : set.getOptions()) {mapOptionId.put(o.getId(),o);}
 			mapOptionSet.get(set).addAll(set.getOptions());
 		}
 	}
@@ -240,7 +241,8 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	protected String statistics()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("Sections: ").append(mapSection.size());
+		sb.append("mapSection: ").append(mapSection.size());
+		sb.append(" mapOptionId: ").append(mapOptionId.size());
 		return sb.toString();
 	}
 }

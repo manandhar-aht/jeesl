@@ -124,23 +124,24 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		logger.info(ejb.toString());
 		if(cTc.isAssignableFrom(ejb.getClass()))
 		{
-			reset(true,true,true,true,true);
+			reset(true,true,true,true,true,true);
 			versions = fSurvey.fVersions(sbhCategory.getSelection());
 		}
 	}
 	
-	private void reset(boolean rTemplate, boolean rVersion, boolean rSection, boolean rQuestion, boolean rAnalysisQuestion)
+	private void reset(boolean rTemplate, boolean rVersion, boolean rSection, boolean rQuestion, boolean rAnalysisQuestion, boolean rTool)
 	{
 		if(rTemplate){template = null;}
 		if(rVersion){version = null;}
 		if(rSection){section = null;}
 		if(rQuestion){question = null;}
 		if(rAnalysisQuestion) {analysisQuestion=null;}
+		if(rTool) {tool = null;}
 	}
 	
 	protected void selectVersion() throws UtilsNotFoundException
 	{
-		reset(false,false,true,true,true);
+		reset(false,false,true,true,true,true);
 		logger.info(AbstractLogMessage.selectEntity(version));
 		version = fSurvey.find(cVersion, version);
 		reloadAnalyses();
@@ -171,14 +172,14 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		logger.info(AbstractLogMessage.selectEntity(analysis));
 		analysis = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), analysis);
 //		analysis = efDescription.persistMissingLangs(fSurvey, localeCodes, analysis);
-		reset(false,false,true,true,true);
+		reset(false,false,true,true,true,true);
 	}
 
 	public void selectSection()
 	{
 		logger.info(AbstractLogMessage.selectEntity(section));
 		questions = bSurvey.getMapQuestion().get(section);
-		reset(false,false,false,true,true);
+		reset(false,false,false,true,true,true);
 	}
 	
 	public void selectQuestion()
@@ -195,6 +196,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 			analysisQuestion = efAnalysisQuestion.build(analysis, question);
 			analysisQuestion.setName(efLang.createEmpty(sbhLocale.getList()));
 		}
+		reset(false,false,false,false,false,true);
 	}
 	
 	public void saveAnalysisQuestion() throws UtilsConstraintViolationException, UtilsLockingException

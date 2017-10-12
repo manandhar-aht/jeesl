@@ -38,29 +38,41 @@
 					</p:panel>
 				</aht:slot>
 			</aht:row>
-			<aht:row id="row2" rendered="#{not empty cc.attrs.bean.sbhSurvey.selected}">
+			<aht:row id="row2" rendered="#{not empty cc.attrs.bean.sbhAnalysis.selected}">
 				<aht:slot>
-					<ui:repeat id="repeatSections" value="#{appSurveyBean.mapSection[cc.attrs.bean.template]}" var="section">
+					<ui:repeat id="repeatSections" value="#{cc.attrs.bean.sections}" var="section">
 							<p:panel id="pQuestions" styleClass="auPanelWithGrid"
 									header="#{section.code}: #{section.name[localeCode].lang}">
 								
-								<ui:repeat value="#{appSurveyBean.mapQuestion[section]}" id="repeatQuestions" var="q">
+								<ui:repeat id="uirQuestions" var="q" value="#{cc.attrs.bean.mapQuestion[section]}">
 									<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80" rendered="#{q.visible}">
 										<h:panelGroup>
-											<h:outputText value="#{q.code} " styleClass="jeeslBold"/> <h:outputText value="#{q.text[localeCode].lang}"/>
+											<h:outputText value="#{q.code}" styleClass="jeeslBold"/><h:outputText value="#{q.text[localeCode].lang}"/>
 										</h:panelGroup>
-										<mc:chart type="column" rendered="#{q.showSelectOne}">  
-						                    <mc:axis code="x" categories="#{cc.attrs.bean.mapDsOption[q].dataSet[0]}">
-						                        <mc:labels rotation="0"/>
-						                    </mc:axis>
-						                    <mc:axis code="y" min="0" >
-						    
-						                    </mc:axis>
-						                    <mc:tooltip shared="true"/>
-						                    <mc:series>
-						                        <mc:dataSet value="#{cc.attrs.bean.mapDsOption[q].dataSet[1]}"/>
-						                    </mc:series>
-						                </mc:chart>
+										<h:panelGroup>
+											<ui:repeat id="uirTools" var="tool" value="#{cc.attrs.bean.mapTool[q]}">
+									            <mc:chart type="column" rendered="#{tool.type.code eq 'chartBarHorizontal'}">
+								                    <mc:axis code="x" categories="#{cc.attrs.bean.ds.dataSet[0]}">
+								                        <mc:labels rotation="0"/>
+								                    </mc:axis>
+								                    <mc:axis code="y" min="0" >
+								                    
+								                    </mc:axis>
+								                    <mc:tooltip shared="true"/>
+								                    <mc:series>
+								                        <mc:dataSet value="#{cc.attrs.bean.ds.dataSet[1]}"/>
+								                    </mc:series>
+								                </mc:chart>
+								                <p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableOption[tool].figures}" rendered="#{tool.type.code eq 'tableVertical'}">
+													<p:column headerText="#{msg.jeeslSurveyOption}">
+														<h:outputText value="#{appSurveyBean.mapOptionId[f.l2].name[localeCode].lang}"/>
+													</p:column>
+													<p:column headerText="#{msg.jeeslSurveyAnalysisAnswers}">
+														<h:outputText value="#{f.l3}"/>
+													</p:column>
+												</p:dataTable>
+									        </ui:repeat>
+										</h:panelGroup>
 									</p:panelGrid>
 								</ui:repeat>
 							</p:panel>

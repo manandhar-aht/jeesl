@@ -67,7 +67,6 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyTemplateBean.class);
 	
 	protected List<VERSION> nestedVersions; public List<VERSION> getNestedVersions(){return nestedVersions;}
-	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
 	protected List<OPTIONS> optionSets; public List<OPTIONS> getOptionSets(){return optionSets;}
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
 	protected List<SCHEME> schemes; public List<SCHEME> getSchemes() {return schemes;}
@@ -260,7 +259,8 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	protected void loadSection()
 	{
 		section = fSurvey.load(section);
-		questions = section.getQuestions();
+		questions.clear();
+		questions.addAll(section.getQuestions());
 		bSurvey.updateSection(section);
 	}
 		

@@ -106,6 +106,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
 	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
+	protected final List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
 	
 	protected SURVEY survey; public SURVEY getSurvey() {return survey;} public void setSurvey(SURVEY survey) {this.survey = survey;}
 	protected TEMPLATE template; public TEMPLATE getTemplate(){return template;} public void setTemplate(TEMPLATE template){this.template = template;}
@@ -145,6 +146,8 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		sbhCategory = new SbSingleHandler<TC>(cTc,this);
 		sbhSurvey = new SbSingleHandler<SURVEY>(cSurvey,this);
 		sbhLocale = new SbSingleHandler<LOC>(cLoc,this);
+		
+		questions = new ArrayList<QUESTION>();
 	}
 	
 	protected abstract void initSettings();

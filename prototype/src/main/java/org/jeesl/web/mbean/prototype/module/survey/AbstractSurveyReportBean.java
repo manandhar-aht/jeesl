@@ -34,6 +34,7 @@ import org.metachart.xml.chart.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -70,24 +71,35 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSurveyReportBean.class);
 
-	final Class<ANALYSIS> cAnalysis; 
+	private final Class<ANALYSIS> cAnalysis;
+	private final Class<AT> cAt; 
 	
 	private McOptionDataSetFactory<OPTION> mfOption;
 	
 	private final Map<QUESTION,DataSet> mapDsOption; public Map<QUESTION, DataSet> getMapDsOption() {return mapDsOption;}
+	private final Map<QUESTION,List<AT>> mapTool; public Map<QUESTION,List<AT>> getMapTool() {return mapTool;}
+	private final Map<SECTION,List<QUESTION>> mapQuestion; public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
+	
+	private final Map<AT,JsonFlatFigures> mapToolTableOption; public Map<AT, JsonFlatFigures> getMapToolTableOption() {return mapToolTableOption;}
 
 	protected final SbSingleHandler<ANALYSIS> sbhAnalysis; public SbSingleHandler<ANALYSIS> getSbhAnalysis() {return sbhAnalysis;}
 	
 	private DataSet ds; public DataSet getDs() {return ds;}
 
-	public AbstractSurveyReportBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions,final Class<OPTION> cOption, final Class<ANALYSIS> cAnalysis, final Class<ATT> cAtt)
+	public AbstractSurveyReportBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions,final Class<OPTION> cOption, final Class<ANALYSIS> cAnalysis, final Class<AT> cAt, final Class<ATT> cAtt)
 	{
 		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
 		this.cAnalysis=cAnalysis;
+		this.cAt=cAt;
 		
+		mapQuestion = new HashMap<SECTION,List<QUESTION>>();
+		mapTool = new HashMap<QUESTION,List<AT>>();
 		mapDsOption = new HashMap<QUESTION,DataSet>();
 		
+		mapToolTableOption = new HashMap<AT,JsonFlatFigures>();
+		
 		sbhAnalysis = new SbSingleHandler<ANALYSIS>(cAnalysis,this);
+		sections = new ArrayList<SECTION>();
 	}
 	
 	protected void initSuperSchedule(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> fSurvey, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> bSurvey, JeeslReportAggregationLevelFactory tfName)
@@ -113,38 +125,13 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 			}
 			else if(cSurvey.isAssignableFrom(ejb.getClass()))
 			{
-				reloadSurvey();
 				sbhAnalysis.setList(fSurvey.allForParent(cAnalysis, sbhSurvey.getSelection().getTemplate()));
 				logger.info(AbstractLogMessage.reloaded(cAnalysis, sbhAnalysis.getList()));
 				sbhAnalysis.silentCallback();
 			}
-			else if(cSurvey.isAssignableFrom(ejb.getClass()))
+			else if(cAnalysis.isAssignableFrom(ejb.getClass()))
 			{
 				reloadAnalysis();
-			}
-		}
-	}
-	
-	private void reloadSurvey()
-	{
-		mapDsOption.clear();
-		template = fSurvey.load(sbhSurvey.getSelection().getTemplate(),false,false);
-		sections = template.getSections();
-		logger.info(AbstractLogMessage.reloaded(cSection, sections));
-		
-		for(SECTION section : sections)
-		{
-			for(QUESTION q : bSurvey.getMapQuestion().get(section))
-			{
-				if(BooleanComparator.active(q.getShowSelectOne()))
-				{
-					JsonFlatFigures f = fSurvey.surveyStatisticOption(q, sbhSurvey.getSelection());
-					DataSet ds2 = mfOption.build(f,bSurvey.getMapOption().get(q));
-					mapDsOption.put(q,ds2);
-					logger.info("DS for "+q.getSection().getCode()+"."+q.getCode()+" "+JaxbUtil.toString(ds2));
-					this.ds=ds2;
-				}
-				
 			}
 		}
 	}
@@ -152,5 +139,54 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private void reloadAnalysis()
 	{
 		logger.info("Reload Analysis");
+		
+		reloadSurvey();
+	}
+	
+	private void reloadSurvey()
+	{
+		mapDsOption.clear();
+		sections.clear();
+		mapQuestion.clear();
+		mapTool.clear();
+		
+		mapToolTableOption.clear();
+		
+		for(SECTION section : bSurvey.getMapSection().get(sbhSurvey.getSelection().getTemplate()))
+		{
+			mapQuestion.put(section,new ArrayList<QUESTION>());
+			for(QUESTION q : bSurvey.getMapQuestion().get(section))
+			{
+				try
+				{
+					AQ analysis = fSurvey.fAnalysis(sbhAnalysis.getSelection(), q);
+					List<AT> tools = new ArrayList<AT>();
+					logger.info("Including "+q.toString());
+					mapQuestion.get(section).add(q);
+					for(AT tool : fSurvey.allForParent(cAt, analysis))
+					{
+						if(tool.isVisible())
+						{
+							if(BooleanComparator.active(q.getShowSelectOne()))
+							{
+								JsonFlatFigures f = fSurvey.surveyStatisticOption(q, sbhSurvey.getSelection());
+								mapToolTableOption.put(tool,f);
+								DataSet ds2 = mfOption.build(f,bSurvey.getMapOption().get(q));
+								mapDsOption.put(q,ds2);
+								logger.trace("DS for "+q.getSection().getCode()+"."+q.getCode()+" "+JaxbUtil.toString(ds2));
+								this.ds=ds2;
+							}
+							tools.add(tool);
+						}
+					}
+					
+					mapTool.put(q,tools);
+					
+					
+				}
+				catch (UtilsNotFoundException e) {}
+			}
+			if(!mapQuestion.get(section).isEmpty()) {sections.add(section);}
+		}
 	}
 }

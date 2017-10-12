@@ -100,6 +100,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		this.fSurvey=fSurvey;
 		refreshUnits();
 		refreshSurveyStatus();
+		reloadToolTypes();
 		
 		//Cache
 		mapSection.clear();mapSection.putAll(efSection.loadMap(fSurvey));
@@ -107,6 +108,10 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		reloadQuestions();
 //		reloadOptions();
 	}
+	
+	private List<ATT> toolTypes;
+	public List<ATT> getToolTypes(){return toolTypes;}
+	public void reloadToolTypes(){toolTypes=fSurvey.allOrderedPositionVisible(ffSurvey.getAttClass());}
 	
 	private List<UNIT> units;
 	public List<UNIT> getUnits(){return units;}

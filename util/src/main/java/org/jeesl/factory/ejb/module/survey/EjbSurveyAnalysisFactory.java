@@ -61,6 +61,7 @@ public class EjbSurveyAnalysisFactory<L extends UtilsLang, D extends UtilsDescri
 		try
 		{
 			ejb = cAnalysis.newInstance();
+			ejb.setTemplate(template);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

@@ -6,8 +6,9 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
-import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisQuestionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisToolFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
@@ -68,6 +69,8 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyAnalysisBean.class);
 	
 	private final Class<ANALYSIS> cAnalysis;
+	private final Class<AT> cTool;
+	private final Class<ATT> cAtt;
 	
 	protected List<ANALYSIS> analyses; public List<ANALYSIS> getAnalyses(){return analyses;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
@@ -75,31 +78,43 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
 	protected List<SCHEME> schemes; public List<SCHEME> getSchemes() {return schemes;}
 	protected List<SCORE> scores; public List<SCORE> getScores() {return scores;}
+	private List<AT> tools; public List<AT> getTools() {return tools;}
+	private List<ATT> toolTypes; public List<ATT> getToolTypes() {return toolTypes;}
 	
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
 	protected VERSION nestedVersion; public VERSION getNestedVersion() {return nestedVersion;} public void setNestedVersion(VERSION nestedVersion) {this.nestedVersion = nestedVersion;}
 	private ANALYSIS analysis; public ANALYSIS getAnalysis() {return analysis;} public void setAnalysis(ANALYSIS analysis) {this.analysis = analysis;}
 	protected SECTION section; public SECTION getSection(){return section;} public void setSection(SECTION section){this.section = section;}
 	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
+	private AQ analysisQuestion; public AQ getAnalysisQuestion() {return analysisQuestion;} public void setAnalysisQuestion(AQ analysisQuestion) {this.analysisQuestion = analysisQuestion;}
+	private AT tool; public AT getTool() {return tool;} public void setTool(AT tool) {this.tool = tool;}
 	
-	protected SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
-		
 	private final EjbSurveyAnalysisFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> efAnalysis;
+	private final EjbSurveyAnalysisQuestionFactory <L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> efAnalysisQuestion;
+	private final EjbSurveyAnalysisToolFactory <L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> efAnalysisTool;
 	
-	public AbstractAdminSurveyAnalysisBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<ANALYSIS> cAnalysis)
+	
+	public AbstractAdminSurveyAnalysisBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
 	{
-		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
+		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
 		this.cAnalysis=cAnalysis;
+		this.cTool=cTool;
+		this.cAtt=cAtt;
+		
 		efAnalysis = ffSurvey.ejbAnalysis(cAnalysis);
+		efAnalysisQuestion = ffSurvey.ejbAnalysisQuestion(cAq);
+		efAnalysisTool = ffSurvey.ejbAnalysisTool(cTool);
 	}
 	
 	protected void initSuperAnalysis(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> fSurvey, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> bSurvey)
 	{
-		super.initSuperSurvey(userLocale,localeCodes,bMessage,fSurvey, bSurvey);
-
-		versions = new ArrayList<VERSION>();
-		
+		super.initSuperSurvey(localeCodes,bMessage,fSurvey, bSurvey);
 		initSettings();
+		super.initLocales(userLocale);
+		
+		toolTypes = bSurvey.getToolTypes();
+		
+		versions = new ArrayList<VERSION>();
 		
 		sbhCategory.silentCallback();
 	}
@@ -109,64 +124,109 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		logger.info(ejb.toString());
 		if(cTc.isAssignableFrom(ejb.getClass()))
 		{
-			reset(true,true,true,true);
+			reset(true,true,true,true,true);
 			versions = fSurvey.fVersions(sbhCategory.getSelection());
 		}
 	}
 	
-	private void reset(boolean rTemplate, boolean rVersion, boolean rSection, boolean rQuestion)
+	private void reset(boolean rTemplate, boolean rVersion, boolean rSection, boolean rQuestion, boolean rAnalysisQuestion)
 	{
 		if(rTemplate){template = null;}
 		if(rVersion){version = null;}
 		if(rSection){section = null;}
-		if(rQuestion){question = null;}	
+		if(rQuestion){question = null;}
+		if(rAnalysisQuestion) {analysisQuestion=null;}
 	}
 	
 	protected void selectVersion() throws UtilsNotFoundException
 	{
-		reset(false,false,true,true);
+		reset(false,false,true,true,true);
 		logger.info(AbstractLogMessage.selectEntity(version));
 		version = fSurvey.find(cVersion, version);
-		analyses = fSurvey.all(cAnalysis);
+		reloadAnalyses();
+		sections = bSurvey.getMapSection().get(version.getTemplate());
+	}
+	
+	private void reloadAnalyses()
+	{
+		analyses = fSurvey.allForParent(cAnalysis, version.getTemplate());
 	}
 		
 	public void addAnalysis()
 	{
 		logger.info(AbstractLogMessage.addEntity(cAnalysis));
 		analysis = efAnalysis.build(version.getTemplate());
+		analysis.setName(efLang.createEmpty(sbhLocale.getList()));
 	}
 	
+	public void saveAnalysis() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(analysis));
+		analysis = fSurvey.save(analysis);
+		reloadAnalyses();
+	}
+	
+	public void selectAnalysis()
+	{
+		logger.info(AbstractLogMessage.selectEntity(analysis));
+		analysis = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), analysis);
+//		analysis = efDescription.persistMissingLangs(fSurvey, localeCodes, analysis);
+		reset(false,false,true,true,true);
+	}
 
 	public void selectSection()
 	{
 		logger.info(AbstractLogMessage.selectEntity(section));
-		efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), section);
-		efDescription.persistMissingLangs(fSurvey, sbhLocale.getList(), section);
-		nnb.doubleToA(section.getScoreLimit());
-		nnb.doubleToB(section.getScoreNormalize());
+		questions = bSurvey.getMapQuestion().get(section);
+		reset(false,false,false,true,true);
 	}
 	
 	public void selectQuestion()
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
-		question = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), question);
-		question = efDescription.persistMissingLangs(fSurvey, sbhLocale.getList(), question);
-		if(question.getText()==null) {question.setText(efDescription.createEmpty(sbhLocale.getList()));}
-		for(LOC loc : sbhLocale.getList())
+		try
 		{
-			if(!question.getText().containsKey(loc.getCode()))
-			{
-				try
-				{
-					D d = fSurvey.persist(efDescription.create(loc.getCode(), ""));
-					question.getText().put(loc.getCode(), d);
-					question = fSurvey.update(question);
-				}
-				catch (UtilsConstraintViolationException e) {e.printStackTrace();}
-				catch (UtilsLockingException e) {e.printStackTrace();}
-			}
+			analysisQuestion = fSurvey.fAnalysis(analysis, question);
+			analysisQuestion = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), analysisQuestion);
+			reloadTools();
+		}
+		catch (UtilsNotFoundException e)
+		{
+			analysisQuestion = efAnalysisQuestion.build(analysis, question);
+			analysisQuestion.setName(efLang.createEmpty(sbhLocale.getList()));
 		}
 	}
 	
-	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, sections);}
+	public void saveAnalysisQuestion() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(analysisQuestion));
+		analysisQuestion = fSurvey.save(analysisQuestion);
+		reloadTools();
+	}
+	
+	private void reloadTools()
+	{
+		tools = fSurvey.allForParent(cTool, analysisQuestion);
+	}
+	
+	public void addTool()
+	{
+		tool = efAnalysisTool.build(analysisQuestion, toolTypes.get(0));
+	}
+	
+	public void saveTool() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(tool));
+		tool.setType(fSurvey.find(cAtt,tool.getType()));
+		tool = fSurvey.save(tool);
+		reloadTools();
+	}
+	
+	public void selectTool()
+	{
+		logger.info(AbstractLogMessage.selectEntity(question));
+		tool = fSurvey.find(cTool,tool);
+	}
+	
+	protected void reorderAnalyses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, analyses);}
 }

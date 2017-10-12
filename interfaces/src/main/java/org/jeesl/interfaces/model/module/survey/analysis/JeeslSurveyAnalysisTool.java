@@ -14,9 +14,12 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyAnalysisTool<L extends UtilsLang, D extends UtilsDescription,
@@ -42,7 +45,14 @@ public interface JeeslSurveyAnalysisTool<L extends UtilsLang, D extends UtilsDes
 										AT extends JeeslSurveyAnalysisTool<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
 										ATT extends UtilsStatus<ATT,L,D>
 										>
-			extends EjbWithId
+			extends EjbWithId,EjbWithParentAttributeResolver,EjbSaveable,
+					EjbWithPositionVisible
 {
+	public enum Attributes{analysisQuestion}
 	
+	AQ getAnalysisQuestion();
+	void setAnalysisQuestion(AQ analysisQuestion);
+	
+	ATT getType();
+	void setType(ATT type);
 }

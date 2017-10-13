@@ -109,6 +109,8 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 //		reloadOptions();
 	}
 	
+	public void reloadQuestionElements() {}
+	
 	private List<ATT> toolTypes;
 	public List<ATT> getToolTypes(){return toolTypes;}
 	public void reloadToolTypes(){toolTypes=fSurvey.allOrderedPositionVisible(ffSurvey.getAttClass());}

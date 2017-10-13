@@ -20,7 +20,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportStyle;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,16 +155,16 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
         CDT dataType = EjbIoReportColumnFactory.toCellDataType(column);
         if(dataType!=null)
         {
-        	if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.text.toString()))
+        	if(dataType.getCode().startsWith(JeeslRevisionAttribute.Type.text.toString()))
         	{
         		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat("text"));
         	}
-        	else if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.number.toString()))
+        	else if(dataType.getCode().startsWith(JeeslRevisionAttribute.Type.number.toString()))
         	{
         		logger.info("Creating Number "+dataType.getSymbol());
         		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat(transformJavaToPoiPattern(dataType.getSymbol())));
         	}
-        	else if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.date.toString()))
+        	else if(dataType.getCode().startsWith(JeeslRevisionAttribute.Type.date.toString()))
         	{
         		logger.info("Creating Date "+dataType.getSymbol());
         		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat(dataType.getSymbol()));
@@ -181,16 +181,16 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
         CDT dataType = EjbIoReportColumnFactory.toRowDataType(row);
         if(dataType!=null)
         {
-        	if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.text.toString()))
+        	if(dataType.getCode().startsWith(JeeslRevisionAttribute.Type.text.toString()))
         	{
         		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat("text"));
         	}
-        	else if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.number.toString()))
+        	else if(dataType.getCode().startsWith(JeeslRevisionAttribute.Type.number.toString()))
         	{
         		logger.info("Creating Number "+dataType.getSymbol());
         		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat(transformJavaToPoiPattern(dataType.getSymbol())));
         	}
-        	else if(dataType.getCode().startsWith(UtilsRevisionAttribute.Type.date.toString()))
+        	else if(dataType.getCode().startsWith(JeeslRevisionAttribute.Type.date.toString()))
         	{
         		logger.info("Creating Row Date "+dataType.getSymbol());
         		style.setDataFormat(xlsWorkbook.getCreationHelper().createDataFormat().getFormat(dataType.getSymbol()));

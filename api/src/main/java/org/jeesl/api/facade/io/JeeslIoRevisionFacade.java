@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.jeesl.interfaces.model.system.revision.EjbWithRevisionAttributes;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionScope;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionView;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionViewMapping;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
@@ -23,13 +23,13 @@ import net.sf.ahtutils.model.json.system.revision.JsonRevision;
 
 public interface JeeslIoRevisionFacade <L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
-									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-									RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RVM extends JeeslRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RST extends UtilsStatus<RST,L,D>,
-									RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-									REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 			extends UtilsFacade
 {	

@@ -4,7 +4,7 @@ import java.util.Date;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface UtilsRevision extends EjbWithId
+public interface JeeslRevision extends EjbWithId
 {					
 	long getId();
 	void setId(long id);

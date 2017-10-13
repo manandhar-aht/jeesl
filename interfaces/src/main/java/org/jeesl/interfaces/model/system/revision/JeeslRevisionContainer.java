@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface UtilsRevisionContainer <REV extends UtilsRevision,
+public interface JeeslRevisionContainer <REV extends JeeslRevision,
 										T extends EjbWithId,
 										L extends UtilsLang,
 										D extends UtilsDescription,

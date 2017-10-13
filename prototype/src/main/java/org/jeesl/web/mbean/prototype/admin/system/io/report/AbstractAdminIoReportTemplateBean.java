@@ -18,12 +18,12 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportStyle;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionScope;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionView;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionViewMapping;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportCellComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportTemplateComparator;
@@ -64,13 +64,13 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 										FILLING extends UtilsStatus<FILLING,L,D>,
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 										RC extends UtilsStatus<RC,L,D>,
-										RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
-										RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
-										RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
+										RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
+										RVM extends JeeslRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
+										RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
 										RST extends UtilsStatus<RST,L,D>,
-										RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
-										REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
-										RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>
+										RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
+										REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
+										RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>
 										>
 					extends AbstractAdminBean<L,D>
 					implements Serializable

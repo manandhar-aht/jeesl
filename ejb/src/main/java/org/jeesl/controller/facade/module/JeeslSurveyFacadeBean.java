@@ -221,10 +221,8 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	
 	@Override public void deleteSurvey(SURVEY survey) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		survey = em.find(cSurvey, survey.getId());
-		
-		
-		
+//		survey = em.find(cSurvey, survey.getId());
+		this.rmProtected(survey);
 	}
 	
 	@Override public List<SURVEY> fSurveysForCategories(List<TC> categories)

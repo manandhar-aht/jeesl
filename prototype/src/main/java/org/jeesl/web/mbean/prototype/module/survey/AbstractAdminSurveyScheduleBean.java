@@ -115,6 +115,7 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.rmEntity(survey));
 		fSurvey.deleteSurvey(survey);
+		survey=null;
 		reloadSurveys();
 	}
 	

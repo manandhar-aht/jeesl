@@ -12,6 +12,8 @@ public class JsonFlatFigureFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonFlatFigureFactory.class);
 	
+	public static JsonFlatFigure build(){return new JsonFlatFigure();}
+	
 	public static JsonFlatFigure build(EjbWithId ejb, Double...doubles)
 	{
 		JsonFlatFigure json = build(doubles);
@@ -56,8 +58,10 @@ public class JsonFlatFigureFactory
 		return json;
 	}
 	
-	public static JsonFlatFigure build()
+	public static JsonFlatFigure build(String text)
 	{
-		return new JsonFlatFigure();
+		JsonFlatFigure json = build();
+		json.setS1(text);
+		return json;
 	}
 }

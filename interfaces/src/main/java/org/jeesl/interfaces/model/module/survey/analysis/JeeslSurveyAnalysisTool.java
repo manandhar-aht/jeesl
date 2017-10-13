@@ -49,10 +49,14 @@ public interface JeeslSurveyAnalysisTool<L extends UtilsLang, D extends UtilsDes
 					EjbWithPositionVisible
 {
 	public enum Attributes{analysisQuestion}
+	public enum Elements{selectOne,bool,text,remark}
 	
 	AQ getAnalysisQuestion();
 	void setAnalysisQuestion(AQ analysisQuestion);
 	
 	ATT getType();
 	void setType(ATT type);
+	
+	QE getElement();
+	void setElement(QE element);
 }

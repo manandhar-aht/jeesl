@@ -17,11 +17,12 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="tool" required="true"/>
 		<composite:attribute name="question" required="true" />
 	</composite:interface>
 	
 	<composite:implementation>
-		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableOption[tool].figures}" rendered="#{cc.attrs.question.showSelectOne}">
+		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableOption[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'selectOne'}">
 			<p:column headerText="#{msg.jeeslSurveyOption}">
 				<h:outputText value="#{appSurveyBean.mapOptionId[f.l2].name[localeCode].lang}"/>
 			</p:column>
@@ -29,12 +30,22 @@
 				<h:outputText value="#{f.l3}"/>
 			</p:column>
 		</p:dataTable>
-		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableBoolean[tool].figures}" rendered="#{cc.attrs.question.showBoolean}">
+		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableBoolean[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'bool'}">
 			<p:column headerText="#{msg.jeeslBoolean}">
 				<h:outputText value="#{f.b1}"/>
 			</p:column>
 			<p:column headerText="#{msg.jeeslSurveyAnalysisAnswers}">
 				<h:outputText value="#{f.l3}"/>
+			</p:column>
+		</p:dataTable>
+		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableText[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'text'}">
+			<p:column headerText="#{msg.jeeslAnswer}">
+				<h:outputText value="#{f.s1}"/>
+			</p:column>
+		</p:dataTable>
+		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableRemark[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'remark'}">
+			<p:column headerText="#{msg.jeeslAnswer}">
+				<h:outputText value="#{f.s1}"/>
 			</p:column>
 		</p:dataTable>
 	</composite:implementation>

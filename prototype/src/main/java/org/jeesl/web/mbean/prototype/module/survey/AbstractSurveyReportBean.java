@@ -9,6 +9,8 @@ import java.util.Map;
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
+import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
+import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.mc.survey.McOptionDataSetFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.factory.txt.JeeslReportAggregationLevelFactory;
@@ -29,7 +31,6 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.model.json.JsonFlatFigures;
-import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.metachart.xml.chart.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
-import net.sf.exlp.util.xml.JaxbUtil;
 
 public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
@@ -80,8 +80,10 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private final Map<QUESTION,List<AT>> mapTool; public Map<QUESTION,List<AT>> getMapTool() {return mapTool;}
 	private final Map<SECTION,List<QUESTION>> mapQuestion; public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
 	
-	private final Map<AT,JsonFlatFigures> mapToolTableOption; public Map<AT, JsonFlatFigures> getMapToolTableOption() {return mapToolTableOption;}
-	private final Map<AT,JsonFlatFigures> mapToolTableBoolean; public Map<AT, JsonFlatFigures> getMapToolTableBoolean() {return mapToolTableBoolean;}
+	private final Map<AT,JsonFlatFigures> mapToolTableOption; public Map<AT,JsonFlatFigures> getMapToolTableOption() {return mapToolTableOption;}
+	private final Map<AT,JsonFlatFigures> mapToolTableBoolean; public Map<AT,JsonFlatFigures> getMapToolTableBoolean() {return mapToolTableBoolean;}
+	private final Map<AT,JsonFlatFigures> mapToolTableText; public Map<AT,JsonFlatFigures> getMapToolTableText() {return mapToolTableText;}
+	private final Map<AT,JsonFlatFigures> mapToolTableRemark; public Map<AT,JsonFlatFigures> getMapToolTableRemark() {return mapToolTableRemark;}
 
 	
 	protected final SbSingleHandler<ANALYSIS> sbhAnalysis; public SbSingleHandler<ANALYSIS> getSbhAnalysis() {return sbhAnalysis;}
@@ -100,6 +102,8 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		
 		mapToolTableOption = new HashMap<AT,JsonFlatFigures>();
 		mapToolTableBoolean = new HashMap<AT,JsonFlatFigures>();
+		mapToolTableText = new HashMap<AT,JsonFlatFigures>();
+		mapToolTableRemark = new HashMap<AT,JsonFlatFigures>();
 		
 		sbhAnalysis = new SbSingleHandler<ANALYSIS>(cAnalysis,this);
 		sections = new ArrayList<SECTION>();
@@ -161,6 +165,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		
 		mapToolTableOption.clear();
 		mapToolTableBoolean.clear();
+		mapToolTableText.clear();
 		
 		for(SECTION section : bSurvey.getMapSection().get(sbhSurvey.getSelection().getTemplate()))
 		{
@@ -171,13 +176,12 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 				{
 					AQ analysis = fSurvey.fAnalysis(sbhAnalysis.getSelection(), q);
 					List<AT> tools = new ArrayList<AT>();
-					logger.info("Including "+q.toString());
 					mapQuestion.get(section).add(q);
 					for(AT tool : fSurvey.allForParent(cAt, analysis))
 					{
 						if(tool.isVisible())
 						{
-							if(BooleanComparator.active(q.getShowSelectOne()))
+							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.selectOne.toString()))
 							{
 								JsonFlatFigures f = fSurvey.surveyStatisticOption(q, sbhSurvey.getSelection());
 								mapToolTableOption.put(tool,f);
@@ -186,11 +190,36 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 //								logger.trace("DS for "+q.getSection().getCode()+"."+q.getCode()+" "+JaxbUtil.toString(ds2));
 								this.ds=ds2;
 							}
-							if(BooleanComparator.active(q.getShowBoolean()))
+							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.bool.toString()))
 							{
 								JsonFlatFigures f = fSurvey.surveyStatisticBoolean(q, sbhSurvey.getSelection());
 								mapToolTableBoolean.put(tool,f);
 							}
+							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.text.toString()))
+							{
+								JsonFlatFigures f = JsonFlatFiguresFactory.build();
+								for(ANSWER a : fSurvey.fAnswers(sbhSurvey.getSelection(),q))
+								{
+									if(a.getValueText()!=null && a.getValueText().trim().length()>0)
+									{
+										f.getFigures().add(JsonFlatFigureFactory.build(a.getValueText()));
+									}
+								}
+								mapToolTableBoolean.put(tool,f);
+							}
+							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.remark.toString()))
+							{
+								JsonFlatFigures f = JsonFlatFiguresFactory.build();
+								for(ANSWER a : fSurvey.fAnswers(sbhSurvey.getSelection(),q))
+								{
+									if(a.getRemark()!=null && a.getRemark().trim().length()>0)
+									{
+										f.getFigures().add(JsonFlatFigureFactory.build(a.getRemark()));
+									}
+								}
+								mapToolTableRemark.put(tool,f);
+							}
+							
 							tools.add(tool);
 						}
 					}

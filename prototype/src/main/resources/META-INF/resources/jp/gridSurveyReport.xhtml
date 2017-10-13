@@ -63,7 +63,7 @@
 								                        <mc:dataSet value="#{cc.attrs.bean.ds.dataSet[1]}"/>
 								                    </mc:series>
 								                </mc:chart>
-								                <jp:surveyAnalysisTableVertical bean="#{cc.attrs.bean}" question="#{q}" rendered="#{tool.type.code eq 'tableVertical'}"/>
+								                <jp:surveyAnalysisTableVertical bean="#{cc.attrs.bean}" tool="#{tool}" question="#{q}" rendered="#{tool.type.code eq 'tableVertical'}"/>
 									        </ui:repeat>
 										</h:panelGroup>
 									</p:panelGrid>

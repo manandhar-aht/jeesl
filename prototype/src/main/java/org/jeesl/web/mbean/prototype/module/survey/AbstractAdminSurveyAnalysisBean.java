@@ -71,6 +71,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	private final Class<ANALYSIS> cAnalysis;
 	private final Class<AT> cTool;
 	private final Class<ATT> cAtt;
+	private final Class<QE> cQe;
 	
 	protected List<ANALYSIS> analyses; public List<ANALYSIS> getAnalyses(){return analyses;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
@@ -80,6 +81,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	protected List<SCORE> scores; public List<SCORE> getScores() {return scores;}
 	private List<AT> tools; public List<AT> getTools() {return tools;}
 	private List<ATT> toolTypes; public List<ATT> getToolTypes() {return toolTypes;}
+	private List<QE> questionElements; public List<QE> getQuestionElements() {return questionElements;}
 	
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
 	protected VERSION nestedVersion; public VERSION getNestedVersion() {return nestedVersion;} public void setNestedVersion(VERSION nestedVersion) {this.nestedVersion = nestedVersion;}
@@ -94,12 +96,13 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	private final EjbSurveyAnalysisToolFactory <L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT> efAnalysisTool;
 	
 	
-	public AbstractAdminSurveyAnalysisBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
+	public AbstractAdminSurveyAnalysisBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<QE> cQe, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
 	{
 		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
 		this.cAnalysis=cAnalysis;
 		this.cTool=cTool;
 		this.cAtt=cAtt;
+		this.cQe=cQe;
 		
 		efAnalysis = ffSurvey.ejbAnalysis(cAnalysis);
 		efAnalysisQuestion = ffSurvey.ejbAnalysisQuestion(cAq);
@@ -113,6 +116,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		super.initLocales(userLocale);
 		
 		toolTypes = bSurvey.getToolTypes();
+		questionElements = fSurvey.allOrderedPositionVisible(cQe);
 		
 		versions = new ArrayList<VERSION>();
 		
@@ -220,6 +224,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.saveEntity(tool));
 		tool.setType(fSurvey.find(cAtt,tool.getType()));
+		tool.setElement(fSurvey.find(cQe,tool.getElement()));
 		tool = fSurvey.save(tool);
 		reloadTools();
 	}

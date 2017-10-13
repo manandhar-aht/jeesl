@@ -84,6 +84,7 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	
 	List<ANSWER> fcAnswers(DATA data);
 	List<ANSWER> fAnswers(SURVEY survey);
+	List<ANSWER> fAnswers(SURVEY survey, QUESTION question);
 	List<ANSWER> fAnswers(DATA data, Boolean visible, List<SECTION> sections);
 	List<ANSWER> fAnswers(List<DATA> datas);
 	List<MATRIX> fCells(List<ANSWER> answers);

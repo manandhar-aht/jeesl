@@ -77,6 +77,13 @@ public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 	{
 		if(value!=null){figures.getFinance().add(XmlFinanceFactory.build(code, value));}
 	}
+	public static <E extends Enum<E>> void add(Figures figures, E code, int index, Double[] values)
+	{
+		if(values!=null && values.length>index && values[index]!=null)
+		{
+			figures.getFinance().add(build(code,values[index]));
+		}
+	}
 	public static <C extends EjbWithCode> void add(Figures figures, C code, int index, Double[] values)
 	{
 		if(values!=null && values.length>index && values[index]!=null)

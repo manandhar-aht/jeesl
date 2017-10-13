@@ -15,5 +15,7 @@ public interface JeeslPivotAggregator
     void add(DynamicPivotData dpd);
     void addAll(List<DynamicPivotData> dpds);
     List<EjbWithId> list(int index);
+    
+    Double[] values(EjbWithId... selectors);
     Double[] values(int size, EjbWithId... selectors);
 }

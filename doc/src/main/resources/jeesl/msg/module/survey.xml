@@ -378,10 +378,52 @@
     	</s:langs>
     </s:translation>
 	<s:translation key="jeeslSurveyOptionSet">
-    	<s:langs>
-    		<s:lang key="de" translation="Auswahl Set"/>
-    		<s:lang key="en" translation="Option Set"/>
-    		<s:lang key="fr" translation="Option Set"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Auswahl Set"/>
+	    		<s:lang key="en" translation="Option Set"/>
+	    		<s:lang key="fr" translation="Option Set"/>
+	    	</s:langs>
     </s:translation>
+    	<s:translation key="jeeslSurveyAnalyses">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Analysen"/>
+	    		<s:lang key="en" translation="Analyses"/>
+	    		<s:lang key="fr" translation="Analyses"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslSurveyAnalysis">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Analyse"/>
+	    		<s:lang key="en" translation="Analysis"/>
+	    		<s:lang key="fr" translation="Analysis"/>
+	    	</s:langs>
+    </s:translation>
+ 	<s:translation key="jeeslSurveyAnalysisQuestion">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Analyse der Frage"/>
+	    		<s:lang key="en" translation="Question Analysis"/>
+	    		<s:lang key="fr" translation="Question Analysis"/>
+	    	</s:langs>
+    </s:translation>
+  	<s:translation key="jeeslSurveyAnalysisTools">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Analysewerkzeuge"/>
+	    		<s:lang key="en" translation="Analysis Tools"/>
+	    		<s:lang key="fr" translation="Analysis Tools"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslSurveyAnalysisTool">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Analysewerkzeug"/>
+	    		<s:lang key="en" translation="Analysis Tool"/>
+	    		<s:lang key="fr" translation="Analysis Tool"/>
+	    	</s:langs>
+    </s:translation>
+    	<s:translation key="jeeslSurveyAnalysisAnswers">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Antworten"/>
+	    		<s:lang key="en" translation="Answers"/>
+	    		<s:lang key="fr" translation="Answers"/>
+	    	</s:langs>
+    </s:translation> 
 </s:translations>

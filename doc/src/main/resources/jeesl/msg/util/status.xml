@@ -93,11 +93,18 @@
     	</s:langs>
     </s:translation>
     <s:translation key="jeeslType">
-    	<s:langs>
-    		<s:lang key="de" translation="Type"/>
-    		<s:lang key="en" translation="Type"/>
-    		<s:lang key="fr" translation="Type"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Type"/>
+	    		<s:lang key="en" translation="Type"/>
+	    		<s:lang key="fr" translation="Type"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslElement">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Element"/>
+	    		<s:lang key="en" translation="Element"/>
+	    		<s:lang key="fr" translation="Element"/>
+	    	</s:langs>
     </s:translation>
     <s:translation key="aupSubType">
     	<s:langs>

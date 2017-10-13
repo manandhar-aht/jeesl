@@ -1,7 +1,4 @@
-package org.jeesl.factory.ejb.module.survey;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.jeesl.factory.txt.module.survey;
 
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
@@ -25,9 +22,8 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.survey.Template;
 
-public class EjbSurveyTemplateFactory<L extends UtilsLang, D extends UtilsDescription,
+public class TxtSurveyFactory <L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
@@ -44,70 +40,22 @@ public class EjbSurveyTemplateFactory<L extends UtilsLang, D extends UtilsDescri
 										DATA extends JeeslSurveyData<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
 										OPTIONS extends JeeslSurveyOptionSet<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
-										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
-										ANALYSIS extends JeeslSurveyAnalysis<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
-										AQ extends JeeslSurveyAnalysisQuestion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
-										AT extends JeeslSurveyAnalysisTool<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
-										ATT extends UtilsStatus<ATT,L,D>>
+										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>, ANALYSIS extends JeeslSurveyAnalysis<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>, AQ extends JeeslSurveyAnalysisQuestion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>, AT extends JeeslSurveyAnalysisTool<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>, ATT extends UtilsStatus<ATT,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbSurveyTemplateFactory.class);
-	
-	final Class<TEMPLATE> cTemplate;
-    
-	public EjbSurveyTemplateFactory(final Class<TEMPLATE> cTemplate)
-	{       
-        this.cTemplate = cTemplate;
-	}
-    
-	public TEMPLATE build(TC category,TS status, Template xTemplate)
-	{
-		return build(category,status,xTemplate.getDescription().getValue());
-	}
-	
-	public TEMPLATE build(TC category,TS status, String name)
-	{
-		TEMPLATE ejb = null;
-		try
-		{
-			ejb = cTemplate.newInstance();
-			ejb.setName(name);
-			ejb.setCategory(category);
-			ejb.setStatus(status);
-		}
-		catch (InstantiationException e) {e.printStackTrace();}
-		catch (IllegalAccessException e) {e.printStackTrace();}
+	final static Logger logger = LoggerFactory.getLogger(TxtSurveyFactory.class);
 		
-		return ejb;
+	private final String localeCode;
+	
+	public TxtSurveyFactory(final String localeCode)
+	{
+		this.localeCode=localeCode;
 	}
 	
-	public TEMPLATE toVisible(TEMPLATE template, boolean withQuestions)
+	public String debug(SURVEY survey)
 	{
-		List<SECTION> sections = new ArrayList<SECTION>();
-		for(SECTION section : template.getSections())
-		{
-			if(section.isVisible())
-			{
-				if(withQuestions)
-				{
-					List<QUESTION> questions = new ArrayList<QUESTION>();
-					for(QUESTION question : section.getQuestions())
-					{
-						if(question.isVisible())
-						{
-							questions.add(question);
-						}
-					}
-					section.getQuestions().clear();
-					section.setQuestions(questions);
-					
-				}
-				
-				sections.add(section);
-			}
-		}
-		
-		template.getSections().clear();
-		template.setSections(sections);
-		return template;
+		StringBuilder sb = new StringBuilder();
+		sb.append(survey.getName().get(localeCode).getLang());
+		sb.append(" (").append(survey.getTemplate().getName());
+		return sb.toString();
 	}
 }

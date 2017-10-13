@@ -61,6 +61,7 @@
 						<p:panel header="#{msg.jeeslSurvey}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSurvey()}" update=":#{cc.id}:grid"/>
+								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteSurvey()}" update=":#{cc.id}:grid"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70" >
 	

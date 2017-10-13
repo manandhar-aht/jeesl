@@ -72,7 +72,9 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	TEMPLATE fcSurveyTemplate(TC category, TS status);
 	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion);
 	
-	SURVEY fSurvey(CORRELATION correlation) throws UtilsNotFoundException;;
+	SURVEY fSurvey(CORRELATION correlation) throws UtilsNotFoundException;
+	void deleteSurvey(SURVEY survey) throws UtilsConstraintViolationException, UtilsLockingException;
+	
 	List<SURVEY> fSurveys(TC category, SS status, Date date);
 	List<SURVEY> fSurveys(List<TC> categories, SS status, Date date);
 	<W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>> List<W> fSurveys(Class<W> c, List<SS> status, Date date);
@@ -96,6 +98,8 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 	AQ fAnalysis(ANALYSIS analysis, QUESTION question) throws UtilsNotFoundException;
 	
 	JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey);
+	JsonFlatFigures surveyStatisticBoolean(QUESTION question, SURVEY survey);
+	
 	JsonFlatFigures surveyCountOption(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations);
 	JsonFlatFigures surveyCountAnswer(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations);
 }

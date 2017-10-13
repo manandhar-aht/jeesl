@@ -15,6 +15,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.date.EjbWithDateRange;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -41,7 +42,7 @@ public interface JeeslSurvey<L extends UtilsLang, D extends UtilsDescription,
 							OPTIONS extends JeeslSurveyOptionSet<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
 							OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>, ANALYSIS extends JeeslSurveyAnalysis<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>, AQ extends JeeslSurveyAnalysisQuestion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>, AT extends JeeslSurveyAnalysisTool<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS,AQ,AT,ATT>, ATT extends UtilsStatus<ATT,L,D>>
-			extends EjbSaveable,EjbWithDateRange,
+			extends EjbWithDateRange,EjbSaveable,
 						UtilsWithStatus<L,D,SS>,EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{id,template,status}

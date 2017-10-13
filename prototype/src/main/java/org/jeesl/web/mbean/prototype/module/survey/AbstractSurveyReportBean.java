@@ -81,7 +81,9 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private final Map<SECTION,List<QUESTION>> mapQuestion; public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
 	
 	private final Map<AT,JsonFlatFigures> mapToolTableOption; public Map<AT, JsonFlatFigures> getMapToolTableOption() {return mapToolTableOption;}
+	private final Map<AT,JsonFlatFigures> mapToolTableBoolean; public Map<AT, JsonFlatFigures> getMapToolTableBoolean() {return mapToolTableBoolean;}
 
+	
 	protected final SbSingleHandler<ANALYSIS> sbhAnalysis; public SbSingleHandler<ANALYSIS> getSbhAnalysis() {return sbhAnalysis;}
 	
 	private DataSet ds; public DataSet getDs() {return ds;}
@@ -97,6 +99,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapDsOption = new HashMap<QUESTION,DataSet>();
 		
 		mapToolTableOption = new HashMap<AT,JsonFlatFigures>();
+		mapToolTableBoolean = new HashMap<AT,JsonFlatFigures>();
 		
 		sbhAnalysis = new SbSingleHandler<ANALYSIS>(cAnalysis,this);
 		sections = new ArrayList<SECTION>();
@@ -120,7 +123,13 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 			{
 				List<TC> categories = new ArrayList<TC>();categories.add(sbhCategory.getSelection());
 				sbhSurvey.setList(fSurvey.fSurveysForCategories(categories));
-				logger.info(AbstractLogMessage.reloaded(cSurvey, sbhSurvey.getList()));
+				
+				for(SURVEY s : sbhSurvey.getList())
+				{
+					logger.warn(s.toString()+" "+s.getTemplate().getCategory());
+				}
+				
+				logger.info(AbstractLogMessage.reloaded(cSurvey, sbhSurvey.getList())+" for category="+sbhCategory.getSelection().getCode());
 				sbhSurvey.silentCallback();
 			}
 			else if(cSurvey.isAssignableFrom(ejb.getClass()))
@@ -151,6 +160,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapTool.clear();
 		
 		mapToolTableOption.clear();
+		mapToolTableBoolean.clear();
 		
 		for(SECTION section : bSurvey.getMapSection().get(sbhSurvey.getSelection().getTemplate()))
 		{
@@ -173,8 +183,13 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 								mapToolTableOption.put(tool,f);
 								DataSet ds2 = mfOption.build(f,bSurvey.getMapOption().get(q));
 								mapDsOption.put(q,ds2);
-								logger.trace("DS for "+q.getSection().getCode()+"."+q.getCode()+" "+JaxbUtil.toString(ds2));
+//								logger.trace("DS for "+q.getSection().getCode()+"."+q.getCode()+" "+JaxbUtil.toString(ds2));
 								this.ds=ds2;
+							}
+							if(BooleanComparator.active(q.getShowBoolean()))
+							{
+								JsonFlatFigures f = fSurvey.surveyStatisticBoolean(q, sbhSurvey.getSelection());
+								mapToolTableBoolean.put(tool,f);
 							}
 							tools.add(tool);
 						}

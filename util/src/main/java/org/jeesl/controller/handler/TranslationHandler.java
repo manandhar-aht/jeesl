@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslLabelBean;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
@@ -30,17 +31,24 @@ public class TranslationHandler<L extends UtilsLang,D extends UtilsDescription,
 								REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 								RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 								RAT extends UtilsStatus<RAT,L,D>>
-	implements Serializable
+	implements Serializable,JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
 {
 	final static Logger logger = LoggerFactory.getLogger(TranslationHandler.class);
 	private static final long serialVersionUID = 1L;
+	
+	private final Class<RE> cRE;
+	
+	private final JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision;
 	
 	private final Map<String,Map<String,L>> entities; public Map<String,Map<String,L>> getEntities() {return entities;}
 	private final Map<String,Map<String,Map<String,L>>> labels; public Map<String, Map<String, Map<String,L>>> getLabels() {return labels;}
 	private final Map<String,Map<String,Map<String,D>>> descriptions;public Map<String, Map<String, Map<String,D>>> getDescriptions() {return descriptions;}
 
 	public TranslationHandler(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RE> cRE)
-	{	
+	{
+		this.cRE = cRE;
+		this.fRevision=fRevision;
+		
         entities = new HashMap<String,Map<String,L>>();
         labels = new HashMap<String,Map<String,Map<String,L>>>();
         descriptions = new HashMap<String,Map<String,Map<String,D>>>();
@@ -50,11 +58,24 @@ public class TranslationHandler<L extends UtilsLang,D extends UtilsDescription,
         
 		for(RE re : list)
 		{
-			reload(fRevision,cRE,re);
+			load(re);
 		}
 	}
 	
-	private void reload(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RE> cRE, RE re)
+	@Override public void reload(RE re)
+	{
+		try
+		{
+			Class<?> c = Class.forName(re.getCode());
+			
+			if(entities.containsKey(c.getSimpleName())) {entities.remove(c.getSimpleName());}
+			if(labels.containsKey(c.getSimpleName())) {labels.remove(c.getSimpleName());}
+			if(descriptions.containsKey(c.getSimpleName())) {descriptions.remove(c.getSimpleName());}
+		}
+		catch (ClassNotFoundException e) {logger.warn("CNFE: "+re.getCode());}
+	}
+	
+	public void load(RE re)
 	{
 		try
 		{

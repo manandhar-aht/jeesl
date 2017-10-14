@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.admin.system.revision;
 import java.io.Serializable;
 import java.util.Collections;
 
+import org.jeesl.api.bean.JeeslLabelBean;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
@@ -40,16 +41,20 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionEntityBean.class);
 	
+	private JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> bLabel;
+	
 	private RE entity; public RE getEntity() {return entity;} public void setEntity(RE entity) {this.entity = entity;}
 	private REM mapping; public REM getMapping() {return mapping;}public void setMapping(REM mapping) {this.mapping = mapping;}
 	
 	private String className; public String getClassName() {return className;}
 	
-	public AbstractAdminRevisionEntityBean(){}
+	public AbstractAdminRevisionEntityBean(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat){super(cL,cD,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> bLabel)
 	{
-		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);
+		super.initRevisionSuper(langs,bMessage,fRevision);
+		this.bLabel=bLabel;
+		
 		scopes = fRevision.all(cScope);
 		types = fRevision.allOrderedPositionVisible(cRat);
 		scopeTypes = fRevision.allOrderedPositionVisible(cScopeType);
@@ -116,6 +121,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		reloadEntities();
 		reloadEntity();
 		bMessage.growlSuccessSaved();
+		bLabel.reload(entity);
 		updatePerformed();
 	}
 	
@@ -147,6 +153,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		attribute = fRevision.save(cEntity,entity,attribute);
 		reloadEntity();
 		bMessage.growlSuccessSaved();
+		bLabel.reload(entity);
 		updatePerformed();
 	}
 	

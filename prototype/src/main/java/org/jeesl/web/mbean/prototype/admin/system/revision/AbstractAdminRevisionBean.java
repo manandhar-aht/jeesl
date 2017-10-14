@@ -52,15 +52,15 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	
 	protected JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision;
 	
-	protected Class<RC> cCategory;
-	protected Class<RV> cView;
-	protected Class<RVM> cMappingView;
-	protected Class<RS> cScope;
-	protected Class<RST> cScopeType;
-	protected Class<RE> cEntity;
-	protected Class<REM> cMappingEntity;
-	protected Class<RA> cAttribute;
-	protected Class<RAT> cRat;
+	protected final Class<RC> cCategory;
+	protected final Class<RV> cView;
+	protected final Class<RVM> cViewMapping;
+	protected final Class<RS> cScope;
+	protected final Class<RST> cScopeType;
+	protected final Class<RE> cEntity;
+	protected final Class<REM> cMappingEntity;
+	protected final Class<RA> cAttribute;
+	protected final Class<RAT> cRat;
 	
 	protected List<RA> attributes; public List<RA> getAttributes() {return attributes;}
 	protected List<RC> categories; public List<RC> getCategories() {return categories;}
@@ -84,25 +84,30 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	
 	protected SbMultiHandler<RC> sbhCategory; public SbMultiHandler<RC> getSbhCategory() {return sbhCategory;}
 	
-	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory,Class<RV> cView, Class<RVM> cMappingView, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
+	public AbstractAdminRevisionBean(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cViewMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
 	{
-		super.initAdmin(langs,cLang,cDescription,bMessage);
-		this.fRevision=fRevision;
+		super(cL,cD);
 		this.cCategory=cCategory;
 		this.cView=cView;
-		this.cMappingView=cMappingView;
+		this.cViewMapping=cViewMapping;
 		this.cScope=cScope;
 		this.cScopeType=cScopeType;
 		this.cEntity=cEntity;
 		this.cMappingEntity=cEntityMapping;
 		this.cAttribute=cAttribute;
 		this.cRat=cRat;
-		
+	}
+	
+	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision)
+	{
+		super.initAdmin(langs,cL,cD,bMessage);
+		this.fRevision=fRevision;
+
 		efView = EjbRevisionViewFactory.factory(cView);
-		efMappingView = EjbRevisionMappingViewFactory.factory(cMappingView);
+		efMappingView = EjbRevisionMappingViewFactory.factory(cViewMapping);
 		efScope = EjbRevisionScopeFactory.factory(cScope);
-		efEntity = EjbRevisionEntityFactory.factory(cLang,cDescription,cEntity);
-		efMappingEntity = EjbRevisionMappingEntityFactory.factory(cEntityMapping);
+		efEntity = EjbRevisionEntityFactory.factory(cL,cD,cEntity);
+		efMappingEntity = EjbRevisionMappingEntityFactory.factory(cMappingEntity);
 		efAttribute = EjbRevisionAttributeFactory.factory(cAttribute);
 		
 		comparatorScope = (new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionScopeComparator.Type.position);

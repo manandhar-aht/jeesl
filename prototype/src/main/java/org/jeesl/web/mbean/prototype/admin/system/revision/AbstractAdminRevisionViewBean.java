@@ -46,9 +46,11 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	private RV rv; public RV getRv() {return rv;} public void setRv(RV rv) {this.rv = rv;}
 	private RVM mapping; public RVM getMapping() {return mapping;}public void setMapping(RVM mapping) {this.mapping = mapping;}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<L> cLang, final Class<D> cDescription, Class<RC> cCategory, Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping,Class<RA> cAttribute, Class<RAT> cRat)
+	public AbstractAdminRevisionViewBean(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat){super(cL,cD,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);}
+
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision)
 	{
-		super.initRevisionSuper(langs,bMessage,fRevision,cLang,cDescription,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);		
+		super.initRevisionSuper(langs,bMessage,fRevision);		
 		entities = fRevision.all(cEntity);
 		reloadViews();
 	}
@@ -133,7 +135,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	
 	public void addMapping() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(cMappingView)+" entites:"+entities.size()+" empty:"+entities.isEmpty());
+		logger.info(AbstractLogMessage.addEntity(cViewMapping)+" entites:"+entities.size()+" empty:"+entities.isEmpty());
 		RE re = null;
 		if(!entities.isEmpty())
 		{
@@ -152,7 +154,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	public void selectMapping() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(mapping));
-		mapping = fRevision.find(cMappingView, mapping);
+		mapping = fRevision.find(cViewMapping, mapping);
 		reloadEntityMappings();
 	}
 	
@@ -170,7 +172,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	public void rmMapping() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(mapping));
-		fRevision.rm(cMappingView,mapping);
+		fRevision.rm(cViewMapping,mapping);
 		mapping=null;
 		bMessage.growlSuccessRemoved();
 		reloadView();

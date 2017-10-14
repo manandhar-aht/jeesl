@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.system;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslLabelBean;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.controller.handler.TranslationHandler;
 import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
@@ -28,7 +29,8 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 								REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 								RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 								RAT extends UtilsStatus<RAT,L,D>>
-					implements Serializable
+								
+					implements Serializable,JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractLabelBean.class);
@@ -48,4 +50,6 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 		
 		th = new TranslationHandler<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(fRevision,cRE);
 	}
+	
+	@Override public void reload(RE re) {th.reload(re);}
 }

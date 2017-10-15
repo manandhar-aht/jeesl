@@ -172,32 +172,35 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		}
 
 		List<ANSWER> loadMatrix = new ArrayList<ANSWER>();
-		
-		for(SECTION s : bSurvey.getMapSection().get(template))
+		if(bSurvey.getMapSection().get(template)!=null)
 		{
-			if(processSection(s))
+			for(SECTION s : bSurvey.getMapSection().get(template))
 			{
-				for(QUESTION q : bSurvey.getMapQuestion().get(s))
-				{	
-					if(q.isVisible())
-					{
-						ANSWER a;
-						if(!answers.containsKey(q))
+				if(processSection(s))
+				{
+					for(QUESTION q : bSurvey.getMapQuestion().get(s))
+					{	
+						if(q.isVisible())
 						{
-							if(SurveyHandler.debugPerformance){logger.warn("Building new Answer for Question"+q.toString());}
-							a = efAnswer.build(q, surveyData);
+							ANSWER a;
+							if(!answers.containsKey(q))
+							{
+								if(SurveyHandler.debugPerformance){logger.warn("Building new Answer for Question"+q.toString());}
+								a = efAnswer.build(q, surveyData);
+							}
+							else
+							{
+								a = answers.get(q);
+								if(SurveyHandler.debugPerformance){logger.warn("Using Answer "+a.getId()+" for Question "+q.toString()+" "+tfAnswer.build(a));}
+							}
+							if(BooleanComparator.active(q.getShowMatrix())){loadMatrix.add(a);}
+							answers.put(q,a);
 						}
-						else
-						{
-							a = answers.get(q);
-							if(SurveyHandler.debugPerformance){logger.warn("Using Answer "+a.getId()+" for Question "+q.toString()+" "+tfAnswer.build(a));}
-						}
-						if(BooleanComparator.active(q.getShowMatrix())){loadMatrix.add(a);}
-						answers.put(q,a);
 					}
 				}
 			}
 		}
+
 		if(withMatrix){matrixLoader(loadMatrix);}
 		
 		logger.trace("Answers loaded: " + answers.size());

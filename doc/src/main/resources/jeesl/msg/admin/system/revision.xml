@@ -64,7 +64,7 @@
     		<s:lang key="fr" translation="Entities"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupRevisionEntity">
+	<s:translation key="jeeslRevisionEntity">
     	<s:langs>
     		<s:lang key="de" translation="Enität"/>
     		<s:lang key="en" translation="Entity"/>

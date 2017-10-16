@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionScope;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
 
@@ -31,7 +31,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(name="RevisionScope", uniqueConstraints=@UniqueConstraint(columnNames={"code"}))
 @EjbErNode(name="Scope",category="revision",subset="revision")
 public class RevisionScope implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsRevisionScope<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionScopeType,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
+								JeeslRevisionScope<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionScopeType,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
 {
 	public static final long serialVersionUID=1;
 

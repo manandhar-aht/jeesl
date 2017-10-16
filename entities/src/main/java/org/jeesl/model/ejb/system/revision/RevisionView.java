@@ -16,7 +16,7 @@ import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionView;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
 
@@ -26,7 +26,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="View",category="revision",subset="revision")
 public class RevisionView implements Serializable,EjbRemoveable,EjbPersistable,
-								UtilsRevisionView<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionScopeType,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
+								JeeslRevisionView<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionScopeType,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
 {
 	public static final long serialVersionUID=1;
 

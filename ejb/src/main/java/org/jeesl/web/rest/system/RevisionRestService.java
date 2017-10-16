@@ -17,12 +17,12 @@ import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.factory.xml.system.revision.XmlEntityFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionScope;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionView;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionViewMapping;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.model.xml.system.revision.Attribute;
 import org.jeesl.model.xml.system.revision.Entities;
@@ -45,13 +45,13 @@ import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription,
 								RC extends UtilsStatus<RC,L,D>,
-								RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-								RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-								RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+								RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+								RVM extends JeeslRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+								RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 								RST extends UtilsStatus<RST,L,D>,
-								RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-								REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-								RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+								RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+								REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+								RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 								RAT extends UtilsStatus<RAT,L,D>>
 					implements JeeslRevisionRestExport,JeeslRevisionRestImport
 {
@@ -107,13 +107,13 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					RC extends UtilsStatus<RC,L,D>,
-					RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RVM extends JeeslRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RST extends UtilsStatus<RST,L,D>,
-					RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>>
 		RevisionRestService<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
 			factory(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision,final Class<L> cL, final Class<D> cD, Class<RC> cRC, final Class<RV> cRV, final Class<RVM> cRVM, final Class<RS> cRS, final Class<RST> cRST, final Class<RE> cRE, final Class<REM> cREM, final Class<RA> cRA, final Class<RAT> cRAT)

@@ -2,12 +2,12 @@ package org.jeesl.factory.ejb.system.revision;
 
 import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionAttribute;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntity;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionScope;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionView;
-import org.jeesl.interfaces.model.system.revision.UtilsRevisionViewMapping;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionScope;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionView;
+import org.jeesl.interfaces.model.system.revision.JeeslRevisionViewMapping;
 import org.jeesl.model.xml.system.revision.Attribute;
 import org.jeesl.model.xml.system.revision.Entity;
 import org.slf4j.Logger;
@@ -20,13 +20,13 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
-									RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-									RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-									RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RVM extends JeeslRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RST extends UtilsStatus<RST,L,D>,
-									RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-									REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-									RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbRevisionEntityFactory.class);
@@ -45,13 +45,13 @@ public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescrip
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					RC extends UtilsStatus<RC,L,D>,
-					RV extends UtilsRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					RVM extends UtilsRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					RS extends UtilsRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RVM extends JeeslRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RST extends UtilsStatus<RST,L,D>,
-					RE extends UtilsRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					REM extends UtilsRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					RA extends UtilsRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>>
 	EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory(final Class<L> cL,final Class<D> cD,final Class<RE> cEntity)
 	{

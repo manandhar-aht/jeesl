@@ -1,5 +1,10 @@
-package org.jeesl.interfaces.model.module.survey.analysis;
+package org.jeesl.factory.ejb.module.survey;
 
+import java.util.List;
+
+import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
+import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
+import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -15,17 +20,14 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
-import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslSurveyAnalysis<L extends UtilsLang, D extends UtilsDescription,
+public class EjbSurveyDomainFactory<L extends UtilsLang, D extends UtilsDescription,
 										SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
 										SS extends UtilsStatus<SS,L,D>,
 										SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
@@ -34,7 +36,8 @@ public interface JeeslSurveyAnalysis<L extends UtilsLang, D extends UtilsDescrip
 										TS extends UtilsStatus<TS,L,D>,
 										TC extends UtilsStatus<TC,L,D>,
 										SECTION extends JeeslSurveySection<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
-										QUESTION extends JeeslSurveyQuestion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>, QE extends UtilsStatus<QE,L,D>,
+										QUESTION extends JeeslSurveyQuestion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
+										QE extends UtilsStatus<QE,L,D>,
 										SCORE extends JeeslSurveyScore<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
 										UNIT extends UtilsStatus<UNIT,L,D>,
 										ANSWER extends JeeslSurveyAnswer<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
@@ -48,11 +51,28 @@ public interface JeeslSurveyAnalysis<L extends UtilsLang, D extends UtilsDescrip
 										AQ extends JeeslSurveyAnalysisQuestion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
 										AT extends JeeslSurveyAnalysisTool<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
 										ATT extends UtilsStatus<ATT,L,D>>
-			extends EjbWithId,EjbWithParentAttributeResolver,EjbWithPositionVisible,EjbSaveable,
-						EjbWithLang<L>//,,EjbWithDescription<D>
 {
-	public enum Attributes{template}
+	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDomainFactory.class);
 	
-	TEMPLATE getTemplate();
-	void setTemplate(TEMPLATE template);
+	private final Class<DOMAIN> cDomain;
+    
+	public EjbSurveyDomainFactory(final Class<DOMAIN> cDomain)
+	{       
+        this.cDomain = cDomain;
+	}
+    
+	public DOMAIN build(List<DOMAIN> list)
+	{
+		DOMAIN ejb = null;
+		try
+		{
+			ejb = cDomain.newInstance();
+			if(list==null) {ejb.setPosition(1);}
+			else {ejb.setPosition(list.size()+1);}
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		return ejb;
+	}
 }

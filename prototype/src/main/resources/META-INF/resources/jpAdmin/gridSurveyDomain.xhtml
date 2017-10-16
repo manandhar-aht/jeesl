@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
+	</composite:interface>
+	
+<composite:implementation>
+	<aup:grid id="grid">
+		<aht:row id="row1">
+			<aht:slot id="sTemplate" width="3">
+				<h:form id="fDomains">
+					<p:dataTable var="domain" value="#{cc.attrs.bean.domains}" rowKey="#{domain.id}"
+								 selection="#{cc.attrs.bean.domain}" selectionMode="single" draggableRows="true">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveyDomains}">
+		                         <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addDomain()}" update=":#{cc.id}:grid"/>
+		                     </aht:pfDataTableHeader>
+						</f:facet>
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderDomains()}" update="@form"/>
+						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectDomain()}" update=":#{cc.id}:grid"/>
+						<p:column>
+							<h:graphicImage rendered="#{not analysis.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+                     		<h:outputText rendered="#{analysis.visible}" value="#{analysis.position}" />
+						</p:column>
+						<p:column headerText="#{msg.jeeslSurveyDomain}">
+							<h:outputText value="#{domain.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</aht:slot>
+			<aht:slot id="sCenter" width="3" >
+				<h:form id="fDomain" rendered="#{not empty cc.attrs.bean.domain}">
+					<p:panel header="#{msg.jeeslSurveyDomain}" styleClass="auPanelWithGrid">
+						<f:facet name="actions">
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveDomain()}" update=":#{cc.id}:grid"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteDomain()}" update=":#{cc.id}:grid"/>
+						</f:facet>
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="4" columnClasses="jeeslGrid30,jeeslGrid20,jeeslGrid30,jeeslGrid20">
+							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
+							<h:outputText value="#{cc.attrs.bean.domain.position}"/>
+						</p:panelGrid>
+						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							<p:outputLabel value="#{msg.jeeslName}"/>
+							<p:inputText value="#{cc.attrs.bean.domain.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</aht:slot>
+		</aht:row>
+	</aup:grid>
+</composite:implementation>
+</html>

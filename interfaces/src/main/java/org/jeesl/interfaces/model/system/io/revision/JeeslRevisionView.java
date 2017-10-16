@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.revision;
+package org.jeesl.interfaces.model.system.io.revision;
 
 import java.util.List;
 
@@ -9,14 +9,12 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
-import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslRevisionEntity<L extends UtilsLang, D extends UtilsDescription,
+public interface JeeslRevisionView<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
 									RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RVM extends JeeslRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
@@ -27,15 +25,9 @@ public interface JeeslRevisionEntity<L extends UtilsLang, D extends UtilsDescrip
 									RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
-				EjbWithCode,EjbWithPositionVisible,EjbWithParentAttributeResolver,EjbWithPositionParent,
-				EjbWithLang<L>,EjbWithDescription<D>,EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
-{	
-	RC getCategory();
-	void setCategory(RC category);
-	
-	List<REM> getMaps();
-	void setMaps(List<REM> maps);
-	
-	String getDeveloperInfo();
-	void setDeveloperInfo(String developerInfo);
+				EjbWithCode,EjbWithPositionVisible,
+				EjbWithLang<L>,EjbWithDescription<D>
+{					
+	List<RVM> getMaps();
+	void setMaps(List<RVM> maps);
 }

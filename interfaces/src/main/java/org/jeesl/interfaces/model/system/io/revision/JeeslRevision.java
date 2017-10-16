@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.revision;
+package org.jeesl.interfaces.model.system.io.revision;
 
 import java.util.Date;
 

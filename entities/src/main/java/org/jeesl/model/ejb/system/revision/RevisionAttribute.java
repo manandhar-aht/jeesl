@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
 
@@ -110,6 +110,11 @@ public class RevisionAttribute implements Serializable,EjbRemoveable,EjbPersista
 	private String developerInfo;
 	@Override public String getDeveloperInfo() {return developerInfo;}
 	@Override public void setDeveloperInfo(String developerInfo) {this.developerInfo=developerInfo;}
+	
+	@ManyToOne
+	private RevisionEntity entity;
+	@Override public RevisionEntity getEntity() {return entity;}
+	@Override public void setEntity(RevisionEntity entity) {this.entity = entity;}
 	
 	@Override public String toString()
 	{

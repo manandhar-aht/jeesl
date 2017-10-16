@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.revision;
+package org.jeesl.interfaces.model.system.io.revision;
 
 import org.hibernate.envers.RevisionType;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;

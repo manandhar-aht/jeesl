@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionViewMapping;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

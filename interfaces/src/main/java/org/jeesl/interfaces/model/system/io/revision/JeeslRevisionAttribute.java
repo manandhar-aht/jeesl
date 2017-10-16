@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.revision;
+package org.jeesl.interfaces.model.system.io.revision;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 
@@ -61,4 +61,7 @@ public interface JeeslRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 	
 	String getDeveloperInfo();
 	void setDeveloperInfo(String developerInfo);
+	
+	RE getEntity();
+	void setEntity(RE entity);
 }

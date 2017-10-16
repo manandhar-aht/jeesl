@@ -9,6 +9,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisQuestionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisToolFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
@@ -139,6 +140,11 @@ public class SurveyFactoryFactory<L extends UtilsLang, D extends UtilsDescriptio
 	public EjbSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,ANALYSIS,AQ,AT,ATT> survey()
 	{
 		return new EjbSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,ANALYSIS,AQ,AT,ATT>(cL,cD,cSurvey);
+	}
+	
+	public EjbSurveyDomainFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,ANALYSIS,AQ,AT,ATT> ejbDomain(Class<DOMAIN> cDomain)
+	{
+		return new EjbSurveyDomainFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,ANALYSIS,AQ,AT,ATT>(cDomain);
 	}
 	
 	public EjbSurveyAnalysisFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,ANALYSIS,AQ,AT,ATT> ejbAnalysis(Class<ANALYSIS> cAnalysis)

@@ -53,5 +53,6 @@ public interface JeeslSurveyDomain<L extends UtilsLang, D extends UtilsDescripti
 			extends EjbWithId,EjbSaveable,
 					EjbWithPosition,EjbWithLang<L>//,EjbWithDescription<D>
 {
-	
+	DENTITY getEntity();
+	void setEntity(DENTITY entity);
 }

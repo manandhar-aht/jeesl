@@ -1,6 +1,8 @@
 package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
@@ -36,6 +38,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.util.comparator.ejb.revision.RevisionEntityComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
@@ -57,7 +60,8 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 										OPTIONS extends JeeslSurveyOptionSet<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
 										OPTION extends JeeslSurveyOption<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
-										DOMAIN extends JeeslSurveyDomain<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>, DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>,
+										DOMAIN extends JeeslSurveyDomain<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
+										DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>,
 										ANALYSIS extends JeeslSurveyAnalysis<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
 										AQ extends JeeslSurveyAnalysisQuestion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
 										AT extends JeeslSurveyAnalysisTool<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT>,
@@ -69,19 +73,25 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyDomainBean.class);
 	
 	private final Class<DOMAIN> cDomain;
+	private final Class<DENTITY> cDentiy;
 	
 	protected List<DOMAIN> domains; public List<DOMAIN> getDomains(){return domains;}
+	protected List<DENTITY> entities; public List<DENTITY> getEntities(){return entities;}
 	
 	protected DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
 
 	private final EjbSurveyDomainFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT> efDomain;
+	private final Comparator<DENTITY> cpDentity;
 	
-	public AbstractAdminSurveyDomainBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<QE> cQe, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<DOMAIN> cDomain, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public AbstractAdminSurveyDomainBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<QE> cQe, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<DOMAIN> cDomain, final Class<DENTITY> cDentiy, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
 	{
 		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
 		this.cDomain=cDomain;
+		this.cDentiy=cDentiy;
 		
 		efDomain = ffSurvey.ejbDomain(cDomain);
+		cpDentity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
 	protected void initSuperCorrelation(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
@@ -90,6 +100,8 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		initSettings();
 		super.initLocales(userLocale);
 		
+		entities = fSurvey.allOrderedPositionVisible(cDentiy);
+		Collections.sort(entities,cpDentity);
 		reloadDomains();
 	}
 	
@@ -108,7 +120,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	public void addDomain()
 	{
 		logger.info(AbstractLogMessage.addEntity(cDomain));
-		domain = efDomain.build(domains);
+		domain = efDomain.build(null,domains);
 		domain.setName(efLang.createEmpty(sbhLocale.getList()));
 	}
 	
@@ -122,7 +134,9 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(domain));
+		domain.setEntity(fSurvey.find(cDentiy,domain.getEntity()));
 		domain = fSurvey.save(domain);
+		
 		reloadDomains();
 	}
 	

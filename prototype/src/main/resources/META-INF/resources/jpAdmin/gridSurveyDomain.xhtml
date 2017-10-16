@@ -32,8 +32,7 @@
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderDomains()}" update="@form"/>
 						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectDomain()}" update=":#{cc.id}:grid"/>
 						<p:column>
-							<h:graphicImage rendered="#{not analysis.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
-                     		<h:outputText rendered="#{analysis.visible}" value="#{analysis.position}" />
+                     		<h:outputText value="#{domain.position}" />
 						</p:column>
 						<p:column headerText="#{msg.jeeslSurveyDomain}">
 							<h:outputText value="#{domain.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
@@ -49,13 +48,17 @@
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteDomain()}" update=":#{cc.id}:grid"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
-						<p:panelGrid columns="4" columnClasses="jeeslGrid30,jeeslGrid20,jeeslGrid30,jeeslGrid20">
+						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<h:outputText value="#{cc.attrs.bean.domain.position}"/>
-						</p:panelGrid>
-						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							
 							<p:outputLabel value="#{msg.jeeslName}"/>
 							<p:inputText value="#{cc.attrs.bean.domain.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+							
+							<p:outputLabel value="#{msg.jeeslSurveyDomainCorrelation}"/>
+							<p:selectOneMenu  value="#{cc.attrs.bean.domain.entity}" autoWidth="false" effect="fade">
+								<f:selectItems value="#{cc.attrs.bean.entities}" var="e" itemLabel="#{e.category.position}.#{e.position} #{e.category.name[cc.attrs.bean.sbhLocale.selection.code].lang} #{e.name[cc.attrs.bean.sbhLocale.selection.code].lang}" itemValue="#{e}"/>
+							</p:selectOneMenu>
 						</p:panelGrid>
 					</p:panel>
 				</h:form>

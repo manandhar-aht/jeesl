@@ -123,14 +123,12 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	{
 		logger.info(AbstractLogMessage.addEntity(cDomain));
 		domain = efDomain.build(null,domains);
-		domain.setName(efLang.createEmpty(sbhLocale.getList()));
 	}
 	
 	protected void selectDomain() throws UtilsNotFoundException
 	{
 		reset(false);
 		logger.info(AbstractLogMessage.selectEntity(domain));
-		domain = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), domain);
 	}
 	
 	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException

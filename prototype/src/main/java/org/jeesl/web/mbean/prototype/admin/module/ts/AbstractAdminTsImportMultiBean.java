@@ -96,9 +96,9 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 	
 	private Comparator<Data> cTsData;
         
-        protected HashMap<SCOPE, List<DATA>> timeSeriesMap;
-        public HashMap<SCOPE, List<DATA>> getTimeSeriesMap() {return timeSeriesMap;}
-        public void setTimeSeriesMap(HashMap<SCOPE, List<DATA>> timeSeriesMap) {this.timeSeriesMap = timeSeriesMap;}
+        protected HashMap<SCOPE, Map<DATA, ArrayList<String>>> timeSeriesMap;
+        public HashMap<SCOPE, Map<DATA, ArrayList<String>>> getTimeSeriesMap() {return timeSeriesMap;}
+        public void setTimeSeriesMap(HashMap<SCOPE, Map<DATA, ArrayList<String>>> timeSeriesMap) {this.timeSeriesMap = timeSeriesMap;}
         
         protected String successMessage; public String getSuccessMessage() {return successMessage;} public void setSuccessMessage(String successMessage) {this.successMessage = successMessage;}
         protected boolean saved; public boolean isSaved() {return saved;} public void setSaved(boolean saved) {this.saved = saved;}
@@ -330,4 +330,26 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
             catch (UtilsConstraintViolationException e) {e.printStackTrace();}
             catch (UtilsLockingException e) {e.printStackTrace();}
         }
+	
+	public String getValidationInfo(SCOPE scope, DATA dataPoint)
+	{
+	    ArrayList<String> validationErrors = timeSeriesMap.get(scope).get(dataPoint);
+	    if (validationErrors.size()>0)
+	    {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Please check row ");
+		String rowNr = validationErrors.get(0);
+		sb.append(rowNr.substring(0, rowNr.indexOf("-")));
+		sb.append(" for the following data: ");
+		for (String failedDataField : validationErrors)
+		{
+		    sb.append(failedDataField.substring(failedDataField.indexOf("-")+1));
+		}
+		return sb.toString();
+	    }
+	    else
+	    {
+		return null;
+	    }
+	}
 }

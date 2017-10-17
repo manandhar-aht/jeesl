@@ -50,6 +50,7 @@
 						<p:tab id="wStations" title="Handle new Stations" rendered="#{not empty cc.attrs.bean.stationsValidationList}">
 						    <p:panel rendered="#{not empty cc.attrs.bean.stationsValidationList}" id="pStationsImport" header="#{msg.stationsImport}" styleClass="auPanelWithGrid">
 							<h:outputText value="Fix validation problems and upload file again to save." rendered="#{not cc.attrs.bean.stationsValidated}"/>
+							<h:outputText value="Click import to save." rendered="#{cc.attrs.bean.stationsValidated}"/>
 							<br/>
 							<br/>
 							<p:commandButton value="Import" disabled="#{not cc.attrs.bean.stationsValidated}" type="button">
@@ -64,7 +65,7 @@
 									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="10,20,30">
 							    <f:facet name="header">
-								    <aht:pfDataTableHeader title="#{msg.aupTsTimeSerie} #{tsScope.code}"/>
+								    <aht:pfDataTableHeader title="#{msg.stations} #{tsScope.code}"/>
 							    </f:facet>
 							    <p:column rendered="true" headerText="#{msg.code}">  
 								<h:outputText value="#{station.code}" rendered="#{not empty station.code}"/>
@@ -85,13 +86,14 @@
 						    </p:panel>
 						</p:tab>
 						<p:tab id="wVerify" title="Verify Data">
-						    <p:panel id="pValidationSummary" header="#{msg.validationSummary}" styleClass="auPanelWithGrid">
-							<h:outputText value="Fix validation problems and upload file again to save. Please check:" rendered="#{not empty cc.attrs.bean.getProblematicDates() or (not empty ee.attrs.bean.getProblematicValues())}"/>
+						    <p:panel id="pValidationSummary" header="#{msg.validationSummary}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.getFailureList()}">
+							<h:outputText value="Fix validation problems and upload file again to save. Please check:"  />
+							
 							<br/>
 							<br/>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
-								<p:outputLabel value="#{msg.checkDatesInRow}"/>
-								<h:outputText value="#{cc.attrs.bean.getProblematicDates()}"/>
+								<p:outputLabel value="#{msg.checkDatesInRow}" />
+								<h:outputText value="#{cc.attrs.bean.getProblematicDates()}" />
 								
 								<p:outputLabel value="#{msg.checkValuesInCells}"/>
 								<h:outputText value="#{cc.attrs.bean.getProblematicValues()}"/>

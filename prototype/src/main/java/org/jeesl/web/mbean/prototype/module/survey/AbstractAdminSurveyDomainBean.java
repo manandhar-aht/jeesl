@@ -93,7 +93,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		this.cDomain=cDomain;
 		this.cDentiy=cDentiy;
 		
-		efDomain = ffSurvey.ejbDomain(cDomain);
+		efDomain = ffAnalysis.ejbDomain(cDomain);
 		cpDentity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	

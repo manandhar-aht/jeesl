@@ -112,8 +112,8 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		this.cAtt=cAtt;
 		this.cQe=cQe;
 		
-		efAnalysis = ffSurvey.ejbAnalysis(cAnalysis);
-		efAnalysisQuestion = ffSurvey.ejbAnalysisQuestion(cAq);
+		efAnalysis = ffAnalysis.ejbAnalysis(cAnalysis);
+		efAnalysisQuestion = ffAnalysis.ejbAnalysisQuestion(cAq);
 		efAnalysisTool = ffAnalysis.ejbAnalysisTool(cTool);
 	}
 	

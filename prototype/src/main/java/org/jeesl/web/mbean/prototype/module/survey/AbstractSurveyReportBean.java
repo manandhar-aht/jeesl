@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
+import org.jeesl.api.facade.module.JeeslSurveyAnalysisFacade;
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
@@ -115,9 +116,9 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		sections = new ArrayList<SECTION>();
 	}
 	
-	protected void initSuperSchedule(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey, JeeslReportAggregationLevelFactory tfName)
+	protected void initSuperSchedule(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey, JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey, JeeslReportAggregationLevelFactory tfName)
 	{
-		super.initSuperSurvey(localeCodes,bMessage,fSurvey,bSurvey);
+		super.initSuperSurvey(localeCodes,bMessage,fSurvey,fAnalysis,bSurvey);
 		mfOption = new McOptionDataSetFactory<OPTION>(tfName);
 		initSettings();
 		
@@ -180,7 +181,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 			{
 				try
 				{
-					AQ analysis = fSurvey.fAnalysis(sbhAnalysis.getSelection(), q);
+					AQ analysis = fAnalysis.fAnalysis(sbhAnalysis.getSelection(), q);
 					List<AT> tools = new ArrayList<AT>();
 					mapQuestion.get(section).add(q);
 					for(AT tool : fSurvey.allForParent(cAt, analysis))

@@ -49,14 +49,14 @@ public class JsonQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	private Question q;
 	
-	private JsonOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> jfOption;
+	private JsonOptionFactory<OPTION> jfOption;
 	
 	public JsonQuestionFactory(String localeCode, Question q){this(localeCode, q,null);}
 	public JsonQuestionFactory(String localeCode, Question q, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey)
 	{
 		this.q=q;
 		this.fSurvey=fSurvey;
-		if(q.isSetOptions()) {jfOption = new JsonOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(localeCode,q.getOptions().get(0));}
+		if(q.isSetOptions()) {jfOption = new JsonOptionFactory<OPTION>(localeCode,q.getOptions().get(0));}
 	}
 	
 	public Question build(QUESTION ejb)

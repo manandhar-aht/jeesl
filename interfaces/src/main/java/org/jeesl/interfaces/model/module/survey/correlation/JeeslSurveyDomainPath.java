@@ -27,7 +27,7 @@ public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescr
 							SECTION extends JeeslSurveySection<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 							QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,AQ>,
 							QE extends UtilsStatus<QE,L,D>,
-							SCORE extends JeeslSurveyScore<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
+							SCORE extends JeeslSurveyScore<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE>,
 							UNIT extends UtilsStatus<UNIT,L,D>,
 							ANSWER extends JeeslSurveyAnswer<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 							MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,

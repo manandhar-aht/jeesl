@@ -29,7 +29,7 @@ public interface JeeslSurveyDomain<L extends UtilsLang, D extends UtilsDescripti
 					TS extends UtilsStatus<TS,L,D>,
 					TC extends UtilsStatus<TC,L,D>,
 					SECTION extends JeeslSurveySection<L,D,?,?,?,?,?,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ>,
+					QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,AQ>,
 					QE extends UtilsStatus<QE,L,D>,
 					SCORE extends JeeslSurveyScore<L,D,?,?,?,?,?,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 					UNIT extends UtilsStatus<UNIT,L,D>,

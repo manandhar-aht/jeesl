@@ -38,7 +38,7 @@ public interface JeeslSurveyOptionSet<L extends UtilsLang, D extends UtilsDescri
 					MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?>,
 					DATA extends JeeslSurveyData<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?>,
 					OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,VERSION,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTIONS,OPTION>,
-					OPTION extends JeeslSurveyOption<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?>>
+					OPTION extends JeeslSurveyOption<L,D>>
 			extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithCode,EjbWithPosition,EjbWithVisible,
 					EjbWithLang<L>
 {

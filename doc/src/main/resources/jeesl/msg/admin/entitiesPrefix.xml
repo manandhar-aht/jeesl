@@ -149,4 +149,12 @@
 			<s:lang key="fr" translation="Language"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="RegistrationStatus">
+		<s:langs>
+			<s:lang key="de" translation="Registrierungsstatus"/>
+			<s:lang key="en" translation="Registration Status"/>
+			<s:lang key="fr" translation="Registration Status"/>
+		</s:langs>
+	</s:translation>
+	
 </s:translations>

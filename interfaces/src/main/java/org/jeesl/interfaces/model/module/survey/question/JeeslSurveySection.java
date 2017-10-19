@@ -39,7 +39,7 @@ public interface JeeslSurveySection<L extends UtilsLang, D extends UtilsDescript
 					QE extends UtilsStatus<QE,L,D>,
 					SCORE extends JeeslSurveyScore<L,D,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,QE,SCORE>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
-					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,ANSWER,MATRIX,DATA,OPTION>,
+					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
 					MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 					DATA extends JeeslSurveyData<L,D,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 					OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,

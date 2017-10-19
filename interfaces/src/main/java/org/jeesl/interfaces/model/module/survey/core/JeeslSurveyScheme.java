@@ -26,20 +26,9 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyScheme<L extends UtilsLang, D extends UtilsDescription,
-					SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,?,?,?>,
-					SS extends UtilsStatus<SS,L,D>,
-					SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX>,
-					TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,?,?>,
-					VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
-					TS extends UtilsStatus<TS,L,D>,
-					TC extends UtilsStatus<TC,L,D>,
-					SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,?,?,?>,
-					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QUESTION,QE,SCORE,UNIT,?,?,?>,
-					QE extends UtilsStatus<QE,L,D>,
-					SCORE extends JeeslSurveyScore<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE>,
-					UNIT extends UtilsStatus<UNIT,L,D>,
-					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,ANSWER,MATRIX,?,?>,
-					MATRIX extends JeeslSurveyMatrix<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,?,?,?>
+					TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,?,SCORE,?,?,?,?,?,?>,
+					SCORE extends JeeslSurveyScore<L,D,?,?,?,TEMPLATE,?,?,?,?,?,?,SCORE>
+
 					>
 			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,EjbSaveable,
 					EjbWithLang<L>,EjbWithDescription<D>

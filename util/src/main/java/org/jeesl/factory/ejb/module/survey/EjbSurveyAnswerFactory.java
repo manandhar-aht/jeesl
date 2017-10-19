@@ -35,7 +35,7 @@ import net.sf.ahtutils.xml.survey.Answer;
 public class EjbSurveyAnswerFactory<L extends UtilsLang, D extends UtilsDescription,
 				SURVEY extends JeeslSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 				SS extends UtilsStatus<SS,L,D>,
-				SCHEME extends JeeslSurveyScheme<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX>,
+				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
 				TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,ANALYSIS>,
 				VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 				TS extends UtilsStatus<TS,L,D>,
@@ -45,7 +45,7 @@ public class EjbSurveyAnswerFactory<L extends UtilsLang, D extends UtilsDescript
 				QE extends UtilsStatus<QE,L,D>,
 				SCORE extends JeeslSurveyScore<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE>,
 				UNIT extends UtilsStatus<UNIT,L,D>,
-				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,ANSWER,MATRIX,DATA,OPTION>,
+				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
 				MATRIX extends JeeslSurveyMatrix<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 				DATA extends JeeslSurveyData<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 				OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
@@ -108,7 +108,7 @@ public class EjbSurveyAnswerFactory<L extends UtilsLang, D extends UtilsDescript
 	public static <L extends UtilsLang, D extends UtilsDescription,
 					QUESTION extends JeeslSurveyQuestion<L,D,?,QUESTION,?,?,?,?,OPTION,?>,
 					
-					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,ANSWER,MATRIX,DATA,OPTION>,
+					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
 					MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,?>,
 					DATA extends JeeslSurveyData<L,D,?,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,?>,
 					
@@ -121,16 +121,12 @@ public class EjbSurveyAnswerFactory<L extends UtilsLang, D extends UtilsDescript
 		return map;
 	}
 	public static <L extends UtilsLang, D extends UtilsDescription,
-					QUESTION extends JeeslSurveyQuestion<L,D,?,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
-					QE extends UtilsStatus<QE,L,D>,
-					SCORE extends JeeslSurveyScore<L,D,?,?,?,?,?,?,?,?,QUESTION,QE,SCORE>,
-					UNIT extends UtilsStatus<UNIT,L,D>,
-					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,ANSWER,MATRIX,DATA,OPTION>,
-					MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,?,?,?,?,?,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					DATA extends JeeslSurveyData<L,D,?,?,?,?,?,?,?,?,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					OPTIONS extends JeeslSurveyOptionSet<L,D,?,OPTION>,
-					OPTION extends JeeslSurveyOption<L,D>,
-					CORRELATION extends JeeslSurveyCorrelation<L,D,?,?,?,?,?,?,?,?,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>
+					QUESTION extends JeeslSurveyQuestion<L,D,?,QUESTION,?,?,?,?,OPTION,?>,
+					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
+					MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,?>,
+					DATA extends JeeslSurveyData<L,D,?,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,?>,
+					
+					OPTION extends JeeslSurveyOption<L,D>
 					>
 		Map<Long,ANSWER> toQuestionIdMap(List<ANSWER> list)
 	{

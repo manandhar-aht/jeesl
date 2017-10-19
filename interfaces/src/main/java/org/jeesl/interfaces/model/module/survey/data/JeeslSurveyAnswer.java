@@ -27,9 +27,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyAnswer<L extends UtilsLang, D extends UtilsDescription,
 							QUESTION extends JeeslSurveyQuestion<L,D,?,QUESTION,?,?,?,?,OPTION,?>,
-							ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,ANSWER,MATRIX,DATA,OPTION>,
-							MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,?>,
-							DATA extends JeeslSurveyData<L,D,?,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,?>,
+							MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,?,?,?,?,?,QUESTION,?,?,?,?,MATRIX,DATA,?,OPTION,?>,
+							DATA extends JeeslSurveyData<L,D,?,?,?,?,?,?,?,?,QUESTION,?,?,?,?,MATRIX,DATA,?,OPTION,?>,
 							OPTION extends JeeslSurveyOption<L,D>
 							>
 			extends EjbWithId,EjbSaveable

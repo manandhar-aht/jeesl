@@ -42,7 +42,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 					ANSWER extends JeeslSurveyAnswer<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 					MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 					DATA extends JeeslSurveyData<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					OPTIONS extends JeeslSurveyOptionSet<L,D,?,?,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTIONS,OPTION>,
+					OPTIONS extends JeeslSurveyOptionSet<L,D,?,OPTION>,
 					OPTION extends JeeslSurveyOption<L,D>,
 					CORRELATION extends JeeslSurveyCorrelation<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 					AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,AQ,?,?>

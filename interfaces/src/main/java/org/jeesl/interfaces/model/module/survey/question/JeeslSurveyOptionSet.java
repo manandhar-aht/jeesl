@@ -30,14 +30,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
 public interface JeeslSurveyOptionSet<L extends UtilsLang, D extends UtilsDescription,
-					TEMPLATE extends JeeslSurveyTemplate<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?,?>,
-					VERSION extends JeeslSurveyTemplateVersion<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX>,
-					SECTION extends JeeslSurveySection<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?>,
-					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?,?>,
-					ANSWER extends JeeslSurveyAnswer<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?>,
-					MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?>,
-					DATA extends JeeslSurveyData<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?>,
-					OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,VERSION,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTIONS,OPTION>,
+					TEMPLATE extends JeeslSurveyTemplate<L,D,?,?,?,TEMPLATE,?,?,?,?,?,?,?,?,?,?,?,?,OPTION,?,?>,
+					
 					OPTION extends JeeslSurveyOption<L,D>>
 			extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithCode,EjbWithPosition,EjbWithVisible,
 					EjbWithLang<L>

@@ -26,7 +26,7 @@ import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
 
 public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends UtilsDescription,
-													C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+													C extends JeeslSecurityCategory<L,D>,
 													R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 													V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 													U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,

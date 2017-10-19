@@ -38,7 +38,7 @@ public class RevisionEngineAttributeResolver<L extends UtilsLang,D extends Utils
 							RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 							RAT extends UtilsStatus<RAT,L,D>,
 							REV extends JeeslRevision,
-							C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+							C extends JeeslSecurityCategory<L,D>,
 							R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 							V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 							U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,

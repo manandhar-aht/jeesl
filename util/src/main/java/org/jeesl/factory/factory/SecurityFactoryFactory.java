@@ -20,7 +20,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class SecurityFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
-									C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+									C extends JeeslSecurityCategory<L,D>,
 									R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 									V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 									U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
@@ -45,7 +45,7 @@ public class SecurityFactoryFactory<L extends UtilsLang, D extends UtilsDescript
 	
 	public static <L extends UtilsLang,
 					D extends UtilsDescription,
-					C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+					C extends JeeslSecurityCategory<L,D>,
 					R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 					V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 					U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,

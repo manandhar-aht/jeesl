@@ -14,14 +14,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslSecurityCategory<L extends UtilsLang, D extends UtilsDescription,
-									   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
-									   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-									   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
-									   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-									   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-									   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-									   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+public interface JeeslSecurityCategory<L extends UtilsLang, D extends UtilsDescription>
 			extends EjbWithId,EjbWithTypeCode,
 				EjbWithPositionTypeVisible,EjbWithPositionVisible,EjbWithPositionType,
 				EjbWithLang<L>,EjbWithDescription<D>,

@@ -30,7 +30,7 @@ import net.sf.ahtutils.xml.qa.Comment;
 import net.sf.ahtutils.xml.qa.Info;
 
 public class XmlInfoFactory<L extends UtilsLang, D extends UtilsDescription,
-						C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+						C extends JeeslSecurityCategory<L,D>,
 						R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 						V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 						U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,

@@ -17,7 +17,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER>,
 								   L extends UtilsLang,  D extends UtilsDescription,
-								   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+								   C extends JeeslSecurityCategory<L,D>,
 								   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 								   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 								   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
@@ -60,7 +60,7 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 
 	public static <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER>,
 	   			   L extends UtilsLang, D extends UtilsDescription,
-	   			   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+	   			   C extends JeeslSecurityCategory<L,D>,
 	   			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 	   			   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,

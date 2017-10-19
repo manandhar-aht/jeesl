@@ -42,7 +42,7 @@ public interface JeeslSurveyDomain<L extends UtilsLang, D extends UtilsDescripti
 					DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>,
 					ANALYSIS extends JeeslSurveyAnalysis<L,D,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
 					AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-					AT extends JeeslSurveyAnalysisTool<L,D,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
+					AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 					ATT extends UtilsStatus<ATT,L,D>>
 			extends EjbWithId,EjbSaveable,
 					EjbWithPosition//,EjbWithLang<L>//,EjbWithDescription<D>

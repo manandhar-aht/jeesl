@@ -38,7 +38,7 @@ public interface JeeslSurveyScheme<L extends UtilsLang, D extends UtilsDescripti
 					QE extends UtilsStatus<QE,L,D>,
 					SCORE extends JeeslSurveyScore<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
-					ANSWER extends JeeslSurveyAnswer<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,?,?,?>,
+					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,?,?,?>,
 					MATRIX extends JeeslSurveyMatrix<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,?,?,?>
 					>
 			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,EjbSaveable,

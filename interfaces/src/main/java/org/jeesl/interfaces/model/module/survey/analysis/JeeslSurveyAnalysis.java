@@ -27,26 +27,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyAnalysis<L extends UtilsLang, D extends UtilsDescription,
-					TEMPLATE extends JeeslSurveyTemplate<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ANALYSIS>,
-					VERSION extends JeeslSurveyTemplateVersion<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX>,
-					SECTION extends JeeslSurveySection<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
-					QE extends UtilsStatus<QE,L,D>,
-					SCORE extends JeeslSurveyScore<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,QE,SCORE>,
-					UNIT extends UtilsStatus<UNIT,L,D>,
-					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					DATA extends JeeslSurveyData<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-					OPTION extends JeeslSurveyOption<L,D>,
-					CORRELATION extends JeeslSurveyCorrelation<L,D,?,?,?,TEMPLATE,VERSION,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					DOMAIN extends JeeslSurveyDomain<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-					PATH extends JeeslSurveyDomainPath<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-					DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>,
-					ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-					AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-					AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
-					ATT extends UtilsStatus<ATT,L,D>>
+					TEMPLATE extends JeeslSurveyTemplate<L,D,?,?,?,TEMPLATE,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?>
+					>
 			extends EjbWithId,EjbWithParentAttributeResolver,EjbWithPositionVisible,EjbSaveable,
 						EjbWithLang<L>//,,EjbWithDescription<D>
 {

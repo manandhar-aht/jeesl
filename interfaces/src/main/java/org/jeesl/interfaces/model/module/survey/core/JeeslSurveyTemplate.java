@@ -47,7 +47,7 @@ public interface JeeslSurveyTemplate<L extends UtilsLang, D extends UtilsDescrip
 										OPTION extends JeeslSurveyOption<L,D>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 
-										ANALYSIS extends JeeslSurveyAnalysis<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,ANALYSIS,?,?,?>
+										ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,ANALYSIS,?,?,?>
 										>
 			extends EjbWithId,EjbWithRecord,EjbWithName,EjbWithRemark,
 						UtilsWithStatus<L,D,TS>,

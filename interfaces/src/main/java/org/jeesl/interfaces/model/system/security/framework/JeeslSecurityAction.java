@@ -15,8 +15,7 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslSecurityAction<L extends UtilsLang,
-								   D extends UtilsDescription,
+public interface JeeslSecurityAction<L extends UtilsLang, D extends UtilsDescription,
 								   C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
 								   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 								   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,

@@ -27,7 +27,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyDomain<L extends UtilsLang, D extends UtilsDescription,
 					SECTION extends JeeslSurveySection<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,AQ>,
+					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 					QE extends UtilsStatus<QE,L,D>,
 					SCORE extends JeeslSurveyScore<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE>,
 					UNIT extends UtilsStatus<UNIT,L,D>,

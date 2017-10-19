@@ -33,19 +33,14 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
 public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescription,
-					
-					SECTION extends JeeslSurveySection<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,AQ>,
+					SECTION extends JeeslSurveySection<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,?,?,?,OPTIONS,OPTION,?>,
+					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 					QE extends UtilsStatus<QE,L,D>,
 					SCORE extends JeeslSurveyScore<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
-					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					DATA extends JeeslSurveyData<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
 					OPTIONS extends JeeslSurveyOptionSet<L,D,?,OPTION>,
 					OPTION extends JeeslSurveyOption<L,D>,
-					CORRELATION extends JeeslSurveyCorrelation<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-					AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,AQ,?,?>
+					AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,?,?,?,OPTIONS,OPTION,?,?,?,?,?,AQ,?,?>
 					
 					>
 			extends EjbWithId,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable,

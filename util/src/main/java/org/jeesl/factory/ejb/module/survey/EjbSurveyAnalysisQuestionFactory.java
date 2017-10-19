@@ -29,7 +29,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class EjbSurveyAnalysisQuestionFactory<L extends UtilsLang, D extends UtilsDescription,
 				TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,ANALYSIS>,
 				QUESTION extends JeeslSurveyQuestion<L,D,?,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>, QE extends UtilsStatus<QE,L,D>,
-				SCORE extends JeeslSurveyScore<L,D,?,?,?,TEMPLATE,?,?,?,?,QUESTION,QE,SCORE>,
+				SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
 				UNIT extends UtilsStatus<UNIT,L,D>,
 				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
 				MATRIX extends JeeslSurveyMatrix<L,D,?,?,?,TEMPLATE,?,?,?,?,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,

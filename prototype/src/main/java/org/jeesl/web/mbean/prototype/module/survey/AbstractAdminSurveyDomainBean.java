@@ -83,7 +83,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	
 	protected DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
 
-	private final EjbSurveyDomainFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efDomain;
+	private final EjbSurveyDomainFactory<L,D,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efDomain;
 	private final Comparator<DENTITY> cpDentity;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })

@@ -27,7 +27,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyAnalysisTool<L extends UtilsLang, D extends UtilsDescription,
 					QE extends UtilsStatus<QE,L,D>,
-					AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?,?,?,?,?,?,QE,?,?,?,?,?,?,?,?,?,?,?,?,AQ,?,ATT>,
+					AQ extends JeeslSurveyAnalysisQuestion<L,D,?,QE,?,?,?,?,?,?,?,?,?,?,?,?,AQ,?,ATT>,
 					ATT extends UtilsStatus<ATT,L,D>
 										>
 			extends EjbWithId,EjbWithParentAttributeResolver,EjbSaveable,

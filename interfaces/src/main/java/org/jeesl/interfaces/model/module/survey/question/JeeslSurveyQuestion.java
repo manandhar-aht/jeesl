@@ -40,7 +40,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 					UNIT extends UtilsStatus<UNIT,L,D>,
 					OPTIONS extends JeeslSurveyOptionSet<L,D,?,OPTION>,
 					OPTION extends JeeslSurveyOption<L,D>,
-					AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,?,?,?,OPTIONS,OPTION,?,?,?,?,?,AQ,?,?>
+					AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,QE,SCORE,UNIT,?,?,?,OPTIONS,OPTION,?,?,?,?,?,AQ,?,?>
 					
 					>
 			extends EjbWithId,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable,

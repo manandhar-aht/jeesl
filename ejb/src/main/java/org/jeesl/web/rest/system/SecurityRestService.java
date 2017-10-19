@@ -18,7 +18,7 @@ import org.jeesl.factory.xml.system.security.XmlUsecaseFactory;
 import org.jeesl.factory.xml.system.security.XmlUsecasesFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
@@ -62,7 +62,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 								U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 								A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 								AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+								USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 				implements JeeslSecurityRestExport,UtilsSecurityViewImport
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityRestService.class);
@@ -126,7 +126,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		initUsecases = AbstractSecurityInit.factoryUsecases(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityRestService<L,D,C,R,V,U,A,AT,USER>
 		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<L> cL,final Class<D> cD,final Class<C> cCategory, final Class<V> cView, final Class<R> cRole, final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
 	{

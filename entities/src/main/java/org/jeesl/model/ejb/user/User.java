@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.model.ejb.system.security.SecurityAction;
 import org.jeesl.model.ejb.system.security.SecurityActionTemplate;
 import org.jeesl.model.ejb.system.security.SecurityCategory;
@@ -39,8 +39,8 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 ({	
 	@NamedQuery(name="fUserByEmail",query="SELECT u FROM MeisUser u WHERE u.email = :email")
 })
-public class JeeslUser implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,
-									UtilsUser<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser>
+public class User implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,
+									JeeslUser<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,User>
 {
 	public static final long serialVersionUID=1;
 	
@@ -90,6 +90,6 @@ public class JeeslUser implements Serializable,EjbWithId,EjbPersistable,EjbRemov
 	
 	public boolean equals(Object object)
 	{
-        return (object instanceof JeeslUser) ? id == ((JeeslUser) object).getId() : (object == this);
+        return (object instanceof User) ? id == ((User) object).getId() : (object == this);
     }
 }

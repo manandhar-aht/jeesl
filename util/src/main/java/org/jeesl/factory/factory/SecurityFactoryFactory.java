@@ -10,7 +10,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class SecurityFactoryFactory<L extends UtilsLang, D extends UtilsDescript
 									U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 									A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 									AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-									USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+									USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityFactoryFactory.class);
     
@@ -51,7 +51,7 @@ public class SecurityFactoryFactory<L extends UtilsLang, D extends UtilsDescript
 					U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 					A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 					AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-					USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+					USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER>
 		factory(final Class<L> cL, final Class<D> cD, final Class<A> cAction)
 	{

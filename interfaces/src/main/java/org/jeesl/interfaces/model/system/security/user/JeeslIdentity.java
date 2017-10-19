@@ -17,7 +17,7 @@ public interface JeeslIdentity <L extends UtilsLang, D extends UtilsDescription,
 								U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 								A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 								AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+								USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 {	
 	USER getUser();
 	void setUser(USER user);

@@ -2,7 +2,7 @@ package net.sf.ahtutils.interfaces.model.util;
 
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -22,7 +22,7 @@ public interface UtilsStaffPool<L extends UtilsLang,
 								   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 								   P extends EjbWithId,
 								   E extends EjbWithId,
-								   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+								   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 			extends EjbWithId
 {
 	public R getRole();

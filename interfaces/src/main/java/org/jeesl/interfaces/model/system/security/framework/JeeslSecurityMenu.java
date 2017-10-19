@@ -1,6 +1,6 @@
 package org.jeesl.interfaces.model.system.security.framework;
 
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -15,7 +15,7 @@ public interface JeeslSecurityMenu<L extends UtilsLang, D extends UtilsDescripti
 								   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 								   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 								   M extends JeeslSecurityMenu<L,D,C,R,V,U,A,AT,M,USER>,
-								   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+								   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 			extends EjbSaveable,EjbWithPosition
 {
 	public static final String extractId = "securityMenu";

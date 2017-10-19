@@ -3,7 +3,7 @@ package org.jeesl.factory.xml.dev.qa;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -36,7 +36,7 @@ public class XmlInfoFactory<L extends UtilsLang, D extends UtilsDescription,
 						U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 						A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 						AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-						USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
+						USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>,
 						STAFF extends UtilsQaStaff<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>,
 						GROUP extends UtilsQaGroup<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>,
 						QA extends UtilsQualityAssurarance<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>,

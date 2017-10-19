@@ -1,6 +1,6 @@
 package org.jeesl.interfaces.model.system.security.framework;
 
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -21,7 +21,7 @@ public interface JeeslSecurityCategory<L extends UtilsLang, D extends UtilsDescr
 									   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 									   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 									   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-									   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+									   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 			extends EjbWithId,EjbWithTypeCode,
 				EjbWithPositionTypeVisible,EjbWithPositionVisible,EjbWithPositionType,
 				EjbWithLang<L>,EjbWithDescription<D>,

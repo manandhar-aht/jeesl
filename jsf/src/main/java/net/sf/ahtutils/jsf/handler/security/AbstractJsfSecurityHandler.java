@@ -11,7 +11,7 @@ import org.jeesl.factory.txt.system.security.TxtSecurityActionFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslIdentity;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -32,7 +32,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 													U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 													A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 													AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-													USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
+													USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>,
 													I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER>>
 	implements UtilsJsfSecurityHandler<L,D,C,R,V,U,A,AT,USER>
 {

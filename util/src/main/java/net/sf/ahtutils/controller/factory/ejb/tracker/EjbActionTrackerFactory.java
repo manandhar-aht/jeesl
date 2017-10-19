@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -24,7 +24,7 @@ public class EjbActionTrackerFactory<L extends UtilsLang,
 				U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 				A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 				AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-				USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
+				USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>,
 				T extends UtilsActionTracker<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbActionTrackerFactory.class);
@@ -39,7 +39,7 @@ public class EjbActionTrackerFactory<L extends UtilsLang,
 				U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 				A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 				AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-				USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>,
+				USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>,
 				T extends UtilsActionTracker<L,D,C,R,V,U,A,AT,USER>>
     	EjbActionTrackerFactory<L,D,C,R,V,U,A,AT,USER,T> createFactory(final Class<T> clTracker)
     {

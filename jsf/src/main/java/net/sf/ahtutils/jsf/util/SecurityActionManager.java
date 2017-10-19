@@ -7,7 +7,7 @@ import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslIdentity;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -27,7 +27,7 @@ public class SecurityActionManager <L extends UtilsLang,
 									U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 									A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 									AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-									USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+									USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityActionManager.class);
 	
@@ -39,7 +39,7 @@ public class SecurityActionManager <L extends UtilsLang,
 		   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 		   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 		   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-		   USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+		   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityActionManager<L,D,C,R,V,U,A,AT,USER>
 		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,final Class<V> cView, String viewId, JeeslIdentity<L,D,C,R,V,U,A,AT,USER> identity) throws UtilsNotFoundException
 	{

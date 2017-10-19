@@ -58,7 +58,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	
 	protected JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
 	
-	protected Class<CAT> cCategory;
+	protected final Class<CAT> cCategory;
 	protected Class<SCOPE> cScope;
 	protected Class<UNIT> cUnit;
 	protected Class<TS> cTs;
@@ -83,9 +83,10 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 
 	protected SbMultiHandler<CAT> sbhCategory; public SbMultiHandler<CAT> getSbhCategory() {return sbhCategory;}
 	
-	public AbstractAdminTsBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
+	public AbstractAdminTsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
 	{
 		super(cL,cD);
+		this.cCategory=cCategory;
 		this.cTransaction = cTransaction;
 		this.cSource = cSource;
 	}
@@ -100,7 +101,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 		this.cBridge=cBridge;
 		this.cEc=cEc;
 		this.cInt=cInt;
-		this.cCategory=cCategory;
+
 		this.cData=cData;
 		this.cWs=cWs;
 		

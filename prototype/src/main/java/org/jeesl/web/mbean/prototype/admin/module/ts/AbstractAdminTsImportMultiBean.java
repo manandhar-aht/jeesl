@@ -105,9 +105,9 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
         
         private List<DATA> dataList; public List<DATA> getDataList() {return dataList;} public void setDataList(List<DATA> dataList) {this.dataList = dataList;}
 	
-	public AbstractAdminTsImportMultiBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
+	public AbstractAdminTsImportMultiBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
 	{
-		super(cL,cD,cTransaction,cSource);
+		super(cL,cD,cCategory,cTransaction,cSource);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)

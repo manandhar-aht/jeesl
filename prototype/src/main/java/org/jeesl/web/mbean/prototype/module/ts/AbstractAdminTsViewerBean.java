@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.module.ts;
+package org.jeesl.web.mbean.prototype.module.ts;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.web.mbean.prototype.admin.module.ts.AbstractAdminTsBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +29,7 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminTsScopeBean <L extends UtilsLang,
-											D extends UtilsDescription,
+public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
 											SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
@@ -48,7 +48,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsScopeBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsViewerBean.class);
 
 	protected List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
@@ -61,13 +61,13 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	
 	protected EC opClass;public EC getOpClass() {return opClass;}public void setOpClass(EC opClass) {this.opClass = opClass;}
 	protected EC tbClass;public EC getTbClass() {return tbClass;}public void setTbClass(EC tbClass) {this.tbClass = tbClass;}
-	
-	public AbstractAdminTsScopeBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
+		
+	public AbstractAdminTsViewerBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
 	{
 		super(cL,cD,cCategory,cTransaction,cSource);
 	}
 	
-	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<CAT> cCategory, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
+	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, final Class<L> cLang, final Class<D> cDescription, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge,Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
 	{
 		super.initTsSuper(langs,fTs,bMessage,cLang,cDescription,cCategory,cScope,cUnit,cTs,cBridge,cEc,cInt,cData,cWs);
 		initLists();

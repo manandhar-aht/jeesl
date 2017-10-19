@@ -56,9 +56,9 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 
-	public AbstractAdminTsTransactionBean(final Class<L> cL, final Class<D> cD, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
+	public AbstractAdminTsTransactionBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
 	{
-		super(cL,cD,cTransaction,cSource);
+		super(cL,cD,cCategory,cTransaction,cSource);
 		
 		sbDateHandler = new SbDateHandler(this);
 		sbDateHandler.initMonthsToNow(2);

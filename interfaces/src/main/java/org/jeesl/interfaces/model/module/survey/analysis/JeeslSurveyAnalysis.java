@@ -11,7 +11,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyAnalysis<L extends UtilsLang, D extends UtilsDescription,
-					TEMPLATE extends JeeslSurveyTemplate<L,D,?,?,?,TEMPLATE,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?>>
+					TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,?,?,?,?,?,?,?,?>>
 			extends EjbWithId,EjbWithParentAttributeResolver,EjbWithPositionVisible,EjbSaveable,
 						EjbWithLang<L>//,,EjbWithDescription<D>
 {

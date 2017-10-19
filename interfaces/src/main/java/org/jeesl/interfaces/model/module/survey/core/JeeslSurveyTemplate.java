@@ -40,7 +40,7 @@ public interface JeeslSurveyTemplate<L extends UtilsLang, D extends UtilsDescrip
 										SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 										UNIT extends UtilsStatus<UNIT,L,D>,
 										ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,?>,
-										MATRIX extends JeeslSurveyMatrix<L,D,?,?,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,?,?>,
+										MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,?>,
 										DATA extends JeeslSurveyData<L,D,?,?,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,?,?>,
 										OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,?>,
 										ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>

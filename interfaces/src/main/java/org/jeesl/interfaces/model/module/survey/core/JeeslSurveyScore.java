@@ -29,7 +29,7 @@ public interface JeeslSurveyScore<L extends UtilsLang, D extends UtilsDescriptio
 							VERSION extends JeeslSurveyTemplateVersion<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,?,?,?>,
 							TS extends UtilsStatus<TS,L,D>,
 							TC extends UtilsStatus<TC,L,D>,
-							SECTION extends JeeslSurveySection<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,?,?,?,?,?,?,?>,
+							SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION,QE,SCORE,?,?,?,?,?,?,?>,
 							QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QUESTION,QE,SCORE,?,?,?,?>,
 							QE extends UtilsStatus<QE,L,D>,
 							SCORE extends JeeslSurveyScore<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE>

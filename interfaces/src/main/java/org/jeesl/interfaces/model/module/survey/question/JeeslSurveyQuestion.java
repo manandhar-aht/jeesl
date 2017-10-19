@@ -20,7 +20,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
 public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescription,
-					SECTION extends JeeslSurveySection<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,?,?,?,OPTIONS,OPTION,?>,
+					SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION,QE,SCORE,UNIT,?,?,?,OPTIONS,OPTION,?>,
 					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 					QE extends UtilsStatus<QE,L,D>,
 					SCORE extends JeeslSurveyScore<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE>,

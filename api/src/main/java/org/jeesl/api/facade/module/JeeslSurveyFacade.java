@@ -58,7 +58,7 @@ public interface JeeslSurveyFacade <L extends UtilsLang, D extends UtilsDescript
 					PATH extends JeeslSurveyDomainPath<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
 					DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>,
 					ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
-					AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
+					AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 					AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 					ATT extends UtilsStatus<ATT,L,D>>
 	extends UtilsFacade

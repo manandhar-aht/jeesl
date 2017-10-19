@@ -7,8 +7,7 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SurveyAnswerComparator<ANSWER extends JeeslSurveyAnswer<?,?,?,?,?,?,ANSWER,?,?,?,?,?>
-				>
+public class SurveyAnswerComparator<ANSWER extends JeeslSurveyAnswer<?,?,?,ANSWER,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyAnswerComparator.class);
 

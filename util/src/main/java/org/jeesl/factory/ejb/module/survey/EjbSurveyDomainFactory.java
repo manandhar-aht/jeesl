@@ -28,25 +28,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class EjbSurveyDomainFactory<L extends UtilsLang, D extends UtilsDescription,
-				TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,OPTIONS,ANALYSIS>,
-				QUESTION extends JeeslSurveyQuestion<L,D,?,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
-				QE extends UtilsStatus<QE,L,D>,
-				SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
-				UNIT extends UtilsStatus<UNIT,L,D>,
-				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-				MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-				DATA extends JeeslSurveyData<L,D,?,ANSWER,CORRELATION>,
-				OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-				OPTION extends JeeslSurveyOption<L,D>,
-				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-				DOMAIN extends JeeslSurveyDomain<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-				PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-				DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>,
-				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
-				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-				AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
-				ATT extends UtilsStatus<ATT,L,D>>
+public class EjbSurveyDomainFactory<L extends UtilsLang, D extends UtilsDescription,	
+				DOMAIN extends JeeslSurveyDomain<L,D,DOMAIN,?,DENTITY,?,?,?,?>,
+				DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDomainFactory.class);
 	

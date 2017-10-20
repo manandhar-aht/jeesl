@@ -88,23 +88,23 @@ public class SurveyAnalysisFactoryFactory<L extends UtilsLang, D extends UtilsDe
 		return new SurveyAnalysisFactoryFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cL,cD,cAtt);
 	}
 		
-	public EjbSurveyDomainFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ejbDomain(Class<DOMAIN> cDomain)
+	public EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> ejbDomain(Class<DOMAIN> cDomain)
 	{
-		return new EjbSurveyDomainFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cDomain);
+		return new EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY>(cDomain);
 	}
 	
-	public EjbSurveyAnalysisFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ejbAnalysis(Class<ANALYSIS> cAnalysis)
+	public EjbSurveyAnalysisFactory<L,D,TEMPLATE,ANALYSIS> ejbAnalysis(Class<ANALYSIS> cAnalysis)
 	{
-		return new EjbSurveyAnalysisFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cAnalysis);
+		return new EjbSurveyAnalysisFactory<L,D,TEMPLATE,ANALYSIS>(cAnalysis);
 	}
 	
-	public EjbSurveyAnalysisQuestionFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ejbAnalysisQuestion(Class<AQ> cAQ)
+	public EjbSurveyAnalysisQuestionFactory<L,D,QUESTION,ANALYSIS,AQ> ejbAnalysisQuestion(Class<AQ> cAQ)
 	{
-		return new EjbSurveyAnalysisQuestionFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cAQ);
+		return new EjbSurveyAnalysisQuestionFactory<L,D,QUESTION,ANALYSIS,AQ>(cAQ);
 	}
 	
-	public EjbSurveyAnalysisToolFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ejbAnalysisTool(Class<AT> cAt)
+	public EjbSurveyAnalysisToolFactory<L,D,AQ,AT,ATT> ejbAnalysisTool(Class<AT> cAt)
 	{
-		return new EjbSurveyAnalysisToolFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cAt);
+		return new EjbSurveyAnalysisToolFactory<L,D,AQ,AT,ATT>(cAt);
 	}
 }

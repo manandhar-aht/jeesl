@@ -24,7 +24,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Time Series",category="ts",subset="ts")
 public class TimeSeries implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslTimeSeries<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsDataSource,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,User,TsWorkspace,TsQaFlag>
+								JeeslTimeSeries<Lang,Description,TsScope,TsBridge,TsInterval>
 {
 	public static final long serialVersionUID=1;
 	

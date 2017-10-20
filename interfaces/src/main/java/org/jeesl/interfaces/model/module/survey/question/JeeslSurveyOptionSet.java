@@ -15,7 +15,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
 public interface JeeslSurveyOptionSet<L extends UtilsLang, D extends UtilsDescription,
-					TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,?,?,?,?,?,?,?,?>,
+					TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,?>,
 					OPTION extends JeeslSurveyOption<L,D>>
 			extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithCode,EjbWithPosition,EjbWithVisible,
 					EjbWithLang<L>

@@ -27,7 +27,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbSurveyAnalysisQuestionFactory<L extends UtilsLang, D extends UtilsDescription,
-				TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,ANALYSIS>,
+				TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,OPTIONS,ANALYSIS>,
 				QUESTION extends JeeslSurveyQuestion<L,D,?,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 				QE extends UtilsStatus<QE,L,D>,
 				SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,

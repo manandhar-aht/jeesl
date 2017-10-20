@@ -25,7 +25,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyCorrelation<L extends UtilsLang, D extends UtilsDescription,
 					
-					DATA extends JeeslSurveyData<L,D,?,?,?,?,?,?,?,?,?,?,?,?,?,?,DATA,?,?,?>
+					DATA extends JeeslSurveyData<L,D,?,?,?>
 					>
 			extends EjbWithId,EjbSaveable
 {

@@ -59,16 +59,16 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	protected JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
 	
 	protected final Class<CAT> cCategory;
-	protected Class<SCOPE> cScope;
-	protected Class<UNIT> cUnit;
-	protected Class<TS> cTs;
+	protected final Class<SCOPE> cScope;
+	protected final Class<UNIT> cUnit;
+	protected final Class<TS> cTs;
 	protected final Class<TRANSACTION> cTransaction;
 	protected final Class<SOURCE> cSource;
-	protected Class<BRIDGE> cBridge;
-	protected Class<EC> cEc;
-	protected Class<INT> cInt;
-	protected Class<DATA> cData;
-	protected Class<WS> cWs;
+	protected final Class<BRIDGE> cBridge;
+	protected final Class<EC> cEc;
+	protected final Class<INT> cInt;
+	protected final Class<DATA> cData;
+	protected final Class<WS> cWs;
 	
 	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
 	
@@ -83,27 +83,30 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 
 	protected SbMultiHandler<CAT> sbhCategory; public SbMultiHandler<CAT> getSbhCategory() {return sbhCategory;}
 	
-	public AbstractAdminTsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource)
+	public AbstractAdminTsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
 		super(cL,cD);
 		this.cCategory=cCategory;
-		this.cTransaction = cTransaction;
-		this.cSource = cSource;
-	}
-	
-	protected void initTsSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, Class<SCOPE> cScope, Class<UNIT> cUnit, Class<TS> cTs, Class<BRIDGE> cBridge, Class<EC> cEc, Class<INT> cInt, Class<DATA> cData, Class<WS> cWs)
-	{
-		super.initAdmin(langs,cL,cD,bMessage);
-		this.fTs=fTs;
 		this.cScope=cScope;
 		this.cUnit=cUnit;
 		this.cTs=cTs;
+		this.cTransaction = cTransaction;
+		this.cSource = cSource;
+		
 		this.cBridge=cBridge;
 		this.cEc=cEc;
 		this.cInt=cInt;
 
 		this.cData=cData;
 		this.cWs=cWs;
+	}
+	
+	protected void initTsSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
+	{
+		super.initAdmin(langs,cL,cD,bMessage);
+		this.fTs=fTs;
+
+
 		
 		comparatorScope = (new TsScopeComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>()).factory(TsScopeComparator.Type.position);
 		comparatorClass = (new TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>()).factory(TsClassComparator.Type.position);

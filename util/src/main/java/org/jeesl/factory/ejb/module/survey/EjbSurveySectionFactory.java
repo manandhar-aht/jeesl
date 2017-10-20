@@ -42,7 +42,7 @@ public class EjbSurveySectionFactory<L extends UtilsLang, D extends UtilsDescrip
 				TS extends UtilsStatus<TS,L,D>,
 				TC extends UtilsStatus<TC,L,D>,
 				SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>,
-				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
+				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 				QE extends UtilsStatus<QE,L,D>,
 				SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 				UNIT extends UtilsStatus<UNIT,L,D>,

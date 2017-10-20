@@ -9,7 +9,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyScore<L extends UtilsLang, D extends UtilsDescription,
 							SCHEME extends JeeslSurveyScheme<L,D,?,?>,
-							QUESTION extends JeeslSurveyQuestion<L,D,?,QUESTION,?,?,?,?,?,?>>
+							QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,?>>
 			extends EjbWithId,EjbSaveable
 {
 	QUESTION getQuestion();

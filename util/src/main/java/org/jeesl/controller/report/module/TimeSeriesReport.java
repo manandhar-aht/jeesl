@@ -69,7 +69,7 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 						BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 						EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 						INT extends UtilsStatus<INT,L,D>,
-						DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						DATA extends JeeslTsData<L,D,TS,TRANSACTION,SAMPLE,WS>,
 						SAMPLE extends JeeslTsSample<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 						USER extends EjbWithId, 
 						WS extends UtilsStatus<WS,L,D>,
@@ -103,7 +103,7 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 	
 	public Report build(WS workspace, SCOPE scope, INT interval, BRIDGE bridge, Date from, Date to) throws UtilsNotFoundException
 	{
-		TS ts = fTs.fTimeSeries(cTs, scope, interval, bridge);
+		TS ts = fTs.fTimeSeries(scope, interval, bridge);
 		List<DATA> tsData = fTs.fData(workspace,ts,from,to);
 		logger.info("Records: "+tsData.size());
 		Report xml = XmlReportFactory.build();

@@ -59,7 +59,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 											BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 											EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 											INT extends UtilsStatus<INT,L,D>,
-											DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+											DATA extends JeeslTsData<L,D,TS,TRANSACTION,SAMPLE,WS>,
 											SAMPLE extends JeeslTsSample<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>, 
 											USER extends EjbWithId, 
 											WS extends UtilsStatus<WS,L,D>,
@@ -271,7 +271,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 		try
 		{
 			BRIDGE bridge = fTs.fcBridge(cBridge, clas, entity);
-			TS ts = fTs.fcTimeSeries(cTs, scope, interval, bridge);
+			TS ts = fTs.fcTimeSeries(scope, interval, bridge);
 			logger.info("Using TS "+ts.toString());
 			
 			if(transaction.getSource()!=null){transaction.setSource(fTs.find(cSource,transaction.getSource()));}

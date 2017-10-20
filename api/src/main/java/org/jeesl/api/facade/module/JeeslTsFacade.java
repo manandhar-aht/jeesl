@@ -31,7 +31,7 @@ public interface JeeslTsFacade <L extends UtilsLang,
 								BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 								EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 								INT extends UtilsStatus<INT,L,D>,
-								DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+								DATA extends JeeslTsData<L,D,TS,TRANSACTION,SAMPLE,WS>,
 								SAMPLE extends JeeslTsSample<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>, 
 								USER extends EjbWithId, 
 								WS extends UtilsStatus<WS,L,D>,
@@ -44,8 +44,9 @@ public interface JeeslTsFacade <L extends UtilsLang,
 	<T extends EjbWithId> BRIDGE fBridge(Class<BRIDGE> cBridge, EC entityClass, T ejb) throws UtilsNotFoundException;
 	<T extends EjbWithId> BRIDGE fcBridge(Class<BRIDGE> cBridge, EC entityClass, T ejb) throws UtilsConstraintViolationException;
 	
-	TS fTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException;
-	TS fcTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException;
+	List<TS> fTimeSeries(SCOPE scope, INT interval, EC entityClass);
+	TS fTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException;
+	TS fcTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException;
 	
 	List<DATA> fData(TRANSACTION transaction);
 	List<DATA> fData(WS workspace, TS timeSeries);

@@ -45,7 +45,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 									BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 									EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 									INT extends UtilsStatus<INT,L,D>,
-									DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+									DATA extends JeeslTsData<L,D,TS,TRANSACTION,SAMPLE,WS>,
 									SAMPLE extends JeeslTsSample<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>, 
 									USER extends EjbWithId, 
 									WS extends UtilsStatus<WS,L,D>,
@@ -81,7 +81,8 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	protected Comparator<SCOPE> comparatorScope;
 	protected Comparator<EC> comparatorClass;
 
-	protected SbMultiHandler<CAT> sbhCategory; public SbMultiHandler<CAT> getSbhCategory() {return sbhCategory;}
+	protected final SbMultiHandler<WS> sbhWorkspace; public SbMultiHandler<WS> getSbhWorkspace() {return sbhWorkspace;}
+	protected final SbMultiHandler<CAT> sbhCategory; public SbMultiHandler<CAT> getSbhCategory() {return sbhCategory;}
 	
 	public AbstractAdminTsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
@@ -99,14 +100,15 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 
 		this.cData=cData;
 		this.cWs=cWs;
+		
+		sbhCategory = new SbMultiHandler<CAT>(cCategory,this);
+		sbhWorkspace = new SbMultiHandler<WS>(cWs,this);
 	}
 	
 	protected void initTsSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fTs=fTs;
-
-
 		
 		comparatorScope = (new TsScopeComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>()).factory(TsScopeComparator.Type.position);
 		comparatorClass = (new TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>()).factory(TsClassComparator.Type.position);
@@ -119,7 +121,9 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 		efBridge = ffTs.bridge();
 		
 		categories = fTs.allOrderedPositionVisible(cCategory);
-		sbhCategory = new SbMultiHandler<CAT>(cCategory,fTs.allOrderedPositionVisible(cCategory),this);sbhCategory.selectAll();
+		
+		sbhCategory.fillAndSelect(fTs.allOrderedPositionVisible(cCategory));
+		sbhWorkspace.fillAndSelect(fTs.allOrderedPositionVisible(cWs));
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException

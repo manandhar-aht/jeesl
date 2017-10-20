@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -44,7 +45,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 							BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 							EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 							INT extends UtilsStatus<INT,L,D>,
-							DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+							DATA extends JeeslTsData<L,D,TS,TRANSACTION,SAMPLE,WS>,
 							SAMPLE extends JeeslTsSample<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>, 
 							USER extends EjbWithId, 
 							WS extends UtilsStatus<WS,L,D>,
@@ -52,15 +53,17 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 					extends UtilsFacadeBean
 					implements JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>
 {
+	private final Class<TS> cTs;
 	private final Class<TRANSACTION> cTransaction;
 	private final Class<DATA> cData;
 	
 	private EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efTs;
 	private EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efBridge;
 	
-	public JeeslTsFacadeBean(EntityManager em, final Class<TRANSACTION> cTransaction, final Class<DATA> cData)
+	public JeeslTsFacadeBean(EntityManager em, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<DATA> cData)
 	{
 		super(em);
+		this.cTs=cTs;
 		this.cTransaction=cTransaction;
 		this.cData=cData;
 	}
@@ -102,9 +105,27 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cBridge.getName()+" found for entityClass/refId");}
 	}
 
-	@Override public TS fcTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException
+	@Override public List<TS> fTimeSeries(SCOPE scope, INT interval, EC entityClass)
 	{
-		try {return fTimeSeries(cTs, scope, interval, bridge);}
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<TS> cQ = cB.createQuery(cTs);
+		
+		Root<TS> ts = cQ.from(cTs);
+		Join<TS,BRIDGE> jBridge = ts.join(JeeslTimeSeries.Attributes.bridge.toString());
+		
+		predicates.add(cB.equal(ts.<SCOPE>get(JeeslTimeSeries.Attributes.scope.toString()), scope));
+		predicates.add(cB.equal(ts.<INT>get(JeeslTimeSeries.Attributes.interval.toString()), interval));
+		predicates.add(cB.equal(jBridge.<EC>get(JeeslTsBridge.Attributes.entityClass.toString()), entityClass));
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(ts);
+		return em.createQuery(cQ).getResultList();
+	}
+	
+	@Override public TS fcTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException
+	{
+		try {return fTimeSeries(scope, interval, bridge);}
 		catch (UtilsNotFoundException e)
 		{
 			if(efTs==null){efTs = new EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cTs);}
@@ -112,18 +133,18 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 			return this.persist(ts);
 		}
 	}
-	@Override public TS fTimeSeries(Class<TS> cTs, SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException
+	@Override public TS fTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<TS> cQ = cB.createQuery(cTs);
-		Root<TS> from = cQ.from(cTs);
+		Root<TS> ts = cQ.from(cTs);
 		
-		Path<SCOPE> pScope = from.get("scope");
-		Path<INT> pInterval = from.get("interval");
-		Path<BRIDGE> pBridge = from.get("bridge");
+		Path<SCOPE> pScope = ts.get(JeeslTimeSeries.Attributes.scope.toString());
+		Path<INT> pInterval = ts.get(JeeslTimeSeries.Attributes.interval.toString());
+		Path<BRIDGE> pBridge = ts.get(JeeslTimeSeries.Attributes.bridge.toString());
 		
-		CriteriaQuery<TS> select = cQ.select(from);
-		select.where(cB.equal(pScope, scope),cB.equal(pInterval, interval),cB.equal(pBridge, bridge));
+		CriteriaQuery<TS> select = cQ.select(ts);
+		select.where(cB.equal(pScope,scope),cB.equal(pInterval,interval),cB.equal(pBridge, bridge));
 		
 		try	{return em.createQuery(select).getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cTs.getName()+" found for scope/interval/bridge");}

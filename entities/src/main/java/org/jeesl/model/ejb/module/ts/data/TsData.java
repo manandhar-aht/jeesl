@@ -29,7 +29,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Data",category="ts",subset="ts",level=2)
 public class TsData implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslTsData<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsDataSource,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,User,TsWorkspace,TsQaFlag>
+								JeeslTsData<Lang,Description,TimeSeries,TsTransaction,TsSample,TsWorkspace>
 {
 	public static final long serialVersionUID=1;
 	

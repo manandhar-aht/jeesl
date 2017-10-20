@@ -83,7 +83,11 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 		refresh();
 	}
 	
-	
+	public void fillAndSelect(List<T> items)
+	{
+		this.list=items;
+		preSelect(items);
+	}
 	public void preSelect(List<T> items)
 	{
 		for(T t : items)

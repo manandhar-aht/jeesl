@@ -7,6 +7,7 @@ import org.jeesl.api.rest.survey.JeeslSurveyRestImport;
 import org.jeesl.api.rest.survey.JeeslSurveyXmlRest;
 import org.jeesl.controller.monitor.DataUpdateTracker;
 import org.jeesl.factory.builder.survey.SurveyCoreFactoryBuilder;
+import org.jeesl.factory.builder.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyFactory;
@@ -14,7 +15,6 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
-import org.jeesl.factory.factory.survey.SurveyTemplateFactoryFactory;
 import org.jeesl.factory.json.jeesl.JsonContainerFactory;
 import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
 import org.jeesl.factory.json.system.survey.JsonTemplateFactory;
@@ -174,7 +174,7 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 		
 		xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(SurveyQuery.get(SurveyQuery.Key.surveyAnswers));
 		
-		SurveyTemplateFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> ffTemplate = SurveyTemplateFactoryFactory.factory(cL,cD,cSurvey,cSS,cScheme,cTEMPLATE,cVersion,cSection,cQuestion,cScore,cUNIT,cAnswer,cMatrix,cData,cOptions,cOption);
+		SurveyTemplateFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> ffTemplate = SurveyTemplateFactoryBuilder.factory(cL,cD,cSurvey,cSS,cScheme,cTEMPLATE,cVersion,cSection,cQuestion,cScore,cUNIT,cAnswer,cMatrix,cData,cOptions,cOption);
 		SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffSurvey = SurveyCoreFactoryBuilder.factory(cL,cD,cSurvey,cSS,cScheme,cTEMPLATE,cVersion,cSection,cQuestion,cScore,cUNIT,cAnswer,cMatrix,cData,cOptions,cOption);
 		
 		efTemlate = ffTemplate.template();

@@ -1,4 +1,4 @@
-package org.jeesl.factory.factory.survey;
+package org.jeesl.factory.builder.survey;
 
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
@@ -27,7 +27,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class SurveyTemplateFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
+public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 				SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 				SS extends UtilsStatus<SS,L,D>,
 				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
@@ -54,7 +54,7 @@ public class SurveyTemplateFactoryFactory<L extends UtilsLang, D extends UtilsDe
 				AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,?>
 				>
 {
-	final static Logger logger = LoggerFactory.getLogger(SurveyTemplateFactoryFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(SurveyTemplateFactoryBuilder.class);
 	
 	private final Class<L> cL;
 	private final Class<D> cD;
@@ -73,7 +73,7 @@ public class SurveyTemplateFactoryFactory<L extends UtilsLang, D extends UtilsDe
 	private final Class<OPTIONS> cOptions; public Class<OPTIONS> getOptionSetClass() {return cOptions;}
 	private final Class<OPTION> cOption; public Class<OPTION> getOptionClass() {return cOption;}
 
-	public SurveyTemplateFactoryFactory(final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
+	public SurveyTemplateFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
 	{
 		this.cL = cL;
 		this.cD = cD;
@@ -119,10 +119,10 @@ public class SurveyTemplateFactoryFactory<L extends UtilsLang, D extends UtilsDe
 					AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 					AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,?>
 					>
-		SurveyTemplateFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT>
+		SurveyTemplateFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT>
 		factory(final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
 	{
-		return new SurveyTemplateFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT>(cL,cD,cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
+		return new SurveyTemplateFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT>(cL,cD,cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
 	}
 	
 	public EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> template()

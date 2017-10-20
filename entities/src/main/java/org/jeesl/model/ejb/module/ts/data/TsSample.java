@@ -8,18 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
-import org.jeesl.model.ejb.module.ts.core.TimeSeries;
-import org.jeesl.model.ejb.module.ts.core.TsBridge;
-import org.jeesl.model.ejb.module.ts.core.TsCategory;
-import org.jeesl.model.ejb.module.ts.core.TsEntityClass;
-import org.jeesl.model.ejb.module.ts.core.TsInterval;
-import org.jeesl.model.ejb.module.ts.core.TsScope;
-import org.jeesl.model.ejb.module.ts.core.TsUnit;
-import org.jeesl.model.ejb.module.ts.core.TsWorkspace;
-import org.jeesl.model.ejb.module.ts.qa.TsQaFlag;
-import org.jeesl.model.ejb.system.status.Description;
-import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.user.User;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -27,7 +15,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Transaction",category="ts",subset="ts",level=2)
 public class TsSample implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslTsSample<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsDataSource,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,User,TsWorkspace,TsQaFlag>
+								JeeslTsSample
 {
 	public static final long serialVersionUID=1;
 	

@@ -21,10 +21,10 @@ import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.factory.builder.survey.SurveyCoreFactoryBuilder;
+import org.jeesl.factory.builder.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
-import org.jeesl.factory.factory.survey.SurveyTemplateFactoryFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.txt.system.status.TxtStatusFactory;
@@ -108,7 +108,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	private final Class<CORRELATION> cCorrelation;
 	private final Class<AQ> cAq;
 	
-	private final SurveyTemplateFactoryFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> ffTemplate;
+	private final SurveyTemplateFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> ffTemplate;
 	private final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffSurvey;
 	
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efAnswer;
@@ -130,7 +130,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		this.cCorrelation=cCorrelation;
 		this.cAq=cAq;
 		
-		ffTemplate = SurveyTemplateFactoryFactory.factory(cL,cD,cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
+		ffTemplate = SurveyTemplateFactoryBuilder.factory(cL,cD,cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
 		ffSurvey = SurveyCoreFactoryBuilder.factory(cL,cD,cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
 		
 		eTemplate = ffTemplate.template();

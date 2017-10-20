@@ -10,7 +10,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 public interface JeeslTsData <L extends UtilsLang, D extends UtilsDescription,
 								TS extends JeeslTimeSeries<L,D,?,?,?>,
 								TRANSACTION extends JeeslTsTransaction<L,D,?,?,?,TS,TRANSACTION,?,?,?,?,?,SAMPLE,?,WS,?>,
-								SAMPLE extends JeeslTsSample<L,D,?,?,?,TS,TRANSACTION,?,?,?,?,?,SAMPLE,?,WS,?>, 
+								SAMPLE extends JeeslTsSample, 
 								WS extends UtilsStatus<WS,L,D>>
 		extends EjbWithId,EjbWithRecord,EjbSaveable
 {

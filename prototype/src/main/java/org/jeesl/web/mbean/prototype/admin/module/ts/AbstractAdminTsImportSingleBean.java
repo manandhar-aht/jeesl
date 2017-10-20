@@ -57,7 +57,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 											TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 											SOURCE extends EjbWithLangDescription<L,D>, 
 											BRIDGE extends JeeslTsBridge<EC>,
-											EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+											EC extends JeeslTsEntityClass<L,D,CAT>,
 											INT extends UtilsStatus<INT,L,D>,
 											DATA extends JeeslTsData<L,D,TS,TRANSACTION,SAMPLE,WS>,
 											SAMPLE extends JeeslTsSample, 

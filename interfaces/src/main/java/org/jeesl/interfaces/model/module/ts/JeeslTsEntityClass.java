@@ -17,20 +17,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslTsEntityClass <L extends UtilsLang,
 										D extends UtilsDescription,
-										CAT extends UtilsStatus<CAT,L,D>,
-										SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
-										UNIT extends UtilsStatus<UNIT,L,D>,
-										TS extends JeeslTimeSeries<L,D,SCOPE,BRIDGE,INT>,
-										TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
-										SOURCE extends EjbWithLangDescription<L,D>,
-										BRIDGE extends JeeslTsBridge<EC>,
-										EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
-										INT extends UtilsStatus<INT,L,D>,
-										DATA extends JeeslTsData<L,D,TS,TRANSACTION,SAMPLE,WS>,
-										SAMPLE extends JeeslTsSample,
-										USER extends EjbWithId, 
-										WS extends UtilsStatus<WS,L,D>,
-										QAF extends UtilsStatus<QAF,L,D>>
+										CAT extends UtilsStatus<CAT,L,D>
+										>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,
 				EjbWithPositionVisibleParent,EjbWithParentAttributeResolver,EjbWithPositionParent,

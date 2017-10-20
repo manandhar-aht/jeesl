@@ -26,7 +26,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Class",category="ts",subset="ts",level=4)
 public class TsEntityClass implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslTsEntityClass<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsDataSource,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,User,TsWorkspace,TsQaFlag>
+								JeeslTsEntityClass<Lang,Description,TsCategory>
 {
 	public static enum Code {welcome}
 	public static final long serialVersionUID=1;

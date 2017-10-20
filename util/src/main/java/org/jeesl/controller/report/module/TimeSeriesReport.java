@@ -61,7 +61,7 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 						TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 						
 						CAT extends UtilsStatus<CAT,L,D>,
-						SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
 						UNIT extends UtilsStatus<UNIT,L,D>,
 						TS extends JeeslTimeSeries<L,D,SCOPE,BRIDGE,INT>,
 						TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,

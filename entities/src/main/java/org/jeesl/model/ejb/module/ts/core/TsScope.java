@@ -34,7 +34,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Scope",category="ts",subset="ts")
 public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslTsScope<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsDataSource,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,User,TsWorkspace,TsQaFlag>
+								JeeslTsScope<Lang,Description,TsCategory,TsUnit,TsEntityClass,TsInterval>
 {
 	public static final long serialVersionUID=1;
 	

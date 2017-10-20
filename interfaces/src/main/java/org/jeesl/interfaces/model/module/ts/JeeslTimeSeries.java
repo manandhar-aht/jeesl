@@ -6,7 +6,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslTimeSeries <L extends UtilsLang, D extends UtilsDescription,
-									SCOPE extends JeeslTsScope<L,D,?,SCOPE,?,?,?,?,BRIDGE,?,INT,?,?,?,?,?>,
+									SCOPE extends JeeslTsScope<L,D,?,?,?,INT>,
 									BRIDGE extends JeeslTsBridge<?>,
 									INT extends UtilsStatus<INT,L,D>>
 		extends EjbWithId

@@ -8,6 +8,4 @@ public interface JeeslTsSample
 		extends EjbWithId,EjbSaveable,EjbWithRecord
 {
 	public enum Attributes{record}
-	
-
 }

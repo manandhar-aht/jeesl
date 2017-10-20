@@ -1,4 +1,4 @@
-package org.jeesl.factory.factory.survey;
+package org.jeesl.factory.builder.survey;
 
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisQuestionFactory;
@@ -30,7 +30,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class SurveyAnalysisFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
+public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 				TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,OPTIONS,ANALYSIS>,
 				QUESTION extends JeeslSurveyQuestion<L,D,?,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 				QE extends UtilsStatus<QE,L,D>,
@@ -49,14 +49,14 @@ public class SurveyAnalysisFactoryFactory<L extends UtilsLang, D extends UtilsDe
 				AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 				ATT extends UtilsStatus<ATT,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(SurveyAnalysisFactoryFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(SurveyAnalysisFactoryBuilder.class);
 	
 	private final Class<L> cL;
 	private final Class<D> cD;
 	
 	private final Class<ATT> cAtt; public Class<ATT> getAttClass() {return cAtt;}
 
-	public SurveyAnalysisFactoryFactory(final Class<L> cL, final Class<D> cD, final Class<ATT> cAtt)
+	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ATT> cAtt)
 	{
 		this.cL = cL;
 		this.cD = cD;
@@ -82,10 +82,10 @@ public class SurveyAnalysisFactoryFactory<L extends UtilsLang, D extends UtilsDe
 					AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 					AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 					ATT extends UtilsStatus<ATT,L,D>>
-		SurveyAnalysisFactoryFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
+		SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
 		factory(final Class<L> cL, final Class<D> cD, final Class<ATT> cAtt)
 	{
-		return new SurveyAnalysisFactoryFactory<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cL,cD,cAtt);
+		return new SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cL,cD,cAtt);
 	}
 		
 	public EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> ejbDomain(Class<DOMAIN> cDomain)

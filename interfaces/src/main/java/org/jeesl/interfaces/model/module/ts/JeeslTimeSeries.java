@@ -7,7 +7,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslTimeSeries <L extends UtilsLang, D extends UtilsDescription,
 									SCOPE extends JeeslTsScope<L,D,?,SCOPE,?,?,?,?,BRIDGE,?,INT,?,?,?,?,?>,
-									BRIDGE extends JeeslTsBridge<L,D,?,SCOPE,?,?,?,?,BRIDGE,?,INT,?,?,?,?,?>,
+									BRIDGE extends JeeslTsBridge<?>,
 									INT extends UtilsStatus<INT,L,D>>
 		extends EjbWithId
 {

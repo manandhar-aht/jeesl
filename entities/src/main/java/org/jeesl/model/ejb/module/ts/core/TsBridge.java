@@ -24,7 +24,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Bridge",category="ts",subset="ts",level=2)
 public class TsBridge implements Serializable,EjbRemoveable,EjbPersistable,
-		JeeslTsBridge<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsDataSource,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,User,TsWorkspace,TsQaFlag>
+		JeeslTsBridge<TsEntityClass>
 {
 	public static final long serialVersionUID=1;
 	

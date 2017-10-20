@@ -9,7 +9,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface JeeslSurveyTemplateVersion<L extends UtilsLang, D extends UtilsDescription,
-					TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,?>>
+											TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,?>>
 			extends EjbWithId,EjbWithRecord,EjbSaveable,EjbWithLang<L>,EjbWithDescription<D>
 {
 	enum Attributes {template,record}

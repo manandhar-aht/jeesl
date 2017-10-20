@@ -3,19 +3,8 @@ package org.jeesl.interfaces.model.module.survey.core;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPath;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -33,10 +22,9 @@ public interface JeeslSurveyTemplate<L extends UtilsLang, D extends UtilsDescrip
 										VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 										TS extends UtilsStatus<TS,L,D>,
 										TC extends UtilsStatus<TC,L,D>,
-										SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,?,?,?,?,?,?,?,OPTIONS,?,?>,
+										SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,?>,
 										OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,?>,
-										ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>
-										>
+										ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>>
 			extends EjbWithId,EjbWithRecord,EjbWithName,EjbWithRemark,
 						UtilsWithStatus<L,D,TS>,
 						UtilsWithCategory<L,D,TC>

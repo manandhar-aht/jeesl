@@ -63,9 +63,9 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected EC opClass;public EC getOpClass() {return opClass;}public void setOpClass(EC opClass) {this.opClass = opClass;}
 	protected EC tbClass;public EC getTbClass() {return tbClass;}public void setTbClass(EC tbClass) {this.tbClass = tbClass;}
 	
-	public AbstractAdminTsScopeBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsScopeBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
-		super(fbTs,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
+		super(fbTs,cBridge,cEc,cInt,cData,cWs);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
@@ -77,7 +77,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	
 	private void initLists()
 	{
-		units = fTs.all(cUnit);
+		units = fTs.all(fbTs.getClassUnit());
 		opIntervals = fTs.all(cInt);
 		opClasses = fTs.all(cEc);
 	}
@@ -114,7 +114,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(scope));
-		scope.setUnit(fTs.find(cUnit, scope.getUnit()));
+		scope.setUnit(fTs.find(fbTs.getClassUnit(), scope.getUnit()));
 		scope.setCategory(fTs.find(fbTs.getClassCategory(), scope.getCategory()));
 		scope = fTs.save(scope);
 		reloadScopes();

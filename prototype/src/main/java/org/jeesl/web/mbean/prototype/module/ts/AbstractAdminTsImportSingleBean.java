@@ -97,9 +97,9 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 	
 	private Comparator<Data> cTsData;
 	
-	public AbstractAdminTsImportSingleBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsImportSingleBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
-		super(fbTs,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
+		super(fbTs,cBridge,cEc,cInt,cData,cWs);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver)
@@ -108,7 +108,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 		this.xlsResolver=xlsResolver;
 		
 		cTsData = TsDataComparator.factory(TsDataComparator.Type.date);
-		sources = fTs.all(cSource);
+		sources = fTs.all(fbTs.getClassSource());
 	}
 	
 	protected void initLists()
@@ -260,7 +260,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 			TS ts = fTs.fcTimeSeries(scope,interval,bridge);
 			logger.info("Using TS "+ts.toString());
 			
-			if(transaction.getSource()!=null){transaction.setSource(fTs.find(cSource,transaction.getSource()));}
+			if(transaction.getSource()!=null){transaction.setSource(fTs.find(fbTs.getClassSource(),transaction.getSource()));}
 			transaction.setRecord(new Date());
 			transaction = fTs.save(transaction);
 			

@@ -106,9 +106,9 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
         
         private List<DATA> dataList; public List<DATA> getDataList() {return dataList;} public void setDataList(List<DATA> dataList) {this.dataList = dataList;}
 	
-	public AbstractAdminTsImportMultiBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsImportMultiBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
-		super(fbTs,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
+		super(fbTs,cBridge,cEc,cInt,cData,cWs);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver)
@@ -117,7 +117,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 		this.xlsResolver=xlsResolver;
 		
 		cTsData = TsDataComparator.factory(TsDataComparator.Type.date);
-		sources = fTs.all(cSource);
+		sources = fTs.all(fbTs.getClassSource());
 	}
 	
 	protected void initLists()
@@ -275,7 +275,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 			TS ts = fTs.fcTimeSeries(scope, interval, bridge);
 			logger.info("Using TS "+ts.toString());
 			
-			if(transaction.getSource()!=null){transaction.setSource(fTs.find(cSource,transaction.getSource()));}
+			if(transaction.getSource()!=null){transaction.setSource(fTs.find(fbTs.getClassSource(),transaction.getSource()));}
 			transaction.setRecord(new Date());
 			transaction = fTs.save(transaction);
 			
@@ -303,7 +303,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
             try
             {
                     
-                    if(transaction.getSource()!=null){transaction.setSource(fTs.find(cSource,transaction.getSource()));}
+                    if(transaction.getSource()!=null){transaction.setSource(fTs.find(fbTs.getClassSource(),transaction.getSource()));}
                     transaction.setRecord(new Date());
                     transaction = fTs.save(transaction);
 

@@ -117,7 +117,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efOption;
 	protected final EjbSurveySchemeFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efScheme;
 	protected final EjbSurveyScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efScore;
-	protected final EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> efTemplate;
+	protected final EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION> efTemplate;
 	
 	protected final SbSingleHandler<TC> sbhCategory; public SbSingleHandler<TC> getSbhCategory() {return sbhCategory;}
 	protected final SbSingleHandler<SURVEY> sbhSurvey; public SbSingleHandler<SURVEY> getSbhSurvey() {return sbhSurvey;}
@@ -155,15 +155,17 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		ffSurvey = SurveyCoreFactoryBuilder.factory(cL,cD,cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
 		ffAnalysis = SurveyAnalysisFactoryBuilder.factory(cL,cD,cAtt);
 		
+		efTemplate = ffTemplate.template();
+		efSection = ffTemplate.section();
+		
 		efSurvey = ffSurvey.survey();
 		efVersion = ffSurvey.version();
-		efSection = ffSurvey.section();
 		efQuestion = ffSurvey.question();
 		efScore = ffSurvey.score();
 		efOptionSet = ffSurvey.optionSet();
 		efOption = ffSurvey.option();
 		efScheme = ffSurvey.scheme();
-		efTemplate = ffTemplate.template();
+		
 		
 		sbhCategory = new SbSingleHandler<TC>(cTc,this);
 		sbhSurvey = new SbSingleHandler<SURVEY>(cSurvey,this);

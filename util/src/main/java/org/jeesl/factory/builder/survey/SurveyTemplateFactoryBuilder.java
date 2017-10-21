@@ -1,5 +1,6 @@
 package org.jeesl.factory.builder.survey;
 
+import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
@@ -125,8 +126,13 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		return new SurveyTemplateFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT>(cL,cD,cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
 	}
 	
-	public EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> template()
+	public EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION> template()
 	{
-		return new EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT>(cTemplate);
+		return new EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION>(cTemplate);
+	}
+	
+	public EjbSurveySectionFactory<L,D,TEMPLATE,SECTION> section()
+	{
+		return new EjbSurveySectionFactory<L,D,TEMPLATE,SECTION>(cSection);
 	}
 }

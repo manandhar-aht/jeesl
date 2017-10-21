@@ -131,7 +131,7 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 	private XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> xfSurvey;
 	private XmlAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> xfAnswer;
 	
-	private EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> efTemlate;
+	private EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION> efTemlate;
 	private EjbSurveySectionFactory<L,D,TEMPLATE,SECTION> efSection;
 	private EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION> efQuestion;
 	private EjbSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efSurvey;
@@ -178,7 +178,7 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 		SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffSurvey = SurveyCoreFactoryBuilder.factory(cL,cD,cSurvey,cSS,cScheme,cTEMPLATE,cVersion,cSection,cQuestion,cScore,cUNIT,cAnswer,cMatrix,cData,cOptions,cOption);
 		
 		efTemlate = ffTemplate.template();
-		efSection = ffSurvey.section();
+		efSection = ffTemplate.section();
 		efQuestion = ffSurvey.question();
 		efSurvey = ffSurvey.survey();
 		efData = ffSurvey.data();

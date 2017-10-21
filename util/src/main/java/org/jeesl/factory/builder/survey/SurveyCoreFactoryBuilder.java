@@ -165,10 +165,7 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		return new EjbSurveyTemplateVersionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cVersion);
 	}
 	
-	public EjbSurveySectionFactory<L,D,TEMPLATE,SECTION> section()
-	{
-		return new EjbSurveySectionFactory<L,D,TEMPLATE,SECTION>(cSection);
-	}
+
 	
 	public EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION> question()
 	{

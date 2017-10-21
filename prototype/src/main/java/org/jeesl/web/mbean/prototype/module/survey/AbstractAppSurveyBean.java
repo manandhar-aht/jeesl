@@ -11,6 +11,7 @@ import org.jeesl.api.facade.module.JeeslSurveyFacade;
 import org.jeesl.controller.monitor.ProcessingTimeTracker;
 import org.jeesl.factory.builder.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.survey.SurveyCoreFactoryBuilder;
+import org.jeesl.factory.builder.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
@@ -87,12 +88,12 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	protected Map<QUESTION,List<OPTION>> matrixCols; @Override public Map<QUESTION,List<OPTION>> getMatrixCols() {return matrixCols;}
 	protected Map<QUESTION,List<OPTION>> matrixCells; public Map<QUESTION,List<OPTION>> getMatrixCells() {return matrixCells;}
 
-	public AbstractAppSurveyBean(SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffSurvey, SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffAnalysis)
+	public AbstractAppSurveyBean(SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffSurvey, SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffAnalysis, SurveyTemplateFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> fbTemplate)
 	{
 		this.ffSurvey=ffSurvey;
 		this.ffAnalysis=ffAnalysis;
 		efOption = ffSurvey.option();
-		efSection = ffSurvey.section();
+		efSection = fbTemplate.section();
 		
 		mapSection = new HashMap<TEMPLATE,List<SECTION>>();
 		mapQuestion = new HashMap<SECTION,List<QUESTION>>();

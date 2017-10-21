@@ -112,7 +112,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	private final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffSurvey;
 	
 	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efAnswer;
-	private EjbSurveyTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> eTemplate;
+	private EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION> eTemplate;
 	
 	public JeeslSurveyFacadeBean(EntityManager em, Class<L> cL, Class<D> cD, Class<SURVEY> cSurvey, final Class<SS> cSs, Class<SCHEME> cScheme, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<CORRELATION> cCorrelation, final Class<AQ> cAq, final Class<ATT> cAtt)
 	{

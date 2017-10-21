@@ -46,4 +46,7 @@ public interface JeeslSurveySection<L extends UtilsLang, D extends UtilsDescript
 	
 	Double getScoreNormalize();
 	void setScoreNormalize(Double scoreNormalize);
+	
+	Boolean getRendered();
+	void setRendered(Boolean rendered);
 }

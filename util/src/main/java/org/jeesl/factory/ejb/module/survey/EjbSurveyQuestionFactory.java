@@ -34,33 +34,26 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.survey.Question;
 
 public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescription,
-				SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
-				SS extends UtilsStatus<SS,L,D>,
-				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
-				TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,ANALYSIS>,
-				VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
-				TS extends UtilsStatus<TS,L,D>,
-				TC extends UtilsStatus<TC,L,D>,
-				SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>, QE extends UtilsStatus<QE,L,D>,
-				SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
+				SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
+				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+				QE extends UtilsStatus<QE,L,D>,
+				SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
 				UNIT extends UtilsStatus<UNIT,L,D>,
 				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
 				MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-				DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
-				OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-				OPTION extends JeeslSurveyOption<L,D>,
-				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>, DOMAIN extends JeeslSurveyDomain<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>, PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>, DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>, ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>, AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>, AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>, ATT extends UtilsStatus<ATT,L,D>>
+				DATA extends JeeslSurveyData<L,D,?,ANSWER,?>,
+				OPTIONS extends JeeslSurveyOptionSet<L,D,?,OPTION>,
+				OPTION extends JeeslSurveyOption<L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyQuestionFactory.class);
 	
 	final Class<QUESTION> cQuestion;
     
-	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey;
+	private JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey;
 	
 	public EjbSurveyQuestionFactory(final Class<QUESTION> cQuestion){this(null,cQuestion);}
 	
-	public EjbSurveyQuestionFactory(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey, final Class<QUESTION> cQuestion)
+	public EjbSurveyQuestionFactory(JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey, final Class<QUESTION> cQuestion)
 	{
 		this.fSurvey = fSurvey;
         this.cQuestion = cQuestion;
@@ -81,20 +74,15 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 	
 	public QUESTION build(SECTION section,UNIT unit, String code,int position,String topic,String question,String remark)
 	{
-		QUESTION ejb = null;
-		try
-		{
-			ejb = cQuestion.newInstance();
-			ejb.setSection(section);
-			ejb.setUnit(unit);
-			ejb.setCode(code);
-			ejb.setPosition(position);
-			ejb.setTopic(topic);
-			ejb.setQuestion(question);
-			ejb.setRemark(remark);
-		}
-		catch (InstantiationException e) {e.printStackTrace();}
-		catch (IllegalAccessException e) {e.printStackTrace();}
+		QUESTION ejb = id(0);
+		ejb.setRendered(true);
+		ejb.setSection(section);
+		ejb.setUnit(unit);
+		ejb.setCode(code);
+		ejb.setPosition(position);
+		ejb.setTopic(topic);
+		ejb.setQuestion(question);
+		ejb.setRemark(remark);
 		
 		return ejb;
 	}
@@ -124,7 +112,7 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 		}
 	}
 	
-	public Map<SECTION,List<QUESTION>> loadMap(JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey)
+	public Map<SECTION,List<QUESTION>> loadMap(JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey)
 	{
 		Map<SECTION,List<QUESTION>> map = new HashMap<SECTION,List<QUESTION>>();
 		for(QUESTION q : fSurvey.allOrderedPosition(cQuestion))

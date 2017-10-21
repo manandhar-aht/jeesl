@@ -91,4 +91,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 	
 	List<SCORE> getScores();
 	void setScores(List<SCORE> scores);
+	
+	Boolean getRendered();
+	void setRendered(Boolean rendered);
 }

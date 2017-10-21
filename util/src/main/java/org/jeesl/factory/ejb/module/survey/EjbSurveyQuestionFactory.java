@@ -35,13 +35,9 @@ import net.sf.ahtutils.xml.survey.Question;
 
 public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescription,
 				SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
-				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,?,UNIT,OPTIONS,OPTION,?>,
 				QE extends UtilsStatus<QE,L,D>,
-				SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
 				UNIT extends UtilsStatus<UNIT,L,D>,
-				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-				MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-				DATA extends JeeslSurveyData<L,D,?,ANSWER,?>,
 				OPTIONS extends JeeslSurveyOptionSet<L,D,?,OPTION>,
 				OPTION extends JeeslSurveyOption<L,D>>
 {
@@ -49,11 +45,11 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 	
 	final Class<QUESTION> cQuestion;
     
-	private JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey;
+	private JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,?,UNIT,?,?,?,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey;
 	
 	public EjbSurveyQuestionFactory(final Class<QUESTION> cQuestion){this(null,cQuestion);}
 	
-	public EjbSurveyQuestionFactory(JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey, final Class<QUESTION> cQuestion)
+	public EjbSurveyQuestionFactory(JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,?,UNIT,?,?,?,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey, final Class<QUESTION> cQuestion)
 	{
 		this.fSurvey = fSurvey;
         this.cQuestion = cQuestion;
@@ -112,7 +108,7 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 		}
 	}
 	
-	public Map<SECTION,List<QUESTION>> loadMap(JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey)
+	public Map<SECTION,List<QUESTION>> loadMap(JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,?,UNIT,?,?,?,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey)
 	{
 		Map<SECTION,List<QUESTION>> map = new HashMap<SECTION,List<QUESTION>>();
 		for(QUESTION q : fSurvey.allOrderedPosition(cQuestion))

@@ -55,10 +55,10 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 	protected final SbSingleHandler<EC> sbhClass; public SbSingleHandler<EC> getSbhClass() {return sbhClass;}
 	protected final SbSingleHandler<INT> sbhInterval; public SbSingleHandler<INT> getSbhInterval() {return sbhInterval;}
 	
-	public AbstractAdminTsViewerBean(TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsViewerBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
-		super(cL,cD,cCategory,cScope,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
-		sbhScope = new SbSingleHandler<SCOPE>(cScope,this);
+		super(fbTs,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
+		sbhScope = new SbSingleHandler<SCOPE>(fbTs.getClassScope(),this);
 		sbhClass = new SbSingleHandler<EC>(cEc,this);
 		sbhInterval = new SbSingleHandler<INT>(cInt,this);
 		
@@ -74,11 +74,11 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		super.toggled(c);
-		if(cCategory.isAssignableFrom(c))
+		if(fbTs.getClassCategory().isAssignableFrom(c))
 		{
-			sbhScope.setList(fTs.findScopes(cScope, cCategory, sbhCategory.getSelected(), uiShowInvisible));
+			sbhScope.setList(fTs.findScopes(fbTs.getClassScope(), fbTs.getClassCategory(), sbhCategory.getSelected(), uiShowInvisible));
 			Collections.sort(sbhScope.getList(), comparatorScope);
-			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cScope,sbhScope.getList()));};
+			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassScope(),sbhScope.getList()));};
 			sbhScope.silentCallback();
 		}
 	}
@@ -86,7 +86,7 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 	@Override
 	public void selectSbSingle(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
 	{
-		if(cScope.isAssignableFrom(item.getClass()))
+		if(fbTs.getClassScope().isAssignableFrom(item.getClass()))
 		{
 			sbhClass.clear();sbhInterval.clear();
 			

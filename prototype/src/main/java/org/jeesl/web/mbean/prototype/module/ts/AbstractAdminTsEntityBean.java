@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.factory.builder.TsFactoryBuilder;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -53,9 +54,9 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang, D extends UtilsDesc
 	
 	protected EC entity; public void setEntity(EC entityClass) {this.entity = entityClass;} public EC getEntity() {return entity;}
 
-	public AbstractAdminTsEntityBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsEntityBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
-		super(cL,cD,cCategory,cScope,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
+		super(fbTs,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
@@ -67,12 +68,12 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang, D extends UtilsDesc
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		super.toggled(c);
-		if(cCategory.isAssignableFrom(c)){reloadClasses();cancel();}
+		if(fbTs.getClassCategory().isAssignableFrom(c)){reloadClasses();cancel();}
 	}
 	
 	public void reloadClasses()
 	{
-		classes = fTs.findClasses(cEc, cCategory, sbhCategory.getSelected(), uiShowInvisible);
+		classes = fTs.findClasses(cEc, fbTs.getClassCategory(), sbhCategory.getSelected(), uiShowInvisible);
 		logger.info(AbstractLogMessage.reloaded(cEc, classes));
 		Collections.sort(classes, comparatorClass);
 	}
@@ -96,7 +97,7 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang, D extends UtilsDesc
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(entity));
-		entity.setCategory(fTs.find(cCategory, entity.getCategory()));
+		entity.setCategory(fTs.find(fbTs.getClassCategory(), entity.getCategory()));
 		entity = fTs.save(entity);
 		reloadClasses();
 		updatePerformed();

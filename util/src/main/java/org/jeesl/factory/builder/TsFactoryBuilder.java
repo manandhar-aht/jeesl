@@ -40,15 +40,17 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(TsFactoryBuilder.class);
 	
-	private final Class<SCOPE> cScope;
+	private final Class<CAT> cCategory; public Class<CAT> getClassCategory() {return cCategory;}
+	private final Class<SCOPE> cScope; public Class<SCOPE> getClassScope() {return cScope;}
 	private final Class<TRANSACTION> cTransaction;
 	private final Class<DATA> cData;
 	private final Class<BRIDGE> cBridge;
 	private final Class<EC> cEc;
     
-	public TsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SCOPE> cScope, final Class<TRANSACTION> cTransaction, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<DATA> cData)
+	public TsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<TRANSACTION> cTransaction, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<DATA> cData)
 	{
 		super(cL,cD);
+		this.cCategory=cCategory;
 		this.cScope=cScope;
         this.cTransaction=cTransaction;
         this.cBridge=cBridge;
@@ -69,9 +71,9 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 					USER extends EjbWithId, 
 					WS extends UtilsStatus<WS,L,D>,
 					QAF extends UtilsStatus<QAF,L,D>>
-	TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> factory(final Class<L> cL, final Class<D> cD,final Class<SCOPE> cScope, final Class<TRANSACTION> cTransaction, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<DATA> cData)
+	TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> factory(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<TRANSACTION> cTransaction, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<DATA> cData)
 	{
-		return new TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cL,cD,cScope,cTransaction,cBridge,cEc,cData);
+		return new TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cL,cD,cCategory,cScope,cTransaction,cBridge,cEc,cData);
 	}
 	
 	public EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> scope()

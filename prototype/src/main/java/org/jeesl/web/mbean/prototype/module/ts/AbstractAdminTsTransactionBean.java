@@ -8,6 +8,7 @@ import java.util.Map;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.api.handler.sb.SbDateIntervalSelection;
 import org.jeesl.controller.handler.sb.SbDateHandler;
+import org.jeesl.factory.builder.TsFactoryBuilder;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -56,9 +57,9 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 
-	public AbstractAdminTsTransactionBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsTransactionBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
-		super(cL,cD,cCategory,cScope,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
+		super(fbTs,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
 		
 		sbDateHandler = new SbDateHandler(this);
 		sbDateHandler.initMonthsToNow(2);

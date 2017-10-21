@@ -18,6 +18,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.jxpath.JXPathContext;
 import org.jeesl.api.controller.ImportStrategy;
 import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.factory.builder.TsFactoryBuilder;
 import org.jeesl.factory.xml.module.ts.XmlDataFactory;
 import org.jeesl.factory.xml.module.ts.XmlTimeSeriesFactory;
 import org.jeesl.factory.xml.system.util.mc.XmlMcDataSetFactory;
@@ -105,9 +106,9 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
         
         private List<DATA> dataList; public List<DATA> getDataList() {return dataList;} public void setDataList(List<DATA> dataList) {this.dataList = dataList;}
 	
-	public AbstractAdminTsImportMultiBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsImportMultiBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
-		super(cL,cD,cCategory,cScope,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
+		super(fbTs,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver)
@@ -133,9 +134,9 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 		interval=null;
 		if(category!=null)
 		{
-			category = fTs.find(cCategory, category);
+			category = fTs.find(fbTs.getClassCategory(), category);
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(category));}
-			scopes = fTs.allOrderedPositionVisibleParent(cScope, category);
+			scopes = fTs.allOrderedPositionVisibleParent(fbTs.getClassScope(), category);
 			if(scopes.size()>0){scope=scopes.get(0);}
 			changeScope();
 		}
@@ -147,7 +148,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 		interval=null;
 		if(scope!=null)
 		{
-			scope = fTs.find(cScope, scope);
+			scope = fTs.find(fbTs.getClassScope(), scope);
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(scope));}
 			
 			classes = scope.getClasses();

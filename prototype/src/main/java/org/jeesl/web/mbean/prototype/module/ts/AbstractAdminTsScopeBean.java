@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.factory.builder.TsFactoryBuilder;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -62,9 +63,9 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected EC opClass;public EC getOpClass() {return opClass;}public void setOpClass(EC opClass) {this.opClass = opClass;}
 	protected EC tbClass;public EC getTbClass() {return tbClass;}public void setTbClass(EC tbClass) {this.tbClass = tbClass;}
 	
-	public AbstractAdminTsScopeBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsScopeBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
-		super(cL,cD,cCategory,cScope,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
+		super(fbTs,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
@@ -84,19 +85,19 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		super.toggled(c);
-		if(cCategory.isAssignableFrom(c)){reloadScopes();cancel();}
+		if(fbTs.getClassCategory().isAssignableFrom(c)){reloadScopes();cancel();}
 	}
 	
 	public void reloadScopes()
 	{
 		if(debugOnInfo){logger.info("reloadScopes");}
-		scopes = fTs.findScopes(cScope, cCategory, sbhCategory.getSelected(), uiShowInvisible);
+		scopes = fTs.findScopes(fbTs.getClassScope(),fbTs.getClassCategory(), sbhCategory.getSelected(), uiShowInvisible);
 		Collections.sort(scopes, comparatorScope);
 	}
 	
 	public void add() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(cScope));
+		logger.info(AbstractLogMessage.addEntity(fbTs.getClassScope()));
 		scope = efScope.build(null);
 		scope.setName(efLang.createEmpty(langs));
 		scope.setDescription(efDescription.createEmpty(langs));
@@ -105,7 +106,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	public void select() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(scope));
-		scope = fTs.find(cScope, scope);
+		scope = fTs.find(fbTs.getClassScope(), scope);
 		scope = efLang.persistMissingLangs(fTs,langs,scope);
 		scope = efDescription.persistMissingLangs(fTs,langs,scope);
 	}
@@ -114,7 +115,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.saveEntity(scope));
 		scope.setUnit(fTs.find(cUnit, scope.getUnit()));
-		scope.setCategory(fTs.find(cCategory, scope.getCategory()));
+		scope.setCategory(fTs.find(fbTs.getClassCategory(), scope.getCategory()));
 		scope = fTs.save(scope);
 		reloadScopes();
 		updatePerformed();
@@ -133,7 +134,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		scope = null;
 	}
 	
-	protected void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, cScope, scopes);Collections.sort(scopes, comparatorScope);}
+	protected void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, fbTs.getClassScope(), scopes);Collections.sort(scopes, comparatorScope);}
 	protected void updatePerformed(){}
 	
 	//OverlayPanel Interval

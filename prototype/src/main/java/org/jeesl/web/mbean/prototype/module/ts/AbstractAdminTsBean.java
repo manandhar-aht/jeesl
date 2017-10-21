@@ -57,9 +57,8 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsBean.class);
 	
 	protected JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
+	protected final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs;
 	
-	protected final Class<CAT> cCategory;
-	protected final Class<SCOPE> cScope;
 	protected final Class<UNIT> cUnit;
 	protected final Class<TS> cTs;
 	protected final Class<TRANSACTION> cTransaction;
@@ -84,11 +83,11 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	protected final SbMultiHandler<WS> sbhWorkspace; public SbMultiHandler<WS> getSbhWorkspace() {return sbhWorkspace;}
 	protected final SbMultiHandler<CAT> sbhCategory; public SbMultiHandler<CAT> getSbhCategory() {return sbhCategory;}
 	
-	public AbstractAdminTsBean(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
-		super(cL,cD);
-		this.cCategory=cCategory;
-		this.cScope=cScope;
+		super(fbTs.getClassL(),fbTs.getClassD());
+		this.fbTs=fbTs;
+
 		this.cUnit=cUnit;
 		this.cTs=cTs;
 		this.cTransaction = cTransaction;
@@ -101,7 +100,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 		this.cData=cData;
 		this.cWs=cWs;
 		
-		sbhCategory = new SbMultiHandler<CAT>(cCategory,this);
+		sbhCategory = new SbMultiHandler<CAT>(fbTs.getClassCategory(),this);
 		sbhWorkspace = new SbMultiHandler<WS>(cWs,this);
 	}
 	
@@ -113,16 +112,15 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 		comparatorScope = (new TsScopeComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>()).factory(TsScopeComparator.Type.position);
 		comparatorClass = (new TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>()).factory(TsClassComparator.Type.position);
 		
-		TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> ffTs = TsFactoryBuilder.factory(cL,cD,cScope,cTransaction,cBridge,cEc,cData);
-		efScope = ffTs.scope();
-		efTransaction = ffTs.transaction();
-		efClass = ffTs.entityClass();
-		efData = ffTs.data();
-		efBridge = ffTs.bridge();
+		efScope = fbTs.scope();
+		efTransaction = fbTs.transaction();
+		efClass = fbTs.entityClass();
+		efData = fbTs.data();
+		efBridge = fbTs.bridge();
 		
-		categories = fTs.allOrderedPositionVisible(cCategory);
+		categories = fTs.allOrderedPositionVisible(fbTs.getClassCategory());
 		
-		sbhCategory.fillAndSelect(fTs.allOrderedPositionVisible(cCategory));
+		sbhCategory.fillAndSelect(fTs.allOrderedPositionVisible(fbTs.getClassCategory()));
 		sbhWorkspace.fillAndSelect(fTs.allOrderedPositionVisible(cWs));
 	}
 	

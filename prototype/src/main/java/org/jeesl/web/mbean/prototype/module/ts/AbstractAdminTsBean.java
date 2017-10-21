@@ -59,12 +59,6 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	protected JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
 	protected final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs;
 	
-	protected final Class<BRIDGE> cBridge;
-	protected final Class<EC> cEc;
-	protected final Class<INT> cInt;
-	protected final Class<DATA> cData;
-	protected final Class<WS> cWs;
-	
 	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
 	
 	protected EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efScope;
@@ -79,20 +73,13 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	protected final SbMultiHandler<WS> sbhWorkspace; public SbMultiHandler<WS> getSbhWorkspace() {return sbhWorkspace;}
 	protected final SbMultiHandler<CAT> sbhCategory; public SbMultiHandler<CAT> getSbhCategory() {return sbhCategory;}
 	
-	public AbstractAdminTsBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
 	{
 		super(fbTs.getClassL(),fbTs.getClassD());
 		this.fbTs=fbTs;
 		
-		this.cBridge=cBridge;
-		this.cEc=cEc;
-		this.cInt=cInt;
-
-		this.cData=cData;
-		this.cWs=cWs;
-		
 		sbhCategory = new SbMultiHandler<CAT>(fbTs.getClassCategory(),this);
-		sbhWorkspace = new SbMultiHandler<WS>(cWs,this);
+		sbhWorkspace = new SbMultiHandler<WS>(fbTs.getClassWorkspace(),this);
 	}
 	
 	protected void initTsSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
@@ -112,7 +99,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 		categories = fTs.allOrderedPositionVisible(fbTs.getClassCategory());
 		
 		sbhCategory.fillAndSelect(fTs.allOrderedPositionVisible(fbTs.getClassCategory()));
-		sbhWorkspace.fillAndSelect(fTs.allOrderedPositionVisible(cWs));
+		sbhWorkspace.fillAndSelect(fTs.allOrderedPositionVisible(fbTs.getClassWorkspace()));
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException

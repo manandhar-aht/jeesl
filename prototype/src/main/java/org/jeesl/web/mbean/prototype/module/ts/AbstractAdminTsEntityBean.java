@@ -54,9 +54,9 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang, D extends UtilsDesc
 	
 	protected EC entity; public void setEntity(EC entityClass) {this.entity = entityClass;} public EC getEntity() {return entity;}
 
-	public AbstractAdminTsEntityBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsEntityBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
 	{
-		super(fbTs,cBridge,cEc,cInt,cData,cWs);
+		super(fbTs);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
@@ -73,14 +73,14 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang, D extends UtilsDesc
 	
 	public void reloadClasses()
 	{
-		classes = fTs.findClasses(cEc, fbTs.getClassCategory(), sbhCategory.getSelected(), uiShowInvisible);
-		logger.info(AbstractLogMessage.reloaded(cEc, classes));
+		classes = fTs.findClasses(fbTs.getClassEntity(), fbTs.getClassCategory(), sbhCategory.getSelected(), uiShowInvisible);
+		logger.info(AbstractLogMessage.reloaded(fbTs.getClassEntity(), classes));
 		Collections.sort(classes, comparatorClass);
 	}
 	
 	public void add() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(cEc));
+		logger.info(AbstractLogMessage.addEntity(fbTs.getClassEntity()));
 		entity = efClass.build(null);
 		entity.setName(efLang.createEmpty(langs));
 		entity.setDescription(efDescription.createEmpty(langs));
@@ -89,7 +89,7 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang, D extends UtilsDesc
 	public void select() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(entity));
-		entity = fTs.find(cEc, entity);
+		entity = fTs.find(fbTs.getClassEntity(), entity);
 		entity = efLang.persistMissingLangs(fTs,langs,entity);
 		entity = efDescription.persistMissingLangs(fTs,langs,entity);
 	}
@@ -116,7 +116,7 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang, D extends UtilsDesc
 		entity = null;
 	}
 	
-	protected void reorderEntities() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, cEc, classes);Collections.sort(classes, comparatorClass);}
+	protected void reorderEntities() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, fbTs.getClassEntity(), classes);Collections.sort(classes, comparatorClass);}
 	protected void updatePerformed(){}
 	
 	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String action)

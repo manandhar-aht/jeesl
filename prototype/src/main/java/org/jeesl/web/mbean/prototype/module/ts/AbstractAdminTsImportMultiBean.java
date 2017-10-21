@@ -97,19 +97,16 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 	
 	private Comparator<Data> cTsData;
         
-        protected HashMap<SCOPE, Map<DATA, ArrayList<String>>> timeSeriesMap;
-        public HashMap<SCOPE, Map<DATA, ArrayList<String>>> getTimeSeriesMap() {return timeSeriesMap;}
-        public void setTimeSeriesMap(HashMap<SCOPE, Map<DATA, ArrayList<String>>> timeSeriesMap) {this.timeSeriesMap = timeSeriesMap;}
-        
-        protected String successMessage; public String getSuccessMessage() {return successMessage;} public void setSuccessMessage(String successMessage) {this.successMessage = successMessage;}
-        protected boolean saved; public boolean isSaved() {return saved;} public void setSaved(boolean saved) {this.saved = saved;}
-        
-        private List<DATA> dataList; public List<DATA> getDataList() {return dataList;} public void setDataList(List<DATA> dataList) {this.dataList = dataList;}
+	protected HashMap<SCOPE, Map<DATA, ArrayList<String>>> timeSeriesMap;
+	public HashMap<SCOPE, Map<DATA, ArrayList<String>>> getTimeSeriesMap() {return timeSeriesMap;}
+	public void setTimeSeriesMap(HashMap<SCOPE, Map<DATA, ArrayList<String>>> timeSeriesMap) {this.timeSeriesMap = timeSeriesMap;}
 	
-	public AbstractAdminTsImportMultiBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
-	{
-		super(fbTs,cBridge,cEc,cInt,cData,cWs);
-	}
+	protected String successMessage; public String getSuccessMessage() {return successMessage;} public void setSuccessMessage(String successMessage) {this.successMessage = successMessage;}
+	protected boolean saved; public boolean isSaved() {return saved;} public void setSaved(boolean saved) {this.saved = saved;}
+	
+	private List<DATA> dataList; public List<DATA> getDataList() {return dataList;} public void setDataList(List<DATA> dataList) {this.dataList = dataList;}
+	
+	public AbstractAdminTsImportMultiBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs) {super(fbTs);}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver)
 	{
@@ -122,7 +119,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 	
 	protected void initLists()
 	{
-		workspaces = fTs.all(cWs);
+		workspaces = fTs.all(fbTs.getClassWorkspace());
 		category = null; if(categories.size()>0){category = categories.get(0);}
 		changeCategory();
 	}
@@ -163,7 +160,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 	{
 		if(clas!=null)
 		{
-			clas = fTs.find(cEc, clas);
+			clas = fTs.find(fbTs.getClassEntity(), clas);
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(clas));}
 		}
 	}
@@ -172,7 +169,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 	{
 		if(interval!=null)
 		{
-			interval = fTs.find(cInt, interval);
+			interval = fTs.find(fbTs.getClassInterval(), interval);
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(interval));}
 		}
 	}
@@ -266,12 +263,12 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 	
 	public void importData()
 	{
-		workspace = fTs.find(cWs, workspace);
+		workspace = fTs.find(fbTs.getClassWorkspace(), workspace);
 		logger.info("Import Data to "+workspace);
 		
 		try
 		{
-			BRIDGE bridge = fTs.fcBridge(cBridge, clas, entity);
+			BRIDGE bridge = fTs.fcBridge(fbTs.getClassBridge(), clas, entity);
 			TS ts = fTs.fcTimeSeries(scope, interval, bridge);
 			logger.info("Using TS "+ts.toString());
 			
@@ -297,7 +294,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
         
         public void importDataList()
         {
-            workspace = fTs.find(cWs, workspace);
+            workspace = fTs.find(fbTs.getClassWorkspace(), workspace);
             logger.info("Import Data to "+workspace);
 
             try

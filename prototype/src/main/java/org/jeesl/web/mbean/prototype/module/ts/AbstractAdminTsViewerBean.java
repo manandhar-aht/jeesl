@@ -55,12 +55,12 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 	protected final SbSingleHandler<EC> sbhClass; public SbSingleHandler<EC> getSbhClass() {return sbhClass;}
 	protected final SbSingleHandler<INT> sbhInterval; public SbSingleHandler<INT> getSbhInterval() {return sbhInterval;}
 	
-	public AbstractAdminTsViewerBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsViewerBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
 	{
-		super(fbTs,cBridge,cEc,cInt,cData,cWs);
+		super(fbTs);
 		sbhScope = new SbSingleHandler<SCOPE>(fbTs.getClassScope(),this);
-		sbhClass = new SbSingleHandler<EC>(cEc,this);
-		sbhInterval = new SbSingleHandler<INT>(cInt,this);
+		sbhClass = new SbSingleHandler<EC>(fbTs.getClassEntity(),this);
+		sbhInterval = new SbSingleHandler<INT>(fbTs.getClassInterval(),this);
 		
 		tsh = new OpEntitySelectionHandler<TS>(null);
 	}
@@ -91,15 +91,15 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 			sbhClass.clear();sbhInterval.clear();
 			
 			sbhClass.setList(sbhScope.getSelection().getClasses());
-			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cEc,sbhClass.getList()));}
+			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassEntity(),sbhClass.getList()));}
 			sbhClass.selectDefault();sbhClass.silentCallback();
 			
 			sbhInterval.setList(sbhScope.getSelection().getIntervals());
-			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cInt,sbhInterval.getList()));}
+			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassInterval(),sbhInterval.getList()));}
 			sbhInterval.selectDefault();sbhInterval.silentCallback();
 		}
-		else if(cEc.isAssignableFrom(item.getClass())) {if(sbhClass.isSelected() && sbhInterval.isSelected()) {reloadBridges();}}
-		else if(cInt.isAssignableFrom(item.getClass())) {if(sbhClass.isSelected() && sbhInterval.isSelected()) {reloadBridges();}}
+		else if(fbTs.getClassEntity().isAssignableFrom(item.getClass())) {if(sbhClass.isSelected() && sbhInterval.isSelected()) {reloadBridges();}}
+		else if(fbTs.getClassInterval().isAssignableFrom(item.getClass())) {if(sbhClass.isSelected() && sbhInterval.isSelected()) {reloadBridges();}}
 	}
 	
 	private void reloadBridges()

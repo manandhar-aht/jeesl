@@ -63,9 +63,9 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected EC opClass;public EC getOpClass() {return opClass;}public void setOpClass(EC opClass) {this.opClass = opClass;}
 	protected EC tbClass;public EC getTbClass() {return tbClass;}public void setTbClass(EC tbClass) {this.tbClass = tbClass;}
 	
-	public AbstractAdminTsScopeBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	public AbstractAdminTsScopeBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
 	{
-		super(fbTs,cBridge,cEc,cInt,cData,cWs);
+		super(fbTs);
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
@@ -78,8 +78,8 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	private void initLists()
 	{
 		units = fTs.all(fbTs.getClassUnit());
-		opIntervals = fTs.all(cInt);
-		opClasses = fTs.all(cEc);
+		opIntervals = fTs.all(fbTs.getClassInterval());
+		opClasses = fTs.all(fbTs.getClassEntity());
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException

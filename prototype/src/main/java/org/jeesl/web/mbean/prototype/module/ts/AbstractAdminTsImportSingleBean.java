@@ -97,10 +97,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 	
 	private Comparator<Data> cTsData;
 	
-	public AbstractAdminTsImportSingleBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
-	{
-		super(fbTs,cBridge,cEc,cInt,cData,cWs);
-	}
+	public AbstractAdminTsImportSingleBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs) {super(fbTs);}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver)
 	{
@@ -113,7 +110,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 	
 	protected void initLists()
 	{
-		workspaces = fTs.all(cWs);
+		workspaces = fTs.all(fbTs.getClassWorkspace());
 		category = null; if(categories.size()>0){category = categories.get(0);}
 		changeCategory();
 	}
@@ -154,7 +151,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 	{
 		if(clas!=null)
 		{
-			clas = fTs.find(cEc, clas);
+			clas = fTs.find(fbTs.getClassEntity(), clas);
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(clas));}
 		}
 	}
@@ -163,7 +160,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 	{
 		if(interval!=null)
 		{
-			interval = fTs.find(cInt, interval);
+			interval = fTs.find(fbTs.getClassInterval(), interval);
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(interval));}
 		}
 	}
@@ -251,12 +248,12 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 	
 	public void importData()
 	{
-		workspace = fTs.find(cWs, workspace);
+		workspace = fTs.find(fbTs.getClassWorkspace(), workspace);
 		logger.info("Import Data to "+workspace);
 		
 		try
 		{
-			BRIDGE bridge = fTs.fcBridge(cBridge, clas, entity);
+			BRIDGE bridge = fTs.fcBridge(fbTs.getClassBridge(), clas, entity);
 			TS ts = fTs.fcTimeSeries(scope,interval,bridge);
 			logger.info("Using TS "+ts.toString());
 			

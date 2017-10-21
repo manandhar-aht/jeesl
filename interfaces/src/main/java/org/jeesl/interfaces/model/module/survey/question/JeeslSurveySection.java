@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.interfaces.model.with.EjbWithRendered;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -21,7 +22,8 @@ public interface JeeslSurveySection<L extends UtilsLang, D extends UtilsDescript
 									TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,SECTION,?,?>,
 									SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,?,?,?,?,?>>
-			extends EjbWithId,EjbWithVisible,EjbSaveable,EjbRemoveable,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithLevel,
+			extends EjbWithId,EjbSaveable,EjbRemoveable
+			,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithLevel,EjbWithVisible,EjbWithRendered,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{template,visible,position}
@@ -46,7 +48,4 @@ public interface JeeslSurveySection<L extends UtilsLang, D extends UtilsDescript
 	
 	Double getScoreNormalize();
 	void setScoreNormalize(Double scoreNormalize);
-	
-	Boolean getRendered();
-	void setRendered(Boolean rendered);
 }

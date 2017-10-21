@@ -6,6 +6,7 @@ import java.util.Map;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.interfaces.model.with.EjbWithRendered;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -28,6 +29,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 										OPTION extends JeeslSurveyOption<L,D>,
 										AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?>>
 			extends EjbWithId,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable,
+					EjbWithRendered,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{section,visible,position,optionSet}
@@ -91,7 +93,4 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 	
 	List<SCORE> getScores();
 	void setScores(List<SCORE> scores);
-	
-	Boolean getRendered();
-	void setRendered(Boolean rendered);
 }

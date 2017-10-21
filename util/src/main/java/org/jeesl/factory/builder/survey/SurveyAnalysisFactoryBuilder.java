@@ -1,5 +1,6 @@
 package org.jeesl.factory.builder.survey;
 
+import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisQuestionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisToolFactory;
@@ -7,11 +8,8 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPath;
@@ -21,7 +19,6 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,19 +45,16 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 				AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 				ATT extends UtilsStatus<ATT,L,D>>
+			extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyAnalysisFactoryBuilder.class);
 	
-	private final Class<L> cL;
-	private final Class<D> cD;
 	
 	private final Class<ATT> cAtt; public Class<ATT> getAttClass() {return cAtt;}
 
 	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ATT> cAtt)
 	{
-		this.cL = cL;
-		this.cD = cD;
-        
+		super(cL,cD);
         this.cAtt = cAtt;
 	}
 	

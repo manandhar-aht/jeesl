@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.module.ts;
+package org.jeesl.web.mbean.prototype.module.ts;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -113,7 +113,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 		comparatorScope = (new TsScopeComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>()).factory(TsScopeComparator.Type.position);
 		comparatorClass = (new TsClassComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>()).factory(TsClassComparator.Type.position);
 		
-		TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> ffTs = TsFactoryBuilder.factory(cScope,cTransaction,cBridge,cEc,cData);
+		TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> ffTs = TsFactoryBuilder.factory(cL,cD,cScope,cTransaction,cBridge,cEc,cData);
 		efScope = ffTs.scope();
 		efTransaction = ffTs.transaction();
 		efClass = ffTs.entityClass();

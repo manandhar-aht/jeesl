@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.module.ts;
+package org.jeesl.web.mbean.prototype.module.ts;
 
 import java.io.File;
 import java.io.FileNotFoundException;

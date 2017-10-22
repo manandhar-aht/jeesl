@@ -11,12 +11,17 @@ public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?
 	CRITERIA getCriteria();
 	void setCriteria(CRITERIA criteria);
 
+	
 	String getValueString();
 	void setValueString(String valueString);
+	
+	Boolean getValueBoolean();
+	void setValueBoolean(Boolean valueBoolean);
 	
 	Integer getValueInteger();
 	void setValueInteger(Integer valueInteger);
 	
-	Boolean getValueBoolean();
-	void setValueBoolean(Boolean valueBoolean);
+	Double getValueDouble();
+	void setValueDouble(Double valueDouble);
+
 }

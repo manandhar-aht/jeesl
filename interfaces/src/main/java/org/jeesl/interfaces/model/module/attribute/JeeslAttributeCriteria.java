@@ -6,16 +6,19 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
+import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslAttributeCriteria<L extends UtilsLang, D extends UtilsDescription,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 										TYPE extends UtilsStatus<TYPE,L,D>>
 			extends EjbWithId,EjbSaveable,
-					EjbWithNonUniqueCode,EjbWithPositionVisible
-			//,
-			//		EjbWithLang<L>,EjbWithDescription<D>
+					EjbWithNonUniqueCode,EjbWithPositionVisible,
+					EjbWithLang<L>,EjbWithDescription<D>
 {
+	public enum Types{text,bool,intNumber,doubleNumber}
+	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);
 	

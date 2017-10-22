@@ -17,7 +17,7 @@ public interface JeeslAttributeBean<L extends UtilsLang, D extends UtilsDescript
 									CRITERIA extends JeeslAttributeCriteria<L,D,CATEGORY,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
 									SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
-									ITEM extends JeeslAttributeItem<SET,CRITERIA>,
+									ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 									CONTAINER extends JeeslAttributeContainer<SET,DATA>,
 									DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
 {	

@@ -14,4 +14,18 @@
 	    		<s:lang key="fr" translation="Attribute"/>
 	    	</s:langs>
     </s:translation>
+   	<s:translation key="jeeslIoAttributeSets">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Attribut Sets"/>
+	    		<s:lang key="en" translation="Attribute Sets"/>
+	    		<s:lang key="fr" translation="Attribute Sets"/>
+	    	</s:langs>
+    </s:translation>   
+   	<s:translation key="jeeslIoAttributeSet">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Attribut Set"/>
+	    		<s:lang key="en" translation="Attribute Set"/>
+	    		<s:lang key="fr" translation="Attribute Set"/>
+	    	</s:langs>
+    </s:translation>    
 </s:translations>

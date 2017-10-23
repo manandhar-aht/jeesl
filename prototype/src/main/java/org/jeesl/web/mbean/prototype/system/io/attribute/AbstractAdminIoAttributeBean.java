@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.system.io.attribute;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import org.jeesl.api.bean.JeeslAttributeBean;
 import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
@@ -15,6 +16,7 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
+import org.jeesl.util.comparator.ejb.system.io.attribute.AttributeCriteriaComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +49,8 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 	protected final EjbAttributeCriteriaFactory<L,D,CATEGORY,CRITERIA,TYPE> efCriteria;
 	protected final EjbAttributeSetFactory<L,D,CATEGORY,SET,ITEM> efSet;
 	protected final EjbAttributeItemFactory<CRITERIA,SET,ITEM> efItem;
+	
+	protected final Comparator<CRITERIA> cpCriteria;
 
 	public AbstractAdminIoAttributeBean(AttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute)
 	{
@@ -56,6 +60,8 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 		efCriteria = fbAttribute.ejbCriteria();
 		efSet = fbAttribute.ejbSet();
 		efItem = fbAttribute.ejbItem();
+		
+		cpCriteria = (new AttributeCriteriaComparator<CATEGORY,CRITERIA>()).factory(AttributeCriteriaComparator.Type.position);
 		
 		sbhCategory = new SbMultiHandler<CATEGORY>(fbAttribute.getClassCategory(),this);
 	}

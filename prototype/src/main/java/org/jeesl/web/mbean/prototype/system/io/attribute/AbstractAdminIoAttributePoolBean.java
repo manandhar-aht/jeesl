@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.system.io.attribute;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslAttributeBean;
@@ -21,6 +22,7 @@ import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends UtilsDescription,
@@ -95,4 +97,6 @@ public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends Ut
 		criteria = efLang.persistMissingLangs(fAttribute,localeCodes,criteria);
 		criteria = efDescription.persistMissingLangs(fAttribute,localeCodes,criteria);
 	}
+	
+	protected void reorderCriterias() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, fbAttribute.getClassCriteria(),criterias);Collections.sort(criterias,cpCriteria);}
 }

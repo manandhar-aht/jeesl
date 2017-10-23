@@ -5,6 +5,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
@@ -14,9 +15,10 @@ public interface JeeslAttributeCriteria<L extends UtilsLang, D extends UtilsDesc
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 										TYPE extends UtilsStatus<TYPE,L,D>>
 			extends EjbWithId,EjbSaveable,
-					EjbWithNonUniqueCode,EjbWithPositionVisible,
+					EjbWithNonUniqueCode,EjbWithPositionVisible,EjbWithPositionParent,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
+	public enum Attributes{category,type}
 	public enum Types{text,bool,intNumber,doubleNumber,date}
 	
 	CATEGORY getCategory();

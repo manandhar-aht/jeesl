@@ -74,16 +74,14 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 				list.add(map.get(q));
 			}
 		}
-		
 		return list;
 	}
 	
-	public static <L extends UtilsLang, D extends UtilsDescription,
-					QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,OPTION,?>,
-					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-					MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-					DATA extends JeeslSurveyData<L,D,?,ANSWER,?>,
-					OPTION extends JeeslSurveyOption<L,D>
+	public static <QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,OPTION,?>,
+					ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,MATRIX,DATA,OPTION>,
+					MATRIX extends JeeslSurveyMatrix<?,?,ANSWER,OPTION>,
+					DATA extends JeeslSurveyData<?,?,?,ANSWER,?>,
+					OPTION extends JeeslSurveyOption<?,?>
 					>
 			Map<QUESTION,ANSWER> toQuestionMap(List<ANSWER> list)
 	{

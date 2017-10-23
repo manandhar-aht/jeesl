@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.module.attribute;
 
+import java.util.Date;
+
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?,?,?>,CONTAINER extends JeeslAttributeContainer<?,?>>
@@ -23,5 +25,8 @@ public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?
 	
 	Double getValueDouble();
 	void setValueDouble(Double valueDouble);
+	
+	Date getValueRecord();
+	void setValueRecord(Date date);
 
 }

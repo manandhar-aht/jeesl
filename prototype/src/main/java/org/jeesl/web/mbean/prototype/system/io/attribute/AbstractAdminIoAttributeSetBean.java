@@ -113,9 +113,14 @@ public class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D extends Uti
 	public void saveItem() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(item));}
-		item.setSet(fAttribute.find(fbAttribute.getClassSet(),item.getSet()));
+		item.setItemSet(fAttribute.find(fbAttribute.getClassSet(),item.getItemSet()));
 		item.setCriteria(fAttribute.find(fbAttribute.getClassCriteria(),item.getCriteria()));
 		item = fAttribute.save(item);
 		reloadItems();
+	}
+	
+	public void selectItem()
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(item));}
 	}
 }

@@ -17,7 +17,7 @@ public interface JeeslAttributeCriteria<L extends UtilsLang, D extends UtilsDesc
 					EjbWithNonUniqueCode,EjbWithPositionVisible,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
-	public enum Types{text,bool,intNumber,doubleNumber}
+	public enum Types{text,bool,intNumber,doubleNumber,date}
 	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);

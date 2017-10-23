@@ -32,7 +32,7 @@ public class EjbAttributeItemFactory<CRITERIA extends JeeslAttributeCriteria<?,?
 		{
 			ejb = cItem.newInstance();
 			ejb.setCriteria(criteria);
-			ejb.setSet(set);
+			ejb.setItemSet(set);
 			
 			if(list==null) {ejb.setPosition(1);}
 			else {ejb.setPosition(list.size()+1);}

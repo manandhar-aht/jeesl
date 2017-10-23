@@ -27,5 +27,34 @@
 	    		<s:lang key="en" translation="Attribute Set"/>
 	    		<s:lang key="fr" translation="Attribute Set"/>
 	    	</s:langs>
+    </s:translation>
+       	<s:translation key="jeeslIoAttributeSetShort">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Set"/>
+	    		<s:lang key="en" translation="Set"/>
+	    		<s:lang key="fr" translation="Set"/>
+	    	</s:langs>
+    </s:translation>
+   	<s:translation key="jeeslIoAttributeItems">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Elemente"/>
+	    		<s:lang key="en" translation="Items"/>
+	    		<s:lang key="fr" translation="Items"/>
+	    	</s:langs>
     </s:translation>    
+     	<s:translation key="jeeslIoAttributeItems">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Elemente"/>
+	    		<s:lang key="en" translation="Items"/>
+	    		<s:lang key="fr" translation="Items"/>
+	    	</s:langs>
+    </s:translation>  
+      	<s:translation key="jeeslIoAttributeItem">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Element"/>
+	    		<s:lang key="en" translation="Item"/>
+	    		<s:lang key="fr" translation="Item"/>
+	    	</s:langs>
+    </s:translation>    
+    
 </s:translations>

@@ -28,7 +28,6 @@
 				<aht:slot id="sCategories" width="7">
 					<h:form id="fUsers">
 						<p:dataTable id="userTable" var="u" value="#{cc.attrs.users}" rowKey="#{u.id}"
-								filteredValue="#{cc.attrs.bean.fvUsers}" sortBy="#{u.lastName}"
 								selection="#{cc.attrs.bean.user}" selectionMode="single" 
 								paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="#{appSettingsBean.paginatorTemplate}" rowsPerPageTemplate="#{appSettingsBean.rowsPerPageTemplate}">
 							<f:facet name="header">

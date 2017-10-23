@@ -10,8 +10,8 @@ public class AbstractFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractFactoryBuilder.class);
 	
-	private final Class<L> cL; public Class<L> getClassL() {return cL;}
-	private final Class<D> cD; public Class<D> getClassD() {return cD;}
+	protected final Class<L> cL; public Class<L> getClassL() {return cL;}
+	protected final Class<D> cD; public Class<D> getClassD() {return cD;}
 	
 	public AbstractFactoryBuilder(final Class<L> cL, final Class<D> cD)
 	{       

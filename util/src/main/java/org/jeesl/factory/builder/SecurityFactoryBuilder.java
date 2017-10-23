@@ -1,4 +1,4 @@
-package org.jeesl.factory.factory;
+package org.jeesl.factory.builder;
 
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
@@ -19,7 +19,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class SecurityFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
+public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 									C extends JeeslSecurityCategory<L,D>,
 									R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 									V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
@@ -27,18 +27,15 @@ public class SecurityFactoryFactory<L extends UtilsLang, D extends UtilsDescript
 									A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 									AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 									USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+				extends AbstractFactoryBuilder<L,D>
 {
-	final static Logger logger = LoggerFactory.getLogger(SecurityFactoryFactory.class);
-    
-    private final Class<L> cL;
-    private final Class<D> cD;
-    
+	final static Logger logger = LoggerFactory.getLogger(SecurityFactoryBuilder.class);
+        
     private final Class<A> cAction;
 	
-	public SecurityFactoryFactory(final Class<L> cL, final Class<D> cD, final Class<A> cAction)
+	public SecurityFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<A> cAction)
 	{		
-		this.cL=cL;
-		this.cD=cD;
+		super(cL,cD);
 		
 		this.cAction=cAction;
 	}
@@ -52,10 +49,10 @@ public class SecurityFactoryFactory<L extends UtilsLang, D extends UtilsDescript
 					A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 					AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 					USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
-		SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER>
+		SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER>
 		factory(final Class<L> cL, final Class<D> cD, final Class<A> cAction)
 	{
-		return new SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER>(cL,cD,cAction);
+		return new SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER>(cL,cD,cAction);
 	}
 	
 	public EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> ejbAction()

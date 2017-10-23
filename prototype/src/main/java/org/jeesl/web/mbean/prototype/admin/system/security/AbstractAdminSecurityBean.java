@@ -5,13 +5,13 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionTemplateFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityCategoryFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityRoleFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityUsecaseFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityViewFactory;
-import org.jeesl.factory.factory.SecurityFactoryFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
@@ -52,7 +52,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected JeeslSecurityCategory.Type categoryType;
 	
-	protected final SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER> ffSecurity;
+	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> ffSecurity;
 	
 	protected EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> efCategory;
 	protected EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> efView;
@@ -105,7 +105,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		this.cTemplate=cTemplate;
 		this.cUser=cUser;
 		
-		ffSecurity = SecurityFactoryFactory.factory(cL,cD,cAction);
+		ffSecurity = SecurityFactoryBuilder.factory(cL,cD,cAction);
 	}
 	
 	public void initSecuritySuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)

@@ -29,22 +29,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JsonSurveyFactory<L extends UtilsLang,D extends UtilsDescription,
-				SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
-				SS extends UtilsStatus<SS,L,D>,
-				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
-				TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,?>,
-				VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
-				TS extends UtilsStatus<TS,L,D>,TC extends UtilsStatus<TC,L,D>,
-				SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
-				QE extends UtilsStatus<QE,L,D>,
-				SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
-				UNIT extends UtilsStatus<UNIT,L,D>,ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-				MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-				DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
-				OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-				OPTION extends JeeslSurveyOption<L,D>,
-				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>>
+								SURVEY extends JeeslSurvey<L,D,SS,?,?>,
+								SS extends UtilsStatus<SS,L,D>
+								>
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonSurveyFactory.class);
 	

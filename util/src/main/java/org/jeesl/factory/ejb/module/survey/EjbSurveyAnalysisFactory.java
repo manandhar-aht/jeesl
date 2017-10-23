@@ -5,12 +5,8 @@ import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-
-public class EjbSurveyAnalysisFactory<L extends UtilsLang, D extends UtilsDescription,
-				TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,ANALYSIS>,
-				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>>
+public class EjbSurveyAnalysisFactory<TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,?,?,ANALYSIS>,
+										ANALYSIS extends JeeslSurveyAnalysis<?,?,TEMPLATE>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyAnalysisFactory.class);
 	

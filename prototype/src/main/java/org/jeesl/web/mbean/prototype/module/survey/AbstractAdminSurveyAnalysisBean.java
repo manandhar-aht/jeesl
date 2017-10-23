@@ -100,7 +100,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	private AQ analysisQuestion; public AQ getAnalysisQuestion() {return analysisQuestion;} public void setAnalysisQuestion(AQ analysisQuestion) {this.analysisQuestion = analysisQuestion;}
 	private AT tool; public AT getTool() {return tool;} public void setTool(AT tool) {this.tool = tool;}
 	
-	private final EjbSurveyAnalysisFactory<L,D,TEMPLATE,ANALYSIS> efAnalysis;
+	private final EjbSurveyAnalysisFactory<TEMPLATE,ANALYSIS> efAnalysis;
 	private final EjbSurveyAnalysisQuestionFactory <L,D,QUESTION,ANALYSIS,AQ> efAnalysisQuestion;
 	private final EjbSurveyAnalysisToolFactory <L,D,AQ,AT,ATT> efAnalysisTool;
 	

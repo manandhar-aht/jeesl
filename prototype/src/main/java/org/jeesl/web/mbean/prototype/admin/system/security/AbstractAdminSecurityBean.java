@@ -94,9 +94,9 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	protected U opUsecase;public U getOpUsecase(){return opUsecase;}public void setOpUsecase(U opUsecase){this.opUsecase = opUsecase;}
 	protected U tblUsecase;public U getTblUsecase(){return tblUsecase;}public void setTblUsecase(U tblUsecase){this.tblUsecase = tblUsecase;}
 	
-	public AbstractAdminSecurityBean(final Class<L> cL, final Class<D> cD, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public AbstractAdminSecurityBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
-		super(cL,cD);
+		super(fbSecurity.getClassL(),fbSecurity.getClassD());
 		this.cCategory=cCategory;
 		this.cRole=cRole;
 		this.cUsecase=cUsecase;

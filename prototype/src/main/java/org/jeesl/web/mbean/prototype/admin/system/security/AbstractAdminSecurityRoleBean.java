@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
@@ -50,9 +51,9 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	
 	private boolean denyRemove; public boolean isDenyRemove(){return denyRemove;}
 	
-	public AbstractAdminSecurityRoleBean(final Class<L> cL, final Class<D> cD, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public AbstractAdminSecurityRoleBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
-		super(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 	}
 	
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)

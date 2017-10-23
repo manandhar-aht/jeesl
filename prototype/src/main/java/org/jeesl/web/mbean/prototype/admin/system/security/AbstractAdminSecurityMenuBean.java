@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -53,9 +54,9 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractAdminSecurityMenuBean(final Class<L> cL, final Class<D> cD, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<M> cMenu, final Class<USER> cUser)
+	public AbstractAdminSecurityMenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<M> cMenu, final Class<USER> cUser)
 	{
-		super(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 		this.cMenu=cMenu;
 		efMenu = ffSecurity.ejbMenu(cMenu);
 	}

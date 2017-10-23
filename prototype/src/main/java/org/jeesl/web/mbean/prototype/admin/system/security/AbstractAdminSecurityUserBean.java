@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.jeesl.api.facade.core.JeeslUserFacade;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityUserFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
@@ -65,7 +66,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected UtilsRevisionPageFlow<USER,USER> revision; public UtilsRevisionPageFlow<USER, USER> getRevision() {return revision;}
 	
-	public AbstractAdminSecurityUserBean(final Class<L> cL, final Class<D> cD, final Class<R> cRole, final Class<USER> cUser)
+	public AbstractAdminSecurityUserBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<L> cL, final Class<D> cD, final Class<R> cRole, final Class<USER> cUser)
 	{
 		super(cL,cD);
 		

@@ -49,9 +49,9 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	private V view;public V getView(){return view;}public void setView(V view) {this.view = view;}
 	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
 	
-	public AbstractAdminSecurityViewBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<L> cL, final Class<D> cD, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public AbstractAdminSecurityViewBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
-		super(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 	}
 	
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.util.comparator.primitive;
+package org.jeesl.util.comparator.primitive;
 
 import java.util.ArrayList;
 import java.util.Collections;

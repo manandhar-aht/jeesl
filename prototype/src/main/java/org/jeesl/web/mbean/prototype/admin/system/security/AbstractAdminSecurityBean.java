@@ -15,6 +15,10 @@ import org.jeesl.factory.factory.SecurityFactoryFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.util.comparator.ejb.system.security.SecurityActionComparator;
+import org.jeesl.util.comparator.ejb.system.security.SecurityRoleComparator;
+import org.jeesl.util.comparator.ejb.system.security.SecurityUsecaseComparator;
+import org.jeesl.util.comparator.ejb.system.security.SecurityViewComparator;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -29,10 +33,6 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityRoleComparator;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityUsecaseComparator;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityViewComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescription,

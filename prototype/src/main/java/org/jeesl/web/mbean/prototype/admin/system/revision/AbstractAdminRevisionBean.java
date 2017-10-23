@@ -19,6 +19,8 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
+import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
+import org.jeesl.util.comparator.ejb.system.io.revision.RevisionScopeComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +32,6 @@ import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.util.comparator.ejb.revision.RevisionEntityComparator;
-import net.sf.ahtutils.util.comparator.ejb.revision.RevisionScopeComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends UtilsDescription,

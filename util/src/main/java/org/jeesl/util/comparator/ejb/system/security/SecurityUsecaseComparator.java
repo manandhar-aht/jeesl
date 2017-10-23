@@ -1,4 +1,4 @@
-package net.sf.ahtutils.util.comparator.ejb.security;
+package org.jeesl.util.comparator.ejb.system.security;
 
 import java.util.Comparator;
 
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
-public class SecurityActionComparator<L extends UtilsLang,
+public class SecurityUsecaseComparator<L extends UtilsLang,
 									D extends UtilsDescription,
 									C extends JeeslSecurityCategory<L,D>,
 									R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
@@ -26,19 +26,19 @@ public class SecurityActionComparator<L extends UtilsLang,
 									AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 									USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 {
-	final static Logger logger = LoggerFactory.getLogger(SecurityActionComparator.class);
+	final static Logger logger = LoggerFactory.getLogger(SecurityUsecaseComparator.class);
 
     public enum Type {position};
 
-    public SecurityActionComparator()
+    public SecurityUsecaseComparator()
     {
     	
     }
     
-    public Comparator<A> factory(Type type)
+    public Comparator<U> factory(Type type)
     {
-        Comparator<A> c = null;
-        SecurityActionComparator<L,D,C,R,V,U,A,AT,USER> factory = new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>();
+        Comparator<U> c = null;
+        SecurityUsecaseComparator<L,D,C,R,V,U,A,AT,USER> factory = new SecurityUsecaseComparator<L,D,C,R,V,U,A,AT,USER>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;
@@ -47,13 +47,12 @@ public class SecurityActionComparator<L extends UtilsLang,
         return c;
     }
 
-    private class PositionCodeComparator implements Comparator<A>
+    private class PositionCodeComparator implements Comparator<U>
     {
-        public int compare(A a, A b)
+        public int compare(U a, U b)
         {
 			  CompareToBuilder ctb = new CompareToBuilder();
-			  ctb.append(a.getView().getCategory().getPosition(), b.getView().getCategory().getPosition());
-			  ctb.append(a.getView().getPosition(), b.getView().getPosition());
+			  ctb.append(a.getCategory().getPosition(), b.getCategory().getPosition());
 			  ctb.append(a.getPosition(), b.getPosition());
 			  return ctb.toComparison();
         }

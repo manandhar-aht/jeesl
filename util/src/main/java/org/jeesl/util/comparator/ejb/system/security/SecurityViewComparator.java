@@ -1,4 +1,4 @@
-package net.sf.ahtutils.util.comparator.ejb.security;
+package org.jeesl.util.comparator.ejb.system.security;
 
 import java.util.Comparator;
 
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
-public class SecurityRoleComparator<L extends UtilsLang,
+public class SecurityViewComparator<L extends UtilsLang,
 									D extends UtilsDescription,
 									C extends JeeslSecurityCategory<L,D>,
 									R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
@@ -26,19 +26,19 @@ public class SecurityRoleComparator<L extends UtilsLang,
 									AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 									USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 {
-	final static Logger logger = LoggerFactory.getLogger(SecurityRoleComparator.class);
+	final static Logger logger = LoggerFactory.getLogger(SecurityViewComparator.class);
 
     public enum Type {position};
 
-    public SecurityRoleComparator()
+    public SecurityViewComparator()
     {
     	
     }
     
-    public Comparator<R> factory(Type type)
+    public Comparator<V> factory(Type type)
     {
-        Comparator<R> c = null;
-        SecurityRoleComparator<L,D,C,R,V,U,A,AT,USER> factory = new SecurityRoleComparator<L,D,C,R,V,U,A,AT,USER>();
+        Comparator<V> c = null;
+        SecurityViewComparator<L,D,C,R,V,U,A,AT,USER> factory = new SecurityViewComparator<L,D,C,R,V,U,A,AT,USER>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;
@@ -47,9 +47,9 @@ public class SecurityRoleComparator<L extends UtilsLang,
         return c;
     }
 
-    private class PositionCodeComparator implements Comparator<R>
+    private class PositionCodeComparator implements Comparator<V>
     {
-        public int compare(R a, R b)
+        public int compare(V a, V b)
         {
 			  CompareToBuilder ctb = new CompareToBuilder();
 			  ctb.append(a.getCategory().getPosition(), b.getCategory().getPosition());

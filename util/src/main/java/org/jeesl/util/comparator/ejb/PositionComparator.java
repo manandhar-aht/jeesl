@@ -1,4 +1,4 @@
-package net.sf.ahtutils.util.comparator.ejb;
+package org.jeesl.util.comparator.ejb;
 
 import java.util.Comparator;
 

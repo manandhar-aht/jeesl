@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
+import org.jeesl.factory.builder.JobFactoryBuilder;
 import org.jeesl.factory.ejb.system.job.EjbJobRobotFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
@@ -46,7 +47,7 @@ public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efRobot;
 
-	public AbstractAdminJobRobotBean(final Class<L> cL, final Class<D> cD, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache){super(cL,cD,cTemplate,cCategory,cType,cJob,cStatus,cRobot,cCache);}
+	public AbstractAdminJobRobotBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache){super(fbJob,cTemplate,cCategory,cType,cJob,cStatus,cRobot,cCache);}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{

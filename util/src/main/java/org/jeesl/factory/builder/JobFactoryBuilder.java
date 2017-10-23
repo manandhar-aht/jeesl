@@ -1,4 +1,4 @@
-package org.jeesl.factory.factory;
+package org.jeesl.factory.builder;
 
 import org.jeesl.factory.ejb.system.job.EjbJobCacheFactory;
 import org.jeesl.factory.ejb.system.job.EjbJobFactory;
@@ -17,7 +17,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
-public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
+public class JobFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
@@ -28,20 +28,19 @@ public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 								CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 								USER extends EjbWithEmail
 								>
+				extends AbstractFactoryBuilder<L,D>
 {
-	final static Logger logger = LoggerFactory.getLogger(JobFactoryFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(JobFactoryBuilder.class);
 	
-//	final Class<L> cL;
-//	final Class<D> cD;
-//	final Class<CATEGORY> cCategory;
 	private final Class<TEMPLATE> cTemplate;
 	private final Class<JOB> cJob;
 	
 	private final Class<ROBOT> cRobot;
 	private final Class<CACHE> cCache;
 	
-	private JobFactoryFactory(final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
-	{       
+	private JobFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
+	{
+		super(cL,cD);
 		this.cTemplate = cTemplate;
 		this.cJob = cJob;
 		this.cRobot = cRobot;
@@ -60,9 +59,9 @@ public class JobFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
 					CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 					USER extends EjbWithEmail
 					>
-		JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> factory(final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
+		JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> factory(final Class<L> cL, final Class<D> cD, final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
 	{
-		return new JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cTemplate,cJob,cRobot,cCache);
+		return new JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cL,cD,cTemplate,cJob,cRobot,cCache);
 	}
 	
 	public EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> template()

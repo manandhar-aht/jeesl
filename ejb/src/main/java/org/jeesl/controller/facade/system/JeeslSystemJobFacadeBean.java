@@ -17,9 +17,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
+import org.jeesl.factory.builder.JobFactoryBuilder;
 import org.jeesl.factory.ejb.system.job.EjbJobCacheFactory;
 import org.jeesl.factory.ejb.system.job.EjbJobFactory;
-import org.jeesl.factory.factory.JobFactoryFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
@@ -59,7 +59,7 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 	private EjbJobCacheFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efCache;
 	private EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efJob;
 	
-	public JeeslSystemJobFacadeBean(EntityManager em,final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<STATUS> cStatus, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
+	public JeeslSystemJobFacadeBean(EntityManager em,JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob, final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<STATUS> cStatus, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
 	{
 		super(em);
 		this.cTemplate=cTemplate;
@@ -67,9 +67,8 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		this.cStatus=cStatus;
 		this.cCache=cCache;
 		
-		JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> ffJob = JobFactoryFactory.factory(cTemplate,cJob,cRobot,cCache);
-		efCache = ffJob.cache();
-		efJob = ffJob.job();
+		efCache = fbJob.cache();
+		efJob = fbJob.job();
 	}
 	
 	@Override public <E extends Enum<E>> TEMPLATE fJobTemplate(E type, String code) throws UtilsNotFoundException

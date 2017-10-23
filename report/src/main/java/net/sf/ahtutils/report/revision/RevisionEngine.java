@@ -7,17 +7,17 @@ import java.util.Map;
 
 import org.apache.commons.jxpath.JXPathContext;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
-import org.jeesl.interfaces.model.system.revision.JeeslRevision;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionContainer;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionViewMapping;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevision;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionContainer;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -41,13 +41,13 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 							RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 							RAT extends UtilsStatus<RAT,L,D>,
 							REV extends JeeslRevision,
-							C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+							C extends JeeslSecurityCategory<L,D>,
 							R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 							V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 							U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 							A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 							AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-							USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+							USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(RevisionEngine.class);
 	

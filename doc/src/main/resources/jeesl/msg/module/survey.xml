@@ -426,4 +426,27 @@
 	    		<s:lang key="fr" translation="Answers"/>
 	    	</s:langs>
     </s:translation> 
+    	<s:translation key="jeeslSurveyTtSaveSection">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Abschnitt Speichern"/>
+	    		<s:lang key="en" translation="Save Section"/>
+	    		<s:lang key="fr" translation="Save Section"/>
+	    	</s:langs>
+    </s:translation>     
+    
+	<s:translation key="jeeslSurveyDomains">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Domänen"/>
+	    		<s:lang key="en" translation="Domains"/>
+	    		<s:lang key="fr" translation="Domains"/>
+	    	</s:langs>
+    </s:translation> 
+    	<s:translation key="jeeslSurveyDomain">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Domäne"/>
+	    		<s:lang key="en" translation="Domain"/>
+	    		<s:lang key="fr" translation="Domain"/>
+	    	</s:langs>
+    </s:translation>
+    
 </s:translations>

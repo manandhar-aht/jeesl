@@ -56,7 +56,7 @@
     		<s:lang key="fr" translation="Attribute"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupTsWorkspaces">
+	<s:translation key="jeeslTsWorkspaces">
     	<s:langs>
     		<s:lang key="de" translation="Arbeitsbereiche"/>
     		<s:lang key="en" translation="Workspaces"/>

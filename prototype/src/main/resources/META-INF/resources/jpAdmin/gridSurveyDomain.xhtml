@@ -20,7 +20,7 @@
 <composite:implementation>
 	<aup:grid id="grid">
 		<aht:row id="row1">
-			<aht:slot id="sTemplate" width="3">
+			<aht:slot id="sTemplate" width="5">
 				<h:form id="fDomains">
 					<p:dataTable var="domain" value="#{cc.attrs.bean.domains}" rowKey="#{domain.id}"
 								 selection="#{cc.attrs.bean.domain}" selectionMode="single" draggableRows="true">
@@ -32,8 +32,13 @@
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderDomains()}" update="@form"/>
 						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectDomain()}" update=":#{cc.id}:grid"/>
 						<p:column>
-							<h:graphicImage rendered="#{not analysis.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
-                     		<h:outputText rendered="#{analysis.visible}" value="#{analysis.position}" />
+                     		<h:outputText value="#{domain.position}" />
+						</p:column>
+						<p:column headerText="#{msg.jeeslCategory}">
+							<h:outputText value="#{domain.entity.category.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:column>
+						<p:column headerText="#{msg.jeeslRevisionEntity}">
+							<h:outputText value="#{domain.entity.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						</p:column>
 						<p:column headerText="#{msg.jeeslSurveyDomain}">
 							<h:outputText value="#{domain.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
@@ -41,7 +46,7 @@
 					</p:dataTable>
 				</h:form>
 			</aht:slot>
-			<aht:slot id="sCenter" width="3" >
+			<aht:slot id="sCenter" width="7" >
 				<h:form id="fDomain" rendered="#{not empty cc.attrs.bean.domain}">
 					<p:panel header="#{msg.jeeslSurveyDomain}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
@@ -49,13 +54,17 @@
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteDomain()}" update=":#{cc.id}:grid"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
-						<p:panelGrid columns="4" columnClasses="jeeslGrid30,jeeslGrid20,jeeslGrid30,jeeslGrid20">
+						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<h:outputText value="#{cc.attrs.bean.domain.position}"/>
-						</p:panelGrid>
-						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							
 							<p:outputLabel value="#{msg.jeeslName}"/>
 							<p:inputText value="#{cc.attrs.bean.domain.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+							
+							<p:outputLabel value="#{msg.jeeslRevisionEntity}"/>
+							<p:selectOneMenu  value="#{cc.attrs.bean.domain.entity}" autoWidth="false" effect="fade">
+								<f:selectItems value="#{cc.attrs.bean.entities}" var="e" itemLabel="#{e.category.position}.#{e.position} #{e.category.name[cc.attrs.bean.sbhLocale.selection.code].lang}: #{e.name[cc.attrs.bean.sbhLocale.selection.code].lang}" itemValue="#{e}"/>
+							</p:selectOneMenu>
 						</p:panelGrid>
 					</p:panel>
 				</h:form>

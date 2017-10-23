@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -13,7 +14,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.model.xml.system.navigation.Menu;
 import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.primefaces.event.NodeCollapseEvent;
@@ -32,14 +33,14 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D extends UtilsDescription,
-											C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+											C extends JeeslSecurityCategory<L,D>,
 											R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 											V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 											U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 											A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 											AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 											M extends JeeslSecurityMenu<L,D,C,R,V,U,A,AT,M,USER>,
-											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+											USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,USER>
 		implements Serializable
 {
@@ -53,9 +54,9 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractAdminSecurityMenuBean(final Class<L> cL, final Class<D> cD, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<M> cMenu, final Class<USER> cUser)
+	public AbstractAdminSecurityMenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<M> cMenu, final Class<USER> cUser)
 	{
-		super(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 		this.cMenu=cMenu;
 		efMenu = ffSecurity.ejbMenu(cMenu);
 	}

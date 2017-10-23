@@ -2,15 +2,16 @@ package org.jeesl.web.mbean.prototype.admin.system.revision;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.List;
 
 import org.jeesl.api.bean.JeeslLabelBean;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionViewMapping;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +43,8 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionEntityBean.class);
 	
 	private JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> bLabel;
+	
+	private List<RE> links; public List<RE> getLinks() {return links;}
 	
 	private RE entity; public RE getEntity() {return entity;} public void setEntity(RE entity) {this.entity = entity;}
 	private REM mapping; public REM getMapping() {return mapping;}public void setMapping(REM mapping) {this.mapping = mapping;}

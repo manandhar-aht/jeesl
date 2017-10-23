@@ -8,10 +8,11 @@ import java.util.Map;
 
 import org.jeesl.api.facade.core.JeeslUserFacade;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityUserFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -31,13 +32,13 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 											D extends UtilsDescription,
-											C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+											C extends JeeslSecurityCategory<L,D>,
 											R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 											V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 											U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 											A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 											AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+											USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		extends AbstractAdminBean<L,D>
 		implements Serializable
 {
@@ -47,8 +48,8 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	protected JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser;
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity;
 	
-	private Class<R> cRole;
-	private Class<USER> cUser;
+	private final Class<R> cRole;
+	private final Class<USER> cUser;
 	
 	protected List<USER> users;public List<USER> getUsers() {return users;}
 	private List<USER> fvUsers; public List<USER> getFvUsers() {return fvUsers;} public void setFvUsers(List<USER> fvUsers) {this.fvUsers = fvUsers;}
@@ -65,19 +66,19 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected UtilsRevisionPageFlow<USER,USER> revision; public UtilsRevisionPageFlow<USER, USER> getRevision() {return revision;}
 	
-	public AbstractAdminSecurityUserBean(final Class<L> cL, final Class<D> cD)
+	public AbstractAdminSecurityUserBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<L> cL, final Class<D> cD, final Class<R> cRole, final Class<USER> cUser)
 	{
 		super(cL,cD);
-	}
-	
-	public void initSuper(JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage, final Class<L> cLang, final Class<D> cDescription, final Class<R> cRole, final Class<USER> cUser)
-	{
-		super.initAdmin(langs, cLang, cDescription, bUtilsMessage);
-		this.fUtilsUser=fUtilsUser;
-		this.fUtilsSecurity=fUtilsSecurity;
 		
 		this.cRole=cRole;
 		this.cUser=cUser;
+	}
+	
+	public void initSuper(JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage)
+	{
+		super.initAdmin(langs, cL, cD, bUtilsMessage);
+		this.fUtilsUser=fUtilsUser;
+		this.fUtilsSecurity=fUtilsSecurity;
 		
 		efUser = EjbSecurityUserFactory.factory(cUser);
 		mapRoles = new Hashtable<Long,Boolean>();
@@ -97,6 +98,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		user = efUser.build();
 		if(revision!=null){revision.pageFlowPrimaryAdd();}
 	}
+	protected void postAdd() {}
 	
 	public void selectUser()
 	{
@@ -124,6 +126,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		{
 			if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(user));}
 			checkPwd();
+			preSave();
 			user = fUtilsUser.saveTransaction(user);
 			reloadUser();
 			bMessage.growlSuccessSaved();
@@ -132,6 +135,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		}
 		catch (UtilsConstraintViolationException e) {constraintViolationOnSave();}
 	}
+	protected void preSave() {}
 	
 	public void rm(USER myUser)
 	{
@@ -146,6 +150,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		}
 		catch (UtilsConstraintViolationException e){constraintViolationOnRemove();}
 	}
+	protected void userChangePerformed() {}
 	
 	protected void checkPwd()
 	{
@@ -176,7 +181,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		}
 	}
 	
-	protected void userChangePerformed() {}
+	
 	protected void constraintViolationOnSave() {}
 	protected void constraintViolationOnRemove() {}
 	protected void passwordsDoNotMatch() {}

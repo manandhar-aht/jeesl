@@ -16,7 +16,7 @@ import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionView;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
 

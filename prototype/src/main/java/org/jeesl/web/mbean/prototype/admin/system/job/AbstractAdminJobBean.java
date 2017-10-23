@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
-import org.jeesl.factory.factory.JobFactoryFactory;
+import org.jeesl.factory.builder.JobFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
@@ -40,49 +40,32 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminJobBean.class);
 	
 	protected JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob;
-	
-	protected final Class<TEMPLATE> cTemplate;
-	protected final Class<CATEGORY> cCategory;
-	protected final Class<TYPE> cType;
-	protected final Class<JOB> cJob;
-	protected final Class<STATUS> cStatus;
-	protected final Class<ROBOT> cRobot;
-	private final Class<CACHE> cCache;
-
-	protected JobFactoryFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> ffJob;
+	protected final JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob;
 	
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	protected SbMultiHandler<TYPE> sbhType; public SbMultiHandler<TYPE> getSbhType() {return sbhType;}
 	protected final SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 
-	public AbstractAdminJobBean(final Class<L> cL, final Class<D> cD, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache)
+	public AbstractAdminJobBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob)
 	{
-		super(cL,cD);
-		this.cTemplate=cTemplate;
-		this.cCategory=cCategory;
-		this.cType=cType;
-		this.cJob=cJob;
-		this.cStatus=cStatus;
-		this.cRobot=cRobot;
-		this.cCache=cCache;
+		super(fbJob.getClassL(),fbJob.getClassD());
+		this.fbJob=fbJob;
 		
-		sbhStatus = new SbMultiHandler<STATUS>(cStatus,this);
+		sbhStatus = new SbMultiHandler<STATUS>(fbJob.getClassStatus(),this);
 	}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fJob=fJob;
-
-		ffJob = JobFactoryFactory.factory(cTemplate,cJob,cRobot,cCache);
 		
-		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,fJob.allOrderedPositionVisible(cCategory),this);
+		sbhCategory = new SbMultiHandler<CATEGORY>(fbJob.getClassCategory(),fJob.allOrderedPositionVisible(fbJob.getClassCategory()),this);
 		sbhCategory.selectAll();
 		
-		sbhType = new SbMultiHandler<TYPE>(cType,fJob.allOrderedPositionVisible(cType),this);
+		sbhType = new SbMultiHandler<TYPE>(fbJob.getClassType(),fJob.allOrderedPositionVisible(fbJob.getClassType()),this);
 		sbhType.selectAll();
 		
-		sbhStatus.setList(fJob.allOrderedPositionVisible(cStatus));
+		sbhStatus.setList(fJob.allOrderedPositionVisible(fbJob.getClassStatus()));
 	}
 	
 	@Override public void toggled(Class<?> c)

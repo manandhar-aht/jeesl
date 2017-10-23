@@ -1,6 +1,5 @@
 package org.jeesl.model.ejb.system.security;
 
-
 import java.io.Serializable;
 import java.util.Map;
 
@@ -20,7 +19,6 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategor
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -30,7 +28,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"type","code"}))
 @EjbErNode(name="Category",category="security",subset="security")
 public class SecurityCategory implements Serializable, EjbWithCode,EjbRemoveable,EjbPersistable,
-	JeeslSecurityCategory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser>
+	JeeslSecurityCategory<Lang,Description>
 {
 	public static final long serialVersionUID=1;
 	

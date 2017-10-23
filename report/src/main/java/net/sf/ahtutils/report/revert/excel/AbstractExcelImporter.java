@@ -1,6 +1,5 @@
 package net.sf.ahtutils.report.revert.excel;
 
-import freemarker.template.utility.StringUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,6 +31,7 @@ import org.apache.commons.lang.reflect.MethodUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jeesl.api.controller.ImportStrategy;
 import org.jeesl.api.controller.ValidationStrategy;
@@ -170,124 +170,130 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 		
 	public Map<C,ArrayList<String>> execute(Boolean skipTitle) throws Exception
 	{
-		// Create a list to hold the Entity classes to be created
-		LinkedHashMap<C,ArrayList<String>> importedEntities = new LinkedHashMap<C,ArrayList<String>>();
+	// Create a list to hold the Entity classes to be created
+	LinkedHashMap<C,ArrayList<String>> importedEntities = new LinkedHashMap<C,ArrayList<String>>();
                 
         // Define the rows to begin with and to end with, whether with or without first row
-		Integer end   = activeSheet.getLastRowNum();
-		Integer start = activeSheet.getFirstRowNum();
-		
-		logger.info("Sheet goes from " +start +" to " +end);
-		if (skipTitle) {start++;}
-                if (startRow!=null) {start = startRow;}
-		logger.info("Starting at " +start);
-		// Iterate through all given rows
-		for (int i = start; i < end+1; i++)
-		{
-			// Get the next row
-			Row row = activeSheet.getRow(i);
-			if (row==null) {continue;}
-			// Create a new Entity
-			C entity = (C) Class.forName(structure.getTargetClass()).newInstance();
+	Integer end   = activeSheet.getLastRowNum();
+	Integer start = activeSheet.getFirstRowNum();
+
+	logger.info("Sheet goes from " +start +" to " +end);
+	if (skipTitle) {start++;}
+	if (startRow!=null) {start = startRow;}
+	logger.info("Starting at " +start);
+	// Iterate through all given rows
+	for (int i = start; i < end+1; i++)
+	{
+	    // Get the next row
+	    Row row = activeSheet.getRow(i);
+	    if (row==null) {continue;}
+	    // Create a new Entity
+	    C entity = (C) Class.forName(structure.getTargetClass()).newInstance();
             if (entity instanceof EjbWithId)
-			{
-				Long currentId = new Long(1);
-				if (tempPropertyStore.containsKey("currentId")) 
-					{
-						currentId = (Long) tempPropertyStore.get("currentId");
-					}
-				((EjbWithId) entity).setId(currentId + 1);
-				tempPropertyStore.put("currentId", currentId +1);
-			}
-			
-			// Create a list of properties that falied the validation
-			// This can be used for staging purposes later on
-			ArrayList<String> failedValidations = new ArrayList<String>();
-                        
-			if (hasPrimaryKey)
-			{
-				// See if there is already an instance created for this key, otherwise create a new one
-				String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
-				if ( this.entities.containsKey(entityKey))
-				{
-					entity = this.entities.get(entityKey);
-				}
-			}
-			
-			// Iterate through the columns and assign data as given in the association table
-			for (short j = row.getFirstCellNum() ; j < row.getLastCellNum() ; j++)
-			{
-				Cell cell = row.getCell(j);
-				activeColumn = j +"";
-				
-				
-			
-			    // Assign the data to the entity using the setter
-                            if (propertyRelations.containsKey(j +""))
-                            {
-                                // Get the Cell Value as Object
-				Object object = DataUtil.getCellValue(cell);
-				
-				// Read the name of the property that should be filled with the data from this column
-				String propertyName = propertyRelations.get(j +"");
-                                if (propertyName!=null && !object.getClass().getCanonicalName().endsWith("java.lang.Object"))
-				{
-                                    logger.trace("Cell " +row.getRowNum() +"," +j +" should store " +propertyName +", value as String is " +object.toString());
-				
-					String property = propertyName;
-					if(logger.isTraceEnabled()){logger.trace("Setting " +property + " to " +object.toString() +" type: " +object.getClass().getCanonicalName() +")");}
-					tempPropertyStore.put(property, object.toString());
-					Class handler = strategies.get(activeColumn);
-					Boolean validated = invokeSetter(property,
-														new Object[] { object },
-														entity.getClass(),
-														entity,
-														handler);
-					if (!validated)
-					{
-						failedValidations.add(property);
-					}
-				}
-                            }
-			}
-                        
-			//facade.save(entity);
-                        importedEntities.put(entity, failedValidations);
-			if (hasPrimaryKey)
-			{
-				String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
-				entities.put(entityKey, entity);
-			}
+	    {
+		Long currentId = new Long(1);
+		if (tempPropertyStore.containsKey("currentId")) 
+		{
+		    currentId = (Long) tempPropertyStore.get("currentId");
 		}
-		return importedEntities;
-		
+		((EjbWithId) entity).setId(currentId + 1);
+		tempPropertyStore.put("currentId", currentId +1);
+	    }
+
+	    // Create a list of properties that falied the validation
+	    // This can be used for staging purposes later on
+	    ArrayList<String> failedValidations = new ArrayList<String>();
+
+	    if (hasPrimaryKey)
+	    {
+		    // See if there is already an instance created for this key, otherwise create a new one
+		    String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
+		    if ( this.entities.containsKey(entityKey))
+		    {
+			entity = this.entities.get(entityKey);
+		    }
+	    }
+
+	    // Iterate through the columns and assign data as given in the association table
+	    for (short j = row.getFirstCellNum() ; j < row.getLastCellNum() ; j++)
+	    {
+		Cell cell = row.getCell(j);
+		activeColumn = j +"";
+
+		// Assign the data to the entity using the setter
+		if (propertyRelations.containsKey(j +""))
+		{
+		    // Get the Cell Value as Object
+		    Object object = DataUtil.getCellValue(cell);
+
+		    // Read the name of the property that should be filled with the data from this column
+		    String propertyName = propertyRelations.get(j +"");
+		    if (propertyName!=null && !object.getClass().getCanonicalName().endsWith("java.lang.Object"))
+		    {
+			logger.trace("Cell " +row.getRowNum() +"," +j +" should store " +propertyName +", value as String is " +object.toString());
+
+			String property = propertyName;
+			if(logger.isTraceEnabled()){logger.trace("Setting " +property + " to " +object.toString() +" type: " +object.getClass().getCanonicalName() +")");}
+			tempPropertyStore.put(property, object.toString());
+			Class handler = strategies.get(activeColumn);
+			Boolean validated = false;
+			try 
+			{
+			    validated = invokeSetter(property,
+					new Object[] { object },
+					entity.getClass(),
+					entity,
+					handler);
+			}
+			catch (Exception e)
+			{
+			    if (logger.isTraceEnabled()) {logger.warn("Could not read " +CellReference.convertNumToColString(j) +"." +(row.getRowNum()+1) +": " +property);}
+			}
+			if (!validated)
+			{
+			    if (logger.isTraceEnabled()) {logger.warn("Could not read " +CellReference.convertNumToColString(j) +"." +(row.getRowNum()+1) +": " +property);}
+			    failedValidations.add(CellReference.convertNumToColString(j) +"." +(row.getRowNum()+1) +": " +property);
+			}
+		    }
+		}
+	    }
+
+	    //facade.save(entity);
+	    importedEntities.put(entity, failedValidations);
+	    if (hasPrimaryKey)
+	    {
+		String entityKey = DataUtil.getStringValue(DataUtil.getCellValue(row.getCell(primaryKey)));
+		entities.put(entityKey, entity);
+	    }
 	}
+	return importedEntities;
+    }
 	
 	
 		
 	 protected Boolean invokeSetter(String   property, 
-			 							Object[] parameters,
-			 							Class    targetClass,
-			 							Object   target,
-										Class    handler)        throws Exception
+					Object[] parameters,
+					Class    targetClass,
+					Object   target,
+					Class    handler)        throws Exception
 	 {
 		if (isList.containsKey(activeColumn))
 		{
-			List list = (List) MethodUtils.invokeMethod(target, "get" +property, null);
-			
-			// Instantiate new strategy to handle import
-			ImportStrategy strategy = (ImportStrategy) handler.newInstance();
+		    List list = (List) MethodUtils.invokeMethod(target, "get" +property, null);
 
-			// Pass database connection and current set of temporary properties
-			strategy.setFacade(facade);
-			strategy.setTempPropertyStore(tempPropertyStore);
+		    // Instantiate new strategy to handle import
+		    ImportStrategy strategy = (ImportStrategy) handler.newInstance();
 
-			// Process import step - Parameterclass is not requrired here
-			Object value  = strategy.handleObject(parameters[0], "", property);
-			parameters[0] =  value;
-			
-			list.add(value);
-			return true;
+		    // Pass database connection and current set of temporary properties
+		    strategy.setFacade(facade);
+		    strategy.setTempPropertyStore(tempPropertyStore);
+
+		    // Process import step - Parameterclass is not requrired here
+		    Object value  = strategy.handleObject(parameters[0], "", property);
+		    parameters[0] =  value;
+
+		    list.add(value);
+		    return true;
 		}
 		else
 		{
@@ -303,18 +309,16 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			Method m         = null;
 			for (Method method : methods)
 			{
-				if (method.getName().equals(methodName))
+			    if (method.getName().equals(methodName))
+			    {
+				parameter = method.getParameterTypes()[0];
+				if (Modifier.isPrivate(method.getModifiers()))
 				{
-					parameter = method.getParameterTypes()[0];
-                                        if (Modifier.isPrivate(method.getModifiers()))
-                                        {
-                                                method.setAccessible(true);
-                                        }
-					m = method;
+				    method.setAccessible(true);
 				}
+				m = method;
+			    }
 			}
-			
-			
 
 			// Determine parameter type of setter
 			// Type t = m.getGenericParameterTypes()[0];
@@ -346,78 +350,73 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				    Object value  = strategy.handleObject(parameters[0], parameterClass, property);
 				    parameters[0] =  value;
 
+				    // Sync new temporary properties if any added
+				    tempPropertyStore = strategy.getTempPropertyStore();
 
-
-
-
-
-					// Sync new temporary properties if any added
-					tempPropertyStore = strategy.getTempPropertyStore();
-
-					// Add the current property/value pair, can be useful when inspecting IDs (overwritten for new lines for examples)
-					if(logger.isTraceEnabled()){logger.trace("Set " +property + " to " + value.toString());}
-					if (value!=null) {tempPropertyStore.put(property, value);}
+				    // Add the current property/value pair, can be useful when inspecting IDs (overwritten for new lines for examples)
+				    if(logger.isTraceEnabled()){logger.trace("Set " +property + " to " + value.toString());}
+				    if (value!=null) {tempPropertyStore.put(property, value);}
 				} 
 
 				// Needed to correct the Class of the general number
 				else if (parameterClass.equals("long"))
 				{
-					Number number = (Number) parameters[0];
-					parameters[0] = number.longValue();
+				    Number number = (Number) parameters[0];
+				    parameters[0] = number.longValue();
 				}
 				
 				// Needed to correct the Class of the general number
 				else if (parameterClass.equals("int"))
 				{
-					Number number = (Number) parameters[0];
-					parameters[0] = number.intValue();
+				    Number number = (Number) parameters[0];
+				    parameters[0] = number.intValue();
 				}
 				
 				// Needed to correct the Class of the general number
 				else if (parameterClass.equals("java.lang.Integer"))
 				{
-					Number number = (Number) parameters[0];
-					parameters[0] = new Integer(number.intValue());
+				    Number number = (Number) parameters[0];
+				    parameters[0] = new Integer(number.intValue());
 				}
                                 
                                 // Needed to correct the Class of the general number
 				else if (parameterClass.equals("java.lang.Double"))
 				{
-					Number number = (Number) parameters[0];
-					parameters[0] = new Double(number.doubleValue());
+				    Number number = (Number) parameters[0];
+				    parameters[0] = new Double(number.doubleValue());
 				}
 
 				// This is important if the String is a Number, Excel will format the cell to be a "general number"
 				else if (parameterClass.equals("java.lang.String"))
 				{
-					if (parameters[0].getClass().getName().equals("java.lang.Double"))
+				    if (parameters[0].getClass().getName().equals("java.lang.Double"))
+				    {
+					Double n			= (Double) parameters[0];
+					if (n % 1 == 0)
 					{
-						Double n			= (Double) parameters[0];
-						if (n % 1 == 0)
-						{
-							parameters[0]	= "" +n.intValue();
-						}
-						else
-						{
-							parameters[0]	= "" +n;
-						}
+					    parameters[0]	= "" +n.intValue();
 					}
 					else
 					{
-						parameters[0] = parameters[0] +"";
+					    parameters[0]	= "" +n;
 					}
+				    }
+				    else
+				    {
+					parameters[0] = parameters[0] +"";
+				    }
 				}
 				
 				// This is important if the String is a Number, Excel will format the cell to be a "general number"
 				else if (parameterClass.equals("java.lang.Boolean") || parameterClass.equals("boolean"))
 				{
-					Number number = (Number) parameters[0];
-					Boolean b     = true;
-					if (number.intValue() == 0)
-					{
-						b = false;
-					}
-					parameters[0] = b;
+				    Number number = (Number) parameters[0];
+				    Boolean b     = true;
+				    if (number.intValue() == 0)
+				    {
+					    b = false;
+				    }
+				    parameters[0] = b;
 				}
 
 				// Now invoke the method with the parameter from the Excel sheet
@@ -428,7 +427,8 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
                             try {
                                 m.invoke(target, parameters[0]);
                             } catch (Throwable ex) {
-                                ex.printStackTrace();
+                                logger.error("Could not set " +m.getName() +" with " +parameters[0] +": " +ex.getMessage());
+				return false;
                             }
 
 			}
@@ -438,29 +438,28 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 
 			}
 			if (validators.containsKey(activeColumn))
-					{
-						logger.info("Found " +property +" validator");
-						// Instantiate new strategy to handle import
-						ValidationStrategy validator = (ValidationStrategy) validators.get(activeColumn).newInstance();
-						validator.setFacade(facade);
-						logger.info("Using " +validator.getClass().getCanonicalName());
-						// Validate the loaded value
-						if (targetClasses.containsKey(activeColumn)) 
-						{
-							validated = validator.validate(valueFromCell, targetClasses.get(activeColumn).getCanonicalName(), property);
-						}
-						else
-						{
-							validated = validator.validate(valueFromCell, "", property);
-						}
+			    {
+				// Instantiate new strategy to handle import
+				ValidationStrategy validator = (ValidationStrategy) validators.get(activeColumn).newInstance();
+				validator.setFacade(facade);
+				if (logger.isTraceEnabled()) {logger.info("Using " +validator.getClass().getCanonicalName());}
+				// Validate the loaded value
+				if (targetClasses.containsKey(activeColumn)) 
+				{
+					validated = validator.validate(valueFromCell, targetClasses.get(activeColumn).getCanonicalName(), property);
+				}
+				else
+				{
+					validated = validator.validate(valueFromCell, "", property);
+				}
 
-						logger.info("Validation result: " +validated);
-					}
-					else
-					{
-						validated = true;
-					}
-				return validated;
+				if (logger.isTraceEnabled()) {logger.trace("Validation result: " +validated);}
+			    }
+			    else
+			    {
+				    validated = true;
+			    }
+			    return validated;
 			}
 			
 		}

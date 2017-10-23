@@ -21,7 +21,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplat
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.user.JeeslUser;
+import org.jeesl.model.ejb.user.User;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -32,7 +32,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @EjbErNode(name="Action Template",category="security",subset="security")
 
 public class SecurityActionTemplate implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-	JeeslSecurityTemplate<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser>
+	JeeslSecurityTemplate<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,User>
 {
 	public static final long serialVersionUID=1;
 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslIoAttributes">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Attribute"/>
+	    		<s:lang key="en" translation="Attributes"/>
+	    		<s:lang key="fr" translation="Attributes"/>
+	    	</s:langs>
+    </s:translation>
+  	<s:translation key="jeeslIoAttribute">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Attribut"/>
+	    		<s:lang key="en" translation="Attribute"/>
+	    		<s:lang key="fr" translation="Attribute"/>
+	    	</s:langs>
+    </s:translation>
+   	<s:translation key="jeeslIoAttributeSets">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Attribut Sets"/>
+	    		<s:lang key="en" translation="Attribute Sets"/>
+	    		<s:lang key="fr" translation="Attribute Sets"/>
+	    	</s:langs>
+    </s:translation>   
+   	<s:translation key="jeeslIoAttributeSet">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Attribut Set"/>
+	    		<s:lang key="en" translation="Attribute Set"/>
+	    		<s:lang key="fr" translation="Attribute Set"/>
+	    	</s:langs>
+    </s:translation>
+       	<s:translation key="jeeslIoAttributeSetShort">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Set"/>
+	    		<s:lang key="en" translation="Set"/>
+	    		<s:lang key="fr" translation="Set"/>
+	    	</s:langs>
+    </s:translation>
+   	<s:translation key="jeeslIoAttributeItems">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Elemente"/>
+	    		<s:lang key="en" translation="Items"/>
+	    		<s:lang key="fr" translation="Items"/>
+	    	</s:langs>
+    </s:translation>    
+     	<s:translation key="jeeslIoAttributeItems">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Elemente"/>
+	    		<s:lang key="en" translation="Items"/>
+	    		<s:lang key="fr" translation="Items"/>
+	    	</s:langs>
+    </s:translation>  
+      	<s:translation key="jeeslIoAttributeItem">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Element"/>
+	    		<s:lang key="en" translation="Item"/>
+	    		<s:lang key="fr" translation="Item"/>
+	    	</s:langs>
+    </s:translation>    
+    
+</s:translations>

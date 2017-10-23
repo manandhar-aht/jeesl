@@ -1,0 +1,21 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://java.sun.com/jsf/html"
+>
+	
+	<c:set var="entity" value="#{entity}" />
+	<c:set var="code" value="#{code}" />
+	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
+	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
+	<c:set var="for" value="#{for}" />
+	
+	<h:outputText value="#{appLabelBean.descriptions[entity][code][loc].lang}">
+		<c:if test="#{not empty id}"><f:attribute name="id" value="#{id}"/></c:if>
+		<c:if test="#{not empty for}"><f:attribute name="for" value="#{for}"/></c:if>
+	</h:outputText>
+	
+</ui:composition>

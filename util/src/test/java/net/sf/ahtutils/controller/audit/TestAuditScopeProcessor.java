@@ -13,7 +13,7 @@ import org.jeesl.model.ejb.system.security.SecurityUsecase;
 import org.jeesl.model.ejb.system.security.SecurityView;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.user.JeeslUser;
+import org.jeesl.model.ejb.user.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -40,13 +40,13 @@ public class TestAuditScopeProcessor extends AbstractJeeslTest
 	private Revisions revisions;
 	
 	private AuditScopeProcessor asp;
-	private XmlRevisionFactory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser> xfRevision;
+	private XmlRevisionFactory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,User> xfRevision;
 	
 	@Before
     public void init()
     {
 		asp = new AuditScopeProcessor();
-	    xfRevision = new XmlRevisionFactory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser>();
+	    xfRevision = new XmlRevisionFactory<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,User>();
 		initScopeList();
 		initRevisions();
     }

@@ -3,13 +3,13 @@ package org.jeesl.api.facade.io;
 import java.util.Date;
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.revision.EjbWithRevisionAttributes;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionAttribute;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.revision.JeeslRevisionViewMapping;
+import org.jeesl.interfaces.model.system.io.revision.EjbWithRevisionAttributes;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;

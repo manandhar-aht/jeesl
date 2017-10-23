@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
+import org.jeesl.factory.builder.JobFactoryBuilder;
 import org.jeesl.factory.ejb.system.job.EjbJobRobotFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
@@ -46,17 +47,17 @@ public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efRobot;
 
-	public AbstractAdminJobRobotBean(final Class<L> cL, final Class<D> cD, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache){super(cL,cD,cTemplate,cCategory,cType,cJob,cStatus,cRobot,cCache);}
+	public AbstractAdminJobRobotBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob){super(fbJob);}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
 		super.initSuper(langs,bMessage,fJob);
-		efRobot = ffJob.robot();
+		efRobot = fbJob.robot();
 		
 		if(debugOnInfo)
 		{
-			logger.info(AbstractLogMessage.multiStatus(cCategory,sbhCategory.getSelected(),sbhCategory.getList()));
-			logger.info(AbstractLogMessage.multiStatus(cType,sbhType.getSelected(),sbhType.getList()));
+			logger.info(AbstractLogMessage.multiStatus(fbJob.getClassCategory(),sbhCategory.getSelected(),sbhCategory.getList()));
+			logger.info(AbstractLogMessage.multiStatus(fbJob.getClassType(),sbhType.getSelected(),sbhType.getList()));
 		}
 		reloadConsumers();
 	}
@@ -69,14 +70,14 @@ public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private void reloadConsumers()
 	{
-		robots = fJob.all(cRobot);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cRobot,robots));}
+		robots = fJob.all(fbJob.getClassRobot());
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbJob.getClassRobot(),robots));}
 //		Collections.sort(templates, comparatorTemplate);
 	}
 	
 	public void addRobot()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cRobot));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbJob.getClassRobot()));}
 		robot = efRobot.build();
 		robot.setName(efLang.createEmpty(langs));
 		robot.setDescription(efDescription.createEmpty(langs));

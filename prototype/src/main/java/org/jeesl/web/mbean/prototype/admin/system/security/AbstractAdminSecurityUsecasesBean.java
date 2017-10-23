@@ -6,9 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -26,13 +27,13 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends UtilsDescription,
-											C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+											C extends JeeslSecurityCategory<L,D>,
 											R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 											V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 											U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 											A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 											AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+											USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,USER>
 		implements Serializable
 {
@@ -46,9 +47,9 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	
 	private U usecase; public U getUsecase(){return usecase;} public void setUsecase(U usecase){this.usecase = usecase;}
 	
-	public AbstractAdminSecurityUsecasesBean(final Class<L> cL, final Class<D> cD, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public AbstractAdminSecurityUsecasesBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
-		super(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 	}
 	
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)

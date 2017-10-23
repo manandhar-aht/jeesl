@@ -61,16 +61,16 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 						TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 						
 						CAT extends UtilsStatus<CAT,L,D>,
-						SCOPE extends JeeslTsScope<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
 						UNIT extends UtilsStatus<UNIT,L,D>,
-						TS extends JeeslTimeSeries<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						TS extends JeeslTimeSeries<L,D,SCOPE,BRIDGE,INT>,
 						TRANSACTION extends JeeslTsTransaction<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
 						SOURCE extends EjbWithLangDescription<L,D>, 
-						BRIDGE extends JeeslTsBridge<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
-						EC extends JeeslTsEntityClass<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						BRIDGE extends JeeslTsBridge<EC>,
+						EC extends JeeslTsEntityClass<L,D,CAT>,
 						INT extends UtilsStatus<INT,L,D>,
-						DATA extends JeeslTsData<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
-						SAMPLE extends JeeslTsSample<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>,
+						DATA extends JeeslTsData<L,D,TS,TRANSACTION,SAMPLE,WS>,
+						SAMPLE extends JeeslTsSample,
 						USER extends EjbWithId, 
 						WS extends UtilsStatus<WS,L,D>,
 						QAF extends UtilsStatus<QAF,L,D>
@@ -103,7 +103,7 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 	
 	public Report build(WS workspace, SCOPE scope, INT interval, BRIDGE bridge, Date from, Date to) throws UtilsNotFoundException
 	{
-		TS ts = fTs.fTimeSeries(cTs, scope, interval, bridge);
+		TS ts = fTs.fTimeSeries(scope, interval, bridge);
 		List<DATA> tsData = fTs.fData(workspace,ts,from,to);
 		logger.info("Records: "+tsData.size());
 		Report xml = XmlReportFactory.build();

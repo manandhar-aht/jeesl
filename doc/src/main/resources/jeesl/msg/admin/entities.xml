@@ -112,6 +112,22 @@
 			<s:lang key="fr" translation="Mail Retention"/>
 		</s:langs>
 	</s:translation>
+	
+	<s:translation key="IoAttributeCategory">
+		<s:langs>
+			<s:lang key="de" translation="Attribut Kategorie"/>
+			<s:lang key="en" translation="Attribute Category"/>
+			<s:lang key="fr" translation="Attribute Category"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoAttributeType">
+		<s:langs>
+			<s:lang key="de" translation="Attribut Typ"/>
+			<s:lang key="en" translation="Attribute Type"/>
+			<s:lang key="fr" translation="Attribute Type"/>
+		</s:langs>
+	</s:translation>
+	
 	<s:translation key="IoTemplateCategory">
 		<s:langs>
 			<s:lang key="de" translation="Vorlagen Kategorie"/>

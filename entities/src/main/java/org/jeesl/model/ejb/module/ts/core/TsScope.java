@@ -26,7 +26,7 @@ import org.jeesl.model.ejb.module.ts.data.TsTransaction;
 import org.jeesl.model.ejb.module.ts.qa.TsQaFlag;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.user.JeeslUser;
+import org.jeesl.model.ejb.user.User;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -34,7 +34,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Scope",category="ts",subset="ts")
 public class TsScope implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslTsScope<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsDataSource,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,JeeslUser,TsWorkspace,TsQaFlag>
+								JeeslTsScope<Lang,Description,TsCategory,TsUnit,TsEntityClass,TsInterval>
 {
 	public static final long serialVersionUID=1;
 	

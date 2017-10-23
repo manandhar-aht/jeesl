@@ -22,7 +22,7 @@ import org.jeesl.model.ejb.system.security.SecurityUsecase;
 import org.jeesl.model.ejb.system.security.SecurityView;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.user.JeeslUser;
+import org.jeesl.model.ejb.user.User;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -34,7 +34,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(name = "StaffWorkspace",uniqueConstraints = @UniqueConstraint(columnNames = {"domain_id","role_id","user_id"}))
 @EjbErNode(name="Staff",category="ts",level=2,subset="ts")
 public class TsStaffWorkspace implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,EjbSaveable,
-					JeeslStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser,TsWorkspace,TsWorkspace>
+					JeeslStaff<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,User,TsWorkspace,TsWorkspace>
 {
 	public static final long serialVersionUID=1;
 
@@ -60,9 +60,9 @@ public class TsStaffWorkspace implements Serializable,EjbWithId,EjbPersistable,E
 	@Override public void setRole(SecurityRole role) {this.role = role;}
 
 	@NotNull @ManyToOne
-	private JeeslUser user;
-	@Override public JeeslUser getUser() {return user;}
-	@Override  public void setUser(JeeslUser user) {this.user = user;}
+	private User user;
+	@Override public User getUser() {return user;}
+	@Override  public void setUser(User user) {this.user = user;}
 	
 	@Override public String toString()
 	{

@@ -35,7 +35,6 @@ public class ValidateExistenceByCode implements ValidationStrategy {
 		{
 			try {
 				lutClass = (Class) Class.forName(parameterClass);
-				logger.info("lutClass " +lutClass.getName());
 				lookupEntity = facade.fByCode(lutClass, code);
                                 validated = true;
 			} catch (Exception e) {

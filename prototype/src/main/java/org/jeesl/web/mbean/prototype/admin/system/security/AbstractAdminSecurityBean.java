@@ -5,16 +5,20 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionTemplateFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityCategoryFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityRoleFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityUsecaseFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityViewFactory;
-import org.jeesl.factory.factory.SecurityFactoryFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.util.comparator.ejb.system.security.SecurityActionComparator;
+import org.jeesl.util.comparator.ejb.system.security.SecurityRoleComparator;
+import org.jeesl.util.comparator.ejb.system.security.SecurityUsecaseComparator;
+import org.jeesl.util.comparator.ejb.system.security.SecurityViewComparator;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -29,20 +33,16 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityRoleComparator;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityUsecaseComparator;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityViewComparator;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescription,
-											C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+											C extends JeeslSecurityCategory<L,D>,
 											R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 											V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 											U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 											A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 											AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-											USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+											USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable
 {
@@ -52,7 +52,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected JeeslSecurityCategory.Type categoryType;
 	
-	protected final SecurityFactoryFactory<L,D,C,R,V,U,A,AT,USER> ffSecurity;
+	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> ffSecurity;
 	
 	protected EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> efCategory;
 	protected EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> efView;
@@ -94,9 +94,9 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	protected U opUsecase;public U getOpUsecase(){return opUsecase;}public void setOpUsecase(U opUsecase){this.opUsecase = opUsecase;}
 	protected U tblUsecase;public U getTblUsecase(){return tblUsecase;}public void setTblUsecase(U tblUsecase){this.tblUsecase = tblUsecase;}
 	
-	public AbstractAdminSecurityBean(final Class<L> cL, final Class<D> cD, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public AbstractAdminSecurityBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
-		super(cL,cD);
+		super(fbSecurity.getClassL(),fbSecurity.getClassD());
 		this.cCategory=cCategory;
 		this.cRole=cRole;
 		this.cUsecase=cUsecase;
@@ -105,7 +105,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		this.cTemplate=cTemplate;
 		this.cUser=cUser;
 		
-		ffSecurity = SecurityFactoryFactory.factory(cL,cD,cAction);
+		ffSecurity = SecurityFactoryBuilder.factory(cL,cD,cAction);
 	}
 	
 	public void initSecuritySuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)

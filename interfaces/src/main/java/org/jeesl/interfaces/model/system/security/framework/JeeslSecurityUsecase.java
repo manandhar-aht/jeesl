@@ -2,7 +2,7 @@ package org.jeesl.interfaces.model.system.security.framework;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithActions;
 import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithCategory;
 import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithViews;
@@ -18,13 +18,13 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSecurityUsecase<L extends UtilsLang,
  									  D extends UtilsDescription, 
- 									  C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+ 									  C extends JeeslSecurityCategory<L,D>,
  									  R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
  									  V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
  									  U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
  									  A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
  									 AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
- 									  USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+ 									  USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 			extends EjbWithCode,EjbSaveable,EjbWithPositionVisible,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>,
 					JeeslSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>,

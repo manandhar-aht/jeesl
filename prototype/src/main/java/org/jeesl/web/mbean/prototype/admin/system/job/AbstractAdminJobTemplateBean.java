@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
+import org.jeesl.factory.builder.JobFactoryBuilder;
 import org.jeesl.factory.ejb.system.job.EjbJobTemplateFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
@@ -46,21 +47,18 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 
 	private EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efTemplate;
 	
-	public AbstractAdminJobTemplateBean(final Class<L> cL, final Class<D> cD, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache)
-	{
-		super(cL,cD,cTemplate,cCategory,cType,cJob,cStatus,cRobot,cCache);
-	}
+	public AbstractAdminJobTemplateBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob) {super(fbJob);}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
 		super.initSuper(langs,bMessage,fJob);
 		
-		efTemplate = ffJob.template();
+		efTemplate = fbJob.template();
 		
 		if(debugOnInfo)
 		{
-			logger.info(AbstractLogMessage.multiStatus(cCategory,sbhCategory.getSelected(),sbhCategory.getList()));
-			logger.info(AbstractLogMessage.multiStatus(cType,sbhType.getSelected(),sbhType.getList()));
+			logger.info(AbstractLogMessage.multiStatus(fbJob.getClassCategory(),sbhCategory.getSelected(),sbhCategory.getList()));
+			logger.info(AbstractLogMessage.multiStatus(fbJob.getClassType(),sbhType.getSelected(),sbhType.getList()));
 		}
 		reloadTemplates();
 	}
@@ -82,14 +80,14 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 	private void reloadTemplates()
 	{
 //		jobs = fJob.fJobs(sbhCategory.getSelected(),sbhType.getSelected(),sbhStatus.getSelected());
-		templates = fJob.all(cTemplate);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cTemplate,templates));}
+		templates = fJob.all(fbJob.getClassTemplate());
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbJob.getClassTemplate(),templates));}
 //		Collections.sort(templates, comparatorTemplate);
 	}
 	
 	public void addTemplate()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cTemplate));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbJob.getClassTemplate()));}
 		template = efTemplate.build(null,null);
 		template.setName(efLang.createEmpty(langs));
 		template.setDescription(efDescription.createEmpty(langs));
@@ -103,8 +101,8 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(template));}
-		template.setCategory(fJob.find(cCategory,template.getCategory()));
-		template.setType(fJob.find(cType,template.getType()));
+		template.setCategory(fJob.find(fbJob.getClassCategory(),template.getCategory()));
+		template.setType(fJob.find(fbJob.getClassType(),template.getType()));
 		template = fJob.save(template);
 		reloadTemplates();
 	}

@@ -18,9 +18,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.report.DataAssociation;
-import net.sf.ahtutils.xml.report.DataAssociations;
-import net.sf.ahtutils.xml.report.ImportStructure;
+import static org.hibernate.criterion.Projections.property;
 import org.jeesl.api.controller.ImportStrategy;
+import org.jeesl.api.controller.ValidationStrategy;
 
 
 public class XmlDataAssociationFactory <L extends UtilsLang,D extends UtilsDescription,
@@ -73,6 +73,17 @@ public class XmlDataAssociationFactory <L extends UtilsLang,D extends UtilsDescr
         association.setColumn("" +column);
         association.setProperty(property);
         association.setHandledBy(handler.getName());
+        return association;
+    }
+    
+    /**
+    * Add a validation by the given class.
+    * @param handler The handler class that implements the ValidationStrategy interface
+    * @return Data association with validation parameter set
+    */
+    public static DataAssociation addValidation(DataAssociation association, Class<? extends ValidationStrategy> handler)
+    {
+	association.setValidatedBy(handler.getName());
         return association;
     }
 }

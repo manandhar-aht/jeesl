@@ -18,12 +18,16 @@ import org.jeesl.factory.xml.system.security.XmlUsecaseFactory;
 import org.jeesl.factory.xml.system.security.XmlUsecasesFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.UtilsUser;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.util.comparator.ejb.system.security.SecurityActionComparator;
+import org.jeesl.util.comparator.ejb.system.security.SecurityRoleComparator;
+import org.jeesl.util.comparator.ejb.system.security.SecurityUsecaseComparator;
+import org.jeesl.util.comparator.ejb.system.security.SecurityViewComparator;
 import org.jeesl.util.query.xml.SecurityQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,10 +38,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityViewImport;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityActionComparator;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityRoleComparator;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityUsecaseComparator;
-import net.sf.ahtutils.util.comparator.ejb.security.SecurityViewComparator;
 import net.sf.ahtutils.web.rest.security.AbstractSecurityInit;
 import net.sf.ahtutils.web.rest.security.SecurityInitRoles;
 import net.sf.ahtutils.web.rest.security.SecurityInitTemplates;
@@ -56,13 +56,13 @@ import net.sf.ahtutils.xml.security.Tmp;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
 public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription,
-								C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,
+								C extends JeeslSecurityCategory<L,D>,
 								R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 								V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
 								U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 								A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 								AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-								USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+								USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 				implements JeeslSecurityRestExport,UtilsSecurityViewImport
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityRestService.class);
@@ -126,7 +126,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		initUsecases = AbstractSecurityInit.factoryUsecases(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D,C,R,V,U,A,AT,USER>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends UtilsUser<L,D,C,R,V,U,A,AT,USER>>
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		SecurityRestService<L,D,C,R,V,U,A,AT,USER>
 		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<L> cL,final Class<D> cD,final Class<C> cCategory, final Class<V> cView, final Class<R> cRole, final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
 	{

@@ -25,7 +25,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.user.JeeslUser;
+import org.jeesl.model.ejb.user.User;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -36,7 +36,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @EjbErNode(name="Role",category="security",subset="security,ts")
 
 public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-	JeeslSecurityRole<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,JeeslUser>
+	JeeslSecurityRole<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,User>
 {
 	public static enum Code {systemAht}
 	public static enum CodeRegion {regionalManager,regionalEditor}
@@ -101,9 +101,9 @@ public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbP
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "User_SecurityRole")
-	private List<JeeslUser> users;
-	public List<JeeslUser> getUsers() {return users;}
-	public void setUsers(List<JeeslUser> users) {this.users = users;}
+	private List<User> users;
+	public List<User> getUsers() {return users;}
+	public void setUsers(List<User> users) {this.users = users;}
 
 	
 	@Override public String toString()

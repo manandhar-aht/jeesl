@@ -25,7 +25,7 @@ import org.jeesl.model.ejb.module.ts.core.TsWorkspace;
 import org.jeesl.model.ejb.module.ts.qa.TsQaFlag;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.user.JeeslUser;
+import org.jeesl.model.ejb.user.User;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -33,7 +33,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Transaction",category="ts",subset="ts",level=2)
 public class TsTransaction implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslTsTransaction<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsDataSource,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,JeeslUser,TsWorkspace,TsQaFlag>
+								JeeslTsTransaction<Lang,Description,TsCategory,TsScope,TsUnit,TimeSeries,TsTransaction,TsDataSource,TsBridge,TsEntityClass,TsInterval,TsData,TsSample,User,TsWorkspace,TsQaFlag>
 {
 	public static final long serialVersionUID=1;
 	
@@ -46,9 +46,9 @@ public class TsTransaction implements Serializable,EjbRemoveable,EjbPersistable,
 	@Override public Date getRecord() {return record;}
 	@Override public void setRecord(java.util.Date record) {this.record=record;}
 	
-	private JeeslUser user;
-	@Override public JeeslUser getUser() {return user;}
-	@Override public void setUser(JeeslUser user) {this.user = user;}
+	private User user;
+	@Override public User getUser() {return user;}
+	@Override public void setUser(User user) {this.user = user;}
 	
 	private String remark;
 	@Override public String getRemark() {return remark;}

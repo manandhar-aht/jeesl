@@ -49,7 +49,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private SbDateHandler sbDateHandler; public SbDateHandler getSbDateHandler() {return sbDateHandler;}
 
-	public AbstractAdminJobQueueBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob, Class<TEMPLATE> cTemplate, Class<CATEGORY> cCategory, Class<TYPE> cType, Class<JOB> cJob, Class<STATUS> cStatus, Class<ROBOT> cRobot, Class<CACHE> cCache){super(fbJob,cTemplate,cCategory,cType,cJob,cStatus,cRobot,cCache);}
+	public AbstractAdminJobQueueBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob){super(fbJob);}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
@@ -60,18 +60,18 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 		
 		try
 		{
-			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.queue));
-			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.timeout));
-			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.error));
-			sbhStatus.select(fJob.fByCode(cStatus,JeeslJob.Status.working));
+			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJob.Status.queue));
+			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJob.Status.timeout));
+			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJob.Status.error));
+			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJob.Status.working));
 		}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 		
 		if(debugOnInfo)
 		{
-			logger.info(AbstractLogMessage.multiStatus(cCategory,sbhCategory.getSelected(),sbhCategory.getList()));
-			logger.info(AbstractLogMessage.multiStatus(cType,sbhType.getSelected(),sbhType.getList()));
-			logger.info(AbstractLogMessage.multiStatus(cStatus,sbhStatus.getSelected(),sbhStatus.getList()));
+			logger.info(AbstractLogMessage.multiStatus(fbJob.getClassCategory(),sbhCategory.getSelected(),sbhCategory.getList()));
+			logger.info(AbstractLogMessage.multiStatus(fbJob.getClassType(),sbhType.getSelected(),sbhType.getList()));
+			logger.info(AbstractLogMessage.multiStatus(fbJob.getClassStatus(),sbhStatus.getSelected(),sbhStatus.getList()));
 		}
 		reloadJobs();
 	}
@@ -80,9 +80,9 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	{
 		logger.trace(AbstractLogMessage.toggled(c));
 		super.toggled(c);
-		if(cCategory.isAssignableFrom(c)){logger.trace(cCategory.getName());}
-		else if(cType.isAssignableFrom(c)){logger.trace(cType.getName());}
-		else if(cStatus.isAssignableFrom(c)){logger.trace(cStatus.getName());}
+		if(fbJob.getClassCategory().isAssignableFrom(c)){logger.trace(fbJob.getClassCategory().getName());}
+		else if(fbJob.getClassType().isAssignableFrom(c)){logger.trace(fbJob.getClassType().getName());}
+		else if(fbJob.getClassStatus().isAssignableFrom(c)){logger.trace(fbJob.getClassStatus().getName());}
 		reloadJobs();
 		clear(true);
 	}
@@ -101,7 +101,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	private void reloadJobs()
 	{
 		jobs = fJob.fJobs(sbhCategory.getSelected(),sbhType.getSelected(),sbhStatus.getSelected(),sbDateHandler.getDate1(),sbDateHandler.getDate2());
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cJob,jobs));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbJob.getClassJob(),jobs));}
 //		Collections.sort(templates, comparatorTemplate);
 	}
 		
@@ -113,7 +113,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	public void saveJob() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(job));}
-		job.setStatus(fJob.find(cStatus,job.getStatus()));
+		job.setStatus(fJob.find(fbJob.getClassStatus(),job.getStatus()));
 		job = fJob.save(job);
 		reloadJobs();
 	}

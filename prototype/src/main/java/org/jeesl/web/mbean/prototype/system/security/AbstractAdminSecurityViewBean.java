@@ -106,7 +106,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	public void addView() throws UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassView()));
-		view = efView.create(category,"");
+		view = efView.build(category,"",views);
 		view.setName(efLang.createEmpty(langs));
 		view.setDescription(efDescription.createEmpty(langs));
 	}
@@ -182,7 +182,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	public void addAction() throws UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassAction()));
-		action = efAction.create(view,"");
+		action = efAction.build(view,"",actions);
 		action.setName(efLang.createEmpty(langs));
 		action.setDescription(efDescription.createEmpty(langs));
 	}

@@ -23,27 +23,13 @@ public class EjbSecurityActionTemplateFactory <L extends UtilsLang, D extends Ut
 										 A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 										 AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 										 USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
-		extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityActionTemplateFactory.class);
 	
-    public static <L extends UtilsLang,
-	 			   D extends UtilsDescription,
-	 			   C extends JeeslSecurityCategory<L,D>,
-	 			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-	 			   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
-	 			   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-	 			   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	 			   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-	 			   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
-    	EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER> factory(final Class<L> clLang,final Class<D> clDescription,Class<AT> clActionTemplate)
+	private final Class<AT> cTemplate;
+	
+    public EjbSecurityActionTemplateFactory(Class<AT> clActionTemplate)
     {
-        return new EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER>(clLang,clDescription,clActionTemplate);
-    }
-    
-    public EjbSecurityActionTemplateFactory(final Class<L> clLang,final Class<D> clDescription,Class<AT> clActionTemplate)
-    {
-    	super(clLang,clDescription);
         this.cTemplate = clActionTemplate;
     } 
     

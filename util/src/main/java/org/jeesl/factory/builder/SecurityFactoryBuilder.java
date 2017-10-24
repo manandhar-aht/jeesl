@@ -6,6 +6,7 @@ import org.jeesl.factory.ejb.system.security.EjbSecurityCategoryFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityRoleFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityUsecaseFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityUserFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityViewFactory;
 import org.jeesl.factory.txt.system.security.TxtStaffFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
@@ -58,37 +59,42 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	
 	public EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> ejbCategory()
 	{
-		return EjbSecurityCategoryFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
+		return new EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER>(cCategory);
 	}
 	
 	public EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> ejbRole()
 	{
-		return EjbSecurityRoleFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
+		return new EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER>(cRole);
 	}
 	
 	public EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> ejbView()
 	{
-		return EjbSecurityViewFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
+		return new EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER>(cView);
 	}
 	
 	public EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> ejbUsecase()
 	{
-		return EjbSecurityUsecaseFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
+		return new EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(cUsecase);
 	}
 	
 	public EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> ejbAction()
 	{
-		return new EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>(cL,cD,cAction);
+		return new EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>(cAction);
 	}
 	
 	public EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER> ejbTemplate()
 	{
-		return EjbSecurityActionTemplateFactory.factory(cL,cD,cTemplate);
+		return new EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER>(cTemplate);
 	}
 	
 	public <M extends JeeslSecurityMenu<L,D,C,R,V,U,A,AT,M,USER>> EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> ejbMenu(Class<M> cM)
 	{
-		return new EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cM);
+		return new EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>(cM);
+	}
+	
+	public EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER> ejbUser()
+	{
+		return new EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER>(cUser);
 	}
 	
 	

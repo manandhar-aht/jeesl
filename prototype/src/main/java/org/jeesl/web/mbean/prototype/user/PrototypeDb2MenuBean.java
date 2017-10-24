@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
 import org.jeesl.factory.txt.system.security.TxtSecurityMenuFactory;
 import org.jeesl.factory.xml.system.navigation.XmlBreadcrumbFactory;
@@ -66,7 +67,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	private boolean setupRequired=false;
 	private boolean debugOnInfo; protected void setLogInfo(boolean log) {debugOnInfo = log;}
 
-	public PrototypeDb2MenuBean(final Class<L> cL, final Class<D> cD, final Class<M> cMenu)
+	public PrototypeDb2MenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<M> cMenu)
 	{
 		this.cMenu=cMenu;
 		
@@ -76,7 +77,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		mapSub = new HashMap<M,MenuItem>();
 		mapBreadcrumb = new HashMap<M,Breadcrumb>();
 		
-		efMenu = new EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cMenu);
+		efMenu = fbSecurity.ejbMenu(cMenu);
 		tfMenu = new TxtSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>();
 		
 		debugOnInfo = false;

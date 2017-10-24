@@ -139,7 +139,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	public void addRole() throws UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassRole()));
-		role = efRole.create(category,"");
+		role = efRole.build(category,"");
 		role.setName(efLang.createEmpty(langs));
 		role.setDescription(efDescription.createEmpty(langs));
 	}

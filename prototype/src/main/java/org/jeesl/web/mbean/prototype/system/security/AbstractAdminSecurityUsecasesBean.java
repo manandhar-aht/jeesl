@@ -127,7 +127,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	public void addUsecase() throws UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassUsecase()));
-		usecase = efUsecase.create(category,"");
+		usecase = efUsecase.build(category,"");
 		usecase.setName(efLang.createEmpty(langs));
 		usecase.setDescription(efDescription.createEmpty(langs));
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jeesl.api.facade.core.JeeslUserFacade;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbStaffFactory;
 import org.jeesl.interfaces.bean.op.OpUserBean;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
@@ -63,6 +64,11 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	
 	private OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> opContactHandler;
 	@Override public OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> getOpUserHandler() {return opContactHandler;}
+	
+	public AbstractAdminSecurityDomainBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
+	{
+		
+	}
 	
 	protected void initSuper(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUser, Class<C> cCategory, Class<R> cRole, Class<USER> cUser, Class<STAFF> cStaff)
 	{

@@ -58,7 +58,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	protected USER user; public USER getUser(){return user;} public void setUser(USER user){this.user = user;}
 	
 	protected Map<Long,Boolean> mapRoles; public Map<Long, Boolean> getMapRoles() {return mapRoles;}
-	protected EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER> efUser;
+	protected final EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER> efUser;
 	
 	protected boolean performPasswordCheck;
 	protected String pwd1; public String getPwd1() {return pwd1;} public void setPwd1(String pwd1) {this.pwd1 = pwd1;}
@@ -69,7 +69,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	public AbstractAdminSecurityUserBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<L> cL, final Class<D> cD, final Class<R> cRole, final Class<USER> cUser)
 	{
 		super(cL,cD);
-		
+		efUser = fbSecurity.ejbUser();
 		this.cRole=cRole;
 		this.cUser=cUser;
 	}
@@ -80,7 +80,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		this.fUtilsUser=fUtilsUser;
 		this.fUtilsSecurity=fUtilsSecurity;
 		
-		efUser = EjbSecurityUserFactory.factory(cUser);
+		
 		mapRoles = new Hashtable<Long,Boolean>();
 		roles = new ArrayList<R>();
 		

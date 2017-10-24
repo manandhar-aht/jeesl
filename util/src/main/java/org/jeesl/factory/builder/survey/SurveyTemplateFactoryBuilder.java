@@ -123,8 +123,8 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		return new EjbSurveySectionFactory<L,D,TEMPLATE,SECTION>(cSection);
 	}
 	
-	public TxtSurveyQuestionFactory<L,D,QUESTION,ANSWER,OPTION> txtQuestion()
+	public TxtSurveyQuestionFactory<L,D,QUESTION,OPTION> txtQuestion()
 	{
-		return new TxtSurveyQuestionFactory<L,D,QUESTION,ANSWER,OPTION>();
+		return new TxtSurveyQuestionFactory<L,D,QUESTION,OPTION>();
 	}
 }

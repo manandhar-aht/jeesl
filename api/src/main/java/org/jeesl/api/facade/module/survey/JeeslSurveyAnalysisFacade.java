@@ -1,4 +1,4 @@
-package org.jeesl.api.facade.module;
+package org.jeesl.api.facade.module.survey;
 
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;

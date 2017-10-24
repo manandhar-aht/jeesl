@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
-import org.jeesl.api.facade.module.JeeslSurveyAnalysisFacade;
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
@@ -116,7 +116,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		sections = new ArrayList<SECTION>();
 	}
 	
-	protected void initSuperSchedule(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey, JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey, JeeslReportAggregationLevelFactory tfName)
+	protected void initSuperSchedule(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey, JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey, JeeslReportAggregationLevelFactory tfName)
 	{
 		super.initSuperSurvey(localeCodes,bMessage,fSurvey,fAnalysis,bSurvey);
 		mfOption = new McOptionDataSetFactory<OPTION>(tfName);
@@ -133,7 +133,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 			if(cTc.isAssignableFrom(ejb.getClass()))
 			{
 				List<TC> categories = new ArrayList<TC>();categories.add(sbhCategory.getSelection());
-				sbhSurvey.setList(fSurvey.fSurveysForCategories(categories));
+				sbhSurvey.setList(fCore.fSurveysForCategories(categories));
 				
 				for(SURVEY s : sbhSurvey.getList())
 				{
@@ -145,7 +145,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 			}
 			else if(cSurvey.isAssignableFrom(ejb.getClass()))
 			{
-				sbhAnalysis.setList(fSurvey.allForParent(cAnalysis, sbhSurvey.getSelection().getTemplate()));
+				sbhAnalysis.setList(fCore.allForParent(cAnalysis, sbhSurvey.getSelection().getTemplate()));
 				logger.info(AbstractLogMessage.reloaded(cAnalysis, sbhAnalysis.getList()));
 				sbhAnalysis.silentCallback();
 			}
@@ -184,13 +184,13 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 					AQ analysis = fAnalysis.fAnalysis(sbhAnalysis.getSelection(), q);
 					List<AT> tools = new ArrayList<AT>();
 					mapQuestion.get(section).add(q);
-					for(AT tool : fSurvey.allForParent(cAt, analysis))
+					for(AT tool : fCore.allForParent(cAt, analysis))
 					{
 						if(tool.isVisible())
 						{
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.selectOne.toString()))
 							{
-								JsonFlatFigures f = fSurvey.surveyStatisticOption(q, sbhSurvey.getSelection());
+								JsonFlatFigures f = fCore.surveyStatisticOption(q, sbhSurvey.getSelection());
 								mapToolTableOption.put(tool,f);
 								DataSet ds2 = mfOption.build(f,bSurvey.getMapOption().get(q));
 								mapDsOption.put(q,ds2);
@@ -199,13 +199,13 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 							}
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.bool.toString()))
 							{
-								JsonFlatFigures f = fSurvey.surveyStatisticBoolean(q, sbhSurvey.getSelection());
+								JsonFlatFigures f = fCore.surveyStatisticBoolean(q, sbhSurvey.getSelection());
 								mapToolTableBoolean.put(tool,f);
 							}
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.text.toString()))
 							{
 								JsonFlatFigures f = JsonFlatFiguresFactory.build();
-								for(ANSWER a : fSurvey.fAnswers(sbhSurvey.getSelection(),q))
+								for(ANSWER a : fCore.fAnswers(sbhSurvey.getSelection(),q))
 								{
 									if(a.getValueText()!=null && a.getValueText().trim().length()>0)
 									{
@@ -217,7 +217,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.remark.toString()))
 							{
 								JsonFlatFigures f = JsonFlatFiguresFactory.build();
-								for(ANSWER a : fSurvey.fAnswers(sbhSurvey.getSelection(),q))
+								for(ANSWER a : fCore.fAnswers(sbhSurvey.getSelection(),q))
 								{
 									if(a.getRemark()!=null && a.getRemark().trim().length()>0)
 									{

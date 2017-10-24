@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
-import org.jeesl.api.facade.module.JeeslSurveyAnalysisFacade;
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.factory.builder.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisQuestionFactory;
@@ -118,7 +118,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		efAnalysisTool = ffAnalysis.ejbAnalysisTool(cTool);
 	}
 	
-	protected void initSuperAnalysis(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey, JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
+	protected void initSuperAnalysis(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey, JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
 	{
 		super.initSuperSurvey(localeCodes,bMessage,fSurvey,fAnalysis,bSurvey);
 		initSettings();
@@ -138,7 +138,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		if(cTc.isAssignableFrom(ejb.getClass()))
 		{
 			reset(true,true,true,true,true,true);
-			versions = fSurvey.fVersions(sbhCategory.getSelection());
+			versions = fCore.fVersions(sbhCategory.getSelection());
 		}
 	}
 	
@@ -156,14 +156,14 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	{
 		reset(false,false,true,true,true,true);
 		logger.info(AbstractLogMessage.selectEntity(version));
-		version = fSurvey.find(cVersion, version);
+		version = fCore.find(cVersion, version);
 		reloadAnalyses();
 		sections = bSurvey.getMapSection().get(version.getTemplate());
 	}
 	
 	private void reloadAnalyses()
 	{
-		analyses = fSurvey.allForParent(cAnalysis, version.getTemplate());
+		analyses = fCore.allForParent(cAnalysis, version.getTemplate());
 	}
 		
 	public void addAnalysis()
@@ -176,14 +176,14 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void saveAnalysis() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(analysis));
-		analysis = fSurvey.save(analysis);
+		analysis = fCore.save(analysis);
 		reloadAnalyses();
 	}
 	
 	public void selectAnalysis()
 	{
 		logger.info(AbstractLogMessage.selectEntity(analysis));
-		analysis = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), analysis);
+		analysis = efLang.persistMissingLangs(fCore, sbhLocale.getList(), analysis);
 //		analysis = efDescription.persistMissingLangs(fSurvey, localeCodes, analysis);
 		reset(false,false,true,true,true,true);
 	}
@@ -201,7 +201,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		try
 		{
 			analysisQuestion = fAnalysis.fAnalysis(analysis, question);
-			analysisQuestion = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), analysisQuestion);
+			analysisQuestion = efLang.persistMissingLangs(fCore, sbhLocale.getList(), analysisQuestion);
 			reloadTools();
 		}
 		catch (UtilsNotFoundException e)
@@ -215,13 +215,13 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void saveAnalysisQuestion() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(analysisQuestion));
-		analysisQuestion = fSurvey.save(analysisQuestion);
+		analysisQuestion = fCore.save(analysisQuestion);
 		reloadTools();
 	}
 	
 	private void reloadTools()
 	{
-		tools = fSurvey.allForParent(cTool, analysisQuestion);
+		tools = fCore.allForParent(cTool, analysisQuestion);
 	}
 	
 	public void addTool()
@@ -232,17 +232,17 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void saveTool() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(tool));
-		tool.setType(fSurvey.find(cAtt,tool.getType()));
-		tool.setElement(fSurvey.find(cQe,tool.getElement()));
-		tool = fSurvey.save(tool);
+		tool.setType(fCore.find(cAtt,tool.getType()));
+		tool.setElement(fCore.find(cQe,tool.getElement()));
+		tool = fCore.save(tool);
 		reloadTools();
 	}
 	
 	public void selectTool()
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
-		tool = fSurvey.find(cTool,tool);
+		tool = fCore.find(cTool,tool);
 	}
 	
-	protected void reorderAnalyses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, analyses);}
+	protected void reorderAnalyses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, analyses);}
 }

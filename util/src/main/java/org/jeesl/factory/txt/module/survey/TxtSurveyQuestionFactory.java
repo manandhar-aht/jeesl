@@ -35,22 +35,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class TxtSurveyQuestionFactory <L extends UtilsLang, D extends UtilsDescription,
 										QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,OPTION,?>,
-										ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,?,?,OPTION>,
 										OPTION extends JeeslSurveyOption<L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(TxtSurveyQuestionFactory.class);
 		
 	private DecimalFormat df = new DecimalFormat("0.#");
-	
-	public Map<QUESTION,String> scoreBoundsAnswers(List<ANSWER> list)
-	{
-		List<QUESTION> questions = new ArrayList<QUESTION>();
-		for(ANSWER a : list)
-		{
-			questions.add(a.getQuestion());
-		}
-		return scoreBoundsQuestions(questions);
-	}
 	
 	public Map<QUESTION,String> scoreBoundsQuestions(Set<QUESTION> set)
 	{

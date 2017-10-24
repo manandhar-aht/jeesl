@@ -3,8 +3,10 @@ package org.jeesl.web.mbean.prototype.module.survey;
 import java.io.Serializable;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
-import org.jeesl.api.facade.module.JeeslSurveyAnalysisFacade;
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
+import org.jeesl.factory.builder.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
@@ -70,14 +72,18 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyScheduleBean.class);
 
-	public AbstractAdminSurveyScheduleBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions,final Class<OPTION> cOption, final Class<ATT> cAtt)
+	public AbstractAdminSurveyScheduleBean(SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+			final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions,final Class<OPTION> cOption, final Class<ATT> cAtt)
 	{
-		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
+		super(fbTemplate,cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
 	}
 	
-	protected void initSuperSchedule(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey, JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
+	protected void initSuperSchedule(String userLocale, String[] localeCodes, FacesMessageBean bMessage,
+			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
+			JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
+			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
 	{
-		super.initSuperSurvey(localeCodes,bMessage,fSurvey,fAnalysis,bSurvey);
+		super.initSuperSurvey(localeCodes,bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 		initSettings();
 		
 		sbhCategory.silentCallback();
@@ -96,18 +102,18 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	
 	protected void reloadSurveys()
 	{
-		sbhSurvey.setList(fSurvey.fSurveysForCategories(sbhCategory.getList()));
+		sbhSurvey.setList(fCore.fSurveysForCategories(sbhCategory.getList()));
 	}
 	
 	public void addSurvey() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.addEntity(cSurvey));
 		TC category = sbhCategory.getList().get(0);
-		TS templateStatus = fSurvey.fByCode(cTs,JeeslSurveyOption.Status.open);
+		TS templateStatus = fCore.fByCode(cTs,JeeslSurveyOption.Status.open);
 		template = efTemplate.build(category, templateStatus, "");
 		reloadAvailableSurveVersions();
 		
-		SS surveystatus = fSurvey.fByCode(cSs,JeeslSurvey.Status.preparation);
+		SS surveystatus = fCore.fByCode(cSs,JeeslSurvey.Status.preparation);
 		
 		survey = efSurvey.build(localeCodes,template,surveystatus);
 	}
@@ -115,18 +121,18 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	public void saveSurvey() throws UtilsLockingException, UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(survey));
-		VERSION version = fSurvey.find(cVersion,template.getVersion());
+		VERSION version = fCore.find(cVersion,template.getVersion());
 		survey.setTemplate(version.getTemplate());
 
-		survey.setStatus(fSurvey.find(cSs,survey.getStatus()));
-		survey = fSurvey.save(survey);
+		survey.setStatus(fCore.find(cSs,survey.getStatus()));
+		survey = fCore.save(survey);
 		reloadSurveys();
 	}
 	
 	public void deleteSurvey() throws UtilsLockingException, UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(survey));
-		fSurvey.deleteSurvey(survey);
+		fCore.deleteSurvey(survey);
 		survey=null;
 		reloadSurveys();
 	}
@@ -134,16 +140,16 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	public void selectSurvey() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(survey));
-		survey = fSurvey.find(cSurvey,survey);
-		survey = efLang.persistMissingLangs(fSurvey, localeCodes, survey);
-		survey = efDescription.persistMissingLangs(fSurvey, localeCodes, survey);
+		survey = fCore.find(cSurvey,survey);
+		survey = efLang.persistMissingLangs(fCore, localeCodes, survey);
+		survey = efDescription.persistMissingLangs(fCore, localeCodes, survey);
 		template = survey.getTemplate();
 		reloadAvailableSurveVersions();
 	}
 	
 	private void reloadAvailableSurveVersions() throws UtilsNotFoundException
 	{
-		versions = fSurvey.fVersions(template.getCategory());
+		versions = fCore.fVersions(template.getCategory());
 		logger.info(AbstractLogMessage.reloaded(cVersion, versions)+" for category:"+template.getCategory().toString());
 	}
 }

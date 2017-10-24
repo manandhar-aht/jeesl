@@ -5,26 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPath;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,11 +30,11 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 	
 	final Class<QUESTION> cQuestion;
     
-	private JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,?,UNIT,?,?,?,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey;
+	private JeeslSurveyCoreFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,?,UNIT,?,?,?,OPTIONS,OPTION,?> fSurvey;
 	
 	public EjbSurveyQuestionFactory(final Class<QUESTION> cQuestion){this(null,cQuestion);}
 	
-	public EjbSurveyQuestionFactory(JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,?,UNIT,?,?,?,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey, final Class<QUESTION> cQuestion)
+	public EjbSurveyQuestionFactory(JeeslSurveyCoreFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,?,UNIT,?,?,?,OPTIONS,OPTION,?> fSurvey, final Class<QUESTION> cQuestion)
 	{
 		this.fSurvey = fSurvey;
         this.cQuestion = cQuestion;
@@ -108,7 +93,7 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 		}
 	}
 	
-	public Map<SECTION,List<QUESTION>> loadMap(JeeslSurveyFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,?,UNIT,?,?,?,OPTIONS,OPTION,?,?,?,?,?,?,?,?> fSurvey)
+	public Map<SECTION,List<QUESTION>> loadMap(JeeslSurveyCoreFacade<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,QE,?,UNIT,?,?,?,OPTIONS,OPTION,?> fSurvey)
 	{
 		Map<SECTION,List<QUESTION>> map = new HashMap<SECTION,List<QUESTION>>();
 		for(QUESTION q : fSurvey.allOrderedPosition(cQuestion))

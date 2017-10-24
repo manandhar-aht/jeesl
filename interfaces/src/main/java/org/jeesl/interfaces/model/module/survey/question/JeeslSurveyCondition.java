@@ -9,7 +9,7 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyCondition<QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?>,
-									QE extends UtilsStatus<QE,?,?>>
+										QE extends UtilsStatus<QE,?,?>>
 			extends Serializable,EjbWithId,EjbSaveable,
 					EjbWithPosition,EjbWithParentAttributeResolver
 {

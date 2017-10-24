@@ -7,9 +7,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
-import org.jeesl.api.facade.module.JeeslSurveyAnalysisFacade;
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
 import org.jeesl.controller.handler.ui.helper.UiHelperSurvey;
+import org.jeesl.factory.builder.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
@@ -90,9 +92,10 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	private UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> uiHelper; public UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> getUiHelper() {return uiHelper;}
 	private Comparator<OPTION> cmpOption;
 	
-	public AbstractAdminSurveyTemplateBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<ATT> cAtt)
+	public AbstractAdminSurveyTemplateBean(SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+			final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<ATT> cAtt)
 	{
-		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
+		super(fbTemplate,cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
 
 		cmpOption = new PositionComparator<OPTION>();
 		options = new ArrayList<OPTION>();
@@ -100,9 +103,11 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		uiHelper = new UiHelperSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>();
 	}
 	
-	protected void initSuperTemplate(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey, JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
+	protected void initSuperTemplate(String userLocale, String[] localeCodes, FacesMessageBean bMessage,
+			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
+			JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore, JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
 	{
-		super.initSuperSurvey(localeCodes,bMessage,fSurvey,fAnalysis,bSurvey);
+		super.initSuperSurvey(localeCodes,bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 		initSettings();
 		super.initLocales(userLocale);
 
@@ -150,7 +155,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	//Template
 	protected void reloadTemplate()
 	{
-		template = fSurvey.load(template,false,false);
+		template = fCore.load(template,false,false);
 		bSurvey.updateTemplate(template);
 		version = template.getVersion();
 		sections = template.getSections();
@@ -166,8 +171,8 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		{
 			try
 			{
-				TS status = fSurvey.fByCode(cTs,statusCode);
-				template = fSurvey.fcSurveyTemplate(sbhCategory.getSelection(),version,status,nestedVersion);
+				TS status = fCore.fByCode(cTs,statusCode);
+				template = fCore.fcSurveyTemplate(sbhCategory.getSelection(),version,status,nestedVersion);
 				logger.info("Resolved "+cTemplate.getSimpleName()+": "+template.toString());
 				version = template.getVersion();
 				reloadTemplate();
@@ -189,7 +194,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	protected void reloadVersions()
 	{
-		versions = fSurvey.fVersions(sbhCategory.getSelection());
+		versions = fCore.fVersions(sbhCategory.getSelection());
 		
 		nestedVersions = new ArrayList<VERSION>();
 		
@@ -197,7 +202,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		{
 			if(!c.equals(sbhCategory.getSelection()))
 			{
-				nestedVersions.addAll(fSurvey.fVersions(c));
+				nestedVersions.addAll(fCore.fVersions(c));
 			}
 		}
 	}
@@ -206,9 +211,9 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		clearSelection();
 		logger.info(AbstractLogMessage.selectEntity(version));
-		efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), version);
-		efDescription.persistMissingLangs(fSurvey, sbhLocale.getList(), version);
-		version = fSurvey.find(cVersion, version);
+		efLang.persistMissingLangs(fCore, sbhLocale.getList(), version);
+		efDescription.persistMissingLangs(fCore, sbhLocale.getList(), version);
+		version = fCore.find(cVersion, version);
 		initTemplate();
 		if(version.getTemplate()!=null && version.getTemplate().getNested()!=null){nestedVersion = version.getTemplate().getNested().getVersion();}
 		uiHelper.check(version,sections);
@@ -219,13 +224,13 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		logger.info(AbstractLogMessage.saveEntity(version));
 		if(nestedVersion!=null)
 		{
-			nestedVersion = fSurvey.find(cVersion,nestedVersion);
+			nestedVersion = fCore.find(cVersion,nestedVersion);
 		}
 		
 		if(EjbIdFactory.isSaved(version))
 		{
 			if(nestedVersion!=null){version.getTemplate().setNested(nestedVersion.getTemplate());}
-			version = fSurvey.save(version);
+			version = fCore.save(version);
 		}
 		
 		initTemplate();
@@ -235,7 +240,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	protected void rmVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(version));
-		fSurvey.rmVersion(version);
+		fCore.rmVersion(version);
 		clear(true,true,true,true,true,true,true,true);
 		reloadVersions();
 	}
@@ -254,8 +259,8 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void selectSection()
 	{
 		logger.info(AbstractLogMessage.selectEntity(section));
-		efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), section);
-		efDescription.persistMissingLangs(fSurvey, sbhLocale.getList(), section);
+		efLang.persistMissingLangs(fCore, sbhLocale.getList(), section);
+		efDescription.persistMissingLangs(fCore, sbhLocale.getList(), section);
 		loadSection();
 		nnb.doubleToA(section.getScoreLimit());
 		nnb.doubleToB(section.getScoreNormalize());
@@ -263,7 +268,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	protected void loadSection()
 	{
-		section = fSurvey.load(section);
+		section = fCore.load(section);
 		questions.clear();
 		questions.addAll(section.getQuestions());
 		bSurvey.updateSection(section);
@@ -274,7 +279,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		logger.info(AbstractLogMessage.saveEntity(section));
 		section.setScoreLimit(nnb.aToDouble());
 		section.setScoreNormalize(nnb.bToDouble());
-		section = fSurvey.save(section);
+		section = fCore.save(section);
 		reloadTemplate();
 		loadSection();
 	}
@@ -282,7 +287,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void rmSection() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.rmEntity(section));
-		fSurvey.rm(section);
+		fCore.rm(section);
 		section=null;
 		question=null;
 		reloadTemplate();
@@ -300,7 +305,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void saveSet() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(optionSet));
-		optionSet = fSurvey.save(optionSet);
+		optionSet = fCore.save(optionSet);
 		reloadTemplate();
 		reloadOptionSet(true);
 	}
@@ -309,7 +314,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.selectEntity(optionSet));
 		clear(false,false,true,true,true,true,true,false);
-		optionSet = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), optionSet);
+		optionSet = efLang.persistMissingLangs(fCore, sbhLocale.getList(), optionSet);
 		reloadOptionSet(false);
 	}
 /*	
@@ -335,8 +340,8 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void selectQuestion()
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
-		question = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), question);
-		question = efDescription.persistMissingLangs(fSurvey, sbhLocale.getList(), question);
+		question = efLang.persistMissingLangs(fCore, sbhLocale.getList(), question);
+		question = efDescription.persistMissingLangs(fCore, sbhLocale.getList(), question);
 		if(question.getText()==null) {question.setText(efDescription.createEmpty(sbhLocale.getList()));}
 		for(LOC loc : sbhLocale.getList())
 		{
@@ -344,9 +349,9 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 			{
 				try
 				{
-					D d = fSurvey.persist(efDescription.create(loc.getCode(), ""));
+					D d = fCore.persist(efDescription.create(loc.getCode(), ""));
 					question.getText().put(loc.getCode(), d);
-					question = fSurvey.update(question);
+					question = fCore.update(question);
 				}
 				catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 				catch (UtilsLockingException e) {e.printStackTrace();}
@@ -359,8 +364,8 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	private void reloadQuestion()
 	{
-		question = fSurvey.find(cQuestion,question);
-		question = fSurvey.load(question);
+		question = fCore.find(cQuestion,question);
+		question = fCore.load(question);
 		Collections.sort(question.getOptions(),cmpOption);
 		options.clear();
 		options.addAll(question.getOptions());
@@ -370,9 +375,9 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void saveQuestion() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(question));
-		if(question.getUnit()!=null){question.setUnit(fSurvey.find(cUnit,question.getUnit()));}
-		if(question.getOptionSet()!=null){question.setOptionSet(fSurvey.find(cOptions,question.getOptionSet()));}
-		question = fSurvey.save(question);
+		if(question.getUnit()!=null){question.setUnit(fCore.find(cUnit,question.getUnit()));}
+		if(question.getOptionSet()!=null){question.setOptionSet(fCore.find(cOptions,question.getOptionSet()));}
+		question = fCore.save(question);
 		loadSection();
 		reloadQuestion();
 	}
@@ -380,7 +385,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void rmQuestion() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(question));}
-		fSurvey.rm(question);
+		fCore.rm(question);
 		clear(false,false,false,true,true,true,true,true);
 		loadSection();
 	}
@@ -388,8 +393,8 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	//Option
 	private void reloadOptionSet(boolean updateBean)
 	{
-		optionSet = fSurvey.find(cOptions,optionSet);
-		optionSet = fSurvey.load(optionSet);
+		optionSet = fCore.find(cOptions,optionSet);
+		optionSet = fCore.load(optionSet);
 		Collections.sort(optionSet.getOptions(),cmpOption);
 		options.clear();
 		options.addAll(optionSet.getOptions());
@@ -407,21 +412,21 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void selectOption()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(option));}
-		option = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), option);
-		option = efDescription.persistMissingLangs(fSurvey, sbhLocale.getList(), option);
+		option = efLang.persistMissingLangs(fCore, sbhLocale.getList(), option);
+		option = efDescription.persistMissingLangs(fCore, sbhLocale.getList(), option);
 	}
 	
 	public void saveQuestionOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(option));}
-		option = fSurvey.saveOption(question,option);
+		option = fCore.saveOption(question,option);
 		reloadQuestion();
 		bMessage.growlSuccessSaved();
 	}
 	public void saveSetOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(option));}
-		option = fSurvey.saveOption(optionSet,option);
+		option = fCore.saveOption(optionSet,option);
 		reloadOptionSet(true);
 		bMessage.growlSuccessSaved();
 	}
@@ -429,14 +434,14 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void rmQuestionOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
-		fSurvey.rmOption(optionSet,option);
+		fCore.rmOption(optionSet,option);
 		reloadQuestion();
 		bMessage.growlSuccessRemoved();
 	}
 	public void rmSetOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
-		fSurvey.rmOption(optionSet,option);
+		fCore.rmOption(optionSet,option);
 		clear(false,false,true,true,true,true,true,false);
 		reloadOptionSet(true);
 		bMessage.growlSuccessRemoved();
@@ -459,7 +464,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void saveScheme() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(scheme));}
-		scheme = fSurvey.save(scheme);
+		scheme = fCore.save(scheme);
 		reloadTemplate();
 	}
 	
@@ -472,16 +477,16 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void saveScore() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(score));}
-		score = fSurvey.save(score);
+		score = fCore.save(score);
 		reloadQuestion();
 		bMessage.growlSuccessSaved();
 	}
 	
-	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, sections);}
-	protected void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, questions);}
+	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, sections);}
+	protected void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, questions);}
 	protected void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		PositionListReorderer.reorder(fSurvey, options);
+		PositionListReorderer.reorder(fCore, options);
 		if(questions!=null) {reloadQuestion();}
 		if(optionSet!=null) {reloadOptionSet(true);}
 	}

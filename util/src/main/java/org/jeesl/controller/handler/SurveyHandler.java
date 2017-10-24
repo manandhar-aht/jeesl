@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.factory.builder.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
@@ -17,25 +17,15 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveyAnswerFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveySectionFactory;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPath;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.model.pojo.map.id.Nested3IdMap;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
@@ -45,46 +35,35 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
-							SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
-							SS extends UtilsStatus<SS,L,D>,
-							SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
-							TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,?>,
-							VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
-							TS extends UtilsStatus<TS,L,D>,
-							TC extends UtilsStatus<TC,L,D>,
-							SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-							QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
-							QE extends UtilsStatus<QE,L,D>,
-							SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
-							UNIT extends UtilsStatus<UNIT,L,D>,
-							ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-							MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-							DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
-							OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-							OPTION extends JeeslSurveyOption<L,D>,
-							CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>>
+public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
+							TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,TC,SECTION,?,?>,
+							TC extends UtilsStatus<TC,?,?>,
+							SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
+							QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,?,?,?,OPTION,?>,
+							ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,MATRIX,DATA,OPTION>,
+							MATRIX extends JeeslSurveyMatrix<?,?,ANSWER,OPTION>,
+							DATA extends JeeslSurveyData<?,?,SURVEY,ANSWER,CORRELATION>,
+							OPTION extends JeeslSurveyOption<?,?>,
+							CORRELATION extends JeeslSurveyCorrelation<?,?,DATA>>
 	implements Serializable
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyHandler.class);
 	private static final long serialVersionUID = 1L;
 	
 	private final FacesMessageBean bMessage;
-	private final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,?,?,?> bSurvey;
+	private final JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?,?,?,?,?,?,?> bSurvey;
 	
 	private final Class<SECTION> cSection;
 
-	private final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,?,?,?> fSurvey;
+	private final JeeslSurveyCoreFacade<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION> fSurvey;
 	
-	private final EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,?,?,?> efAnswer;
-	private final EjbSurveyMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,?,?,?> efMatrix;
-	private final EjbSurveyDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,?,?,?> efData;
-	private final TxtSurveySectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,?,?,?> tfSection;
-	private final TxtSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,?,?,?> tfAnswer;
+	private final EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION> efAnswer;
+	private final EjbSurveyMatrixFactory<ANSWER,MATRIX,OPTION> efMatrix;
+	private final EjbSurveyDataFactory<SURVEY,DATA,CORRELATION> efData;
+	private final TxtSurveySectionFactory<?,?,SECTION> tfSection;
+	private final TxtSurveyAnswerFactory<?,?,ANSWER,MATRIX,OPTION> tfAnswer;
 	
 	private List<OPTION> districts; public List<OPTION> getDistricts() {return districts;} public void setDistricts(List<OPTION> districts) {this.districts = districts;}
 
@@ -105,7 +84,10 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	public static boolean debugPerformance = false;
 	public static int debugDelay = 1000;
 	
-	public SurveyHandler(FacesMessageBean bMessage, final JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,?,?,?> fSurvey, JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,?,?,?> bSurvey, final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?,?,?,?,?,?,?> ffSurvey)
+	public SurveyHandler(FacesMessageBean bMessage,
+			final JeeslSurveyCoreFacade<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION> fSurvey,
+			JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?,?,?,?,?,?,?> bSurvey,
+			final SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?,?,?,?,?,?,?> ffSurvey)
 	{
 		this.bMessage=bMessage;
 		this.fSurvey=fSurvey;

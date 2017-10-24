@@ -58,9 +58,9 @@ public class XlsSurveyQuestionFactory <L extends UtilsLang, D extends UtilsDescr
 {
 	final static Logger logger = LoggerFactory.getLogger(XlsSurveyQuestionFactory.class);
 	
-	private final EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efOption;
+	private final EjbSurveyOptionFactory<QUESTION,OPTION> efOption;
 	
-	public XlsSurveyQuestionFactory(EjbSurveyOptionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efOption)
+	public XlsSurveyQuestionFactory(EjbSurveyOptionFactory<QUESTION,OPTION> efOption)
 	{
 		this.efOption = efOption;
 	}
@@ -77,6 +77,5 @@ public class XlsSurveyQuestionFactory <L extends UtilsLang, D extends UtilsDescr
 		{
 			return 1;
 		}
-		
 	}
 }

@@ -87,9 +87,9 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		return new EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY>(cDomain);
 	}
 	
-	public EjbSurveyAnalysisFactory<L,D,TEMPLATE,ANALYSIS> ejbAnalysis(Class<ANALYSIS> cAnalysis)
+	public EjbSurveyAnalysisFactory<TEMPLATE,ANALYSIS> ejbAnalysis(Class<ANALYSIS> cAnalysis)
 	{
-		return new EjbSurveyAnalysisFactory<L,D,TEMPLATE,ANALYSIS>(cAnalysis);
+		return new EjbSurveyAnalysisFactory<TEMPLATE,ANALYSIS>(cAnalysis);
 	}
 	
 	public EjbSurveyAnalysisQuestionFactory<L,D,QUESTION,ANALYSIS,AQ> ejbAnalysisQuestion(Class<AQ> cAQ)

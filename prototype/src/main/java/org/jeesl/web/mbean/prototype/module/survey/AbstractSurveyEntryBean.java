@@ -3,9 +3,11 @@ package org.jeesl.web.mbean.prototype.module.survey;
 import java.io.Serializable;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
-import org.jeesl.api.facade.module.JeeslSurveyAnalysisFacade;
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
 import org.jeesl.controller.handler.SurveyHandler;
+import org.jeesl.factory.builder.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -70,27 +72,31 @@ public abstract class AbstractSurveyEntryBean <L extends UtilsLang, D extends Ut
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSurveyEntryBean.class);
 
-	private SurveyHandler<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> handler; public SurveyHandler<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> getHandler() {return handler;}
+	private SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> handler; public SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getHandler() {return handler;}
 	
 	protected CORRELATION correlation;
 	
-	public AbstractSurveyEntryBean(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<ATT> cAtt)
+	public AbstractSurveyEntryBean(SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+			final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<ATT> cAtt)
 	{
-		super(cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
+		super(fbTemplate,cL,cD,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
 	}
 	
-	protected void initSuperEntry(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey, JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
+	protected void initSuperEntry(String userLocale, String[] localeCodes, FacesMessageBean bMessage,
+			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
+			JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
+			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
 	{
-		super.initSuperSurvey(localeCodes,bMessage,fSurvey,fAnalysis,bSurvey);
+		super.initSuperSurvey(localeCodes,bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 		initSettings();
 		try
 		{
-			SS status = fSurvey.fByCode(cSs, JeeslSurvey.Status.open);
-			sbhSurvey.setList(fSurvey.fSurveysForCategories(sbhCategory.getList()));
+			SS status = fCore.fByCode(cSs, JeeslSurvey.Status.open);
+			sbhSurvey.setList(fCore.fSurveysForCategories(sbhCategory.getList()));
 			logger.info(AbstractLogMessage.reloaded(cSurvey, sbhSurvey.getList()));
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
-		handler = ffSurvey.handler(bMessage,fSurvey,bSurvey);
+		handler = fbCore.handler(bMessage,fCore,bSurvey);
 	}
 	
 	protected abstract void prepareCorrelation();
@@ -121,7 +127,7 @@ public abstract class AbstractSurveyEntryBean <L extends UtilsLang, D extends Ut
 	public void saveData(SECTION section) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(null,correlation,section));
-		correlation = fSurvey.saveTransaction(correlation);
+		correlation = fCore.saveTransaction(correlation);
 		handler.save(correlation,section);
 	}
 

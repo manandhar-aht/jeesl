@@ -58,7 +58,7 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 	{
 		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
 		this.cMenu=cMenu;
-		efMenu = ffSecurity.ejbMenu(cMenu);
+		efMenu = fbSecurity.ejbMenu(cMenu);
 	}
 	
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)

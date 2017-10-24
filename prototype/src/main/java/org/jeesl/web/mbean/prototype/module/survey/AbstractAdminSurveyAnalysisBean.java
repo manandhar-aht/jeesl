@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
-import org.jeesl.api.facade.module.JeeslSurveyAnalysisFacade;
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
 import org.jeesl.factory.builder.survey.SurveyAnalysisFactoryBuilder;
+import org.jeesl.factory.builder.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisQuestionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisToolFactory;
@@ -100,14 +102,15 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	private AQ analysisQuestion; public AQ getAnalysisQuestion() {return analysisQuestion;} public void setAnalysisQuestion(AQ analysisQuestion) {this.analysisQuestion = analysisQuestion;}
 	private AT tool; public AT getTool() {return tool;} public void setTool(AT tool) {this.tool = tool;}
 	
-	private final EjbSurveyAnalysisFactory<L,D,TEMPLATE,ANALYSIS> efAnalysis;
+	private final EjbSurveyAnalysisFactory<TEMPLATE,ANALYSIS> efAnalysis;
 	private final EjbSurveyAnalysisQuestionFactory <L,D,QUESTION,ANALYSIS,AQ> efAnalysisQuestion;
 	private final EjbSurveyAnalysisToolFactory <L,D,AQ,AT,ATT> efAnalysisTool;
 	
 	
-	public AbstractAdminSurveyAnalysisBean(SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<QE> cQe, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
+	public AbstractAdminSurveyAnalysisBean(SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+											SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis, final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<QE> cQe, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
 	{
-		super(fbAnalysis.getClassL(),fbAnalysis.getClassD(),cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
+		super(fbTemplate,fbAnalysis.getClassL(),fbAnalysis.getClassD(),cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption,cAtt);
 		this.cAnalysis=cAnalysis;
 		this.cTool=cTool;
 		this.cAtt=cAtt;
@@ -118,14 +121,17 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		efAnalysisTool = ffAnalysis.ejbAnalysisTool(cTool);
 	}
 	
-	protected void initSuperAnalysis(String userLocale, String[] localeCodes, FacesMessageBean bMessage, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey, JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
+	protected void initSuperAnalysis(String userLocale, String[] localeCodes, FacesMessageBean bMessage,
+			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
+			JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
+			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis, final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> bSurvey)
 	{
-		super.initSuperSurvey(localeCodes,bMessage,fSurvey,fAnalysis,bSurvey);
+		super.initSuperSurvey(localeCodes,bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 		initSettings();
 		super.initLocales(userLocale);
 		
 		toolTypes = bSurvey.getToolTypes();
-		questionElements = fSurvey.allOrderedPositionVisible(cQe);
+		questionElements = fCore.allOrderedPositionVisible(cQe);
 		
 		versions = new ArrayList<VERSION>();
 		
@@ -138,7 +144,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		if(cTc.isAssignableFrom(ejb.getClass()))
 		{
 			reset(true,true,true,true,true,true);
-			versions = fSurvey.fVersions(sbhCategory.getSelection());
+			versions = fCore.fVersions(sbhCategory.getSelection());
 		}
 	}
 	
@@ -156,14 +162,14 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	{
 		reset(false,false,true,true,true,true);
 		logger.info(AbstractLogMessage.selectEntity(version));
-		version = fSurvey.find(cVersion, version);
+		version = fCore.find(cVersion, version);
 		reloadAnalyses();
 		sections = bSurvey.getMapSection().get(version.getTemplate());
 	}
 	
 	private void reloadAnalyses()
 	{
-		analyses = fSurvey.allForParent(cAnalysis, version.getTemplate());
+		analyses = fCore.allForParent(cAnalysis, version.getTemplate());
 	}
 		
 	public void addAnalysis()
@@ -176,14 +182,14 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void saveAnalysis() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(analysis));
-		analysis = fSurvey.save(analysis);
+		analysis = fCore.save(analysis);
 		reloadAnalyses();
 	}
 	
 	public void selectAnalysis()
 	{
 		logger.info(AbstractLogMessage.selectEntity(analysis));
-		analysis = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), analysis);
+		analysis = efLang.persistMissingLangs(fCore, sbhLocale.getList(), analysis);
 //		analysis = efDescription.persistMissingLangs(fSurvey, localeCodes, analysis);
 		reset(false,false,true,true,true,true);
 	}
@@ -201,7 +207,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		try
 		{
 			analysisQuestion = fAnalysis.fAnalysis(analysis, question);
-			analysisQuestion = efLang.persistMissingLangs(fSurvey, sbhLocale.getList(), analysisQuestion);
+			analysisQuestion = efLang.persistMissingLangs(fCore, sbhLocale.getList(), analysisQuestion);
 			reloadTools();
 		}
 		catch (UtilsNotFoundException e)
@@ -215,13 +221,13 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void saveAnalysisQuestion() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(analysisQuestion));
-		analysisQuestion = fSurvey.save(analysisQuestion);
+		analysisQuestion = fCore.save(analysisQuestion);
 		reloadTools();
 	}
 	
 	private void reloadTools()
 	{
-		tools = fSurvey.allForParent(cTool, analysisQuestion);
+		tools = fCore.allForParent(cTool, analysisQuestion);
 	}
 	
 	public void addTool()
@@ -232,17 +238,17 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void saveTool() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(tool));
-		tool.setType(fSurvey.find(cAtt,tool.getType()));
-		tool.setElement(fSurvey.find(cQe,tool.getElement()));
-		tool = fSurvey.save(tool);
+		tool.setType(fCore.find(cAtt,tool.getType()));
+		tool.setElement(fCore.find(cQe,tool.getElement()));
+		tool = fCore.save(tool);
 		reloadTools();
 	}
 	
 	public void selectTool()
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
-		tool = fSurvey.find(cTool,tool);
+		tool = fCore.find(cTool,tool);
 	}
 	
-	protected void reorderAnalyses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSurvey, analyses);}
+	protected void reorderAnalyses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, analyses);}
 }

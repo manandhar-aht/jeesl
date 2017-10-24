@@ -1,6 +1,6 @@
 package org.jeesl.factory.json.system.survey;
 
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -38,11 +38,11 @@ public class JsonSectionFactory<L extends UtilsLang,D extends UtilsDescription,
 	private final String localeCode;
 	private final Section q;
 	
-	private JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey;
+	private JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
 	private JsonQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> jfQuestion;
 	
 	public JsonSectionFactory(String localeCode, Section q){this(localeCode,q,null);}
-	public JsonSectionFactory(String localeCode, Section q, JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fSurvey)
+	public JsonSectionFactory(String localeCode, Section q, JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
 	{
 		this.localeCode=localeCode;
 		this.q=q;

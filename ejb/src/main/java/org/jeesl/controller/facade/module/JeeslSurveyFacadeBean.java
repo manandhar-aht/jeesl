@@ -19,7 +19,7 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.jeesl.api.facade.module.JeeslSurveyFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.factory.builder.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
@@ -90,7 +90,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 									AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 									AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 									ATT extends UtilsStatus<ATT,L,D>>
-	extends UtilsFacadeBean implements JeeslSurveyFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
+	extends UtilsFacadeBean implements JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyFacadeBean.class);
 	
@@ -108,15 +108,16 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 	private final Class<CORRELATION> cCorrelation;
 	private final Class<AQ> cAq;
 	
-	private final SurveyTemplateFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT> ffTemplate;
+	private final SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> ffTemplate;
 	private final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffSurvey;
 	
-	private EjbSurveyAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> efAnswer;
+	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION> efAnswer;
 	private EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION> eTemplate;
 	
-	public JeeslSurveyFacadeBean(EntityManager em, Class<L> cL, Class<D> cD, Class<SURVEY> cSurvey, final Class<SS> cSs, Class<SCHEME> cScheme, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<CORRELATION> cCorrelation, final Class<AQ> cAq, final Class<ATT> cAtt)
+	public JeeslSurveyFacadeBean(EntityManager em, SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> ffTemplate, Class<L> cL, Class<D> cD, Class<SURVEY> cSurvey, final Class<SS> cSs, Class<SCHEME> cScheme, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<CORRELATION> cCorrelation, final Class<AQ> cAq, final Class<ATT> cAtt)
 	{
 		super(em);
+		this.ffTemplate=ffTemplate;
 		this.cSurvey=cSurvey;
 		this.cTemplate=cTemplate;
 		this.cVersion=cVersion;
@@ -130,7 +131,6 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		this.cCorrelation=cCorrelation;
 		this.cAq=cAq;
 		
-		ffTemplate = SurveyTemplateFactoryBuilder.factory(cL,cD,cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
 		ffSurvey = SurveyCoreFactoryBuilder.factory(cL,cD,cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
 		
 		eTemplate = ffTemplate.template();
@@ -334,7 +334,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		this.rmProtected(option);
 	}
 	
-	@Override public <TYPE extends UtilsStatus<TYPE,L,D>, WT extends JeeslWithType<L,D,TYPE>, W extends JeeslWithSurveyType<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT,WT,TYPE>>
+	@Override public <TYPE extends UtilsStatus<TYPE,L,D>, WT extends JeeslWithType<L,D,TYPE>, W extends JeeslWithSurveyType<SURVEY,WT,TYPE>>
 		List<W> fWithSurveys(Class<W> c, List<SS> status, TYPE type, Date date)
 	{
 		logger.info("Looking für wSurvey for type="+type.getCode()+" and status="+TxtStatusFactory.toCodes(status)+" and c="+c.getSimpleName());
@@ -355,7 +355,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		return em.createQuery(cQ).getResultList();
 	}
 	
-	@Override public <W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>>
+	@Override public <W extends JeeslWithSurvey<SURVEY>>
 		List<W> fSurveys(Class<W> c, List<SS> status, Date date)
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
@@ -374,7 +374,7 @@ public class JeeslSurveyFacadeBean <L extends UtilsLang, D extends UtilsDescript
 		return em.createQuery(cQ).getResultList();
 	}
 	
-	@Override public <W extends JeeslWithSurvey<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>>
+	@Override public <W extends JeeslWithSurvey<SURVEY>>
 		W fWithSurvey(Class<W> c, long surveyId) throws UtilsNotFoundException
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();

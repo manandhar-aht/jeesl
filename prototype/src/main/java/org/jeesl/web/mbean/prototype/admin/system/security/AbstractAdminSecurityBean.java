@@ -52,13 +52,13 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected JeeslSecurityCategory.Type categoryType;
 	
-	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> ffSecurity;
+	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
 	
 	protected EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> efCategory;
 	protected EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> efView;
 	protected EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> efRole;
 	protected EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> efUsecase;
-	protected EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> efAction;
+	protected final EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> efAction;
 	protected EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER> efTemplate;
 	
 	protected Class<C> cCategory;
@@ -97,6 +97,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	public AbstractAdminSecurityBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
 	{
 		super(fbSecurity.getClassL(),fbSecurity.getClassD());
+		this.fbSecurity=fbSecurity;
 		this.cCategory=cCategory;
 		this.cRole=cRole;
 		this.cUsecase=cUsecase;
@@ -105,7 +106,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		this.cTemplate=cTemplate;
 		this.cUser=cUser;
 		
-		ffSecurity = SecurityFactoryBuilder.factory(cL,cD,cAction);
+		efAction = fbSecurity.ejbAction();
 	}
 	
 	public void initSecuritySuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
@@ -117,7 +118,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		efView = EjbSecurityViewFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efRole = EjbSecurityRoleFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
 		efUsecase = EjbSecurityUsecaseFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
-		efAction = ffSecurity.ejbAction();
+		
 		efTemplate = EjbSecurityActionTemplateFactory.factory(cL,cD,cTemplate);
 		
 		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityRoleComparator.Type.position);

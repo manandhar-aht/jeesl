@@ -95,4 +95,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 	
 	List<SCORE> getScores();
 	void setScores(List<SCORE> scores);
+	
+	String getRenderCondition();
+	void setRenderCondition(String renderCondition);
 }

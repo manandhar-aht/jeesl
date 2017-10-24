@@ -79,7 +79,7 @@
     		<s:lang key="fr" translation="Questions"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupSurveyQuestion">
+	<s:translation key="jeeslSurveyQuestion">
     	<s:langs>
     		<s:lang key="de" translation="Question"/>
     		<s:lang key="en" translation="Question"/>
@@ -448,5 +448,25 @@
 	    		<s:lang key="fr" translation="Domain"/>
 	    	</s:langs>
     </s:translation>
-    
+    <s:translation key="jeeslSurveyConditions">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Bedingungen"/>
+	    		<s:lang key="en" translation="Conditions"/>
+	    		<s:lang key="fr" translation="Conditions"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslSurveyCondition">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Bedingung"/>
+	    		<s:lang key="en" translation="Condition"/>
+	    		<s:lang key="fr" translation="Condition"/>
+	    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSurveyElement">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Element"/>
+	    		<s:lang key="en" translation="Element"/>
+	    		<s:lang key="fr" translation="Element"/>
+	    	</s:langs>
+    </s:translation>
 </s:translations>

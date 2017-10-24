@@ -14,6 +14,7 @@ import org.jeesl.factory.builder.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -28,6 +29,7 @@ import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPat
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
@@ -51,6 +53,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 						TC extends UtilsStatus<TC,L,D>,
 						SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 						QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
+						CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
 						QE extends UtilsStatus<QE,L,D>,
 						SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 						UNIT extends UtilsStatus<UNIT,L,D>,
@@ -71,6 +74,8 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	final static Logger logger = LoggerFactory.getLogger(AbstractAppSurveyBean.class);
 
 	private JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
+	
+	private final SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
 	private final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffSurvey;
 	private final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffAnalysis;
 	
@@ -90,12 +95,15 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 
 	public AbstractAppSurveyBean(SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffSurvey,
 									SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffAnalysis,
-									SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate)
+									SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate)
 	{
+		this.fbTemplate=fbTemplate;
 		this.ffSurvey=ffSurvey;
 		this.ffAnalysis=ffAnalysis;
 		efOption = ffSurvey.option();
 		efSection = fbTemplate.section();
+		
+		elements = new ArrayList<QE>();
 		
 		mapSection = new HashMap<TEMPLATE,List<SECTION>>();
 		mapQuestion = new HashMap<SECTION,List<QUESTION>>();
@@ -115,6 +123,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		refreshUnits();
 		refreshSurveyStatus();
 		reloadToolTypes();
+		reloadElements();
 		
 		//Cache
 		mapSection.clear();mapSection.putAll(efSection.loadMap(fSurvey));
@@ -136,6 +145,23 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	private List<SS> surveyStatus;
 	public List<SS> getSurveyStatus(){return surveyStatus;}
 	public void refreshSurveyStatus(){surveyStatus=fSurvey.allOrderedPositionVisible(ffSurvey.getClassSurveyStatus());}
+	
+	private final List<QE> elements;
+	@Override public List<QE> getElements(){return elements;}
+	public void reloadElements()
+	{
+		elements.clear();
+		for(QE type : fSurvey.allOrderedPositionVisible(fbTemplate.getClassElement()))
+		{
+			boolean add=false;
+			for(JeeslSurveyQuestion.Elements t : JeeslSurveyQuestion.Elements.values())
+			{
+				if(type.getCode().equals(t.toString())) {add=true;}
+			}
+			if(add) {elements.add(type);}
+		}
+	}
+	
 	
 	@Override public void updateTemplate(TEMPLATE template)
 	{

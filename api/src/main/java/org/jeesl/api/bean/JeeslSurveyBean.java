@@ -55,6 +55,7 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 					ATT extends UtilsStatus<ATT,L,D>>
 {	
 	List<ATT> getToolTypes();
+	List<QE> getElements();
 	
 	Map<TEMPLATE,List<SECTION>> getMapSection();
 	Map<SECTION,List<QUESTION>> getMapQuestion();

@@ -34,6 +34,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 {
 	public enum Attributes{section,visible,position,optionSet}
 	
+	public enum Elements{selectOne};
 	public enum AttributeTypeCode{text,number,bool};
 	
 	SECTION getSection();

@@ -54,25 +54,18 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	
 	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
 	
-	protected EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> efCategory;
-	protected EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> efView;
-	protected EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> efRole;
-	protected EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> efUsecase;
+	protected final EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> efCategory;
+	protected final EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> efRole;
+	protected final EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> efView;
+	protected final EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> efUsecase;
 	protected final EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> efAction;
-	protected EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER> efTemplate;
+	protected final EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER> efTemplate;
 	
-	protected Class<C> cCategory;
-	protected Class<R> cRole;
-	protected Class<V> cView;
-	protected Class<U> cUsecase;
-	protected Class<A> cAction;
-	protected Class<AT> cTemplate;
-	protected final Class<USER> cUser;
-	
-	protected Comparator<R> comparatorRole;
-	protected Comparator<V> comparatorView;
-	protected Comparator<U> comparatorUsecase;
-	protected Comparator<A> comparatorAction;
+
+	protected final Comparator<R> comparatorRole;
+	protected final Comparator<V> comparatorView;
+	protected final Comparator<U> comparatorUsecase;
+	protected final Comparator<A> comparatorAction;
 		
 	//Category
 	protected List<C> categories; public List<C> getCategories() {return categories;}
@@ -94,19 +87,22 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	protected U opUsecase;public U getOpUsecase(){return opUsecase;}public void setOpUsecase(U opUsecase){this.opUsecase = opUsecase;}
 	protected U tblUsecase;public U getTblUsecase(){return tblUsecase;}public void setTblUsecase(U tblUsecase){this.tblUsecase = tblUsecase;}
 	
-	public AbstractAdminSecurityBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public AbstractAdminSecurityBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
 		super(fbSecurity.getClassL(),fbSecurity.getClassD());
 		this.fbSecurity=fbSecurity;
-		this.cCategory=cCategory;
-		this.cRole=cRole;
-		this.cUsecase=cUsecase;
-		this.cView=cView;
-		this.cAction=cAction;
-		this.cTemplate=cTemplate;
-		this.cUser=cUser;
-		
+
+		efCategory = fbSecurity.ejbCategory();
+		efRole = fbSecurity.ejbRole();
+		efView = fbSecurity.ejbView();
+		efUsecase = fbSecurity.ejbUsecase();
 		efAction = fbSecurity.ejbAction();
+		efTemplate = fbSecurity.ejbTemplate();
+		
+		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityRoleComparator.Type.position);
+		comparatorView = (new SecurityViewComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityViewComparator.Type.position);
+		comparatorUsecase = (new SecurityUsecaseComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityUsecaseComparator.Type.position);
+		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityActionComparator.Type.position);
 	}
 	
 	public void initSecuritySuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
@@ -114,17 +110,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fSecurity=fSecurity;
 		
-		efCategory = EjbSecurityCategoryFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
-		efView = EjbSecurityViewFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
-		efRole = EjbSecurityRoleFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
-		efUsecase = EjbSecurityUsecaseFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
-		
-		efTemplate = EjbSecurityActionTemplateFactory.factory(cL,cD,cTemplate);
-		
-		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityRoleComparator.Type.position);
-		comparatorView = (new SecurityViewComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityViewComparator.Type.position);
-		comparatorUsecase = (new SecurityUsecaseComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityUsecaseComparator.Type.position);
-		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityActionComparator.Type.position);
+
 		
 		reloadCategories();
 	}
@@ -164,7 +150,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		}
 		else
 		{
-			logger.warn(cCategory.getSimpleName()+" not removeable ... in use!");
+			logger.warn(fbSecurity.getClassCategory().getSimpleName()+" not removeable ... in use!");
 			bMessage.errorConstraintViolationInUse("category");
 		}
 	}
@@ -175,9 +161,9 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		
 		if(categoryType!=null)
 		{
-			if(uiShowInvisible){categories = fSecurity.allOrderedPosition(cCategory,categoryType);}
-			else{categories = fSecurity.allOrderedPositionVisible(cCategory,categoryType);}
-			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cCategory,categories));}
+			if(uiShowInvisible){categories = fSecurity.allOrderedPosition(fbSecurity.getClassCategory(),categoryType);}
+			else{categories = fSecurity.allOrderedPositionVisible(fbSecurity.getClassCategory(),categoryType);}
+			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbSecurity.getClassCategory(),categories));}
 		}
 	}
 	

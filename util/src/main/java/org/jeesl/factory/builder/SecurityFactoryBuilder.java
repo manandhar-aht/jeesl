@@ -1,7 +1,11 @@
 package org.jeesl.factory.builder;
 
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityActionTemplateFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityCategoryFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityRoleFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityUsecaseFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityViewFactory;
 import org.jeesl.factory.txt.system.security.TxtStaffFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
@@ -51,10 +55,25 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cTemplate=cTemplate;
 		this.cUser=cUser;
 	}
-		
+	
+	public EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> ejbCategory()
+	{
+		return EjbSecurityCategoryFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
+	}
+	
+	public EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> ejbRole()
+	{
+		return EjbSecurityRoleFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
+	}
+	
 	public EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> ejbView()
 	{
-		return new EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER>(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
+		return EjbSecurityViewFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
+	}
+	
+	public EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> ejbUsecase()
+	{
+		return EjbSecurityUsecaseFactory.factory(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
 	}
 	
 	public EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> ejbAction()
@@ -62,10 +81,16 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		return new EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>(cL,cD,cAction);
 	}
 	
+	public EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER> ejbTemplate()
+	{
+		return EjbSecurityActionTemplateFactory.factory(cL,cD,cTemplate);
+	}
+	
 	public <M extends JeeslSecurityMenu<L,D,C,R,V,U,A,AT,M,USER>> EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> ejbMenu(Class<M> cM)
 	{
 		return new EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cM);
 	}
+	
 	
 	public <STAFF extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		TxtStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2> txtStaff(String localeCode)

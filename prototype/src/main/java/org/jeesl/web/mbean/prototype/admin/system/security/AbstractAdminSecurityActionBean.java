@@ -42,9 +42,9 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang, D extends Uti
 	
 	private AT template;public AT getTemplate(){return template;}public void setTemplate(AT template) {this.template = template;}
 	
-	public AbstractAdminSecurityActionBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public AbstractAdminSecurityActionBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
-		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		super(fbSecurity);
 	}
 	
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
@@ -65,21 +65,21 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang, D extends Uti
 	
 	private void reloadTemplates() throws UtilsNotFoundException
 	{
-		templates = fSecurity.allForCategory(cTemplate,cCategory,category.getCode());
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cTemplate, templates));}
+		templates = fSecurity.allForCategory(fbSecurity.getClassTemplate(),fbSecurity.getClassCategory(),category.getCode());
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbSecurity.getClassTemplate(), templates));}
 	}
 
 	public void selectTemplate()
 	{
 		logger.info(AbstractLogMessage.selectEntity(template));
-		template = fSecurity.find(cTemplate, template);
+		template = fSecurity.find(fbSecurity.getClassTemplate(), template);
 		template = efLang.persistMissingLangs(fSecurity,langs,template);
 		template = efDescription.persistMissingLangs(fSecurity,langs,template);
 	}
 	
 	public void addTemplate() throws UtilsConstraintViolationException
 	{
-		logger.info(AbstractLogMessage.addEntity(cTemplate));
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassTemplate()));
 		template = efTemplate.build(category,"",templates);
 		template.setName(efLang.createEmpty(langs));
 		template.setDescription(efDescription.createEmpty(langs));
@@ -88,7 +88,7 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang, D extends Uti
 	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(template));
-		template.setCategory(fSecurity.find(cCategory, template.getCategory()));
+		template.setCategory(fSecurity.find(fbSecurity.getClassCategory(), template.getCategory()));
 		template = fSecurity.save(template);
 		reloadTemplates();
 	}

@@ -49,9 +49,9 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	private V view;public V getView(){return view;}public void setView(V view) {this.view = view;}
 	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
 	
-	public AbstractAdminSecurityViewBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public AbstractAdminSecurityViewBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
-		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		super(fbSecurity);
 	}
 	
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
@@ -59,7 +59,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		categoryType = JeeslSecurityCategory.Type.view;
 		initSecuritySuper(langs,fSecurity,bMessage);
 		
-		templates = fSecurity.allOrderedPositionVisible(cTemplate);
+		templates = fSecurity.allOrderedPositionVisible(fbSecurity.getClassTemplate());
 	}
 	
 	@Override public void categorySelected() throws UtilsNotFoundException
@@ -75,19 +75,19 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	
 	protected boolean categoryRemoveable() throws UtilsNotFoundException
 	{
-		views = fSecurity.allForCategory(cView,cCategory,category.getCode());
+		views = fSecurity.allForCategory(fbSecurity.getClassView(),fbSecurity.getClassCategory(),category.getCode());
 		return views.isEmpty();
 	}
 	
 	private void reloadViews() throws UtilsNotFoundException
 	{
-		views = fSecurity.allForCategory(cView,cCategory,category.getCode());
-		logger.info(AbstractLogMessage.reloaded(cView, views));
+		views = fSecurity.allForCategory(fbSecurity.getClassView(),fbSecurity.getClassCategory(),category.getCode());
+		logger.info(AbstractLogMessage.reloaded(fbSecurity.getClassView(), views));
 	}
 	
 	private void reloadView()
 	{
-		view = fSecurity.load(cView,view);
+		view = fSecurity.load(fbSecurity.getClassView(),view);
 		
 		roles = view.getRoles();
 		Collections.sort(roles,comparatorRole);
@@ -105,7 +105,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	//VIEW
 	public void addView() throws UtilsConstraintViolationException
 	{
-		logger.info(AbstractLogMessage.addEntity(cView));
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassView()));
 		view = efView.create(category,"");
 		view.setName(efLang.createEmpty(langs));
 		view.setDescription(efDescription.createEmpty(langs));
@@ -114,7 +114,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	public void selectView()
 	{
 		logger.info(AbstractLogMessage.selectEntity(view));
-		view = fSecurity.load(cView, view);
+		view = fSecurity.load(fbSecurity.getClassView(), view);
 		view = efLang.persistMissingLangs(fSecurity,langs,view);
 		view = efDescription.persistMissingLangs(fSecurity,langs,view);
 		reloadView();
@@ -132,7 +132,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	public void saveView() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(view));
-		view.setCategory(fSecurity.find(cCategory, view.getCategory()));
+		view.setCategory(fSecurity.find(fbSecurity.getClassCategory(), view.getCategory()));
 		view = fSecurity.save(view);
 		reloadView();
 		reloadViews();
@@ -160,7 +160,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		List<D> descriptions = new ArrayList<D>();
 		if(action.getTemplate()!=null)
 		{
-			action.setTemplate(fSecurity.find(cTemplate, action.getTemplate()));
+			action.setTemplate(fSecurity.find(fbSecurity.getClassTemplate(), action.getTemplate()));
 			logger.info("Testing ... "+action.toString());
 			
 			if(action.getName()!=null){langs.addAll(action.getName().values());}
@@ -181,7 +181,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	//ACTION
 	public void addAction() throws UtilsConstraintViolationException
 	{
-		logger.info(AbstractLogMessage.addEntity(cAction));
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassAction()));
 		action = efAction.create(view,"");
 		action.setName(efLang.createEmpty(langs));
 		action.setDescription(efDescription.createEmpty(langs));
@@ -203,7 +203,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		logger.info(AbstractLogMessage.selectOneMenuChange(action.getTemplate()));
 		if(action.getTemplate()!=null)
 		{
-			action.setTemplate(fSecurity.find(cTemplate, action.getTemplate()));
+			action.setTemplate(fSecurity.find(fbSecurity.getClassTemplate(), action.getTemplate()));
 			action.setCode(UUID.randomUUID().toString());
 		}
 		else

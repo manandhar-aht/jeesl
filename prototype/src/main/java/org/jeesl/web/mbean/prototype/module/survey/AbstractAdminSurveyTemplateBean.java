@@ -292,7 +292,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	public void selectSection()
 	{
-		logger.info(AbstractLogMessage.selectEntity(section));
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(section));}
 		efLang.persistMissingLangs(fCore, sbhLocale.getList(), section);
 		efDescription.persistMissingLangs(fCore, sbhLocale.getList(), section);
 		loadSection();
@@ -373,7 +373,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	public void selectQuestion()
 	{
-		logger.info(AbstractLogMessage.selectEntity(question));
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(question));}
 		question = efLang.persistMissingLangs(fCore, sbhLocale.getList(), question);
 		question = efDescription.persistMissingLangs(fCore, sbhLocale.getList(), question);
 		if(question.getText()==null) {question.setText(efDescription.createEmpty(sbhLocale.getList()));}
@@ -402,7 +402,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		question = fCore.load(question);
 		Collections.sort(question.getOptions(),cmpOption);
 		options.clear(); options.addAll(question.getOptions());
-		conditions.clear(); conditions.addAll(fTemplate.allForParent(fbTemplate.getClassCondition(), question));
+		reloadConditions();
 		bSurvey.updateOptions(question);
 	}
 	
@@ -517,9 +517,14 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		bMessage.growlSuccessSaved();
 	}
 	
+	private void reloadConditions()
+	{
+		conditions.clear(); conditions.addAll(fTemplate.allForParent(fbTemplate.getClassCondition(), question));
+	}
+	
 	public void addCondition()
 	{
-		clear(false,false,true,true,true,true,true,true,false);
+		clear(false,false,false,false,true,true,true,true,false);
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassCondition()));}
 		QUESTION triggerQuestion = null; if(!triggerQuestions.isEmpty()) {triggerQuestion = triggerQuestions.get(0);}
 		QE element = null; if(!bSurvey.getElements().isEmpty()){element = bSurvey.getElements().get(0);}
@@ -536,6 +541,30 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		}
 	}
 	
+	public void saveCondition() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(condition));}
+		condition.setTriggerQuestion(fTemplate.find(fbTemplate.getClassQuestion(), condition.getTriggerQuestion()));
+		condition.setElement(fTemplate.find(fbTemplate.getClassElement(), condition.getElement()));
+		if(condition.getOption()!=null) {condition.setOption(fTemplate.find(fbTemplate.getOptionClass(), condition.getOption()));}
+		condition = fTemplate.save(condition);
+		reloadConditions();
+	}
+	
+	public void selectCondition()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(condition));}
+		condition = fTemplate.find(fbTemplate.getClassCondition(), condition);
+		triggerChanged();
+	}
+	
+	public void deleteCondition() throws UtilsConstraintViolationException
+	{
+		fTemplate.rm(condition);
+		clear(false,false,false,false,true,true,true,true,true);
+		reloadConditions();
+	}
+	
 	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, sections);}
 	protected void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, questions);}
 	protected void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException
@@ -544,4 +573,5 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		if(questions!=null) {reloadQuestion();}
 		if(optionSet!=null) {reloadOptionSet(true);}
 	}
+	protected void reorderConditions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, conditions);}
 }

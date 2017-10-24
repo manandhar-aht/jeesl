@@ -462,6 +462,20 @@
 	    		<s:lang key="fr" translation="Condition"/>
 	    	</s:langs>
     </s:translation>
+    	<s:translation key="jeeslSurveyConditionPresetRendering">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Standard Sichtbarkeit"/>
+	    		<s:lang key="en" translation="Preset Rendering"/>
+	    		<s:lang key="fr" translation="Preset Rendering"/>
+	    	</s:langs>
+    </s:translation>
+    	<s:translation key="jeeslSurveyConditionConditionalRendering">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Bedingte Sichtbarkeit"/>
+	    		<s:lang key="en" translation="Conditional Rendering"/>
+	    		<s:lang key="fr" translation="Conditional Rendering"/>
+	    	</s:langs>
+    </s:translation>
     <s:translation key="jeeslSurveyElement">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Element"/>
@@ -469,4 +483,12 @@
 	    		<s:lang key="fr" translation="Element"/>
 	    	</s:langs>
     </s:translation>
+     <s:translation key="jeeslSurveyConditionNegated">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Negiert"/>
+	    		<s:lang key="en" translation="Negated"/>
+	    		<s:lang key="fr" translation="Negated"/>
+	    	</s:langs>
+    </s:translation>   
+    
 </s:translations>

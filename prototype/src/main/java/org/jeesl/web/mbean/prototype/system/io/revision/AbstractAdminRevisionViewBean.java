@@ -1,9 +1,10 @@
-package org.jeesl.web.mbean.prototype.admin.system.revision;
+package org.jeesl.web.mbean.prototype.system.io.revision;
 
 import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
+import org.jeesl.factory.builder.RevisionFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
@@ -46,26 +47,26 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	private RV rv; public RV getRv() {return rv;} public void setRv(RV rv) {this.rv = rv;}
 	private RVM mapping; public RVM getMapping() {return mapping;}public void setMapping(RVM mapping) {this.mapping = mapping;}
 	
-	public AbstractAdminRevisionViewBean(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat){super(cL,cD,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);}
+	public AbstractAdminRevisionViewBean(final RevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision){super(fbRevision);}
 
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision);		
-		entities = fRevision.all(cEntity);
+		entities = fRevision.all(fbRevision.getClassEntity());
 		reloadViews();
 	}
 
 	public void reloadViews()
 	{
-		views = fRevision.allOrderedPosition(cView);
-		logger.info(AbstractLogMessage.reloaded(cView,views));
+		views = fRevision.allOrderedPosition(fbRevision.getClassView());
+		logger.info(AbstractLogMessage.reloaded(fbRevision.getClassView(),views));
 //		if(showInvisibleCategories){categories = fUtils.allOrderedPosition(cCategory);}
 //		else{categories = fUtils.allOrderedPositionVisible(cCategory);}
 	}
 	
 	public void add() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(cView));
+		logger.info(AbstractLogMessage.addEntity(fbRevision.getClassView()));
 		rv = efView.build();
 		rv.setName(efLang.createEmpty(langs));
 		rv.setDescription(efDescription.createEmpty(langs));
@@ -74,7 +75,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	public void select() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(rv));
-		rv = fRevision.find(cView, rv);
+		rv = fRevision.find(fbRevision.getClassView(), rv);
 		rv = efLang.persistMissingLangs(fRevision,langs,rv);
 		rv = efDescription.persistMissingLangs(fRevision,langs,rv);
 		mapping=null;
@@ -83,7 +84,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	
 	private void reloadView()
 	{
-		rv = fRevision.load(cView, rv);
+		rv = fRevision.load(fbRevision.getClassView(), rv);
 		viewMappings = rv.getMaps();
 	}
 	
@@ -119,7 +120,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	{
 		if(mapping.getEntity()!=null)
 		{
-			mapping.setEntity(fRevision.find(cEntity,mapping.getEntity()));
+			mapping.setEntity(fRevision.find(fbRevision.getClassEntity(),mapping.getEntity()));
 			logger.info(AbstractLogMessage.selectOneMenuChange(mapping.getEntity()));
 			reloadEntityMappings();
 			if(entityMappings.isEmpty()){mapping.setEntityMapping(null);}
@@ -129,13 +130,13 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	
 	private void reloadEntityMappings()
 	{
-		RE e = fRevision.load(cEntity, mapping.getEntity());
+		RE e = fRevision.load(fbRevision.getClassEntity(), mapping.getEntity());
 		entityMappings = e.getMaps();
 	}
 	
 	public void addMapping() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(cViewMapping)+" entites:"+entities.size()+" empty:"+entities.isEmpty());
+		logger.info(AbstractLogMessage.addEntity(fbRevision.getClassViewMapping())+" entites:"+entities.size()+" empty:"+entities.isEmpty());
 		RE re = null;
 		if(!entities.isEmpty())
 		{
@@ -154,15 +155,15 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	public void selectMapping() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(mapping));
-		mapping = fRevision.find(cViewMapping, mapping);
+		mapping = fRevision.find(fbRevision.getClassViewMapping(), mapping);
 		reloadEntityMappings();
 	}
 	
 	public void saveMapping() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(mapping));
-		mapping.setEntityMapping(fRevision.find(cMappingEntity,mapping.getEntityMapping()));
-		mapping.setEntity(fRevision.find(cEntity,mapping.getEntity()));
+		mapping.setEntityMapping(fRevision.find(fbRevision.getClassEntityMapping(),mapping.getEntityMapping()));
+		mapping.setEntity(fRevision.find(fbRevision.getClassEntity(),mapping.getEntity()));
 		mapping = fRevision.save(mapping);
 		reloadView();
 		bMessage.growlSuccessSaved();
@@ -172,7 +173,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	public void rmMapping() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(mapping));
-		fRevision.rm(cViewMapping,mapping);
+		fRevision.rm(fbRevision.getClassViewMapping(),mapping);
 		mapping=null;
 		bMessage.growlSuccessRemoved();
 		reloadView();

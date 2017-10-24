@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslAttributeBean;
 import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
-import org.jeesl.factory.builder.AttributeFactoryBuilder;
+import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
@@ -34,9 +34,9 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 	final static Logger logger = LoggerFactory.getLogger(AbstractAppAttributeBean.class);
 
 	private JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fAttribute;
-	private final AttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute;
+	private final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute;
 
-	public AbstractAppAttributeBean(AttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute)
+	public AbstractAppAttributeBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute)
 	{
 		this.fbAttribute=fbAttribute;
 		categories = new ArrayList<CATEGORY>();

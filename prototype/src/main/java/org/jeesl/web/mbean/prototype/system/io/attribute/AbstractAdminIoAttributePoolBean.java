@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslAttributeBean;
 import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
-import org.jeesl.factory.builder.AttributeFactoryBuilder;
+import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
@@ -43,7 +43,7 @@ public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends Ut
 
 	private CRITERIA criteria; public CRITERIA getCriteria() {return criteria;} public void setCriteria(CRITERIA criteria) {this.criteria = criteria;}
 
-	public AbstractAdminIoAttributePoolBean(AttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute)
+	public AbstractAdminIoAttributePoolBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute)
 	{
 		super(fbAttribute);
 	}

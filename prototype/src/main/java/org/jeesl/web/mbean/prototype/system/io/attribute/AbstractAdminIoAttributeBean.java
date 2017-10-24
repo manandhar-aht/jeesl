@@ -6,7 +6,7 @@ import java.util.Comparator;
 import org.jeesl.api.bean.JeeslAttributeBean;
 import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
-import org.jeesl.factory.builder.AttributeFactoryBuilder;
+import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.factory.ejb.module.attribute.EjbAttributeCriteriaFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeItemFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeSetFactory;
@@ -42,7 +42,7 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 	
 	protected JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fAttribute;
 	protected JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> bAttribute;
-	protected final AttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute;
+	protected final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute;
 	
 	protected final SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	
@@ -52,7 +52,7 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 	
 	protected final Comparator<CRITERIA> cpCriteria;
 
-	public AbstractAdminIoAttributeBean(AttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute)
+	public AbstractAdminIoAttributeBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute)
 	{
 		super(fbAttribute.getClassL(),fbAttribute.getClassD());
 		this.fbAttribute=fbAttribute;

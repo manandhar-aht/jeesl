@@ -1,5 +1,6 @@
-package org.jeesl.factory.builder;
+package org.jeesl.factory.builder.io;
 
+import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.attribute.EjbAttributeCriteriaFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeItemFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeSetFactory;
@@ -15,7 +16,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class AttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
+public class IoAttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									CRITERIA extends JeeslAttributeCriteria<L,D,CATEGORY,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
@@ -25,7 +26,7 @@ public class AttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescrip
 									DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
 				extends AbstractFactoryBuilder<L,D>
 {
-	final static Logger logger = LoggerFactory.getLogger(AttributeFactoryBuilder.class);
+	final static Logger logger = LoggerFactory.getLogger(IoAttributeFactoryBuilder.class);
 
 	private final Class<CATEGORY> cCat; public Class<CATEGORY> getClassCategory() {return cCat;}
 	private final Class<CRITERIA> cCriteria; public Class<CRITERIA> getClassCriteria() {return cCriteria;}
@@ -33,7 +34,7 @@ public class AttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescrip
 	private final Class<SET> cSet; public Class<SET> getClassSet() {return cSet;}
 	private final Class<ITEM> cItem; public Class<ITEM> getClassItem() {return cItem;}
     
-	public AttributeFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CATEGORY> cCat, final Class<CRITERIA> cCriteria, final Class<TYPE> cType, final Class<SET> cSet, final Class<ITEM> cItem)
+	public IoAttributeFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CATEGORY> cCat, final Class<CRITERIA> cCriteria, final Class<TYPE> cType, final Class<SET> cSet, final Class<ITEM> cItem)
 	{
 		super(cL,cD);
 		this.cCat=cCat;

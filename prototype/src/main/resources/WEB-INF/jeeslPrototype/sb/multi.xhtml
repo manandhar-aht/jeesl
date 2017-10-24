@@ -23,11 +23,11 @@
 				<ui:fragment>
                   <h:commandLink>
                       <h:graphicImage  library="jeeslPrototypeGfx" name="12/ui/control/select-all.png"/>
-                      <p:ajax event="click" listener="#{handler.toggleAll()}" update="#{update}"/>
+                      <p:ajax event="click" listener="#{handler.toggleAll()}" update="#{update}" oncomplete="#{oncomplete}"/>
                   </h:commandLink>
                   <h:commandLink>
                       <h:graphicImage library="jeeslPrototypeGfx" name="12/ui/control/select-none.png"/>
-                      <p:ajax event="click" listener="#{handler.toggleNone()}" update="#{update}"/>
+                      <p:ajax event="click" listener="#{handler.toggleNone()}" update="#{update}" oncomplete="#{oncomplete}"/>
                   </h:commandLink>
                   (#{fn:length(handler.selected)}/#{fn:length(handler.list)})
 				</ui:fragment>
@@ -37,7 +37,7 @@
 		<h:commandLink>
 			<ui:insert />
 			<aup:sbCheckmark value="#{handler.map[var]}"/>
-			<p:ajax event="click" listener="#{handler.toggle(var)}" update="#{update}"/>
+			<p:ajax event="click" listener="#{handler.toggle(var)}" update="#{update}" oncomplete="#{oncomplete}"/>
 		</h:commandLink>
 	</jp:sbItem>
 </ui:composition>

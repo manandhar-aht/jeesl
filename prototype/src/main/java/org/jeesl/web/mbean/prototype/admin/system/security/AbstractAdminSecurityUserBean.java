@@ -87,6 +87,12 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		performPasswordCheck = true;
 	}
 	
+	public void cancelUser() {reset(true);}
+	protected void reset(boolean rUser)
+	{
+		if(rUser) {user=null;}
+	}
+	
 	protected void reloadUsers()
 	{
 		users = fUtilsUser.all(cUser);
@@ -113,11 +119,6 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		mapRoles.clear();
 		if(debugOnInfo){logger.info("Settings roles: "+user.getRoles().size());}
 		for(R r : user.getRoles()){mapRoles.put(r.getId(), true);}
-	}
-	
-	public void cancelUser()
-	{
-		user = null;
 	}
 	
 	public void saveUser() throws UtilsLockingException

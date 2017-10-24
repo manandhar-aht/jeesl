@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.security;
+package org.jeesl.web.mbean.prototype.system.security;
 
 import java.io.Serializable;
 import java.util.Comparator;

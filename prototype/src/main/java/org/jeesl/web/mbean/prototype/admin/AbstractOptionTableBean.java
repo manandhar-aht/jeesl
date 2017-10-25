@@ -159,7 +159,15 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	@SuppressWarnings("unchecked")
 	public void selectCategory(boolean reset) throws ClassNotFoundException
 	{
-		logger.info("selectCategory "+((EjbWithCode)category).getCode() +" ("+ ((EjbWithImageAlt)category).getImageAlt()+") allowAdditionalElements:"+allowAdditionalElements.get(((EjbWithId)category).getId()));
+		if(category==null) {logger.error("selectCategory, but category is NULL");}
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("selectCategory");
+		sb.append(" ").append(((EjbWithCode)category).getCode());
+		sb.append(" (").append(((EjbWithImageAlt)category).getImageAlt()).append(")");
+		sb.append(" allowAdditionalElements:").append(allowAdditionalElements.get(((EjbWithId)category).getId()));
+		logger.info(sb.toString());
+		
 		cl = Class.forName(((EjbWithImage)category).getImage());
 		updateUiForCategory();
 		

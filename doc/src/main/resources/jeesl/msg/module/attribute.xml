@@ -49,12 +49,25 @@
 	    		<s:lang key="fr" translation="Items"/>
 	    	</s:langs>
     </s:translation>  
-      	<s:translation key="jeeslIoAttributeItem">
+	<s:translation key="jeeslIoAttributeItem">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Element"/>
 	    		<s:lang key="en" translation="Item"/>
 	    		<s:lang key="fr" translation="Item"/>
 	    	</s:langs>
     </s:translation>    
-    
+      	<s:translation key="jeeslIoAttributeOptions">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Optionen"/>
+	    		<s:lang key="en" translation="Options"/>
+	    		<s:lang key="fr" translation="Options"/>
+	    	</s:langs>
+    </s:translation>  
+	<s:translation key="jeeslIoAttributeOption">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Option"/>
+	    		<s:lang key="en" translation="Option"/>
+	    		<s:lang key="fr" translation="Option"/>
+	    	</s:langs>
+    </s:translation>    
 </s:translations>

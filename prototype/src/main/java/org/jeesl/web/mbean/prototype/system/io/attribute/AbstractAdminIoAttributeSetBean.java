@@ -11,6 +11,7 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +28,12 @@ public class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D extends Uti
 												CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 												CRITERIA extends JeeslAttributeCriteria<L,D,CATEGORY,TYPE>,
 												TYPE extends UtilsStatus<TYPE,L,D>,
+												OPTION extends JeeslAttributeOption<L,D,CRITERIA>,
 												SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
 												ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 												CONTAINER extends JeeslAttributeContainer<SET,DATA>,
 												DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
-					extends AbstractAdminIoAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA>
+					extends AbstractAdminIoAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -44,7 +46,7 @@ public class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D extends Uti
 	private SET set; public SET getSet() {return set;} public void setSet(SET set) {this.set = set;}
 	private ITEM item; public ITEM getItem() {return item;} public void setItem(ITEM item) {this.item = item;}
 	
-	public AbstractAdminIoAttributeSetBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute) {super(fbAttribute);}
+	public AbstractAdminIoAttributeSetBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute) {super(fbAttribute);}
 	
 	protected void initAttributeSet(String[] localeCodes, FacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{

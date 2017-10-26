@@ -19,7 +19,7 @@ public interface JeeslAttributeCriteria<L extends UtilsLang, D extends UtilsDesc
 					EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{category,type}
-	public enum Types{text,bool,intNumber,doubleNumber,date}
+	public enum Types{text,bool,intNumber,doubleNumber,date,selectOne}
 	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);

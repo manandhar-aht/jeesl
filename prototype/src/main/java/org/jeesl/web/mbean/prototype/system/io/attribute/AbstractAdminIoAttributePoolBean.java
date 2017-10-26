@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,24 +30,24 @@ public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends Ut
 												CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 												CRITERIA extends JeeslAttributeCriteria<L,D,CATEGORY,TYPE>,
 												TYPE extends UtilsStatus<TYPE,L,D>,
+												OPTION extends JeeslAttributeOption<L,D,CRITERIA>,
 												SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
 												ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 												CONTAINER extends JeeslAttributeContainer<SET,DATA>,
 												DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
-					extends AbstractAdminIoAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA>
+					extends AbstractAdminIoAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoAttributePoolBean.class);
 		
 	private List<CRITERIA> criterias; public List<CRITERIA> getCriterias() {return criterias;}
+	private List<OPTION> options; public List<OPTION> getOptions() {return options;}
 
 	private CRITERIA criteria; public CRITERIA getCriteria() {return criteria;} public void setCriteria(CRITERIA criteria) {this.criteria = criteria;}
-
-	public AbstractAdminIoAttributePoolBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute)
-	{
-		super(fbAttribute);
-	}
+	private OPTION option; public OPTION getOption() {return option;} public void setOption(OPTION option) {this.option = option;}
+	
+	public AbstractAdminIoAttributePoolBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute){super(fbAttribute);}
 	
 	protected void initAttributePool(String[] localeCodes, FacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{
@@ -89,6 +90,7 @@ public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends Ut
 		criteria.setType(fAttribute.find(fbAttribute.getClassType(),criteria.getType()));
 		criteria = fAttribute.save(criteria);
 		reloadCriterias();
+		reloadOptions();
 	}
 	
 	public void selectCriteria()
@@ -96,6 +98,34 @@ public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends Ut
 		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(criteria));}
 		criteria = efLang.persistMissingLangs(fAttribute,localeCodes,criteria);
 		criteria = efDescription.persistMissingLangs(fAttribute,localeCodes,criteria);
+		reloadOptions();
+	}
+	
+	private void reloadOptions()
+	{
+		options = fAttribute.allForParent(fbAttribute.getClassOption(),criteria);
+	}
+	
+	public void addOption()
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.addEntity(fbAttribute.getClassOption()));}
+		option = efOption.build(criteria,options);
+		option.setName(efLang.createEmpty(localeCodes));
+		option.setDescription(efDescription.createEmpty(localeCodes));
+	}
+	
+	public void selectOption()
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(criteria));}
+		option = efLang.persistMissingLangs(fAttribute,localeCodes,option);
+		option = efDescription.persistMissingLangs(fAttribute,localeCodes,option);
+	}
+	
+	public void saveOption() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(criteria));}
+		option = fAttribute.save(option);
+		reloadOptions();
 	}
 	
 	protected void reorderCriterias() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, fbAttribute.getClassCriteria(),criterias);Collections.sort(criterias,cpCriteria);}

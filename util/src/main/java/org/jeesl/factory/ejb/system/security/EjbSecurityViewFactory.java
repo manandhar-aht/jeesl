@@ -44,7 +44,7 @@ public class EjbSecurityViewFactory <L extends UtilsLang,
 			ejb.setCategory(category);
 			ejb.setCode(code);
 			if(list==null){ejb.setPosition(1);}
-			else{ejb.setPosition(list.size());}
+			else{ejb.setPosition(list.size()+1);}
 		}
     	catch (InstantiationException e) {e.printStackTrace();}
     	catch (IllegalAccessException e) {e.printStackTrace();}

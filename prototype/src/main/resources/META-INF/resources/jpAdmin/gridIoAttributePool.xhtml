@@ -51,7 +51,7 @@
 							<f:facet name="actions">
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetCriteria()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveCriteria()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.rmCriteria()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.criteria.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteCriteria()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.criteria.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslCategory}"/>
@@ -65,13 +65,15 @@
 								<p:outputLabel value="#{msg.jeeslType}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.criteria.type}" effect="fade" >
 									<f:selectItems value="#{appAttributeBean.types}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeCriteriaType()}" update=":#{cc.id}:fOptions :#{cc.id}:fOption"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.criteria}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 						</p:panel>
 					</h:form>
-					<h:form id="fOptions" rendered="#{(not empty cc.attrs.bean.criteria) and (cc.attrs.bean.criteria.id gt 0)}">
+					<h:form id="fOptions" >
 						<p:dataTable var="o" value="#{cc.attrs.bean.options}" draggableRows="true"
+							rendered="#{(not empty cc.attrs.bean.criteria) and (cc.attrs.bean.criteria.id gt 0) and (cc.attrs.bean.criteria.type.code eq 'selectOne')}"
 							selection="#{cc.attrs.bean.option}" selectionMode="single" rowKey="#{o.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoAttributeOptions}">

@@ -63,10 +63,12 @@ public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends Ut
 		}
 	}
 	
-	public void resetCriteria() {reset(true);}
-	private void reset(boolean rCriteria)
+	public void resetOption() {reset(false,true);}
+	public void resetCriteria() {reset(true,true);}
+	private void reset(boolean rCriteria, boolean rOption)
 	{
 		if(rCriteria) {criteria=null;}
+		if(rOption) {option=null;}
 	}
 	
 	private void reloadCriterias()
@@ -78,9 +80,10 @@ public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends Ut
 	public void addCriteria()
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.addEntity(fbAttribute.getClassCriteria()));}
-		criteria = efCriteria.build(null,null);
+		criteria = efCriteria.build(null,bAttribute.getTypes().get(0));
 		criteria.setName(efLang.createEmpty(localeCodes));
 		criteria.setDescription(efDescription.createEmpty(localeCodes));
+		reset(true,true);
 	}
 	
 	public void saveCriteria() throws UtilsConstraintViolationException, UtilsLockingException
@@ -99,11 +102,25 @@ public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends Ut
 		criteria = efLang.persistMissingLangs(fAttribute,localeCodes,criteria);
 		criteria = efDescription.persistMissingLangs(fAttribute,localeCodes,criteria);
 		reloadOptions();
+		reset(false,true);
+	}
+	
+	public void deleteCriteria() throws UtilsConstraintViolationException
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.rmEntity(criteria));}
+		fAttribute.rm(criteria);
+		reloadCriterias();
+		reset(true,true);
 	}
 	
 	private void reloadOptions()
 	{
 		options = fAttribute.allForParent(fbAttribute.getClassOption(),criteria);
+	}
+	
+	public void changeCriteriaType()
+	{
+		criteria.setType(fAttribute.find(fbAttribute.getClassType(),criteria.getType()));
 	}
 	
 	public void addOption()
@@ -126,6 +143,14 @@ public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends Ut
 		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(criteria));}
 		option = fAttribute.save(option);
 		reloadOptions();
+	}
+	
+	public void deleteOption() throws UtilsConstraintViolationException
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.rmEntity(criteria));}
+		fAttribute.rm(option);
+		reloadOptions();
+		reset(false,true);
 	}
 	
 	protected void reorderCriterias() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, fbAttribute.getClassCriteria(),criterias);Collections.sort(criterias,cpCriteria);}

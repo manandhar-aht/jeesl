@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslStatus">
+		<s:langs>
+	    		<s:lang key="de" translation="Status"/>
+	    		<s:lang key="en" translation="Status"/>
+	    		<s:lang key="fr" translation="Status"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="jeeslCode">
+		<s:langs>
+	    		<s:lang key="de" translation="Code"/>
+	    		<s:lang key="en" translation="Code"/>
+	    		<s:lang key="fr" translation="Code"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="jeeslName">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Name"/>
@@ -7,6 +21,13 @@
 	    		<s:lang key="fr" translation="Name"/>
 	    	</s:langs>
     </s:translation>
+    	<s:translation key="jeeslDescription">
+		<s:langs>
+    		<s:lang key="de" translation="Beschreibung"/>
+    		<s:lang key="en" translation="Description"/>
+    		<s:lang key="fr" translation="Description"/>
+		</s:langs>
+	</s:translation>
     <s:translation key="jeeslOptionTables">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Tabellen"/>

@@ -13,7 +13,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
-		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
+		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -67,8 +67,7 @@
 									<f:selectItems value="#{appAttributeBean.types}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.criteria}" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.criteria}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 						</p:panel>
 					</h:form>
 				</aht:slot>

@@ -22,27 +22,6 @@
     		<s:lang key="fr" translation="Visible"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="jeeslCode">
-		<s:langs>
-    		<s:lang key="de" translation="Code"/>
-    		<s:lang key="en" translation="Code"/>
-    		<s:lang key="fr" translation="Code"/>
-		</s:langs>
-	</s:translation>
-	<s:translation key="jeeslDescription">
-		<s:langs>
-    		<s:lang key="de" translation="Beschreibung"/>
-    		<s:lang key="en" translation="Description"/>
-    		<s:lang key="fr" translation="Description"/>
-		</s:langs>
-	</s:translation>
-	<s:translation key="jeeslStatus">
-		<s:langs>
-    		<s:lang key="de" translation="Status"/>
-    		<s:lang key="en" translation="Status"/>
-    		<s:lang key="fr" translation="Status"/>
-		</s:langs>
-	</s:translation>
 	<s:translation key="jeeslReportViewer">
 		<s:langs>
     		<s:lang key="de" translation="Report Viewer"/>

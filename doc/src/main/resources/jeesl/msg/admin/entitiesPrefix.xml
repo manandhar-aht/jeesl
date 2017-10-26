@@ -83,7 +83,14 @@
 		<s:langs>
 			<s:lang key="en" translation="Entity Class" />
 			<s:lang key="fr" translation="Entity Class" />
-    	</s:langs>
+    		</s:langs>
+	</s:translation>
+	<s:translation key="TsDataSource">
+		<s:langs>
+			<s:lang key="en" translation="Datenursprung" />
+			<s:lang key="en" translation="Data Source" />
+			<s:lang key="fr" translation="Data Source" />
+    		</s:langs>
 	</s:translation>
 	<s:translation key="PropertyCategory">
 		<s:langs>

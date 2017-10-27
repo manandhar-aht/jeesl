@@ -156,6 +156,14 @@
 			<s:lang key="fr" translation="Language"/>
 		</s:langs>
 	</s:translation>
+		<s:translation key="Locale">
+		<s:langs>
+			<s:lang key="de" translation="Sprache"/>
+			<s:lang key="en" translation="Language"/>
+			<s:lang key="fr" translation="Language"/>
+		</s:langs>
+	</s:translation>
+	
 	<s:translation key="RegistrationStatus">
 		<s:langs>
 			<s:lang key="de" translation="Registrierungsstatus"/>

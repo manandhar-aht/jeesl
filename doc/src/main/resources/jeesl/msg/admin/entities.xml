@@ -247,4 +247,53 @@
 			<s:lang key="fr" translation="Constraint Level"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="TsCategory">
+		<s:langs>
+		 	<s:lang key="en" translation="Category"/>
+	        <s:lang key="fr" translation="Category"/>
+    	</s:langs>
+	</s:translation>
+	<s:translation key="TsInterval">
+		<s:langs>
+		 	<s:lang key="en" translation="Observation Interval"/>
+	        <s:lang key="fr" translation="Observation Interval"/>
+    	</s:langs>
+	</s:translation>
+	<s:translation key="TsWorkspace">
+		<s:langs>
+		 	<s:lang key="en" translation="Workspace"/>
+	        <s:lang key="fr" translation="Workspace"/>
+    	</s:langs>
+	</s:translation>
+	<s:translation key="TsUnit">
+		<s:langs>
+			<s:lang key="en" translation="Unit" />
+			<s:lang key="fr" translation="Unit" />
+    	</s:langs>
+	</s:translation>
+	<s:translation key="TsStatistic">
+		<s:langs>
+			<s:lang key="en" translation="Statistic" />
+			<s:lang key="fr" translation="Statistic" />
+    	</s:langs>
+	</s:translation>
+	<s:translation key="TsQaFlag">
+		<s:langs>
+			<s:lang key="en" translation="QA Flag" />
+			<s:lang key="fr" translation="QA Flag" />
+    	</s:langs>
+	</s:translation>
+	<s:translation key="TsEntityClass">
+		<s:langs>
+			<s:lang key="en" translation="Entity Class" />
+			<s:lang key="fr" translation="Entity Class" />
+    		</s:langs>
+	</s:translation>
+	<s:translation key="TsDataSource">
+		<s:langs>
+			<s:lang key="en" translation="Datenursprung" />
+			<s:lang key="en" translation="Data Source" />
+			<s:lang key="fr" translation="Data Source" />
+    		</s:langs>
+	</s:translation>
 </s:translations>

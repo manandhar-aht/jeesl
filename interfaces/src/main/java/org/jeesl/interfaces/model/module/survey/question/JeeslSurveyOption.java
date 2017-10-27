@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.module.survey.question;
 
+import java.io.Serializable;
+
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
@@ -9,7 +11,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyOption<L extends UtilsLang, D extends UtilsDescription>
-			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,//EjbSaveable,
+			extends Serializable,EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,//EjbSaveable,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
 	enum Units{yn,number,txt}

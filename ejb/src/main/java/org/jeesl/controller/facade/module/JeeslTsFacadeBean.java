@@ -15,6 +15,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.factory.builder.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
@@ -53,19 +54,17 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 					extends UtilsFacadeBean
 					implements JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>
 {
-	private final Class<TS> cTs;
-	private final Class<TRANSACTION> cTransaction;
-	private final Class<DATA> cData;
+	private final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs;
 	
-	private EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efTs;
+	private final EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efTs;
 	private EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efBridge;
 	
-	public JeeslTsFacadeBean(EntityManager em, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<DATA> cData)
+	public JeeslTsFacadeBean(EntityManager em, final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
 	{
 		super(em);
-		this.cTs=cTs;
-		this.cTransaction=cTransaction;
-		this.cData=cData;
+		this.fbTs=fbTs;
+
+		efTs = new EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(fbTs.getClassTs());
 	}
 
 	@Override public List<SCOPE> findScopes(Class<SCOPE> cScope, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleScopes)
@@ -109,9 +108,9 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<TS> cQ = cB.createQuery(cTs);
+		CriteriaQuery<TS> cQ = cB.createQuery(fbTs.getClassTs());
 		
-		Root<TS> ts = cQ.from(cTs);
+		Root<TS> ts = cQ.from(fbTs.getClassTs());
 		Join<TS,BRIDGE> jBridge = ts.join(JeeslTimeSeries.Attributes.bridge.toString());
 		
 		predicates.add(cB.equal(ts.<SCOPE>get(JeeslTimeSeries.Attributes.scope.toString()), scope));
@@ -128,7 +127,6 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 		try {return fTimeSeries(scope, interval, bridge);}
 		catch (UtilsNotFoundException e)
 		{
-			if(efTs==null){efTs = new EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cTs);}
 			TS ts = efTs.build(scope, interval, bridge);
 			return this.persist(ts);
 		}
@@ -136,8 +134,8 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	@Override public TS fTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<TS> cQ = cB.createQuery(cTs);
-		Root<TS> ts = cQ.from(cTs);
+		CriteriaQuery<TS> cQ = cB.createQuery(fbTs.getClassTs());
+		Root<TS> ts = cQ.from(fbTs.getClassTs());
 		
 		Path<SCOPE> pScope = ts.get(JeeslTimeSeries.Attributes.scope.toString());
 		Path<INT> pInterval = ts.get(JeeslTimeSeries.Attributes.interval.toString());
@@ -147,7 +145,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 		select.where(cB.equal(pScope,scope),cB.equal(pInterval,interval),cB.equal(pBridge, bridge));
 		
 		try	{return em.createQuery(select).getSingleResult();}
-		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cTs.getName()+" found for scope/interval/bridge");}
+		catch (NoResultException ex){throw new UtilsNotFoundException("No "+fbTs.getClassTs().getName()+" found for scope/interval/bridge");}
 	}
 	
 	@Override
@@ -155,8 +153,8 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<DATA> cQ = cB.createQuery(cData);
-		Root<DATA> data = cQ.from(cData);
+		CriteriaQuery<DATA> cQ = cB.createQuery(fbTs.getClassData());
+		Root<DATA> data = cQ.from(fbTs.getClassData());
 		
 		predicates.add(cB.equal(data.<TRANSACTION>get(JeeslTsData.Attributes.transaction.toString()), transaction));
 		Expression<Date> eRecord = data.get(JeeslTsData.Attributes.record.toString());
@@ -174,8 +172,8 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<DATA> cQ = cB.createQuery(cData);
-		Root<DATA> data = cQ.from(cData);
+		CriteriaQuery<DATA> cQ = cB.createQuery(fbTs.getClassData());
+		Root<DATA> data = cQ.from(fbTs.getClassData());
 		
 		predicates.add(cB.equal(data.<WS>get(JeeslTsData.Attributes.workspace.toString()), workspace));
 		predicates.add(cB.equal(data.<TS>get(JeeslTsData.Attributes.timeSeries.toString()), timeSeries));
@@ -194,7 +192,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	@Override
 	public void deleteTransaction(TRANSACTION transaction) throws UtilsConstraintViolationException
 	{
-		transaction = em.find(cTransaction, transaction.getId());
+		transaction = em.find(fbTs.getClassTransaction(), transaction.getId());
 		this.rmProtected(transaction);
 	}
 
@@ -203,8 +201,8 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<TRANSACTION> cQ = cB.createQuery(cTransaction);
-		Root<TRANSACTION> data = cQ.from(cTransaction);
+		CriteriaQuery<TRANSACTION> cQ = cB.createQuery(fbTs.getClassTransaction());
+		Root<TRANSACTION> data = cQ.from(fbTs.getClassTransaction());
 		
 		Expression<Date> eRecord = data.get(JeeslTsTransaction.Attributes.record.toString());
 		if(from!=null){predicates.add(cB.greaterThanOrEqualTo(eRecord, from));}

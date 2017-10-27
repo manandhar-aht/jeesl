@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.security;
+package org.jeesl.web.mbean.prototype.system.security;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -51,9 +51,9 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	
 	private boolean denyRemove; public boolean isDenyRemove(){return denyRemove;}
 	
-	public AbstractAdminSecurityRoleBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public AbstractAdminSecurityRoleBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
-		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		super(fbSecurity);
 	}
 	
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
@@ -61,11 +61,11 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 		categoryType = JeeslSecurityCategory.Type.role;
 		initSecuritySuper(langs,fSecurity,bMessage);
 		
-		opViews = fSecurity.all(cView);
+		opViews = fSecurity.all(fbSecurity.getClassView());
 		Collections.sort(opViews, comparatorView);
 		
 		opActions = new ArrayList<A>();
-		opUsecases = fSecurity.all(cUsecase);
+		opUsecases = fSecurity.all(fbSecurity.getClassUsecase());
 		Collections.sort(opUsecases,comparatorUsecase);
 		
 		roles = new ArrayList<R>();
@@ -85,7 +85,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	{
 		roles.clear();
 		logger.trace(StringUtil.stars());
-		for(R r : fSecurity.allForCategory(cRole,cCategory,category.getCode()))
+		for(R r : fSecurity.allForCategory(fbSecurity.getClassRole(),fbSecurity.getClassCategory(),category.getCode()))
 		{
 			logger.trace("Role "+r.toString());
 			if(r.isVisible() | uiShowInvisible){roles.add(r);}
@@ -98,10 +98,10 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	public void selectRole()
 	{
 		logger.trace(AbstractLogMessage.selectEntity(role));
-		role = fSecurity.load(cRole,role);
+		role = fSecurity.load(fbSecurity.getClassRole(),role);
 		role = efLang.persistMissingLangs(fSecurity,langs,role);
 		role = efDescription.persistMissingLangs(fSecurity,langs,role);		
-		role = fSecurity.load(cRole,role);
+		role = fSecurity.load(fbSecurity.getClassRole(),role);
 		reloadActions();
 		
 		views = role.getViews();
@@ -130,7 +130,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	{
 		for(V v : role.getViews())
 		{
-			v = fSecurity.load(cView,v);
+			v = fSecurity.load(fbSecurity.getClassView(),v);
 			opActions.addAll(v.getActions());
 		}
 	}
@@ -138,8 +138,8 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	//Role
 	public void addRole() throws UtilsConstraintViolationException
 	{
-		logger.info(AbstractLogMessage.addEntity(cRole));
-		role = efRole.create(category,"");
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassRole()));
+		role = efRole.build(category,"");
 		role.setName(efLang.createEmpty(langs));
 		role.setDescription(efDescription.createEmpty(langs));
 	}
@@ -157,7 +157,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 		
 		try
 		{
-			role.setCategory(fSecurity.find(cCategory, role.getCategory()));
+			role.setCategory(fSecurity.find(fbSecurity.getClassCategory(), role.getCategory()));
 			role = fSecurity.save(role);
 			selectRole();
 			reloadRoles();

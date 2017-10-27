@@ -14,7 +14,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
-		<composite:attribute name="langKeys" required="false" default="#{translationBean.langKeys}"/>
+		<composite:attribute name="langKeys" required="false" default="#{appTranslationBean.langKeys}"/>
 		
 		<composite:attribute name="graphicTypes" required="false" default="#{appUtilsBean.graphicTypes}"/>
 		<composite:attribute name="graphicStyles" required="false" default="#{appUtilsBean.graphicStyles}"/>
@@ -43,7 +43,7 @@
 					          selection="#{cc.attrs.bean.status}" selectionMode="single" rowKey="#{s.id}">
 							<f:facet name="header">
 					          	<aht:pfDataTableHeader title="#{msg[cc.attrs.bean.category.code]}">
-					          		<aht:icon rendered="#{cc.attrs.bean.uiAllowAdd}" type="jeeslAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttNew}"/>
+					          		<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttNew}" rendered="#{cc.attrs.bean.uiAllowAdd}"/>
 					          	</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form"/>

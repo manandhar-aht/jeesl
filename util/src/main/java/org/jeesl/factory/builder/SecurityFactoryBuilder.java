@@ -1,7 +1,12 @@
 package org.jeesl.factory.builder;
 
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityActionTemplateFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityCategoryFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityRoleFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityUsecaseFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityUserFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityViewFactory;
 import org.jeesl.factory.txt.system.security.TxtStaffFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
@@ -51,21 +56,47 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cTemplate=cTemplate;
 		this.cUser=cUser;
 	}
-		
+	
+	public EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> ejbCategory()
+	{
+		return new EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER>(cCategory);
+	}
+	
+	public EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> ejbRole()
+	{
+		return new EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER>(cRole);
+	}
+	
 	public EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> ejbView()
 	{
-		return new EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER>(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cUser);
+		return new EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER>(cView);
+	}
+	
+	public EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> ejbUsecase()
+	{
+		return new EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(cUsecase);
 	}
 	
 	public EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> ejbAction()
 	{
-		return new EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>(cL,cD,cAction);
+		return new EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>(cAction);
+	}
+	
+	public EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER> ejbTemplate()
+	{
+		return new EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER>(cTemplate);
 	}
 	
 	public <M extends JeeslSecurityMenu<L,D,C,R,V,U,A,AT,M,USER>> EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> ejbMenu(Class<M> cM)
 	{
-		return new EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cM);
+		return new EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>(cM);
 	}
+	
+	public EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER> ejbUser()
+	{
+		return new EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER>(cUser);
+	}
+	
 	
 	public <STAFF extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		TxtStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2> txtStaff(String localeCode)

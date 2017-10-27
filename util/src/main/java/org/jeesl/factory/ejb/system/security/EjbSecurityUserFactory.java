@@ -21,28 +21,13 @@ public class EjbSecurityUserFactory <L extends UtilsLang, D extends UtilsDescrip
 									 A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 									 AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 									 USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
-	extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityUserFactory.class);
 	
     final Class<USER> cUser;
-	
-    public static <L extends UtilsLang, D extends UtilsDescription,
-	 			   C extends JeeslSecurityCategory<L,D>,
-	 			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-	 			   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
-	 			   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-	 			   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	 			   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-	 			   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
-    	EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER> factory(final Class<USER> cUser)
-    {
-        return new EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER>(cUser);
-    }
     
     public EjbSecurityUserFactory(final Class<USER> cUser)
     {
-    	super(null,null);
         this.cUser = cUser;
     } 
     

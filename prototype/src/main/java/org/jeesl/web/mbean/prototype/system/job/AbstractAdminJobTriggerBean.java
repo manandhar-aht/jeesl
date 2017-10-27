@@ -1,11 +1,11 @@
-package org.jeesl.web.mbean.prototype.admin.system.job;
+package org.jeesl.web.mbean.prototype.system.job;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.factory.builder.JobFactoryBuilder;
-import org.jeesl.factory.ejb.system.job.EjbJobRobotFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
@@ -14,8 +14,6 @@ import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
-import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -23,7 +21,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAdminJobTriggerBean <L extends UtilsLang,D extends UtilsDescription,
 									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
@@ -39,59 +37,34 @@ public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescr
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminJobRobotBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAdminJobTriggerBean.class);
 	
-	private List<ROBOT> robots; public List<ROBOT> getRobots() {return robots;}
+	protected List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
 	
-	private ROBOT robot; public ROBOT getRobot() {return robot;} public void setRobot(ROBOT robot) {this.robot = robot;}
+	protected TEMPLATE template; public TEMPLATE getTemplate() {return template;} public void setTemplate(TEMPLATE template) {this.template = template;}
 	
-	private EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efRobot;
-
-	public AbstractAdminJobRobotBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob){super(fbJob);}
+	public AbstractAdminJobTriggerBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob){super(fbJob);}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
 		super.initSuper(langs,bMessage,fJob);
-		efRobot = fbJob.robot();
 		
 		if(debugOnInfo)
 		{
 			logger.info(AbstractLogMessage.multiStatus(fbJob.getClassCategory(),sbhCategory.getSelected(),sbhCategory.getList()));
 			logger.info(AbstractLogMessage.multiStatus(fbJob.getClassType(),sbhType.getSelected(),sbhType.getList()));
 		}
-		reloadConsumers();
+		templates = new ArrayList<TEMPLATE>();
 	}
 	
-	public void cancelRobot(){reset(true);}
-	private void reset(boolean clearConsumer)
+	@Override public void toggled(Class<?> c)
 	{
-		if(clearConsumer){robot=null;}
+		logger.info(AbstractLogMessage.toggled(c));
+		super.toggled(c);
 	}
 	
-	private void reloadConsumers()
+	public void selectTemplate()
 	{
-		robots = fJob.all(fbJob.getClassRobot());
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbJob.getClassRobot(),robots));}
-//		Collections.sort(templates, comparatorTemplate);
-	}
-	
-	public void addRobot()
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbJob.getClassRobot()));}
-		robot = efRobot.build();
-		robot.setName(efLang.createEmpty(langs));
-		robot.setDescription(efDescription.createEmpty(langs));
-	}
-		
-	public void selectRobot()
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(robot));}
-	}
-	
-	public void saveConsumer() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(robot));}
-		robot = fJob.save(robot);
-		reloadConsumers();
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
 	}
 }

@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.security;
+package org.jeesl.web.mbean.prototype.system.security;
 
 import java.io.Serializable;
 import java.util.List;
@@ -54,9 +54,9 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractAdminSecurityMenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<M> cMenu, final Class<USER> cUser)
+	public AbstractAdminSecurityMenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<M> cMenu)
 	{
-		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		super(fbSecurity);
 		this.cMenu=cMenu;
 		efMenu = fbSecurity.ejbMenu(cMenu);
 	}
@@ -64,7 +64,7 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
 	{
 		super.initSecuritySuper(langs,fSecurity,bMessage);
-		opViews = fSecurity.all(cView);
+		opViews = fSecurity.all(fbSecurity.getClassView());
 		
 		if(fSecurity.all(cMenu,1).isEmpty()) {firstInit();}
 		Map<V,M> map = efMenu.toMapView(fSecurity.all(cMenu));
@@ -98,7 +98,7 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 		{
 			try
 			{
-				V v = fSecurity.fByCode(cView,item.getView().getCode());
+				V v = fSecurity.fByCode(fbSecurity.getClassView(),item.getView().getCode());
 				M m = efMenu.create(v);
 				m.setPosition(i);i++;
 				m.setParent(parent);

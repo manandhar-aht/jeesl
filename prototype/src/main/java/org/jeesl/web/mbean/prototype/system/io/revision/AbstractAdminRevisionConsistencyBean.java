@@ -1,8 +1,9 @@
-package org.jeesl.web.mbean.prototype.admin.system.revision;
+package org.jeesl.web.mbean.prototype.system.io.revision;
 
 import java.io.Serializable;
 
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
+import org.jeesl.factory.builder.RevisionFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
@@ -37,7 +38,7 @@ public class AbstractAdminRevisionConsistencyBean <L extends UtilsLang,D extends
 	
 	private RC category; public RC getCategory() {return category;} public void setCategory(RC category) {this.category = category;}
 
-	public AbstractAdminRevisionConsistencyBean(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat){super(cL,cD,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);}
+	public AbstractAdminRevisionConsistencyBean(final RevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision){super(fbRevision);}
 
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision)
 	{
@@ -50,7 +51,7 @@ public class AbstractAdminRevisionConsistencyBean <L extends UtilsLang,D extends
 	{
 		try
 		{
-			RC s = cCategory.newInstance();
+			RC s = fbRevision.getClassCategory().newInstance();
 			s.setId(index);
 			s.setCode(c.getSimpleName());
 			s.setImage(c.getName());

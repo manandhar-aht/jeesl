@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.revision;
+package org.jeesl.web.mbean.prototype.system.io.revision;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslLabelBean;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
+import org.jeesl.factory.builder.RevisionFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
@@ -51,16 +52,16 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	private String className; public String getClassName() {return className;}
 	
-	public AbstractAdminRevisionEntityBean(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat){super(cL,cD,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);}
+	public AbstractAdminRevisionEntityBean(final RevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision){super(fbRevision);}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> bLabel)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision);
 		this.bLabel=bLabel;
 		
-		scopes = fRevision.all(cScope);
-		types = fRevision.allOrderedPositionVisible(cRat);
-		scopeTypes = fRevision.allOrderedPositionVisible(cScopeType);
+		scopes = fRevision.all(fbRevision.getClassScope());
+		types = fRevision.allOrderedPositionVisible(fbRevision.getClassAttributeType());
+		scopeTypes = fRevision.allOrderedPositionVisible(fbRevision.getClassScopeType());
 		reloadEntities();
 	}
 	
@@ -74,14 +75,14 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 
 	private void reloadEntities()
 	{
-		entities = fRevision.findEntities(cEntity, cCategory, sbhCategory.getSelected(), true);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cEntity,entities));}
+		entities = fRevision.findEntities(fbRevision.getClassEntity(), fbRevision.getClassCategory(), sbhCategory.getSelected(), true);
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbRevision.getClassEntity(),entities));}
 		Collections.sort(entities, comparatorEntity);
 	}
 	
 	public void addEntity() throws UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cEntity));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbRevision.getClassEntity()));}
 		entity = efEntity.build(null);
 		entity.setName(efLang.createEmpty(langs));
 		entity.setDescription(efDescription.createEmpty(langs));
@@ -91,7 +92,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	private void reloadEntity()
 	{
-		entity = fRevision.load(cEntity, entity);
+		entity = fRevision.load(fbRevision.getClassEntity(), entity);
 		attributes = entity.getAttributes();
 		entityMappings = entity.getMaps();
 		try
@@ -108,7 +109,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void selectEntity() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(entity));}
-		entity = fRevision.find(cEntity, entity);
+		entity = fRevision.find(fbRevision.getClassEntity(), entity);
 		entity = efLang.persistMissingLangs(fRevision,langs,entity);
 		entity = efDescription.persistMissingLangs(fRevision,langs,entity);
 		reloadEntity();
@@ -119,7 +120,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void saveEntity() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(entity));}
-		if(entity.getCategory()!=null){entity.setCategory(fRevision.find(cCategory, entity.getCategory()));}
+		if(entity.getCategory()!=null){entity.setCategory(fRevision.find(fbRevision.getClassCategory(), entity.getCategory()));}
 		entity = fRevision.save(entity);
 		reloadEntities();
 		reloadEntity();
@@ -152,8 +153,8 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void saveAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(attribute));}
-		if(attribute.getType()!=null){attribute.setType(fRevision.find(cRat, attribute.getType()));}
-		attribute = fRevision.save(cEntity,entity,attribute);
+		if(attribute.getType()!=null){attribute.setType(fRevision.find(fbRevision.getClassAttributeType(), attribute.getType()));}
+		attribute = fRevision.save(fbRevision.getClassEntity(),entity,attribute);
 		reloadEntity();
 		bMessage.growlSuccessSaved();
 		bLabel.reload(entity);
@@ -163,7 +164,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void rmAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(attribute));}
-		fRevision.rm(cEntity,entity,attribute);
+		fRevision.rm(fbRevision.getClassEntity(),entity,attribute);
 		attribute=null;
 		bMessage.growlSuccessRemoved();
 		reloadEntity();
@@ -174,7 +175,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	public void addMapping() throws UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cMappingEntity));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbRevision.getClassEntityMapping()));}
 		RST rst = null; if(!scopeTypes.isEmpty()){rst=scopeTypes.get(0);}
 		mapping = efMappingEntity.build(entity,null,rst);
 		updateUi();
@@ -183,15 +184,15 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void selectMapping() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(mapping));}
-		mapping = fRevision.find(cMappingEntity, mapping);
+		mapping = fRevision.find(fbRevision.getClassEntityMapping(), mapping);
 		updateUi();
 	}
 	
 	public void saveMapping() throws UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(mapping));}
-		mapping.setScope(fRevision.find(cScope,mapping.getScope()));
-		mapping.setType(fRevision.find(cScopeType, mapping.getType()));
+		mapping.setScope(fRevision.find(fbRevision.getClassScope(),mapping.getScope()));
+		mapping.setType(fRevision.find(fbRevision.getClassScopeType(), mapping.getType()));
 		
 		try
 		{
@@ -221,7 +222,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	public void changeScopeType()
 	{
-		mapping.setType(fRevision.find(cScopeType, mapping.getType()));
+		mapping.setType(fRevision.find(fbRevision.getClassScopeType(), mapping.getType()));
 		logger.info(AbstractLogMessage.selectEntity(mapping, mapping.getType()));
 		updateUi();
 	}
@@ -241,7 +242,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		}
 	}
 	
-	protected void reorderEntites() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, cEntity, entities);Collections.sort(entities, comparatorEntity);}
+	protected void reorderEntites() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, fbRevision.getClassEntity(), entities);Collections.sort(entities, comparatorEntity);}
 	protected void reorderAttributes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, attributes);}
 	protected void reorderMappings() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, entityMappings);}
 	

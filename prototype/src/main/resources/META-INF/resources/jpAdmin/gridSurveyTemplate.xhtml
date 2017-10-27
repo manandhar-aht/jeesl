@@ -23,6 +23,7 @@
 		<composite:attribute name="withSchemes" required="false" default="false"/>
 		<composite:attribute name="withMatrix" required="false" default="false"/>
 		<composite:attribute name="withOptionSets" required="false" default="false"/>
+		<composite:attribute name="withCondition" required="false" default="false"/>
 	</composite:interface>
 	
 <composite:implementation>
@@ -234,7 +235,7 @@
                      <h:outputText rendered="#{q.visible}" value="#{q.code}" />
                   </p:column>
 						<p:column>
-	                       <f:facet name="header">#{msg.aupSurveyQuestion}</f:facet>
+	                       <f:facet name="header">#{msg.jeeslSurveyQuestion}</f:facet>
 	                       <h:outputText value="#{q.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 	                   </p:column>
 					</p:dataTable>
@@ -242,7 +243,7 @@
 			</aht:slot>
 			<aht:slot id="sQuestion" width="4" >
 				<h:form id="fQuestion" rendered="#{not empty cc.attrs.bean.question}">
-					<p:panel header="#{msg.aupSurveyQuestion}" styleClass="auPanelWithGrid">
+					<p:panel header="#{msg.jeeslSurveyQuestion}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveQuestion()}" update=":#{cc.id}:row1"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmQuestion()}" update=":#{cc.id}:row1"/>
@@ -259,7 +260,7 @@
 							<p:outputLabel value="#{msg.jeeslName}"/>
 							<p:inputText value="#{cc.attrs.bean.question.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						
-							<p:outputLabel value="#{msg.aupSurveyQuestion}"/>
+							<p:outputLabel value="#{msg.jeeslSurveyQuestion}"/>
 							<jtp:inputRemark value="#{cc.attrs.bean.question.text[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 							
 							<p:outputLabel rendered="false" value="#{msg.aupSurveyQuestionUnit}"/>
@@ -312,6 +313,12 @@
 								<f:selectItem itemLabel="--"/>
 								<f:selectItems value="#{cc.attrs.bean.optionSets}" var="os" itemLabel="#{os.name[cc.attrs.bean.sbhLocale.selection.code].lang}" itemValue="#{os}"/>
 							</p:selectOneMenu>
+						</p:panelGrid>
+						<p:panelGrid columns="2" columnClasses="jeeslGrid50,jeeslGrid50" rendered="#{cc.attrs.withCondition}">					
+							<p:outputLabel value="#{msg.jeeslSurveyConditionPresetRendering}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.rendered}" />
+							<p:outputLabel value="#{msg.jeeslSurveyConditionConditionalRendering}"/>
+							<p:inputText value="#{cc.attrs.bean.question.renderCondition}"/>
 						</p:panelGrid>
 					</p:panel>
 				</h:form>
@@ -479,6 +486,63 @@
 							<p:outputLabel value="#{msg.jpSurveyQuestionShowScore}"/>
 							<p:outputLabel value="#{msg.jpSurveyQuestionScoreMax}"/>
 							<p:inputText value="#{cc.attrs.bean.score.maxScore}"/>	
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+				
+				<h:form id="fConditions" rendered="#{cc.attrs.withCondition and (not empty cc.attrs.bean.question) and (cc.attrs.bean.question.id gt 0)}">
+					<p:dataTable var="condition" value="#{cc.attrs.bean.conditions}" rowKey="#{condition.id}"
+								 selection="#{cc.attrs.bean.condition}" selectionMode="single" draggableRows="true">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveyConditions}">
+								<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addCondition()}" update=":#{cc.id}:fConditions :#{cc.id}:fCondition"/>
+							</aht:pfDataTableHeader>
+						</f:facet>
+						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectCondition()}" update=":#{cc.id}:fConditions :#{cc.id}:fCondition"/>
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderConditions()}" update="@form"/>
+						<p:column>
+							<h:graphicImage rendered="#{condition.negate}" name="12/ui/module/survey/negate.png"  library="jeeslPrototypeGfx"/>
+						</p:column>
+						<p:column>
+							<f:facet name="header">#{msg.jeeslSurveyQuestion}</f:facet>
+							<h:outputText value="#{condition.triggerQuestion.section.code} #{condition.triggerQuestion.code} #{condition.triggerQuestion.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:column>
+						<p:column>	
+							<h:outputText value="#{condition.element.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">#{msg.jeeslSurveyCondition}</f:facet>
+							<h:outputText value="#{condition.option.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+				<h:form id="fCondition" >
+					<p:panel header="#{msg.jeeslSurveyCondition}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.condition}">
+						<f:facet name="actions">
+							<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelCondition()}" update=":#{cc.id}:fConditions :#{cc.id}:fCondition"/>
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveCondition()}" update=":#{cc.id}:fConditions :#{cc.id}:fCondition"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteCondition()}" update=":#{cc.id}:fConditions :#{cc.id}:fCondition"/>
+						</f:facet>
+						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
+							<p:outputLabel value="#{msg.jeeslSurveyConditionNegated}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.condition.negate}" />
+						
+							<p:outputLabel value="#{msg.jeeslSurveyQuestion}"/>
+							<p:selectOneMenu id="s1Question" value="#{cc.attrs.bean.condition.triggerQuestion}" effect="fade" autoWidth="false">
+								<f:selectItems value="#{cc.attrs.bean.triggerQuestions}" var="q" itemLabel="#{q.section.code} #{q.code} #{q.name[cc.attrs.bean.sbhLocale.selection.code].lang}" itemValue="#{q}"/>
+								<p:ajax event="change" listener="#{cc.attrs.bean.triggerChanged()}" update="@form"/>
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="#{msg.jeeslSurveyElement}"/>
+							<p:selectOneMenu id="s1Element" value="#{cc.attrs.bean.condition.element}" effect="fade" autoWidth="false">
+								<f:selectItems value="#{appSurveyBean.elements}" var="e" itemLabel="#{e.name[cc.attrs.bean.sbhLocale.selection.code].lang}" itemValue="#{e}"/>
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="#{msg.jeeslSurveyOption}"/>
+							<p:selectOneMenu id="s1Option" value="#{cc.attrs.bean.condition.option}" effect="fade" autoWidth="false">
+								<f:selectItems value="#{cc.attrs.bean.triggerOptions}" var="o" itemLabel="#{o.name[cc.attrs.bean.sbhLocale.selection.code].lang}" itemValue="#{o}"/>
+							</p:selectOneMenu>
+							
 						</p:panelGrid>
 					</p:panel>
 				</h:form>

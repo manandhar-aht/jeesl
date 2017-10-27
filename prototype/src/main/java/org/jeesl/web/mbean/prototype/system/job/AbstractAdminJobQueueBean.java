@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.job;
+package org.jeesl.web.mbean.prototype.system.job;
 
 import java.io.Serializable;
 import java.util.List;

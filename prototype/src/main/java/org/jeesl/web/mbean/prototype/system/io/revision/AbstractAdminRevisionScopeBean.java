@@ -1,9 +1,10 @@
-package org.jeesl.web.mbean.prototype.admin.system.revision;
+package org.jeesl.web.mbean.prototype.system.io.revision;
 
 import java.io.Serializable;
 import java.util.Collections;
 
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
+import org.jeesl.factory.builder.RevisionFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
@@ -41,12 +42,12 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 	
 	private RS scope; public RS getScope() {return scope;} public void setScope(RS scope) {this.scope = scope;}
 
-	public AbstractAdminRevisionScopeBean(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat){super(cL,cD,cCategory,cView,cMapping,cScope,cScopeType,cEntity,cEntityMapping,cAttribute,cRat);}
+	public AbstractAdminRevisionScopeBean(final RevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision){super(fbRevision);}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision);
-		types = fRevision.allOrderedPositionVisible(cRat);
+		types = fRevision.allOrderedPositionVisible(fbRevision.getClassAttributeType());
 		reloadScopes();
 	}
 	
@@ -60,20 +61,20 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 
 	public void reloadScopes()
 	{
-		scopes = fRevision.findScopes(cScope, cCategory, sbhCategory.getSelected(), true);
-		logger.info(AbstractLogMessage.reloaded(cScope,scopes));
+		scopes = fRevision.findScopes(fbRevision.getClassScope(), fbRevision.getClassCategory(), sbhCategory.getSelected(), true);
+		logger.info(AbstractLogMessage.reloaded(fbRevision.getClassScope(),scopes));
 		Collections.sort(scopes, comparatorScope);
 	}
 	
 	private void reloadScope()
 	{
-		scope = fRevision.load(cScope, scope);
+		scope = fRevision.load(fbRevision.getClassScope(), scope);
 		attributes = scope.getAttributes();
 	}
 	
 	public void add() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(cScope));
+		logger.info(AbstractLogMessage.addEntity(fbRevision.getClassScope()));
 		scope = efScope.build();
 		scope.setName(efLang.createEmpty(langs));
 		scope.setDescription(efDescription.createEmpty(langs));
@@ -82,7 +83,7 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 	public void select() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(scope));
-		scope = fRevision.find(cScope,scope);
+		scope = fRevision.find(fbRevision.getClassScope(),scope);
 		scope = efLang.persistMissingLangs(fRevision,langs,scope);
 		scope = efDescription.persistMissingLangs(fRevision,langs,scope);
 		reloadScope();
@@ -118,8 +119,8 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 	public void saveAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(attribute));}
-		if(attribute.getType()!=null){attribute.setType(fRevision.find(cRat, attribute.getType()));}
-		attribute = fRevision.save(cScope,scope,attribute);
+		if(attribute.getType()!=null){attribute.setType(fRevision.find(fbRevision.getClassAttributeType(), attribute.getType()));}
+		attribute = fRevision.save(fbRevision.getClassScope(),scope,attribute);
 		reloadScope();
 		bMessage.growlSuccessSaved();
 		updatePerformed();
@@ -128,14 +129,14 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 	public void rmAttribute() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(attribute));}
-		fRevision.rm(cScope,scope,attribute);
+		fRevision.rm(fbRevision.getClassScope(),scope,attribute);
 		attribute=null;
 		bMessage.growlSuccessRemoved();
 		reloadScope();
 		updatePerformed();
 	}
 	
-	protected void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, cScope, scopes);Collections.sort(scopes, comparatorScope);}
+	protected void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, fbRevision.getClassScope(), scopes);Collections.sort(scopes, comparatorScope);}
 	protected void reorderAttributes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, attributes);}
 	
 	protected void updatePerformed(){}	

@@ -31,54 +31,53 @@ public class EjbSecurityMenuFactory <L extends UtilsLang, D extends UtilsDescrip
 										 AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 										 M extends JeeslSecurityMenu<L,D,C,R,V,U,A,AT,M,USER>,
 										 USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
-						extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityMenuFactory.class);
 	
 	private final Class<M> cM;
 	private final Comparator<M> comparator;
     
-    public EjbSecurityMenuFactory(final Class<L> cLang,final Class<D> cDescription, final Class<M> cM)
+    public EjbSecurityMenuFactory(final Class<M> cM)
     {
-    		super(cLang,cDescription);
-        this.cM = cM;
-        comparator = new PositionComparator<M>();
+		this.cM = cM;
+		comparator = new PositionComparator<M>();
     } 
     
     
     public M build()
     {
-	    	M ejb = null;
-	    	
-	    	try
-	    	{
+    	M ejb = null;
+    	
+    	try
+    	{
 			ejb = cM.newInstance();
 		}
-	    	catch (InstantiationException e) {e.printStackTrace();}
-	    	catch (IllegalAccessException e) {e.printStackTrace();}
-	    	
-	    	return ejb;
+    	catch (InstantiationException e) {e.printStackTrace();}
+    	catch (IllegalAccessException e) {e.printStackTrace();}
+    	
+    	return ejb;
     }
+    
     public M create(V view)
     {
 		M ejb = null;
     	
-	    	try
-	    	{
+    	try
+    	{
 			ejb = cM.newInstance();
 			ejb.setView(view);
 		}
-	    	catch (InstantiationException e) {e.printStackTrace();}
-	    	catch (IllegalAccessException e) {e.printStackTrace();}
-	    	
-	    	return ejb;
+    	catch (InstantiationException e) {e.printStackTrace();}
+    	catch (IllegalAccessException e) {e.printStackTrace();}
+    	
+    	return ejb;
     }
     
     public Map<V,M> toMapView(List<M> list)
     {
-    		Map<V,M> map = new HashMap<V,M>();
-    		for(M m : list) {map.put(m.getView(),m);}
-    		return map;
+		Map<V,M> map = new HashMap<V,M>();
+		for(M m : list) {map.put(m.getView(),m);}
+		return map;
     }
     
     public List<M> toListRoot(List<M> list)

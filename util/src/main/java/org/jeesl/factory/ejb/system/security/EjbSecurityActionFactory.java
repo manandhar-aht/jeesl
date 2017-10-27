@@ -1,12 +1,14 @@
 package org.jeesl.factory.ejb.system.security;
 
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import java.util.List;
+
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,26 +24,28 @@ public class EjbSecurityActionFactory <L extends UtilsLang,
 										 A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 										 AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 										 USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
-			extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityActionFactory.class);
     
-    public EjbSecurityActionFactory(final Class<L> clLang,final Class<D> clDescription,final Class<A> cAction)
+    private final Class<A> cAction;
+    
+    public EjbSecurityActionFactory(final Class<A> cAction)
     {
-    	super(clLang,clDescription);
         this.cAction = cAction;
     } 
     
-    public A create(V view, String code)
+    public A build(V view, String code, List<A> list)
     {
     	A ejb = null;
     	
     	try
     	{
 			ejb = cAction.newInstance();
-			ejb.setPosition(1);
+			
 			ejb.setView(view);
 			ejb.setCode(code);
+			if(list==null){ejb.setPosition(1);}
+			else{ejb.setPosition(list.size()+1);}
 		}
     	catch (InstantiationException e) {e.printStackTrace();}
     	catch (IllegalAccessException e) {e.printStackTrace();}

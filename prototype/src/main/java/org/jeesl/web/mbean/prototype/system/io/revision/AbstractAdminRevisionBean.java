@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.revision;
+package org.jeesl.web.mbean.prototype.system.io.revision;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
+import org.jeesl.factory.builder.RevisionFactoryBuilder;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionEntityFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionMappingEntityFactory;
@@ -34,7 +35,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends UtilsDescription,
+public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends UtilsDescription,
 											RC extends UtilsStatus<RC,L,D>,
 											RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 											RVM extends JeeslRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
@@ -51,16 +52,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionBean.class);
 	
 	protected JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision;
-	
-	protected final Class<RC> cCategory;
-	protected final Class<RV> cView;
-	protected final Class<RVM> cViewMapping;
-	protected final Class<RS> cScope;
-	protected final Class<RST> cScopeType;
-	protected final Class<RE> cEntity;
-	protected final Class<REM> cMappingEntity;
-	protected final Class<RA> cAttribute;
-	protected final Class<RAT> cRat;
+	protected final RevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision;
 	
 	protected List<RA> attributes; public List<RA> getAttributes() {return attributes;}
 	protected List<RC> categories; public List<RC> getCategories() {return categories;}
@@ -72,49 +64,41 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	
 	protected RA attribute; public RA getAttribute() {return attribute;}public void setAttribute(RA attribute) {this.attribute = attribute;}
 
-	protected EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efView;
-	protected EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efMappingView;
-	protected EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efScope;
-	protected EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efEntity;
-	protected EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efMappingEntity;
-	protected EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efAttribute;
+	protected final EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efView;
+	protected final EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efMappingView;
+	protected final EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efScope;
+	protected final EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efEntity;
+	protected final EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efMappingEntity;
+	protected final EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efAttribute;
 	
 	protected Comparator<RS> comparatorScope;
 	protected Comparator<RE> comparatorEntity;
 	
 	protected SbMultiHandler<RC> sbhCategory; public SbMultiHandler<RC> getSbhCategory() {return sbhCategory;}
 	
-	public AbstractAdminRevisionBean(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cViewMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cEntityMapping, Class<RA> cAttribute, Class<RAT> cRat)
+	public AbstractAdminRevisionBean(final RevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision)
 	{
-		super(cL,cD);
-		this.cCategory=cCategory;
-		this.cView=cView;
-		this.cViewMapping=cViewMapping;
-		this.cScope=cScope;
-		this.cScopeType=cScopeType;
-		this.cEntity=cEntity;
-		this.cMappingEntity=cEntityMapping;
-		this.cAttribute=cAttribute;
-		this.cRat=cRat;
+		super(fbRevision.getClassL(),fbRevision.getClassD());
+		this.fbRevision=fbRevision;
+		
+		efView = fbRevision.ejbView();
+		efMappingView = fbRevision.ejbMappingView();
+		efScope = fbRevision.ejbScope();
+		efEntity = fbRevision.ejbEntity();
+		efMappingEntity = fbRevision.ejbMappingEntity();
+		efAttribute = fbRevision.ejbAttribute();
 	}
 	
 	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fRevision=fRevision;
-
-		efView = EjbRevisionViewFactory.factory(cView);
-		efMappingView = EjbRevisionMappingViewFactory.factory(cViewMapping);
-		efScope = EjbRevisionScopeFactory.factory(cScope);
-		efEntity = EjbRevisionEntityFactory.factory(cL,cD,cEntity);
-		efMappingEntity = EjbRevisionMappingEntityFactory.factory(cMappingEntity);
-		efAttribute = EjbRevisionAttributeFactory.factory(cAttribute);
 		
 		comparatorScope = (new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionScopeComparator.Type.position);
 		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
 		
-		categories = fRevision.allOrderedPositionVisible(cCategory);
-		sbhCategory = new SbMultiHandler<RC>(cCategory,categories,this);
+		categories = fRevision.allOrderedPositionVisible(fbRevision.getClassCategory());
+		sbhCategory = new SbMultiHandler<RC>(fbRevision.getClassCategory(),categories,this);
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
@@ -124,7 +108,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	
 	public void addAttribute() throws UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cAttribute));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbRevision.getClassAttribute()));}
 		attribute = efAttribute.build(null);
 		attribute.setName(efLang.createEmpty(langs));
 		attribute.setDescription(efDescription.createEmpty(langs));
@@ -133,7 +117,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang,D extends U
 	public void selectAttribute() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(attribute));}
-		attribute = fRevision.find(cAttribute, attribute);
+		attribute = fRevision.find(fbRevision.getClassAttribute(), attribute);
 		attribute = efLang.persistMissingLangs(fRevision,langs,attribute);
 		attribute = efDescription.persistMissingLangs(fRevision,langs,attribute);
 	}

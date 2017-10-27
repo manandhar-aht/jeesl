@@ -21,12 +21,19 @@
     		<s:lang key="fr" translation="Code"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslTranslation">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Übersetzung"/>
+	    		<s:lang key="en" translation="Translation"/>
+	    		<s:lang key="fr" translation="Translation"/>
+	    	</s:langs>
+    </s:translation>
     <s:translation key="aupTranslation">
-    	<s:langs>
-    		<s:lang key="de" translation="Übersetzung"/>
-    		<s:lang key="en" translation="Translation"/>
-    		<s:lang key="fr" translation="Translation"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Übersetzung"/>
+	    		<s:lang key="en" translation="Translation"/>
+	    		<s:lang key="fr" translation="Translation"/>
+	    	</s:langs>
     </s:translation>
 	<s:translation key="aupDescription">
     	<s:langs>

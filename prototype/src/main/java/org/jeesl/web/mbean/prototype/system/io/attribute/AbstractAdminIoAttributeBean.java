@@ -6,8 +6,9 @@ import java.util.Comparator;
 import org.jeesl.api.bean.JeeslAttributeBean;
 import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
-import org.jeesl.factory.builder.AttributeFactoryBuilder;
+import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.factory.ejb.module.attribute.EjbAttributeCriteriaFactory;
+import org.jeesl.factory.ejb.module.attribute.EjbAttributeOptionFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeItemFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeSetFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
@@ -15,6 +16,7 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.util.comparator.ejb.system.io.attribute.AttributeCriteriaComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -30,6 +32,7 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 													CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 													CRITERIA extends JeeslAttributeCriteria<L,D,CATEGORY,TYPE>,
 													TYPE extends UtilsStatus<TYPE,L,D>,
+													OPTION extends JeeslAttributeOption<L,D,CRITERIA>,
 													SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
 													ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 													CONTAINER extends JeeslAttributeContainer<SET,DATA>,
@@ -42,22 +45,24 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 	
 	protected JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fAttribute;
 	protected JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> bAttribute;
-	protected final AttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute;
+	protected final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute;
 	
 	protected final SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	
 	protected final EjbAttributeCriteriaFactory<L,D,CATEGORY,CRITERIA,TYPE> efCriteria;
+	protected final EjbAttributeOptionFactory<CRITERIA,OPTION> efOption;
 	protected final EjbAttributeSetFactory<L,D,CATEGORY,SET,ITEM> efSet;
 	protected final EjbAttributeItemFactory<CRITERIA,SET,ITEM> efItem;
 	
 	protected final Comparator<CRITERIA> cpCriteria;
 
-	public AbstractAdminIoAttributeBean(AttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fbAttribute)
+	public AbstractAdminIoAttributeBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute)
 	{
 		super(fbAttribute.getClassL(),fbAttribute.getClassD());
 		this.fbAttribute=fbAttribute;
 		
 		efCriteria = fbAttribute.ejbCriteria();
+		efOption = fbAttribute.ejbOption();
 		efSet = fbAttribute.ejbSet();
 		efItem = fbAttribute.ejbItem();
 		

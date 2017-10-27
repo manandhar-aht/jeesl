@@ -22,36 +22,17 @@ public class EjbSecurityRoleFactory <L extends UtilsLang,
 										 A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 										 AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 										 USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
-		extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityRoleFactory.class);
 	
-    public static <L extends UtilsLang,
-	 			   D extends UtilsDescription,
-	 			   C extends JeeslSecurityCategory<L,D>,
-	 			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
-	 			   V extends JeeslSecurityView<L,D,C,R,V,U,A,AT,USER>,
-	 			   U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
-	 			   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
-	 			  AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-	 			   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
-    	EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> factory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
-    {
-        return new EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER>(clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
-    }
+    private final Class<R> cRole;
     
-    public EjbSecurityRoleFactory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser)
+    public EjbSecurityRoleFactory(final Class<R> cRole)
     {
-    	super(clLang,clDescription);
-        this.cCategory = clCategory;
-        this.cRole = clRole;
-        this.cView = clView;
-        this.cUsecase = clUsecase;
-        this.cAction = clAction;
-        this.cUser = clUser;
+        this.cRole = cRole;
     } 
     
-    public R create(C category, String code)
+    public R build(C category, String code)
     {
     	R ejb = null;
     	

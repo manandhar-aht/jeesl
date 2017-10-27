@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.security;
+package org.jeesl.web.mbean.prototype.system.security;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,9 +47,9 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	
 	private U usecase; public U getUsecase(){return usecase;} public void setUsecase(U usecase){this.usecase = usecase;}
 	
-	public AbstractAdminSecurityUsecasesBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public AbstractAdminSecurityUsecasesBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
-		super(fbSecurity,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser);
+		super(fbSecurity);
 	}
 	
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
@@ -57,7 +57,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 		categoryType = JeeslSecurityCategory.Type.usecase;
 		initSecuritySuper(langs,fSecurity,bMessage);
 		
-		opViews = fSecurity.all(cView);
+		opViews = fSecurity.all(fbSecurity.getClassView());
 		Collections.sort(opViews,comparatorView);
 		
 		opActions = new ArrayList<A>();
@@ -90,7 +90,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	//Reload
 	private void reloadUsecase()
 	{
-		usecase = fSecurity.load(cUsecase,usecase);
+		usecase = fSecurity.load(fbSecurity.getClassUsecase(),usecase);
 		roles = usecase.getRoles();
 		views = usecase.getViews();
 		actions = usecase.getActions();
@@ -103,14 +103,14 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	private void reloadUsecases() throws UtilsNotFoundException
 	{
 		logger.info("reloadUsecases");
-		usecases = fSecurity.allForCategory(cUsecase,cCategory,category.getCode());
+		usecases = fSecurity.allForCategory(fbSecurity.getClassUsecase(),fbSecurity.getClassCategory(),category.getCode());
 	}
 	private void reloadActions()
 	{
 		opActions.clear();
 		for(V v : usecase.getViews())
 		{
-			v = fSecurity.load(cView,v);
+			v = fSecurity.load(fbSecurity.getClassView(),v);
 			opActions.addAll(v.getActions());
 		}
 		Collections.sort(opActions, comparatorAction);
@@ -119,15 +119,15 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	//Add
 	public void addCategory() throws UtilsConstraintViolationException
 	{
-		logger.info(AbstractLogMessage.addEntity(cCategory));
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassCategory()));
 		category = efCategory.create(null,JeeslSecurityCategory.Type.usecase.toString());
 		category.setName(efLang.createEmpty(langs));
 		category.setDescription(efDescription.createEmpty(langs));
 	}
 	public void addUsecase() throws UtilsConstraintViolationException
 	{
-		logger.info(AbstractLogMessage.addEntity(cUsecase));
-		usecase = efUsecase.create(category,"");
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassUsecase()));
+		usecase = efUsecase.build(category,"");
 		usecase.setName(efLang.createEmpty(langs));
 		usecase.setDescription(efDescription.createEmpty(langs));
 	}
@@ -137,7 +137,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	public void saveUsecase() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(usecase));
-		usecase.setCategory(fSecurity.find(cCategory, usecase.getCategory()));
+		usecase.setCategory(fSecurity.find(fbSecurity.getClassCategory(), usecase.getCategory()));
 		usecase = fSecurity.save(usecase);
 		reloadUsecase();
 		reloadUsecases();

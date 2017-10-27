@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.module.survey.core;
 
+import java.io.Serializable;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -12,7 +14,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 public interface JeeslSurveyScheme<L extends UtilsLang, D extends UtilsDescription,
 									TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,?>,
 									SCORE extends JeeslSurveyScore<L,D,?,?>>
-			extends EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,EjbSaveable,
+			extends Serializable,EjbWithId,EjbWithNonUniqueCode,EjbWithPosition,EjbSaveable,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
 	TEMPLATE getTemplate();

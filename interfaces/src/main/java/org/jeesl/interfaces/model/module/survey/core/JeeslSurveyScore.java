@@ -1,16 +1,17 @@
 package org.jeesl.interfaces.model.module.survey.core;
 
+import java.io.Serializable;
+
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyScore<L extends UtilsLang, D extends UtilsDescription,
 									SCHEME extends JeeslSurveyScheme<L,D,?,?>,
 									QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,?>>
-			extends EjbWithId,EjbSaveable
+			extends Serializable,EjbSaveable
 {
 	QUESTION getQuestion();
 	void setQuestion(QUESTION question);

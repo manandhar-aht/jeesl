@@ -1,5 +1,6 @@
 package org.jeesl.interfaces.model.module.survey.question;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 										OPTIONS extends JeeslSurveyOptionSet<L,D,?,OPTION>,
 										OPTION extends JeeslSurveyOption<L,D>,
 										AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?>>
-			extends EjbWithId,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable,
+			extends Serializable,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable,
 					EjbWithRendered,
 					EjbWithLang<L>,EjbWithDescription<D>
 {

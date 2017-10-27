@@ -1,11 +1,14 @@
 package org.jeesl.interfaces.model.system.io.revision;
 
+import java.io.Serializable;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslRevisionViewMapping<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
@@ -17,7 +20,7 @@ public interface JeeslRevisionViewMapping<L extends UtilsLang,D extends UtilsDes
 									REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
-		extends EjbWithId,EjbSaveable,
+		extends Serializable,EjbRemoveable,EjbPersistable,EjbSaveable,
 				EjbWithPositionVisible
 {					
 	RV getView();

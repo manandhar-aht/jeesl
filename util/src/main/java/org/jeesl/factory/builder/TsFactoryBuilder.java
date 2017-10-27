@@ -49,7 +49,7 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	private final Class<BRIDGE> cBridge; public Class<BRIDGE> getClassBridge() {return cBridge;}
 	private final Class<EC> cEc; public Class<EC> getClassEntity() {return cEc;}
 	private final Class<INT> cInt; public Class<INT> getClassInterval() {return cInt;}
-	private final Class<DATA> cData; 
+	private final Class<DATA> cData;  public Class<DATA> getClassData() {return cData;}
 	private final Class<WS> cWs; public Class<WS> getClassWorkspace() {return cWs;}
 	
 	public TsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt,final Class<DATA> cData, final Class<WS> cWs)

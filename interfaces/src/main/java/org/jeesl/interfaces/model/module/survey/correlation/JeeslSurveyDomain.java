@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.module.survey.correlation;
 
+import java.io.Serializable;
+
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -20,7 +22,7 @@ public interface JeeslSurveyDomain<L extends UtilsLang, D extends UtilsDescripti
 									AQ extends JeeslSurveyAnalysisQuestion<L,D,?,ANALYSIS>,
 									AT extends JeeslSurveyAnalysisTool<L,D,?,AQ,ATT>,
 									ATT extends UtilsStatus<ATT,L,D>>
-			extends EjbWithId,EjbSaveable,
+			extends Serializable,EjbWithId,EjbSaveable,
 					EjbWithPosition//,EjbWithLang<L>//,EjbWithDescription<D>
 {
 	DENTITY getEntity();

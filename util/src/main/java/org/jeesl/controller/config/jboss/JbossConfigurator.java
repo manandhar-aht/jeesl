@@ -3,6 +3,7 @@ package org.jeesl.controller.config.jboss;
 import java.io.IOException;
 import java.net.InetAddress;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.OperationBuilder;
@@ -87,6 +88,32 @@ public class JbossConfigurator
 		request.get("driver-module-name").set("com.mysql");
 		request.get("driver-xa-datasource-class-name").set("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
 		client.execute(new OperationBuilder(request).build());
+	}
+	
+	public void createMysqlDatasource(Configuration config, String context) throws IOException
+	{
+		String cfgDbDs = "db."+context+".ds";
+		String cfgDbHost = "db."+context+".host";
+		String cfgDbName = "db."+context+".db";
+		String cfgDbUser = "db."+context+".user";
+		String cfgDbPwd = "db."+context+".pwd";
+		
+		String pDbDs = config.getString(cfgDbDs);
+		String pDbHost = config.getString(cfgDbHost);
+		String pDbName = config.getString(cfgDbName);
+		String pDbUser = config.getString(cfgDbUser);
+		String pDbPwd = config.getString(cfgDbPwd);
+		
+		logger.info(cfgDbPwd+"\t"+pDbDs);
+		logger.info(cfgDbHost+"\t"+pDbHost);
+		logger.info(cfgDbName+"\t"+pDbName);
+		logger.info(cfgDbUser+"\t"+pDbUser);
+		logger.info(cfgDbPwd+"\t"+pDbPwd);
+		
+		if(!this.dsExists(cfgDbDs))
+		{
+			createMysqlDatasource(pDbDs,pDbHost,pDbName,"?useSSL=false",pDbUser,pDbPwd);
+		}
 	}
 	
 	public void createMysqlDatasource(String name, String host, String db, String jdbcParamter, String username, String password) throws IOException

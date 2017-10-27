@@ -1,5 +1,6 @@
 package org.jeesl.interfaces.model.module.survey.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
@@ -14,7 +15,7 @@ public interface JeeslSurveyData<L extends UtilsLang, D extends UtilsDescription
 									SURVEY extends JeeslSurvey<L,D,?,?,?>,
 									ANSWER extends JeeslSurveyAnswer<L,D,?,?,?,?>,
 									CORRELATION extends JeeslSurveyCorrelation<L,D,?>>
-			extends EjbWithId,EjbWithRecord
+			extends Serializable,EjbWithId,EjbWithRecord
 {
 	public enum Attributes{correlation,survey}
 	public enum Status{empty,partial,fully}

@@ -1,5 +1,6 @@
 package org.jeesl.interfaces.model.module.survey.core;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
@@ -18,7 +19,7 @@ public interface JeeslSurvey<L extends UtilsLang, D extends UtilsDescription,
 								TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,?>,
 								DATA extends JeeslSurveyData<L,D,?,?,?>
 >
-			extends EjbWithDateRange,EjbSaveable,
+			extends Serializable,EjbSaveable,EjbWithDateRange,
 						UtilsWithStatus<L,D,SS>,EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{id,template,status}

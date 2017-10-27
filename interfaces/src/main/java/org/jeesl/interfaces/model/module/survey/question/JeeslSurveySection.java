@@ -1,5 +1,6 @@
 package org.jeesl.interfaces.model.module.survey.question;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
@@ -14,7 +15,6 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithLevel;
 import net.sf.ahtutils.interfaces.model.with.EjbWithRemark;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
@@ -22,7 +22,7 @@ public interface JeeslSurveySection<L extends UtilsLang, D extends UtilsDescript
 									TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,SECTION,?,?>,
 									SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,?,?,?,?,?>>
-			extends EjbWithId,EjbSaveable,EjbRemoveable
+			extends Serializable,EjbSaveable,EjbRemoveable
 			,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithLevel,EjbWithVisible,EjbWithRendered,
 					EjbWithLang<L>,EjbWithDescription<D>
 {

@@ -1,5 +1,6 @@
 package org.jeesl.interfaces.model.module.survey.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
@@ -15,7 +16,7 @@ public interface JeeslSurveyAnswer<L extends UtilsLang, D extends UtilsDescripti
 									MATRIX extends JeeslSurveyMatrix<L,D,?,OPTION>,
 									DATA extends JeeslSurveyData<L,D,?,?,?>,
 									OPTION extends JeeslSurveyOption<L,D>>
-			extends EjbWithId,EjbSaveable
+			extends Serializable,EjbWithId,EjbSaveable
 {
 	public enum Attributes{data,question,option,valueBoolean}
 	

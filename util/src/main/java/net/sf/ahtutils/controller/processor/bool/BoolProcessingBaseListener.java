@@ -1,6 +1,6 @@
-// Generated from SetProcessing.g4 by ANTLR 4.7
+// Generated from BoolProcessing.g4 by ANTLR 4.7
 
-package net.sf.ahtutils.controller.processor.set;
+package net.sf.ahtutils.controller.processor.bool;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -8,47 +8,47 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link SetProcessingListener},
+ * This class provides an empty implementation of {@link BoolProcessingListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class SetProcessingBaseListener implements SetProcessingListener {
+public class BoolProcessingBaseListener implements BoolProcessingListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParse(SetProcessingParser.ParseContext ctx) { }
+	@Override public void enterParse(BoolProcessingParser.ParseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParse(SetProcessingParser.ParseContext ctx) { }
+	@Override public void exitParse(BoolProcessingParser.ParseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpression(SetProcessingParser.ExpressionContext ctx) { }
+	@Override public void enterExpression(BoolProcessingParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpression(SetProcessingParser.ExpressionContext ctx) { }
+	@Override public void exitExpression(BoolProcessingParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBinary(SetProcessingParser.BinaryContext ctx) { }
+	@Override public void enterBinary(BoolProcessingParser.BinaryContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBinary(SetProcessingParser.BinaryContext ctx) { }
+	@Override public void exitBinary(BoolProcessingParser.BinaryContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

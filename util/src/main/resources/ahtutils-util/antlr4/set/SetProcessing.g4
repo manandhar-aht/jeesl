@@ -5,16 +5,11 @@ options {
 }
 
 @lexer::header{
-	package net.sf.ahtutils.controller.processor.set;
-
-	import java.util.List;
-    import java.util.ArrayList;
+package net.sf.ahtutils.controller.processor.set;
 }
-@parser::header{
-	package net.sf.ahtutils.controller.processor.set;
 
-	import java.util.List;
-    import java.util.ArrayList;
+@parser::header{
+package net.sf.ahtutils.controller.processor.set;
 }
 
 parse: expression;

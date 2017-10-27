@@ -49,12 +49,13 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyAnalysisFactoryBuilder.class);
 	
-	
+	private final Class<AQ> cAq; public Class<AQ> getClassAnalysisQuestion() {return cAq;}
 	private final Class<ATT> cAtt; public Class<ATT> getAttClass() {return cAtt;}
 
-	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ATT> cAtt)
+	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<AQ> cAq, final Class<ATT> cAtt)
 	{
 		super(cL,cD);
+		this.cAq=cAq;
         this.cAtt = cAtt;
 	}
 	
@@ -77,9 +78,9 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 					AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 					ATT extends UtilsStatus<ATT,L,D>>
 		SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
-		factory(final Class<L> cL, final Class<D> cD, final Class<ATT> cAtt)
+		factory(final Class<L> cL, final Class<D> cD, final Class<AQ> cAq, final Class<ATT> cAtt)
 	{
-		return new SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cL,cD,cAtt);
+		return new SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cL,cD,cAq,cAtt);
 	}
 		
 	public EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> ejbDomain(Class<DOMAIN> cDomain)

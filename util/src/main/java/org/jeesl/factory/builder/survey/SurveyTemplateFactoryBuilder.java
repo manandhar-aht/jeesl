@@ -23,7 +23,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
-				SS extends UtilsStatus<SS,L,D>,
 				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
 				TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,?>,
 				VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
@@ -42,9 +41,8 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyTemplateFactoryBuilder.class);
 	
-	private final Class<SS> cSs; public Class<SS> getClassSurveyStatus() {return cSs;}
 	private final Class<SCHEME> cScheme;
-	private final Class<TEMPLATE> cTemplate;
+	private final Class<TEMPLATE> cTemplate; public Class<TEMPLATE> getClassTemplate() {return cTemplate;}
 	private final Class<VERSION> cVersion;
 	private final Class<SECTION> cSection; public Class<SECTION> getClassSection() {return cSection;}
 	private final Class<QUESTION> cQuestion; public Class<QUESTION> getClassQuestion() {return cQuestion;}
@@ -55,10 +53,9 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	private final Class<OPTIONS> cOptions; public Class<OPTIONS> getOptionSetClass() {return cOptions;}
 	private final Class<OPTION> cOption; public Class<OPTION> getOptionClass() {return cOption;}
 
-	public SurveyTemplateFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<CONDITION> cCondition, final Class<QE> cElement, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
+	public SurveyTemplateFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<CONDITION> cCondition, final Class<QE> cElement, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
 	{
 		super(cL,cD);
-		this.cSs = cSs;
 		this.cScheme = cScheme;
 		this.cTemplate = cTemplate;
 		this.cVersion = cVersion;

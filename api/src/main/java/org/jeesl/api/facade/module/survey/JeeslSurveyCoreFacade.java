@@ -67,8 +67,7 @@ public interface JeeslSurveyCoreFacade <L extends UtilsLang, D extends UtilsDesc
 	void rmOption(QUESTION question, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException;
 	void rmOption(OPTIONS set, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException;
 	
-	TEMPLATE fcSurveyTemplate(TC category, TS status);
-	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion);
+
 	
 	SURVEY fSurvey(CORRELATION correlation) throws UtilsNotFoundException;
 	void deleteSurvey(SURVEY survey) throws UtilsConstraintViolationException, UtilsLockingException;
@@ -94,9 +93,5 @@ public interface JeeslSurveyCoreFacade <L extends UtilsLang, D extends UtilsDesc
 	ANSWER saveAnswer(ANSWER answer) throws UtilsConstraintViolationException, UtilsLockingException;
 	void rmAnswer(ANSWER answer) throws UtilsConstraintViolationException;
 	
-	JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey);
-	JsonFlatFigures surveyStatisticBoolean(QUESTION question, SURVEY survey);
-	
-	JsonFlatFigures surveyCountOption(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations);
-	JsonFlatFigures surveyCountAnswer(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations);
+
 }

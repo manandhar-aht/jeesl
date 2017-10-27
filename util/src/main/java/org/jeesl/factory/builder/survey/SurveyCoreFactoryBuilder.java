@@ -75,7 +75,7 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	
 	private final Class<L> cL;
 	private final Class<D> cD;
-	private final Class<SURVEY> cSurvey;
+	private final Class<SURVEY> cSurvey; public Class<SURVEY> getClassSurvey() {return cSurvey;}
 	private final Class<SS> cSs; public Class<SS> getClassSurveyStatus() {return cSs;}
 	private final Class<SCHEME> cScheme;
 	private final Class<TEMPLATE> cTemplate;

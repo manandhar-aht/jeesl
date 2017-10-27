@@ -96,7 +96,6 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyCoreFacadeBean.class);
 	
-	private final Class<SURVEY> cSurvey;
 	private final Class<TEMPLATE> cTemplate;
 	private final Class<VERSION> cVersion;
 	@SuppressWarnings("unused")
@@ -108,19 +107,19 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	private final Class<DATA> cData;
 	private final Class<OPTION> cOption;
 	private final Class<CORRELATION> cCorrelation;
-	private final Class<AQ> cAq;
 	
-	private final SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> ffTemplate;
-	private final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffSurvey;
+	private final SurveyTemplateFactoryBuilder<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
+	private final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbCore;
 	
 	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION> efAnswer;
-	private EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION> eTemplate;
+
 	
-	public JeeslSurveyCoreFacadeBean(EntityManager em, SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> ffTemplate, Class<SURVEY> cSurvey, final Class<SS> cSs, Class<SCHEME> cScheme, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<CORRELATION> cCorrelation, final Class<AQ> cAq, final Class<ATT> cAtt)
+	public JeeslSurveyCoreFacadeBean(EntityManager em, SurveyTemplateFactoryBuilder<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate, SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbCore, final Class<SS> cSs, Class<SCHEME> cScheme, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<CORRELATION> cCorrelation, final Class<AQ> cAq, final Class<ATT> cAtt)
 	{
 		super(em);
-		this.ffTemplate=ffTemplate;
-		this.cSurvey=cSurvey;
+		this.fbTemplate=fbTemplate;
+		this.fbCore=fbCore;
+
 		this.cTemplate=cTemplate;
 		this.cVersion=cVersion;
 		this.cTS=cTS;
@@ -131,12 +130,9 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		this.cData=cData;
 		this.cOption=cOption;
 		this.cCorrelation=cCorrelation;
-		this.cAq=cAq;
 		
-		ffSurvey = SurveyCoreFactoryBuilder.factory(ffTemplate.getClassL(),ffTemplate.getClassD(),cSurvey,cSs,cScheme,cTemplate,cVersion,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData,cOptions,cOption);
-		
-		eTemplate = ffTemplate.template();
-		efAnswer = ffSurvey.answer();
+
+		efAnswer = fbCore.answer();
 	}
 
 	@Override public TEMPLATE load(TEMPLATE template,boolean withQuestions, boolean withOptions)
@@ -182,7 +178,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	
 	@Override public SURVEY load(SURVEY survey)
 	{
-		survey = em.find(cSurvey,survey.getId());
+		survey = em.find(fbCore.getClassSurvey(),survey.getId());
 		survey.getSurveyData().size();
 		return survey;
 	}
@@ -212,7 +208,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	
 	@Override public OPTIONS load(OPTIONS optionSet)
 	{
-		optionSet = em.find(ffSurvey.getOptionSetClass(),optionSet.getId());
+		optionSet = em.find(fbCore.getOptionSetClass(),optionSet.getId());
 		optionSet.getOptions().size();
 		return optionSet;
 	}
@@ -220,7 +216,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	@Override public SURVEY fSurvey(CORRELATION correlation) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<SURVEY> cQ = cB.createQuery(cSurvey);
+		CriteriaQuery<SURVEY> cQ = cB.createQuery(fbCore.getClassSurvey());
 		Root<DATA> data = cQ.from(cData);
 		
 		Path<SURVEY> pathSurvey = data.get(JeeslSurveyData.Attributes.survey.toString());
@@ -245,8 +241,8 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		if(categories==null || categories.isEmpty()){return new ArrayList<SURVEY>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<SURVEY> cQ = cB.createQuery(cSurvey);
-		Root<SURVEY> survey = cQ.from(cSurvey);
+		CriteriaQuery<SURVEY> cQ = cB.createQuery(fbCore.getClassSurvey());
+		Root<SURVEY> survey = cQ.from(fbCore.getClassSurvey());
 		
 		Join<SURVEY,TEMPLATE> jTemplate = survey.join(JeeslSurvey.Attributes.template.toString());
 		Path<TC> pCategory = jTemplate.get(JeeslSurveyTemplate.Attributes.category.toString());
@@ -268,8 +264,8 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		if(categories==null || categories.isEmpty()) {return new ArrayList<SURVEY>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<SURVEY> cQ = cB.createQuery(cSurvey);
-		Root<SURVEY> survey = cQ.from(cSurvey);
+		CriteriaQuery<SURVEY> cQ = cB.createQuery(fbCore.getClassSurvey());
+		Root<SURVEY> survey = cQ.from(fbCore.getClassSurvey());
 		
 		Join<SURVEY,TEMPLATE> jTemplate = survey.join(JeeslSurvey.Attributes.template.toString());
 		Path<TC> pCategory = jTemplate.get(JeeslSurveyTemplate.Attributes.category.toString());
@@ -303,7 +299,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	}
 	@Override public OPTION saveOption(OPTIONS set, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		set = em.find(ffSurvey.getOptionSetClass(), set.getId());
+		set = em.find(fbCore.getOptionSetClass(), set.getId());
 		option = this.saveProtected(option);
 		if(!set.getOptions().contains(option))
 		{
@@ -326,7 +322,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	}
 	@Override public void rmOption(OPTIONS set, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		set = em.find(ffSurvey.getOptionSetClass(), set.getId());
+		set = em.find(fbCore.getOptionSetClass(), set.getId());
 		option = em.find(cOption, option.getId());
 		if(set.getOptions().contains(option))
 		{
@@ -417,65 +413,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		return em.createQuery(cQ).getResultList();
 	}
 	
-	@Override public TEMPLATE fcSurveyTemplate(TC category, TS status){return fcSurveyTemplate(category,null,status,null);}
-	@Override public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion)
-	{
-		if(logger.isInfoEnabled())
-		{
-			logger.info("Query:");
-			logger.info("\tCategory: "+category.getCode());
-			if(version!=null) {logger.info("\tVersion: "+version.toString()+" (unsaved:"+EjbIdFactory.isUnSaved(version)+")");}
-			logger.info("\tStatus: "+status.getCode());
-		}
-		
-		if(version!=null && EjbIdFactory.isUnSaved(version))
-		{
-			TEMPLATE template = eTemplate.build(category,status,"");
-			template.setVersion(version);
-			template.getVersion().setTemplate(template);
-			if(nestedVersion!=null){template.setNested(nestedVersion.getTemplate());}
-			em.persist(template);
-			return template;
-		}
-		
-		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(cTemplate);
-		Root<TEMPLATE> template = cQ.from(cTemplate);
-		List<Predicate> predicates = new ArrayList<Predicate>();
-		
-		Path<TC> pCategory = template.get(JeeslSurveyTemplate.Attributes.category.toString());
-		predicates.add(cB.equal(pCategory,category));
-		
-		if(version!=null)
-		{
-			logger.info("Using Version: "+version.toString());
-			Join<TEMPLATE,VERSION> jVersion = template.join(JeeslSurveyTemplate.Attributes.version.toString());
-//			predicates.add(cB.equal(jVersion,version));
-			predicates.add(cB.isTrue(jVersion.in(version.getId())));
-		}
-		
-		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
-		cQ.select(template);
-
-		List<TEMPLATE> list = em.createQuery(cQ).getResultList();
-		if(logger.isInfoEnabled())
-		{
-			logger.info("Results: "+list.size());
-			for(TEMPLATE t : list)
-			{
-				logger.info("\t"+t.toString());
-			}
-		}
-		
-		if(list.isEmpty())
-		{
-			TEMPLATE t = eTemplate.build(category,status,"");
-			if(nestedVersion!=null){t.setNested(nestedVersion.getTemplate());}
-			em.persist(t);
-			return t;
-		}
-		else{return list.get(0);}
-	}
+	
 	
 	@Override public List<ANSWER> fAnswers(DATA data, Boolean visible, List<SECTION> sections)
 	{
@@ -652,146 +590,5 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		this.rmProtected(answer);
 	}
 	
-	@Override public JsonFlatFigures surveyCountAnswer(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations)
-	{
-		CriteriaBuilder cB = em.getCriteriaBuilder();
-        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
-        
-        Root<ANSWER> answer = cQ.from(cAnswer);
-        
-        Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
-     
-        Expression<Long> eTa = cB.count(answer.<Long>get("id"));
-      
-        cQ.groupBy(pQuestion.get("id"));
-        cQ.multiselect(pQuestion.get("id"),eTa);
-        cQ.where(pQuestion.in(questions));
-        
-        TypedQuery<Tuple> tQ = em.createQuery(cQ);
-        List<Tuple> tuples = tQ.getResultList();
-        
-        JsonFlatFigures result = JsonFlatFiguresFactory.build();
-        for(Tuple t : tuples)
-        {
-	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
-	        	f.setL1((Long)t.get(0));
-	        	f.setL2((Long)t.get(1));
-	        	result.getFigures().add(f);
-        }
-        
-        return result;
-	}
-	
-	@Override public JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey)
-	{
-		List<Predicate> predicates = new ArrayList<Predicate>();
-		CriteriaBuilder cB = em.getCriteriaBuilder();
-        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
-        
-        Root<ANSWER> answer = cQ.from(cAnswer);
-        Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
-        Join<DATA,SURVEY> jSurvey = jData.join(JeeslSurveyData.Attributes.survey.toString());
-        predicates.add(jSurvey.in(survey));
-        
-        Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
-        predicates.add(cB.equal(pQuestion,question));
-        
-        Path<OPTION> pOption = answer.get(JeeslSurveyAnswer.Attributes.option.toString());
-        
-        Expression<Long> eTa = cB.count(answer.<Long>get(JeeslSurveyAnswer.Attributes.option.toString()));
-      
-        cQ.groupBy(pQuestion.get("id"),pOption.get("id"));
-        cQ.multiselect(pQuestion.get("id"),pOption.get("id"),eTa);
 
-        cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
-        TypedQuery<Tuple> tQ = em.createQuery(cQ);
-        List<Tuple> tuples = tQ.getResultList();
-        
-        JsonFlatFigures result = JsonFlatFiguresFactory.build();
-        for(Tuple t : tuples)
-        {
-	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
-	        	f.setL1((Long)t.get(0));
-	        	f.setL2((Long)t.get(1));
-	        	f.setL3((Long)t.get(2));
-	        	result.getFigures().add(f);
-        }
-        
-        return result;
-	}
-	
-	@Override public JsonFlatFigures surveyStatisticBoolean(QUESTION question, SURVEY survey)
-	{
-		List<Predicate> predicates = new ArrayList<Predicate>();
-		CriteriaBuilder cB = em.getCriteriaBuilder();
-        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
-        
-        Root<ANSWER> answer = cQ.from(cAnswer);
-        Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
-        Join<DATA,SURVEY> jSurvey = jData.join(JeeslSurveyData.Attributes.survey.toString());
-        predicates.add(jSurvey.in(survey));
-        
-        Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
-        predicates.add(cB.equal(pQuestion,question));
-        
-        Expression<Long> eBoolean = cB.count(answer.<Long>get(JeeslSurveyAnswer.Attributes.valueBoolean.toString()));
-      
-        cQ.groupBy(pQuestion.get("id"),answer.get(JeeslSurveyAnswer.Attributes.valueBoolean.toString()));
-        cQ.multiselect(pQuestion.get("id"),answer.get(JeeslSurveyAnswer.Attributes.valueBoolean.toString()),eBoolean);
-
-        cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
-        TypedQuery<Tuple> tQ = em.createQuery(cQ);
-        List<Tuple> tuples = tQ.getResultList();
-        
-        JsonFlatFigures result = JsonFlatFiguresFactory.build();
-        for(Tuple t : tuples)
-        {
-	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
-	        	f.setL1((Long)t.get(0));
-	        	f.setB1((Boolean)t.get(1));
-	        	f.setL3((Long)t.get(2));
-	        	result.getFigures().add(f);
-        }
-        
-        return result;
-	}
-	
-	@Override public JsonFlatFigures surveyCountOption(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations)
-	{
-		if(questions==null || questions.isEmpty() || correlations==null || correlations.isEmpty()) {return JsonFlatFiguresFactory.build();} 
-		List<Predicate> predicates = new ArrayList<Predicate>();
-		CriteriaBuilder cB = em.getCriteriaBuilder();
-        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
-        Root<ANSWER> answer = cQ.from(cAnswer);
-        
-        Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
-        predicates.add(pQuestion.in(questions));
-        
-        Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
-        Join<DATA,CORRELATION> jCorrelation = jData.join(JeeslSurveyData.Attributes.correlation.toString());
-        predicates.add(jCorrelation.in(correlations));
-        
-        Path<OPTION> pOption = answer.get(JeeslSurveyAnswer.Attributes.option.toString());
-        
-        Expression<Long> eTa = cB.count(answer.<Long>get(JeeslSurveyAnswer.Attributes.option.toString()));
-      
-        cQ.groupBy(pQuestion.get("id"),pOption.get("id"));
-        cQ.multiselect(pQuestion.get("id"),pOption.get("id"),eTa);
-        
-        cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
-        TypedQuery<Tuple> tQ = em.createQuery(cQ);
-        List<Tuple> tuples = tQ.getResultList();
-        
-        JsonFlatFigures result = JsonFlatFiguresFactory.build();
-        for(Tuple t : tuples)
-        {
-	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
-	        	f.setL1((Long)t.get(0));
-	        	f.setL2((Long)t.get(1));
-	        	f.setL3((Long)t.get(2));
-	        	result.getFigures().add(f);
-        }
-        
-        return result;
-	}
 }

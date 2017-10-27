@@ -28,15 +28,13 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
-				TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,OPTIONS,ANALYSIS>,
-				QUESTION extends JeeslSurveyQuestion<L,D,?,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
+				TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,ANALYSIS>,
+				QUESTION extends JeeslSurveyQuestion<L,D,?,QE,SCORE,?,?,OPTION,AQ>,
 				QE extends UtilsStatus<QE,L,D>,
 				SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
-				UNIT extends UtilsStatus<UNIT,L,D>,
 				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
 				MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
 				DATA extends JeeslSurveyData<L,D,?,ANSWER,CORRELATION>,
-				OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 				OPTION extends JeeslSurveyOption<L,D>,
 				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 				DOMAIN extends JeeslSurveyDomain<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
@@ -49,40 +47,18 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyAnalysisFactoryBuilder.class);
 	
+	private final Class<ANSWER> cAnswer; public Class<ANSWER> getClassAnswer() {return cAnswer;}
 	private final Class<AQ> cAq; public Class<AQ> getClassAnalysisQuestion() {return cAq;}
 	private final Class<ATT> cAtt; public Class<ATT> getAttClass() {return cAtt;}
 
-	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<AQ> cAq, final Class<ATT> cAtt)
+	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<AQ> cAq, final Class<ATT> cAtt)
 	{
 		super(cL,cD);
+		this.cAnswer=cAnswer;
 		this.cAq=cAq;
         this.cAtt = cAtt;
 	}
 	
-	public static <L extends UtilsLang, D extends UtilsDescription,
-					TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,OPTIONS,ANALYSIS>,
-					QUESTION extends JeeslSurveyQuestion<L,D,?,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
-					QE extends UtilsStatus<QE,L,D>,
-					SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
-					UNIT extends UtilsStatus<UNIT,L,D>,
-					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-					MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-					DATA extends JeeslSurveyData<L,D,?,ANSWER,CORRELATION>,
-					OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-					OPTION extends JeeslSurveyOption<L,D>,
-					CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-					DOMAIN extends JeeslSurveyDomain<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-					PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-					DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>, ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
-					AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-					AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
-					ATT extends UtilsStatus<ATT,L,D>>
-		SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
-		factory(final Class<L> cL, final Class<D> cD, final Class<AQ> cAq, final Class<ATT> cAtt)
-	{
-		return new SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>(cL,cD,cAq,cAtt);
-	}
-		
 	public EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> ejbDomain(Class<DOMAIN> cDomain)
 	{
 		return new EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY>(cDomain);

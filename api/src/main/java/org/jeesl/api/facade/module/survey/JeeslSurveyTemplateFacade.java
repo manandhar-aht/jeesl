@@ -29,5 +29,6 @@ public interface JeeslSurveyTemplateFacade <L extends UtilsLang, D extends Utils
 									OPTION extends JeeslSurveyOption<L,D>>
 	extends UtilsFacade
 {	
-	
+	TEMPLATE fcSurveyTemplate(TC category, TS status);
+	TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion);
 }

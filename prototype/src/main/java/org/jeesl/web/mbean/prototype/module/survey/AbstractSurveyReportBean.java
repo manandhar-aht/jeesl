@@ -103,9 +103,9 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	
 	private DataSet ds; public DataSet getDs() {return ds;}
 
-	public AbstractSurveyReportBean(SurveyTemplateFactoryBuilder<L,D,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+	public AbstractSurveyReportBean(SurveyTemplateFactoryBuilder<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbCore,
-			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis,
+			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis,
 								final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions,final Class<OPTION> cOption, final Class<ANALYSIS> cAnalysis, final Class<AT> cAt, final Class<ATT> cAtt)
 	{
 		super(fbTemplate,fbCore,fbAnalysis,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData);
@@ -201,7 +201,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 						{
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.selectOne.toString()))
 							{
-								JsonFlatFigures f = fCore.surveyStatisticOption(q, sbhSurvey.getSelection());
+								JsonFlatFigures f = fAnalysis.surveyStatisticOption(q, sbhSurvey.getSelection());
 								mapToolTableOption.put(tool,f);
 								DataSet ds2 = mfOption.build(f,bSurvey.getMapOption().get(q));
 								mapDsOption.put(q,ds2);
@@ -210,7 +210,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 							}
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.bool.toString()))
 							{
-								JsonFlatFigures f = fCore.surveyStatisticBoolean(q, sbhSurvey.getSelection());
+								JsonFlatFigures f = fAnalysis.surveyStatisticBoolean(q, sbhSurvey.getSelection());
 								mapToolTableBoolean.put(tool,f);
 							}
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.text.toString()))

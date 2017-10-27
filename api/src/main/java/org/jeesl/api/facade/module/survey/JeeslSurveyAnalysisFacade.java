@@ -1,5 +1,7 @@
 package org.jeesl.api.facade.module.survey;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -19,6 +21,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.model.json.JsonFlatFigures;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
@@ -53,4 +56,10 @@ public interface JeeslSurveyAnalysisFacade <L extends UtilsLang, D extends Utils
 	extends UtilsFacade
 {	
 	AQ fAnalysis(ANALYSIS analysis, QUESTION question) throws UtilsNotFoundException;
+	
+	JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey);
+	JsonFlatFigures surveyStatisticBoolean(QUESTION question, SURVEY survey);
+	
+	JsonFlatFigures surveyCountOption(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations);
+	JsonFlatFigures surveyCountAnswer(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations);
 }

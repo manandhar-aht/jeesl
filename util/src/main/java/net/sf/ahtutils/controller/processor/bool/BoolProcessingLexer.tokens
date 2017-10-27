@@ -1,0 +1,11 @@
+WS=1
+AND=2
+OR=3
+OPAREN=4
+CPAREN=5
+BOOL=6
+SEP=7
+CHAR=8
+'('=4
+')'=5
+', '=7

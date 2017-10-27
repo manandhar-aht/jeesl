@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sf.ahtutils.controller.processor.set.SetProcessingLexer;
 import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.collections.ListUtils;
 
@@ -36,7 +37,7 @@ public class IntersectionProcessor extends SetProcessingBaseVisitor
 	public static <T> List<T> query(String query, List<List<T>> l)
 	{
 		lists = l;
-		SetProcessingLexer lexer = new SetProcessingLexer(new ANTLRInputStream(query));
+		SetProcessingLexer lexer = new SetProcessingLexer(CharStreams.fromString(query));
 		SetProcessingParser parser = new SetProcessingParser(new CommonTokenStream(lexer));
 		return (List<T>)new IntersectionProcessor().visit(parser.parse());
 	}

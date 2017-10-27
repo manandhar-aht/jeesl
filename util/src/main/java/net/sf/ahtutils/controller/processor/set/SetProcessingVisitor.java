@@ -1,11 +1,7 @@
-// Generated from SetProcessing.g4 by ANTLR 4.5
+// Generated from SetProcessing.g4 by ANTLR 4.7
 
-	package net.sf.ahtutils.controller.processor.set;
+package net.sf.ahtutils.controller.processor.set;
 
-	import java.util.List;
-    import java.util.ArrayList;
-
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**

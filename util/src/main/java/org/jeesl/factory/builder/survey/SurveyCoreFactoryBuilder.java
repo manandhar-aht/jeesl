@@ -71,31 +71,21 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	
 	private final Class<SURVEY> cSurvey; public Class<SURVEY> getClassSurvey() {return cSurvey;}
 	private final Class<SS> cSs; public Class<SS> getClassSurveyStatus() {return cSs;}
-	private final Class<SCHEME> cScheme;
-	private final Class<TEMPLATE> cTemplate;
-	private final Class<VERSION> cVersion;
 	private final Class<SECTION> cSection; public Class<SECTION> getClassSection() {return cSection;}
 	private final Class<QUESTION> cQuestion; public Class<QUESTION> getClassQuestion() {return cQuestion;}
-	private final Class<SCORE> cScore;
-	private final Class<UNIT> cUnit; public Class<UNIT> getClassUnit() {return cUnit;}
 	private final Class<ANSWER> cAnswer;
 	private final Class<MATRIX> cMatrix;
 	private final Class<DATA> cData; 
 	private final Class<OPTIONS> cOptions; public Class<OPTIONS> getOptionSetClass() {return cOptions;}
 	private final Class<OPTION> cOption; public Class<OPTION> getOptionClass() {return cOption;}
 
-	public SurveyCoreFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
+	public SurveyCoreFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
 	{
 		super(cL,cD);
 		this.cSurvey = cSurvey;
 		this.cSs = cSs;
-		this.cScheme = cScheme;
-		this.cTemplate = cTemplate;
-		this.cVersion = cVersion;
 		this.cSection = cSection;
 		this.cQuestion = cQuestion;
-		this.cScore = cScore;
-		this.cUnit = cUnit;
         this.cAnswer = cAnswer;
         this.cMatrix = cMatrix;
         this.cData = cData;
@@ -108,10 +98,7 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		return new EjbSurveyFactory<L,D,SURVEY,SS,TEMPLATE>(cL,cD,cSurvey);
 	}
 	
-	public EjbSurveySchemeFactory<SCHEME,TEMPLATE> scheme()
-	{
-		return new EjbSurveySchemeFactory<SCHEME,TEMPLATE>(cScheme);
-	}
+
 	
 	public EjbSurveyOptionFactory<QUESTION,OPTION> ejbOption()
 	{
@@ -123,10 +110,7 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		return new EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION>(cQuestion);
 	}
 	
-	public EjbSurveyScoreFactory<QUESTION,SCORE> score()
-	{
-		return new EjbSurveyScoreFactory<QUESTION,SCORE>(cScore);
-	}
+
 	
 	public EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION> answer()
 	{

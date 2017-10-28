@@ -195,7 +195,10 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		triggerQuestions.clear();
 		for(SECTION section : sections)
 		{
-			triggerQuestions.addAll(bSurvey.getMapQuestion().get(section));
+			if(bSurvey.getMapQuestion().containsKey(section))
+			{
+				triggerQuestions.addAll(bSurvey.getMapQuestion().get(section));
+			}
 		}
 	}
 	
@@ -243,7 +246,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		}
 	}
 	
-	protected void selectVersion() throws UtilsNotFoundException
+	public void selectVersion() throws UtilsNotFoundException
 	{
 		clearSelection();
 		logger.info(AbstractLogMessage.selectEntity(version));
@@ -255,7 +258,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		uiHelper.check(version,sections);
 	}
 	
-	protected void saveVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	public void saveVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(version));
 		if(nestedVersion!=null)

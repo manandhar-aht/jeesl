@@ -167,10 +167,10 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		efVersion = fbTemplate.version();
 		efQuestion = fbCore.question();
 		efCondition = fbTemplate.ejbCondition();
-		efScore = fbCore.score();
+		efScore = fbTemplate.score();
 		efOptionSet = fbCore.optionSet();
 		efOption = fbCore.option();
-		efScheme = fbCore.scheme();
+		efScheme = fbTemplate.scheme();
 		
 		
 		sbhCategory = new SbSingleHandler<TC>(cTc,this);

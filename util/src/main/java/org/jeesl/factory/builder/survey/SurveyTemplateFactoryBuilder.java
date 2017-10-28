@@ -2,6 +2,8 @@ package org.jeesl.factory.builder.survey;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyConditionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveySchemeFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyScoreFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateVersionFactory;
@@ -67,6 +69,16 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		this.cUnit = cUnit;
         this.cOptions = cOptions;
         this.cOption = cOption;
+	}
+	
+	public EjbSurveySchemeFactory<SCHEME,TEMPLATE> scheme()
+	{
+		return new EjbSurveySchemeFactory<SCHEME,TEMPLATE>(cScheme);
+	}
+	
+	public EjbSurveyScoreFactory<QUESTION,SCORE> score()
+	{
+		return new EjbSurveyScoreFactory<QUESTION,SCORE>(cScore);
 	}
 	
 	public EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION> template()

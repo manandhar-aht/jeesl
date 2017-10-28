@@ -136,7 +136,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	
 	private List<UNIT> units;
 	public List<UNIT> getUnits(){return units;}
-	public void refreshUnits(){units=fSurvey.allOrderedPositionVisible(ffSurvey.getClassUnit());}
+	public void refreshUnits(){units=fSurvey.allOrderedPositionVisible(fbTemplate.getClassUnit());}
 	
 	private List<SS> surveyStatus;
 	public List<SS> getSurveyStatus(){return surveyStatus;}

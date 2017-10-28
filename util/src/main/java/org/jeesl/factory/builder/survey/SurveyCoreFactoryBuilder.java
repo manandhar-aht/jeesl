@@ -45,7 +45,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
+public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescription, //LOC extends UtilsStatus<LOC,L,D>,
 				SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 				SS extends UtilsStatus<SS,L,D>,
 				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
@@ -73,9 +73,9 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	private final Class<SS> cSs; public Class<SS> getClassSurveyStatus() {return cSs;}
 	private final Class<SECTION> cSection; public Class<SECTION> getClassSection() {return cSection;}
 	private final Class<QUESTION> cQuestion; public Class<QUESTION> getClassQuestion() {return cQuestion;}
-	private final Class<ANSWER> cAnswer;
-	private final Class<MATRIX> cMatrix;
-	private final Class<DATA> cData; 
+	private final Class<ANSWER> cAnswer; public Class<ANSWER> getClassAnswer() {return cAnswer;}
+	private final Class<MATRIX> cMatrix; public Class<MATRIX> getClassMatrix() {return cMatrix;}
+	private final Class<DATA> cData; public Class<DATA> getClassData() {return cData;}
 	private final Class<OPTIONS> cOptions; public Class<OPTIONS> getOptionSetClass() {return cOptions;}
 	private final Class<OPTION> cOption; public Class<OPTION> getOptionClass() {return cOption;}
 
@@ -100,15 +100,9 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	
 
 	
-	public EjbSurveyOptionFactory<QUESTION,OPTION> ejbOption()
-	{
-		return new EjbSurveyOptionFactory<QUESTION,OPTION>(cOption);
-	}
+
 	
-	public EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION> question()
-	{
-		return new EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION>(cQuestion);
-	}
+
 	
 
 	

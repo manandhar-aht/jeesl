@@ -38,6 +38,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.metachart.xml.chart.DataSet;
@@ -56,6 +57,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 						SS extends UtilsStatus<SS,L,D>,
 						SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
+						VALGORITHM extends JeeslSurveyValidationAlgorithm,
 						TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,ANALYSIS>,
 						VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 						TS extends UtilsStatus<TS,L,D>,
@@ -78,7 +80,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 						AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 						ATT extends UtilsStatus<ATT,L,D>>
-					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
+					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -143,7 +145,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		logger.info("sb" + (ejb!=null));
 		if(ejb!=null)
 		{
-			if(cTc.isAssignableFrom(ejb.getClass()))
+			if(fbTemplate.getClassTemplateCategory().isAssignableFrom(ejb.getClass()))
 			{
 				List<TC> categories = new ArrayList<TC>();categories.add(sbhCategory.getSelection());
 				sbhSurvey.setList(fCore.fSurveysForCategories(categories));
@@ -153,10 +155,10 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 					logger.warn(s.toString()+" "+s.getTemplate().getCategory());
 				}
 				
-				logger.info(AbstractLogMessage.reloaded(cSurvey, sbhSurvey.getList())+" for category="+sbhCategory.getSelection().getCode());
+				logger.info(AbstractLogMessage.reloaded(fbCore.getClassSurvey(), sbhSurvey.getList())+" for category="+sbhCategory.getSelection().getCode());
 				sbhSurvey.silentCallback();
 			}
-			else if(cSurvey.isAssignableFrom(ejb.getClass()))
+			else if(fbCore.getClassSurvey().isAssignableFrom(ejb.getClass()))
 			{
 				sbhAnalysis.setList(fCore.allForParent(cAnalysis, sbhSurvey.getSelection().getTemplate()));
 				logger.info(AbstractLogMessage.reloaded(cAnalysis, sbhAnalysis.getList()));

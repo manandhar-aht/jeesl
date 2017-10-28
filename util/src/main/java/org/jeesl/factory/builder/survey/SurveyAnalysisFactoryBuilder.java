@@ -39,7 +39,8 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 				DOMAIN extends JeeslSurveyDomain<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
 				PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-				DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>, ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
+				DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>,
+				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 				AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 				ATT extends UtilsStatus<ATT,L,D>>
@@ -48,14 +49,18 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	final static Logger logger = LoggerFactory.getLogger(SurveyAnalysisFactoryBuilder.class);
 	
 	private final Class<ANSWER> cAnswer; public Class<ANSWER> getClassAnswer() {return cAnswer;}
+	private final Class<ANALYSIS> cAnalysis; public Class<ANALYSIS> getClassAnalysis() {return cAnalysis;}
 	private final Class<AQ> cAq; public Class<AQ> getClassAnalysisQuestion() {return cAq;}
+	private final Class<AT> cTool; public Class<AT> getClassAnalysisTool() {return cTool;}
 	private final Class<ATT> cAtt; public Class<ATT> getAttClass() {return cAtt;}
 
-	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<AQ> cAq, final Class<ATT> cAtt)
+	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
 	{
 		super(cL,cD);
 		this.cAnswer=cAnswer;
 		this.cAq=cAq;
+		this.cAnalysis=cAnalysis;
+		this.cTool=cTool;
         this.cAtt = cAtt;
 	}
 	

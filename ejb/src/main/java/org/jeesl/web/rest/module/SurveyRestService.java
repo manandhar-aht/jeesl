@@ -178,7 +178,7 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 		
 		efTemlate = fbTemplate.template();
 		efSection = fbTemplate.section();
-		efQuestion = fbCore.question();
+		efQuestion = fbTemplate.question();
 		efSurvey = fbCore.survey();
 		efData = fbCore.data();
 		efAnswer = fbCore.answer();

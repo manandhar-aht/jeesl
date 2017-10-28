@@ -32,6 +32,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
 import org.slf4j.Logger;
@@ -52,6 +53,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 						SS extends UtilsStatus<SS,L,D>,
 						SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
+						VALGORITHM extends JeeslSurveyValidationAlgorithm,
 						TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,ANALYSIS>,
 						VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 						TS extends UtilsStatus<TS,L,D>,
@@ -75,7 +77,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 						AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 						ATT extends UtilsStatus<ATT,L,D>>
-					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
+					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -102,7 +104,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		this.cDomain=cDomain;
 		this.cDentiy=cDentiy;
 		
-		efDomain = ffAnalysis.ejbDomain(cDomain);
+		efDomain = fbAnalysis.ejbDomain(cDomain);
 		cpDentity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	

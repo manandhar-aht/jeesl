@@ -42,6 +42,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -57,6 +58,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 						SS extends UtilsStatus<SS,L,D>,
 						SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
+						VALGORITHM extends JeeslSurveyValidationAlgorithm,
 						TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,ANALYSIS>,
 						VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 						TS extends UtilsStatus<TS,L,D>,
@@ -93,24 +95,10 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey;
 
 	protected final Class<LOC> cLoc;
-	protected final Class<SURVEY> cSurvey;
-	protected final Class<SS> cSs;
-	protected final Class<SCHEME> cScheme;
-	protected final Class<TEMPLATE> cTemplate;
-	protected final Class<VERSION> cVersion;
-	protected final Class<TS> cTs;
-	protected final Class<TC> cTc;
-	protected final Class<SECTION> cSection;
-	protected final Class<QUESTION> cQuestion;
-	protected final Class<SCORE> cScore;
-	protected final Class<UNIT> cUnit;
-	protected final Class<ANSWER> cAnswer;
-	protected final Class<MATRIX> cMatrix;
-	protected final Class<DATA> cData;
 	
 	protected final SurveyTemplateFactoryBuilder<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
 	protected final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore;
-	protected final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffAnalysis;
+	protected final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis;
 	
 	protected final EjbSurveyFactory<L,D,SURVEY,SS,TEMPLATE> efSurvey;
 	protected final EjbSurveyTemplateVersionFactory<VERSION> efVersion;
@@ -136,36 +124,22 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	
 	public AbstractSurveyBean(SurveyTemplateFactoryBuilder<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
-			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> ffAnalysis,
+			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis,
 			final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit,final Class<ANSWER> cAnswer,final Class<MATRIX> cMatrix,final Class<DATA> cData)
 	{
 		super(fbTemplate.getClassL(),fbTemplate.getClassD());
 		this.fbTemplate=fbTemplate;
 		this.fbCore=fbCore;
-		this.ffAnalysis=ffAnalysis;
+		this.fbAnalysis=fbAnalysis;
 		
 		this.cLoc = cLoc;
-		this.cSurvey = cSurvey;
-		this.cSs = cSs;
-		this.cScheme = cScheme;
-		this.cTemplate = cTemplate;
-		this.cVersion = cVersion;
-		this.cTs = cTs;
-		this.cTc = cTc;
-		this.cSection = cSection;
-		this.cQuestion = cQuestion;
-		this.cScore = cScore;
-		this.cUnit = cUnit;
-		this.cAnswer = cAnswer;
-		this.cMatrix = cMatrix;
-		this.cData = cData;
 		
 		efTemplate = fbTemplate.template();
 		efSection = fbTemplate.section();
 		
 		efSurvey = fbCore.survey();
 		efVersion = fbTemplate.version();
-		efQuestion = fbCore.question();
+		efQuestion = fbTemplate.question();
 		efCondition = fbTemplate.ejbCondition();
 		efScore = fbTemplate.score();
 		efOptionSet = fbCore.optionSet();

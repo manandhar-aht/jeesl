@@ -29,6 +29,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,7 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 						SS extends UtilsStatus<SS,L,D>,
 						SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
+						VALGORITHM extends JeeslSurveyValidationAlgorithm,
 						TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,ANALYSIS>,
 						VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 						TS extends UtilsStatus<TS,L,D>,
@@ -70,7 +72,7 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 						AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 						ATT extends UtilsStatus<ATT,L,D>>
-					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
+					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -100,7 +102,7 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	{
 		if(ejb!=null)
 		{
-			if(cTc.isAssignableFrom(ejb.getClass()))
+			if(fbTemplate.getClassTemplateCategory().isAssignableFrom(ejb.getClass()))
 			{
 				reloadSurveys();
 			}
@@ -114,13 +116,13 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	
 	public void addSurvey() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(cSurvey));
+		logger.info(AbstractLogMessage.addEntity(fbCore.getClassSurvey()));
 		TC category = sbhCategory.getList().get(0);
-		TS templateStatus = fCore.fByCode(cTs,JeeslSurveyOption.Status.open);
+		TS templateStatus = fCore.fByCode(fbTemplate.getClassTemplateStatus(),JeeslSurveyOption.Status.open);
 		template = efTemplate.build(category, templateStatus, "");
 		reloadAvailableSurveVersions();
 		
-		SS surveystatus = fCore.fByCode(cSs,JeeslSurvey.Status.preparation);
+		SS surveystatus = fCore.fByCode(fbCore.getClassSurveyStatus(),JeeslSurvey.Status.preparation);
 		
 		survey = efSurvey.build(localeCodes,template,surveystatus);
 	}
@@ -128,10 +130,10 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	public void saveSurvey() throws UtilsLockingException, UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(survey));
-		VERSION version = fCore.find(cVersion,template.getVersion());
+		VERSION version = fCore.find(fbTemplate.getClassVersion(),template.getVersion());
 		survey.setTemplate(version.getTemplate());
 
-		survey.setStatus(fCore.find(cSs,survey.getStatus()));
+		survey.setStatus(fCore.find(fbCore.getClassSurveyStatus(),survey.getStatus()));
 		survey = fCore.save(survey);
 		reloadSurveys();
 	}
@@ -147,7 +149,7 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	public void selectSurvey() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(survey));
-		survey = fCore.find(cSurvey,survey);
+		survey = fCore.find(fbCore.getClassSurvey(),survey);
 		survey = efLang.persistMissingLangs(fCore, localeCodes, survey);
 		survey = efDescription.persistMissingLangs(fCore, localeCodes, survey);
 		template = survey.getTemplate();
@@ -157,6 +159,6 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	private void reloadAvailableSurveVersions() throws UtilsNotFoundException
 	{
 		versions = fCore.fVersions(template.getCategory());
-		logger.info(AbstractLogMessage.reloaded(cVersion, versions)+" for category:"+template.getCategory().toString());
+		logger.info(AbstractLogMessage.reloaded(fbTemplate.getClassVersion(), versions)+" for category:"+template.getCategory().toString());
 	}
 }

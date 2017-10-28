@@ -2,6 +2,8 @@ package org.jeesl.factory.builder.survey;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyConditionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySchemeFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyScoreFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
@@ -43,24 +45,30 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyTemplateFactoryBuilder.class);
 	
-	private final Class<SCHEME> cScheme;
+	private final Class<SCHEME> cScheme; public Class<SCHEME> getClassScheme() {return cScheme;}
 	private final Class<TEMPLATE> cTemplate; public Class<TEMPLATE> getClassTemplate() {return cTemplate;}
-	private final Class<VERSION> cVersion;
+	private final Class<VERSION> cVersion; public Class<VERSION> getClassVersion() {return cVersion;}
+	private final Class<TS> cTs; public Class<TS> getClassTemplateStatus() {return cTs;}
+	private final Class<TC> cTc; public Class<TC> getClassTemplateCategory() {return cTc;}
 	private final Class<SECTION> cSection; public Class<SECTION> getClassSection() {return cSection;}
 	private final Class<QUESTION> cQuestion; public Class<QUESTION> getClassQuestion() {return cQuestion;}
 	private final Class<CONDITION> cCondition; public Class<CONDITION> getClassCondition() {return cCondition;}
 	private final Class<QE> cElement; public Class<QE> getClassElement(){return cElement;}
-	private final Class<SCORE> cScore;
+	private final Class<SCORE> cScore; public Class<SCORE> getClassScore(){return cScore;}
 	private final Class<UNIT> cUnit; public Class<UNIT> getClassUnit() {return cUnit;}
 	private final Class<OPTIONS> cOptions; public Class<OPTIONS> getOptionSetClass() {return cOptions;}
 	private final Class<OPTION> cOption; public Class<OPTION> getOptionClass() {return cOption;}
+	
+//	private final Class<LOC> cLoc;
 
-	public SurveyTemplateFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<CONDITION> cCondition, final Class<QE> cElement, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
+	public SurveyTemplateFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<CONDITION> cCondition, final Class<QE> cElement, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
 	{
 		super(cL,cD);
 		this.cScheme = cScheme;
 		this.cTemplate = cTemplate;
 		this.cVersion = cVersion;
+		this.cTs = cTs;
+		this.cTc = cTc;
 		this.cSection = cSection;
 		this.cQuestion = cQuestion;
 		this.cCondition = cCondition;
@@ -94,6 +102,16 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	public EjbSurveySectionFactory<L,D,TEMPLATE,SECTION> section()
 	{
 		return new EjbSurveySectionFactory<L,D,TEMPLATE,SECTION>(cSection);
+	}
+	
+	public EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION> question()
+	{
+		return new EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION>(cQuestion);
+	}
+	
+	public EjbSurveyOptionFactory<QUESTION,OPTION> ejbOption()
+	{
+		return new EjbSurveyOptionFactory<QUESTION,OPTION>(cOption);
 	}
 	
 	public EjbSurveyConditionFactory<QUESTION,CONDITION,QE> ejbCondition()

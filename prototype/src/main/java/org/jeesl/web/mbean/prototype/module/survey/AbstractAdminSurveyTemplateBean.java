@@ -35,6 +35,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.util.comparator.ejb.PositionComparator;
 import org.slf4j.Logger;
@@ -55,6 +56,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 						SS extends UtilsStatus<SS,L,D>,
 						SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
+						VALGORITHM extends JeeslSurveyValidationAlgorithm,
 						TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,ANALYSIS>,
 						VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 						TS extends UtilsStatus<TS,L,D>,
@@ -78,7 +80,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 						AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 						ATT extends UtilsStatus<ATT,L,D>>
-					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
+					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -142,7 +144,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	@Override public void selectSbSingle(EjbWithId ejb)
 	{
 		logger.info(ejb.toString());
-		if(cTc.isAssignableFrom(ejb.getClass()))
+		if(fbTemplate.getClassTemplateCategory().isAssignableFrom(ejb.getClass()))
 		{
 			try
 			{
@@ -210,9 +212,9 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		{
 			try
 			{
-				TS status = fTemplate.fByCode(cTs,statusCode);
+				TS status = fTemplate.fByCode(fbTemplate.getClassTemplateStatus(),statusCode);
 				template = fTemplate.fcSurveyTemplate(sbhCategory.getSelection(),version,status,nestedVersion);
-				logger.info("Resolved "+cTemplate.getSimpleName()+": "+template.toString());
+				logger.info("Resolved "+fbTemplate.getClassTemplate().getSimpleName()+": "+template.toString());
 				version = template.getVersion();
 				reloadTemplate();
 				section=null;
@@ -225,7 +227,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	//Version
 	public void addVersion()
 	{
-		logger.info(AbstractLogMessage.addEntity(cVersion));
+		logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassVersion()));
 		version = efVersion.build();
 		version.setName(efLang.createEmpty(sbhLocale.getList()));
 		version.setDescription(efDescription.createEmpty(sbhLocale.getList()));
@@ -252,7 +254,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		logger.info(AbstractLogMessage.selectEntity(version));
 		efLang.persistMissingLangs(fCore, sbhLocale.getList(), version);
 		efDescription.persistMissingLangs(fCore, sbhLocale.getList(), version);
-		version = fCore.find(cVersion, version);
+		version = fCore.find(fbTemplate.getClassVersion(), version);
 		initTemplate();
 		if(version.getTemplate()!=null && version.getTemplate().getNested()!=null){nestedVersion = version.getTemplate().getNested().getVersion();}
 		uiHelper.check(version,sections);
@@ -263,7 +265,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		logger.info(AbstractLogMessage.saveEntity(version));
 		if(nestedVersion!=null)
 		{
-			nestedVersion = fCore.find(cVersion,nestedVersion);
+			nestedVersion = fCore.find(fbTemplate.getClassVersion(),nestedVersion);
 		}
 		
 		if(EjbIdFactory.isSaved(version))
@@ -287,7 +289,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	//Section
 	public void addSection()
 	{
-		logger.info(AbstractLogMessage.addEntity(cSection));
+		logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassSection()));
 		section = efSection.build(template,0);
 		section.setName(efLang.createEmpty(sbhLocale.getList()));
 		section.setDescription(efDescription.createEmpty(sbhLocale.getList()));
@@ -369,7 +371,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	//Question
 	public void addQuestion()
 	{
-		logger.info(AbstractLogMessage.addEntity(cQuestion));
+		logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassQuestion()));
 		question = efQuestion.build(section,null);
 		question.setName(efLang.createEmpty(sbhLocale.getList()));
 		question.setText(efDescription.createEmpty(sbhLocale.getList()));
@@ -403,7 +405,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	private void reloadQuestion()
 	{
-		question = fCore.find(cQuestion,question);
+		question = fCore.find(fbTemplate.getClassQuestion(),question);
 		question = fCore.load(question);
 		Collections.sort(question.getOptions(),cmpOption);
 		options.clear(); options.addAll(question.getOptions());
@@ -414,7 +416,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void saveQuestion() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(question));
-		if(question.getUnit()!=null){question.setUnit(fCore.find(cUnit,question.getUnit()));}
+		if(question.getUnit()!=null){question.setUnit(fCore.find(fbTemplate.getClassUnit(),question.getUnit()));}
 		if(question.getOptionSet()!=null){question.setOptionSet(fCore.find(fbTemplate.getOptionSetClass(),question.getOptionSet()));}
 		question = fCore.save(question);
 		loadSection();
@@ -490,7 +492,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	//Scheme
 	public void addScheme()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cScheme));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassScheme()));}
 		scheme = efScheme.build(template, "", schemes);
 		scheme.setName(efLang.createEmpty(langs));
 		scheme.setDescription(efDescription.createEmpty(langs));
@@ -510,7 +512,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	public void addScore()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cScore));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassScore()));}
 		score = efScore.build(question);
 	}
 	

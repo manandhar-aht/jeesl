@@ -177,6 +177,13 @@
     		<s:lang key="fr" translation="Qui/Non"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslSurveyQuestionShowDate">
+    	<s:langs>
+    		<s:lang key="de" translation="Datum"/>
+    		<s:lang key="en" translation="Date"/>
+    		<s:lang key="fr" translation="Date"/>
+    	</s:langs>
+    </s:translation>
     <s:translation key="jpSurveyQuestionShowInteger">
     	<s:langs>
     		<s:lang key="de" translation="Natürliche Zahl"/>

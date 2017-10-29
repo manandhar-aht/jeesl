@@ -70,6 +70,9 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 	Boolean getShowBoolean();
 	void setShowBoolean(Boolean showBoolean);
 	
+	Boolean getShowDate();
+	void setShowDate(Boolean showDate);
+	
 	Boolean getShowInteger();
 	void setShowInteger(Boolean showInteger);
 	

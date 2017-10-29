@@ -156,7 +156,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		if(rTool) {tool = null;}
 	}
 	
-	protected void selectVersion() throws UtilsNotFoundException
+	public void selectVersion() throws UtilsNotFoundException
 	{
 		reset(false,false,true,true,true,true);
 		logger.info(AbstractLogMessage.selectEntity(version));
@@ -248,5 +248,5 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		tool = fCore.find(fbAnalysis.getClassAnalysisTool(),tool);
 	}
 	
-	protected void reorderAnalyses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, analyses);}
+	public void reorderAnalyses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, analyses);}
 }

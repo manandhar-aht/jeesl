@@ -57,12 +57,15 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	protected boolean noActions; public boolean isNoActions() {return noActions;}
 	protected boolean noRoles; public boolean isNoRoles() {return noRoles;}
 	
+	protected boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
+
 	public AbstractJsfSecurityHandler(I identity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, String pageCode, Class<V> cV)
 	{
 		this.identity=identity;
 		this.fSecurity=fSecurity;
 		this.pageCode=pageCode;
 		
+		debugOnInfo = false;
 		noActions=true;
 		noRoles=true;
 		

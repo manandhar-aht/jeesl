@@ -86,9 +86,6 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSurveyReportBean.class);
 
-	private final Class<ANALYSIS> cAnalysis;
-	private final Class<AT> cAt; 
-	
 	private McOptionDataSetFactory<OPTION> mfOption;
 	
 	private final Map<QUESTION,DataSet> mapDsOption; public Map<QUESTION, DataSet> getMapDsOption() {return mapDsOption;}
@@ -100,19 +97,15 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private final Map<AT,JsonFlatFigures> mapToolTableText; public Map<AT,JsonFlatFigures> getMapToolTableText() {return mapToolTableText;}
 	private final Map<AT,JsonFlatFigures> mapToolTableRemark; public Map<AT,JsonFlatFigures> getMapToolTableRemark() {return mapToolTableRemark;}
 
-	
 	protected final SbSingleHandler<ANALYSIS> sbhAnalysis; public SbSingleHandler<ANALYSIS> getSbhAnalysis() {return sbhAnalysis;}
 	
 	private DataSet ds; public DataSet getDs() {return ds;}
 
-	public AbstractSurveyReportBean(SurveyTemplateFactoryBuilder<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+	public AbstractSurveyReportBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
-			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis,
-								final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions,final Class<OPTION> cOption, final Class<ANALYSIS> cAnalysis, final Class<AT> cAt, final Class<ATT> cAtt)
+			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis)
 	{
-		super(fbTemplate,fbCore,fbAnalysis,cLoc,cSurvey,cSs,cScheme,cTemplate,cVersion,cTs,cTc,cSection,cQuestion,cScore,cUnit,cAnswer,cMatrix,cData);
-		this.cAnalysis=cAnalysis;
-		this.cAt=cAt;
+		super(fbTemplate,fbCore,fbAnalysis);
 		
 		mapQuestion = new HashMap<SECTION,List<QUESTION>>();
 		mapTool = new HashMap<QUESTION,List<AT>>();
@@ -123,7 +116,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapToolTableText = new HashMap<AT,JsonFlatFigures>();
 		mapToolTableRemark = new HashMap<AT,JsonFlatFigures>();
 		
-		sbhAnalysis = new SbSingleHandler<ANALYSIS>(cAnalysis,this);
+		sbhAnalysis = new SbSingleHandler<ANALYSIS>(fbAnalysis.getClassAnalysis(),this);
 		sections = new ArrayList<SECTION>();
 	}
 	
@@ -160,11 +153,11 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 			}
 			else if(fbCore.getClassSurvey().isAssignableFrom(ejb.getClass()))
 			{
-				sbhAnalysis.setList(fCore.allForParent(cAnalysis, sbhSurvey.getSelection().getTemplate()));
-				logger.info(AbstractLogMessage.reloaded(cAnalysis, sbhAnalysis.getList()));
+				sbhAnalysis.setList(fCore.allForParent(fbAnalysis.getClassAnalysis(), sbhSurvey.getSelection().getTemplate()));
+				logger.info(AbstractLogMessage.reloaded(fbAnalysis.getClassAnalysis(), sbhAnalysis.getList()));
 				sbhAnalysis.silentCallback();
 			}
-			else if(cAnalysis.isAssignableFrom(ejb.getClass()))
+			else if(fbAnalysis.getClassAnalysis().isAssignableFrom(ejb.getClass()))
 			{
 				reloadAnalysis();
 			}
@@ -199,7 +192,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 					AQ analysis = fAnalysis.fAnalysis(sbhAnalysis.getSelection(), q);
 					List<AT> tools = new ArrayList<AT>();
 					mapQuestion.get(section).add(q);
-					for(AT tool : fCore.allForParent(cAt, analysis))
+					for(AT tool : fCore.allForParent(fbAnalysis.getClassAnalysisTool(), analysis))
 					{
 						if(tool.isVisible())
 						{

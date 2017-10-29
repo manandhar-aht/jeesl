@@ -1,8 +1,6 @@
 package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
@@ -12,7 +10,8 @@ import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
 import org.jeesl.factory.builder.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.survey.SurveyTemplateFactoryBuilder;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyValidationAlgorithmFactory;
+import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -34,13 +33,11 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -49,11 +46,11 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
+public abstract class AbstractAdminSurveyValidationBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 						SS extends UtilsStatus<SS,L,D>,
 						SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
-						VALGORITHM extends JeeslSurveyValidationAlgorithm,
+						VALGORITHM extends JeeslSurveyValidationAlgorithm<L,D>,
 						TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,ANALYSIS>,
 						VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 						TS extends UtilsStatus<TS,L,D>,
@@ -78,37 +75,26 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 						AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 						ATT extends UtilsStatus<ATT,L,D>>
 					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>
-					implements Serializable
+					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyDomainBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyValidationBean.class);
+		
+	protected List<VALGORITHM> algorithms; public List<VALGORITHM> getAlgorithms(){return algorithms;}
 	
-	private final Class<DOMAIN> cDomain;
-	private final Class<DENTITY> cDentiy;
-	
-	protected List<DOMAIN> domains; public List<DOMAIN> getDomains(){return domains;}
-	protected List<DENTITY> entities; public List<DENTITY> getEntities(){return entities;}
-	
-	protected DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
+	protected VALGORITHM algorithm; public VALGORITHM getAlgorithm() {return algorithm;} public void setAlgorithm(VALGORITHM algorithm) {this.algorithm = algorithm;}
 
-	private final EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> efDomain;
-	private final Comparator<DENTITY> cpDentity;
+	private final EjbSurveyValidationAlgorithmFactory<VALGORITHM> efValidationAlgorithm;
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public AbstractAdminSurveyDomainBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
-			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
-			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis,
-			final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<QE> cQe, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<DOMAIN> cDomain, final Class<DENTITY> cDentiy, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
+	public AbstractAdminSurveyValidationBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+											SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
+											SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis)
 	{
 		super(fbTemplate,fbCore,fbAnalysis);
-		this.cDomain=cDomain;
-		this.cDentiy=cDentiy;
-		
-		efDomain = fbAnalysis.ejbDomain(cDomain);
-		cpDentity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
+		efValidationAlgorithm = fbTemplate.ejbAlgorithm();
 	}
 	
-	protected void initSuperCorrelation(String userLocale, String[] localeCodes, FacesMessageBean bMessage,
+	protected void initSuperValidation(String userLocale, String[] localeCodes, FacesMessageBean bMessage,
 			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
 			JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
 			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis,
@@ -117,44 +103,45 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		super.initSuperSurvey(localeCodes,bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 		initSettings();
 		super.initLocales(userLocale);
+		reloadAlgorithms();
+	}
+	
+	@Override public void selectSbSingle(EjbWithId ejb)
+	{
 		
-		entities = fCore.allOrderedPositionVisible(cDentiy);
-		Collections.sort(entities,cpDentity);
-		reloadDomains();
 	}
 	
-	@Override public void selectSbSingle(EjbWithId ejb) {}
-	
-	private void reset(boolean rDomain)
+	private void reset(boolean rAlgorihtm)
 	{
-		if(rDomain){domain = null;}
+		if(rAlgorihtm){algorithm = null;}
 	}
 	
-	private void reloadDomains()
+	private void reloadAlgorithms()
 	{
-		domains = fCore.all(cDomain);
+		algorithms = fTemplate.all(fbTemplate.getClassValidationAlgorithm());
+		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbTemplate.getClassValidationAlgorithm(), algorithms));}
 	}
-	
-	public void addDomain()
+			
+	public void addAlgorithm()
 	{
-		logger.info(AbstractLogMessage.addEntity(cDomain));
-		domain = efDomain.build(null,domains);
+		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassAnalysis()));
+		algorithm = efValidationAlgorithm.build(algorithms);
+		algorithm.setName(efLang.createEmpty(localeCodes));
 	}
 	
-	protected void selectDomain() throws UtilsNotFoundException
+	public void saveAlgorithm() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		reset(false);
-		logger.info(AbstractLogMessage.selectEntity(domain));
+		logger.info(AbstractLogMessage.saveEntity(algorithm));
+		algorithm = fTemplate.save(algorithm);
+		reloadAlgorithms();
 	}
 	
-	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException
+	public void selectAlgorithm()
 	{
-		logger.info(AbstractLogMessage.saveEntity(domain));
-		domain.setEntity(fCore.find(cDentiy,domain.getEntity()));
-		domain = fCore.save(domain);
-		
-		reloadDomains();
+		logger.info(AbstractLogMessage.selectEntity(algorithm));
+		algorithm = efLang.persistMissingLangs(fTemplate, localeCodes, algorithm);
+		algorithm = efDescription.persistMissingLangs(fTemplate, localeCodes, algorithm);
 	}
 	
-	protected void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, domains);}
+	public void reorderAlgorithms() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate,algorithms);}
 }

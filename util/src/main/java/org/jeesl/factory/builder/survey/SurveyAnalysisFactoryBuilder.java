@@ -69,18 +69,18 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		return new EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY>(cDomain);
 	}
 	
-	public EjbSurveyAnalysisFactory<TEMPLATE,ANALYSIS> ejbAnalysis(Class<ANALYSIS> cAnalysis)
+	public EjbSurveyAnalysisFactory<TEMPLATE,ANALYSIS> ejbAnalysis()
 	{
 		return new EjbSurveyAnalysisFactory<TEMPLATE,ANALYSIS>(cAnalysis);
 	}
 	
-	public EjbSurveyAnalysisQuestionFactory<L,D,QUESTION,ANALYSIS,AQ> ejbAnalysisQuestion(Class<AQ> cAQ)
+	public EjbSurveyAnalysisQuestionFactory<L,D,QUESTION,ANALYSIS,AQ> ejbAnalysisQuestion()
 	{
-		return new EjbSurveyAnalysisQuestionFactory<L,D,QUESTION,ANALYSIS,AQ>(cAQ);
+		return new EjbSurveyAnalysisQuestionFactory<L,D,QUESTION,ANALYSIS,AQ>(cAq);
 	}
 	
-	public EjbSurveyAnalysisToolFactory<L,D,AQ,AT,ATT> ejbAnalysisTool(Class<AT> cAt)
+	public EjbSurveyAnalysisToolFactory<L,D,AQ,AT,ATT> ejbAnalysisTool()
 	{
-		return new EjbSurveyAnalysisToolFactory<L,D,AQ,AT,ATT>(cAt);
+		return new EjbSurveyAnalysisToolFactory<L,D,AQ,AT,ATT>(cTool);
 	}
 }

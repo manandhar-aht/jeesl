@@ -490,5 +490,19 @@
 	    		<s:lang key="fr" translation="Negated"/>
 	    	</s:langs>
     </s:translation>   
+    <s:translation key="jeeslSurveyValidationAlgorithms">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Validierungsalgorithmen"/>
+	    		<s:lang key="en" translation="Validation Algorithms"/>
+	    		<s:lang key="fr" translation="Validation Algorithms"/>
+	    	</s:langs>
+    </s:translation>   
+    <s:translation key="jeeslSurveyValidationAlgorithm">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Validierungsalgorithmus"/>
+	    		<s:lang key="en" translation="Validation Algorithm"/>
+	    		<s:lang key="fr" translation="Validation Algorithm"/>
+	    	</s:langs>
+    </s:translation>     
     
 </s:translations>

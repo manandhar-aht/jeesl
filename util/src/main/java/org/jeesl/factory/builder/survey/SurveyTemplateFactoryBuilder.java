@@ -9,6 +9,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyScoreFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateVersionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyValidationAlgorithmFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveyQuestionFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -19,6 +20,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +28,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
+public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
+				VALGORITHM extends JeeslSurveyValidationAlgorithm,
 				TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,?>,
 				VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 				TS extends UtilsStatus<TS,L,D>,
@@ -45,7 +48,9 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyTemplateFactoryBuilder.class);
 	
+	private final Class<LOC> cLoc; public Class<LOC> getClassLocale() {return cLoc;}
 	private final Class<SCHEME> cScheme; public Class<SCHEME> getClassScheme() {return cScheme;}
+	private final Class<VALGORITHM> cValgorithm; public Class<VALGORITHM> getClassValidationAlgorithm() {return cValgorithm;}
 	private final Class<TEMPLATE> cTemplate; public Class<TEMPLATE> getClassTemplate() {return cTemplate;}
 	private final Class<VERSION> cVersion; public Class<VERSION> getClassVersion() {return cVersion;}
 	private final Class<TS> cTs; public Class<TS> getClassTemplateStatus() {return cTs;}
@@ -58,13 +63,13 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	private final Class<UNIT> cUnit; public Class<UNIT> getClassUnit() {return cUnit;}
 	private final Class<OPTIONS> cOptions; public Class<OPTIONS> getOptionSetClass() {return cOptions;}
 	private final Class<OPTION> cOption; public Class<OPTION> getOptionClass() {return cOption;}
-	
-//	private final Class<LOC> cLoc;
 
-	public SurveyTemplateFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<CONDITION> cCondition, final Class<QE> cElement, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
+	public SurveyTemplateFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SCHEME> cScheme, final Class<VALGORITHM> cValgorithm, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<CONDITION> cCondition, final Class<QE> cElement, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
 	{
 		super(cL,cD);
+		this.cLoc = cLoc;
 		this.cScheme = cScheme;
+		this.cValgorithm = cValgorithm;
 		this.cTemplate = cTemplate;
 		this.cVersion = cVersion;
 		this.cTs = cTs;
@@ -122,5 +127,10 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	public TxtSurveyQuestionFactory<L,D,QUESTION,OPTION> txtQuestion()
 	{
 		return new TxtSurveyQuestionFactory<L,D,QUESTION,OPTION>();
+	}
+	
+	public EjbSurveyValidationAlgorithmFactory<VALGORITHM> ejbAlgorithm()
+	{
+		return new EjbSurveyValidationAlgorithmFactory<VALGORITHM>(cValgorithm);
 	}
 }

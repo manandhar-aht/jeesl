@@ -13,6 +13,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="false" default="#{adminTsEntityBean}"/>
+		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -69,8 +70,7 @@
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.entity.visible}"/>
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.entity}" labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
-       												keys="#{translationBean.langKeys}" withDescription="true"/>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.entity}" keys="#{cc.attrs.localeKeys}" withDescription="true"/>
 						</p:panel>
 					</h:form>
 				</aht:slot>

@@ -48,7 +48,7 @@ public abstract class AbstractSurveyEntryBean <L extends UtilsLang, D extends Ut
 						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 						SS extends UtilsStatus<SS,L,D>,
 						SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
-						VALGORITHM extends JeeslSurveyValidationAlgorithm,
+						VALGORITHM extends JeeslSurveyValidationAlgorithm<L,D>,
 						TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,ANALYSIS>,
 						VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 						TS extends UtilsStatus<TS,L,D>,
@@ -139,4 +139,8 @@ public abstract class AbstractSurveyEntryBean <L extends UtilsLang, D extends Ut
 		handler.save(correlation,section);
 	}
 
+	public void saveData() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(null,correlation)+" TEST ONLY");
+	}
 }

@@ -2,11 +2,14 @@ package org.jeesl.interfaces.model.module.attribute;
 
 import java.util.Date;
 
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?,?,?>,CONTAINER extends JeeslAttributeContainer<?,?>>
-		extends EjbWithId
+		extends EjbWithId,EjbSaveable
 {
+	public static enum Attributes{container,criteria};
+	
 	CONTAINER getContainer();
 	void setContainer(CONTAINER container);
 	

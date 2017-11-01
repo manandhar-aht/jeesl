@@ -1,5 +1,6 @@
 package org.jeesl.factory.factory;
 
+import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.feedback.EjbFeedbackFactory;
 import org.jeesl.factory.ejb.module.feedback.EjbFeedbackThreadFactory;
 import org.jeesl.interfaces.model.module.feedback.JeeslFeedback;
@@ -18,18 +19,16 @@ public class FeedbackFactoryFactory<L extends UtilsLang, D extends UtilsDescript
 									STYLE extends UtilsStatus<STYLE,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
 									USER extends EjbWithEmail>
+		extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(FeedbackFactoryFactory.class);
 	
-	private final Class<L> cL;
-	private final Class<D> cD;
 	private final Class<THREAD> cThread;
 	private final Class<FEEDBACK> cFeedback;
     
 	private FeedbackFactoryFactory(final Class<L> cL,final Class<D> cD,final Class<THREAD> cThread, final Class<FEEDBACK> cFeedback)
 	{       
-		this.cL = cL;
-		this.cD = cD;
+		super(cL,cD);
 		this.cThread = cThread;
         this.cFeedback = cFeedback;
 	}

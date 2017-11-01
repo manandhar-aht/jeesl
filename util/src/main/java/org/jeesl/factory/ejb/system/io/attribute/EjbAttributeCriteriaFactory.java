@@ -1,4 +1,4 @@
-package org.jeesl.factory.ejb.module.attribute;
+package org.jeesl.factory.ejb.system.io.attribute;
 
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.slf4j.Logger;

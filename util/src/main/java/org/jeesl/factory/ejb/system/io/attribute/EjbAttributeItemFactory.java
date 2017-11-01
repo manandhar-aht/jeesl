@@ -8,10 +8,6 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-
 public class EjbAttributeItemFactory<CRITERIA extends JeeslAttributeCriteria<?,?,?,?>,
 									SET extends JeeslAttributeSet<?,?,?,ITEM>,
 									ITEM extends JeeslAttributeItem<CRITERIA,SET>>

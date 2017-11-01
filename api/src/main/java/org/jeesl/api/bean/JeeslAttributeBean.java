@@ -1,11 +1,13 @@
 package org.jeesl.api.bean;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -16,6 +18,7 @@ public interface JeeslAttributeBean<L extends UtilsLang, D extends UtilsDescript
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									CRITERIA extends JeeslAttributeCriteria<L,D,CATEGORY,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
+									OPTION extends JeeslAttributeOption<L,D,CRITERIA>,
 									SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
 									ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 									CONTAINER extends JeeslAttributeContainer<SET,DATA>,
@@ -26,4 +29,6 @@ public interface JeeslAttributeBean<L extends UtilsLang, D extends UtilsDescript
 	
 	List<TYPE> getTypes();
 	void reloadTypes();
+	
+	Map<SET,List<CRITERIA>> getMapCriteria();
 }

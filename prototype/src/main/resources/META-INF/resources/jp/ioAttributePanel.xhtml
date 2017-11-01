@@ -8,11 +8,11 @@
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:j="http://www.jeesl.org/jsf"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdm="http://ahtutils.sourceforge.net/prototype/admin"
-	xmlns:jp="http://jsf.jeesl.org/prototype"
-	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
@@ -21,35 +21,17 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<ui:repeat id="repeatSections" value="#{appSurveyBean.mapSection[cc.attrs.handler.template]}" var="section">
-			<p:panel id="pQuestions" styleClass="auPanelWithGrid"
-					header="#{section.code}: #{section.name[localeCode].lang}"
-					rendered="#{cc.attrs.handler.showAssessment}">
+			<p:panel id="pQuestions" styleClass="auPanelWithGrid" header="#{cc.attrs.handler.attributeSet.name[localeCode].lang}">
 				<f:facet name="actions">
-					<aht:icon id="btSave" type="jeeslSave" listener="#{cc.attrs.bean.saveData(section)}" update="@form" tooltip="#{msg.jeeslSurveyTtSaveSection}"/>
-					<p:blockUI trigger="btSave:link" block="pQuestions" />
+					<aht:icon id="btSave" type="jeeslSave" listener="#{cc.attrs.handler.save()}" update="@form" tooltip="#{msg.jeeslSurveyTtSaveSection}"/>
 				</f:facet>
-				<p:panelGrid columns="1" columnClasses="jeeslGrid100">
-					<h:outputText value="#{section.description[localeCode].lang}"/>
-				</p:panelGrid>
-				<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
-				<p:panelGrid columns="3" columnClasses="#{section.columnClasses}">
-					<jtp:label entity="MeisLcfUserEvaluation" code="question"/>
-					<jtp:label entity="MeisLcfUserEvaluation" code="answer"/>
-					<jtp:label entity="MeisLcfUserEvaluation" code="remark"/>
-				</p:panelGrid>
-				<ui:repeat value="#{appSurveyBean.mapQuestion[section]}" id="repeatQuestions" var="q">
-					<p:panelGrid columns="2" columnClasses="#{section.columnClasses}" rendered="#{q.visible}">
-						<h:panelGroup>
-							<h:outputText value="#{q.code} #{q.text[localeCode].lang}" styleClass="jeeslBold"/>
-							<br/>
-							<h:outputText value="#{q.description[localeCode].lang}" styleClass="jeeslItalic"/>
-						</h:panelGroup>
-						<jtp:surveyAnswer question="#{q}" surveyHandler="#{cc.attrs.handler}"/>
-						<ui:remove><ui:fragment><h:outputText value="#{q.remark}"/></ui:fragment></ui:remove>
+				<ui:repeat id="repeatC" value="#{appAttributeBean.mapCriteria[cc.attrs.handler.attributeSet]}"  var="c">	
+					<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
+						<p:outputLabel value="#{c.name[localeCode].lang}"/>
+						<jtp:inputAttribute attributeHandler="#{cc.attrs.handler}" criteria="#{c}"/>
 					</p:panelGrid>
 				</ui:repeat>
+				
 			</p:panel>
-		</ui:repeat>
 	</composite:implementation>
 </html>

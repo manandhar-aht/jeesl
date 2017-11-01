@@ -1,10 +1,16 @@
 package org.jeesl.factory.builder.io;
 
+import org.jeesl.api.bean.JeeslAttributeBean;
+import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
+import org.jeesl.controller.handler.AttributeHandler;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
-import org.jeesl.factory.ejb.module.attribute.EjbAttributeCriteriaFactory;
-import org.jeesl.factory.ejb.module.attribute.EjbAttributeOptionFactory;
+import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeContainerFactory;
+import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeCriteriaFactory;
+import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeDataFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeItemFactory;
+import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeOptionFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeSetFactory;
+import org.jeesl.interfaces.bean.AttributeBean;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
@@ -14,6 +20,7 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -37,8 +44,10 @@ public class IoAttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescr
 	private final Class<OPTION> cOption; public Class<OPTION> getClassOption() {return cOption;}
 	private final Class<SET> cSet; public Class<SET> getClassSet() {return cSet;}
 	private final Class<ITEM> cItem; public Class<ITEM> getClassItem() {return cItem;}
+	private final Class<CONTAINER> cContainer; public Class<CONTAINER> getClassContainer() {return cContainer;}
+	private final Class<DATA> cData; public Class<DATA> getClassData() {return cData;}
     
-	public IoAttributeFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CATEGORY> cCat, final Class<CRITERIA> cCriteria, final Class<TYPE> cType, final Class<OPTION> cOption, final Class<SET> cSet, final Class<ITEM> cItem)
+	public IoAttributeFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CATEGORY> cCat, final Class<CRITERIA> cCriteria, final Class<TYPE> cType, final Class<OPTION> cOption, final Class<SET> cSet, final Class<ITEM> cItem, final Class<CONTAINER> cContainer, final Class<DATA> cData)
 	{
 		super(cL,cD);
 		this.cCat=cCat;
@@ -47,6 +56,8 @@ public class IoAttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescr
 		this.cOption=cOption;
 		this.cSet=cSet;
 		this.cItem=cItem;
+		this.cContainer=cContainer;
+		this.cData=cData;
 	}
 	
 	public EjbAttributeCriteriaFactory<L,D,CATEGORY,CRITERIA,TYPE> ejbCriteria()
@@ -67,5 +78,20 @@ public class IoAttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescr
 	public EjbAttributeItemFactory<CRITERIA,SET,ITEM> ejbItem()
 	{
 		return new EjbAttributeItemFactory<CRITERIA,SET,ITEM>(cItem);
+	}
+	
+	public EjbAttributeContainerFactory<SET,CONTAINER> ejbContainer()
+	{
+		return new EjbAttributeContainerFactory<SET,CONTAINER>(cContainer);
+	}
+	
+	public EjbAttributeDataFactory<CRITERIA,CONTAINER,DATA> ejbData()
+	{
+		return new EjbAttributeDataFactory<CRITERIA,CONTAINER,DATA>(cData);
+	}
+	
+	public AttributeHandler<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> handler(FacesMessageBean bMessage, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, AttributeBean bean)
+	{
+		return new AttributeHandler<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>(bMessage,fAttribute,bAttribute,this,bean);
 	}
 }

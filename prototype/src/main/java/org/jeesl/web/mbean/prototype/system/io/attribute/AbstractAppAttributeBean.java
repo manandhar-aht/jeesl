@@ -2,7 +2,9 @@ package org.jeesl.web.mbean.prototype.system.io.attribute;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.api.bean.JeeslAttributeBean;
 import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
@@ -30,12 +32,12 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 											CONTAINER extends JeeslAttributeContainer<SET,DATA>,
 											DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
 					implements Serializable,
-								JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA>
+								JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAppAttributeBean.class);
 
-	private JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fAttribute;
+	private JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute;
 	private final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute;
 
 	public AbstractAppAttributeBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute)
@@ -43,15 +45,17 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 		this.fbAttribute=fbAttribute;
 		categories = new ArrayList<CATEGORY>();
 		types = new ArrayList<TYPE>();
+		mapCriteria = new HashMap<SET,List<CRITERIA>>();
 	}
 	
-	public void initSuper(JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fAttribute)
+	public void initSuper(JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{
 		this.fAttribute=fAttribute;
 		
 		reloadCategories();
 		reloadTypes();
 		reloadCategories();
+		reloadCriteria();
 		
 	}
 	
@@ -74,11 +78,34 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 			if(add) {types.add(type);}
 		}
 	}
+	
+	private final Map<SET,List<CRITERIA>> mapCriteria;
+	@Override  public Map<SET, List<CRITERIA>> getMapCriteria() {return mapCriteria;}
+	private void reloadCriteria()
+	{
+		mapCriteria.clear();
+		for(SET s : fAttribute.all(fbAttribute.getClassSet()))
+		{
+			List<CRITERIA> list = new ArrayList<CRITERIA>();
+			
+			for(ITEM item : fAttribute.allOrderedPositionVisibleParent(fbAttribute.getClassItem(),s))
+			{
+				list.add(item.getCriteria());
+			}
+			mapCriteria.put(s, list);
+		}
+	}
 		
 	protected String statistics()
 	{
 		StringBuilder sb = new StringBuilder();
-
+		sb.append("Statistics");
+		for(SET s : mapCriteria.keySet())
+		{
+			sb.append(s.getCode()+" "+mapCriteria.get(s).size());
+		}
 		return sb.toString();
 	}
+	
+	
 }

@@ -7,9 +7,9 @@ import org.jeesl.api.bean.JeeslAttributeBean;
 import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
-import org.jeesl.factory.ejb.module.attribute.EjbAttributeCriteriaFactory;
-import org.jeesl.factory.ejb.module.attribute.EjbAttributeOptionFactory;
+import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeCriteriaFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeItemFactory;
+import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeOptionFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeSetFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
@@ -43,8 +43,8 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoAttributeBean.class);
 	
-	protected JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fAttribute;
-	protected JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> bAttribute;
+	protected JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute;
+	protected JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute;
 	protected final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute;
 	
 	protected final SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
@@ -71,7 +71,7 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 		sbhCategory = new SbMultiHandler<CATEGORY>(fbAttribute.getClassCategory(),this);
 	}
 	
-	protected void initAttribute(String[] localeCodes, FacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,SET,ITEM,CONTAINER,DATA> fAttribute)
+	protected void initAttribute(String[] localeCodes, FacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fAttribute=fAttribute;

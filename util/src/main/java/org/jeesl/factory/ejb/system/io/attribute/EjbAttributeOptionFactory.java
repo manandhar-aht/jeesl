@@ -1,4 +1,4 @@
-package org.jeesl.factory.ejb.module.attribute;
+package org.jeesl.factory.ejb.system.io.attribute;
 
 import java.util.List;
 

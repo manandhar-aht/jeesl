@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
-import org.jeesl.factory.builder.TsFactoryBuilder;
+import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;

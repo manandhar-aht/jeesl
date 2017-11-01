@@ -6,7 +6,7 @@ import java.util.List;
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.api.handler.sb.SbDateIntervalSelection;
 import org.jeesl.controller.handler.sb.SbDateHandler;
-import org.jeesl.factory.builder.JobFactoryBuilder;
+import org.jeesl.factory.builder.system.JobFactoryBuilder;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;

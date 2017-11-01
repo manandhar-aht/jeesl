@@ -6,7 +6,7 @@ import java.util.Collections;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.op.OpEntitySelectionHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
-import org.jeesl.factory.builder.TsFactoryBuilder;
+import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;

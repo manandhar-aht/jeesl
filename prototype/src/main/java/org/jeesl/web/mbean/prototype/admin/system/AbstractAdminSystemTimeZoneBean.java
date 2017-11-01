@@ -6,8 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslCalendarFacade;
+import org.jeesl.factory.builder.module.CalendarFactoryBuilder;
 import org.jeesl.factory.ejb.module.calendar.EjbTimeZoneFactory;
-import org.jeesl.factory.factory.CalendarFactoryFactory;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendar;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendarItem;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendarTimeZone;
@@ -38,8 +38,7 @@ public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSystemTimeZoneBean.class);
 	
 	private JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar;
-	
-	private Class<ZONE> cZone;
+	private final CalendarFactoryBuilder<L,D,CALENDAR,ZONE,CT,ITEM,IT> fbCalendar;
 	
 	private List<ZONE> zones; public List<ZONE> getZones() {return zones;}
 	
@@ -48,14 +47,18 @@ public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
 	private Comparator<ZONE> comparatorTimeZone;
 	private EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> efZone;
 	
-	public void initSuper(JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, FacesMessageBean bMessage, String[] localeCodes, final Class<L> cL, final Class<D> cD, final Class<ZONE> cZone, final Class<IT> cItemType)
+	public AbstractAdminSystemTimeZoneBean(final CalendarFactoryBuilder<L,D,CALENDAR,ZONE,CT,ITEM,IT> fbCalendar)
 	{
-		super.initAdmin(localeCodes, cL, cD, bMessage);
+		super(fbCalendar.getClassL(),fbCalendar.getClassD());
+		this.fbCalendar=fbCalendar;
+	}
+	
+	public void initSuper(JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, FacesMessageBean bMessage, String[] localeCodes)
+	{
+		super.initAdmin(localeCodes,fbCalendar.getClassL(),fbCalendar.getClassD(),bMessage);
 		this.fCalendar=fCalendar;
-		this.cZone=cZone;
 
-		CalendarFactoryFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> ffCalendar = CalendarFactoryFactory.factory(cL,cD,cZone,cItemType);
-		efZone = ffCalendar.zone();
+		efZone = fbCalendar.zone();
 		
 		comparatorTimeZone = (new TimeZoneComparator<L,D,CALENDAR,ZONE,CT,ITEM,IT>()).factory(TimeZoneComparator.Type.offset);
 		reload();	
@@ -64,13 +67,13 @@ public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
 	
 	private void reload()
 	{
-		zones  = fCalendar.all(cZone);
+		zones  = fCalendar.all(fbCalendar.getClassZone());
 		Collections.sort(zones,comparatorTimeZone);
 	}
 	
 	public void selectZone() throws UtilsNotFoundException
 	{
-		zone = fCalendar.find(cZone,zone);
+		zone = fCalendar.find(fbCalendar.getClassZone(),zone);
 	}
 	
 	public void addZone() throws UtilsNotFoundException

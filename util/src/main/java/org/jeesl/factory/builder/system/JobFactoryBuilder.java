@@ -1,5 +1,6 @@
-package org.jeesl.factory.builder;
+package org.jeesl.factory.builder.system;
 
+import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.job.EjbJobCacheFactory;
 import org.jeesl.factory.ejb.system.job.EjbJobFactory;
 import org.jeesl.factory.ejb.system.job.EjbJobRobotFactory;

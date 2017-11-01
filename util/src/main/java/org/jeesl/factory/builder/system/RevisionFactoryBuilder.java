@@ -1,5 +1,6 @@
-package org.jeesl.factory.builder;
+package org.jeesl.factory.builder.system;
 
+import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionEntityFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionMappingEntityFactory;

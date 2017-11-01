@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
-import org.jeesl.factory.builder.RevisionFactoryBuilder;
+import org.jeesl.factory.builder.system.RevisionFactoryBuilder;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionEntityFactory;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionMappingEntityFactory;

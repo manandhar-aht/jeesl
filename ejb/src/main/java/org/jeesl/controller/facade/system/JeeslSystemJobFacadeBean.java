@@ -17,7 +17,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
-import org.jeesl.factory.builder.JobFactoryBuilder;
+import org.jeesl.factory.builder.system.JobFactoryBuilder;
 import org.jeesl.factory.ejb.system.job.EjbJobCacheFactory;
 import org.jeesl.factory.ejb.system.job.EjbJobFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;

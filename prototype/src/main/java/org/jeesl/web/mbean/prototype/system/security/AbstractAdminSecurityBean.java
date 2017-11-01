@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
-import org.jeesl.factory.builder.SecurityFactoryBuilder;
+import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionTemplateFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityCategoryFactory;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
-import org.jeesl.factory.builder.JobFactoryBuilder;
+import org.jeesl.factory.builder.system.JobFactoryBuilder;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslSystemPropertyFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
+import org.jeesl.factory.builder.system.PropertyFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.jeesl.util.comparator.ejb.system.PropertyComparator;
@@ -31,42 +32,39 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang, D extends Uti
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSystemPropertyBean.class);
 	
 	private JeeslSystemPropertyFacade<L,D,C,P> fProperty;
+	private final PropertyFactoryBuilder<L,D,C,P> fbProperty;
 	
 	private final SbMultiHandler<C> sbhCategory; public SbMultiHandler<C> getSbhCategory() {return sbhCategory;}
 	private final Comparator<P> comparatorProperty;
-	
-	private Class<P> cProperty;
-	private Class<C> cCategory;
 	
 	protected List<P> properties; public List<P> getProperties() {return properties;}
 	
 	protected P property;public P getProperty() {return property;}public void setProperty(P property) {this.property = property;}
 	
-	public AbstractAdminSystemPropertyBean(final Class<L> cL, final Class<D> cD)
+	public AbstractAdminSystemPropertyBean(final PropertyFactoryBuilder<L,D,C,P> fbProperty)
 	{
-		super(cL,cD);
-		sbhCategory = new SbMultiHandler<C>(cCategory,this);
+		super(fbProperty.getClassL(),fbProperty.getClassD());
+		this.fbProperty = fbProperty;
+		sbhCategory = new SbMultiHandler<C>(fbProperty.getClassCategory(),this);
 		comparatorProperty = (new PropertyComparator<L,D,C,P>()).factory(PropertyComparator.Type.category);
 	}
 	
-	public void initSuper(JeeslSystemPropertyFacade<L,D,C,P> fProperty, final Class<C> cCategory, final Class<P> cProperty)
+	public void initSuper(JeeslSystemPropertyFacade<L,D,C,P> fProperty)
 	{
 		this.fProperty=fProperty;
-		this.cProperty=cProperty;
-		this.cCategory=cCategory;
 
-		sbhCategory.setList(fProperty.allOrderedPositionVisible(cCategory));
+		sbhCategory.setList(fProperty.allOrderedPositionVisible(fbProperty.getClassCategory()));
 		sbhCategory.selectAll();
 		if(debugOnInfo)
 		{
-			logger.info(SbMultiHandler.class.getSimpleName()+": "+cCategory.getSimpleName()+" "+sbhCategory.getSelected().size()+"/"+sbhCategory.getList().size());
+			logger.info(SbMultiHandler.class.getSimpleName()+": "+fbProperty.getClassCategory().getSimpleName()+" "+sbhCategory.getSelected().size()+"/"+sbhCategory.getList().size());
 		}
 		refreshList();
 	}
 	
 	private void refreshList()
 	{
-		properties = fProperty.all(cProperty);
+		properties = fProperty.all(fbProperty.getClassProperty());
 		Collections.sort(properties,comparatorProperty);
 	}
 	
@@ -81,12 +79,12 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang, D extends Uti
 	
 	public void selectProperty() throws UtilsNotFoundException
 	{
-		property = fProperty.find(cProperty, property);
+		property = fProperty.find(fbProperty.getClassProperty(), property);
 	}
 	
 	public void save() throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(property.getCategory()!=null){property.setCategory(fProperty.find(cCategory,property.getCategory()));}
+		if(property.getCategory()!=null){property.setCategory(fProperty.find(fbProperty.getClassCategory(),property.getCategory()));}
 		property = fProperty.save(property);
 		refreshList();
 	}

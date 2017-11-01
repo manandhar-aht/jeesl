@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.jeesl.api.facade.core.JeeslUserFacade;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
-import org.jeesl.factory.builder.SecurityFactoryBuilder;
+import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbStaffFactory;
 import org.jeesl.interfaces.bean.op.OpUserBean;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
-import org.jeesl.factory.builder.RevisionFactoryBuilder;
+import org.jeesl.factory.builder.system.RevisionFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslJobFacade;
-import org.jeesl.factory.builder.JobFactoryBuilder;
+import org.jeesl.factory.builder.system.JobFactoryBuilder;
 import org.jeesl.factory.ejb.system.job.EjbJobRobotFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;

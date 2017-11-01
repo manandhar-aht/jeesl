@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
-import org.jeesl.factory.builder.SecurityFactoryBuilder;
+import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;

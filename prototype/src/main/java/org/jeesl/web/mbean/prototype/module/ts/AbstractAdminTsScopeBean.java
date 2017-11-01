@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
-import org.jeesl.factory.builder.TsFactoryBuilder;
+import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;

@@ -58,8 +58,7 @@
 								<p:outputLabel value="#{msg.jeeslCode}"/>
 								<p:inputText  value="#{cc.attrs.bean.set.code}" autocomplete="off"/>
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.set}" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.set}" keys="#{cc.attrs.localeKeys}" withDescription="true"/>
 						</p:panel>
 					</h:form>
 				</aht:slot>

@@ -83,7 +83,7 @@ public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends Ut
 		criteria = efCriteria.build(null,bAttribute.getTypes().get(0));
 		criteria.setName(efLang.createEmpty(localeCodes));
 		criteria.setDescription(efDescription.createEmpty(localeCodes));
-		reset(true,true);
+		reset(false,true);
 	}
 	
 	public void saveCriteria() throws UtilsConstraintViolationException, UtilsLockingException

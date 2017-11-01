@@ -18,11 +18,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jeesl.factory.builder.system.ReportFactoryProvider;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
-import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.pojo.system.io.report.JeeslTreeFigureFactory;
 import org.jeesl.interfaces.controller.report.JeeslReport;
 import org.jeesl.interfaces.controller.report.JeeslReportSelectorTransformation;
@@ -78,7 +78,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	private WORKBOOK ioWorkbook;
 	
-	private ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ffReport;
+	private ReportFactoryProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ffReport;
 	private EjbIoReportSheetFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efSheet;
 	
     // Excel related objects
@@ -102,7 +102,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
         this.localeCode = localeCode;
         this.ioWorkbook=ioWorkbook;
         
-        ffReport = ReportFactoryFactory.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumWidth,cRowType);
+        ffReport = ReportFactoryProvider.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumWidth,cRowType);
         efSheet = ffReport.sheet();
     }
 	

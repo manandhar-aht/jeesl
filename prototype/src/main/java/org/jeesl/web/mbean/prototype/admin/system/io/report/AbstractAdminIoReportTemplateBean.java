@@ -6,9 +6,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
+import org.jeesl.factory.builder.system.ReportFactoryProvider;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportCellFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportTemplateFactory;
-import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -102,7 +102,7 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		this.cTemplate = cTemplate;
 		this.cCell = cCell;
 		
-		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ff = ReportFactoryFactory.factory(cLang,cDescription,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType);
+		ReportFactoryProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ff = ReportFactoryProvider.factory(cLang,cDescription,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType);
 		efTemplate = ff.template();
 		efCell = ff.cell();
 				

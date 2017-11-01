@@ -9,10 +9,10 @@ import org.jeesl.api.rest.system.io.db.JeeslDbDumpRest;
 import org.jeesl.api.rest.system.io.db.JeeslDbRestExport;
 import org.jeesl.api.rest.system.io.db.JeeslDbRestImport;
 import org.jeesl.controller.monitor.DataUpdateTracker;
+import org.jeesl.factory.builder.io.IoDbFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.db.EjbDbDumpFileFactory;
 import org.jeesl.factory.ejb.system.io.db.EjbIoDumpFactory;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
-import org.jeesl.factory.factory.DbFactoryFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.model.xml.jeesl.Container;
@@ -41,36 +41,27 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDbRestService.class);
 	
-	private JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb;
-	
-	private final Class<DUMP> cDump;
-	@SuppressWarnings("unused") private final Class<FILE> cFile;
-	private final Class<HOST> cHost;
-	private final Class<STATUS> cStatus;
+	private final JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb;
+	private final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb;
 	
 	private EjbIoDumpFactory<L,D,DUMP,FILE,HOST,STATUS> efDump;
 	private EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> efDumpFile;
 	private EjbStatusFactory<HOST,L,D> efHost; 
 	
-	public IoDbRestService(JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb,final Class<L> cL, final Class<D> cD,final Class<DUMP> cDump,final Class<FILE> cFile,final Class<HOST> cHost,final Class<STATUS> cStatus)
+	public IoDbRestService(JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb, IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb)
 	{
-		super(fDb,cL,cD);
+		super(fDb,fbDb.getClassL(),fbDb.getClassD());
 		this.fDb = fDb;
+		this.fbDb=fbDb;
 		
-		this.cDump=cDump;
-		this.cFile=cFile;
-		this.cHost=cHost;
-		this.cStatus=cStatus;
+		efHost = EjbStatusFactory.createFactory(fbDb.getClassHost(),fbDb.getClassL(),fbDb.getClassD());
 		
-		efHost = EjbStatusFactory.createFactory(cHost,cL,cD);
-		
-		DbFactoryFactory<L,D,DUMP,FILE,HOST,STATUS> ff = DbFactoryFactory.factory(cL,cD,cDump,cFile,cHost,cStatus);
-		efDump = ff.dump();
-		efDumpFile = ff.file();
+		efDump = fbDb.dump();
+		efDumpFile = fbDb.file();
 	}
 	
 //	@Override public Container exportSystemDbActivityState() {return xfContainer.build(fDb.allOrderedPosition(cCategory));}
-	@Override public Container exportSystemIoDbDumpStatus() {return xfContainer.build(fDb.allOrderedPosition(cStatus));}
+	@Override public Container exportSystemIoDbDumpStatus() {return xfContainer.build(fDb.allOrderedPosition(fbDb.getClassStatus()));}
 	
 	@Override public DataUpdate uploadDumps(Dir directory)
 	{
@@ -81,13 +72,13 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		
 		try
 		{
-			eStatusStored = fDb.fByCode(cStatus,JeeslDbDumpFile.Status.stored);
-			eStatusDeleted = fDb.fByCode(cStatus,JeeslDbDumpFile.Status.deleted);
+			eStatusStored = fDb.fByCode(fbDb.getClassStatus(),JeeslDbDumpFile.Status.stored);
+			eStatusDeleted = fDb.fByCode(fbDb.getClassStatus(),JeeslDbDumpFile.Status.deleted);
 		}
 		catch (UtilsNotFoundException e) {dut.fail(e, true);return dut.toDataUpdate();}
 		
 		HOST eHost;
-		try{eHost = fDb.fByCode(cHost, directory.getCode());}
+		try{eHost = fDb.fByCode(fbDb.getClassHost(), directory.getCode());}
 		catch (UtilsNotFoundException e)
 		{
 			try{eHost = fDb.persist(efHost.create(directory.getCode()));}
@@ -99,7 +90,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		for(File xFile : directory.getFile())
 		{
 			DUMP eDump;
-			try{eDump = fDb.fByName(cDump, xFile.getName());}
+			try{eDump = fDb.fByName(fbDb.getClassDump(), xFile.getName());}
 			catch (UtilsNotFoundException e)
 			{
 				try{eDump = fDb.persist(efDump.build(xFile));}
@@ -139,5 +130,5 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	@Override public DataUpdate importSystemDbActivityState(Aht states){logger.warn("NYI importSystemDbActivityState");return new DataUpdate();}
-	@Override public DataUpdate importSystemIoDbDumpStatus(Container container){return importStatus(cStatus,container,null);}
+	@Override public DataUpdate importSystemIoDbDumpStatus(Container container){return importStatus(fbDb.getClassStatus(),container,null);}
 }

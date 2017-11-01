@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
+import org.jeesl.factory.builder.io.IoDbFactoryBuilder;
 import org.jeesl.factory.json.system.io.db.JsonDbConnectionFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.sql.system.db.SqlDbConnectionsFactory;
@@ -37,23 +38,23 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDbFacadeBean.class);
 	
-	private final Class<FILE> cDumpFile;
+	private final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb;
 	
-	public JeeslIoDbFacadeBean(EntityManager em,final Class<DUMP> cDump,final Class<FILE> cDumpFile,final Class<HOST> cHost,final Class<STATUS> cStatus){this(em,false,cDump,cDumpFile,cHost,cStatus);}
-	public JeeslIoDbFacadeBean(EntityManager em, boolean handleTransaction,final Class<DUMP> cDump,final Class<FILE> cDumpFile,final Class<HOST> cHost,final Class<STATUS> cStatus)
+	public JeeslIoDbFacadeBean(EntityManager em, final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb){this(em,fbDb,false);}
+	public JeeslIoDbFacadeBean(EntityManager em, final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb, boolean handleTransaction)
 	{
 		super(em,handleTransaction);
-		this.cDumpFile=cDumpFile;
+		this.fbDb=fbDb;
 	}
 	
 	@Override public List<FILE> fDumpFiles(HOST host) 
 	{
-		return this.allForParent(cDumpFile,JeeslDbDumpFile.Attributes.host.toString(), host);
+		return this.allForParent(fbDb.getClassFile(),JeeslDbDumpFile.Attributes.host.toString(), host);
 	}
 	
 	@Override public FILE fDumpFile(DUMP dump, HOST host) throws UtilsNotFoundException
 	{
-		return this.oneForParents(cDumpFile, JeeslDbDumpFile.Attributes.dump.toString(), dump, JeeslDbDumpFile.Attributes.host.toString(), host);
+		return this.oneForParents(fbDb.getClassFile(), JeeslDbDumpFile.Attributes.dump.toString(), dump, JeeslDbDumpFile.Attributes.host.toString(), host);
 	}
 	
 	@Override public String version()

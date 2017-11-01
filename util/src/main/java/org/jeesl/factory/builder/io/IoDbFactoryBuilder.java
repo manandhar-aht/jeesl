@@ -1,6 +1,8 @@
 package org.jeesl.factory.builder.io;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
+import org.jeesl.factory.ejb.system.io.db.EjbDbDumpFileFactory;
+import org.jeesl.factory.ejb.system.io.db.EjbIoDumpFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.slf4j.Logger;
@@ -31,5 +33,15 @@ public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 		this.cFile=cFile;
 		this.cHost=cHost;
 		this.cStatus=cStatus;
+	}
+	
+	public EjbIoDumpFactory<L,D,DUMP,FILE,HOST,STATUS> dump()
+	{
+		return new EjbIoDumpFactory<L,D,DUMP,FILE,HOST,STATUS>(cDump);
+	}
+	
+	public EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> file()
+	{
+		return new EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS>(cFile);
 	}
 }

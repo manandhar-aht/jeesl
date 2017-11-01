@@ -1,8 +1,9 @@
-package org.jeesl.factory.factory;
+package org.jeesl.factory.builder.system;
 
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportCellFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
@@ -34,7 +35,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class ReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription,
+public class ReportFactoryProvider<L extends UtilsLang,D extends UtilsDescription,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 										REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 										IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -52,30 +53,28 @@ public class ReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription
 										TLS extends UtilsStatus<TLS,L,D>,
 										FILLING extends UtilsStatus<FILLING,L,D>,
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
+	extends AbstractFactoryBuilder<L,D>
 {
-	final static Logger logger = LoggerFactory.getLogger(ReportFactoryFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(ReportFactoryProvider.class);
 	
-	final Class<L> cL;
-	final Class<D> cD;
-	final Class<CATEGORY> cCategory;
-	final Class<REPORT> cReport;
-	final Class<IMPLEMENTATION> cImplementation;
-	final Class<WORKBOOK> cWorkbook;
-	final Class<SHEET> cSheet;
-	final Class<GROUP> cGroup;
-	final Class<COLUMN> cColumn;
-	final Class<ROW> cRow;
-	final Class<TEMPLATE> cTemplate;
-	final Class<CELL> cCell;
-	final Class<STYLE> cStyle;
-	final Class<CDT> cDataType;
-	final Class<CW> cColumnWidth;
-	final Class<RT> cRt;
+	private final Class<CATEGORY> cCategory;
+	private final Class<REPORT> cReport;
+	private final Class<IMPLEMENTATION> cImplementation;
+	private final Class<WORKBOOK> cWorkbook;
+	private final Class<SHEET> cSheet;
+	private final Class<GROUP> cGroup;
+	private final Class<COLUMN> cColumn;
+	private final Class<ROW> cRow;
+	private final Class<TEMPLATE> cTemplate;
+	private final Class<CELL> cCell;
+	private final Class<STYLE> cStyle;
+	private final Class<CDT> cDataType;
+	private final Class<CW> cColumnWidth;
+	private final Class<RT> cRt;
     
-	private ReportFactoryFactory(final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumnWidth, final Class<RT> cRt)
+	private ReportFactoryProvider(final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumnWidth, final Class<RT> cRt)
 	{       
-		this.cL = cL;
-        this.cD = cD;
+		super(cL,cD);
         this.cCategory = cCategory;
         this.cReport = cReport;
         this.cImplementation=cImplementation;
@@ -109,9 +108,9 @@ public class ReportFactoryFactory<L extends UtilsLang,D extends UtilsDescription
 					TLS extends UtilsStatus<TLS,L,D>,
 					FILLING extends UtilsStatus<FILLING,L,D>,
 					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-	ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> factory(final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory,final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumnWidth, final Class<RT> cRt)
+	ReportFactoryProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> factory(final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory,final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumnWidth, final Class<RT> cRt)
 	{
-		return new ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRt);
+		return new ReportFactoryProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRt);
 	}
 	
 	public EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> report()

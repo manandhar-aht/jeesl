@@ -10,6 +10,7 @@ import org.jeesl.api.rest.system.io.report.JeeslIoReportRestExport;
 import org.jeesl.api.rest.system.io.report.JeeslIoReportRestImport;
 import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
 import org.jeesl.controller.monitor.DataUpdateTracker;
+import org.jeesl.factory.builder.system.ReportFactoryProvider;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportCellFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
@@ -19,7 +20,6 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportStyleFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportTemplateFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
-import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportsFactory;
 import org.jeesl.factory.xml.system.io.report.XmlStyleFactory;
@@ -158,7 +158,7 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		xfTemplate = new XmlTemplateFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>(ReportQuery.exTemplate());
 		xfStyle = new XmlStyleFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>(ReportQuery.exStyle());
 		
-		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ffReport = ReportFactoryFactory.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumWidth,cRt);
+		ReportFactoryProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ffReport = ReportFactoryProvider.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumWidth,cRt);
 		efReport = ffReport.report();
 		efWorkbook = ffReport.workbook();
 		efSheet = ffReport.sheet();

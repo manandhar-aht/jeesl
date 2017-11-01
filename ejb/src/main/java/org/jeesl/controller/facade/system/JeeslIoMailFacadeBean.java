@@ -13,8 +13,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.io.JeeslIoMailFacade;
+import org.jeesl.factory.builder.io.MailFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.mail.EjbIoMailFactory;
-import org.jeesl.factory.factory.MailFactoryFactory;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -37,38 +37,32 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoMailFacadeBean.class);
 		
-	@SuppressWarnings("unused")
-	private final Class<CATEGORY> cCategory;
+	private final MailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail;
 	
-	private final Class<MAIL> cMail;
-	private final Class<STATUS> cStatus;
-	private final Class<RETENTION> cRetention;
+
 	
 	private EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION> efMail;
 	
-	public JeeslIoMailFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<MAIL> cMail, final Class<STATUS> cStatus, final Class<RETENTION> cRetention)
+	public JeeslIoMailFacadeBean(EntityManager em, MailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail)
 	{
 		super(em);
-		this.cCategory=cCategory;
-		this.cMail=cMail;
-		this.cStatus=cStatus;
-		this.cRetention=cRetention;
-		MailFactoryFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION> ff = MailFactoryFactory.factory(cMail);
-		efMail = ff.mail();
+		this.fbMail = fbMail;
+		
+		efMail = fbMail.mail();
 	}
 	
 	@Override public Integer cQueue()
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<Long> cQ = cB.createQuery(Long.class);
-		Root<MAIL> mail = cQ.from(cMail);
+		Root<MAIL> mail = cQ.from(fbMail.getClassMail());
 		
 		Path<STATUS> pStatus = mail.get(JeeslIoMail.Attributes.status.toString());
 
 		try
 		{
-			STATUS statusSpooling = fByCode(cStatus, JeeslIoMail.Status.spooling);
-			STATUS statusQueue = fByCode(cStatus, JeeslIoMail.Status.queue);
+			STATUS statusSpooling = fByCode(fbMail.getClassStatus(), JeeslIoMail.Status.spooling);
+			STATUS statusQueue = fByCode(fbMail.getClassStatus(), JeeslIoMail.Status.queue);
 			cQ.where(cB.or(cB.equal(pStatus,statusSpooling),cB.equal(pStatus,statusQueue)));
 			cQ.select(cB.count(mail));
 			TypedQuery<Long> tQ = em.createQuery(cQ);
@@ -87,8 +81,8 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 		if(categories==null || categories.isEmpty()){return new ArrayList<MAIL>();}
 		if(status==null || status.isEmpty()){return new ArrayList<MAIL>();}
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<MAIL> cQ = cB.createQuery(cMail);
-		Root<MAIL> mail = cQ.from(cMail);
+		CriteriaQuery<MAIL> cQ = cB.createQuery(fbMail.getClassMail());
+		Root<MAIL> mail = cQ.from(fbMail.getClassMail());
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		
 		Path<Date> pRecordCreation = mail.get(JeeslIoMail.Attributes.recordCreation.toString());
@@ -108,11 +102,11 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 	
 	@Override public void queueMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
-		STATUS status = this.fByCode(cStatus, JeeslIoMail.Status.queue);
-		RETENTION retention = this.fByCode(cRetention, JeeslIoMail.Retention.fully);
+		STATUS status = this.fByCode(fbMail.getClassStatus(), JeeslIoMail.Status.queue);
+		RETENTION retention = this.fByCode(fbMail.getClassRetention(), JeeslIoMail.Retention.fully);
 		MAIL ejb = efMail.build(category,status,mail,retention);
 		ejb = this.persist(ejb);
-		logger.info(cMail.getSimpleName()+" spooled with id="+ejb.getId());
+		logger.info(fbMail.getClassMail().getSimpleName()+" spooled with id="+ejb.getId());
 	}
 
 	@Override public List<MAIL> fSpoolMails(int maxResult)
@@ -120,8 +114,8 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 		List<MAIL> mails = new ArrayList<MAIL>();
 		try
 		{
-			STATUS statusSpooling = fByCode(cStatus, JeeslIoMail.Status.spooling);
-			STATUS statusQueue = fByCode(cStatus, JeeslIoMail.Status.queue);
+			STATUS statusSpooling = fByCode(fbMail.getClassStatus(), JeeslIoMail.Status.spooling);
+			STATUS statusQueue = fByCode(fbMail.getClassStatus(), JeeslIoMail.Status.queue);
 			
 			mails.addAll(fMails(statusSpooling,maxResult));
 			
@@ -138,8 +132,8 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 	public List<MAIL> fMails(STATUS status, int maxResult)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<MAIL> cQ = cB.createQuery(cMail);
-		Root<MAIL> mail = cQ.from(cMail);
+		CriteriaQuery<MAIL> cQ = cB.createQuery(fbMail.getClassMail());
+		Root<MAIL> mail = cQ.from(fbMail.getClassMail());
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		
 		Path<STATUS> pStatus = mail.get(JeeslIoMail.Attributes.status.toString());

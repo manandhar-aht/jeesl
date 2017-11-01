@@ -4,6 +4,7 @@ import org.jeesl.api.facade.system.JeeslSystemPropertyFacade;
 import org.jeesl.api.rest.system.property.JeeslSystemPropertyRestExport;
 import org.jeesl.api.rest.system.property.JeeslSystemPropertyRestImport;
 import org.jeesl.controller.monitor.DataUpdateTracker;
+import org.jeesl.factory.builder.system.PropertyFactoryBuilder;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.ejb.system.util.EjbPropertyFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
@@ -33,34 +34,30 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 	final static Logger logger = LoggerFactory.getLogger(SystemPropertyRestService.class);
 	
 	private JeeslSystemPropertyFacade<L,D,C,P> fProperty;
-	
-	private final Class<C> cCategory;
-	private final Class<P> cProperty;
+	private final PropertyFactoryBuilder<L,D,C,P> fbProperty;
 	
 	private EjbPropertyFactory<L,D,C,P> efProperty;
 	
-	private SystemPropertyRestService(JeeslSystemPropertyFacade<L,D,C,P> fProperty,final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<C> cCategory, final Class<P> cProperty)
+	private SystemPropertyRestService(JeeslSystemPropertyFacade<L,D,C,P> fProperty,final String[] localeCodes, final PropertyFactoryBuilder<L,D,C,P> fbProperty)
 	{
-		super(fProperty,localeCodes,cL,cD);
+		super(fProperty,localeCodes,fbProperty.getClassL(),fbProperty.getClassD());
 		this.fProperty=fProperty;
+		this.fbProperty=fbProperty;
 		
-		this.cCategory=cCategory;
-		this.cProperty=cProperty;
-		
-		efProperty = EjbPropertyFactory.factory(cProperty);
+		efProperty = EjbPropertyFactory.factory(fbProperty.getClassProperty());
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					C extends UtilsStatus<C,L,D>,
 					P extends JeeslProperty<L,D,C,P>>
 		SystemPropertyRestService<L,D,C,P>
-			factory(JeeslSystemPropertyFacade<L,D,C,P> fNews, final String[] localeCodes, final Class<L> cL, final Class<D> cD, Class<C> cCategory, final Class<P> cProperty)
+			factory(JeeslSystemPropertyFacade<L,D,C,P> fNews, final String[] localeCodes, final PropertyFactoryBuilder<L,D,C,P> fbProperty)
 	{
-		return new SystemPropertyRestService<L,D,C,P>(fNews,localeCodes,cL,cD,cCategory,cProperty);
+		return new SystemPropertyRestService<L,D,C,P>(fNews,localeCodes,fbProperty);
 	}
 	
-	@Override public Container exportSystemPropertyCategories() {return super.exportContainer(cCategory);}
-	@Override public DataUpdate importSystemPropertyCategories(Container categories){return importStatus2(cCategory,null,categories);}
+	@Override public Container exportSystemPropertyCategories() {return super.exportContainer(fbProperty.getClassCategory());}
+	@Override public DataUpdate importSystemPropertyCategories(Container categories){return importStatus2(fbProperty.getClassCategory(),null,categories);}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus2(Class<S> clStatus, Class<P> clParent, Container container)
@@ -78,7 +75,7 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
 	public DataUpdate importSystemProperties(Utils utils)
 	{
 		DataUpdateTracker dut = new DataUpdateTracker(true);
-		dut.setType(XmlTypeFactory.build(cProperty.getName(),JeeslProperty.class.getSimpleName()+"-DB Import"));
+		dut.setType(XmlTypeFactory.build(fbProperty.getClassD().getName(),JeeslProperty.class.getSimpleName()+"-DB Import"));
 		
 		for(Property property : utils.getProperty())
 		{			

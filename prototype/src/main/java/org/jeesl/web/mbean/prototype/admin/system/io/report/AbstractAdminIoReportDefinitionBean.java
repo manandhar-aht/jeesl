@@ -9,13 +9,13 @@ import java.util.UUID;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
+import org.jeesl.factory.builder.system.ReportFactoryProvider;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
-import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
@@ -173,7 +173,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		this.cRevisionCategory=cRevisionCategory;
 
 
-		ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ef = ReportFactoryFactory.factory(cLang,cDescription,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType);
+		ReportFactoryProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ef = ReportFactoryProvider.factory(cLang,cDescription,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType);
 		efReport = ef.report();
 		efWorkbook = ef.workbook();
 		efSheet = ef.sheet();

@@ -9,10 +9,10 @@ import java.util.Map;
 
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.controller.processor.JobCodeProcessor;
+import org.jeesl.factory.builder.system.ReportFactoryProvider;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
-import org.jeesl.factory.factory.ReportFactoryFactory;
 import org.jeesl.factory.xls.system.io.report.XlsFactory;
 import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
 import org.jeesl.interfaces.factory.txt.JeeslReportAggregationLevelFactory;
@@ -101,7 +101,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected TRANSFORMATION reportSettingTransformation; public TRANSFORMATION getReportSettingTransformation() {return reportSettingTransformation;}
 
 	protected EjbLangFactory<L> efLang;
-	protected ReportFactoryFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ffReport;
+	protected ReportFactoryProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ffReport;
 	protected EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efColumn;
 	protected XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> xlsFactory;
 	
@@ -146,7 +146,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	{
 		if(fReport!=null)
 		{
-			ffReport = ReportFactoryFactory.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType);
+			ffReport = ReportFactoryProvider.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType);
 			efLang = EjbLangFactory.factory(cL);
 			efColumn = ffReport.column();
 			

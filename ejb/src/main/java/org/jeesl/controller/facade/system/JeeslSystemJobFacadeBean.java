@@ -50,22 +50,16 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 									>
 					extends UtilsFacadeBean
 					implements JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>
-{	
-	private final Class<TEMPLATE> cTemplate;
-	private final Class<JOB> cJob;
-	private final Class<STATUS> cStatus;
-	private final Class<CACHE> cCache;
+{
+	private final JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob;
 	
 	private EjbJobCacheFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efCache;
 	private EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efJob;
 	
-	public JeeslSystemJobFacadeBean(EntityManager em,JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob, final Class<TEMPLATE> cTemplate, final Class<JOB> cJob, final Class<STATUS> cStatus, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
+	public JeeslSystemJobFacadeBean(EntityManager em, final JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob)
 	{
 		super(em);
-		this.cTemplate=cTemplate;
-		this.cJob=cJob;
-		this.cStatus=cStatus;
-		this.cCache=cCache;
+		this.fbJob=fbJob;
 		
 		efCache = fbJob.cache();
 		efJob = fbJob.job();
@@ -75,8 +69,8 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(cTemplate);
-		Root<TEMPLATE> template = cQ.from(cTemplate);
+		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(fbJob.getClassTemplate());
+		Root<TEMPLATE> template = cQ.from(fbJob.getClassTemplate());
 		
 		Join<TEMPLATE,TYPE> jType = template.join(JeeslJobTemplate.Attributes.type.toString());
 		Expression<String> eType = jType.get(UtilsStatus.EjbAttributes.code.toString());
@@ -90,8 +84,8 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 
 		TypedQuery<TEMPLATE> tQ = em.createQuery(cQ);
 		try	{return tQ.getSingleResult();}
-		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cTemplate.getSimpleName()+" found for type="+type.toString()+" and code="+code);}
-		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("No unique results in "+cTemplate.getSimpleName()+" for type="+type.toString()+" and code="+code);}
+		catch (NoResultException ex){throw new UtilsNotFoundException("No "+fbJob.getClassTemplate().getSimpleName()+" found for type="+type.toString()+" and code="+code);}
+		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("No unique results in "+fbJob.getClassTemplate().getSimpleName()+" for type="+type.toString()+" and code="+code);}
 	}
 	
 	@Override public List<JOB> fJobs(List<CATEGORY> categories, List<TYPE> types, List<STATUS> status, Date from, Date to)
@@ -102,8 +96,8 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<JOB> cQ = cB.createQuery(cJob);
-		Root<JOB> job = cQ.from(cJob);
+		CriteriaQuery<JOB> cQ = cB.createQuery(fbJob.getClassJob());
+		Root<JOB> job = cQ.from(fbJob.getClassJob());
 		
 		Join<JOB,TEMPLATE> jTemplate = job.join(JeeslJob.Attributes.template.toString());
 		Path<CATEGORY> pCategory = jTemplate.get(JeeslJobTemplate.Attributes.category.toString());
@@ -132,15 +126,15 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		List<STATUS> statuses = new ArrayList<STATUS>();
 		try
 		{
-			statuses.add(this.fByCode(cStatus,JeeslJob.Status.queue));
-			statuses.add(this.fByCode(cStatus,JeeslJob.Status.working));
+			statuses.add(this.fByCode(fbJob.getClassStatus(),JeeslJob.Status.queue));
+			statuses.add(this.fByCode(fbJob.getClassStatus(),JeeslJob.Status.working));
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<JOB> cQ = cB.createQuery(cJob);
-		Root<JOB> job = cQ.from(cJob);
+		CriteriaQuery<JOB> cQ = cB.createQuery(fbJob.getClassJob());
+		Root<JOB> job = cQ.from(fbJob.getClassJob());
 		
 		Join<CACHE,TEMPLATE> jTemplate = job.join(JeeslJob.Attributes.template.toString());
 		Path<STATUS> pStatus = job.get(JeeslJob.Attributes.status.toString());
@@ -163,8 +157,8 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<CACHE> cQ = cB.createQuery(cCache);
-		Root<CACHE> cache = cQ.from(cCache);
+		CriteriaQuery<CACHE> cQ = cB.createQuery(fbJob.getClassCache());
+		Root<CACHE> cache = cQ.from(fbJob.getClassCache());
 		
 		Join<CACHE,TEMPLATE> jTemplate = cache.join(JeeslJobCache.Attributes.template.toString());
 		Expression<String> pCode = cache.get(JeeslJobCache.Attributes.code.toString());
@@ -199,7 +193,7 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 	@Override
 	public JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
-		STATUS status = this.fByCode(cStatus,JeeslJob.Status.queue);
+		STATUS status = this.fByCode(fbJob.getClassStatus(),JeeslJob.Status.queue);
 		JOB job = efJob.build(user,template,status,code,name);
 		return this.save(job);
 	}

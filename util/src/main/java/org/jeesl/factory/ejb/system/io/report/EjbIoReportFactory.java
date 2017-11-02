@@ -28,11 +28,11 @@ import net.sf.ahtutils.xml.report.Report;
 
 public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+								REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
 								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-								WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-								SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-								GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+								WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
+								SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
+								GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
 								COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 								ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 								TEMPLATE extends JeeslReportTemplate<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
@@ -52,16 +52,14 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	private final Class<CATEGORY> cCategory;
 	private final Class<REPORT> cReport;
-	private final Class<IMPLEMENTATION> cImplementation;
 	
 	private JeeslDbLangUpdater<REPORT,L> dbuReportLang;
 	private JeeslDbDescriptionUpdater<REPORT,D> dbuReportDescription;
     
-	public EjbIoReportFactory(final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation)
+	public EjbIoReportFactory(final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
 	{
 		this.cCategory = cCategory;
         this.cReport = cReport;
-        this.cImplementation=cImplementation;
         
 		dbuReportLang = JeeslDbLangUpdater.factory(cReport, cL);
 		dbuReportDescription = JeeslDbDescriptionUpdater.factory(cReport, cD);
@@ -98,9 +96,9 @@ public class EjbIoReportFactory<L extends UtilsLang,D extends UtilsDescription,
 		return ejb;
 	}
 	
-	public REPORT update (JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport, REPORT eReport, Report xReport) throws UtilsNotFoundException
+	public REPORT update (UtilsFacade fUtils, REPORT eReport, Report xReport) throws UtilsNotFoundException
 	{
-		CATEGORY eCategory = fReport.fByCode(cCategory, xReport.getCategory().getCode());
+		CATEGORY eCategory = fUtils.fByCode(cCategory, xReport.getCategory().getCode());
 
 		eReport.setCategory(eCategory);
 		eReport.setPosition(xReport.getPosition());

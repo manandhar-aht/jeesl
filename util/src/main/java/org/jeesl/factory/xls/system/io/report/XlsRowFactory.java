@@ -9,8 +9,10 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.jeesl.factory.builder.system.ReportFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
+import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -33,11 +35,11 @@ import net.sf.ahtutils.xml.finance.Figures;
 
 public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-							REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+							REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
 							IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-							WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-							SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-							GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+							WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
+							SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
+							GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
 							COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 							ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 							TEMPLATE extends JeeslReportTemplate<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,STYLE extends JeeslReportStyle<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,CDT extends UtilsStatus<CDT,L,D>,CW extends UtilsStatus<CW,L,D>,
@@ -49,13 +51,20 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(XlsRowFactory.class);
 		
-	private String localeCode;
+	private final String localeCode;
+	private final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,?,ENTITY,ATTRIBUTE,TL,TLS,?,?> fbReport;
+	
+	private final EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,?,?> efColumnGroup;
+	private final EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,?,?> efColumn;
 	
 	private XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell;
 	
-	public XlsRowFactory(String localeCode, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell)
+	public XlsRowFactory(String localeCode, final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,?,ENTITY,ATTRIBUTE,TL,TLS,?,?> fbReport, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell)
 	{
 		this.localeCode = localeCode;
+		this.fbReport=fbReport;
+		efColumnGroup = fbReport.group();
+		efColumn = fbReport.column();
 		this.xfCell=xfCell;
 	}
 	
@@ -82,7 +91,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	@Deprecated public void header(Sheet sheet, MutableInt rowNr, CellStyle dateHeaderStyle, SHEET ioSheet)
     {
-		Map<GROUP,Integer> mapSize = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
+		Map<GROUP,Integer> mapSize = efColumnGroup.toMapVisibleGroupSize(ioSheet);
 
 		Row groupingRow = sheet.createRow(rowNr.intValue());
 		int columnNr = 0;
@@ -102,7 +111,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		Row headerRow = sheet.createRow(rowNr.intValue());
 		columnNr = 0;
-		for(COLUMN c : EjbIoReportColumnFactory.toListVisibleColumns(ioSheet))
+		for(COLUMN c : efColumn.toListVisibleColumns(ioSheet))
 		{
 			Cell cell = headerRow.createCell(columnNr);
             cell.setCellStyle(dateHeaderStyle);
@@ -115,7 +124,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 	public void header(Sheet sheet, MutableInt rowNr, SHEET ioSheet)
     {
 		MutableInt columnNr = new MutableInt(0);
-		Map<GROUP,Integer> mapSize = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
+		Map<GROUP,Integer> mapSize = efColumnGroup.toMapVisibleGroupSize(ioSheet);
 
 		Row groupingRow = sheet.createRow(rowNr.intValue());
 		for(GROUP g : EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet))
@@ -131,7 +140,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		Row headerRow = sheet.createRow(rowNr.intValue());
 		columnNr.setValue(0);
-		for(COLUMN c : EjbIoReportColumnFactory.toListVisibleColumns(ioSheet))
+		for(COLUMN c : efColumn.toListVisibleColumns(ioSheet))
 		{
 			xfCell.header(c,headerRow,columnNr);
 		}
@@ -143,7 +152,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		logger.info("Tranformation:"+transformation+" with:"+transformationHeader.getFigures().size());
 		
 		MutableInt columnNr = new MutableInt(0);
-		Map<GROUP,Integer> mapSize = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
+		Map<GROUP,Integer> mapSize = efColumnGroup.toMapVisibleGroupSize(ioSheet);
 
 		Row groupingRow = sheet.createRow(rowNr.intValue());
 		boolean treeLabels = true;
@@ -172,7 +181,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 			
 		Row headerRow = sheet.createRow(rowNr.intValue());
 		columnNr.setValue(0);
-		for(COLUMN c : EjbIoReportColumnFactory.toListVisibleColumns(ioSheet))
+		for(COLUMN c : efColumn.toListVisibleColumns(ioSheet))
 		{
 			if(c.getQueryCell().equals("g1"))
 			{

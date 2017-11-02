@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.controller.processor.JobCodeProcessor;
-import org.jeesl.factory.builder.system.ReportFactoryProvider;
+import org.jeesl.factory.builder.system.ReportFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
@@ -48,11 +48,11 @@ import net.sf.exlp.util.io.StringUtil;
 
 public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDescription,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-											REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+											REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
 											IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-											WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-											SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-											GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+											WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
+											SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
+											GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
 											COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 											ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 											TEMPLATE extends JeeslReportTemplate<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
@@ -61,6 +61,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 											CDT extends UtilsStatus<CDT,L,D>,
 											CW extends UtilsStatus<CW,L,D>,
 											RT extends UtilsStatus<RT,L,D>,
+											RCAT extends UtilsStatus<RCAT,L,D>,
 											ENTITY extends EjbWithId,
 											ATTRIBUTE extends EjbWithId,
 											TL extends JeeslTrafficLight<L,D,TLS>,
@@ -72,9 +73,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	
 	protected boolean debugOnInfo;
 	protected boolean developmentMode; public void activateDevelopmenetMode() {developmentMode=true;}
-	
-	private final Class<L> cL;
-	private final Class<D> cD;
+
 	private final Class<REPORT> cReport;
 	private final Class<CATEGORY> cCategory;
 
@@ -100,10 +99,12 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected FILLING reportFilling;
 	protected TRANSFORMATION reportSettingTransformation; public TRANSFORMATION getReportSettingTransformation() {return reportSettingTransformation;}
 
+	protected final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport;
 	protected EjbLangFactory<L> efLang;
-	protected ReportFactoryProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ffReport;
-	protected EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efColumn;
-	protected XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> xlsFactory;
+	protected final EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efColumn;
+	private final EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efGroup;
+	
+	protected XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> xlsFactory;
 	
 	protected JeeslComparatorProvider<EjbWithId> cProvider;
 	protected final JobCodeProcessor jobCodeProcessor;
@@ -118,15 +119,17 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	private Comparator<ROW> comparatorRow;
 	private Comparator<CELL> comparatorCell;
 
-	public AbstractJeeslReport(String localeCode, final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
+	public AbstractJeeslReport(String localeCode, final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport,	final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
 	{
-		this.cL=cL;
-		this.cD=cD;
+		this.fbReport=fbReport;
 		this.cCategory=cCategory;
 		this.cReport=cReport;
 		this.localeCode=localeCode;
 		debugOnInfo = false;
 		developmentMode = false;
+		
+		efGroup = fbReport.group();
+		efColumn = fbReport.column();
 		
 		comparatorSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>().factory(IoReportSheetComparator.Type.position);
 		comparatorGroup = new IoReportGroupComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>().factory(IoReportGroupComparator.Type.position);
@@ -146,9 +149,8 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	{
 		if(fReport!=null)
 		{
-			ffReport = ReportFactoryProvider.factory(cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType);
-			efLang = EjbLangFactory.factory(cL);
-			efColumn = ffReport.column();
+			efLang = EjbLangFactory.factory(fbReport.getClassL());
+			
 			
 			if(reportSettingTransformation==null)
 			{
@@ -172,7 +174,8 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 						if(mapGroupVisibilityToggle.isEmpty()){for(GROUP g : ioSheet.getGroups()){mapGroupVisibilityToggle.put(g,true);}}
 						
 						calculateSheetSettings();
-						xlsFactory = new XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>(localeCode,cL,cD,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType,ioWorkbook);
+						xlsFactory = new XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>(localeCode,fbReport,
+								cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType,ioWorkbook);
 						
 						//Sorting of the report structure (and lazyloading of Template)
 						for(SHEET s : ioWorkbook.getSheets())
@@ -258,9 +261,9 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	{
 		groupsAll = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
 		groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet,mapGroupVisibilityToggle);
-		columns = EjbIoReportColumnFactory.toListVisibleColumns(ioSheet,mapGroupVisibilityToggle);
+		columns = efColumn.toListVisibleColumns(ioSheet,mapGroupVisibilityToggle);
 		
-		mapGroupChilds = EjbIoReportColumnGroupFactory.toMapVisibleGroupSize(ioSheet);
+		mapGroupChilds = efGroup.toMapVisibleGroupSize(ioSheet);
 		mapGroupColumns = EjbIoReportColumnGroupFactory.toMapVisibleGroupColumns(ioSheet);
 
 		Collections.sort(groupsAll, comparatorGroup);

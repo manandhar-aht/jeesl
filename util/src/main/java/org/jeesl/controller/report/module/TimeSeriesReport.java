@@ -6,6 +6,7 @@ import java.util.List;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.report.AbstractJeeslReport;
+import org.jeesl.factory.builder.system.ReportFactoryBuilder;
 import org.jeesl.factory.xml.module.ts.XmlDataFactory;
 import org.jeesl.factory.xml.module.ts.XmlTimeSeriesFactory;
 import org.jeesl.factory.xml.system.io.report.XmlReportFactory;
@@ -40,11 +41,11 @@ import net.sf.ahtutils.xml.report.Report;
 
 public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 						CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-						REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+						REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
 						IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-						WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-						SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-						GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+						WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
+						SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
+						GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
 						COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 						ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 						TEMPLATE extends JeeslReportTemplate<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
@@ -53,6 +54,7 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 						CDT extends UtilsStatus<CDT,L,D>,
 						CW extends UtilsStatus<CW,L,D>,
 						RT extends UtilsStatus<RT,L,D>,
+						RCAT extends UtilsStatus<RCAT,L,D>,
 						ENTITY extends EjbWithId,
 						ATTRIBUTE extends EjbWithId,
 						TL extends JeeslTrafficLight<L,D,TLS>,
@@ -75,7 +77,7 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 						WS extends UtilsStatus<WS,L,D>,
 						QAF extends UtilsStatus<QAF,L,D>
 						>
-					extends AbstractJeeslReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>
+					extends AbstractJeeslReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>
 //implements JeeslReportHeader//,JeeslFlatReport,JeeslXlsReport
 {
 	final static Logger logger = LoggerFactory.getLogger(TimeSeriesReport.class);
@@ -86,16 +88,19 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 	public TimeSeriesReport(String localeCode,
 			final JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport,
 			final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs,
+			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport,
+
 			final Class<L> cL,final Class<D> cD,
 			final Class<CATEGORY> cCategory,final Class<REPORT> cReport,
-			final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet,
+			final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook,
+			final Class<SHEET> cSheet,
 			final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow,
 			final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle,
 			final Class<CDT> cDataType,
 			final Class<CW> cColumnWidth, Class<RT> cRowType, final Class<TRANSFORMATION> cTransformation,
 			final Class<TS> cTs)
 	{
-		super(localeCode,cL,cD,cCategory,cReport);
+		super(localeCode,fbReport,cL,cD,cCategory,cReport);
 		super.initIo(fReport,this.getClass(),cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType,cTransformation);
 		this.fTs=fTs;
 		this.cTs=cTs;

@@ -2,6 +2,7 @@ package org.jeesl.controller.report.system;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.jeesl.controller.report.AbstractJeeslReport;
+import org.jeesl.factory.builder.system.ReportFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -23,11 +24,11 @@ import net.sf.ahtutils.xml.report.Report;
 
 public class DbConnectionsReport <L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+									REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
 									IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-									WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-									SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-									GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+									WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
+									SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
+									GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
 									COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 									ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 									TEMPLATE extends JeeslReportTemplate<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
@@ -36,22 +37,25 @@ public class DbConnectionsReport <L extends UtilsLang,D extends UtilsDescription
 									CDT extends UtilsStatus<CDT,L,D>,
 									CW extends UtilsStatus<CW,L,D>,
 									RT extends UtilsStatus<RT,L,D>,
+									RCAT extends UtilsStatus<RCAT,L,D>,
 									ENTITY extends EjbWithId,
 									ATTRIBUTE extends EjbWithId,
 									TL extends JeeslTrafficLight<L,D,TLS>,
 									TLS extends UtilsStatus<TLS,L,D>,
 									FILLING extends UtilsStatus<FILLING,L,D>,
 									TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-								extends AbstractJeeslReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>
+								extends AbstractJeeslReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>
 //implements JeeslReportHeader//,JeeslFlatReport,JeeslXlsReport
 {
 	final static Logger logger = LoggerFactory.getLogger(DbConnectionsReport.class);
 
 	private JeeslIoDbFacade fDb;
 	
-	public DbConnectionsReport(String localeCode, JeeslIoDbFacade fDb, final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
+	public DbConnectionsReport(String localeCode, JeeslIoDbFacade fDb, 
+			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport,
+			final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
 	{
-		super(localeCode,cL,cD,cCategory,cReport);
+		super(localeCode,fbReport,cL,cD,cCategory,cReport);
 		this.fDb=fDb;
 		
 		headers.add("Transaction");

@@ -9,7 +9,8 @@ import java.util.UUID;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
-import org.jeesl.factory.builder.system.ReportFactoryProvider;
+import org.jeesl.factory.builder.AbstractFactoryBuilder;
+import org.jeesl.factory.builder.system.ReportFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
@@ -55,63 +56,39 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends UtilsDescription,
-										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-										REPORT extends JeeslIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-										IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-										WORKBOOK extends JeeslReportWorkbook<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-										SHEET extends JeeslReportSheet<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-										GROUP extends JeeslReportColumnGroup<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-										COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-										ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-										TEMPLATE extends JeeslReportTemplate<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-										CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-										STYLE extends JeeslReportStyle<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-										CDT extends UtilsStatus<CDT,L,D>,
-										CW extends UtilsStatus<CW,L,D>,
-										RT extends UtilsStatus<RT,L,D>,
-										ENTITY extends EjbWithId,
-										ATTRIBUTE extends EjbWithId,
-										TL extends JeeslTrafficLight<L,D,TLS>,
-										TLS extends UtilsStatus<TLS,L,D>,
-										FILLING extends UtilsStatus<FILLING,L,D>,
-										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
-										RC extends UtilsStatus<RC,L,D>,
-										RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
-										RVM extends JeeslRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
-										RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
-										RST extends UtilsStatus<RST,L,D>,
-										RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
-										REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
-										RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>
-										>
-					extends AbstractAdminBean<L,D>
-					implements Serializable,SbToggleBean
+						CATEGORY extends UtilsStatus<CATEGORY,L,D>,
+						REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
+						IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
+						WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
+						SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
+						GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
+						COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+						ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+						TEMPLATE extends JeeslReportTemplate<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+						CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+						STYLE extends JeeslReportStyle<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+						CDT extends UtilsStatus<CDT,L,D>,
+						CW extends UtilsStatus<CW,L,D>,
+						RT extends UtilsStatus<RT,L,D>,
+						ENTITY extends EjbWithId,
+						ATTRIBUTE extends EjbWithId,
+						TL extends JeeslTrafficLight<L,D,TLS>,
+						TLS extends UtilsStatus<TLS,L,D>,
+						FILLING extends UtilsStatus<FILLING,L,D>,
+						TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
+						RCAT extends UtilsStatus<RCAT,L,D>,	
+						RE extends JeeslRevisionEntity<L,D,RCAT,?,?,?,?,RE,REM,RA,CDT>,
+						REM extends JeeslRevisionEntityMapping<L,D,RCAT,?,?,?,?,RE,REM,RA,CDT>,
+						RA extends JeeslRevisionAttribute<L,D,RCAT,?,?,?,?,RE,REM,RA,CDT>
+						>
+	extends AbstractIoReportBean<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION,RCAT,RE,REM,RA>
+	implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoReportDefinitionBean.class);
-	
-	protected JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport;
-	
-	private Class<CATEGORY> cCategory;
-	private Class<REPORT> cReport;
-	private Class<IMPLEMENTATION> cImplementation;
-//	private Class<WORKBOOK> cWorkbook;
-	private Class<SHEET> cSheet;
-	private Class<GROUP> cGroup;
-	private Class<COLUMN> cColumn;
-	private Class<ROW> cRow;
-	private Class<TEMPLATE> cTemplate;
-	private Class<STYLE> cStyle;
-	
-	private final Class<TLS> cTls;
-	
-	private Class<CDT> cDataType;
-	private Class<CW> cColumnWidth;
-	private Class<RT> cRowType;
-	private Class<RC> cRevisionCategory;
-	
+
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
-	private List<RC> revisionCategories; public List<RC> getRevisionCategories() {return revisionCategories;}
+	private List<RCAT> revisionCategories; public List<RCAT> getRevisionCategories() {return revisionCategories;}
 	private List<CW> columnWidths; public List<CW> getColumnWidths() {return columnWidths;}
 	private List<RT> rowTypes; public List<RT> getRowTypes() {return rowTypes;}
 	private List<CDT> attributeTypes; public List<CDT> getAttributeTypes() {return attributeTypes;}
@@ -125,7 +102,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private List<STYLE> styles; public List<STYLE> getStyles() {return styles;}
 	private List<TLS> trafficLightScopes; public List<TLS> getTrafficLightScopes() {return trafficLightScopes;}
 	
-	private RC revisionCategory; public RC getRevisionCategory() {return revisionCategory;} public void setRevisionCategory(RC revisionCategory) {this.revisionCategory = revisionCategory;}
+	private RCAT revisionCategory; public RCAT getRevisionCategory() {return revisionCategory;} public void setRevisionCategory(RCAT revisionCategory) {this.revisionCategory = revisionCategory;}
 	private REPORT report; public REPORT getReport() {return report;} public void setReport(REPORT report) {this.report = report;}
 	private SHEET sheet; public SHEET getSheet() {return sheet;} public void setSheet(SHEET sheet) {this.sheet = sheet;}
 	private ROW row; public ROW getRow() {return row;} public void setRow(ROW row) {this.row = row;}
@@ -148,42 +125,25 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efColumn;
 	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efRow;
 	
-	protected AbstractAdminIoReportDefinitionBean(final Class<TLS> cTls)
+	protected AbstractAdminIoReportDefinitionBean(final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport)
 	{
-		this.cTls = cTls;
+		super(fbReport);
 	}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<TEMPLATE> cTemplate, Class<CELL> cCell, Class<STYLE> cStyle, Class<CDT> cDataType, Class<CW> cColumnWidth, Class<RT> cRowType, Class<RC> cRevisionCategory)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
 	{
-		super.initAdmin(langs,cLang,cDescription,bMessage);
-		this.fReport=fReport;
-		
-		this.cCategory=cCategory;
-		this.cReport=cReport;
-		this.cImplementation=cImplementation;
-		this.cSheet=cSheet;
-		this.cGroup=cGroup;
-		this.cColumn=cColumn;
-		this.cRow=cRow;
-		this.cTemplate=cTemplate;
-		this.cStyle=cStyle;
-		this.cDataType=cDataType;
-		this.cColumnWidth=cColumnWidth;
-		this.cRowType=cRowType;
-		this.cRevisionCategory=cRevisionCategory;
+		super.initSuperReport(langs,bMessage,fReport);
 
-
-		ReportFactoryProvider<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> ef = ReportFactoryProvider.factory(cLang,cDescription,cCategory,cReport,cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType);
-		efReport = ef.report();
-		efWorkbook = ef.workbook();
-		efSheet = ef.sheet();
-		efGroup = ef.group();
-		efColumn = ef.column();
-		efRow = ef.row();
+		efReport = fbReport.report();
+		efWorkbook = fbReport.workbook();
+		efSheet = fbReport.sheet();
+		efGroup = fbReport.group();
+		efColumn = fbReport.column();
+		efRow = fbReport.row();
 		
 		uiHelper = new UiHelperIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>();
-		categories = fReport.allOrderedPositionVisible(cCategory);
-		revisionCategories = fReport.allOrderedPositionVisible(cRevisionCategory);
+		categories = fReport.allOrderedPositionVisible(fbReport.getClassCategory());
+		revisionCategories = fReport.allOrderedPositionVisible(fbReport.getClassRevisionCategory());
 		
 		comparatorReport = new IoReportComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>().factory(IoReportComparator.Type.position);
 		comparatorSheet = new IoReportSheetComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>().factory(IoReportSheetComparator.Type.position);
@@ -191,15 +151,15 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		comparatorColumn = new IoReportColumnComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>().factory(IoReportColumnComparator.Type.position);
 		comparatorRow  = new IoReportRowComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>().factory(IoReportRowComparator.Type.position);
 		
-		implementations = fReport.allOrderedPositionVisible(cImplementation);
-		attributeTypes = fReport.allOrderedPositionVisible(cDataType);
-		columnWidths = fReport.allOrderedPositionVisible(cColumnWidth);
-		rowTypes = fReport.allOrderedPositionVisible(cRowType);
-		templates = fReport.allOrderedPositionVisible(cTemplate);
-		styles = fReport.allOrderedPositionVisible(cStyle);
-		trafficLightScopes = fReport.allOrderedPositionVisible(cTls);
+		implementations = fReport.allOrderedPositionVisible(fbReport.getClassImplementation());
+		attributeTypes = fReport.allOrderedPositionVisible(fbReport.getClassCellDataType());
+		columnWidths = fReport.allOrderedPositionVisible(fbReport.getClassColumnWidth());
+		rowTypes = fReport.allOrderedPositionVisible(fbReport.getClassRowType());
+		templates = fReport.allOrderedPositionVisible(fbReport.getClassTemplate());
+		styles = fReport.allOrderedPositionVisible(fbReport.getClassStyle());
+		trafficLightScopes = fReport.allOrderedPositionVisible(fbReport.getClassTrafficLightScope());
 		
-		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,categories,this);
+		sbhCategory = new SbMultiHandler<CATEGORY>(fbReport.getClassCategory(),categories,this);
 //		sbhCategory.selectAll();
 		reloadReports();
 	}
@@ -225,13 +185,13 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private void reloadReports()
 	{
 		reports = fReport.fReports(sbhCategory.getSelected(), true);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cReport,reports));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbReport.getClassReport(),reports));}
 		Collections.sort(reports,comparatorReport);
 	}
 	
 	public void addReport()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cReport));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassReport()));}
 		report = efReport.build(null);
 		report.setName(efLang.createEmpty(langs));
 		report.setDescription(efDescription.createEmpty(langs));
@@ -261,7 +221,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	public void selectReport() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(report));}
-		report = fReport.find(cReport, report);
+		report = fReport.find(fbReport.getClassReport(), report);
 		report = efLang.persistMissingLangs(fReport,langs,report);
 		report = efDescription.persistMissingLangs(fReport,langs,report);
 		if(report.getWorkbook()==null)
@@ -277,7 +237,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	public void saveReport() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(report));}
-		if(report.getCategory()!=null){report.setCategory(fReport.find(cCategory, report.getCategory()));}
+		if(report.getCategory()!=null){report.setCategory(fReport.find(fbReport.getClassCategory(), report.getCategory()));}
 		report = fReport.save(report);
 		reloadReports();
 		reloadReport();
@@ -307,7 +267,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 
 	public void addSheet()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cSheet));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassSheet()));}
 		sheet = efSheet.build(report.getWorkbook());
 		sheet.setName(efLang.createEmpty(langs));
 		sheet.setDescription(efDescription.createEmpty(langs));
@@ -318,7 +278,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	public void selectSheet()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(sheet));}
-		sheet = fReport.find(cSheet, sheet);
+		sheet = fReport.find(fbReport.getClassSheet(), sheet);
 		if(sheet.getCode()==null)
 		{
 			try
@@ -349,7 +309,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(sheet));}
 		try
 		{
-			if(sheet.getImplementation()!=null){sheet.setImplementation(fReport.find(cImplementation, sheet.getImplementation()));}
+			if(sheet.getImplementation()!=null){sheet.setImplementation(fReport.find(fbReport.getClassImplementation(), sheet.getImplementation()));}
 			sheet = fReport.save(sheet);
 			reloadReport();
 			reloadSheet();
@@ -381,7 +341,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 
 	public void addGroup()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cGroup));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassGroup()));}
 		group = efGroup.build(sheet);
 		group.setName(efLang.createEmpty(langs));
 		group.setDescription(efDescription.createEmpty(langs));
@@ -392,7 +352,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	public void selectGroup()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(group));}
-		group = fReport.find(cGroup, group);
+		group = fReport.find(fbReport.getClassGroup(), group);
 		if(group.getCode()==null)
 		{
 			try
@@ -420,7 +380,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(group));}
 		try
 		{
-			if(group.getStyleHeader()!=null){group.setStyleHeader(fReport.find(cStyle,group.getStyleHeader()));}
+			if(group.getStyleHeader()!=null){group.setStyleHeader(fReport.find(fbReport.getClassStyle(),group.getStyleHeader()));}
 			group = fReport.save(group);
 			reloadReport();
 			reloadSheet();
@@ -451,7 +411,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 
 	public void addColumn()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cColumn));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassColumn()));}
 		column = efColumn.build(group);
 		column.setName(efLang.createEmpty(langs));
 		column.setDescription(efDescription.createEmpty(langs));
@@ -475,7 +435,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	
 	private void reloadColumn()
 	{
-		column = fReport.find(cColumn, column);
+		column = fReport.find(fbReport.getClassColumn(), column);
 	}
 	
 	public void saveColumn() throws UtilsLockingException
@@ -483,10 +443,10 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(column));}
 		try
 		{
-			if(column.getDataType()!=null) {column.setDataType(fReport.find(cDataType,column.getDataType()));}
-			if(column.getColumWidth()!=null) {column.setColumWidth(fReport.find(cColumnWidth,column.getColumWidth()));}
-			if(column.getTrafficLightScope()!=null) {column.setTrafficLightScope(fReport.find(cTls,column.getTrafficLightScope()));}
-			column.setGroup(fReport.find(cGroup,column.getGroup()));
+			if(column.getDataType()!=null) {column.setDataType(fReport.find(fbReport.getClassCellDataType(),column.getDataType()));}
+			if(column.getColumWidth()!=null) {column.setColumWidth(fReport.find(fbReport.getClassColumnWidth(),column.getColumWidth()));}
+			if(column.getTrafficLightScope()!=null) {column.setTrafficLightScope(fReport.find(fbReport.getClassTrafficLightScope(),column.getTrafficLightScope()));}
+			column.setGroup(fReport.find(fbReport.getClassGroup(),column.getGroup()));
 			column = fReport.save(column);
 			reloadReport();
 			reloadSheet();
@@ -515,12 +475,12 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	
 	public void changeColumnDataType()
 	{
-		if(column.getDataType()!=null){column.setDataType(fReport.find(cDataType,column.getDataType()));}
+		if(column.getDataType()!=null){column.setDataType(fReport.find(fbReport.getClassCellDataType(),column.getDataType()));}
 	}
 	
 	public void changeRevisionCategory()
 	{
-		revisionCategory = fReport.find(cRevisionCategory, revisionCategory);
+		revisionCategory = fReport.find(fbReport.getClassRevisionCategory(), revisionCategory);
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(revisionCategory));}
 	}
 	
@@ -528,7 +488,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	
 	public void addRow()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cRow));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassRow()));}
 		row = efRow.build(sheet);
 		row.setName(efLang.createEmpty(langs));
 		row.setDescription(efDescription.createEmpty(langs));
@@ -543,7 +503,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	
 	private void reloadRow()
 	{
-		row = fReport.find(cRow, row);
+		row = fReport.find(fbReport.getClassRow(),row);
 	}
 	
 	public void saveRow() throws UtilsLockingException
@@ -551,9 +511,9 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(row));}
 		try
 		{
-			if(row.getDataType()!=null){row.setDataType(fReport.find(cDataType,row.getDataType()));}
-			if(row.getTemplate()!=null){row.setTemplate(fReport.find(cTemplate, row.getTemplate()));}
-			row.setType(fReport.find(cRowType,row.getType()));
+			if(row.getDataType()!=null){row.setDataType(fReport.find(fbReport.getClassCellDataType(),row.getDataType()));}
+			if(row.getTemplate()!=null){row.setTemplate(fReport.find(fbReport.getClassTemplate(), row.getTemplate()));}
+			row.setType(fReport.find(fbReport.getClassRowType(),row.getType()));
 			row = fReport.save(row);
 			reloadReport();
 			reloadSheet();
@@ -574,11 +534,11 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	public void cancelRow(){reset(false,false,true,true,true);}
     
 	//*************************************************************************************
-	protected void reorderReports() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cReport, reports);Collections.sort(reports, comparatorReport);}
-	protected void reorderSheets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cSheet, sheets);Collections.sort(sheets, comparatorSheet);}
-	protected void reorderGroups() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cGroup, groups);Collections.sort(groups, comparatorGroup);}
-	protected void reorderColumns() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cColumn, columns);Collections.sort(columns, comparatorColumn);}
-	protected void reorderRows() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, cRow, rows);Collections.sort(rows, comparatorRow);}
+	protected void reorderReports() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassReport(), reports);Collections.sort(reports, comparatorReport);}
+	protected void reorderSheets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassSheet(), sheets);Collections.sort(sheets, comparatorSheet);}
+	protected void reorderGroups() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassGroup(), groups);Collections.sort(groups, comparatorGroup);}
+	protected void reorderColumns() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassColumn(), columns);Collections.sort(columns, comparatorColumn);}
+	protected void reorderRows() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassRow(), rows);Collections.sort(rows, comparatorRow);}
 	
 	protected void updatePerformed(){}	
 	

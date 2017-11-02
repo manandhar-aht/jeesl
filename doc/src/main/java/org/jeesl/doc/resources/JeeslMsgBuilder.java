@@ -32,7 +32,7 @@ public class JeeslMsgBuilder
 	public static final String query = "aht-utils/msg/query.xml";
 	public static final String entities = "jeesl/msg/admin/entities.xml";
 	public static final String entitiesPrefix = "jeesl/msg/admin/entitiesPrefix.xml";
-	public static final String srcProject = "msg.aht-utils/project.xml";
+	public static final String srcProject = "jeesl/msg/domain/project/project.xml";
 	public static final String srcDate = "jeesl/msg/date.xml";
 	
 	//Finance
@@ -57,7 +57,9 @@ public class JeeslMsgBuilder
 	//System
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
 	public static final String systemJob = "jeesl/msg/admin/system/job.xml";
+	
 	public static final String systemProperty = "jeesl/msg/admin/system/property.xml";
+	
 	public static final String systemFeature = "jeesl/msg/admin/system/feature.xml";
 	
 	public static final String tooltip = "jeesl/msg/tooltip.xml";
@@ -69,10 +71,10 @@ public class JeeslMsgBuilder
 	public static final String srcWizard = "jeesl/msg/wizard.xml";
 	public static final String srcAdminAuditLog = "msg.aht-utils/admin/system/auditLog.xml";
 	public static final String srcAdminSync = "msg.aht-utils/admin/system/sync.xml";
-	public static final String srcAdminSystemProperty = "msg.aht-utils/admin/system/properties.xml";
+	
 	public static final String systemTrafficLights = "jeesl/msg/admin/system/trafficLights.xml";
 	public static final String systemConstraint = "jeesl/msg/admin/system/constraint.xml";
-	public static final String srcAdminSystemDbStatistic = "msg.aht-utils/admin/system/dbStatistic.xml";
+	public static final String srcAdminSystemDbStatistic = "jeesl/msg/system/io/db.xml";
 	
 	public static final String msgAdminSystemOptionTables = "jeesl/msg/admin/system/options.xml";
 	public static final String srcAdminSecurity = "jeesl/msg/module/security.xml";

@@ -24,6 +24,7 @@ public class EjbSurveyTemplateVersionFactory<VERSION extends JeeslSurveyTemplate
 		{
 			ejb = cVersion.newInstance();
 			ejb.setRecord(new Date());
+			ejb.setRefId(Long.valueOf(0));
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

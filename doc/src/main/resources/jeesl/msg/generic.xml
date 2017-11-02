@@ -57,4 +57,11 @@
     		<s:lang key="fr" translation="Details"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="jeeslPosition">
+		<s:langs>
+    		<s:lang key="de" translation="Position"/>
+    		<s:lang key="en" translation="Position"/>
+    		<s:lang key="fr" translation="Position"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.jeesl.factory.builder.system.ReportFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.txt.system.io.report.TxtIoColumnFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
@@ -37,7 +38,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 								WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
 								SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
 								GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
-								COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+								COLUMN extends JeeslReportColumn<L,D,GROUP,STYLE,CDT,CW,TLS>,
 								ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 								TEMPLATE extends JeeslReportTemplate<L,D,CELL>,
 								CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
@@ -64,9 +65,11 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	private CellStyle styleLabelCenter; public CellStyle getStyleLabelCenter() {return styleLabelCenter;}
 	private CellStyle styleLabelLeft; public CellStyle getStyleLabelLeft() {return styleLabelLeft;}
 	private TxtIoColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> tfColumn;
+	private final EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,?,?> efColumn;
 	
-	public XlsStyleFactory(Workbook xlsWorkbook, List<GROUP> ioGroups, List<COLUMN> ioColumns, List<ROW> ioRows)
+	public XlsStyleFactory(final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,?,ENTITY,ATTRIBUTE,TL,TLS,?,?> fbReport, Workbook xlsWorkbook, List<GROUP> ioGroups, List<COLUMN> ioColumns, List<ROW> ioRows)
 	{
+		efColumn = fbReport.column();
 		mapHeader = new HashMap<STYLE,CellStyle>();
 		mapCell = new HashMap<COLUMN,CellStyle>();
 		mapRow = new HashMap<ROW,CellStyle>();
@@ -98,7 +101,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 		for(ROW r : ioRows)
 		{
 			mapRow.put(r, buildRow(xlsWorkbook,r));
-			mapRowDataType.put(r,toDataTypeEnum(EjbIoReportColumnFactory.toRowDataType(r)));
+			mapRowDataType.put(r,toDataTypeEnum(efColumn.toRowDataType(r)));
 		}
 		for(GROUP g : ioGroups)
 		{
@@ -107,7 +110,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 		for(COLUMN c : ioColumns)
 		{
 			mapCell.put(c, buildCell(xlsWorkbook,c));
-			CDT cdt = EjbIoReportColumnFactory.toCellDataType(c);
+			CDT cdt = efColumn.toCellDataType(c);
 			logger.trace(tfColumn.position(c));
 			mapCellDataType.put(c,toDataTypeEnum(cdt));
 		}
@@ -152,7 +155,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 //        style.setAlignment(CellStyle.ALIGN_CENTER);
 //        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
        
-        CDT dataType = EjbIoReportColumnFactory.toCellDataType(column);
+        CDT dataType = efColumn.toCellDataType(column);
         if(dataType!=null)
         {
         	if(dataType.getCode().startsWith(JeeslRevisionAttribute.Type.text.toString()))
@@ -178,7 +181,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	{
         CellStyle style = xlsWorkbook.createCellStyle();
        
-        CDT dataType = EjbIoReportColumnFactory.toRowDataType(row);
+        CDT dataType = efColumn.toRowDataType(row);
         if(dataType!=null)
         {
         	if(dataType.getCode().startsWith(JeeslRevisionAttribute.Type.text.toString()))

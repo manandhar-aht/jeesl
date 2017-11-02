@@ -43,7 +43,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 								WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
 								SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
 								GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
-								COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+								COLUMN extends JeeslReportColumn<L,D,GROUP,STYLE,CDT,CW,TLS>,
 								ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 								TEMPLATE extends JeeslReportTemplate<L,D,CELL>,
 								CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
@@ -179,24 +179,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		return list;
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,
-					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
-					IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-					WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
-					SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
-					GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
-					COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-					ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-					TEMPLATE extends JeeslReportTemplate<L,D,CELL>,CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,STYLE extends JeeslReportStyle<L,D>,CDT extends UtilsStatus<CDT,L,D>,CW extends UtilsStatus<CW,L,D>,
-					RT extends UtilsStatus<RT,L,D>,
-					ENTITY extends EjbWithId,
-					ATTRIBUTE extends EjbWithId,
-					TL extends JeeslTrafficLight<L,D,TLS>,
-					TLS extends UtilsStatus<TLS,L,D>,
-					FILLING extends UtilsStatus<FILLING,L,D>,
-					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-			List<COLUMN> toListVisibleColumns(GROUP group)
+	public  List<COLUMN> toListVisibleColumns(GROUP group)
 	{
 		List<COLUMN> list = new ArrayList<COLUMN>();
 		for(COLUMN c : group.getColumns())
@@ -206,80 +189,20 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 		return list;
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,
-				CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-				REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
-				IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-				WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
-				SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
-				GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
-				COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-				ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-				TEMPLATE extends JeeslReportTemplate<L,D,CELL>,
-				CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-				STYLE extends JeeslReportStyle<L,D>,
-				CDT extends UtilsStatus<CDT,L,D>,CW extends UtilsStatus<CW,L,D>,
-				RT extends UtilsStatus<RT,L,D>,
-				ENTITY extends EjbWithId,
-				ATTRIBUTE extends EjbWithId,
-				TL extends JeeslTrafficLight<L,D,TLS>,
-				TLS extends UtilsStatus<TLS,L,D>,
-				FILLING extends UtilsStatus<FILLING,L,D>,
-				TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-		CDT toCellDataType(COLUMN column)
+	public CDT toCellDataType(COLUMN column)
 	{
 		if(column.getDataType()!=null){return column.getDataType();}
 		logger.warn("No CellDataType for "+column.toString());
 		return null;
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,
-		CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-		REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
-		IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-		WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
-		SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
-		GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
-		COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-		ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-		TEMPLATE extends JeeslReportTemplate<L,D,CELL>,
-		CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-		STYLE extends JeeslReportStyle<L,D>,
-		CDT extends UtilsStatus<CDT,L,D>,CW extends UtilsStatus<CW,L,D>,
-		RT extends UtilsStatus<RT,L,D>,
-		ENTITY extends EjbWithId,
-		ATTRIBUTE extends EjbWithId,
-		TL extends JeeslTrafficLight<L,D,TLS>,
-		TLS extends UtilsStatus<TLS,L,D>,
-		FILLING extends UtilsStatus<FILLING,L,D>,
-		TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-	CDT toRowDataType(ROW row)
+	public CDT toRowDataType(ROW row)
 	{
 		if(row.getDataType()!=null){return row.getDataType();}
 		return null;
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,
-					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
-					IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
-					WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
-					SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
-					GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
-					COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-					ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-					TEMPLATE extends JeeslReportTemplate<L,D,CELL>,
-					CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-					STYLE extends JeeslReportStyle<L,D>,
-					CDT extends UtilsStatus<CDT,L,D>,CW extends UtilsStatus<CW,L,D>,
-					RT extends UtilsStatus<RT,L,D>,
-					ENTITY extends EjbWithId,
-					ATTRIBUTE extends EjbWithId,
-					TL extends JeeslTrafficLight<L,D,TLS>,
-					TLS extends UtilsStatus<TLS,L,D>,
-					FILLING extends UtilsStatus<FILLING,L,D>,
-					TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-		boolean hasFooter(COLUMN column)
+	public boolean hasFooter(COLUMN column)
 	{
 		return (column.getQueryFooter()!=null && column.getQueryFooter().trim().length()>0);
 	}

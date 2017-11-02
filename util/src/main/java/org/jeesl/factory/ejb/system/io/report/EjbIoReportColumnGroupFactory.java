@@ -41,7 +41,7 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 								WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
 								SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
 								GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
-								COLUMN extends JeeslReportColumn<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+								COLUMN extends JeeslReportColumn<L,D,GROUP,STYLE,CDT,CW,TLS>,
 								ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 								TEMPLATE extends JeeslReportTemplate<L,D,CELL>,
 								CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
@@ -150,7 +150,7 @@ public class EjbIoReportColumnGroupFactory<L extends UtilsLang,D extends UtilsDe
 	
 	public static <SHEET extends JeeslReportSheet<?,?,?,?,GROUP,?>,
 					GROUP extends JeeslReportColumnGroup<?,?,SHEET,COLUMN,?>,
-					COLUMN extends JeeslReportColumn<?,?,?,?,?,?,SHEET,GROUP,COLUMN,?,?,?,?,?,?,?,?,?,?,?>>
+					COLUMN extends JeeslReportColumn<?,?,GROUP,?,?,?,?>>
 		Map<GROUP,List<COLUMN>> toMapVisibleGroupColumns(SHEET sheet)
 	{
 		Map<GROUP,List<COLUMN>> map = new HashMap<GROUP,List<COLUMN>>();

@@ -17,7 +17,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslReportColumnGroup<L extends UtilsLang,D extends UtilsDescription,
 									SHEET extends JeeslReportSheet<L,D,?,?,?,?>,
-									COLUMN extends JeeslReportColumn<L,D,?,?,?,?,SHEET,?,COLUMN,?,?,?,STYLE,?,?,?,?,?,?,?>,
+									COLUMN extends JeeslReportColumn<L,D,?,STYLE,?,?,?>,
 									STYLE extends JeeslReportStyle<L,D>
 									>
 		extends Serializable,EjbRemoveable,EjbPersistable,EjbSaveable,

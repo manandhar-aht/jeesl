@@ -24,7 +24,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D extends UtilsDescription,
 												CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 												CRITERIA extends JeeslAttributeCriteria<L,D,CATEGORY,TYPE>,
 												TYPE extends UtilsStatus<TYPE,L,D>,
@@ -52,6 +52,7 @@ public class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D extends Uti
 	{
 		super.initAttribute(localeCodes,bMessage,bAttribute,fAttribute);
 		criterias = fAttribute.allOrderedPositionVisible(fbAttribute.getClassCriteria());
+		reloadSets();
 	}
 	
 	public void toggled(Class<?> c)
@@ -118,6 +119,14 @@ public class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D extends Uti
 		item.setItemSet(fAttribute.find(fbAttribute.getClassSet(),item.getItemSet()));
 		item.setCriteria(fAttribute.find(fbAttribute.getClassCriteria(),item.getCriteria()));
 		item = fAttribute.save(item);
+		reloadItems();
+	}
+	
+	public void deleteItem() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.rmEntity(item));}
+		fAttribute.rm(item);
+		reset(true);
 		reloadItems();
 	}
 	

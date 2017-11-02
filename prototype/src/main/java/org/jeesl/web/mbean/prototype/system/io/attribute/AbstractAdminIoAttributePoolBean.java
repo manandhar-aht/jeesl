@@ -26,7 +26,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends UtilsDescription,
 												CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 												CRITERIA extends JeeslAttributeCriteria<L,D,CATEGORY,TYPE>,
 												TYPE extends UtilsStatus<TYPE,L,D>,

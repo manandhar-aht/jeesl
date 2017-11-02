@@ -76,7 +76,8 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fAttribute=fAttribute;
 		this.bAttribute=bAttribute;
-		sbhCategory.setList(fAttribute.allOrderedPositionVisible(fbAttribute.getClassCategory()));
-		sbhCategory.toggleNone();
+		initSettings();
 	}
+	
+	protected abstract void initSettings();
 }

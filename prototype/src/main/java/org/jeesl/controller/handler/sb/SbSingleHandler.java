@@ -117,7 +117,10 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	{
 		try
 		{
-			if (list.isEmpty()){selectSbSingle(null);}
+			if (list.isEmpty())
+			{
+				//selectSbSingle(null);
+			}
 			else
 			{
 				if(list.contains(selection)) {selectSbSingle(selection);}

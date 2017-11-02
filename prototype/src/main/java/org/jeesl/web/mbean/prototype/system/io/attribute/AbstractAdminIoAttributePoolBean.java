@@ -52,6 +52,7 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 	protected void initAttributePool(String[] localeCodes, FacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{
 		super.initAttribute(localeCodes,bMessage,bAttribute,fAttribute);
+		reloadCriterias();
 	}
 	
 	public void toggled(Class<?> c)
@@ -61,6 +62,7 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 		{
 			reloadCriterias();
 		}
+		sbhCategory.debug(true);
 	}
 	
 	public void resetOption() {reset(false,true);}
@@ -73,7 +75,7 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 	
 	private void reloadCriterias()
 	{
-		criterias = fAttribute.all(fbAttribute.getClassCriteria());
+		criterias = fAttribute.allForParents(fbAttribute.getClassCriteria(), sbhCategory.getSelected());
 		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbAttribute.getClassCriteria(),criterias));}
 	}
 	

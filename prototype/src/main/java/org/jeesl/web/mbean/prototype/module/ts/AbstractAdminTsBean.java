@@ -100,6 +100,12 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 		
 		sbhCategory.fillAndSelect(fTs.allOrderedPositionVisible(fbTs.getClassCategory()));
 		sbhWorkspace.fillAndSelect(fTs.allOrderedPositionVisible(fbTs.getClassWorkspace()));
+		
+		if(debugOnInfo)
+		{
+			logger.info(fbTs.getClassCategory().getSimpleName()+" "+sbhCategory.getSelected().size()+"/"+sbhCategory.getList().size());
+			logger.info(fbTs.getClassWorkspace().getSimpleName()+" "+sbhWorkspace.getSelected().size()+"/"+sbhWorkspace.getList().size());
+		}
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException

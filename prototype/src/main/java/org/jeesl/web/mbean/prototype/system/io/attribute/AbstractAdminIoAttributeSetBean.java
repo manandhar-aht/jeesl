@@ -62,7 +62,7 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 	protected void initAttributeSet(String[] localeCodes, FacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{
 		super.initAttribute(localeCodes,bMessage,bAttribute,fAttribute);
-		criterias = fAttribute.allOrderedPositionVisible(fbAttribute.getClassCriteria());
+		
 		reloadSets();
 	}
 	
@@ -84,7 +84,8 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 	
 	private void reloadSets()
 	{
-		sets = fAttribute.all(fbAttribute.getClassSet());
+		criterias = fAttribute.allForParents(fbAttribute.getClassCriteria(), sbhCategory.getSelected());
+		sets = fAttribute.allForParents(fbAttribute.getClassSet(), sbhCategory.getSelected());
 		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbAttribute.getClassSet(),sets));}
 	}
 	

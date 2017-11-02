@@ -1,14 +1,16 @@
 package org.jeesl.interfaces.model.module.attribute;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?,?,?>,
 							OPTION extends JeeslAttributeOption<?,?,CRITERIA>,
 							CONTAINER extends JeeslAttributeContainer<?,?>>
-		extends EjbWithId,EjbSaveable
+		extends Serializable,EjbSaveable,EjbRemoveable
 {
 	public static enum Attributes{container,criteria};
 	
@@ -33,5 +35,7 @@ public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?
 	
 	Date getValueRecord();
 	void setValueRecord(Date date);
-
+	
+	OPTION getValueOption();
+	void setValueOption(OPTION option);
 }

@@ -1,6 +1,8 @@
 package org.jeesl.web.mbean.prototype.system.io.attribute;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslAttributeBean;
@@ -13,15 +15,18 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
+import org.jeesl.util.comparator.ejb.system.io.attribute.AttributeSetComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D extends UtilsDescription,
@@ -32,7 +37,7 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 												SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
 												ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 												CONTAINER extends JeeslAttributeContainer<SET,DATA>,
-												DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
+												DATA extends JeeslAttributeData<CRITERIA,OPTION,CONTAINER>>
 					extends AbstractAdminIoAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
 					implements Serializable,SbToggleBean
 {
@@ -46,7 +51,13 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 	private SET set; public SET getSet() {return set;} public void setSet(SET set) {this.set = set;}
 	private ITEM item; public ITEM getItem() {return item;} public void setItem(ITEM item) {this.item = item;}
 	
-	public AbstractAdminIoAttributeSetBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute) {super(fbAttribute);}
+	private final Comparator<SET> comparatorSet;
+	
+	public AbstractAdminIoAttributeSetBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute)
+	{
+		super(fbAttribute);
+		comparatorSet = new AttributeSetComparator<CATEGORY,SET>().factory(AttributeSetComparator.Type.position);
+	}
 	
 	protected void initAttributeSet(String[] localeCodes, FacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{
@@ -64,10 +75,11 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 		}
 	}
 	
-	public void resetSet() {reset(true);}
-	private void reset(boolean rSet)
+	public void resetSet() {reset(true,true);}
+	private void reset(boolean rSet, boolean rItem)
 	{
 		if(rSet) {set=null;}
+		if(rItem){item=null;}
 	}
 	
 	private void reloadSets()
@@ -93,12 +105,21 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 		reloadItems();
 	}
 	
+	public void deleteSet() throws UtilsConstraintViolationException
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.rmEntity(set));}
+		fAttribute.rm(set);
+		reloadSets();
+		reset(true,true);
+	}
+	
 	public void selectSet()
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(set));}
 		set = efLang.persistMissingLangs(fAttribute,localeCodes,set);
 		set = efDescription.persistMissingLangs(fAttribute,localeCodes,set);
 		reloadItems();
+		reset(false,true);
 	}
 	
 	private void reloadItems()
@@ -126,7 +147,7 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.rmEntity(item));}
 		fAttribute.rm(item);
-		reset(true);
+		reset(false,true);
 		reloadItems();
 	}
 	
@@ -134,4 +155,7 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(item));}
 	}
+	
+	public void reorderSets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, fbAttribute.getClassSet(), sets);Collections.sort(sets, comparatorSet);}
+	public void reorderItems() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, items);}
 }

@@ -30,7 +30,7 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 											SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
 											ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 											CONTAINER extends JeeslAttributeContainer<SET,DATA>,
-											DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
+											DATA extends JeeslAttributeData<CRITERIA,OPTION,CONTAINER>>
 					implements Serializable,
 								JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
 {
@@ -46,6 +46,7 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 		categories = new ArrayList<CATEGORY>();
 		types = new ArrayList<TYPE>();
 		mapCriteria = new HashMap<SET,List<CRITERIA>>();
+		mapOption = new HashMap<CRITERIA,List<OPTION>>();
 	}
 	
 	public void initSuper(JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
@@ -56,7 +57,7 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 		reloadTypes();
 		reloadCategories();
 		reloadCriteria();
-		
+		reloadOptions();
 	}
 	
 	private final List<CATEGORY> categories;
@@ -93,6 +94,18 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 				list.add(item.getCriteria());
 			}
 			mapCriteria.put(s, list);
+		}
+	}
+	
+	private final Map<CRITERIA,List<OPTION>> mapOption;
+	@Override public Map<CRITERIA,List<OPTION>> getMapOption() {return mapOption;}
+	private void reloadOptions()
+	{
+		mapOption.clear();
+		for(OPTION o : fAttribute.allOrderedPosition(fbAttribute.getClassOption()))
+		{
+			if(!mapOption.containsKey(o.getCriteria())){mapOption.put(o.getCriteria(),new ArrayList<OPTION>());}
+			mapOption.get(o.getCriteria()).add(o);
 		}
 	}
 		

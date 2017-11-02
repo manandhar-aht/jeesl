@@ -9,7 +9,10 @@
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 
 	<ui:fragment>
-		<p:selectBooleanCheckbox rendered="#{criteria.type.code eq 'bool'}" value="#{attributeHandler.data[criteria].valueBoolean}" />
-		<p:inputText rendered="#{criteria.type.code eq 'text'}" value="#{attributeHandler.data[criteria].valueString}"/>
+		<p:selectBooleanCheckbox value="#{attributeHandler.data[criteria].valueBoolean}" rendered="#{criteria.type.code eq 'bool'}"/>
+		<p:inputText value="#{attributeHandler.data[criteria].valueString}" rendered="#{criteria.type.code eq 'text'}"/>
+		<p:selectOneMenu id="s1" value="#{attributeHandler.data[criteria].valueOption}" effect="fade" rendered="#{criteria.type.code eq 'selectOne'}">
+				<f:selectItems value="#{appAttributeBean.mapOption[criteria]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
+		</p:selectOneMenu>
 	</ui:fragment>
 </ui:composition>

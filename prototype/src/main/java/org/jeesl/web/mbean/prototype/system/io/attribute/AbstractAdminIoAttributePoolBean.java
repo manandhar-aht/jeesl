@@ -34,7 +34,7 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 												SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
 												ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 												CONTAINER extends JeeslAttributeContainer<SET,DATA>,
-												DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
+												DATA extends JeeslAttributeData<CRITERIA,OPTION,CONTAINER>>
 					extends AbstractAdminIoAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
 					implements Serializable,SbToggleBean
 {

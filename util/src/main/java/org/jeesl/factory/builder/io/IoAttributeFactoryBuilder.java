@@ -33,7 +33,7 @@ public class IoAttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescr
 									SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
 									ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 									CONTAINER extends JeeslAttributeContainer<SET,DATA>,
-									DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
+									DATA extends JeeslAttributeData<CRITERIA,OPTION,CONTAINER>>
 				extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoAttributeFactoryBuilder.class);
@@ -85,9 +85,9 @@ public class IoAttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescr
 		return new EjbAttributeContainerFactory<SET,CONTAINER>(cContainer);
 	}
 	
-	public EjbAttributeDataFactory<CRITERIA,CONTAINER,DATA> ejbData()
+	public EjbAttributeDataFactory<CRITERIA,OPTION,CONTAINER,DATA> ejbData()
 	{
-		return new EjbAttributeDataFactory<CRITERIA,CONTAINER,DATA>(cData);
+		return new EjbAttributeDataFactory<CRITERIA,OPTION,CONTAINER,DATA>(cData);
 	}
 	
 	public AttributeHandler<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> handler(FacesMessageBean bMessage, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, AttributeBean bean)

@@ -38,7 +38,7 @@ public class JeeslIoAttributeFacadeBean<L extends UtilsLang, D extends UtilsDesc
 										SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
 										ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 										CONTAINER extends JeeslAttributeContainer<SET,DATA>,
-										DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
+										DATA extends JeeslAttributeData<CRITERIA,OPTION,CONTAINER>>
 					extends UtilsFacadeBean
 					implements JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
 {	

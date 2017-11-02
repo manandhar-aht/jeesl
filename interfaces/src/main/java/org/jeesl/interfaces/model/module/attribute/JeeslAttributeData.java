@@ -5,7 +5,9 @@ import java.util.Date;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?,?,?>,CONTAINER extends JeeslAttributeContainer<?,?>>
+public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?,?,?>,
+							OPTION extends JeeslAttributeOption<?,?,CRITERIA>,
+							CONTAINER extends JeeslAttributeContainer<?,?>>
 		extends EjbWithId,EjbSaveable
 {
 	public static enum Attributes{container,criteria};

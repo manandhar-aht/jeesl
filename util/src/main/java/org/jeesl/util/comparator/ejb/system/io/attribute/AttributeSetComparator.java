@@ -3,28 +3,27 @@ package org.jeesl.util.comparator.ejb.system.io.attribute;
 import java.util.Comparator;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
-import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class AttributeCriteriaComparator<CATEGORY extends UtilsStatus<CATEGORY,?,?>,
-										CRITERIA extends JeeslAttributeCriteria<?,?,CATEGORY,?>>
+public class AttributeSetComparator<CATEGORY extends UtilsStatus<CATEGORY,?,?>, SET extends JeeslAttributeSet<?,?,CATEGORY,?>>
 {
-	final static Logger logger = LoggerFactory.getLogger(AttributeCriteriaComparator.class);
+	final static Logger logger = LoggerFactory.getLogger(AttributeSetComparator.class);
 
     public enum Type {position};
 
-    public AttributeCriteriaComparator()
+    public AttributeSetComparator()
     {
     	
     }
     
-    public Comparator<CRITERIA> factory(Type type)
+    public Comparator<SET> factory(Type type)
     {
-        Comparator<CRITERIA> c = null;
-        AttributeCriteriaComparator<CATEGORY,CRITERIA> factory = new AttributeCriteriaComparator<CATEGORY,CRITERIA>();
+        Comparator<SET> c = null;
+        AttributeSetComparator<CATEGORY,SET> factory = new AttributeSetComparator<CATEGORY,SET>();
         switch (type)
         {
             case position: c = factory.new PositionComparator();break;
@@ -33,9 +32,9 @@ public class AttributeCriteriaComparator<CATEGORY extends UtilsStatus<CATEGORY,?
         return c;
     }
 
-    private class PositionComparator implements Comparator<CRITERIA>
+    private class PositionComparator implements Comparator<SET>
     {
-        public int compare(CRITERIA a, CRITERIA b)
+        public int compare(SET a, SET b)
         {
 			  CompareToBuilder ctb = new CompareToBuilder();
 			  ctb.append(a.getCategory().getPosition(), b.getCategory().getPosition());

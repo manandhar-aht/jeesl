@@ -38,7 +38,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 								SET extends JeeslAttributeSet<L,D,CATEGORY,ITEM>,
 								ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 								CONTAINER extends JeeslAttributeContainer<SET,DATA>,
-								DATA extends JeeslAttributeData<CRITERIA,CONTAINER>>
+								DATA extends JeeslAttributeData<CRITERIA,OPTION,CONTAINER>>
 	implements Serializable,JeeslAttributeHandler
 {
 	final static Logger logger = LoggerFactory.getLogger(AttributeHandler.class);
@@ -53,7 +53,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	
 	private final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute;
 	private final EjbAttributeContainerFactory<SET,CONTAINER> efContainer;
-	private final EjbAttributeDataFactory<CRITERIA,CONTAINER,DATA> efData;
+	private final EjbAttributeDataFactory<CRITERIA,OPTION,CONTAINER,DATA> efData;
 	
 	private final Map<CRITERIA,DATA> data; public Map<CRITERIA, DATA> getData() {return data;}
 	private SET attributeSet; public SET getAttributeSet() {return attributeSet;}

@@ -2,10 +2,10 @@ package org.jeesl.interfaces.model.module.attribute;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?,?,?>,
 							OPTION extends JeeslAttributeOption<?,?,CRITERIA>,
@@ -20,7 +20,6 @@ public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?
 	CRITERIA getCriteria();
 	void setCriteria(CRITERIA criteria);
 
-	
 	String getValueString();
 	void setValueString(String valueString);
 	
@@ -38,4 +37,7 @@ public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?
 	
 	OPTION getValueOption();
 	void setValueOption(OPTION option);
+	
+	List<OPTION> getValueOptions();
+	void setValueOptions(List<OPTION> valueOptions);
 }

@@ -17,6 +17,7 @@
 		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
 		<composite:attribute name="withCategory" required="false" default="true"/>
 		<composite:attribute name="withVersion" required="false" default="true"/>
+		<composite:attribute name="withScore" required="false" default="true"/>
 		<composite:attribute name="withNested" required="false" default="false"/>
 		<composite:attribute name="withOptions" required="false" default="false"/>
 		<composite:attribute name="withMultiOptions" required="false" default="false"/>
@@ -194,8 +195,8 @@
 							<p:outputLabel rendered="false" value="#{msg.jeeslSurveySectionScoreLimit}"/>
 							<p:inputText rendered="false" value="#{cc.attrs.bean.nnb.a}"/>
 							
-							<p:outputLabel rendered="true" value="#{msg.jeeslSurveySectionScoreNormalize}"/>
-							<p:inputText rendered="true" value="#{cc.attrs.bean.nnb.b}"/>
+							<p:outputLabel rendered="#{cc.attrs.withScore}" value="#{msg.jeeslSurveySectionScoreNormalize}"/>
+							<p:inputText rendered="#{cc.attrs.withScore}" value="#{cc.attrs.bean.nnb.b}"/>
 
 						</p:panelGrid>
 					</p:panel>
@@ -278,7 +279,8 @@
 							
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<h:outputText value="#{cc.attrs.bean.question.position}"/>
-							
+						</p:panelGrid>
+						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg30,auPwg20" rendered="#{cc.attrs.withScore}">
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.calculateScore}" />
 							<p:outputLabel value="#{msg.jpSurveyQuestionScoreCalculate}"/>
 							
@@ -302,6 +304,7 @@
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40" rendered="#{cc.attrs.withOptions}">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectOne}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectOne}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectMulti}" rendered="#{cc.attrs.withMultiOptions}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectMulti}" rendered="#{cc.attrs.withMultiOptions}"/>
+							<h:outputText rendered="#{not cc.attrs.withMultiOptions}"/><h:outputText rendered="#{not cc.attrs.withMultiOptions}"/>
 						</p:panelGrid>
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40" rendered="#{cc.attrs.withMatrix}">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showMatrix}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowMatrix}"/>

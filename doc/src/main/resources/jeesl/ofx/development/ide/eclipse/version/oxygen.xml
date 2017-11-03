@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org" id="section.admin.installation.eclipse"
+			xmlns:t="http://www.openfuxml.org/table"
+			xmlns:media="http://www.openfuxml.org/media"
+			xmlns:layout="http://www.openfuxml.org/layout"
+			xmlns:text="http://www.openfuxml.org/text"
+			xmlns:l="http://www.openfuxml.org/list"
+			container="true" classifier="luna">
+	
+	<ofx:paragraph lang="en">
+		Start the Eclipse installer
+		Choose Eclipse IDE for Java Developers
+		Launch
+	</ofx:paragraph>
+	
+	<ofx:paragraph lang="en">
+		Choose a directory username/workspace/version
+	</ofx:paragraph>
+	
+	<ofx:section id="section.admin.installation.eclipse.luna.svn.install" classifier="svn">
+		<ofx:title lang="en">Subversion (SVN)</ofx:title>
+	
+		<ofx:paragraph lang="en">
+			To install the <text:emphasis style="italic">"Subversive Team Provider 2.0"</text:emphasis>,
+			click on <text:emphasis style="typewriter">Help -> Install New Software</text:emphasis> and choose the 
+			<text:emphasis style="italic">Work with</text:emphasis> <text:emphasis style="typewriter">Oxygen</text:emphasis>. 
+			Then expand <text:emphasis style="italic">Collaboration</text:emphasis> and choose the
+			<text:emphasis style="italic">Subversive SVN Team Provider</text:emphasis> and
+			<text:emphasis style="italic">Subversive SVN Integration for the M2E Project</text:emphasis>.
+			Confirm with <text:emphasis style="typewriter">Next</text:emphasis>, <text:emphasis style="typewriter">Next</text:emphasis>
+			accept the licenses and <text:emphasis style="typewriter">Finish</text:emphasis> the installation.
+			After installation Eclipse should directly be restarted. 
+		</ofx:paragraph>
+	</ofx:section>
+	
+	<ofx:section id="section.admin.installation.eclipse.luna.svn.checkout">
+		<ofx:title lang="en">Checkout Project From SVN Repository</ofx:title>
+		
+		<ofx:paragraph lang="en">
+			brew install --with-java --universal subversion
+
+			View add SVN
+			JavaHL 1.9.x
+		</ofx:paragraph>
+		
+		<ofx:listing id="listing.admin.installation.eclipse.vcs.url">
+			<ofx:raw>https://www.example.com/svn/project</ofx:raw>
+		</ofx:listing>
+		
+		<ofx:paragraph lang="en">
+			Since the Maven build tool is downloading all dependencies for the project while setting it up in eclipse, 
+			this process takes very long when triggered the first time.
+		</ofx:paragraph>
+		
+	</ofx:section>
+	
+		<ofx:section container="true" classifier="git">
+		<ofx:section id="section.admin.installation.eclipse.kepler" classifier="kepler">
+			<ofx:title lang="en">GIT</ofx:title>
+			
+			<ofx:section id="section.admin.installation.eclipse.git.m2e">
+				<ofx:title lang="en">Maven GIT Connector</ofx:title>
+				
+				<ofx:paragraph lang="en">
+					Now right click on your "Project Explorer", select "new", press "Other", search for "Maven" and "Checkout Maven Projects from SCM", press "Next"
+					and go for the writing "Find more SCM connectors in the m2e Marketplace". 
+					Find: "m2e" and select "m2e-egit" and press "finish".
+					Follow these steps:
+				</ofx:paragraph>
+				
+				<l:list>
+	    		<l:type ordering="unordered"/>	
+					<l:item><ofx:paragraph lang="en">Next</ofx:paragraph></l:item>
+					<l:item><ofx:paragraph lang="en">Next</ofx:paragraph></l:item>
+					<l:item><ofx:paragraph lang="en">"I accept the terms of the license agreements"</ofx:paragraph></l:item>
+					<l:item><ofx:paragraph lang="en">Finish and restart</ofx:paragraph></l:item>
+	   		</l:list>	
+			
+			</ofx:section>
+			
+			<ofx:section id="section.admin.installation.eclipse.checkout.git">
+				<ofx:title lang="en">Checkout GIT repository</ofx:title>
+			
+				<ofx:paragraph lang="en">
+					The next part of the installation is to "Checkout a GIT Repository".
+					Now right click on your "Project Explorer", select "new", press "Other", search for "Maven" and "Checkout Maven Projects from SCM", press "Next"
+					and copy the SCM URL to the text field and click "Next".
+				</ofx:paragraph>
+			</ofx:section>
+		</ofx:section>
+		<ofx:section id="section.admin.installation.eclipse.kepler" classifier="luna">
+			<ofx:title lang="en">GIT</ofx:title>
+			
+			<ofx:section id="section.admin.installation.eclipse.git.m2e">
+				<ofx:title lang="en">Maven GIT Connector</ofx:title>
+				
+				<ofx:paragraph lang="en">
+					ProjectExplorer - (r.click) New - Other - Maven - Checkout Maven Projects from  - Next
+					Find more SCM connectors in the m2e Marketplace
+					Find: "m2e-egit"
+					NOT AVAILABLE ????
+				</ofx:paragraph>
+			</ofx:section>
+			
+		</ofx:section>
+	</ofx:section>
+	
+	<ofx:section include="texlipse.xml"/>
+</ofx:section>

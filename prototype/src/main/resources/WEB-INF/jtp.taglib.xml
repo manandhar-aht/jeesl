@@ -23,6 +23,10 @@
         <tag-name>inputText</tag-name>
         <source>jeeslPrototype/input/text.xhtml</source>
     </tag>
+        <tag>
+        <tag-name>inputDate</tag-name>
+        <source>jeeslPrototype/input/date.xhtml</source>
+    </tag>
 	<tag>
         <tag-name>inputMultiLangRows</tag-name>
         <source>jeeslPrototype/langs/inputRows.xhtml</source>

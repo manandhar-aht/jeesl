@@ -5,6 +5,7 @@
     xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui"
+    xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 >
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 
@@ -15,6 +16,7 @@
 			<p:inputText rendered="#{question.showText  and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueText}"/>
 			<p:inputTextarea id="remarkIta" rows="2" styleClass="w100" rendered="#{question.showRemark}" value="#{surveyHandler.answers[question].remark}"/>
 			<p:watermark for="remarkIta" value="Remark" id="watermark" />
+			<jtp:inputDate rendered="#{question.showDate and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDate}"/>
 			<p:selectOneMenu id="categoryS1" value="#{surveyHandler.answers[question].option}" effect="fade" rendered="#{question.showSelectOne and (not question.showMatrix)}">
 				<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
 			</p:selectOneMenu>

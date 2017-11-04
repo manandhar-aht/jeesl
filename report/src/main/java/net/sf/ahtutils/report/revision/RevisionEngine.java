@@ -106,7 +106,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 		logger.info(this.getClass().getSimpleName()+" initialized with "+map.size()+" entities");
 	}
 	
-	public Change build(JeeslRevisionContainer<REV,?,L,D,C,R,V,U,A,AT,USER> revision)
+	public Change build(JeeslRevisionContainer<REV,?,USER> revision)
 	{
 		Object o = revision.getEntity();
 		String key = o.getClass().getName();

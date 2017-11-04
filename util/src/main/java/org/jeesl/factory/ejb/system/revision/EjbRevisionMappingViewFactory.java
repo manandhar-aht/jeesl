@@ -21,7 +21,7 @@ public class EjbRevisionMappingViewFactory<L extends UtilsLang,D extends UtilsDe
 									RST extends UtilsStatus<RST,L,D>,
 									RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-									RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbRevisionMappingViewFactory.class);
@@ -41,7 +41,7 @@ public class EjbRevisionMappingViewFactory<L extends UtilsLang,D extends UtilsDe
 					RST extends UtilsStatus<RST,L,D>,
 					RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>>
 	EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory(final Class<RVM> cMapping)
 	{

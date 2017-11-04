@@ -57,7 +57,7 @@ public class AbstractReportSelectorBean <L extends UtilsLang,D extends UtilsDesc
 										RST extends UtilsStatus<RST,L,D>,
 										RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
 										REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>,
-										RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,CDT>
+										RA extends JeeslRevisionAttribute<L,D,RE,CDT>
 										>
 					implements Serializable
 {

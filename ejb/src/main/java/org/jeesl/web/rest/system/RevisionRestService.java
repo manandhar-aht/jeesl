@@ -51,7 +51,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 								RST extends UtilsStatus<RST,L,D>,
 								RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 								REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-								RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+								RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 								RAT extends UtilsStatus<RAT,L,D>>
 					implements JeeslRevisionRestExport,JeeslRevisionRestImport
 {
@@ -113,7 +113,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 					RST extends UtilsStatus<RST,L,D>,
 					RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>>
 		RevisionRestService<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
 			factory(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision,final Class<L> cL, final Class<D> cD, Class<RC> cRC, final Class<RV> cRV, final Class<RVM> cRVM, final Class<RS> cRS, final Class<RST> cRST, final Class<RE> cRE, final Class<REM> cREM, final Class<RA> cRA, final Class<RAT> cRAT)

@@ -43,7 +43,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends 
 											RST extends UtilsStatus<RST,L,D>,
 											RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 											REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-											RA extends JeeslRevisionAttribute<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 											RAT extends UtilsStatus<RAT,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean

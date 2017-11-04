@@ -80,7 +80,7 @@ public class AbstractIoReportBean <L extends UtilsLang,D extends UtilsDescriptio
 							RCAT extends UtilsStatus<RCAT,L,D>,
 							RE extends JeeslRevisionEntity<L,D,RCAT,?,?,?,?,RE,?,RA,CDT>,
 							
-							RA extends JeeslRevisionAttribute<L,D,RCAT,?,?,?,?,RE,?,RA,CDT>
+							RA extends JeeslRevisionAttribute<L,D,RE,CDT>
 							>
 					extends AbstractAdminBean<L,D>
 					implements Serializable

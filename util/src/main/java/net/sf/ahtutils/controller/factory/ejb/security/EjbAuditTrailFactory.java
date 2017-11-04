@@ -26,7 +26,7 @@ public class EjbAuditTrailFactory <L extends UtilsLang,
 										 U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 										 A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 										 AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-										 USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>,
+										 USER extends JeeslUser<R>,
 							 			 T extends UtilsAuditTrail<L,D,C,R,V,U,A,AT,USER,TY>,
 							 			 TY extends UtilsStatus<TY,L,D>>
 {
@@ -51,7 +51,7 @@ public class EjbAuditTrailFactory <L extends UtilsLang,
 	 			   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 	 			   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 	 			  AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-	 			  USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>,
+	 			  USER extends JeeslUser<R>,
 	 			   T extends UtilsAuditTrail<L,D,C,R,V,U,A,AT,USER,TY>,
 	 			   TY extends UtilsStatus<TY,L,D>>
     	EjbAuditTrailFactory<L,D,C,R,V,U,A,AT,USER,T,TY> factory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<USER> clUser, final Class<T> clTrail,final Class<TY> clType)

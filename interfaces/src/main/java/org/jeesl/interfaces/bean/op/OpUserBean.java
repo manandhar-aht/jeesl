@@ -22,7 +22,7 @@ public interface OpUserBean <L extends UtilsLang,
 							U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 							A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 							AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-							USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+							USER extends JeeslUser<R>>
 {
 	OpUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> getOpUserHandler();
 	void selectOpUser(USER user) throws UtilsLockingException, UtilsConstraintViolationException;

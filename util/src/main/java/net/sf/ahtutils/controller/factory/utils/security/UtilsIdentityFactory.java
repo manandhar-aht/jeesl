@@ -23,7 +23,7 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 								   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 								   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 								   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-								   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+								   USER extends JeeslUser<R>>
 {
 
 	final static Logger logger = LoggerFactory.getLogger(UtilsIdentityFactory.class);
@@ -66,7 +66,7 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 	   			   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 	   			AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-	   			USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+	   			USER extends JeeslUser<R>>
 	UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER> factory(final Class<I> clIdentity,
 													 final Class<L> clLang,
 													 final Class<D> clDescription,

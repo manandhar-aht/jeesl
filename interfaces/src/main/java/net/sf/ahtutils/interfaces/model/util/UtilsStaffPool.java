@@ -22,7 +22,7 @@ public interface UtilsStaffPool<L extends UtilsLang,
 								   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 								   P extends EjbWithId,
 								   E extends EjbWithId,
-								   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+								   USER extends JeeslUser<R>>
 			extends EjbWithId
 {
 	public R getRole();

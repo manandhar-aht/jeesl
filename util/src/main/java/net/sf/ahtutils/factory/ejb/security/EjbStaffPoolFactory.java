@@ -28,7 +28,7 @@ public class EjbStaffPoolFactory <L extends UtilsLang,
 										 S extends UtilsStaffPool<L,D,C,R,V,U,A,AT,P,E,USER>,
 										 P extends EjbWithId,
 										 E extends EjbWithId,
-										 USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+										 USER extends JeeslUser<R>>
 		extends AbstractEjbSecurityFactory<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbStaffPoolFactory.class);
@@ -49,7 +49,7 @@ public class EjbStaffPoolFactory <L extends UtilsLang,
 	 			   S extends UtilsStaffPool<L,D,C,R,V,U,A,AT,P,E,USER>,
 	 			   P extends EjbWithId,
 	 			   E extends EjbWithId,
-	 			   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+	 			   USER extends JeeslUser<R>>
     	EjbStaffPoolFactory<L,D,C,R,V,U,A,AT,S,P,E,USER> factory(final Class<L> clLang,final Class<D> clDescription,final Class<C> clCategory,final Class<R> clRole,final Class<V> clView,final Class<U> clUsecase,final Class<A> clAction,final Class<S> clStaff, final Class<P> clPool, final Class<E> clEntity,final Class<USER> clUser)
     {
         return new EjbStaffPoolFactory<L,D,C,R,V,U,A,AT,S,P,E,USER>(clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clStaff,clPool,clEntity,clUser);

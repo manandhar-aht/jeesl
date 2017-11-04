@@ -24,7 +24,7 @@ public class AbstractUserBean <L extends UtilsLang,D extends UtilsDescription,
 								U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 								A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 								AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-								USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+								USER extends JeeslUser<R>>
 		extends AbstractAdminBean<L,D>
 		implements Serializable
 {

@@ -1,6 +1,5 @@
 package org.jeesl.model.ejb.user;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +17,8 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.model.ejb.system.security.SecurityAction;
-import org.jeesl.model.ejb.system.security.SecurityActionTemplate;
-import org.jeesl.model.ejb.system.security.SecurityCategory;
 import org.jeesl.model.ejb.system.security.SecurityRole;
-import org.jeesl.model.ejb.system.security.SecurityUsecase;
-import org.jeesl.model.ejb.system.security.SecurityView;
-import org.jeesl.model.ejb.system.status.Description;
-import org.jeesl.model.ejb.system.status.Lang;
 
-import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
-import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
@@ -39,8 +28,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 ({	
 	@NamedQuery(name="fUserByEmail",query="SELECT u FROM MeisUser u WHERE u.email = :email")
 })
-public class User implements Serializable,EjbWithId,EjbPersistable,EjbRemoveable,
-									JeeslUser<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,User>
+public class User implements JeeslUser<SecurityRole>
 {
 	public static final long serialVersionUID=1;
 	

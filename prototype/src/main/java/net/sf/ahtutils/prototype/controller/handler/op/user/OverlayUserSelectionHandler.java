@@ -25,7 +25,7 @@ public class OverlayUserSelectionHandler <L extends UtilsLang, D extends UtilsDe
 											U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 											A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 											AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-											USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+											USER extends JeeslUser<R>>
 	implements OpUserSelectionHandler<L,D,C,R,V,U,A,AT,USER>
 {
 	public static final long serialVersionUID=1;

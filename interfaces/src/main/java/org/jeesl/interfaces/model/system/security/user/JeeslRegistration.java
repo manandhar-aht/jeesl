@@ -8,7 +8,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslRegistration <L extends UtilsLang, D extends UtilsDescription,
-							USER extends JeeslUser<L,D,?,?,?,?,?,?,USER>,
+							USER extends JeeslUser<?>,
 							REGSTATUS extends UtilsStatus<REGSTATUS,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable
 {	

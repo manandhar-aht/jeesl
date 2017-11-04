@@ -27,7 +27,7 @@ public class SecurityActionManager <L extends UtilsLang,
 									U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 									A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 									AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-									USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+									USER extends JeeslUser<R>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityActionManager.class);
 	
@@ -39,7 +39,7 @@ public class SecurityActionManager <L extends UtilsLang,
 		   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 		   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 		   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-		   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+		   USER extends JeeslUser<R>>
 		SecurityActionManager<L,D,C,R,V,U,A,AT,USER>
 		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,final Class<V> cView, String viewId, JeeslIdentity<L,D,C,R,V,U,A,AT,USER> identity) throws UtilsNotFoundException
 	{

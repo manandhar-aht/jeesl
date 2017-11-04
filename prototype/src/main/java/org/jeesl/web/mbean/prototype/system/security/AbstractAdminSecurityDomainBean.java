@@ -37,7 +37,7 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 												U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 												A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 												AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-												USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>,
+												USER extends JeeslUser<R>,
 												STAFF extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
 												D1 extends EjbWithId, D2 extends EjbWithId>
 		implements Serializable,OpUserBean<L,D,C,R,V,U,A,AT,USER>

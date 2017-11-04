@@ -20,7 +20,7 @@ public class EjbSecurityUserFactory <L extends UtilsLang, D extends UtilsDescrip
 									 U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 									 A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 									 AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-									 USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+									 USER extends JeeslUser<R>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSecurityUserFactory.class);
 	

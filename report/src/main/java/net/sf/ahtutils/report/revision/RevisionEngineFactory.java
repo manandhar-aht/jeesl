@@ -47,7 +47,7 @@ public class RevisionEngineFactory
 					U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 					A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 					AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-					USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+					USER extends JeeslUser<R>>
 		RevisionEngine<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> engine(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity, final Class<RAT> cRat)
 	{
 		return new RevisionEngine<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER>(fRevision, cView, cScope, cEntity, cRat);
@@ -70,7 +70,7 @@ public class RevisionEngineFactory
 					U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 					A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 					AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-					USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+					USER extends JeeslUser<R>>
 		RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> attribute(Map<RAT,DecimalFormat> mapDecimalFormatter, Map<RAT,SimpleDateFormat> mapDateFormatter)
 	{
 		return new RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER>(mapDecimalFormatter,mapDateFormatter);
@@ -93,7 +93,7 @@ public class RevisionEngineFactory
 					U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 					A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 					AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-					USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+					USER extends JeeslUser<R>>
 		RevisionEngineScopeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> scope(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> rear)
 	{
 		return new RevisionEngineScopeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER>(fRevision,rear);

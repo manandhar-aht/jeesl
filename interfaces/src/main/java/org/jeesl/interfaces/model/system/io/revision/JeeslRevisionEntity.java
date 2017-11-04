@@ -29,7 +29,7 @@ public interface JeeslRevisionEntity<L extends UtilsLang, D extends UtilsDescrip
 									RAT extends UtilsStatus<RAT,L,D>>
 		extends Serializable,EjbPersistable,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithParentAttributeResolver,EjbWithPositionParent,
-				EjbWithLang<L>,EjbWithDescription<D>,EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
+				EjbWithLang<L>,EjbWithDescription<D>,EjbWithRevisionAttributes<RA>
 {	
 	RC getCategory();
 	void setCategory(RC category);

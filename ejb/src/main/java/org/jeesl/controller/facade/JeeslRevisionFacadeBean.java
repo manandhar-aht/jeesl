@@ -105,7 +105,7 @@ public class JeeslRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		this.rmProtected(mapping);
 	}
 
-	@Override public <W extends EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>>
+	@Override public <W extends EjbWithRevisionAttributes<RA>>
 			RA save(Class<W> cW, W entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		entity = this.find(cW, entity);
@@ -118,7 +118,7 @@ public class JeeslRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		return attribute;
 	}
 
-	@Override public <W extends EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>>
+	@Override public <W extends EjbWithRevisionAttributes<RA>>
 			void rm(Class<W> cW, W entity, RA attribute) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		entity = this.find(cW, entity);

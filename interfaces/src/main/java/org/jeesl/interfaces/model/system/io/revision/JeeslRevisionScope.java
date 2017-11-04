@@ -29,7 +29,7 @@ public interface JeeslRevisionScope<L extends UtilsLang,D extends UtilsDescripti
 		extends Serializable,EjbPersistable,EjbSaveable,EjbRemoveable,
 				EjbWithPositionVisible,EjbWithParentAttributeResolver,EjbWithPositionParent,
 				EjbWithCode,
-				EjbWithLang<L>,EjbWithDescription<D>,EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
+				EjbWithLang<L>,EjbWithDescription<D>,EjbWithRevisionAttributes<RA>
 {		
 	RC getCategory();
 	void setCategory(RC category);

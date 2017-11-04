@@ -46,8 +46,8 @@ public interface JeeslIoRevisionFacade <L extends UtilsLang,D extends UtilsDescr
 	
 	void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException;
 	
-	<W extends EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>> RA save(Class<W> cW, W entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
-	<W extends EjbWithRevisionAttributes<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>> void rm(Class<W> cW, W entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
+	<W extends EjbWithRevisionAttributes<RA>> RA save(Class<W> cW, W entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
+	<W extends EjbWithRevisionAttributes<RA>> void rm(Class<W> cW, W entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;
 	
 	<T extends EjbWithId> T jpaTree(Class<T> c, String jpa, long id) throws UtilsNotFoundException;
 	

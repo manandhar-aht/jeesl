@@ -6,7 +6,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslSecurityWithViews <V extends JeeslSecurityView<?,?,?,?,V,?,?,?,?>>
+public interface JeeslSecurityWithViews <V extends JeeslSecurityView<?,?,?,?,?,?>>
 										extends EjbWithId
 {
 	public List<V> getViews();

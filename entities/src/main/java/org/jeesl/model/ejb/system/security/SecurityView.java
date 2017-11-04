@@ -34,8 +34,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"code"}))
 @EjbErNode(name="View",category="security",subset="security")
 
-public class SecurityView implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-		JeeslSecurityView<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,User>
+public class SecurityView implements JeeslSecurityView<Lang,Description,SecurityCategory,SecurityRole,SecurityUsecase,SecurityAction>
 {
 	public static enum Code {welcome}
 	public static enum CodeSeries {seriesAll,series,season,episode}

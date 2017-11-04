@@ -32,7 +32,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 											C extends JeeslSecurityCategory<L,D>,
 											R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 											V extends JeeslSecurityView<L,D,C,R,U,A>,
-											U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
+											U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 											A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 											AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 											USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>

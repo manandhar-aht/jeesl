@@ -8,7 +8,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 
 public interface JeeslRevisionViewMapping<RV extends JeeslRevisionView<?,?,?>,
-									RE extends JeeslRevisionEntity<?,?,?,RV,?,?,?,RE,REM,?,?>,
+									RE extends JeeslRevisionEntity<?,?,?,REM,?>,
 									REM extends JeeslRevisionEntityMapping<?,?,?,RV,?,?,?,RE,REM,?,?>>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithPositionVisible

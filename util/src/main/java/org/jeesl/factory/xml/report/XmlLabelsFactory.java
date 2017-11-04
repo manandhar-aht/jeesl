@@ -58,16 +58,7 @@ public class XmlLabelsFactory
 		}
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,
-					RC extends UtilsStatus<RC,L,D>,
-					RV extends JeeslRevisionView<L,D,RVM>,
-					RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
-					RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					RST extends UtilsStatus<RST,L,D>,
-					RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
-					RAT extends UtilsStatus<RAT,L,D>>
+	public static <RE extends JeeslRevisionEntity<?,?,?,?,RA>, RA extends JeeslRevisionAttribute<?,?,RE,?>>
 		Labels build(RE entity, String localeCode, String scope)
 	{
 		Labels xml = build();

@@ -20,7 +20,7 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 									RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
 									RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RST extends UtilsStatus<RST,L,D>,
-									RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 									REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
@@ -40,7 +40,7 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 					RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
 					RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RST extends UtilsStatus<RST,L,D>,
-					RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 					REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>>

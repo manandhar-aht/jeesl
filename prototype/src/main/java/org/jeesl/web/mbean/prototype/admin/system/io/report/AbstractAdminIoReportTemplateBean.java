@@ -64,7 +64,7 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 										FILLING extends UtilsStatus<FILLING,L,D>,
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 										RC extends UtilsStatus<RC,L,D>,
-										RE extends JeeslRevisionEntity<L,D,RC,?,?,?,?,RE,?,RA,CDT>,
+										RE extends JeeslRevisionEntity<L,D,RC,?,RA>,
 										RA extends JeeslRevisionAttribute<L,D,RE,CDT>
 										>
 	extends AbstractIoReportBean<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION,RC,RE,RA>

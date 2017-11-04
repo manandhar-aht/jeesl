@@ -16,7 +16,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslRevisionAttribute<L extends UtilsLang,D extends UtilsDescription,
-										RE extends JeeslRevisionEntity<L,D,?,?,?,?,?,?,?,?,RAT>,
+										RE extends JeeslRevisionEntity<L,D,?,?,?>,
 										RAT extends UtilsStatus<RAT,L,D>>
 		extends Serializable,EjbRemoveable,EjbPersistable,UtilsWithSymbol,EjbWithId,
 				EjbWithCode,EjbWithPosition,

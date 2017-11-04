@@ -51,7 +51,7 @@ public class UiHelperSurvey <L extends UtilsLang, D extends UtilsDescription,
 				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 				DOMAIN extends JeeslSurveyDomain<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
 				PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-				DENTITY extends JeeslRevisionEntity<L,D,?,?,?,?,?,DENTITY,?,?,?>,
+				DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>, AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>, AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>, ATT extends UtilsStatus<ATT,L,D>>
 //					extends AbstractAdminBean<L,D>
 			implements Serializable

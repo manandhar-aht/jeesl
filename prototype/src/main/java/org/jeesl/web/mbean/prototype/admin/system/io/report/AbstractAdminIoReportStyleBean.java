@@ -19,13 +19,8 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportStyleComparator;
-import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,19 +57,17 @@ public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends Utils
 										TLS extends UtilsStatus<TLS,L,D>,
 										FILLING extends UtilsStatus<FILLING,L,D>,
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
-										RCAT extends UtilsStatus<RCAT,L,D>,
-										
-										RE extends JeeslRevisionEntity<L,D,RCAT,?,?,?,?,RE,REM,RA,CDT>,
-										REM extends JeeslRevisionEntityMapping<L,D,RCAT,?,?,?,?,RE,REM,RA,CDT>,
-										RA extends JeeslRevisionAttribute<L,D,RCAT,?,?,?,?,RE,REM,RA,CDT>
+										RCAT extends UtilsStatus<RCAT,L,D>,				
+										RE extends JeeslRevisionEntity<L,D,RCAT,?,?,?,?,RE,?,RA,CDT>,
+										RA extends JeeslRevisionAttribute<L,D,RCAT,?,?,?,?,RE,?,RA,CDT>
 										>
-	extends AbstractIoReportBean<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION,RCAT,RE,REM,RA>
+	extends AbstractIoReportBean<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION,RCAT,RE,RA>
 	implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoReportStyleBean.class);
 
-	private Class<STYLE> cStyle;
+	
 	
 	private List<STYLE> styles; public List<STYLE> getStyles() {return styles;}
 	
@@ -89,12 +82,9 @@ public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends Utils
 		super(fbReport);
 	}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport
-			, Class<REPORT> cReport, Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<TEMPLATE> cTemplate, Class<CELL> cCell, Class<STYLE> cStyle, Class<CDT> cDataType, Class<CW> cColumnWidth, Class<RT> cRowType, Class<RCAT> cRevisionCategory)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
 	{
 		super.initSuperReport(langs,bMessage,fReport);
-
-		this.cStyle = cStyle;
 		
 		efStyle = fbReport.style();
 				
@@ -111,14 +101,14 @@ public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends Utils
 	//*************************************************************************************
 	private void reloadStyles()
 	{
-		styles = fReport.all(cStyle);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cStyle,styles));}
+		styles = fReport.all(fbReport.getClassStyle());
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbReport.getClassStyle(),styles));}
 //		Collections.sort(templates,comparatorTemplate);
 	}
 	
 	public void addStyle()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cStyle));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassStyle()));}
 		style = efStyle.build();
 		style.setName(efLang.createEmpty(langs));
 		style.setDescription(efDescription.createEmpty(langs));
@@ -127,13 +117,13 @@ public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends Utils
 	
 	private void reloadStyle()
 	{
-		style = fReport.find(cStyle,style);
+		style = fReport.find(fbReport.getClassStyle(),style);
 	}
 	
 	public void selectStyle() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(style));}
-		style = fReport.find(cStyle, style);
+		style = fReport.find(fbReport.getClassStyle(), style);
 		style = efLang.persistMissingLangs(fReport,langs,style);
 		style = efDescription.persistMissingLangs(fReport,langs,style);
 		

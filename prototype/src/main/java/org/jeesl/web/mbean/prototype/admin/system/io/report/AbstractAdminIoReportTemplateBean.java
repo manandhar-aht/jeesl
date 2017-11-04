@@ -64,20 +64,14 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 										FILLING extends UtilsStatus<FILLING,L,D>,
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 										RC extends UtilsStatus<RC,L,D>,
-										RV extends JeeslRevisionView<L,D,RC,RV,?,?,?,RE,REM,RA,CDT>,
-
-										RE extends JeeslRevisionEntity<L,D,RC,RV,?,?,?,RE,REM,RA,CDT>,
-										REM extends JeeslRevisionEntityMapping<L,D,RC,RV,?,?,?,RE,REM,RA,CDT>,
-										RA extends JeeslRevisionAttribute<L,D,RC,RV,?,?,?,RE,REM,RA,CDT>
+										RE extends JeeslRevisionEntity<L,D,RC,?,?,?,?,RE,?,RA,CDT>,
+										RA extends JeeslRevisionAttribute<L,D,RC,?,?,?,?,RE,?,RA,CDT>
 										>
-	extends AbstractIoReportBean<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION,RC,RE,REM,RA>
+	extends AbstractIoReportBean<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION,RC,RE,RA>
 	implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoReportTemplateBean.class);
-	
-	private Class<TEMPLATE> cTemplate;
-	private Class<CELL> cCell;
 	
 	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
 	private List<CELL> cells; public List<CELL> getCells() {return cells;}
@@ -96,13 +90,9 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		super(fbReport);
 	}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport,
-			final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, Class<WORKBOOK> cWorkbook, Class<SHEET> cSheet, Class<GROUP> cGroup, Class<COLUMN> cColumn, Class<ROW> cRow, Class<TEMPLATE> cTemplate, Class<CELL> cCell, Class<STYLE> cStyle, Class<CDT> cDataType, Class<CW> cColumnWidth, Class<RT> cRowType, Class<RC> cRevisionCategory)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
 	{
 		super.initSuperReport(langs,bMessage,fReport);
-
-		this.cTemplate = cTemplate;
-		this.cCell = cCell;
 		
 		efTemplate = fbReport.template();
 		efCell = fbReport.cell();
@@ -122,14 +112,14 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	//*************************************************************************************
 	private void reloadTemplates()
 	{
-		templates = fReport.all(cTemplate);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cTemplate,templates));}
+		templates = fReport.all(fbReport.getClassTemplate());
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbReport.getClassTemplate(),templates));}
 //		Collections.sort(templates,comparatorTemplate);
 	}
 	
 	public void addTemplate()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cTemplate));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassTemplate()));}
 		template = efTemplate.build();
 		template.setName(efLang.createEmpty(langs));
 		template.setDescription(efDescription.createEmpty(langs));
@@ -147,7 +137,7 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	public void selectTemplate() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
-		template = fReport.find(cTemplate, template);
+		template = fReport.find(fbReport.getClassTemplate(), template);
 		template = efLang.persistMissingLangs(fReport,langs,template);
 		template = efDescription.persistMissingLangs(fReport,langs,template);
 		
@@ -182,7 +172,7 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 
 	public void addCell()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cCell));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassCell()));}
 		cell = efCell.build(template);
 		cell.setName(efLang.createEmpty(langs));
 		cell.setDescription(efDescription.createEmpty(langs));
@@ -192,7 +182,7 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	public void selectCell()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(cell));}
-		cell = fReport.find(cCell, cell);
+		cell = fReport.find(fbReport.getClassCell(), cell);
 		reset(false,false);
 	}
 		

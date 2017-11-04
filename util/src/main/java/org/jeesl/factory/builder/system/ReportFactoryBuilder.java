@@ -73,7 +73,7 @@ public class ReportFactoryBuilder<L extends UtilsLang,D extends UtilsDescription
 	private final Class<COLUMN> cColumn; public Class<COLUMN> getClassColumn(){return cColumn;}
 	private final Class<ROW> cRow; public Class<ROW> getClassRow(){return cRow;}
 	private final Class<TEMPLATE> cTemplate; public Class<TEMPLATE> getClassTemplate(){return cTemplate;}
-	private final Class<CELL> cCell;
+	private final Class<CELL> cCell; public Class<CELL> getClassCell(){return cCell;}
 	private final Class<STYLE> cStyle; public Class<STYLE> getClassStyle(){return cStyle;}
 	private final Class<CDT> cDataType; public Class<CDT> getClassCellDataType(){return cDataType;}
 	private final Class<CW> cColumnWidth; public Class<CW> getClassColumnWidth(){return cColumnWidth;}

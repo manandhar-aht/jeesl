@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 public interface JeeslRevisionEntityMapping<L extends UtilsLang,D extends UtilsDescription,
 											RC extends UtilsStatus<RC,L,D>,
 											RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-											RVM extends JeeslRevisionViewMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
 											RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 											RST extends UtilsStatus<RST,L,D>,
 											RE extends JeeslRevisionEntity<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,

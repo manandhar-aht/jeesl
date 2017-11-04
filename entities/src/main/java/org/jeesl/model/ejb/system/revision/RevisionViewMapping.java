@@ -1,8 +1,6 @@
 package org.jeesl.model.ejb.system.revision;
 
 
-import java.io.Serializable;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,16 +9,11 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
-import org.jeesl.model.ejb.system.status.Description;
-import org.jeesl.model.ejb.system.status.Lang;
 
-import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
-import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="View Mapping",category="revision",subset="revision",level=3)
-public class RevisionViewMapping implements Serializable,EjbRemoveable,EjbPersistable,
-								JeeslRevisionViewMapping<Lang,Description,RevisionCategory,RevisionView,RevisionViewMapping,RevisionScope,RevisionScopeType,RevisionEntity,RevisionEntityMapping,RevisionAttribute,RevisionAttributeType>
+public class RevisionViewMapping implements JeeslRevisionViewMapping<RevisionView,RevisionEntity,RevisionEntityMapping>
 {
 	public static final long serialVersionUID=1;
 

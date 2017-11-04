@@ -1,6 +1,5 @@
 package org.jeesl.model.ejb.system.security;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,21 +20,15 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.user.User;
 
-import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
-import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames = {"code"}))
 @EjbErNode(name="Action",category="security",subset="security")
-
-public class SecurityAction implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-	JeeslSecurityAction<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,User>
+public class SecurityAction implements JeeslSecurityAction<Lang,Description,SecurityRole,SecurityView,SecurityUsecase,SecurityActionTemplate>
 {
 	public static final long serialVersionUID=1;
 

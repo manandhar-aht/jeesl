@@ -18,7 +18,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		implements Serializable
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractLogMessage.class);
@@ -34,7 +34,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 		return sb.toString();
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		String postConstruct(USER user)
 	{
 		StringBuffer sb = new StringBuffer();
@@ -53,9 +53,9 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 		return sb.toString();
 	}
 	
-    public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+    public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		String postConstruct(USER user, long urlCode){return postConstruct(user, ""+urlCode);}
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		String postConstruct(USER user, String urlCode)
 	{
 		StringBuffer sb = new StringBuffer();
@@ -84,7 +84,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 		return sb.toString();
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		String preDestroy(USER user)
 	{
 		StringBuffer sb = new StringBuffer();
@@ -94,7 +94,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	public static String addEntity(Class<?> cl){return addEntity(null,cl);}
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 		String addEntity(USER user, Class<?> cl)
 	{
 		StringBuffer sb = new StringBuffer();
@@ -106,7 +106,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 	}
 
 	 public static <T extends EjbWithId> String addEntity(T t){return addEntity(null,t);}
-	 public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId>
+	 public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId>
 	 		String addEntity(USER user,T t)
 	 {
 		 StringBuffer sb = new StringBuffer();
@@ -120,7 +120,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 	{
 		 return rmEntity(null,t);
 	}
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId>
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId>
 		String rmEntity(USER user, T t)
 	{
 		 StringBuffer sb = new StringBuffer();
@@ -243,7 +243,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 	}
 
 	public static <T extends EjbWithId> String saveEntity(T t){return saveEntity(null,t);}
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId>
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId>
 		String saveEntity(USER user, T t)
     {
         StringBuffer sb = new StringBuffer();
@@ -252,7 +252,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
         sb.append(": ").append(t.toString());
         return sb.toString();
     }
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId, X extends EjbWithId>
+	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>, T extends EjbWithId, X extends EjbWithId>
 	String saveEntity(USER user, T t, X x)
 {
     StringBuffer sb = new StringBuffer();

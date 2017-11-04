@@ -22,7 +22,7 @@ public interface JeeslSecurityView<L extends UtilsLang,
 								   C extends JeeslSecurityCategory<L,D>,
 								   R extends JeeslSecurityRole<L,D,C,R,?,U,A,?,?>,
 								   U extends JeeslSecurityUsecase<L,D,C,R,?,A>,
-								   A extends JeeslSecurityAction<L,D,C,R,?,U,A,?,?>>
+								   A extends JeeslSecurityAction<L,D,R,?,U,?>>
 			extends Serializable,EjbPersistable,EjbSaveable,EjbRemoveable,
 					EjbWithCode,EjbWithPositionVisible,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>,

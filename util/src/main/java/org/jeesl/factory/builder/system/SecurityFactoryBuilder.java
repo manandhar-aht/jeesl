@@ -31,7 +31,7 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 									V extends JeeslSecurityView<L,D,C,R,U,A>,
 									U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-									A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+									A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 									AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 									USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 				extends AbstractFactoryBuilder<L,D>

@@ -21,7 +21,7 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 								   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 								   V extends JeeslSecurityView<L,D,C,R,U,A>,
 								   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-								   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+								   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 								   AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 								   USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 {
@@ -64,7 +64,7 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER
 	   			   R extends JeeslSecurityRole<L,D,C,R,V,U,A,AT,USER>,
 	   			   V extends JeeslSecurityView<L,D,C,R,U,A>,
 	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-	   			   A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
+	   			   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 	   			AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
 	   			USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 	UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER> factory(final Class<I> clIdentity,

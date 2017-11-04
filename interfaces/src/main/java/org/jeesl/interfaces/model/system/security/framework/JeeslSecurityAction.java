@@ -20,7 +20,7 @@ public interface JeeslSecurityAction<L extends UtilsLang, D extends UtilsDescrip
 								   R extends JeeslSecurityRole<L,D,?,V,U,?,?>,
 								   V extends JeeslSecurityView<L,D,?,R,U,?>,
 								   U extends JeeslSecurityUsecase<L,D,?,R,V,?>,
-								   AT extends JeeslSecurityTemplate<L,D,?,R,V,U,?,AT,?>>
+								   AT extends JeeslSecurityTemplate<L,D,?>>
 			extends Serializable,EjbWithCode,EjbPersistable,EjbSaveable,EjbRemoveable,
 					EjbWithPositionVisible,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>

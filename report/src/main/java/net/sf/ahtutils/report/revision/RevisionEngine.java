@@ -46,7 +46,7 @@ public class RevisionEngine<L extends UtilsLang,D extends UtilsDescription,
 							V extends JeeslSecurityView<L,D,C,R,U,A>,
 							U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 							A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-							AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
+							AT extends JeeslSecurityTemplate<L,D,C>,
 							USER extends JeeslUser<R>>
 {
 	final static Logger logger = LoggerFactory.getLogger(RevisionEngine.class);

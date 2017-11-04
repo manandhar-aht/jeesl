@@ -24,7 +24,7 @@ public class OverlayUserSelectionHandler <L extends UtilsLang, D extends UtilsDe
 											V extends JeeslSecurityView<L,D,C,R,U,A>,
 											U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 											A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-											AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
+											AT extends JeeslSecurityTemplate<L,D,C>,
 											USER extends JeeslUser<R>>
 	implements OpUserSelectionHandler<L,D,C,R,V,U,A,AT,USER>
 {

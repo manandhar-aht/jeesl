@@ -31,9 +31,9 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 													V extends JeeslSecurityView<L,D,C,R,U,A>,
 													U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 													A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-													AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
+													AT extends JeeslSecurityTemplate<L,D,C>,
 													USER extends JeeslUser<R>,
-													I extends JeeslIdentity<L,D,C,R,V,U,A,AT,USER>>
+													I extends JeeslIdentity<R,V,U,A,USER>>
 	implements UtilsJsfSecurityHandler<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJsfSecurityHandler.class);

@@ -18,7 +18,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,USER extends JeeslUser<R>>
+public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C>,USER extends JeeslUser<R>>
 		implements Serializable
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractLogMessage.class);

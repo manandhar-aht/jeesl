@@ -20,7 +20,7 @@ public class EjbRevisionMappingViewFactory<L extends UtilsLang,D extends UtilsDe
 									RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RST extends UtilsStatus<RST,L,D>,
 									RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
-									REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
 									RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 {
@@ -40,7 +40,7 @@ public class EjbRevisionMappingViewFactory<L extends UtilsLang,D extends UtilsDe
 					RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RST extends UtilsStatus<RST,L,D>,
 					RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
-					REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
 					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>>
 	EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory(final Class<RVM> cMapping)

@@ -9,7 +9,7 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 
 public interface JeeslRevisionViewMapping<RV extends JeeslRevisionView<?,?,?>,
 									RE extends JeeslRevisionEntity<?,?,?,REM,?>,
-									REM extends JeeslRevisionEntityMapping<?,?,?,RV,?,?,?,RE,REM,?,?>>
+									REM extends JeeslRevisionEntityMapping<?,?,RE>>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithPositionVisible
 {					

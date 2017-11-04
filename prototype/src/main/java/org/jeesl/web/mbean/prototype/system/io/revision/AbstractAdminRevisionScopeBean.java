@@ -31,7 +31,7 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 											RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 											RST extends UtilsStatus<RST,L,D>,
 											RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
-											REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+											REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
 											RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 											RAT extends UtilsStatus<RAT,L,D>>
 					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>

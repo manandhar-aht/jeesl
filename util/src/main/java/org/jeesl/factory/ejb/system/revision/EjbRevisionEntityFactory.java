@@ -25,7 +25,7 @@ public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescrip
 									RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RST extends UtilsStatus<RST,L,D>,
 									RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
-									REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
 									RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 									RAT extends UtilsStatus<RAT,L,D>>
 {
@@ -50,7 +50,7 @@ public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescrip
 					RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RST extends UtilsStatus<RST,L,D>,
 					RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
-					REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
 					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
 					RAT extends UtilsStatus<RAT,L,D>>
 	EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory(final Class<L> cL,final Class<D> cD,final Class<RE> cEntity)

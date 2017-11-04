@@ -5,34 +5,25 @@ import java.io.Serializable;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 
-public interface JeeslRevisionEntityMapping<L extends UtilsLang,D extends UtilsDescription,
-											RC extends UtilsStatus<RC,L,D>,
-											RV extends JeeslRevisionView<L,D,RVM>,
-											RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
-											RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-											RST extends UtilsStatus<RST,L,D>,
-											RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
-											REM extends JeeslRevisionEntityMapping<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
-											RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
-											RAT extends UtilsStatus<RAT,L,D>>
+public interface JeeslRevisionEntityMapping<RS extends JeeslRevisionScope<?,?,?,?,?,RS,RST,RE,?,?,?>,
+											RST extends UtilsStatus<RST,?,?>,
+											RE extends JeeslRevisionEntity<?,?,?,?,?>>
 		extends Serializable,EjbPersistable,EjbSaveable,EjbRemoveable,
 				EjbWithPositionVisible
 {			
 	public static enum Type{xpath,jpqlTree}
-	
-	RE getEntity();
-	void setEntity(RE entity);
 	
 	RS getScope();
 	void setScope(RS scope);
 	
 	RST getType();
 	void setType(RST type);
+	
+	RE getEntity();
+	void setEntity(RE entity);
 	
 	String getXpath();
 	void setXpath(String xpath);

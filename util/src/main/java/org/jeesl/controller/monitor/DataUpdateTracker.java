@@ -8,12 +8,14 @@ import java.util.Set;
 
 import org.jeesl.factory.xml.system.io.sync.XmlExceptionFactory;
 import org.jeesl.factory.xml.system.io.sync.XmlExceptionsFactory;
+import org.jeesl.factory.xml.system.io.sync.XmlMapperFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.status.Type;
 import net.sf.ahtutils.xml.sync.DataUpdate;
+import net.sf.ahtutils.xml.sync.Mapper;
 import net.sf.ahtutils.xml.sync.Result;
 import net.sf.exlp.util.DateUtil;
 
@@ -25,8 +27,8 @@ public class DataUpdateTracker implements net.sf.ahtutils.interfaces.controller.
 	
 	private DataUpdate update;
 	
-	private Map<String,Integer> updateSuccess,updateFail;
-	private Map<String,Integer> createSuccess,createFail;
+	private final Map<String,Integer> updateSuccess,updateFail;
+	private final Map<String,Integer> createSuccess,createFail;
 	
 	public DataUpdateTracker()
 	{
@@ -121,6 +123,18 @@ public class DataUpdateTracker implements net.sf.ahtutils.interfaces.controller.
 		if(update.getResult().getSuccess()==update.getResult().getTotal()){update.getResult().setStatus(XmlStatusFactory.create(Code.success.toString()));}
 		else if(update.getResult().getFail()==update.getResult().getTotal()){update.getResult().setStatus(XmlStatusFactory.create(Code.fail.toString()));}
 		else if(update.getResult().getFail()!=0){update.getResult().setStatus(XmlStatusFactory.create(Code.partial.toString()));}
+		
+		if(!updateSuccess.isEmpty())
+		{
+			for(String key : updateSuccess.keySet())
+			{
+				Mapper m = new Mapper();
+				m.setClazz(key);
+				m.setCode("updateSuccess");
+				m.setNewId(updateSuccess.get(key));
+				update.getMapper().add(m);
+			}
+		}
 		
 		return update;
 	}

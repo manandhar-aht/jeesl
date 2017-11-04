@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public interface JeeslLabelBean<L extends UtilsLang,D extends UtilsDescription,
 								RC extends UtilsStatus<RC,L,D>,
-								RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+								RV extends JeeslRevisionView<L,D,RVM>,
 								RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
 								RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 								RST extends UtilsStatus<RST,L,D>,

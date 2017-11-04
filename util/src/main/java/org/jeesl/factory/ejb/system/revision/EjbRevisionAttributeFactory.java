@@ -16,7 +16,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
-									RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+									RV extends JeeslRevisionView<L,D,RVM>,
 									RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
 									RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 									RST extends UtilsStatus<RST,L,D>,
@@ -36,7 +36,7 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					RC extends UtilsStatus<RC,L,D>,
-					RV extends JeeslRevisionView<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
+					RV extends JeeslRevisionView<L,D,RVM>,
 					RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
 					RS extends JeeslRevisionScope<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>,
 					RST extends UtilsStatus<RST,L,D>,

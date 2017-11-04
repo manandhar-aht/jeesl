@@ -12,8 +12,8 @@
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
-		<composite:attribute name="bean" required="false" default="#{adminIoReportBean}"/>
-		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
+		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -31,7 +31,7 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderStyles()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sStyle" listener="#{cc.attrs.bean.selectStyle()}"/>
 							<p:column rendered="true"><h:outputText value="#{s.position}"/></p:column>
-							<p:column headerText="#{msg.Name}"><h:outputText value="#{s.name[userBean.localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslName}"><h:outputText value="#{s.name[userBean.localeCode].lang}"/></p:column>
 							<p:column><aup:iconCheckmark value="#{s.visible}"/></p:column>
 						</p:dataTable>
 					</h:form>
@@ -48,8 +48,7 @@
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.style.visible}"/>
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.style}" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.style}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 								<p:outputLabel value="#{msg.jeeslIoReportStyleColorBackground}"/>
 								<p:colorPicker value="#{cc.attrs.bean.style.colorBackground}"/>

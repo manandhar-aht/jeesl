@@ -1,9 +1,13 @@
 package org.jeesl.interfaces.model.system.io.report;
 
+import java.io.Serializable;
+
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -32,7 +36,7 @@ public interface JeeslReportCell<L extends UtilsLang,D extends UtilsDescription,
 									TL extends JeeslTrafficLight<L,D,TLS>,
 									TLS extends UtilsStatus<TLS,L,D>>
 
-		extends EjbWithId,EjbSaveable,
+		extends Serializable,EjbRemoveable,EjbPersistable,EjbSaveable,
 				EjbWithCode,EjbWithVisible,
 				EjbWithLang<L>,EjbWithDescription<D>
 {	

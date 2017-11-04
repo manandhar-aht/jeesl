@@ -161,8 +161,8 @@
 		</dependency>
 		
 		<dependency>
-        	<groupId>org.jeesl</groupId>
-        	<artifactId>jeesl-util</artifactId>
+			<groupId>org.jeesl</groupId>
+			<artifactId>jeesl-util</artifactId>
 	    </dependency>
 		
 		<dependency>

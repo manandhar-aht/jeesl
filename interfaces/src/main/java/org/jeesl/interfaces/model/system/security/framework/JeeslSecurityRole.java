@@ -29,8 +29,8 @@ public interface JeeslSecurityRole<L extends UtilsLang,
 			extends EjbWithCode,EjbSaveable,EjbRemoveable,EjbWithPositionVisible,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>,
 					JeeslSecurityWithCategory<C>,
-					JeeslSecurityWithViews<L,D,C,R,V,U,A,AT,USER>,
-					JeeslSecurityWithActions<L,D,C,R,V,U,A,AT,USER>
+					JeeslSecurityWithViews<V>,
+					JeeslSecurityWithActions<A>
 //					UtilsSecurityWithActionTemplates<L,D,C,R,V,U,A,AT,USER>
 					
 {

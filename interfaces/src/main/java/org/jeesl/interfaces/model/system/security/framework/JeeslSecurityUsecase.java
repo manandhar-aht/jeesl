@@ -28,8 +28,8 @@ public interface JeeslSecurityUsecase<L extends UtilsLang,
 			extends EjbWithCode,EjbSaveable,EjbWithPositionVisible,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>,
 					JeeslSecurityWithCategory<C>,
-					JeeslSecurityWithViews<L,D,C,R,V,U,A,AT,USER>,
-					JeeslSecurityWithActions<L,D,C,R,V,U,A,AT,USER>
+					JeeslSecurityWithViews<V>,
+					JeeslSecurityWithActions<A>
 //					UtilsSecurityWithActionTemplates<L,D,C,R,V,U,A,AT,USER>
 {
 	public static final String extractId = "securityUsecases";

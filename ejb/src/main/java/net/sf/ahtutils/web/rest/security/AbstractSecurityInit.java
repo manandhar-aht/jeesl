@@ -246,7 +246,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		logger.error("This method *must* be overridden!");
 	}
 	
-	@Deprecated protected <T extends JeeslSecurityWithViews<L,D,C,R,V,U,A,AT,USER>> T iuListViews(T ejb, Views views) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
+	@Deprecated protected <T extends JeeslSecurityWithViews<V>> T iuListViews(T ejb, Views views) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
 		ejb.getViews().clear();
 		ejb = fSecurity.update(ejb);
@@ -261,7 +261,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		}
 		return ejb;
 	}
-	protected <T extends JeeslSecurityWithViews<L,D,C,R,V,U,A,AT,USER>> T iuListViewsSecurity(T ejb, net.sf.ahtutils.xml.security.Views views) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
+	protected <T extends JeeslSecurityWithViews<V>> T iuListViewsSecurity(T ejb, net.sf.ahtutils.xml.security.Views views) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
 //		ejb = fSecurity.load(cView, view);
 		ejb.getViews().clear();
@@ -279,7 +279,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		return ejb;
 	}
 	
-	@Deprecated protected <T extends JeeslSecurityWithActions<L,D,C,R,V,U,A,AT,USER>> T iuListActions(T ejb, Actions actions) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
+	@Deprecated protected <T extends JeeslSecurityWithActions<A>> T iuListActions(T ejb, Actions actions) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
 		ejb.getActions().clear();
 		ejb = fSecurity.update(ejb);
@@ -294,7 +294,7 @@ public class AbstractSecurityInit <L extends UtilsLang,
 		}
 		return ejb;
 	}
-	protected <T extends JeeslSecurityWithActions<L,D,C,R,V,U,A,AT,USER>> T iuListActions(T ejb, net.sf.ahtutils.xml.security.Actions actions) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
+	protected <T extends JeeslSecurityWithActions<A>> T iuListActions(T ejb, net.sf.ahtutils.xml.security.Actions actions) throws UtilsConstraintViolationException, UtilsNotFoundException, UtilsLockingException
 	{
 		ejb.getActions().clear();
 		ejb = fSecurity.update(ejb);

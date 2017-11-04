@@ -29,7 +29,7 @@ public interface JeeslSecurityView<L extends UtilsLang,
 					EjbWithPositionVisible,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>,
 					JeeslSecurityWithCategory<C>,
-					JeeslSecurityWithActions<L,D,C,R,V,U,A,AT,USER>
+					JeeslSecurityWithActions<A>
 {
 	public static final String extractId = "securityViews";
 	

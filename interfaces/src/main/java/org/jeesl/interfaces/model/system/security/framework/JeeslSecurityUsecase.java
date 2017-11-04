@@ -20,7 +20,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSecurityUsecase<L extends UtilsLang, D extends UtilsDescription, 
  									  C extends JeeslSecurityCategory<L,D>,
- 									  R extends JeeslSecurityRole<L,D,C,R,V,?,A,?,?>,
+ 									  R extends JeeslSecurityRole<L,D,C,V,?,A,?>,
  									  V extends JeeslSecurityView<L,D,C,R,?,A>,
  									  A extends JeeslSecurityAction<L,D,R,V,?,?>
  									 >

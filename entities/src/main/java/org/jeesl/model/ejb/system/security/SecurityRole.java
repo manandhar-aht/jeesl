@@ -1,6 +1,5 @@
 package org.jeesl.model.ejb.system.security;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,21 +21,16 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
-import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
 import org.jeesl.model.ejb.user.User;
 
-import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
-import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"code"}))
 @EjbErNode(name="Role",category="security",subset="security,ts")
-
-public class SecurityRole implements EjbWithCode,Serializable,EjbRemoveable,EjbPersistable,
-	JeeslSecurityRole<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityUsecase,SecurityAction,SecurityActionTemplate,User>
+public class SecurityRole implements JeeslSecurityRole<Lang,Description,SecurityCategory,SecurityView,SecurityUsecase,SecurityAction,User>
 {
 	public static enum Code {systemAht}
 	public static enum CodeRegion {regionalManager,regionalEditor}

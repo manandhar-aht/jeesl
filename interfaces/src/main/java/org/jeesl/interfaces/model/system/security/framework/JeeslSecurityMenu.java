@@ -5,9 +5,7 @@ import java.io.Serializable;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 
-public interface JeeslSecurityMenu<
-								   V extends JeeslSecurityView<?,?,?,?,?,?>,
-								   
+public interface JeeslSecurityMenu<V extends JeeslSecurityView<?,?,?,?,?,?>,
 								   M extends JeeslSecurityMenu<V,M>>
 			extends Serializable,EjbSaveable,EjbWithPosition
 {

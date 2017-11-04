@@ -211,7 +211,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		return user.getRoles();
 	}
 	
-	@Override public <WC extends JeeslSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>> List<WC> allForCategory(Class<WC> clWc, Class<C> clC, String code) throws UtilsNotFoundException
+	@Override public <WC extends JeeslSecurityWithCategory<C>> List<WC> allForCategory(Class<WC> clWc, Class<C> clC, String code) throws UtilsNotFoundException
 	{
 		if(logger.isTraceEnabled())
 		{

@@ -23,7 +23,7 @@ public class XmlMenuItemFactory <L extends UtilsLang, D extends UtilsDescription
 								U extends JeeslSecurityUsecase<L,D,C,R,V,U,A,AT,USER>,
 								A extends JeeslSecurityAction<L,D,C,R,V,U,A,AT,USER>,
 								AT extends JeeslSecurityTemplate<L,D,C,R,V,U,A,AT,USER>,
-								M extends JeeslSecurityMenu<L,D,C,R,V,U,A,AT,M,USER>,
+								M extends JeeslSecurityMenu<V,M>,
 								USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlMenuItemFactory.class);

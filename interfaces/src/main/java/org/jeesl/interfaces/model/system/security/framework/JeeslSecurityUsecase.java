@@ -27,7 +27,7 @@ public interface JeeslSecurityUsecase<L extends UtilsLang,
  									  USER extends JeeslUser<L,D,C,R,V,U,A,AT,USER>>
 			extends EjbWithCode,EjbSaveable,EjbWithPositionVisible,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>,
-					JeeslSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>,
+					JeeslSecurityWithCategory<C>,
 					JeeslSecurityWithViews<L,D,C,R,V,U,A,AT,USER>,
 					JeeslSecurityWithActions<L,D,C,R,V,U,A,AT,USER>
 //					UtilsSecurityWithActionTemplates<L,D,C,R,V,U,A,AT,USER>

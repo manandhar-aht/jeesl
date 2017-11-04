@@ -25,7 +25,7 @@ public interface JeeslSecurityTemplate<L extends UtilsLang,
 			extends EjbWithCode,EjbSaveable,EjbRemoveable,
 					EjbWithPositionVisible,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>,
-					JeeslSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>
+					JeeslSecurityWithCategory<C>
 {
 	public boolean getDocumentation();
 	public void setDocumentation(boolean documentation);

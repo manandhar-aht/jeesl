@@ -28,7 +28,7 @@ public interface JeeslSecurityView<L extends UtilsLang,
 			extends EjbWithCode,EjbSaveable,EjbRemoveable,
 					EjbWithPositionVisible,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>,
-					JeeslSecurityWithCategory<L,D,C,R,V,U,A,AT,USER>,
+					JeeslSecurityWithCategory<C>,
 					JeeslSecurityWithActions<L,D,C,R,V,U,A,AT,USER>
 {
 	public static final String extractId = "securityViews";

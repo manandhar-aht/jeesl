@@ -58,44 +58,44 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cUser=cUser;
 	}
 	
-	public EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> ejbCategory()
+	public EjbSecurityCategoryFactory<C> ejbCategory()
 	{
-		return new EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER>(cCategory);
+		return new EjbSecurityCategoryFactory<C>(cCategory);
 	}
 	
-	public EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> ejbRole()
+	public EjbSecurityRoleFactory<C,R> ejbRole()
 	{
-		return new EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER>(cRole);
+		return new EjbSecurityRoleFactory<C,R>(cRole);
 	}
 	
-	public EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> ejbView()
+	public EjbSecurityViewFactory<C,V> ejbView()
 	{
-		return new EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER>(cView);
+		return new EjbSecurityViewFactory<C,V>(cView);
 	}
 	
-	public EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> ejbUsecase()
+	public EjbSecurityUsecaseFactory<C,U> ejbUsecase()
 	{
-		return new EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER>(cUsecase);
+		return new EjbSecurityUsecaseFactory<C,U>(cUsecase);
 	}
 	
-	public EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> ejbAction()
+	public EjbSecurityActionFactory<V,A> ejbAction()
 	{
-		return new EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>(cAction);
+		return new EjbSecurityActionFactory<V,A>(cAction);
 	}
 	
-	public EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER> ejbTemplate()
+	public EjbSecurityActionTemplateFactory<C,AT> ejbTemplate()
 	{
-		return new EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER>(cTemplate);
+		return new EjbSecurityActionTemplateFactory<C,AT>(cTemplate);
 	}
 	
-	public <M extends JeeslSecurityMenu<V,M>> EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> ejbMenu(Class<M> cM)
+	public <M extends JeeslSecurityMenu<V,M>> EjbSecurityMenuFactory<V,M> ejbMenu(Class<M> cM)
 	{
-		return new EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>(cM);
+		return new EjbSecurityMenuFactory<V,M>(cM);
 	}
 	
-	public EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER> ejbUser()
+	public EjbSecurityUserFactory<USER> ejbUser()
 	{
-		return new EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER>(cUser);
+		return new EjbSecurityUserFactory<USER>(cUser);
 	}
 	
 	

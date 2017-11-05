@@ -53,7 +53,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	private JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	
 	private XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER> xfMenuItem;
-	private final EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> efMenu;
+	private final EjbSecurityMenuFactory<V,M> efMenu;
 	private final TxtSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> tfMenu;
 	
 	private final Map<String,M> mapKey;

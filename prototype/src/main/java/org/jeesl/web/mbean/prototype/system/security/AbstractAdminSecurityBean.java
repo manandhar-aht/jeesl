@@ -54,12 +54,12 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	
 	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
 	
-	protected final EjbSecurityCategoryFactory<L,D,C,R,V,U,A,AT,USER> efCategory;
-	protected final EjbSecurityRoleFactory<L,D,C,R,V,U,A,AT,USER> efRole;
-	protected final EjbSecurityViewFactory<L,D,C,R,V,U,A,AT,USER> efView;
-	protected final EjbSecurityUsecaseFactory<L,D,C,R,V,U,A,AT,USER> efUsecase;
-	protected final EjbSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> efAction;
-	protected final EjbSecurityActionTemplateFactory<L,D,C,R,V,U,A,AT,USER> efTemplate;
+	protected final EjbSecurityCategoryFactory<C> efCategory;
+	protected final EjbSecurityRoleFactory<C,R> efRole;
+	protected final EjbSecurityViewFactory<C,V> efView;
+	protected final EjbSecurityUsecaseFactory<C,U> efUsecase;
+	protected final EjbSecurityActionFactory<V,A> efAction;
+	protected final EjbSecurityActionTemplateFactory<C,AT> efTemplate;
 	
 
 	protected final Comparator<R> comparatorRole;

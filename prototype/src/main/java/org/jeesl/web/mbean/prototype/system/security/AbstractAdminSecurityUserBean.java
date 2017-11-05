@@ -58,7 +58,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	protected USER user; public USER getUser(){return user;} public void setUser(USER user){this.user = user;}
 	
 	protected Map<Long,Boolean> mapRoles; public Map<Long, Boolean> getMapRoles() {return mapRoles;}
-	protected final EjbSecurityUserFactory<L,D,C,R,V,U,A,AT,USER> efUser;
+	protected final EjbSecurityUserFactory<USER> efUser;
 	
 	protected boolean performPasswordCheck;
 	protected String pwd1; public String getPwd1() {return pwd1;} public void setPwd1(String pwd1) {this.pwd1 = pwd1;}

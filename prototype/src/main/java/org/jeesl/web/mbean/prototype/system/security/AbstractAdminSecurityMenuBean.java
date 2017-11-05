@@ -49,7 +49,7 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 
 	private final Class<M> cMenu;
 	
-	private EjbSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> efMenu;
+	private EjbSecurityMenuFactory<V,M> efMenu;
 	
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}

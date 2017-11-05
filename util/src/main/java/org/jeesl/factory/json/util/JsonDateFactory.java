@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.json;
+package org.jeesl.factory.json.util;
 
 import java.util.Date;
 

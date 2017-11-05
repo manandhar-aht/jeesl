@@ -22,7 +22,7 @@
 			selection="#{cc.attrs.bean.attribute}" selectionMode="single" rowKey="#{a.id}">
 			<f:facet name="header">
 				<aht:pfDataTableHeader title="#{msg.aupRevisionAttributes}">
-					<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addAttribute()}" update="#{cc.attrs.updateAdd}" tooltip="#{msg.ttNew}"/>
+					<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addAttribute()}" update="#{cc.attrs.updateAdd}" tooltip="#{msg.ttNew}"/>
 				</aht:pfDataTableHeader>
 			</f:facet>
 			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderAttributes()}" update="@form"/>

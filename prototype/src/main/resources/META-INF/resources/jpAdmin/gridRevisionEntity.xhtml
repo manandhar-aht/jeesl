@@ -13,6 +13,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="false" default="#{adminRevisionEntityBean}"/>
+		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -55,7 +56,7 @@
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupCategory}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.entity.category}" effect="fade" >
+								<p:selectOneMenu value="#{cc.attrs.bean.entity.category}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.categories}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
@@ -70,9 +71,7 @@
 								<p:inputTextarea value="#{cc.attrs.bean.entity.developerInfo}" style="width:100%" autocomplete="off"/>
 								
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.entity}"
-													labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
-       											keys="#{cc.attrs.bean.langs}" withDescription="true"/>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.entity}" keys="#{cc.attrs.localeKeys}" withDescription="true"/>
 						</p:panel>
 					</h:form>
 				</aht:slot>
@@ -104,11 +103,11 @@
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupRevisionScope}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.mapping.scope}" effect="fade" >
+								<p:selectOneMenu value="#{cc.attrs.bean.mapping.scope}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.scopes}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
 								<p:outputLabel value="#{msg.aupType}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.mapping.type}" effect="fade" >
+								<p:selectOneMenu value="#{cc.attrs.bean.mapping.type}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.scopeTypes}" var="t" itemLabel="#{t.name[userBean.localeCode].lang}" itemValue="#{t}"/>
 									<p:ajax event="change" listener="#{cc.attrs.bean.changeScopeType()}" update="@form"/>
 								</p:selectOneMenu>
@@ -126,7 +125,7 @@
 						<jpAdmin:tableRevisionAttributes bean="#{cc.attrs.bean}" updateAdd=":#{cc.id}:fAttributes :#{cc.id}:fAttribute" updateSelect=":#{cc.id}:fAttribute"/>
 					</h:form>
 					<h:form id="fAttribute">
-						<jpAdmin:panelRevisionAttribute bean="#{cc.attrs.bean}" update=":#{cc.id}:sAttributes"/>
+						<jpAdmin:panelRevisionAttribute bean="#{cc.attrs.bean}" update=":#{cc.id}:sAttributes" localeKeys="#{cc.attrs.localeKeys}"/>
 					</h:form>
 				</aht:slot>
 			</aht:row>

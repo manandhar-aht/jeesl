@@ -14,6 +14,7 @@
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
 		<composite:attribute name="update" required="true"/>
+		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -23,37 +24,38 @@
 				<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveAttribute()}" update="#{cc.attrs.update}" tooltip="#{msg.ttSave}"/>
 				<aht:icon type="jeeslDelete" mayDisappear="true" rendered="#{cc.attrs.bean.attribute.id gt 0}" listener="#{cc.attrs.bean.rmAttribute()}" update="#{cc.attrs.update}" tooltip="#{msg.ttDelete}"/>
 			</f:facet>
-			<p:panelGrid columns="4" columnClasses="auPwg20,auPwg30,auPwg20,auPwg30">
-				<p:outputLabel value="#{msg.jeeslRevisionAttributeWeb}"/>
+			<p:panelGrid columns="4" columnClasses="jeeslGrid10,jeeslGrid40,jeeslGrid10,jeeslGrid40">
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.showWeb}"/>
-				<p:outputLabel value="#{msg.jeeslRevisionAttributePrint}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributeWeb}"/>
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.showPrint}"/>
-				<p:outputLabel value="#{msg.jeeslRevisionAttributeName}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributePrint}"/>
+				
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.showName}"/>
-				<p:outputLabel value="#{msg.jeeslRevisionAttributeEnclosure}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributeName}"/>
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.showEnclosure}"/>
-				<p:outputLabel value="#{msg.jeeslRevisionAttributeUi}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributeEnclosure}"/>
+				
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.ui}"/>
-				<p:outputLabel value="#{msg.jeeslRevisionAttributeBean}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributeUi}"/>
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.bean}"/>
-				<p:outputLabel value="#{msg.jeeslRevisionAttributeConstruction}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributeBean}"/>
+				
 				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.construction}"/>
+				<p:outputLabel value="#{msg.jeeslRevisionAttributeConstruction}"/>
 			</p:panelGrid>
-			<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+			<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 				<p:outputLabel value="#{msg.jeeslCode}"/>
 				<h:inputText autocomplete="off" value="#{cc.attrs.bean.attribute.code}" styleClass="aupW100"/>
 				<p:outputLabel value="#{msg.jeeslXpath}"/>
 				<h:inputText autocomplete="off" value="#{cc.attrs.bean.attribute.xpath}" styleClass="aupW100"/>
 				<p:outputLabel value="#{msg.aupType}"/>
-				<p:selectOneMenu value="#{cc.attrs.bean.attribute.type}" effect="fade" >
+				<p:selectOneMenu value="#{cc.attrs.bean.attribute.type}" effect="fade" autoWidth="false">
 					<f:selectItems value="#{cc.attrs.bean.types}" var="u" itemLabel="#{u.name[userBean.localeCode].lang}" itemValue="#{u}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="#{msg.jeeslRemark}"/>
 				<p:inputTextarea value="#{cc.attrs.bean.attribute.developerInfo}" style="width:100%" autocomplete="off"/>
 			</p:panelGrid>
-			<aht:tabTranslationEditor value="#{cc.attrs.bean.attribute}"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}"
-									keys="#{cc.attrs.bean.langs}" withDescription="true"/>
+			<aht:tabTranslationEditor value="#{cc.attrs.bean.attribute}" keys="#{cc.attrs.localeKeys}" withDescription="true"/>
 		</p:panel>
 	</composite:implementation>
 </html>

@@ -90,16 +90,16 @@ public class JeeslRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 		return entity;
 	}
 	
-	@Override public List<RS> findScopes(Class<RS> cScope, Class<RC> cCategory, List<RC> categories, boolean showInvisibleScopes)
+	@Override public List<RS> findRevisionScopes(List<RC> categories, boolean showInvisibleScopes)
 	{
-		List<ParentPredicate<RC>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
-		return allForOrParents(cScope,ppCategory);
+		List<ParentPredicate<RC>> ppCategory = ParentPredicate.createFromList(fbRevision.getClassCategory(),"category",categories);
+		return allForOrParents(fbRevision.getClassScope(),ppCategory);
 	}
 	
-	@Override public List<RE> findEntities(Class<RE> cEntity, Class<RC> cCategory, List<RC> categories, boolean showInvisibleEntities)
+	@Override public List<RE> findRevisionEntities(List<RC> categories, boolean showInvisibleEntities)
 	{
-		List<ParentPredicate<RC>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
-		return allForOrParents(cEntity,ppCategory);
+		List<ParentPredicate<RC>> ppCategory = ParentPredicate.createFromList(fbRevision.getClassCategory(),"category",categories);
+		return allForOrParents(fbRevision.getClassEntity(),ppCategory);
 	}
 	
 	@Override public void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException

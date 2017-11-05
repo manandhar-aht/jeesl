@@ -41,18 +41,20 @@ public class JeeslMsgBuilder
 	public static final String financePeriod = "jeesl/msg/finance/period.xml";
 	
 	//Modules
-	public static final String attribute = "jeesl/msg/module/attribute.xml";
-	public static final String timeseries = "jeesl/msg/module/timeseries.xml";
-	public static final String io = "jeesl/msg/module/io.xml";
+	public static final String mTimeseries = "jeesl/msg/module/timeseries.xml";
+	public static final String mSurvey = "jeesl/msg/module/survey.xml";
 	public static final String monitoring = "aht-utils/msg/module/monitoring.xml";
 	public static final String calendar = "jeesl/msg/module/calendar.xml";
-	public static final String cms = "jeesl/msg/module/cms.xml";
 	
 	//IO
+	public static final String io = "jeesl/msg/module/io.xml";
+	public static final String ioAttribute = "jeesl/msg/module/attribute.xml";
 	public static final String ioTemplate = "jeesl/msg/admin/system/io/template.xml";
 	public static final String ioReport = "jeesl/msg/admin/system/io/report.xml";
+	public static final String ioRevision = "jeesl/msg/admin/system/revision.xml";
 	public static final String ioMail = "jeesl/msg/admin/system/io/mail.xml";
-	public static final String srcAdminSystemDbDump = "jeesl/msg/admin/system/io/db.xml";
+	public static final String ioDb = "jeesl/msg/admin/system/io/db.xml";
+	public static final String ioCms = "jeesl/msg/module/cms.xml";
 	
 	//System
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
@@ -80,11 +82,10 @@ public class JeeslMsgBuilder
 	public static final String srcAdminSecurity = "jeesl/msg/module/security.xml";
 	public static final String srcAdminUser = "aht-utils/msg/admin/user.xml";
 	
-	public static final String revision = "jeesl/msg/admin/system/revision.xml";
+	
 	public static final String srcConstraint = "jeesl/msg/admin/system/constraint.xml";
 	public static final String facesMessages = "jeesl/msg/facesMessages.xml";
 	
-	public static final String survey = "jeesl/msg/module/survey.xml";
 	public static final String devQa = "jeesl/msg/development/qa.xml";
 	
 	final static Logger logger = LoggerFactory.getLogger(JeeslMsgBuilder.class);

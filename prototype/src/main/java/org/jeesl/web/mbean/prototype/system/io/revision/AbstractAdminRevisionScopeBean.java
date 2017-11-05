@@ -61,7 +61,7 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 
 	public void reloadScopes()
 	{
-		scopes = fRevision.findScopes(fbRevision.getClassScope(), fbRevision.getClassCategory(), sbhCategory.getSelected(), true);
+		scopes = fRevision.findRevisionScopes(sbhCategory.getSelected(), true);
 		logger.info(AbstractLogMessage.reloaded(fbRevision.getClassScope(),scopes));
 		Collections.sort(scopes, comparatorScope);
 	}

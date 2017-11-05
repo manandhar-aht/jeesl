@@ -97,6 +97,10 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends 
 		comparatorScope = (new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionScopeComparator.Type.position);
 		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
 		
+		if(fRevision==null) {logger.warn(JeeslIoRevisionFacade.class.getSimpleName()+" is NULL");}
+		if(fbRevision==null) {logger.warn(IoRevisionFactoryBuilder.class.getSimpleName()+" is NULL");}
+		if(fbRevision.getClassCategory()==null) {logger.warn(IoRevisionFactoryBuilder.class.getSimpleName()+".getClassCategory() is NULL");}
+		
 		categories = fRevision.allOrderedPositionVisible(fbRevision.getClassCategory());
 		sbhCategory = new SbMultiHandler<RC>(fbRevision.getClassCategory(),categories,this);
 	}

@@ -41,8 +41,8 @@ public interface JeeslIoRevisionFacade <L extends UtilsLang,D extends UtilsDescr
 	RS load(Class<RS> cScope, RS scope);
 	RE load(Class<RE> cEntity, RE entity);
 	
-	List<RS> findScopes(Class<RS> cScope, Class<RC> cCategory, List<RC> categories, boolean showInvisibleScopes);
-	List<RE> findEntities(Class<RE> cEntity, Class<RC> cCategory, List<RC> categories, boolean showInvisibleEntities);
+	List<RS> findRevisionScopes(List<RC> categories, boolean showInvisibleScopes);
+	List<RE> findRevisionEntities(List<RC> categories, boolean showInvisibleEntities);
 	
 	void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException;
 	

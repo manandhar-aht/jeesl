@@ -63,6 +63,7 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends 
 	protected List<RE> entities; public List<RE> getEntities() {return entities;}
 	protected List<REM> entityMappings; public List<REM> getEntityMappings() {return entityMappings;}
 	protected List<RAT> types; public List<RAT> getTypes() {return types;}
+	protected List<RER> relations; public List<RER> getrelations() {return relations;}
 	
 	protected RA attribute; public RA getAttribute() {return attribute;}public void setAttribute(RA attribute) {this.attribute = attribute;}
 
@@ -94,8 +95,8 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends 
 	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
-		this.fRevision=fRevision;
-		
+		this.fRevision=fRevision; 
+		 
 		comparatorScope = (new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>()).factory(RevisionScopeComparator.Type.position);
 		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>()).factory(RevisionEntityComparator.Type.position);
 		

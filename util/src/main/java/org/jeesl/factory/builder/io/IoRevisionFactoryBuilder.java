@@ -28,7 +28,8 @@ public class IoRevisionFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 									RST extends UtilsStatus<RST,L,D>,
 									RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 									REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-									RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
+									RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>,
+									RER extends UtilsStatus<RER,L,D>,
 									RAT extends UtilsStatus<RAT,L,D>>
 				extends AbstractFactoryBuilder<L,D>
 {
@@ -42,9 +43,10 @@ public class IoRevisionFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	private final Class<RE> cEntity; public Class<RE> getClassEntity(){return cEntity;}
 	private final Class<REM> cMappingEntity; public Class<REM> getClassEntityMapping(){return cMappingEntity;}
 	private final Class<RA> cAttribute; public Class<RA> getClassAttribute(){return cAttribute;}
+	private final Class<RER> cRelation; public Class<RER> getClassRelation(){return cRelation;}
 	private final Class<RAT> cRat; public Class<RAT> getClassAttributeType(){return cRat;}
     
-	public IoRevisionFactoryBuilder(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cViewMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cMappingEntity, Class<RA> cAttribute, Class<RAT> cRat)
+	public IoRevisionFactoryBuilder(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cViewMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cMappingEntity, Class<RA> cAttribute, final Class<RER> cRelation, Class<RAT> cRat)
 	{
 		super(cL,cD);
 		this.cCategory=cCategory;
@@ -55,6 +57,7 @@ public class IoRevisionFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		this.cEntity=cEntity;
 		this.cMappingEntity=cMappingEntity;
 		this.cAttribute=cAttribute;
+		this.cRelation=cRelation;
 		this.cRat=cRat;
 	}
 	

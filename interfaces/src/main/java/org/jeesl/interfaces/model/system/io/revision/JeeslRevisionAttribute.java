@@ -61,6 +61,9 @@ public interface JeeslRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 	String getDeveloperInfo();
 	void setDeveloperInfo(String developerInfo);
 	
+	RER getRelation();
+	void setRelation(RER relation);
+	
 	RE getEntity();
 	void setEntity(RE entity);
 }

@@ -1,5 +1,8 @@
 package org.jeesl.factory.ejb.system.revision;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
@@ -8,7 +11,6 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
-import org.jeesl.model.xml.system.revision.Attribute;
 import org.jeesl.model.xml.system.revision.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +62,7 @@ public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescrip
 	
 	public RE build(RC category, Entity xml)
 	{
-		RE ejb = build(category);
+		RE ejb = build(category,new ArrayList<RE>());
 		ejb.setCode(xml.getCode());
 		ejb.setPosition(xml.getPosition());
 		try
@@ -72,15 +74,16 @@ public class EjbRevisionEntityFactory<L extends UtilsLang,D extends UtilsDescrip
 		return ejb;
 	}
     
-	public RE build(RC category)
+	public RE build(RC category, List<RE> list)
 	{
 		RE ejb = null;
 		try
 		{
 			ejb = cEntity.newInstance();
 			ejb.setCategory(category);
-			ejb.setPosition(1);
 			ejb.setVisible(true);
+			if(list==null) {ejb.setPosition(1);}
+			else {ejb.setPosition(list.size()+1);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

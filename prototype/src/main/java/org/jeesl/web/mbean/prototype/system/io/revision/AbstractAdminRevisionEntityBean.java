@@ -61,7 +61,9 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		
 		scopes = fRevision.all(fbRevision.getClassScope());
 		types = fRevision.allOrderedPositionVisible(fbRevision.getClassAttributeType());
+		relations = fRevision.allOrderedPositionVisible(fbRevision.getClassRelation());
 		scopeTypes = fRevision.allOrderedPositionVisible(fbRevision.getClassScopeType());
+		links = fRevision.all(fbRevision.getClassEntity());
 		reloadEntities();
 	}
 	
@@ -83,7 +85,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	public void addEntity() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbRevision.getClassEntity()));}
-		entity = efEntity.build(null);
+		entity = efEntity.build(null,entities);
 		entity.setName(efLang.createEmpty(langs));
 		entity.setDescription(efDescription.createEmpty(langs));
 		attribute=null;
@@ -154,6 +156,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(attribute));}
 		if(attribute.getType()!=null){attribute.setType(fRevision.find(fbRevision.getClassAttributeType(), attribute.getType()));}
+		changeRelation();
 		attribute = fRevision.save(fbRevision.getClassEntity(),entity,attribute);
 		reloadEntity();
 		bMessage.growlSuccessSaved();
@@ -242,9 +245,17 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		}
 	}
 	
-	protected void reorderEntites() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, fbRevision.getClassEntity(), entities);Collections.sort(entities, comparatorEntity);}
-	protected void reorderAttributes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, attributes);}
-	protected void reorderMappings() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, entityMappings);}
+	public void changeRelation()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(attribute.getRelation()));}
+		if(attribute.getRelation()!=null) {attribute.setRelation(fRevision.find(fbRevision.getClassRelation(), attribute.getRelation()));}
+		else {attribute.setEntity(null);}
+		if(attribute.getEntity()!=null){attribute.setEntity(fRevision.find(fbRevision.getClassEntity(), attribute.getEntity()));}
+	}
+	
+	public void reorderEntites() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, fbRevision.getClassEntity(), entities);Collections.sort(entities, comparatorEntity);}
+	public void reorderAttributes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, attributes);}
+	public void reorderMappings() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fRevision, entityMappings);}
 	
 	protected void updatePerformed(){}	
 	

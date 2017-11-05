@@ -30,7 +30,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
-				VALGORITHM extends JeeslSurveyValidationAlgorithm,
+				VALGORITHM extends JeeslSurveyValidationAlgorithm<L,D>,
 				TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,?>,
 				VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 				TS extends UtilsStatus<TS,L,D>,

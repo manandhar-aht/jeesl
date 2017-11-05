@@ -149,10 +149,19 @@
     	</s:langs>
     </s:translation>
     <s:translation key="jeeslRevisionClass">
-    	<s:langs>
-    		<s:lang key="de" translation="Klasse"/>
-    		<s:lang key="en" translation="Class"/>
-    		<s:lang key="fr" translation="Class"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Klasse"/>
+	    		<s:lang key="en" translation="Class"/>
+	    		<s:lang key="fr" translation="Class"/>
+	    	</s:langs>
     </s:translation>
+	<s:translation key="jeeslRevisionEntityRelation">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Relation"/>
+	    		<s:lang key="en" translation="Relation"/>
+	    		<s:lang key="fr" translation="Relation"/>
+	    	</s:langs>
+    </s:translation>
+    
+    
 </s:translations>

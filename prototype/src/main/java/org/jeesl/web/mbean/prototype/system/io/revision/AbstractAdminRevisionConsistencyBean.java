@@ -26,9 +26,9 @@ public class AbstractAdminRevisionConsistencyBean <L extends UtilsLang,D extends
 											RST extends UtilsStatus<RST,L,D>,
 											RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 											REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-											RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+											RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 											RAT extends UtilsStatus<RAT,L,D>>
-					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
+					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -38,9 +38,9 @@ public class AbstractAdminRevisionConsistencyBean <L extends UtilsLang,D extends
 	
 	private RC category; public RC getCategory() {return category;} public void setCategory(RC category) {this.category = category;}
 
-	public AbstractAdminRevisionConsistencyBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision){super(fbRevision);}
+	public AbstractAdminRevisionConsistencyBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision){super(fbRevision);}
 
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision);
 		categories.clear();

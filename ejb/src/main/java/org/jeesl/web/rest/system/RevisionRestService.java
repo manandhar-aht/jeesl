@@ -51,13 +51,13 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 								RST extends UtilsStatus<RST,L,D>,
 								RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 								REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-								RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+								RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 								RAT extends UtilsStatus<RAT,L,D>>
 					implements JeeslRevisionRestExport,JeeslRevisionRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(RevisionRestService.class);
 	
-	private JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision;
+	private JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision;
 	
 	private final Class<L> cL;
 	private final Class<D> cD;
@@ -73,14 +73,14 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<RAT> cRAT;
 
 	private XmlContainerFactory xfContainer;
-	private XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> xfEntity;
+	private XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> xfEntity;
 
 	private EjbLangFactory<L> efLang;
 	private EjbDescriptionFactory<D> efDescription;
-	private EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efEntity;
-	private EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efAttribute;
+	private EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> efEntity;
+	private EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> efAttribute;
 	
-	private RevisionRestService(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision,final Class<L> cL, final Class<D> cD, Class<RC> cRC, final Class<RV> cRV, final Class<RVM> cRVM, final Class<RS> cRS, final Class<RST> cRST, final Class<RE> cRE, final Class<REM> cREM, final Class<RA> cRA, final Class<RAT> cRAT)
+	private RevisionRestService(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision,final Class<L> cL, final Class<D> cD, Class<RC> cRC, final Class<RV> cRV, final Class<RVM> cRVM, final Class<RS> cRS, final Class<RST> cRST, final Class<RE> cRE, final Class<REM> cREM, final Class<RA> cRA, final Class<RAT> cRAT)
 	{
 		this.fRevision=fRevision;
 		this.cL=cL;
@@ -97,7 +97,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cRAT=cRAT;
 	
 		xfContainer = new XmlContainerFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
-		xfEntity = new XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntity));
+		xfEntity = new XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntity));
 			
 		efLang = EjbLangFactory.factory(cL);
 		efDescription = EjbDescriptionFactory.factory(cD);
@@ -113,12 +113,12 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 					RST extends UtilsStatus<RST,L,D>,
 					RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 					REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+					RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 					RAT extends UtilsStatus<RAT,L,D>>
-		RevisionRestService<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
-			factory(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision,final Class<L> cL, final Class<D> cD, Class<RC> cRC, final Class<RV> cRV, final Class<RVM> cRVM, final Class<RS> cRS, final Class<RST> cRST, final Class<RE> cRE, final Class<REM> cREM, final Class<RA> cRA, final Class<RAT> cRAT)
+		RevisionRestService<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
+			factory(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision,final Class<L> cL, final Class<D> cD, Class<RC> cRC, final Class<RV> cRV, final Class<RVM> cRVM, final Class<RS> cRS, final Class<RST> cRST, final Class<RE> cRE, final Class<REM> cREM, final Class<RA> cRA, final Class<RAT> cRAT)
 	{
-		return new RevisionRestService<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(fRevision,cL,cD,cRC,cRV,cRVM,cRS,cRST,cRE,cREM,cRA,cRAT);
+		return new RevisionRestService<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>(fRevision,cL,cD,cRC,cRV,cRVM,cRS,cRST,cRE,cREM,cRA,cRAT);
 	}
 	
 	@Override public Container exportSystemIoRevisionAttributeTypes() {return xfContainer.build(fRevision.allOrderedPosition(cRAT));}

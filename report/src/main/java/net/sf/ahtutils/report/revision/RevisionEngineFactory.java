@@ -38,7 +38,8 @@ public class RevisionEngineFactory
 					RST extends UtilsStatus<RST,L,D>,
 					RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 					REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+					RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>,
+					RER extends UtilsStatus<RER,L,D>,
 					RAT extends UtilsStatus<RAT,L,D>,
 					REV extends JeeslRevision,
 					C extends JeeslSecurityCategory<L,D>,
@@ -48,9 +49,9 @@ public class RevisionEngineFactory
 					A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 					AT extends JeeslSecurityTemplate<L,D,C>,
 					USER extends JeeslUser<R>>
-		RevisionEngine<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> engine(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity, final Class<RAT> cRat)
+		RevisionEngine<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT,REV,C,R,V,U,A,AT,USER> engine(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, final Class<RV> cView, final Class<RS> cScope, final Class<RE> cEntity, final Class<RAT> cRat)
 	{
-		return new RevisionEngine<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER>(fRevision, cView, cScope, cEntity, cRat);
+		return new RevisionEngine<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT,REV,C,R,V,U,A,AT,USER>(fRevision, cView, cScope, cEntity, cRat);
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -61,7 +62,8 @@ public class RevisionEngineFactory
 					RST extends UtilsStatus<RST,L,D>,
 					RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 					REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+					RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>,
+					RER extends UtilsStatus<RER,L,D>,
 					RAT extends UtilsStatus<RAT,L,D>,
 					REV extends JeeslRevision,
 					C extends JeeslSecurityCategory<L,D>,
@@ -71,9 +73,9 @@ public class RevisionEngineFactory
 					A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 					AT extends JeeslSecurityTemplate<L,D,C>,
 					USER extends JeeslUser<R>>
-		RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> attribute(Map<RAT,DecimalFormat> mapDecimalFormatter, Map<RAT,SimpleDateFormat> mapDateFormatter)
+		RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT,REV,C,R,V,U,A,AT,USER> attribute(Map<RAT,DecimalFormat> mapDecimalFormatter, Map<RAT,SimpleDateFormat> mapDateFormatter)
 	{
-		return new RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER>(mapDecimalFormatter,mapDateFormatter);
+		return new RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT,REV,C,R,V,U,A,AT,USER>(mapDecimalFormatter,mapDateFormatter);
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -84,7 +86,8 @@ public class RevisionEngineFactory
 					RST extends UtilsStatus<RST,L,D>,
 					RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 					REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+					RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>,
+					RER extends UtilsStatus<RER,L,D>,
 					RAT extends UtilsStatus<RAT,L,D>,
 					REV extends JeeslRevision,
 					C extends JeeslSecurityCategory<L,D>,
@@ -94,8 +97,8 @@ public class RevisionEngineFactory
 					A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 					AT extends JeeslSecurityTemplate<L,D,C>,
 					USER extends JeeslUser<R>>
-		RevisionEngineScopeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> scope(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> rear)
+		RevisionEngineScopeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT,REV,C,R,V,U,A,AT,USER> scope(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT,REV,C,R,V,U,A,AT,USER> rear)
 	{
-		return new RevisionEngineScopeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER>(fRevision,rear);
+		return new RevisionEngineScopeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT,REV,C,R,V,U,A,AT,USER>(fRevision,rear);
 	}
 }

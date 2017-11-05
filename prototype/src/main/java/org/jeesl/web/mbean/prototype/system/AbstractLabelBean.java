@@ -27,28 +27,28 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 								RST extends UtilsStatus<RST,L,D>,
 								RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 								REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-								RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+								RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 								RAT extends UtilsStatus<RAT,L,D>>
 								
-					implements Serializable,JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
+					implements Serializable,JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractLabelBean.class);
 	
 	@SuppressWarnings("unused")
-	private JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision;
+	private JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision;
 	
-	private TranslationHandler<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> th;
+	private TranslationHandler<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> th;
 	
 	public Map<String,Map<String,L>> getEntities() {return th.getEntities();}
 	public Map<String, Map<String, Map<String,L>>> getLabels() {return th.getLabels();}
 	public Map<String, Map<String, Map<String,D>>> getDescriptions() {return th.getDescriptions();}
 
-	protected void init(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, final Class<RE> cRE)
+	protected void init(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, final Class<RE> cRE)
 	{
 		this.fRevision=fRevision;
 		
-		th = new TranslationHandler<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(fRevision,cRE);
+		th = new TranslationHandler<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>(fRevision,cRE);
 	}
 	
 	@Override public void reload(RE re) {th.reload(re);}

@@ -27,7 +27,7 @@ public class XmlEntityFactory <L extends UtilsLang,D extends UtilsDescription,
 								RST extends UtilsStatus<RST,L,D>,
 								RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 								REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-								RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+								RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 								RAT extends UtilsStatus<RAT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlEntityFactory.class);
@@ -37,7 +37,7 @@ public class XmlEntityFactory <L extends UtilsLang,D extends UtilsDescription,
 	private XmlCategoryFactory xfCategory;
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
-	private XmlAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> xfAttribute;
+	private XmlAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> xfAttribute;
 	
 	public XmlEntityFactory(Query q){this(q.getEntity());}
 	public XmlEntityFactory(Entity q)
@@ -46,7 +46,7 @@ public class XmlEntityFactory <L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory(q.getCategory());}
 		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
 		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
-		if(q.isSetAttribute()){xfAttribute = new XmlAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(q.getAttribute().get(0));}
+		if(q.isSetAttribute()){xfAttribute = new XmlAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>(q.getAttribute().get(0));}
 	}
 	
 	public Entity build(RE ejb)

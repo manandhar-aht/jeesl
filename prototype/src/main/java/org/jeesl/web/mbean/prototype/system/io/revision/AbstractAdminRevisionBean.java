@@ -43,7 +43,9 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends 
 											RST extends UtilsStatus<RST,L,D>,
 											RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 											REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-											RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+											RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>,
+											RER extends UtilsStatus<RER,L,D>,
+											
 											RAT extends UtilsStatus<RAT,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean
@@ -51,8 +53,8 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends 
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionBean.class);
 	
-	protected JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision;
-	protected final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision;
+	protected JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision;
+	protected final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision;
 	
 	protected List<RA> attributes; public List<RA> getAttributes() {return attributes;}
 	protected List<RC> categories; public List<RC> getCategories() {return categories;}
@@ -64,19 +66,19 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends 
 	
 	protected RA attribute; public RA getAttribute() {return attribute;}public void setAttribute(RA attribute) {this.attribute = attribute;}
 
-	protected final EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efView;
-	protected final EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efMappingView;
-	protected final EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efScope;
-	protected final EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efEntity;
-	protected final EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efMappingEntity;
-	protected final EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> efAttribute;
+	protected final EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> efView;
+	protected final EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> efMappingView;
+	protected final EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> efScope;
+	protected final EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> efEntity;
+	protected final EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> efMappingEntity;
+	protected final EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> efAttribute;
 	
 	protected Comparator<RS> comparatorScope;
 	protected Comparator<RE> comparatorEntity;
 	
 	protected SbMultiHandler<RC> sbhCategory; public SbMultiHandler<RC> getSbhCategory() {return sbhCategory;}
 	
-	public AbstractAdminRevisionBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision)
+	public AbstractAdminRevisionBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision)
 	{
 		super(fbRevision.getClassL(),fbRevision.getClassD());
 		this.fbRevision=fbRevision;
@@ -89,13 +91,13 @@ public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends 
 		efAttribute = fbRevision.ejbAttribute();
 	}
 	
-	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision)
+	protected void initRevisionSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fRevision=fRevision;
 		
-		comparatorScope = (new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionScopeComparator.Type.position);
-		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>()).factory(RevisionEntityComparator.Type.position);
+		comparatorScope = (new RevisionScopeComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>()).factory(RevisionScopeComparator.Type.position);
+		comparatorEntity = (new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>()).factory(RevisionEntityComparator.Type.position);
 		
 		if(fRevision==null) {logger.warn(JeeslIoRevisionFacade.class.getSimpleName()+" is NULL");}
 		if(fbRevision==null) {logger.warn(IoRevisionFactoryBuilder.class.getSimpleName()+" is NULL");}

@@ -24,7 +24,7 @@ public class RevisionEntityComparator<L extends UtilsLang,D extends UtilsDescrip
 										RST extends UtilsStatus<RST,L,D>,
 										RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 										REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-										RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+										RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 										RAT extends UtilsStatus<RAT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(RevisionEntityComparator.class);
@@ -39,7 +39,7 @@ public class RevisionEntityComparator<L extends UtilsLang,D extends UtilsDescrip
     public Comparator<RE> factory(Type type)
     {
         Comparator<RE> c = null;
-        RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory = new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>();
+        RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> factory = new RevisionEntityComparator<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;

@@ -45,22 +45,22 @@ public class JeeslRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 									RST extends UtilsStatus<RST,L,D>,
 									RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 									REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-									RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+									RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 									RAT extends UtilsStatus<RAT,L,D>>
 					extends UtilsFacadeBean
-					implements JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
+					implements JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
 {
-	private final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision;
+	private final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision;
 	
 	private String revisionPrefix;
 	private String revisionTable;
 
-	public JeeslRevisionFacadeBean(EntityManager em, final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision)
+	public JeeslRevisionFacadeBean(EntityManager em, final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision)
 	{
 		this("_at_","auditinfo",em,fbRevision);
 	}
 	
-	public JeeslRevisionFacadeBean(String revisionPrefix, String revisionTable, EntityManager em, final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision)
+	public JeeslRevisionFacadeBean(String revisionPrefix, String revisionTable, EntityManager em, final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision)
 	{
 		super(em);
 		this.fbRevision=fbRevision;

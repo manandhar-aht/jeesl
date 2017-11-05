@@ -22,7 +22,7 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 									RST extends UtilsStatus<RST,L,D>,
 									RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 									REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-									RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+									RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 									RAT extends UtilsStatus<RAT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbRevisionAttributeFactory.class);
@@ -42,11 +42,11 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 					RST extends UtilsStatus<RST,L,D>,
 					RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 					REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+					RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 					RAT extends UtilsStatus<RAT,L,D>>
-	EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory(final Class<RA> cAttribute)
+	EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> factory(final Class<RA> cAttribute)
 	{
-		return new EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(cAttribute);
+		return new EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>(cAttribute);
 	}
     
 	public RA build(RAT type, Attribute xml)

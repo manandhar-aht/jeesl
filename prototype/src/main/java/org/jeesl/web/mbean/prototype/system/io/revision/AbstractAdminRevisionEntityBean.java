@@ -35,15 +35,15 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 											RST extends UtilsStatus<RST,L,D>,
 											RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 											REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-											RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+											RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 											RAT extends UtilsStatus<RAT,L,D>>
-					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
+					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionEntityBean.class);
 	
-	private JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> bLabel;
+	private JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> bLabel;
 	
 	private List<RE> links; public List<RE> getLinks() {return links;}
 	
@@ -52,9 +52,9 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	private String className; public String getClassName() {return className;}
 	
-	public AbstractAdminRevisionEntityBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision){super(fbRevision);}
+	public AbstractAdminRevisionEntityBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision){super(fbRevision);}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> bLabel)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> bLabel)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision);
 		this.bLabel=bLabel;

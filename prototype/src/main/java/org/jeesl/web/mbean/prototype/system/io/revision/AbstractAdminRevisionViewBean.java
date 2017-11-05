@@ -33,9 +33,9 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 											RST extends UtilsStatus<RST,L,D>,
 											RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 											REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-											RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+											RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 											RAT extends UtilsStatus<RAT,L,D>>
-					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
+					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -47,9 +47,9 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	private RV rv; public RV getRv() {return rv;} public void setRv(RV rv) {this.rv = rv;}
 	private RVM mapping; public RVM getMapping() {return mapping;}public void setMapping(RVM mapping) {this.mapping = mapping;}
 	
-	public AbstractAdminRevisionViewBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision){super(fbRevision);}
+	public AbstractAdminRevisionViewBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision){super(fbRevision);}
 
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision);		
 		entities = fRevision.all(fbRevision.getClassEntity());

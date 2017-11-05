@@ -28,7 +28,7 @@ public class IoRevisionFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 									RST extends UtilsStatus<RST,L,D>,
 									RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 									REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-									RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+									RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 									RAT extends UtilsStatus<RAT,L,D>>
 				extends AbstractFactoryBuilder<L,D>
 {
@@ -58,32 +58,32 @@ public class IoRevisionFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		this.cRat=cRat;
 	}
 	
-	public EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> ejbView()
+	public EjbRevisionViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> ejbView()
 	{
 		return EjbRevisionViewFactory.factory(cView);
 	}
 	
-	public EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> ejbMappingView()
+	public EjbRevisionMappingViewFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> ejbMappingView()
 	{
 		return EjbRevisionMappingViewFactory.factory(cViewMapping);
 	}
 	
-	public EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> ejbScope()
+	public EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> ejbScope()
 	{
 		return EjbRevisionScopeFactory.factory(cScope);
 	}
 	
-	public EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> ejbEntity()
+	public EjbRevisionEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> ejbEntity()
 	{
 		return EjbRevisionEntityFactory.factory(cL,cD,cEntity);
 	}
 	
-	public EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> ejbMappingEntity()
+	public EjbRevisionMappingEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> ejbMappingEntity()
 	{
 		return EjbRevisionMappingEntityFactory.factory(cMappingEntity);
 	}
 	
-	public EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> ejbAttribute()
+	public EjbRevisionAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> ejbAttribute()
 	{
 		return EjbRevisionAttributeFactory.factory(cAttribute);
 	}

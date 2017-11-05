@@ -21,7 +21,7 @@ public class EjbRevisionScopeFactory<L extends UtilsLang,D extends UtilsDescript
 									RST extends UtilsStatus<RST,L,D>,
 									RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 									REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-									RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+									RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 									RAT extends UtilsStatus<RAT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbRevisionScopeFactory.class);
@@ -41,11 +41,11 @@ public class EjbRevisionScopeFactory<L extends UtilsLang,D extends UtilsDescript
 					RST extends UtilsStatus<RST,L,D>,
 					RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 					REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-					RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+					RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 					RAT extends UtilsStatus<RAT,L,D>>
-	EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> factory(final Class<RS> cScope)
+	EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> factory(final Class<RS> cScope)
 	{
-		return new EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>(cScope);
+		return new EjbRevisionScopeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>(cScope);
 	}
     
 	public RS build()

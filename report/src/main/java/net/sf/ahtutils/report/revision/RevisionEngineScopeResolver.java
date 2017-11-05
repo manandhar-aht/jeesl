@@ -34,7 +34,8 @@ public class RevisionEngineScopeResolver<L extends UtilsLang,D extends UtilsDesc
 							RST extends UtilsStatus<RST,L,D>,
 							RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
 							REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-							RA extends JeeslRevisionAttribute<L,D,RE,RAT>,
+							RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>,
+							RER extends UtilsStatus<RER,L,D>,
 							RAT extends UtilsStatus<RAT,L,D>,
 							REV extends JeeslRevision,
 							C extends JeeslSecurityCategory<L,D>,
@@ -47,11 +48,11 @@ public class RevisionEngineScopeResolver<L extends UtilsLang,D extends UtilsDesc
 {
 	final static Logger logger = LoggerFactory.getLogger(RevisionEngineScopeResolver.class);
 	
-	private JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision;
+	private JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision;
 	
-	private RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> rear;
+	private RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT,REV,C,R,V,U,A,AT,USER> rear;
 	
-	public RevisionEngineScopeResolver(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision, RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT,REV,C,R,V,U,A,AT,USER> rear)
+	public RevisionEngineScopeResolver(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, RevisionEngineAttributeResolver<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT,REV,C,R,V,U,A,AT,USER> rear)
 	{
 		this.fRevision=fRevision;
 		this.rear=rear;

@@ -6,9 +6,9 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.factory.builder.system.SvgFactoryBuilder;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
-import org.jeesl.factory.factory.SvgFactoryFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicStyle;
@@ -102,7 +102,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		this.cFS=cFS;
 		this.cStatus=cStatus;
 		
-		SvgFactoryFactory<L,D,G,GT,F,FS> ffSvg = SvgFactoryFactory.factory(cL,cD,cG,cF,cFS);
+		SvgFactoryBuilder<L,D,G,GT,F,FS> ffSvg = SvgFactoryBuilder.factory(cL,cD,cG,cF,cFS);
 		efGraphic = ffSvg.efGraphic();
 		
 		efFigure = new EjbGraphicFigureFactory<L,D,G,GT,F,FS>(cF);

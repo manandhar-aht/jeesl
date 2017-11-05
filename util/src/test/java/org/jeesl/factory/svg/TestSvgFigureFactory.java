@@ -11,9 +11,9 @@ import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderException;
 import org.jeesl.AbstractJeeslUtilTest;
 import org.jeesl.JeeslUtilTestBootstrap;
+import org.jeesl.factory.builder.system.SvgFactoryBuilder;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
-import org.jeesl.factory.factory.SvgFactoryFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
@@ -47,7 +47,7 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 	
 	public TestSvgFigureFactory()
 	{
-		SvgFactoryFactory<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> ffSvg = SvgFactoryFactory.factory(Lang.class,Description.class,Graphic.class,GraphicFigure.class,GraphicStyle.class);
+		SvgFactoryBuilder<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> ffSvg = SvgFactoryBuilder.factory(Lang.class,Description.class,Graphic.class,GraphicFigure.class,GraphicStyle.class);
 		efFigure = ffSvg.efFigure();
 		efStyle = ffSvg.style();
 		svgF = SvgFigureFactory.factory();

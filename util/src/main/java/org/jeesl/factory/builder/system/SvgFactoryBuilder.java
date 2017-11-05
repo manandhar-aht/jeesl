@@ -1,5 +1,6 @@
-package org.jeesl.factory.factory;
+package org.jeesl.factory.builder.system;
 
+import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
@@ -12,22 +13,20 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class SvgFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
+public class SvgFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
 								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
+	extends AbstractFactoryBuilder<L,D>
 {
-	final static Logger logger = LoggerFactory.getLogger(SvgFactoryFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(SvgFactoryBuilder.class);
 	
-	final Class<L> cL;
-	final Class<D> cD;
 	final Class<G> cG;
 	final Class<F> cF;
 	final Class<FS> cFs;
 	
-	private SvgFactoryFactory(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<F> cF, final Class<FS> cFs)
+	public SvgFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<F> cF, final Class<FS> cFs)
 	{       
-		this.cL = cL;
-		this.cD = cD;
+		super(cL,cD);
 		this.cG = cG;
 		this.cF = cF;
 		this.cFs = cFs;
@@ -36,9 +35,9 @@ public class SvgFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
 	public static <L extends UtilsLang, D extends UtilsDescription,
 					G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
 					F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
-		SvgFactoryFactory<L,D,G,GT,F,FS> factory(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<F> cF, final Class<FS> cFs)
+		SvgFactoryBuilder<L,D,G,GT,F,FS> factory(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<F> cF, final Class<FS> cFs)
 	{
-		return new SvgFactoryFactory<L,D,G,GT,F,FS>(cL,cD,cG,cF,cFs);
+		return new SvgFactoryBuilder<L,D,G,GT,F,FS>(cL,cD,cG,cF,cFs);
 	}
 	
     public EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic()

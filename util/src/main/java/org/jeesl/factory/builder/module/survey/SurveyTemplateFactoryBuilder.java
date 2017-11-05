@@ -1,4 +1,4 @@
-package org.jeesl.factory.builder.survey;
+package org.jeesl.factory.builder.module.survey;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyConditionFactory;

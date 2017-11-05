@@ -1,4 +1,4 @@
-package org.jeesl.factory.builder.survey;
+package org.jeesl.factory.builder.module.survey;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;

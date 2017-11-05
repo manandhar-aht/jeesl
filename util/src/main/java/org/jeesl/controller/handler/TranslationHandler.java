@@ -10,41 +10,29 @@ import org.jeesl.api.bean.JeeslLabelBean;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class TranslationHandler<L extends UtilsLang,D extends UtilsDescription,
-								RC extends UtilsStatus<RC,L,D>,
-								RV extends JeeslRevisionView<L,D,RVM>,
-								RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
-								RS extends JeeslRevisionScope<L,D,RC,RA>,
-								RST extends UtilsStatus<RST,L,D>,
-								RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
-								REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-								RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
-								RAT extends UtilsStatus<RAT,L,D>>
-	implements Serializable,JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
+								RE extends JeeslRevisionEntity<L,D,?,?,RA>,
+								RA extends JeeslRevisionAttribute<L,D,RE,?,?>>
+	implements Serializable,JeeslLabelBean<RE>
 {
 	final static Logger logger = LoggerFactory.getLogger(TranslationHandler.class);
 	private static final long serialVersionUID = 1L;
 	
 	private final Class<RE> cRE;
 	
-	private final JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision;
+	private final JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
 	private final Map<String,Map<String,L>> entities; public Map<String,Map<String,L>> getEntities() {return entities;}
 	private final Map<String,Map<String,Map<String,L>>> labels; public Map<String, Map<String, Map<String,L>>> getLabels() {return labels;}
 	private final Map<String,Map<String,Map<String,D>>> descriptions;public Map<String, Map<String, Map<String,D>>> getDescriptions() {return descriptions;}
 
-	public TranslationHandler(JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, final Class<RE> cRE)
+	public TranslationHandler(JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision, final Class<RE> cRE)
 	{
 		this.cRE = cRE;
 		this.fRevision=fRevision;

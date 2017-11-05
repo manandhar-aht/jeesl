@@ -43,7 +43,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionEntityBean.class);
 	
-	private JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> bLabel;
+	private JeeslLabelBean<RE> bLabel;
 	
 	private List<RE> links; public List<RE> getLinks() {return links;}
 	
@@ -54,7 +54,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	public AbstractAdminRevisionEntityBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision){super(fbRevision);}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, JeeslLabelBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> bLabel)
+	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, JeeslLabelBean<RE> bLabel)
 	{
 		super.initRevisionSuper(langs,bMessage,fRevision);
 		this.bLabel=bLabel;

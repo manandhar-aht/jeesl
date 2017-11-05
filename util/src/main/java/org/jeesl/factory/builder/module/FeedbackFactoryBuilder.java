@@ -1,4 +1,4 @@
-package org.jeesl.factory.factory;
+package org.jeesl.factory.builder.module;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.feedback.EjbFeedbackFactory;
@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
-public class FeedbackFactoryFactory<L extends UtilsLang, D extends UtilsDescription,
+public class FeedbackFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 									THREAD extends JeeslFeedbackThread<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>,
 									FEEDBACK extends JeeslFeedback<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>,
 									STYLE extends UtilsStatus<STYLE,L,D>,
@@ -21,29 +21,18 @@ public class FeedbackFactoryFactory<L extends UtilsLang, D extends UtilsDescript
 									USER extends EjbWithEmail>
 		extends AbstractFactoryBuilder<L,D>
 {
-	final static Logger logger = LoggerFactory.getLogger(FeedbackFactoryFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(FeedbackFactoryBuilder.class);
 	
 	private final Class<THREAD> cThread;
 	private final Class<FEEDBACK> cFeedback;
     
-	private FeedbackFactoryFactory(final Class<L> cL,final Class<D> cD,final Class<THREAD> cThread, final Class<FEEDBACK> cFeedback)
+	public FeedbackFactoryBuilder(final Class<L> cL,final Class<D> cD,final Class<THREAD> cThread, final Class<FEEDBACK> cFeedback)
 	{       
 		super(cL,cD);
 		this.cThread = cThread;
         this.cFeedback = cFeedback;
 	}
-	
-	public static <L extends UtilsLang, D extends UtilsDescription,
-					THREAD extends JeeslFeedbackThread<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>,
-					FEEDBACK extends JeeslFeedback<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>,
-					STYLE extends UtilsStatus<STYLE,L,D>,
-					TYPE extends UtilsStatus<TYPE,L,D>,
-					USER extends EjbWithEmail>
-		FeedbackFactoryFactory<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER> factory(final Class<L> cL,final Class<D> cD,final Class<THREAD> cThread, final Class<FEEDBACK> cFeedback)
-	{
-		return new FeedbackFactoryFactory<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>(cL,cD,cThread,cFeedback);
-	}
-	
+		
 	public EjbFeedbackThreadFactory<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER> thread()
 	{
 		return new EjbFeedbackThreadFactory<L,D,THREAD,FEEDBACK,STYLE,TYPE,USER>(cThread);

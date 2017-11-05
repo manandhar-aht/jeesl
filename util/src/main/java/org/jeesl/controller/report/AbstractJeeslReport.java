@@ -236,9 +236,8 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 					int arrayIndex = 0;
 					for(EjbWithId ejb : last)
 					{
-						COLUMN c = efColumn.build(group);
+						COLUMN c = efColumn.build(group,group.getColumns());
 						c.setId(group.getColumns().size()+1);
-						c.setPosition(group.getColumns().size()+1);
 						c.setColumWidth(original.getColumWidth());
 						c.setDataType(original.getDataType());
 						c.setVisible(true);

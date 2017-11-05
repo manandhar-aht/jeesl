@@ -3,7 +3,7 @@ package org.jeesl.web.mbean.prototype.system.io.revision;
 import java.io.Serializable;
 
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
-import org.jeesl.factory.builder.system.RevisionFactoryBuilder;
+import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
@@ -38,7 +38,7 @@ public class AbstractAdminRevisionConsistencyBean <L extends UtilsLang,D extends
 	
 	private RC category; public RC getCategory() {return category;} public void setCategory(RC category) {this.category = category;}
 
-	public AbstractAdminRevisionConsistencyBean(final RevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision){super(fbRevision);}
+	public AbstractAdminRevisionConsistencyBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision){super(fbRevision);}
 
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fRevision)
 	{

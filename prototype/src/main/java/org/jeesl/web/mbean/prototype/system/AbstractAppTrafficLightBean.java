@@ -15,17 +15,16 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class AbstractTrafficLightBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAppTrafficLightBean <L extends UtilsLang,D extends UtilsDescription,
 										LIGHT extends JeeslTrafficLight<L,D,SCOPE>,
 										SCOPE extends UtilsStatus<SCOPE,L,D>>
 					implements Serializable,JeeslTrafficLightBean<L,D,LIGHT,SCOPE>
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractTrafficLightBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractAppTrafficLightBean.class);
 	
 	private JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fLight;
 		
-	
 	private Hashtable<String,List<LIGHT>> cache;
 	
 	protected void init(JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fLight)

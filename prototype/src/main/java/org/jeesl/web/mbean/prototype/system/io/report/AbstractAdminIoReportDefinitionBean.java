@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.io.report;
+package org.jeesl.web.mbean.prototype.system.io.report;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -9,7 +9,6 @@ import java.util.UUID;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
-import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.builder.system.ReportFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
@@ -29,17 +28,12 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportColumnComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportGroupComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportRowComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportSheetComparator;
-import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -341,7 +335,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	public void addGroup()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassGroup()));}
-		group = efGroup.build(sheet);
+		group = efGroup.build(sheet,groups);
 		group.setName(efLang.createEmpty(langs));
 		group.setDescription(efDescription.createEmpty(langs));
 		reset(false,false,true,false,true);
@@ -370,7 +364,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private void reloadGroup()
 	{
 		group = fReport.load(group);
-		columns = group.getColumns();
+		columns = fReport.allForParent(fbReport.getClassColumn(), group);
 		Collections.sort(columns, comparatorColumn);
 	}
 	
@@ -411,7 +405,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	public void addColumn()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassColumn()));}
-		column = efColumn.build(group);
+		column = efColumn.build(group,columns);
 		column.setName(efLang.createEmpty(langs));
 		column.setDescription(efDescription.createEmpty(langs));
 	}
@@ -447,6 +441,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 			if(column.getTrafficLightScope()!=null) {column.setTrafficLightScope(fReport.find(fbReport.getClassTrafficLightScope(),column.getTrafficLightScope()));}
 			column.setGroup(fReport.find(fbReport.getClassGroup(),column.getGroup()));
 			column = fReport.save(column);
+		
 			reloadReport();
 			reloadSheet();
 			reloadGroup();
@@ -533,11 +528,11 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	public void cancelRow(){reset(false,false,true,true,true);}
     
 	//*************************************************************************************
-	protected void reorderReports() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassReport(), reports);Collections.sort(reports, comparatorReport);}
-	protected void reorderSheets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassSheet(), sheets);Collections.sort(sheets, comparatorSheet);}
-	protected void reorderGroups() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassGroup(), groups);Collections.sort(groups, comparatorGroup);}
+	public void reorderReports() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassReport(), reports);Collections.sort(reports, comparatorReport);}
+	public void reorderSheets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassSheet(), sheets);Collections.sort(sheets, comparatorSheet);}
+	public void reorderGroups() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassGroup(), groups);Collections.sort(groups, comparatorGroup);}
 	protected void reorderColumns() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassColumn(), columns);Collections.sort(columns, comparatorColumn);}
-	protected void reorderRows() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassRow(), rows);Collections.sort(rows, comparatorRow);}
+	public void reorderRows() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassRow(), rows);Collections.sort(rows, comparatorRow);}
 	
 	protected void updatePerformed(){}	
 	

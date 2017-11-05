@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.io.report;
+package org.jeesl.web.mbean.prototype.system.io.report;
 
 import java.io.Serializable;
 import java.util.Collections;

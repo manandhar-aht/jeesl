@@ -1,4 +1,4 @@
-package org.jeesl.factory.builder.system;
+package org.jeesl.factory.builder.io;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.revision.EjbRevisionAttributeFactory;
@@ -20,7 +20,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class RevisionFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
+public class IoRevisionFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
 									RV extends JeeslRevisionView<L,D,RVM>,
 									RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
@@ -32,7 +32,7 @@ public class RevisionFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									RAT extends UtilsStatus<RAT,L,D>>
 				extends AbstractFactoryBuilder<L,D>
 {
-	final static Logger logger = LoggerFactory.getLogger(RevisionFactoryBuilder.class);
+	final static Logger logger = LoggerFactory.getLogger(IoRevisionFactoryBuilder.class);
 
 	private final Class<RC> cCategory; public Class<RC> getClassCategory(){return cCategory;}
 	private final Class<RV> cView; public Class<RV> getClassView(){return cView;}
@@ -44,7 +44,7 @@ public class RevisionFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	private final Class<RA> cAttribute; public Class<RA> getClassAttribute(){return cAttribute;}
 	private final Class<RAT> cRat; public Class<RAT> getClassAttributeType(){return cRat;}
     
-	public RevisionFactoryBuilder(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cViewMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cMappingEntity, Class<RA> cAttribute, Class<RAT> cRat)
+	public IoRevisionFactoryBuilder(final Class<L> cL, final Class<D> cD, Class<RC> cCategory,Class<RV> cView,Class<RVM> cViewMapping, Class<RS> cScope, Class<RST> cScopeType, Class<RE> cEntity, Class<REM> cMappingEntity, Class<RA> cAttribute, Class<RAT> cRat)
 	{
 		super(cL,cD);
 		this.cCategory=cCategory;

@@ -75,7 +75,7 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
         dbuDescription = JeeslDbDescriptionUpdater.factory(cColumn,cD);
 	}
 	    
-	public COLUMN build(GROUP group)
+	public COLUMN build(GROUP group, List<COLUMN> list)
 	{
 		COLUMN ejb = null;
 		try
@@ -83,9 +83,11 @@ public class EjbIoReportColumnFactory<L extends UtilsLang,D extends UtilsDescrip
 			ejb = cColumn.newInstance();
 			ejb.setCode(UUID.randomUUID().toString());
 			ejb.setGroup(group);
-			ejb.setPosition(1);
+			
 			ejb.setVisible(false);
 			ejb.setShowLabel(true);
+			if(list==null) {ejb.setPosition(1);}
+			else {ejb.setPosition(list.size()+1);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

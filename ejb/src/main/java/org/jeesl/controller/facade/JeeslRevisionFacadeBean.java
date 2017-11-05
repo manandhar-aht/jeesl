@@ -14,6 +14,7 @@ import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
+import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.json.system.revision.JsonRevisionFactory;
 import org.jeesl.interfaces.model.system.io.revision.EjbWithRevisionAttributes;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
@@ -48,18 +49,21 @@ public class JeeslRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 									RAT extends UtilsStatus<RAT,L,D>>
 					extends UtilsFacadeBean
 					implements JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT>
-{	
+{
+	private final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision;
+	
 	private String revisionPrefix;
 	private String revisionTable;
 
-	public JeeslRevisionFacadeBean(EntityManager em)
+	public JeeslRevisionFacadeBean(EntityManager em, final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision)
 	{
-		this("_at_","auditinfo",em);
+		this("_at_","auditinfo",em,fbRevision);
 	}
 	
-	public JeeslRevisionFacadeBean(String revisionPrefix, String revisionTable, EntityManager em)
+	public JeeslRevisionFacadeBean(String revisionPrefix, String revisionTable, EntityManager em, final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RAT> fbRevision)
 	{
 		super(em);
+		this.fbRevision=fbRevision;
 		this.revisionPrefix=revisionPrefix;
 		this.revisionTable=revisionTable;
 	}

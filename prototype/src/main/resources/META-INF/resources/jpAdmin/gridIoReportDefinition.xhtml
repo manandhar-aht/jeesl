@@ -13,7 +13,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="false" default="#{adminIoReportBean}"/>
-		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
+		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -59,8 +59,7 @@
 								<p:outputLabel value="#{msg.jeeslIoReportXmlExample}"/>
 								<p:inputText autocomplete="off" value="#{cc.attrs.bean.report.xmlExample}" />
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.report}" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.report}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 						</p:panel>
 					</h:form>
 				</aht:slot>
@@ -89,7 +88,7 @@
 						<p:panel header="#{msg.jeeslIoSheet}" rendered="#{(not empty cc.attrs.bean.sheet) and cc.attrs.bean.uiHelper.showPanelSheet}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
-								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}" mayDisappear="true"/>
 								<aht:icon type="jeeslDelete" rendered="#{cc.attrs.bean.sheet.id gt 0}" listener="#{cc.attrs.bean.rmSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
@@ -100,12 +99,11 @@
 								<p:outputLabel value="#{msg.jeeslIoReportQueryTable}"/>
 								<p:inputText value="#{cc.attrs.bean.sheet.queryTable}"/>
 								<p:outputLabel value="#{msg.jeeslIoReportImplementation}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.sheet.implementation}" effect="fade" >
+								<p:selectOneMenu value="#{cc.attrs.bean.sheet.implementation}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.implementations}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.sheet}" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.sheet}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 						</p:panel>
 					</h:form>
 				</aht:slot>
@@ -120,10 +118,12 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderGroups()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fGroup :#{cc.id}:row2" listener="#{cc.attrs.bean.selectGroup()}"/>
-				         <p:column rendered="true"><h:outputText value="#{group.position}"/></p:column>
+				         <p:column rendered="true">
+				         	<h:graphicImage rendered="#{not group.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+                     		<h:outputText rendered="#{group.visible}" value="#{group.position}" />
+				         </p:column>
 				         <p:column headerText="#{msg.jeeslName}"><h:outputText value="#{group.name[userBean.localeCode].lang}"/></p:column>
 				         <p:column rendered="true">
-							<aup:iconCheckmark value="#{group.visible}"/>
 							<h:graphicImage rendered="#{group.showLabel}" name="12/ui/system/io/report/label.png"  library="jeeslPrototypeGfx" style="margin-left: 5px;"/>
 				         </p:column>
 				      </p:dataTable>
@@ -132,12 +132,14 @@
 						<p:panel header="#{msg.jeeslIoReportGroup}" rendered="#{(not empty cc.attrs.bean.group) and cc.attrs.bean.uiHelper.showPanelGroup}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelGroup()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
-								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveGroup()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveGroup()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}" mayDisappear="true"/>
 								<aht:icon type="jeeslDelete" rendered="#{cc.attrs.bean.group.id gt 0}" listener="#{cc.attrs.bean.rmGroup()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60">
-								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
+							<p:panelGrid columns="4" columnClasses="jeeslGrid10,jeeslGrid40,jeeslGrid40,jeeslGrid10">
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.group.visible}"/>
+								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
+								<p:outputLabel value="#{msg.jeeslPosition}"/>
+								<h:outputText value="#{cc.attrs.bean.group.position}"/>
 							</p:panelGrid>
 							<p:panelGrid columns="4" columnClasses="jeeslGrid10,jeeslGrid40,jeeslGrid10,jeeslGrid40">
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.group.showLabel}"/>
@@ -150,12 +152,11 @@
 								<p:inputText value="#{cc.attrs.bean.group.queryColumns}"/>
 								
 								<p:outputLabel value="#{msg.jeeslIoReportStyleHeader}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.group.styleHeader}" effect="fade" >
+								<p:selectOneMenu value="#{cc.attrs.bean.group.styleHeader}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.styles}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.group}" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.group}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 						</p:panel>
 					</h:form>
 				</aht:slot>
@@ -172,10 +173,12 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderColumns()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sColumn" listener="#{cc.attrs.bean.selectColumn()}"/>
-				         <p:column rendered="true"><h:outputText value="#{column.position}"/></p:column>
-				         <p:column headerText="#{msg.jeeslName}"><h:outputText value="#{column.name[userBean.localeCode].lang}"/></p:column>
+				         <p:column rendered="true">
+				         	<h:graphicImage rendered="#{not column.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+                     		<h:outputText rendered="#{column.visible}" value="#{column.position}" />
+				         </p:column>
+				         <p:column headerText="#{msg.jeeslName}"><h:outputText value="#{column.name[localeCode].lang}"/></p:column>
 				         <p:column>  
-							<aup:iconCheckmark value="#{column.visible}"/>
 							<h:graphicImage rendered="#{column.showLabel}" name="12/ui/system/io/report/label.png"  library="jeeslPrototypeGfx" style="margin-left: 5px;"/>
 				         </p:column>
 				      </p:dataTable>
@@ -191,7 +194,7 @@
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslIoReportGroup}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.column.group}" effect="fade" >
+								<p:selectOneMenu value="#{cc.attrs.bean.column.group}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.groups}" var="g" itemLabel="#{g.name[userBean.localeCode].lang}" itemValue="#{g}"/>
 								</p:selectOneMenu>
 								
@@ -225,13 +228,12 @@
 								
 							</p:panelGrid>
 							<p:panelGrid id="pgColumnData" columns="2" columnClasses="auPwg50,auPwg50">
-								<aht:tabTranslationEditor value="#{cc.attrs.bean.column}" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+								<aht:tabTranslationEditor value="#{cc.attrs.bean.column}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 								
 								<p:panelGrid columns="1" columnClasses="auPwg100">
 									<p:panelGrid id="pgWidth" columns="3" columnClasses="auPwg40,auPwg50,auPwg10">
 										<p:outputLabel value="#{msg.jeeslIoReportColumWidth}"/>
-										<p:selectOneMenu value="#{cc.attrs.bean.column.columWidth}" effect="fade" >
+										<p:selectOneMenu value="#{cc.attrs.bean.column.columWidth}" effect="fade" autoWidth="false">
 											<f:selectItems value="#{cc.attrs.bean.columnWidths}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 										</p:selectOneMenu>
 										<p:inputText value="#{cc.attrs.bean.column.columSize}"/>
@@ -239,24 +241,24 @@
 									
 									<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60">
 										<p:outputLabel value="#{msg.jeeslIoReportStyleHeader}"/>
-										<p:selectOneMenu value="#{cc.attrs.bean.column.styleHeader}" effect="fade" >
+										<p:selectOneMenu value="#{cc.attrs.bean.column.styleHeader}" effect="fade" autoWidth="false">
 											<f:selectItems value="#{cc.attrs.bean.styles}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
 										</p:selectOneMenu>
 										
 										<p:outputLabel value="#{msg.jeeslIoReportStyleCell}"/>
-										<p:selectOneMenu value="#{cc.attrs.bean.column.styleCell}" effect="fade" >
+										<p:selectOneMenu value="#{cc.attrs.bean.column.styleCell}" effect="fade" autoWidth="false">
 											<f:selectItems value="#{cc.attrs.bean.styles}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
 										</p:selectOneMenu>
 										
 										<p:outputLabel value="#{msg.jeeslIoReportStyleFooter}"/>
-										<p:selectOneMenu value="#{cc.attrs.bean.column.styleFooter}" effect="fade" >
+										<p:selectOneMenu value="#{cc.attrs.bean.column.styleFooter}" effect="fade" autoWidth="false">
 											<f:selectItems value="#{cc.attrs.bean.styles}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
 										</p:selectOneMenu>
 									</p:panelGrid>
 									
 									<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60">
 										<p:outputLabel value="#{msg.jeeslIoReportTrafficLight}"/>
-										<p:selectOneMenu value="#{cc.attrs.bean.column.trafficLightScope}" effect="fade" >
+										<p:selectOneMenu value="#{cc.attrs.bean.column.trafficLightScope}" effect="fade" autoWidth="false">
 											<f:selectItem itemLabel="---"/>
 											<f:selectItems value="#{cc.attrs.bean.trafficLightScopes}" var="s" itemLabel="#{s.name[localeCode].lang}" itemValue="#{s}"/>
 										</p:selectOneMenu>
@@ -264,14 +266,14 @@
 									
 									<p:panelGrid id="pgColumnDataRevision" columns="2" columnClasses="jeeslGrid40,jeeslGrid60">
 										<p:outputLabel value="#{msg.jeeslIoReportDataType}"/>
-										<p:selectOneMenu value="#{cc.attrs.bean.column.dataType}" effect="fade" >
+										<p:selectOneMenu value="#{cc.attrs.bean.column.dataType}" effect="fade" autoWidth="false">
 											<f:selectItem itemLabel="---"/>
 											<f:selectItems value="#{cc.attrs.bean.attributeTypes}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 											<p:ajax event="change" update="pgColumnDataRevision" listener="#{cc.attrs.bean.changeColumnDataType()}"/>
 										</p:selectOneMenu>
 
 										<p:outputLabel value="#{msg.aupCategory}" rendered="#{empty cc.attrs.bean.column.dataType}"/>
-										<p:selectOneMenu value="#{cc.attrs.bean.revisionCategory}" effect="fade" rendered="#{empty cc.attrs.bean.column.dataType}">
+										<p:selectOneMenu value="#{cc.attrs.bean.revisionCategory}" effect="fade" rendered="#{empty cc.attrs.bean.column.dataType}" autoWidth="false">
 											<f:selectItems value="#{cc.attrs.bean.revisionCategories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 											<p:ajax event="change" listener="#{cc.attrs.bean.changeRevisionCategory()}" update="pgColumnData"/>
 										</p:selectOneMenu>

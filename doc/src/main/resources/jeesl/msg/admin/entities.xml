@@ -21,6 +21,13 @@
 			<s:lang key="fr" translation="Revision Scope Type"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="RevisionEntityRelation">
+		<s:langs>
+			<s:lang key="de" translation="Revision Beziehung"/>
+			<s:lang key="en" translation="Revision Relation"/>
+			<s:lang key="fr" translation="Revision Relation"/>
+		</s:langs>
+	</s:translation>	
 	<s:translation key="IoReportRowType">
 		<s:langs>
 			<s:lang key="de" translation="Zeilentyp"/>

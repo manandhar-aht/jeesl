@@ -37,7 +37,7 @@
 				</aht:slot>
 				<aht:slot id="sCategory" width="8">
 					<mc:chart type="column" rendered="#{not empty cc.attrs.bean.tsh.opList}">
-	                    <mc:axis code="x" categories="#{cc.attrs.bean.ds.dataSet[0]}">
+	                    <mc:axis code="x" type="datetime"<>
 	                        <mc:labels rotation="0"/>
 	                    </mc:axis>
 	                    <mc:axis code="y" min="0" >
@@ -45,8 +45,7 @@
 	                    </mc:axis>
 	                    <mc:tooltip shared="true"/>
 	                    <mc:series>
-	                        <mc:dataSet value="#{cc.attrs.bean.ds.dataSet[1]}"/>
-	                        <mc:dataSet value="#{cc.attrs.bean.ds.dataSet[1]}"/>
+	                        <mc:dataSet value="#{cc.attrs.bean.ds.dataSet[0]}"/>
 	                    </mc:series>
 	                </mc:chart>
 				</aht:slot>

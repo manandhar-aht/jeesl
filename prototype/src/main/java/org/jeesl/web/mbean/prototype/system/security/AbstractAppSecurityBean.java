@@ -82,9 +82,9 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		else {return null;}
 	}
 	
-	public String findCode(String pattern)
+	public V findCode(String pattern)
 	{
-		if(urlPattern.containsKey(pattern)) {return urlPattern.get(pattern).getCode();}
+		if(urlPattern.containsKey(pattern)) {return urlPattern.get(pattern);}
 		else {return null;}
 	}
 }

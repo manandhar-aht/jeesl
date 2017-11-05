@@ -2,11 +2,13 @@ package org.jeesl.web.mbean.prototype.module.ts;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.op.OpEntitySelectionHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
+import org.jeesl.factory.mc.ts.McTsViewerFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
@@ -15,6 +17,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.metachart.xml.chart.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +30,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
@@ -110,7 +114,21 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 	
 	public void selectTimeseries()
 	{
+		logger.info("Selected: "+tsh.getOpList().size());
+		List<DATA> list = fTs.fData(sbhWorkspace.getSelected().get(0), tsh.getOpList().get(0));
 		
+		McTsViewerFactory<TS,DATA> f = new McTsViewerFactory<TS,DATA>();
+		ds=f.build(list);
+		JaxbUtil.info(ds);
 	}
 	
+	DataSet ds;
+
+	public DataSet getDs() {
+		return ds;
+	}
+
+	public void setDs(DataSet ds) {
+		this.ds = ds;
+	}
 }

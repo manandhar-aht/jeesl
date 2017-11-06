@@ -1,5 +1,7 @@
 package org.jeesl.factory.ejb.module.survey;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
 import org.slf4j.Logger;
@@ -17,13 +19,15 @@ public class EjbSurveyAnalysisFactory<TEMPLATE extends JeeslSurveyTemplate<?,?,?
         this.cAnalysis = cAnalysis;
 	}
     
-	public ANALYSIS build(TEMPLATE template)
+	public ANALYSIS build(TEMPLATE template, List<ANALYSIS> list)
 	{
 		ANALYSIS ejb = null;
 		try
 		{
 			ejb = cAnalysis.newInstance();
 			ejb.setTemplate(template);
+			if(list==null) {ejb.setPosition(1);}
+			else {ejb.setPosition(list.size()+1);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

@@ -61,7 +61,7 @@
 					<p:panel header="#{msg.jeeslSurveyAnalysis}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveAnalysis()}" update=":#{cc.id}:grid"/>
-							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmAnalysis()}" update=":#{cc.id}:grid"/>
+							<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteAnalysis()}" update=":#{cc.id}:grid" mayDisappear="true" rendered="#{cc.attrs.bean.analysis.id gt 0}"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="4" columnClasses="jeeslGrid30,jeeslGrid20,jeeslGrid30,jeeslGrid20">

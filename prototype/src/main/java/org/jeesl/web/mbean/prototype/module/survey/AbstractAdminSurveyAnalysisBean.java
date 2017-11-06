@@ -173,7 +173,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void addAnalysis()
 	{
 		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassAnalysis()));
-		analysis = efAnalysis.build(version.getTemplate());
+		analysis = efAnalysis.build(version.getTemplate(),analyses);
 		analysis.setName(efLang.createEmpty(sbhLocale.getList()));
 	}
 	
@@ -186,10 +186,17 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	
 	public void selectAnalysis()
 	{
-		logger.info(AbstractLogMessage.selectEntity(analysis));
+		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(analysis));}
 		analysis = efLang.persistMissingLangs(fCore, sbhLocale.getList(), analysis);
 //		analysis = efDescription.persistMissingLangs(fSurvey, localeCodes, analysis);
 		reset(false,false,true,true,true,true);
+	}
+	
+	public void deleteAnalysis() throws UtilsConstraintViolationException
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.rmEntity(analysis));}
+		fCore.rm(analysis);
+		reset(true,false,false,true,true,true);
 	}
 
 	public void selectSection()

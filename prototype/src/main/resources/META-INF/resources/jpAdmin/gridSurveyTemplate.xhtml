@@ -143,7 +143,7 @@
 					<p:panel header="#{msg.jpSurveyTemplateVersion}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveVersion()}" update=":#{cc.id}:row1"/>
-							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmVersion()}" update=":#{cc.id}:row1" rendered="#{cc.attrs.bean.uiHelper.versionRemoveable}"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteVersion()}" update=":#{cc.id}:row1" rendered="#{cc.attrs.bean.uiHelper.versionRemoveable}"/>
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 							<p:outputLabel value="#{msg.jeeslName}"/>

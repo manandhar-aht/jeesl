@@ -277,7 +277,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		reloadVersions();
 	}
 	
-	protected void rmVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	public void deleteVersion() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(version));
 		fCore.rmVersion(version);

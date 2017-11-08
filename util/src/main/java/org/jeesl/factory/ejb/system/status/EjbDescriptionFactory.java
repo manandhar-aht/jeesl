@@ -1,5 +1,6 @@
 package org.jeesl.factory.ejb.system.status;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 	{
 		if(!description.isSetKey()){throw new UtilsConstraintViolationException("Key not set: "+JaxbUtil.toString(description));}
 		if(!description.isSetValue()){throw new UtilsConstraintViolationException("Value not set: "+JaxbUtil.toString(description));}
-    	return create(description.getKey(),description.getValue());
+    		return create(description.getKey(),description.getValue());
 	}
     
 	public D create(String key, String value) throws UtilsConstraintViolationException
@@ -53,9 +54,9 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
-    	d.setLang(value);
-    	d.setLkey(key);
-    	return d;
+	    	d.setLang(value);
+	    	d.setLkey(key);
+	    	return d;
 	}
 	
 	public Map<String,D> create(Descriptions descriptions) throws UtilsConstraintViolationException
@@ -90,6 +91,21 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 				map.put(key, create(key,""));
 			}
 			catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+		}
+		return map;
+	}
+	
+	public Map<String,D> clone(Map<String,D> original) 
+	{
+		Map<String,D> map = new HashMap<String,D>();
+		for(String key : original.keySet())
+		{
+			try {
+				map.put(key, create(key, original.get(key).getLang()));
+			} catch (UtilsConstraintViolationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return map;
 	}

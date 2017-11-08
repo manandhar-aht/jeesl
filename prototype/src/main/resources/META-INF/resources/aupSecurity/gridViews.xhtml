@@ -58,6 +58,7 @@
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveView()}" update=":#{cc.id}:sViews :#{cc.id}:sActions" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteView()}" update=":#{cc.id}:sViews :#{cc.id}:sActions" rendered="#{cc.attrs.bean.hasDeveloperAction}" mayDisappear="true" tooltip="#{msg.ttDelete}"/>
+								<aht:icon type="jeeslClone" listener="#{cc.attrs.bean.cloneView()}" update=":#{cc.id}:sViews :#{cc.id}:sActions" tooltip="#{msg.jeeslTooltipClone}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 								<p:outputLabel value="#{msg.aupSecurityCategory}"/>

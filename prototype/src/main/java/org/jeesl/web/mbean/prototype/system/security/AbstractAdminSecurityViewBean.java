@@ -102,6 +102,12 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		Collections.sort(actions, comparatorAction);
 	}
 	
+	private void reset(boolean rView, boolean rAction)
+	{
+		if(rView) {view=null;}
+		if(rAction) {action=null;}
+	}
+	
 	//VIEW
 	public void addView() throws UtilsConstraintViolationException
 	{
@@ -140,14 +146,23 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		propagateChanges();
 	}
 	
+	public void cloneView() throws UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassView()));
+		V clone = efView.clone(view);
+		clone.setName(efLang.clone(view.getName()));
+		clone.setDescription(efDescription.clone(view.getDescription()));
+		reset(true,true);
+		view = clone;
+	}
+	
 	protected abstract void propagateChanges();
 	
 	public void deleteView() throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(view));
 		fSecurity.rm(view);
-		view=null;
-		action=null;
+		reset(true,true);
 		reloadViews();
 		propagateChanges();
 		bMessage.growlSuccessRemoved();

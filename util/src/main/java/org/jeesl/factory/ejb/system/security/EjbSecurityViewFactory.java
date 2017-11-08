@@ -21,19 +21,44 @@ public class EjbSecurityViewFactory <C extends JeeslSecurityCategory<?,?>,
     
     public V build(C category, String code, List<V> list)
     {
-    	V ejb = null;
-    	
-    	try
-    	{
+    		V ejb = null;
+
+    		try
+    		{
 			ejb = cView.newInstance();
 			ejb.setCategory(category);
 			ejb.setCode(code);
 			if(list==null){ejb.setPosition(1);}
 			else{ejb.setPosition(list.size()+1);}
-		}
+    		}
     	catch (InstantiationException e) {e.printStackTrace();}
     	catch (IllegalAccessException e) {e.printStackTrace();}
     	
     	return ejb;
+    }
+    
+    public V clone(V view)
+    {
+    		V ejb = null;
+	    	
+	    	try
+	    	{
+			ejb = cView.newInstance();
+			ejb.setCategory(view.getCategory());
+			ejb.setCode(view.getCode()+"Clone");
+			ejb.setPosition(view.getPosition());
+			ejb.setVisible(view.isVisible());
+			ejb.setAccessLogin(view.getAccessLogin());
+			ejb.setAccessPublic(view.getAccessPublic());
+			ejb.setDocumentation(view.getDocumentation());
+			ejb.setPackageName(view.getPackageName());
+			ejb.setUrlBase(view.getUrlBase());
+			ejb.setUrlMapping(view.getUrlMapping());
+			ejb.setViewPattern(view.getViewPattern());
+		}
+	    	catch (InstantiationException e) {e.printStackTrace();}
+	    	catch (IllegalAccessException e) {e.printStackTrace();}
+	    	
+	    	return ejb;
     }
 }

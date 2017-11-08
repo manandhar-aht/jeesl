@@ -62,6 +62,16 @@ public class EjbIdFactory
 		return results;
 	}
 	
+	public static <T extends EjbWithId> List<Long> toLongs(Collection<T> list)
+	{
+		List<Long> results = new ArrayList<Long>();
+		for(T ejb : list)
+		{
+			results.add(ejb.getId());
+		}
+		return results;
+	}
+	
 	public static List<Long> toLong(String[] list)
 	{
 		List<Long> results = new ArrayList<Long>();

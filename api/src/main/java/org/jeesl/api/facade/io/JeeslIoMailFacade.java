@@ -1,5 +1,6 @@
 package org.jeesl.api.facade.io;
 
+import java.util.Date;
 import java.util.List;
 
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
@@ -19,7 +20,7 @@ public interface JeeslIoMailFacade <L extends UtilsLang,D extends UtilsDescripti
 			extends UtilsFacade
 {	
 	Integer cQueue();
-	List<MAIL> fMails(List<CATEGORY> categories,List<STATUS> stauts);
+	List<MAIL> fMails(List<CATEGORY> categories,List<STATUS> stauts, Date from, Date to);
 	List<MAIL> fSpoolMails(int max);
 	
 	void queueMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException;

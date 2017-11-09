@@ -76,7 +76,7 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 		}
 	}
 	
-	@Override public List<MAIL> fMails(List<CATEGORY> categories, List<STATUS> status)
+	@Override public List<MAIL> fMails(List<CATEGORY> categories, List<STATUS> status,Date from, Date to)
 	{
 		if(categories==null || categories.isEmpty()){return new ArrayList<MAIL>();}
 		if(status==null || status.isEmpty()){return new ArrayList<MAIL>();}
@@ -88,6 +88,9 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 		Path<Date> pRecordCreation = mail.get(JeeslIoMail.Attributes.recordCreation.toString());
 		Path<CATEGORY> pCategory = mail.get(JeeslIoMail.Attributes.category.toString());
 		Path<STATUS> pStatus = mail.get(JeeslIoMail.Attributes.status.toString());
+		
+		if(from!=null){predicates.add(cB.greaterThanOrEqualTo(pRecordCreation, from));}
+		if(to!=null){predicates.add(cB.lessThan(pRecordCreation,to));}
 		
 		predicates.add(pCategory.in(categories));
 		predicates.add(pStatus.in(status));

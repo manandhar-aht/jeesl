@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoMailFacade;
+import org.jeesl.api.handler.sb.SbDateIntervalSelection;
+import org.jeesl.controller.handler.sb.SbDateHandler;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
@@ -24,7 +26,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 											STATUS extends UtilsStatus<STATUS,L,D>,
 											RETENTION extends UtilsStatus<RETENTION,L,D>>
 					extends AbstractAdminBean<L,D>
-					implements Serializable,SbToggleBean
+					implements Serializable,SbToggleBean,SbDateIntervalSelection
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoMailQueueBean.class);
@@ -42,10 +44,13 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
-	
+	private final SbDateHandler sbhDate; public SbDateHandler getSbhDate() {return sbhDate;}
+
 	public AbstractAdminIoMailQueueBean(final Class<L> cL, final Class<D> cD)
 	{
 		super(cL,cD);
+		sbhDate = new SbDateHandler(this);
+		sbhDate.initWeeksToNow(2);
 	}
 	
 	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
@@ -81,6 +86,13 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 		clear(true);
 	}
 	
+	@Override
+	public void callbackDateChanged()
+	{
+		reloadMails();
+		clear(true);
+	}
+	
 	private void clear(boolean clearMail)
 	{
 		if(clearMail){mail=null;}
@@ -89,7 +101,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	//*************************************************************************************
 	protected void reloadMails()
 	{
-		mails = fMail.fMails(sbhCategory.getSelected(),sbhStatus.getSelected());
+		mails = fMail.fMails(sbhCategory.getSelected(),sbhStatus.getSelected(),sbhDate.getDate1(),sbhDate.getDate2());
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cMail,mails));}
 //		Collections.sort(templates, comparatorTemplate);
 	}

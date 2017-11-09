@@ -13,4 +13,6 @@ public interface JeeslTrafficLightBean<L extends UtilsLang,D extends UtilsDescri
 										SCOPE extends UtilsStatus<SCOPE,L,D>>
 {	
 	List<LIGHT> getTrafficLights(String scope);
+	
+	void refreshTrafficLights();
 }

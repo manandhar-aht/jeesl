@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <translations xmlns="http://ahtutils.aht-group.com/status">
-	<translation key="jeeslTrafficLightScopes">
+	<translation key="jeeslSystemLightScopes">
 		<langs>
 			<lang key="de" translation="Traffic Light Scopes" />
 			<lang key="en" translation="Traffic Light Scopes" />
 			<lang key="fr" translation="Traffic Light Scopes" />
 		</langs>
 	</translation>
-	<translation key="jeeslTrafficLights">
+	<translation key="jeeslSystemLights">
 		<langs>
 			<lang key="de" translation="Ampeln" />
 			<lang key="en" translation="Traffic Lights" />
 			<lang key="fr" translation="Traffic Lights" />
 		</langs>
 	</translation>
-	<translation key="jeeslTrafficLightColorBackground">
+	<translation key="jeeslSystemLight">
+		<langs>
+			<lang key="de" translation="Ampel" />
+			<lang key="en" translation="Traffic Light" />
+			<lang key="fr" translation="Traffic Light" />
+		</langs>
+	</translation>
+	<translation key="jeeslSystemLightColorBackground">
 		<langs>
 			<lang key="de" translation="Hintergrundfarbe" />
 			<lang key="en" translation="Background Colour" />
 			<lang key="fr" translation="Clé" />
 		</langs>
 	</translation>
-	<translation key="jeeslTrafficLightColorText">
+	<translation key="jeeslSystemLightColorText">
 		<langs>
 			<lang key="de" translation="Textfarbe" />
 			<lang key="en" translation="Text Colour" />
 			<lang key="fr" translation="Clé" />
 		</langs>
 	</translation>	
-	<translation key="jeeslTrafficLightThreshold">
+	<translation key="jeeslSystemLightThreshold">
     <langs>
       <lang key="de" translation="Schwellwert" />
       <lang key="en" translation="Threshold" />

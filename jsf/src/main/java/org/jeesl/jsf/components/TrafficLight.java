@@ -19,7 +19,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 @FacesComponent("org.jeesl.jsf.components.TrafficLight")
 public class TrafficLight <L extends UtilsLang,D extends UtilsDescription,
-							LIGHT extends JeeslTrafficLight<L,D,SCOPE>,SCOPE extends UtilsStatus<SCOPE,L,D>>
+							LIGHT extends JeeslTrafficLight<L,D,SCOPE>,
+							SCOPE extends UtilsStatus<SCOPE,L,D>>
 							extends UIOutput 
 {
     final static Logger logger = LoggerFactory.getLogger(TrafficLight.class);

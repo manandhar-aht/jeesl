@@ -1,9 +1,11 @@
-package org.jeesl.web.mbean.prototype.admin.system;
+package org.jeesl.web.mbean.prototype.system.symbol.lights;
 
 import java.io.Serializable;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTrafficLightBean;
 import org.jeesl.api.facade.system.graphic.JeeslTrafficLightFacade;
+import org.jeesl.factory.builder.system.LightFactoryBuilder;
 import org.jeesl.factory.ejb.system.util.EjbTrafficLightFactory;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.slf4j.Logger;
@@ -25,9 +27,8 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTrafficLightBean.class);
 	
 	private JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fTl;
-	
-	private final Class<SCOPE> cScope;
-	private final Class<LIGHT> cLight;
+	private final LightFactoryBuilder<L,D,LIGHT,SCOPE> fbLight;
+	private JeeslTrafficLightBean<L,D,LIGHT,SCOPE> bLight;
 	
 	private String[] defaultLangs;
 	
@@ -38,26 +39,23 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	
 	protected SCOPE scope; public SCOPE getScope(){return scope;} public void setScope(SCOPE scope){this.scope = scope;}
 	
-	public AbstractAdminTrafficLightBean(Class<L> cLang,Class<D> cDescription,Class<SCOPE> cScope,Class<LIGHT> cLight)
+	public AbstractAdminTrafficLightBean(LightFactoryBuilder<L,D,LIGHT,SCOPE> fbLight)
 	{
-		this.cScope=cScope;
-		this.cLight=cLight;
-		
-		efLight = EjbTrafficLightFactory.factory(cLang,cDescription,cLight);
+		this.fbLight=fbLight;
+		efLight = EjbTrafficLightFactory.factory(fbLight.getClassL(),fbLight.getClassD(),fbLight.getClassLight());
 	}
 	
-	public void initSuper(String[] defaultLangs, JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fTl)
+	public void initSuper(String[] defaultLangs, JeeslTrafficLightFacade<L,D,LIGHT,SCOPE> fTl, JeeslTrafficLightBean<L,D,LIGHT,SCOPE> bLight)
 	{
 		this.defaultLangs=defaultLangs;
 		this.fTl=fTl;
 		
 		 reloadTrafficLightScopes();
 	}
-
 	
 	private void reloadTrafficLightScopes()
 	{
-		trafficLightScopes = fTl.all(cScope);
+		trafficLightScopes = fTl.all(fbLight.getClassScope());
 		logger.trace("Results: " + trafficLightScopes.size() +" scopes loaded.");
 	}
 		
@@ -81,7 +79,7 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 	
 	public void addTrafficLight() throws UtilsConstraintViolationException
 	{
-		logger.debug(AbstractLogMessage.addEntity(cLight));
+		logger.debug(AbstractLogMessage.addEntity(fbLight.getClassLight()));
 		trafficLight = efLight.build(defaultLangs,scope);
 	}
 	
@@ -95,7 +93,7 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 		logger.debug(AbstractLogMessage.saveEntity(trafficLight));
 		trafficLight = fTl.save(trafficLight);
 		reloadTrafficLights();
-		fireUpdate();
+		bLight.refreshTrafficLights();
 	}
 	
 	public void rm() throws UtilsConstraintViolationException
@@ -104,10 +102,6 @@ public class AbstractAdminTrafficLightBean <L extends UtilsLang, D extends Utils
 		fTl.rm(trafficLight);
 		trafficLight=null;
 		reloadTrafficLights();
-	}
-	
-	public void fireUpdate()
-	{
-	    logger.warn("This should never be called in the Abstract class, it should be overwritten!");
+		bLight.refreshTrafficLights();
 	}
 }

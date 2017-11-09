@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.system;
+package org.jeesl.web.mbean.prototype.system.symbol.lights;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class AbstractAppTrafficLightBean <L extends UtilsLang,D extends UtilsDes
 	protected List<LIGHT> trafficLights;
 	public List<LIGHT> getTrafficLights(){return trafficLights;}
 	
-	public void refreshTrafficLights()
+	@Override public void refreshTrafficLights()
 	{
 	    cache = new Hashtable<String,List<LIGHT>>();
 	    

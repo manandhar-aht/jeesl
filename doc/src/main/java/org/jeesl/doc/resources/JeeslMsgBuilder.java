@@ -74,7 +74,8 @@ public class JeeslMsgBuilder
 	public static final String srcAdminAuditLog = "msg.aht-utils/admin/system/auditLog.xml";
 	public static final String srcAdminSync = "msg.aht-utils/admin/system/sync.xml";
 	
-	public static final String systemTrafficLights = "jeesl/msg/admin/system/trafficLights.xml";
+	//System
+	public static final String systemLights = "jeesl/msg/system/lights.xml";
 	public static final String systemConstraint = "jeesl/msg/admin/system/constraint.xml";
 	public static final String srcAdminSystemDbStatistic = "jeesl/msg/system/io/db.xml";
 	

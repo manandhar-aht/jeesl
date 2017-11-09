@@ -24,7 +24,7 @@
 						<p:dataTable var="scope" value="#{cc.attrs.bean.trafficLightScopes}"
 							selection="#{cc.attrs.bean.scope}" selectionMode="single" rowKey="#{scope.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslTrafficLightScopes}"/>
+								<aht:pfDataTableHeader title="#{msg.jeeslSystemLightScopes}"/>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sLights :#{cc.id}:sLight" listener="#{cc.attrs.bean.selectScope()}"/>
 							<p:column headerText="#{msg.jeeslName}">
@@ -38,7 +38,7 @@
 						<p:dataTable var="trafficLight" value="#{cc.attrs.bean.trafficLights}" rendered="#{not empty cc.attrs.bean.scope}"
 								selection="#{cc.attrs.bean.trafficLight}" selectionMode="single" rowKey="#{trafficLight.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslTrafficLights}">
+								<aht:pfDataTableHeader title="#{msg.jeeslSystemLights}">
 									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addTrafficLight()}" update=":#{cc.id}:sLight" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
@@ -46,7 +46,7 @@
 							<p:column headerText="#{msg.jeeslName}">
 								<h:outputText value="#{trafficLight.name[localeCode].lang}"/>
 							</p:column>
-							<p:column headerText="#{msg.jeeslTrafficLightThreshold}"
+							<p:column headerText="#{msg.jeeslSystemLightThreshold}"
 										style="background: ##{trafficLight.colorBackground}; text-align: center;">
 								<h:outputText style="color: ##{trafficLight.colorText};" value="#{trafficLight.threshold}"/>
 							</p:column>
@@ -62,14 +62,14 @@
 									<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
 									<aht:icon type="jeeslDelete" ejb="#{cc.attrs.bean.trafficLight}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80" >
-								 <p:outputLabel value="#{msg.jeeslTrafficLightColorBackground}"/>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid60,jeeslGrid40" >
+								 <p:outputLabel value="#{msg.jeeslSystemLightColorBackground}"/>
 								 <p:colorPicker value="#{cc.attrs.bean.trafficLight.colorBackground}" />
 								 
-								 <p:outputLabel value="#{msg.jeeslTrafficLightColorText}"/>
+								 <p:outputLabel value="#{msg.jeeslSystemLightColorText}"/>
 								 <p:colorPicker value="#{cc.attrs.bean.trafficLight.colorText}" />
 								 
-								 <p:outputLabel value="#{msg.jeeslTrafficLightThreshold}"/>
+								 <p:outputLabel value="#{msg.jeeslSystemLightThreshold}"/>
 								 <h:inputText id="tresholdText" value="#{cc.attrs.bean.trafficLight.threshold}"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.trafficLight}" keys="#{cc.attrs.localeKeys}" withDescription="true"/>

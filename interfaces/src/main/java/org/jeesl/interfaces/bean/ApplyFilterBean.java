@@ -1,6 +1,8 @@
 package org.jeesl.interfaces.bean;
 
-public interface ApplyFilterBean
+import java.io.Serializable;
+
+public interface ApplyFilterBean extends Serializable
 {
 	void applyFilter();
 }

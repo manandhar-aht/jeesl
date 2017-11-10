@@ -56,15 +56,15 @@ public class EjbConstraintScopeFactory <L extends UtilsLang, D extends UtilsDesc
 		return ejb;
 	}
 	
-	public SCOPE importOrUpdate(JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint, ConstraintScope xScope) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	public SCOPE importOrUpdate(UtilsFacade fUtils, ConstraintScope xScope) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
 		SCOPE eScope;	
-		try {eScope = fConstraint.fByCode(cScope,xScope.getCode());}
+		try {eScope = fUtils.fByCode(cScope,xScope.getCode());}
 		catch (UtilsNotFoundException e) {eScope = this.build(null);}
-		eScope.setCategory(fConstraint.fByCode(cCategory,xScope.getCategory()));
+		eScope.setCategory(fUtils.fByCode(cCategory,xScope.getCategory()));
 		eScope = this.update(eScope, xScope);
-		eScope = fConstraint.save(eScope);
-		return this.updateLD(fConstraint,eScope,xScope);
+		eScope = fUtils.save(eScope);
+		return this.updateLD(fUtils,eScope,xScope);
 	}
 	
 	private SCOPE update(SCOPE eScope, ConstraintScope xScope)

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:jpAdmin="http://jsf.jeesl.org/prototype/admin"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<aup:grid id="grid">
+			<aht:row>
+				<aht:slot id="sAlgorithms" width="5">
+					<h:form id="falgorithms">
+						<p:dataTable var="a" value="#{cc.attrs.bean.algorithms}" draggableRows="true"
+							selection="#{cc.attrs.bean.algorithm}" selectionMode="single" rowKey="#{a.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslConstraintAlgorithms}">
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addAlgorithm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderAlgorithms()}" update="@form"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.saveAlgorithm()}" update=":#{cc.id}:sAlgorithm"/>
+							<p:column rendered="true">  
+								<h:outputText value="#{a.category.position}.#{a.position}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.jeeslCategory}">  
+								<h:outputText value="#{a.category.name[localeCode].lang}"/>
+				            </p:column>
+				            <p:column headerText="#{msg.jeeslConstraintAlgorithm}">  
+								<h:outputText value="#{a.name[localeCode].lang}"/>
+				            </p:column>
+				       	</p:dataTable>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sAlgorithm" width="7">
+					<h:form id="falgorithm" rendered="#{not empty cc.attrs.bean.algorithm}">
+						<p:panel id="pAlgorithm" header="#{msg.jeeslConstraintAlgorithm}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetAlgorithm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}"/>
+								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveAlgorithm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteAlgorithm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" rendered="#{cc.attrs.bean.algorithm.id gt 0}"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+								<p:outputLabel value="#{msg.jeeslCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.algorithm.category}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.sbhAlgorithmCategory.list}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslCode}"/>
+								<p:inputText value="#{cc.attrs.bean.algorithm.code}" autocomplete="off"/>
+								
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.algorithm}" keys="#{cc.attrs.localeKeys}" withDescription="true"/>
+						</p:panel>
+					</h:form>
+				</aht:slot>
+			</aht:row>
+	    </aup:grid>
+	</composite:implementation>
+</html>

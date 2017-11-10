@@ -76,7 +76,7 @@ public class JeeslMsgBuilder
 	
 	//System
 	public static final String systemLights = "jeesl/msg/system/lights.xml";
-	public static final String systemConstraint = "jeesl/msg/admin/system/constraint.xml";
+	public static final String systemConstraint = "jeesl/msg/system/constraint.xml";
 	public static final String srcAdminSystemDbStatistic = "jeesl/msg/system/io/db.xml";
 	
 	public static final String msgAdminSystemOptionTables = "jeesl/msg/admin/system/options.xml";

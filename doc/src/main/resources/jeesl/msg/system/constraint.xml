@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	
+	<s:translation key="jeeslConstraintAlgorithms">
+    	<s:langs>
+    		<s:lang key="de" translation="Algorithmen"/>
+    		<s:lang key="en" translation="Algorithms"/>
+    		<s:lang key="fr" translation="Algorithms"/>
+    	</s:langs>
+    </s:translation>
+    	<s:translation key="jeeslConstraintAlgorithm">
+    	<s:langs>
+    		<s:lang key="de" translation="Algorithmus"/>
+    		<s:lang key="en" translation="Algorithm"/>
+    		<s:lang key="fr" translation="Algorithm"/>
+    	</s:langs>
+    </s:translation>
+	
 	<s:translation key="jeeslConstraintScopes">
     	<s:langs>
     		<s:lang key="de" translation="Bereiche"/>

@@ -60,7 +60,7 @@ public class EjbConstraintFactory <L extends UtilsLang, D extends UtilsDescripti
 		return ejb;
 	}
 	
-	public CONSTRAINT importOrUpdate(JeeslSystemConstraintFacade<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint, SCOPE eScope, Constraint xConstraint) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	public CONSTRAINT importOrUpdate(JeeslSystemConstraintFacade<L,D,?,?,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint, SCOPE eScope, Constraint xConstraint) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
 		CONSTRAINT eConstraint;	
 		try {eConstraint = fConstraint.fSystemConstraint(eScope,xConstraint.getCode());}

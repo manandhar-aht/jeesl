@@ -254,6 +254,15 @@
 			<s:lang key="fr" translation="Constraint Level"/>
 		</s:langs>
 	</s:translation>
+		<s:translation key="SystemConstraintAlgorithmCategory">
+		<s:langs>
+			<s:lang key="de" translation="Algorithmus Kategorie"/>
+			<s:lang key="en" translation="Algorithm Category"/>
+			<s:lang key="fr" translation="Algorithm Category"/>
+		</s:langs>
+	</s:translation>
+	
+	
 	<s:translation key="TsCategory">
 		<s:langs>
 		 	<s:lang key="en" translation="Category"/>

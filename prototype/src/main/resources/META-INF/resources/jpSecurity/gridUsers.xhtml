@@ -6,6 +6,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupSec="http://ahtutils.sourceforge.net/prototype/security"
@@ -18,7 +19,7 @@
 		<composite:attribute name="withEmail" required="false" default="false"/>
 		<composite:attribute name="withPwd" required="false" default="false"/>
 		<composite:attribute name="withPermit" required="false" default="false"/>
-		
+		<composite:attribute name="withRegistrationStatus" required="false" default="false"/>	
 		
 		<composite:facet name="userDetail" required="false"/>
 		<composite:facet name="revisions" required="false"/>
@@ -38,6 +39,9 @@
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sDetail" listener="#{cc.attrs.bean.selectUser}"/>
+							<p:column rendered="#{cc.attrs.withRegistrationStatus}" styleClass="jeeslColumnCentered">
+								<jtp:symbolizer value="#{u.registration.status}"/>
+							</p:column>
 							<p:column rendered="#{cc.attrs.withPermit}" sortBy="#{u.permitLogin}">
 	                  		<h:graphicImage rendered="#{u.permitLogin}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx"/>
 	                  		<h:graphicImage rendered="#{not u.permitLogin}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx"/>

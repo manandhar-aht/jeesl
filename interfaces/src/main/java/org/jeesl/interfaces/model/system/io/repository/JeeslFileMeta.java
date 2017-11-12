@@ -1,0 +1,23 @@
+package org.jeesl.interfaces.model.system.io.repository;
+
+import java.io.Serializable;
+
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithName;
+
+public interface JeeslFileMeta<L extends UtilsLang,D extends UtilsDescription,
+								TYPE extends UtilsStatus<TYPE,L,D>>
+		extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,
+				EjbWithName
+{	
+	TYPE getType();
+	void setType(TYPE type);
+	
+	long getSize();
+	void setSize(long size);
+}

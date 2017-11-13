@@ -14,6 +14,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionSetFactory;
 import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
 import org.jeesl.factory.txt.module.survey.TxtOptionFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveyAnswerFactory;
+import org.jeesl.factory.txt.module.survey.TxtSurveyFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveySectionFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
@@ -122,6 +123,10 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		return new EjbSurveyDataFactory<SURVEY,DATA,CORRELATION>(cData);
 	}
 	
+	public TxtSurveyFactory<L,D,SURVEY,TEMPLATE> txtSurvey(final String localeCode)
+	{
+		return new TxtSurveyFactory<L,D,SURVEY,TEMPLATE>(localeCode);
+	}
 	public TxtSurveySectionFactory<L,D,SECTION> txtSection()
 	{
 		return new TxtSurveySectionFactory<L,D,SECTION>();

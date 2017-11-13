@@ -54,9 +54,11 @@ public interface JeeslSurveyAnalysisFacade <L extends UtilsLang, D extends Utils
 											AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 											ATT extends UtilsStatus<ATT,L,D>>
 	extends UtilsFacade
-{	
+{
 	AQ fAnalysis(ANALYSIS analysis, QUESTION question) throws UtilsNotFoundException;
 	
+	
+	JsonFlatFigures surveyCountRecords(List<SURVEY> surveys);
 	JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey);
 	JsonFlatFigures surveyStatisticBoolean(QUESTION question, SURVEY survey);
 	

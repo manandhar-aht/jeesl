@@ -89,6 +89,37 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 		return this.oneForParents(fbAnalyis.getClassAnalysisQuestion(), JeeslSurveyAnalysisQuestion.Attributes.analysis.toString(), analysis, JeeslSurveyAnalysisQuestion.Attributes.question.toString(), question);
 	}
 	
+	@Override public JsonFlatFigures surveyCountRecords(List<SURVEY> surveys)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
+        Root<DATA> data = cQ.from(fbAnalyis.getClassData());
+        
+        Path<SURVEY> pSurvey = data.get(JeeslSurveyData.Attributes.survey.toString());
+        predicates.add(pSurvey.in(surveys));
+        
+        Expression<Long> eTa = cB.count(data.<Long>get("id"));
+      
+        cQ.groupBy(pSurvey.get("id"));
+        cQ.multiselect(pSurvey.get("id"),eTa);
+        
+        cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+        TypedQuery<Tuple> tQ = em.createQuery(cQ);
+        List<Tuple> tuples = tQ.getResultList();
+        
+        JsonFlatFigures result = JsonFlatFiguresFactory.build();
+        for(Tuple t : tuples)
+        {
+	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
+	        	f.setL1((Long)t.get(0));
+	        	f.setL2((Long)t.get(1));
+	        	result.getFigures().add(f);
+        }
+        
+        return result;
+	}
+	
 	@Override public JsonFlatFigures surveyCountAnswer(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();

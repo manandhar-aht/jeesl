@@ -1,6 +1,9 @@
 package org.jeesl.factory.ejb.module.survey;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
@@ -66,5 +69,12 @@ public class EjbSurveyFactory<L extends UtilsLang, D extends UtilsDescription,
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public Map<Long,SURVEY> toMapId(List<SURVEY> surveys)
+	{
+		Map<Long,SURVEY> map = new HashMap<Long,SURVEY>();
+		for(SURVEY s : surveys) {map.put(s.getId(),s);}
+		return map;
 	}
 }

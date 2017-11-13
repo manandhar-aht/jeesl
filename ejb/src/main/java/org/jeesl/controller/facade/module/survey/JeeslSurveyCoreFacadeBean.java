@@ -55,6 +55,8 @@ import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
+import net.sf.ahtutils.interfaces.model.date.EjbWithValidUntil;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -126,7 +128,6 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		this.cData=cData;
 		this.cOption=cOption;
 		this.cCorrelation=cCorrelation;
-		
 
 		efAnswer = fbCore.answer();
 	}
@@ -336,31 +337,39 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<W> cQ = cB.createQuery(c);
 		Root<W> with = cQ.from(c);
-		
 		Join<W,SURVEY> jSurvey = with.join(JeeslWithSurvey.Attributes.survey.toString());
-		Join<SURVEY,SS> jStatus = jSurvey.join(JeeslSurvey.Attributes.status.toString());
-		Path<TYPE> pType = with.get(JeeslWithType.attributeType);
 		
+		Join<SURVEY,SS> jStatus = jSurvey.join(JeeslSurvey.Attributes.status.toString());
 		predicates.add(jStatus.in(status));
+		
+		Path<TYPE> pType = with.get(JeeslWithType.attributeType);
 		predicates.add(cB.equal(pType,type));
+		
+		Expression<Date> dStart = jSurvey.get(JeeslSurvey.Attributes.startDate.toString());
+		Expression<Date> dEnd   = jSurvey.get(JeeslSurvey.Attributes.endDate.toString());
+		predicates.add(cB.lessThanOrEqualTo(dStart,date));
+		predicates.add(cB.greaterThan(dEnd,date));
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(with);
 		return em.createQuery(cQ).getResultList();
 	}
 	
-	@Override public <W extends JeeslWithSurvey<SURVEY>>
-		List<W> fSurveys(Class<W> c, List<SS> status, Date date)
+	@Override public <W extends JeeslWithSurvey<SURVEY>> List<W> fSurveys(Class<W> c, List<SS> status, Date date)
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<W> cQ = cB.createQuery(c);
 		Root<W> root = cQ.from(c);
-		
 		Join<W,SURVEY> jSurvey = root.join(JeeslWithSurvey.Attributes.survey.toString());
-		Path<SS> pStatus = jSurvey.get(JeeslSurvey.Attributes.status.toString());
 		
+		Path<SS> pStatus = jSurvey.get(JeeslSurvey.Attributes.status.toString());
 		predicates.add(pStatus.in(status));
+		
+		Expression<Date> dStart = jSurvey.get(JeeslSurvey.Attributes.startDate.toString());
+		Expression<Date> dEnd   = jSurvey.get(JeeslSurvey.Attributes.endDate.toString());
+		predicates.add(cB.lessThanOrEqualTo(dStart,date));
+		predicates.add(cB.greaterThan(dEnd,date));
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(root);
@@ -368,8 +377,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		return em.createQuery(cQ).getResultList();
 	}
 	
-	@Override public <W extends JeeslWithSurvey<SURVEY>>
-		W fWithSurvey(Class<W> c, long surveyId) throws UtilsNotFoundException
+	@Override public <W extends JeeslWithSurvey<SURVEY>> W fWithSurvey(Class<W> c, long surveyId) throws UtilsNotFoundException
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
@@ -378,7 +386,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		
 		Join<W,SURVEY> jSurvey = root.join(JeeslWithSurvey.Attributes.survey.toString());
 		Expression<Long> eId = jSurvey.get(JeeslSurvey.Attributes.id.toString());
-		
+	
 		predicates.add(cB.equal(eId,surveyId));
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));

@@ -22,7 +22,7 @@ public interface JeeslSurvey<L extends UtilsLang, D extends UtilsDescription,
 			extends Serializable,EjbSaveable,EjbWithDateRange,
 						UtilsWithStatus<L,D,SS>,EjbWithLang<L>,EjbWithDescription<D>
 {
-	public enum Attributes{id,template,status}
+	public enum Attributes{id,template,status,startDate,endDate}
 	public enum Status{open,preparation};
 	
 	TEMPLATE getTemplate();

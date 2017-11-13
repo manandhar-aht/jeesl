@@ -84,7 +84,7 @@ public class JeeslMsgBuilder
 	public static final String srcAdminUser = "aht-utils/msg/admin/user.xml";
 	
 	
-	public static final String srcConstraint = "jeesl/msg/admin/system/constraint.xml";
+	public static final String srcConstraint = "jeesl/msg/system/constraint.xml";
 	public static final String facesMessages = "jeesl/msg/facesMessages.xml";
 	
 	public static final String devQa = "jeesl/msg/development/qa.xml";

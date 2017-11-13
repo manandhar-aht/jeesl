@@ -10,8 +10,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslUser <
-							R extends JeeslSecurityRole<?,?,?,?,?,?,?>
+public interface JeeslUser <R extends JeeslSecurityRole<?,?,?,?,?,?,?>
 							//,REGISTRATION>,
 //							REGISTRATION extends JeeslRegistrationStatus<L,D,USER,?>
 >

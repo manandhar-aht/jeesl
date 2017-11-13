@@ -83,9 +83,6 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyDomainBean.class);
 	
-	private final Class<DOMAIN> cDomain;
-	private final Class<DENTITY> cDentiy;
-	
 	protected List<DOMAIN> domains; public List<DOMAIN> getDomains(){return domains;}
 	protected List<DENTITY> entities; public List<DENTITY> getEntities(){return entities;}
 	
@@ -97,18 +94,15 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AbstractAdminSurveyDomainBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
-			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis,
-			final Class<LOC> cLoc, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SCHEME> cScheme, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<QE> cQe, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<DOMAIN> cDomain, final Class<DENTITY> cDentiy, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
+			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fbAnalysis)
 	{
 		super(fbTemplate,fbCore,fbAnalysis);
-		this.cDomain=cDomain;
-		this.cDentiy=cDentiy;
-		
-		efDomain = fbAnalysis.ejbDomain(cDomain);
+
+		efDomain = fbAnalysis.ejbDomain(fbAnalysis.getClassDomain());
 		cpDentity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
-	protected void initSuperCorrelation(String userLocale, String[] localeCodes, FacesMessageBean bMessage,
+	protected void initSuperDomain(String userLocale, String[] localeCodes, FacesMessageBean bMessage,
 			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
 			JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
 			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis,
@@ -118,7 +112,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		initSettings();
 		super.initLocales(userLocale);
 		
-		entities = fCore.allOrderedPositionVisible(cDentiy);
+		entities = fCore.allOrderedPositionVisible(fbAnalysis.getClassDomainEntity());
 		Collections.sort(entities,cpDentity);
 		reloadDomains();
 	}
@@ -132,12 +126,12 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	
 	private void reloadDomains()
 	{
-		domains = fCore.all(cDomain);
+		domains = fCore.all(fbAnalysis.getClassDomain());
 	}
 	
 	public void addDomain()
 	{
-		logger.info(AbstractLogMessage.addEntity(cDomain));
+		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassDomain()));
 		domain = efDomain.build(null,domains);
 	}
 	
@@ -150,7 +144,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(domain));
-		domain.setEntity(fCore.find(cDentiy,domain.getEntity()));
+		domain.setEntity(fCore.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
 		domain = fCore.save(domain);
 		
 		reloadDomains();

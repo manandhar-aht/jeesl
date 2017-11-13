@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
-import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,10 +22,7 @@ import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
-import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
-import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.txt.system.status.TxtStatusFactory;
 import org.jeesl.interfaces.model.module.survey.JeeslWithSurvey;
 import org.jeesl.interfaces.model.module.survey.JeeslWithSurveyType;
@@ -52,8 +48,6 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
-import org.jeesl.model.json.JsonFlatFigure;
-import org.jeesl.model.json.JsonFlatFigures;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -395,7 +389,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		catch (NoResultException ex){throw new UtilsNotFoundException(c.getSimpleName()+" not found for "+JeeslSurvey.class.getSimpleName()+"."+JeeslSurvey.Attributes.id+"="+surveyId);}
 	}
 	
-	@Override public List<VERSION> fVersions(TC category)
+	@Override public List<VERSION> fVersions(TC category, Long refId)
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
@@ -405,8 +399,13 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		Join<VERSION,TEMPLATE> jTemplate = root.join(JeeslSurveyTemplateVersion.Attributes.template.toString());
 		Path<TC> pCategory = jTemplate.get(JeeslSurveyTemplate.Attributes.category.toString());
 		Path<Date> pRecord = root.get(JeeslSurveyTemplateVersion.Attributes.record.toString());
-		
 		predicates.add(cB.equal(pCategory,category));
+		
+		if(refId!=null && refId>0)
+		{
+			Expression<Long> eRefId = root.get(JeeslSurveyTemplateVersion.Attributes.refId.toString());
+			predicates.add(cB.equal(eRefId,refId));
+		}	
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.orderBy(cB.desc(pRecord));
@@ -414,8 +413,6 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 
 		return em.createQuery(cQ).getResultList();
 	}
-	
-	
 	
 	@Override public List<ANSWER> fAnswers(DATA data, Boolean visible, List<SECTION> sections)
 	{

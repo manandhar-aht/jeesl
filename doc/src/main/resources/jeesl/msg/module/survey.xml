@@ -59,7 +59,7 @@
     </s:translation>
     	<s:translation key="jeeslSurveySection">
     	<s:langs>
-    		<s:lang key="de" translation="Section"/>
+    		<s:lang key="de" translation="Abschnitt"/>
     		<s:lang key="en" translation="Section"/>
     		<s:lang key="kin" translation="Section"/>
     		<s:lang key="fr" translation="Section"/>

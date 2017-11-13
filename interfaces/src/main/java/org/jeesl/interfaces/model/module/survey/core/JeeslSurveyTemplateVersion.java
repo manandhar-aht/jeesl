@@ -17,7 +17,7 @@ public interface JeeslSurveyTemplateVersion<L extends UtilsLang, D extends Utils
 					EjbWithRecord,EjbWithRefId,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
-	enum Attributes {template,record}
+	enum Attributes {template,record,refId}
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);

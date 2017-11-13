@@ -17,14 +17,15 @@ public class EjbSurveyTemplateVersionFactory<VERSION extends JeeslSurveyTemplate
         this.cVersion = cVersion;
 	}
 	
-	public VERSION build()
+	public VERSION build(Long refId)
 	{
 		VERSION ejb = null;
 		try
 		{
 			ejb = cVersion.newInstance();
 			ejb.setRecord(new Date());
-			ejb.setRefId(Long.valueOf(0));
+			if(refId==null) {ejb.setRefId(Long.valueOf(0));}
+			else {ejb.setRefId(refId);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

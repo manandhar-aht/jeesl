@@ -155,6 +155,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		}
 	}
 	
+	protected void cancelAll() {clear(true,true,true,true,true,true,true,true,true);}
 	public void cancelScheme(){clear(false,false,false,false,false,true,false,true,true);}
 	public void calcelScore(){clear(false,false,false,false,false,false,true,true,true);}
 	public void cancelCondition() {clear(false,false,false,false,false,false,true,true,true);}
@@ -227,22 +228,24 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void addVersion()
 	{
 		logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassVersion()));
-		version = efVersion.build();
+		version = efVersion.build(refId);
 		version.setName(efLang.createEmpty(sbhLocale.getList()));
 		version.setDescription(efDescription.createEmpty(sbhLocale.getList()));
 	}
 	
 	protected void reloadVersions()
 	{
-		versions = fCore.fVersions(sbhCategory.getSelection());
+		if(refId!=null && refId<=0) {versions = new ArrayList<VERSION>();}
+		else{versions = fCore.fVersions(sbhCategory.getSelection(),refId);}
+		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbTemplate.getClassVersion(), versions));}
 		
 		nestedVersions = new ArrayList<VERSION>();
-		
 		for(TC c : sbhCategory.getList())
 		{
 			if(!c.equals(sbhCategory.getSelection()))
 			{
-				nestedVersions.addAll(fCore.fVersions(c));
+				if(refId!=null && refId<=0) {nestedVersions = new ArrayList<VERSION>();}
+				else{nestedVersions = fCore.fVersions(c,refId);}
 			}
 		}
 	}

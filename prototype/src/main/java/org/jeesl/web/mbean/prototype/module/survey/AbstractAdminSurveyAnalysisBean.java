@@ -142,7 +142,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		if(fbTemplate.getClassTemplateCategory().isAssignableFrom(ejb.getClass()))
 		{
 			reset(true,true,true,true,true,true);
-			versions = fCore.fVersions(sbhCategory.getSelection());
+			versions = fCore.fVersions(sbhCategory.getSelection(),refId);
 		}
 	}
 	

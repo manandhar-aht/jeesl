@@ -77,7 +77,7 @@ public interface JeeslSurveyCoreFacade <L extends UtilsLang, D extends UtilsDesc
 	<W extends JeeslWithSurvey<SURVEY>> List<W> fSurveys(Class<W> c, List<SS> status, Date date);
 	<TYPE extends UtilsStatus<TYPE,L,D>, WT extends JeeslWithType<L,D,TYPE>, W extends JeeslWithSurveyType<SURVEY,WT,TYPE>> List<W> fWithSurveys(Class<W> c, List<SS> status, TYPE type, Date date);
 	<W extends JeeslWithSurvey<SURVEY>> W fWithSurvey(Class<W> c, long id) throws UtilsNotFoundException;
-	List<VERSION> fVersions(TC category);
+	List<VERSION> fVersions(TC category, Long refId);
 	
 	List<ANSWER> fcAnswers(DATA data);
 	List<ANSWER> fAnswers(SURVEY survey);

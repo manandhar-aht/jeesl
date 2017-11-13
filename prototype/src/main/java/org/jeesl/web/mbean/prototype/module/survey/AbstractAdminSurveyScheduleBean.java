@@ -157,7 +157,7 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 	
 	private void reloadAvailableSurveVersions() throws UtilsNotFoundException
 	{
-		versions = fCore.fVersions(template.getCategory());
+		versions = fCore.fVersions(template.getCategory(),refId);
 		logger.info(AbstractLogMessage.reloaded(fbTemplate.getClassVersion(), versions)+" for category:"+template.getCategory().toString());
 	}
 }

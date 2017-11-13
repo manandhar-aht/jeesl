@@ -43,9 +43,9 @@
 								<jtp:symbolizer value="#{u.registration.status}"/>
 							</p:column>
 							<p:column rendered="#{cc.attrs.withPermit}" sortBy="#{u.permitLogin}">
-	                  		<h:graphicImage rendered="#{u.permitLogin}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx"/>
-	                  		<h:graphicImage rendered="#{not u.permitLogin}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx"/>
-	                  </p:column>
+		                  		<h:graphicImage rendered="#{u.permitLogin}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx"/>
+		                  		<h:graphicImage rendered="#{not u.permitLogin}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx"/>
+		                  	</p:column>
 							<p:column headerText="#{msg.aupFirstName}"
 									sortBy="#{u.firstName}"
 									filterBy="#{u.firstName}" filterMatchMode="contains">

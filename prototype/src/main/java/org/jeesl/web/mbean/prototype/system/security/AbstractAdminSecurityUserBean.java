@@ -30,7 +30,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.EjbWithPwd;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminSecurityUserBean <L extends UtilsLang,
+public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 											D extends UtilsDescription,
 											C extends JeeslSecurityCategory<L,D>,
 											R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
@@ -103,8 +103,9 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cUser));}
 		user = efUser.build();
 		if(revision!=null){revision.pageFlowPrimaryAdd();}
+		postAdd();
 	}
-	protected void postAdd() {}
+	protected abstract void postAdd();
 	
 	public void selectUser()
 	{
@@ -138,12 +139,13 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	}
 	protected void preSave() {}
 	
-	public void rm(USER myUser)
+	public void rm(USER myUser){this.user=myUser;deleteUser();}
+	public void deleteUser()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(myUser));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(user));}
 		try
 		{
-			fUtilsUser.rm(myUser);
+			fUtilsUser.rm(user);
 			user = null;
 			bMessage.growlSuccessRemoved();
 			if(revision!=null){revision.pageFlowPrimaryCancel();}
@@ -151,6 +153,7 @@ public class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		}
 		catch (UtilsConstraintViolationException e){constraintViolationOnRemove();}
 	}
+	
 	protected void userChangePerformed() {}
 	
 	protected void checkPwd()

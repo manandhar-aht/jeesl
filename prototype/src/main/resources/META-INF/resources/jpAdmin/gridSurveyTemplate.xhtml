@@ -171,7 +171,7 @@
 					<p:panel header="#{msg.jeeslSurveySection}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:row1"/>
-							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1" rendered="#{(cc.attrs.bean.section.id gt 0) and (cc.attrs.bean.questions.isEmpty())}"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="4" columnClasses="jeeslGrid30,jeeslGrid20,jeeslGrid30,jeeslGrid20">

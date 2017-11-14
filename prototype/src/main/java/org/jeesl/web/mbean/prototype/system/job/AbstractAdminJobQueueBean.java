@@ -47,7 +47,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private JOB job; public JOB getJob() {return job;} public void setJob(JOB job) {this.job = job;}
 	
-	private SbDateHandler sbDateHandler; public SbDateHandler getSbDateHandler() {return sbDateHandler;}
+	private SbDateHandler sbhDate; public SbDateHandler getSbhDate() {return sbhDate;}
 
 	public AbstractAdminJobQueueBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob){super(fbJob);}
 	
@@ -55,8 +55,8 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	{
 		super.initSuper(langs,bMessage,fJob);
 		
-		sbDateHandler = new SbDateHandler(this);
-		sbDateHandler.initWeeksToNow(2);
+		sbhDate = new SbDateHandler(this);
+		sbhDate.initWeeksToNow(2);
 		
 		try
 		{
@@ -100,7 +100,7 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 	
 	private void reloadJobs()
 	{
-		jobs = fJob.fJobs(sbhCategory.getSelected(),sbhType.getSelected(),sbhStatus.getSelected(),sbDateHandler.getDate1(),sbDateHandler.getDate2());
+		jobs = fJob.fJobs(sbhCategory.getSelected(),sbhType.getSelected(),sbhStatus.getSelected(),sbhDate.getDate1(),sbhDate.getDate2());
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbJob.getClassJob(),jobs));}
 //		Collections.sort(templates, comparatorTemplate);
 	}

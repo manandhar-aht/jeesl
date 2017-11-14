@@ -20,4 +20,7 @@ public interface JeeslSurveyDomain<L extends UtilsLang, D extends UtilsDescripti
 {
 	DENTITY getEntity();
 	void setEntity(DENTITY entity);
+	
+	PATH getPath();
+	void setPath(PATH path);
 }

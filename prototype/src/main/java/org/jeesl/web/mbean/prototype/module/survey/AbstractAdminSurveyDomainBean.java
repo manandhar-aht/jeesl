@@ -85,6 +85,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	
 	protected List<DOMAIN> domains; public List<DOMAIN> getDomains(){return domains;}
 	protected List<DENTITY> entities; public List<DENTITY> getEntities(){return entities;}
+	protected List<PATH> paths; public List<PATH> getPaths(){return paths;}
 	
 	protected DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
 
@@ -150,6 +151,11 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		domain = fAnalysis.save(domain);
 		
 		reloadDomains();
+	}
+	
+	private void reloadPaths()
+	{
+//		paths = fAnalysis.allForParent(fbAnalysis.getClassDomainPath(), domain);
 	}
 	
 	protected void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, domains);}

@@ -26,8 +26,8 @@
 								 selection="#{cc.attrs.bean.domain}" selectionMode="single" draggableRows="true">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.jeeslSurveyDomains}">
-		                         <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addDomain()}" update=":#{cc.id}:grid"/>
-		                     </aht:pfDataTableHeader>
+                         <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addDomain()}" update=":#{cc.id}:grid"/>
+                     </aht:pfDataTableHeader>
 						</f:facet>
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderDomains()}" update="@form"/>
 						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectDomain()}" update=":#{cc.id}:grid"/>

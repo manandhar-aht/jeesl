@@ -7,6 +7,7 @@ import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.api.handler.sb.SbDateIntervalSelection;
 import org.jeesl.controller.handler.sb.SbDateHandler;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
+import org.jeesl.factory.builder.io.MailFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -46,9 +47,9 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 	private final SbDateHandler sbhDate; public SbDateHandler getSbhDate() {return sbhDate;}
 
-	public AbstractAdminIoMailQueueBean(final Class<L> cL, final Class<D> cD)
+	public AbstractAdminIoMailQueueBean(MailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail)
 	{
-		super(cL,cD);
+		super(fbMail.getClassL(),fbMail.getClassD());
 		sbhDate = new SbDateHandler(this);
 		sbhDate.initWeeksToNow(2);
 	}

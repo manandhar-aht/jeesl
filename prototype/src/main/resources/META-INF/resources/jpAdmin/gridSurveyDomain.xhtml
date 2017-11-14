@@ -20,7 +20,7 @@
 <composite:implementation>
 	<aup:grid id="grid">
 		<aht:row id="row1">
-			<aht:slot id="sDomains" width="5">
+			<aht:slot id="sDomains" width="7">
 				<h:form id="fDomains">
 					<p:dataTable var="domain" value="#{cc.attrs.bean.domains}" rowKey="#{domain.id}"
 								 selection="#{cc.attrs.bean.domain}" selectionMode="single" draggableRows="true">
@@ -40,10 +40,13 @@
 						<p:column headerText="#{msg.jeeslRevisionEntity}">
 							<h:outputText value="#{domain.entity.name[localeCode].lang}" />
 						</p:column>
+						<p:column headerText="#{msg.jeeslSurveyDomain}">
+							<h:outputText value="#{domain.name[localeCode].lang}" />
+						</p:column>
 					</p:dataTable>
 				</h:form>
 			</aht:slot>
-			<aht:slot id="sCenter" width="7" >
+			<aht:slot id="sCenter" width="5" >
 				<h:form id="fDomain" rendered="#{not empty cc.attrs.bean.domain}">
 					<p:panel header="#{msg.jeeslSurveyDomain}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
@@ -60,6 +63,7 @@
 								<f:selectItems value="#{cc.attrs.bean.entities}" var="e" itemLabel="#{e.category.position}.#{e.position} #{e.category.name[localeCode].lang}: #{e.name[localeCode].lang}" itemValue="#{e}"/>
 							</p:selectOneMenu>
 						</p:panelGrid>
+						<aht:tabTranslationEditor value="#{cc.attrs.bean.domain}" withDescription="false" keys="#{cc.attrs.localeKeys}" />
 					</p:panel>
 				</h:form>
 			</aht:slot>

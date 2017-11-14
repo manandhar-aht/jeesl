@@ -70,8 +70,8 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 						OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 						OPTION extends JeeslSurveyOption<L,D>,
 						CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-						DOMAIN extends JeeslSurveyDomain<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
-						PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT>,
+						DOMAIN extends JeeslSurveyDomain<L,D,PATH,DENTITY>,
+						PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY>,
 						DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
@@ -126,26 +126,28 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	
 	private void reloadDomains()
 	{
-		domains = fCore.all(fbAnalysis.getClassDomain());
+		domains = fAnalysis.all(fbAnalysis.getClassDomain());
 	}
 	
 	public void addDomain()
 	{
 		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassDomain()));
 		domain = efDomain.build(null,domains);
+		domain.setName(efLang.createEmpty(localeCodes));
 	}
 	
-	protected void selectDomain() throws UtilsNotFoundException
+	public void selectDomain() throws UtilsNotFoundException
 	{
 		reset(false);
 		logger.info(AbstractLogMessage.selectEntity(domain));
+		domain = efLang.persistMissingLangs(fAnalysis,localeCodes,domain);
 	}
 	
 	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(domain));
-		domain.setEntity(fCore.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
-		domain = fCore.save(domain);
+		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
+		domain = fAnalysis.save(domain);
 		
 		reloadDomains();
 	}

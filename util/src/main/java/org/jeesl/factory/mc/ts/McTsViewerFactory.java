@@ -24,9 +24,12 @@ public class McTsViewerFactory <TS extends JeeslTimeSeries<?,?,?,?,?>, DATA exte
 		DataSet dsValue = XmlDataSetFactory.build();
 		for(DATA d : list)
 		{
-			dsValue.getData().add(XmlDataFactory.build(d.getValue(),d.getRecord()));
-		}
+			if(d.getValue() != null && d.getRecord() != null)
+			{
+				dsValue.getData().add(XmlDataFactory.build(d.getValue(), d.getRecord()));
+			}
 
+		}
 		return XmlDataSetFactory.build(dsValue);
 	}
 }

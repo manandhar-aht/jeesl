@@ -27,7 +27,35 @@
 					<h:form id="fRoles"><aupSec:tableRoles bean="#{cc.attrs.bean}" update=":#{cc.id}:fRoles :#{cc.id}:sRole"/></h:form>
 				</aht:slot>
 				<aht:slot id="sRole" width="6" renderChildren="#{not empty cc.attrs.bean.role}">
-					<h:form id="fRole"><aupSec:panelRole bean="#{cc.attrs.bean}" update=":#{cc.id}:fRoles :#{cc.id}:sRole" /></h:form>
+					<h:form id="fRole">
+					
+						<p:panel header="#{msg.aupSecurityRole}" styleClass="auPanelWithGrid"
+								 rendered="#{not empty cc.attrs.bean.role}">
+							<f:facet name="actions">
+								<aht:icon type="save" listener="#{cc.attrs.bean.saveRole()}" update=":#{cc.id}:fRoles :#{cc.id}:sRole" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="delete" rendered="#{!cc.attrs.bean.denyRemove}" listener="#{cc.attrs.bean.rmRole()}" update=":#{cc.id}:fRoles :#{cc.id}:sRole" tooltip="#{msg.ttDelete}"/>
+							</f:facet>
+							<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
+								<p:outputLabel value="#{msg.aupSecurityCategory}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.role.category}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.aupSecurityCode}"/>
+								<h:inputText rendered="#{cc.attrs.bean.uiAllowCode or (cc.attrs.bean.role.id eq 0)}" value="#{cc.attrs.bean.role.code}"/>
+								<h:outputText rendered="#{!(cc.attrs.bean.uiAllowCode or (cc.attrs.bean.role.id eq 0))}" value="#{cc.attrs.bean.role.code}"/>
+								
+								<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
+								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{cc.attrs.bean.role.visible}"/>
+								
+								<p:outputLabel rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
+								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{cc.attrs.bean.role.documentation}"/>
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.role}" keys="#{appTranslationBean.langKeys}" withDescription="true"/>
+						</p:panel>	
+						
+					</h:form>
 					<h:form id="fViews"><aupSec:addViews rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fViews :#{cc.id}:fAction" views="#{cc.attrs.bean.views}"/></h:form>
 					<h:form id="fAction"><aupSec:addActions rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fAction" actions="#{cc.attrs.bean.actions}"/></h:form>
 					<h:form id="fUsecase"><aupSec:addUsecases rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fUsecase" usecases="#{cc.attrs.bean.usecases}"/></h:form>

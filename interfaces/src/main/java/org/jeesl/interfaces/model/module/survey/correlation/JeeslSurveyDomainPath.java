@@ -16,5 +16,6 @@ public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescr
 										>
 			extends Serializable,EjbWithId,EjbSaveable
 {
-
+	DENTITY getEntity();
+	void setEntity(DENTITY entity);
 }

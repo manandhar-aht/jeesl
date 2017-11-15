@@ -2,7 +2,9 @@ package org.jeesl.web.mbean.prototype.module.ts;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.op.OpEntitySelectionHandler;
@@ -54,6 +56,7 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsViewerBean.class);
 
 	private final OpEntitySelectionHandler<TS> tsh; public OpEntitySelectionHandler<TS> getTsh() {return tsh;}
+	private final Map<TS,EjbWithId> mapTsEntity; public Map<TS,EjbWithId> getMapTsEntity() {return mapTsEntity;}
 	
 	protected final SbSingleHandler<SCOPE> sbhScope; public SbSingleHandler<SCOPE> getSbhScope() {return sbhScope;}
 	protected final SbSingleHandler<EC> sbhClass; public SbSingleHandler<EC> getSbhClass() {return sbhClass;}
@@ -67,6 +70,7 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 		sbhInterval = new SbSingleHandler<INT>(fbTs.getClassInterval(),this);
 		
 		tsh = new OpEntitySelectionHandler<TS>(null);
+		mapTsEntity = new HashMap<TS,EjbWithId>();
 	}
 	
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
@@ -108,8 +112,25 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 	
 	private void reloadBridges()
 	{
+		
 		tsh.setTbList(fTs.fTimeSeries(sbhScope.getSelection(), sbhInterval.getSelection(), sbhClass.getSelection()));
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassTs(),tsh.getTbList()));}
+		
+		try
+		{
+			mapTsEntity.clear();
+			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(sbhClass.getSelection().getCode()).asSubclass(EjbWithId.class);
+			Map<Long,TS> mapBridgeTs = efTs.toMapBridgeTs(tsh.getTbList());
+			for(EjbWithId ejb : fTs.find(c,efTs.toBridgeIds(tsh.getTbList())))
+			{
+				mapTsEntity.put(mapBridgeTs.get(ejb.getId()),ejb);
+			}
+		}
+		catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void selectTimeseries()

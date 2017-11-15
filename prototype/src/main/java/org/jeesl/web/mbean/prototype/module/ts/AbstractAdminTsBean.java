@@ -10,6 +10,7 @@ import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
+import org.jeesl.factory.ejb.module.ts.EjbTsFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsScopeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsTransactionFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
@@ -61,6 +62,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	
 	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
 	
+	protected final EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efTs;
 	protected EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efScope;
 	protected EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efClass;
 	protected EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efBridge;
@@ -77,6 +79,8 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	{
 		super(fbTs.getClassL(),fbTs.getClassD());
 		this.fbTs=fbTs;
+		
+		efTs = fbTs.ts();
 		
 		sbhCategory = new SbMultiHandler<CAT>(fbTs.getClassCategory(),this);
 		sbhWorkspace = new SbMultiHandler<WS>(fbTs.getClassWorkspace(),this);

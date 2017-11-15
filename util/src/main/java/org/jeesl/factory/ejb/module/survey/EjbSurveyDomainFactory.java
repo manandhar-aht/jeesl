@@ -29,7 +29,7 @@ public class EjbSurveyDomainFactory<L extends UtilsLang, D extends UtilsDescript
 		try
 		{
 			ejb = cDomain.newInstance();
-			ejb.setEntity(entity);
+//			ejb.setEntity(entity);
 			if(list==null) {ejb.setPosition(1);}
 			else {ejb.setPosition(list.size()+1);}
 		}

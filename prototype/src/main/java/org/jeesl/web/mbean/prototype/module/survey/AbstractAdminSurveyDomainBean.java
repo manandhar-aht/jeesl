@@ -147,7 +147,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(domain));
-		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
+//		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
 		domain = fAnalysis.save(domain);
 		
 		reloadDomains();

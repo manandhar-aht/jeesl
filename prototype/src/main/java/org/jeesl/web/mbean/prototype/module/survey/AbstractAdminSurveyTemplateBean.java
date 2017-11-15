@@ -242,10 +242,11 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		nestedVersions = new ArrayList<VERSION>();
 		for(TC c : sbhCategory.getList())
 		{
+			if(debugOnInfo) {logger.info("Testing nested for "+c.toString());}
 			if(!c.equals(sbhCategory.getSelection()))
 			{
-				if(refId!=null && refId<=0) {nestedVersions = new ArrayList<VERSION>();}
-				else{nestedVersions = fCore.fVersions(c,refId);}
+				if(refId!=null && refId<=0) {}
+				else{nestedVersions.addAll(fCore.fVersions(c,refId));}
 			}
 		}
 	}

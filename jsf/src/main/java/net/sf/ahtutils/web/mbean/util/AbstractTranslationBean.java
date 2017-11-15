@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +61,15 @@ public class AbstractTranslationBean implements Serializable,JeeslTranslationBea
 	    	for(String s : key)
 	    	{
 	    		langKeys.add(s);
+	    	}
+	}
+	
+	public void overrideLangKeys(List<EjbWithCode> codes)
+	{
+	    	langKeys.clear();
+	    	for(EjbWithCode s : codes)
+	    	{
+	    		langKeys.add(s.getCode());
 	    	}
 	}
     

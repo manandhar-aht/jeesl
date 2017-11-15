@@ -63,13 +63,15 @@ public class JbossModuleConfigurator
 		File dirMain = new File(dirMysql,"main");
 		File moduleXml = new File(dirMain,"module.xml");
 		
+		logger.info(moduleXml.getAbsolutePath());
+		
 		if(!dirCom.exists()){dirCom.mkdir();}
 		if(!dirMysql.exists()){dirMysql.mkdir();}
 		if(!dirMain.exists()){dirMain.mkdir();}
 		if(!moduleXml.exists())
 		{
 			String src = srcBaseDir+"/"+product+"/"+version+"/mysql.xml";
-			logger.info("Available?"+mrl.isAvailable(src)+" "+src);
+			logger.info("Available?"+mrl.isAvailable(src)+" "+src+" to "+moduleXml.getAbsolutePath());
 			InputStream input = mrl.searchIs(src);
 			FileUtils.copyInputStreamToFile(input, moduleXml);
 		}
@@ -86,7 +88,7 @@ public class JbossModuleConfigurator
 	
 	public void envers() throws IOException
 	{
-		File hibernateBase = buildMobuleBase("org/hibernate/envers");
+		File hibernateBase = buildMobuleBase("org"+File.separator+"hibernate"+File.separator+"envers");
 		File moduleMain = new File(hibernateBase,"main");
 		File moduleXml = new File(moduleMain,"module.xml");
 		
@@ -127,8 +129,11 @@ public class JbossModuleConfigurator
 	private File buildMobuleBase(String packageId)
 	{
 		StringBuffer sb = new StringBuffer();
-		sb.append("modules/system/layers/base/");
-		sb.append(packageId);
+		sb.append("modules");
+		sb.append(File.separator).append("system");
+		sb.append(File.separator).append("layers");
+		sb.append(File.separator).append("base");
+		sb.append(File.separator).append(packageId);
 		return new File(jbossBaseDir,sb.toString());
 	}
 }

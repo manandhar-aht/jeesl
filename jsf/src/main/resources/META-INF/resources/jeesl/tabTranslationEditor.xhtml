@@ -8,14 +8,12 @@
     
 	<composite:interface>
 		<composite:attribute name="value" required="true"/>
-		<composite:attribute name="keys" required="true"/>
+		<composite:attribute name="keys" required="false" default="#{appTranslationBean.langKeys}"/>
 		<composite:attribute name="labelTranslation" required="false" default="#{msg.jeeslTranslation}"/>
 		<composite:attribute name="labelDescription" required="false" default="#{msg.jeeslDescription}"/>
 		<composite:attribute name="withName" required="false" default="true"/>
 		<composite:attribute name="withDescription" required="false" default="false"/>
 	</composite:interface>
-	
-	<!-- Deprecated, use jeesl:tabTranslationEditor -->
         
   <composite:implementation>
   	<p:tabView id="tabView" var="t" value="#{cc.attrs.keys}">  

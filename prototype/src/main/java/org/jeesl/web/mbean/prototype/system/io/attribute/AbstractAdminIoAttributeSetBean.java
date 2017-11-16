@@ -61,9 +61,9 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 	protected void initAttributeSet(String[] localeCodes, FacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{
 		super.initAttribute(localeCodes,bMessage,bAttribute,fAttribute);
-		
 		reloadSets();
 	}
+	protected abstract void initPageConfiguration();
 	
 	public void toggled(Class<?> c)
 	{

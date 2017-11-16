@@ -55,6 +55,7 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 	protected final EjbAttributeItemFactory<CRITERIA,SET,ITEM> efItem;
 	
 	protected final Comparator<CRITERIA> cpCriteria;
+	protected Long refId;
 
 	public AbstractAdminIoAttributeBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute)
 	{
@@ -76,8 +77,8 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fAttribute=fAttribute;
 		this.bAttribute=bAttribute;
-		initSettings();
+		initPageConfiguration();
 	}
 	
-	protected abstract void initSettings();
+	protected abstract void initPageConfiguration();
 }

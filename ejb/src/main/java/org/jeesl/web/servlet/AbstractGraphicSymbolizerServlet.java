@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderException;
 import org.jeesl.api.facade.system.graphic.JeeslGraphicFacade;
+import org.jeesl.factory.builder.system.SvgFactoryBuilder;
 import org.jeesl.factory.svg.SvgFigureFactory;
 import org.jeesl.factory.svg.SvgSymbolFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
@@ -44,6 +45,13 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 	private final SvgSymbolFactory<L,D,G,GT,F,FS> fSvgGraphic;
 	private final SvgFigureFactory<L,D,G,GT,F,FS> fSvgFigure;
 	
+	public AbstractGraphicSymbolizerServlet(SvgFactoryBuilder<L,D,G,GT,F,FS> fbStatus)
+	{
+		this.cF = fbStatus.getClassFigure();
+		fSvgGraphic = fbStatus.symbol();
+		fSvgFigure = fbStatus.figure();
+	}
+	
 	public AbstractGraphicSymbolizerServlet(final Class<F> cF)
 	{
 		this.cF=cF;
@@ -60,17 +68,17 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 		
 		if(graphic==null){throw new UtilsProcessingException("graphic is null");}
 		if(graphic.getType()==null){throw new UtilsProcessingException("graphic.type is null");}
-    	if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
+    		if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
 		{
 			logger.info("Build SVG: size " + size + " id:" + id);
-	    	SVGGraphics2D g = fSvgGraphic.build(size,graphic);
-	    	bytes = Svg2SvgTranscoder.transcode(g);
-	    	respond(request,response,bytes,"svg");
+		    	SVGGraphics2D g = fSvgGraphic.build(size,graphic);
+		    	bytes = Svg2SvgTranscoder.transcode(g);
+		    	respond(request,response,bytes,"svg");
 		}
-    	else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.svg.toString()))
-    	{
-    		respond(request,response,graphic.getData(),"svg");
-    	}
+	    	else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.svg.toString()))
+	    	{
+	    		respond(request,response,graphic.getData(),"svg");
+	    	}
 	}
 	
 	protected void process(HttpServletRequest request, HttpServletResponse response, JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic, G graphic, Image image) throws ServletException, IOException, TranscoderException, UtilsProcessingException

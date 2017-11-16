@@ -32,13 +32,13 @@
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectSet()}" update=":#{cc.id}:sSet :#{cc.id}:sItems"/>
 							<p:column >  
 								<h:outputText value="#{s.category.position}.#{s.position}"/>
-					      </p:column>
-					      <p:column headerText="#{msg.jeeslCategory}">  
-									<h:outputText value="#{s.category.name[localeCode].lang}"/>
-					     	</p:column>
-				         <p:column headerText="#{msg.jeeslIoAttributeSet}">  
+							</p:column>
+							<p:column headerText="#{msg.jeeslCategory}" rendered="#{cc.attrs.bean.sbhCategory.hasMore}">  
+								<h:outputText value="#{s.category.name[localeCode].lang}"/>
+							</p:column>
+							<p:column headerText="#{msg.jeeslIoAttributeSet}">  
 								<h:outputText value="#{s.name[localeCode].lang}"/>
-				         </p:column>
+							</p:column>
 					   	</p:dataTable>
 					</h:form>
 				</aht:slot>
@@ -51,8 +51,8 @@
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteSet()}" update=":#{cc.id}:grid" rendered="#{(cc.attrs.bean.set.id gt 0) and (cc.attrs.bean.items.isEmpty())}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
-								<p:outputLabel value="#{msg.jeeslCategory}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.set.category}" effect="fade" >
+								<p:outputLabel value="#{msg.jeeslCategory}" rendered="#{cc.attrs.bean.sbhCategory.hasMore}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.set.category}" effect="fade" autoWidth="false" rendered="#{cc.attrs.bean.sbhCategory.hasMore}">
 									<f:selectItems value="#{appAttributeBean.categories}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
 								</p:selectOneMenu>
 								<p:outputLabel value="#{msg.jeeslCode}"/>

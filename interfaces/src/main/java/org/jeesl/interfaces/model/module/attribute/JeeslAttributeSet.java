@@ -25,4 +25,7 @@ public interface JeeslAttributeSet <L extends UtilsLang, D extends UtilsDescript
 	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);
+	
+	Long getRefId();
+	void setRefId(Long refId);
 }

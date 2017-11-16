@@ -4,6 +4,8 @@ import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
+import org.jeesl.factory.svg.SvgFigureFactory;
+import org.jeesl.factory.svg.SvgSymbolFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.slf4j.Logger;
@@ -21,7 +23,7 @@ public class SvgFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(SvgFactoryBuilder.class);
 	
 	final Class<G> cG;
-	final Class<F> cF;
+	final Class<F> cF; public Class<F> getClassFigure(){return cF;}
 	final Class<FS> cFs;
 	
 	public SvgFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<F> cF, final Class<FS> cFs)
@@ -42,16 +44,26 @@ public class SvgFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	
     public EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic()
     {
-    	return new EjbGraphicFactory<L,D,G,GT,F,FS>(cG);
+    		return new EjbGraphicFactory<L,D,G,GT,F,FS>(cG);
     }
     
     public EjbGraphicFigureFactory<L,D,G,GT,F,FS> efFigure()
     {
-    	return new EjbGraphicFigureFactory<L,D,G,GT,F,FS>(cF);
+    		return new EjbGraphicFigureFactory<L,D,G,GT,F,FS>(cF);
     }
 	
 	public EjbStatusFactory<FS,L,D> style()
 	{
 		return EjbStatusFactory.createFactory(cFs,cL,cD);
+	}
+	
+	public SvgSymbolFactory<L,D,G,GT,F,FS> symbol()
+	{
+		return SvgSymbolFactory.factory();
+	}
+	
+	public SvgFigureFactory<L,D,G,GT,F,FS> figure()
+	{
+		return SvgFigureFactory.factory();
 	}
 }

@@ -54,8 +54,8 @@
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteCriteria()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.criteria.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
-								<p:outputLabel value="#{msg.jeeslCategory}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.criteria.category}" effect="fade" >
+								<p:outputLabel value="#{msg.jeeslCategory}" rendered="#{cc.attrs.bean.sbhCategory.hasMore}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.criteria.category}" effect="fade" rendered="#{cc.attrs.bean.sbhCategory.hasMore}" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.sbhCategory.list}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
 								</p:selectOneMenu>
 								<p:outputLabel value="#{msg.jeeslCode}"/>

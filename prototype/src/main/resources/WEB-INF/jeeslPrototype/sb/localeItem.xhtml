@@ -9,18 +9,22 @@
 	xmlns:jp="http://jsf.jeesl.org/prototype"
   	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 >
 	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 
-	<jp:sbItem orientation="left" childs="#{appTranslationBean.locales}" rendered="#{rendered}">
-		<f:facet name="label">
+	<aht:li>
+		<ui:fragment>
 			<jtp:symbolizer value="#{appTranslationBean.mapLocales[loc]}"/>
-		</f:facet>
-		<h:commandLink>
-			<jtp:symbolizer value="#{var}"/>
-			<h:outputText value="#{var.code}"/>
-			<p:ajax event="click" listener="#{userBean.setLocale(var.code)}" update="@form" oncomplete="javascript:location.reload(true)"/>
-		</h:commandLink>
-	</jp:sbItem>
+			...
+			<ui:repeat var="l" value="#{appTranslationBean.locales}">
+				<h:commandLink>
+					<jtp:symbolizer value="#{l}"/>
+					<h:outputText value="#{l.code}"/>
+					<p:ajax event="click" listener="#{userBean.setLocale(l.code)}" update="@form" oncomplete="javascript:location.reload(true)"/>
+				</h:commandLink>
+			</ui:repeat>
+		</ui:fragment>		
+	</aht:li>
 </ui:composition>

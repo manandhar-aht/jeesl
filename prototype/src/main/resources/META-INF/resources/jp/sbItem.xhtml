@@ -26,16 +26,16 @@
 			<label for="#{cc.id}">
 				<h:outputText rendered="#{not empty cc.attrs.label}" value="#{cc.attrs.label}"/>
 				<c:if test="#{not empty cc.facets.label}">
-                    <composite:renderFacet name="label"/>
-                </c:if>
+					<composite:renderFacet name="label"/>
+				</c:if>
 			</label>
 			<input type="checkbox" id="#{cc.id}" />
 			<ul>
 				<c:if test="#{!empty cc.facets.top}">
-                    <li>
-                    	<composite:renderFacet name="top"/>
-                    </li>
-                </c:if>
+                <li>
+                	<composite:renderFacet name="top"/>
+                </li>
+            </c:if>
 				<ui:repeat var="var" value="#{cc.attrs.childs}">
 					<li>
 						<composite:insertChildren/>

@@ -3,12 +3,13 @@ package net.sf.ahtutils.web.mbean.util;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.factory.builder.system.StatusFactoryBuilder;
-import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,16 +32,17 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 	private UtilsFacade fUtils;
 	private StatusFactoryBuilder<L,D,LOC> fbStatus;
 	
-	
 	private TranslationMap tm;
 	protected final List<String> langKeys; public List<String> getLangKeys(){return langKeys;}
 	
 	private final List<LOC> locales; public List<LOC> getLocales() {return locales;}
+	private final Map<String,LOC> mapLocales; public Map<String, LOC> getMapLocales() {return mapLocales;}
 
 	public AbstractTranslationBean()
 	{
 		langKeys = new ArrayList<String>();
 		locales = new ArrayList<LOC>();
+		mapLocales = new HashMap<String,LOC>();
 	}
 	
 	public AbstractTranslationBean(StatusFactoryBuilder<L,D,LOC> fbStatus)
@@ -48,7 +50,7 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 		langKeys = new ArrayList<String>();
 		locales = new ArrayList<LOC>();
 		this.fbStatus=fbStatus;
-		
+		mapLocales = new HashMap<String,LOC>();
 	}
 	
 	
@@ -82,8 +84,16 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 			logger.error(sb.toString());
 		}
 		
-		if(fbStatus!=null) {locales.addAll(fUtils.allOrderedPositionVisible(fbStatus.getClassLocale()));}
-		
+		if(fbStatus!=null)
+		{
+			locales.addAll(fUtils.allOrderedPositionVisible(fbStatus.getClassLocale()));
+		 	langKeys.clear();
+			for(LOC loc : locales)
+		    	{
+		    		langKeys.add(loc.getCode());
+		    		mapLocales.put(loc.getCode(),loc);
+		    	}
+		}
     }
 	
 	public void overrideLangKeys(String... key)
@@ -92,15 +102,6 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 	    	for(String s : key)
 	    	{
 	    		langKeys.add(s);
-	    	}
-	}
-	
-	public void overrideLangKeys(List<EjbWithCode> codes)
-	{
-	    	langKeys.clear();
-	    	for(EjbWithCode s : codes)
-	    	{
-	    		langKeys.add(s.getCode());
 	    	}
 	}
     

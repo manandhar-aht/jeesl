@@ -67,9 +67,13 @@
         <tag-name>sbSingle</tag-name>
         <source>jeeslPrototype/sb/single.xhtml</source>
     </tag>
-    	<tag>
+	<tag>
         <tag-name>sbLocale</tag-name>
         <source>jeeslPrototype/sb/locale.xhtml</source>
+    </tag>
+	<tag>
+        <tag-name>sbLocaleItem</tag-name>
+        <source>jeeslPrototype/sb/localeItem.xhtml</source>
     </tag>
     
 	<tag>

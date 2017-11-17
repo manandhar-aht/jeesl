@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.system.io.attribute;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,6 +66,7 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 		sbhCategory.debug(true);
 	}
 	
+	protected void resetAll() {reset(true,true);}
 	public void resetOption() {reset(false,true);}
 	public void resetCriteria() {reset(true,true);}
 	private void reset(boolean rCriteria, boolean rOption)
@@ -73,9 +75,10 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 		if(rOption) {option=null;}
 	}
 	
-	private void reloadCriterias()
+	protected void reloadCriterias()
 	{
-		criterias = fAttribute.allForParents(fbAttribute.getClassCriteria(), sbhCategory.getSelected());
+		if(refId<0) {criterias = new ArrayList<CRITERIA>();}
+		else {criterias = fAttribute.allForParents(fbAttribute.getClassCriteria(), sbhCategory.getSelected());}
 		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbAttribute.getClassCriteria(),criterias));}
 	}
 	

@@ -55,12 +55,13 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 	protected final EjbAttributeItemFactory<CRITERIA,SET,ITEM> efItem;
 	
 	protected final Comparator<CRITERIA> cpCriteria;
-	protected Long refId;
+	protected long refId;
 
 	public AbstractAdminIoAttributeBean(IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute)
 	{
 		super(fbAttribute.getClassL(),fbAttribute.getClassD());
 		this.fbAttribute=fbAttribute;
+		refId = 0;
 		
 		efCriteria = fbAttribute.ejbCriteria();
 		efOption = fbAttribute.ejbOption();

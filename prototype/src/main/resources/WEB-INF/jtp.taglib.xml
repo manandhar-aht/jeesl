@@ -86,6 +86,11 @@
         <source>jeeslPrototype/calendar/schedule.xhtml</source>
     </tag>
     
+    	<tag>
+        <tag-name>footerLocale</tag-name>
+        <source>jeeslPrototype/footer/locale.xhtml</source>
+	</tag>
+    
     <tag>
         <tag-name>ioFiles</tag-name>
         <source>jeeslPrototype/io/files.xhtml</source>

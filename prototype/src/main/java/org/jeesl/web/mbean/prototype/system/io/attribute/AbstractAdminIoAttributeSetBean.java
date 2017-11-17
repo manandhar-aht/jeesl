@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.system.io.attribute;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -74,6 +75,7 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 		}
 	}
 	
+	public void resetAll() {reset(true,true);}
 	public void resetSet() {reset(true,true);}
 	private void reset(boolean rSet, boolean rItem)
 	{
@@ -81,17 +83,25 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 		if(rItem){item=null;}
 	}
 	
-	private void reloadSets()
+	protected void reloadSets()
 	{
-		criterias = fAttribute.allForParents(fbAttribute.getClassCriteria(), sbhCategory.getSelected());
-		sets = fAttribute.allForParents(fbAttribute.getClassSet(), sbhCategory.getSelected());
+		if(refId<0)
+		{
+			criterias = new ArrayList<CRITERIA>();
+			sets = new ArrayList<SET>();
+		}
+		else
+		{
+			criterias = fAttribute.fAttributeCriteria(sbhCategory.getSelected(),refId);
+			sets = fAttribute.fAttributeSets(sbhCategory.getSelected(), refId);
+		}
 		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbAttribute.getClassSet(),sets));}
 	}
 	
 	public void addSet()
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.addEntity(fbAttribute.getClassCriteria()));}
-		set = efSet.build(null);
+		set = efSet.build(sbhCategory.getSelected().get(0),refId);
 		set.setName(efLang.createEmpty(localeCodes));
 		set.setDescription(efDescription.createEmpty(localeCodes));
 	}

@@ -78,14 +78,14 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 	protected void reloadCriterias()
 	{
 		if(refId<0) {criterias = new ArrayList<CRITERIA>();}
-		else {criterias = fAttribute.allForParents(fbAttribute.getClassCriteria(), sbhCategory.getSelected());}
+		else {criterias = fAttribute.fAttributeCriteria(sbhCategory.getSelected(),refId);}
 		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbAttribute.getClassCriteria(),criterias));}
 	}
 	
 	public void addCriteria()
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.addEntity(fbAttribute.getClassCriteria()));}
-		criteria = efCriteria.build(null,bAttribute.getTypes().get(0));
+		criteria = efCriteria.build(sbhCategory.getSelected().get(0),bAttribute.getTypes().get(0),refId);
 		criteria.setName(efLang.createEmpty(localeCodes));
 		criteria.setDescription(efDescription.createEmpty(localeCodes));
 		reset(false,true);

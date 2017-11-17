@@ -23,12 +23,13 @@ public class EjbAttributeSetFactory<L extends UtilsLang, D extends UtilsDescript
         this.cSet = cSet;
 	}
     
-	public SET build(CATEGORY category)
+	public SET build(CATEGORY category, long refId)
 	{
 		SET ejb = null;
 		try
 		{
 			ejb = cSet.newInstance();
+			ejb.setRefId(refId);
 			ejb.setCategory(category);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

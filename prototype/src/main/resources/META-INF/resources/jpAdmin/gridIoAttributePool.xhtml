@@ -25,7 +25,7 @@
 							selection="#{cc.attrs.bean.criteria}" selectionMode="single" rowKey="#{c.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoAttributes}">
-									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addCriteria()}" update=":#{cc.id}:grid" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addCriteria()}" update=":#{cc.id}:grid" tooltip="#{msg.ttNew}" rendered="#{cc.attrs.bean.sbhCategory.hasSelected}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCriterias()}" update="@form"/>

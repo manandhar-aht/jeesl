@@ -22,12 +22,13 @@ public class EjbAttributeCriteriaFactory<L extends UtilsLang, D extends UtilsDes
         this.cCriteria = cCriteria;
 	}
     
-	public CRITERIA build(CATEGORY category, TYPE type)
+	public CRITERIA build(CATEGORY category, TYPE type, long refId)
 	{
 		CRITERIA ejb = null;
 		try
 		{
 			ejb = cCriteria.newInstance();
+			ejb.setRefId(refId);
 			ejb.setCategory(category);
 			ejb.setType(type);
 		}

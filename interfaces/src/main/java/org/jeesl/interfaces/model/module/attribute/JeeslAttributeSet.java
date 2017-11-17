@@ -21,7 +21,7 @@ public interface JeeslAttributeSet <L extends UtilsLang, D extends UtilsDescript
 				EjbWithPosition,EjbWithPositionParent,EjbWithCode,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
-	public enum Attributes{category}
+	public enum Attributes{category,refId,position}
 	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);

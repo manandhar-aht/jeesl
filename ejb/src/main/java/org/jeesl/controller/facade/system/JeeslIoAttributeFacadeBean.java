@@ -1,12 +1,9 @@
 package org.jeesl.controller.facade.system;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,13 +21,10 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -89,7 +83,28 @@ public class JeeslIoAttributeFacadeBean<L extends UtilsLang, D extends UtilsDesc
 	public List<SET> fAttributeSets(List<CATEGORY> categories, long refId)
 	{
 		if(categories==null || categories.isEmpty()){return new ArrayList<SET>();}
-		return new ArrayList<SET>();
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<SET> cQ = cB.createQuery(fbAttribute.getClassSet());
+		Root<SET> root = cQ.from(fbAttribute.getClassSet());
+		
+		Join<SET,CATEGORY> jCategory = root.join(JeeslAttributeSet.Attributes.category.toString());
+		predicates.add(jCategory.in(categories));
+		
+		if(refId>0)
+		{
+			Expression<Long> eRefId = root.get(JeeslAttributeSet.Attributes.refId.toString());
+			predicates.add(cB.equal(eRefId,refId));
+		}
+		
+		Path<Integer> pPosition = root.get(JeeslAttributeSet.Attributes.position.toString());
+		Path<Integer> pCategoryPosition = jCategory.get(JeeslAttributeSet.Attributes.position.toString());
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.orderBy(cB.asc(pCategoryPosition),cB.asc(pPosition));
+		cQ.select(root);
+
+		return em.createQuery(cQ).getResultList();
 	}
 
 	@Override

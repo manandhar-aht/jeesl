@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.mbean.util;
+package org.jeesl.web.mbean.system;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -22,8 +22,7 @@ import net.sf.ahtutils.msgbundle.TranslationMap;
 import net.sf.exlp.util.xml.JaxbUtil;
 import net.sf.exlp.xml.io.Dir;
 
-public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescription,
-									LOC extends UtilsStatus<LOC,L,D>>
+public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>>
 			implements Serializable,JeeslTranslationBean
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractTranslationBean.class);
@@ -37,13 +36,6 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 	
 	private final List<LOC> locales; public List<LOC> getLocales() {return locales;}
 	private final Map<String,LOC> mapLocales; public Map<String, LOC> getMapLocales() {return mapLocales;}
-
-	public AbstractTranslationBean()
-	{
-		langKeys = new ArrayList<String>();
-		locales = new ArrayList<LOC>();
-		mapLocales = new HashMap<String,LOC>();
-	}
 	
 	public AbstractTranslationBean(StatusFactoryBuilder<L,D,LOC> fbStatus)
 	{
@@ -84,17 +76,20 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 			logger.error(sb.toString());
 		}
 		
-		if(fbStatus!=null)
-		{
-			locales.addAll(fUtils.allOrderedPositionVisible(fbStatus.getClassLocale()));
-		 	langKeys.clear();
-			for(LOC loc : locales)
-		    	{
-		    		langKeys.add(loc.getCode());
-		    		mapLocales.put(loc.getCode(),loc);
-		    	}
-		}
+		reloadLocales();
     }
+	
+	public void reloadLocales()
+	{
+		locales.clear();
+		locales.addAll(fUtils.allOrderedPositionVisible(fbStatus.getClassLocale()));
+		langKeys.clear();
+		for(LOC loc : locales)
+    	{
+    		langKeys.add(loc.getCode());
+    		mapLocales.put(loc.getCode(),loc);
+    	}
+	}
 	
 	public void overrideLangKeys(String... key)
 	{

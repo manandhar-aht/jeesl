@@ -26,5 +26,6 @@ public interface JeeslIoAttributeFacade <L extends UtilsLang, D extends UtilsDes
 			extends UtilsFacade
 {	
 	List<CRITERIA> fAttributeCriteria(List<CATEGORY> categories, long refId);
+	List<SET> fAttributeSets(List<CATEGORY> categories, long refId);
 	List<DATA> fAttributeData(CONTAINER container);
 }

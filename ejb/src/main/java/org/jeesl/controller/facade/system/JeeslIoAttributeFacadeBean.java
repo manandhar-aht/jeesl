@@ -84,6 +84,13 @@ public class JeeslIoAttributeFacadeBean<L extends UtilsLang, D extends UtilsDesc
 
 		return em.createQuery(cQ).getResultList();
 	}
+	
+	@Override
+	public List<SET> fAttributeSets(List<CATEGORY> categories, long refId)
+	{
+		if(categories==null || categories.isEmpty()){return new ArrayList<SET>();}
+		return new ArrayList<SET>();
+	}
 
 	@Override
 	public List<DATA> fAttributeData(CONTAINER container)

@@ -22,7 +22,7 @@ public interface JeeslAttributeCriteria<L extends UtilsLang, D extends UtilsDesc
 					EjbWithNonUniqueCode,EjbWithPositionVisible,EjbWithPositionParent,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
-	public enum Attributes{category,type}
+	public enum Attributes{category,refId,position,type}
 	public enum Types{text,bool,intNumber,doubleNumber,date,selectOne,selectMany}
 	
 	CATEGORY getCategory();

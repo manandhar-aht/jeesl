@@ -15,7 +15,7 @@ public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescr
 										QUERY extends JeeslSurveyDomainQuery<L,D,?>,
 										
 										DENTITY extends JeeslRevisionEntity<L,D,?,?,?>
-//,										DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>
+,										DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>
 										>
 			extends Serializable,EjbWithId,
 					EjbSaveable,

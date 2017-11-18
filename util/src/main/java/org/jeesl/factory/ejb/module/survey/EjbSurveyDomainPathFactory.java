@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPath;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainQuery;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

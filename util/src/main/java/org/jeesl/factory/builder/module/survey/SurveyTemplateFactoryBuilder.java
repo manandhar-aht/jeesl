@@ -11,6 +11,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyValidationAlgorithmFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveyQuestionFactory;
+import org.jeesl.factory.txt.module.survey.TxtSurveyTemplateFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
@@ -132,5 +133,10 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	public EjbSurveyValidationAlgorithmFactory<VALGORITHM> ejbAlgorithm()
 	{
 		return new EjbSurveyValidationAlgorithmFactory<VALGORITHM>(cValgorithm);
+	}
+	
+	public TxtSurveyTemplateFactory<TEMPLATE> txtTemplate(String localeCode)
+	{
+		return new TxtSurveyTemplateFactory<TEMPLATE>(localeCode);
 	}
 }

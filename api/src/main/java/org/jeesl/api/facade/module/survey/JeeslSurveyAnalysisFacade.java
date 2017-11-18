@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPath;
+import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainQuery;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
@@ -47,6 +48,7 @@ public interface JeeslSurveyAnalysisFacade <L extends UtilsLang, D extends Utils
 											OPTION extends JeeslSurveyOption<L,D>,
 											CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 											DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
+											QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
 											PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY>,
 											DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 											ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,

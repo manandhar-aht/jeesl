@@ -32,7 +32,7 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 	private StatusFactoryBuilder<L,D,LOC> fbStatus;
 	
 	private TranslationMap tm;
-	protected final List<String> langKeys; public List<String> getLangKeys(){return langKeys;}
+	protected final List<String> langKeys; @Override public List<String> getLangKeys(){return langKeys;}
 	
 	private final List<LOC> locales; public List<LOC> getLocales() {return locales;}
 	private final Map<String,LOC> mapLocales; public Map<String, LOC> getMapLocales() {return mapLocales;}
@@ -85,10 +85,10 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 		locales.addAll(fUtils.allOrderedPositionVisible(fbStatus.getClassLocale()));
 		langKeys.clear();
 		for(LOC loc : locales)
-    	{
-    		langKeys.add(loc.getCode());
-    		mapLocales.put(loc.getCode(),loc);
-    	}
+	    	{
+	    		langKeys.add(loc.getCode());
+	    		mapLocales.put(loc.getCode(),loc);
+	    	}
 	}
 	
 	public void overrideLangKeys(String... key)

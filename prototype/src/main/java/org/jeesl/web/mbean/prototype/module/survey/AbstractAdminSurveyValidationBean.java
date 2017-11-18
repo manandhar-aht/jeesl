@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
@@ -36,6 +37,7 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
@@ -67,7 +69,7 @@ public abstract class AbstractAdminSurveyValidationBean <L extends UtilsLang, D 
 						OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 						OPTION extends JeeslSurveyOption<L,D>,
 						CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-						DOMAIN extends JeeslSurveyDomain<L,D,PATH,DENTITY>,
+						DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 						PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY>,
 						DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
@@ -100,7 +102,7 @@ public abstract class AbstractAdminSurveyValidationBean <L extends UtilsLang, D 
 			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis,
 			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
 	{
-		super.initSuperSurvey(localeCodes,bMessage,fTemplate,fCore,fAnalysis,bSurvey);
+		super.initSuperSurvey(new ArrayList<String>(Arrays.asList(localeCodes)),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 		initSettings();
 		super.initLocales(userLocale);
 		reloadAlgorithms();

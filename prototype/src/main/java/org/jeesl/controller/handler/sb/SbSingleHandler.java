@@ -22,6 +22,8 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	final static Logger logger = LoggerFactory.getLogger(SbSingleHandler.class);
 	private static final long serialVersionUID = 1L;
 
+	private boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
+
 	private final SbSingleBean bean; 
 	private final Class<T> c;
 	
@@ -35,6 +37,7 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	{
 		this.c=c;
 		this.bean=bean;
+		debugOnInfo = false;
 		update(list);
 		try
 		{
@@ -45,6 +48,24 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		catch (IllegalAccessException e) {e.printStackTrace();}
 	}
 
+	public void silentCallback()
+	{
+		try
+		{
+			if (list.isEmpty())
+			{
+				//selectSbSingle(null);
+			}
+			else
+			{
+				if(list.contains(selection)) {selectSbSingle(selection);}
+				else{selectSbSingle(list.get(0));}	
+			}
+		}
+		catch (UtilsLockingException e) {}
+		catch (UtilsConstraintViolationException e) {}
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void selectSbSingle(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
@@ -63,7 +84,7 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 			sb.append(this.getClass().getSimpleName());
 			sb.append(" selected with:").append(selection.toString());
 			sb.append(" Previous:").append(previous.getId());
-			logger.trace(sb.toString());
+			if(debugOnInfo) {logger.info(sb.toString());}
 			if(bean!=null){bean.selectSbSingle(item);}
 		}
 	}
@@ -103,6 +124,7 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		selection = null;
 	}
 	
+	public boolean getHasSome(){return !list.isEmpty();}
 	public boolean getHasMore(){return list.size()>1;}
 	public boolean isSelected(){return selection!=null;}
 	public boolean getTwiceSelected() {return previous.equals(selection);}
@@ -113,21 +135,5 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		if(list!=null && !list.isEmpty()){selection = list.get(0);}
 	}
 	
-	public void silentCallback()
-	{
-		try
-		{
-			if (list.isEmpty())
-			{
-				//selectSbSingle(null);
-			}
-			else
-			{
-				if(list.contains(selection)) {selectSbSingle(selection);}
-				else{selectSbSingle(list.get(0));}	
-			}
-		}
-		catch (UtilsLockingException e) {}
-		catch (UtilsConstraintViolationException e) {}
-	}
+	
 }

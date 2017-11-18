@@ -42,7 +42,7 @@ public interface SurveyCorrelationInfoBuilder<L extends UtilsLang, D extends Uti
 							OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 							OPTION extends JeeslSurveyOption<L,D>,
 							CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-							DOMAIN extends JeeslSurveyDomain<L,D,PATH,DENTITY>,
+							DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 							PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY>, DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 							ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
 							AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,

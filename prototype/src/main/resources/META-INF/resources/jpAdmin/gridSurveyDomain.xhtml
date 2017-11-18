@@ -19,10 +19,10 @@
 	
 <composite:implementation>
 	<aup:grid id="grid">
-		<aht:row id="row1">
+		<aht:row id="row1" rendered="#{cc.attrs.bean.sbhDomain.twiceSelected}">
 			<aht:slot id="sDomains" width="7">
 				<h:form id="fDomains">
-					<p:dataTable var="domain" value="#{cc.attrs.bean.domains}" rowKey="#{domain.id}"
+					<p:dataTable var="domain" value="#{cc.attrs.bean.sbhDomain.list}" rowKey="#{domain.id}"
 								 selection="#{cc.attrs.bean.domain}" selectionMode="single" draggableRows="true">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.jeeslSurveyDomains}">
@@ -33,9 +33,6 @@
 						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectDomain()}" update=":#{cc.id}:grid"/>
 						<p:column>
                      	<h:outputText value="#{domain.position}" />
-						</p:column>
-						<p:column headerText="#{msg.jeeslCategory}">
-							<h:outputText value="#{domain.entity.category.name[localeCode].lang}" />
 						</p:column>
 						<p:column headerText="#{msg.jeeslRevisionEntity}">
 							<h:outputText value="#{domain.entity.name[localeCode].lang}" />
@@ -51,7 +48,7 @@
 					<p:panel header="#{msg.jeeslSurveyDomain}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveDomain()}" update=":#{cc.id}:grid"/>
-							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteDomain()}" update=":#{cc.id}:grid"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteDomain()}" update=":fStatusBar :#{cc.id}:grid"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">

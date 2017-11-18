@@ -36,7 +36,7 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 				DATA extends JeeslSurveyData<L,D,?,ANSWER,CORRELATION>,
 				OPTION extends JeeslSurveyOption<L,D>,
 				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-				DOMAIN extends JeeslSurveyDomain<L,D,PATH,DENTITY>,
+				DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 				PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY>,
 				DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,

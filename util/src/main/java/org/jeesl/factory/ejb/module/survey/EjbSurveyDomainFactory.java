@@ -11,7 +11,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class EjbSurveyDomainFactory<L extends UtilsLang, D extends UtilsDescription,	
-				DOMAIN extends JeeslSurveyDomain<L,D,?,DENTITY>,
+				DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 				DENTITY extends JeeslRevisionEntity<L,D,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDomainFactory.class);

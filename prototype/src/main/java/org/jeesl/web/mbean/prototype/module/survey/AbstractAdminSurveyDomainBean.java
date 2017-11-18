@@ -6,13 +6,16 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
+import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
+import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -40,7 +43,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -70,7 +72,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 						OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 						OPTION extends JeeslSurveyOption<L,D>,
 						CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-						DOMAIN extends JeeslSurveyDomain<L,D,PATH,DENTITY>,
+						DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 						PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY>,
 						DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
@@ -83,12 +85,13 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyDomainBean.class);
 	
-	protected List<DOMAIN> domains; public List<DOMAIN> getDomains(){return domains;}
 	protected List<DENTITY> entities; public List<DENTITY> getEntities(){return entities;}
 	protected List<PATH> paths; public List<PATH> getPaths(){return paths;}
 	
 	protected DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
 
+	protected final SbSingleHandler<DOMAIN> sbhDomain; public SbSingleHandler<DOMAIN> getSbhDomain() {return sbhDomain;}
+	
 	private final EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> efDomain;
 	private final Comparator<DENTITY> cpDentity;
 	
@@ -99,26 +102,61 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	{
 		super(fbTemplate,fbCore,fbAnalysis);
 
+		sbhDomain = new SbSingleHandler<DOMAIN>(fbAnalysis.getClassDomain(),this);
+		sbhDomain.setDebugOnInfo(true);
+		
 		efDomain = fbAnalysis.ejbDomain(fbAnalysis.getClassDomain());
 		cpDentity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
-	protected void initSuperDomain(String userLocale, String[] localeCodes, FacesMessageBean bMessage,
+	protected void initSuperDomain(String userLocale, JeeslTranslationBean bTranslation, FacesMessageBean bMessage,
 			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
 			JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
 			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis,
 			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
 	{
-		super.initSuperSurvey(localeCodes,bMessage,fTemplate,fCore,fAnalysis,bSurvey);
+		super.initSuperSurvey(bTranslation.getLangKeys(),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 		initSettings();
 		super.initLocales(userLocale);
 		
 		entities = fCore.allOrderedPositionVisible(fbAnalysis.getClassDomainEntity());
 		Collections.sort(entities,cpDentity);
 		reloadDomains();
+		if(sbhDomain.getHasSome())
+		{
+			sbhDomain.selectDefault();
+		}
+		else
+		{
+			try
+			{
+				addDomain();
+				sbhDomain.selectSbSingle(domain);
+				sbhDomain.selectSbSingle(domain);
+			}
+			catch (UtilsLockingException e) {logger.error(e.getMessage());}
+			catch (UtilsConstraintViolationException e) {logger.error(e.getMessage());}
+		}
 	}
 	
-	@Override public void selectSbSingle(EjbWithId ejb) {}
+	@SuppressWarnings("unchecked")
+	@Override public void selectSbSingle(EjbWithId ejb)
+	{
+		if(ejb==null) {reset(true);}
+		else if(JeeslSurveyDomain.class.isAssignableFrom(ejb.getClass()))
+		{
+			domain = (DOMAIN)ejb;
+			if(EjbIdFactory.isSaved(domain))
+			{
+				selectDomain();
+			}
+			logger.info("Twice:"+sbhDomain.getTwiceSelected()+" for "+domain.toString());
+		}
+		else
+		{
+			logger.info("NOT Assignable");
+		}
+	}
 	
 	private void reset(boolean rDomain)
 	{
@@ -127,17 +165,17 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	
 	private void reloadDomains()
 	{
-		domains = fAnalysis.all(fbAnalysis.getClassDomain());
+		sbhDomain.setList(fAnalysis.all(fbAnalysis.getClassDomain()));
 	}
 	
 	public void addDomain()
 	{
 		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassDomain()));
-		domain = efDomain.build(null,domains);
+		domain = efDomain.build(null,sbhDomain.getList());
 		domain.setName(efLang.createEmpty(localeCodes));
 	}
 	
-	public void selectDomain() throws UtilsNotFoundException
+	public void selectDomain()
 	{
 		reset(false);
 		logger.info(AbstractLogMessage.selectEntity(domain));
@@ -147,7 +185,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(domain));
-//		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
+		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
 		domain = fAnalysis.save(domain);
 		
 		reloadDomains();
@@ -158,5 +196,5 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 //		paths = fAnalysis.allForParent(fbAnalysis.getClassDomainPath(), domain);
 	}
 	
-	protected void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, domains);}
+	protected void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, sbhDomain.getList());}
 }

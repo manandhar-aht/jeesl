@@ -12,12 +12,11 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyDomain<L extends UtilsLang, D extends UtilsDescription,
-									PATH extends JeeslSurveyDomainPath<L,D,?,PATH,DENTITY>,
 									DENTITY extends JeeslRevisionEntity<L,D,?,?,?>
 									>
 			extends Serializable,EjbWithId,EjbSaveable,
 					EjbWithPosition,EjbWithLang<L>//,EjbWithDescription<D>
 {
-	PATH getPath();
-	void setPath(PATH path);
+	DENTITY getEntity();
+	void setEntity(DENTITY entiy);
 }

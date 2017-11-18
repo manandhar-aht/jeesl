@@ -10,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescription,
-										DOMAIN extends JeeslSurveyDomain<L,D,PATH,DENTITY>,
+										DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 										PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY>,
 										DENTITY extends JeeslRevisionEntity<L,D,?,?,?>
 										>

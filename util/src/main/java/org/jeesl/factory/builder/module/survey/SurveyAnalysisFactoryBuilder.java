@@ -52,6 +52,7 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	private final Class<ANSWER> cAnswer; public Class<ANSWER> getClassAnswer() {return cAnswer;}
 	private final Class<DATA> cData; public Class<DATA> getClassData() {return cData;}
 	private final Class<DOMAIN> cDomain; public Class<DOMAIN> getClassDomain() {return cDomain;}
+	private final Class<QUERY> cDomainQuery; public Class<QUERY> getClassDomainQuery() {return cDomainQuery;}
 	private final Class<PATH> cDomainPath; public Class<PATH> getClassDomainPath() {return cDomainPath;}
 	private final Class<DENTITY> cDomainEntity; public Class<DENTITY> getClassDomainEntity() {return cDomainEntity;}
 	private final Class<ANALYSIS> cAnalysis; public Class<ANALYSIS> getClassAnalysis() {return cAnalysis;}
@@ -59,12 +60,13 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	private final Class<AT> cTool; public Class<AT> getClassAnalysisTool() {return cTool;}
 	private final Class<ATT> cAtt; public Class<ATT> getAttClass() {return cAtt;}
 
-	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<DOMAIN> cDomain, final Class<PATH> cDomainPath, final Class<DENTITY> cDomainEntity, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
+	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<DOMAIN> cDomain, final Class<QUERY> cDomainQuery, final Class<PATH> cDomainPath, final Class<DENTITY> cDomainEntity, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
 	{
 		super(cL,cD);
 		this.cAnswer=cAnswer;
 		this.cData=cData;
 		this.cDomain=cDomain;
+		this.cDomainQuery=cDomainQuery;
 		this.cDomainPath=cDomainPath;
 		this.cDomainEntity=cDomainEntity;
 		this.cAq=cAq;

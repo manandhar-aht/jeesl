@@ -73,7 +73,8 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 						OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 						OPTION extends JeeslSurveyOption<L,D>,
 						CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-						DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>, QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
+						DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
+						QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
 						PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY>,
 						DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
@@ -87,10 +88,12 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyDomainBean.class);
 	
 	protected List<DENTITY> entities; public List<DENTITY> getEntities(){return entities;}
+	protected List<QUERY> queries; public List<QUERY> getQueries(){return queries;}
 	protected List<PATH> paths; public List<PATH> getPaths(){return paths;}
 	
-	protected DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
-
+	private DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
+	private QUERY query; public QUERY getQuery() {return query;} public void setQuery(QUERY query) {this.query = query;}
+	
 	protected final SbSingleHandler<DOMAIN> sbhDomain; public SbSingleHandler<DOMAIN> getSbhDomain() {return sbhDomain;}
 	
 	private final EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> efDomain;
@@ -126,6 +129,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		if(sbhDomain.getHasSome())
 		{
 			sbhDomain.selectDefault();
+			domain = sbhDomain.getSelection();
 		}
 		else
 		{
@@ -181,6 +185,8 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		reset(false);
 		logger.info(AbstractLogMessage.selectEntity(domain));
 		domain = efLang.persistMissingLangs(fAnalysis,localeCodes,domain);
+		sbhDomain.setSelection(domain);
+		reloadQueries();
 	}
 	
 	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException
@@ -188,13 +194,14 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		logger.info(AbstractLogMessage.saveEntity(domain));
 		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
 		domain = fAnalysis.save(domain);
-		
+		sbhDomain.setSelection(domain);
 		reloadDomains();
+		reloadQueries();
 	}
 	
-	private void reloadPaths()
+	private void reloadQueries()
 	{
-//		paths = fAnalysis.allForParent(fbAnalysis.getClassDomainPath(), domain);
+		queries = fAnalysis.allForParent(fbAnalysis.getClassDomainQuery(), domain);
 	}
 	
 	protected void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, sbhDomain.getList());}

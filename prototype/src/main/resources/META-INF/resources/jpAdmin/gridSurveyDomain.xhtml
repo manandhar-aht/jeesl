@@ -43,7 +43,7 @@
 					</p:dataTable>
 				</h:form>
 			</aht:slot>
-			<aht:slot id="sCenter" width="5" >
+			<aht:slot width="5" >
 				<h:form id="fDomain" rendered="#{not empty cc.attrs.bean.domain}">
 					<p:panel header="#{msg.jeeslSurveyDomain}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
@@ -61,6 +61,41 @@
 							</p:selectOneMenu>
 						</p:panelGrid>
 						<aht:tabTranslationEditor value="#{cc.attrs.bean.domain}" withDescription="false" keys="#{cc.attrs.localeKeys}" />
+					</p:panel>
+				</h:form>
+			</aht:slot>
+		</aht:row>
+		<aht:row id="row2" rendered="#{(not empty cc.attrs.bean.domain) and (cc.attrs.bean.domain.id gt 0)}">
+			<aht:slot id="sQueries" width="7">
+				<h:form id="fQueries">
+					<p:dataTable var="query" value="#{cc.attrs.bean.queries}" rowKey="#{query.id}"
+								 selection="#{cc.attrs.bean.query}" selectionMode="single" draggableRows="true">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveyDomainQueries}">
+                         <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addQuery()}" update=":#{cc.id}:row2"/>
+                     </aht:pfDataTableHeader>
+						</f:facet>
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderQueries()}" update="@form"/>
+						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectQuery()}" update=":#{cc.id}:row2"/>
+						<p:column>
+                     	<h:outputText value="#{query.position}" />
+						</p:column>
+						
+					</p:dataTable>
+				</h:form>
+			</aht:slot>
+			<aht:slot width="5" >
+				<h:form id="fQuery" rendered="#{not empty cc.attrs.bean.query}">
+					<p:panel header="#{msg.jeeslSurveyDomainQuery}" styleClass="auPanelWithGrid">
+						<f:facet name="actions">
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveQuery()}" update=":#{cc.id}:row2"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteQuery()}" update=":#{cc.id}:row2"/>
+						</f:facet>
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							<p:outputLabel value="#{msg.jeeslPosition}"/>
+							<h:outputText value="#{cc.attrs.bean.query.position}"/>
+						</p:panelGrid>
 					</p:panel>
 				</h:form>
 			</aht:slot>

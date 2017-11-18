@@ -49,7 +49,7 @@ public interface JeeslSurveyAnalysisFacade <L extends UtilsLang, D extends Utils
 											CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 											DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 											QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
-											PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY>,
+											PATH extends JeeslSurveyDomainPath<L,D,QUERY,PATH,DENTITY>,
 											DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 											ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
 											AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,

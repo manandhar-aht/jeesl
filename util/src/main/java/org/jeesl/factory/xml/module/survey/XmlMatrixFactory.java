@@ -50,12 +50,13 @@ public class XmlMatrixFactory<L extends UtilsLang,D extends UtilsDescription,
 //	private Class<SURVEY> cSurvey;
 		
 	private String localeCode;
+	@SuppressWarnings("unused")
 	private final Matrix q;
 	
 	private EjbSurveyOptionFactory<QUESTION,OPTION> efOption;
 	private EjbSurveyMatrixFactory<ANSWER,MATRIX,OPTION> efMatrix;
 	
-	private XmlCellFactory<L,D,UNIT,ANSWER,MATRIX,?,OPTIONS,OPTION> xfCell;
+	private XmlCellFactory<MATRIX> xfCell;
 		
 	public XmlMatrixFactory(String localeCode, Matrix q)
 	{
@@ -63,7 +64,7 @@ public class XmlMatrixFactory<L extends UtilsLang,D extends UtilsDescription,
 		this.q=q;
 		efOption = new EjbSurveyOptionFactory<QUESTION,OPTION>(null);
 		efMatrix = new EjbSurveyMatrixFactory<ANSWER,MATRIX,OPTION>(null);
-		xfCell = new XmlCellFactory<L,D,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode);
+		xfCell = new XmlCellFactory<MATRIX>(localeCode);
 	}
 	
 	public void lazyLoad(JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,OPTIONS,OPTION,?> fSurvey)

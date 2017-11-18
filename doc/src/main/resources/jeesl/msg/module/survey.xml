@@ -511,11 +511,25 @@
 	    		<s:lang key="fr" translation="Validation Algorithm"/>
 	    	</s:langs>
     </s:translation>
-        <s:translation key="jeeslSurveyRecords">
+	<s:translation key="jeeslSurveyRecords">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Einträge"/>
 	    		<s:lang key="en" translation="Records"/>
 	    		<s:lang key="fr" translation="Records"/>
 	    	</s:langs>
     </s:translation>
+ 	<s:translation key="jeeslSurveyDomainQueries">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Domain Queries"/>
+	    		<s:lang key="en" translation="Domain Queries"/>
+	    		<s:lang key="fr" translation="Domain Queries"/>
+	    	</s:langs>
+    </s:translation>   
+ 	<s:translation key="jeeslSurveyDomainQuery">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Domain Query"/>
+	    		<s:lang key="en" translation="Domain Query"/>
+	    		<s:lang key="fr" translation="Domain Query"/>
+	    	</s:langs>
+    </s:translation>     
 </s:translations>

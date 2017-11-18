@@ -15,6 +15,7 @@ import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
@@ -93,10 +94,12 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	
 	private DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
 	private QUERY query; public QUERY getQuery() {return query;} public void setQuery(QUERY query) {this.query = query;}
+	private PATH path; public PATH getPath() {return path;} public void setPath(PATH path) {this.path = path;}
 	
 	protected final SbSingleHandler<DOMAIN> sbhDomain; public SbSingleHandler<DOMAIN> getSbhDomain() {return sbhDomain;}
 	
 	private final EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> efDomain;
+	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY> efDomainQuery;
 	private final Comparator<DENTITY> cpDentity;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -109,7 +112,8 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		sbhDomain = new SbSingleHandler<DOMAIN>(fbAnalysis.getClassDomain(),this);
 		sbhDomain.setDebugOnInfo(true);
 		
-		efDomain = fbAnalysis.ejbDomain(fbAnalysis.getClassDomain());
+		efDomain = fbAnalysis.ejbDomain();
+		efDomainQuery = fbAnalysis.ejbDomainQuery();
 		cpDentity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
@@ -130,6 +134,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		{
 			sbhDomain.selectDefault();
 			domain = sbhDomain.getSelection();
+			reloadQueries();
 		}
 		else
 		{
@@ -180,15 +185,6 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		domain.setName(efLang.createEmpty(localeCodes));
 	}
 	
-	public void selectDomain()
-	{
-		reset(false);
-		logger.info(AbstractLogMessage.selectEntity(domain));
-		domain = efLang.persistMissingLangs(fAnalysis,localeCodes,domain);
-		sbhDomain.setSelection(domain);
-		reloadQueries();
-	}
-	
 	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(domain));
@@ -199,10 +195,65 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		reloadQueries();
 	}
 	
+	public void selectDomain()
+	{
+		reset(false);
+		logger.info(AbstractLogMessage.selectEntity(domain));
+		domain = efLang.persistMissingLangs(fAnalysis,localeCodes,domain);
+		sbhDomain.setSelection(domain);
+		reloadQueries();
+	}
+	
 	private void reloadQueries()
 	{
 		queries = fAnalysis.allForParent(fbAnalysis.getClassDomainQuery(), domain);
 	}
 	
-	protected void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, sbhDomain.getList());}
+	public void addQuery()
+	{
+		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassDomainQuery()));
+		query = efDomainQuery.build(domain, queries);
+		query.setName(efLang.createEmpty(localeCodes));
+		query.setDescription(efDescription.createEmpty(localeCodes));
+	}
+	
+	public void saveQuery() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(query));
+//		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
+		query = fAnalysis.save(query);
+		reloadQueries();
+		reloadPaths();
+	}
+	
+	public void selectQuery()
+	{
+		reset(false);
+		logger.info(AbstractLogMessage.selectEntity(query));
+		query = efLang.persistMissingLangs(fAnalysis,localeCodes,query);
+		query = efDescription.persistMissingLangs(fAnalysis,localeCodes,query);
+		reloadPaths();
+	}
+	
+	private void reloadPaths()
+	{
+		
+	}
+	
+	public void addPath()
+	{
+		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassDomainQuery()));
+//		path = efDomainPath.build(query, paths);
+	}
+	
+	public void savePath() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(path));
+//		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
+		path = fAnalysis.save(path);
+		reloadPaths();
+	}
+	
+	public void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, sbhDomain.getList());}
+	public void reorderQueries() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, queries);}
 }

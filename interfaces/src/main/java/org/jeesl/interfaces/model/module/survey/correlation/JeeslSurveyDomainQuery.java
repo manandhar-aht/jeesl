@@ -6,14 +6,16 @@ import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
+import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyDomainQuery<L extends UtilsLang, D extends UtilsDescription,
 										DOMAIN extends JeeslSurveyDomain<L,D,?>
 										>
 			extends Serializable,EjbWithId,
 					EjbSaveable,
-					EjbWithPositionParent
+					EjbWithPositionParent,EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{domain}
 	

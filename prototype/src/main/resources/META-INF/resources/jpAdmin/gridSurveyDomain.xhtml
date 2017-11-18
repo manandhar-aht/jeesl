@@ -66,7 +66,7 @@
 			</aht:slot>
 		</aht:row>
 		<aht:row id="row2" rendered="#{(not empty cc.attrs.bean.domain) and (cc.attrs.bean.domain.id gt 0)}">
-			<aht:slot id="sQueries" width="7">
+			<aht:slot id="sQueries" width="3">
 				<h:form id="fQueries">
 					<p:dataTable var="query" value="#{cc.attrs.bean.queries}" rowKey="#{query.id}"
 								 selection="#{cc.attrs.bean.query}" selectionMode="single" draggableRows="true">
@@ -80,7 +80,6 @@
 						<p:column>
                      	<h:outputText value="#{query.position}" />
 						</p:column>
-						
 					</p:dataTable>
 				</h:form>
 			</aht:slot>
@@ -96,7 +95,23 @@
 							<p:outputLabel value="#{msg.jeeslPosition}"/>
 							<h:outputText value="#{cc.attrs.bean.query.position}"/>
 						</p:panelGrid>
+						<aht:tabTranslationEditor value="#{cc.attrs.bean.query}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 					</p:panel>
+				</h:form>
+				<h:form id="fPaths" rendered="#{(not empty cc.attrs.bean.query) and (cc.attrs.bean.query.id gt 0)}">
+					<p:dataTable var="path" value="#{cc.attrs.bean.paths}" rowKey="#{path.id}"
+								 selection="#{cc.attrs.bean.path}" selectionMode="single" draggableRows="true">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveyDomainPaths}">
+                         <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addPath()}" update=":#{cc.id}:row2"/>
+                     </aht:pfDataTableHeader>
+						</f:facet>
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderQueries()}" update="@form"/>
+						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectQuery()}" update=":#{cc.id}:row2"/>
+						<p:column>
+                     	<h:outputText value="#{path.position}" />
+						</p:column>
+					</p:dataTable>
 				</h:form>
 			</aht:slot>
 		</aht:row>

@@ -7,6 +7,7 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescription,
@@ -14,7 +15,9 @@ public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescr
 										PATH extends JeeslSurveyDomainPath<L,D,DOMAIN,PATH,DENTITY>,
 										DENTITY extends JeeslRevisionEntity<L,D,?,?,?>
 										>
-			extends Serializable,EjbWithId,EjbSaveable
+			extends Serializable,EjbWithId,
+					EjbSaveable,
+					EjbWithPosition
 {
 	DENTITY getEntity();
 	void setEntity(DENTITY entity);

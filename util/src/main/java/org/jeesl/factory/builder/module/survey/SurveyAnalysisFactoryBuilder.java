@@ -5,6 +5,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisQuestionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisToolFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -75,9 +76,14 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
         this.cAtt = cAtt;
 	}
 	
-	public EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> ejbDomain(Class<DOMAIN> cDomain)
+	public EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> ejbDomain()
 	{
 		return new EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY>(cDomain);
+	}
+	
+	public EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY> ejbDomainQuery()
+	{
+		return new EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY>(cDomainQuery);
 	}
 	
 	public EjbSurveyAnalysisFactory<TEMPLATE,ANALYSIS> ejbAnalysis()

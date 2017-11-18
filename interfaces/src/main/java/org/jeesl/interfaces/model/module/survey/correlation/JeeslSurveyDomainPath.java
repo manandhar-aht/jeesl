@@ -2,6 +2,7 @@ package org.jeesl.interfaces.model.module.survey.correlation;
 
 import java.io.Serializable;
 
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -12,9 +13,9 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescription,
 										QUERY extends JeeslSurveyDomainQuery<L,D,?>,
-										PATH extends JeeslSurveyDomainPath<L,D,QUERY,PATH,DENTITY>,
 										
 										DENTITY extends JeeslRevisionEntity<L,D,?,?,?>
+//,										DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>
 										>
 			extends Serializable,EjbWithId,
 					EjbSaveable,

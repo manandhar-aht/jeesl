@@ -76,7 +76,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 						CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 						DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 						QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
-						PATH extends JeeslSurveyDomainPath<L,D,QUERY,PATH,DENTITY>,
+						PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY>,
 						DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,

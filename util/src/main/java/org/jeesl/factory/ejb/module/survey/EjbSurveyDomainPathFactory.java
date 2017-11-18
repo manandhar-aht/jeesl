@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class EjbSurveyDomainPathFactory<L extends UtilsLang, D extends UtilsDescription,
 										DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
-										PATH extends JeeslSurveyDomainPath<L,D,?,PATH,DENTITY>,
+										PATH extends JeeslSurveyDomainPath<L,D,?,DENTITY>,
 										DENTITY extends JeeslRevisionEntity<L,D,?,?,?>
 										>
 {

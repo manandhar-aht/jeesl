@@ -21,6 +21,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.model.json.JsonFlatFigures;
 
@@ -49,9 +50,9 @@ public interface JeeslSurveyAnalysisFacade <L extends UtilsLang, D extends Utils
 											CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 											DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 											QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
-											PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,?>,
+											PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 											DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
-											
+											DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
 											ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
 											AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 											AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,

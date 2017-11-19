@@ -531,5 +531,12 @@
 	    		<s:lang key="en" translation="Domain Query"/>
 	    		<s:lang key="fr" translation="Domain Query"/>
 	    	</s:langs>
-    </s:translation>     
+    </s:translation>
+	<s:translation key="jeeslSurveyDomainPaths">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Domain Paths"/>
+	    		<s:lang key="en" translation="Domain Paths"/>
+	    		<s:lang key="fr" translation="Domain Paths"/>
+	    	</s:langs>
+    </s:translation>    
 </s:translations>

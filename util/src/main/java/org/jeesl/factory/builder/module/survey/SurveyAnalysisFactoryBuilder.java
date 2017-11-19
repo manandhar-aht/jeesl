@@ -5,6 +5,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisQuestionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisToolFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainPathFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
@@ -58,12 +59,13 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	private final Class<QUERY> cDomainQuery; public Class<QUERY> getClassDomainQuery() {return cDomainQuery;}
 	private final Class<PATH> cDomainPath; public Class<PATH> getClassDomainPath() {return cDomainPath;}
 	private final Class<DENTITY> cDomainEntity; public Class<DENTITY> getClassDomainEntity() {return cDomainEntity;}
+	private final Class<DATTRIBUTE> cDomainAttribute; public Class<DATTRIBUTE> getClassDomainAttribute() {return cDomainAttribute;}
 	private final Class<ANALYSIS> cAnalysis; public Class<ANALYSIS> getClassAnalysis() {return cAnalysis;}
 	private final Class<AQ> cAq; public Class<AQ> getClassAnalysisQuestion() {return cAq;}
 	private final Class<AT> cTool; public Class<AT> getClassAnalysisTool() {return cTool;}
 	private final Class<ATT> cAtt; public Class<ATT> getAttClass() {return cAtt;}
 
-	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<DOMAIN> cDomain, final Class<QUERY> cDomainQuery, final Class<PATH> cDomainPath, final Class<DENTITY> cDomainEntity, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
+	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<DOMAIN> cDomain, final Class<QUERY> cDomainQuery, final Class<PATH> cDomainPath, final Class<DENTITY> cDomainEntity, final Class<DATTRIBUTE> cDomainAttribute, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
 	{
 		super(cL,cD);
 		this.cAnswer=cAnswer;
@@ -72,6 +74,7 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		this.cDomainQuery=cDomainQuery;
 		this.cDomainPath=cDomainPath;
 		this.cDomainEntity=cDomainEntity;
+		this.cDomainAttribute=cDomainAttribute;
 		this.cAq=cAq;
 		this.cAnalysis=cAnalysis;
 		this.cTool=cTool;
@@ -86,6 +89,11 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	public EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY> ejbDomainQuery()
 	{
 		return new EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY>(cDomainQuery);
+	}
+	
+	public EjbSurveyDomainPathFactory<L,D,QUERY,PATH,DENTITY,DATTRIBUTE> ejbDomainPath()
+	{
+		return new EjbSurveyDomainPathFactory<L,D,QUERY,PATH,DENTITY,DATTRIBUTE>(cDomainPath);
 	}
 	
 	public EjbSurveyAnalysisFactory<TEMPLATE,ANALYSIS> ejbAnalysis()

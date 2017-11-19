@@ -80,7 +80,7 @@
 						<p:column>
                      	<h:outputText value="#{query.position}" />
 						</p:column>
-						<p:column headerText="#{msg.jeeslName}">>
+						<p:column headerText="#{msg.jeeslName}">
                      	<h:outputText value="#{query.name[localeCode].lang}" />
 						</p:column>
 					</p:dataTable>
@@ -103,18 +103,39 @@
 				</h:form>
 				<h:form id="fPaths" rendered="#{(not empty cc.attrs.bean.query) and (cc.attrs.bean.query.id gt 0)}">
 					<p:dataTable var="path" value="#{cc.attrs.bean.paths}" rowKey="#{path.id}"
-								 selection="#{cc.attrs.bean.path}" selectionMode="single" draggableRows="true">
+								 selection="#{cc.attrs.bean.path}" selectionMode="single" draggableRows="false">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.jeeslSurveyDomainPaths}">
                          <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addPath()}" update=":#{cc.id}:row2"/>
                      </aht:pfDataTableHeader>
 						</f:facet>
-						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderQueries()}" update="@form"/>
-						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectQuery()}" update=":#{cc.id}:row2"/>
+						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectPath()}" update=":#{cc.id}:row2"/>
 						<p:column>
                      	<h:outputText value="#{path.position}" />
 						</p:column>
+						<p:column headerText="#{msg.jeeslName}">
+                     	<h:outputText value="#{path.entity.name[localeCode].lang}" />
+						</p:column>
 					</p:dataTable>
+				</h:form>
+			</aht:slot>
+			<aht:slot width="4" >
+				<h:form id="fPath" rendered="#{not empty cc.attrs.bean.path}">
+					<p:panel header="#{msg.jeeslSurveyDomainPath}" styleClass="auPanelWithGrid">
+						<f:facet name="actions">
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.savePath()}" update=":#{cc.id}:grid"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deletePath()}" update=":#{cc.id}:row2"/>
+						</f:facet>
+						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							<p:outputLabel value="#{msg.jeeslPosition}"/>
+							<h:outputText value="#{cc.attrs.bean.path.position}"/>
+							
+							<p:outputLabel value="#{msg.jeeslRevisionEntity}"/>
+							<h:outputText value="#{cc.attrs.bean.path.entity}"/>
+						</p:panelGrid>
+						
+					</p:panel>
 				</h:form>
 			</aht:slot>
 		</aht:row>

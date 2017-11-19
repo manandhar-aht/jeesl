@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
@@ -15,6 +16,7 @@ import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainPathFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
@@ -102,6 +104,8 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	
 	private final EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> efDomain;
 	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY> efDomainQuery;
+	private final EjbSurveyDomainPathFactory<L,D,QUERY,PATH,DENTITY,DATTRIBUTE> efDomainPath;
+	
 	private final Comparator<DENTITY> cpDentity;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -116,13 +120,14 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		
 		efDomain = fbAnalysis.ejbDomain();
 		efDomainQuery = fbAnalysis.ejbDomainQuery();
+		efDomainPath = fbAnalysis.ejbDomainPath();
 		cpDentity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
 	protected void initSuperDomain(String userLocale, JeeslTranslationBean bTranslation, FacesMessageBean bMessage,
 			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
 			JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
-			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,ANALYSIS,AQ,AT,ATT> fAnalysis,
+			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fAnalysis,
 			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
 	{
 		super.initSuperSurvey(bTranslation.getLangKeys(),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
@@ -230,7 +235,8 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		reloadPaths();
 		if(paths.isEmpty())
 		{
-			
+			path = fAnalysis.save(efDomainPath.build(query,domain.getEntity(),paths));
+			reloadPaths();
 		}
 	}
 	
@@ -254,7 +260,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	
 	private void reloadPaths()
 	{
-		
+		paths = fAnalysis.allForParent(fbAnalysis.getClassDomainPath(), query);
 	}
 	
 	public void addPath()
@@ -271,6 +277,14 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		reloadPaths();
 	}
 	
+	public void selectPath()
+	{
+		reset(false,false,false);
+		logger.info(AbstractLogMessage.selectEntity(path));
+		reloadPaths();
+	}
+	
 	public void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, sbhDomain.getList());}
 	public void reorderQueries() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, queries);}
+	
 }

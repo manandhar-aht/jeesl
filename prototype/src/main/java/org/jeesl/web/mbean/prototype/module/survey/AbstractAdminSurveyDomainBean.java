@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
-import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
@@ -157,6 +156,8 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 			catch (UtilsConstraintViolationException e) {logger.error(e.getMessage());}
 		}
 	}
+	
+	@Override protected void initSettings(){}
 	
 	@SuppressWarnings("unchecked")
 	@Override public void selectSbSingle(EjbWithId ejb)

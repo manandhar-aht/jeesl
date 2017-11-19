@@ -26,4 +26,7 @@ public interface JeeslSurveyAnalysis<L extends UtilsLang, D extends UtilsDescrip
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);
+	
+	DOMAIN getDomain();
+	void setDomain(DOMAIN domain);
 }

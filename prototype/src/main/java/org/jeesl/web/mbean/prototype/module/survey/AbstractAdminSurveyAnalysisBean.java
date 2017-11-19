@@ -90,6 +90,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyAnalysisBean.class);
 		
 	protected List<ANALYSIS> analyses; public List<ANALYSIS> getAnalyses(){return analyses;}
+	protected List<DOMAIN> domains; public List<DOMAIN> getDomains(){return domains;}
 	protected List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
 	protected List<OPTIONS> optionSets; public List<OPTIONS> getOptionSets(){return optionSets;}
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
@@ -133,8 +134,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		initSettings();
 		super.initLocales(userLocale);
 		
-		;
-		
+		domains = fAnalysis.allOrderedPosition(fbAnalysis.getClassDomain());		
 		toolTypes = bSurvey.getToolTypes();
 		questionElements = fCore.allOrderedPositionVisible(fbTemplate.getClassElement());
 		
@@ -174,7 +174,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	
 	private void reloadAnalyses()
 	{
-		analyses = fCore.allForParent(fbAnalysis.getClassAnalysis(), version.getTemplate());
+		analyses = fAnalysis.allForParent(fbAnalysis.getClassAnalysis(), version.getTemplate());
 	}
 		
 	public void addAnalysis()
@@ -187,7 +187,8 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void saveAnalysis() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(analysis));
-		analysis = fCore.save(analysis);
+		analysis.setDomain(fAnalysis.find(fbAnalysis.getClassDomain(),analysis.getDomain()));
+		analysis = fAnalysis.save(analysis);
 		reloadAnalyses();
 	}
 	

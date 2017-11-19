@@ -21,7 +21,7 @@
 		<p:dataTable var="a" value="#{cc.attrs.bean.attributes}" draggableRows="true"
 			selection="#{cc.attrs.bean.attribute}" selectionMode="single" rowKey="#{a.id}">
 			<f:facet name="header">
-				<aht:pfDataTableHeader title="#{msg.aupRevisionAttributes}">
+				<aht:pfDataTableHeader title="#{msg.jeeslRevisionAttributes}">
 					<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addAttribute()}" update="#{cc.attrs.updateAdd}" tooltip="#{msg.ttNew}"/>
 				</aht:pfDataTableHeader>
 			</f:facet>
@@ -30,7 +30,7 @@
 			<p:column rendered="true">  
 				<h:outputText value="#{a.position}"/>
             </p:column>
-            <p:column headerText="#{msg.aupRevisionAttribute}">  
+            <p:column headerText="#{msg.jeeslRevisionAttribute}">  
 				<h:outputText value="#{a.name[userBean.localeCode].lang}"/>
             </p:column>
             <p:column headerText="P" styleClass="aupPfDtColCentered">

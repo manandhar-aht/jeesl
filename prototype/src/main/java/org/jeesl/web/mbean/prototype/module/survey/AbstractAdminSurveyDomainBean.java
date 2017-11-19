@@ -95,10 +95,12 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	protected List<DENTITY> entities; public List<DENTITY> getEntities(){return entities;}
 	protected List<QUERY> queries; public List<QUERY> getQueries(){return queries;}
 	protected List<PATH> paths; public List<PATH> getPaths(){return paths;}
+	protected List<DATTRIBUTE> attributes; public List<DATTRIBUTE> getAttributes(){return attributes;}
 	
 	private DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
 	private QUERY query; public QUERY getQuery() {return query;} public void setQuery(QUERY query) {this.query = query;}
 	private PATH path; public PATH getPath() {return path;} public void setPath(PATH path) {this.path = path;}
+	private DENTITY entity; public DENTITY getEntity() {return entity;}
 	
 	protected final SbSingleHandler<DOMAIN> sbhDomain; public SbSingleHandler<DOMAIN> getSbhDomain() {return sbhDomain;}
 	
@@ -159,7 +161,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	@SuppressWarnings("unchecked")
 	@Override public void selectSbSingle(EjbWithId ejb)
 	{
-		if(ejb==null) {reset(true,true,true);}
+		if(ejb==null) {reset(true,true,true,true);}
 		else if(JeeslSurveyDomain.class.isAssignableFrom(ejb.getClass()))
 		{
 			domain = (DOMAIN)ejb;
@@ -175,11 +177,12 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		}
 	}
 	
-	private void reset(boolean rDomain, boolean rQuery, boolean rPath)
+	private void reset(boolean rDomain, boolean rQuery, boolean rPath, boolean rEntity)
 	{
 		if(rDomain){domain = null;}
 		if(rQuery){query = null;}
 		if(rPath){path = null;}
+		if(rEntity){entity = null;}
 	}
 	
 	private void reloadDomains()
@@ -206,7 +209,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	
 	public void selectDomain()
 	{
-		reset(false,true,true);
+		reset(false,true,true,true);
 		logger.info(AbstractLogMessage.selectEntity(domain));
 		domain = efLang.persistMissingLangs(fAnalysis,localeCodes,domain);
 		sbhDomain.setSelection(domain);
@@ -246,12 +249,12 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 //		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
 		fAnalysis.rm(query);
 		reloadQueries();
-		reset(false,true,true);
+		reset(false,true,true,true);
 	}
 	
 	public void selectQuery()
 	{
-		reset(false,false,true);
+		reset(false,false,true,true);
 		logger.info(AbstractLogMessage.selectEntity(query));
 		query = efLang.persistMissingLangs(fAnalysis,localeCodes,query);
 		query = efDescription.persistMissingLangs(fAnalysis,localeCodes,query);
@@ -261,12 +264,36 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	private void reloadPaths()
 	{
 		paths = fAnalysis.allForParent(fbAnalysis.getClassDomainPath(), query);
+		if(!paths.isEmpty())
+		{
+			PATH p = paths.get(paths.size()-1);
+			if(p.getAttribute()!=null)
+			{
+				if(p.getAttribute().getRelation()!=null)
+				{
+					entity = p.getAttribute().getEntity();
+				}
+			}
+		}
+	}
+	
+	private void reloadPath()
+	{
+		entity = null;
+		if(path.getAttribute()!=null)
+		{
+			if(path.getAttribute().getRelation()!=null)
+			{
+				entity = path.getAttribute().getEntity();
+			}
+		}
 	}
 	
 	public void addPath()
 	{
 		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassDomainQuery()));
-//		path = efDomainPath.build(query, paths);
+		path = efDomainPath.build(query,entity,paths);
+		reloadAttributes();
 	}
 	
 	public void savePath() throws UtilsConstraintViolationException, UtilsLockingException
@@ -275,13 +302,30 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 //		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
 		path = fAnalysis.save(path);
 		reloadPaths();
+		reloadAttributes();
+		reloadPath();
 	}
 	
 	public void selectPath()
 	{
-		reset(false,false,false);
+		reset(false,false,false,true);
 		logger.info(AbstractLogMessage.selectEntity(path));
+		reloadAttributes();
+		reloadPath();
+	}
+	
+	public void deletePath() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.rmEntity(path));
+//		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
+		fAnalysis.rm(path);
 		reloadPaths();
+		reset(false,false,true,true);
+	}
+	
+	private void reloadAttributes()
+	{
+		attributes = fAnalysis.fDomainAttributes(path.getEntity());
 	}
 	
 	public void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, sbhDomain.getList());}

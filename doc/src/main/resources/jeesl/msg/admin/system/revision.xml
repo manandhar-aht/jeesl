@@ -71,14 +71,14 @@
     		<s:lang key="fr" translation="Entity"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupRevisionAttributes">
+	<s:translation key="jeeslRevisionAttributes">
     	<s:langs>
     		<s:lang key="de" translation="Attribute"/>
     		<s:lang key="en" translation="Attributes"/>
     		<s:lang key="fr" translation="Attributes"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupRevisionAttribute">
+	<s:translation key="jeeslRevisionAttribute">
     	<s:langs>
     		<s:lang key="de" translation="Attribut"/>
     		<s:lang key="en" translation="Attribute"/>

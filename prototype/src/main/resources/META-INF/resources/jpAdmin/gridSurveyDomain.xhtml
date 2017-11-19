@@ -106,15 +106,21 @@
 								 selection="#{cc.attrs.bean.path}" selectionMode="single" draggableRows="false">
 						<f:facet name="header">
 							<aht:pfDataTableHeader title="#{msg.jeeslSurveyDomainPaths}">
-                         <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addPath()}" update=":#{cc.id}:row2"/>
+                         <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addPath()}" update=":#{cc.id}:row2" rendered="#{not empty cc.attrs.bean.entity}"/>
                      </aht:pfDataTableHeader>
 						</f:facet>
 						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectPath()}" update=":#{cc.id}:row2"/>
 						<p:column>
                      	<h:outputText value="#{path.position}" />
 						</p:column>
-						<p:column headerText="#{msg.jeeslName}">
+						<p:column headerText="#{msg.jeeslRevisionEntity}">
                      	<h:outputText value="#{path.entity.name[localeCode].lang}" />
+						</p:column>
+						<p:column headerText="#{msg.jeeslRevisionAttribute}">
+                     	<h:outputText value="#{path.attribute.name[localeCode].lang}" />
+						</p:column>
+						<p:column headerText="#{msg.jeeslRevisionEntityRelation}">
+                     	<h:outputText value="#{path.attribute.relation.name[localeCode].lang}" />
 						</p:column>
 					</p:dataTable>
 				</h:form>
@@ -124,7 +130,7 @@
 					<p:panel header="#{msg.jeeslSurveyDomainPath}" styleClass="auPanelWithGrid">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.savePath()}" update=":#{cc.id}:grid"/>
-							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deletePath()}" update=":#{cc.id}:row2"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deletePath()}" update=":#{cc.id}:row2" rendered="#{(cc.attrs.bean.path.id gt 0) and (cc.attrs.bean.path.position eq cc.attrs.bean.paths.size())}"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
@@ -132,7 +138,13 @@
 							<h:outputText value="#{cc.attrs.bean.path.position}"/>
 							
 							<p:outputLabel value="#{msg.jeeslRevisionEntity}"/>
-							<h:outputText value="#{cc.attrs.bean.path.entity}"/>
+							<h:outputText value="#{cc.attrs.bean.path.entity.name[localeCode].lang}"/>
+							
+							<p:outputLabel value="#{msg.jeeslRevisionAttribute}"/>
+							<p:selectOneMenu value="#{cc.attrs.bean.path.attribute}" effect="fade" autoWidth="false">
+							 	<f:selectItem itemLabel="---"/>
+								<f:selectItems value="#{cc.attrs.bean.attributes}" var="a" itemLabel="#{a.name[localeCode].lang}" itemValue="#{a}"/>
+							</p:selectOneMenu>
 						</p:panelGrid>
 						
 					</p:panel>

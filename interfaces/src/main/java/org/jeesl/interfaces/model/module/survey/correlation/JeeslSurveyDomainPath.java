@@ -6,6 +6,7 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
@@ -17,7 +18,7 @@ public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescr
 										DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>
 										>
 			extends Serializable,EjbWithId,
-					EjbSaveable,
+					EjbSaveable,EjbRemoveable,
 					EjbWithPositionParent
 {
 	public enum Attributes{query}

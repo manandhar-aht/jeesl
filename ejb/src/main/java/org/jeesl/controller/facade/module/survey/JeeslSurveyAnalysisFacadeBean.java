@@ -70,7 +70,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 				DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 				QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
 				PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
-				DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
+				DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
 				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
@@ -91,6 +91,14 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	@Override public AQ fAnalysis(ANALYSIS analysis, QUESTION question) throws UtilsNotFoundException
 	{
 		return this.oneForParents(fbAnalyis.getClassAnalysisQuestion(), JeeslSurveyAnalysisQuestion.Attributes.analysis.toString(), analysis, JeeslSurveyAnalysisQuestion.Attributes.question.toString(), question);
+	}
+	
+	@Override
+	public List<DATTRIBUTE> fDomainAttributes(DENTITY entity)
+	{
+		entity = em.find(fbAnalyis.getClassDomainEntity(), entity.getId());
+		entity.getAttributes().size();
+		return entity.getAttributes();
 	}
 	
 	@Override public JsonFlatFigures surveyCountRecords(List<SURVEY> surveys)

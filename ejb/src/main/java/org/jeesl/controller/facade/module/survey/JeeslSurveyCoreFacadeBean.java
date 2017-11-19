@@ -84,7 +84,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 									DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
 									PATH extends JeeslSurveyDomainPath<L,D,?,DENTITY,?>,
 									DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
-									ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE>,
+									ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,?>,
 									AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 									AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
 									ATT extends UtilsStatus<ATT,L,D>>
@@ -102,7 +102,6 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	private final Class<MATRIX> cMatrix;
 	private final Class<DATA> cData;
 	private final Class<OPTION> cOption;
-	private final Class<CORRELATION> cCorrelation;
 	
 	private final SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
 	private final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore;
@@ -110,7 +109,13 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION> efAnswer;
 
 	
-	public JeeslSurveyCoreFacadeBean(EntityManager em, SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate, SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore, final Class<SS> cSs, Class<SCHEME> cScheme, Class<TEMPLATE> cTemplate, Class<VERSION> cVersion, final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<CORRELATION> cCorrelation, final Class<AQ> cAq)
+	public JeeslSurveyCoreFacadeBean(EntityManager em, SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
+			final Class<SS> cSs,
+			Class<SCHEME> cScheme,
+			Class<TEMPLATE> cTemplate,
+			Class<VERSION> cVersion,
+			final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<AQ> cAq)
 	{
 		super(em);
 		this.fbTemplate=fbTemplate;
@@ -125,7 +130,6 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		this.cMatrix=cMatrix;
 		this.cData=cData;
 		this.cOption=cOption;
-		this.cCorrelation=cCorrelation;
 
 		efAnswer = fbCore.answer();
 	}
@@ -547,7 +551,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		
 		if(EjbIdFactory.isSaved(data.getCorrelation()))
 		{
-			data.setCorrelation(em.find(cCorrelation,data.getCorrelation().getId()));
+			data.setCorrelation(em.find(fbCore.getClassCorrelation(),data.getCorrelation().getId()));
 		}
 //		logger.info("Now Saving ...");
 		return this.saveProtected(data);

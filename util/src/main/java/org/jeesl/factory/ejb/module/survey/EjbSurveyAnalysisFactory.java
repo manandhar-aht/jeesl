@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbSurveyAnalysisFactory<TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,?,?,ANALYSIS>,
-										ANALYSIS extends JeeslSurveyAnalysis<?,?,TEMPLATE>>
+										ANALYSIS extends JeeslSurveyAnalysis<?,?,TEMPLATE,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyAnalysisFactory.class);
 	

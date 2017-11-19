@@ -70,8 +70,9 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	private final Class<DATA> cData; public Class<DATA> getClassData() {return cData;}
 	private final Class<OPTIONS> cOptions; public Class<OPTIONS> getOptionSetClass() {return cOptions;}
 	private final Class<OPTION> cOption; public Class<OPTION> getOptionClass() {return cOption;}
+	private final Class<CORRELATION> cCorrelation; public Class<CORRELATION> getClassCorrelation() {return cCorrelation;} 
 
-	public SurveyCoreFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
+	public SurveyCoreFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SURVEY> cSurvey, final Class<SS> cSs, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, final Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<CORRELATION> cCorrelation)
 	{
 		super(cL,cD);
 		this.cSurvey = cSurvey;
@@ -83,6 +84,7 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
         this.cData = cData;
         this.cOptions = cOptions;
         this.cOption = cOption;
+        this.cCorrelation = cCorrelation;
 	}
 	
 	public EjbSurveyFactory<L,D,SURVEY,SS,TEMPLATE> survey()

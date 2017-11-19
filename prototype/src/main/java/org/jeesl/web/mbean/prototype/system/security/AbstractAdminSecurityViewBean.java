@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
@@ -54,6 +55,11 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		super(fbSecurity);
 	}
 	
+	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
+	{
+		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
+		this.initSuper(langs, fSecurity, bMessage);
+	}
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
 	{
 		categoryType = JeeslSecurityCategory.Type.view;

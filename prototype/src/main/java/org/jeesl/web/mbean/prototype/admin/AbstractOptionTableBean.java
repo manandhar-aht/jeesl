@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.factory.builder.system.SvgFactoryBuilder;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
@@ -117,6 +118,12 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		allowAdditionalElements = new Hashtable<Long,Boolean>();
 		
 		categories = new ArrayList<EjbWithPosition>();
+	}
+	
+	protected void initUtils(JeeslTranslationBean bTranslation, UtilsFacade fUtils, FacesMessageBean bMessage)
+	{
+		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
+		this.initUtils(langs, fUtils, bMessage);
 	}
 	
 	protected void initUtils(String[] langs, UtilsFacade fUtils, FacesMessageBean bMessage)

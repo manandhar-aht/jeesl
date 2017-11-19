@@ -80,6 +80,9 @@
 						<p:column>
                      	<h:outputText value="#{query.position}" />
 						</p:column>
+						<p:column headerText="#{msg.jeeslName}">>
+                     	<h:outputText value="#{query.name[localeCode].lang}" />
+						</p:column>
 					</p:dataTable>
 				</h:form>
 			</aht:slot>

@@ -152,7 +152,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	@SuppressWarnings("unchecked")
 	@Override public void selectSbSingle(EjbWithId ejb)
 	{
-		if(ejb==null) {reset(true);}
+		if(ejb==null) {reset(true,true,true);}
 		else if(JeeslSurveyDomain.class.isAssignableFrom(ejb.getClass()))
 		{
 			domain = (DOMAIN)ejb;
@@ -168,9 +168,11 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		}
 	}
 	
-	private void reset(boolean rDomain)
+	private void reset(boolean rDomain, boolean rQuery, boolean rPath)
 	{
 		if(rDomain){domain = null;}
+		if(rQuery){query = null;}
+		if(rPath){path = null;}
 	}
 	
 	private void reloadDomains()
@@ -197,7 +199,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	
 	public void selectDomain()
 	{
-		reset(false);
+		reset(false,true,true);
 		logger.info(AbstractLogMessage.selectEntity(domain));
 		domain = efLang.persistMissingLangs(fAnalysis,localeCodes,domain);
 		sbhDomain.setSelection(domain);
@@ -224,11 +226,24 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		query = fAnalysis.save(query);
 		reloadQueries();
 		reloadPaths();
+		if(paths.isEmpty())
+		{
+			
+		}
+	}
+	
+	public void deleteQuery() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.rmEntity(query));
+//		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
+		fAnalysis.rm(query);
+		reloadQueries();
+		reset(false,true,true);
 	}
 	
 	public void selectQuery()
 	{
-		reset(false);
+		reset(false,false,true);
 		logger.info(AbstractLogMessage.selectEntity(query));
 		query = efLang.persistMissingLangs(fAnalysis,localeCodes,query);
 		query = efDescription.persistMissingLangs(fAnalysis,localeCodes,query);

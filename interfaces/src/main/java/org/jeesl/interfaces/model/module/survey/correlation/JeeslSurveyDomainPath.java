@@ -13,7 +13,6 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescription,
 										QUERY extends JeeslSurveyDomainQuery<L,D,?>,
-										
 										DENTITY extends JeeslRevisionEntity<L,D,?,?,?>
 ,										DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>
 										>
@@ -21,6 +20,12 @@ public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescr
 					EjbSaveable,
 					EjbWithPosition
 {
+	QUERY getQuery();
+	void setQuery(QUERY query);
+	
 	DENTITY getEntity();
 	void setEntity(DENTITY entity);
+	
+	DATTRIBUTE getAttribute();
+	void setAttribute(DATTRIBUTE attribute);
 }

@@ -3,6 +3,7 @@ package org.jeesl.interfaces.model.module.survey.correlation;
 import java.io.Serializable;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
@@ -14,7 +15,7 @@ public interface JeeslSurveyDomainQuery<L extends UtilsLang, D extends UtilsDesc
 										DOMAIN extends JeeslSurveyDomain<L,D,?>
 										>
 			extends Serializable,EjbWithId,
-					EjbSaveable,
+					EjbSaveable,EjbRemoveable,
 					EjbWithPositionParent,EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{domain}

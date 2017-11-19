@@ -16,7 +16,7 @@ public class EjbSurveyDomainPathFactory<L extends UtilsLang, D extends UtilsDesc
 										QUERY extends JeeslSurveyDomainQuery<L,D,?>,
 										PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 										DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
-										DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>
+										DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>
 										>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDomainPathFactory.class);

@@ -18,5 +18,9 @@ public interface JeeslFileStorage<L extends UtilsLang,D extends UtilsDescription
 			EjbWithLang<L>,EjbWithDescription<D>
 				
 {	
-
+	ENGINE getEngine();
+	void setEngine(ENGINE engines);
+	
+	String getJson();
+	void setJson(String json);
 }

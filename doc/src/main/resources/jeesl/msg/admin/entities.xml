@@ -135,11 +135,11 @@
 		</s:langs>
 	</s:translation>
 	
-	<s:translation key="IoFileRepositoryEngine">
+	<s:translation key="IoFileStorageEngine">
 		<s:langs>
-			<s:lang key="de" translation="File Repository Engine"/>
-			<s:lang key="en" translation="File Repository Engine"/>
-			<s:lang key="fr" translation="File Repository Engine"/>
+			<s:lang key="de" translation="File Storage Engine"/>
+			<s:lang key="en" translation="File Storage Engine"/>
+			<s:lang key="fr" translation="File Storage Engine"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="IoFileType">

@@ -8,16 +8,11 @@ import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.controller.handler.TranslationHandler;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 								

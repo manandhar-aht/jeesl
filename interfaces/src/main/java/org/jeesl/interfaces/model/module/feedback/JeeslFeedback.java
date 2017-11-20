@@ -14,8 +14,9 @@ public interface JeeslFeedback<L extends UtilsLang, D extends UtilsDescription,
 								STYLE extends UtilsStatus<STYLE,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
 								USER extends EjbWithEmail>
-						extends EjbWithId, EjbSaveable,
-									EjbWithRecord
+						extends EjbWithId,
+								EjbSaveable,
+								EjbWithRecord
 {	
 	THREAD getThread();
 	void setThread(THREAD thread);

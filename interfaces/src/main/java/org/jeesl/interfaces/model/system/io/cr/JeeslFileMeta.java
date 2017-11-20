@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.io.repository;
+package org.jeesl.interfaces.model.system.io.cr;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
 public interface JeeslFileMeta<L extends UtilsLang,D extends UtilsDescription,
-								CONTAINER extends JeeslFileContainer<?>,
+								CONTAINER extends JeeslFileContainer<L,D,?>,
 								TYPE extends UtilsStatus<TYPE,L,D>>
 		extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithName,EjbWithSize

@@ -134,11 +134,19 @@
 			<s:lang key="fr" translation="Attribute Type"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="IoContentRepositoryType">
+	
+	<s:translation key="IoFileRepositoryEngine">
 		<s:langs>
-			<s:lang key="de" translation="Content Repository Typ"/>
-			<s:lang key="en" translation="Content Repository Type"/>
-			<s:lang key="fr" translation="Content Repository Type"/>
+			<s:lang key="de" translation="File Repository Engine"/>
+			<s:lang key="en" translation="File Repository Engine"/>
+			<s:lang key="fr" translation="File Repository Engine"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoFileType">
+		<s:langs>
+			<s:lang key="de" translation="Dateityp"/>
+			<s:lang key="en" translation="File Type"/>
+			<s:lang key="fr" translation="File Type"/>
 		</s:langs>
 	</s:translation>
 	

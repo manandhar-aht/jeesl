@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.io.cr;
+package org.jeesl.interfaces.model.system.io.fr;
 
 import java.io.Serializable;
 

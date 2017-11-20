@@ -123,11 +123,6 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	protected void initUtils(JeeslTranslationBean bTranslation, UtilsFacade fUtils, FacesMessageBean bMessage)
 	{
 		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
-		this.initUtils(langs, fUtils, bMessage);
-	}
-	
-	protected void initUtils(String[] langs, UtilsFacade fUtils, FacesMessageBean bMessage)
-	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fUtils=fUtils;
 			

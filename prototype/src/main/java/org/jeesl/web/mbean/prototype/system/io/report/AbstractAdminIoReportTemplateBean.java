@@ -20,14 +20,9 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportCellComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportTemplateComparator;
-import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

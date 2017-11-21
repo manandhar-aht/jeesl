@@ -51,6 +51,7 @@ public class JeeslMsgBuilder
 	public static final String ioAttribute = "jeesl/msg/module/attribute.xml";
 	public static final String ioTemplate = "jeesl/msg/admin/system/io/template.xml";
 	public static final String ioReport = "jeesl/msg/admin/system/io/report.xml";
+	public static final String ioFr = "jeesl/msg/system/io/fr.xml";
 	public static final String ioRevision = "jeesl/msg/admin/system/revision.xml";
 	public static final String ioMail = "jeesl/msg/admin/system/io/mail.xml";
 	public static final String ioDb = "jeesl/msg/admin/system/io/db.xml";

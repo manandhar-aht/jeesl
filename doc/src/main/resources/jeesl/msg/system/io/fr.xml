@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslIoFileStorages">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Dateiablagen"/>
+	    		<s:lang key="en" translation="File Storages"/>
+	    		<s:lang key="fr" translation="File Storages"/>
+	    	</s:langs>
+    </s:translation>
+    	<s:translation key="jeeslIoFileStorage">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Dateiablage"/>
+	    		<s:lang key="en" translation="File Storage"/>
+	    		<s:lang key="fr" translation="File Storage"/>
+	    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslIoFileStorageEngine">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Engine"/>
+	    		<s:lang key="en" translation="Engine"/>
+	    		<s:lang key="fr" translation="Engine"/>
+	    	</s:langs>
+    </s:translation>
+</s:translations>

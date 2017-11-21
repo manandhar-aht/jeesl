@@ -1,6 +1,7 @@
 package org.jeesl.factory.builder.io;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
+import org.jeesl.factory.ejb.system.io.fr.EjbIoFrStorageFactory;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,5 +26,10 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 		super(cL,cD);
 		this.cStorage=cStorage;
 		this.cEngine=cEngine;
+	}
+	
+	public EjbIoFrStorageFactory<STORAGE> ejbStorage()
+	{
+		return new EjbIoFrStorageFactory<STORAGE>(cStorage);
 	}
 }

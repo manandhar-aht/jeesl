@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.admin;
 
 import java.io.Serializable;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.jsf.util.NullNumberBinder;
@@ -42,6 +43,9 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		this.cL = cL;
 		this.cD = cD;
 		
+		efLang = new EjbLangFactory<L>(cL);
+		efDescription = new EjbDescriptionFactory<D>(cD);
+		
 		debugOnInfo = false;
 		
 		hasDeveloperAction = true;
@@ -78,6 +82,12 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		uiShowDocumentation = true;
 		
 		nnb = new NullNumberBinder();
+	}
+	
+	protected void initJeeslAdmin(JeeslTranslationBean bTranslation, FacesMessageBean bMessage)
+	{
+		this.localeCodes=bTranslation.getLangKeys().toArray(new String[bTranslation.getLangKeys().size()]);
+		this.bMessage=bMessage;
 	}
 	
 	protected void initAdmin(String[] langs, final Class<L> cL, final Class<D> cD, FacesMessageBean bMessage)

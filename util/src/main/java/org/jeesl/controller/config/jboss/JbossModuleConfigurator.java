@@ -54,6 +54,11 @@ public class JbossModuleConfigurator
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgis:postgis-jdbc:1.5.3"),moduleMain);
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgresql:postgresql:42.0.0"),moduleMain);
 		}
+		if(version.equals("7.0"))
+		{
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgis:postgis-jdbc:1.5.3"),moduleMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgresql:postgresql:42.0.0"),moduleMain);
+		}
 	}
 	
 	public void mysql() throws IOException

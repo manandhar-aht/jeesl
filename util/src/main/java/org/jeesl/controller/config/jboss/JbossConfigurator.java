@@ -90,6 +90,9 @@ public class JbossConfigurator
 		client.execute(new OperationBuilder(request).build());
 	}
 	
+	
+	
+	
 	public void createMysqlDatasource(Configuration config, String context) throws IOException
 	{
 		String cfgDbDs = "db."+context+".ds";
@@ -120,7 +123,7 @@ public class JbossConfigurator
 	{		
 		ModelNode request = new ModelNode();
 		request.get(ClientConstants.OP).set(ClientConstants.ADD);
-		  request.get(ClientConstants.OP_ADDR).add("subsystem","datasources");
+		request.get(ClientConstants.OP_ADDR).add("subsystem","datasources");
 		  request.get(ClientConstants.OP_ADDR).add("data-source",name);
 		  request.get("jta").set(true);
 		  request.get("jndi-name").set("java:jboss/datasources/"+name);

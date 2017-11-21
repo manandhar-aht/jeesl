@@ -57,7 +57,7 @@ public class JbossModuleConfigurator
 		if(version.equals("7.0"))
 		{
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgis:postgis-jdbc:1.5.3"),moduleMain);
-			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgresql:postgresql:42.0.0"),moduleMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgresql:postgresql:42.1.4"),moduleMain);
 		}
 	}
 	

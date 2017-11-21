@@ -77,9 +77,7 @@ public class JbossConfigurator
 	}
 	
 	public void createMysqlDriver() throws IOException
-	{		
-//		ModelControllerClient client = ModelControllerClient.Factory.create(InetAddress.getByName("localhost"), 9990);
-		
+	{			
 		ModelNode request = new ModelNode();
 		request.get(ClientConstants.OP).set(ClientConstants.ADD);
 		request.get(ClientConstants.OP_ADDR).add("subsystem","datasources");
@@ -90,7 +88,17 @@ public class JbossConfigurator
 		client.execute(new OperationBuilder(request).build());
 	}
 	
-	
+	public void createPostgresDriver() throws IOException
+	{		
+		ModelNode request = new ModelNode();
+		request.get(ClientConstants.OP).set(ClientConstants.ADD);
+		request.get(ClientConstants.OP_ADDR).add("subsystem","datasources");
+		request.get(ClientConstants.OP_ADDR).add("jdbc-driver","postgres");
+		request.get("driver-name").set("postgres");
+		request.get("driver-module-name").set("org.postgresql");
+		request.get("driver-xa-datasource-class-name").set("org.postgresql.xa.PGXADataSource");
+		client.execute(new OperationBuilder(request).build());
+	}
 	
 	
 	public void createMysqlDatasource(Configuration config, String context) throws IOException
@@ -119,40 +127,106 @@ public class JbossConfigurator
 		}
 	}
 	
+	public void createPostgresDatasource(Configuration config, String context) throws IOException
+	{
+		String cfgDbDs = "db."+context+".ds";
+		String cfgDbHost = "db."+context+".host";
+		String cfgDbName = "db."+context+".db";
+		String cfgDbUser = "db."+context+".user";
+		String cfgDbPwd = "db."+context+".pwd";
+		
+		String pDbDs = config.getString(cfgDbDs);
+		String pDbHost = config.getString(cfgDbHost);
+		String pDbName = config.getString(cfgDbName);
+		String pDbUser = config.getString(cfgDbUser);
+		String pDbPwd = config.getString(cfgDbPwd);
+		
+		logger.info(cfgDbPwd+"\t"+pDbDs);
+		logger.info(cfgDbHost+"\t"+pDbHost);
+		logger.info(cfgDbName+"\t"+pDbName);
+		logger.info(cfgDbUser+"\t"+pDbUser);
+		logger.info(cfgDbPwd+"\t"+pDbPwd);
+		
+		if(!this.dsExists(cfgDbDs))
+		{
+			createPostgresDatasource(pDbDs,pDbHost,pDbName,null,pDbUser,pDbPwd);
+		}
+	}
+	
 	public void createMysqlDatasource(String name, String host, String db, String jdbcParamter, String username, String password) throws IOException
 	{		
 		ModelNode request = new ModelNode();
 		request.get(ClientConstants.OP).set(ClientConstants.ADD);
 		request.get(ClientConstants.OP_ADDR).add("subsystem","datasources");
-		  request.get(ClientConstants.OP_ADDR).add("data-source",name);
-		  request.get("jta").set(true);
-		  request.get("jndi-name").set("java:jboss/datasources/"+name);
-		  request.get("pool-name").set(name);
-		  request.get("use-java-context").set(true);
-		  request.get("use-ccm").set(true);
-
-		  StringBuilder sb = new StringBuilder();
-		  sb.append("jdbc:mysql://").append(host);
-		  sb.append("/").append(db);
-		  if(jdbcParamter!=null) {sb.append(jdbcParamter);}
-		  
-		  request.get("connection-url").set(sb.toString());
-		  request.get("driver-name").set("mysql");
-		  request.get("transaction-isolation").set("TRANSACTION_READ_COMMITTED");
+		request.get(ClientConstants.OP_ADDR).add("data-source",name);
+		
+		datasource(request,name);
+		connection(request,"mysql",host,db,jdbcParamter);
+		request.get("driver-name").set("mysql");
+		request.get("transaction-isolation").set("TRANSACTION_READ_COMMITTED");
 		 
+		pool(request);
+		security(request,username,password);
+		  
+		request.get("prepared-statements-cache-size").set(32);
+		request.get("share-prepared-statements").set(true);
+		  
+		client.execute(new OperationBuilder(request).build());
+	}
+	
+	public void createPostgresDatasource(String name, String host, String db, String jdbcParamter, String username, String password) throws IOException
+	{		
+		ModelNode request = new ModelNode();
+		request.get(ClientConstants.OP).set(ClientConstants.ADD);
+		request.get(ClientConstants.OP_ADDR).add("subsystem","datasources");
+		request.get(ClientConstants.OP_ADDR).add("data-source",name);
+		
+		datasource(request,name);
+		connection(request,"postgresql",host,db,jdbcParamter);
+		request.get("driver-name").set("postgres");
+		request.get("transaction-isolation").set("TRANSACTION_READ_COMMITTED");
+		 
+		pool(request);
+		security(request,username,password);
+		  
+		request.get("prepared-statements-cache-size").set(32);
+		request.get("share-prepared-statements").set(true);
+		  
+		client.execute(new OperationBuilder(request).build());
+	}
+	
+	private void datasource(ModelNode request, String name)
+	{
+		request.get("jta").set(true);
+		request.get("jndi-name").set("java:jboss/datasources/"+name);
+		request.get("pool-name").set(name);
+		request.get("use-java-context").set(true);
+		request.get("use-ccm").set(true);
+	}
+	
+	private void connection(ModelNode request, String type, String host, String db, String jdbcParamter)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("jdbc:").append(type).append("://");
+		sb.append(host);
+		sb.append("/").append(db);
+		if(jdbcParamter!=null) {sb.append(jdbcParamter);}
+		request.get("connection-url").set(sb.toString());
+	}
+	
+	private void pool(ModelNode request)
+	{
 		  request.get("min-pool-size").set(5);
 		  request.get("max-pool-size").set(20);
 		  request.get("pool-prefill").set(true);
 		  request.get("pool-use-strict-min").set(false);
 		  request.get("flush-strategy").set("FailingConnectionOnly");
-		  
-		  request.get("user-name").set(username);
-		  request.get("password").set(password);
-		  
-		  request.get("prepared-statements-cache-size").set(32);
-		  request.get("share-prepared-statements").set(true);
-		  
-		  client.execute(new OperationBuilder(request).build());
+	}
+	
+	private void security(ModelNode request, String username, String password)
+	{
+		request.get("user-name").set(username);
+		request.get("password").set(password);
 	}
 	
 	public void close()

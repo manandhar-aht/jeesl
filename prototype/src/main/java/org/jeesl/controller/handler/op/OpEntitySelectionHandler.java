@@ -18,7 +18,7 @@ public class OpEntitySelectionHandler <T extends EjbWithId> extends AbstractOpSe
     public OpEntitySelectionHandler(OpEntityBean bean) {this(bean,new ArrayList<T>());}
     public OpEntitySelectionHandler(OpEntityBean bean, List<T> opEntites) {super(bean,opEntites);}
     
-    public OpEntitySelectionHandler(OpEntityBean bean, List<T> opEntites,String xPath)
+    public OpEntitySelectionHandler(OpEntityBean bean, List<T> opEntites, String xPath)
     {
     		super(bean,opEntites);
     		showName=true;

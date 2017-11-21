@@ -14,6 +14,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="showComponent" required="false" default="true"/>
 		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
 		<composite:attribute name="withCategory" required="false" default="true"/>
 		<composite:attribute name="withVersion" required="false" default="true"/>
@@ -29,7 +30,7 @@
 	
 <composite:implementation>
 	<aup:grid id="grid">
-		<aht:row id="row1">
+		<aht:row id="row1" rendered="#{cc.attrs.showComponent}">
 			<aht:slot id="sTemplate" width="3">
 				<h:form id="fCategory" rendered="#{cc.attrs.withCategory}">
 					<p:dataTable var="category" value="#{cc.attrs.bean.categories}" rowKey="#{category.id}"

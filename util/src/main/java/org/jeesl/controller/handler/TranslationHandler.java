@@ -59,6 +59,7 @@ public class TranslationHandler<L extends UtilsLang,D extends UtilsDescription,
 			if(entities.containsKey(c.getSimpleName())) {entities.remove(c.getSimpleName());}
 			if(labels.containsKey(c.getSimpleName())) {labels.remove(c.getSimpleName());}
 			if(descriptions.containsKey(c.getSimpleName())) {descriptions.remove(c.getSimpleName());}
+			load(re);
 		}
 		catch (ClassNotFoundException e) {logger.warn("CNFE: "+re.getCode());}
 	}

@@ -15,7 +15,7 @@ public class JbossModuleConfigurator
 {
 	final static Logger logger = LoggerFactory.getLogger(JbossModuleConfigurator.class);
 	
-	private static final String srcBaseDir = "jeesl/listing/admin/installation/jboss/modules";
+	private static final String srcBaseDir = "jeesl/listing/installation/jboss/modules";
 	
 	public static enum Product {eap}
 	
@@ -128,6 +128,12 @@ public class JbossModuleConfigurator
 		{
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("com.vividsolutions:jts:1.12"),moduleMain);
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.hibernate:hibernate-spatial:4.0-M1"),moduleMain);
+		}
+		else if(version.equals("7.0"))
+		{
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("com.vividsolutions:jts:1.13"),moduleMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.geolatte:geolatte-geom:1.0.1"),moduleMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.hibernate:hibernate-spatial:5.0.9.Final"),moduleMain);
 		}
 	}
 	

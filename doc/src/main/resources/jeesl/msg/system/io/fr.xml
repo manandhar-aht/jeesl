@@ -21,4 +21,18 @@
 	    		<s:lang key="fr" translation="Engine"/>
 	    	</s:langs>
     </s:translation>
+	<s:translation key="jeeslIoFiles">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Dateien"/>
+	    		<s:lang key="en" translation="Files"/>
+	    		<s:lang key="fr" translation="Files"/>
+	    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslIoFileName">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Name"/>
+	    		<s:lang key="en" translation="Name"/>
+	    		<s:lang key="fr" translation="Name"/>
+	    	</s:langs>
+    </s:translation>
 </s:translations>

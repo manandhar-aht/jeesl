@@ -7,6 +7,8 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
 import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrStorageFactory;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -22,17 +24,19 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescription,
-										STORAGE extends JeeslFileStorage<L,D,ENGINE>,
-										ENGINE extends UtilsStatus<ENGINE,L,D>
-										>
+									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
+									ENGINE extends UtilsStatus<ENGINE,L,D>,
+									CONTAINER extends JeeslFileContainer<STORAGE,META>,
+									META extends JeeslFileMeta<CONTAINER,TYPE>,
+									TYPE extends UtilsStatus<TYPE,L,D>>
 						extends AbstractAdminBean<L,D>
 						implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractFrStorageBean.class);
 	
-	private JeeslIoFrFacade<L,D,STORAGE,ENGINE> fFr;
-	private final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE> fbFr;
+	private JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
+	private final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr;
 	
 	private final EjbIoFrStorageFactory<STORAGE> efStorage;
 	
@@ -41,14 +45,14 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	
 	private STORAGE storage; public STORAGE getStorage() {return storage;} public void setStorage(STORAGE storage) {this.storage = storage;}
 
-	protected AbstractFrStorageBean(final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE> fbFr)
+	protected AbstractFrStorageBean(final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr)
 	{
 		super(fbFr.getClassL(),fbFr.getClassD());
 		this.fbFr=fbFr;
 		efStorage = fbFr.ejbStorage();
 	}
 	
-	protected void initStorage(JeeslIoFrFacade<L,D,STORAGE,ENGINE> fFr, JeeslTranslationBean bTranslation, FacesMessageBean bMessage)
+	protected void initStorage(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslTranslationBean bTranslation, FacesMessageBean bMessage)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fFr=fFr;

@@ -71,4 +71,11 @@
     		<s:lang key="fr" translation="Position"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="jeeslSession">
+		<s:langs>
+    		<s:lang key="de" translation="Sitzung"/>
+    		<s:lang key="en" translation="Session"/>
+    		<s:lang key="fr" translation="Session"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

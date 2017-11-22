@@ -60,6 +60,7 @@
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteView()}" update=":#{cc.id}:sViews :#{cc.id}:sActions" rendered="#{cc.attrs.bean.hasDeveloperAction}" mayDisappear="true" tooltip="#{msg.ttDelete}"/>
 								<aht:icon type="jeeslClone" listener="#{cc.attrs.bean.cloneView()}" update=":#{cc.id}:sViews :#{cc.id}:sActions" tooltip="#{msg.jeeslTooltipClone}"/>
 							</f:facet>
+							<p:messages redisplay="false" severity="warn,error" showSummary="false" showDetail="true" closable="true"/>
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 								<p:outputLabel value="#{msg.aupSecurityCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.view.category}" effect="fade" autoWidth="false">

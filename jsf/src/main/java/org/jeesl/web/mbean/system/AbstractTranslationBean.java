@@ -89,6 +89,7 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 	    		langKeys.add(loc.getCode());
 	    		mapLocales.put(loc.getCode(),loc);
 	    	}
+		logger.info("Locales loaded "+locales.size());
 	}
 	
 	public void overrideLangKeys(String... key)

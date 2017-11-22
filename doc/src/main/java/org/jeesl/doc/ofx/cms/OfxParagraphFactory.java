@@ -5,6 +5,7 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
+import org.jsoup.Jsoup;
 import org.openfuxml.content.ofx.Paragraph;
 import org.openfuxml.factory.xml.ofx.content.structure.XmlParagraphFactory;
 import org.slf4j.Logger;
@@ -37,11 +38,18 @@ public class OfxParagraphFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	public Paragraph build(E element)
 	{
+		logger.info("Building Paragraph ");
+		
+		
 		Paragraph p = XmlParagraphFactory.build(localeCode);
 		
 		if(element.getContent().containsKey(localeCode))
 		{
-			p.getContent().add(element.getContent().get(localeCode).getLang());
+			String conent = element.getContent().get(localeCode).getLang();
+			logger.info("\t"+conent);
+			conent = Jsoup.parse(conent).text();
+			logger.info("\t"+conent);
+			p.getContent().add(conent);
 			
 		}
 		

@@ -116,7 +116,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected void reloadUser()
 	{		
-		user = fUtilsUser.load(cUser,user);
+		user = fUtilsUser.load(user);
 		mapRoles.clear();
 		if(debugOnInfo){logger.info("Settings roles: "+user.getRoles().size());}
 		for(R r : user.getRoles()){mapRoles.put(r.getId(), true);}

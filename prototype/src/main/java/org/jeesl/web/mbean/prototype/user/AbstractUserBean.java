@@ -6,7 +6,7 @@ import org.jeesl.api.bean.JeeslMenuBean;
 import org.jeesl.api.facade.core.JeeslUserFacade;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.StatusFactoryBuilder;
-import org.jeesl.factory.pojo.system.io.report.UtilsIdentityFactory;
+import org.jeesl.factory.pojo.system.JeeslIdentityFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
@@ -35,7 +35,7 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 	
 	private JeeslUserFacade<USER> fUser;
 	protected JeeslSecurityFacade<L,D,?,R,V,U,A,?,USER> fSecurity;
-	protected UtilsIdentityFactory<I,R,V,U,A,USER> fId;
+	protected JeeslIdentityFactory<I,R,V,U,A,USER> fId;
 	private JeeslMenuBean<L,D,R,V,U,A,?,USER,I> bMenu;
 	
 	protected USER user;

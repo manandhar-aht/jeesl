@@ -1,4 +1,4 @@
-package org.jeesl.factory.pojo.system.io.report;
+package org.jeesl.factory.pojo.system;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
@@ -11,7 +11,7 @@ import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UtilsIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
+public class JeeslIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 								   R extends JeeslSecurityRole<?,?,?,V,U,A,USER>,
 								   V extends JeeslSecurityView<?,?,?,R,U,A>,
 								   U extends JeeslSecurityUsecase<?,?,?,R,V,A>,
@@ -19,12 +19,12 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 								   USER extends JeeslUser<R>>
 {
 
-	final static Logger logger = LoggerFactory.getLogger(UtilsIdentityFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslIdentityFactory.class);
 
 	private final SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity;
 	final Class<I>  cIdentity;
 
-	public UtilsIdentityFactory(SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity,final Class<I> cIdentity)
+	public JeeslIdentityFactory(SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity,final Class<I> cIdentity)
 	{
 		this.fbSecurity=fbSecurity;
 		this.cIdentity=cIdentity;
@@ -36,9 +36,9 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 	   			   U extends JeeslSecurityUsecase<?,?,?,R,V,A>,
 	   			   A extends JeeslSecurityAction<?,?,R,V,U,?>,
 	   			USER extends JeeslUser<R>>
-	UtilsIdentityFactory<I,R,V,U,A,USER> factory(SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity,final Class<I> cIdentity)
+	JeeslIdentityFactory<I,R,V,U,A,USER> factory(SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity,final Class<I> cIdentity)
 	{
-		return new UtilsIdentityFactory<I,R,V,U,A,USER>(fbSecurity,cIdentity);
+		return new JeeslIdentityFactory<I,R,V,U,A,USER>(fbSecurity,cIdentity);
 	}
 
 	public I create(JeeslSecurityFacade<?,?,?,R,V,U,A,?,USER> fSecurity, USER user)

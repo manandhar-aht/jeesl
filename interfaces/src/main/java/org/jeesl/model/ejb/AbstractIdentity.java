@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.model.idm;
+package org.jeesl.model.ejb;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
-public class AbstractIdentityUser <L extends UtilsLang, D extends UtilsDescription,
+public class AbstractIdentity <L extends UtilsLang, D extends UtilsDescription,
 								   C extends JeeslSecurityCategory<L,D>,
 								   R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 								   V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -25,30 +25,17 @@ public class AbstractIdentityUser <L extends UtilsLang, D extends UtilsDescripti
 								   AT extends JeeslSecurityTemplate<L,D,C>,
 								   USER extends JeeslUser<R>>
 {
-	final static Logger logger = LoggerFactory.getLogger(AbstractIdentityUser.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractIdentity.class);
 	public static final long serialVersionUID=1;
 	
 	private String loginName;
+	public String getLoginName() {return loginName;}
+	public void setLoginName(String loginName) {this.loginName = loginName;}
 	
 	private String loginPassword;
-	public String getLoginName() {
-		return loginName;
-	}
-
-
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
-
-
-	public String getLoginPassword() {
-		return loginPassword;
-	}
-
-
-	public void setLoginPassword(String loginPassword) {
-		this.loginPassword = loginPassword;
-	}
+	public String getLoginPassword() {return loginPassword;}
+	public void setLoginPassword(String loginPassword) {this.loginPassword = loginPassword;}
+	
 	private Map<String,Boolean> mapUsecases,mapRoles,mapActions;
 	
 	private Map<String,Boolean> mapSystemViews; //Only systems views, domain views not included
@@ -58,7 +45,7 @@ public class AbstractIdentityUser <L extends UtilsLang, D extends UtilsDescripti
 	private boolean loggedIn; public boolean isLoggedIn() {return loggedIn;}  public void setLoggedIn(boolean loggedIn) {this.loggedIn = loggedIn;}
 
 	
-	public AbstractIdentityUser()
+	public AbstractIdentity()
 	{		
 		mapUsecases = new Hashtable<String,Boolean>();
 		mapViews = new Hashtable<String,Boolean>();

@@ -2,6 +2,13 @@
 <xsd:schema targetNamespace="http://www.jeesl.org/text"
 	xmlns:text="http://www.jeesl.org/text"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="remarks">
+		<xsd:complexType>
+			<xsd:sequence>
+                <xsd:element ref="text:remark" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
 	<xsd:element name="remark">
         <xsd:complexType>
             <xsd:simpleContent>

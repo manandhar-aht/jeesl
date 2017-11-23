@@ -38,6 +38,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Remarks }
+     * 
+     */
+    public Remarks createRemarks() {
+        return new Remarks();
+    }
+
+    /**
      * Create an instance of {@link Remark }
      * 
      */

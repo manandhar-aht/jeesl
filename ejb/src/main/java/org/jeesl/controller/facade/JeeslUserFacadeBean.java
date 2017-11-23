@@ -1,4 +1,4 @@
-package net.sf.ahtutils.controller.facade;
+package org.jeesl.controller.facade;
 
 import java.util.List;
 
@@ -10,30 +10,16 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.core.JeeslUserFacade;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 
-public class UtilsUserFacadeBean<L extends UtilsLang,
-									D extends UtilsDescription,
-									C extends JeeslSecurityCategory<L,D>,
-									R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-									V extends JeeslSecurityView<L,D,C,R,U,A>,
-									U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-									A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-									AT extends JeeslSecurityTemplate<L,D,C>,
-									USER extends JeeslUser<R>>
-							extends UtilsFacadeBean
-							implements JeeslUserFacade<L,D,C,R,V,U,A,AT,USER>
+public class JeeslUserFacadeBean<USER extends JeeslUser<?>>
+					extends UtilsFacadeBean
+					implements JeeslUserFacade<USER>
 {	
-	public UtilsUserFacadeBean(EntityManager em)
+	public JeeslUserFacadeBean(EntityManager em, SecurityFactoryBuilder<?,?,?,?,?,?,?,?,USER> fbSecurity)
 	{
 		super(em);
 	}

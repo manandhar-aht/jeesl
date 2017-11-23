@@ -47,7 +47,7 @@ public class AbstractRememberMeBean <L extends UtilsLang,D extends UtilsDescript
 		super(cL,cD);
 	}
 	
-	protected void readCookie(Class<REM> cRem, JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUser, String cookieName)
+	protected void readCookie(Class<REM> cRem, JeeslUserFacade<USER> fUser, String cookieName)
 	{
 		Map<String,Object> cookies = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();
 		if(cookies.containsKey(cookieName))

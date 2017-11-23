@@ -1,4 +1,4 @@
-package org.jeesl.controller.facade;
+package org.jeesl.controller.facade.system;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,15 +16,16 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
+import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
-import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
+import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +50,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslSecurityFacadeBean.class);
 	
-	public JeeslSecurityFacadeBean(EntityManager em)
+	public JeeslSecurityFacadeBean(EntityManager em, SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
 		super(em);
 	}

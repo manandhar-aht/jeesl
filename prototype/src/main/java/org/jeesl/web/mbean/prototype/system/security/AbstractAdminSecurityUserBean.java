@@ -45,7 +45,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityUserBean.class);
 
-	protected JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser;
+	protected JeeslUserFacade<USER> fUtilsUser;
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity;
 	
 	private final Class<R> cRole;
@@ -74,7 +74,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		this.cUser=cUser;
 	}
 	
-	public void initSuper(JeeslUserFacade<L,D,C,R,V,U,A,AT,USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage)
+	public void initSuper(JeeslUserFacade<USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage)
 	{
 		super.initAdmin(langs, cL, cD, bUtilsMessage);
 		this.fUtilsUser=fUtilsUser;

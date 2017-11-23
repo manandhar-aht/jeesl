@@ -13,7 +13,10 @@ public interface JeeslIdentity <R extends JeeslSecurityRole<?,?,?,V,U,A,USER>,
 {	
 	USER getUser();
 	void setUser(USER user);
-		
+	
+	String getLoginName();
+	String getLoginPassword();
+	
 	boolean isLoggedIn();
 	void setLoggedIn(boolean loggedIn);
 	

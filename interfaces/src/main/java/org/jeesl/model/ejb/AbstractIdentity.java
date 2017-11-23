@@ -3,37 +3,31 @@ package org.jeesl.model.ejb;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.user.JeeslIdentity;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-
-public class AbstractIdentity <L extends UtilsLang, D extends UtilsDescription,
-								   C extends JeeslSecurityCategory<L,D>,
-								   R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-								   V extends JeeslSecurityView<L,D,C,R,U,A>,
-								   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-								   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-								   AT extends JeeslSecurityTemplate<L,D,C>,
+public abstract class AbstractIdentity < R extends JeeslSecurityRole<?,?,?,V,U,A,USER>,
+								   V extends JeeslSecurityView<?,?,?,R,U,A>,
+								   U extends JeeslSecurityUsecase<?,?,?,R,V,A>,
+								   A extends JeeslSecurityAction<?,?,R,V,U,?>,
 								   USER extends JeeslUser<R>>
+						implements JeeslIdentity<R,V,U,A,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractIdentity.class);
 	public static final long serialVersionUID=1;
 	
 	private String loginName;
-	public String getLoginName() {return loginName;}
+	@Override public String getLoginName() {return loginName;}
 	public void setLoginName(String loginName) {this.loginName = loginName;}
 	
 	private String loginPassword;
-	public String getLoginPassword() {return loginPassword;}
+	@Override public String getLoginPassword() {return loginPassword;}
 	public void setLoginPassword(String loginPassword) {this.loginPassword = loginPassword;}
 	
 	private Map<String,Boolean> mapUsecases,mapRoles,mapActions;

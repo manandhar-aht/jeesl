@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.user;
 
 import java.io.Serializable;
 
+import org.jeesl.api.bean.JeeslMenuBean;
 import org.jeesl.api.facade.core.JeeslUserFacade;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.StatusFactoryBuilder;
@@ -15,6 +16,7 @@ import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.controller.factory.utils.security.UtilsIdentityFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
@@ -23,7 +25,8 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 											V extends JeeslSecurityView<L,D,?,R,U,A>,
 											U extends JeeslSecurityUsecase<L,D,?,R,V,A>,
 											A extends JeeslSecurityAction<L,D,R,V,U,?>,
-											USER extends JeeslUser<R>>
+											USER extends JeeslUser<R>,
+											I extends JeeslIdentity<R,V,U,A,USER>>
 				extends AbstractAdminBean<L,D>
 				implements Serializable
 {
@@ -32,9 +35,11 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 	
 	private JeeslUserFacade<USER> fUser;
 	protected JeeslSecurityFacade<L,D,?,R,V,U,A,?,USER> fSecurity;
+	protected UtilsIdentityFactory<I,R,V,U,A,USER> fId;
+	private JeeslMenuBean<L,D,R,V,U,A,?,USER,I> bMenu;
 	
 	protected USER user;
-	private JeeslIdentity<R,V,U,A,USER> identity2;
+	protected JeeslIdentity<R,V,U,A,USER> identity;
 	
 	protected String ipAddress;
 	protected String localeCode;
@@ -48,5 +53,12 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 	{
 		this.fUser=fUser;
 		this.fSecurity=fSecurity;
+	}
+	
+	protected void postConstruct(JeeslUserFacade<USER> fUser, JeeslSecurityFacade<L,D,?,R,V,U,A,?,USER> fSecurity, JeeslMenuBean<L,D,R,V,U,A,?,USER,I> bMenu)
+	{
+		this.fUser=fUser;
+		this.fSecurity=fSecurity;
+		this.bMenu=bMenu;
 	}
 }

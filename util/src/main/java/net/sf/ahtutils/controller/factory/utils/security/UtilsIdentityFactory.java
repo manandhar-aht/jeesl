@@ -2,83 +2,46 @@ package net.sf.ahtutils.controller.factory.utils.security;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslIdentity;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-
 public class UtilsIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
-								   L extends UtilsLang,  D extends UtilsDescription,
-								   C extends JeeslSecurityCategory<L,D>,
-								   R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-								   V extends JeeslSecurityView<L,D,C,R,U,A>,
-								   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-								   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-								   AT extends JeeslSecurityTemplate<L,D,C>,
+								   R extends JeeslSecurityRole<?,?,?,V,U,A,USER>,
+								   V extends JeeslSecurityView<?,?,?,R,U,A>,
+								   U extends JeeslSecurityUsecase<?,?,?,R,V,A>,
+								   A extends JeeslSecurityAction<?,?,R,V,U,?>,
 								   USER extends JeeslUser<R>>
 {
 
 	final static Logger logger = LoggerFactory.getLogger(UtilsIdentityFactory.class);
 
+	private final SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity;
 	final Class<I>  cIdentity;
-	final Class<L>  cL;
-	final Class<D>  cD;
-	final Class<C>  clCategory;
-	final Class<R>  clRole;
-	final Class<V>  clView;
 
-	final Class<USER>  cUser;
-
-	public UtilsIdentityFactory(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity,final Class<I> cIdentity,
-								final Class<L> cL, final Class<D> cD,
-								final Class<C> clCategory,
-								final Class<R> clRole,
-								final Class<V> clView,
-								final Class<U> clUsecase,
-								final Class<A> clAction,
-								final Class<USER> cUser)
+	public UtilsIdentityFactory(SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity,final Class<I> cIdentity)
 	{
+		this.fbSecurity=fbSecurity;
 		this.cIdentity=cIdentity;
-		this.cL=cL;
-		this.cD=cD;
-		this.clCategory=clCategory;
-		this.clRole=clRole;
-		this.clView=clView;
-		this.cUser = cUser;
 	} 
 
 	public static <I extends JeeslIdentity<R,V,U,A,USER>,
-	   			   L extends UtilsLang, D extends UtilsDescription,
-	   			   C extends JeeslSecurityCategory<L,D>,
-	   			   R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-	   			   V extends JeeslSecurityView<L,D,C,R,U,A>,
-	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-	   			   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-	   			AT extends JeeslSecurityTemplate<L,D,C>,
+	   			   R extends JeeslSecurityRole<?,?,?,V,U,A,USER>,
+	   			   V extends JeeslSecurityView<?,?,?,R,U,A>,
+	   			   U extends JeeslSecurityUsecase<?,?,?,R,V,A>,
+	   			   A extends JeeslSecurityAction<?,?,R,V,U,?>,
 	   			USER extends JeeslUser<R>>
-	UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER> factory(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity,final Class<I> clIdentity,
-													 final Class<L> clLang,
-													 final Class<D> clDescription,
-													 final Class<C> clCategory,
-													 final Class<R> clRole,
-													 final Class<V> clView,
-													 final Class<U> clUsecase,
-													 final Class<A> clAction,
-													 final Class<USER> clUser)
+	UtilsIdentityFactory<I,R,V,U,A,USER> factory(SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity,final Class<I> cIdentity)
 	{
-		return new UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER>(fbSecurity,clIdentity,clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
+		return new UtilsIdentityFactory<I,R,V,U,A,USER>(fbSecurity,cIdentity);
 	}
 
-	public I create(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, USER user)
+	public I create(JeeslSecurityFacade<?,?,?,R,V,U,A,?,USER> fSecurity, USER user)
 	{		
 		I identity = null;
 		
@@ -87,14 +50,14 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 			identity = cIdentity.newInstance();
 			identity.setUser(user);
 			
-			for(A a : fSecurity.allActionsForUser(cUser,user)){identity.allowAction(a);}
+			for(A a : fSecurity.allActionsForUser(fbSecurity.getClassUser(),user)){identity.allowAction(a);}
 			
 			logger.info("Roles");
-			for(R r : fSecurity.allRolesForUser(cUser,user))
+			for(R r : fSecurity.allRolesForUser(fbSecurity.getClassUser(),user))
 			{
 				identity.allowRole(r);
 			}
-			for(V v : fSecurity.allViewsForUser(cUser,user)){identity.allowView(v);}
+			for(V v : fSecurity.allViewsForUser(fbSecurity.getClassUser(),user)){identity.allowView(v);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

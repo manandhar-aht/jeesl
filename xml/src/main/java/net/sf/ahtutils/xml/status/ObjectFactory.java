@@ -454,6 +454,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Sector }
+     * 
+     */
+    public Sector createSector() {
+        return new Sector();
+    }
+
+    /**
+     * Create an instance of {@link Pillar }
+     * 
+     */
+    public Pillar createPillar() {
+        return new Pillar();
+    }
+
+    /**
      * Create an instance of {@link Family }
      * 
      */

@@ -5,6 +5,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:mc="http://www.metachart.org/chart"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
@@ -21,14 +22,19 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sTransactions" width="4">
+				<aht:slot id="sTransactions" width="5">
 					<h:form id="fTransactions">
-						<p:dataTable var="t" value="#{cc.attrs.bean.transactions}" 
+						<p:dataTable id="dtTransactions" var="t" value="#{cc.attrs.bean.transactions}" 
 								selection="#{cc.attrs.bean.transaction}" selectionMode="single" rowKey="#{t.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslTsTransactions}"/>
+								<p:commandButton id="toggler" type="button" value="Select information" style="float:right" icon="ui-icon-calculator" />
+								<p:columnToggler datasource="dtTransactions" trigger="toggler" />
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sTransaction" listener="#{cc.attrs.bean.selectTransaction()}"/>
+							<p:column rendered="true" headerText="#{msg.jeeslTsReference}">  
+								<h:outputText value="#{t.reference}"/>
+				            </p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslTsTransactionUser}">  
 								<h:outputText value="#{t.user.firstName} #{t.user.lastName}"/>
 				            </p:column>
@@ -38,7 +44,7 @@
 				       	</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sTransaction" width="8">
+				<aht:slot id="sTransaction" width="7">
 					<h:form id="fTransaction" rendered="#{not empty cc.attrs.bean.transaction}">
 						<p:panel header="#{msg.jeeslTsTransaction}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">

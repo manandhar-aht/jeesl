@@ -1,5 +1,6 @@
 package org.jeesl.interfaces.model.module.ts;
 
+import java.util.Date;
 import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -33,6 +34,9 @@ public interface JeeslTsTransaction <L extends UtilsLang,
 	USER getUser();
 	void setUser(USER user);
 	
+	Date getRecord();
+	void setRecord(java.util.Date record);
+	
 	String getRemark();
 	void setRemark(String remark);
 	
@@ -41,4 +45,7 @@ public interface JeeslTsTransaction <L extends UtilsLang,
 	
 	List<DATA> getDatas();
 	void setDatas(List<DATA> datas);
+	
+	String getReference();
+	void setReference(String reference);
 }

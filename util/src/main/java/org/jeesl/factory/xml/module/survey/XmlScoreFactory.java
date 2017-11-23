@@ -62,10 +62,9 @@ public class XmlScoreFactory<L extends UtilsLang,D extends UtilsDescription,
 	{
 		Score xml = build();
 		
-		if(q.isSetMax()){xml.setMax(ejb.getMaxScore());}
+		if(q.isSetMax() && ejb.getMaxScore()!=null){xml.setMax(ejb.getMaxScore());}
 		
 		return xml;
-		
 	}
 	
 	public static Score build()

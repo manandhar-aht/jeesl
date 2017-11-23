@@ -157,7 +157,12 @@
 					    </p:wizard>
 					    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 					    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-						<h:graphicImage library="aupGfx" name="jeesl_ajax_spinner.svg" />
+							<!--
+							<p:progressBar widgetVar="pbAjax" ajax="true" value="#{cc.attrs.bean.progress}" labelTemplate="{value}%" styleClass="animated" global="false">
+								<p:ajax event="complete" listener="#{progressBarView.onComplete}" update="@this" oncomplete="startButton2.enable()"/>
+							</p:progressBar>
+							-->
+							<h:graphicImage library="aupGfx" name="jeesl_ajax_spinner.svg" />
 					    </p:dialog>
 					</h:form>
 				</aht:slot>

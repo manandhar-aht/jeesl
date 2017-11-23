@@ -164,7 +164,7 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	//AutoComplete User
 	public List<USER> autoComplete(String query)
 	{
-		List<USER> users = fUser.likeNameFirstLast(cUser,query);
+		List<USER> users = fUser.likeNameFirstLast(query);
 		logger.info(AbstractLogMessage.autoComplete(cUser,query,users.size()));
 		return users;
 	}

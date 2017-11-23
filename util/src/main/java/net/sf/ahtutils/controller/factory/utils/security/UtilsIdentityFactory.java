@@ -1,6 +1,7 @@
 package net.sf.ahtutils.controller.factory.utils.security;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslIdentity;
@@ -34,11 +35,10 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 	final Class<C>  clCategory;
 	final Class<R>  clRole;
 	final Class<V>  clView;
-	final Class<U> 	clUsecase;
-	final Class<A> 	clAction;
+
 	final Class<USER>  cUser;
 
-	public UtilsIdentityFactory(final Class<I> cIdentity,
+	public UtilsIdentityFactory(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity,final Class<I> cIdentity,
 								final Class<L> cL, final Class<D> cD,
 								final Class<C> clCategory,
 								final Class<R> clRole,
@@ -53,8 +53,6 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 		this.clCategory=clCategory;
 		this.clRole=clRole;
 		this.clView=clView;
-		this.clUsecase=clUsecase;
-		this.clAction=clAction;
 		this.cUser = cUser;
 	} 
 
@@ -67,7 +65,7 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 	   			   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 	   			AT extends JeeslSecurityTemplate<L,D,C>,
 	   			USER extends JeeslUser<R>>
-	UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER> factory(final Class<I> clIdentity,
+	UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER> factory(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity,final Class<I> clIdentity,
 													 final Class<L> clLang,
 													 final Class<D> clDescription,
 													 final Class<C> clCategory,
@@ -77,7 +75,7 @@ public class UtilsIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 													 final Class<A> clAction,
 													 final Class<USER> clUser)
 	{
-		return new UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER>(clIdentity,clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
+		return new UtilsIdentityFactory<I,L,D,C,R,V,U,A,AT,USER>(fbSecurity,clIdentity,clLang,clDescription,clCategory,clRole,clView,clUsecase,clAction,clUser);
 	}
 
 	public I create(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, USER user)

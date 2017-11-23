@@ -19,24 +19,27 @@ public class JeeslUserFacadeBean<USER extends JeeslUser<?>>
 					extends UtilsFacadeBean
 					implements JeeslUserFacade<USER>
 {	
+	private final SecurityFactoryBuilder<?,?,?,?,?,?,?,?,USER> fbSecurity;
+	
 	public JeeslUserFacadeBean(EntityManager em, SecurityFactoryBuilder<?,?,?,?,?,?,?,?,USER> fbSecurity)
 	{
 		super(em);
+		this.fbSecurity=fbSecurity;
 	}
 	
-	@Override public USER load(Class<USER> cUser, USER user)
+	@Override public USER load(USER user)
 	{
-		user = em.find(cUser, user.getId());
+		user = em.find(fbSecurity.getClassUser(), user.getId());
 		user.getRoles().size();
 		return user;
 	}
 
-	@Override public  List<USER> likeNameFirstLast(Class<USER> cUser, String query)
+	@Override public  List<USER> likeNameFirstLast(String query)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-	    CriteriaQuery<USER> criteriaQuery = cB.createQuery(cUser);
+	    CriteriaQuery<USER> criteriaQuery = cB.createQuery(fbSecurity.getClassUser());
 	    
-	    Root<USER> fromType = criteriaQuery.from(cUser);
+	    Root<USER> fromType = criteriaQuery.from(fbSecurity.getClassUser());
 	    
 	    Expression<String> literal = cB.upper(cB.literal("%"+query+"%"));
 	    Expression<String> eFirst = fromType.get("firstName");

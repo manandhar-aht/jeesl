@@ -8,6 +8,6 @@ import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 
 public interface JeeslUserFacade <USER extends JeeslUser<?>> extends UtilsFacade
 {	
-	USER load(Class<USER> cUser, USER user);
-	List<USER> likeNameFirstLast(Class<USER> cUser, String query);
+	USER load(USER user);
+	List<USER> likeNameFirstLast(String query);
 }

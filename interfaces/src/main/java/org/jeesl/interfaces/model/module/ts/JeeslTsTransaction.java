@@ -41,4 +41,7 @@ public interface JeeslTsTransaction <L extends UtilsLang,
 	
 	List<DATA> getDatas();
 	void setDatas(List<DATA> datas);
+	
+	String getReference();
+	void setReference(String reference);
 }

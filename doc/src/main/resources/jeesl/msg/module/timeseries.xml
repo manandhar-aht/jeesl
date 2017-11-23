@@ -162,11 +162,25 @@
     		<s:lang key="fr" translation="Date / Time"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="jeeslTsSource">
+	<s:translation key="jeeslTsTransactionRecord">
     	<s:langs>
-    		<s:lang key="de" translation="Datenquelle"/>
-    		<s:lang key="en" translation="Data Source"/>
-    		<s:lang key="fr" translation="Data Source"/>
+    		<s:lang key="de" translation="Datum / Uhrzeit"/>
+    		<s:lang key="en" translation="Date / Time"/>
+    		<s:lang key="fr" translation="Date / Time"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslTsReference">
+    	<s:langs>
+    		<s:lang key="de" translation="Referenz"/>
+    		<s:lang key="en" translation="Reference"/>
+    		<s:lang key="fr" translation="Reference"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslTsImportedBy">
+    	<s:langs>
+    		<s:lang key="de" translation="Importiert von"/>
+    		<s:lang key="en" translation="Imported by"/>
+    		<s:lang key="fr" translation="Imported by"/>
     	</s:langs>
     </s:translation>
 </s:translations>

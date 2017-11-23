@@ -33,10 +33,7 @@ public interface JeeslTsTransaction <L extends UtilsLang,
 	
 	USER getUser();
 	void setUser(USER user);
-	
-	Date getRecord();
-	void setRecord(java.util.Date record);
-	
+
 	String getRemark();
 	void setRemark(String remark);
 	

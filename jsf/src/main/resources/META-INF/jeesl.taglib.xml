@@ -7,6 +7,19 @@
 	<composite-library-name>jeesl</composite-library-name>
 	
 	<tag>
+        <tag-name>grid</tag-name>
+        <component>
+            <component-type>net.sf.ahtutils.jsf.components.layout.Grid</component-type>
+        </component>
+    </tag>
+    	<tag>
+        <tag-name>row</tag-name>
+        <component>
+            <component-type>net.sf.ahtutils.jsf.components.layout.Row</component-type>
+        </component>
+    </tag>
+	
+	<tag>
         <tag-name>outputXpath</tag-name>
         <component>
             <component-type>org.jeesl.jsf.components.xpath.OutputXpath</component-type>
@@ -18,7 +31,7 @@
             <component-type>org.jeesl.jsf.components.TrafficLight</component-type>
         </component>
     </tag>
-		<tag>
+	<tag>
         <tag-name>trafficLightXpath</tag-name>
         <component>
             <component-type>org.jeesl.jsf.components.xpath.TrafficLightXpath</component-type>

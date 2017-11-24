@@ -18,16 +18,17 @@
             <component-type>net.sf.ahtutils.jsf.components.LogThis</component-type>
         </component>
     </tag>
-    <tag>
-        <tag-name>row</tag-name>
-        <component>
-            <component-type>net.sf.ahtutils.jsf.components.layout.Row</component-type>
-        </component>
-    </tag>
+
     <tag>
         <tag-name>grid</tag-name>
         <component>
             <component-type>net.sf.ahtutils.jsf.components.layout.Grid</component-type>
+        </component>
+    </tag>
+	<tag>
+        <tag-name>row</tag-name>
+        <component>
+            <component-type>net.sf.ahtutils.jsf.components.layout.Row</component-type>
         </component>
     </tag>
     <tag>

@@ -6,4 +6,11 @@
 	<namespace>http://jsf.jeesl.org/prototype</namespace>
 	<composite-library-name>jp</composite-library-name>   
 
+	<tag>
+        <tag-name>grid</tag-name>
+        <component>
+            <component-type>net.sf.ahtutils.prototype.web.component.Grid</component-type>
+        </component>
+    </tag>
+
 </facelet-taglib> 

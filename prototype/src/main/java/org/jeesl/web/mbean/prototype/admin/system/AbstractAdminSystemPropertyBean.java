@@ -21,6 +21,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminSystemPropertyBean <L extends UtilsLang, D extends UtilsDescription,
 												C extends UtilsStatus<C,L,D>,
@@ -39,8 +40,8 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang, D extends Uti
 	
 	protected List<P> properties; public List<P> getProperties() {return properties;}
 	
-	protected P property;public P getProperty() {return property;}public void setProperty(P property) {this.property = property;}
-	
+	protected P prop; public P getProp() {return prop;} public void setProp(P prop) {this.prop = prop;}
+
 	public AbstractAdminSystemPropertyBean(final PropertyFactoryBuilder<L,D,C,P> fbProperty)
 	{
 		super(fbProperty.getClassL(),fbProperty.getClassD());
@@ -55,10 +56,7 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang, D extends Uti
 
 		sbhCategory.setList(fProperty.allOrderedPositionVisible(fbProperty.getClassCategory()));
 		sbhCategory.selectAll();
-		if(debugOnInfo)
-		{
-			logger.info(SbMultiHandler.class.getSimpleName()+": "+fbProperty.getClassCategory().getSimpleName()+" "+sbhCategory.getSelected().size()+"/"+sbhCategory.getList().size());
-		}
+		if(debugOnInfo){logger.info(SbMultiHandler.class.getSimpleName()+": "+fbProperty.getClassCategory().getSimpleName()+" "+sbhCategory.getSelected().size()+"/"+sbhCategory.getList().size());}
 		refreshList();
 	}
 	
@@ -71,21 +69,20 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang, D extends Uti
 	@Override
 	public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
-		if(debugOnInfo)
-		{
-			logger.info(SbMultiHandler.class.getSimpleName()+" toggled, but NYI");
-		}
+		if(debugOnInfo){logger.info(SbMultiHandler.class.getSimpleName()+" toggled, but NYI");}
 	}
 	
 	public void selectProperty() throws UtilsNotFoundException
 	{
-		property = fProperty.find(fbProperty.getClassProperty(), property);
+		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(prop));}
+		prop = fProperty.find(fbProperty.getClassProperty(), prop);
 	}
 	
-	public void save() throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	public void saveProperty() throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(property.getCategory()!=null){property.setCategory(fProperty.find(fbProperty.getClassCategory(),property.getCategory()));}
-		property = fProperty.save(property);
+		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(prop));}
+		if(prop.getCategory()!=null){prop.setCategory(fProperty.find(fbProperty.getClassCategory(),prop.getCategory()));}
+		prop = fProperty.save(prop);
 		refreshList();
 	}
 }

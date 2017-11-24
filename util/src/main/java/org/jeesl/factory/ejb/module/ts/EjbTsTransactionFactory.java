@@ -57,4 +57,20 @@ public class EjbTsTransactionFactory<L extends UtilsLang, D extends UtilsDescrip
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		return ejb;
 	}
+	
+	public TRANSACTION build(USER user, SOURCE source, String reference)
+	{
+		TRANSACTION ejb = null;
+		try
+		{
+			ejb = cTransaction.newInstance();
+			ejb.setUser(user);
+			ejb.setRecord(new Date());
+			ejb.setSource(source);
+			ejb.setReference(reference);
+		}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		return ejb;
+	}
 }

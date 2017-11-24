@@ -1,6 +1,9 @@
 package org.jeesl.web.mbean.prototype.user;
 
 import java.io.Serializable;
+import java.util.Locale;
+
+import javax.faces.context.FacesContext;
 
 import org.jeesl.api.bean.JeeslMenuBean;
 import org.jeesl.api.facade.core.JeeslUserFacade;
@@ -17,6 +20,8 @@ import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
@@ -60,5 +65,18 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 		this.fUser=fUser;
 		this.fSecurity=fSecurity;
 		this.bMenu=bMenu;
+	}
+	
+	public final void setLocale(String localeCode)// throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		this.localeCode=localeCode;
+		
+		Locale locale = null;
+		if(localeCode.equals("de")){locale = Locale.GERMAN;}
+		else if(localeCode.equals("en")){locale = Locale.ENGLISH;}
+		else if(localeCode.equals("fr")){locale = Locale.FRENCH;}
+		else if(localeCode.equals("kin")){locale = new Locale.Builder().setLanguage("rw").setRegion("RW").build();}
+		
+		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
 	}
 }

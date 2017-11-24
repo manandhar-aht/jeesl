@@ -30,10 +30,12 @@ public class JeeslMsgBuilder
 	public static final String generic = "jeesl/msg/generic.xml";
 	public static final String report = "jeesl/msg/report.xml";
 	public static final String query = "aht-utils/msg/query.xml";
+	public static final String tooltip = "jeesl/msg/tooltip.xml";
 	public static final String entities = "jeesl/msg/admin/entities.xml";
 	public static final String entitiesPrefix = "jeesl/msg/admin/entitiesPrefix.xml";
 	public static final String srcProject = "jeesl/msg/domain/project/project.xml";
 	public static final String srcDate = "jeesl/msg/date.xml";
+	public static final String facesMessages = "jeesl/msg/facesMessages.xml";
 	
 	//Finance
 	public static final String srcFinance = "jeesl/msg/finance/finance.xml";
@@ -43,8 +45,8 @@ public class JeeslMsgBuilder
 	//Modules
 	public static final String mTimeseries = "jeesl/msg/module/timeseries.xml";
 	public static final String mSurvey = "jeesl/msg/module/survey.xml";
-	public static final String monitoring = "aht-utils/msg/module/monitoring.xml";
-	public static final String calendar = "jeesl/msg/module/calendar.xml";
+	public static final String mMonitoring = "aht-utils/msg/module/monitoring.xml";
+	public static final String mCalendar = "jeesl/msg/module/calendar.xml";
 	
 	//IO
 	public static final String io = "jeesl/msg/module/io.xml";
@@ -55,39 +57,28 @@ public class JeeslMsgBuilder
 	public static final String ioRevision = "jeesl/msg/admin/system/revision.xml";
 	public static final String ioMail = "jeesl/msg/admin/system/io/mail.xml";
 	public static final String ioDb = "jeesl/msg/admin/system/io/db.xml";
+	public static final String ioDbStatistic = "jeesl/msg/system/io/db.xml";
 	public static final String ioCms = "jeesl/msg/module/cms.xml";
 	
 	//System
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
 	public static final String systemJob = "jeesl/msg/admin/system/job.xml";
-	
 	public static final String systemProperty = "jeesl/msg/admin/system/property.xml";
-	
 	public static final String systemFeature = "jeesl/msg/admin/system/feature.xml";
+	public static final String systemLights = "jeesl/msg/system/lights.xml";
+	public static final String systemConstraint = "jeesl/msg/system/constraint.xml";
 	
-	public static final String tooltip = "jeesl/msg/tooltip.xml";
-	
-	
-	//Util
-	public static final String srcAdminStatus = "jeesl/msg/util/status.xml";
-
 	public static final String srcWizard = "jeesl/msg/wizard.xml";
 	public static final String srcAdminAuditLog = "msg.aht-utils/admin/system/auditLog.xml";
 	public static final String srcAdminSync = "msg.aht-utils/admin/system/sync.xml";
 	
-	//System
-	public static final String systemLights = "jeesl/msg/system/lights.xml";
-	public static final String systemConstraint = "jeesl/msg/system/constraint.xml";
-	public static final String srcAdminSystemDbStatistic = "jeesl/msg/system/io/db.xml";
+	//Util
+	public static final String adminStatus = "jeesl/msg/util/status.xml";
+	public static final String adminOptionTables = "jeesl/msg/admin/system/options.xml";
+	public static final String adminSecurity = "jeesl/msg/module/security.xml";
+	public static final String adminUser = "aht-utils/msg/admin/user.xml";
 	
-	public static final String msgAdminSystemOptionTables = "jeesl/msg/admin/system/options.xml";
-	public static final String srcAdminSecurity = "jeesl/msg/module/security.xml";
-	public static final String srcAdminUser = "aht-utils/msg/admin/user.xml";
-	
-	
-	public static final String srcConstraint = "jeesl/msg/system/constraint.xml";
-	public static final String facesMessages = "jeesl/msg/facesMessages.xml";
-	
+	//Dev
 	public static final String devQa = "jeesl/msg/development/qa.xml";
 	
 	final static Logger logger = LoggerFactory.getLogger(JeeslMsgBuilder.class);

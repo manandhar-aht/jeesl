@@ -18,4 +18,6 @@ public interface JeeslPivotAggregator
     
     Double[] values(EjbWithId... selectors);
     Double[] values(int size, EjbWithId... selectors);
+    
+    int size();
 }

@@ -151,4 +151,6 @@ public class LoopingPivotAggregator implements JeeslPivotAggregator
 	    	if(!oneMatches){return null;}
 	    	return ArrayUtils.toObject(values);
     }
+	
+    @Override public int size() {return list.size();}
 }

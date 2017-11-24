@@ -169,12 +169,19 @@
     		<s:lang key="fr" translation="Date / Time"/>
     	</s:langs>
     </s:translation>
+    	<s:translation key="jeeslTsSource">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Quelle"/>
+	    		<s:lang key="en" translation="Source"/>
+	    		<s:lang key="fr" translation="Source"/>
+	    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslTsReference">
-    	<s:langs>
-    		<s:lang key="de" translation="Referenz"/>
-    		<s:lang key="en" translation="Reference"/>
-    		<s:lang key="fr" translation="Reference"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Referenz"/>
+	    		<s:lang key="en" translation="Reference"/>
+	    		<s:lang key="fr" translation="Reference"/>
+	    	</s:langs>
     </s:translation>
 	<s:translation key="jeeslTsImportedBy">
     	<s:langs>

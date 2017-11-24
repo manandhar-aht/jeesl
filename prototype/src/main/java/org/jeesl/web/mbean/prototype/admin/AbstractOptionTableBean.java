@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.factory.builder.system.StatusFactoryBuilder;
 import org.jeesl.factory.builder.system.SvgFactoryBuilder;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
@@ -46,7 +47,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.exlp.util.io.StringUtil;
 
-public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescription,
+public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 										G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
 										F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
 			extends AbstractAdminBean<L,D>
@@ -56,6 +57,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	private static final long serialVersionUID = 1L;
 
 	protected UtilsFacade fUtils;
+	private final StatusFactoryBuilder<L,D,LOC> fbStatus;
+	private final SvgFactoryBuilder<L,D,G,GT,F,FS> fbSvg;
 	
 	protected boolean allowSvg; public boolean isAllowSvg() {return allowSvg;}
 	
@@ -82,31 +85,21 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	private List<F> figures; public List<F> getFigures() {return figures;}
 	private F figure; public F getFigure() {return figure;} public void setFigure(F figure) {this.figure = figure;}
 
-	protected final Class<?> cStatus;
-	
-	private final Class<G> cG;
-	private final Class<GT> cGT;
-	private final Class<F> cF;
-	private final Class<FS> cFS;
 	
 	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
 	
 	protected final EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic;
 	private final EjbGraphicFigureFactory<L,D,G,GT,F,FS> efFigure;
 	
-	public AbstractOptionTableBean(final Class<L> cL, final Class<D> cD, Class<G> cG, Class<GT> cGT, final Class<F> cF, final Class<FS> cFS, final Class<?> cStatus)
+	public AbstractOptionTableBean(StatusFactoryBuilder<L,D,LOC> fbStatus, SvgFactoryBuilder<L,D,G,GT,F,FS> fbSvg)
 	{
-		super(cL,cD);
-		this.cG=cG;
-		this.cGT=cGT;
-		this.cF=cF;
-		this.cFS=cFS;
-		this.cStatus=cStatus;
+		super(fbStatus.getClassL(),fbStatus.getClassD());
+		this.fbStatus=fbStatus;
+		this.fbSvg=fbSvg;
 		
-		SvgFactoryBuilder<L,D,G,GT,F,FS> ffSvg = SvgFactoryBuilder.factory(cL,cD,cG,cF,cFS);
-		efGraphic = ffSvg.efGraphic();
+		efGraphic = fbSvg.efGraphic();
 		
-		efFigure = new EjbGraphicFigureFactory<L,D,G,GT,F,FS>(cF);
+		efFigure = fbSvg.efFigure();
 		
 		index=1;
 		
@@ -126,8 +119,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fUtils=fUtils;
 			
-		graphicTypes = fUtils.allOrderedPositionVisible(cGT);
-		graphicStyles = fUtils.allOrderedPositionVisible(cFS);
+		graphicTypes = fUtils.allOrderedPositionVisible(fbSvg.getClassGraphicType());
+		graphicStyles = fUtils.allOrderedPositionVisible(fbSvg.getClassFigureStyle());
 	}
 	
 	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
@@ -177,7 +170,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		
 		if(((EjbWithImageAlt)category).getImageAlt()!=null)
 		{
-            clParent = Class.forName(((EjbWithImageAlt)category).getImageAlt()).asSubclass(cStatus);
+            clParent = Class.forName(((EjbWithImageAlt)category).getImageAlt()).asSubclass(fbStatus.getClassStatus());
             parents = fUtils.all(clParent);
             logger.info(cl.getSimpleName()+" "+parents.size());
 		}
@@ -211,8 +204,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		
 		if(supportsGraphic)
 		{
-			GT type = fUtils.fByCode(cGT, JeeslGraphicType.Code.symbol.toString());
-			FS style = fUtils.fByCode(cFS, JeeslGraphicStyle.Code.circle.toString());
+			GT type = fUtils.fByCode(fbSvg.getClassGraphicType(), JeeslGraphicType.Code.symbol.toString());
+			FS style = fUtils.fByCode(fbSvg.getClassFigureStyle(), JeeslGraphicStyle.Code.circle.toString());
 			graphic = efGraphic.buildSymbol(type, style);
 			((EjbWithGraphic<L,D,G,GT,F,FS>)status).setGraphic(graphic);
 		}
@@ -238,8 +231,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			if(((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic()==null)
 			{
 				logger.info("Need to create a graphic entity for this status");
-				GT type = fUtils.fByCode(cGT, JeeslGraphicType.Code.symbol.toString());
-				FS style = fUtils.fByCode(cFS, JeeslGraphicStyle.Code.circle.toString());
+				GT type = fUtils.fByCode(fbSvg.getClassGraphicType(), JeeslGraphicType.Code.symbol.toString());
+				FS style = fUtils.fByCode(fbSvg.getClassFigureStyle(), JeeslGraphicStyle.Code.circle.toString());
 				graphic = fUtils.persist(efGraphic.buildSymbol(type, style));
 				((EjbWithGraphic<L,D,G,GT,F,FS>)status).setGraphic(graphic);
 				status = fUtils.update(status);
@@ -278,8 +271,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
             }
         	if(supportsGraphic && graphic!=null)
             {
-        		graphic.setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType()));
-            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(cFS, ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getStyle()));}
+        		graphic.setType(fUtils.find(fbSvg.getClassGraphicType(), ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType()));
+            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(fbSvg.getClassFigureStyle(), ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getStyle()));}
         		
 //            	if(debugSave){logger.info("Saving "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
 //           	graphic = fUtils.save(graphic);
@@ -357,18 +350,18 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	@SuppressWarnings("unchecked")
 	public void changeGraphicType()
 	{
-		((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().setType(fUtils.find(cGT, ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType()));
+		((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().setType(fUtils.find(fbSvg.getClassGraphicType(), ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType()));
 		logger.info("changeGraphicType to "+((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType().getCode());
 	}
 	
 	private void reloadFigures()
 	{
-		figures = fUtils.allForParent(cF,graphic);
+		figures = fUtils.allForParent(fbSvg.getClassFigure(),graphic);
 	}
 	
 	public void addFigure()
 	{
-		logger.info("Add "+cF.getSimpleName());
+		logger.info("Add "+fbSvg.getClassFigure().getSimpleName());
 		figure = efFigure.build(graphic);
 	}
 	
@@ -380,7 +373,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	public void saveFigure() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info("Select "+figure.toString());
-		figure.setStyle(fUtils.find(cFS,figure.getStyle()));
+		figure.setStyle(fUtils.find(fbSvg.getClassFigureStyle(),figure.getStyle()));
 		figure = fUtils.save(figure);
 		reloadFigures();
 	}

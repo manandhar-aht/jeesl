@@ -47,7 +47,7 @@ public class TestSvgFigureFactory extends AbstractJeeslUtilTest
 	
 	public TestSvgFigureFactory()
 	{
-		SvgFactoryBuilder<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> ffSvg = SvgFactoryBuilder.factory(Lang.class,Description.class,Graphic.class,GraphicFigure.class,GraphicStyle.class);
+		SvgFactoryBuilder<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle> ffSvg = SvgFactoryBuilder.factory(Lang.class,Description.class,Graphic.class,GraphicType.class,GraphicFigure.class,GraphicStyle.class);
 		efFigure = ffSvg.efFigure();
 		efStyle = ffSvg.style();
 		svgF = SvgFigureFactory.factory();

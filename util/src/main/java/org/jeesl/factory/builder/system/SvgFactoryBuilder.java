@@ -22,14 +22,16 @@ public class SvgFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(SvgFactoryBuilder.class);
 	
-	final Class<G> cG;
-	final Class<F> cF; public Class<F> getClassFigure(){return cF;}
-	final Class<FS> cFs;
+	private final Class<G> cG; public Class<G> getClassGraphic(){return cG;}
+	private final Class<GT> cGT; public Class<GT> getClassGraphicType(){return cGT;}
+	private final Class<F> cF; public Class<F> getClassFigure(){return cF;}
+	private final Class<FS> cFs; public Class<FS> getClassFigureStyle(){return cFs;}
 	
-	public SvgFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<F> cF, final Class<FS> cFs)
+	public SvgFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<GT> cGT, final Class<F> cF, final Class<FS> cFs)
 	{       
 		super(cL,cD);
 		this.cG = cG;
+		this.cGT = cGT;
 		this.cF = cF;
 		this.cFs = cFs;
 	}
@@ -37,9 +39,9 @@ public class SvgFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	public static <L extends UtilsLang, D extends UtilsDescription,
 					G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
 					F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
-		SvgFactoryBuilder<L,D,G,GT,F,FS> factory(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<F> cF, final Class<FS> cFs)
+		SvgFactoryBuilder<L,D,G,GT,F,FS> factory(final Class<L> cL, final Class<D> cD, final Class<G> cG, final Class<GT> cGT, final Class<F> cF, final Class<FS> cFs)
 	{
-		return new SvgFactoryBuilder<L,D,G,GT,F,FS>(cL,cD,cG,cF,cFs);
+		return new SvgFactoryBuilder<L,D,G,GT,F,FS>(cL,cD,cG,cGT,cF,cFs);
 	}
 	
     public EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic()

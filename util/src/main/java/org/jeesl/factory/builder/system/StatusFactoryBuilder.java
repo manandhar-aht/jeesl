@@ -14,11 +14,13 @@ public class StatusFactoryBuilder<L extends UtilsLang, D extends UtilsDescriptio
 {
 	final static Logger logger = LoggerFactory.getLogger(StatusFactoryBuilder.class);
 	
-	final Class<LOC> cLoc; public Class<LOC> getClassLocale(){return cLoc;}
+	private final Class<LOC> cLoc; public Class<LOC> getClassLocale(){return cLoc;}
+	private final Class<?> cStatus; public Class<?> getClassStatus(){return cStatus;}
 	
-	public StatusFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc)
+	public StatusFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<?> cStatus)
 	{       
 		super(cL,cD);
 		this.cLoc = cLoc;
+		this.cStatus=cStatus;
 	}
 }

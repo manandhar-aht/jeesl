@@ -67,7 +67,8 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 		this.bMenu=bMenu;
 	}
 	
-	public final void setLocale(String localeCode)// throws UtilsConstraintViolationException, UtilsLockingException
+	//TODO final should be used, but EAP6 throwing an error
+	public void setLocale(String localeCode)// throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		this.localeCode=localeCode;
 		

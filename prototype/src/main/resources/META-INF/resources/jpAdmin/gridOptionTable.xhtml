@@ -56,7 +56,7 @@
 					            <h:outputText value="#{s.parent.name[localeCode].lang}" />
 							</p:column>
 							<p:column>
-					             <f:facet name="header">#{msg.aupOptionCode}</f:facet>  
+					             <f:facet name="header">#{msg.jeeslCode}</f:facet>  
 					             <h:outputText value="#{s.code}" />
 							</p:column>
 							<p:column>  
@@ -67,7 +67,7 @@
 								<f:facet name="header">#{msg.aupOptionSymbol}</f:facet>  
 								<h:outputText value="#{s.symbol}" />
 							</p:column>
-							<p:column rendered="#{cc.attrs.bean.supportsGraphic}" styleClass="aupPfDtColCentered">
+							<p:column rendered="#{cc.attrs.bean.supportsGraphic}" styleClass="jeeslColumnCentered">
 								<jtp:symbolizer value="#{s}"/>
 							</p:column>
 						</p:dataTable>

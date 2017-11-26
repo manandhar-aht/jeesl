@@ -31,7 +31,14 @@ public abstract class AbstractSymbolizerServlet<L extends UtilsLang, D extends U
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSymbolizerServlet.class);
-		
+	
+	private boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo=debugOnInfo;}
+	
+	protected AbstractSymbolizerServlet()
+	{
+		debugOnInfo = false;
+	}
+	
 	protected Image getPathInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		if (request.getPathInfo() == null)
@@ -47,18 +54,18 @@ public abstract class AbstractSymbolizerServlet<L extends UtilsLang, D extends U
 	        	return null;
         }
         
-        if(logger.isInfoEnabled())
+        if(debugOnInfo)
         {
-        		logger.trace("Path " +path);
+        		logger.info("Path " +path);
         }
         
         String[] pathElements = path.split("/");
         Integer size = new Integer(pathElements[1]);
         Long id = new Long(pathElements[2]);
         
-        if(logger.isTraceEnabled())
+        if(debugOnInfo)
         {
-        		logger.trace("Requested size " +size+" id:"+id);
+        		logger.info("Requested size " +size+" id:"+id);
         }
         
         return XmlImageFactory.idHeight(id,size);

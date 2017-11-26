@@ -12,10 +12,16 @@
             <component-type>net.sf.ahtutils.jsf.components.layout.Grid</component-type>
         </component>
     </tag>
-    	<tag>
+	<tag>
         <tag-name>row</tag-name>
         <component>
             <component-type>net.sf.ahtutils.jsf.components.layout.Row</component-type>
+        </component>
+    </tag>
+	<tag>
+        <tag-name>slot</tag-name>
+        <component>
+            <component-type>net.sf.ahtutils.jsf.components.layout.Slot</component-type>
         </component>
     </tag>
 	
@@ -37,7 +43,13 @@
             <component-type>org.jeesl.jsf.components.xpath.TrafficLightXpath</component-type>
         </component>
     </tag>
-	
+    
+    
+	<function>
+		<function-name>prettyUrl</function-name>
+		<function-class>net.sf.ahtutils.jsf.functions.PrettyUrl</function-class>
+		<function-signature>java.lang.String prettyUrl(java.lang.String)</function-signature>
+	</function>
 	<function>
 		<function-name>humanFileSize</function-name>
 		<function-class>org.jeesl.jsf.functions.HumanFileSize</function-class>

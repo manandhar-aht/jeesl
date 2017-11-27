@@ -35,4 +35,26 @@
 	    		<s:lang key="fr" translation="Name"/>
 	    	</s:langs>
     </s:translation>
+	<s:translation key="jeeslIoFileSize">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Größe"/>
+	    		<s:lang key="en" translation="Size"/>
+	    		<s:lang key="fr" translation="Size"/>
+	    	</s:langs>
+    </s:translation>
+    	<s:translation key="jeeslIoFileRecord">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Datum"/>
+	    		<s:lang key="en" translation="Date"/>
+	    		<s:lang key="fr" translation="Date"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslIoFileUpload">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Upload"/>
+	    		<s:lang key="en" translation="Upload"/>
+	    		<s:lang key="fr" translation="Upload"/>
+	    	</s:langs>
+    </s:translation>
+    
 </s:translations>

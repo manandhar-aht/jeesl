@@ -21,4 +21,3 @@ public class JeeslMimeMessage extends MimeMessage
 		setHeader("Message-ID", msgId);
 	}
 }
-

@@ -1,9 +1,12 @@
 package org.jeesl.api.facade.io;
 
+import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryStore;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -15,7 +18,7 @@ public interface JeeslIoFrFacade <L extends UtilsLang, D extends UtilsDescriptio
 								CONTAINER extends JeeslFileContainer<STORAGE,META>,
 								META extends JeeslFileMeta<CONTAINER,TYPE>,
 								TYPE extends UtilsStatus<TYPE,L,D>>
-		extends UtilsFacade
+		extends UtilsFacade,JeeslFileRepositoryStore<META>
 {
-	
+
 }

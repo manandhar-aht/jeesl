@@ -1,7 +1,11 @@
 package org.jeesl.factory.builder.io;
 
-import org.jeesl.controller.handler.FileRepositoryHandler;
+import org.jeesl.api.bean.callback.JeeslFileRepositoryCallback;
+import org.jeesl.api.facade.io.JeeslIoFrFacade;
+import org.jeesl.controller.handler.fr.FileRepositoryHandler;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
+import org.jeesl.factory.ejb.system.io.fr.EjbIoFrContainerFactory;
+import org.jeesl.factory.ejb.system.io.fr.EjbIoFrMetaFactory;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrStorageFactory;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
@@ -25,12 +29,18 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 
 	private final Class<STORAGE> cStorage; public Class<STORAGE> getClassStorage() {return cStorage;}
 	private final Class<ENGINE> cEngine; public Class<ENGINE> getClassEngine() {return cEngine;}
+	private final Class<CONTAINER> cContainer; public Class<CONTAINER> getClassContainer() {return cContainer;}
+	private final Class<META> cMeta; public Class<META> getClassMeta() {return cMeta;}
+	private final Class<TYPE> cType; public Class<TYPE> getClassType() {return cType;}
 	
-	public IoFileRepositoryFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<STORAGE> cStorage, final Class<ENGINE> cEngine)
+	public IoFileRepositoryFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<STORAGE> cStorage, final Class<ENGINE> cEngine, final Class<CONTAINER> cContainer, final Class<META> cMeta, final Class<TYPE> cType)
 	{
 		super(cL,cD);
 		this.cStorage=cStorage;
 		this.cEngine=cEngine;
+		this.cContainer=cContainer;
+		this.cMeta=cMeta;
+		this.cType=cType;
 	}
 	
 	public EjbIoFrStorageFactory<STORAGE> ejbStorage()
@@ -38,8 +48,18 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 		return new EjbIoFrStorageFactory<STORAGE>(cStorage);
 	}
 	
-	public FileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> handler()
+	public EjbIoFrContainerFactory<STORAGE,CONTAINER> ejbContainer()
 	{
-		return new FileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>();
+		return new EjbIoFrContainerFactory<STORAGE,CONTAINER>(cContainer);
+	}
+	
+	public EjbIoFrMetaFactory<CONTAINER,META> ejbMeta()
+	{
+		return new EjbIoFrMetaFactory<CONTAINER,META>(cMeta);
+	}
+	
+	public FileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> handler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback)
+	{
+		return new FileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>(fFr,this,callback);
 	}
 }

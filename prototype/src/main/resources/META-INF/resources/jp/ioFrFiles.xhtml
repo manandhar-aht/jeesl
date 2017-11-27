@@ -19,7 +19,7 @@
 		<h:form id="fFiles">
 			<p:dataTable var="meta" value="#{cc.attrs.handler.metas}" rowKey="#{meta.id}" selection="#{cc.attrs.handler.meta}" selectionMode="single">
 				<f:facet name="header">
-					<aht:pfDataTableHeader title="#{msg.jjeeslIoFiles}">
+					<aht:pfDataTableHeader title="#{msg.jeeslIoFiles}">
 						<aht:icon type="jeeslAdd" listener="#{cc.attrs.handler.addFile()}" update=":#{cc.id}:opUpload" oncomplete="PF('wvUpload').show();"/>
 					</aht:pfDataTableHeader>
 				</f:facet>
@@ -38,18 +38,24 @@
 		<p:overlayPanel id="opUpload" widgetVar="wvUpload" appendToBody="false">
 			<aht:slot width="7">
 				<h:form id="fUpload">
-					<p:fileUpload fileUploadListener="#{cc.attrs.bean.handleFileUpload}" mode="advanced" auto="true"
-					dragDropSupport="false" update=":#{cc.id}:opUpload" multiple="false"
-					sizeLimit="10000000" fileLimit="100" allowTypes="/(\\.|\\/)(docx|doc|pdf|xls|xlsx|jpg|jpeg)$/" />
+					<p:fileUpload fileUploadListener="#{cc.attrs.handler.handleFileUpload}" mode="advanced" auto="true"
+					dragDropSupport="false" update=":#{cc.id}:fConfirm" multiple="false"
+					sizeLimit="10000000" fileLimit="100" />
 				</h:form>
 				<h:form id="fConfirm" >
 					<p:panel header="#{msg.jeeslIoFileUpload}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.handler.meta}">
 						<f:facet name="actions">
-							<aht:icon type="jeeslSave" listener="#{cc.attrs.handler.saveFile()}" update="#{cc.attrs.update}" oncomplete="PF('wvUpload').hide();"/> 
+							<aht:icon type="jeeslSave" listener="#{cc.attrs.handler.saveFile()}" update=":#{cc.id}:fFiles" oncomplete="PF('wvUpload').hide();"/> 
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 							<p:outputLabel value="#{msg.jeeslIoFileName}"/>
 							<h:outputText value="#{cc.attrs.handler.meta.name}"/>
+							<p:outputLabel value="#{msg.jeeslIoFileSize}"/>
+							<h:outputText value="#{cc.attrs.handler.meta.size}"/>
+							<p:outputLabel value="#{msg.jeeslIoFileRecord}"/>
+							<h:outputText value="#{cc.attrs.handler.meta.record}">
+								<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+							</h:outputText>
 						</p:panelGrid>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 					</p:panel>

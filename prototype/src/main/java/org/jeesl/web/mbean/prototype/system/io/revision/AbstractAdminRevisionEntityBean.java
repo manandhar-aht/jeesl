@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslLabelBean;
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
@@ -54,8 +55,9 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	public AbstractAdminRevisionEntityBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision){super(fbRevision);}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, JeeslLabelBean<RE> bLabel)
+	protected void initSuper(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, JeeslLabelBean<RE> bLabel)
 	{
+		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
 		super.initRevisionSuper(langs,bMessage,fRevision);
 		this.bLabel=bLabel;
 		

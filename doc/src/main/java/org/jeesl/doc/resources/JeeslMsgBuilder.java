@@ -26,10 +26,12 @@ public class JeeslMsgBuilder
 {	
 	public static final String jeeslPath = "utils"+File.separator+"jeesl"+File.separator;
 	public static final String jeeslIoPath = "utils"+File.separator+"jeesl"+File.separator+"io"+File.separator;
+	public static final String jeeslAdminPath = "utils"+File.separator+"jeesl"+File.separator+"admin"+File.separator;
+	public static final String jeeslSystemPath = "utils"+File.separator+"jeesl"+File.separator+"system"+File.separator;
 	
 	public static final String generic = "jeesl/msg/generic.xml";
 	public static final String report = "jeesl/msg/report.xml";
-	public static final String query = "aht-utils/msg/query.xml";
+	public static final String query = "jeesl/msg/util/query.xml";
 	public static final String tooltip = "jeesl/msg/tooltip.xml";
 	public static final String entities = "jeesl/msg/admin/entities.xml";
 	public static final String entitiesPrefix = "jeesl/msg/admin/entitiesPrefix.xml";
@@ -45,7 +47,7 @@ public class JeeslMsgBuilder
 	//Modules
 	public static final String mTimeseries = "jeesl/msg/module/timeseries.xml";
 	public static final String mSurvey = "jeesl/msg/module/survey.xml";
-	public static final String mMonitoring = "aht-utils/msg/module/monitoring.xml";
+	public static final String mMonitoring = "jeesl/msg/module/monitoring.xml";
 	public static final String mCalendar = "jeesl/msg/module/calendar.xml";
 	
 	//IO
@@ -67,16 +69,19 @@ public class JeeslMsgBuilder
 	public static final String systemFeature = "jeesl/msg/admin/system/feature.xml";
 	public static final String systemLights = "jeesl/msg/system/lights.xml";
 	public static final String systemConstraint = "jeesl/msg/system/constraint.xml";
+	public static final String srcAdminSync = "jeesl/msg/system/sync.xml";
+	public static final String srcAdminAuditLog = "jeesl/msg/system/auditLog.xml";
 	
 	public static final String srcWizard = "jeesl/msg/wizard.xml";
-	public static final String srcAdminAuditLog = "msg.aht-utils/admin/system/auditLog.xml";
-	public static final String srcAdminSync = "msg.aht-utils/admin/system/sync.xml";
+	
+	
+	
 	
 	//Util
 	public static final String adminStatus = "jeesl/msg/util/status.xml";
 	public static final String adminOptionTables = "jeesl/msg/admin/system/options.xml";
 	public static final String adminSecurity = "jeesl/msg/module/security.xml";
-	public static final String adminUser = "aht-utils/msg/admin/user.xml";
+	public static final String adminUser = "jeesl/msg/admin/user.xml";
 	
 	//Dev
 	public static final String devQa = "jeesl/msg/development/qa.xml";

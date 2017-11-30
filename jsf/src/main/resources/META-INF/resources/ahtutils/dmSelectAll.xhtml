@@ -15,11 +15,11 @@
         
 <composite:implementation>
 <h:panelGroup>
-  <h:graphicImage value="#{iconBean.icon(12,'dmNotSelected')}">
+  <h:graphicImage value="#{appIconBean.icon(12,'dmNotSelected')}">
     <p:ajax update="#{cc.attrs.update}" event="click" listener="#{cc.attrs.dm.selectAll(false)}"/>
   </h:graphicImage>
   <p:spacer width="5"/>
-  <h:graphicImage value="#{iconBean.icon(12,'dmSelected')}">
+  <h:graphicImage value="#{appIconBean.icon(12,'dmSelected')}">
     <p:ajax update="#{cc.attrs.update}" event="click" listener="#{cc.attrs.dm.selectAll(true)}"/>
   </h:graphicImage>
 </h:panelGroup>

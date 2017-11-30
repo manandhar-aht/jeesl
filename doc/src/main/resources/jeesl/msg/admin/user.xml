@@ -1,59 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
-    <s:translation key="aupUsers">
+    <s:translation key="jeeslUsers">
         <s:langs>
             <s:lang key="de" translation="Users"/>
             <s:lang key="en" translation="Users"/>
+            <s:lang key="fr" translation="Users"/>
+            <s:lang key="kin" translation="Users"/>
         </s:langs>
     </s:translation>
-	<s:translation key="aupUser">
+	<s:translation key="jeeslUser">
         <s:langs>
             <s:lang key="de" translation="User"/>
             <s:lang key="en" translation="User"/>
         </s:langs>
     </s:translation>
-    <s:translation key="aupFirstName">
+    <s:translation key="jeeslFirstName">
 		<s:langs>
+			<s:lang key="de" translation="Vorname"/>
 			<s:lang key="fr" translation="First Name"/>
 			<s:lang key="en" translation="First Name"/>
+			<s:lang key="kin" translation="First Name"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="aupLastName">
+	<s:translation key="jeeslLastName">
 		<s:langs>
+			<s:lang key="de" translation="Vorname"/>
 			<s:lang key="fr" translation="Last Name"/>
 			<s:lang key="en" translation="Last Name"/>
+			<s:lang key="kin" translation="Last Name"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="aupEmail">
+	<s:translation key="jeeslEmail">
 		<s:langs>
 			<s:lang key="de" translation="E-Mail"/>
 			<s:lang key="en" translation="E-Mail"/>
 			<s:lang key="fr" translation="E-Mail"/>
+			<s:lang key="kin" translation="E-Mail"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="aupGender">
+	<s:translation key="jeeslUserGender">
 		<s:langs>
 			<s:lang key="fr" translation="Gender"/>
 			<s:lang key="en" translation="Gender"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="aupAge">
+	<s:translation key="jeeslUserAge">
 		<s:langs>
 			<s:lang key="de" translation="Alter"/>
 			<s:lang key="en" translation="Age"/>
 			<s:lang key="fr" translation="Age"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="aupPhone">
+	<s:translation key="jeeslPhone">
 		<s:langs>
 			<s:lang key="fr" translation="Phone"/>
 			<s:lang key="en" translation="Phone"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="aupPerson">
+	<s:translation key="jeeslPerson">
 		<s:langs>
+			<s:lang key="de" translation="Person"/>
 			<s:lang key="fr" translation="Person"/>
 			<s:lang key="en" translation="Person"/>
+			<s:lang key="kin" translation="Person"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="aupContacts">

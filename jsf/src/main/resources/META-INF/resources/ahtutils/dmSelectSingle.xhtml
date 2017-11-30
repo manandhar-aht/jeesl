@@ -16,12 +16,12 @@
         
 	<composite:implementation>
 		<h:panelGroup>
-  			<h:graphicImage rendered="#{!cc.attrs.dm.mapSelect[cc.attrs.for.id]}" value="#{iconBean.icon(12,'dmNotSelected')}">
+  			<h:graphicImage rendered="#{!cc.attrs.dm.mapSelect[cc.attrs.for.id]}" value="#{appIconBean.icon(12,'dmNotSelected')}">
     			<p:ajax update="#{cc.attrs.update}" event="click"
     					listener="#{cc.attrs.dm.select(cc.attrs.for,true)}"
     					oncomplete="#{cc.attrs.oncomplete}"/>
   			</h:graphicImage>
-  			<h:graphicImage rendered="#{cc.attrs.dm.mapSelect[cc.attrs.for.id]}" value="#{iconBean.icon(12,'dmSelected')}">
+  			<h:graphicImage rendered="#{cc.attrs.dm.mapSelect[cc.attrs.for.id]}" value="#{appIconBean.icon(12,'dmSelected')}">
     			<p:ajax update="#{cc.attrs.update}" event="click"
     					listener="#{cc.attrs.dm.select(cc.attrs.for,false)}"
     					oncomplete="#{cc.attrs.oncomplete}"/>

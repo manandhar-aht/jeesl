@@ -1,9 +1,9 @@
 <ui:composition
 	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"	
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:jp="http://jsf.jeesl.org/prototype"
@@ -11,11 +11,13 @@
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 >
 	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
+	<c:set var="counter"  value="#{not empty counter ? counter : false}" />
 
 	<jp:sbItem orientation="right" childs="#{handler.list}" rendered="#{rendered}">
 		<f:facet name="label">
 			<jtp:statusSymbolizer rendered="#{not empty icon}" value="#{icon}" height="12"/>
 			#{label}
+			<h:outputText rendered="#{counter}" value="(#{fn:length(handler.selected)}/#{fn:length(handler.list)})"/>
 		</f:facet>
 		
 		<f:facet name="top">

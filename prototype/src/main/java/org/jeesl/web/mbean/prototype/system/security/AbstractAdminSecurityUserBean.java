@@ -47,9 +47,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 
 	protected JeeslUserFacade<USER> fUtilsUser;
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity;
-	
-	private final Class<R> cRole;
-	private final Class<USER> cUser;
+	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
 	
 	protected List<USER> users;public List<USER> getUsers() {return users;}
 	private List<USER> fvUsers; public List<USER> getFvUsers() {return fvUsers;} public void setFvUsers(List<USER> fvUsers) {this.fvUsers = fvUsers;}
@@ -66,12 +64,12 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected UtilsRevisionPageFlow<USER,USER> revision; public UtilsRevisionPageFlow<USER, USER> getRevision() {return revision;}
 	
-	public AbstractAdminSecurityUserBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<L> cL, final Class<D> cD, final Class<R> cRole, final Class<USER> cUser)
+	public AbstractAdminSecurityUserBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
-		super(cL,cD);
+		super(fbSecurity.getClassL(),fbSecurity.getClassD());
+		this.fbSecurity=fbSecurity;
 		efUser = fbSecurity.ejbUser();
-		this.cRole=cRole;
-		this.cUser=cUser;
+
 	}
 	
 	public void initSuper(JeeslUserFacade<USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, FacesMessageBean bUtilsMessage)
@@ -95,12 +93,12 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected void reloadUsers()
 	{
-		users = fUtilsUser.all(cUser);
+		users = fUtilsUser.all(fbSecurity.getClassUser());
 	}
 
 	public void addUser()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cUser));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassUser()));}
 		user = efUser.build();
 		if(revision!=null){revision.pageFlowPrimaryAdd();}
 		postAdd();
@@ -158,7 +156,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected void checkPwd()
 	{
-		if(performPasswordCheck && EjbWithPwd.class.isAssignableFrom(cUser))
+		if(performPasswordCheck && EjbWithPwd.class.isAssignableFrom(fbSecurity.getClassUser()))
 		{
 			logger.info("Checking PWD");
 			if(pwd1.length()!=pwd2.length())
@@ -209,7 +207,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	public void grantRole(R role, boolean grant) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info("Grant ("+grant+") "+role.toString());}
-		fUtilsSecurity.grantRole(cUser,cRole,user,role,grant);
+		fUtilsSecurity.grantRole(fbSecurity.getClassUser(),fbSecurity.getClassRole(),user,role,grant);
 		reloadUser();
 	}
 }

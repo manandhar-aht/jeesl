@@ -30,17 +30,17 @@
 				#{msg.aupContacts} <h:outputLink rendered="#{not empty cc.attrs.linkAddContact}" value="#{cc.attrs.linkAddContact}" onclick="PF('wvOpContactSelection').hide();">#{msg.aupAddressBookAddContactPage}</h:outputLink>
 			</f:facet>
                 <p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.contactHandler.selectListener}" oncomplete="PF('wvOpContactSelection').hide();"/>
-                <p:column headerText="#{msg.aupFirstName}"
+                <p:column headerText="#{msg.jeeslFirstName}"
                           sortBy="#{user.firstName}"
                           filterBy="#{user.firstName}" filterMatchMode="contains">
                     <h:outputText value="#{user.firstName}" />
                 </p:column>
-                <p:column headerText="#{msg.aupLastName}"
+                <p:column headerText="#{msg.jeeslLastName}"
                           sortBy="#{user.lastName}"
                           filterBy="#{user.lastName}" filterMatchMode="contains">
                     <h:outputText value="#{user.lastName}" />
                 </p:column>
-                <p:column headerText="#{msg.aupEmail}"
+                <p:column headerText="#{msg.jeeslEmail}"
                           sortBy="#{user.email}"
                           filterBy="#{user.email}" filterMatchMode="contains">
                     <h:outputText value="#{user.email}" />

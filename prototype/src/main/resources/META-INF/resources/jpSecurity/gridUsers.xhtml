@@ -34,7 +34,7 @@
 								selection="#{cc.attrs.bean.user}" selectionMode="single" 
 								paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="#{appSettingsBean.paginatorTemplate}" rowsPerPageTemplate="#{appSettingsBean.rowsPerPageTemplate}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.aupUsers}">
+								<aht:pfDataTableHeader title="#{msg.jeeslUsers}">
 									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addUser()}" update=":#{cc.id}:sDetail"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
@@ -46,18 +46,18 @@
 		                  		<h:graphicImage rendered="#{u.permitLogin}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx"/>
 		                  		<h:graphicImage rendered="#{not u.permitLogin}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx"/>
 		                  	</p:column>
-							<p:column headerText="#{msg.aupFirstName}"
+							<p:column headerText="#{msg.jeeslFirstName}"
 									sortBy="#{u.firstName}"
 									filterBy="#{u.firstName}" filterMatchMode="contains">
 								<h:outputText value="#{u.firstName}" />
 		                    </p:column>
-		                    <p:column headerText="#{msg.aupLastName}"
+		                    <p:column headerText="#{msg.jeeslLastName}"
 		                              sortBy="#{u.lastName}"
 		                              filterBy="#{u.lastName}"
 		                              filterMatchMode="contains">
 		                        <h:outputText value="#{u.lastName}" />
 		                    </p:column>
-		                    <p:column headerText="#{msg.aupEmail}"
+		                    <p:column headerText="#{msg.jeeslEmail}"
 		                              sortBy="#{u.email}"
 		                              filterBy="#{u.email}" filterMatchMode="contains">
 		                        <h:outputText value="#{u.email}" />
@@ -73,13 +73,13 @@
 								  <aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.rm(cc.attrs.bean.user)}" tooltip="delete user" update=":#{cc.id}:grid"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70" >
-								<p:outputLabel for="itFirstName" value="#{msg.aupFirstName}" />
+								<p:outputLabel for="itFirstName" value="#{msg.jeeslFirstName}" />
 								<p:inputText id="itFirstName" required="true" value="#{cc.attrs.bean.user.firstName}" />
-								<p:outputLabel for="itLastName" value="#{msg.aupLastName}" />
+								<p:outputLabel for="itLastName" value="#{msg.jeeslLastName}" />
 								<p:inputText id="itLastName" required="true" value="#{cc.attrs.bean.user.lastName}" />			
 							</p:panelGrid>
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.withEmail}">
-								<p:outputLabel for="itEmail" value="#{msg.aupEmail}" />
+								<p:outputLabel for="itEmail" value="#{msg.jeeslEmail}" />
 								<p:inputText id="itEmail" required="true" value="#{cc.attrs.bean.user.email}" />
 							</p:panelGrid>
 							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" rendered="#{cc.attrs.withPwd}">

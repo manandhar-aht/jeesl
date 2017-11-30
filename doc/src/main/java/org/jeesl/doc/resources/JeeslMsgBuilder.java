@@ -74,9 +74,6 @@ public class JeeslMsgBuilder
 	
 	public static final String srcWizard = "jeesl/msg/wizard.xml";
 	
-	
-	
-	
 	//Util
 	public static final String adminStatus = "jeesl/msg/util/status.xml";
 	public static final String adminOptionTables = "jeesl/msg/admin/system/options.xml";

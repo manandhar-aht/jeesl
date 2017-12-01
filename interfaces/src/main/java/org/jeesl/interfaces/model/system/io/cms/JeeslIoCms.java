@@ -1,5 +1,6 @@
 package org.jeesl.interfaces.model.system.io.cms;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
@@ -24,7 +25,8 @@ public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
 								C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
 								M extends UtilsStatus<M,L,D>,
 								LOC extends UtilsStatus<LOC,L,D>>
-		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPosition,EjbWithLang<L>,JeeslWithCategory<L,D,CAT>
+		extends Serializable,EjbWithId,
+				EjbSaveable,EjbRemoveable,EjbWithPosition,EjbWithLang<L>,JeeslWithCategory<L,D,CAT>
 {	
 	public enum Attributes{category,position}
 	

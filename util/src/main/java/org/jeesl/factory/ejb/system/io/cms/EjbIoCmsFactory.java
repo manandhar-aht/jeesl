@@ -52,11 +52,10 @@ public class EjbIoCmsFactory <L extends UtilsLang,D extends UtilsDescription,
 		return ejb;
 	}
 	
-	public <W extends JeeslWithCms<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>> List<CMS> toCms(List<W> list)
+	public <W extends JeeslWithCms<CMS>> List<CMS> toCms(List<W> list)
 	{
 		List<CMS> result = new ArrayList<CMS>();
 		for(W w : list) {result.add(w.getCms());}
 		return result;
-		
 	}
 }

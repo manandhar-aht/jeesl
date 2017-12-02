@@ -115,8 +115,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	protected void initUtils(JeeslTranslationBean bTranslation, UtilsFacade fUtils, FacesMessageBean bMessage)
 	{
-		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
-		super.initAdmin(langs,cL,cD,bMessage);
+		super.initAdmin(bTranslation.getLangKeys().toArray(new String[0]),cL,cD,bMessage);
 		this.fUtils=fUtils;
 			
 		graphicTypes = fUtils.allOrderedPositionVisible(fbSvg.getClassGraphicType());

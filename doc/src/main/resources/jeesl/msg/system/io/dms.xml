@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslIoDmsSystems">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Document Management Systems"/>
+	    		<s:lang key="en" translation="Document Management Systems"/>
+	    		<s:lang key="fr" translation="Document Management Systems"/>
+	    	</s:langs>
+    </s:translation>
+    		<s:translation key="jeeslIoDmsSystem">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Document Management System"/>
+	    		<s:lang key="en" translation="Document Management System"/>
+	    		<s:lang key="fr" translation="Document Management System"/>
+	    	</s:langs>
+    </s:translation>
+    
+</s:translations>

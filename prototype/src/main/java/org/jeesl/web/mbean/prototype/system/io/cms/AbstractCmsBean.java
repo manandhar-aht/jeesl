@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.module;
+package org.jeesl.web.mbean.prototype.system.io.cms;
 
 import java.io.Serializable;
 import java.util.ArrayList;

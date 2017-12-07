@@ -6,18 +6,42 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:composite="http://java.sun.com/jsf/composite">
     
-    <composite:interface componentType="net.sf.ahtutils.jsf.components.IconListener">
+	<composite:interface componentType="net.sf.ahtutils.jsf.components.IconListener">		
 		<composite:attribute name="styleClass" required="false" default="pf-panel-header-action-icon"/>
 		<composite:attribute name="height" required="false" default="12"/>
 		<composite:attribute name="value" required="true"/>
 		<composite:attribute name="tooltip" required="false"/>
+		<composite:attribute name="immediate" required="false" default="false"/>
+				
+		<composite:attribute name="listener" required="false" method-signature="void listener(javax.faces.event.AjaxBehaviorEvent)"/>
+		<composite:attribute name="process" required="false" default=""/>
+		<composite:attribute name="oncomplete" required="false"/>
+		<composite:attribute name="onstart" required="false"/>
 	</composite:interface>
 
 	<composite:implementation>
-	   <h:graphicImage id="image"
+	   <h:graphicImage rendered="#{empty cc.attrs.listener}"
+	   					id="image"
 	   					height="#{cc.attrs.height}"
 						styleClass="#{cc.attrs.styleClass}"
 						value="/image/symbolizer/status/#{cc.attrs.height}/#{cc.attrs.value.id}"/>
-		<p:tooltip rendered="#{not empty cc.attrs.tooltip}" for="image" value="#{cc.attrs.tooltip}" />
+		<p:tooltip rendered="#{(empty cc.attrs.listener) and (not empty cc.attrs.tooltip)}" for="image" value="#{cc.attrs.tooltip}" />
+		
+		<p:commandLink rendered="#{not empty cc.attrs.listener}"
+						id="link" 
+					   update="#{cc.attrs.update}"
+					   actionListener="#{cc.listener}"
+					   process="#{cc.attrs.process}" 
+					   onstart="#{cc.attrs.onstart}"
+					   oncomplete="#{cc.attrs.oncomplete}"
+					   immediate="#{cc.attrs.immediate}">
+				<h:graphicImage id="image2"
+						rendered="#{not cc.attrs.disabled}"
+						height="#{cc.attrs.height}"
+						styleClass="#{cc.attrs.styleClass}"
+						value="/image/symbolizer/status/#{cc.attrs.height}/#{cc.attrs.value.id}"/>
+				<p:tooltip for="image2" value="#{cc.attrs.tooltip}" />
+		</p:commandLink>
+		
 	</composite:implementation>
 </html>

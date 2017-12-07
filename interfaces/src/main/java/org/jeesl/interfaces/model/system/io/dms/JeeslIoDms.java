@@ -9,17 +9,21 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslIoDms<L extends UtilsLang,D extends UtilsDescription,
-							OS extends JeeslAttributeSet<L,D,?,?>
-							//,S extends JeeslIoDmsSection<L,S
+							AS extends JeeslAttributeSet<L,D,?,?>,
+							S extends JeeslIoDmsSection<L,S>
 							>
 								
 		extends Serializable,EjbWithId,
-				EjbSaveable,EjbRemoveable
+				EjbSaveable,EjbRemoveable,EjbWithLang<L>
 {	
 	public enum Attributes{xx}
 	
-	OS getSet();
-	void setSet(OS set);
+	AS getSet();
+	void setSet(AS set);
+	
+	S getRoot();
+	void setRoot(S section);
 }

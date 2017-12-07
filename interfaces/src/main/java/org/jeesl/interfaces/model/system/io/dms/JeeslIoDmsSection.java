@@ -12,7 +12,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslIoDmsSection<L extends UtilsLang, S extends JeeslIoDmsSection<L,S>>
-		extends Serializable,EjbWithId,
+					extends Serializable,EjbWithId,
 					EjbRemoveable,EjbPersistable,EjbSaveable,
 					EjbWithPositionVisibleParent,EjbWithLang<L>
 {	

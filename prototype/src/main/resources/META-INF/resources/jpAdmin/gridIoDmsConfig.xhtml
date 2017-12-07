@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<aup:grid id="grid">
+			<aht:row>
+				<aht:slot id="sDms" width="5">
+					<h:form id="fDms">
+						<p:dataTable var="dm" value="#{cc.attrs.bean.dms}" draggableRows="false"
+							selection="#{cc.attrs.bean.dm}" selectionMode="single" rowKey="#{dm.id}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslIoDmsSystems}">
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addDm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttNew}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderDms()}" update="@form"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectDm()}" update=":#{cc.id}:sDm"/>
+							
+							<p:column headerText="#{msg.jeeslIoDmsSystem}">  
+								<h:outputText value="#{dm.name[localeCode].lang}"/>
+							</p:column>
+					   	</p:dataTable>
+					</h:form>
+				</aht:slot>
+				<aht:slot id="sDm" width="4">
+					<h:form id="fSet">
+						<p:panel header="#{msg.jeeslIoDmsSystem}" rendered="#{not empty cc.attrs.bean.dm}" styleClass="auPanelWithGrid">
+							<f:facet name="actions">
+								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetDm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
+								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveDm()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteDm()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.dm.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+								<p:outputLabel value="#{msg.jeeslIoAttributeSet}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.dm.set}" effect="fade" autoWidth="false">
+									<f:selectItems value="#{cc.attrs.bean.sets}" var="s" itemLabel="#{s.name[localeCode].lang}" itemValue="#{s}"/>
+								</p:selectOneMenu>
+							</p:panelGrid>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.dm}" keys="#{cc.attrs.localeKeys}" withDescription="false"/>
+						</p:panel>
+					</h:form>
+				</aht:slot>
+			</aht:row>
+	    </aup:grid>
+	</composite:implementation>
+</html>

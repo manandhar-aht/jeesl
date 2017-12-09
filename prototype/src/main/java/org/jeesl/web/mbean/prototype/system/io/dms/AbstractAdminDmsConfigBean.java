@@ -19,13 +19,14 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends UtilsDescription,
+public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 													DMS extends JeeslIoDms<L,D,AS,S>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
 													S extends JeeslIoDmsSection<L,S>>
-					extends AbstractDmsBean<L,D,DMS,AS,S>
+					extends AbstractDmsBean<L,D,LOC,DMS,AS,S>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -39,14 +40,14 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 	
 
 
-	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,DMS,AS,S> fbDms)
+	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,AS,S> fbDms)
 	{
 		super(fbDms);
 		
 		efDms = fbDms.ejbDms();
 	}
 	
-	protected void initDmsConfig(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,DMS,AS,S> fDms)
+	protected void initDmsConfig(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,AS,S> fDms)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
 		initPageConfiguration();

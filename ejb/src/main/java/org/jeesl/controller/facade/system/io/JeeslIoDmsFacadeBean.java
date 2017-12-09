@@ -13,19 +13,20 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class JeeslIoDmsFacadeBean<L extends UtilsLang,D extends UtilsDescription,
+public class JeeslIoDmsFacadeBean<L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 								DMS extends JeeslIoDms<L,D,AS,S>,
 								AS extends JeeslAttributeSet<L,D,?,?>,
 								S extends JeeslIoDmsSection<L,S>>
 					extends UtilsFacadeBean
-					implements JeeslIoDmsFacade<L,D,DMS,AS,S>
+					implements JeeslIoDmsFacade<L,D,LOC,DMS,AS,S>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDmsFacadeBean.class);
 	
-	private final IoDmsFactoryBuilder<L,D,DMS,AS,S> fbDms;
+	private final IoDmsFactoryBuilder<L,D,LOC,DMS,AS,S> fbDms;
 	
-	public JeeslIoDmsFacadeBean(EntityManager em, final IoDmsFactoryBuilder<L,D,DMS,AS,S> fbDms)
+	public JeeslIoDmsFacadeBean(EntityManager em, final IoDmsFactoryBuilder<L,D,LOC,DMS,AS,S> fbDms)
 	{
 		super(em);
 		this.fbDms=fbDms;

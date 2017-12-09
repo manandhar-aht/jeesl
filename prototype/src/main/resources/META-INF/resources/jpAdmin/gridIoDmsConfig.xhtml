@@ -13,13 +13,13 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
-		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
+		<composite:attribute name="localeKeys" required="false" default="#{cc.attrs.bean.localeCodes}"/>
 	</composite:interface>
 	
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sDms" width="5">
+				<aht:slot id="sDms" width="8">
 					<h:form id="fDms">
 						<p:dataTable var="dm" value="#{cc.attrs.bean.dms}" draggableRows="false"
 							selection="#{cc.attrs.bean.dm}" selectionMode="single" rowKey="#{dm.id}">
@@ -33,6 +33,9 @@
 							
 							<p:column headerText="#{msg.jeeslIoDmsSystem}">  
 								<h:outputText value="#{dm.name[localeCode].lang}"/>
+							</p:column>
+							<p:column headerText="#{msg.jeeslIoAttributeSet}">  
+								<h:outputText value="#{dm.set.name[localeCode].lang}"/>
 							</p:column>
 					   	</p:dataTable>
 					</h:form>

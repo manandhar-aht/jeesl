@@ -14,5 +14,18 @@
 	    		<s:lang key="fr" translation="Document Management System"/>
 	    	</s:langs>
     </s:translation>
-    
+	<s:translation key="jeeslIoDmsTree">
+	    	<s:langs>
+	    		<s:lang key="de" translation="DMS Baum"/>
+	    		<s:lang key="en" translation="DMS Tree"/>
+	    		<s:lang key="fr" translation="DMS Tree"/>
+	    	</s:langs>
+	</s:translation>
+	<s:translation key="jeeslIoDmsSection">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Abschnitt"/>
+	    		<s:lang key="en" translation="Section"/>
+	    		<s:lang key="fr" translation="Section"/>
+	    	</s:langs>
+    </s:translation>
 </s:translations>

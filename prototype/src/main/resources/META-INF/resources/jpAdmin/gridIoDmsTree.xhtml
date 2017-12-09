@@ -15,7 +15,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
-		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
+		<composite:attribute name="localeKeys" required="false" default="#{cc.attrs.bean.localeCodes}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -51,7 +51,7 @@
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteSection()}" update=":#{cc.id}:sSection" rendered="#{cc.attrs.bean.section.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
-								<p:outputLabel value="#{msg.jeeslCDmsVisible}"/>
+								<p:outputLabel value="#{msg.jeeslVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.visible}"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.section}" keys="#{cc.attrs.localeKeys}" withDescription="false"/>

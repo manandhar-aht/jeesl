@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class IoDmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
+public class IoDmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 								DMS extends JeeslIoDms<L,D,AS,S>,
 								AS extends JeeslAttributeSet<L,D,?,?>,
 								S extends JeeslIoDmsSection<L,S>>
@@ -20,13 +21,15 @@ public class IoDmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDmsFactoryBuilder.class);
 
+	private final Class<LOC> cLoc; public Class<LOC> getClassLocale() {return cLoc;}
 	private final Class<DMS> cDms; public Class<DMS> getClassDms() {return cDms;}
 	private final Class<AS> cAttributeSet; public Class<AS> getClassAttributeSet() {return cAttributeSet;}
 	private final Class<S> cSection; public Class<S> getClassSection() {return cSection;}
     
-	public IoDmsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<DMS> cDms, final Class<AS> cAttributeSet, final Class<S> cSection)
+	public IoDmsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<DMS> cDms, final Class<AS> cAttributeSet, final Class<S> cSection)
 	{
 		super(cL,cD);
+		this.cLoc=cLoc;
 		this.cDms=cDms;
 		this.cAttributeSet=cAttributeSet;
 		this.cSection=cSection;

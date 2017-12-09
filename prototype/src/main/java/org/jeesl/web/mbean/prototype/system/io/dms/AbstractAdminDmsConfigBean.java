@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.system.io.dms;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
@@ -11,6 +12,7 @@ import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +25,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-													DMS extends JeeslIoDms<L,D,AS,S>,
+													DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
+													STORAGE extends JeeslFileStorage<L,D,?>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
 													S extends JeeslIoDmsSection<L,S>>
-					extends AbstractDmsBean<L,D,LOC,DMS,AS,S>
+					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -35,19 +38,23 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 	private final EjbIoDmsFactory<DMS> efDms;
 	
 	private List<DMS> dms; public List<DMS> getDms() {return dms;}
-	protected List<AS> sets; public List<AS> getSets() {return sets;}
+	protected final List<AS> sets; public List<AS> getSets() {return sets;}
+	protected final List<STORAGE> storages; public List<STORAGE> getStorages() {return storages;}
 //	private List<ITEM> items; public List<ITEM> getItems() {return items;}
 	
 
 
-	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,AS,S> fbDms)
+	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S> fbDms)
 	{
 		super(fbDms);
 		
 		efDms = fbDms.ejbDms();
+		
+		sets = new ArrayList<AS>();
+		storages = new ArrayList<STORAGE>();
 	}
 	
-	protected void initDmsConfig(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,AS,S> fDms)
+	protected void initDmsConfig(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S> fDms)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
 		initPageConfiguration();
@@ -86,7 +93,9 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 	public void saveDm() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(dm));}
-//		set.setCategory(fAttribute.find(fbAttribute.getClassCategory(),set.getCategory()));
+		dm.setSet(fDms.find(fbDms.getClassAttributeSet(),dm.getSet()));
+		dm.setStorage(fDms.find(fbDms.getClassStorage(),dm.getStorage()));
+		
 		dm = fDms.save(dm);
 		reloadDms();
 	}

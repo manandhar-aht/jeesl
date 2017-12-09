@@ -11,6 +11,7 @@ import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
@@ -30,10 +31,11 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-											DMS extends JeeslIoDms<L,D,AS,S>,
+											DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
+											STORAGE extends JeeslFileStorage<L,D,?>,
 											AS extends JeeslAttributeSet<L,D,?,?>,
 											S extends JeeslIoDmsSection<L,S>>
-					extends AbstractDmsBean<L,D,LOC,DMS,AS,S>
+					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -45,13 +47,13 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
 	private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 	
-	public AbstractAdminDmsTreeBean(IoDmsFactoryBuilder<L,D,LOC,DMS,AS,S> fbDms)
+	public AbstractAdminDmsTreeBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S> fbDms)
 	{
 		super(fbDms);
 		sbhDms = new SbSingleHandler<DMS>(fbDms.getClassDms(),this);
 	}
 	
-	protected void initDmsConfig(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,AS,S> fDms)
+	protected void initDmsConfig(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S> fDms)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
 		initPageConfiguration();

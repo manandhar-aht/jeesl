@@ -7,12 +7,11 @@ import org.jeesl.api.facade.io.JeeslIoDmsFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsSectionFactory;
-import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
-import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +23,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-													DMS extends JeeslIoDms<L,D,AS,S>,
+													DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
+													STORAGE extends JeeslFileStorage<L,D,?>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
 													S extends JeeslIoDmsSection<L,S>>
 					extends AbstractAdminBean<L,D>
@@ -36,15 +35,15 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDmsBean.class);
 	
-	protected JeeslIoDmsFacade<L,D,LOC,DMS,AS,S> fDms;
-	protected final IoDmsFactoryBuilder<L,D,LOC,DMS,AS,S> fbDms;
+	protected JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S> fDms;
+	protected final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S> fbDms;
 	
 	protected final EjbIoDmsSectionFactory<S> efSection;
 	
 	protected DMS dm; public DMS getDm() {return dm;} public void setDm(DMS dm) {this.dm = dm;}
 	protected final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 
-	public AbstractDmsBean(IoDmsFactoryBuilder<L,D,LOC,DMS,AS,S> fbDms)
+	public AbstractDmsBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S> fbDms)
 	{
 		super(fbDms.getClassL(),fbDms.getClassD());
 		this.fbDms=fbDms;
@@ -53,7 +52,7 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 		efSection = fbDms.ejbSection();
 	}
 	
-	protected void initDms(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,AS,S> fDms)
+	protected void initDms(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S> fDms)
 	{
 		super.initAdmin(bTranslation.getLangKeys().toArray(new String[0]),cL,cD,bMessage);
 		this.fDms=fDms;

@@ -5,6 +5,7 @@ import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsFactory;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsSectionFactory;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.slf4j.Logger;
@@ -18,7 +19,8 @@ public class IoDmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
 								STORAGE extends JeeslFileStorage<L,D,?>,
 								AS extends JeeslAttributeSet<L,D,?,?>,
-								S extends JeeslIoDmsSection<L,S>>
+								S extends JeeslIoDmsSection<L,S>,
+								FILE extends JeeslIoDmsFile<L,S,?,?>>
 				extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDmsFactoryBuilder.class);

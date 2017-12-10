@@ -4,9 +4,12 @@ import javax.persistence.EntityManager;
 
 import org.jeesl.api.facade.io.JeeslIoDmsFacade;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,15 +23,18 @@ public class JeeslIoDmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 								DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
 								STORAGE extends JeeslFileStorage<L,D,?>,
 								AS extends JeeslAttributeSet<L,D,?,?>,
-								S extends JeeslIoDmsSection<L,S>>
+								S extends JeeslIoDmsSection<L,S>,
+								F extends JeeslIoDmsFile<L,S,FC,AC>,
+								FC extends JeeslFileContainer<?,?>,
+								AC extends JeeslAttributeContainer<?,?>>
 					extends UtilsFacadeBean
-					implements JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S>
+					implements JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDmsFacadeBean.class);
 	
-	private final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S> fbDms;
+	private final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms;
 	
-	public JeeslIoDmsFacadeBean(EntityManager em, final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S> fbDms)
+	public JeeslIoDmsFacadeBean(EntityManager em, final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms)
 	{
 		super(em);
 		this.fbDms=fbDms;

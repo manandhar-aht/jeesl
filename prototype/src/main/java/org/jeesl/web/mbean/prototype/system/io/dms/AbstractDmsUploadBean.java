@@ -7,7 +7,6 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.io.JeeslIoDmsFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
-import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
@@ -18,7 +17,6 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
-import org.primefaces.event.TreeDragDropEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import org.slf4j.Logger;
@@ -33,33 +31,40 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
+public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 											DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
 											STORAGE extends JeeslFileStorage<L,D,?>,
 											AS extends JeeslAttributeSet<L,D,?,?>,
 											S extends JeeslIoDmsSection<L,S>,
 											F extends JeeslIoDmsFile<L,S,FC,AC>,
 											FC extends JeeslFileContainer<?,?>,
-											AC extends JeeslAttributeContainer<?,?>>
+											
+											AC extends JeeslAttributeContainer<?,?>
+	//										AD extends JeeslAttributeData<?,?,AC>
+>
 					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminDmsTreeBean.class);	
+	final static Logger logger = LoggerFactory.getLogger(AbstractDmsUploadBean.class);	
 
 	protected final SbSingleHandler<DMS> sbhDms; public SbSingleHandler<DMS> getSbhDms() {return sbhDms;}
+	
+//	private AttributeHandler<L,D,IoAttributeCategory,IoAttributeCriteria,IoAttributeType,IoAttributeOption,IoAttributeSet,IoAttributeItem,AC,IoAttributeData> handler; public AttributeHandler<L,D,IoAttributeCategory,IoAttributeCriteria,IoAttributeType,IoAttributeOption,IoAttributeSet,IoAttributeItem,AC,IoAttributeData> getHandler() {return handler;}
+
+	//private final IoAttributeFactoryBuilder<L,D,?,?,?,?,AS,?,AC,AD> fbAttribute;
 	
 	private TreeNode tree; public TreeNode getTree() {return tree;}
 	private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 	
-	public AbstractAdminDmsTreeBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms)
+	public AbstractDmsUploadBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms)
 	{
 		super(fbDms);
 		sbhDms = new SbSingleHandler<DMS>(fbDms.getClassDms(),this);
 	}
 	
-	protected void initDmsConfig(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC> fDms)
+	protected void initDmsUpload(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC> fDms)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
 		initPageConfiguration();
@@ -97,29 +102,6 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
 	public void onNodeExpand(NodeExpandEvent event) {if(debugOnInfo) {logger.info("Expanded "+event.getTreeNode().toString());}}
     public void onNodeCollapse(NodeCollapseEvent event) {if(debugOnInfo) {logger.info("Collapsed "+event.getTreeNode().toString());}}
 
-    
-	@SuppressWarnings("unchecked")
-	public void onDragDrop(TreeDragDropEvent event) throws UtilsConstraintViolationException, UtilsLockingException
-	{
-        TreeNode dragNode = event.getDragNode();
-        TreeNode dropNode = event.getDropNode();
-        int dropIndex = event.getDropIndex();
-        logger.info("Dragged " + dragNode.getData() + "Dropped on " + dropNode.getData() + " at " + dropIndex);
-        
-        logger.info("Childs of "+dropNode.getData());
-        S parent = (S)dropNode.getData();
-        int index=1;
-        for(TreeNode n : dropNode.getChildren())
-        {
-        		S child =(S)n.getData();
-        		S db = fDms.load(child,false);
-        		efSection.update(db,child);
-        		child.setSection(parent);
-        		child.setPosition(index);
-        		fDms.save(child);
-        		index++;
-        }  
-    }
 
     @SuppressWarnings("unchecked")
 	public void onSectionSelect(NodeSelectEvent event)
@@ -132,19 +114,5 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
     }
 
     
-	public void addSection() 
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbDms.getClassSection()));}
-		section = efSection.build(dm.getRoot());
-		section.setName(efLang.createEmpty(localeCodes));
-	}
-	
-	public void saveSection() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(section));}
-		boolean appendToTree = EjbIdFactory.isUnSaved(section);		
-		section = fDms.save(section);
-		if(appendToTree) {new DefaultTreeNode(section, tree);}
-//		reloadSection();
-	}
+
 }

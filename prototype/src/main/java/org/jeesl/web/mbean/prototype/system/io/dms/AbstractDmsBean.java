@@ -8,9 +8,12 @@ import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsSectionFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -28,22 +31,25 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 													DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
 													STORAGE extends JeeslFileStorage<L,D,?>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
-													S extends JeeslIoDmsSection<L,S>>
+													S extends JeeslIoDmsSection<L,S>,
+													F extends JeeslIoDmsFile<L,S,FC,AC>,
+													FC extends JeeslFileContainer<?,?>,
+													AC extends JeeslAttributeContainer<?,?>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDmsBean.class);
 	
-	protected JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S> fDms;
-	protected final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S> fbDms;
+	protected JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC> fDms;
+	protected final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms;
 	
 	protected final EjbIoDmsSectionFactory<S> efSection;
 	
 	protected DMS dm; public DMS getDm() {return dm;} public void setDm(DMS dm) {this.dm = dm;}
 	protected final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 
-	public AbstractDmsBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S> fbDms)
+	public AbstractDmsBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms)
 	{
 		super(fbDms.getClassL(),fbDms.getClassD());
 		this.fbDms=fbDms;
@@ -52,7 +58,7 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 		efSection = fbDms.ejbSection();
 	}
 	
-	protected void initDms(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S> fDms)
+	protected void initDms(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC> fDms)
 	{
 		super.initAdmin(bTranslation.getLangKeys().toArray(new String[0]),cL,cD,bMessage);
 		this.fDms=fDms;

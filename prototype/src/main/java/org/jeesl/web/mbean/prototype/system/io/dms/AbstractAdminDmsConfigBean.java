@@ -9,9 +9,12 @@ import org.jeesl.api.facade.io.JeeslIoDmsFacade;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +31,11 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 													DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
 													STORAGE extends JeeslFileStorage<L,D,?>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
-													S extends JeeslIoDmsSection<L,S>>
-					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S>
+													S extends JeeslIoDmsSection<L,S>,
+													F extends JeeslIoDmsFile<L,S,FC,AC>,
+													FC extends JeeslFileContainer<?,?>,
+													AC extends JeeslAttributeContainer<?,?>>
+					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -44,7 +50,7 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 	
 
 
-	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S> fbDms)
+	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms)
 	{
 		super(fbDms);
 		
@@ -54,7 +60,7 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 		storages = new ArrayList<STORAGE>();
 	}
 	
-	protected void initDmsConfig(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S> fDms)
+	protected void initDmsConfig(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC> fDms)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
 		initPageConfiguration();

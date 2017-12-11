@@ -3,11 +3,21 @@ package org.jeesl.web.mbean.prototype.system.io.dms;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslAttributeBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.api.facade.io.JeeslIoDmsFacade;
+import org.jeesl.controller.handler.AttributeHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
+import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
+import org.jeesl.interfaces.bean.AttributeBean;
+import org.jeesl.interfaces.controller.handler.JeeslAttributeHandler;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
@@ -32,44 +42,59 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-											DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
+											DMS extends JeeslIoDms<L,D,STORAGE,ASET,S>,
 											STORAGE extends JeeslFileStorage<L,D,?>,
-											AS extends JeeslAttributeSet<L,D,?,?>,
 											S extends JeeslIoDmsSection<L,S>,
-											F extends JeeslIoDmsFile<L,S,FC,AC>,
+											F extends JeeslIoDmsFile<L,S,FC,ACONTAINER>,
 											FC extends JeeslFileContainer<?,?>,
 											
-											AC extends JeeslAttributeContainer<?,?>
-	//										AD extends JeeslAttributeData<?,?,AC>
+											ACATEGORY extends UtilsStatus<ACATEGORY,L,D>,
+											ACRITERIA extends JeeslAttributeCriteria<L,D,ACATEGORY,ATYPE>,
+											ATYPE extends UtilsStatus<ATYPE,L,D>,
+											AOPTION extends JeeslAttributeOption<L,D,ACRITERIA>,
+											ASET extends JeeslAttributeSet<L,D,ACATEGORY,AITEM>,
+											AITEM extends JeeslAttributeItem<ACRITERIA,ASET>,
+											ACONTAINER extends JeeslAttributeContainer<ASET,ADATA>,
+											ADATA extends JeeslAttributeData<ACRITERIA,AOPTION,ACONTAINER>
 >
-					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC>
-					implements Serializable
+					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,ASET,S,F,FC,ACONTAINER>
+					implements Serializable,AttributeBean<ACONTAINER>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDmsUploadBean.class);	
 
+	private JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute;
+	
 	protected final SbSingleHandler<DMS> sbhDms; public SbSingleHandler<DMS> getSbhDms() {return sbhDms;}
 	
-//	private AttributeHandler<L,D,IoAttributeCategory,IoAttributeCriteria,IoAttributeType,IoAttributeOption,IoAttributeSet,IoAttributeItem,AC,IoAttributeData> handler; public AttributeHandler<L,D,IoAttributeCategory,IoAttributeCriteria,IoAttributeType,IoAttributeOption,IoAttributeSet,IoAttributeItem,AC,IoAttributeData> getHandler() {return handler;}
+	private AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> handler; public AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> getHandler() {return handler;}
 
-	//private final IoAttributeFactoryBuilder<L,D,?,?,?,?,AS,?,AC,AD> fbAttribute;
+	private final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute;
 	
 	private TreeNode tree; public TreeNode getTree() {return tree;}
 	private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 	
-	public AbstractDmsUploadBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms)
+	public AbstractDmsUploadBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,ASET,S,F> fbDms,
+								final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute)
 	{
 		super(fbDms);
+		this.fbAttribute=fbAttribute;
 		sbhDms = new SbSingleHandler<DMS>(fbDms.getClassDms(),this);
 	}
 	
-	protected void initDmsUpload(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC> fDms)
+	protected void initDmsUpload(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,
+								JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,ASET,S,F,FC,ACONTAINER> fDms,
+								JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute,
+								JeeslAttributeBean<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> bAttribute
+								)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
+		this.fAttribute=fAttribute;
 		initPageConfiguration();
 		super.initLocales();
 		sbhDms.silentCallback();
+		handler = fbAttribute.handler(bMessage,fAttribute,bAttribute,this);
 	}
 	protected abstract void initPageConfiguration();
 	
@@ -114,5 +139,12 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
     }
 
     
-
+	@Override
+	public void save(JeeslAttributeHandler<ACONTAINER> handler) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+//		section.setAttributeContainer(handler.saveContainer());
+		section = fAttribute.save(section);
+//		reloadDemos();
+		
+	}
 }

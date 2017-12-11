@@ -39,7 +39,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 								ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 								CONTAINER extends JeeslAttributeContainer<SET,DATA>,
 								DATA extends JeeslAttributeData<CRITERIA,OPTION,CONTAINER>>
-	implements Serializable,JeeslAttributeHandler
+	implements Serializable,JeeslAttributeHandler<CONTAINER>
 {
 	final static Logger logger = LoggerFactory.getLogger(AttributeHandler.class);
 	private static final long serialVersionUID = 1L;
@@ -49,7 +49,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	private final JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute;
 	private final JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute;
 	private final FacesMessageBean bMessage;
-	private final AttributeBean bean;
+	private final AttributeBean<CONTAINER> bean;
 	
 	private final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute;
 	private final EjbAttributeContainerFactory<SET,CONTAINER> efContainer;

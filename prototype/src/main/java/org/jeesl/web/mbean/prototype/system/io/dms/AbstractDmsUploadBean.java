@@ -38,6 +38,7 @@ import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
@@ -45,7 +46,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 											DMS extends JeeslIoDms<L,D,STORAGE,ASET,S>,
 											STORAGE extends JeeslFileStorage<L,D,?>,
 											S extends JeeslIoDmsSection<L,S>,
-											F extends JeeslIoDmsFile<L,S,FC,ACONTAINER>,
+											FILE extends JeeslIoDmsFile<L,S,FC,ACONTAINER>,
 											FC extends JeeslFileContainer<?,?>,
 											
 											ACATEGORY extends UtilsStatus<ACATEGORY,L,D>,
@@ -57,25 +58,27 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 											ACONTAINER extends JeeslAttributeContainer<ASET,ADATA>,
 											ADATA extends JeeslAttributeData<ACRITERIA,AOPTION,ACONTAINER>
 >
-					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,ASET,S,F,FC,ACONTAINER>
+					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,ASET,S,FILE,FC,ACONTAINER>
 					implements Serializable,AttributeBean<ACONTAINER>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDmsUploadBean.class);	
 
 	private JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute;
-	
-	protected final SbSingleHandler<DMS> sbhDms; public SbSingleHandler<DMS> getSbhDms() {return sbhDms;}
-	
-	private AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> handler; public AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> getHandler() {return handler;}
-
 	private final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute;
 	
+	protected final SbSingleHandler<DMS> sbhDms; public SbSingleHandler<DMS> getSbhDms() {return sbhDms;}
+
+	private AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> handler; public AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> getHandler() {return handler;}
+
+	private List<FILE> files; public List<FILE> getFiles() {return files;} public void setFiles(List<FILE> files) {this.files = files;}
+
 	private TreeNode tree; public TreeNode getTree() {return tree;}
 	private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
-	
-	public AbstractDmsUploadBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,ASET,S,F> fbDms,
+	private FILE file; public FILE getFile() {return file;} public void setFile(FILE file) {this.file = file;}
+
+	public AbstractDmsUploadBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,FILE> fbDms,
 								final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute)
 	{
 		super(fbDms);
@@ -84,7 +87,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	}
 	
 	protected void initDmsUpload(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,
-								JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,ASET,S,F,FC,ACONTAINER> fDms,
+								JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,ASET,S,FILE,FC,ACONTAINER> fDms,
 								JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute,
 								JeeslAttributeBean<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> bAttribute
 								)
@@ -104,6 +107,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	{
 		logger.info(AbstractLogMessage.selectEntity(item));
 		this.dm = (DMS)item;
+		handler.init(dm.getSet());
 		reloadTree();
 	}
 	
@@ -136,8 +140,35 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
     		section = efLang.persistMissingLangs(fDms, localeCodes, section);
     		S db = fDms.load(section,false);
     		efSection.update(db,section);
+    		reloadFiles();
+//    	handler.prepare(demo);
+    }
+    
+    private void reloadFiles()
+    {
+    		files = fDms.allForParent(fbDms.getClassFile(),section);
     }
 
+    public void addFile()
+    {
+    		if(debugOnInfo) {logger.info(AbstractLogMessage.addEntity(fbDms.getClassFile()));}
+    		file = efFile.build(section, files);
+    		file.setName(efLang.createEmpty(sbhLocale.getList()));
+//       handler.prepare(demo);
+    }
+    	
+    public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
+    {
+    		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(file));}
+    		file = fDms.save(file);
+    		reloadFiles();
+    }
+    
+    public void selectFile()
+    {
+    		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity((file)));}
+    		file = efLang.persistMissingLangs(fDms, sbhLocale.getList(), file);
+    }
     
 	@Override
 	public void save(JeeslAttributeHandler<ACONTAINER> handler) throws UtilsConstraintViolationException, UtilsLockingException
@@ -145,6 +176,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 //		section.setAttributeContainer(handler.saveContainer());
 		section = fAttribute.save(section);
 //		reloadDemos();
-		
 	}
+	
+	public void reorderFiles() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fDms, files);}
 }

@@ -19,10 +19,11 @@ public interface JeeslIoDmsFile<L extends UtilsLang, S extends JeeslIoDmsSection
 								FC extends JeeslFileContainer<?,?>, AC extends JeeslAttributeContainer<?,?>>
 					extends Serializable,EjbWithId,
 							EjbRemoveable,EjbPersistable,EjbSaveable,
-							EjbWithPositionVisibleParent,EjbWithLang<L>,
+							EjbWithPositionVisibleParent,
+							EjbWithLang<L>,
 							JeeslWithFileRepositoryContainer<FC>,JeeslWithAttributeContainer<AC>
 {	
-//	public enum Attributes{section}
+	public enum Attributes{section}
 	
 	S getSection();
 	void setSection(S section);

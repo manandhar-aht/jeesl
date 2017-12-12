@@ -53,7 +53,7 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
 	private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 	
-	public AbstractAdminDmsTreeBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms)
+	public AbstractAdminDmsTreeBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F> fbDms)
 	{
 		super(fbDms);
 		sbhDms = new SbSingleHandler<DMS>(fbDms.getClassDms(),this);

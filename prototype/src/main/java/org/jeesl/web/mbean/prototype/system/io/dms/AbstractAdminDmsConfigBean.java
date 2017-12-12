@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.api.facade.io.JeeslIoDmsFacade;
+import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
@@ -41,6 +43,8 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminDmsConfigBean.class);
 	
+	private final IoAttributeFactoryBuilder<L,D,?,?,?,?,AS,?,?,?> fbAttribute;
+	
 	private final EjbIoDmsFactory<DMS> efDms;
 	
 	private List<DMS> dms; public List<DMS> getDms() {return dms;}
@@ -49,11 +53,10 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 //	private List<ITEM> items; public List<ITEM> getItems() {return items;}
 	
 
-
-	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms)
+	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F> fbDms, final IoAttributeFactoryBuilder<L,D,?,?,?,?,AS,?,?,?> fbAttribute)
 	{
 		super(fbDms);
-		
+		this.fbAttribute=fbAttribute;
 		efDms = fbDms.ejbDms();
 		
 		sets = new ArrayList<AS>();
@@ -99,7 +102,7 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 	public void saveDm() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(dm));}
-		dm.setSet(fDms.find(fbDms.getClassAttributeSet(),dm.getSet()));
+		dm.setSet(fDms.find(fbAttribute.getClassSet(),dm.getSet()));
 		dm.setStorage(fDms.find(fbDms.getClassStorage(),dm.getStorage()));
 		
 		dm = fDms.save(dm);

@@ -2,8 +2,8 @@ package org.jeesl.factory.builder.io;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsFactory;
+import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsFileFactory;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsSectionFactory;
-import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
@@ -16,11 +16,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class IoDmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-								DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
+								DMS extends JeeslIoDms<L,D,STORAGE,?,SECTION>,
 								STORAGE extends JeeslFileStorage<L,D,?>,
-								AS extends JeeslAttributeSet<L,D,?,?>,
-								S extends JeeslIoDmsSection<L,S>,
-								FILE extends JeeslIoDmsFile<L,S,?,?>>
+								SECTION extends JeeslIoDmsSection<L,SECTION>,
+								FILE extends JeeslIoDmsFile<L,SECTION,?,?>>
 				extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDmsFactoryBuilder.class);
@@ -28,17 +27,18 @@ public class IoDmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 	private final Class<LOC> cLoc; public Class<LOC> getClassLocale() {return cLoc;}
 	private final Class<DMS> cDms; public Class<DMS> getClassDms() {return cDms;}
 	private final Class<STORAGE> cStorage; public Class<STORAGE> getClassStorage() {return cStorage;}
-	private final Class<AS> cAttributeSet; public Class<AS> getClassAttributeSet() {return cAttributeSet;}
-	private final Class<S> cSection; public Class<S> getClassSection() {return cSection;}
+	private final Class<SECTION> cSection; public Class<SECTION> getClassSection() {return cSection;}
+	private final Class<FILE> cFile; public Class<FILE> getClassFile() {return cFile;}
     
-	public IoDmsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<DMS> cDms, final Class<STORAGE> cStorage, final Class<AS> cAttributeSet, final Class<S> cSection)
+	public IoDmsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<DMS> cDms, final Class<STORAGE> cStorage, final Class<SECTION> cSection, final Class<FILE> cFile)
 	{
 		super(cL,cD);
 		this.cLoc=cLoc;
 		this.cDms=cDms;
 		this.cStorage=cStorage;
-		this.cAttributeSet=cAttributeSet;
+
 		this.cSection=cSection;
+		this.cFile=cFile;
 	}
 	
 	public EjbIoDmsFactory<DMS> ejbDms()
@@ -46,8 +46,13 @@ public class IoDmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 		return new EjbIoDmsFactory<DMS>(cDms);
 	}
 	
-	public EjbIoDmsSectionFactory<S> ejbSection()
+	public EjbIoDmsSectionFactory<SECTION> ejbSection()
 	{
-		return new EjbIoDmsSectionFactory<S>(cSection);
+		return new EjbIoDmsSectionFactory<SECTION>(cSection);
+	}
+	
+	public EjbIoDmsFileFactory<SECTION,FILE> ejbFile()
+	{
+		return new EjbIoDmsFileFactory<SECTION,FILE>(cFile);
 	}
 }

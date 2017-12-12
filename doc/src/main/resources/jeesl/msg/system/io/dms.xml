@@ -22,10 +22,24 @@
 	    	</s:langs>
 	</s:translation>
 	<s:translation key="jeeslIoDmsSection">
-	    	<s:langs>
-	    		<s:lang key="de" translation="Abschnitt"/>
-	    		<s:lang key="en" translation="Section"/>
-	    		<s:lang key="fr" translation="Section"/>
-	    	</s:langs>
-    </s:translation>
+    	<s:langs>
+    		<s:lang key="de" translation="Abschnitt"/>
+    		<s:lang key="en" translation="Section"/>
+    		<s:lang key="fr" translation="Section"/>
+    	</s:langs>
+   </s:translation>
+   <s:translation key="jeeslIoDmsFiles">
+    	<s:langs>
+    		<s:lang key="de" translation="Dateien"/>
+    		<s:lang key="en" translation="Files"/>
+    		<s:lang key="fr" translation="Files"/>
+    	</s:langs>
+   </s:translation>
+	<s:translation key="jeeslIoDmsFile">
+    	<s:langs>
+    		<s:lang key="de" translation="Datei"/>
+    		<s:lang key="en" translation="File"/>
+    		<s:lang key="fr" translation="File"/>
+    	</s:langs>
+   </s:translation>
 </s:translations>

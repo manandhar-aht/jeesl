@@ -79,8 +79,12 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	
 	public <E extends Enum<E>> void init(E code)
 	{
-		try {attributeSet = fAttribute.fByCode(fbAttribute.getClassSet(), code);}
+		try {init(fAttribute.fByCode(fbAttribute.getClassSet(), code));}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
+	}
+	public  void init(SET attributeSet)
+	{
+		this.attributeSet = attributeSet;
 	}
 	
 	public void reloadData()

@@ -32,9 +32,9 @@ public class JeeslIoDmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDmsFacadeBean.class);
 	
-	private final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms;
+	private final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F> fbDms;
 	
-	public JeeslIoDmsFacadeBean(EntityManager em, final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,AS,S,F> fbDms)
+	public JeeslIoDmsFacadeBean(EntityManager em, final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F> fbDms)
 	{
 		super(em);
 		this.fbDms=fbDms;

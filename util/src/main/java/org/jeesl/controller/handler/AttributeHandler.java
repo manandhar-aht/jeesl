@@ -59,6 +59,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	private final Map<CRITERIA,DATA> data; public Map<CRITERIA,DATA> getData() {return data;}
 	private final Map<CRITERIA,String[]> options; public Map<CRITERIA,String[]> getOptions() {return options;}
 	
+	
 	private SET attributeSet; public SET getAttributeSet() {return attributeSet;}
 	private CONTAINER container;
 	

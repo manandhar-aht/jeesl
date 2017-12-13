@@ -33,7 +33,7 @@ public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?
 	void setValueDouble(Double valueDouble);
 	
 	Date getValueRecord();
-	void setValueRecord(Date date);
+	void setValueRecord(Date valueRecord);
 	
 	OPTION getValueOption();
 	void setValueOption(OPTION option);

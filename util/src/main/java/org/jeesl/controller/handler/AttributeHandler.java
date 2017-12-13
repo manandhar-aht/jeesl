@@ -1,7 +1,9 @@
 package org.jeesl.controller.handler;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslAttributeBean;
@@ -48,14 +50,15 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	
 	private final JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute;
 	private final JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute;
-	private final FacesMessageBean bMessage;
 	private final AttributeBean<CONTAINER> bean;
 	
 	private final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute;
 	private final EjbAttributeContainerFactory<SET,CONTAINER> efContainer;
 	private final EjbAttributeDataFactory<CRITERIA,OPTION,CONTAINER,DATA> efData;
 	
-	private final Map<CRITERIA,DATA> data; public Map<CRITERIA, DATA> getData() {return data;}
+	private final Map<CRITERIA,DATA> data; public Map<CRITERIA,DATA> getData() {return data;}
+	private final Map<CRITERIA,String[]> options; public Map<CRITERIA,String[]> getOptions() {return options;}
+	
 	private SET attributeSet; public SET getAttributeSet() {return attributeSet;}
 	private CONTAINER container;
 	
@@ -65,7 +68,6 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 			final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute,
 			final AttributeBean<CONTAINER> bean)
 	{
-		this.bMessage=bMessage;
 		this.fAttribute=fAttribute;
 		this.bAttribute=bAttribute;
 		this.fbAttribute=fbAttribute;
@@ -73,7 +75,9 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 		
 		efContainer = fbAttribute.ejbContainer();
 		efData = fbAttribute.ejbData();
+		
 		data = new HashMap<CRITERIA,DATA>();
+		options = new HashMap<CRITERIA,String[]>();
 	}
 	
 	public <E extends Enum<E>> void init(E code)
@@ -90,10 +94,36 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	public void reloadData()
 	{
 		data.clear();
+		options.clear();
+		
+		if(debugOnInfo) {logger.info(this.getClass().getSimpleName()+" loading data for container: "+container.toString());}
 		for(DATA d : fAttribute.fAttributeData(container))
 		{
+			if(debugOnInfo)
+			{
+				StringBuilder sb = new StringBuilder();
+				sb.append("\t ").append(d.getCriteria().getPosition()).append(" ").append(d.getCriteria().getCode());
+				if(d.getCriteria().getType().getCode().equals("selectMany")) {sb.append(" selectMany:").append(d.getValueOptions().size());}
+				logger.info(sb.toString());
+			}
 			data.put(d.getCriteria(),d);
+			if(d.getValueOptions().isEmpty()) {options.put(d.getCriteria(),new String[0]);}
+			else
+			{
+				String[] tmp = new String[d.getValueOptions().size()];
+				for(int i=0;i<d.getValueOptions().size();i++)
+				{
+					tmp[i]=d.getValueOptions().get(i).getCode();
+				}
+				options.put(d.getCriteria(),tmp);
+			}
 		}
+	}
+	
+	public void save() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(this.getClass().getName()+" saveData");}
+		if(bean!=null) {bean.save(this);}
 	}
 	
 	public <W extends JeeslWithAttributeContainer<CONTAINER>> void prepare(W ejb)
@@ -114,7 +144,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 		}
 		if(bAttribute.getMapCriteria().containsKey(attributeSet))
 		{
-			if(debugOnInfo) {logger.info(this.getClass().getName()+" preparing for "+attributeSet.getCode()+" with "+bAttribute.getMapCriteria().get(attributeSet).size()+" "+fbAttribute.getClassCriteria().getSimpleName());}
+			if(debugOnInfo) {logger.info(this.getClass().getSimpleName()+" preparing for "+attributeSet.getCode()+" with "+bAttribute.getMapCriteria().get(attributeSet).size()+" "+fbAttribute.getClassCriteria().getSimpleName());}
 			for(CRITERIA c : bAttribute.getMapCriteria().get(attributeSet))
 			{
 				if(!data.containsKey(c))
@@ -130,16 +160,6 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 		if(debugOnInfo) {logger.info(this.getClass().getSimpleName()+" prepared for "+attributeSet.getCode()+" with "+data.size()+" "+fbAttribute.getClassData());}
 	}
 	
-	public void save() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		if(debugOnInfo)
-		{
-			logger.info(this.getClass().getName()+" saveData");
-		}
-		
-		if(bean!=null) {bean.save(this);}
-	}
-	
 	public CONTAINER saveContainer() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(EjbIdFactory.isUnSaved(container))
@@ -149,15 +169,27 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 		for(DATA d : data.values())
 		{
 			d.setContainer(container);
+			if(options.containsKey(d.getCriteria()))
+			{
+				
+				String[] tmp = options.get(d.getCriteria());
+				List<OPTION> l = new ArrayList<OPTION>();
+				for(String s : tmp)
+				{
+					for(OPTION o : bAttribute.getMapOption().get(d.getCriteria()))
+					{
+						if(o.getCode().equals(s)) {l.add(o);}
+					}
+					logger.info("\t"+s);
+				}
+				if(debugOnInfo) {logger.info(this.getClass().getSimpleName()+" Saving options "+d.getCriteria().getPosition()+" "+d.getCriteria().getCode()+" options:"+l.size());}
+				if(l.isEmpty()){d.setValueOptions(null);}
+				else {d.setValueOptions(l);}
+			}
+			else {d.setValueOptions(null);}
 			fAttribute.save(d);
 		}
 		reloadData();
 		return container;
-	}
-
-	
-//	public void save(CORRELATION correlation, SECTION section) throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		
 	}
 }

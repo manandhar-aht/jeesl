@@ -11,12 +11,13 @@
 	<ui:fragment>
 		<p:selectBooleanCheckbox value="#{attributeHandler.data[criteria].valueBoolean}" rendered="#{criteria.type.code eq 'bool'}"/>
 		<p:inputText value="#{attributeHandler.data[criteria].valueString}" rendered="#{criteria.type.code eq 'text'}"/>
-		<p:selectOneMenu id="s1" value="#{attributeHandler.data[criteria].valueOption}" effect="fade" rendered="#{criteria.type.code eq 'selectOne'}">
-			<f:selectItems value="#{appAttributeBean.mapOption[criteria]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
+		
+		<p:selectOneMenu id="sOne" value="#{attributeHandler.data[criteria].valueOption}" effect="fade" rendered="#{criteria.type.code eq 'selectOne'}">
+			<f:selectItems value="#{appAttributeBean.mapOption[criteria]}" var="o" itemLabel="#{o.name[loc].lang}" itemValue="#{o}"/>
 		</p:selectOneMenu>
 		
-		<p:selectManyCheckbox value="#{attributeHandler.data[criteria].valueOptions}" layout="grid" columns="1" rendered="#{criteria.type.code eq 'selectMany'}">
-	        <f:selectItems value="#{appAttributeBean.mapOption[criteria]}" var="opt" itemLabel="#{opt.name[localeCode].lang}" itemValue="#{opt.id}" />
+		<p:selectManyCheckbox id="sMulti" value="#{attributeHandler.options[criteria]}" layout="grid" columns="1" rendered="#{criteria.type.code eq 'selectMany'}">
+	        <f:selectItems value="#{appAttributeBean.mapOption[criteria]}" var="o" itemLabel="#{o.name[loc].lang}" itemValue="#{o.code}"/>
 	    </p:selectManyCheckbox>
 
 	</ui:fragment>

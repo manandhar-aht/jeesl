@@ -99,6 +99,11 @@
         <tag-name>ioUpload</tag-name>
         <source>jeeslPrototype/io/upload.xhtml</source>
     </tag>
+    
+	<tag>
+        <tag-name>ioAttributeTableColumns</tag-name>
+        <source>jeeslPrototype/io/attribute/tableColumns.xhtml</source>
+    </tag>
 
 	<tag>
         <tag-name>symbolizer</tag-name>

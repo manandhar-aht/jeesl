@@ -15,6 +15,7 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
+import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +47,7 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 		categories = new ArrayList<CATEGORY>();
 		types = new ArrayList<TYPE>();
 		mapCriteria = new HashMap<SET,List<CRITERIA>>();
+		mapTableHeader = new HashMap<SET,List<CRITERIA>>();
 		mapOption = new HashMap<CRITERIA,List<OPTION>>();
 	}
 	
@@ -80,21 +82,31 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 		}
 	}
 	
-	private final Map<SET,List<CRITERIA>> mapCriteria;
-	@Override  public Map<SET, List<CRITERIA>> getMapCriteria() {return mapCriteria;}
+	private final Map<SET,List<CRITERIA>> mapCriteria; @Override  public Map<SET,List<CRITERIA>> getMapCriteria() {return mapCriteria;}
+	private final Map<SET,List<CRITERIA>> mapTableHeader; @Override  public Map<SET,List<CRITERIA>> getMapTableHeader() {return mapTableHeader;}
 	private void reloadCriteria()
 	{
 		mapCriteria.clear();
+		mapTableHeader.clear();
+		
 		for(SET s : fAttribute.all(fbAttribute.getClassSet()))
 		{
-			List<CRITERIA> list = new ArrayList<CRITERIA>();
-			
-			for(ITEM item : fAttribute.allOrderedPositionVisibleParent(fbAttribute.getClassItem(),s))
-			{
-				list.add(item.getCriteria());
-			}
-			mapCriteria.put(s, list);
+			updateSet(s);
 		}
+	}
+	
+	public void updateSet(SET s)
+	{
+		List<CRITERIA> listCriteria = new ArrayList<CRITERIA>();
+		List<CRITERIA> listTable = new ArrayList<CRITERIA>();
+		
+		for(ITEM item : fAttribute.allOrderedPositionVisibleParent(fbAttribute.getClassItem(),s))
+		{
+			listCriteria.add(item.getCriteria());
+			if(BooleanComparator.active(item.getTableHeader())){listTable.add(item.getCriteria());}
+		}
+		mapCriteria.put(s, listCriteria);
+		mapTableHeader.put(s, listTable);
 	}
 	
 	private final Map<CRITERIA,List<OPTION>> mapOption;

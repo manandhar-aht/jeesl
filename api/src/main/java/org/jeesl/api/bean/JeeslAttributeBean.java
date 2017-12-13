@@ -30,6 +30,9 @@ public interface JeeslAttributeBean<L extends UtilsLang, D extends UtilsDescript
 	List<TYPE> getTypes();
 	void reloadTypes();
 	
+	void updateSet(SET set);
 	Map<SET,List<CRITERIA>> getMapCriteria();
+	Map<SET,List<CRITERIA>> getMapTableHeader();
+	
 	Map<CRITERIA,List<OPTION>> getMapOption();
 }

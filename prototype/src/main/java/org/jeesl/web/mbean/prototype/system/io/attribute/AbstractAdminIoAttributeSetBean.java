@@ -152,6 +152,7 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 		item.setCriteria(fAttribute.find(fbAttribute.getClassCriteria(),item.getCriteria()));
 		item = fAttribute.save(item);
 		reloadItems();
+		bAttribute.updateSet(item.getItemSet());
 	}
 	
 	public void deleteItem() throws UtilsConstraintViolationException, UtilsLockingException

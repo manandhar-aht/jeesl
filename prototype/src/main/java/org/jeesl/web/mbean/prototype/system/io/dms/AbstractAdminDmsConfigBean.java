@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
-import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.api.facade.io.JeeslIoDmsFacade;
 import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
@@ -33,7 +32,7 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 													DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
 													STORAGE extends JeeslFileStorage<L,D,?>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
-													S extends JeeslIoDmsSection<L,S>,
+													S extends JeeslIoDmsSection<L,D,S>,
 													F extends JeeslIoDmsFile<L,S,FC,AC>,
 													FC extends JeeslFileContainer<?,?>,
 													AC extends JeeslAttributeContainer<?,?>>

@@ -12,10 +12,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslIoDms<L extends UtilsLang,D extends UtilsDescription,
+public interface JeeslIoDms<L extends UtilsLang, D extends UtilsDescription,
 							STORAGE extends JeeslFileStorage<L,D,?>,
 							AS extends JeeslAttributeSet<L,D,?,?>,
-							S extends JeeslIoDmsSection<L,S>
+							S extends JeeslIoDmsSection<L,D,S>
 							>
 								
 		extends Serializable,EjbWithId,

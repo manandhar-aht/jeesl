@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.job;
 
+import java.io.Serializable;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -21,7 +23,8 @@ public interface JeeslJobCache<L extends UtilsLang,D extends UtilsDescription,
 							CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
 							USER extends EjbWithEmail
 							>
-		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithNonUniqueCode,EjbWithRecord
+		extends Serializable,
+				EjbWithId,EjbSaveable,EjbRemoveable,EjbWithNonUniqueCode,EjbWithRecord
 {
 	public static enum Attributes{template,code};
 	

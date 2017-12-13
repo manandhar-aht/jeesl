@@ -23,7 +23,7 @@ public class JeeslIoDmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 								DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
 								STORAGE extends JeeslFileStorage<L,D,?>,
 								AS extends JeeslAttributeSet<L,D,?,?>,
-								S extends JeeslIoDmsSection<L,S>,
+								S extends JeeslIoDmsSection<L,D,S>,
 								F extends JeeslIoDmsFile<L,S,FC,AC>,
 								FC extends JeeslFileContainer<?,?>,
 								AC extends JeeslAttributeContainer<?,?>>

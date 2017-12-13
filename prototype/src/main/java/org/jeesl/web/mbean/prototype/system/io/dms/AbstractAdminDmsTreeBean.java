@@ -37,7 +37,7 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
 											DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
 											STORAGE extends JeeslFileStorage<L,D,?>,
 											AS extends JeeslAttributeSet<L,D,?,?>,
-											S extends JeeslIoDmsSection<L,S>,
+											S extends JeeslIoDmsSection<L,D,S>,
 											F extends JeeslIoDmsFile<L,S,FC,AC>,
 											FC extends JeeslFileContainer<?,?>,
 											AC extends JeeslAttributeContainer<?,?>>
@@ -126,7 +126,8 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
     {
     		logger.info("Selected "+event.getTreeNode().toString());
     		section = (S)event.getTreeNode().getData();
-    		section = efLang.persistMissingLangs(fDms, localeCodes, section);
+    		section = efLang.persistMissingLangs(fDms, sbhLocale.getList(), section);
+    		section = efDescription.persistMissingLangs(fDms, sbhLocale.getList(), section);
     		S db = fDms.load(section,false);
     		efSection.update(db,section);
     }
@@ -136,7 +137,8 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbDms.getClassSection()));}
 		section = efSection.build(dm.getRoot());
-		section.setName(efLang.createEmpty(localeCodes));
+		section.setName(efLang.createEmpty(sbhLocale.getList()));
+		section.setDescription(efDescription.createEmpty(sbhLocale.getList()));
 	}
 	
 	public void saveSection() throws UtilsConstraintViolationException, UtilsLockingException

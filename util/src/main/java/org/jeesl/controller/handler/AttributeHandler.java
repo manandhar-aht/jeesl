@@ -59,12 +59,11 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	private SET attributeSet; public SET getAttributeSet() {return attributeSet;}
 	private CONTAINER container;
 	
-	
 	public AttributeHandler(FacesMessageBean bMessage,
 			final JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute,
 			final JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute,
 			final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute,
-			final AttributeBean bean)
+			final AttributeBean<CONTAINER> bean)
 	{
 		this.bMessage=bMessage;
 		this.fAttribute=fAttribute;
@@ -85,6 +84,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	public  void init(SET attributeSet)
 	{
 		this.attributeSet = attributeSet;
+		if(debugOnInfo) {logger.info("Initialized with Attribute Set: "+this.attributeSet.toString());}
 	}
 	
 	public void reloadData()
@@ -114,6 +114,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 		}
 		if(bAttribute.getMapCriteria().containsKey(attributeSet))
 		{
+			if(debugOnInfo) {logger.info(this.getClass().getName()+" preparing for "+attributeSet.getCode()+" with "+bAttribute.getMapCriteria().get(attributeSet).size()+" "+fbAttribute.getClassCriteria().getSimpleName());}
 			for(CRITERIA c : bAttribute.getMapCriteria().get(attributeSet))
 			{
 				if(!data.containsKey(c))
@@ -122,10 +123,11 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 				}
 			}
 		}
-		if(debugOnInfo)
+		else
 		{
-			logger.info(this.getClass().getName()+" prepared for "+attributeSet.getCode()+" with "+data.size()+" "+fbAttribute.getClassData());
+			logger.warn("The "+fbAttribute.getClassSet().getSimpleName()+" "+attributeSet.getCode()+" is not cached in "+bAttribute.getClass().getSimpleName());
 		}
+		if(debugOnInfo) {logger.info(this.getClass().getSimpleName()+" prepared for "+attributeSet.getCode()+" with "+data.size()+" "+fbAttribute.getClassData());}
 	}
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException

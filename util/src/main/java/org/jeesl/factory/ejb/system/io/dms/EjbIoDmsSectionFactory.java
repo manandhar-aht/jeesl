@@ -4,7 +4,7 @@ import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbIoDmsSectionFactory <S extends JeeslIoDmsSection<?,S>>
+public class EjbIoDmsSectionFactory <S extends JeeslIoDmsSection<?,?,S>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoDmsSectionFactory.class);
 	

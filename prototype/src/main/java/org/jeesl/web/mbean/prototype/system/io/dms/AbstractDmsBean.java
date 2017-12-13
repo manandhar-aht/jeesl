@@ -32,7 +32,7 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 													DMS extends JeeslIoDms<L,D,STORAGE,AS,SECTION>,
 													STORAGE extends JeeslFileStorage<L,D,?>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
-													SECTION extends JeeslIoDmsSection<L,SECTION>,
+													SECTION extends JeeslIoDmsSection<L,D,SECTION>,
 													F extends JeeslIoDmsFile<L,SECTION,FC,AC>,
 													FC extends JeeslFileContainer<?,?>,
 													AC extends JeeslAttributeContainer<?,?>>

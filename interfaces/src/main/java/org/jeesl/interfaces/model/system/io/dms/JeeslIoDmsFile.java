@@ -15,17 +15,16 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisiblePare
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslIoDmsFile<L extends UtilsLang, S extends JeeslIoDmsSection<L,S>,
+public interface JeeslIoDmsFile<L extends UtilsLang, S extends JeeslIoDmsSection<L,?,S>,
 								FC extends JeeslFileContainer<?,?>, AC extends JeeslAttributeContainer<?,?>>
 					extends Serializable,EjbWithId,
 							EjbRemoveable,EjbPersistable,EjbSaveable,
 							EjbWithPositionVisibleParent,
 							EjbWithLang<L>,
-							JeeslWithFileRepositoryContainer<FC>,JeeslWithAttributeContainer<AC>
+							JeeslWithFileRepositoryContainer<FC>, JeeslWithAttributeContainer<AC>
 {	
 	public enum Attributes{section}
 	
 	S getSection();
 	void setSection(S section);
-
 }

@@ -18,6 +18,7 @@
 	<composite:interface>
 		<composite:attribute name="handler" required="true"/>
 		<composite:attribute name="bean" required="true"/>
+		<composite:attribute name="update" required="false"/>
 		<composite:attribute name="withSave" required="false" default="true"/>
 		<composite:attribute name="datePattern" required="false" default="dd.MM.yyyy" />
 	</composite:interface>
@@ -25,7 +26,7 @@
 	<composite:implementation>
 			<p:panel id="pQuestions" styleClass="auPanelWithGrid" header="#{cc.attrs.handler.attributeSet.name[localeCode].lang}">
 				<f:facet name="actions">
-					<aht:icon id="btSave" type="jeeslSave" listener="#{cc.attrs.handler.save()}" update="@form" tooltip="#{msg.jeeslSurveyTtSaveSection}" rendered="#{cc.attrs.withSave}"/>
+					<aht:icon id="btSave" type="jeeslSave" listener="#{cc.attrs.handler.save()}" update="@form #{cc.attrs.update}" tooltip="#{msg.jeeslSurveyTtSaveSection}" rendered="#{cc.attrs.withSave}"/>
 				</f:facet>
 				<ui:repeat id="repeatC" value="#{appAttributeBean.mapCriteria[cc.attrs.handler.attributeSet]}"  var="c">	
 					<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">

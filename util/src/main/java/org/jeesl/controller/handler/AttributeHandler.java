@@ -58,7 +58,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	
 	private final Map<CRITERIA,DATA> data; public Map<CRITERIA,DATA> getData() {return data;}
 	private final Map<CRITERIA,String[]> options; public Map<CRITERIA,String[]> getOptions() {return options;}
-	
+	private final Map<CONTAINER,Map<CRITERIA,DATA>> containers; public Map<CONTAINER, Map<CRITERIA, DATA>> getContainers() {return containers;}
 	
 	private SET attributeSet; public SET getAttributeSet() {return attributeSet;}
 	private CONTAINER container;
@@ -79,6 +79,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 		
 		data = new HashMap<CRITERIA,DATA>();
 		options = new HashMap<CRITERIA,String[]>();
+		containers = new HashMap<CONTAINER,Map<CRITERIA,DATA>>();
 	}
 	
 	public <E extends Enum<E>> void init(E code)
@@ -192,5 +193,20 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 		}
 		reloadData();
 		return container;
+	}
+	
+	public <W extends JeeslWithAttributeContainer<CONTAINER>> void loadContainers(List<W> list)
+	{
+		containers.clear();
+		if(debugOnInfo) {logger.info("Loading "+list.size()+" "+fbAttribute.getClassContainer().getSimpleName());}
+		for(W w : list)
+		{
+			Map<CRITERIA,DATA> map = new HashMap<CRITERIA,DATA>();
+			for(DATA d : fAttribute.fAttributeData(w.getAttributeContainer()))
+			{
+				map.put(d.getCriteria(),d);
+			}
+			containers.put(w.getAttributeContainer(), map);
+		}
 	}
 }

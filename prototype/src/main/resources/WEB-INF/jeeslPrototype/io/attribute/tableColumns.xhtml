@@ -8,9 +8,9 @@
 >
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 
-	<p:columns var="c" value="#{appAttributeBean.mapTableHeader[handler.attributeSet]}">
-		<f:facet name="header"><h:outputText value="#{c.name[loc].lang}"/></f:facet>
-		<h:outputText value="#{c.id}"/>
+	<p:columns var="criteria" value="#{appAttributeBean.mapTableHeader[handler.attributeSet]}">
+		<f:facet name="header"><h:outputText value="#{criteria.name[loc].lang}"/></f:facet>
+		<h:outputText value="#{handler.containers[var.attributeContainer][criteria].valueString}" rendered="#{criteria.type.code eq 'text'}"/>
 	</p:columns>	
 	
 </ui:composition>

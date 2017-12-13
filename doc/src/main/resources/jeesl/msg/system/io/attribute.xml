@@ -55,8 +55,15 @@
 	    		<s:lang key="en" translation="Item"/>
 	    		<s:lang key="fr" translation="Item"/>
 	    	</s:langs>
-    </s:translation>    
-      	<s:translation key="jeeslIoAttributeOptions">
+    </s:translation>
+    	<s:translation key="jeeslIoAttributeItemTableHeader">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Tabelle"/>
+	    		<s:lang key="en" translation="Table"/>
+	    		<s:lang key="fr" translation="Table"/>
+	    	</s:langs>
+    </s:translation> 
+	<s:translation key="jeeslIoAttributeOptions">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Optionen"/>
 	    		<s:lang key="en" translation="Options"/>

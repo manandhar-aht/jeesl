@@ -17,4 +17,7 @@ public interface JeeslAttributeItem <CRITERIA extends JeeslAttributeCriteria<?,?
 	
 	CRITERIA getCriteria();
 	void setCriteria(CRITERIA criteria);
+	
+	Boolean getTableHeader();
+	void setTableHeader(Boolean tableHeader);
 }

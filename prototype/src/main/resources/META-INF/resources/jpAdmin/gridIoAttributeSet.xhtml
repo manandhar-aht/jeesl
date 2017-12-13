@@ -52,7 +52,7 @@
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslCategory}" rendered="#{cc.attrs.bean.sbhCategory.hasMore}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.set.category}" effect="fade" autoWidth="false" rendered="#{cc.attrs.bean.sbhCategory.hasMore}">
+								<p:selectOneMenu value="#{cc.attrs.bean.set.category}"  rendered="#{cc.attrs.bean.sbhCategory.hasMore}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{appAttributeBean.categories}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
 								</p:selectOneMenu>
 								<p:outputLabel value="#{msg.jeeslCode}"/>
@@ -74,11 +74,15 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderItems()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectItem()}" update=":#{cc.id}:sItems"/>
 							<p:column>  
-								<h:outputText value="#{i.position}"/>
-						      </p:column>
-						      <p:column headerText="#{msg.jeeslIoAttributeItem}">  
+								<h:graphicImage rendered="#{not i.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+                     			<h:outputText rendered="#{i.visible}" value="#{i.position}" />	
+						    </p:column>
+						    <p:column>  
+								<h:graphicImage rendered="#{i.tableHeader}" name="12/ui/system/io/attribute/table.png"  library="jeeslPrototypeGfx"/>
+						    </p:column>
+							<p:column headerText="#{msg.jeeslIoAttributeItem}">  
 									<h:outputText value="#{i.criteria.name[localeCode].lang}"/>
-					         </p:column>
+							</p:column>
 					   	</p:dataTable>
 					</h:form>
 					<h:form id="fItem">
@@ -92,6 +96,10 @@
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.item.visible}"/>
+								
+								<p:outputLabel value="#{msg.jeeslIoAttributeItemTableHeader}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.item.tableHeader}"/>
+								
 								
 								<p:outputLabel value="#{msg.jeeslIoAttributeSetShort}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.item.itemSet}" effect="fade" >

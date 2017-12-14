@@ -78,9 +78,10 @@
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.file}" withDescription="false" keys="#{cc.attrs.localeKeys}" />
 						</p:panel>
 					</h:form>
-					<h:form rendered="#{(not empty cc.attrs.bean.file) and (cc.attrs.bean.file.id gt 0)}">
-					<jp:ioAttributePanel handler="#{cc.attrs.bean.attributeHandler}" />
-				</h:form>
+					<h:form id="fAttrbute" rendered="#{(not empty cc.attrs.bean.file) and (cc.attrs.bean.file.id gt 0)}">
+						<jp:ioAttributePanel handler="#{cc.attrs.bean.attributeHandler}" />
+					</h:form>
+					<jp:ioFrFiles id="jeeslFrFiles" handler="#{cc.attrs.bean.fileHandler}" rendered="#{(not empty cc.attrs.bean.file) and (cc.attrs.bean.file.id gt 0)}" componentPrefix="#{cc.id}"/>
 				</aht:slot>
 			</aht:row>
 	    </aup:grid>

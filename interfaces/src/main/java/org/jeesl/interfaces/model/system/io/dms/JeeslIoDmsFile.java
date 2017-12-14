@@ -21,7 +21,8 @@ public interface JeeslIoDmsFile<L extends UtilsLang, S extends JeeslIoDmsSection
 							EjbRemoveable,EjbPersistable,EjbSaveable,
 							EjbWithPositionVisibleParent,
 							EjbWithLang<L>,
-							JeeslWithFileRepositoryContainer<FC>, JeeslWithAttributeContainer<AC>
+							JeeslWithFileRepositoryContainer<FC>,
+							JeeslWithAttributeContainer<AC>
 {	
 	public enum Attributes{section}
 	

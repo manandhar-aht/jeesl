@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslAttributeBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.callback.JeeslFileRepositoryCallback;
 import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.api.facade.io.JeeslIoDmsFacade;
+import org.jeesl.api.facade.io.JeeslIoFrFacade;
 import org.jeesl.controller.handler.AttributeHandler;
+import org.jeesl.controller.handler.fr.FileRepositoryHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
+import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
 import org.jeesl.interfaces.bean.AttributeBean;
 import org.jeesl.interfaces.controller.handler.JeeslAttributeHandler;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
@@ -23,6 +27,7 @@ import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
@@ -43,11 +48,15 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-											DMS extends JeeslIoDms<L,D,STORAGE,ASET,S>,
-											STORAGE extends JeeslFileStorage<L,D,?>,
+											DMS extends JeeslIoDms<L,D,FSTORAGE,ASET,S>,
 											S extends JeeslIoDmsSection<L,D,S>,
-											FILE extends JeeslIoDmsFile<L,S,FC,ACONTAINER>,
-											FC extends JeeslFileContainer<?,?>,
+											FILE extends JeeslIoDmsFile<L,S,FCONTAINER,ACONTAINER>,
+											
+											FSTORAGE extends JeeslFileStorage<L,D,FENGINE>,
+											FENGINE extends UtilsStatus<FENGINE,L,D>,
+											FCONTAINER extends JeeslFileContainer<FSTORAGE,FMETA>,
+											FMETA extends JeeslFileMeta<FCONTAINER,FTYPE>,
+											FTYPE extends UtilsStatus<FTYPE,L,D>,
 											
 											ACATEGORY extends UtilsStatus<ACATEGORY,L,D>,
 											ACRITERIA extends JeeslAttributeCriteria<L,D,ACATEGORY,ATYPE>,
@@ -58,19 +67,24 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 											ACONTAINER extends JeeslAttributeContainer<ASET,ADATA>,
 											ADATA extends JeeslAttributeData<ACRITERIA,AOPTION,ACONTAINER>
 >
-					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,ASET,S,FILE,FC,ACONTAINER>
-					implements Serializable,AttributeBean<ACONTAINER>
+					extends AbstractDmsBean<L,D,LOC,DMS,FSTORAGE,ASET,S,FILE,FCONTAINER,ACONTAINER>
+					implements Serializable,AttributeBean<ACONTAINER>,JeeslFileRepositoryCallback
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDmsUploadBean.class);	
 
-	private JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute;
+	private JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute; 
+	private JeeslIoFrFacade<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr;
+	
 	private final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute;
+	private final IoFileRepositoryFactoryBuilder<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fbFr;
 	
 	protected final SbSingleHandler<DMS> sbhDms; public SbSingleHandler<DMS> getSbhDms() {return sbhDms;}
 
 	private AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> attributeHandler; public AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> getAttributeHandler() {return attributeHandler;}
+	private FileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fileHandler; public FileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> getFileHandler() {return fileHandler;}
 
+	
 	private List<FILE> files; public List<FILE> getFiles() {return files;} public void setFiles(List<FILE> files) {this.files = files;}
 
 	private TreeNode tree; public TreeNode getTree() {return tree;}
@@ -78,25 +92,30 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 	private FILE file; public FILE getFile() {return file;} public void setFile(FILE file) {this.file = file;}
 
-	public AbstractDmsUploadBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,FILE> fbDms,
-								final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute)
+	public AbstractDmsUploadBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,FSTORAGE,S,FILE> fbDms,
+								final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute,
+								final IoFileRepositoryFactoryBuilder<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fbFr)
 	{
 		super(fbDms);
 		this.fbAttribute=fbAttribute;
+		this.fbFr=fbFr;
 		sbhDms = new SbSingleHandler<DMS>(fbDms.getClassDms(),this);
 	}
 	
 	protected void initDmsUpload(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,
-								JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,ASET,S,FILE,FC,ACONTAINER> fDms,
+								JeeslIoDmsFacade<L,D,LOC,DMS,FSTORAGE,ASET,S,FILE,FCONTAINER,ACONTAINER> fDms,
+								JeeslIoFrFacade<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr,
 								JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute,
 								JeeslAttributeBean<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> bAttribute
 								)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
+		this.fFr=fFr;
 		this.fAttribute=fAttribute;
 		initPageConfiguration();
 		super.initLocales();
 		attributeHandler = fbAttribute.handler(bMessage,fAttribute,bAttribute,this);
+		fileHandler = fbFr.handler(fFr,this);
 		sbhDms.silentCallback();
 	}
 	protected abstract void initPageConfiguration();
@@ -109,6 +128,13 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 		this.dm = (DMS)item;
 		attributeHandler.init(dm.getSet());
 		reloadTree();
+		reset(true,true);
+	}
+	
+	private void reset(boolean rSection, boolean rFile)
+	{
+		if(rSection) {section=null;}
+		if(rFile) {file=null;}
 	}
 	
 	private void reloadTree()
@@ -131,7 +157,6 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	public void onNodeExpand(NodeExpandEvent event) {if(debugOnInfo) {logger.info("Expanded "+event.getTreeNode().toString());}}
     public void onNodeCollapse(NodeCollapseEvent event) {if(debugOnInfo) {logger.info("Collapsed "+event.getTreeNode().toString());}}
 
-
     @SuppressWarnings("unchecked")
 	public void onSectionSelect(NodeSelectEvent event)
     {
@@ -141,6 +166,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
     		S db = fDms.load(section,false);
     		efSection.update(db,section);
     		reloadFiles();
+    		reset(false,true);
     }
     
     private void reloadFiles()
@@ -148,12 +174,13 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
     		files = fDms.allForParent(fbDms.getClassFile(),section);
     }
 
-    public void addFile()
+    public void addFile() throws UtilsConstraintViolationException, UtilsLockingException
     {
     		if(debugOnInfo) {logger.info(AbstractLogMessage.addEntity(fbDms.getClassFile()));}
     		file = efFile.build(section, files);
     		file.setName(efLang.createEmpty(sbhLocale.getList()));
     		attributeHandler.prepare(file);
+    		fileHandler.init(dm.getStorage(),file);
     }
     	
     public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
@@ -164,11 +191,12 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
     		attributeHandler.prepare(file);
     }
     
-    public void selectFile()
+    public void selectFile() throws UtilsConstraintViolationException, UtilsLockingException
     {
     		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity((file)));}
     		file = efLang.persistMissingLangs(fDms, sbhLocale.getList(), file);
     		attributeHandler.prepare(file);
+    		fileHandler.init(dm.getStorage(),file);
     }
     
 	@Override
@@ -176,7 +204,12 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	{
 		file.setAttributeContainer(handler.saveContainer());
 		file = fAttribute.save(file);
-
+	}
+	
+	@Override public void fileRepositoryContainerSaved(EjbWithId id) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		file.setFrContainer(fileHandler.getContainer());
+		file = fFr.save(file);
 	}
 	
 	public void reorderFiles() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fDms, files);}

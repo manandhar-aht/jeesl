@@ -12,6 +12,13 @@
 			<s:lang key="fr" translation="WARN"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="jeeslFmWarn">
+		<s:langs>
+			<s:lang key="en" translation="WARNUNG"/>
+			<s:lang key="en" translation="WARN"/>
+			<s:lang key="fr" translation="WARN"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="aupFmError">
 		<s:langs>
 			<s:lang key="en" translation="ERROR"/>

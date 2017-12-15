@@ -124,6 +124,7 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		selection = null;
 	}
 	
+	public boolean getHasNone(){return list.isEmpty();}
 	public boolean getHasSome(){return !list.isEmpty();}
 	public boolean getHasMore(){return list.size()>1;}
 	public boolean isSelected(){return selection!=null;}

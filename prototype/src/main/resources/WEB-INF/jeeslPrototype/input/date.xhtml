@@ -8,11 +8,14 @@
 >
 	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
 
+	<ui:remove>
+		<!-- The Id was originally pCalendar -->
+	</ui:remove>
 	<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%" rendered="#{rendered}">
-			<p:calendar id="pCalendar"
-						value="#{value}"
-						showOn="button"
-						pattern="#{appSettingsBean.calendarFormat}">
-            </p:calendar>
+		<p:calendar id="#{id}"
+					value="#{value}"
+					showOn="button"
+					pattern="#{appSettingsBean.calendarFormat}">
+		</p:calendar>
 	</h:panelGroup>
 </ui:composition>

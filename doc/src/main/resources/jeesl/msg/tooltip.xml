@@ -7,10 +7,11 @@
     	</s:langs>
     </s:translation>
     <s:translation key="ttSave">
-    	<s:langs>
-    		<s:lang key="en" translation="Save this item!"/>
-    		<s:lang key="fr" translation="Save this item!"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Speichern"/>
+	    		<s:lang key="en" translation="Save this item!"/>
+	    		<s:lang key="fr" translation="Save this item!"/>
+	    	</s:langs>
     </s:translation>
     <s:translation key="ttDelete">
     	<s:langs>
@@ -26,6 +27,7 @@
 	</s:translation>
 	<s:translation key="ttAdd">
         <s:langs>
+			<s:lang key="de" translation="Hinzufügen"/>
             <s:lang key="en" translation="Add an item!"/>
             <s:lang key="fr" translation="Add an item!"/>
         </s:langs>

@@ -9,6 +9,7 @@
 	<composite:interface>
 		<composite:attribute name="value" required="true"/>
 		<composite:attribute name="keys" required="false" default="#{appTranslationBean.langKeys}"/>
+		<composite:attribute name="locales" required="false"/>
 		<composite:attribute name="labelTranslation" required="false" default="#{msg.jeeslTranslation}"/>
 		<composite:attribute name="labelDescription" required="false" default="#{msg.jeeslDescription}"/>
 		<composite:attribute name="withName" required="false" default="true"/>
@@ -16,7 +17,7 @@
 	</composite:interface>
         
   <composite:implementation>
-  	<p:tabView id="tabView" var="t" value="#{cc.attrs.keys}">  
+  	<p:tabView id="tabViewKey" var="t" value="#{cc.attrs.keys}" rendered="#{empty cc.attrs.locales}">  
   		<p:tab title="#{t}">
   			<c:if test="#{cc.attrs.withName}">
 	  			<p:outputLabel value="#{cc.attrs.labelTranslation}"/>
@@ -25,6 +26,18 @@
   			<c:if test="#{cc.attrs.withDescription}">
   				<p:outputLabel value="#{cc.attrs.labelDescription}"/>
   				<p:inputTextarea value="#{cc.attrs.value.description[t].lang}" style="width:100%" autocomplete="off"/>
+  			</c:if>
+  		</p:tab>  
+  	</p:tabView> 
+  	<p:tabView id="tabViewLocale" var="l" value="#{cc.attrs.locales}" rendered="#{not empty cc.attrs.locales}">  
+  		<p:tab title="#{l.code}">
+  			<c:if test="#{cc.attrs.withName}">
+	  			<p:outputLabel value="#{cc.attrs.labelTranslation}"/>
+	  			<p:inputTextarea value="#{cc.attrs.value.name[l.code].lang}" maxlength="254" style="width:100%" autocomplete="off"/>
+  			</c:if>
+  			<c:if test="#{cc.attrs.withDescription}">
+  				<p:outputLabel value="#{cc.attrs.labelDescription}"/>
+  				<p:inputTextarea value="#{cc.attrs.value.description[l.code].lang}" style="width:100%" autocomplete="off"/>
   			</c:if>
   		</p:tab>  
   	</p:tabView> 

@@ -12,7 +12,7 @@
 		<!-- The Id was originally pCalendar -->
 	</ui:remove>
 	<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%" rendered="#{rendered}">
-		<p:calendar id="#{id}"
+		<p:calendar 
 					value="#{value}"
 					showOn="button"
 					pattern="#{appSettingsBean.calendarFormat}">

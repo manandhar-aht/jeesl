@@ -28,6 +28,8 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.model.pojo.map.id.Nested3IdMap;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,8 +80,11 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	private Set<SECTION> activeSections;
 	private SECTION activeSection; public SECTION getActiveSection() {return activeSection;} public void setActiveSection(SECTION activeSection) {this.activeSection = activeSection;}
 
+	private boolean showDataSave; public boolean isShowDataSave() {return showDataSave;}
+	private boolean showDataFields; public boolean isShowDataFields() {return showDataFields;}
+
 	private boolean showAssessment; public boolean isShowAssessment() {return showAssessment;}
-	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
+	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} //public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
 	
 	public static boolean debugPerformance = false;
 	public static int debugDelay = 1000;
@@ -92,6 +97,9 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		this.bMessage=bMessage;
 		this.fSurvey=fSurvey;
 		this.bSurvey=bSurvey;
+		
+		showDataSave = false;
+		showDataFields = false;
 		
 		showAssessment = false;
 		allowAssessment = true;
@@ -117,12 +125,16 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		matrix.clear();
 		multiOptions.clear();
 		activeSections.clear();
+		
+		showDataSave = false;
 		surveyData = null;
 		showAssessment = false;
 	}
 	
 	public void prepare(SURVEY survey, CORRELATION correlation)
 	{
+		buildControls(survey);
+		
 		showAssessment = true;
 		if(SurveyHandler.debugPerformance){logger.warn("prepare fData()");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		try {surveyData = fSurvey.fData(correlation);}
@@ -134,11 +146,24 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	
 	public void prepareNested(SURVEY survey, CORRELATION correlation)
 	{
+		buildControls(survey);
+		
 		showAssessment = true;
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate().getNested();
 		activeSections.addAll(bSurvey.getMapSection().get(template));
+	}
+	
+	private void buildControls(SURVEY survey)
+	{
+		boolean surveyOpen = survey.getStatus().getCode().equals(JeeslSurvey.Status.open.toString());
+		boolean surveyPreparation = survey.getStatus().getCode().equals(JeeslSurvey.Status.preparation.toString());
+		boolean surveyInPeriod = (new Interval(new DateTime(survey.getStartDate()), new DateTime(survey.getEndDate()))).containsNow();
+		
+		logger.info("surveyOpen:"+surveyOpen+" surveyDate:"+surveyInPeriod);
+		showDataSave = surveyOpen && surveyInPeriod;
+		showDataFields = surveyPreparation || (surveyOpen && surveyInPeriod);
 	}
 	
 	public void reloadAnswers(){reloadAnswers(true);}

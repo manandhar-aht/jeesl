@@ -10,16 +10,34 @@
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 
 		<ui:fragment rendered="#{surveyHandler.allowAssessment}">
+			
+			<ui:fragment rendered="#{question.showText  and (not question.showMatrix)}">
+				<p:inputText  value="#{surveyHandler.answers[question].valueText}" rendered="#{surveyHandler.showDataFields}"/>
+				<h:outputText value="#{surveyHandler.answers[question].valueText}" rendered="#{not surveyHandler.showDataFields}"/>
+			</ui:fragment>
+			<ui:fragment rendered="#{question.showSelectOne and (not question.showMatrix)}">
+				<p:selectOneMenu id="categoryS1" value="#{surveyHandler.answers[question].option}" effect="fade" rendered="#{surveyHandler.showDataFields}">
+					<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="o" itemLabel="#{o.name[loc].lang}" itemValue="#{o}"/>
+				</p:selectOneMenu>
+				<h:outputText value="#{surveyHandler.answers[question].option.name[loc].lang}" rendered="#{not surveyHandler.showDataFields}"/>
+			</ui:fragment>
+			<ui:fragment rendered="#{question.showRemark}">
+				<p:inputTextarea id="remarkIta" rows="2" styleClass="w100"  value="#{surveyHandler.answers[question].remark}" rendered="#{surveyHandler.showDataFields}"/>
+				<p:watermark for="remarkIta" value="Remark" id="watermark" rendered="#{surveyHandler.showDataFields}"/>
+				<h:outputText value="#{surveyHandler.answers[question].remark}" rendered="#{not surveyHandler.showDataFields}"/>
+			</ui:fragment>
+			
+			
+			
 			<p:selectBooleanCheckbox rendered="#{question.showBoolean and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueBoolean}" />
+			
 			<p:inputText rendered="#{question.showInteger and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueNumber}"/>
 			<p:inputText rendered="#{question.showDouble and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDouble}"/>
-			<p:inputText rendered="#{question.showText  and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueText}"/>
-			<p:inputTextarea id="remarkIta" rows="2" styleClass="w100" rendered="#{question.showRemark}" value="#{surveyHandler.answers[question].remark}"/>
-			<p:watermark for="remarkIta" value="Remark" id="watermark" />
+			
+			
 			<jtp:inputDate rendered="#{question.showDate and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDate}"/>
-			<p:selectOneMenu id="categoryS1" value="#{surveyHandler.answers[question].option}" effect="fade" rendered="#{question.showSelectOne and (not question.showMatrix)}">
-				<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
-			</p:selectOneMenu>
+							
+			
 			<p:selectManyMenu showCheckbox="true" rendered="#{question.showSelectMulti and (not question.showMatrix)}"
 								value="#{surveyHandler.districts}" var="o">
 	           	<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="opt" itemLabel="#{opt.name[localeCode].lang}" itemValue="#{opt.id}" />

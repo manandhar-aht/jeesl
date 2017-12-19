@@ -43,7 +43,9 @@
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveDocument()}" update=":#{cc.id}:grid #{cc.attrs.updateStatusBar}" tooltip="#{msg.ttSave}" mayDisappear="true"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60">
+								<p:outputLabel value="#{msg.jeeslId}"/>
+								<h:outputText value="#{cc.attrs.bean.cms.id}"/>
 								<p:outputLabel value="#{msg.jeeslCmsDocumentToc}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.cms.toc}"/>
 							</p:panelGrid>

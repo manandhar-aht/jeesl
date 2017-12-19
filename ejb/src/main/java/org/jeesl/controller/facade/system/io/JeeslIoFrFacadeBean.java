@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -54,12 +55,16 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 	}
 
 
-	@Override
-	public META saveToFileRepository(META meta, byte[] bytes) throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public META saveToFileRepository(META meta, byte[] bytes) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		meta.setMd5Hash(HashUtil.hash(bytes));
 		meta = this.saveProtected(meta);
 		build(meta.getContainer().getStorage()).saveToFileRepository(meta,bytes);
 		return meta;
-	}	
+	}
+	
+	@Override public byte[] loadFromFileRepository(META meta) throws UtilsNotFoundException
+	{
+		return build(meta.getContainer().getStorage()).loadFromFileRepository(meta);
+	}
 }

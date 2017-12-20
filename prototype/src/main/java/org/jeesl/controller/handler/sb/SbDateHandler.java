@@ -87,4 +87,13 @@ public class SbDateHandler implements Serializable
 		logger.info("changed");
 		if(bean!=null){bean.callbackDateChanged();}
 	}
+	
+	public void shiftToFirstLastDayofMonth()
+	{
+		DateTime dt1 = new DateTime(date1);
+		date1 = dt1.withTimeAtStartOfDay().withDayOfMonth(1).toDate();
+		
+		DateTime dt2 = new DateTime(date2);
+		date2 = dt2.withTimeAtStartOfDay().withDayOfMonth(1).plusMonths(1).minusDays(1).toDate();
+	}
 }

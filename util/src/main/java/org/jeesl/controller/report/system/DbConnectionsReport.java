@@ -49,9 +49,9 @@ public class DbConnectionsReport <L extends UtilsLang,D extends UtilsDescription
 {
 	final static Logger logger = LoggerFactory.getLogger(DbConnectionsReport.class);
 
-	private JeeslIoDbFacade fDb;
+	private JeeslIoDbFacade<L,D,?,?,?,?> fDb;
 	
-	public DbConnectionsReport(String localeCode, JeeslIoDbFacade fDb, 
+	public DbConnectionsReport(String localeCode, JeeslIoDbFacade<L,D,?,?,?,?> fDb, 
 			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport,
 			final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
 	{

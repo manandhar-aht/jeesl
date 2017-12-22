@@ -78,7 +78,10 @@ public class FileRepositoryHandler<L extends UtilsLang, D extends UtilsDescripti
 			if(EjbIdFactory.isSaved(with))
 			{
 				container = fFr.save(container);
-				callback.fileRepositoryContainerSaved(with);
+				if(callback!=null)
+				{
+					callback.fileRepositoryContainerSaved(with);
+				}
 			}
 		}
 		else
@@ -117,6 +120,16 @@ public class FileRepositoryHandler<L extends UtilsLang, D extends UtilsDescripti
 		xmlFile = XmlFileFactory.build("");
 	}
 	
+	public void addFile(String name, byte[] bytes) throws UtilsNotFoundException
+	{
+		addFile();
+		xmlFile.setName(name);
+		xmlFile.setSize(bytes.length);
+		xmlFile.setData(XmlDataFactory.build(bytes));
+		meta = efMeta.build(container,name,bytes.length,new Date());
+		meta.setType(fFr.fByCode(fbFile.getClassType(), JeeslFileType.Code.unknown));
+	}
+	
 	public void handleFileUpload(FileUploadEvent event) throws UtilsNotFoundException
 	{
 		logger.info("Handling FileUpload: "+event.getFile().getFileName());
@@ -128,6 +141,8 @@ public class FileRepositoryHandler<L extends UtilsLang, D extends UtilsDescripti
 		
 		logger.info(meta.toString());
     }
+	
+	
 	
 	public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
 	{

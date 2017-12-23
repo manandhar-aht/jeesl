@@ -54,7 +54,7 @@
 				</aht:slot>
 				<aht:slot id="sActions" width="4" renderChildren="#{not empty cc.attrs.bean.view}">
 					<h:form id="fView">
-						<p:panel rendered="#{not empty cc.attrs.bean.view}" header="#{msg.aupSecurityView}" styleClass="auPanelWithGrid">
+						<p:panel rendered="#{not empty cc.attrs.bean.view}" header="#{msg.aupSecurityView}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveView()}" update=":#{cc.id}:sViews :#{cc.id}:sActions" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteView()}" update=":#{cc.id}:sViews :#{cc.id}:sActions" rendered="#{cc.attrs.bean.hasDeveloperAction}" mayDisappear="true" tooltip="#{msg.ttDelete}"/>

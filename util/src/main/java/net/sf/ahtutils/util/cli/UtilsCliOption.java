@@ -81,11 +81,7 @@ public class UtilsCliOption
 	public void handleLogger(CommandLine line)
 	{
 		if(line.hasOption(oDebug.getOpt())) {initLogger("log4j.debug.xml");}
-        else
-        {
-//        	System.out.println("Using cli");
-        	initLogger("log4j.cli.xml");
-        }
+        else {initLogger("log4j.cli.xml");}
 	}
 	
 	private void initLogger(String logConfig)

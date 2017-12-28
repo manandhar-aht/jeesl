@@ -57,7 +57,7 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 		sb.append("Init "+TranslationMap.class.getSimpleName()+" with "+fXml);
 		try
 		{
-			Dir dir = JaxbUtil.loadJAXB(cl,fXml, Dir.class);
+			Dir dir = JaxbUtil.loadJAXB(cl,fXml,Dir.class);
 			TranslationFactory tFactory = new TranslationFactory();
 			for(net.sf.exlp.xml.io.File f : dir.getFile())
 			{

@@ -11,6 +11,8 @@ import org.jeesl.factory.builder.system.StatusFactoryBuilder;
 import org.jeesl.factory.builder.system.SvgFactoryBuilder;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
+import org.jeesl.interfaces.model.system.option.JeeslOptionDownloadable;
+import org.jeesl.interfaces.model.system.option.JeeslOptionUploadable;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicStyle;
@@ -62,6 +64,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	protected boolean allowSvg; public boolean isAllowSvg() {return allowSvg;}
 	
+	private boolean supportsUpload; public boolean getSupportsUpload(){return supportsUpload;}
+	private boolean supportsDownload; public boolean getSupportsDownload(){return supportsDownload;}
 	protected boolean supportsSymbol; public boolean getSupportsSymbol(){return supportsSymbol;}
 	protected boolean supportsImage; public boolean getSupportsImage() {return supportsImage;}
 	protected boolean supportsGraphic; public boolean getSupportsGraphic() {return supportsGraphic;}
@@ -129,6 +133,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	protected void updateUiForCategory()
 	{
+		supportsUpload = JeeslOptionUploadable.class.isAssignableFrom(cl);
+		supportsDownload = JeeslOptionDownloadable.class.isAssignableFrom(cl);
 		supportsImage = UtilsWithImage.class.isAssignableFrom(cl);
 		supportsGraphic = EjbWithGraphic.class.isAssignableFrom(cl);
 		supportsSymbol = UtilsWithSymbol.class.isAssignableFrom(cl);
@@ -146,6 +152,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			logger.info("\tGraphic? "+supportsGraphic);
 			logger.info("\tSymbol? "+supportsSymbol);
 			logger.info("\tFigure? "+supportsFigure);
+			logger.info("\t"+JeeslOptionDownloadable.class.getSimpleName()+"? "+supportsDownload);
+			logger.info("\t"+JeeslOptionUploadable.class.getSimpleName()+"? "+supportsUpload);
 		}
 	}
 	

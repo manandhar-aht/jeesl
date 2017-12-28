@@ -47,8 +47,7 @@ public class PostgresDump extends AbstractPostgresShell implements UtilsDbShell
 	public void buildCommands(boolean withStructure) throws ExlpUnsupportedOsException
 	{
 		super.cmdPre();
-		if (db=="wis") {dumpDatabaseWis();}
-		else
+//		if (db=="wis") {dumpDatabaseWis();} else
 		dumpDatabase();
 		super.cmdPost();
 	}

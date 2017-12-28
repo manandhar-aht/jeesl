@@ -44,6 +44,8 @@
 							<f:facet name="header">
 					          	<aht:pfDataTableHeader title="#{msg[cc.attrs.bean.category.code]}">
 					          		<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttNew}" rendered="#{cc.attrs.bean.uiAllowAdd}"/>
+					          		<aht:icon type="jeeslUpload" listener="#{cc.attrs.bean.upload()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttUpload}" rendered="#{cc.attrs.bean.supportsUpload}"/>
+					          		<aht:icon type="jeeslDownload" listener="#{cc.attrs.bean.download()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttUpload}" rendered="#{cc.attrs.bean.supportsDownload}"/>
 					          	</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form"/>

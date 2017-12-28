@@ -11,6 +11,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
+@Path("/rest/jeesl/export")
 public interface JeeslExportRest <L extends UtilsLang,D extends UtilsDescription>
 {	
 	@GET @Path("/status/{code}") @Produces(MediaType.APPLICATION_XML)

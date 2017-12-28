@@ -63,7 +63,7 @@
 								<p:selectOneMenu value="#{cc.attrs.bean.template.category}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 								</p:selectOneMenu>
-								<p:outputLabel value="#{msg.aupSecurityCode}"/>
+								<p:outputLabel value="#{msg.jeeslSecurityCode}"/>
 								<h:inputText value="#{cc.attrs.bean.template.code}"/>
 								
 								<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>

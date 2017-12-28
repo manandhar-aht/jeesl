@@ -78,7 +78,7 @@ public class JeeslMsgBuilder
 	//Util
 	public static final String adminStatus = "jeesl/msg/util/status.xml";
 	public static final String adminOptionTables = "jeesl/msg/admin/system/options.xml";
-	public static final String adminSecurity = "jeesl/msg/module/security.xml";
+	public static final String adminSecurity = "jeesl/msg/system/security.xml";
 	public static final String adminUser = "jeesl/msg/admin/user.xml";
 	
 	//Dev

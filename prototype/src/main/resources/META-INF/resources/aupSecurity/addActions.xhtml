@@ -33,7 +33,7 @@
 			<p:column headerText="#{msg.aupSecurityView}" >
 				<h:outputText value="#{a.view.name[userBean.localeCode].lang}" />
 			</p:column>
-			<p:column headerText="#{msg.aupSecurityCode}">
+			<p:column headerText="#{msg.jeeslSecurityCode}">
 				<h:outputText value="#{a.toCode}" />
 			</p:column>
 			<p:column headerText="#{msg.aupSecurityAction}">
@@ -52,7 +52,7 @@
 				<p:column headerText="#{msg.aupSecurityView}" sortBy="#{a.view.name[userBean.localeCode].lang}" filterBy="#{a.view.name[userBean.localeCode].lang}" filterMatchMode="contains">
 					<h:outputText value="#{a.view.name[userBean.localeCode].lang}" />
 				</p:column>
-				<p:column headerText="#{msg.aupSecurityCode}">
+				<p:column headerText="#{msg.jeeslSecurityCode}">
 					<h:outputText value="#{a.toCode}" />
 				</p:column>
 				<p:column headerText="#{msg.aupSecurityAction}" sortBy="#{a.view.toName[userBean.localeCode].lang}" filterBy="#{a.toName[userBean.localeCode].lang}" filterMatchMode="contains">

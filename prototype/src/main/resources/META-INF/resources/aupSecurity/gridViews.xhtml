@@ -70,7 +70,7 @@
 								<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{cc.attrs.bean.view.visible}"/>
 								
-								<p:outputLabel value="#{msg.aupSecurityCode}"/>
+								<p:outputLabel value="#{msg.jeeslSecurityCode}"/>
 								<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.view.code}"/>
 								<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.view.code}"/>
 								
@@ -111,7 +111,7 @@
 									<f:selectItems value="#{cc.attrs.bean.templates}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
 									<p:ajax event="change" listener="#{cc.attrs.bean.changeTemplate()}" update="@form"/>
 								</p:selectOneMenu>
-								<p:outputLabel value="#{msg.aupSecurityCode}"/>
+								<p:outputLabel value="#{msg.jeeslSecurityCode}"/>
 								<h:outputText rendered="#{(not empty cc.attrs.bean.action.template) or (not cc.attrs.bean.uiAllowCode)}" value="#{cc.attrs.bean.action.toCode}"/>
 								<p:inputText rendered="#{(empty cc.attrs.bean.action.template) and (cc.attrs.bean.uiAllowCode)}" value="#{cc.attrs.bean.action.code}"/>
 							</p:panelGrid>
@@ -121,7 +121,7 @@
 					</h:form>
 					
 					<p:dataTable var="u" value="#{cc.attrs.bean.usecases}" rendered="#{not empty cc.attrs.bean.view}">
-						<f:facet name="header"><aht:pfDataTableHeader title="#{msg.aupSecurityViewAppliedToUsecase}"/></f:facet>
+						<f:facet name="header"><aht:pfDataTableHeader title="#{msg.jeeslSecurityViewAppliedToUsecase}"/></f:facet>
 						<p:column><h:outputText value="#{u.category.position}.#{u.position}" /></p:column>  
 			            <p:column headerText="#{msg.aupSecurityRole}">  
 							<h:outputText value="#{u.name[userBean.localeCode].lang}" />  

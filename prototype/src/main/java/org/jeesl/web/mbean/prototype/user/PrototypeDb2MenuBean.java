@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.exlp.util.io.StringUtil;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescription,
@@ -52,7 +53,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	
 	private JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	
-	private XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER> xfMenuItem;
+	private final XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER> xfMenuItem;
 	private final EjbSecurityMenuFactory<V,M> efMenu;
 	private final TxtSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER> tfMenu;
 	
@@ -77,6 +78,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		mapSub = new HashMap<M,MenuItem>();
 		mapBreadcrumb = new HashMap<M,Breadcrumb>();
 		
+		xfMenuItem = new XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER>(localeCode);
 		efMenu = fbSecurity.ejbMenu(cMenu);
 		tfMenu = new TxtSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>();
 		
@@ -111,14 +113,24 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	{
 		if(setupRequired)
 		{
-			xfMenuItem = new XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER>(localeCode);
+			if(debugOnInfo) {logger.info(StringUtil.stars());logger.info("Setup Menu");}
+			xfMenuItem.setLocaleCode(localeCode);
 			
 			M root = efMenu.build();
 			mapKey.put(JeeslSecurityMenu.keyRoot, root);
 			for(M m : fSecurity.allOrderedPosition(cMenu))
 			{
+				if(debugOnInfo)
+				{
+					logger.info("View: "+m.getView().getCode());
+					logger.info("\t\tm.getView().isVisible() "+m.getView().isVisible());
+					logger.info("\t\tm.getView().getAccessPublic() "+m.getView().getAccessPublic());
+					logger.info("\t\tidentity.isLoggedIn() "+identity.isLoggedIn());
+					logger.info("\t\tidentity.hasView(m.getView()) "+identity.hasView(m.getView()));
+				}
+				
 				boolean visible = m.getView().isVisible() && (m.getView().getAccessPublic() || (identity.isLoggedIn() && (m.getView().getAccessLogin() || identity.hasView(m.getView()))));
-//				logger.info(m.getView().getCode()+" "+visible);
+				if(debugOnInfo) {logger.info("\t\t"+m.getView().getCode()+" "+visible);}
 				if(visible)
 				{
 					M parent = null;

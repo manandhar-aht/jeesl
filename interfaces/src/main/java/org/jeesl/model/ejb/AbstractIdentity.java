@@ -33,7 +33,6 @@ public abstract class AbstractIdentity < R extends JeeslSecurityRole<?,?,?,V,U,A
 	private Map<String,Boolean> mapUsecases,mapRoles,mapActions;
 	
 	private Map<String,Boolean> mapSystemViews; //Only systems views, domain views not included
-	
 	private Map<String,Boolean> mapViews;
 	
 	private boolean loggedIn; public boolean isLoggedIn() {return loggedIn;}  public void setLoggedIn(boolean loggedIn) {this.loggedIn = loggedIn;}
@@ -66,7 +65,7 @@ public abstract class AbstractIdentity < R extends JeeslSecurityRole<?,?,?,V,U,A
 	
 	public boolean hasView(V view)
 	{
-		if(mapViews.containsKey(view.toString())){return mapViews.get(view.toString());}
+		if(mapViews.containsKey(view.getCode())){return mapViews.get(view.getCode());}
 		return false;
 	}
 	public boolean hasView(String code)

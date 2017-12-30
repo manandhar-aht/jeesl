@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.security.user;
 
+import java.io.Serializable;
+
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
@@ -10,6 +12,7 @@ public interface JeeslIdentity <R extends JeeslSecurityRole<?,?,?,V,U,A,USER>,
 								U extends JeeslSecurityUsecase<?,?,?,R,V,A>,
 								A extends JeeslSecurityAction<?,?,R,V,U,?>,
 								USER extends JeeslUser<R>>
+				extends Serializable
 {	
 	USER getUser();
 	void setUser(USER user);

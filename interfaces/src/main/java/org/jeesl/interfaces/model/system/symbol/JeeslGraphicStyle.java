@@ -1,6 +1,8 @@
 package org.jeesl.interfaces.model.system.symbol;
 
-public interface JeeslGraphicStyle
+import org.jeesl.interfaces.model.system.option.JeeslOptionRestDownload;
+
+public interface JeeslGraphicStyle extends JeeslOptionRestDownload
 {
 	public static enum Code{circle,square,triangle}
 	public static enum Group{outer,inner}

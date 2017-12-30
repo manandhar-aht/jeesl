@@ -6,12 +6,17 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.resteasy.client.jaxrs.ResteasyClient;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.rest.JeeslExportRest;
 import org.jeesl.factory.builder.system.StatusFactoryBuilder;
 import org.jeesl.factory.builder.system.SvgFactoryBuilder;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
-import org.jeesl.interfaces.model.system.option.JeeslOptionDownloadable;
+import org.jeesl.interfaces.model.system.option.JeeslOptionRest;
+import org.jeesl.interfaces.model.system.option.JeeslOptionRestDownload;
 import org.jeesl.interfaces.model.system.option.JeeslOptionUploadable;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
@@ -20,6 +25,7 @@ import org.jeesl.interfaces.model.system.symbol.JeeslGraphicType;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.model.xml.jeesl.Container;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
@@ -28,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -48,6 +55,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.exlp.util.io.StringUtil;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 										G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
@@ -134,7 +142,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	protected void updateUiForCategory()
 	{
 		supportsUpload = JeeslOptionUploadable.class.isAssignableFrom(cl);
-		supportsDownload = JeeslOptionDownloadable.class.isAssignableFrom(cl);
+		supportsDownload = JeeslOptionRestDownload.class.isAssignableFrom(cl);
 		supportsImage = UtilsWithImage.class.isAssignableFrom(cl);
 		supportsGraphic = EjbWithGraphic.class.isAssignableFrom(cl);
 		supportsSymbol = UtilsWithSymbol.class.isAssignableFrom(cl);
@@ -152,7 +160,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			logger.info("\tGraphic? "+supportsGraphic);
 			logger.info("\tSymbol? "+supportsSymbol);
 			logger.info("\tFigure? "+supportsFigure);
-			logger.info("\t"+JeeslOptionDownloadable.class.getSimpleName()+"? "+supportsDownload);
+			logger.info("\t"+JeeslOptionRestDownload.class.getSimpleName()+"? "+supportsDownload);
 			logger.info("\t"+JeeslOptionUploadable.class.getSimpleName()+"? "+supportsUpload);
 		}
 	}
@@ -397,4 +405,21 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	public void pageFlowPrimaryCancel() {}
 	public void pageFlowPrimarySave(Object revision) {}
 	public void pageFlowPrimaryAdd() {}
+	
+	
+	//JEESL REST
+	
+	@SuppressWarnings("unchecked")
+	public <X extends JeeslOptionRest> void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
+	{
+		logger.info("Downloading REST");
+		ResteasyClient client = new ResteasyClientBuilder().build();
+		ResteasyWebTarget restTarget = client.target("http://localhost:8080/jeesl");
+		JeeslExportRest<L,D> rest = restTarget.proxy(JeeslExportRest.class);
+		
+		Class<X> cX = (Class<X>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(JeeslOptionRest.class);
+		X x = cX.newInstance();
+		Container xml = rest.exportStatus(x.getRestCode());
+		JaxbUtil.info(xml);
+	}
 }

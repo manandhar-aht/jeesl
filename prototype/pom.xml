@@ -33,11 +33,11 @@
 			<artifactId>jeesl-mail</artifactId>
 			<scope>provided</scope>
 		</dependency>
-   	<dependency>
-   		<groupId>com.sun.faces</groupId>
-   		<artifactId>jsf-api</artifactId>
-   		<scope>provided</scope>
-   	</dependency>
+		<dependency>
+	   		<groupId>com.sun.faces</groupId>
+	   		<artifactId>jsf-api</artifactId>
+	   		<scope>provided</scope>
+		</dependency>
 		<dependency>  
    			<groupId>org.primefaces</groupId>  
    			<artifactId>primefaces</artifactId>
@@ -91,6 +91,37 @@
    	   		<artifactId>log4j</artifactId>
    	   		<scope>test</scope>
    	   	</dependency>
+   	   	
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+			<version>3.0.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.1.Final</version>
+			<scope>provided</scope>
+			<exclusions>
+			   	<exclusion>
+            		<artifactId>commons-logging</artifactId>
+            		<groupId>commons-logging</groupId>
+            	</exclusion>
+		   </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>jaxrs-api</artifactId>
+			<version>3.0.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 		
 	<dependencyManagement>

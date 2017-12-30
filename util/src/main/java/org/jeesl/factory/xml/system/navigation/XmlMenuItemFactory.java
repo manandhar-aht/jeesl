@@ -28,8 +28,8 @@ public class XmlMenuItemFactory <L extends UtilsLang, D extends UtilsDescription
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlMenuItemFactory.class);
 	
-	private final String localeCode;
-	
+	private String localeCode; public void setLocaleCode(String localeCode) {this.localeCode = localeCode;}
+
 	public XmlMenuItemFactory(String localeCode)
 	{
 		this.localeCode=localeCode;
@@ -37,7 +37,15 @@ public class XmlMenuItemFactory <L extends UtilsLang, D extends UtilsDescription
 	
 	public MenuItem build(M menu)
 	{
-		MenuItem xml = new MenuItem();
+		/*
+		logger.warn("localeCode:"+localeCode);
+		logger.warn("menu!=null:"+(menu!=null));
+		logger.warn("menu.getView()!=null:"+(menu.getView()!=null));
+		logger.warn("menu.getView().getName()!=null:"+(menu.getView().getName()!=null));
+		logger.warn("menu.getView().getName().containsKey(localeCode):"+(menu.getView().getName().containsKey(localeCode)));
+		*/
+		
+		MenuItem xml = build();
 		xml.setCode(menu.getView().getCode());
 		xml.setName(menu.getView().getName().get(localeCode).getLang());
 		xml.setHref(menu.getView().getUrlMapping());
@@ -47,7 +55,7 @@ public class XmlMenuItemFactory <L extends UtilsLang, D extends UtilsDescription
 	
 	public static MenuItem clone(MenuItem item)
 	{
-		MenuItem xml = new MenuItem();
+		MenuItem xml = build();
 		xml.setName(item.getName());
 		xml.setHref(item.getHref());
 		xml.setCode(item.getCode());
@@ -57,7 +65,7 @@ public class XmlMenuItemFactory <L extends UtilsLang, D extends UtilsDescription
 	
 	public static MenuItem build(MenuItem mi)
 	{
-		MenuItem xml = new MenuItem();
+		MenuItem xml = build();
 		xml.setActive(mi.isSetActive() && mi.isActive());
 		xml.setCode(mi.getCode());
 		xml.setHref(mi.getHref());
@@ -68,7 +76,7 @@ public class XmlMenuItemFactory <L extends UtilsLang, D extends UtilsDescription
 	
 	public static MenuItem create(String label)
 	{
-		MenuItem xml = new MenuItem();
+		MenuItem xml = build();
 		xml.setName(label);
 		return xml;
 	}
@@ -88,7 +96,7 @@ public class XmlMenuItemFactory <L extends UtilsLang, D extends UtilsDescription
 	
 	public static MenuItem buildItem(String label, String href)
 	{
-		MenuItem mi = new MenuItem();
+		MenuItem mi = build();
 		mi.setName(label);
 		mi.setHref(href);
 		return mi;

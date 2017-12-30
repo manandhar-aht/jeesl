@@ -34,7 +34,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 													AT extends JeeslSecurityTemplate<L,D,C>,
 													USER extends JeeslUser<R>,
 													I extends JeeslIdentity<R,V,U,A,USER>>
-	implements UtilsJsfSecurityHandler<L,D,C,R,V,U,A,AT,USER>
+								implements UtilsJsfSecurityHandler<L,D,C,R,V,U,A,AT,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJsfSecurityHandler.class);
 	public static final long serialVersionUID=1;
@@ -44,8 +44,6 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	
 	protected List<A> actions; public List<A> getActions() {return actions;}
 	protected List<R> roles; public List<R> getRoles() {return roles;}
-	
-	
 	
 	protected String pageCode; public String getPageCode() {return pageCode;}
 	protected V view;public V getView() {return view;}
@@ -96,7 +94,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	
 	private void update()
 	{
-		logger.info("AllowedActions:");
+//		logger.info("AllowedActions:");
 		clear();
 		for(A action : view.getActions())
 		{

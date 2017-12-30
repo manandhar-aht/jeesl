@@ -1,11 +1,11 @@
 package org.jeesl.web.rest.system;
 
 import org.jeesl.api.facade.system.graphic.JeeslGraphicFacade;
-import org.jeesl.api.rest.JeeslExportRest;
 import org.jeesl.factory.xml.system.symbol.XmlGraphicFactory;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
+import org.jeesl.interfaces.rest.JeeslExportRest;
 import org.jeesl.util.query.xml.SymbolQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;

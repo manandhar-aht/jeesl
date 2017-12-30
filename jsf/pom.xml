@@ -92,6 +92,7 @@
    	   	<dependency>
    	   		<groupId>org.jeesl</groupId>
    	   		<artifactId>jeesl-util</artifactId>
+   	   		<scope>provided</scope>
    	   		<exclusions>
    	   			<exclusion>
    	   				<artifactId>ant</artifactId>

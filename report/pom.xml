@@ -36,9 +36,9 @@
 			<artifactId>itextpdf</artifactId>
 		</dependency>
 
-			<dependency>
-			    <groupId>net.sf.jasperreports</groupId>
-			    <artifactId>jasperreports</artifactId>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
 			    <exclusions>
 			    	<!-- 
 			    	<exclusion>
@@ -105,8 +105,8 @@
 			<dependency>
 			    <groupId>org.codehaus.groovy</groupId>
 			    <artifactId>groovy-all</artifactId>
-			</dependency>
-			<dependency>
+		</dependency>
+		<dependency>
         	<groupId>net.sf.exlp</groupId>
         	<artifactId>exlp-util</artifactId>
         	<type>jar</type>
@@ -163,6 +163,7 @@
 		<dependency>
 			<groupId>org.jeesl</groupId>
 			<artifactId>jeesl-util</artifactId>
+			<scope>provided</scope>
 	    </dependency>
 		
 		<dependency>

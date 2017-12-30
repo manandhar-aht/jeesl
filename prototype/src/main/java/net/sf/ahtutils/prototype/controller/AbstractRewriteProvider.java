@@ -1,0 +1,97 @@
+package net.sf.ahtutils.prototype.controller;
+
+import java.io.Serializable;
+
+import org.jeesl.api.bean.JeeslSecurityBean;
+import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.util.comparator.pojo.BooleanComparator;
+import org.ocpsoft.rewrite.config.Condition;
+import org.ocpsoft.rewrite.config.ConfigurationBuilder;
+import org.ocpsoft.rewrite.config.Direction;
+import org.ocpsoft.rewrite.servlet.config.HttpConfigurationProvider;
+import org.ocpsoft.rewrite.servlet.config.rule.Join;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+
+public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends UtilsDescription,
+											C extends JeeslSecurityCategory<L,D>,
+											R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
+											V extends JeeslSecurityView<L,D,C,R,U,A>,
+											U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
+											A extends JeeslSecurityAction<L,D,R,V,U,AT>,
+											AT extends JeeslSecurityTemplate<L,D,C>,
+											M extends JeeslSecurityMenu<V,M>,
+											USER extends JeeslUser<R>>
+		extends HttpConfigurationProvider
+		implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	final static Logger logger = LoggerFactory.getLogger(AbstractRewriteProvider.class);
+	
+	protected boolean debugOnInfo;
+	
+	public void setDebugOnInfo(boolean debugOnInfo) {
+		this.debugOnInfo = debugOnInfo;
+	}
+
+	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity;
+		
+	private U usecase; public U getUsecase(){return usecase;} public void setUsecase(U usecase){this.usecase = usecase;}
+	
+	public AbstractRewriteProvider(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
+	{
+		debugOnInfo = false;
+	}
+	
+	public void postConstruct(JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
+	{
+		this.bSecurity=bSecurity;
+	}
+	
+	protected ConfigurationBuilder build(Condition loggedIn, Condition pageActive1)
+	{
+		ConfigurationBuilder config = ConfigurationBuilder.begin();
+		config = config.addRule(Join.path("/").to("index.jsf"));
+		for(V view : bSecurity.getViews())
+		{
+			if(BooleanComparator.active(view.getAccessPublic()))
+			{
+				config = config.addRule(Join.path(view.getUrlMapping()).to(view.getViewPattern()))
+								.when(Direction.isInbound().and(pageActive1));
+				config = config.addRule(Join.path(view.getViewPattern()).to("/jsf/settings/access/deactivated.xhtml"))
+						.when(Direction.isInbound().andNot(pageActive1));
+			}
+			else
+			{
+				if(BooleanComparator.active(view.getAccessLogin()))
+				{
+					config = config.addRule(Join.path(view.getUrlMapping()).to(view.getViewPattern()))
+							.when(Direction.isInbound().and(loggedIn));
+					
+					config = config.addRule(Join.path(view.getUrlMapping()).to("/jsf/settings/access/login.xhtml"))
+							.when(Direction.isInbound().andNot(loggedIn));
+					config = config.addRule(Join.path(view.getViewPattern()).to("/jsf/settings/access/login.xhtml"))
+							.when(Direction.isInbound().andNot(loggedIn));
+				}
+				else
+				{
+					
+				}
+			}
+		}
+		
+		return config;
+	}
+	
+}

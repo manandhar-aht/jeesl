@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslSecurityBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
@@ -31,7 +32,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 											AT extends JeeslSecurityTemplate<L,D,C>,
 											M extends JeeslSecurityMenu<V,M>,
 											USER extends JeeslUser<R>>
-					implements Serializable
+					implements Serializable,JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAppSecurityBean.class);
@@ -39,7 +40,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
 
-	private List<V> views; public List<V> getViews() {return views;}
+	private List<V> views; @Override public List<V> getViews() {return views;}
 	private final Map<String,V> urlPattern;
 
 	public AbstractAppSecurityBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)

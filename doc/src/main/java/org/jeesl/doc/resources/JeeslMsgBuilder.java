@@ -23,7 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JeeslMsgBuilder
-{	
+{
+	final static Logger logger = LoggerFactory.getLogger(JeeslMsgBuilder.class);
+	
 	public static final String jeeslPath = "utils"+File.separator+"jeesl"+File.separator;
 	public static final String jeeslIoPath = "utils"+File.separator+"jeesl"+File.separator+"io"+File.separator;
 	public static final String jeeslAdminPath = "utils"+File.separator+"jeesl"+File.separator+"admin"+File.separator;
@@ -83,9 +85,7 @@ public class JeeslMsgBuilder
 	
 	//Dev
 	public static final String devQa = "jeesl/msg/development/qa.xml";
-	
-	final static Logger logger = LoggerFactory.getLogger(JeeslMsgBuilder.class);
-		
+			
 	private MultiResourceLoader mrl;
 	private File baseMsg;
 	

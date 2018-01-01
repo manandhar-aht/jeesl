@@ -41,13 +41,15 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
 
 	private List<V> views; @Override public List<V> getViews() {return views;}
-	private final Map<String,V> urlPattern;
+	private final Map<String,V> mapUrlPattern;
+	private final Map<String,V> mapUrlMapping;
 
 	public AbstractAppSecurityBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
 		this.fbSecurity=fbSecurity;
 		
-		urlPattern = new HashMap<String,V>();
+		mapUrlPattern = new HashMap<String,V>();
+		mapUrlMapping = new HashMap<String,V>();
 	}
 	
 	protected void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
@@ -61,20 +63,27 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		views = fSecurity.all(fbSecurity.getClassView());
 		for(V v : views)
 		{
-			urlPattern.put(v.getViewPattern(),v);
+			update(v);
 		}
 		logger.info(AbstractLogMessage.reloaded(fbSecurity.getClassView(), views));
 	}
 	
-	public V findView(String pattern)
+	public void update(V v)
 	{
-		if(urlPattern.containsKey(pattern)) {return urlPattern.get(pattern);}
+		logger.info("Updating "+v.getCode());
+		mapUrlPattern.put(v.getViewPattern(),v);
+		mapUrlMapping.put(v.getUrlMapping(),v);
+	}
+		
+	@Override public V findViewByHttpPattern(String pattern)
+	{
+		if(mapUrlPattern.containsKey(pattern)) {return mapUrlPattern.get(pattern);}
 		else {return null;}
 	}
 	
-	public V findCode(String pattern)
+	@Override public V findViewByUrlMapping(String pattern)
 	{
-		if(urlPattern.containsKey(pattern)) {return urlPattern.get(pattern);}
+		if(mapUrlMapping.containsKey(pattern)) {return mapUrlMapping.get(pattern);}
 		else {return null;}
 	}
 }

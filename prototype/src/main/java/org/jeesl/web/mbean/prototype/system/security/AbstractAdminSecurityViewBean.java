@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import org.jeesl.api.bean.JeeslSecurityBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
@@ -50,15 +51,18 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	private V view;public V getView(){return view;}public void setView(V view) {this.view = view;}
 	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
 	
+	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity;
+	
 	public AbstractAdminSecurityViewBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
 		super(fbSecurity);
 	}
 	
-	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
+	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity)
 	{
 		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
 		this.initSuper(langs, fSecurity, bMessage);
+		this.bSecurity=bSecurity;
 	}
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
 	{
@@ -150,6 +154,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		reloadViews();
 		bMessage.growlSuccessSaved();
 		propagateChanges();
+		bSecurity.update(view);
 	}
 	
 	public void cloneView() throws UtilsConstraintViolationException

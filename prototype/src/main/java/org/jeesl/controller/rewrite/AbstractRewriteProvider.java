@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.controller;
+package org.jeesl.controller.rewrite;
 
 import java.io.Serializable;
 
@@ -12,7 +12,6 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplat
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.ocpsoft.rewrite.config.Condition;
 import org.ocpsoft.rewrite.config.ConfigurationBuilder;
 import org.ocpsoft.rewrite.config.Direction;
@@ -39,19 +38,22 @@ public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends Ut
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractRewriteProvider.class);
 	
-	protected boolean debugOnInfo;
-	
-	public void setDebugOnInfo(boolean debugOnInfo) {
-		this.debugOnInfo = debugOnInfo;
-	}
+	protected boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 
 	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity;
 		
 	private U usecase; public U getUsecase(){return usecase;} public void setUsecase(U usecase){this.usecase = usecase;}
 	
+	protected String forwardDeactivated;
+	protected String forwardLogin;
+	protected String forwardDenied;
+	
 	public AbstractRewriteProvider(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
 		debugOnInfo = false;
+		forwardDeactivated = "/jsf/settings/access/deactivated.xhtml";
+		forwardLogin = "/jsf/settings/access/login.xhtml";
+		forwardDenied = "/jsf/settings/access/denied.xhtml";
 	}
 	
 	public void postConstruct(JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
@@ -59,39 +61,31 @@ public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends Ut
 		this.bSecurity=bSecurity;
 	}
 	
-	protected ConfigurationBuilder build(Condition loggedIn, Condition pageActive1)
+	protected ConfigurationBuilder build(Condition pageActive, Condition notLoggedIn, Condition pageDenied)
 	{
 		ConfigurationBuilder config = ConfigurationBuilder.begin();
 		config = config.addRule(Join.path("/").to("index.jsf"));
 		for(V view : bSecurity.getViews())
 		{
-			if(BooleanComparator.active(view.getAccessPublic()))
-			{
-				config = config.addRule(Join.path(view.getUrlMapping()).to(view.getViewPattern()))
-								.when(Direction.isInbound().and(pageActive1));
-				config = config.addRule(Join.path(view.getViewPattern()).to("/jsf/settings/access/deactivated.xhtml"))
-						.when(Direction.isInbound().andNot(pageActive1));
-			}
-			else
-			{
-				if(BooleanComparator.active(view.getAccessLogin()))
-				{
-					config = config.addRule(Join.path(view.getUrlMapping()).to(view.getViewPattern()))
-							.when(Direction.isInbound().and(loggedIn));
-					
-					config = config.addRule(Join.path(view.getUrlMapping()).to("/jsf/settings/access/login.xhtml"))
-							.when(Direction.isInbound().andNot(loggedIn));
-					config = config.addRule(Join.path(view.getViewPattern()).to("/jsf/settings/access/login.xhtml"))
-							.when(Direction.isInbound().andNot(loggedIn));
-				}
-				else
-				{
-					
-				}
-			}
+			config = config.addRule(Join.path(view.getViewPattern()).to(forwardDeactivated)).when(Direction.isInbound().andNot(pageActive));
+			config = config.addRule(Join.path(view.getUrlMapping()).to(forwardDeactivated)).when(Direction.isInbound().andNot(pageActive));
+			
+			config = config.addRule(Join.path(view.getViewPattern()).to(forwardLogin)).when(Direction.isInbound().and(notLoggedIn));
+			config = config.addRule(Join.path(view.getUrlMapping()).to(forwardLogin)).when(Direction.isInbound().and(notLoggedIn));
+			
+			config = config.addRule(Join.path(view.getViewPattern()).to(forwardDenied)).when(Direction.isInbound().and(pageDenied));
+			config = config.addRule(Join.path(view.getUrlMapping()).to(forwardDenied)).when(Direction.isInbound().and(pageDenied));
+			
+			config = config.addRule(Join.path(view.getUrlMapping()).to(view.getViewPattern())).when(Direction.isInbound().and(pageActive));
 		}
-		
 		return config;
 	}
 	
+	public static String getViewPattern(String context, String url)
+	{
+		int index = url.indexOf(context);
+		
+		String httpPattern = url.substring(index+context.length(), url.length());
+		return httpPattern;
+	}
 }

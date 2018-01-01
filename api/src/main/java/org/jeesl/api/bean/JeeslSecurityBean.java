@@ -25,4 +25,8 @@ public interface JeeslSecurityBean<L extends UtilsLang,D extends UtilsDescriptio
 									USER extends JeeslUser<R>>
 {	
 	List<V> getViews();
+	void update(V v);
+	
+	V findViewByHttpPattern(String pattern);
+	V findViewByUrlMapping(String pattern);
 }

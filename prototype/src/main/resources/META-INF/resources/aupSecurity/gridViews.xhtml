@@ -73,15 +73,18 @@
 								<p:outputLabel value="#{msg.jeeslSecurityCode}"/>
 								<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.view.code}"/>
 								<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.view.code}"/>
-								
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid50,jeeslGrid50">
 								<p:outputLabel rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{msg.aupSecurityIncludeInManual}"/>
 								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowDocumentation}" value="#{cc.attrs.bean.view.documentation}"/>
 							</p:panelGrid>
-							<p:panelGrid rendered="#{cc.attrs.bean.hasDeveloperAction}" columns="2" columnClasses="auPwg30,auPwg70">
+							<p:panelGrid rendered="#{cc.attrs.bean.hasDeveloperAction}" columns="2" columnClasses="jeeslGrid50,jeeslGrid50">
 								<p:outputLabel value="#{msg.aupSecurityAccessPublic}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.view.accessPublic}"/>
 								<p:outputLabel value="#{msg.aupSecurityAccessLogin}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.view.accessLogin}"/>
+							</p:panelGrid>	
+							<p:panelGrid rendered="#{cc.attrs.bean.hasDeveloperAction}" columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 								<p:outputLabel value="#{msg.aupSecurityJavaPackage}"/>
 								<p:inputText value="#{cc.attrs.bean.view.packageName}"/>
 								<p:outputLabel value="#{msg.aupSecurityViewPattern}"/>

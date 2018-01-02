@@ -83,11 +83,15 @@ public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends Ut
 		return config;
 	}
 	
-	public static String getViewPattern(String context, String url)
+	public static String getUrlMapping(String context, String url)
 	{
-		int index = url.indexOf(context);
+		int indexStart = url.indexOf(context);
+		int indexParameter = url.indexOf("?");
 		
-		String httpPattern = url.substring(index+context.length(), url.length());
+		int indexEnd = url.length();
+		if(indexParameter>=0) {indexEnd = indexParameter;}
+		
+		String httpPattern = url.substring(indexStart+context.length(), indexEnd);
 		return httpPattern;
 	}
 }

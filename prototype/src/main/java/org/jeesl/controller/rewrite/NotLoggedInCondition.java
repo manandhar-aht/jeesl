@@ -53,7 +53,7 @@ public class NotLoggedInCondition <L extends UtilsLang, D extends UtilsDescripti
 	
 	@Override public boolean evaluateHttp(HttpServletRewrite event, EvaluationContext context)
     {           	 
-		String url = AbstractRewriteProvider.getViewPattern(event.getContextPath(), event.getAddress().toString());
+		String url = AbstractRewriteProvider.getUrlMapping(event.getContextPath(), event.getAddress().toString());
 		V view = bSecurity.findViewByUrlMapping(url);
 
 		if(debugOnInfo)

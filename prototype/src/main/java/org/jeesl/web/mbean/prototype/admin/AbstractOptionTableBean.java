@@ -27,12 +27,12 @@ import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -428,7 +428,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		Container xml = rest.exportStatus(x.getRestCode());
 		JaxbUtil.info(xml);
 		
-		AhtStatusDbInit asdi = new AhtStatusDbInit();
+		JeeslStatusDbUpdater asdi = new JeeslStatusDbUpdater();
         asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(cS, cL, cD,bTranslation.getLangKeys()));
         asdi.setFacade(fUtils);
         DataUpdate dataUpdate = asdi.iuStatus(xml.getStatus(), cS, cL, clParent);

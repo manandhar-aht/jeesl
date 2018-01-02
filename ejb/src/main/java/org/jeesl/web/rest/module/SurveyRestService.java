@@ -49,6 +49,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAl
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.model.json.system.status.JsonContainer;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.jeesl.util.query.json.JsonStatusQueryProvider;
 import org.jeesl.util.query.json.JsonSurveyQueryProvider;
 import org.jeesl.util.query.xml.XmlStatusQuery;
@@ -57,7 +58,6 @@ import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -306,7 +306,7 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Aht container, Class<P> clParent)
     {
     	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
-		AhtStatusDbInit asdi = new AhtStatusDbInit();
+		JeeslStatusDbUpdater asdi = new JeeslStatusDbUpdater();
         asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus, clLang, clDescription));
         asdi.setFacade(fSurvey);
         DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, clLang, clParent);

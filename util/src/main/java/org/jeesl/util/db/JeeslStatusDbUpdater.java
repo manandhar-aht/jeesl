@@ -1,4 +1,4 @@
-package net.sf.ahtutils.db.xml;
+package org.jeesl.util.db;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -28,9 +28,9 @@ import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AhtStatusDbInit <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription>
+public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription>
 {
-	final static Logger logger = LoggerFactory.getLogger(AhtStatusDbInit.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslStatusDbUpdater.class);
 	
 	private final Map<String,Set<Long>> mDbAvailableStatus;
 	private Set<Long> sDeleteLangs,sDeleteDescriptions;
@@ -38,7 +38,7 @@ public class AhtStatusDbInit <S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 	private EjbStatusFactory<S,L,D> statusEjbFactory;
 	private UtilsFacade fStatus;
 
-	public AhtStatusDbInit()
+	public JeeslStatusDbUpdater()
 	{
 		mDbAvailableStatus = new Hashtable<String,Set<Long>>();
 		sDeleteLangs = new HashSet<Long>();

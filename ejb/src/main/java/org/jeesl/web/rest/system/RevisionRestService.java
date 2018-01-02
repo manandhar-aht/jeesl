@@ -27,12 +27,12 @@ import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.model.xml.system.revision.Attribute;
 import org.jeesl.model.xml.system.revision.Entities;
 import org.jeesl.model.xml.system.revision.Entity;
+import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.jeesl.util.query.xml.RevisionQuery;
 import org.jeesl.util.query.xml.XmlStatusQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -262,7 +262,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Aht container, Class<P> clParent)
     {
     	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
-		AhtStatusDbInit asdi = new AhtStatusDbInit();
+		JeeslStatusDbUpdater asdi = new JeeslStatusDbUpdater();
         asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus, clLang, clDescription));
         asdi.setFacade(fRevision);
         DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, clLang, clParent);
@@ -274,7 +274,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Class<L> clLang, Class<D> clDescription, Container container, Class<P> clParent)
     {
     	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
-		AhtStatusDbInit asdi = new AhtStatusDbInit();
+		JeeslStatusDbUpdater asdi = new JeeslStatusDbUpdater();
         asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus, clLang, clDescription));
         asdi.setFacade(fRevision);
         DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, clLang, clParent);

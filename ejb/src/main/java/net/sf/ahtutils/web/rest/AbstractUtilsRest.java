@@ -7,11 +7,11 @@ import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
+import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.jeesl.util.query.xml.XmlStatusQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -85,7 +85,7 @@ public class AbstractUtilsRest <L extends UtilsLang, D extends UtilsDescription>
 	protected <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> cS, Class<P> cP, Aht container)
 	{
 		for(Status xml : container.getStatus()){xml.setGroup(cS.getSimpleName());}
-		AhtStatusDbInit<S,L,D> asdi = new AhtStatusDbInit<S,L,D>();
+		JeeslStatusDbUpdater<S,L,D> asdi = new JeeslStatusDbUpdater<S,L,D>();
 	    asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(cS,cL,cD));
 	    asdi.setFacade(fUtils);
 	    DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(),cS,cL,cP);

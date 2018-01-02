@@ -5,10 +5,10 @@ import org.jeesl.api.rest.module.news.JeeslNewsRestExport;
 import org.jeesl.api.rest.module.news.JeeslNewsRestImport;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
+import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -60,7 +60,7 @@ public class SystemNewsRestService <L extends UtilsLang,D extends UtilsDescripti
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus2(Class<S> clStatus, Class<P> clParent, Aht container)
     {
     	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
-		AhtStatusDbInit asdi = new AhtStatusDbInit();
+		JeeslStatusDbUpdater asdi = new JeeslStatusDbUpdater();
         asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus, cL, cD));
         asdi.setFacade(fNews);
         DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, cL, clParent);

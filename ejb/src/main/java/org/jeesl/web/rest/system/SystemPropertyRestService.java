@@ -9,10 +9,10 @@ import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.ejb.system.util.EjbPropertyFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
+import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -63,7 +63,7 @@ public class SystemPropertyRestService <L extends UtilsLang,D extends UtilsDescr
     public <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus2(Class<S> clStatus, Class<P> clParent, Container container)
     {
     	for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
-		AhtStatusDbInit asdi = new AhtStatusDbInit();
+		JeeslStatusDbUpdater asdi = new JeeslStatusDbUpdater();
         asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus, cL, cD));
         asdi.setFacade(fProperty);
         DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, cL, clParent);

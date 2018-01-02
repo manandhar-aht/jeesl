@@ -3,11 +3,11 @@ package org.jeesl.web.rest;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.xml.jeesl.XmlContainerFactory;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.jeesl.util.query.xml.XmlStatusQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -39,7 +39,7 @@ public abstract class AbstractJeeslRestService <L extends UtilsLang,D extends Ut
     protected <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> clStatus, Container container, Class<P> clParent)
     {
     		for(Status xml : container.getStatus()){xml.setGroup(clStatus.getSimpleName());}
-		AhtStatusDbInit asdi = new AhtStatusDbInit();
+		JeeslStatusDbUpdater asdi = new JeeslStatusDbUpdater();
         asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(clStatus,cL,cD));
         asdi.setFacade(fUtils);
         DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(), clStatus, cL, clParent);

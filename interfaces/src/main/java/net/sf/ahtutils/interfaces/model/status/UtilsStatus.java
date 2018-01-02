@@ -10,9 +10,7 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParent;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface UtilsStatus<S extends UtilsStatus<S,L,D>,
-								L extends UtilsLang, D extends UtilsDescription>
-							//	G extends UtilsGraphic>
+public interface UtilsStatus<S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription>
 			extends EjbRemoveable,EjbWithId,EjbWithCode,EjbWithPositionVisible,EjbWithImage,EjbWithImageAlt,
 						EjbWithLangDescription<L,D>,EjbWithParent
 {	

@@ -56,7 +56,7 @@ public class JeeslGraphicFacadeBean<L extends UtilsLang, D extends UtilsDescript
 		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("Multiple Results for status.id"+statusId);}
 	}
 	
-	@Override public <W extends EjbWithGraphic<L,D,G,GT,F,FS>> G fGraphic(Class<W> c, long id) throws UtilsNotFoundException
+	@Override public <W extends EjbWithGraphic<G>> G fGraphic(Class<W> c, long id) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<G> cQ = cB.createQuery(cG);
@@ -73,7 +73,7 @@ public class JeeslGraphicFacadeBean<L extends UtilsLang, D extends UtilsDescript
 		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("Multiple Results for status.id"+id);}
 	}
 
-	@Override public <T extends EjbWithGraphic<L,D,G,GT,F,FS>> List<T> allWithGraphicFigures(Class<T> c)
+	@Override public <T extends EjbWithGraphic<G>> List<T> allWithGraphicFigures(Class<T> c)
 	{
 		List<T> list = this.all(c);
 		for(T ejb : list)

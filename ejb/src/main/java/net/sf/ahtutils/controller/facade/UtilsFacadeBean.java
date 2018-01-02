@@ -86,7 +86,7 @@ public class UtilsFacadeBean implements UtilsFacade
 		status = em.find(cS, status.getId());
 		if(EjbWithGraphic.class.isAssignableFrom(cS))
 		{
-			if(((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic()!=null){((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getId();}
+			if(((EjbWithGraphic<G>)status).getGraphic()!=null){((EjbWithGraphic<G>)status).getGraphic().getId();}
 		}
 		
 		return status;

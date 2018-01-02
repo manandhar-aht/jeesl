@@ -127,7 +127,7 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 	    	{
 	    		try
 	    		{
-	    			Class<EjbWithGraphic<L,D,G,GT,F,FS>> c = (Class<EjbWithGraphic<L,D,G,GT,F,FS>>)Class.forName(m.getVersion()).asSubclass(EjbWithGraphic.class);
+	    			Class<EjbWithGraphic<G>> c = (Class<EjbWithGraphic<G>>)Class.forName(m.getVersion()).asSubclass(EjbWithGraphic.class);
 	    			if(EjbWithGraphic.class.isAssignableFrom(c))
 	    			{
 	    				G g = fGraphic.fGraphic(c,Long.valueOf(m.getId()));

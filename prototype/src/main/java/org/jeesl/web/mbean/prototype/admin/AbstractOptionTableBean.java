@@ -225,7 +225,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			GT type = fUtils.fByCode(fbSvg.getClassGraphicType(), JeeslGraphicType.Code.symbol.toString());
 			FS style = fUtils.fByCode(fbSvg.getClassFigureStyle(), JeeslGraphicStyle.Code.circle.toString());
 			graphic = efGraphic.buildSymbol(type, style);
-			((EjbWithGraphic<L,D,G,GT,F,FS>)status).setGraphic(graphic);
+			((EjbWithGraphic<G>)status).setGraphic(graphic);
 		}
 	}
 	
@@ -246,16 +246,16 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		
 		if(supportsGraphic)
 		{
-			if(((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic()==null)
+			if(((EjbWithGraphic<G>)status).getGraphic()==null)
 			{
 				logger.info("Need to create a graphic entity for this status");
 				GT type = fUtils.fByCode(fbSvg.getClassGraphicType(), JeeslGraphicType.Code.symbol.toString());
 				FS style = fUtils.fByCode(fbSvg.getClassFigureStyle(), JeeslGraphicStyle.Code.circle.toString());
 				graphic = fUtils.persist(efGraphic.buildSymbol(type, style));
-				((EjbWithGraphic<L,D,G,GT,F,FS>)status).setGraphic(graphic);
+				((EjbWithGraphic<G>)status).setGraphic(graphic);
 				status = fUtils.update(status);
 			}
-			graphic = ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic();
+			graphic = ((EjbWithGraphic<G>)status).getGraphic();
 			
 			if(supportsFigure){reloadFigures();}
 		}
@@ -289,12 +289,12 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
             }
         	if(supportsGraphic && graphic!=null)
             {
-        		graphic.setType(fUtils.find(fbSvg.getClassGraphicType(), ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType()));
-            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(fbSvg.getClassFigureStyle(), ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getStyle()));}
+        		graphic.setType(fUtils.find(fbSvg.getClassGraphicType(), ((EjbWithGraphic<G>)status).getGraphic().getType()));
+            	if(graphic.getStyle()!=null){graphic.setStyle(fUtils.find(fbSvg.getClassFigureStyle(), ((EjbWithGraphic<G>)status).getGraphic().getStyle()));}
         		
 //            	if(debugSave){logger.info("Saving "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
 //           	graphic = fUtils.save(graphic);
-            	((EjbWithGraphic<L,D,G,GT,F,FS>)status).setGraphic(graphic);
+            	((EjbWithGraphic<G>)status).setGraphic(graphic);
 //            	if(debugSave){logger.info("Saved "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
             }
 
@@ -303,7 +303,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			status = fUtils.load(cl,(EjbWithId)status);
 			if(supportsGraphic)
 			{
-				graphic = ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic();
+				graphic = ((EjbWithGraphic<G>)status).getGraphic();
 				if(debugSave){logger.info("Saved "+graphic.getClass().getSimpleName()+" "+graphic.toString());}
 			}
 			if(supportsFigure){reloadFigures();}
@@ -361,15 +361,15 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	{
 		UploadedFile file = event.getFile();
 		logger.info("Received file with a size of " +file.getSize());
-		((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().setData(file.getContents());  
+		((EjbWithGraphic<G>)status).getGraphic().setData(file.getContents());  
 	}
 	
 //	@Override
 	@SuppressWarnings("unchecked")
 	public void changeGraphicType()
 	{
-		((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().setType(fUtils.find(fbSvg.getClassGraphicType(), ((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType()));
-		logger.info("changeGraphicType to "+((EjbWithGraphic<L,D,G,GT,F,FS>)status).getGraphic().getType().getCode());
+		((EjbWithGraphic<G>)status).getGraphic().setType(fUtils.find(fbSvg.getClassGraphicType(), ((EjbWithGraphic<G>)status).getGraphic().getType()));
+		logger.info("changeGraphicType to "+((EjbWithGraphic<G>)status).getGraphic().getType().getCode());
 	}
 	
 	private void reloadFigures()

@@ -7,6 +7,7 @@ import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.jeesl.util.query.xml.XmlStatusQuery;
 import org.slf4j.Logger;
@@ -82,10 +83,10 @@ public class AbstractUtilsRest <L extends UtilsLang, D extends UtilsDescription>
 		return xml;
 	}
 	
-	protected <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>> DataUpdate importStatus(Class<S> cS, Class<P> cP, Aht container)
+	protected <S extends UtilsStatus<S,L,D>, P extends UtilsStatus<P,L,D>, G extends JeeslGraphic<L,D,G,?,?,?>> DataUpdate importStatus(Class<S> cS, Class<P> cP, Aht container)
 	{
 		for(Status xml : container.getStatus()){xml.setGroup(cS.getSimpleName());}
-		JeeslStatusDbUpdater<S,L,D> asdi = new JeeslStatusDbUpdater<S,L,D>();
+		JeeslStatusDbUpdater<S,L,D,G> asdi = new JeeslStatusDbUpdater<S,L,D,G>();
 	    asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(cS,cL,cD));
 	    asdi.setFacade(fUtils);
 	    DataUpdate dataUpdate = asdi.iuStatus(container.getStatus(),cS,cL,cP);

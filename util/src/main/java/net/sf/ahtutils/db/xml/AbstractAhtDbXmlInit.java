@@ -15,9 +15,9 @@ public abstract class AbstractAhtDbXmlInit <S extends UtilsStatus<S,L,D>, L exte
 	final static Logger logger = LoggerFactory.getLogger(AbstractAhtDbXmlInit.class);
 
 	protected UtilsIdMapper idMapper;
-	protected JeeslStatusDbUpdater<S,L,D> asdi;
+	protected JeeslStatusDbUpdater<S,L,D,?> asdi;
 	
-	public AbstractAhtDbXmlInit(Db dbSeed, DataSource datasource, UtilsIdMapper idMapper, JeeslStatusDbUpdater<S,L,D> asdi)
+	public AbstractAhtDbXmlInit(Db dbSeed, DataSource datasource, UtilsIdMapper idMapper, JeeslStatusDbUpdater<S,L,D,?> asdi)
 	{
 		super(dbSeed, datasource,null,idMapper);
 		this.idMapper=idMapper;

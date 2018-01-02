@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jeesl.controller.monitor.DataUpdateTracker;
+import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
+import org.jeesl.factory.xml.system.status.XmlTypeFactory;
+import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -22,19 +29,14 @@ import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-import org.jeesl.controller.monitor.DataUpdateTracker;
-import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
-import org.jeesl.factory.xml.system.status.XmlTypeFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription>
+public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription, G extends JeeslGraphic<L,D,G,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslStatusDbUpdater.class);
 	
 	private final Map<String,Set<Long>> mDbAvailableStatus;
 	private Set<Long> sDeleteLangs,sDeleteDescriptions;
 
+	private final JeeslGraphicDbUpdater<G> dbuGraphic;
 	private EjbStatusFactory<S,L,D> statusEjbFactory;
 	private UtilsFacade fStatus;
 
@@ -43,10 +45,15 @@ public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends Utils
 		mDbAvailableStatus = new Hashtable<String,Set<Long>>();
 		sDeleteLangs = new HashSet<Long>();
 		sDeleteDescriptions = new HashSet<Long>();
+		dbuGraphic = new JeeslGraphicDbUpdater<G>();
 	}
 	
 	public void setStatusEjbFactory(EjbStatusFactory<S,L,D> statusEjbFactory) {this.statusEjbFactory = statusEjbFactory;}
-	public void setFacade(UtilsFacade fStatus){this.fStatus=fStatus;}
+	public void setFacade(UtilsFacade fStatus)
+	{
+		this.fStatus=fStatus;
+		dbuGraphic.setFacade(fStatus);
+	}
 	
 	
 	public List<Status> getStatus(String xmlFile) throws FileNotFoundException

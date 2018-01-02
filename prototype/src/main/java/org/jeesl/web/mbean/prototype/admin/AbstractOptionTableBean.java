@@ -27,6 +27,7 @@ import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.util.db.JeeslGraphicDbUpdater;
 import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -70,6 +71,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	private static final long serialVersionUID = 1L;
 
 	protected UtilsFacade fUtils;
+	
 	private final StatusFactoryBuilder<L,D,LOC> fbStatus;
 	private final SvgFactoryBuilder<L,D,G,GT,F,FS> fbSvg;
 	
@@ -112,6 +114,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		this.fbStatus=fbStatus;
 		this.fbSvg=fbSvg;
 		
+
 		efGraphic = fbSvg.efGraphic();
 		
 		efFigure = fbSvg.efFigure();

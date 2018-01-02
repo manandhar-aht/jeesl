@@ -57,7 +57,7 @@
     		<s:lang key="fr" translation="Scope"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupRevisionEntities">
+	<s:translation key="jeeslRevisionEntities">
     	<s:langs>
     		<s:lang key="de" translation="Enitäten"/>
     		<s:lang key="en" translation="Entities"/>

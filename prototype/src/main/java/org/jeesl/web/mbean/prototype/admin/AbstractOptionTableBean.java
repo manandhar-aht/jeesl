@@ -13,6 +13,7 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.rest.JeeslExportRest;
 import org.jeesl.factory.builder.system.StatusFactoryBuilder;
 import org.jeesl.factory.builder.system.SvgFactoryBuilder;
+import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
 import org.jeesl.interfaces.model.system.option.JeeslOptionRest;
@@ -31,6 +32,7 @@ import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.db.xml.AhtStatusDbInit;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -54,6 +56,7 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
+import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.util.io.StringUtil;
 import net.sf.exlp.util.xml.JaxbUtil;
 
@@ -127,7 +130,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	protected void initUtils(JeeslTranslationBean bTranslation, UtilsFacade fUtils, FacesMessageBean bMessage)
 	{
-		super.initAdmin(bTranslation.getLangKeys().toArray(new String[0]),cL,cD,bMessage);
+		super.initJeeslAdmin(bTranslation, bMessage);
 		this.fUtils=fUtils;
 			
 		graphicTypes = fUtils.allOrderedPositionVisible(fbSvg.getClassGraphicType());
@@ -214,8 +217,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		status = cl.newInstance();
 		((EjbWithId)status).setId(0);
 		((EjbWithCode)status).setCode("enter code");
-		((EjbWithLang<L>)status).setName(efLang.createEmpty(langs));
-		((EjbWithDescription<D>)status).setDescription(efDescription.createEmpty(langs));
+		((EjbWithLang<L>)status).setName(efLang.createEmpty(localeCodes));
+		((EjbWithDescription<D>)status).setDescription(efDescription.createEmpty(localeCodes));
 		
 		if(supportsGraphic)
 		{
@@ -233,8 +236,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		status = fUtils.find(cl,(EjbWithId)status);
 		status = fUtils.load(cl,(EjbWithId)status);
 		logger.debug("selectStatus");
-		status = efLang.persistMissingLangs(fUtils,langs,(EjbWithLang)status);
-		status = efDescription.persistMissingLangs(fUtils,langs,(EjbWithDescription)status);
+		status = efLang.persistMissingLangs(fUtils,localeCodes,(EjbWithLang)status);
+		status = efDescription.persistMissingLangs(fUtils,localeCodes,(EjbWithDescription)status);
 		
 		if(((EjbWithParent)status).getParent()!=null)
 		{
@@ -409,17 +412,28 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	//JEESL REST
 	
-	@SuppressWarnings("unchecked")
-	public <X extends JeeslOptionRest> void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public <X extends JeeslOptionRest, S extends UtilsStatus> void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
 	{
 		logger.info("Downloading REST");
 		ResteasyClient client = new ResteasyClientBuilder().build();
-		ResteasyWebTarget restTarget = client.target("http://localhost:8080/jeesl");
+//		ResteasyWebTarget restTarget = client.target("http://localhost:8080/jeesl");
+		ResteasyWebTarget restTarget = client.target("http://192.168.202.26:8080/jeesl");
 		JeeslExportRest<L,D> rest = restTarget.proxy(JeeslExportRest.class);
 		
 		Class<X> cX = (Class<X>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(JeeslOptionRest.class);
+		Class<S> cS = (Class<S>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(UtilsStatus.class);
+		
 		X x = cX.newInstance();
 		Container xml = rest.exportStatus(x.getRestCode());
 		JaxbUtil.info(xml);
+		
+		AhtStatusDbInit asdi = new AhtStatusDbInit();
+        asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(cS, cL, cD,bTranslation.getLangKeys()));
+        asdi.setFacade(fUtils);
+        DataUpdate dataUpdate = asdi.iuStatus(xml.getStatus(), cS, cL, clParent);
+        asdi.deleteUnusedStatus(cS, cL, cD);
+        JaxbUtil.info(dataUpdate);
+        selectCategory();
 	}
 }

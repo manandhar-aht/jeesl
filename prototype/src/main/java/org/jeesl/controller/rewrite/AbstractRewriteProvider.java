@@ -67,6 +67,8 @@ public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends Ut
 		config = config.addRule(Join.path("/").to("index.jsf"));
 		for(V view : bSecurity.getViews())
 		{
+			logger.info("Building Rule for "+view.toString());
+			
 			config = config.addRule(Join.path(view.getViewPattern()).to(forwardDeactivated)).when(Direction.isInbound().andNot(pageActive));
 			config = config.addRule(Join.path(view.getUrlMapping()).to(forwardDeactivated)).when(Direction.isInbound().andNot(pageActive));
 			

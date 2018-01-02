@@ -25,6 +25,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	protected Class<D> cD;
 	
 	protected FacesMessageBean bMessage;
+	protected JeeslTranslationBean bTranslation;
 	
 	protected boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo){this.debugOnInfo=debugOnInfo;}
 	protected String[] langs; public String[] getLangs() {return langs;}
@@ -86,6 +87,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 	
 	protected void initJeeslAdmin(JeeslTranslationBean bTranslation, FacesMessageBean bMessage)
 	{
+		this.bTranslation=bTranslation;
 		this.localeCodes=bTranslation.getLangKeys().toArray(new String[bTranslation.getLangKeys().size()]);
 		this.bMessage=bMessage;
 	}

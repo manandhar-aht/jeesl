@@ -32,7 +32,7 @@ public class AhtStatusDbInit <S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(AhtStatusDbInit.class);
 	
-	private Map<String,Set<Long>> mDbAvailableStatus;
+	private final Map<String,Set<Long>> mDbAvailableStatus;
 	private Set<Long> sDeleteLangs,sDeleteDescriptions;
 
 	private EjbStatusFactory<S,L,D> statusEjbFactory;
@@ -48,6 +48,7 @@ public class AhtStatusDbInit <S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 	public void setStatusEjbFactory(EjbStatusFactory<S,L,D> statusEjbFactory) {this.statusEjbFactory = statusEjbFactory;}
 	public void setFacade(UtilsFacade fStatus){this.fStatus=fStatus;}
 	
+	
 	public List<Status> getStatus(String xmlFile) throws FileNotFoundException
 	{
 		Aht aht = (Aht)JaxbUtil.loadJAXB(xmlFile, Aht.class);
@@ -55,9 +56,10 @@ public class AhtStatusDbInit <S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 		return aht.getStatus();
 	}
 	
-	public boolean isGroupInMap(String group)
+	private boolean isGroupInMap(String group)
 	{
-		return mDbAvailableStatus.containsKey(group);
+		boolean inMap = mDbAvailableStatus.containsKey(group);
+		return inMap;
 	}
 	
 	private void savePreviousDbEntries(String key, List<UtilsStatus<S,L,D>> availableStatus)
@@ -79,9 +81,9 @@ public class AhtStatusDbInit <S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 		return ejbStatus;
 	}
 	
-	public UtilsStatus<S,L,D> addLangsAndDescriptions(UtilsStatus<S,L,D> ejbStatus, Status status) throws InstantiationException, IllegalAccessException, UtilsConstraintViolationException
+	private UtilsStatus<S,L,D> addLangsAndDescriptions(UtilsStatus<S,L,D> ejbStatus, Status status) throws InstantiationException, IllegalAccessException, UtilsConstraintViolationException
 	{
-		UtilsStatus<S,L,D> ejbUpdateInfo = statusEjbFactory.create(status);
+		UtilsStatus<S,L,D> ejbUpdateInfo = statusEjbFactory.create(status);		
 		ejbStatus.setName(ejbUpdateInfo.getName());
 		ejbStatus.setDescription(ejbUpdateInfo.getDescription());
 		return ejbStatus;
@@ -164,7 +166,7 @@ public class AhtStatusDbInit <S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 		DataUpdateTracker dut = new DataUpdateTracker(true);
 		dut.setType(XmlTypeFactory.build(cStatus.getName(),"Status-DB Import"));
 		
-		if(fStatus==null){dut.fail(new UtilsDeveloperException("No Factory available for "+cStatus.getName()), true);}
+		if(fStatus==null){dut.fail(new UtilsDeveloperException("No Facade available for "+cStatus.getName()), true);}
 		else {logger.debug("Updating "+cStatus.getSimpleName()+" with "+list.size()+" entries");}
 		iuStatusEJB(list, cStatus, cLang);
 		
@@ -192,10 +194,11 @@ public class AhtStatusDbInit <S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 	{
 		for(Status xml : list)
 		{
+			if(!xml.isSetGroup()) {xml.setGroup(cStatus.getName());}
 			try
 			{
-				logger.trace("Processing "+xml.getGroup()+" with "+xml.getCode());
-				S ejbStatus;
+				logger.debug("Processing "+xml.getGroup()+" with "+xml.getCode());
+				S ejb;
 				if(!isGroupInMap(xml.getGroup()))
 				{	// If a new group occurs, all entities are saved in a (delete) pool where
 					// they will be deleted if in the current list no entity with this key exists.
@@ -206,41 +209,42 @@ public class AhtStatusDbInit <S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 				}
 				try
 				{
-					ejbStatus = fStatus.fByCode(cStatus,xml.getCode());
+					ejb = fStatus.fByCode(cStatus,xml.getCode());
 					
 					//UTILS-145 Don't do unnecessary entity updates in AhtStatusDbInit
-					ejbStatus = removeData(ejbStatus);
-					ejbStatus = fStatus.update(ejbStatus);
-					ejbStatus = fStatus.find(cStatus, ejbStatus.getId());
-					removeStatusFromDelete(xml.getGroup(), ejbStatus.getId());
+					ejb = removeData(ejb);
+					ejb = fStatus.update(ejb);
+					ejb = fStatus.find(cStatus, ejb.getId());
+					removeStatusFromDelete(xml.getGroup(), ejb.getId());
 					logger.trace("Now in Pool: "+mDbAvailableStatus.get(xml.getGroup()).size());
-					logger.trace("Found: "+ejbStatus);
+					logger.trace("Found: "+ejb);
 				}
 				catch (UtilsNotFoundException e)
 				{
-					ejbStatus = cStatus.newInstance();
-					ejbStatus.setCode(xml.getCode());
-					ejbStatus = fStatus.persist(ejbStatus);
-					logger.trace("Added: "+ejbStatus);
+					ejb = cStatus.newInstance();
+					ejb.setCode(xml.getCode());
+					ejb = fStatus.persist(ejb);
+					logger.trace("Added: "+ejb);
 				}
 				
 				try
 				{
-					addLangsAndDescriptions(ejbStatus,xml);
-					if(xml.isSetImage()){ejbStatus.setImage(xml.getImage());}
-					if(xml.isSetStyle()){ejbStatus.setStyle(xml.getStyle());}
+					addLangsAndDescriptions(ejb,xml);
+					ejb.setSymbol(xml.getSymbol());
+					if(xml.isSetImage()){ejb.setImage(xml.getImage());}
+					if(xml.isSetStyle()){ejb.setStyle(xml.getStyle());}
 				}
 				catch (InstantiationException e) {logger.error("",e);}
 				catch (IllegalAccessException e) {logger.error("",e);}
 				catch (UtilsConstraintViolationException e) {logger.error("",e);}
 		        
-				if(xml.isSetPosition()){ejbStatus.setPosition(xml.getPosition());}
-		        else{ejbStatus.setPosition(0);}
+				if(xml.isSetPosition()){ejb.setPosition(xml.getPosition());}
+		        else{ejb.setPosition(0);}
 				
-				if(xml.isSetVisible()){ejbStatus.setVisible(xml.isVisible());}
-				else{ejbStatus.setVisible(false);}
+				if(xml.isSetVisible()){ejb.setVisible(xml.isVisible());}
+				else{ejb.setVisible(false);}
 				
-				ejbStatus = fStatus.update(ejbStatus);
+				ejb = fStatus.update(ejb);
 			}
 			catch (UtilsConstraintViolationException e){logger.error("",e);}
 			catch (InstantiationException e) {logger.error("",e);}

@@ -24,7 +24,7 @@
 						<p:dataTable var="e" value="#{cc.attrs.bean.entities}" draggableRows="true"
 							selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{e.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.aupRevisionEntities}">
+								<aht:pfDataTableHeader title="#{msg.jeeslRevisionEntities}">
 									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addEntity()}" update=":#{cc.id}:sView :#{cc.id}:sAttributes" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>

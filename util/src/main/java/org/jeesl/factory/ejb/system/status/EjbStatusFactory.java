@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
+import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Descriptions;
+import net.sf.ahtutils.xml.status.Lang;
+import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.exlp.util.xml.JaxbUtil;
 
@@ -24,6 +28,7 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 	
 	private final Class<D> cD;
 	private final Class<S> cStatus;
+	private List<String> localeCodes;
 
     private final EjbLangFactory<L> efLang;
     private final EjbDescriptionFactory<D> efDescription;
@@ -35,13 +40,29 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
         
         efLang = EjbLangFactory.factory(cL);
         efDescription = EjbDescriptionFactory.factory(cD);
-    } 
+    }
+    
+    public EjbStatusFactory(final Class<S> cStatus, final Class<L> cL, final Class<D> cD, List<String> localeCodes)
+    {
+    		this.localeCodes=localeCodes;
+        this.cStatus = cStatus;
+        this.cD = cD;
+        
+        efLang = EjbLangFactory.factory(cL);
+        efDescription = EjbDescriptionFactory.factory(cD);
+    }
     
     public static <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> EjbStatusFactory<S, L, D>
     		createFactory(final Class<S> cStatus, final Class<L> cLang, final Class<D> descriptionClass)
     {
         return new EjbStatusFactory<S,L,D>(cStatus, cLang, descriptionClass);
     }
+    
+    public static <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> EjbStatusFactory<S, L, D>
+		createFactory(final Class<S> cStatus, final Class<L> cL, final Class<D> cD, List<String> localeCodes)
+	{
+    	return new EjbStatusFactory<S,L,D>(cStatus,cL,cD,localeCodes);
+	}
     
     public <E extends Enum<E>> S build(E code){return create(code.toString());}
     
@@ -55,8 +76,29 @@ public class EjbStatusFactory<S extends UtilsStatus<S,L,D>, L extends UtilsLang,
 			s.setCode(status.getCode());
 			if(status.isSetPosition()){s.setPosition(status.getPosition());}
 			else{s.setPosition(0);}
-			s.setName(efLang.getLangMap(status.getLangs()));
-			s.setDescription(efDescription.create(status.getDescriptions()));
+			
+			Langs langs = XmlLangsFactory.build();
+			if(localeCodes==null) {langs.getLang().addAll(status.getLangs().getLang());}
+			else
+			{
+				for(Lang l : status.getLangs().getLang())
+				{
+					if(localeCodes.contains(l.getKey())) {langs.getLang().add(l);}
+				}
+			}
+			
+			Descriptions descriptions = XmlDescriptionsFactory.build();
+			if(localeCodes==null) {descriptions.getDescription().addAll(status.getDescriptions().getDescription());}
+			else
+			{
+				for(Description d : status.getDescriptions().getDescription())
+				{
+					if(localeCodes.contains(d.getKey())) {descriptions.getDescription().add(d);}
+				}
+			}
+			
+			s.setName(efLang.getLangMap(langs));
+			s.setDescription(efDescription.create(descriptions));
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

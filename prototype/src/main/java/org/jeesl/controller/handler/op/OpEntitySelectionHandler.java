@@ -23,4 +23,10 @@ public class OpEntitySelectionHandler <T extends EjbWithId> extends AbstractOpSe
     		super(bean,opEntites);
     		showName=true;
     }
+    
+    public OpEntitySelectionHandler(OpEntityBean bean, List<T> opEntites, Class<?> c)
+    {
+    		super(bean,opEntites);
+    		showLang=true;
+    }
 }

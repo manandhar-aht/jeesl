@@ -36,7 +36,6 @@ public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends Utils
 	private final Map<String,Set<Long>> mDbAvailableStatus;
 	private Set<Long> sDeleteLangs,sDeleteDescriptions;
 
-	private final JeeslGraphicDbUpdater<G> dbuGraphic;
 	private EjbStatusFactory<S,L,D> statusEjbFactory;
 	private UtilsFacade fStatus;
 
@@ -45,14 +44,13 @@ public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends Utils
 		mDbAvailableStatus = new Hashtable<String,Set<Long>>();
 		sDeleteLangs = new HashSet<Long>();
 		sDeleteDescriptions = new HashSet<Long>();
-		dbuGraphic = new JeeslGraphicDbUpdater<G>();
+
 	}
 	
 	public void setStatusEjbFactory(EjbStatusFactory<S,L,D> statusEjbFactory) {this.statusEjbFactory = statusEjbFactory;}
 	public void setFacade(UtilsFacade fStatus)
 	{
 		this.fStatus=fStatus;
-		dbuGraphic.setFacade(fStatus);
 	}
 	
 	
@@ -252,6 +250,8 @@ public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends Utils
 				else{ejb.setVisible(false);}
 				
 				ejb = fStatus.update(ejb);
+				
+				
 			}
 			catch (UtilsConstraintViolationException e){logger.error("",e);}
 			catch (InstantiationException e) {logger.error("",e);}

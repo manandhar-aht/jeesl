@@ -10,12 +10,14 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.facade.system.graphic.JeeslGraphicFacade;
 import org.jeesl.api.rest.JeeslExportRest;
 import org.jeesl.factory.builder.system.StatusFactoryBuilder;
 import org.jeesl.factory.builder.system.SvgFactoryBuilder;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFactory;
 import org.jeesl.factory.ejb.system.symbol.EjbGraphicFigureFactory;
+import org.jeesl.interfaces.model.system.graphic.with.EjbWithCodeGraphic;
 import org.jeesl.interfaces.model.system.option.JeeslOptionRest;
 import org.jeesl.interfaces.model.system.option.JeeslOptionRestDownload;
 import org.jeesl.interfaces.model.system.option.JeeslOptionUploadable;
@@ -75,6 +77,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	private final StatusFactoryBuilder<L,D,LOC> fbStatus;
 	private final SvgFactoryBuilder<L,D,G,GT,F,FS> fbSvg;
 	
+	private final JeeslGraphicDbUpdater<G,GT> dbuGraphic;
+	
 	protected boolean allowSvg; public boolean isAllowSvg() {return allowSvg;}
 	
 	private boolean supportsUpload; public boolean getSupportsUpload(){return supportsUpload;}
@@ -113,7 +117,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		super(fbStatus.getClassL(),fbStatus.getClassD());
 		this.fbStatus=fbStatus;
 		this.fbSvg=fbSvg;
-		
+		dbuGraphic = new JeeslGraphicDbUpdater<G,GT>(fbSvg);
 
 		efGraphic = fbSvg.efGraphic();
 		
@@ -131,10 +135,11 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		categories = new ArrayList<EjbWithPosition>();
 	}
 	
-	protected void initUtils(JeeslTranslationBean bTranslation, UtilsFacade fUtils, FacesMessageBean bMessage)
+	protected void initUtils(JeeslTranslationBean bTranslation, JeeslGraphicFacade<L,D,?,G,GT,F,FS> fGraphic, FacesMessageBean bMessage)
 	{
 		super.initJeeslAdmin(bTranslation, bMessage);
-		this.fUtils=fUtils;
+		this.fUtils=fGraphic;
+		dbuGraphic.setFacade(fGraphic);
 			
 		graphicTypes = fUtils.allOrderedPositionVisible(fbSvg.getClassGraphicType());
 		graphicStyles = fUtils.allOrderedPositionVisible(fbSvg.getClassFigureStyle());
@@ -416,7 +421,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	//JEESL REST
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public <X extends JeeslOptionRest, S extends UtilsStatus> void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
+	public <X extends JeeslOptionRest, S extends UtilsStatus, W extends EjbWithCodeGraphic<G>> void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
 	{
 		logger.info("Downloading REST");
 		ResteasyClient client = new ResteasyClientBuilder().build();
@@ -426,6 +431,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		
 		Class<X> cX = (Class<X>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(JeeslOptionRest.class);
 		Class<S> cS = (Class<S>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(UtilsStatus.class);
+		Class<W> cW = (Class<W>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(EjbWithCodeGraphic.class);
 		
 		X x = cX.newInstance();
 		Container xml = rest.exportStatus(x.getRestCode());
@@ -437,6 +443,9 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
         DataUpdate dataUpdate = asdi.iuStatus(xml.getStatus(), cS, cL, clParent);
         asdi.deleteUnusedStatus(cS, cL, cD);
         JaxbUtil.info(dataUpdate);
+        
+        dbuGraphic.update(cW,xml.getStatus());
+        
         selectCategory();
 	}
 }

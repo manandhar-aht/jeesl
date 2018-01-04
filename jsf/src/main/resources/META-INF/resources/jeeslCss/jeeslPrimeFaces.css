@@ -57,6 +57,16 @@
 
 .auPanelWithGrid .ui-spinner-button {left:0!important}
 .jeeslPanel .ui-spinner-button {left:0!important}
+
+/* This one makes the shadows for input components disappear */
+.jeeslPanel * .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield, .jeeslPanel * .ui-widget-header .ui-inputfield {box-shadow: none !important;}
+
+/* Makes all input elements use the full width of the parent container
+   For SelectOneMenu this is realized by introducing a p:panelGrid with layout=block that renders a DIV
+*/
+.jeeslPanel * .ui-widget-header .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield {width: 100%; padding: 2px;}
+
+
 /***********************************************************************************/
 
 /* Defines the columns for multi-column standard layouts */
@@ -103,13 +113,11 @@
 .jeeslGrid95 {width: 95% !important; border-style: none;}
 .jeeslGrid100 {width: 100% !important; border-style: none;}
 
-.pf-panel-with-tree {
-	.ui-panel-content.padding: 0px;
-}
+.pf-panel-with-tree {.ui-panel-content.padding: 0px;}
+.pf-panel-with-tree .ui-tree {border: none; width: 100%;}
 
-.pf-panel-with-tree .ui-tree {
-	border: none; width: 100%;
-}
+.jeeslTree {.ui-panel-content.padding: 0px;}
+.jeeslTree .ui-tree {border: none; width: 100%;}
 
 .auPfTcLeft {text-align:left}
 .jeeslPfTcCenter {text-align:center}

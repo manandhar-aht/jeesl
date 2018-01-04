@@ -20,16 +20,18 @@
 			<aht:row>
 				<aht:slot width="12">
 					<h:form id="fTree" >
-						<p:tree id="tree1" value="#{cc.attrs.bean.tree}" var="node" 
-							selection="#{cc.attrs.bean.node}" selectionMode="single"
-			                draggable="true" droppable="true" dragdropScope="demo">
-			            <p:ajax event="dragdrop" listener="#{cc.attrs.bean.onDragDrop}"/>
-			            <p:ajax event="expand" listener="#{cc.attrs.bean.onNodeExpand}" />
-							<p:ajax event="collapse" listener="#{cc.attrs.bean.onNodeCollapse}" />
-			            <p:treeNode>
-			                <h:outputText value="#{node.view.category.position}.#{node.view.position} #{node.view.name[localeCode].lang}" />
-			            </p:treeNode>
-			        </p:tree>
+						<p:panel header="#{msg.jeeslSecurityMenu}" styleClass="jeeslTree">
+							<p:tree id="tree1" value="#{cc.attrs.bean.tree}" var="node" 
+								selection="#{cc.attrs.bean.node}" selectionMode="single"
+				                draggable="true" droppable="true" dragdropScope="demo">
+					            <p:ajax event="dragdrop" listener="#{cc.attrs.bean.onDragDrop}"/>
+					            <p:ajax event="expand" listener="#{cc.attrs.bean.onNodeExpand}" />
+									<p:ajax event="collapse" listener="#{cc.attrs.bean.onNodeCollapse}" />
+					            <p:treeNode>
+					                <h:outputText value="#{node.view.category.position}.#{node.view.position} #{node.view.name[localeCode].lang}" />
+					            </p:treeNode>
+					        </p:tree>
+						</p:panel>
 					</h:form>
 				</aht:slot>
 			</aht:row>

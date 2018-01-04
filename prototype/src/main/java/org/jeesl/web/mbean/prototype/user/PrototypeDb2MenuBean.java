@@ -130,7 +130,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 				}
 				
 				boolean visible = m.getView().isVisible() && (m.getView().getAccessPublic() || (identity.isLoggedIn() && (m.getView().getAccessLogin() || identity.hasView(m.getView()))));
-				if(debugOnInfo) {logger.info("\t\t"+m.getView().getCode()+" "+visible);}
+				if(debugOnInfo) {logger.info("\t\t"+m.getView().getCode()+" visible:"+visible);}
 				if(visible)
 				{
 					M parent = null;

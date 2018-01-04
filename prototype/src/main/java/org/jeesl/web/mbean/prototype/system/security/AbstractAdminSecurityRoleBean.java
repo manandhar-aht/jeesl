@@ -233,5 +233,5 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	}
 	
 	//Order
-	protected void reorderRoles() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, roles);}
+	public void reorderRoles() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, roles);}
 }

@@ -215,10 +215,17 @@
     	</s:langs>
     </s:translation>
     <s:translation key="jeeslSecurityPassword">
-    	<s:langs>
-    		<s:lang key="de" translation="Kennwort"/>
-    		<s:lang key="en" translation="Password"/>
-    		<s:lang key="fr" translation="Password"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Kennwort"/>
+	    		<s:lang key="en" translation="Password"/>
+	    		<s:lang key="fr" translation="Password"/>
+	    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslSecurityMenu">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Menü"/>
+	    		<s:lang key="en" translation="Menu"/>
+	    		<s:lang key="fr" translation="Menu"/>
+	    	</s:langs>
     </s:translation>
 </s:translations>

@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.ArrayList;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
@@ -37,7 +38,6 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;

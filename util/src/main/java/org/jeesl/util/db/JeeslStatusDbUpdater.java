@@ -212,6 +212,7 @@ public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends Utils
 					savePreviousDbEntries(xml.getGroup(), l);
 					logger.debug("Delete Pool: "+mDbAvailableStatus.get(xml.getGroup()).size());
 				}
+				
 				try
 				{
 					ejb = fStatus.fByCode(cStatus,xml.getCode());

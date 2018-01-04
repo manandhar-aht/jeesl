@@ -4,17 +4,12 @@ import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPath;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
@@ -22,7 +17,6 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +65,7 @@ public class XlsSurveyAnswerFactory <L extends UtilsLang, D extends UtilsDescrip
 			if(answer.getOption()!=null){XlsCellFactory.build(row, colNr, style, answer.getOption().getCode(), 1);}
 			else{XlsCellFactory.build(row, colNr, style, "", 1);}
 		}
+		else if(BooleanComparator.active(answer.getQuestion().getShowDate())){XlsCellFactory.build(row, colNr, style, answer.getValueDate(), 1);}
 		else
 		{
 			XlsCellFactory.build(row, colNr, style, "XXXXX", 1);
@@ -89,6 +84,7 @@ public class XlsSurveyAnswerFactory <L extends UtilsLang, D extends UtilsDescrip
 			if(matrix.getOption()!=null){XlsCellFactory.build(row, colNr, style, matrix.getOption().getCode(), 1);}
 			else{XlsCellFactory.build(row, colNr, style, "", 1);}
 		}
+//		else if(BooleanComparator.active(question.getShowDate())){XlsCellFactory.build(row, colNr, style, matrix.getValueDate(), 1);}
 		else
 		{
 			XlsCellFactory.build(row, colNr, style, "XXXXX", 1);

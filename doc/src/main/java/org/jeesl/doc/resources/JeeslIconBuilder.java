@@ -65,9 +65,9 @@ public class JeeslIconBuilder
 		catch (TranscoderException e) {throw new UtilsConfigurationException(e.getMessage());}
 	}
 	
-	public void png() throws UtilsConfigurationException
+	public void png(String prefix) throws UtilsConfigurationException
 	{
-		File base = new File("../../jeesl/prototype/src/main/resources/META-INF/resources/jeeslPrototypeGfx/12/ui");
+		File base = new File(prefix+"/jeesl/prototype/src/main/resources/META-INF/resources/jeeslPrototypeGfx/12/ui");
 		copy(FileUtils.normalize(base.getAbsolutePath()),"control",   "delete","clone","download","filter","move","remove","save","search","upload");		
 		copy(FileUtils.normalize(base.getAbsolutePath()),"security",   "check-mark","documentation","x-mark");
 	}

@@ -30,13 +30,16 @@
          	<scope>provided</scope>
          </dependency>
 	
-		<dependency>
-         <!--Sun istack problem   -->  
+<!-- Commented out to fix mvn compilation error
+Failed to collect dependencies at com.sun.xml.ws:policy:jar:2.2 -> woodstox:wstx-asl:jar:3.2.1 
+-->
+<!-- 		<dependency>
+         Sun istack problem    
         <groupId>com.sun.xml.ws</groupId>
         <artifactId>policy</artifactId>
         <version>2.2</version>
          <scope>provided</scope>
-      </dependency>
+      </dependency> -->
       
 		<!-- REST -->
 		<dependency>

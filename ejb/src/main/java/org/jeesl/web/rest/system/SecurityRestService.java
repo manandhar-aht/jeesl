@@ -317,7 +317,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 						}
 						
 						Roles xRoles = XmlRolesFactory.build();
-						for(R role : fSecurity.rolesForView(cView, view))
+						for(R role : fSecurity.rolesForView(view))
 						{
 							xRoles.getRole().add(fRoleDescription.build(role));
 						}
@@ -357,7 +357,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 						}
 						
 						Roles xRoles = XmlRolesFactory.build();
-						for(R role : fSecurity.rolesForView(cView, view))
+						for(R role : fSecurity.rolesForView(view))
 						{
 							xRoles.getRole().add(fRoleDescription.build(role));
 						}

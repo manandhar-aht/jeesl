@@ -50,9 +50,12 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslSecurityFacadeBean.class);
 	
+	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
+	
 	public JeeslSecurityFacadeBean(EntityManager em, SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
 		super(em);
+		this.fbSecurity=fbSecurity;
 	}
 
 	@Override public R load(Class<R> cRole, R role)
@@ -110,9 +113,9 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		return new ArrayList<V>(views.values());
 	}
 	
-	@Override public List<R> rolesForView(Class<V> cView, V view)
+	@Override public List<R> rolesForView(V view)
 	{	
-		return rolesForView(cView,null,view,null);
+		return rolesForView(fbSecurity.getClassView(),null,view,null);
 	}
 	
 	@Override public List<R> rolesForView(Class<V> cView, Class<USER> cUser, V view, USER user)

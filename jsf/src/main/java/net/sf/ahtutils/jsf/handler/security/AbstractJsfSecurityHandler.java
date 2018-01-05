@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslSecurityBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.txt.system.security.TxtSecurityActionFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
@@ -24,6 +25,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
+import net.sf.exlp.util.io.StringUtil;
 
 public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends UtilsDescription,
 													C extends JeeslSecurityCategory<L,D>,
@@ -40,19 +42,21 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	public static final long serialVersionUID=1;
 
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity;
+	
 	protected I identity;
 	
 	protected List<A> actions; public List<A> getActions() {return actions;}
 	protected List<R> roles; public List<R> getRoles() {return roles;}
 	
 	protected String pageCode; public String getPageCode() {return pageCode;}
-	protected V view;public V getView() {return view;}
+	protected V view; public V getView() {return view;}
 
 	protected TxtSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> txtAction;
 	protected Comparator<A> comparatorAction;
 	
 	protected Map<R,Boolean> mapHasRole;public Map<R,Boolean> getMapHasRole() {return mapHasRole;}
-	protected Map<String,Boolean> mapAllow; public Map<String,Boolean> getMapAllow(){return mapAllow;}
+	protected final Map<String,Boolean> mapAllow; public Map<String,Boolean> getMapAllow(){return mapAllow;}
 	
 	protected boolean noActions; public boolean isNoActions() {return noActions;}
 	protected boolean noRoles; public boolean isNoRoles() {return noRoles;}
@@ -83,13 +87,44 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 		{
 			view = fSecurity.fByCode(cV, pageCode);
 			view = fSecurity.load(cV, view);
-//			Collections.sort(actions, comparatorAction);
 
-			roles = fSecurity.rolesForView(cV, view);
+			logger.info(StringUtil.stars());
+
+			roles = fSecurity.rolesForView(view);
 			noRoles = roles.size()==0;
 			update();
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
+	}
+	
+	public AbstractJsfSecurityHandler(I identity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity, V view, Class<V> cV)
+	{
+		this.identity=identity;
+		this.fSecurity=fSecurity;
+		this.bSecurity=bSecurity;
+		this.view=view;
+		this.pageCode=view.getCode();
+		
+		debugOnInfo = false;
+		noActions=true;
+		noRoles=true;
+		
+		mapAllow = new Hashtable<String,Boolean>();
+		mapHasRole = new Hashtable<R,Boolean>();
+		actions = new ArrayList<A>();
+		
+		SecurityActionComparator<L,D,C,R,V,U,A,AT,USER> cfAction = new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>();
+		cfAction.factory(SecurityActionComparator.Type.position);
+		comparatorAction = cfAction.factory(SecurityActionComparator.Type.position);
+		
+		txtAction = new TxtSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>();
+		
+		logger.info(StringUtil.stars());
+		roles = bSecurity.fRoles(view);
+		logger.info(StringUtil.stars());
+		
+		noRoles = roles.size()==0;
+		update();
 	}
 	
 	private void update()

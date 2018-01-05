@@ -39,7 +39,7 @@ public interface JeeslSecurityFacade <L extends UtilsLang,
 	List<V> allViewsForUser(Class<USER> cUser, USER user);
 	
 	List<R> allRolesForUser(Class<USER> cUser, USER user);
-	List<R> rolesForView(Class<V> cView, V view);
+	List<R> rolesForView(V view);
 	List<R> rolesForView(Class<V> cView, Class<USER> cUser, V view, USER user);
 	List<R> rolesForAction(Class<A> cAction, A action);
 	List<R> rolesForAction(Class<A> cAction, Class<USER> cUser, A action, USER user);

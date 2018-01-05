@@ -41,8 +41,10 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
 
 	private List<V> views; @Override public List<V> getViews() {return views;}
+	
 	private final Map<String,V> mapUrlPattern;
 	private final Map<String,V> mapUrlMapping;
+	private final Map<V,List<R>> mapRoles;
 
 	public AbstractAppSecurityBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
 	{
@@ -50,6 +52,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		
 		mapUrlPattern = new HashMap<String,V>();
 		mapUrlMapping = new HashMap<String,V>();
+		mapRoles = new HashMap<V,List<R>>();
 	}
 	
 	protected void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
@@ -85,5 +88,16 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	{
 		if(mapUrlMapping.containsKey(pattern)) {return mapUrlMapping.get(pattern);}
 		else {return null;}
+	}
+
+	@Override
+	public List<R> fRoles(V view)
+	{
+		if(!mapRoles.containsKey(view))
+		{
+			mapRoles.put(view,fSecurity.rolesForView(view));
+		}
+		
+		return mapRoles.get(view);
 	}
 }

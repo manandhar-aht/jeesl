@@ -57,7 +57,7 @@
 			<p:column rendered="#{cc.attrs.showStatusSymbol}">
 				<jtp:statusSymbolizer value="#{var}"/>
 			</p:column>
-			<p:column headerText="#{cc.attrs.colHeaderName}" rendered="#{cc.attrs.handler.showName}">
+			<p:column headerText="#{cc.attrs.colHeaderName}" rendered="#{cc.attrs.handler.showName}" filterBy="#{var.name}" filterMatchMode="contains">
 				<h:outputText value="#{var.name}" />
 			</p:column>
 			<p:column headerText="#{msg.colHeaderLang}" rendered="#{cc.attrs.handler.showLang}">

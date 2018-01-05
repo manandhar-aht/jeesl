@@ -228,6 +228,18 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 		return reports;
 	}
 	
+	@Override public Reports exportSystemIoReport(String code)
+	{
+		Reports reports = XmlReportsFactory.build();
+		try
+		{
+			REPORT r = fReport.fByCode(cReport, code);
+			reports.getReport().add(xfReport.build(r));
+		}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
+		return reports;
+	}
+	
 	@Override public Templates exportSystemIoReportTemplates()
 	{
 		Templates templates = XmlTemplatesFactory.build();
@@ -556,6 +568,4 @@ public class IoReportRestService <L extends UtilsLang,D extends UtilsDescription
 
 		return eRow;
 	}
-
-
 }

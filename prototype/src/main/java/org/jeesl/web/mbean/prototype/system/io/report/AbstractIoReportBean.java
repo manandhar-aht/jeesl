@@ -1,23 +1,9 @@
 package org.jeesl.web.mbean.prototype.system.io.report;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
 
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
-import org.jeesl.controller.handler.sb.SbMultiHandler;
-import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
-import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.builder.system.ReportFactoryBuilder;
-import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
-import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
-import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
-import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
-import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
-import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
-import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -29,31 +15,16 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
-import org.jeesl.util.comparator.ejb.system.io.report.IoReportColumnComparator;
-import org.jeesl.util.comparator.ejb.system.io.report.IoReportComparator;
-import org.jeesl.util.comparator.ejb.system.io.report.IoReportGroupComparator;
-import org.jeesl.util.comparator.ejb.system.io.report.IoReportRowComparator;
-import org.jeesl.util.comparator.ejb.system.io.report.IoReportSheetComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
-import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
-import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractIoReportBean <L extends UtilsLang,D extends UtilsDescription,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>,

@@ -6,7 +6,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+import org.jboss.resteasy.client.jaxrs.ResteasyClient;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
+import org.jeesl.api.rest.system.io.report.JeeslIoReportRestExport;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
 import org.jeesl.factory.builder.system.ReportFactoryBuilder;
@@ -40,6 +44,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -48,6 +53,8 @@ import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
+import net.sf.ahtutils.xml.report.Reports;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends UtilsDescription,
 						CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -117,6 +124,8 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efGroup;
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efColumn;
 	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efRow;
+	
+	private String restUrl; public String getRestUrl() {return restUrl;} public void setRestUrl(String restUrl) {this.restUrl = restUrl;}
 	
 	protected AbstractAdminIoReportDefinitionBean(final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport)
 	{
@@ -545,5 +554,19 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		{
 			logger.info(uiAllowSave+" allowSave ("+actionDeveloper+")");
 		}
+	}
+	
+	public  void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
+	{
+		logger.info("Downloading REST");
+		ResteasyClient client = new ResteasyClientBuilder().build();
+//		ResteasyWebTarget restTarget = client.target("http://localhost:8080/jeesl");
+		ResteasyWebTarget restTarget = client.target(restUrl);
+		JeeslIoReportRestExport rest = restTarget.proxy(JeeslIoReportRestExport.class);
+		
+		Reports xml = rest.exportSystemIoReport(report.getCode());
+        JaxbUtil.info(xml);
+        
+        reloadReports();
 	}
 }

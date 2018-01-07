@@ -24,9 +24,11 @@ public interface JeeslSecurityBean<L extends UtilsLang,D extends UtilsDescriptio
 									M extends JeeslSecurityMenu<V,M>,
 									USER extends JeeslUser<R>>
 {	
-	List<V> getViews();
-	void update(V v);
+	void update(V view);
+	void update(R role);
+	void update(U usecase);
 	
+	List<V> getViews();
 	V findViewByHttpPattern(String pattern);
 	V findViewByUrlMapping(String pattern);
 	List<R> fRoles(V view);

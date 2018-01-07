@@ -9,15 +9,15 @@ import java.util.Map;
 import org.jeesl.api.bean.JeeslSecurityBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.txt.system.security.TxtSecurityActionFactory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.user.JeeslIdentity;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.util.comparator.ejb.system.security.SecurityActionComparator;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,6 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
-import net.sf.exlp.util.io.StringUtil;
 
 public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends UtilsDescription,
 													C extends JeeslSecurityCategory<L,D>,
@@ -88,8 +87,6 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 			view = fSecurity.fByCode(cV, pageCode);
 			view = fSecurity.load(cV, view);
 
-			logger.info(StringUtil.stars());
-
 			roles = fSecurity.rolesForView(view);
 			noRoles = roles.size()==0;
 			update();
@@ -119,9 +116,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 		
 		txtAction = new TxtSecurityActionFactory<L,D,C,R,V,U,A,AT,USER>();
 		
-		logger.info(StringUtil.stars());
 		roles = bSecurity.fRoles(view);
-		logger.info(StringUtil.stars());
 		
 		noRoles = roles.size()==0;
 		update();

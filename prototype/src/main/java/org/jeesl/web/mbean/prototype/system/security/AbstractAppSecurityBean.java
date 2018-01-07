@@ -61,7 +61,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		reload();
 	}
 	
-	public void reload()
+	private void reload()
 	{
 		views = fSecurity.all(fbSecurity.getClassView());
 		for(V v : views)
@@ -71,11 +71,21 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		logger.info(AbstractLogMessage.reloaded(fbSecurity.getClassView(), views));
 	}
 	
-	public void update(V v)
+	public void update(V view)
 	{
-		logger.info("Updating "+v.getCode());
-		mapUrlPattern.put(v.getViewPattern(),v);
-		mapUrlMapping.put(v.getUrlMapping(),v);
+		logger.info("Updating "+view.getCode());
+		mapUrlPattern.put(view.getViewPattern(),view);
+		mapUrlMapping.put(view.getUrlMapping(),view);
+	}
+	
+	public void update(R role)
+	{
+
+	}
+	
+	public void update(U usecase)
+	{
+
 	}
 		
 	@Override public V findViewByHttpPattern(String pattern)

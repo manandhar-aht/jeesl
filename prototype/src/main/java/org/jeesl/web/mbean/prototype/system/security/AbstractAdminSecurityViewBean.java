@@ -64,10 +64,11 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		this.initSuper(langs, fSecurity, bMessage);
 		this.bSecurity=bSecurity;
 	}
+	@Deprecated
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
 	{
 		categoryType = JeeslSecurityCategory.Type.view;
-		initSecuritySuper(langs,fSecurity,bMessage);
+		super.initSecuritySuper(langs,fSecurity,bMessage);
 		
 		templates = fSecurity.allOrderedPositionVisible(fbSecurity.getClassTemplate());
 	}

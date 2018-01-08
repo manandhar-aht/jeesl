@@ -36,15 +36,15 @@ public interface JeeslSecurityFacade <L extends UtilsLang,
 	U load(Class<U> cUsecase, U usecase);
 //	UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER> load(Class<UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER>> cRole, UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER> sww);
 	
-	List<V> allViewsForUser(Class<USER> cUser, USER user);
+	List<V> allViewsForUser(USER user);
 	
-	List<R> allRolesForUser(Class<USER> cUser, USER user);
+	List<R> allRolesForUser(USER user);
 	List<R> rolesForView(V view);
 	List<R> rolesForView(Class<V> cView, Class<USER> cUser, V view, USER user);
 	List<R> rolesForAction(Class<A> cAction, A action);
 	List<R> rolesForAction(Class<A> cAction, Class<USER> cUser, A action, USER user);
 	
-	List<A> allActionsForUser(Class<USER> clUser, USER user);
+	List<A> allActionsForUser(USER user);
 	List<A> allActions(Class<R> cRole, List<R> roles);
 	
 	void grantRole(Class<USER> clUser, Class<R> clRole, USER user, R role, boolean grant);

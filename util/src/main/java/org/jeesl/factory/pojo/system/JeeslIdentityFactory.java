@@ -21,10 +21,10 @@ public class JeeslIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 
 	final static Logger logger = LoggerFactory.getLogger(JeeslIdentityFactory.class);
 
-	private final SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity;
+	private final SecurityFactoryBuilder<?,?,?,R,V,U,A,?,?,USER> fbSecurity;
 	final Class<I>  cIdentity;
 
-	public JeeslIdentityFactory(SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity,final Class<I> cIdentity)
+	public JeeslIdentityFactory(SecurityFactoryBuilder<?,?,?,R,V,U,A,?,?,USER> fbSecurity,final Class<I> cIdentity)
 	{
 		this.fbSecurity=fbSecurity;
 		this.cIdentity=cIdentity;
@@ -36,7 +36,7 @@ public class JeeslIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 	   			   U extends JeeslSecurityUsecase<?,?,?,R,V,A>,
 	   			   A extends JeeslSecurityAction<?,?,R,V,U,?>,
 	   			USER extends JeeslUser<R>>
-	JeeslIdentityFactory<I,R,V,U,A,USER> factory(SecurityFactoryBuilder<?,?,?,R,V,U,A,?,USER> fbSecurity,final Class<I> cIdentity)
+	JeeslIdentityFactory<I,R,V,U,A,USER> factory(SecurityFactoryBuilder<?,?,?,R,V,U,A,?,?,USER> fbSecurity,final Class<I> cIdentity)
 	{
 		return new JeeslIdentityFactory<I,R,V,U,A,USER>(fbSecurity,cIdentity);
 	}
@@ -50,14 +50,14 @@ public class JeeslIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 			identity = cIdentity.newInstance();
 			identity.setUser(user);
 			
-			for(A a : fSecurity.allActionsForUser(fbSecurity.getClassUser(),user)){identity.allowAction(a);}
+			for(A a : fSecurity.allActionsForUser(user)){identity.allowAction(a);}
 			
 			logger.info("Roles");
-			for(R r : fSecurity.allRolesForUser(fbSecurity.getClassUser(),user))
+			for(R r : fSecurity.allRolesForUser(user))
 			{
 				identity.allowRole(r);
 			}
-			for(V v : fSecurity.allViewsForUser(fbSecurity.getClassUser(),user)){identity.allowView(v);}
+			for(V v : fSecurity.allViewsForUser(user)){identity.allowView(v);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

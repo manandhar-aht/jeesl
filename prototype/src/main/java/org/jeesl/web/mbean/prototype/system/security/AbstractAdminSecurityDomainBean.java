@@ -16,6 +16,7 @@ import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,7 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 												U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 												A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 												AT extends JeeslSecurityTemplate<L,D,C>,
+												M extends JeeslSecurityMenu<V,M>,
 												USER extends JeeslUser<R>,
 												STAFF extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
 												D1 extends EjbWithId, D2 extends EjbWithId>
@@ -65,7 +67,7 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	private OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> opContactHandler;
 	@Override public OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> getOpUserHandler() {return opContactHandler;}
 	
-	public AbstractAdminSecurityDomainBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
+	public AbstractAdminSecurityDomainBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		
 	}

@@ -50,9 +50,9 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslSecurityFacadeBean.class);
 	
-	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
+	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,?,USER> fbSecurity;
 	
-	public JeeslSecurityFacadeBean(EntityManager em, SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
+	public JeeslSecurityFacadeBean(EntityManager em, SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,?,USER> fbSecurity)
 	{
 		super(em);
 		this.fbSecurity=fbSecurity;
@@ -92,9 +92,9 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		return usecase;
 	}
 	
-	@Override public List<V> allViewsForUser(Class<USER> clUser, USER user)
+	@Override public List<V> allViewsForUser(USER user)
 	{
-		user = em.find(clUser, user.getId());
+		user = em.find(fbSecurity.getClassUser(), user.getId());
 		Map<Long,V> views = new HashMap<Long,V>();
 		for(R role : user.getRoles())
 		{
@@ -180,9 +180,9 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		return new ArrayList<R>(roles.values());
 	}
 	
-	@Override public List<A> allActionsForUser(Class<USER> cUser, USER user)
+	@Override public List<A> allActionsForUser(USER user)
 	{
-		user = em.find(cUser, user.getId());
+		user = em.find(fbSecurity.getClassUser(), user.getId());
 		Map<Long,A> actions = new HashMap<Long,A>();
 		for(R r : user.getRoles())
 		{
@@ -208,9 +208,9 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		return result;
 	}
 	
-	@Override public List<R> allRolesForUser(Class<USER> cUser, USER user)
+	@Override public List<R> allRolesForUser(USER user)
 	{
-		user = em.find(cUser, user.getId());
+		user = em.find(fbSecurity.getClassUser(), user.getId());
 		logger.warn("ROLES "+user.getRoles().size());
 		return user.getRoles();
 	}
@@ -397,12 +397,10 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		role = em.merge(role);
 	}
 
-	@Override
-	public 
-	boolean hasRole(Class<USER> clUser, Class<R> clRole, USER user, R role)
+	@Override public boolean hasRole(Class<USER> clUser, Class<R> clRole, USER user, R role)
 	{
 		if(user==null || role==null){return false;}
-		for(R r: allRolesForUser(clUser, user))
+		for(R r: allRolesForUser(user))
 		{
 			if(r.getId() == role.getId()){return true;}
 		}

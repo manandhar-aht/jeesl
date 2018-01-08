@@ -33,6 +33,7 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 									A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 									AT extends JeeslSecurityTemplate<L,D,C>,
+									M extends JeeslSecurityMenu<V,M>,
 									USER extends JeeslUser<R>
 //,I extends JeeslIdentity<R,V,U,A,USER>
 >
@@ -46,9 +47,10 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	private final Class<U> cUsecase; public Class<U> getClassUsecase(){return cUsecase;}
     private final Class<A> cAction; public Class<A> getClassAction(){return cAction;}
     private final Class<AT> cTemplate; public Class<AT> getClassTemplate(){return cTemplate;}
+    private final Class<M> cMenu; public Class<M> getClassMenu(){return cMenu;}
     private final Class<USER> cUser; public Class<USER> getClassUser(){return cUser;}
 	
-	public SecurityFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<USER> cUser)
+	public SecurityFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<M> cMenu, final Class<USER> cUser)
 	{		
 		super(cL,cD);
 		this.cCategory=cCategory;
@@ -57,6 +59,7 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cUsecase=cUsecase;
 		this.cAction=cAction;
 		this.cTemplate=cTemplate;
+		this.cMenu=cMenu;
 		this.cUser=cUser;
 	}
 	

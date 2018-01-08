@@ -12,6 +12,7 @@ import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
@@ -36,8 +37,9 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 											U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 											A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 											AT extends JeeslSecurityTemplate<L,D,C>,
+											M extends JeeslSecurityMenu<V,M>,
 											USER extends JeeslUser<R>>
-		extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,USER>
+		extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,M,USER>
 		implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -53,7 +55,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	
 	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity;
 	
-	public AbstractAdminSecurityViewBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
+	public AbstractAdminSecurityViewBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		super(fbSecurity);
 	}

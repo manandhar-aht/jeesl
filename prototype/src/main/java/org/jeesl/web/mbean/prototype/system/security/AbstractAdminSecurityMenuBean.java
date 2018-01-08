@@ -41,24 +41,21 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 											AT extends JeeslSecurityTemplate<L,D,C>,
 											M extends JeeslSecurityMenu<V,M>,
 											USER extends JeeslUser<R>>
-		extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,USER>
+		extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,M,USER>
 		implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityMenuBean.class);
-
-	private final Class<M> cMenu;
 	
 	private EjbSecurityMenuFactory<V,M> efMenu;
 	
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractAdminSecurityMenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity, final Class<M> cMenu)
+	public AbstractAdminSecurityMenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		super(fbSecurity);
-		this.cMenu=cMenu;
-		efMenu = fbSecurity.ejbMenu(cMenu);
+		efMenu = fbSecurity.ejbMenu(fbSecurity.getClassMenu());
 	}
 	
 	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
@@ -66,8 +63,8 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 		super.initSecuritySuper(langs,fSecurity,bMessage);
 		opViews = fSecurity.all(fbSecurity.getClassView());
 		
-		if(fSecurity.all(cMenu,1).isEmpty()) {firstInit();}
-		Map<V,M> map = efMenu.toMapView(fSecurity.all(cMenu));
+		if(fSecurity.all(fbSecurity.getClassMenu(),1).isEmpty()) {firstInit();}
+		Map<V,M> map = efMenu.toMapView(fSecurity.all(fbSecurity.getClassMenu()));
 		
 		for(V v : opViews)
 		{
@@ -113,7 +110,7 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 	
 	public void reload()
     {
-		List<M> list = fSecurity.all(cMenu);
+		List<M> list = fSecurity.all(fbSecurity.getClassMenu());
 		Map<M,List<M>> map = efMenu.toMapParent(list);
 	    	tree = new DefaultTreeNode(null, null);
 	    	
@@ -148,7 +145,7 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
         for(TreeNode n : dropNode.getChildren())
         {
         		M child =(M)n.getData();
-        		child = fSecurity.find(cMenu,child);
+        		child = fSecurity.find(fbSecurity.getClassMenu(),child);
         		child.setParent(parent);
         		child.setPosition(index);
         		fSecurity.save(child);

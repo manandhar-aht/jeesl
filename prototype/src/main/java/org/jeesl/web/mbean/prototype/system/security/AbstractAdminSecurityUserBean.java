@@ -16,6 +16,7 @@ import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 											U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 											A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 											AT extends JeeslSecurityTemplate<L,D,C>,
+											M extends JeeslSecurityMenu<V,M>,
 											USER extends JeeslUser<R>>
 		extends AbstractAdminBean<L,D>
 		implements Serializable
@@ -47,7 +49,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 
 	protected JeeslUserFacade<USER> fUtilsUser;
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity;
-	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
+	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity;
 	
 	protected List<USER> users;public List<USER> getUsers() {return users;}
 	private List<USER> fvUsers; public List<USER> getFvUsers() {return fvUsers;} public void setFvUsers(List<USER> fvUsers) {this.fvUsers = fvUsers;}
@@ -64,7 +66,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected UtilsRevisionPageFlow<USER,USER> revision; public UtilsRevisionPageFlow<USER, USER> getRevision() {return revision;}
 	
-	public AbstractAdminSecurityUserBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
+	public AbstractAdminSecurityUserBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		super(fbSecurity.getClassL(),fbSecurity.getClassD());
 		this.fbSecurity=fbSecurity;

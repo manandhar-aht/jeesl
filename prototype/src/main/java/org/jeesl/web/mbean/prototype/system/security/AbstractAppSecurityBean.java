@@ -38,7 +38,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	final static Logger logger = LoggerFactory.getLogger(AbstractAppSecurityBean.class);
 	
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
-	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity;
+	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity;
 
 	private List<V> views; @Override public List<V> getViews() {return views;}
 	
@@ -46,7 +46,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	private final Map<String,V> mapUrlMapping;
 	private final Map<V,List<R>> mapRoles;
 
-	public AbstractAppSecurityBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,USER> fbSecurity)
+	public AbstractAppSecurityBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		this.fbSecurity=fbSecurity;
 		

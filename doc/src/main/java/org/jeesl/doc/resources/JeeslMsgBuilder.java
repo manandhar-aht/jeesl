@@ -59,7 +59,7 @@ public class JeeslMsgBuilder
 	public static final String ioReport = "jeesl/msg/admin/system/io/report.xml";
 	public static final String ioFr = "jeesl/msg/system/io/fr.xml";
 	public static final String ioDms = "jeesl/msg/system/io/dms.xml";
-	public static final String ioRevision = "jeesl/msg/admin/system/revision.xml";
+	public static final String ioRevision = "jeesl/msg/system/io/revision.xml";
 	public static final String ioMail = "jeesl/msg/admin/system/io/mail.xml";
 	public static final String ioDb = "jeesl/msg/admin/system/io/db.xml";
 	public static final String ioDbStatistic = "jeesl/msg/system/io/db.xml";

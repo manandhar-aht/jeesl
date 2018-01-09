@@ -32,10 +32,10 @@ public class TxtUserFactory <L extends UtilsLang,
     
     public String name(USER user)
     {
-    	StringBuffer sb = new StringBuffer();
-    	sb.append(user.getFirstName());
-    	sb.append(" ");
-    	sb.append(user.getLastName());
-    	return sb.toString();
+	    	StringBuffer sb = new StringBuffer();
+	    	sb.append(user.getFirstName());
+	    	sb.append(" ");
+	    	sb.append(user.getLastName());
+	    	return sb.toString();
     }
 }

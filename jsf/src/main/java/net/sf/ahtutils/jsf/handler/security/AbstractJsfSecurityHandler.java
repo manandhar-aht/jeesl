@@ -160,6 +160,26 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 //		return true;
 	}
 	
+	protected boolean hasDomainRole(Class<R> cRole, Class<U> cUsecase, A action, List<R> staffRoles)
+	{
+		boolean allowDomain = false;
+
+		for(R r : staffRoles)
+		{
+			r = fSecurity.load(cRole, r);
+			if(r.getActions().contains(action)){allowDomain=true;}
+			else
+			{
+				for(U uc : r.getUsecases())
+				{
+					uc = fSecurity.load(cUsecase, uc);
+					if(uc.getActions().contains(action)){allowDomain=true;}
+				}
+			}
+		}
+		return allowDomain;
+	}
+	
 	protected void checkIcon(){noActions = actions.size() == 0;}
 	
 	@Override public <E extends Enum<E>> boolean allowSuffixCode(E actionCode)

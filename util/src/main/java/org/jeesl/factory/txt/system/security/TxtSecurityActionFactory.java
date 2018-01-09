@@ -32,9 +32,9 @@ public class TxtSecurityActionFactory <L extends UtilsLang,
     
     public String code(V view, AT template)
     {
-    	StringBuffer sb = new StringBuffer();
-    	sb.append(view.getCode());
-    	sb.append(template.getCode().substring(template.getCode().lastIndexOf("."), template.getCode().length()));
-    	return sb.toString();
+	    	StringBuffer sb = new StringBuffer();
+	    	sb.append(view.getCode());
+	    	sb.append(template.getCode().substring(template.getCode().lastIndexOf("."), template.getCode().length()));
+	    	return sb.toString();
     }
 }

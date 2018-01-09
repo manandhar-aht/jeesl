@@ -33,15 +33,15 @@ public class TxtStaffFactory <L extends UtilsLang,
 	
     public TxtStaffFactory(final String localeCode)
     {
-    	this.localeCode=localeCode;
+    		this.localeCode=localeCode;
     } 
     
     public String staff(STAFF staff)
     {
-    	StringBuffer sb = new StringBuffer();
-    	sb.append("Role:").append(staff.getRole().getName().get(localeCode).getLang());
-    	sb.append(" User:").append(staff.getUser().getFirstName()).append(staff.getUser().getLastName());
-    	sb.append(" Doamin:").append(staff.getDomain().toString());
-    	return sb.toString();
+	    	StringBuffer sb = new StringBuffer();
+	    	sb.append("Role:").append(staff.getRole().getName().get(localeCode).getLang());
+	    	sb.append(" User:").append(staff.getUser().getFirstName()).append(staff.getUser().getLastName());
+	    	sb.append(" Doamin:").append(staff.getDomain().toString());
+	    	return sb.toString();
     }
 }

@@ -47,7 +47,7 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
 				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN>,
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-				AT extends JeeslSurveyAnalysisTool<L,D,QE,AQ,ATT>,
+				AT extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,AQ,ATT>,
 				ATT extends UtilsStatus<ATT,L,D>>
 			extends AbstractFactoryBuilder<L,D>
 {

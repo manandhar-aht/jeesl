@@ -47,8 +47,7 @@
 				</aht:slot>
 				<aht:slot id="sView" width="3">
 					<h:form id="fView">
-						<p:panel id="pView" header="#{msg.jeeslRevisionEntity}"
-									rendered="#{not empty cc.attrs.bean.entity}" styleClass="auPanelWithGrid">
+						<p:panel id="pView" header="#{msg.jeeslRevisionEntity}" rendered="#{not empty cc.attrs.bean.entity}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelEntity()}" update=":#{cc.id}:sView :#{cc.id}:sAttributes" tooltip="#{msg.ttCancel}"/>
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveEntity()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}" rendered="#{cc.attrs.bean.uiAllowSave}" />
@@ -95,7 +94,7 @@
 				       	</p:dataTable>
 					</h:form>
 					<h:form id="fMapping">
-						<p:panel header="#{msg.aupRevisionMapping}" rendered="#{not empty cc.attrs.bean.mapping}" styleClass="auPanelWithGrid">
+						<p:panel header="#{msg.aupRevisionMapping}" rendered="#{not empty cc.attrs.bean.mapping}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelMapping()}" 	update=":#{cc.id}:sAttributes" mayDisappear="true" tooltip="#{msg.ttCancel}"/>
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveMapping()}" 	update=":#{cc.id}:sAttributes" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>

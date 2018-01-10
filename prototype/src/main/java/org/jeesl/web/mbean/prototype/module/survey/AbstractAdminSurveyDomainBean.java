@@ -310,7 +310,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	public void selectPath()
 	{
 		reset(false,false,false,true);
-		logger.info(AbstractLogMessage.selectEntity(path));
+		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(path));}
 		reloadAttributes();
 		reloadPath();
 	}
@@ -327,9 +327,9 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	private void reloadAttributes()
 	{
 		attributes = fAnalysis.fDomainAttributes(path.getEntity());
+		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbAnalysis.getClassDomainAttribute(), attributes, path.getEntity()));}
 	}
 	
 	public void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, sbhDomain.getList());}
 	public void reorderQueries() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, queries);}
-	
 }

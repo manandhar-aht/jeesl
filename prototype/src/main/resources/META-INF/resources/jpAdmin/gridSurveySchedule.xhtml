@@ -58,7 +58,7 @@
 				</aht:slot>
 				<aht:slot id="sSurvey" width="4" renderChildren="#{not empty cc.attrs.bean.survey}">
 					<h:form id="fQuestion">
-						<p:panel header="#{msg.jeeslSurvey}" styleClass="auPanelWithGrid">
+						<p:panel header="#{msg.jeeslSurvey}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSurvey()}" update=":#{cc.id}:grid"/>
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteSurvey()}" update=":#{cc.id}:grid"/>

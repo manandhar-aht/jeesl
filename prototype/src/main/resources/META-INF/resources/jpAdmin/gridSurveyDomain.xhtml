@@ -88,7 +88,7 @@
 			</aht:slot>
 			<aht:slot width="5" >
 				<h:form id="fQuery" rendered="#{not empty cc.attrs.bean.query}">
-					<p:panel header="#{msg.jeeslSurveyDomainQuery}" styleClass="auPanelWithGrid">
+					<p:panel header="#{msg.jeeslSurveyDomainQuery}" styleClass="jeeslPanel">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveQuery()}" update=":#{cc.id}:row2"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteQuery()}" update=":#{cc.id}:row2"/>
@@ -127,7 +127,7 @@
 			</aht:slot>
 			<aht:slot width="4" >
 				<h:form id="fPath" rendered="#{not empty cc.attrs.bean.path}">
-					<p:panel header="#{msg.jeeslSurveyDomainPath}" styleClass="auPanelWithGrid">
+					<p:panel header="#{msg.jeeslSurveyDomainPath}" styleClass="jeeslPanel">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.savePath()}" update=":#{cc.id}:grid"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deletePath()}" update=":#{cc.id}:row2" rendered="#{(cc.attrs.bean.path.id gt 0) and (cc.attrs.bean.path.position eq cc.attrs.bean.paths.size())}"/>

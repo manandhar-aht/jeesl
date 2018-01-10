@@ -1,6 +1,9 @@
 package org.jeesl.interfaces.model.module.survey.analysis;
 
+import java.io.Serializable;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -12,8 +15,8 @@ public interface JeeslSurveyAnalysisTool<L extends UtilsLang, D extends UtilsDes
 											QE extends UtilsStatus<QE,L,D>,
 											AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?>,
 											ATT extends UtilsStatus<ATT,L,D>>
-			extends EjbWithId,EjbWithParentAttributeResolver,EjbSaveable,
-					EjbWithPositionVisible
+			extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,
+						EjbWithParentAttributeResolver,EjbWithPositionVisible
 {
 	public enum Attributes{analysisQuestion}
 	public enum Elements{selectOne,bool,text,remark}

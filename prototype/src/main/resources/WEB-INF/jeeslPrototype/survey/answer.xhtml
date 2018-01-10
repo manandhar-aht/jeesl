@@ -8,81 +8,62 @@
     xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 >
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
-
-		<ui:fragment rendered="#{surveyHandler.allowAssessment}">
+		
+	<h:panelGroup rendered="#{question.showText  and (not question.showMatrix)}">
+		<p:inputText  value="#{surveyHandler.answers[question].valueText}" rendered="#{surveyHandler.showDataFields}"/>
+		<h:outputText value="#{surveyHandler.answers[question].valueText}" rendered="#{not surveyHandler.showDataFields}"/>
+	</h:panelGroup>
 			
-			<ui:fragment rendered="#{question.showText  and (not question.showMatrix)}">
-				<p:inputText  value="#{surveyHandler.answers[question].valueText}" rendered="#{surveyHandler.showDataFields}"/>
-				<h:outputText value="#{surveyHandler.answers[question].valueText}" rendered="#{not surveyHandler.showDataFields}"/>
-			</ui:fragment>
-			<ui:fragment rendered="#{question.showSelectOne and (not question.showMatrix)}">
-				<p:selectOneMenu id="categoryS1" value="#{surveyHandler.answers[question].option}" effect="fade" rendered="#{surveyHandler.showDataFields}">
-					<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="o" itemLabel="#{o.name[loc].lang}" itemValue="#{o}"/>
-				</p:selectOneMenu>
-				<h:outputText value="#{surveyHandler.answers[question].option.name[loc].lang}" rendered="#{not surveyHandler.showDataFields}"/>
-			</ui:fragment>
-			<ui:fragment rendered="#{question.showRemark}">
-				<p:inputTextarea id="remarkIta" rows="2" styleClass="w100"  value="#{surveyHandler.answers[question].remark}" rendered="#{surveyHandler.showDataFields}"/>
-				<p:watermark for="remarkIta" value="Remark" id="watermark" rendered="#{surveyHandler.showDataFields}"/>
-				<h:outputText value="#{surveyHandler.answers[question].remark}" rendered="#{not surveyHandler.showDataFields}"/>
-			</ui:fragment>
+	<h:panelGroup rendered="#{question.showSelectOne and (not question.showMatrix)}">
+		<p:selectOneMenu id="categoryS1" value="#{surveyHandler.answers[question].option}" effect="fade" rendered="#{surveyHandler.showDataFields}">
+			<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="o" itemLabel="#{o.name[loc].lang}" itemValue="#{o}"/>
+		</p:selectOneMenu>
+		<h:outputText value="#{surveyHandler.answers[question].option.name[loc].lang}" rendered="#{not surveyHandler.showDataFields}"/>
+	</h:panelGroup>
 			
+	<h:panelGroup rendered="#{question.showRemark}">
+		<p:inputTextarea id="remarkIta" rows="2" styleClass="w100"  value="#{surveyHandler.answers[question].remark}" rendered="#{surveyHandler.showDataFields}"/>
+		<p:watermark for="remarkIta" value="Remark" id="watermark" rendered="#{surveyHandler.showDataFields}"/>
+		<h:outputText value="#{surveyHandler.answers[question].remark}" rendered="#{not surveyHandler.showDataFields}"/>
+	</h:panelGroup>
 			
+	<p:selectBooleanCheckbox rendered="#{question.showBoolean and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueBoolean}" />
 			
-			<p:selectBooleanCheckbox rendered="#{question.showBoolean and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueBoolean}" />
+	<p:inputText rendered="#{question.showInteger and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueNumber}"/>
+	<p:inputText rendered="#{question.showDouble and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDouble}"/>
 			
-			<p:inputText rendered="#{question.showInteger and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueNumber}"/>
-			<p:inputText rendered="#{question.showDouble and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDouble}"/>
-			
-			
-			<jtp:inputDate rendered="#{question.showDate and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDate}"/>
+	<jtp:inputDate rendered="#{question.showDate and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDate}"/>
 							
 			
-			<p:selectManyMenu showCheckbox="true" rendered="#{question.showSelectMulti and (not question.showMatrix)}"
-								value="#{surveyHandler.districts}" var="o">
-	           	<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="opt" itemLabel="#{opt.name[localeCode].lang}" itemValue="#{opt.id}" />
-	            <p:column>
-	                <h:outputText value="#{o.name[localeCode].lang}" />
-	            </p:column>
-	        </p:selectManyMenu>
+	<p:selectManyMenu showCheckbox="true" rendered="#{question.showSelectMulti and (not question.showMatrix)}"
+						value="#{surveyHandler.districts}" var="o">
+          	<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="opt" itemLabel="#{opt.name[localeCode].lang}" itemValue="#{opt.id}" />
+           <p:column>
+               <h:outputText value="#{o.name[localeCode].lang}" />
+           </p:column>
+	</p:selectManyMenu>
 			
-			<p:dataTable rendered="#{question.showMatrix}" var="r" value="#{appSurveyBean.matrixRows[question]}">
-				<p:column styleClass="jeeslBold">
-					<h:outputText value="#{r.name[loc].lang}"/>
-				</p:column>
-				<p:columns var="c" value="#{appSurveyBean.matrixCols[question]}">
-					<f:facet name="header">
-						<h:outputText value="#{c.name[loc].lang}" />
-					</f:facet>
-					<p:selectBooleanCheckbox  value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueBoolean}" rendered="#{question.showBoolean}"/>
-					<p:inplace emptyLabel="-" rendered="#{question.showInteger}">
-						<h:inputText   value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueNumber}" />
-					</p:inplace>
-					<p:inplace emptyLabel="-" rendered="#{question.showDouble}">
-						<h:inputText   value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueDouble}" />
-					</p:inplace>
-					<p:inplace emptyLabel="-" rendered="#{question.showText}">
-						<h:inputText   value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueText}" />
-					</p:inplace>
-					<h:selectOneMenu value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].option}" rendered="#{question.showSelectOne}" styleClass="w100">
-						<f:selectItems value="#{appSurveyBean.matrixCells[question]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
-					</h:selectOneMenu>
-				</p:columns>
-			</p:dataTable>
-		</ui:fragment>
-		<ui:fragment rendered="#{not surveyHandler.allowAssessment}">
-			<p:selectBooleanCheckbox disabled="true" rendered="#{question.showBoolean}" value="#{surveyHandler.answers[question].valueBoolean}" />
-			<h:outputText rendered="#{question.showInteger}" value="#{surveyHandler.answers[question].valueNumber}"/>
-			<h:outputText rendered="#{question.showDouble}" value="#{surveyHandler.answers[question].valueDouble}"/>
-			<h:outputText rendered="#{question.showText}" value="#{surveyHandler.answers[question].valueText}"/>
-			<h:outputText rendered="#{question.showRemark}" value="#{surveyHandler.answers[question].remark}"/>
-			<h:outputText rendered="#{question.showSelectOne}" value="#{surveyHandler.answers[question].option.name[localeCode].lang}"/>
-			
-			<p:dataTable rendered="#{question.showMatrix}" var="r" value="#{surveyHandler.matrixRows[question]}">
-				<p:column>
-					<h:outputText value="#{r.name[loc].lang}"/>
-				</p:column>
-			</p:dataTable>
-			
-		</ui:fragment>
+	<p:dataTable rendered="#{question.showMatrix}" var="r" value="#{appSurveyBean.matrixRows[question]}">
+		<p:column styleClass="jeeslBold">
+			<h:outputText value="#{r.name[loc].lang}"/>
+		</p:column>
+		<p:columns var="c" value="#{appSurveyBean.matrixCols[question]}">
+			<f:facet name="header">
+				<h:outputText value="#{c.name[loc].lang}" />
+			</f:facet>
+			<p:selectBooleanCheckbox  value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueBoolean}" rendered="#{question.showBoolean}"/>
+			<p:inplace emptyLabel="-" rendered="#{question.showInteger}">
+				<h:inputText   value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueNumber}" />
+			</p:inplace>
+			<p:inplace emptyLabel="-" rendered="#{question.showDouble}">
+				<h:inputText   value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueDouble}" />
+			</p:inplace>
+			<p:inplace emptyLabel="-" rendered="#{question.showText}">
+				<h:inputText   value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].valueText}" />
+			</p:inplace>
+			<h:selectOneMenu value="#{surveyHandler.matrix.m[question.id].m[r.id][c.id].option}" rendered="#{question.showSelectOne}" styleClass="w100">
+				<f:selectItems value="#{appSurveyBean.matrixCells[question]}" var="o" itemLabel="#{o.name[localeCode].lang}" itemValue="#{o}"/>
+			</h:selectOneMenu>
+		</p:columns>
+	</p:dataTable>
 </ui:composition>

@@ -22,7 +22,7 @@
 	
 	<composite:implementation>
 		<ui:repeat id="repeatSections" value="#{appSurveyBean.mapSection[cc.attrs.handler.template]}" var="section">
-			<p:panel id="pQuestions" styleClass="auPanelWithGrid"
+			<p:panel id="pQuestions" styleClass="jeeslPanel"
 					header="#{section.code}: #{section.name[localeCode].lang}"
 					rendered="#{cc.attrs.handler.showAssessment}">
 				<f:facet name="actions">
@@ -41,12 +41,11 @@
 				<ui:repeat value="#{appSurveyBean.mapQuestion[section]}" id="repeatQuestions" var="q">
 					<p:panelGrid columns="2" columnClasses="#{section.columnClasses}" rendered="#{q.visible}">
 						<h:panelGroup>
-							<h:outputText value="#{q.code} #{q.text[localeCode].lang}" styleClass="jeeslBold"/>
+							<h:outputText value="#{q.code}" styleClass="jeeslBold"/> <h:outputText value="#{q.text[localeCode].lang}"/>
 							<br/>
 							<h:outputText value="#{q.description[localeCode].lang}" styleClass="jeeslItalic"/>
 						</h:panelGroup>
 						<jtp:surveyAnswer question="#{q}" surveyHandler="#{cc.attrs.handler}"/>
-						<ui:remove><ui:fragment><h:outputText value="#{q.remark}"/></ui:fragment></ui:remove>
 					</p:panelGrid>
 				</ui:repeat>
 			</p:panel>

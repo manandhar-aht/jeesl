@@ -1,10 +1,9 @@
 package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
@@ -91,13 +90,13 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 		super(fbTemplate,fbCore,fbAnalysis);
 	}
 	
-	protected void initSuperSchedule(String userLocale, String[] localeCodes, FacesMessageBean bMessage,
+	protected void initSuperSchedule(String userLocale, JeeslTranslationBean bTranslation, FacesMessageBean bMessage,
 			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
 			JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
 			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fAnalysis,
 			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
 	{
-		super.initSuperSurvey(new ArrayList<String>(Arrays.asList(localeCodes)),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
+		super.initSuperSurvey(bTranslation.getLangKeys(),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 		initSettings();
 		
 		sbhCategory.silentCallback();
@@ -141,6 +140,7 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 		survey.setStatus(fCore.find(fbCore.getClassSurveyStatus(),survey.getStatus()));
 		survey = fCore.save(survey);
 		reloadSurveys();
+		bMessage.growlSuccessSaved();
 	}
 	
 	public void deleteSurvey() throws UtilsLockingException, UtilsConstraintViolationException, UtilsNotFoundException
@@ -149,6 +149,7 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 		fCore.deleteSurvey(survey);
 		survey=null;
 		reloadSurveys();
+		bMessage.growlSuccessRemoved();
 	}
 	
 	public void selectSurvey() throws UtilsNotFoundException

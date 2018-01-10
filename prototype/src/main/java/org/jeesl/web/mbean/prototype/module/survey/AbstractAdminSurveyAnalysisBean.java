@@ -234,13 +234,13 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void saveAnalysisQuestion() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(analysisQuestion));
-		analysisQuestion = fCore.save(analysisQuestion);
+		analysisQuestion = fAnalysis.save(analysisQuestion);
 		reloadTools();
 	}
 	
 	private void reloadTools()
 	{
-		tools = fCore.allForParent(fbAnalysis.getClassAnalysisTool(), analysisQuestion);
+		tools = fAnalysis.allForParent(fbAnalysis.getClassAnalysisTool(), analysisQuestion);
 	}
 	
 	public void addTool()
@@ -251,9 +251,9 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void saveTool() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(tool));
-		tool.setType(fCore.find(fbAnalysis.getAttClass(),tool.getType()));
-		tool.setElement(fCore.find(fbTemplate.getClassElement(),tool.getElement()));
-		tool = fCore.save(tool);
+		tool.setType(fAnalysis.find(fbAnalysis.getAttClass(),tool.getType()));
+		tool.setElement(fAnalysis.find(fbTemplate.getClassElement(),tool.getElement()));
+		tool = fAnalysis.save(tool);
 		reloadTools();
 	}
 	
@@ -261,6 +261,14 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.selectEntity(question));
 		tool = fCore.find(fbAnalysis.getClassAnalysisTool(),tool);
+	}
+	
+	public void deleteTool() throws UtilsConstraintViolationException
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.rmEntity(tool));}
+		fAnalysis.rm(tool);
+		reloadTools();
+		reset(false,false,false,false,false,true);
 	}
 	
 	public void reorderAnalyses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, analyses);}

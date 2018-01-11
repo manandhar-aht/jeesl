@@ -164,6 +164,8 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	
 	@Override public JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey, TOOL tool)
 	{
+		boolean withDomainQuery = !(tool==null || tool.getQuery()==null);
+		
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
         CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
@@ -177,11 +179,20 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
         predicates.add(cB.equal(pQuestion,question));
         
         Path<OPTION> pOption = answer.get(JeeslSurveyAnswer.Attributes.option.toString());
-        
         Expression<Long> eTa = cB.count(answer.<Long>get(JeeslSurveyAnswer.Attributes.option.toString()));
       
-        cQ.groupBy(pQuestion.get("id"),pOption.get("id"));
-        cQ.multiselect(pQuestion.get("id"),pOption.get("id"),eTa);
+        if(!withDomainQuery)
+        {	// No DomainQuery, using the whole dataset
+            cQ.groupBy(pQuestion.get("id"),pOption.get("id"));
+            cQ.multiselect(pQuestion.get("id"),pOption.get("id"),eTa);
+        }
+        else
+        {
+        		Join<DATA,CORRELATION> jCorrelation = jData.join(JeeslSurveyData.Attributes.correlation.toString());
+        		
+        		cQ.groupBy(pQuestion.get("id"),pOption.get("id"),jCorrelation.get("id"));
+        		cQ.multiselect(pQuestion.get("id"),pOption.get("id"),jCorrelation.get("id"),eTa);
+        }
 
         cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
         TypedQuery<Tuple> tQ = em.createQuery(cQ);
@@ -191,9 +202,20 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
         for(Tuple t : tuples)
         {
 	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
-	        	f.setL1((Long)t.get(0));
-	        	f.setL2((Long)t.get(1));
-	        	f.setL3((Long)t.get(2));
+	        	
+	        	f.setL1((Long)t.get(0));		//Question ID
+	        	f.setL2((Long)t.get(1));		//Option ID
+	        	
+	        	if(!withDomainQuery)
+	        	{
+	        		f.setL3((Long)t.get(2));		//Count
+	        	}
+	        	else
+	        	{
+	        		f.setL3((Long)t.get(3));		//Count
+	        		f.setL4((Long)t.get(2));		//DomainQuery ID
+	        	}
+	        	
 	        	result.getFigures().add(f);
         }
         

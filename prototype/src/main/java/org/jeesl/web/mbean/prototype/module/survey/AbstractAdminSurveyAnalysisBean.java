@@ -270,7 +270,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	
 	public void selectTool()
 	{
-		logger.info(AbstractLogMessage.selectEntity(question));
+		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(tool));}
 		tool = fCore.find(fbAnalysis.getClassAnalysisTool(),tool);
 	}
 	

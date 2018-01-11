@@ -204,7 +204,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 						{
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.selectOne.toString()))
 							{
-								JsonFlatFigures f = fAnalysis.surveyStatisticOption(q, sbhSurvey.getSelection());
+								JsonFlatFigures f = fAnalysis.surveyStatisticOption(q, sbhSurvey.getSelection(), tool);
 								mapToolTableOption.put(tool,f);
 								DataSet ds2 = mfOption.build(f,bSurvey.getMapOption().get(q));
 								mapDsOption.put(q,ds2);

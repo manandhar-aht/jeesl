@@ -1,5 +1,7 @@
 package org.jeesl.factory.ejb.module.survey;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
 import org.slf4j.Logger;
@@ -24,7 +26,7 @@ public class EjbSurveyAnalysisToolFactory<L extends UtilsLang, D extends UtilsDe
         this.cAt = cAt;
 	}
     
-	public AT build(AQ analysisQuestion, ATT type)
+	public AT build(AQ analysisQuestion, ATT type, List<AT> list)
 	{
 		AT ejb = null;
 		try
@@ -32,6 +34,8 @@ public class EjbSurveyAnalysisToolFactory<L extends UtilsLang, D extends UtilsDe
 			ejb = cAt.newInstance();
 			ejb.setAnalysisQuestion(analysisQuestion);
 			ejb.setType(type);
+			if(list==null) {ejb.setPosition(1);}
+			else {ejb.setPosition(list.size()+1);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

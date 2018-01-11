@@ -96,6 +96,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
 	protected List<SCHEME> schemes; public List<SCHEME> getSchemes() {return schemes;}
 	protected List<SCORE> scores; public List<SCORE> getScores() {return scores;}
+	private final List<QUERY> queries; public List<QUERY> getQueries() {return queries;}
 	private List<AT> tools; public List<AT> getTools() {return tools;}
 	private List<ATT> toolTypes; public List<ATT> getToolTypes() {return toolTypes;}
 	private List<QE> questionElements; public List<QE> getQuestionElements() {return questionElements;}
@@ -118,6 +119,8 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 											SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fbAnalysis)
 	{
 		super(fbTemplate,fbCore,fbAnalysis);
+		
+		queries = new ArrayList<QUERY>();
 		
 		efAnalysis = fbAnalysis.ejbAnalysis();
 		efAnalysisQuestion = fbAnalysis.ejbAnalysisQuestion();
@@ -190,6 +193,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		analysis.setDomain(fAnalysis.find(fbAnalysis.getClassDomain(),analysis.getDomain()));
 		analysis = fAnalysis.save(analysis);
 		reloadAnalyses();
+		reloadAnalysis();
 	}
 	
 	public void selectAnalysis()
@@ -198,6 +202,13 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		analysis = efLang.persistMissingLangs(fCore, sbhLocale.getList(), analysis);
 //		analysis = efDescription.persistMissingLangs(fSurvey, localeCodes, analysis);
 		reset(false,false,true,true,true,true);
+		reloadAnalysis();
+	}
+	
+	private void reloadAnalysis()
+	{
+		queries.clear();
+		queries.addAll(fAnalysis.allForParent(fbAnalysis.getClassDomainQuery(), analysis.getDomain()));
 	}
 	
 	public void deleteAnalysis() throws UtilsConstraintViolationException
@@ -209,7 +220,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 
 	public void selectSection()
 	{
-		logger.info(AbstractLogMessage.selectEntity(section));
+		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(section));}
 		questions = bSurvey.getMapQuestion().get(section);
 		reset(false,false,false,true,true,true);
 	}
@@ -233,7 +244,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	
 	public void saveAnalysisQuestion() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info(AbstractLogMessage.saveEntity(analysisQuestion));
+		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(analysisQuestion));}
 		analysisQuestion = fAnalysis.save(analysisQuestion);
 		reloadTools();
 	}
@@ -245,7 +256,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	
 	public void addTool()
 	{
-		tool = efAnalysisTool.build(analysisQuestion, toolTypes.get(0));
+		tool = efAnalysisTool.build(analysisQuestion, toolTypes.get(0),tools);
 	}
 	
 	public void saveTool() throws UtilsConstraintViolationException, UtilsLockingException

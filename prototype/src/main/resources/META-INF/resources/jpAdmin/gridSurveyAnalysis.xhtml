@@ -165,7 +165,7 @@
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<h:outputText value="#{cc.attrs.bean.tool.position}"/>
 						</p:panelGrid>
-						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 							<p:outputLabel value="#{msg.jeeslType}"/>
 							<p:selectOneMenu  value="#{cc.attrs.bean.tool.type}" autoWidth="false" effect="fade">
 								<f:selectItems value="#{cc.attrs.bean.toolTypes}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
@@ -174,6 +174,12 @@
 							<p:outputLabel value="#{msg.jeeslElement}"/>
 							<p:selectOneMenu  value="#{cc.attrs.bean.tool.element}" autoWidth="false" effect="fade">
 								<f:selectItems value="#{cc.attrs.bean.questionElements}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="#{msg.jeeslSurveyDomainQuery}"/>
+							<p:selectOneMenu  value="#{cc.attrs.bean.tool.query}" autoWidth="false" effect="fade">
+								<f:selectItem itemLabel="---"/>
+								<f:selectItems value="#{cc.attrs.bean.queries}" var="q" itemLabel="#{q.name[localeCode].lang}" itemValue="#{q}"/>
 							</p:selectOneMenu>
 						</p:panelGrid>
 					</p:panel>

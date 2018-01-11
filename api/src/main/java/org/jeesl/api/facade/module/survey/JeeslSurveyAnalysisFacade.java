@@ -55,8 +55,8 @@ public interface JeeslSurveyAnalysisFacade <L extends UtilsLang, D extends Utils
 											DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
 											ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN>,
 											AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-											AT extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,AQ,ATT>,
-											ATT extends UtilsStatus<ATT,L,D>>
+											TOOL extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,AQ,TOOLT>,
+											TOOLT extends UtilsStatus<TOOLT,L,D>>
 	extends UtilsFacade
 {
 	AQ fAnalysis(ANALYSIS analysis, QUESTION question) throws UtilsNotFoundException;
@@ -64,7 +64,7 @@ public interface JeeslSurveyAnalysisFacade <L extends UtilsLang, D extends Utils
 	List<DATTRIBUTE> fDomainAttributes(DENTITY entity);
 	
 	JsonFlatFigures surveyCountRecords(List<SURVEY> surveys);
-	JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey);
+	JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey, TOOL tool);
 	JsonFlatFigures surveyStatisticBoolean(QUESTION question, SURVEY survey);
 	
 	JsonFlatFigures surveyCountOption(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations);

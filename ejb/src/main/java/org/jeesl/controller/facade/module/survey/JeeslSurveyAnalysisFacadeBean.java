@@ -74,15 +74,15 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
 				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN>,
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-				AT extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,AQ,ATT>,
-				ATT extends UtilsStatus<ATT,L,D>>
-	extends UtilsFacadeBean implements JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT>
+				TOOL extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,AQ,TOOLT>,
+				TOOLT extends UtilsStatus<TOOLT,L,D>>
+	extends UtilsFacadeBean implements JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyAnalysisFacadeBean.class);
 	
-	private final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fbAnalyis;
+	private final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT> fbAnalyis;
 	
-	public JeeslSurveyAnalysisFacadeBean(EntityManager em, final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fbAnalyis)
+	public JeeslSurveyAnalysisFacadeBean(EntityManager em, final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT> fbAnalyis)
 	{
 		super(em);
 		this.fbAnalyis=fbAnalyis;
@@ -162,7 +162,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
         return result;
 	}
 	
-	@Override public JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey)
+	@Override public JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey, TOOL tool)
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();

@@ -53,25 +53,19 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	private V view;public V getView(){return view;}public void setView(V view) {this.view = view;}
 	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
 	
-	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity;
+	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity;
 	
 	public AbstractAdminSecurityViewBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		super(fbSecurity);
+		categoryType = JeeslSecurityCategory.Type.view;
 	}
 	
-	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity)
+	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
 	{
-		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
-		this.initSuper(langs, fSecurity, bMessage);
 		this.bSecurity=bSecurity;
-	}
-	@Deprecated
-	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
-	{
-		categoryType = JeeslSecurityCategory.Type.view;
+		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
 		super.initSecuritySuper(langs,fSecurity,bMessage);
-		
 		templates = fSecurity.allOrderedPositionVisible(fbSecurity.getClassTemplate());
 	}
 	

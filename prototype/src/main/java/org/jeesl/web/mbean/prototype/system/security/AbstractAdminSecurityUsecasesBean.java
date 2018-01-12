@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslSecurityBean;
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
@@ -52,11 +54,21 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	public AbstractAdminSecurityUsecasesBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		super(fbSecurity);
+		categoryType = JeeslSecurityCategory.Type.usecase;
 	}
 	
-	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
+	public void postConstructUsecase(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
 	{
-		categoryType = JeeslSecurityCategory.Type.usecase;
+		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
+		super.initSecuritySuper(langs,fSecurity,bMessage);		
+		opViews = fSecurity.all(fbSecurity.getClassView());
+		Collections.sort(opViews,comparatorView);
+		
+		opActions = new ArrayList<A>();
+	}
+	
+	private void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
+	{
 		initSecuritySuper(langs,fSecurity,bMessage);
 		
 		opViews = fSecurity.all(fbSecurity.getClassView());

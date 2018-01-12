@@ -1,7 +1,6 @@
 package org.jeesl.controller.handler.fr;
 
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +16,6 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
 import org.jeesl.interfaces.model.system.io.fr.JeeslWithFileRepositoryContainer;
-import org.primefaces.event.FileUploadEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,31 +29,31 @@ import net.sf.exlp.factory.xml.io.XmlDataFactory;
 import net.sf.exlp.factory.xml.io.XmlFileFactory;
 import net.sf.exlp.xml.io.File;
 
-public class UtilFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription,
+public class AbstractFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription,
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<CONTAINER,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>>
-	implements Serializable
+	implements org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(UtilFileRepositoryHandler.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractFileRepositoryHandler.class);
 
-	private final JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
-	private final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
-	private final JeeslFileRepositoryCallback callback;
+	protected final JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
+	protected final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
+	protected final JeeslFileRepositoryCallback callback;
 	
-	private final EjbIoFrContainerFactory<STORAGE,CONTAINER> efContainer;
-	private final EjbIoFrMetaFactory<CONTAINER,META> efMeta;
+	protected final EjbIoFrContainerFactory<STORAGE,CONTAINER> efContainer;
+	protected final EjbIoFrMetaFactory<CONTAINER,META> efMeta;
 	
-	private final List<META> metas; public List<META> getMetas() {return metas;}
+	protected final List<META> metas; public List<META> getMetas() {return metas;}
 
-	private CONTAINER container; public CONTAINER getContainer() {return container;}
-	private META meta; public META getMeta() {return meta;} public void setMeta(META meta) {this.meta = meta;}
-	private File xmlFile;
+	protected CONTAINER container; public CONTAINER getContainer() {return container;}
+	protected META meta; public META getMeta() {return meta;} public void setMeta(META meta) {this.meta = meta;}
+	protected File xmlFile;
 	
-	public UtilFileRepositoryHandler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
+	public AbstractFileRepositoryHandler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
 								IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile,
 								JeeslFileRepositoryCallback callback)
 	{
@@ -114,6 +112,11 @@ public class UtilFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescr
 //		return new ByteArrayInputStream(file.getData().getValue());
 	}
 	
+	public void reset()
+	{
+		
+	}
+	
 	public void addFile()
 	{
 		logger.info("Adding File");
@@ -130,7 +133,7 @@ public class UtilFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescr
 		meta.setType(fFr.fByCode(fbFile.getClassType(), JeeslFileType.Code.unknown));
 	}
 	
-	public void handleFileUpload(FileUploadEvent event) throws UtilsNotFoundException
+/*	public void handleFileUpload(FileUploadEvent event) throws UtilsNotFoundException
 	{
 		logger.info("Handling FileUpload: "+event.getFile().getFileName());
 		xmlFile.setName(event.getFile().getFileName());
@@ -141,7 +144,7 @@ public class UtilFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescr
 		
 		logger.info(meta.toString());
     }
-	
+*/	
 	public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info("Saving: "+xmlFile.getName());
@@ -149,11 +152,4 @@ public class UtilFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescr
 		reload();
 		reset(true);
     }
-	
-	public void selectFile() throws UtilsNotFoundException
-	{
-//		logger.info("selectFile");
-//		loadFile();
-//		bean.jcrFileSelected(ejb);
-	}
 }

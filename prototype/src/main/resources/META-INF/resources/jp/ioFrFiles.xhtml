@@ -41,7 +41,7 @@
 		</h:form>
 		<h:form id="fDownload">
 			<p:commandButton rendered="#{not empty cc.attrs.handler.meta}" value="#{msg.jeeslIoFileDownload}" ajax="false" icon="ui-icon-arrowthick-1-s">
-	        		<p:fileDownload value="#{cc.attrs.handler.bean.download}" />
+	        		<p:fileDownload value="#{cc.attrs.handler.download}" />
 			</p:commandButton>
 		</h:form>
 		<p:overlayPanel id="opUpload" widgetVar="wvUpload" appendToBody="false">

@@ -10,7 +10,7 @@ import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.api.facade.io.JeeslIoDmsFacade;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
 import org.jeesl.controller.handler.AttributeHandler;
-import org.jeesl.controller.handler.fr.UtilFileRepositoryHandler;
+import org.jeesl.controller.handler.fr.AbstractFileRepositoryHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
@@ -82,7 +82,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	protected final SbSingleHandler<DMS> sbhDms; public SbSingleHandler<DMS> getSbhDms() {return sbhDms;}
 
 	private AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> attributeHandler; public AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> getAttributeHandler() {return attributeHandler;}
-	private UtilFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fileHandler; public UtilFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> getFileHandler() {return fileHandler;}
+	private AbstractFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fileHandler; public AbstractFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> getFileHandler() {return fileHandler;}
 
 	
 	private List<FILE> files; public List<FILE> getFiles() {return files;} public void setFiles(List<FILE> files) {this.files = files;}

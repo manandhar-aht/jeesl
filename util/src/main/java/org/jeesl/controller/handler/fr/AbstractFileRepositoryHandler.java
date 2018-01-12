@@ -29,7 +29,7 @@ import net.sf.exlp.factory.xml.io.XmlDataFactory;
 import net.sf.exlp.factory.xml.io.XmlFileFactory;
 import net.sf.exlp.xml.io.File;
 
-public class AbstractFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription,
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
@@ -49,7 +49,7 @@ public class AbstractFileRepositoryHandler<L extends UtilsLang, D extends UtilsD
 	
 	protected final List<META> metas; public List<META> getMetas() {return metas;}
 
-	protected CONTAINER container; public CONTAINER getContainer() {return container;}
+	protected CONTAINER container; @Override public CONTAINER getContainer() {return container;}
 	protected META meta; public META getMeta() {return meta;} public void setMeta(META meta) {this.meta = meta;}
 	protected File xmlFile;
 	
@@ -66,7 +66,7 @@ public class AbstractFileRepositoryHandler<L extends UtilsLang, D extends UtilsD
 		metas = new ArrayList<META>();
 	}
 	
-	public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with) throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		metas.clear();
 		reset(true);

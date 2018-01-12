@@ -2,7 +2,7 @@ package org.jeesl.factory.builder.io;
 
 import org.jeesl.api.bean.callback.JeeslFileRepositoryCallback;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
-import org.jeesl.controller.handler.fr.AbstractFileRepositoryHandler;
+import org.jeesl.controller.handler.fr.DefaultFileRepositoryHandler;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrContainerFactory;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrMetaFactory;
@@ -58,8 +58,8 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 		return new EjbIoFrMetaFactory<CONTAINER,META>(cMeta);
 	}
 	
-	public AbstractFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> handler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback)
+	public DefaultFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> handler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback)
 	{
-		return new AbstractFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>(fFr,this,callback);
+		return new DefaultFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>(fFr,this,callback);
 	}
 }

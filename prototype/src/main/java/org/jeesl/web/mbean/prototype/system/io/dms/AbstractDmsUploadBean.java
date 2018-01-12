@@ -10,13 +10,13 @@ import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.api.facade.io.JeeslIoDmsFacade;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
 import org.jeesl.controller.handler.AttributeHandler;
-import org.jeesl.controller.handler.fr.AbstractFileRepositoryHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
 import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
 import org.jeesl.interfaces.bean.AttributeBean;
 import org.jeesl.interfaces.controller.handler.JeeslAttributeHandler;
+import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
@@ -82,7 +82,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	protected final SbSingleHandler<DMS> sbhDms; public SbSingleHandler<DMS> getSbhDms() {return sbhDms;}
 
 	private AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> attributeHandler; public AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> getAttributeHandler() {return attributeHandler;}
-	private AbstractFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fileHandler; public AbstractFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> getFileHandler() {return fileHandler;}
+	private JeeslFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fileHandler; public JeeslFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> getFileHandler() {return fileHandler;}
 
 	
 	private List<FILE> files; public List<FILE> getFiles() {return files;} public void setFiles(List<FILE> files) {this.files = files;}
@@ -106,16 +106,19 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 								JeeslIoDmsFacade<L,D,LOC,DMS,FSTORAGE,ASET,S,FILE,FCONTAINER,ACONTAINER> fDms,
 								JeeslIoFrFacade<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr,
 								JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute,
-								JeeslAttributeBean<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> bAttribute
+								JeeslAttributeBean<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> bAttribute,
+								JeeslFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fileHandler
 								)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
 		this.fFr=fFr;
 		this.fAttribute=fAttribute;
+		this.fileHandler=fileHandler;
+		
 		initPageConfiguration();
 		super.initLocales();
 		attributeHandler = fbAttribute.handler(bMessage,fAttribute,bAttribute,this);
-		fileHandler = fbFr.handler(fFr,this);
+//		fileHandler = fbFr.handler(fFr,this);
 		sbhDms.silentCallback();
 	}
 	protected abstract void initPageConfiguration();

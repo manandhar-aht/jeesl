@@ -189,6 +189,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
         else
         {
         		Join<DATA,CORRELATION> jCorrelation = jData.join(JeeslSurveyData.Attributes.correlation.toString());
+ //       		jCorrelation.j
         		
         		cQ.groupBy(pQuestion.get("id"),pOption.get("id"),jCorrelation.get("id"));
         		cQ.multiselect(pQuestion.get("id"),pOption.get("id"),jCorrelation.get("id"),eTa);

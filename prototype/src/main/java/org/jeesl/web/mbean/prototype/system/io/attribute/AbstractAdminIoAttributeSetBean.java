@@ -67,7 +67,7 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 	}
 	protected abstract void initPageConfiguration();
 	
-	public void toggled(Class<?> c)
+	@Override public void toggled(Class<?> c)
 	{
 		logger.info(AbstractLogMessage.toggled(c));
 		if(fbAttribute.getClassCategory().isAssignableFrom(c))

@@ -31,7 +31,7 @@ import net.sf.exlp.factory.xml.io.XmlDataFactory;
 import net.sf.exlp.factory.xml.io.XmlFileFactory;
 import net.sf.exlp.xml.io.File;
 
-public class FileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription,
+public class UtilFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription,
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
@@ -40,7 +40,7 @@ public class FileRepositoryHandler<L extends UtilsLang, D extends UtilsDescripti
 	implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(FileRepositoryHandler.class);
+	final static Logger logger = LoggerFactory.getLogger(UtilFileRepositoryHandler.class);
 
 	private final JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
 	private final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
@@ -55,7 +55,7 @@ public class FileRepositoryHandler<L extends UtilsLang, D extends UtilsDescripti
 	private META meta; public META getMeta() {return meta;} public void setMeta(META meta) {this.meta = meta;}
 	private File xmlFile;
 	
-	public FileRepositoryHandler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
+	public UtilFileRepositoryHandler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
 								IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile,
 								JeeslFileRepositoryCallback callback)
 	{
@@ -141,8 +141,6 @@ public class FileRepositoryHandler<L extends UtilsLang, D extends UtilsDescripti
 		
 		logger.info(meta.toString());
     }
-	
-	
 	
 	public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
 	{

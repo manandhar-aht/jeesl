@@ -63,7 +63,7 @@ public class ErGraphProcessor
 		
 		File fPackage = new File(fBase,sEjbPackage);
 		RecursiveFileFinder finder = new RecursiveFileFinder(FileFilterUtils.suffixFileFilter(".java"));
-    	List<File> list = finder.find(fPackage);
+		List<File> list = finder.find(fPackage);
 		for(File f : list)
 		{
 			createNode(f,setSub);
@@ -91,7 +91,7 @@ public class ErGraphProcessor
 	
 	private void createNode(File f,Set<String> subSet) throws ClassNotFoundException
 	{
-		Class<?> c = ClassUtil.forFile(fBase, f);		
+		Class<?> c = ClassUtil.forFile(fBase, f);
 		createNode(c,subSet);
 	}
 	

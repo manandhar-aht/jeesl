@@ -1,22 +1,83 @@
 package org.jeesl.controller.module;
 
+import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.Table;
+
+import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
+import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
+import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
+import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SurveyNativeQueryBuilder <SURVEY extends JeeslSurvey<?,?,?,?,?>,
-									  QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?>>
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+
+public class SurveyNativeQueryBuilder <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
+									  QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?>,
+									  ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,DATA,?>,
+									  DATA extends JeeslSurveyData<?,?,SURVEY,ANSWER,CORRELATION>,
+									  CORRELATION extends JeeslSurveyCorrelation<?,?,DATA>,
+									  TOOL extends JeeslSurveyAnalysisTool<?,?,?,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyNativeQueryBuilder.class);
 
-	public SurveyNativeQueryBuilder()
+	private final Map<String,String> mapTable;
+	
+	private final SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore;
+	private final SurveyAnalysisFactoryBuilder<?,?,?,QUESTION,?,?,ANSWER,?,DATA,?,CORRELATION,?,?,?,?,?,?,?,TOOL,?> fbAnalysis;
+	
+	public SurveyNativeQueryBuilder(SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore,
+									SurveyAnalysisFactoryBuilder<?,?,?,QUESTION,?,?,ANSWER,?,DATA,?,CORRELATION,?,?,?,?,?,?,?,TOOL,?> fbAnalysis)
 	{
+		this.fbCore=fbCore;
+		this.fbAnalysis=fbAnalysis;
 		
+		mapTable = new HashMap<String,String>();
+	}
+	
+	private String createNode(Class<?> c) throws UtilsNotFoundException
+	{
+		Annotation a = c.getAnnotation(Table.class);
+		if(a!=null)
+		{
+			Table t = (Table)a;
+			return t.name();
+	
+		}
+		return "--";
+	}
+	
+	private void prepareTableNames() throws UtilsNotFoundException
+	{
+		mapTable.put(fbCore.getClassAnswer().getName(), createNode(fbCore.getClassAnswer()));
+	}
+	
+	private String getTableName(String c)
+	{
+		return mapTable.get(c);
 	}
 	
 	public String build(SURVEY survey)
 	{
+		if(mapTable.isEmpty())
+		{
+			try {
+				prepareTableNames();
+			} catch (UtilsNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		
 		String sql = "select answer.question_id as questionId, answer.option_id as optionId, correlation.id as correlationId, count(answer.option_id) as counter\n" + 
 				"from SurveyAnswer answer\n" + 
 				"                inner join SurveyData data on answer.data_id=data.id\n" + 

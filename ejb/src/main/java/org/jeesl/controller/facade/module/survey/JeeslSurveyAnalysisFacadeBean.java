@@ -1,5 +1,6 @@
 package org.jeesl.controller.facade.module.survey;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,6 +167,36 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	{
 		boolean withDomainQuery = !(tool==null || tool.getQuery()==null);
 		
+		String sql ="select answer.question_id as questionId, answer.option_id as optionId, correlation.id as correlationId, count(answer.option_id) as counter\n" + 
+				"from SurveyAnswer answer\n" + 
+				"                inner join SurveyData data on answer.data_id=data.id\n" + 
+				"                inner join Survey survey on data.survey_id=survey.id\n" + 
+				"                inner join SurveyCorrelation correlation on data.correlation_id=correlation.id\n" + 
+				"                inner join SurveyCorrelationErpUser corruser on correlation.id=corruser.id\n" + 
+				"                inner join User user on user.id=corruser.user_id\n" + 
+				"                inner join Cv cv on cv.user_id=corruser.user_id,\n" + 
+				"                SurveyOption opt\n" + 
+				"where answer.option_id=opt.id and (survey.id in (2)) and answer.question_id=34\n" + 
+				"group by answer.question_id , answer.option_id , cv.gender_id";
+		
+		JsonFlatFigures result = JsonFlatFiguresFactory.build();
+		for(Object o : em.createNativeQuery(sql).getResultList())
+        {
+            Object[] array = (Object[])o;
+            long idQuestion = ((BigInteger)array[0]).longValue();
+            long idOption = ((BigInteger)array[1]).longValue();
+            long idPath = ((BigInteger)array[2]).longValue();
+            long count = ((BigInteger)array[3]).longValue();
+           
+        		JsonFlatFigure f = JsonFlatFigureFactory.build();
+        		f.setL1(idQuestion);
+        		f.setL2(idOption);
+        		f.setL3(idPath);
+        		f.setL4(count);
+        	 	result.getFigures().add(f);
+        }
+		
+/*		
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
         CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
@@ -219,7 +250,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	        	
 	        	result.getFigures().add(f);
         }
-        
+*/
         return result;
 	}
 	

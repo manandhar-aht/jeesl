@@ -32,10 +32,10 @@ public class NativeQueryDebugger
 			   
 		    try 
 		    {
-		    	Statement statement = connection.createStatement();
-		    	ResultSet rs = statement.executeQuery(sql);	
-		    	OfxTextRenderer.table(rs, System.out);
-		    	DbUtils.closeQuietly(rs);
+			    	Statement statement = connection.createStatement();
+			    	ResultSet rs = statement.executeQuery(sql);	
+			    	OfxTextRenderer.table(rs, System.out);
+			    	DbUtils.closeQuietly(rs);
 		    }
 		    catch (SQLException e) {e.printStackTrace();}
 		    catch (OfxAuthoringException e) {e.printStackTrace();}

@@ -20,6 +20,7 @@ import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
+import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.txt.system.status.TxtStatusFactory;
@@ -91,49 +92,26 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyCoreFacadeBean.class);
 	
-	private final Class<TEMPLATE> cTemplate;
-	private final Class<VERSION> cVersion;
-	@SuppressWarnings("unused")
-	private final Class<TS> cTS;
-	private final Class<SECTION> cSection;
-	private final Class<QUESTION> cQuestion;
-	private final Class<ANSWER> cAnswer;
-	private final Class<MATRIX> cMatrix;
-	private final Class<DATA> cData;
-	private final Class<OPTION> cOption;
-	
+	private final SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
 	private final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore;
 	
 	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION> efAnswer;
 
 	
 	public JeeslSurveyCoreFacadeBean(EntityManager em,
-//			SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
-			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
-			Class<SCHEME> cScheme,
-			Class<TEMPLATE> cTemplate,
-			Class<VERSION> cVersion,
-			final Class<TS> cTS, Class<SECTION> cSection, Class<QUESTION> cQuestion, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<ANSWER> cAnswer, final Class<MATRIX> cMatrix, Class<DATA> cData, final Class<OPTIONS> cOptions, final Class<OPTION> cOption, final Class<AQ> cAq)
+			SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore)
 	{
 		super(em);
+		this.fbTemplate=fbTemplate;
 		this.fbCore=fbCore;
-
-		this.cTemplate=cTemplate;
-		this.cVersion=cVersion;
-		this.cTS=cTS;
-		this.cSection=cSection;
-		this.cQuestion=cQuestion;
-		this.cAnswer=cAnswer;
-		this.cMatrix=cMatrix;
-		this.cData=cData;
-		this.cOption=cOption;
 
 		efAnswer = fbCore.answer();
 	}
 
 	@Override public TEMPLATE load(TEMPLATE template,boolean withQuestions, boolean withOptions)
 	{
-		template = em.find(cTemplate,template.getId());
+		template = em.find(fbTemplate.getClassTemplate(),template.getId());
 		
 		template.getSchemes().size();
 		template.getOptionSets().size();
@@ -163,7 +141,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	
 	@Override public SECTION load(SECTION section)
 	{
-		section = em.find(cSection,section.getId());
+		section = em.find(fbTemplate.getClassSection(),section.getId());
 		for(SECTION sub : section.getSections())
 		{
 			sub.getQuestions().size();
@@ -181,7 +159,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	
 	@Override public QUESTION load(QUESTION question)
 	{
-		question = em.find(cQuestion,question.getId());
+		question = em.find(fbTemplate.getClassQuestion(),question.getId());
 		question.getScores().size();
 		question.getOptions().size();
 		return question;
@@ -189,7 +167,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	
 	@Override public ANSWER load(ANSWER answer)
 	{
-		answer = em.find(cAnswer,answer.getId());
+		answer = em.find(fbCore.getClassAnswer(),answer.getId());
 		answer.getMatrix().size();
 		answer.getOptions().size();
 		return answer;
@@ -197,7 +175,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 
 	@Override public DATA load(DATA data)
 	{
-		data = em.find(cData,data.getId());
+		data = em.find(fbCore.getClassData(),data.getId());
 		data.getAnswers().size();
 		return data;
 	}
@@ -213,7 +191,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<SURVEY> cQ = cB.createQuery(fbCore.getClassSurvey());
-		Root<DATA> data = cQ.from(cData);
+		Root<DATA> data = cQ.from(fbCore.getClassData());
 		
 		Path<SURVEY> pathSurvey = data.get(JeeslSurveyData.Attributes.survey.toString());
 		Join<DATA,CORRELATION> jCorrelation = data.join(JeeslSurveyData.Attributes.correlation.toString());
@@ -278,13 +256,13 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	
 	@Override public void rmVersion(VERSION version) throws UtilsConstraintViolationException
 	{
-		version = em.find(cVersion, version.getId());
+		version = em.find(fbTemplate.getClassVersion(), version.getId());
 		this.rmProtected(version);
 	}
 	
 	@Override public OPTION saveOption(QUESTION question, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		question = em.find(cQuestion, question.getId());
+		question = em.find(fbTemplate.getClassQuestion(), question.getId());
 		option = this.saveProtected(option);
 		if(!question.getOptions().contains(option))
 		{
@@ -307,8 +285,8 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	
 	@Override public void rmOption(QUESTION question, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		question = em.find(cQuestion, question.getId());
-		option = em.find(cOption, option.getId());
+		question = em.find(fbTemplate.getClassQuestion(), question.getId());
+		option = em.find(fbTemplate.getClassOption(), option.getId());
 		if(question.getOptions().contains(option))
 		{
 			question.getOptions().remove(option);
@@ -319,7 +297,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	@Override public void rmOption(OPTIONS set, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		set = em.find(fbCore.getOptionSetClass(), set.getId());
-		option = em.find(cOption, option.getId());
+		option = em.find(fbTemplate.getClassOption(), option.getId());
 		if(set.getOptions().contains(option))
 		{
 			set.getOptions().remove(option);
@@ -400,8 +378,8 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<VERSION> cQ = cB.createQuery(cVersion);
-		Root<VERSION> root = cQ.from(cVersion);
+		CriteriaQuery<VERSION> cQ = cB.createQuery(fbTemplate.getClassVersion());
+		Root<VERSION> root = cQ.from(fbTemplate.getClassVersion());
 		
 		Join<VERSION,TEMPLATE> jTemplate = root.join(JeeslSurveyTemplateVersion.Attributes.template.toString());
 		Path<TC> pCategory = jTemplate.get(JeeslSurveyTemplate.Attributes.category.toString());
@@ -426,8 +404,8 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		if(sections!=null && sections.isEmpty()){return new ArrayList<ANSWER>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<ANSWER> cQ = cB.createQuery(cAnswer);
-		Root<ANSWER> answer = cQ.from(cAnswer);
+		CriteriaQuery<ANSWER> cQ = cB.createQuery(fbCore.getClassAnswer());
+		Root<ANSWER> answer = cQ.from(fbCore.getClassAnswer());
 		Expression<Long> eAnswerId = answer.get(EjbWithId.attribute);
 		
 		Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
@@ -454,8 +432,8 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<ANSWER> cQ = cB.createQuery(cAnswer);
-		Root<ANSWER> answer = cQ.from(cAnswer);
+		CriteriaQuery<ANSWER> cQ = cB.createQuery(fbCore.getClassAnswer());
+		Root<ANSWER> answer = cQ.from(fbCore.getClassAnswer());
 		Expression<Long> eAnswerId = answer.get(EjbWithId.attribute);
 		
 		Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
@@ -473,8 +451,8 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<ANSWER> cQ = cB.createQuery(cAnswer);
-		Root<ANSWER> answer = cQ.from(cAnswer);
+		CriteriaQuery<ANSWER> cQ = cB.createQuery(fbCore.getClassAnswer());
+		Root<ANSWER> answer = cQ.from(fbCore.getClassAnswer());
 		
 		Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
 		Join<DATA,SURVEY> jSurvey = jData.join(JeeslSurveyData.Attributes.survey.toString());
@@ -495,8 +473,8 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		if(answers!=null && answers.isEmpty()){return new ArrayList<MATRIX>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<MATRIX> cQ = cB.createQuery(cMatrix);
-		Root<MATRIX> matrix = cQ.from(cMatrix);
+		CriteriaQuery<MATRIX> cQ = cB.createQuery(fbCore.getClassMatrix());
+		Root<MATRIX> matrix = cQ.from(fbCore.getClassMatrix());
 		
 		Join<MATRIX,ANSWER> jAnswer = matrix.join(JeeslSurveyMatrix.Attributes.answer.toString());
 		predicates.add(jAnswer.in(answers));
@@ -510,8 +488,8 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	
 	@Override public List<ANSWER> fcAnswers(DATA data)
 	{
-		data = em.find(cData,data.getId());
-		TEMPLATE template = em.find(cTemplate,data.getSurvey().getTemplate().getId());
+		data = em.find(fbCore.getClassData(),data.getId());
+		TEMPLATE template = em.find(fbTemplate.getClassTemplate(),data.getSurvey().getTemplate().getId());
 		List<ANSWER> result = new ArrayList<ANSWER>();
 
 		Set<Long> existing = new HashSet<Long>();
@@ -556,12 +534,12 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 
 	@Override public List<ANSWER> fAnswers(SURVEY survey)
 	{
-		return this.allForGrandParent(cAnswer, cData, "data", survey, "survey");
+		return this.allForGrandParent(fbCore.getClassAnswer(), fbCore.getClassData(), "data", survey, "survey");
 	}
 
 	@Override public DATA fData(CORRELATION correlation) throws UtilsNotFoundException
 	{
-		return this.oneForParent(cData, "correlation", correlation);
+		return this.oneForParent(fbCore.getClassData(), "correlation", correlation);
 	}
 	
 	@Override public List<DATA> fDatas(List<CORRELATION> correlations)
@@ -569,8 +547,8 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		if(correlations!=null && correlations.isEmpty()){return new ArrayList<DATA>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<DATA> cQ = cB.createQuery(cData);
-		Root<DATA> data = cQ.from(cData);
+		CriteriaQuery<DATA> cQ = cB.createQuery(fbCore.getClassData());
+		Root<DATA> data = cQ.from(fbCore.getClassData());
 		
 		Join<DATA,CORRELATION> jCorrelation = data.join(JeeslSurveyData.Attributes.correlation.toString());
 		predicates.add(jCorrelation.in(correlations));
@@ -584,17 +562,14 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 	
 	@Override public ANSWER saveAnswer(ANSWER answer) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(answer.getOption()!=null){answer.setOption(this.find(cOption,answer.getOption()));}
+		if(answer.getOption()!=null){answer.setOption(this.find(fbTemplate.getClassOption(),answer.getOption()));}
 		return this.saveProtected(answer);
 	}
 
-	
 	@Override public void rmAnswer(ANSWER answer) throws UtilsConstraintViolationException
 	{
-		answer = em.find(cAnswer, answer.getId());
+		answer = em.find(fbCore.getClassAnswer(), answer.getId());
 		answer.getData().getAnswers().remove(answer);
 		this.rmProtected(answer);
 	}
-	
-
 }

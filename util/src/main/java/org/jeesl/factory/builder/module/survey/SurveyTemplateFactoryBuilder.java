@@ -63,7 +63,7 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	private final Class<SCORE> cScore; public Class<SCORE> getClassScore(){return cScore;}
 	private final Class<UNIT> cUnit; public Class<UNIT> getClassUnit() {return cUnit;}
 	private final Class<OPTIONS> cOptions; public Class<OPTIONS> getOptionSetClass() {return cOptions;}
-	private final Class<OPTION> cOption; public Class<OPTION> getOptionClass() {return cOption;}
+	private final Class<OPTION> cOption; public Class<OPTION> getClassOption() {return cOption;}
 
 	public SurveyTemplateFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<LOC> cLoc, final Class<SCHEME> cScheme, final Class<VALGORITHM> cValgorithm, final Class<TEMPLATE> cTemplate, final Class<VERSION> cVersion, final Class<TS> cTs, final Class<TC> cTc, final Class<SECTION> cSection, final Class<QUESTION> cQuestion, final Class<CONDITION> cCondition, final Class<QE> cElement, final Class<SCORE> cScore, final Class<UNIT> cUnit, final Class<OPTIONS> cOptions, final Class<OPTION> cOption)
 	{

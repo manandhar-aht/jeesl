@@ -453,7 +453,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	public void addOption()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getOptionClass()));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassOption()));}
 		option = efOption.build(question,"");
 		option.setName(efLang.createEmpty(sbhLocale.getList()));
 		option.setDescription(efDescription.createEmpty(sbhLocale.getList()));
@@ -561,7 +561,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(condition));}
 		condition.setTriggerQuestion(fTemplate.find(fbTemplate.getClassQuestion(), condition.getTriggerQuestion()));
 		condition.setElement(fTemplate.find(fbTemplate.getClassElement(), condition.getElement()));
-		if(condition.getOption()!=null) {condition.setOption(fTemplate.find(fbTemplate.getOptionClass(), condition.getOption()));}
+		if(condition.getOption()!=null) {condition.setOption(fTemplate.find(fbTemplate.getClassOption(), condition.getOption()));}
 		condition = fTemplate.save(condition);
 		reloadConditions();
 	}

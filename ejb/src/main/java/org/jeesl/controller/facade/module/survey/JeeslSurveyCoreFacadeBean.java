@@ -59,7 +59,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
+public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 									SS extends UtilsStatus<SS,L,D>,
 									SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
@@ -87,7 +87,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 									AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 									AT extends JeeslSurveyAnalysisTool<L,D,QE,?,AQ,ATT>,
 									ATT extends UtilsStatus<ATT,L,D>>
-	extends UtilsFacadeBean implements JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>
+	extends UtilsFacadeBean implements JeeslSurveyCoreFacade<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyCoreFacadeBean.class);
 	

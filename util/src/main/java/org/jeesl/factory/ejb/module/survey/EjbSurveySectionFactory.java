@@ -66,7 +66,7 @@ public class EjbSurveySectionFactory<L extends UtilsLang, D extends UtilsDescrip
 		return ejb;
 	}
 	
-	public Map<TEMPLATE,List<SECTION>> loadMap(JeeslSurveyCoreFacade<L,D,?,?,?,TEMPLATE,?,?,?,SECTION,?,?,?,?,?,?,?,?,?,?> fSurvey)
+	public Map<TEMPLATE,List<SECTION>> loadMap(JeeslSurveyCoreFacade<L,D,?,?,?,?,TEMPLATE,?,?,?,SECTION,?,?,?,?,?,?,?,?,?,?> fSurvey)
 	{
 		Map<TEMPLATE,List<SECTION>> map = new HashMap<TEMPLATE,List<SECTION>>();
 		for(SECTION s : fSurvey.allOrderedPosition(cSection))

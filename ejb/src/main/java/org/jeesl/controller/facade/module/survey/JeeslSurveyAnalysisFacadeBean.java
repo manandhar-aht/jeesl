@@ -51,7 +51,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends UtilsDescription,
+public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends UtilsDescription, 
 				SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 				SS extends UtilsStatus<SS,L,D>,
 				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,

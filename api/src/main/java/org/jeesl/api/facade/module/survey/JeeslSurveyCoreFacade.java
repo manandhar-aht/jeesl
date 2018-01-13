@@ -28,7 +28,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public interface JeeslSurveyCoreFacade <L extends UtilsLang, D extends UtilsDescription,
+public interface JeeslSurveyCoreFacade <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 									SS extends UtilsStatus<SS,L,D>,
 									SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,

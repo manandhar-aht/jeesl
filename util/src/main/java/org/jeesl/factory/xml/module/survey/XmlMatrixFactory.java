@@ -46,7 +46,7 @@ public class XmlMatrixFactory<L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlMatrixFactory.class);
 	
-	private JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,OPTIONS,OPTION,?> fSurvey;
+	private JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,OPTIONS,OPTION,?> fSurvey;
 //	private Class<SURVEY> cSurvey;
 		
 	private String localeCode;
@@ -67,7 +67,7 @@ public class XmlMatrixFactory<L extends UtilsLang,D extends UtilsDescription,
 		xfCell = new XmlCellFactory<MATRIX>(localeCode);
 	}
 	
-	public void lazyLoad(JeeslSurveyCoreFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,OPTIONS,OPTION,?> fSurvey)
+	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,?,OPTIONS,OPTION,?> fSurvey)
 	{
 		this.fSurvey=fSurvey;
 	}

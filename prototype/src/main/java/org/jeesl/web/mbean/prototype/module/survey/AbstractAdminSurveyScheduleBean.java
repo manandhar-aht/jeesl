@@ -73,7 +73,7 @@ public abstract class AbstractAdminSurveyScheduleBean <L extends UtilsLang, D ex
 						PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 						DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 						DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
-						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN>,
+						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 						AT extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,AQ,ATT>,
 						ATT extends UtilsStatus<ATT,L,D>>

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -16,7 +18,9 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyAnalysis<L extends UtilsLang, D extends UtilsDescription,
 										TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,?>,
-										DOMAIN extends JeeslSurveyDomain<L,?>>
+										DOMAIN extends JeeslSurveyDomain<L,?>,
+										DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
+										DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>>
 			extends Serializable,EjbWithId,
 						EjbSaveable,EjbRemoveable,
 						EjbWithParentAttributeResolver,EjbWithPositionVisible,
@@ -29,4 +33,10 @@ public interface JeeslSurveyAnalysis<L extends UtilsLang, D extends UtilsDescrip
 	
 	DOMAIN getDomain();
 	void setDomain(DOMAIN domain);
+	
+	DENTITY getEntity();
+	void setEntity(DENTITY entity);
+	
+	DATTRIBUTE getAttribute();
+	void setAttribute(DATTRIBUTE attribute);
 }

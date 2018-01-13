@@ -24,7 +24,7 @@ public interface JeeslSurveyTemplate<L extends UtilsLang, D extends UtilsDescrip
 										TC extends UtilsStatus<TC,L,D>,
 										SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,?>,
 										OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,?>,
-										ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,?>>
+										ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,?,?,?>>
 			extends EjbWithId,EjbWithRecord,EjbWithName,EjbWithRemark,
 						UtilsWithStatus<L,D,TS>,
 						UtilsWithCategory<L,D,TC>

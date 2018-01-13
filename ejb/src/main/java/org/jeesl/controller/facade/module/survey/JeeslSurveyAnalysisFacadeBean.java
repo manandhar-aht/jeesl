@@ -73,7 +73,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 				PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 				DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
-				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN>,
+				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 				TOOL extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,AQ,TOOLT>,
 				TOOLT extends UtilsStatus<TOOLT,L,D>>

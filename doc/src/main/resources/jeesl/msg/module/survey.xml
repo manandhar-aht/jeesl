@@ -28,6 +28,13 @@
     		<s:lang key="fr" translation="Category"/>
     	</s:langs>
     </s:translation>
+	<s:translation key="jeeslSurveyCorrelation">
+    	<s:langs>
+    		<s:lang key="de" translation="Korrelation"/>
+    		<s:lang key="en" translation="Correlation"/>
+    		<s:lang key="fr" translation="Correlation"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslSurveyStatus">
     	<s:langs>
     		<s:lang key="de" translation="Status"/>

@@ -97,6 +97,8 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	protected List<SCHEME> schemes; public List<SCHEME> getSchemes() {return schemes;}
 	protected List<SCORE> scores; public List<SCORE> getScores() {return scores;}
 	private final List<QUERY> queries; public List<QUERY> getQueries() {return queries;}
+	private final List<DENTITY> correlations; public List<DENTITY> getCorrelations() {return correlations;}
+	private final List<DATTRIBUTE> attributes; public List<DATTRIBUTE> getAttributes() {return attributes;}
 	private List<AT> tools; public List<AT> getTools() {return tools;}
 	private List<ATT> toolTypes; public List<ATT> getToolTypes() {return toolTypes;}
 	private List<QE> questionElements; public List<QE> getQuestionElements() {return questionElements;}
@@ -121,6 +123,8 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		super(fbTemplate,fbCore,fbAnalysis);
 		
 		queries = new ArrayList<QUERY>();
+		correlations = new ArrayList<DENTITY>();
+		attributes = new ArrayList<DATTRIBUTE>();
 		
 		efAnalysis = fbAnalysis.ejbAnalysis();
 		efAnalysisQuestion = fbAnalysis.ejbAnalysisQuestion();
@@ -142,6 +146,8 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		questionElements = fCore.allOrderedPositionVisible(fbTemplate.getClassElement());
 		
 		versions = new ArrayList<VERSION>();
+		
+		correlations.addAll(fAnalysis.all(fbAnalysis.getClassDomainEntity()));
 		
 		sbhCategory.silentCallback();
 	}
@@ -191,6 +197,8 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.saveEntity(analysis));
 		analysis.setDomain(fAnalysis.find(fbAnalysis.getClassDomain(),analysis.getDomain()));
+		if(analysis.getEntity()!=null) {analysis.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),analysis.getEntity()));}
+		
 		analysis = fAnalysis.save(analysis);
 		reloadAnalyses();
 		reloadAnalysis();
@@ -209,6 +217,17 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	{
 		queries.clear();
 		queries.addAll(fAnalysis.allForParent(fbAnalysis.getClassDomainQuery(), analysis.getDomain()));
+		
+		changeCorrelation();
+	}
+	
+	public void changeCorrelation()
+	{
+		if(analysis.getEntity()!=null)
+		{
+			attributes.clear();
+			attributes.addAll(fAnalysis.fDomainAttributes(analysis.getEntity()));
+		}
 	}
 	
 	public void deleteAnalysis() throws UtilsConstraintViolationException

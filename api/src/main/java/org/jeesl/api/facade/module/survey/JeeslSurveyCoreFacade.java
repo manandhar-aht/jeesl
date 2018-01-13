@@ -66,8 +66,6 @@ public interface JeeslSurveyCoreFacade <L extends UtilsLang, D extends UtilsDesc
 	void rmOption(QUESTION question, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException;
 	void rmOption(OPTIONS set, OPTION option) throws UtilsConstraintViolationException, UtilsLockingException;
 	
-
-	
 	SURVEY fSurvey(CORRELATION correlation) throws UtilsNotFoundException;
 	void deleteSurvey(SURVEY survey) throws UtilsConstraintViolationException, UtilsLockingException;
 	

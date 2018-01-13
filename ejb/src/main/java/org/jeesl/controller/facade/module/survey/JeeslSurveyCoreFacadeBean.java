@@ -65,12 +65,12 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 									SS extends UtilsStatus<SS,L,D>,
 									SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
 									VALGORITHM extends JeeslSurveyValidationAlgorithm<L,D>,
-									TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,ANALYSIS>,
+									TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,?>,
 									VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 									TS extends UtilsStatus<TS,L,D>,
 									TC extends UtilsStatus<TC,L,D>,
 									SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
+									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 									CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
 									QE extends UtilsStatus<QE,L,D>,
 									SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
@@ -80,27 +80,20 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 									DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
 									OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 									OPTION extends JeeslSurveyOption<L,D>,
-									CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-									DOMAIN extends JeeslSurveyDomain<L,DENTITY>,
-									PATH extends JeeslSurveyDomainPath<L,D,?,DENTITY,?>,
-									DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
-									ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,?>,
-									AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-									AT extends JeeslSurveyAnalysisTool<L,D,QE,?,AQ,ATT>,
-									ATT extends UtilsStatus<ATT,L,D>>
+									CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>>
 	extends UtilsFacadeBean implements JeeslSurveyCoreFacade<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyCoreFacadeBean.class);
 	
 	private final SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
-	private final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore;
+	private final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?> fbCore;
 	
 	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION> efAnswer;
 
 	
 	public JeeslSurveyCoreFacadeBean(EntityManager em,
 			SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
-			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore)
+			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?> fbCore)
 	{
 		super(em);
 		this.fbTemplate=fbTemplate;

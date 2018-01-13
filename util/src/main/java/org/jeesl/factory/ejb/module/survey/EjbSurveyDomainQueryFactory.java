@@ -11,7 +11,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class EjbSurveyDomainQueryFactory<L extends UtilsLang, D extends UtilsDescription,
-										DOMAIN extends JeeslSurveyDomain<L,D,?>,
+										DOMAIN extends JeeslSurveyDomain<L,?>,
 										QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>
 										>
 {

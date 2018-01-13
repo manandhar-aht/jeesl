@@ -40,7 +40,7 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 				DATA extends JeeslSurveyData<L,D,?,ANSWER,CORRELATION>,
 				OPTION extends JeeslSurveyOption<L,D>,
 				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-				DOMAIN extends JeeslSurveyDomain<L,D,DENTITY>,
+				DOMAIN extends JeeslSurveyDomain<L,DENTITY>,
 				QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
 				PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 				DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,

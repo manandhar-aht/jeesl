@@ -8,6 +8,8 @@ import javax.persistence.Table;
 
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
+import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
+import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
@@ -32,8 +34,10 @@ public class SurveyNativeQueryBuilder <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 									  DOMAIN extends JeeslSurveyDomain<?,DENTITY>,
 									  QUERY extends JeeslSurveyDomainQuery<?,?,DOMAIN>,
 									  PATH extends JeeslSurveyDomainPath<?,?,QUERY,DENTITY,DATTRIBUTE>,
-									  DENTITY extends JeeslRevisionEntity<?,?,?,?,?>,
+									  DENTITY extends JeeslRevisionEntity<?,?,?,?,DATTRIBUTE>,
 									  DATTRIBUTE extends JeeslRevisionAttribute<?,?,DENTITY,?,?>,
+									  ANALYSIS extends JeeslSurveyAnalysis<?,?,?,DOMAIN,DENTITY,DATTRIBUTE>,
+									  AQ extends JeeslSurveyAnalysisQuestion<?,?,QUESTION,ANALYSIS>,
 									  TOOL extends JeeslSurveyAnalysisTool<?,?,?,QUERY,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyNativeQueryBuilder.class);
@@ -80,39 +84,49 @@ public class SurveyNativeQueryBuilder <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 				Class<?> cl = Class.forName(c);
 				mapTable.put(cl.getName(), createNode(cl));
 			}
-			catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UtilsNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			catch (ClassNotFoundException e) {e.printStackTrace();}
+			catch (UtilsNotFoundException e) {e.printStackTrace();}
 		}
 		return mapTable.get(c);
 	}
 	
 	public String build(SURVEY survey, TOOL tool)
-	{		
+	{
+		StringBuilder sbCorelationColumn = new StringBuilder();
+		StringBuilder sbCorelationJoin = new StringBuilder();
+		
+		if(tool!=null && tool.getQuery()!=null)
+		{
+			sbCorelationJoin.append("INNER JOIN ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(" ON correlation.id=").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id\n");
+			sbCorelationColumn.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id as correlationId");
+			
+		}
+		
+		
 		StringBuilder sb = new StringBuilder();
-		sb.append("select answer.question_id as questionId, answer.option_id as optionId, correlation.id as correlationId, count(answer.option_id) as counter\n");
+		sb.append("select answer.question_id as questionId, answer.option_id as optionId");
+		
+		if(sbCorelationColumn.length()>0)
+		{
+			sb.append(", ").append(sbCorelationColumn);
+		}
+		sb.append(", count(answer.option_id) as counter\n");
 		sb.append("FROM ").append(getTableName(fbCore.getClassAnswer().getName())).append(" as answer\n");
 		sb.append("INNER JOIN ").append(getTableName(fbCore.getClassData().getName())).append(" data on answer.data_id=data.id\n");
 		sb.append("INNER JOIN ").append(getTableName(fbCore.getClassSurvey().getName())).append(" survey on data.survey_id=survey.id\n");
 		sb.append("INNER JOIN ").append(getTableName(fbCore.getClassCorrelation().getName())).append(" correlation on data.correlation_id=correlation.id\n");
 		
-		if(tool!=null && tool.getQuery()!=null)
-		{
-			sb.append("   INNER JOIN ").append(getTableName(tool.getQuery().getDomain().getEntity().getCode())).append(" correlation on data.correlation_id=correlation.id\n");
-		}
+		sb.append(sbCorelationJoin);
+		
 		String sql = 
 
-				"                inner join User user on user.id=corruser.user_id\n" + 
-				"                inner join Cv cv on cv.user_id=corruser.user_id,\n" + 
-				"                SurveyOption opt\n" + 
+//				"                inner join User user on user.id=corruser.user_id\n" + 
+//				"                inner join Cv cv on cv.user_id=corruser.user_id,\n" + 
+				"                ,SurveyOption opt\n" + 
 				"where answer.option_id=opt.id and (survey.id in (2)) and answer.question_id=34\n" + 
-				"group by answer.question_id , answer.option_id , cv.gender_id";
+				"group by answer.question_id , answer.option_id , correlation.id";
 		
-		tool.getQuery().getDomain().getEntity().getCode();
+//		tool.getQuery().getDomain().getEntity().getCode();
 		
 		return sb.toString()+sql;
 	}

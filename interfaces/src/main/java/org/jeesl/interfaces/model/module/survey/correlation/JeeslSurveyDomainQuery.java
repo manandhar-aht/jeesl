@@ -22,4 +22,5 @@ public interface JeeslSurveyDomainQuery<L extends UtilsLang, D extends UtilsDesc
 	
 	DOMAIN getDomain();
 	void setDomain(DOMAIN domain);
+
 }

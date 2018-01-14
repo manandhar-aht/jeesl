@@ -1,6 +1,7 @@
 package org.jeesl.interfaces.model.module.survey.correlation;
 
 import java.io.Serializable;
+import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -24,6 +25,6 @@ public interface JeeslSurveyDomainQuery<L extends UtilsLang, D extends UtilsDesc
 	DOMAIN getDomain();
 	void setDomain(DOMAIN domain);
 
-//	List<SurveyDomainPath> getPaths();
-//	void setPaths(List<SurveyDomainPath> paths);
+	List<PATH> getPaths();
+	void setPaths(List<PATH> paths);
 }

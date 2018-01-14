@@ -68,13 +68,6 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 		return "--";
 	}
 	
-	private void prepareTableNames() throws UtilsNotFoundException
-	{
-		mapTable.put(fbCore.getClassAnswer().getName(), createNode(fbCore.getClassAnswer()));
-		mapTable.put(fbCore.getClassSurvey().getName(), createNode(fbCore.getClassSurvey()));
-		mapTable.put(fbCore.getClassData().getName(), createNode(fbCore.getClassData()));
-	}
-	
 	private String getTableName(String c)
 	{
 		if(!mapTable.containsKey(c))
@@ -92,30 +85,60 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 	
 	public String build(SURVEY survey, TOOL tool)
 	{
+		String tbAnswer = getTableName(fbCore.getClassAnswer().getName());
+		String tbData = getTableName(fbCore.getClassData().getName());
+		String tbSurvey = getTableName(fbCore.getClassSurvey().getName());
+		String tbCorrelation = getTableName(fbCore.getClassCorrelation().getName());
+		
 		StringBuilder sbCorelationColumn = new StringBuilder();
 		StringBuilder sbCorelationJoin = new StringBuilder();
 		
 		if(tool!=null && tool.getQuery()!=null)
 		{
-			sbCorelationJoin.append("INNER JOIN ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(" ON correlation.id=").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id\n");
 			sbCorelationColumn.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id as correlationId");
 			
-//			for(PATH p : tool.getQuery().get)
+			sbCorelationJoin.append(" INNER JOIN ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(" ON ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id=").append(tbCorrelation).append(".id\n");
+			
+			for(int i=0;i<tool.getQuery().getPaths().size();i++)
+			{
+				PATH p = tool.getQuery().getPaths().get(i);
+				sbCorelationJoin.append("  INNER JOIN ").append(getTableName(p.getEntity().getCode())).append(" ON ");
+				
+				if(i==0)
+				{
+					sbCorelationJoin.append(getTableName(p.getEntity().getCode())).append(".id");
+					sbCorelationJoin.append("=");
+					sbCorelationJoin.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".").append(tool.getAnalysisQuestion().getAnalysis().getAttribute().getCode()).append("_id");
+					sbCorelationJoin.append("\n");
+				}
+				else
+				{
+					sbCorelationJoin.append(getTableName(tool.getQuery().getPaths().get(i-1).getEntity().getCode())).append(".id=");
+					sbCorelationJoin.append(getTableName(p.getEntity().getCode())).append(".user_id\n");
+				}
+				
+
+				sbCorelationColumn.setLength(0);
+				sbCorelationColumn.append(getTableName(p.getEntity().getCode())).append(".").append(p.getAttribute().getCode()).append("_id");
+			}
 		}
 		
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("select answer.question_id as questionId, answer.option_id as optionId");
+		sb.append("SELECT ").append(tbAnswer).append(".question_id as questionId");
+		sb.append(", ").append(tbAnswer).append(".option_id as optionId");
 		
 		if(sbCorelationColumn.length()>0)
 		{
 			sb.append(", ").append(sbCorelationColumn);
 		}
-		sb.append(", count(answer.option_id) as counter\n");
-		sb.append("FROM ").append(getTableName(fbCore.getClassAnswer().getName())).append(" as answer\n");
-		sb.append("INNER JOIN ").append(getTableName(fbCore.getClassData().getName())).append(" data on answer.data_id=data.id\n");
-		sb.append("INNER JOIN ").append(getTableName(fbCore.getClassSurvey().getName())).append(" survey on data.survey_id=survey.id\n");
-		sb.append("INNER JOIN ").append(getTableName(fbCore.getClassCorrelation().getName())).append(" correlation on data.correlation_id=correlation.id\n");
+		sb.append(", COUNT(").append(tbAnswer).append(".option_id) as counter\n");
+		sb.append("FROM ").append(getTableName(fbCore.getClassAnswer().getName())).append("\n");
+		sb.append("INNER JOIN ").append(tbData).append(" ON ").append(tbData).append(".id=").append(getTableName(fbCore.getClassAnswer().getName())).append(".data_id\n");
+		sb.append("INNER JOIN ").append(tbSurvey).append(" ON ").append(tbSurvey).append(".id=").append(tbData).append(".survey_id\n");
+		
+		
+		sb.append("INNER JOIN ").append(tbCorrelation).append(" ON ").append(tbCorrelation).append(".id=").append(tbData).append(".correlation_id\n");
 		
 		sb.append(sbCorelationJoin);
 		
@@ -124,8 +147,9 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 //				"                inner join User user on user.id=corruser.user_id\n" + 
 //				"                inner join Cv cv on cv.user_id=corruser.user_id,\n" + 
 				"                ,SurveyOption opt\n" + 
-				"where answer.option_id=opt.id and (survey.id in (2)) and answer.question_id=34\n" + 
-				"group by answer.question_id , answer.option_id , correlation.id";
+				"WHERE "+tbAnswer+".option_id=opt.id and ("+tbSurvey+".id in (2)) and "
+						+ tbAnswer+".question_id=34\n" + 
+				"GROUP BY "+tbAnswer+".question_id , "+tbAnswer+".option_id , "+sbCorelationColumn;
 		
 //		tool.getQuery().getDomain().getEntity().getCode();
 		

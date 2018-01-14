@@ -78,6 +78,15 @@
     		<s:lang key="fr" translation="Attributes"/>
     	</s:langs>
     </s:translation>
+    	<s:translation key="jeeslRevisionEntityRelationOwner">
+    	<s:langs>
+    		<s:lang key="de" translation="Relation Owner"/>
+    		<s:lang key="en" translation="Relation Owner"/>
+    		<s:lang key="fr" translation="Relation Owner"/>
+    	</s:langs>
+    </s:translation>
+    
+    
 	<s:translation key="jeeslRevisionAttribute">
     	<s:langs>
     		<s:lang key="de" translation="Attribut"/>

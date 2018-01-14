@@ -94,7 +94,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 		tool = em.find(fbAnalyis.getClassAnalysisTool(),tool.getId());
 		if(tool.getQuery()!=null)
 		{
-//			tool.getQuery().get
+			tool.getQuery().getPaths().size();
 		}
 		return tool;
 	}

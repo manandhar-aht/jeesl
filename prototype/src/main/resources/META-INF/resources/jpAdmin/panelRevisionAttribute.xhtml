@@ -56,7 +56,7 @@
 				<p:inputTextarea value="#{cc.attrs.bean.attribute.developerInfo}" style="width:100%" autocomplete="off"/>
 			</p:panelGrid>
 			<aht:tabTranslationEditor value="#{cc.attrs.bean.attribute}" keys="#{cc.attrs.localeKeys}" withDescription="true"/>
-			<p:panelGrid id="pgRelation" columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+			<p:panelGrid id="pgRelation" columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 			
 				<p:outputLabel value="#{msg.jeeslRevisionEntityRelation}"/>
 				<p:selectOneMenu value="#{cc.attrs.bean.attribute.relation}" effect="fade" autoWidth="false">
@@ -70,6 +70,8 @@
 					<f:selectItems value="#{cc.attrs.bean.links}" var="l" itemLabel="#{l.category.position}.#{l.position} #{l.name[localeCode].lang}" itemValue="#{l}"/>
 				</p:selectOneMenu>
 				
+				<p:outputLabel value="#{msg.jeeslRevisionEntityRelationOwner}" rendered="#{not empty cc.attrs.bean.attribute.relation}"/>
+				<p:selectBooleanCheckbox value="#{cc.attrs.bean.attribute.relationOwner}" rendered="#{not empty cc.attrs.bean.attribute.relation}"/>
 			</p:panelGrid>
 		</p:panel>
 	</composite:implementation>

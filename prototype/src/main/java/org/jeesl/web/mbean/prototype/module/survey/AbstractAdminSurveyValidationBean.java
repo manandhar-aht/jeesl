@@ -72,7 +72,7 @@ public abstract class AbstractAdminSurveyValidationBean <L extends UtilsLang, D 
 						OPTION extends JeeslSurveyOption<L,D>,
 						CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 						DOMAIN extends JeeslSurveyDomain<L,DENTITY>,
-						QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
+						QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN,PATH>,
 						PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 						DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 						DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,

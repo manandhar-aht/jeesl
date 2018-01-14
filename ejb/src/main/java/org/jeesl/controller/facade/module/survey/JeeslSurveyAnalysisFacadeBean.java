@@ -69,7 +69,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 				OPTION extends JeeslSurveyOption<L,D>,
 				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 				DOMAIN extends JeeslSurveyDomain<L,DENTITY>,
-				QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
+				QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN,PATH>,
 				PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 				DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
@@ -87,6 +87,16 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	{
 		super(em);
 		this.fbAnalyis=fbAnalyis;
+	}
+	
+	@Override public TOOL load(TOOL tool)
+	{
+		tool = em.find(fbAnalyis.getClassAnalysisTool(),tool.getId());
+		if(tool.getQuery()!=null)
+		{
+//			tool.getQuery().get
+		}
+		return tool;
 	}
 	
 	@Override public AQ fAnalysis(ANALYSIS analysis, QUESTION question) throws UtilsNotFoundException

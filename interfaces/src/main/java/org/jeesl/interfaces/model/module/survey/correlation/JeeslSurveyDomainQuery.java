@@ -12,7 +12,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyDomainQuery<L extends UtilsLang, D extends UtilsDescription,
-										DOMAIN extends JeeslSurveyDomain<L,?>
+										DOMAIN extends JeeslSurveyDomain<L,?>,
+										PATH extends JeeslSurveyDomainPath<?,?,?,?,?>
 										>
 			extends Serializable,EjbWithId,
 					EjbSaveable,EjbRemoveable,
@@ -23,4 +24,6 @@ public interface JeeslSurveyDomainQuery<L extends UtilsLang, D extends UtilsDesc
 	DOMAIN getDomain();
 	void setDomain(DOMAIN domain);
 
+//	List<SurveyDomainPath> getPaths();
+//	void setPaths(List<SurveyDomainPath> paths);
 }

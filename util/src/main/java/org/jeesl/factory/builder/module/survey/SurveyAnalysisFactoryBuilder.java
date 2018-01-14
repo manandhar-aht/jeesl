@@ -41,13 +41,13 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 				OPTION extends JeeslSurveyOption<L,D>,
 				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 				DOMAIN extends JeeslSurveyDomain<L,DENTITY>,
-				QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>,
+				QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN,PATH>,
 				PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 				DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
 				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-				AT extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,AQ,ATT>,
+				TOOL extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,AQ,ATT>,
 				ATT extends UtilsStatus<ATT,L,D>>
 			extends AbstractFactoryBuilder<L,D>
 {
@@ -62,10 +62,10 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	private final Class<DATTRIBUTE> cDomainAttribute; public Class<DATTRIBUTE> getClassDomainAttribute() {return cDomainAttribute;}
 	private final Class<ANALYSIS> cAnalysis; public Class<ANALYSIS> getClassAnalysis() {return cAnalysis;}
 	private final Class<AQ> cAq; public Class<AQ> getClassAnalysisQuestion() {return cAq;}
-	private final Class<AT> cTool; public Class<AT> getClassAnalysisTool() {return cTool;}
+	private final Class<TOOL> cTool; public Class<TOOL> getClassAnalysisTool() {return cTool;}
 	private final Class<ATT> cAtt; public Class<ATT> getAttClass() {return cAtt;}
 
-	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<DOMAIN> cDomain, final Class<QUERY> cDomainQuery, final Class<PATH> cDomainPath, final Class<DENTITY> cDomainEntity, final Class<DATTRIBUTE> cDomainAttribute, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<AT> cTool, final Class<ATT> cAtt)
+	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<DOMAIN> cDomain, final Class<QUERY> cDomainQuery, final Class<PATH> cDomainPath, final Class<DENTITY> cDomainEntity, final Class<DATTRIBUTE> cDomainAttribute, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<TOOL> cTool, final Class<ATT> cAtt)
 	{
 		super(cL,cD);
 		this.cAnswer=cAnswer;
@@ -106,8 +106,8 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		return new EjbSurveyAnalysisQuestionFactory<L,D,QUESTION,ANALYSIS,AQ>(cAq);
 	}
 	
-	public EjbSurveyAnalysisToolFactory<L,D,AQ,AT,ATT> ejbAnalysisTool()
+	public EjbSurveyAnalysisToolFactory<L,D,AQ,TOOL,ATT> ejbAnalysisTool()
 	{
-		return new EjbSurveyAnalysisToolFactory<L,D,AQ,AT,ATT>(cTool);
+		return new EjbSurveyAnalysisToolFactory<L,D,AQ,TOOL,ATT>(cTool);
 	}
 }

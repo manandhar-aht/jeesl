@@ -12,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class EjbSurveyDomainQueryFactory<L extends UtilsLang, D extends UtilsDescription,
 										DOMAIN extends JeeslSurveyDomain<L,?>,
-										QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN>
+										QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN,?>
 										>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDomainQueryFactory.class);

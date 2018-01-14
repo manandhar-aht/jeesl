@@ -1,4 +1,4 @@
-package org.jeesl.controller.module;
+package org.jeesl.factory.sql.module.survey;
 
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
@@ -26,13 +26,13 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
-public class SurveyNativeQueryBuilder <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
+public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 									  QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?>,
 									  ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,DATA,?>,
 									  DATA extends JeeslSurveyData<?,?,SURVEY,ANSWER,CORRELATION>,
 									  CORRELATION extends JeeslSurveyCorrelation<?,?,DATA>,
 									  DOMAIN extends JeeslSurveyDomain<?,DENTITY>,
-									  QUERY extends JeeslSurveyDomainQuery<?,?,DOMAIN>,
+									  QUERY extends JeeslSurveyDomainQuery<?,?,DOMAIN,PATH>,
 									  PATH extends JeeslSurveyDomainPath<?,?,QUERY,DENTITY,DATTRIBUTE>,
 									  DENTITY extends JeeslRevisionEntity<?,?,?,?,DATTRIBUTE>,
 									  DATTRIBUTE extends JeeslRevisionAttribute<?,?,DENTITY,?,?>,
@@ -40,14 +40,14 @@ public class SurveyNativeQueryBuilder <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 									  AQ extends JeeslSurveyAnalysisQuestion<?,?,QUESTION,ANALYSIS>,
 									  TOOL extends JeeslSurveyAnalysisTool<?,?,?,QUERY,?,?>>
 {
-	final static Logger logger = LoggerFactory.getLogger(SurveyNativeQueryBuilder.class);
+	final static Logger logger = LoggerFactory.getLogger(SqlSurveyAnalysisFactory.class);
 
 	private final Map<String,String> mapTable;
 	
 	private final SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore;
 	private final SurveyAnalysisFactoryBuilder<?,?,?,QUESTION,?,?,ANSWER,?,DATA,?,CORRELATION,?,?,?,?,?,?,?,TOOL,?> fbAnalysis;
 	
-	public SurveyNativeQueryBuilder(SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore,
+	public SqlSurveyAnalysisFactory(SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore,
 									SurveyAnalysisFactoryBuilder<?,?,?,QUESTION,?,?,ANSWER,?,DATA,?,CORRELATION,DOMAIN,?,?,?,?,?,?,TOOL,?> fbAnalysis)
 	{
 		this.fbCore=fbCore;
@@ -100,6 +100,7 @@ public class SurveyNativeQueryBuilder <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 			sbCorelationJoin.append("INNER JOIN ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(" ON correlation.id=").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id\n");
 			sbCorelationColumn.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id as correlationId");
 			
+//			for(PATH p : tool.getQuery().get)
 		}
 		
 		

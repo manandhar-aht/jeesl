@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescription,
-										QUERY extends JeeslSurveyDomainQuery<L,D,?>,
+										QUERY extends JeeslSurveyDomainQuery<L,D,?,?>,
 										DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 										DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>
 										>

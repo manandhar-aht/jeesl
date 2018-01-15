@@ -18,7 +18,6 @@ import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.report.util.DataUtil;
-import net.sf.ahtutils.util.reflection.ReflectionsUtil;
 import net.sf.ahtutils.xml.report.DataAssociation;
 import net.sf.ahtutils.xml.report.ImportStructure;
 import net.sf.ahtutils.xml.report.ImportType;
@@ -35,6 +34,7 @@ import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jeesl.api.controller.ImportStrategy;
 import org.jeesl.api.controller.ValidationStrategy;
+import org.jeesl.util.ReflectionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -332,7 +332,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			// Otherwise assume that it is used with a lookup table
 
 			Boolean isHandled = (handler != null);
-			if (ReflectionsUtil.hasMethod(target, methodName))
+			if (ReflectionUtil.hasMethod(target, methodName))
 			{
 				if (isHandled)
 				{

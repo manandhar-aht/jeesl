@@ -1,6 +1,7 @@
 package net.sf.ahtutils.controller.constraints;
 
-import net.sf.ahtutils.util.reflection.ReflectionsUtil;
+import org.jeesl.util.ReflectionUtil;
+
 import net.sf.ahtutils.xml.system.Constraint;
 import net.sf.ahtutils.xml.system.ConstraintAttribute;
 import net.sf.ahtutils.xml.system.ConstraintScope;
@@ -8,7 +9,7 @@ import net.sf.ahtutils.xml.system.ConstraintScope;
 public class ConstraintsChecker {
 	public static boolean notNull(Object object, String attribute) throws Exception
 	{
-		return ReflectionsUtil.resolveExpression(object, attribute) != null;
+		return ReflectionUtil.resolveExpression(object, attribute) != null;
 	}
 
 	public static String notNull(Object object, String attribute, ConstraintScope scope) throws Exception

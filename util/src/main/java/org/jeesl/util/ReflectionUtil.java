@@ -1,4 +1,4 @@
-package net.sf.ahtutils.util.reflection;
+package org.jeesl.util;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -6,9 +6,9 @@ import java.lang.reflect.Modifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReflectionsUtil {
+public class ReflectionUtil {
 
-	final static Logger logger = LoggerFactory.getLogger(ReflectionsUtil.class);
+	final static Logger logger = LoggerFactory.getLogger(ReflectionUtil.class);
 
 	/**
 	 * Inspect if an Object has some given method

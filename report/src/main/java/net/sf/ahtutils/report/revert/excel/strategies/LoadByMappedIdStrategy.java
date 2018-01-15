@@ -4,9 +4,9 @@ import java.util.Hashtable;
 
 import net.sf.ahtutils.db.xml.UtilsIdMapper;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.util.reflection.ReflectionsUtil;
 
 import org.jeesl.api.controller.ImportStrategy;
+import org.jeesl.util.ReflectionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +45,7 @@ public class LoadByMappedIdStrategy implements ImportStrategy {
 				logger.error(e.getMessage());
 			}
 			try {
-				ReflectionsUtil.simpleInvokeMethod("setId",
+				ReflectionUtil.simpleInvokeMethod("setId",
 					      new Object[] { id.longValue() },
 					      lutClass,
 					      lookupEntity);

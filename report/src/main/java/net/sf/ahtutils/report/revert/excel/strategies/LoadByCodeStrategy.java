@@ -3,11 +3,11 @@ package net.sf.ahtutils.report.revert.excel.strategies;
 import java.util.Hashtable;
 
 import org.jeesl.api.controller.ImportStrategy;
+import org.jeesl.util.ReflectionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.util.reflection.ReflectionsUtil;
 
 public class LoadByCodeStrategy implements ImportStrategy
 {
@@ -101,7 +101,7 @@ public class LoadByCodeStrategy implements ImportStrategy
 		Object[] parameters = new Object[1];
 		parameters[0] = code;
 		try {
-			ReflectionsUtil.simpleInvokeMethod("setCode", parameters, lutClass, lookupEntity);
+			ReflectionUtil.simpleInvokeMethod("setCode", parameters, lutClass, lookupEntity);
 		} catch (Exception ex) {
 			logger.error("Could not invoke setCode method!");
 			logger.error(ex.getMessage());

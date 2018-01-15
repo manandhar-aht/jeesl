@@ -84,7 +84,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 						DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
 						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-						AT extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,AQ,ATT>,
+						AT extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,DATTRIBUTE,AQ,ATT>,
 						ATT extends UtilsStatus<ATT,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean

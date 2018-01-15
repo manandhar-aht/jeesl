@@ -85,11 +85,6 @@
 								<f:selectItems value="#{cc.attrs.bean.correlations}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
 								<p:ajax event="change" listener="#{cc.attrs.bean.changeCorrelation()}" update="@form"/>
 							</p:selectOneMenu>
-							
-							<p:outputLabel value="#{msg.jeeslRevisionAttribute}"/>
-							<p:selectOneMenu  value="#{cc.attrs.bean.analysis.attribute}" effect="fade" autoWidth="false">
-								<f:selectItems value="#{cc.attrs.bean.attributes}" var="a" itemLabel="#{a.name[localeCode].lang}" itemValue="#{a}"/>
-							</p:selectOneMenu>
 						</p:panelGrid>
 					</p:panel>
 				</h:form>
@@ -185,6 +180,14 @@
 							<p:outputLabel value="#{msg.jeeslElement}"/>
 							<p:selectOneMenu  value="#{cc.attrs.bean.tool.element}" autoWidth="false" effect="fade">
 								<f:selectItems value="#{cc.attrs.bean.questionElements}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
+							</p:selectOneMenu>
+							
+							
+							
+							<p:outputLabel value="#{msg.jeeslRevisionAttribute}"/>
+							<p:selectOneMenu  value="#{cc.attrs.bean.tool.attribute}" effect="fade" autoWidth="false">
+								<f:selectItem itemLabel="---"/>
+								<f:selectItems value="#{cc.attrs.bean.attributes}" var="a" itemLabel="#{a.name[localeCode].lang}" itemValue="#{a}"/>
 							</p:selectOneMenu>
 							
 							<p:outputLabel value="#{msg.jeeslSurveyDomainQuery}"/>

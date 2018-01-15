@@ -36,7 +36,4 @@ public interface JeeslSurveyAnalysis<L extends UtilsLang, D extends UtilsDescrip
 	
 	DENTITY getEntity();
 	void setEntity(DENTITY entity);
-	
-	DATTRIBUTE getAttribute();
-	void setAttribute(DATTRIBUTE attribute);
 }

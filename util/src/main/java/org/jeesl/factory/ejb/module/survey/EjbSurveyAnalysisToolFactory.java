@@ -14,7 +14,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class EjbSurveyAnalysisToolFactory<L extends UtilsLang, D extends UtilsDescription,
 
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?>,
-				AT extends JeeslSurveyAnalysisTool<L,D,?,?,AQ,ATT>,
+				AT extends JeeslSurveyAnalysisTool<L,D,?,?,?,AQ,ATT>,
 				ATT extends UtilsStatus<ATT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyAnalysisToolFactory.class);

@@ -38,7 +38,7 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 									  DATTRIBUTE extends JeeslRevisionAttribute<?,?,DENTITY,?,?>,
 									  ANALYSIS extends JeeslSurveyAnalysis<?,?,?,DOMAIN,DENTITY,DATTRIBUTE>,
 									  AQ extends JeeslSurveyAnalysisQuestion<?,?,QUESTION,ANALYSIS>,
-									  TOOL extends JeeslSurveyAnalysisTool<?,?,?,QUERY,?,?>>
+									  TOOL extends JeeslSurveyAnalysisTool<?,?,?,QUERY,DATTRIBUTE,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SqlSurveyAnalysisFactory.class);
 
@@ -108,7 +108,8 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 				{
 					sbCorelationJoin.append(getTableName(p.getEntity().getCode())).append(".id");
 					sbCorelationJoin.append("=");
-					sbCorelationJoin.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".").append(tool.getAnalysisQuestion().getAnalysis().getAttribute().getCode()).append("_id");
+					logger.warn("NYI");
+//					sbCorelationJoin.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".").append(tool.getAnalysisQuestion().getAnalysis().getAttribute().getCode()).append("_id");
 					sbCorelationJoin.append("\n");
 				}
 				else

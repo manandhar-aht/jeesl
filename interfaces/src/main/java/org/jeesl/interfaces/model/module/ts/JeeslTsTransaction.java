@@ -1,6 +1,5 @@
 package org.jeesl.interfaces.model.module.ts;
 
-import java.util.Date;
 import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;

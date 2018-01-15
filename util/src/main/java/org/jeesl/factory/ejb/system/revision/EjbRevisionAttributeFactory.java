@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.exlp.util.io.StringUtil;
 
 public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDescription,
 									RC extends UtilsStatus<RC,L,D>,
@@ -93,5 +94,11 @@ public class EjbRevisionAttributeFactory<L extends UtilsLang,D extends UtilsDesc
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public void toReverseAttribute(RE entity, RA attribute)
+	{
+		logger.info(StringUtil.stars());
+		logger.info("Gettings Reverse from "+entity.getCode()+"--"+attribute.getCode());
 	}
 }

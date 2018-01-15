@@ -20,6 +20,7 @@ import net.sf.exlp.util.io.ClassUtil;
 import net.sf.exlp.util.io.dir.RecursiveFileFinder;
 
 import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.jeesl.util.ReflectionUtil;
 import org.metachart.xml.graph.Edge;
 import org.metachart.xml.graph.Edges;
 import org.metachart.xml.graph.Graph;
@@ -136,9 +137,8 @@ public class ErGraphProcessor
 		{
 			logger.trace("Processing edges for "+c.getName());
 			Node source = mapNodes.get(c.getName());
-			List<Field> fields = getFields(c);
 			
-			for(Field field : fields)
+			for(Field field : ReflectionUtil.toFields(c))
 			{
 				logger.trace("Field "+field.getName());
 				Annotation annotations[] = field.getAnnotations();
@@ -176,20 +176,7 @@ public class ErGraphProcessor
 		}
 	}
 	
-	private List<Field> getFields(Class<?> c)
-	{
-		List<Field> fields = new ArrayList<Field>();
-		fields.addAll(Arrays.asList(c.getDeclaredFields()));
-		
-		Class<?> cSuper = c.getSuperclass();
-		Annotation a = cSuper.getAnnotation(MappedSuperclass.class);
-		if(a!=null)
-		{
-			fields.addAll(getFields(cSuper));
-		}
-		
-		return fields;
-	}
+	
 	
 	private void createEdge(Node source, Cardinality cardinality,Node target,boolean targetIsChild)
 	{

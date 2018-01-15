@@ -17,8 +17,10 @@ import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
+import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
+import org.jeesl.factory.sql.module.survey.SqlSurveyAnalysisFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -83,10 +85,16 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	
 	private final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT> fbAnalyis;
 	
-	public JeeslSurveyAnalysisFacadeBean(EntityManager em, final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT> fbAnalyis)
+	private SqlSurveyAnalysisFactory<SURVEY,QUESTION,ANSWER,DATA,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL> sqlFactory;
+	
+	public JeeslSurveyAnalysisFacadeBean(EntityManager em,
+			final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,?,VERSION,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,TOOLT> fbCore,
+			final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT> fbAnalyis)
 	{
 		super(em);
 		this.fbAnalyis=fbAnalyis;
+		
+		sqlFactory = new SqlSurveyAnalysisFactory<SURVEY,QUESTION,ANSWER,DATA,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL>(fbCore,fbAnalyis);
 	}
 	
 	@Override public TOOL load(TOOL tool)
@@ -175,34 +183,19 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	
 	@Override public JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey, TOOL tool)
 	{
-		boolean withDomainQuery = !(tool==null || tool.getQuery()==null);
-		
-		String sql ="select answer.question_id as questionId, answer.option_id as optionId, correlation.id as correlationId, count(answer.option_id) as counter\n" + 
-				"from SurveyAnswer answer\n" + 
-				"                inner join SurveyData data on answer.data_id=data.id\n" + 
-				"                inner join Survey survey on data.survey_id=survey.id\n" + 
-				"                inner join SurveyCorrelation correlation on data.correlation_id=correlation.id\n" + 
-				"                inner join SurveyCorrelationErpUser corruser on correlation.id=corruser.id\n" + 
-				"                inner join User user on user.id=corruser.user_id\n" + 
-				"                inner join Cv cv on cv.user_id=corruser.user_id,\n" + 
-				"                SurveyOption opt\n" + 
-				"where answer.option_id=opt.id and (survey.id in (2)) and answer.question_id=34\n" + 
-				"group by answer.question_id , answer.option_id , cv.gender_id";
+		boolean withDomainQuery = tool!=null && tool.getQuery()!=null;
 		
 		JsonFlatFigures result = JsonFlatFiguresFactory.build();
-		for(Object o : em.createNativeQuery(sql).getResultList())
+		for(Object o : em.createNativeQuery(sqlFactory.build(question,survey,tool)).getResultList())
         {
             Object[] array = (Object[])o;
-            long idQuestion = ((BigInteger)array[0]).longValue();
-            long idOption = ((BigInteger)array[1]).longValue();
-            long idPath = ((BigInteger)array[2]).longValue();
-            long count = ((BigInteger)array[3]).longValue();
-           
+
         		JsonFlatFigure f = JsonFlatFigureFactory.build();
-        		f.setL1(idQuestion);
-        		f.setL2(idOption);
-        		f.setL3(idPath);
-        		f.setL4(count);
+        		f.setL1(((BigInteger)array[0]).longValue());						// ID Question
+        		f.setL2(((BigInteger)array[1]).longValue());						// ID Option
+        		f.setL3(((BigInteger)array[2]).longValue());						// Count
+        		if(withDomainQuery){f.setL4(((BigInteger)array[3]).longValue());}	// ID Path}
+        		
         	 	result.getFigures().add(f);
         }
 		

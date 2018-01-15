@@ -22,7 +22,8 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableOption[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'selectOne'}">
+		
+		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableOptionGlobal[tool].figures}" rendered="#{(cc.attrs.tool.element.code eq 'selectOne') and (empty cc.attrs.tool.query)}">
 			<p:column headerText="#{msg.jeeslSurveyOption}">
 				<h:outputText value="#{appSurveyBean.mapOptionId[f.l2].name[localeCode].lang}"/>
 			</p:column>
@@ -30,6 +31,8 @@
 				<h:outputText value="#{f.l3}"/>
 			</p:column>
 		</p:dataTable>
+		
+		
 		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableBoolean[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'bool'}">
 			<p:column headerText="#{msg.jeeslBoolean}">
 				<h:outputText value="#{f.b1}"/>

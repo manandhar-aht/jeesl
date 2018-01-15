@@ -98,7 +98,9 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private final Map<QUESTION,List<AT>> mapTool; public Map<QUESTION,List<AT>> getMapTool() {return mapTool;}
 	private final Map<SECTION,List<QUESTION>> mapQuestion; public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
 	
-	private final Map<AT,JsonFlatFigures> mapToolTableOption; public Map<AT,JsonFlatFigures> getMapToolTableOption() {return mapToolTableOption;}
+	private final Map<AT,JsonFlatFigures> mapToolTableOptionGlobal; public Map<AT,JsonFlatFigures> getMapToolTableOptionGlobal() {return mapToolTableOptionGlobal;}
+	
+	
 	private final Map<AT,JsonFlatFigures> mapToolTableBoolean; public Map<AT,JsonFlatFigures> getMapToolTableBoolean() {return mapToolTableBoolean;}
 	private final Map<AT,JsonFlatFigures> mapToolTableText; public Map<AT,JsonFlatFigures> getMapToolTableText() {return mapToolTableText;}
 	private final Map<AT,JsonFlatFigures> mapToolTableRemark; public Map<AT,JsonFlatFigures> getMapToolTableRemark() {return mapToolTableRemark;}
@@ -117,7 +119,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapTool = new HashMap<QUESTION,List<AT>>();
 		mapDsOption = new HashMap<QUESTION,DataSet>();
 		
-		mapToolTableOption = new HashMap<AT,JsonFlatFigures>();
+		mapToolTableOptionGlobal = new HashMap<AT,JsonFlatFigures>();
 		mapToolTableBoolean = new HashMap<AT,JsonFlatFigures>();
 		mapToolTableText = new HashMap<AT,JsonFlatFigures>();
 		mapToolTableRemark = new HashMap<AT,JsonFlatFigures>();
@@ -184,7 +186,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapQuestion.clear();
 		mapTool.clear();
 		
-		mapToolTableOption.clear();
+		mapToolTableOptionGlobal.clear();
 		mapToolTableBoolean.clear();
 		mapToolTableText.clear();
 		
@@ -205,10 +207,9 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.selectOne.toString()))
 							{
 								JsonFlatFigures f = fAnalysis.surveyStatisticOption(q, sbhSurvey.getSelection(), tool);
-								mapToolTableOption.put(tool,f);
+								mapToolTableOptionGlobal.put(tool,f);
 								DataSet ds2 = mfOption.build(f,bSurvey.getMapOption().get(q));
 								mapDsOption.put(q,ds2);
-//								logger.trace("DS for "+q.getSection().getCode()+"."+q.getCode()+" "+JaxbUtil.toString(ds2));
 								this.ds=ds2;
 							}
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.bool.toString()))

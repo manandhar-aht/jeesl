@@ -1,10 +1,7 @@
 package org.jeesl.factory.sql.module.survey;
 
-import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.persistence.Table;
 
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
@@ -21,6 +18,8 @@ import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.util.ReflectionUtil;
+import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,18 +55,6 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 		mapTable = new HashMap<String,String>();
 	}
 	
-	private String createNode(Class<?> c) throws UtilsNotFoundException
-	{
-		Annotation a = c.getAnnotation(Table.class);
-		if(a!=null)
-		{
-			Table t = (Table)a;
-			return t.name();
-	
-		}
-		return "--";
-	}
-	
 	private String getTableName(String c)
 	{
 		if(!mapTable.containsKey(c))
@@ -75,7 +62,7 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 			try
 			{
 				Class<?> cl = Class.forName(c);
-				mapTable.put(cl.getName(), createNode(cl));
+				mapTable.put(cl.getName(), ReflectionUtil.toTable(cl));
 			}
 			catch (ClassNotFoundException e) {e.printStackTrace();}
 			catch (UtilsNotFoundException e) {e.printStackTrace();}
@@ -83,7 +70,7 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 		return mapTable.get(c);
 	}
 	
-	public String build(SURVEY survey, TOOL tool)
+	public String build(QUESTION question, SURVEY survey, TOOL tool)
 	{
 		String tbAnswer = getTableName(fbCore.getClassAnswer().getName());
 		String tbData = getTableName(fbCore.getClassData().getName());
@@ -97,28 +84,45 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 		{
 			sbCorelationColumn.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id as correlationId");
 			
-			sbCorelationJoin.append(" INNER JOIN ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(" ON ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id=").append(tbCorrelation).append(".id\n");
+			sbCorelationJoin.append("INNER JOIN ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(" ON ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id=").append(tbCorrelation).append(".id\n");
 			
 			for(int i=0;i<tool.getQuery().getPaths().size();i++)
 			{
 				PATH p = tool.getQuery().getPaths().get(i);
-				sbCorelationJoin.append("  INNER JOIN ").append(getTableName(p.getEntity().getCode())).append(" ON ");
+				sbCorelationJoin.append("    INNER JOIN ").append(getTableName(p.getEntity().getCode())).append(" ON ");
 				
 				if(i==0)
 				{
 					sbCorelationJoin.append(getTableName(p.getEntity().getCode())).append(".id");
 					sbCorelationJoin.append("=");
-					logger.warn("NYI");
-//					sbCorelationJoin.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".").append(tool.getAnalysisQuestion().getAnalysis().getAttribute().getCode()).append("_id");
+					sbCorelationJoin.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".");
+					sbCorelationJoin.append(tool.getAttribute().getCode()).append("_id");
 					sbCorelationJoin.append("\n");
 				}
 				else
 				{
-					sbCorelationJoin.append(getTableName(tool.getQuery().getPaths().get(i-1).getEntity().getCode())).append(".id=");
-					sbCorelationJoin.append(getTableName(p.getEntity().getCode())).append(".user_id\n");
+					PATH previousPath = tool.getQuery().getPaths().get(i-1);
+					
+					if(BooleanComparator.active(previousPath.getAttribute().getRelationOwner()))
+					{
+						sbCorelationJoin.append(getTableName(p.getEntity().getCode())).append(".id");
+						sbCorelationJoin.append("=");
+						sbCorelationJoin.append(getTableName(previousPath.getEntity().getCode())).append(".");
+						sbCorelationJoin.append(previousPath.getAttribute().getCode()).append("_id\n");
+					}
+					else
+					{
+						sbCorelationJoin.append(getTableName(p.getEntity().getCode())).append(".");
+						try
+						{
+							sbCorelationJoin.append(ReflectionUtil.getReverseMapping(previousPath.getEntity().getCode(), "", p.getEntity().getCode()));
+							sbCorelationJoin.append("_id");
+						}
+						catch (UtilsNotFoundException e) {e.printStackTrace();}
+						sbCorelationJoin.append("=");
+						sbCorelationJoin.append(getTableName(previousPath.getEntity().getCode())).append(".id\n");
+					}
 				}
-				
-
 				sbCorelationColumn.setLength(0);
 				sbCorelationColumn.append(getTableName(p.getEntity().getCode())).append(".").append(p.getAttribute().getCode()).append("_id");
 			}
@@ -128,32 +132,28 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT ").append(tbAnswer).append(".question_id as questionId");
 		sb.append(", ").append(tbAnswer).append(".option_id as optionId");
+		sb.append(", COUNT(").append(tbAnswer).append(".option_id) as counter");
+		if(sbCorelationColumn.length()>0) {sb.append(", ").append(sbCorelationColumn);}
+		sb.append("\n");
 		
-		if(sbCorelationColumn.length()>0)
-		{
-			sb.append(", ").append(sbCorelationColumn);
-		}
-		sb.append(", COUNT(").append(tbAnswer).append(".option_id) as counter\n");
 		sb.append("FROM ").append(getTableName(fbCore.getClassAnswer().getName())).append("\n");
 		sb.append("INNER JOIN ").append(tbData).append(" ON ").append(tbData).append(".id=").append(getTableName(fbCore.getClassAnswer().getName())).append(".data_id\n");
 		sb.append("INNER JOIN ").append(tbSurvey).append(" ON ").append(tbSurvey).append(".id=").append(tbData).append(".survey_id\n");
 		
-		
 		sb.append("INNER JOIN ").append(tbCorrelation).append(" ON ").append(tbCorrelation).append(".id=").append(tbData).append(".correlation_id\n");
 		
 		sb.append(sbCorelationJoin);
+		sb.append("  ,SurveyOption opt\n");
 		
-		String sql = 
-
-//				"                inner join User user on user.id=corruser.user_id\n" + 
-//				"                inner join Cv cv on cv.user_id=corruser.user_id,\n" + 
-				"                ,SurveyOption opt\n" + 
-				"WHERE "+tbAnswer+".option_id=opt.id and ("+tbSurvey+".id in (2)) and "
-						+ tbAnswer+".question_id=34\n" + 
-				"GROUP BY "+tbAnswer+".question_id , "+tbAnswer+".option_id , "+sbCorelationColumn;
-		
-//		tool.getQuery().getDomain().getEntity().getCode();
-		
-		return sb.toString()+sql;
+		sb.append("WHERE ").append(tbAnswer).append(".option_id=opt.id\n");
+		sb.append(" AND (").append(tbSurvey).append(".id in (").append(survey.getId()).append("))\n");
+		sb.append(" AND ").append(tbAnswer).append(".question_id=").append(question.getId()).append("\n");
+		sb.append("GROUP BY ").append(tbAnswer).append(".question_id, ");
+							  sb.append(tbAnswer).append(".option_id");
+		if(sbCorelationColumn.length()>0)
+		{
+			sb.append(", ").append(sbCorelationColumn);
+		}
+		return sb.toString();
 	}
 }

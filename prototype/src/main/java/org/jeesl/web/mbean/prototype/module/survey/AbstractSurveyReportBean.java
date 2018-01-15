@@ -99,7 +99,8 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private final Map<SECTION,List<QUESTION>> mapQuestion; public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
 	
 	private final Map<AT,JsonFlatFigures> mapToolTableOptionGlobal; public Map<AT,JsonFlatFigures> getMapToolTableOptionGlobal() {return mapToolTableOptionGlobal;}
-	
+	private final Map<AT,JsonFlatFigures> mapToolTableOptionPath; public Map<AT,JsonFlatFigures> getMapToolTableOptionPath() {return mapToolTableOptionPath;}
+
 	
 	private final Map<AT,JsonFlatFigures> mapToolTableBoolean; public Map<AT,JsonFlatFigures> getMapToolTableBoolean() {return mapToolTableBoolean;}
 	private final Map<AT,JsonFlatFigures> mapToolTableText; public Map<AT,JsonFlatFigures> getMapToolTableText() {return mapToolTableText;}
@@ -120,6 +121,8 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapDsOption = new HashMap<QUESTION,DataSet>();
 		
 		mapToolTableOptionGlobal = new HashMap<AT,JsonFlatFigures>();
+		mapToolTableOptionPath = new HashMap<AT,JsonFlatFigures>();
+		
 		mapToolTableBoolean = new HashMap<AT,JsonFlatFigures>();
 		mapToolTableText = new HashMap<AT,JsonFlatFigures>();
 		mapToolTableRemark = new HashMap<AT,JsonFlatFigures>();
@@ -204,13 +207,21 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 					{
 						if(tool.isVisible())
 						{
+							tool = fAnalysis.load(tool);
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.selectOne.toString()))
 							{
 								JsonFlatFigures f = fAnalysis.surveyStatisticOption(q, sbhSurvey.getSelection(), tool);
-								mapToolTableOptionGlobal.put(tool,f);
-								DataSet ds2 = mfOption.build(f,bSurvey.getMapOption().get(q));
-								mapDsOption.put(q,ds2);
-								this.ds=ds2;
+								if(tool.getQuery()==null)
+								{
+									mapToolTableOptionGlobal.put(tool,f);
+									DataSet ds2 = mfOption.build(f,bSurvey.getMapOption().get(q));
+									mapDsOption.put(q,ds2);
+									this.ds=ds2;
+								}
+								else
+								{
+									
+								}
 							}
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.bool.toString()))
 							{

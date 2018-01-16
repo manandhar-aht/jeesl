@@ -62,6 +62,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
+import net.sf.exlp.util.io.JsonUtil;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
@@ -246,6 +248,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 								{
 									DataSet ds2 = mfOption.build(ff,bSurvey.getMapOption().get(q));
 									mapDsOption.put(q,ds2);
+									JaxbUtil.info(ds2);
 									this.ds=ds2;
 								}
 								else

@@ -1,11 +1,13 @@
 package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
@@ -15,6 +17,8 @@ import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveyValueFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.mc.survey.McOptionDataSetFactory;
@@ -43,7 +47,10 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.model.json.JsonFlatFigure;
 import org.jeesl.model.json.JsonFlatFigures;
+import org.jeesl.model.json.module.survey.JsonSurveyValue;
+import org.jeesl.model.pojo.map.generic.Nested2Map;
 import org.metachart.xml.chart.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,12 +101,19 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 
 	private McOptionDataSetFactory<OPTION> mfOption;
 	
+	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH> efDomainQuery;
+	
 	private final Map<QUESTION,DataSet> mapDsOption; public Map<QUESTION, DataSet> getMapDsOption() {return mapDsOption;}
 	private final Map<QUESTION,List<AT>> mapTool; public Map<QUESTION,List<AT>> getMapTool() {return mapTool;}
 	private final Map<SECTION,List<QUESTION>> mapQuestion; public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
 	
 	private final Map<AT,JsonFlatFigures> mapToolTableOptionGlobal; public Map<AT,JsonFlatFigures> getMapToolTableOptionGlobal() {return mapToolTableOptionGlobal;}
-	private final Map<AT,JsonFlatFigures> mapToolTableOptionPath; public Map<AT,JsonFlatFigures> getMapToolTableOptionPath() {return mapToolTableOptionPath;}
+
+	
+	private final Map<AT,List<JsonSurveyValue>> mapToolOption; public Map<AT,List<JsonSurveyValue>> getMapToolOption() {return mapToolOption;}
+	private final Map<AT,DATTRIBUTE> mapToolPathAttribute; public Map<AT,DATTRIBUTE> getMapToolPathAttribute() {return mapToolPathAttribute;}
+	private final Map<AT,List<JsonSurveyValue>> mapToolPathEntities; public Map<AT,List<JsonSurveyValue>> getMapToolPathEntities() {return mapToolPathEntities;}
+	private final Map<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>> mapToolPathValue; public Map<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>> getMapToolPathValue() {return mapToolPathValue;}
 
 	
 	private final Map<AT,JsonFlatFigures> mapToolTableBoolean; public Map<AT,JsonFlatFigures> getMapToolTableBoolean() {return mapToolTableBoolean;}
@@ -116,12 +130,18 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	{
 		super(fbTemplate,fbCore,fbAnalysis);
 		
+		efDomainQuery = fbAnalysis.ejbDomainQuery();
+		
 		mapQuestion = new HashMap<SECTION,List<QUESTION>>();
 		mapTool = new HashMap<QUESTION,List<AT>>();
 		mapDsOption = new HashMap<QUESTION,DataSet>();
 		
+		mapToolOption = new HashMap<AT,List<JsonSurveyValue>>();
+		mapToolPathAttribute = new HashMap<AT,DATTRIBUTE>();
+		mapToolPathEntities = new HashMap<AT,List<JsonSurveyValue>>();
+		mapToolPathValue = new HashMap<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>>();
+		
 		mapToolTableOptionGlobal = new HashMap<AT,JsonFlatFigures>();
-		mapToolTableOptionPath = new HashMap<AT,JsonFlatFigures>();
 		
 		mapToolTableBoolean = new HashMap<AT,JsonFlatFigures>();
 		mapToolTableText = new HashMap<AT,JsonFlatFigures>();
@@ -189,6 +209,10 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapQuestion.clear();
 		mapTool.clear();
 		
+		mapToolOption.clear();
+		mapToolPathEntities.clear();
+		mapToolPathValue.clear();
+		
 		mapToolTableOptionGlobal.clear();
 		mapToolTableBoolean.clear();
 		mapToolTableText.clear();
@@ -207,21 +231,49 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 					{
 						if(tool.isVisible())
 						{
+							Set<Long> optionIds = new HashSet<Long>();
+							mapToolPathEntities.put(tool,new ArrayList<JsonSurveyValue>());
 							tool = fAnalysis.load(tool);
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.selectOne.toString()))
 							{
-								JsonFlatFigures f = fAnalysis.surveyStatisticOption(q, sbhSurvey.getSelection(), tool);
+								JsonFlatFigures ff = fAnalysis.surveyStatisticOption(q, sbhSurvey.getSelection(), tool);
+								for(JsonFlatFigure f : ff.getFigures())
+								{
+									optionIds.add(f.getL2());
+								}
+								mapToolTableOptionGlobal.put(tool,ff);
 								if(tool.getQuery()==null)
 								{
-									mapToolTableOptionGlobal.put(tool,f);
-									DataSet ds2 = mfOption.build(f,bSurvey.getMapOption().get(q));
+									DataSet ds2 = mfOption.build(ff,bSurvey.getMapOption().get(q));
 									mapDsOption.put(q,ds2);
 									this.ds=ds2;
 								}
 								else
 								{
+									Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue> nm2 = new Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>();
+									long idValue = 1;
+									Set<Long> pathIds = new HashSet<Long>();
+									for(JsonFlatFigure f : ff.getFigures())
+									{
+										idValue++;
+										JsonSurveyValue vOption = JsonSurveyValueFactory.build(f.getL2());
+										JsonSurveyValue vPath = JsonSurveyValueFactory.build(f.getL4());
+										JsonSurveyValue vCount = JsonSurveyValueFactory.build(idValue,f.getL3());
+										nm2.put(vOption, vPath, vCount);
+										pathIds.add(vPath.getId());
+									}
 									
+									PATH path = efDomainQuery.toEffectiveAttribute(tool.getQuery());
+									logger.info("PATH "+path.toString());
+									mapToolPathAttribute.put(tool, efDomainQuery.toEffectiveAttribute(tool.getQuery()).getAttribute());
+									
+									try {mapToolPathEntities.get(tool).addAll(JsonSurveyValueFactory.build(fAnalysis,pathIds,path));}
+									catch (ClassNotFoundException e) {e.printStackTrace();}
+									mapToolPathValue.put(tool,nm2);
 								}
+								
+								mapToolOption.put(tool,JsonSurveyValueFactory.build(optionIds));
+								
 							}
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.bool.toString()))
 							{

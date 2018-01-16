@@ -104,7 +104,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	protected final SbSingleHandler<DOMAIN> sbhDomain; public SbSingleHandler<DOMAIN> getSbhDomain() {return sbhDomain;}
 	
 	private final EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> efDomain;
-	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY> efDomainQuery;
+	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH> efDomainQuery;
 	private final EjbSurveyDomainPathFactory<L,D,QUERY,PATH,DENTITY,DATTRIBUTE> efDomainPath;
 	
 	private final Comparator<DENTITY> cpDentity;

@@ -86,9 +86,9 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		return new EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY>(cDomain);
 	}
 	
-	public EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY> ejbDomainQuery()
+	public EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH> ejbDomainQuery()
 	{
-		return new EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY>(cDomainQuery);
+		return new EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH>(cDomainQuery);
 	}
 	
 	public EjbSurveyDomainPathFactory<L,D,QUERY,PATH,DENTITY,DATTRIBUTE> ejbDomainPath()

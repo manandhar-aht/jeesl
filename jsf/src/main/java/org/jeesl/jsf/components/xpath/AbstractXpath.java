@@ -10,11 +10,15 @@ import java.util.Map;
 import javax.faces.component.UIOutput;
 
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public abstract class AbstractXpath extends UIOutput
 {	
+	final static Logger logger = LoggerFactory.getLogger(AbstractXpath.class);
+	
 	private Map<JeeslReportColumn,SimpleDateFormat> mapDateFormatter;
 	private Map<String,DecimalFormat> mapDecimal;
 	
@@ -26,6 +30,7 @@ public abstract class AbstractXpath extends UIOutput
 		if(mapDateFormatter.containsKey(c)){return mapDateFormatter.get(c);}
 		else
 		{
+			logger.info("Createing SDF with "+dt.getSymbol());
 			SimpleDateFormat sdf = new SimpleDateFormat(dt.getSymbol());
 			mapDateFormatter.put(c,sdf);
 			return sdf;

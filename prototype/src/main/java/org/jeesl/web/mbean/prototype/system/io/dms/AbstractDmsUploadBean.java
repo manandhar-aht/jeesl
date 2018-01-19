@@ -183,7 +183,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
     		file = efFile.build(section, files);
     		file.setName(efLang.createEmpty(sbhLocale.getList()));
     		attributeHandler.prepare(file);
-    		fileHandler.init(dm.getStorage(),file);
+    		fileHandler.init(dm.getStorage(),file,false);
     }
     	
     public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
@@ -199,7 +199,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
     		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity((file)));}
     		file = efLang.persistMissingLangs(fDms, sbhLocale.getList(), file);
     		attributeHandler.prepare(file);
-    		fileHandler.init(dm.getStorage(),file);
+    		fileHandler.init(dm.getStorage(),file,false);
     }
     
 	@Override

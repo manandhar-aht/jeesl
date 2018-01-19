@@ -107,8 +107,6 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH> efDomainQuery;
 	private final EjbSurveyDomainPathFactory<L,D,QUERY,PATH,DENTITY,DATTRIBUTE> efDomainPath;
 	
-	private final Comparator<DENTITY> cpDentity;
-	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AbstractAdminSurveyDomainBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
@@ -122,7 +120,6 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		efDomain = fbAnalysis.ejbDomain();
 		efDomainQuery = fbAnalysis.ejbDomainQuery();
 		efDomainPath = fbAnalysis.ejbDomainPath();
-		cpDentity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
 	protected void initSuperDomain(String userLocale, JeeslTranslationBean bTranslation, FacesMessageBean bMessage,
@@ -136,7 +133,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 		super.initLocales(userLocale);
 		
 		entities = fCore.allOrderedPositionVisible(fbAnalysis.getClassDomainEntity());
-		Collections.sort(entities,cpDentity);
+		Collections.sort(entities,cpDomainEntity);
 		reloadDomains();
 		if(sbhDomain.getHasSome())
 		{

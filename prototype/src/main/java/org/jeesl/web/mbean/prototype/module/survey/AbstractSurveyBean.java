@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
@@ -46,6 +47,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,6 +120,8 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected final SbSingleHandler<SURVEY> sbhSurvey; public SbSingleHandler<SURVEY> getSbhSurvey() {return sbhSurvey;}
 	protected final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	
+	protected final Comparator<DENTITY> cpDomainEntity;
+	
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
 	protected List<SECTION> sections; public List<SECTION> getSections(){return sections;}
 	protected final List<QUESTION> questions; public List<QUESTION> getQuestions(){return questions;}
@@ -146,12 +150,13 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		efOption = fbCore.option();
 		efScheme = fbTemplate.scheme();
 		
-		
 		sbhCategory = new SbSingleHandler<TC>(fbTemplate.getClassTemplateCategory(),this);
 		sbhSurvey = new SbSingleHandler<SURVEY>(fbCore.getClassSurvey(),this);
 		sbhLocale = new SbSingleHandler<LOC>(fbTemplate.getClassLocale(),this);
 		
 		questions = new ArrayList<QUESTION>();
+		
+		cpDomainEntity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
 	protected abstract void initSettings();

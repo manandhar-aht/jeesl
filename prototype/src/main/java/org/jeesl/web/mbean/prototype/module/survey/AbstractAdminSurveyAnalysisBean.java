@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +149,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		versions = new ArrayList<VERSION>();
 		
 		correlations.addAll(fAnalysis.all(fbAnalysis.getClassDomainEntity()));
+		Collections.sort(correlations,cpDomainEntity);
 		
 		sbhCategory.silentCallback();
 	}

@@ -66,6 +66,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		relations = fRevision.allOrderedPositionVisible(fbRevision.getClassRelation());
 		scopeTypes = fRevision.allOrderedPositionVisible(fbRevision.getClassScopeType());
 		links = fRevision.all(fbRevision.getClassEntity());
+		Collections.sort(links,comparatorEntity);
 		reloadEntities();
 	}
 	

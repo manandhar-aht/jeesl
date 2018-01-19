@@ -19,14 +19,16 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
 public class JobFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
-								TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+								TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE>,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
-								JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>, FEEDBACK extends JeeslJobFeedback<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+								JOB extends JeeslJob<TEMPLATE,FEEDBACK,STATUS,USER>,
+								PRIORITY extends UtilsStatus<PRIORITY,L,D>,
+								FEEDBACK extends JeeslJobFeedback<JOB,FT,USER>,	
 								FT extends UtilsStatus<FT,L,D>,
 								STATUS extends UtilsStatus<STATUS,L,D>,
-								ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
-								CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+								ROBOT extends JeeslJobRobot<L,D>,
+								CACHE extends JeeslJobCache<TEMPLATE>,
 								USER extends EjbWithEmail
 								>
 				extends AbstractFactoryBuilder<L,D>
@@ -53,23 +55,23 @@ public class JobFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 		this.cCache = cCache;
 	}
 		
-	public EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> template()
+	public EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE> template()
 	{
-		return new EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cTemplate);
+		return new EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE>(cTemplate);
 	}
 	
-	public EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> job()
+	public EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> job()
 	{
-		return new EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cJob);
+		return new EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cJob);
 	}
 	
-	public EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> robot()
+	public EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> robot()
 	{
-		return new EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cRobot);
+		return new EjbJobRobotFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cRobot);
 	}
 	
-	public EjbJobCacheFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> cache()
+	public EjbJobCacheFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> cache()
 	{
-		return new EjbJobCacheFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cCache);
+		return new EjbJobCacheFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>(cCache);
 	}
 }

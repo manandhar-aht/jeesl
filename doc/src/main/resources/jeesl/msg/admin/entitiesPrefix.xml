@@ -21,6 +21,13 @@
 			<s:lang key="fr" translation="Job Type"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="JobPriority">
+		<s:langs>
+			<s:lang key="de" translation="Job Priority"/>
+			<s:lang key="en" translation="Job Priority"/>
+			<s:lang key="fr" translation="Job Priority"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="JobFeedbackType">
 		<s:langs>
 			<s:lang key="de" translation="Job Rückmeldung Typ"/>

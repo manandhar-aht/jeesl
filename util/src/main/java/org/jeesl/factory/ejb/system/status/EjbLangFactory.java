@@ -122,6 +122,15 @@ public class EjbLangFactory<L extends UtilsLang>
 	{
 		return persistMissingLangs(fUtils,TxtStatusFactory.toCodes(locales).toArray(new String[0]),ejb);
 	}
+	public <T extends EjbWithLang<L>, LOC extends UtilsStatus<LOC,L,D>, D extends UtilsDescription> T persistMissingLangsForCode(UtilsFacade fUtils, List<String> codes, T ejb)
+	{
+		String[] localeCodes = new String[codes.size()];
+		for(int i=0;i<codes.size();i++)
+		{
+			localeCodes[i] = codes.get(i);
+		}
+		return persistMissingLangs(fUtils,localeCodes,ejb);
+	}
 	
 	public <T extends EjbWithLang<L>> T persistMissingLangs(UtilsFacade fUtils, String[] keys, T ejb)
 	{

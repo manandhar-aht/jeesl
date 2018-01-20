@@ -15,8 +15,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.exlp.util.io.StringUtil;
 
-public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
-					implements Serializable
+public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription> implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminBean.class);
@@ -65,6 +64,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		nnb = new NullNumberBinder();
 	}
 	
+	@Deprecated
 	public AbstractAdminBean()
 	{
 		debugOnInfo = false;
@@ -92,6 +92,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription>
 		this.bMessage=bMessage;
 	}
 	
+	@Deprecated
 	protected void initAdmin(String[] langs, final Class<L> cL, final Class<D> cD, FacesMessageBean bMessage)
 	{
 		this.localeCodes=langs;

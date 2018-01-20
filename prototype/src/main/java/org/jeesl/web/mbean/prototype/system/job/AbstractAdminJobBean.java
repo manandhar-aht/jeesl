@@ -60,7 +60,7 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 	
 	protected void postConstructAbstractJob(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
-		super.initAdmin(bTranslation.getLangKeys().toArray(new String[0]),cL,cD,bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fJob=fJob;
 		
 		sbhCategory = new SbMultiHandler<CATEGORY>(fbJob.getClassCategory(),fJob.allOrderedPositionVisible(fbJob.getClassCategory()),this);

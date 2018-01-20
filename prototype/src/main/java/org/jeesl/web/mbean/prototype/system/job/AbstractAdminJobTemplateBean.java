@@ -98,6 +98,8 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 	public void selectTemplate()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
+		template = efLang.persistMissingLangsForCode(fJob, bTranslation.getLangKeys(), template);
+		template = efDescription.persistMissingLangsForCode(fJob, bTranslation.getLangKeys(), template);
 	}
 	
 	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException

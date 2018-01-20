@@ -67,7 +67,7 @@ public class JeeslMsgBuilder
 	
 	//System
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
-	public static final String systemJob = "jeesl/msg/admin/system/job.xml";
+	public static final String systemJob = "jeesl/msg/system/job.xml";
 	public static final String systemProperty = "jeesl/msg/admin/system/property.xml";
 	public static final String systemFeature = "jeesl/msg/admin/system/feature.xml";
 	public static final String systemLights = "jeesl/msg/system/lights.xml";

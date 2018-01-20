@@ -8,7 +8,7 @@ import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface JeeslJobCache<TEMPLATE extends JeeslJobTemplate<?,?,TEMPLATE,?,?>>
+public interface JeeslJobCache<TEMPLATE extends JeeslJobTemplate<?,?,?,?,?>>
 		extends Serializable,
 				EjbWithId,EjbSaveable,EjbRemoveable,EjbWithNonUniqueCode,EjbWithRecord
 {

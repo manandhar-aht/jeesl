@@ -23,7 +23,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
 public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsDescription,
-									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE>,
+									TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
 									JOB extends JeeslJob<TEMPLATE,FEEDBACK,STATUS,USER>,
@@ -47,6 +47,7 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	protected SbMultiHandler<TYPE> sbhType; public SbMultiHandler<TYPE> getSbhType() {return sbhType;}
 	protected final SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
+	protected final SbMultiHandler<PRIORITY> sbhPriority; public SbMultiHandler<PRIORITY> getSbhPriority() {return sbhPriority;}
 
 	public AbstractAdminJobBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob)
 	{
@@ -54,6 +55,7 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 		this.fbJob=fbJob;
 		
 		sbhStatus = new SbMultiHandler<STATUS>(fbJob.getClassStatus(),this);
+		sbhPriority = new SbMultiHandler<PRIORITY>(fbJob.getClassPriority(),this);
 	}
 	
 	protected void postConstructAbstractJob(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
@@ -68,6 +70,7 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 		sbhType.selectAll();
 		
 		sbhStatus.setList(fJob.allOrderedPositionVisible(fbJob.getClassStatus()));
+		sbhPriority.setList(fJob.allOrderedPositionVisible(fbJob.getClassPriority()));
 	}
 	
 	@Override public void toggled(Class<?> c)

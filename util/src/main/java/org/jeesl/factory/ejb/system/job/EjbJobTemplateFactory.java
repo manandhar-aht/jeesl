@@ -9,9 +9,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbJobTemplateFactory <L extends UtilsLang,D extends UtilsDescription,
-									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE>,
+									TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									TYPE extends UtilsStatus<TYPE,L,D>>
+									TYPE extends UtilsStatus<TYPE,L,D>,
+									PRIORITY extends UtilsStatus<PRIORITY,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbJobTemplateFactory.class);
 	

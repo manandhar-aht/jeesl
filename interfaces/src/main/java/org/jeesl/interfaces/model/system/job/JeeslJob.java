@@ -11,7 +11,7 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslJob<TEMPLATE extends JeeslJobTemplate<?,?,TEMPLATE,?,?>,
+public interface JeeslJob<TEMPLATE extends JeeslJobTemplate<?,?,?,?,?>,
 							FEEDBACK extends JeeslJobFeedback<?,?,USER>,
 							STATUS extends UtilsStatus<STATUS,?,?>,
 							USER extends EjbWithEmail

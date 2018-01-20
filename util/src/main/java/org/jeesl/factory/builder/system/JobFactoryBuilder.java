@@ -19,7 +19,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
 public class JobFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
-								TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE>,
+								TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
 								JOB extends JeeslJob<TEMPLATE,FEEDBACK,STATUS,USER>,
@@ -39,25 +39,27 @@ public class JobFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 	private final Class<CATEGORY> cCategory; public Class<CATEGORY> getClassCategory(){return cCategory;}
 	private final Class<TYPE> cType; public Class<TYPE> getClassType(){return cType;}
 	private final Class<JOB> cJob; public Class<JOB> getClassJob(){return cJob;}
+	private final Class<PRIORITY> cPriority; public Class<PRIORITY> getClassPriority(){return cPriority;}
 	private final Class<STATUS> cStatus; public Class<STATUS> getClassStatus(){return cStatus;}
 	private final Class<ROBOT> cRobot; public Class<ROBOT> getClassRobot(){return cRobot;}
 	private final Class<CACHE> cCache; public Class<CACHE> getClassCache(){return cCache;}
 	
-	public JobFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<TEMPLATE> cTemplate, final Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<JOB> cJob, final Class<STATUS> cStatus, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
+	public JobFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<TEMPLATE> cTemplate, final Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<JOB> cJob, final Class<PRIORITY> cPriority, final Class<STATUS> cStatus, final Class<ROBOT> cRobot, final Class<CACHE> cCache)
 	{
 		super(cL,cD);
 		this.cTemplate = cTemplate;
 		this.cCategory=cCategory;
 		this.cType=cType;
 		this.cJob = cJob;
+		this.cPriority = cPriority;
 		this.cStatus=cStatus;
 		this.cRobot = cRobot;
 		this.cCache = cCache;
 	}
 		
-	public EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE> template()
+	public EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,PRIORITY> template()
 	{
-		return new EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE>(cTemplate);
+		return new EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,PRIORITY>(cTemplate);
 	}
 	
 	public EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> job()

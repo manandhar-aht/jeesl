@@ -14,6 +14,13 @@
 			<lang key="fr" translation="Category" />
 		</langs>
 	</translation>
+	<translation key="jeeslJobPriority">
+		<langs>
+			<lang key="de" translation="Priorität" />
+			<lang key="en" translation="Priority" />
+			<lang key="fr" translation="Priority" />
+		</langs>
+	</translation>
 	<translation key="jeeslJobDescription">
 		<langs>
 			<lang key="de" translation="Beschreibung" />

@@ -25,7 +25,7 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDescription,
-									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE>,
+									TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
 									JOB extends JeeslJob<TEMPLATE,FEEDBACK,STATUS,USER>,
@@ -47,7 +47,7 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 	
 	private TEMPLATE template; public TEMPLATE getTemplate() {return template;} public void setTemplate(TEMPLATE template) {this.template = template;}
 
-	private EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE> efTemplate;
+	private EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,PRIORITY> efTemplate;
 	
 	public AbstractAdminJobTemplateBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob) {super(fbJob);}
 	
@@ -105,6 +105,7 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(template));}
 		template.setCategory(fJob.find(fbJob.getClassCategory(),template.getCategory()));
 		template.setType(fJob.find(fbJob.getClassType(),template.getType()));
+		template.setPriority(fJob.find(fbJob.getClassPriority(),template.getPriority()));
 		template = fJob.save(template);
 		reloadTemplates();
 	}

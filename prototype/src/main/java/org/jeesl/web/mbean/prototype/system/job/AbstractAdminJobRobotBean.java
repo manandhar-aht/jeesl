@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.system.job;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.factory.builder.system.JobFactoryBuilder;
 import org.jeesl.factory.ejb.system.job.EjbJobRobotFactory;
@@ -50,9 +51,9 @@ public class AbstractAdminJobRobotBean <L extends UtilsLang,D extends UtilsDescr
 
 	public AbstractAdminJobRobotBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob){super(fbJob);}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
+	protected void postConstructJobRobot(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
-		super.initSuper(langs,bMessage,fJob);
+		super.postConstructAbstractJob(bTranslation,bMessage,fJob);
 		efRobot = fbJob.robot();
 		
 		if(debugOnInfo)

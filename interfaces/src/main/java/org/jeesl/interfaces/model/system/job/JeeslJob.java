@@ -19,8 +19,7 @@ public interface JeeslJob<TEMPLATE extends JeeslJobTemplate<?,?,TEMPLATE,?,?>,
 		extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,EjbWithNonUniqueCode
 {	
 	public static enum Attributes{template,status,recordCreation,recordStart,code};
-	public static enum Status{queue,timeout,working,completed,error,failed};
-	public static enum Feedback{none,email,box}
+	
 	public static enum Type{reportXml,reportXlsx}
 	
 	TEMPLATE getTemplate();

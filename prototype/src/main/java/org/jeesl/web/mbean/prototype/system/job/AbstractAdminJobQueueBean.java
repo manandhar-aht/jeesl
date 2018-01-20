@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.system.job;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.api.handler.sb.SbDateIntervalSelection;
 import org.jeesl.controller.handler.sb.SbDateHandler;
@@ -11,6 +12,7 @@ import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
 import org.jeesl.interfaces.model.system.job.JeeslJobRobot;
+import org.jeesl.interfaces.model.system.job.JeeslJobStatus;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,19 +54,19 @@ public class AbstractAdminJobQueueBean <L extends UtilsLang,D extends UtilsDescr
 
 	public AbstractAdminJobQueueBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob){super(fbJob);}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
+	protected void postConstructJobQueue(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
-		super.initSuper(langs,bMessage,fJob);
+		super.postConstructAbstractJob(bTranslation,bMessage,fJob);
 		
 		sbhDate = new SbDateHandler(this);
 		sbhDate.initWeeksToNow(2);
 		
 		try
 		{
-			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJob.Status.queue));
-			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJob.Status.timeout));
-			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJob.Status.error));
-			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJob.Status.working));
+			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.queue));
+			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.timeout));
+			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.error));
+			sbhStatus.select(fJob.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.working));
 		}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 		

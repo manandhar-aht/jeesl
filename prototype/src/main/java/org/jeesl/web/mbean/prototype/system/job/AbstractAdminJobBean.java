@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.system.job;
 
 import java.io.Serializable;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.builder.system.JobFactoryBuilder;
@@ -55,9 +56,9 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 		sbhStatus = new SbMultiHandler<STATUS>(fbJob.getClassStatus(),this);
 	}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
+	protected void postConstructAbstractJob(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
-		super.initAdmin(langs,cL,cD,bMessage);
+		super.initAdmin(bTranslation.getLangKeys().toArray(new String[0]),cL,cD,bMessage);
 		this.fJob=fJob;
 		
 		sbhCategory = new SbMultiHandler<CATEGORY>(fbJob.getClassCategory(),fJob.allOrderedPositionVisible(fbJob.getClassCategory()),this);

@@ -52,10 +52,9 @@ public class DbConnectionsReport <L extends UtilsLang,D extends UtilsDescription
 	private JeeslIoDbFacade<L,D,?,?,?,?> fDb;
 	
 	public DbConnectionsReport(String localeCode, JeeslIoDbFacade<L,D,?,?,?,?> fDb, 
-			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport,
-			final Class<L> cL,final Class<D> cD, final Class<CATEGORY> cCategory, final Class<REPORT> cReport)
+			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport)
 	{
-		super(localeCode,fbReport,cL,cD,cCategory,cReport);
+		super(localeCode,fbReport);
 		this.fDb=fDb;
 		
 		headers.add("Transaction");

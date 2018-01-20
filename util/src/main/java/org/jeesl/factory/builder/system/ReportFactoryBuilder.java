@@ -57,8 +57,6 @@ public class ReportFactoryBuilder<L extends UtilsLang,D extends UtilsDescription
 										TLS extends UtilsStatus<TLS,L,D>,
 										FILLING extends UtilsStatus<FILLING,L,D>,
 										TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>
-										
-//,RC extends UtilsStatus<RC,L,D>
 >
 	extends AbstractFactoryBuilder<L,D>
 {
@@ -80,9 +78,17 @@ public class ReportFactoryBuilder<L extends UtilsLang,D extends UtilsDescription
 	private final Class<RT> cRt; public Class<RT> getClassRowType(){return cRt;}
 	private final Class<RCAT> cRevisionCategory; public Class<RCAT> getClassRevisionCategory(){return cRevisionCategory;}
 	private final Class<TLS> cTls; public Class<TLS> getClassTrafficLightScope(){return cTls;}
+	private final Class<TRANSFORMATION> cTransformation; public Class<TRANSFORMATION> getClassTransformation(){return cTransformation;}
 //	
 	
-	public ReportFactoryBuilder(final Class<L> cL,final Class<D> cD,final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumnWidth, final Class<RT> cRt, final Class<RCAT> cRevisionCategory, final Class<TLS> cTls)
+	public ReportFactoryBuilder(final Class<L> cL,final Class<D> cD,
+								final Class<CATEGORY> cCategory, final Class<REPORT> cReport, 
+								final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, 
+								final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, 
+								final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, 
+								final Class<CDT> cDataType, final Class<CW> cColumnWidth, final Class<RT> cRt, 
+								final Class<RCAT> cRevisionCategory, final Class<TLS> cTls,
+								final Class<TRANSFORMATION> cTransformation)
 	{       
 		super(cL,cD);
         this.cCategory = cCategory;
@@ -101,6 +107,7 @@ public class ReportFactoryBuilder<L extends UtilsLang,D extends UtilsDescription
         this.cRt = cRt;
         this.cRevisionCategory=cRevisionCategory;
         this.cTls = cTls;
+        this.cTransformation=cTransformation;
 	}
 	
 	public EjbIoReportFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> report()

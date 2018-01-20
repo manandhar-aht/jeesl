@@ -24,6 +24,7 @@ import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
 import org.jeesl.interfaces.model.system.job.JeeslJobRobot;
+import org.jeesl.interfaces.model.system.job.JeeslJobStatus;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.joda.time.DateTime;
 
@@ -127,8 +128,8 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		List<STATUS> statuses = new ArrayList<STATUS>();
 		try
 		{
-			statuses.add(this.fByCode(fbJob.getClassStatus(),JeeslJob.Status.queue));
-			statuses.add(this.fByCode(fbJob.getClassStatus(),JeeslJob.Status.working));
+			statuses.add(this.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.queue));
+			statuses.add(this.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.working));
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		
@@ -194,7 +195,7 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 	@Override
 	public JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
-		STATUS status = this.fByCode(fbJob.getClassStatus(),JeeslJob.Status.queue);
+		STATUS status = this.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.queue);
 		JOB job = efJob.build(user,template,status,code,name);
 		return this.save(job);
 	}

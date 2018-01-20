@@ -82,28 +82,16 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(TimeSeriesReport.class);
 
-	private final Class<TS> cTs;
 	private final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
 	
 	public TimeSeriesReport(String localeCode,
 			final JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport,
 			final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs,
-			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport,
-
-			final Class<L> cL,final Class<D> cD,
-			final Class<CATEGORY> cCategory,final Class<REPORT> cReport,
-			final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook,
-			final Class<SHEET> cSheet,
-			final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow,
-			final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle,
-			final Class<CDT> cDataType,
-			final Class<CW> cColumnWidth, Class<RT> cRowType, final Class<TRANSFORMATION> cTransformation,
-			final Class<TS> cTs)
+			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport)
 	{
-		super(localeCode,fbReport,cL,cD,cCategory,cReport);
-		super.initIo(fReport,this.getClass(),cImplementation,cWorkbook,cSheet,cGroup,cColumn,cRow,cTemplate,cCell,cStyle,cDataType,cColumnWidth,cRowType,cTransformation);
+		super(localeCode,fbReport);
+		super.initIo(fReport,this.getClass());
 		this.fTs=fTs;
-		this.cTs=cTs;
 	}
 	
 	public Report build(WS workspace, SCOPE scope, INT interval, BRIDGE bridge, Date from, Date to) throws UtilsNotFoundException

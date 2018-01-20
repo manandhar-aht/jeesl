@@ -103,8 +103,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	public XlsFactory(String localeCode,
 			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport,
-			
-			final Class<CATEGORY> cCategory, final Class<REPORT> cReport, final Class<IMPLEMENTATION> cImplementation, final Class<WORKBOOK> cWorkbook, final Class<SHEET> cSheet, final Class<GROUP> cGroup, final Class<COLUMN> cColumn, final Class<ROW> cRow, final Class<TEMPLATE> cTemplate, final Class<CELL> cCell, final Class<STYLE> cStyle, final Class<CDT> cDataType, final Class<CW> cColumWidth, Class<RT> cRowType, WORKBOOK ioWorkbook)
+			WORKBOOK ioWorkbook)
     {
         this.localeCode = localeCode;
         this.ioWorkbook=ioWorkbook;

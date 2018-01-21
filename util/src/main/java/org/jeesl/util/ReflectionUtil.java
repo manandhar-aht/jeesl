@@ -189,11 +189,9 @@ public class ReflectionUtil
 			 {
 				 return f.getName();
 			 }
-			
-			 
 		 }
 		 
-		 throw new UtilsNotFoundException("No reverse mapping found");
+		 throw new UtilsNotFoundException("No reverse mapping found ("+cSrc.getName()+"."+aSrc+") -> "+cDst.getName());
 	 }
 	 
 	public static List<Field> toFields(Class<?> c)

@@ -19,7 +19,7 @@ public class EjbJobFactory <L extends UtilsLang,D extends UtilsDescription,
 									TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
-									JOB extends JeeslJob<TEMPLATE,FEEDBACK,STATUS,USER>,
+									JOB extends JeeslJob<TEMPLATE,PRIORITY,FEEDBACK,STATUS,USER>,
 									PRIORITY extends UtilsStatus<PRIORITY,L,D>,
 									FEEDBACK extends JeeslJobFeedback<JOB,FT,USER>,
 									FT extends UtilsStatus<FT,L,D>,
@@ -46,6 +46,7 @@ public class EjbJobFactory <L extends UtilsLang,D extends UtilsDescription,
 			ejb = cJob.newInstance();
 			ejb.setTemplate(template);
 			ejb.setStatus(status);
+			ejb.setPriority(template.getPriority());
 			ejb.setRecordCreation(new Date());
 			ejb.setCode(code);
 			ejb.setName(name);

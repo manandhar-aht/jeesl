@@ -44,15 +44,27 @@
           </p:columns>
 		</p:dataTable>
 		
-		
-		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableBoolean[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'bool'}">
-			<p:column headerText="#{msg.jeeslBoolean}">
-				<h:outputText value="#{f.b1}"/>
+		<p:dataTable var="bool" value="#{cc.attrs.bean.mapToolOption[tool]}"  rendered="#{cc.attrs.tool.element.code eq 'bool' and (empty cc.attrs.tool.query)}">
+			<p:column headerText="#{msg.jeeslSurveyAnswerBoolean}">
+				<h:outputText value="#{bool.bool}"/>
 			</p:column>
 			<p:column headerText="#{msg.jeeslSurveyAnalysisAnswers}">
-				<h:outputText value="#{f.l3}"/>
+				<h:outputText value="#{bool.count}"/>
 			</p:column>
 		</p:dataTable>
+		<p:dataTable var="bool" value="#{cc.attrs.bean.mapToolOption[tool]}" rendered="#{(cc.attrs.tool.element.code eq 'bool') and (not empty cc.attrs.tool.query)}">
+			<p:column headerText="#{msg.jeeslSurveyAnswerBoolean}">
+				<h:outputText value="#{bool.bool}"/>
+			</p:column>
+			<p:columns var="path" value="#{cc.attrs.bean.mapToolPathEntities[tool]}">
+            	<f:facet name="header">
+            		<jeesl:outputXpath value="#{path.ejb}" xpath="#{cc.attrs.bean.mapToolPathAttribute[tool].xpath}" localeCode="#{localeCode}"/>	
+            	</f:facet>
+            	<h:outputText value="#{cc.attrs.bean.mapToolPathValue[tool].m[bool][path].count}"/>
+          </p:columns>
+		</p:dataTable>
+		
+		
 		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableText[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'text'}">
 			<p:column headerText="#{msg.jeeslAnswer}">
 				<h:outputText value="#{f.s1}"/>

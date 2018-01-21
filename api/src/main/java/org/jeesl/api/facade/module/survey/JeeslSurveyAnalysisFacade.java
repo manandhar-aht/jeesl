@@ -24,6 +24,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.model.json.JsonFlatFigures;
+import org.jeesl.model.json.module.survey.JsonSurveyValues;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
@@ -66,8 +67,9 @@ public interface JeeslSurveyAnalysisFacade <L extends UtilsLang, D extends Utils
 	List<DATTRIBUTE> fDomainAttributes(DENTITY entity);
 	
 	JsonFlatFigures surveyCountRecords(List<SURVEY> surveys);
+	
 	JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey, TOOL tool);
-	JsonFlatFigures surveyStatisticBoolean(QUESTION question, SURVEY survey);
+	JsonSurveyValues surveyStatisticBoolean(QUESTION question, SURVEY survey, TOOL tool);
 	
 	JsonFlatFigures surveyCountOption(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations);
 	JsonFlatFigures surveyCountAnswer(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations);

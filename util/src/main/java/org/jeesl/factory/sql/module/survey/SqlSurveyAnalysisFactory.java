@@ -41,6 +41,8 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 {
 	final static Logger logger = LoggerFactory.getLogger(SqlSurveyAnalysisFactory.class);
 
+	private boolean explainAnalyse = false;
+	private boolean debugOnInfo = true;
 	private final Map<String,String> mapTable;
 	
 	private final SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore;
@@ -70,21 +72,73 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 		return mapTable.get(c);
 	}
 	
-	public String build(QUESTION question, SURVEY survey, TOOL tool)
+	public String bool(QUESTION question, SURVEY survey, TOOL tool)
 	{
-		String tbAnswer = getTableName(fbCore.getClassAnswer().getName());
-		String tbData = getTableName(fbCore.getClassData().getName());
-		String tbSurvey = getTableName(fbCore.getClassSurvey().getName());
-		String tbCorrelation = getTableName(fbCore.getClassCorrelation().getName());
+		if(debugOnInfo) {logger.info("Bulding Bool Query for q:"+question.toString());}
+		CorrelationInfo info = build(tool);
+		
+		StringBuilder sb = new StringBuilder();
+		if(explainAnalyse) {sb.append("EXPLAIN ANALYSE ");}
+		sb.append("SELECT ").append(info.tbAnswer).append(".question_id as questionId");
+		sb.append(", ").append(info.tbAnswer).append(".").append(JeeslSurveyAnswer.Attributes.valueBoolean.toString());
+		sb.append(", COUNT(").append(info.tbAnswer).append(".").append(JeeslSurveyAnswer.Attributes.valueBoolean.toString()).append(") as counter");
+		if(info.getCorrelationColumn().length()>0) {sb.append(", ").append(info.getCorrelationColumn()).append(" as correlationId");}
+		sb.append("\n");
+		
+		sb.append("FROM ").append(getTableName(fbCore.getClassAnswer().getName())).append("\n");
+		sb.append("  INNER JOIN ").append(info.tbData).append(" ON ").append(info.tbData).append(".id=").append(getTableName(fbCore.getClassAnswer().getName())).append(".data_id\n");
+		sb.append("  INNER JOIN ").append(info.tbSurvey).append(" ON ").append(info.tbSurvey).append(".id=").append(info.tbData).append(".survey_id\n");
+		sb.append("  INNER JOIN ").append(info.tbCorrelation).append(" ON ").append(info.tbCorrelation).append(".id=").append(info.tbData).append(".correlation_id\n");
+		sb.append(info.getCorrelationJoin());
+		
+		sb.append("WHERE (").append(info.tbSurvey).append(".id in (").append(survey.getId()).append("))\n");
+		sb.append("  AND ").append(info.tbAnswer).append(".question_id=").append(question.getId()).append("\n");
+		sb.append("GROUP BY ").append(info.tbAnswer).append(".question_id, ");
+							  sb.append(info.tbAnswer).append(".").append(JeeslSurveyAnswer.Attributes.valueBoolean.toString());
+		this.addCorrelationGrouping(info,sb);
+		return sb.toString();
+	}
+	
+	public String option(QUESTION question, SURVEY survey, TOOL tool)
+	{
+		if(debugOnInfo) {logger.info("Bulding Option Query for q:"+question.toString());}
+		CorrelationInfo info = build(tool);
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT ").append(info.tbAnswer).append(".question_id as questionId");
+		sb.append(", ").append(info.tbAnswer).append(".option_id as optionId");
+		sb.append(", COUNT(").append(info.tbAnswer).append(".option_id) as counter");
+		if(info.getCorrelationColumn().length()>0) {sb.append(", ").append(info.getCorrelationColumn()).append(" as correlationId");}
+		sb.append("\n");
+		
+		sb.append("FROM ").append(getTableName(fbCore.getClassAnswer().getName())).append("\n");
+		sb.append("  INNER JOIN ").append(info.tbData).append(" ON ").append(info.tbData).append(".id=").append(getTableName(fbCore.getClassAnswer().getName())).append(".data_id\n");
+		sb.append("  INNER JOIN ").append(info.tbSurvey).append(" ON ").append(info.tbSurvey).append(".id=").append(info.tbData).append(".survey_id\n");
+		sb.append("  INNER JOIN ").append(info.tbCorrelation).append(" ON ").append(info.tbCorrelation).append(".id=").append(info.tbData).append(".correlation_id\n");
+		sb.append(info.getCorrelationJoin());
+		sb.append("  ,SurveyOption opt\n");
+		
+		sb.append("WHERE ").append(info.tbAnswer).append(".option_id=opt.id\n");
+		sb.append("  AND (").append(info.tbSurvey).append(".id in (").append(survey.getId()).append("))\n");
+		sb.append("  AND ").append(info.tbAnswer).append(".question_id=").append(question.getId()).append("\n");
+		sb.append("GROUP BY ").append(info.tbAnswer).append(".question_id, ");
+							  sb.append(info.tbAnswer).append(".option_id");
+		this.addCorrelationGrouping(info,sb);
+		return sb.toString();
+	}
+	
+	private CorrelationInfo build(TOOL tool)
+	{	
+		CorrelationInfo info = new CorrelationInfo();
 		
 		StringBuilder sbCorelationColumn = new StringBuilder();
 		StringBuilder sbCorelationJoin = new StringBuilder();
 		
 		if(tool!=null && tool.getQuery()!=null)
 		{
-			sbCorelationColumn.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id as correlationId");
+			sbCorelationColumn.append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id");
 			
-			sbCorelationJoin.append("INNER JOIN ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(" ON ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id=").append(tbCorrelation).append(".id\n");
+			sbCorelationJoin.append("INNER JOIN ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(" ON ").append(getTableName(tool.getAnalysisQuestion().getAnalysis().getEntity().getCode())).append(".id=").append(info.tbCorrelation).append(".id\n");
 			
 			for(int i=0;i<tool.getQuery().getPaths().size();i++)
 			{
@@ -124,36 +178,46 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 					}
 				}
 				sbCorelationColumn.setLength(0);
-				sbCorelationColumn.append(getTableName(p.getEntity().getCode())).append(".").append(p.getAttribute().getCode()).append("_id");
+				if(p.getAttribute().getRelation()==null)
+				{
+					sbCorelationColumn.append(getTableName(p.getEntity().getCode())).append(".id");
+				}
+				else
+				{
+					sbCorelationColumn.append(getTableName(p.getEntity().getCode())).append(".").append(p.getAttribute().getCode()).append("_id");
+				}
 			}
 		}
 		
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT ").append(tbAnswer).append(".question_id as questionId");
-		sb.append(", ").append(tbAnswer).append(".option_id as optionId");
-		sb.append(", COUNT(").append(tbAnswer).append(".option_id) as counter");
-		if(sbCorelationColumn.length()>0) {sb.append(", ").append(sbCorelationColumn);}
-		sb.append("\n");
-		
-		sb.append("FROM ").append(getTableName(fbCore.getClassAnswer().getName())).append("\n");
-		sb.append("INNER JOIN ").append(tbData).append(" ON ").append(tbData).append(".id=").append(getTableName(fbCore.getClassAnswer().getName())).append(".data_id\n");
-		sb.append("INNER JOIN ").append(tbSurvey).append(" ON ").append(tbSurvey).append(".id=").append(tbData).append(".survey_id\n");
-		
-		sb.append("INNER JOIN ").append(tbCorrelation).append(" ON ").append(tbCorrelation).append(".id=").append(tbData).append(".correlation_id\n");
-		
-		sb.append(sbCorelationJoin);
-		sb.append("  ,SurveyOption opt\n");
-		
-		sb.append("WHERE ").append(tbAnswer).append(".option_id=opt.id\n");
-		sb.append(" AND (").append(tbSurvey).append(".id in (").append(survey.getId()).append("))\n");
-		sb.append(" AND ").append(tbAnswer).append(".question_id=").append(question.getId()).append("\n");
-		sb.append("GROUP BY ").append(tbAnswer).append(".question_id, ");
-							  sb.append(tbAnswer).append(".option_id");
-		if(sbCorelationColumn.length()>0)
+		info.setCorrelationColumn(sbCorelationColumn.toString());
+		info.setCorrelationJoin(sbCorelationJoin.toString());
+		return info;
+	}
+	
+	private void addCorrelationGrouping(CorrelationInfo info, StringBuilder sb)
+	{
+		if(info.getCorrelationColumn().length()>0)
 		{
-			sb.append(", ").append(sbCorelationColumn);
+			sb.append(", ").append(info.getCorrelationColumn());
 		}
-		return sb.toString();
+	}
+	
+	private class CorrelationInfo
+	{
+		private String correlationColumn; public String getCorrelationColumn() {return correlationColumn;} public void setCorrelationColumn(String correlationColumn) {this.correlationColumn = correlationColumn;}
+		private String correlationJoin; public String getCorrelationJoin() {return correlationJoin;} public void setCorrelationJoin(String correlationJoin) {this.correlationJoin = correlationJoin;}
+		
+		public String tbAnswer;
+		public String tbData;
+		public String tbSurvey;
+		public String tbCorrelation;
+		
+		public CorrelationInfo()
+		{
+			tbAnswer = getTableName(fbCore.getClassAnswer().getName());
+			tbData = getTableName(fbCore.getClassData().getName());
+			tbSurvey = getTableName(fbCore.getClassSurvey().getName());
+			tbCorrelation = getTableName(fbCore.getClassCorrelation().getName());
+		}
 	}
 }

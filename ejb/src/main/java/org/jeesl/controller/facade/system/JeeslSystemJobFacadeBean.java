@@ -23,6 +23,7 @@ import org.jeesl.factory.ejb.system.job.EjbJobFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
+import org.jeesl.interfaces.model.system.job.JeeslJobPriority;
 import org.jeesl.interfaces.model.system.job.JeeslJobRobot;
 import org.jeesl.interfaces.model.system.job.JeeslJobStatus;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
@@ -41,7 +42,7 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 									TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
-									JOB extends JeeslJob<TEMPLATE,FEEDBACK,STATUS,USER>,
+									JOB extends JeeslJob<TEMPLATE,PRIORITY,FEEDBACK,STATUS,USER>,
 									PRIORITY extends UtilsStatus<PRIORITY,L,D>,
 									FEEDBACK extends JeeslJobFeedback<JOB,FT,USER>,
 									FT extends UtilsStatus<FT,L,D>,
@@ -108,6 +109,9 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		Path<Date> pRecordCreation = job.get(JeeslJob.Attributes.recordCreation.toString());
 		Path<STATUS> pStatus = job.get(JeeslJob.Attributes.status.toString());
 		
+		Path<PRIORITY> pPriority = job.get(JeeslJob.Attributes.priority.toString());
+		Path<Integer> pPosition = pPriority.get(JeeslJobPriority.Attributes.position.toString());
+		
 		if(from!=null){predicates.add(cB.greaterThanOrEqualTo(pRecordCreation, (new DateTime(from)).withTimeAtStartOfDay().toDate()));}
 		if(to!=null){predicates.add(cB.lessThan(pRecordCreation, (new DateTime(to)).withTimeAtStartOfDay().plusDays(1).toDate()));}
 		
@@ -116,7 +120,7 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		predicates.add(pStatus.in(status));
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
-		cQ.orderBy(cB.desc(pRecordCreation));
+		cQ.orderBy(cB.desc(pPosition),cB.asc(pRecordCreation));
 		cQ.select(job);
 
 		TypedQuery<JOB> tQ = em.createQuery(cQ);

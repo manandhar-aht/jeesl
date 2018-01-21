@@ -15,5 +15,6 @@ public interface JeeslJobPriority <S extends UtilsStatus<S,L,D>,
 									L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
 		extends Serializable,EjbPersistable,JeeslOptionRestDownload,EjbWithCodeGraphic<G>
 {
+	public static enum Attributes{position};
 	public static enum Code{low,medium,high}
 }

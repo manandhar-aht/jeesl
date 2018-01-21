@@ -19,10 +19,25 @@ public class JsonSurveyValue implements Serializable, EjbWithId
 	@Override public long getId() {return id;}
 	@Override public void setId(long id) {this.id = id;}
 	
+	@JsonProperty("questionId")
+	private long questionId;
+	public long getQuestionId() {return questionId;}
+	public void setQuestionId(long questionId) {this.questionId = questionId;}
+	
+	@JsonProperty("pathId")
+	private long pathId;
+	public long getPathId() {return pathId;}
+	public void setPathId(long pathId) {this.pathId = pathId;}
+
 	@JsonProperty("Count")
 	private Long count;
 	public Long getCount() {return count;}
 	public void setCount(Long count) {this.count = count;}
+	
+	@JsonProperty("Bool")
+	private Boolean bool;
+	public Boolean getBool() {return bool;}
+	public void setBool(Boolean bool) {this.bool = bool;}
 	
 	@JsonProperty("Ejb")
 	private EjbWithId ejb;

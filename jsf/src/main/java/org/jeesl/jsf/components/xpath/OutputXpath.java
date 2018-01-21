@@ -42,10 +42,8 @@ public class OutputXpath extends AbstractXpath
 	{	
 		String xpath = ComponentAttribute.get(Properties.xpath,"",context,this);
 		String localeCode = ComponentAttribute.get(Properties.localeCode, null, context, this);
-		logger.info("localeCode: ");
 		if(localeCode!=null)
 		{
-			
 			xpath=xpath.replace("$localeCode$", localeCode);
 		}
 		logger.info("localeCode: "+(localeCode!=null)+" "+xpath);

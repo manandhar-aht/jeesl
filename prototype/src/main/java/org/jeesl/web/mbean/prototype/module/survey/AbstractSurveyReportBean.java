@@ -18,7 +18,9 @@ import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
+import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveyValueFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveyValuesFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.mc.survey.McOptionDataSetFactory;
@@ -50,6 +52,7 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.model.json.JsonFlatFigure;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.jeesl.model.json.module.survey.JsonSurveyValue;
+import org.jeesl.model.json.module.survey.JsonSurveyValues;
 import org.jeesl.model.pojo.map.generic.Nested2Map;
 import org.metachart.xml.chart.DataSet;
 import org.slf4j.Logger;
@@ -62,7 +65,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
-import net.sf.exlp.util.io.JsonUtil;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
@@ -109,16 +111,16 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private final Map<QUESTION,List<AT>> mapTool; public Map<QUESTION,List<AT>> getMapTool() {return mapTool;}
 	private final Map<SECTION,List<QUESTION>> mapQuestion; public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
 	
-	private final Map<AT,JsonFlatFigures> mapToolTableOptionGlobal; public Map<AT,JsonFlatFigures> getMapToolTableOptionGlobal() {return mapToolTableOptionGlobal;}
 
-	
-	private final Map<AT,List<JsonSurveyValue>> mapToolOption; public Map<AT,List<JsonSurveyValue>> getMapToolOption() {return mapToolOption;}
 	private final Map<AT,DATTRIBUTE> mapToolPathAttribute; public Map<AT,DATTRIBUTE> getMapToolPathAttribute() {return mapToolPathAttribute;}
 	private final Map<AT,List<JsonSurveyValue>> mapToolPathEntities; public Map<AT,List<JsonSurveyValue>> getMapToolPathEntities() {return mapToolPathEntities;}
 	private final Map<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>> mapToolPathValue; public Map<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>> getMapToolPathValue() {return mapToolPathValue;}
 
+	private final Map<AT,List<JsonSurveyValue>> mapToolOption; public Map<AT,List<JsonSurveyValue>> getMapToolOption() {return mapToolOption;}
+	private final Map<AT,JsonFlatFigures> mapToolTableOptionGlobal; public Map<AT,JsonFlatFigures> getMapToolTableOptionGlobal() {return mapToolTableOptionGlobal;}
+
+	private final Map<AT,List<JsonSurveyValue>> mapToolBoolean; public Map<AT,List<JsonSurveyValue>> getMapToolBoolean() {return mapToolBoolean;}
 	
-	private final Map<AT,JsonFlatFigures> mapToolTableBoolean; public Map<AT,JsonFlatFigures> getMapToolTableBoolean() {return mapToolTableBoolean;}
 	private final Map<AT,JsonFlatFigures> mapToolTableText; public Map<AT,JsonFlatFigures> getMapToolTableText() {return mapToolTableText;}
 	private final Map<AT,JsonFlatFigures> mapToolTableRemark; public Map<AT,JsonFlatFigures> getMapToolTableRemark() {return mapToolTableRemark;}
 
@@ -138,14 +140,15 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapTool = new HashMap<QUESTION,List<AT>>();
 		mapDsOption = new HashMap<QUESTION,DataSet>();
 		
-		mapToolOption = new HashMap<AT,List<JsonSurveyValue>>();
+		
 		mapToolPathAttribute = new HashMap<AT,DATTRIBUTE>();
 		mapToolPathEntities = new HashMap<AT,List<JsonSurveyValue>>();
 		mapToolPathValue = new HashMap<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>>();
 		
+		mapToolOption = new HashMap<AT,List<JsonSurveyValue>>();
 		mapToolTableOptionGlobal = new HashMap<AT,JsonFlatFigures>();
 		
-		mapToolTableBoolean = new HashMap<AT,JsonFlatFigures>();
+		mapToolBoolean = new HashMap<AT,List<JsonSurveyValue>>(); 
 		mapToolTableText = new HashMap<AT,JsonFlatFigures>();
 		mapToolTableRemark = new HashMap<AT,JsonFlatFigures>();
 		
@@ -215,8 +218,9 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapToolPathEntities.clear();
 		mapToolPathValue.clear();
 		
+		mapToolBoolean.clear();
+		
 		mapToolTableOptionGlobal.clear();
-		mapToolTableBoolean.clear();
 		mapToolTableText.clear();
 		
 		for(SECTION section : bSurvey.getMapSection().get(sbhSurvey.getSelection().getTemplate()))
@@ -233,18 +237,21 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 					{
 						if(tool.isVisible())
 						{
+							if(debugOnInfo) {logger.info("Crunching data for tool:"+tool.toString()+" "+tool.getElement().getCode());}
 							Set<Long> optionIds = new HashSet<Long>();
 							mapToolPathEntities.put(tool,new ArrayList<JsonSurveyValue>());
 							tool = fAnalysis.load(tool);
+							
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.selectOne.toString()))
 							{
+								if(debugOnInfo) {logger.info("Handling :"+JeeslSurveyAnalysisTool.Elements.selectOne);}
 								JsonFlatFigures ff = fAnalysis.surveyStatisticOption(q, sbhSurvey.getSelection(), tool);
 								for(JsonFlatFigure f : ff.getFigures())
 								{
 									optionIds.add(f.getL2());
 								}
 								mapToolTableOptionGlobal.put(tool,ff);
-								if(tool.getQuery()==null)
+								if(!efTool.withDomainQuery(tool))
 								{
 									DataSet ds2 = mfOption.build(ff,bSurvey.getMapOption().get(q));
 									mapDsOption.put(q,ds2);
@@ -265,25 +272,44 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 										nm2.put(vOption, vPath, vCount);
 										pathIds.add(vPath.getId());
 									}
-									
-									PATH path = efDomainQuery.toEffectiveAttribute(tool.getQuery());
-									logger.info("PATH "+path.toString());
-									mapToolPathAttribute.put(tool, efDomainQuery.toEffectiveAttribute(tool.getQuery()).getAttribute());
-									
-									try {mapToolPathEntities.get(tool).addAll(JsonSurveyValueFactory.build(fAnalysis,pathIds,path));}
-									catch (ClassNotFoundException e) {e.printStackTrace();}
 									mapToolPathValue.put(tool,nm2);
+									buildPathEntities(tool,pathIds);
 								}
 								
 								mapToolOption.put(tool,JsonSurveyValueFactory.build(optionIds));
-								
 							}
-							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.bool.toString()))
+							
+							else if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.bool.toString()))
 							{
-								JsonFlatFigures f = fAnalysis.surveyStatisticBoolean(q, sbhSurvey.getSelection());
-								mapToolTableBoolean.put(tool,f);
+								if(debugOnInfo) {logger.info("Handling :"+JeeslSurveyAnalysisTool.Elements.bool);}
+								JsonSurveyValues ff = fAnalysis.surveyStatisticBoolean(q, sbhSurvey.getSelection(),tool);
+									
+								if(!efTool.withDomainQuery(tool))
+								{
+									EjbIdFactory.setNegativeIds(ff.getValues());
+									mapToolOption.put(tool,ff.getValues());
+								}	
+								else
+								{
+									mapToolOption.put(tool,JsonSurveyValuesFactory.buildBooleanList());
+									Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue> nm2 = new Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>();
+									long idValue = 1;
+									Set<Long> pathIds = new HashSet<Long>();
+									for(JsonSurveyValue v : ff.getValues())
+									{
+										idValue++;
+										JsonSurveyValue vOption = JsonSurveyValueFactory.build(v.getBool());
+										JsonSurveyValue vPath = JsonSurveyValueFactory.build(v.getPathId());
+										JsonSurveyValue vCount = JsonSurveyValueFactory.build(idValue,v.getCount());
+										nm2.put(vOption, vPath, vCount);
+										pathIds.add(vPath.getId());
+									}
+									mapToolPathValue.put(tool,nm2);
+									buildPathEntities(tool,pathIds);
+								}
 							}
-							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.text.toString()))
+							
+							else if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.text.toString()))
 							{
 								JsonFlatFigures f = JsonFlatFiguresFactory.build();
 								for(ANSWER a : fCore.fAnswers(sbhSurvey.getSelection(),q))
@@ -293,9 +319,9 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 										f.getFigures().add(JsonFlatFigureFactory.build(a.getValueText()));
 									}
 								}
-								mapToolTableBoolean.put(tool,f);
 							}
-							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.remark.toString()))
+							
+							else if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.remark.toString()))
 							{
 								JsonFlatFigures f = JsonFlatFiguresFactory.build();
 								for(ANSWER a : fCore.fAnswers(sbhSurvey.getSelection(),q))
@@ -320,5 +346,16 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 			}
 			if(!mapQuestion.get(section).isEmpty()) {sections.add(section);}
 		}
+	}
+	
+	private void buildPathEntities(AT tool, Set<Long> pathIds)
+	{
+		PATH path = efDomainQuery.toEffectiveAttribute(tool.getQuery());
+		
+		
+		mapToolPathAttribute.put(tool, efDomainQuery.toEffectiveAttribute(tool.getQuery()).getAttribute());
+		
+		try {mapToolPathEntities.get(tool).addAll(JsonSurveyValueFactory.build(fAnalysis,pathIds,path));}
+		catch (ClassNotFoundException e) {e.printStackTrace();}
 	}
 }

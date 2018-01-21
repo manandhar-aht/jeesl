@@ -25,15 +25,13 @@
 		<aup:grid id="grid">
 			<aht:row id="row1" rendered="#{not empty cc.attrs.bean.sbhSurvey.selected}">
 				<aht:slot id="sSurvey" width="4" renderChildren="#{not empty cc.attrs.bean.sbhSurvey.selected}">
-					<p:panel header="#{msg.jeeslSurvey}" styleClass="auPanelWithGrid">
-							
+					<p:panel header="#{msg.jeeslSurvey}" styleClass="jeeslPanel">
 						<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60" >
 							<p:outputLabel value="#{msg.jeeslSurveyCategory}"/>
 							<h:outputText value="#{cc.attrs.bean.survey.template.category.name[userBean.localeCode].lang}"/>
 							
 							<p:outputLabel value="#{cc.attrs.bean.survey.name[userBean.localeCode].lang}"/>
 							<h:outputText value="#{cc.attrs.bean.survey.description[userBean.localeCode].lang}"/>
-
 						</p:panelGrid>
 					</p:panel>
 				</aht:slot>
@@ -41,7 +39,7 @@
 			<aht:row id="row2" rendered="#{not empty cc.attrs.bean.sbhAnalysis.selected}">
 				<aht:slot>
 					<ui:repeat id="repeatSections" value="#{cc.attrs.bean.sections}" var="section">
-						<p:panel id="pQuestions" styleClass="auPanelWithGrid"
+						<p:panel id="pQuestions" styleClass="jeeslPanel"
 								header="#{section.code}: #{section.name[localeCode].lang}">
 							
 							<ui:repeat id="uirQuestions" var="q" value="#{cc.attrs.bean.mapQuestion[section]}">

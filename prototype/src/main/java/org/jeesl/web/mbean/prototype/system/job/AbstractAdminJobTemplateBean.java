@@ -28,7 +28,7 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 									TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
-									JOB extends JeeslJob<TEMPLATE,FEEDBACK,STATUS,USER>,
+									JOB extends JeeslJob<TEMPLATE,PRIORITY,FEEDBACK,STATUS,USER>,
 									PRIORITY extends UtilsStatus<PRIORITY,L,D>,
 									FEEDBACK extends JeeslJobFeedback<JOB,FT,USER>,
 									FT extends UtilsStatus<FT,L,D>,

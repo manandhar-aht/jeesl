@@ -12,13 +12,14 @@ import net.sf.ahtutils.interfaces.model.with.code.EjbWithNonUniqueCode;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslJob<TEMPLATE extends JeeslJobTemplate<?,?,?,?,?>,
+							PRIORITY extends UtilsStatus<PRIORITY,?,?>,
 							FEEDBACK extends JeeslJobFeedback<?,?,USER>,
 							STATUS extends UtilsStatus<STATUS,?,?>,
 							USER extends EjbWithEmail
 							>
 		extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,EjbWithNonUniqueCode
 {	
-	public static enum Attributes{template,status,recordCreation,recordStart,code};
+	public static enum Attributes{template,status,priority,recordCreation,recordStart,code};
 	
 	public static enum Type{reportXml,reportXlsx}
 	
@@ -27,6 +28,9 @@ public interface JeeslJob<TEMPLATE extends JeeslJobTemplate<?,?,?,?,?>,
 	
 	STATUS getStatus();
 	void setStatus(STATUS status);
+	
+	PRIORITY getPriority();
+	void setPriority(PRIORITY priority);
 	
 	Date getRecordCreation();
 	void setRecordCreation(Date recordCreation);

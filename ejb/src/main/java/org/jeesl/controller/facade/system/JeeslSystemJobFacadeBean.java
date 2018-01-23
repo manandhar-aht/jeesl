@@ -197,10 +197,10 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 	}
 
 	@Override
-	public JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	public JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name, String jsonFilter) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
 		STATUS status = this.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.queue);
-		JOB job = efJob.build(user,template,status,code,name);
+		JOB job = efJob.build(user,template,status,code,name,jsonFilter);
 		return this.save(job);
 	}
 }

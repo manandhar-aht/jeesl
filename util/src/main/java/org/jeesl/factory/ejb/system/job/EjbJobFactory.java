@@ -38,18 +38,20 @@ public class EjbJobFactory <L extends UtilsLang,D extends UtilsDescription,
         this.cJob = cJob;
 	}
  
-	public JOB build(USER user, TEMPLATE template, STATUS status, String code, String name)
+	public JOB build(USER user, TEMPLATE template, STATUS status, String code, String name, String jsonFilter)
 	{
 		JOB ejb = null;
 		try
 		{
 			ejb = cJob.newInstance();
+			ejb.setUser(user);
 			ejb.setTemplate(template);
 			ejb.setStatus(status);
 			ejb.setPriority(template.getPriority());
 			ejb.setRecordCreation(new Date());
 			ejb.setCode(code);
 			ejb.setName(name);
+			ejb.setJsonFilter(jsonFilter);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

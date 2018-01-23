@@ -15,8 +15,7 @@ public interface JeeslJob<TEMPLATE extends JeeslJobTemplate<?,?,?,?,?>,
 							PRIORITY extends UtilsStatus<PRIORITY,?,?>,
 							FEEDBACK extends JeeslJobFeedback<?,?,USER>,
 							STATUS extends UtilsStatus<STATUS,?,?>,
-							USER extends EjbWithEmail
-							>
+							USER extends EjbWithEmail>
 		extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,EjbWithNonUniqueCode
 {	
 	public static enum Attributes{template,status,priority,recordCreation,recordStart,code};
@@ -52,4 +51,7 @@ public interface JeeslJob<TEMPLATE extends JeeslJobTemplate<?,?,?,?,?>,
 	
 	List<FEEDBACK> getFeedbacks();
 	void setFeedbacks(List<FEEDBACK> feedbacks);
+	
+	String getJsonFilter();
+	void setJsonFilter(String jsonFilter);
 }

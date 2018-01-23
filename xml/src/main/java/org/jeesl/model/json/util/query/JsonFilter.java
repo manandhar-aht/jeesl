@@ -13,10 +13,15 @@ public class JsonFilter implements Serializable
 	public static final long serialVersionUID=1;
 	public enum Type{idList}
 	
-	@JsonProperty("filters")
-	private List<JsonFilters> filters;
-	public List<JsonFilters> getFilters() {if(filters==null) {filters = new ArrayList<JsonFilters>();}return filters;}
-	public void setFilters(List<JsonFilters> filters) {this.filters = filters;}
+	@JsonProperty("localeCode")
+	private String localeCode;
+	public String getLocaleCode() {return localeCode;}
+	public void setLocaleCode(String localeCode) {this.localeCode = localeCode;}
+
+	@JsonProperty("items")
+	private List<JsonFilterItem> items;
+	public List<JsonFilterItem> getItems() {if(items==null) {items = new ArrayList<JsonFilterItem>();}return items;}
+	public void setItems(List<JsonFilterItem> items) {this.items = items;}
 
 
 	public String toString()

@@ -6,16 +6,16 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName(value="filters")
-public class JsonFilters implements Serializable
+@JsonRootName(value="item")
+public class JsonFilterItem implements Serializable
 {
 	public static final long serialVersionUID=1;
 
-	@JsonProperty("fqcn")
-	private String fqcn;
-	public String getFqcn() {return fqcn;}
-	public void setFqcn(String fqcn) {this.fqcn = fqcn;}
-	
+	@JsonProperty("className")
+	private String className;
+	public String getClassName() {return className;}
+	public void setClassName(String className) {this.className = className;}
+
 	@JsonProperty("type")
 	private String type;
 	public String getType() {return type;}

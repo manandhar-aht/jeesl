@@ -217,7 +217,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 		JsonSurveyValues values = JsonSurveyValuesFactory.build();
 		
 		String sql = sqlFactory.bool(question,survey,tool);
-		NativeQueryDebugger.debug(null, sql, true, false);
+		NativeQueryDebugger.debug(null, sql, false, false);
 		
 		for(Object o : em.createNativeQuery(sql).getResultList())
         {

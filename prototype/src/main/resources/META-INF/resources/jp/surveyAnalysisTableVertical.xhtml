@@ -57,11 +57,12 @@
 				<h:outputText value="#{bool.bool}"/>
 			</p:column>
 			<p:columns var="path" value="#{cc.attrs.bean.mapToolPathEntities[tool]}">
-            	<f:facet name="header">
-            		<jeesl:outputXpath value="#{path.ejb}" xpath="#{cc.attrs.bean.mapToolPathAttribute[tool].xpath}" localeCode="#{localeCode}"/>	
-            	</f:facet>
-            	<h:outputText value="#{cc.attrs.bean.mapToolPathValue[tool].m[bool][path].count}"/>
-          </p:columns>
+	            	<f:facet name="header">
+	            		<h:outputText valeu="#{cc.attrs.bean.mapToolPathAttribute[tool].xpath}"/>
+	            		<jeesl:outputXpath value="#{path.ejb}" xpath="#{cc.attrs.bean.mapToolAttributeXpath[tool]}" localeCode="#{localeCode}"/>	
+	            	</f:facet>
+	            	<h:outputText value="#{cc.attrs.bean.mapToolPathValue[tool].m[bool][path].count}"/>
+	          </p:columns>
 		</p:dataTable>
 		
 		

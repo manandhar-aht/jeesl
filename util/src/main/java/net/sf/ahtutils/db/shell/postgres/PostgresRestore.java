@@ -88,7 +88,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		{
 			if(e.getName().equals(getElementAfterLastDot(UtilsDbShell.restroreSequence))){restoreSequence(e.getText());}
 		}
-		for(Element e : elementList )
+		for(Element e : elementList)
 		{
 			if(e.getName().equals(getElementAfterLastDot("db.tables.restore.file")))
 			{

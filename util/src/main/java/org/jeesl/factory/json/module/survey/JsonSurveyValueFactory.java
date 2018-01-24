@@ -58,13 +58,13 @@ public class JsonSurveyValueFactory
 					DATTRIBUTE extends JeeslRevisionAttribute<?,?,DENTITY,?,?>>
 		List<JsonSurveyValue> build(UtilsFacade fUtils, Set<Long> ids, PATH path) throws ClassNotFoundException
 	{
-		logger.info(StringUtil.stars());
-		logger.info(path.toString());
+		if(logger.isTraceEnabled()){logger.info(StringUtil.stars());}
+		if(logger.isTraceEnabled()){logger.info(path.toString());}
 		
 		List<JsonSurveyValue> list = new ArrayList<JsonSurveyValue>();
 		Class<EjbWithId> c = null;
 		
-		if(path.getAttribute().getEntity()!=null)
+		if(path.getAttribute().getRelation()!=null)
 		{
 			c = (Class<EjbWithId>)Class.forName(path.getAttribute().getEntity().getCode()).asSubclass(EjbWithId.class);
 		}
@@ -72,11 +72,13 @@ public class JsonSurveyValueFactory
 		{
 			c = (Class<EjbWithId>)Class.forName(path.getEntity().getCode()).asSubclass(EjbWithId.class);
 		}
-		logger.info("Using Class: "+c.getName());
 		
-		for(EjbWithId o : fUtils.find(c, ids))
+		List<EjbWithId> ejbs = fUtils.find(c,ids);
+		if(logger.isTraceEnabled()){logger.info("Using Class: "+c.getName()+" with "+ejbs.size()+"/"+ids.size()+" Elements");}
+		
+		for(EjbWithId o : ejbs)
 		{
-			logger.info("\t"+o.toString());
+			if(logger.isTraceEnabled()){logger.info("\t"+o.toString());}
 			JsonSurveyValue v = build(o.getId());
 			v.setEjb(o);
 			list.add(v);

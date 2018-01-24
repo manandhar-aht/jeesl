@@ -65,6 +65,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
+import net.sf.exlp.util.io.JsonUtil;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
@@ -111,7 +112,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private final Map<QUESTION,List<AT>> mapTool; public Map<QUESTION,List<AT>> getMapTool() {return mapTool;}
 	private final Map<SECTION,List<QUESTION>> mapQuestion; public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
 	
-
+	private final Map<AT,String> mapToolAttributeXpath; public Map<AT, String> getMapToolAttributeXpath() {return mapToolAttributeXpath;}
 	private final Map<AT,DATTRIBUTE> mapToolPathAttribute; public Map<AT,DATTRIBUTE> getMapToolPathAttribute() {return mapToolPathAttribute;}
 	private final Map<AT,List<JsonSurveyValue>> mapToolPathEntities; public Map<AT,List<JsonSurveyValue>> getMapToolPathEntities() {return mapToolPathEntities;}
 	private final Map<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>> mapToolPathValue; public Map<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>> getMapToolPathValue() {return mapToolPathValue;}
@@ -140,7 +141,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapTool = new HashMap<QUESTION,List<AT>>();
 		mapDsOption = new HashMap<QUESTION,DataSet>();
 		
-		
+		mapToolAttributeXpath = new HashMap<AT,String>();
 		mapToolPathAttribute = new HashMap<AT,DATTRIBUTE>();
 		mapToolPathEntities = new HashMap<AT,List<JsonSurveyValue>>();
 		mapToolPathValue = new HashMap<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>>();
@@ -171,7 +172,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	
 	@Override public void selectSbSingle(EjbWithId ejb)
 	{
-		logger.info("sb" + (ejb!=null));
+		if(debugOnInfo) {logger.info("sb" + (ejb!=null));}
 		if(ejb!=null)
 		{
 			if(fbTemplate.getClassTemplateCategory().isAssignableFrom(ejb.getClass()))
@@ -202,8 +203,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	
 	private void reloadAnalysis()
 	{
-		logger.info("Reload Analysis");
-		
+		if(debugOnInfo) {logger.info("Reload Analysis");}
 		reloadSurvey();
 	}
 	
@@ -214,6 +214,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		mapQuestion.clear();
 		mapTool.clear();
 		
+		mapToolAttributeXpath.clear();
 		mapToolOption.clear();
 		mapToolPathEntities.clear();
 		mapToolPathValue.clear();
@@ -244,7 +245,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 							
 							if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.selectOne.toString()))
 							{
-								if(debugOnInfo) {logger.info("Handling :"+JeeslSurveyAnalysisTool.Elements.selectOne);}
+								if(debugOnInfo) {logger.info("Handling :"+JeeslSurveyAnalysisTool.Elements.selectOne+" withDomainQuery:"+efTool.withDomainQuery(tool));}
 								JsonFlatFigures ff = fAnalysis.surveyStatisticOption(q, sbhSurvey.getSelection(), tool);
 								for(JsonFlatFigure f : ff.getFigures())
 								{
@@ -281,15 +282,10 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 							
 							else if(tool.getElement().getCode().equals(JeeslSurveyAnalysisTool.Elements.bool.toString()))
 							{
-								if(debugOnInfo) {logger.info("Handling :"+JeeslSurveyAnalysisTool.Elements.bool);}
+								if(debugOnInfo) {logger.info("Handling :"+JeeslSurveyAnalysisTool.Elements.bool+" withDomainQuery:"+efTool.withDomainQuery(tool));}
 								JsonSurveyValues ff = fAnalysis.surveyStatisticBoolean(q, sbhSurvey.getSelection(),tool);
-									
-								if(!efTool.withDomainQuery(tool))
-								{
-									EjbIdFactory.setNegativeIds(ff.getValues());
-									mapToolOption.put(tool,ff.getValues());
-								}	
-								else
+								
+								if(efTool.withDomainQuery(tool))
 								{
 									mapToolOption.put(tool,JsonSurveyValuesFactory.buildBooleanList());
 									Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue> nm2 = new Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>();
@@ -306,6 +302,11 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 									}
 									mapToolPathValue.put(tool,nm2);
 									buildPathEntities(tool,pathIds);
+								}
+								else
+								{
+									EjbIdFactory.setNegativeIds(ff.getValues());
+									mapToolOption.put(tool,ff.getValues());
 								}
 							}
 							
@@ -339,8 +340,6 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 					}
 					
 					mapTool.put(q,tools);
-					
-					
 				}
 				catch (UtilsNotFoundException e) {}
 			}
@@ -352,7 +351,18 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	{
 		PATH path = efDomainQuery.toEffectiveAttribute(tool.getQuery());
 		
+		String xpath;
+		if(path.getAttribute().getXpath().startsWith(path.getAttribute().getCode()))
+		{
+			int indexStart = path.getAttribute().getCode().length()+1;
+			int indexEnd = path.getAttribute().getXpath().length();
+			logger.info("subString: "+indexStart+" - "+indexEnd);
+			xpath = path.getAttribute().getXpath().substring(indexStart, indexEnd);
+		}
+		else {xpath = path.getAttribute().getXpath();}
+		if(debugOnInfo) {logger.info("XPath for:"+tool.toString()+": "+xpath);}
 		
+		mapToolAttributeXpath.put(tool,xpath);
 		mapToolPathAttribute.put(tool, efDomainQuery.toEffectiveAttribute(tool.getQuery()).getAttribute());
 		
 		try {mapToolPathEntities.get(tool).addAll(JsonSurveyValueFactory.build(fAnalysis,pathIds,path));}

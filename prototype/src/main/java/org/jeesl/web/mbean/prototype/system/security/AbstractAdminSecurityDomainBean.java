@@ -40,7 +40,7 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 												AT extends JeeslSecurityTemplate<L,D,C>,
 												M extends JeeslSecurityMenu<V,M>,
 												USER extends JeeslUser<R>,
-												STAFF extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>,
+												STAFF extends JeeslStaff<R,USER,D1,D2>,
 												D1 extends EjbWithId, D2 extends EjbWithId>
 		implements Serializable,OpUserBean<L,D,C,R,V,U,A,AT,USER>
 {

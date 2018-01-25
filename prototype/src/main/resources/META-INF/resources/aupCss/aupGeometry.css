@@ -279,4 +279,4 @@ a:hover { color: #333; text-decoration: none; }
 .jeeslInvisible {visibility:hidden;}
 .jeeslVisible {visibility: visible !important;}
 
-.jeeslPfFileUpload > div{display:flex !important; padding: 4px 10px;}
+.jeeslFileUpload > div{display:flex !important; padding: 4px 10px;}

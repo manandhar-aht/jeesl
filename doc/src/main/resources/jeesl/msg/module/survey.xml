@@ -552,5 +552,12 @@
 	    		<s:lang key="en" translation="Domain Path"/>
 	    		<s:lang key="fr" translation="Domain Path"/>
 	    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSurveyAnswerBoolean">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Boolscher Wert"/>
+	    		<s:lang key="en" translation="Boolean Value"/>
+	    		<s:lang key="fr" translation="Boolean Value"/>
+	    	</s:langs>
     </s:translation> 
 </s:translations>

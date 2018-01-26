@@ -45,7 +45,7 @@
 			</aht:slot>
 			<aht:slot width="5" >
 				<h:form id="fDomain" rendered="#{not empty cc.attrs.bean.domain}">
-					<p:panel header="#{msg.jeeslSurveyDomain}" styleClass="auPanelWithGrid">
+					<p:panel header="#{msg.jeeslSurveyDomain}" styleClass="jeeslPanel">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveDomain()}" update=":#{cc.id}:grid"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteDomain()}" update=":fStatusBar :#{cc.id}:grid"/>
@@ -146,7 +146,6 @@
 								<f:selectItems value="#{cc.attrs.bean.attributes}" var="a" itemLabel="#{a.name[localeCode].lang}" itemValue="#{a}"/>
 							</p:selectOneMenu>
 						</p:panelGrid>
-						
 					</p:panel>
 				</h:form>
 			</aht:slot>

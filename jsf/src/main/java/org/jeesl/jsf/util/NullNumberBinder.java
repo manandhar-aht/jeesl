@@ -9,6 +9,11 @@ public class NullNumberBinder
 	
 	public NullNumberBinder()
 	{
+		reset();
+	}
+	
+	public void reset()
+	{
 		a = "";
 		b = "";
 		c = "";
@@ -18,7 +23,6 @@ public class NullNumberBinder
 		g = "";
 		h = "";
 		i = "";
-		
 	}
 	
 	private String a; 

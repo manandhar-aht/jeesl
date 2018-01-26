@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.system.job;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.factory.builder.system.JobFactoryBuilder;
 import org.jeesl.factory.ejb.system.job.EjbJobTemplateFactory;
@@ -24,18 +25,19 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDescription,
-									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+									TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
-									JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
-									FEEDBACK extends JeeslJobFeedback<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+									JOB extends JeeslJob<TEMPLATE,PRIORITY,FEEDBACK,STATUS,USER>,
+									PRIORITY extends UtilsStatus<PRIORITY,L,D>,
+									FEEDBACK extends JeeslJobFeedback<JOB,FT,USER>,
 									FT extends UtilsStatus<FT,L,D>,
 									STATUS extends UtilsStatus<STATUS,L,D>,
-									ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
-									CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+									ROBOT extends JeeslJobRobot<L,D>,
+									CACHE extends JeeslJobCache<TEMPLATE>,
 									USER extends EjbWithEmail
 									>
-					extends AbstractAdminJobBean<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>
+					extends AbstractAdminJobBean<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -45,13 +47,13 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 	
 	private TEMPLATE template; public TEMPLATE getTemplate() {return template;} public void setTemplate(TEMPLATE template) {this.template = template;}
 
-	private EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efTemplate;
+	private EjbJobTemplateFactory<L,D,TEMPLATE,CATEGORY,TYPE,PRIORITY> efTemplate;
 	
-	public AbstractAdminJobTemplateBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob) {super(fbJob);}
+	public AbstractAdminJobTemplateBean(JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob) {super(fbJob);}
 	
-	protected void initSuper(String[] langs, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
+	protected void postConstructJobTemplate(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
 	{
-		super.initSuper(langs,bMessage,fJob);
+		super.postConstructAbstractJob(bTranslation,bMessage,fJob);
 		
 		efTemplate = fbJob.template();
 		
@@ -96,6 +98,8 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 	public void selectTemplate()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
+		template = efLang.persistMissingLangsForCode(fJob, bTranslation.getLangKeys(), template);
+		template = efDescription.persistMissingLangsForCode(fJob, bTranslation.getLangKeys(), template);
 	}
 	
 	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException
@@ -103,6 +107,7 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(template));}
 		template.setCategory(fJob.find(fbJob.getClassCategory(),template.getCategory()));
 		template.setType(fJob.find(fbJob.getClassType(),template.getType()));
+		template.setPriority(fJob.find(fbJob.getClassPriority(),template.getPriority()));
 		template = fJob.save(template);
 		reloadTemplates();
 	}

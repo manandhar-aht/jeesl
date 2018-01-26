@@ -6,7 +6,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAl
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbSurveyValidationAlgorithmFactory<VALGORITHM extends JeeslSurveyValidationAlgorithm>
+public class EjbSurveyValidationAlgorithmFactory<VALGORITHM extends JeeslSurveyValidationAlgorithm<?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyValidationAlgorithmFactory.class);
 	

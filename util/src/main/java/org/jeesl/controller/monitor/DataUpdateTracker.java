@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.jeesl.factory.xml.system.io.sync.XmlExceptionFactory;
 import org.jeesl.factory.xml.system.io.sync.XmlExceptionsFactory;
-import org.jeesl.factory.xml.system.io.sync.XmlMapperFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,21 +2,22 @@ package org.jeesl.factory.xml.domain.finance;
 
 import java.util.Date;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.controller.util.poi.PoiRowColNumerator;
 import net.sf.ahtutils.controller.util.poi.PoiSsCellType;
 import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.xml.finance.Time;
 import net.sf.exlp.util.DateUtil;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class XmlTimeFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlTimeFactory.class);
 	
+	public static <E extends Enum<E>> Time build(E code, Date record){return create(code.toString(),record);}
 	public static Time create(String code, Date record)
 	{
 		Time xml = new Time();

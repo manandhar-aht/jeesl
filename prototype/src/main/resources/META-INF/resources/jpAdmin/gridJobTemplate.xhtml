@@ -34,6 +34,7 @@
 							<p:column headerText="#{msg.jeeslJobType}" styleClass="jeeslPfTcCenter"><jtp:statusSymbolizer value="#{t.type}" height="12"/></p:column>
 							<p:column headerText="#{msg.jeeslJobCategory}"><h:outputText value="#{t.category.name[userBean.localeCode].lang}"/></p:column>
 							<p:column headerText="#{msg.Name}"><h:outputText value="#{t.name[userBean.localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslJobPriority}" styleClass="jeeslPfTcCenter"><jtp:statusSymbolizer value="#{t.priority}" height="12"/></p:column>
 						</p:dataTable>
 					</h:form>
 				</aht:slot>
@@ -55,6 +56,11 @@
 								<p:outputLabel value="#{msg.jeeslJobType}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.template.type}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.sbhType.list}" var="t" itemLabel="#{t.name[userBean.localeCode].lang}" itemValue="#{t}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslJobPriority}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.template.priority}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.sbhPriority.list}" var="p" itemLabel="#{p.name[userBean.localeCode].lang}" itemValue="#{p}"/>
 								</p:selectOneMenu>
 								
 								<p:outputLabel value="#{msg.jeeslJobTimeout}"/>

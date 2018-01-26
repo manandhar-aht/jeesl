@@ -23,7 +23,9 @@ import org.jeesl.factory.ejb.system.job.EjbJobFactory;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
+import org.jeesl.interfaces.model.system.job.JeeslJobPriority;
 import org.jeesl.interfaces.model.system.job.JeeslJobRobot;
+import org.jeesl.interfaces.model.system.job.JeeslJobStatus;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.joda.time.DateTime;
 
@@ -37,26 +39,27 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
 public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescription,
-									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+									TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
-									JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
-									FEEDBACK extends JeeslJobFeedback<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+									JOB extends JeeslJob<TEMPLATE,PRIORITY,FEEDBACK,STATUS,USER>,
+									PRIORITY extends UtilsStatus<PRIORITY,L,D>,
+									FEEDBACK extends JeeslJobFeedback<JOB,FT,USER>,
 									FT extends UtilsStatus<FT,L,D>,
 									STATUS extends UtilsStatus<STATUS,L,D>,
-									ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
-									CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+									ROBOT extends JeeslJobRobot<L,D>,
+									CACHE extends JeeslJobCache<TEMPLATE>,
 									USER extends EjbWithEmail
 									>
 					extends UtilsFacadeBean
-					implements JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>
+					implements JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>
 {
-	private final JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob;
+	private final JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob;
 	
-	private EjbJobCacheFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efCache;
-	private EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efJob;
+	private EjbJobCacheFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efCache;
+	private EjbJobFactory<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> efJob;
 	
-	public JeeslSystemJobFacadeBean(EntityManager em, final JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob)
+	public JeeslSystemJobFacadeBean(EntityManager em, final JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob)
 	{
 		super(em);
 		this.fbJob=fbJob;
@@ -106,6 +109,9 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		Path<Date> pRecordCreation = job.get(JeeslJob.Attributes.recordCreation.toString());
 		Path<STATUS> pStatus = job.get(JeeslJob.Attributes.status.toString());
 		
+		Path<PRIORITY> pPriority = job.get(JeeslJob.Attributes.priority.toString());
+		Path<Integer> pPosition = pPriority.get(JeeslJobPriority.Attributes.position.toString());
+		
 		if(from!=null){predicates.add(cB.greaterThanOrEqualTo(pRecordCreation, (new DateTime(from)).withTimeAtStartOfDay().toDate()));}
 		if(to!=null){predicates.add(cB.lessThan(pRecordCreation, (new DateTime(to)).withTimeAtStartOfDay().plusDays(1).toDate()));}
 		
@@ -114,7 +120,7 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		predicates.add(pStatus.in(status));
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
-		cQ.orderBy(cB.desc(pRecordCreation));
+		cQ.orderBy(cB.desc(pPosition),cB.asc(pRecordCreation));
 		cQ.select(job);
 
 		TypedQuery<JOB> tQ = em.createQuery(cQ);
@@ -126,8 +132,8 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 		List<STATUS> statuses = new ArrayList<STATUS>();
 		try
 		{
-			statuses.add(this.fByCode(fbJob.getClassStatus(),JeeslJob.Status.queue));
-			statuses.add(this.fByCode(fbJob.getClassStatus(),JeeslJob.Status.working));
+			statuses.add(this.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.queue));
+			statuses.add(this.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.working));
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		
@@ -191,10 +197,10 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 	}
 
 	@Override
-	public JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	public JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name, String jsonFilter) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
-		STATUS status = this.fByCode(fbJob.getClassStatus(),JeeslJob.Status.queue);
-		JOB job = efJob.build(user,template,status,code,name);
+		STATUS status = this.fByCode(fbJob.getClassStatus(),JeeslJobStatus.Code.queue);
+		JOB job = efJob.build(user,template,status,code,name,jsonFilter);
 		return this.save(job);
 	}
 }

@@ -16,9 +16,15 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
+import org.jeesl.controller.db.NativeQueryDebugger;
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
+import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisToolFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveyValueFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveyValuesFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFigureFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
+import org.jeesl.factory.sql.module.survey.SqlSurveyAnalysisFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -42,6 +48,8 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.model.json.JsonFlatFigure;
 import org.jeesl.model.json.JsonFlatFigures;
+import org.jeesl.model.json.module.survey.JsonSurveyValue;
+import org.jeesl.model.json.module.survey.JsonSurveyValues;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,11 +90,20 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyAnalysisFacadeBean.class);
 	
 	private final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT> fbAnalyis;
+	private final EjbSurveyAnalysisToolFactory <L,D,AQ,TOOL,TOOLT> efTool;
 	
-	public JeeslSurveyAnalysisFacadeBean(EntityManager em, final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT> fbAnalyis)
+	
+	private SqlSurveyAnalysisFactory<SURVEY,QUESTION,ANSWER,DATA,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL> sqlFactory;
+	
+	public JeeslSurveyAnalysisFacadeBean(EntityManager em,
+			final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,?,VERSION,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,TOOLT> fbCore,
+			final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT> fbAnalyis)
 	{
 		super(em);
 		this.fbAnalyis=fbAnalyis;
+		
+		sqlFactory = new SqlSurveyAnalysisFactory<SURVEY,QUESTION,ANSWER,DATA,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL>(fbCore,fbAnalyis);
+		efTool = fbAnalyis.ejbAnalysisTool();
 	}
 	
 	@Override public TOOL load(TOOL tool)
@@ -175,129 +192,45 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	
 	@Override public JsonFlatFigures surveyStatisticOption(QUESTION question, SURVEY survey, TOOL tool)
 	{
-		boolean withDomainQuery = !(tool==null || tool.getQuery()==null);
-		
-		String sql ="select answer.question_id as questionId, answer.option_id as optionId, correlation.id as correlationId, count(answer.option_id) as counter\n" + 
-				"from SurveyAnswer answer\n" + 
-				"                inner join SurveyData data on answer.data_id=data.id\n" + 
-				"                inner join Survey survey on data.survey_id=survey.id\n" + 
-				"                inner join SurveyCorrelation correlation on data.correlation_id=correlation.id\n" + 
-				"                inner join SurveyCorrelationErpUser corruser on correlation.id=corruser.id\n" + 
-				"                inner join User user on user.id=corruser.user_id\n" + 
-				"                inner join Cv cv on cv.user_id=corruser.user_id,\n" + 
-				"                SurveyOption opt\n" + 
-				"where answer.option_id=opt.id and (survey.id in (2)) and answer.question_id=34\n" + 
-				"group by answer.question_id , answer.option_id , cv.gender_id";
-		
 		JsonFlatFigures result = JsonFlatFiguresFactory.build();
+		
+		String sql = sqlFactory.option(question,survey,tool);
+		NativeQueryDebugger.debug(null, sql, false, false);
+		
 		for(Object o : em.createNativeQuery(sql).getResultList())
         {
             Object[] array = (Object[])o;
-            long idQuestion = ((BigInteger)array[0]).longValue();
-            long idOption = ((BigInteger)array[1]).longValue();
-            long idPath = ((BigInteger)array[2]).longValue();
-            long count = ((BigInteger)array[3]).longValue();
-           
+
         		JsonFlatFigure f = JsonFlatFigureFactory.build();
-        		f.setL1(idQuestion);
-        		f.setL2(idOption);
-        		f.setL3(idPath);
-        		f.setL4(count);
+        		f.setL1(((BigInteger)array[0]).longValue());										// ID Question
+        		f.setL2(((BigInteger)array[1]).longValue());										// ID Option
+        		f.setL3(((BigInteger)array[2]).longValue());										// Count
+        		if(efTool.withDomainQuery(tool)){f.setL4(((BigInteger)array[3]).longValue());}	// ID Path}
+        		
         	 	result.getFigures().add(f);
         }
-		
-/*		
-		List<Predicate> predicates = new ArrayList<Predicate>();
-		CriteriaBuilder cB = em.getCriteriaBuilder();
-        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
-        
-        Root<ANSWER> answer = cQ.from(fbAnalyis.getClassAnswer());
-        Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
-        Join<DATA,SURVEY> jSurvey = jData.join(JeeslSurveyData.Attributes.survey.toString());
-        predicates.add(jSurvey.in(survey));
-        
-        Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
-        predicates.add(cB.equal(pQuestion,question));
-        
-        Path<OPTION> pOption = answer.get(JeeslSurveyAnswer.Attributes.option.toString());
-        Expression<Long> eTa = cB.count(answer.<Long>get(JeeslSurveyAnswer.Attributes.option.toString()));
-      
-        if(!withDomainQuery)
-        {	// No DomainQuery, using the whole dataset
-            cQ.groupBy(pQuestion.get("id"),pOption.get("id"));
-            cQ.multiselect(pQuestion.get("id"),pOption.get("id"),eTa);
-        }
-        else
-        {
-        		Join<DATA,CORRELATION> jCorrelation = jData.join(JeeslSurveyData.Attributes.correlation.toString());
- //       		jCorrelation.j
-        		
-        		cQ.groupBy(pQuestion.get("id"),pOption.get("id"),jCorrelation.get("id"));
-        		cQ.multiselect(pQuestion.get("id"),pOption.get("id"),jCorrelation.get("id"),eTa);
-        }
-
-        cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
-        TypedQuery<Tuple> tQ = em.createQuery(cQ);
-        List<Tuple> tuples = tQ.getResultList();
-        
-        JsonFlatFigures result = JsonFlatFiguresFactory.build();
-        for(Tuple t : tuples)
-        {
-	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
-	        	
-	        	f.setL1((Long)t.get(0));		//Question ID
-	        	f.setL2((Long)t.get(1));		//Option ID
-	        	
-	        	if(!withDomainQuery)
-	        	{
-	        		f.setL3((Long)t.get(2));		//Count
-	        	}
-	        	else
-	        	{
-	        		f.setL3((Long)t.get(3));		//Count
-	        		f.setL4((Long)t.get(2));		//DomainQuery ID
-	        	}
-	        	
-	        	result.getFigures().add(f);
-        }
-*/
         return result;
 	}
 	
-	@Override public JsonFlatFigures surveyStatisticBoolean(QUESTION question, SURVEY survey)
+	@Override public JsonSurveyValues surveyStatisticBoolean(QUESTION question, SURVEY survey, TOOL tool)
 	{
-		List<Predicate> predicates = new ArrayList<Predicate>();
-		CriteriaBuilder cB = em.getCriteriaBuilder();
-        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
-        
-        Root<ANSWER> answer = cQ.from(fbAnalyis.getClassAnswer());
-        Join<ANSWER,DATA> jData = answer.join(JeeslSurveyAnswer.Attributes.data.toString());
-        Join<DATA,SURVEY> jSurvey = jData.join(JeeslSurveyData.Attributes.survey.toString());
-        predicates.add(jSurvey.in(survey));
-        
-        Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
-        predicates.add(cB.equal(pQuestion,question));
-        
-        Expression<Long> eBoolean = cB.count(answer.<Long>get(JeeslSurveyAnswer.Attributes.valueBoolean.toString()));
-      
-        cQ.groupBy(pQuestion.get("id"),answer.get(JeeslSurveyAnswer.Attributes.valueBoolean.toString()));
-        cQ.multiselect(pQuestion.get("id"),answer.get(JeeslSurveyAnswer.Attributes.valueBoolean.toString()),eBoolean);
-
-        cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
-        TypedQuery<Tuple> tQ = em.createQuery(cQ);
-        List<Tuple> tuples = tQ.getResultList();
-        
-        JsonFlatFigures result = JsonFlatFiguresFactory.build();
-        for(Tuple t : tuples)
+		JsonSurveyValues values = JsonSurveyValuesFactory.build();
+		
+		String sql = sqlFactory.bool(question,survey,tool);
+		NativeQueryDebugger.debug(null, sql, false, false);
+		
+		for(Object o : em.createNativeQuery(sql).getResultList())
         {
-	        	JsonFlatFigure f = JsonFlatFigureFactory.build();
-	        	f.setL1((Long)t.get(0));
-	        	f.setB1((Boolean)t.get(1));
-	        	f.setL3((Long)t.get(2));
-	        	result.getFigures().add(f);
+            Object[] array = (Object[])o;
+
+            JsonSurveyValue v = JsonSurveyValueFactory.build();
+            v.setQuestionId(((BigInteger)array[0]).longValue());
+            v.setBool(((Boolean)array[1]).booleanValue());
+            v.setCount(((BigInteger)array[2]).longValue());
+            if(efTool.withDomainQuery(tool)){v.setPathId(((BigInteger)array[3]).longValue());}
+            values.getValues().add(v);
         }
-        
-        return result;
+        return values;
 	}
 	
 	@Override public JsonFlatFigures surveyCountOption(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations)

@@ -1,13 +1,24 @@
 package org.jeesl.util;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReflectionUtil {
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.exlp.util.io.StringUtil;
 
+public class ReflectionUtil
+{
 	final static Logger logger = LoggerFactory.getLogger(ReflectionUtil.class);
 
 	/**
@@ -135,4 +146,66 @@ public class ReflectionUtil {
         }
 	}
 
+	public static String toTable(Class<?> c) throws UtilsNotFoundException
+	{
+		Annotation a = c.getAnnotation(Table.class);
+		if(a!=null)
+		{
+			Table t = (Table)a;
+			return t.name();
+	
+		}
+		return "--";
+	}
+	 
+	public static String getReverseMapping(String src, String aSrc, String dst) throws UtilsNotFoundException
+	{
+		 try
+		 {
+			Class<?> cSrc = Class.forName(src);
+			Class<?> cDst = Class.forName(dst);
+			
+			return getReverseMapping(cSrc,aSrc,cDst);
+		 }
+		 catch (ClassNotFoundException e) {throw new UtilsNotFoundException(e.getMessage());}
+	 }
+	 
+	 private static String getReverseMapping(Class<?> cSrc, String aSrc, Class<?> cDst) throws UtilsNotFoundException
+	 {
+		 if(logger.isTraceEnabled())
+		 {
+			 logger.trace(StringUtil.stars());
+			 logger.trace("Reverse Mapping");
+			 logger.trace("cSrs: "+cSrc.getName());
+			 logger.trace("aSrc: "+aSrc);
+			 logger.trace("cDst: "+cDst.getName());
+		 }
+		 
+		 List<Field> fields = toFields(cDst);
+		 for(Field f : fields)
+		 {
+//			 logger.info("Field "+f.getName()+" "+f.getType());
+			 if(f.getType().getName().equals(cSrc.getName()))
+			 {
+				 return f.getName();
+			 }
+		 }
+		 
+		 throw new UtilsNotFoundException("No reverse mapping found ("+cSrc.getName()+"."+aSrc+") -> "+cDst.getName());
+	 }
+	 
+	public static List<Field> toFields(Class<?> c)
+	{
+		List<Field> fields = new ArrayList<Field>();
+		fields.addAll(Arrays.asList(c.getDeclaredFields()));
+		
+		Class<?> cSuper = c.getSuperclass();
+		Annotation a = cSuper.getAnnotation(MappedSuperclass.class);
+		if(a!=null)
+		{
+			fields.addAll(toFields(cSuper));
+		}
+		
+		return fields;
+	}
 }

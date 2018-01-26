@@ -36,7 +36,7 @@
     	</s:langs>
     </s:translation>
     
-	<s:translation key="aupSecurityRoles">
+	<s:translation key="jeeslSecurityRoles">
     	<s:langs>
     		<s:lang key="de" translation="Roles"/>
     		<s:lang key="en" translation="Roles"/>

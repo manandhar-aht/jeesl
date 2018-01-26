@@ -70,7 +70,7 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 		if(graphic.getType()==null){throw new UtilsProcessingException("graphic.type is null");}
     		if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
 		{
-			logger.info("Build SVG: size " + size + " id:" + id);
+    			if(debugOnInfo){logger.info("Build SVG: size " + size + " id:" + id);}
 		    	SVGGraphics2D g = fSvgGraphic.build(size,graphic);
 		    	bytes = Svg2SvgTranscoder.transcode(g);
 		    	respond(request,response,bytes,"svg");
@@ -92,7 +92,7 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 		if(graphic.getType()==null){throw new UtilsProcessingException("graphic.type is null");}
 	    	if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
 		{
-	    		logger.info("Build SVG: size " + size + " id:" + id);
+	    		if(debugOnInfo){logger.info("Build SVG: size " + size + " id:" + id);}
 	    		List<F> figures = fGraphic.allForParent(cF,graphic);
 			if(figures.isEmpty())
 			{

@@ -580,13 +580,14 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		reloadConditions();
 	}
 	
-	protected void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, sections);}
-	protected void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, questions);}
-	protected void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException
+	public void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, sections);}
+	public void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, questions);}
+	public void reorderConditions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, conditions);}
+	public void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		PositionListReorderer.reorder(fCore, options);
 		if(questions!=null) {reloadQuestion();}
 		if(optionSet!=null) {reloadOptionSet(true);}
 	}
-	protected void reorderConditions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, conditions);}
+	
 }

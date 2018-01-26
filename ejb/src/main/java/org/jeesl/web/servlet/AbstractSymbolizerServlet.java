@@ -32,7 +32,7 @@ public abstract class AbstractSymbolizerServlet<L extends UtilsLang, D extends U
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSymbolizerServlet.class);
 	
-	private boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo=debugOnInfo;}
+	protected boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo=debugOnInfo;}
 	
 	protected AbstractSymbolizerServlet()
 	{
@@ -54,19 +54,13 @@ public abstract class AbstractSymbolizerServlet<L extends UtilsLang, D extends U
 	        	return null;
         }
         
-        if(debugOnInfo)
-        {
-        		logger.info("Path " +path);
-        }
+        if(debugOnInfo){logger.info("Path " +path);}
         
         String[] pathElements = path.split("/");
         Integer size = new Integer(pathElements[1]);
         Long id = new Long(pathElements[2]);
         
-        if(debugOnInfo)
-        {
-        		logger.info("Requested size " +size+" id:"+id);
-        }
+        if(debugOnInfo){logger.info("Requested size " +size+" id:"+id);}
         
         return XmlImageFactory.idHeight(id,size);
 	}

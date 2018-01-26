@@ -221,6 +221,7 @@
 					
 					<h:form id="fUpload" enctype="multipart/form-data" >
 						<p:fileUpload rendered="#{(cc.attrs.bean.supportsGraphic) and (cc.attrs.bean.graphic.type.code eq 'svg')}"
+											styleClass="jeeslFileUpload"
 											fileUploadListener="#{cc.attrs.bean.handleFileUpload}" mode="advanced" dragDropSupport="false"
 											update=":#{cc.id}:sLang" sizeLimit="10000000" fileLimit="1" allowTypes="/(\.|\/)(svg)$/" />
 					</h:form>

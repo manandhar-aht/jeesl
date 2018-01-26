@@ -22,7 +22,7 @@ import net.sf.ahtutils.jsf.util.ComponentAttribute;
 public class OutputXpath extends AbstractXpath
 {	
 	final static Logger logger = LoggerFactory.getLogger(OutputXpath.class);
-	private static enum Properties {value,xpath,column,styleClass}
+	private static enum Properties {value,xpath,column,styleClass,localeCode}
 	
 	@Override
 	public void encodeBegin(FacesContext context) throws IOException
@@ -41,6 +41,12 @@ public class OutputXpath extends AbstractXpath
 	public void encodeChildren(FacesContext context) throws IOException
 	{	
 		String xpath = ComponentAttribute.get(Properties.xpath,"",context,this);
+		String localeCode = ComponentAttribute.get(Properties.localeCode, null, context, this);
+		if(localeCode!=null)
+		{
+			xpath=xpath.replace("$localeCode$", localeCode);
+		}
+		logger.info("localeCode: "+(localeCode!=null)+" "+xpath);
 				
 		ValueExpression ve = this.getValueExpression(Properties.value.toString());
 		JXPathContext ctx = JXPathContext.newContext(ve.getValue(context.getELContext()));

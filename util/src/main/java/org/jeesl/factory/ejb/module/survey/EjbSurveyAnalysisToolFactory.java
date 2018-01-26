@@ -12,23 +12,22 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbSurveyAnalysisToolFactory<L extends UtilsLang, D extends UtilsDescription,
-
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?>,
-				AT extends JeeslSurveyAnalysisTool<L,D,?,?,?,AQ,ATT>,
+				TOOL extends JeeslSurveyAnalysisTool<L,D,?,?,?,AQ,ATT>,
 				ATT extends UtilsStatus<ATT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyAnalysisToolFactory.class);
 	
-	private final Class<AT> cAt;
+	private final Class<TOOL> cAt;
     
-	public EjbSurveyAnalysisToolFactory(final Class<AT> cAt)
+	public EjbSurveyAnalysisToolFactory(final Class<TOOL> cAt)
 	{       
         this.cAt = cAt;
 	}
     
-	public AT build(AQ analysisQuestion, ATT type, List<AT> list)
+	public TOOL build(AQ analysisQuestion, ATT type, List<TOOL> list)
 	{
-		AT ejb = null;
+		TOOL ejb = null;
 		try
 		{
 			ejb = cAt.newInstance();
@@ -41,5 +40,10 @@ public class EjbSurveyAnalysisToolFactory<L extends UtilsLang, D extends UtilsDe
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public boolean withDomainQuery(TOOL tool)
+	{
+		return tool!=null && tool.getQuery()!=null;
 	}
 }

@@ -19,15 +19,16 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
 public interface JeeslJobFacade <L extends UtilsLang,D extends UtilsDescription,
-								TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+								TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
-								JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
-								FEEDBACK extends JeeslJobFeedback<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+								JOB extends JeeslJob<TEMPLATE,PRIORITY,FEEDBACK,STATUS,USER>,
+								PRIORITY extends UtilsStatus<PRIORITY,L,D>,
+								FEEDBACK extends JeeslJobFeedback<JOB,FT,USER>,
 								FT extends UtilsStatus<FT,L,D>,
 								STATUS extends UtilsStatus<STATUS,L,D>,
-								ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
-								CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+								ROBOT extends JeeslJobRobot<L,D>,
+								CACHE extends JeeslJobCache<TEMPLATE>,
 								USER extends EjbWithEmail
 								>
 			extends UtilsFacade
@@ -38,5 +39,5 @@ public interface JeeslJobFacade <L extends UtilsLang,D extends UtilsDescription,
 	JOB fActiveJob(TEMPLATE template, String code) throws UtilsNotFoundException;
 	CACHE fJobCache(TEMPLATE template, String code) throws UtilsNotFoundException;
 	CACHE uJobCache(TEMPLATE template, String code, byte[] data) throws UtilsConstraintViolationException, UtilsLockingException;
-	JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException;
+	JOB cJob(USER user, List<FEEDBACK> feedbacks, TEMPLATE template, String code, String name, String jsonFilter) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException;
 }

@@ -16,15 +16,16 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
 public class EjbJobFactory <L extends UtilsLang,D extends UtilsDescription,
-									TEMPLATE extends JeeslJobTemplate<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+									TEMPLATE extends JeeslJobTemplate<L,D,CATEGORY,TYPE,PRIORITY>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
-									JOB extends JeeslJob<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
-									FEEDBACK extends JeeslJobFeedback<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+									JOB extends JeeslJob<TEMPLATE,PRIORITY,FEEDBACK,STATUS,USER>,
+									PRIORITY extends UtilsStatus<PRIORITY,L,D>,
+									FEEDBACK extends JeeslJobFeedback<JOB,FT,USER>,
 									FT extends UtilsStatus<FT,L,D>,
 									STATUS extends UtilsStatus<STATUS,L,D>,
-									ROBOT extends JeeslJobRobot<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
-									CACHE extends JeeslJobCache<L,D,TEMPLATE,CATEGORY,TYPE,JOB,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER>,
+									ROBOT extends JeeslJobRobot<L,D>,
+									CACHE extends JeeslJobCache<TEMPLATE>,
 									USER extends EjbWithEmail
 									>
 {
@@ -37,17 +38,20 @@ public class EjbJobFactory <L extends UtilsLang,D extends UtilsDescription,
         this.cJob = cJob;
 	}
  
-	public JOB build(USER user, TEMPLATE template, STATUS status, String code, String name)
+	public JOB build(USER user, TEMPLATE template, STATUS status, String code, String name, String jsonFilter)
 	{
 		JOB ejb = null;
 		try
 		{
 			ejb = cJob.newInstance();
+			ejb.setUser(user);
 			ejb.setTemplate(template);
 			ejb.setStatus(status);
+			ejb.setPriority(template.getPriority());
 			ejb.setRecordCreation(new Date());
 			ejb.setCode(code);
 			ejb.setName(name);
+			ejb.setJsonFilter(jsonFilter);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

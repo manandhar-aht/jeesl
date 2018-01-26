@@ -16,6 +16,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
+import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.exlp.util.xml.JaxbUtil;
@@ -132,6 +133,16 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 	public <T extends EjbWithDescription<D>, S extends UtilsStatus<S,L,D>, L extends UtilsLang> T persistMissingLangs(UtilsFacade fUtils, List<S> locales, T ejb)
 	{
 		return persistMissingLangs(fUtils,TxtStatusFactory.toCodes(locales).toArray(new String[0]),ejb);
+	}
+	
+	public <T extends EjbWithDescription<D>> T persistMissingLangsForCode(UtilsFacade fUtils, List<String> codes, T ejb)
+	{
+		String[] localeCodes = new String[codes.size()];
+		for(int i=0;i<codes.size();i++)
+		{
+			localeCodes[i] = codes.get(i);
+		}
+		return persistMissingLangs(fUtils,localeCodes,ejb);
 	}
 	
 	public <T extends EjbWithDescription<D>> T persistMissingLangs(UtilsFacade fUtils, String[] keys, T ejb)

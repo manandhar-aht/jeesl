@@ -128,6 +128,13 @@ public class EjbIdFactory
 		}
 		ejb.setId(next);
 	}
+	public static <T extends EjbWithId> void setNegativeIds(List<T> list)
+	{
+		for(int i=0;i<list.size();i++)
+		{
+			list.get(i).setId(-1-i);
+		}
+	}
 	
 	public static <T extends EjbWithId> void negativeToZero(List<T> list)
 	{

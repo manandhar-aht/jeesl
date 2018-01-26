@@ -244,21 +244,21 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	
 	// STAFF
 	@Override
-	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+	public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffU(Class<S> clStaff, USER user)
 	{return allForParent(clStaff, "user", user);}
 	
 	@Override
-	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+	public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffR(Class<S> clStaff, R role)
 	{return allForParent(clStaff, "role", role);}
 	
 	@Override
-	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+	public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffD(Class<S> clStaff, D1 domain)
 	{return allForParent(clStaff, JeeslStaff.Attributes.domain.toString(), domain);}
 	
-	@Override public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffD(Class<S> cStaff, List<D1> domains)
+	@Override public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffD(Class<S> cStaff, List<D1> domains)
 	{
 		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
 		List<Predicate> predicates = new ArrayList<Predicate>();
@@ -275,12 +275,12 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@Override
-	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+	public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffUR(Class<S> clStaff, USER user, R role)
 	{return allForParent(clStaff, "user", user, "role",role);}
 	
 	@SuppressWarnings("unchecked")
-	@Override public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
+	@Override public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId>
 		List<S> fStaffUD(Class<S> cStaff, USER user, D1 domain)
 	{
 		List<USER> users = new ArrayList<USER>(Arrays.asList(user));
@@ -290,7 +290,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@SuppressWarnings("unchecked") @Override
-	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, D1 domain)
+	public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, D1 domain)
 	{
 		List<USER> users = null;
 		List<R> roles = new ArrayList<R>(Arrays.asList(role));
@@ -299,7 +299,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, USER user, R role, List<D1> domains)
+	@Override public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, USER user, R role, List<D1> domains)
 	{
 		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
 		List<USER> users = new ArrayList<USER>(Arrays.asList(user));
@@ -308,7 +308,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<D1> domains)
+	@Override public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffRD(Class<S> cStaff, R role, List<D1> domains)
 	{
 		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
 		List<USER> users = null;
@@ -317,7 +317,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffUD(Class<S> cStaff, USER user, List<D1> domains)
+	public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffUD(Class<S> cStaff, USER user, List<D1> domains)
 	{
 		if(domains==null || domains.isEmpty()){return new ArrayList<S>();}
 		List<USER> users = new ArrayList<USER>(Arrays.asList(user));
@@ -325,7 +325,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		return fStaffURD(cStaff,users,roles,domains);
 	}
 	
-	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, List<USER> users, List<R> roles, List<D1> domains)
+	public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<S> fStaffURD(Class<S> cStaff, List<USER> users, List<R> roles, List<D1> domains)
 	{
 		if(users==null && roles==null && domains==null) {return new ArrayList<S>();}
 		if(users!=null && users.isEmpty()){return new ArrayList<S>();}
@@ -361,7 +361,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 	
 	@Override
-	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> S fStaff(Class<S> clStaff, USER user, R role, D1 domain) throws UtilsNotFoundException
+	public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> S fStaff(Class<S> clStaff, USER user, R role, D1 domain) throws UtilsNotFoundException
 	{
 		return oneForParents(clStaff,"user",user,"role",role,JeeslStaff.Attributes.domain.toString(),domain);
 	}
@@ -407,7 +407,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	}
 
 	@Override
-	public <S extends JeeslStaff<L,D,C,R,V,U,A,AT,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<D1> fDomains(Class<V> cView, Class<S> cStaff, USER user, V view)
+	public <S extends JeeslStaff<R,USER,D1,D2>, D1 extends EjbWithId, D2 extends EjbWithId> List<D1> fDomains(Class<V> cView, Class<S> cStaff, USER user, V view)
 	{
 		List<R> roles = new ArrayList<R>();
 		List<D1> result = new ArrayList<D1>();

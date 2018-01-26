@@ -11,6 +11,7 @@
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdm="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:jeesl="http://www.jeesl.org/jsf"
 	xmlns:jp="http://jsf.jeesl.org/prototype"
 	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:composite="http://java.sun.com/jsf/composite">
@@ -22,7 +23,8 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableOption[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'selectOne'}">
+		
+		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableOptionGlobal[tool].figures}" rendered="#{(cc.attrs.tool.element.code eq 'selectOne') and (empty cc.attrs.tool.query)}">
 			<p:column headerText="#{msg.jeeslSurveyOption}">
 				<h:outputText value="#{appSurveyBean.mapOptionId[f.l2].name[localeCode].lang}"/>
 			</p:column>
@@ -30,14 +32,40 @@
 				<h:outputText value="#{f.l3}"/>
 			</p:column>
 		</p:dataTable>
-		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableBoolean[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'bool'}">
-			<p:column headerText="#{msg.jeeslBoolean}">
-				<h:outputText value="#{f.b1}"/>
+		<p:dataTable var="option" value="#{cc.attrs.bean.mapToolOption[tool]}" rendered="#{(cc.attrs.tool.element.code eq 'selectOne') and (not empty cc.attrs.tool.query)}">
+			<p:column headerText="#{msg.jeeslSurveyOption}">
+				<h:outputText value="#{appSurveyBean.mapOptionId[option.id].name[localeCode].lang}"/>
+			</p:column>
+			<p:columns var="path" value="#{cc.attrs.bean.mapToolPathEntities[tool]}">
+            	<f:facet name="header">
+            		<jeesl:outputXpath value="#{path.ejb}" xpath="#{cc.attrs.bean.mapToolPathAttribute[tool].xpath}" localeCode="#{localeCode}"/>	
+            	</f:facet>
+            	<h:outputText value="#{cc.attrs.bean.mapToolPathValue[tool].m[option][path].count}"/>
+          </p:columns>
+		</p:dataTable>
+		
+		<p:dataTable var="bool" value="#{cc.attrs.bean.mapToolOption[tool]}"  rendered="#{cc.attrs.tool.element.code eq 'bool' and (empty cc.attrs.tool.query)}">
+			<p:column headerText="#{msg.jeeslSurveyAnswerBoolean}">
+				<h:outputText value="#{bool.bool}"/>
 			</p:column>
 			<p:column headerText="#{msg.jeeslSurveyAnalysisAnswers}">
-				<h:outputText value="#{f.l3}"/>
+				<h:outputText value="#{bool.count}"/>
 			</p:column>
 		</p:dataTable>
+		<p:dataTable var="bool" value="#{cc.attrs.bean.mapToolOption[tool]}" rendered="#{(cc.attrs.tool.element.code eq 'bool') and (not empty cc.attrs.tool.query)}">
+			<p:column headerText="#{msg.jeeslSurveyAnswerBoolean}">
+				<h:outputText value="#{bool.bool}"/>
+			</p:column>
+			<p:columns var="path" value="#{cc.attrs.bean.mapToolPathEntities[tool]}">
+	            	<f:facet name="header">
+	            		<h:outputText valeu="#{cc.attrs.bean.mapToolPathAttribute[tool].xpath}"/>
+	            		<jeesl:outputXpath value="#{path.ejb}" xpath="#{cc.attrs.bean.mapToolAttributeXpath[tool]}" localeCode="#{localeCode}"/>	
+	            	</f:facet>
+	            	<h:outputText value="#{cc.attrs.bean.mapToolPathValue[tool].m[bool][path].count}"/>
+	          </p:columns>
+		</p:dataTable>
+		
+		
 		<p:dataTable var="f" value="#{cc.attrs.bean.mapToolTableText[tool].figures}" rendered="#{cc.attrs.tool.element.code eq 'text'}">
 			<p:column headerText="#{msg.jeeslAnswer}">
 				<h:outputText value="#{f.s1}"/>

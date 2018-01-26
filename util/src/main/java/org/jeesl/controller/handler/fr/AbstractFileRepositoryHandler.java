@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -39,6 +40,8 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractFileRepositoryHandler.class);
+	
+	private boolean debugOnInfo = true;
 
 	protected final JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
 	protected final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
@@ -66,7 +69,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		metas = new ArrayList<META>();
 	}
 	
-	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with) throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		metas.clear();
 		reset(true);
@@ -75,7 +78,9 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 			container = efContainer.build(storage);
 			if(EjbIdFactory.isSaved(with))
 			{
-				container = fFr.save(container);
+				if(withTransaction){container = fFr.saveTransaction(container);}
+				else {container = fFr.save(container);}
+				if(debugOnInfo) {logger.info("Saved container "+container.toString());}
 				if(callback!=null)
 				{
 					callback.fileRepositoryContainerSaved(with);

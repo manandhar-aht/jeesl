@@ -14,7 +14,7 @@
 	
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
-		<composite:attribute name="localeKeys" required="false" default="#{translationBean.langKeys}"/>
+		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -33,7 +33,7 @@
 							<p:ajax event="rowSelect" update=":#{cc.id}:sTemplate" listener="#{cc.attrs.bean.selectTemplate()}"/>
 							<p:column headerText="#{msg.jeeslJobType}" styleClass="jeeslPfTcCenter"><jtp:statusSymbolizer value="#{t.type}" height="12"/></p:column>
 							<p:column headerText="#{msg.jeeslJobCategory}"><h:outputText value="#{t.category.name[userBean.localeCode].lang}"/></p:column>
-							<p:column headerText="#{msg.Name}"><h:outputText value="#{t.name[userBean.localeCode].lang}"/></p:column>
+							<p:column headerText="#{msg.jeeslName}"><h:outputText value="#{t.name[userBean.localeCode].lang}"/></p:column>
 							<p:column headerText="#{msg.jeeslJobPriority}" styleClass="jeeslPfTcCenter"><jtp:statusSymbolizer value="#{t.priority}" height="12"/></p:column>
 						</p:dataTable>
 					</h:form>
@@ -69,8 +69,7 @@
 								<p:outputLabel value="#{msg.jeeslCode}"/>
 								<p:inputText value="#{cc.attrs.bean.template.code}"/>
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.template}" withDescription="true"
-									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.template}" withDescription="true" keys="#{cc.attrs.localeKeys}"/>
 						</p:panel>
 					</h:form>
 				</aht:slot>

@@ -23,6 +23,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +48,9 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
 				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-				TOOL extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,DATTRIBUTE,AQ,ATT>,
-				ATT extends UtilsStatus<ATT,L,D>>
+				TOOL extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,DATTRIBUTE,AQ,TOOLT>,
+				TOOLT extends UtilsStatus<TOOLT,L,D>,
+				TOOLCACHETEMPLATE extends JeeslJobTemplate<L,D,?,?,?>>
 			extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyAnalysisFactoryBuilder.class);
@@ -63,9 +65,10 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 	private final Class<ANALYSIS> cAnalysis; public Class<ANALYSIS> getClassAnalysis() {return cAnalysis;}
 	private final Class<AQ> cAq; public Class<AQ> getClassAnalysisQuestion() {return cAq;}
 	private final Class<TOOL> cTool; public Class<TOOL> getClassAnalysisTool() {return cTool;}
-	private final Class<ATT> cAtt; public Class<ATT> getAttClass() {return cAtt;}
+	private final Class<TOOLT> cToolType; public Class<TOOLT> getAttClass() {return cToolType;}
+	private final Class<TOOLCACHETEMPLATE> cJobTemplate; public Class<TOOLCACHETEMPLATE> getClassJobTemplate(){return cJobTemplate;}
 
-	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<DOMAIN> cDomain, final Class<QUERY> cDomainQuery, final Class<PATH> cDomainPath, final Class<DENTITY> cDomainEntity, final Class<DATTRIBUTE> cDomainAttribute, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<TOOL> cTool, final Class<ATT> cAtt)
+	public SurveyAnalysisFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<ANSWER> cAnswer, final Class<DATA> cData, final Class<DOMAIN> cDomain, final Class<QUERY> cDomainQuery, final Class<PATH> cDomainPath, final Class<DENTITY> cDomainEntity, final Class<DATTRIBUTE> cDomainAttribute, final Class<ANALYSIS> cAnalysis, final Class<AQ> cAq, final Class<TOOL> cTool, final Class<TOOLT> cToolType, final Class<TOOLCACHETEMPLATE> cJobTemplate)
 	{
 		super(cL,cD);
 		this.cAnswer=cAnswer;
@@ -78,7 +81,8 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		this.cAq=cAq;
 		this.cAnalysis=cAnalysis;
 		this.cTool=cTool;
-        this.cAtt = cAtt;
+        this.cToolType = cToolType;
+        this.cJobTemplate=cJobTemplate;
 	}
 	
 	public EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> ejbDomain()
@@ -106,8 +110,8 @@ public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		return new EjbSurveyAnalysisQuestionFactory<L,D,QUESTION,ANALYSIS,AQ>(cAq);
 	}
 	
-	public EjbSurveyAnalysisToolFactory<L,D,AQ,TOOL,ATT> ejbAnalysisTool()
+	public EjbSurveyAnalysisToolFactory<L,D,AQ,TOOL,TOOLT> ejbAnalysisTool()
 	{
-		return new EjbSurveyAnalysisToolFactory<L,D,AQ,TOOL,ATT>(cTool);
+		return new EjbSurveyAnalysisToolFactory<L,D,AQ,TOOL,TOOLT>(cTool);
 	}
 }

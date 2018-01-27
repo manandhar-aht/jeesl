@@ -177,12 +177,13 @@
 								<f:selectItems value="#{cc.attrs.bean.toolTypes}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
 							</p:selectOneMenu>
 							
+							<p:outputLabel value="#{msg.jeeslJobExpire}"/>
+							<p:inputText value="#{cc.attrs.bean.nnb.a}"/>
+							
 							<p:outputLabel value="#{msg.jeeslElement}"/>
 							<p:selectOneMenu  value="#{cc.attrs.bean.tool.element}" autoWidth="false" effect="fade">
 								<f:selectItems value="#{cc.attrs.bean.questionElements}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
 							</p:selectOneMenu>
-							
-							
 							
 							<p:outputLabel value="#{msg.jeeslRevisionAttribute}"/>
 							<p:selectOneMenu  value="#{cc.attrs.bean.tool.attribute}" effect="fade" autoWidth="false">

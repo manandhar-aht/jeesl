@@ -173,7 +173,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 		if(rSection){section = null;}
 		if(rQuestion){question = null;}
 		if(rAnalysisQuestion) {analysisQuestion=null;}
-		if(rTool) {tool = null;}
+		if(rTool) {tool = null;nnb.reset();}
 	}
 	
 	public void selectVersion() throws UtilsNotFoundException
@@ -280,14 +280,21 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	public void addTool()
 	{
 		tool = efAnalysisTool.build(analysisQuestion, toolTypes.get(0),tools);
+		nnb.integerToA(tool.getCacheExpire());
 	}
 	
 	public void saveTool() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info(AbstractLogMessage.saveEntity(tool));
+		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(tool));}
 		tool.setType(fAnalysis.find(fbAnalysis.getAttClass(),tool.getType()));
 		tool.setElement(fAnalysis.find(fbTemplate.getClassElement(),tool.getElement()));
+		tool.setCacheExpire(nnb.aToInteger());
 		tool = fAnalysis.save(tool);
+		if(jobTemplate!=null)
+		{
+			if(debugOnInfo) {logger.info("Deleting Cache");}
+			
+		}
 		reloadTools();
 	}
 	
@@ -295,6 +302,7 @@ public abstract class AbstractAdminSurveyAnalysisBean <L extends UtilsLang, D ex
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(tool));}
 		tool = fCore.find(fbAnalysis.getClassAnalysisTool(),tool);
+		nnb.integerToA(tool.getCacheExpire());
 	}
 	
 	public void deleteTool() throws UtilsConstraintViolationException

@@ -40,4 +40,7 @@ public interface JeeslSurveyAnalysisTool<L extends UtilsLang, D extends UtilsDes
 	
 	QUERY getQuery();
 	void setQuery(QUERY query);
+	
+	Integer getCacheExpire();
+	void setCacheExpire(Integer cacheExpire);
 }

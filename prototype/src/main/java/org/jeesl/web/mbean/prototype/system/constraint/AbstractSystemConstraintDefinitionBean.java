@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system;
+package org.jeesl.web.mbean.prototype.system.constraint;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.controller.handler.ui.helper.UiTwiceClickHelper;
+import org.jeesl.factory.builder.system.ConstraintFactoryBuilder;
 import org.jeesl.factory.ejb.system.constraint.EjbConstraintFactory;
 import org.jeesl.factory.ejb.system.constraint.EjbConstraintScopeFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
@@ -26,7 +27,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends UtilsDescription,
+public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D extends UtilsDescription,
 										ALGCAT extends UtilsStatus<ALGCAT,L,D>,
 										ALGO extends JeeslConstraintAlgorithm<L,D,ALGCAT>,
 										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
@@ -39,7 +40,7 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractSettingsConstraintBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractSystemConstraintDefinitionBean.class);
 	
 	private JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint;
 	
@@ -63,7 +64,9 @@ public class AbstractSettingsConstraintBean <L extends UtilsLang, D extends Util
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	private final UiTwiceClickHelper ui2; public UiTwiceClickHelper getUi2() {return ui2;}
 
-	public AbstractSettingsConstraintBean(Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<LEVEL> cLevel, Class<TYPE> cType)
+	public AbstractSystemConstraintDefinitionBean(
+//			ConstraintFactoryBuilder<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fbConstraint,
+			Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<LEVEL> cLevel, Class<TYPE> cType)
 	{
 		super(cL,cD);
 		this.cScope=cScope;

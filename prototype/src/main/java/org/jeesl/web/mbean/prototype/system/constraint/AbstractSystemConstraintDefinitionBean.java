@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.system.constraint;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.controller.handler.ui.helper.UiTwiceClickHelper;
@@ -30,22 +31,20 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D extends UtilsDescription,
 										ALGCAT extends UtilsStatus<ALGCAT,L,D>,
 										ALGO extends JeeslConstraintAlgorithm<L,D,ALGCAT>,
-										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
-										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
+										SCOPE extends JeeslConstraintScope<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
+										CONCAT extends UtilsStatus<CONCAT,L,D>,
+										CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
 										LEVEL extends UtilsStatus<LEVEL,L,D>,
 										TYPE extends UtilsStatus<TYPE,L,D>,
-										RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
-					extends AbstractAdminBean<L,D>
+										RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
+//					extends AbstractAdminBean<L,D>
+					extends AbstractSystemConstraintBean<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSystemConstraintDefinitionBean.class);
 	
-	private JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint;
-	
-	private final Class<SCOPE> cScope;
-	private final Class<CATEGORY> cCategory;
+	private final Class<CONCAT> cCategory;
 	private final Class<CONSTRAINT> cConstraint;
 	private final Class<LEVEL> cLevel;
 	private final Class<TYPE> cType;
@@ -58,33 +57,31 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	private SCOPE scope; public SCOPE getScope() {return scope;} public void setScope(SCOPE scope) {this.scope = scope;}
 	private CONSTRAINT constraint; public CONSTRAINT getConstraint() {return constraint;} public void setConstraint(CONSTRAINT constraint) {this.constraint = constraint;}
 	
-	private final EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> efScope;
-	private final EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> efConstraint;
+	private final EjbConstraintScopeFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> efScope;
+	private final EjbConstraintFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> efConstraint;
 	
-	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
+	protected SbMultiHandler<CONCAT> sbhCategory; public SbMultiHandler<CONCAT> getSbhCategory() {return sbhCategory;}
 	private final UiTwiceClickHelper ui2; public UiTwiceClickHelper getUi2() {return ui2;}
 
 	public AbstractSystemConstraintDefinitionBean(
-//			ConstraintFactoryBuilder<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fbConstraint,
-			Class<L> cL, Class<D> cD, Class<SCOPE> cScope, Class<CATEGORY> cCategory, Class<CONSTRAINT> cConstraint, Class<LEVEL> cLevel, Class<TYPE> cType)
+			ConstraintFactoryBuilder<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fbConstraint,
+			Class<SCOPE> cScope, Class<CONCAT> cCategory, Class<CONSTRAINT> cConstraint, Class<LEVEL> cLevel, Class<TYPE> cType)
 	{
-		super(cL,cD);
-		this.cScope=cScope;
+		super(fbConstraint);
 		this.cCategory=cCategory;
 		this.cConstraint=cConstraint;
 		this.cLevel=cLevel;
 		this.cType=cType;
 		
 		ui2 = new UiTwiceClickHelper();
-		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(cL,cD,cScope,cCategory);
-		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(cL,cD,cConstraint,cType);
+		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(fbConstraint.getClassL(),fbConstraint.getClassD(),cScope,cCategory);
+		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(fbConstraint.getClassL(),fbConstraint.getClassD(),cConstraint,cType);
 	}
 	
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
+	protected void initSuper(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
-		super.initAdmin(localeCodes,cL,cD,bMessage);
-		this.fConstraint=fConstraint;
-		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,fConstraint.allOrderedPosition(cCategory),this);
+		super.initConstraint(bTranslation,bMessage,fConstraint);
+		sbhCategory = new SbMultiHandler<CONCAT>(cCategory,fConstraint.allOrderedPosition(cCategory),this);
 		types = fConstraint.allOrderedPosition(cType);
 		levels = fConstraint.allOrderedPosition(cLevel);
 	}
@@ -102,13 +99,13 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 
 	private void reloadScopes()
 	{
-		scopes = fConstraint.all(cScope);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cScope,scopes));}
+		scopes = fConstraint.all(fbConstraint.getClassScope());
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbConstraint.getClassScope(),scopes));}
 	}
 	
 	public void addScope() throws UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cScope));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbConstraint.getClassScope()));}
 		scope = efScope.build(null);
 		scope.setName(efLang.createEmpty(localeCodes));
 		scope.setDescription(efDescription.createEmpty(localeCodes));
@@ -119,7 +116,7 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	public void selectScope() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(scope));}
-		scope = fConstraint.find(cScope,scope);
+		scope = fConstraint.find(fbConstraint.getClassScope(),scope);
 		scope = efScope.updateLD(fConstraint, scope, localeCodes);
 		reloadConstraints();
 		ui2.checkA(scope);

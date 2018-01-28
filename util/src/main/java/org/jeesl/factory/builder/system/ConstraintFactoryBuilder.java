@@ -26,6 +26,7 @@ RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,T
 {
 	final static Logger logger = LoggerFactory.getLogger(ConstraintFactoryBuilder.class);
 	
+	private final Class<SCOPE> cScope; public Class<SCOPE> getClassScope() {return cScope;}
 	private final Class<ALGCAT> cAlgorithmCategory; public Class<ALGCAT> getClassAlgorithmCategory() {return cAlgorithmCategory;}
 	private final Class<ALGO> cAlgorithm; public Class<ALGO> getClassAlgorithm() {return cAlgorithm;}
 	
@@ -34,11 +35,13 @@ RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,T
 	public ConstraintFactoryBuilder(final Class<L> cL, final Class<D> cD,
 								final Class<ALGCAT> cAlgorithmCategory,
 								final Class<ALGO> cAlgorithm,
+								final Class<SCOPE> cScope,
 								final Class<CONSTRAINT> cConstraint)
 	{
 		super(cL,cD);
 		this.cAlgorithmCategory=cAlgorithmCategory;
 		this.cAlgorithm=cAlgorithm;
+		this.cScope=cScope;
 		this.cConstraint=cConstraint;
 	}
 	

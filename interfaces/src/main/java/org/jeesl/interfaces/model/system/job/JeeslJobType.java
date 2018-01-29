@@ -15,5 +15,5 @@ public interface JeeslJobType <S extends UtilsStatus<S,L,D>,
 									L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
 		extends Serializable,EjbPersistable,JeeslOptionRestDownload,EjbWithCodeGraphic<G>
 {
-	public static enum Code{mail};
+	public static enum Code{mail,json};
 }

@@ -37,6 +37,8 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.job.JeeslJobCache;
+import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,8 +81,10 @@ public abstract class AbstractAdminSurveyValidationBean <L extends UtilsLang, D 
 						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 						AT extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,DATTRIBUTE,AQ,ATT>,
-						ATT extends UtilsStatus<ATT,L,D>>
-					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT>
+						ATT extends UtilsStatus<ATT,L,D>,
+						TOOLCACHETEMPLATE extends JeeslJobTemplate<L,D,?,?,?>,
+						CACHE extends JeeslJobCache<TOOLCACHETEMPLATE>>
+					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT,TOOLCACHETEMPLATE,CACHE>
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -94,7 +98,7 @@ public abstract class AbstractAdminSurveyValidationBean <L extends UtilsLang, D 
 	
 	public AbstractAdminSurveyValidationBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 											SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
-											SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fbAnalysis)
+											SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT,TOOLCACHETEMPLATE> fbAnalysis)
 	{
 		super(fbTemplate,fbCore,fbAnalysis);
 		efValidationAlgorithm = fbTemplate.ejbAlgorithm();
@@ -107,7 +111,7 @@ public abstract class AbstractAdminSurveyValidationBean <L extends UtilsLang, D 
 			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
 	{
 		super.initSuperSurvey(new ArrayList<String>(Arrays.asList(localeCodes)),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
-		initSettings();
+		initPageSettings();
 		super.initLocales(userLocale);
 		reloadAlgorithms();
 	}

@@ -91,8 +91,8 @@ public class AbstractAdminJobTemplateBean <L extends UtilsLang,D extends UtilsDe
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbJob.getClassTemplate()));}
 		template = efTemplate.build(null,null);
-		template.setName(efLang.createEmpty(langs));
-		template.setDescription(efDescription.createEmpty(langs));
+		template.setName(efLang.createEmpty(localeCodes));
+		template.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	public void selectTemplate()

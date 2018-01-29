@@ -9,6 +9,7 @@ import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
+import org.jeesl.controller.handler.module.SurveyAnalysisCacheHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
@@ -48,6 +49,8 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.job.JeeslJobCache;
+import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -88,7 +91,9 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 						TOOL extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,DATTRIBUTE,AQ,ATT>,
-						ATT extends UtilsStatus<ATT,L,D>>
+						ATT extends UtilsStatus<ATT,L,D>,
+						TOOLCACHETEMPLATE extends JeeslJobTemplate<L,D,?,?,?>,
+						CACHE extends JeeslJobCache<TOOLCACHETEMPLATE>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
 {
@@ -102,9 +107,11 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey;
 	protected Long refId;
 
+	protected SurveyAnalysisCacheHandler<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT,TOOLCACHETEMPLATE,CACHE> cacheHandler;
+	
 	protected final SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
 	protected final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore;
-	protected final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT> fbAnalysis;
+	protected final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT,TOOLCACHETEMPLATE> fbAnalysis;
 	
 	protected final EjbSurveyFactory<L,D,SURVEY,SS,TEMPLATE> efSurvey;
 	protected final EjbSurveyTemplateVersionFactory<VERSION> efVersion;
@@ -133,7 +140,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	
 	public AbstractSurveyBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
-			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT> fbAnalysis)
+			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT,TOOLCACHETEMPLATE> fbAnalysis)
 	{
 		super(fbTemplate.getClassL(),fbTemplate.getClassD());
 		this.fbTemplate=fbTemplate;
@@ -162,7 +169,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		cpDomainEntity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
-	protected abstract void initSettings();
+	protected abstract void initPageSettings();
 	
 	protected void initSuperSurvey(List<String> localeCodes, FacesMessageBean bMessage,
 			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,

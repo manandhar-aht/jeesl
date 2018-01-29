@@ -22,6 +22,7 @@ public interface JeeslJobTemplate<L extends UtilsLang,D extends UtilsDescription
 				EjbWithCode,EjbWithLang<L>,EjbWithDescription<D>
 {
 	public static enum Attributes{category,type,code};
+	public static enum Code{surveyAnalysis}
 	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);

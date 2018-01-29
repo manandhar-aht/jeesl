@@ -16,6 +16,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
+import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.controller.db.NativeQueryDebugger;
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
@@ -46,6 +47,8 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.interfaces.model.system.job.JeeslJobCache;
+import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.jeesl.model.json.JsonFlatFigure;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.jeesl.model.json.module.survey.JsonSurveyValue;
@@ -84,20 +87,22 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 				ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
 				TOOL extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,DATTRIBUTE,AQ,TOOLT>,
-				TOOLT extends UtilsStatus<TOOLT,L,D>>
+				TOOLT extends UtilsStatus<TOOLT,L,D>,
+				TOOLCACHETEMPLATE extends JeeslJobTemplate<L,D,?,?,?>,
+				TOOLCACHE extends JeeslJobCache<TOOLCACHETEMPLATE>>
 	extends UtilsFacadeBean implements JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyAnalysisFacadeBean.class);
 	
-	private final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT> fbAnalyis;
+	private JeeslJobFacade<L,D,TOOLCACHETEMPLATE,?,?,?,?,?,?,?,?,TOOLCACHE,?> fJob;
+	
+	private final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT,TOOLCACHETEMPLATE> fbAnalyis;
 	private final EjbSurveyAnalysisToolFactory <L,D,AQ,TOOL,TOOLT> efTool;
-	
-	
-	private SqlSurveyAnalysisFactory<SURVEY,QUESTION,ANSWER,DATA,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL> sqlFactory;
+	private final SqlSurveyAnalysisFactory<SURVEY,QUESTION,ANSWER,DATA,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL> sqlFactory;
 	
 	public JeeslSurveyAnalysisFacadeBean(EntityManager em,
 			final SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,?,VERSION,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,TOOLT> fbCore,
-			final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT> fbAnalyis)
+			final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT,TOOLCACHETEMPLATE> fbAnalyis)
 	{
 		super(em);
 		this.fbAnalyis=fbAnalyis;

@@ -126,4 +126,11 @@
 			<lang key="fr" translation="User" />
 		</langs>
 	</translation>
+	<translation key="jeeslJobExpire">
+		<langs>
+			<lang key="de" translation="Cache Ablauf [h]" />
+			<lang key="en" translation="Cache Expire [h]" />
+			<lang key="fr" translation="Cache Expire [h]" />
+		</langs>
+	</translation>
 </translations>

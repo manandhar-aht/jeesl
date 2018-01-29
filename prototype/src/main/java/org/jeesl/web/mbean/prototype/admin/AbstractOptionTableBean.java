@@ -10,6 +10,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.facade.system.JeeslExportRestFacade;
 import org.jeesl.api.facade.system.graphic.JeeslGraphicFacade;
 import org.jeesl.api.rest.JeeslExportRest;
 import org.jeesl.factory.builder.system.StatusFactoryBuilder;
@@ -424,17 +425,26 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	public <X extends JeeslOptionRest, S extends UtilsStatus, W extends EjbWithCodeGraphic<G>> void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
 	{
 		logger.info("Downloading REST");
-		ResteasyClient client = new ResteasyClientBuilder().build();
-//		ResteasyWebTarget restTarget = client.target("http://localhost:8080/jeesl");
-		ResteasyWebTarget restTarget = client.target("http://192.168.202.26:8080/jeesl");
-		JeeslExportRest<L,D> rest = restTarget.proxy(JeeslExportRest.class);
+
 		
 		Class<X> cX = (Class<X>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(JeeslOptionRest.class);
 		Class<S> cS = (Class<S>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(UtilsStatus.class);
 		Class<W> cW = (Class<W>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(EjbWithCodeGraphic.class);
-		
 		X x = cX.newInstance();
-		Container xml = rest.exportStatus(x.getRestCode());
+		
+		
+		Container xml;
+		if(fUtils instanceof JeeslExportRestFacade)
+		{
+			logger.info("Using Facade Connection (JBoss EAP6)");
+			xml = ((JeeslExportRestFacade)fUtils).exportJeeslReferenceRest(x.getRestCode());
+		}
+		else
+		{
+			logger.info("Using Direct Connection (JBoss EAP7)");
+			xml = getFromRest(x.getRestCode());
+		}
+		
 		JaxbUtil.info(xml);
 		
 		JeeslStatusDbUpdater asdi = new JeeslStatusDbUpdater();
@@ -447,5 +457,13 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
         dbuGraphic.update(cW,xml.getStatus());
         
         selectCategory();
+	}
+	
+	private Container getFromRest(String code) throws UtilsConfigurationException
+	{
+		ResteasyClient client = new ResteasyClientBuilder().build();
+		ResteasyWebTarget restTarget = client.target(JeeslExportRestFacade.url);
+		JeeslExportRest<L,D> rest = restTarget.proxy(JeeslExportRest.class);
+		return rest.exportStatus(code);
 	}
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.builder.system.ConstraintFactoryBuilder;
@@ -24,7 +25,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractSystemAlgorithmBean <L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractSystemConstraintAlgorithmBean <L extends UtilsLang, D extends UtilsDescription,
 														ALGCAT extends UtilsStatus<ALGCAT,L,D>,
 														ALGO extends JeeslConstraintAlgorithm<L,D,ALGCAT>,
 														SCOPE extends JeeslConstraintScope<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
@@ -37,7 +38,7 @@ public abstract class AbstractSystemAlgorithmBean <L extends UtilsLang, D extend
 					implements Serializable//,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractSystemAlgorithmBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractSystemConstraintAlgorithmBean.class);
 	
 	protected final SbMultiHandler<ALGCAT> sbhAlgorithmCategory; public SbMultiHandler<ALGCAT> getSbhAlgorithmCategory() {return sbhAlgorithmCategory;}
 	
@@ -48,7 +49,7 @@ public abstract class AbstractSystemAlgorithmBean <L extends UtilsLang, D extend
 	private ALGO algorithm; public ALGO getAlgorithm() {return algorithm;} public void setAlgorithm(ALGO algorithm) {this.algorithm = algorithm;}
 
 	
-	public AbstractSystemAlgorithmBean(ConstraintFactoryBuilder<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fbConstraint)
+	public AbstractSystemConstraintAlgorithmBean(ConstraintFactoryBuilder<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fbConstraint)
 	{
 		super(fbConstraint);
 		efAlgorithm = fbConstraint.algorithm();
@@ -56,9 +57,9 @@ public abstract class AbstractSystemAlgorithmBean <L extends UtilsLang, D extend
 		sbhAlgorithmCategory = new SbMultiHandler<ALGCAT>(fbConstraint.getClassAlgorithmCategory(),this);
 	}
 	
-	protected void initConstraintAlgorithms(String[] localeCodes, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
+	protected void initConstraintAlgorithms(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
-		super.initConstraint(localeCodes,bMessage,fConstraint);
+		super.initConstraint(bTranslation,bMessage,fConstraint);
 		initImplementationSettings();
 		reloadAlgorithms();
 	}

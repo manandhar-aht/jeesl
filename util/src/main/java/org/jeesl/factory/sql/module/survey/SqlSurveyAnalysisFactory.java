@@ -46,10 +46,10 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 	private final Map<String,String> mapTable;
 	
 	private final SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore;
-	private final SurveyAnalysisFactoryBuilder<?,?,?,QUESTION,?,?,ANSWER,?,DATA,?,CORRELATION,?,?,?,?,?,?,?,TOOL,?> fbAnalysis;
+	private final SurveyAnalysisFactoryBuilder<?,?,?,QUESTION,?,?,ANSWER,?,DATA,?,CORRELATION,?,?,?,?,?,?,?,TOOL,?,?> fbAnalysis;
 	
 	public SqlSurveyAnalysisFactory(SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore,
-									SurveyAnalysisFactoryBuilder<?,?,?,QUESTION,?,?,ANSWER,?,DATA,?,CORRELATION,DOMAIN,?,?,?,?,?,?,TOOL,?> fbAnalysis)
+									SurveyAnalysisFactoryBuilder<?,?,?,QUESTION,?,?,ANSWER,?,DATA,?,CORRELATION,DOMAIN,?,?,?,?,?,?,TOOL,?,?> fbAnalysis)
 	{
 		this.fbCore=fbCore;
 		this.fbAnalysis=fbAnalysis;

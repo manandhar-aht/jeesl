@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.system.constraint;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.factory.builder.system.ConstraintFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
@@ -21,14 +22,14 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public abstract class AbstractSystemConstraintBean <L extends UtilsLang, D extends UtilsDescription,
-								ALGCAT extends UtilsStatus<ALGCAT,L,D>,
-								ALGO extends JeeslConstraintAlgorithm<L,D,ALGCAT>,
-								SCOPE extends JeeslConstraintScope<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
-								CONCAT extends UtilsStatus<CONCAT,L,D>,
-								CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
-								LEVEL extends UtilsStatus<LEVEL,L,D>,
-								TYPE extends UtilsStatus<TYPE,L,D>,
-								RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
+													ALGCAT extends UtilsStatus<ALGCAT,L,D>,
+													ALGO extends JeeslConstraintAlgorithm<L,D,ALGCAT>,
+													SCOPE extends JeeslConstraintScope<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
+													CONCAT extends UtilsStatus<CONCAT,L,D>,
+													CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
+													LEVEL extends UtilsStatus<LEVEL,L,D>,
+													TYPE extends UtilsStatus<TYPE,L,D>,
+													RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean
 {
@@ -48,9 +49,9 @@ public abstract class AbstractSystemConstraintBean <L extends UtilsLang, D exten
 		cpAlgorithm = (new SystemConstraintAlgorithmComparator<ALGCAT,ALGO>()).factory(SystemConstraintAlgorithmComparator.Type.position);
 	}
 	
-	protected void initConstraint(String[] localeCodes, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
+	protected void initConstraint(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
-		super.initAdmin(localeCodes,cL,cD,bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fConstraint=fConstraint;
 	}
 }

@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.system;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslLabelBean;
@@ -15,9 +16,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
-								
 								RE extends JeeslRevisionEntity<L,D,?,?,RA>,
-								
 								RA extends JeeslRevisionAttribute<L,D,RE,?,?>>
 								
 					implements Serializable,JeeslLabelBean<RE>
@@ -27,14 +26,28 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 	
 	private TranslationHandler<L,D,RE,RA> th;
 	
+	
 	public Map<String, Map<String,L>> getEntities() {return th.getEntities();}
 	public Map<String, Map<String, Map<String,L>>> getLabels() {return th.getLabels();}
 	public Map<String, Map<String, Map<String,D>>> getDescriptions() {return th.getDescriptions();}
+	
+	public Map<String,RE> getMapEntities() {return th.getMapEntities();}
 
+	public AbstractLabelBean()
+	{
+		
+	}
+	
 	protected void init(JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision, final Class<RE> cRE)
 	{		
 		th = new TranslationHandler<L,D,RE,RA>(fRevision,cRE);
 	}
 	
-	@Override public void reload(RE re) {th.reload(re);}
+	@Override public void reload(RE re)
+	{
+		
+		th.reload(re);
+	}
+	
+	
 }

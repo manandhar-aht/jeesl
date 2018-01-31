@@ -23,6 +23,11 @@ public class JsonTranslation implements Serializable
 	public void setCode(String code) {this.code = code;}
 	@JsonIgnore public boolean isSetCode() {return code!=null;}
 	
+	@JsonProperty("xpath")
+	private String xpath;
+	public String getXpath() {return xpath;}
+	public void setXpath(String xpath) {this.xpath = xpath;}
+	
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

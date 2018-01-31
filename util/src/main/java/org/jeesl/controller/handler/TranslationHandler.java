@@ -32,6 +32,8 @@ public class TranslationHandler<L extends UtilsLang,D extends UtilsDescription,
 	private final Map<String,Map<String,Map<String,L>>> labels; public Map<String, Map<String, Map<String,L>>> getLabels() {return labels;}
 	private final Map<String,Map<String,Map<String,D>>> descriptions;public Map<String, Map<String, Map<String,D>>> getDescriptions() {return descriptions;}
 
+	public final Map<String,RE> mapEntities; public Map<String, RE> getMapEntities() {return mapEntities;}
+	
 	public TranslationHandler(JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision, final Class<RE> cRE)
 	{
 		this.cRE = cRE;
@@ -40,6 +42,8 @@ public class TranslationHandler<L extends UtilsLang,D extends UtilsDescription,
         entities = new HashMap<String,Map<String,L>>();
         labels = new HashMap<String,Map<String,Map<String,L>>>();
         descriptions = new HashMap<String,Map<String,Map<String,D>>>();
+        
+        mapEntities = new HashMap<String,RE>();
         
         List<RE> list = fRevision.all(cRE);
         logger.info("building "+list.size());
@@ -55,7 +59,7 @@ public class TranslationHandler<L extends UtilsLang,D extends UtilsDescription,
 		try
 		{
 			Class<?> c = Class.forName(re.getCode());
-			
+			if(mapEntities.containsKey(c.getSimpleName())) {mapEntities.remove(c.getSimpleName());}
 			if(entities.containsKey(c.getSimpleName())) {entities.remove(c.getSimpleName());}
 			if(labels.containsKey(c.getSimpleName())) {labels.remove(c.getSimpleName());}
 			if(descriptions.containsKey(c.getSimpleName())) {descriptions.remove(c.getSimpleName());}
@@ -69,6 +73,7 @@ public class TranslationHandler<L extends UtilsLang,D extends UtilsDescription,
 		try
 		{
 			Class<?> c = Class.forName(re.getCode());
+			mapEntities.put(c.getSimpleName(),re);
 			
 			re = fRevision.load(cRE, re);
 			if(entities.containsKey(c.getSimpleName())){logger.warn("Duplicate classs in Revisions "+re.getCode());}

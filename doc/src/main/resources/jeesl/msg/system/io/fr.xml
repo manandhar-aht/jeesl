@@ -21,6 +21,13 @@
 	    		<s:lang key="fr" translation="Engine"/>
 	    	</s:langs>
     </s:translation>
+	<s:translation key="jeeslIoFileStorageLimit">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Maximale Dateigröße"/>
+	    		<s:lang key="en" translation="Max. File Size"/>
+	    		<s:lang key="fr" translation="Max. File Size"/>
+	    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslIoFiles">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Dateien"/>
@@ -56,5 +63,4 @@
 	    		<s:lang key="fr" translation="Upload"/>
 	    	</s:langs>
     </s:translation>
-    
 </s:translations>

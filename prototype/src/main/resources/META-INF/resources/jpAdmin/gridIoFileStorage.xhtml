@@ -42,7 +42,7 @@
 				</aht:slot>
 				<aht:slot id="sStorage" width="5">
 					<h:form id="fStorage">
-						<p:panel header="#{msg.jeeslIoFileStorage}" rendered="#{not empty cc.attrs.bean.storage}" styleClass="auPanelWithGrid">
+						<p:panel header="#{msg.jeeslIoFileStorage}" rendered="#{not empty cc.attrs.bean.storage}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetStorage()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveStorage()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>
@@ -57,6 +57,9 @@
 								<p:selectOneMenu value="#{cc.attrs.bean.storage.engine}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.engines}" var="e" itemLabel="#{e.name[localeCode].lang}" itemValue="#{e}"/>
 								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslIoFileStorageLimit}" />
+								<p:inputText value="#{cc.attrs.bean.storage.fileSizeLimit}"/>
 								
 								<p:outputLabel value="#{msg.jeeslJson}" />
 								<p:inputText value="#{cc.attrs.bean.storage.json}"/>

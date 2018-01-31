@@ -21,11 +21,13 @@
 	<composite:attribute name="colHeaderName" required="false" default="#{msg.aupName}"/>
 	<composite:attribute name="colHeaderLang" required="false" default="#{msg.aupName}"/>
 	
+	<composite:attribute name="showPageTable" required="false" default="true"/>
 	<composite:attribute name="showStatusSymbol" required="false" default="false"/>
 	
+	<composite:attribute name="opRows" required="false" default="10"/>
 	<composite:attribute name="paginatorTemplate" required="false" default="#{appSettingsBean.paginatorTemplate}"/>
 	<composite:attribute name="rowsPerPageTemplate" required="false" default="#{appSettingsBean.rowsPerPageTemplate}"/>
-	<composite:attribute name="opRows" required="false" default="10"/>
+
 </composite:interface>
 
 <composite:implementation>

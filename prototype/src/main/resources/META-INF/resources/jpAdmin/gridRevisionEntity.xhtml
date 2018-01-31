@@ -53,6 +53,8 @@
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveEntity()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}" rendered="#{cc.attrs.bean.uiAllowSave}" />
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.rmEntity()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" rendered="#{cc.attrs.bean.entity.id gt 0}"/>
 							</f:facet>
+							<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+							<p:messages for="entity" redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.entity.category}" effect="fade" autoWidth="false">

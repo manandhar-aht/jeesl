@@ -44,6 +44,8 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionEntityBean.class);
 	
+	private enum FM {entity}
+	
 	private JeeslLabelBean<RE> bLabel;
 	
 	private List<RE> links; public List<RE> getLinks() {return links;}
@@ -122,16 +124,22 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 		mapping=null;
 	}
 	
-	public void saveEntity() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	public void saveEntity() throws UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(entity));}
-		if(entity.getCategory()!=null){entity.setCategory(fRevision.find(fbRevision.getClassCategory(), entity.getCategory()));}
-		entity = fRevision.save(entity);
-		reloadEntities();
-		reloadEntity();
-		bMessage.growlSuccessSaved();
-		bLabel.reload(entity);
-		updatePerformed();
+		
+		try
+		{
+			if(entity.getCategory()!=null){entity.setCategory(fRevision.find(fbRevision.getClassCategory(), entity.getCategory()));}
+			entity = fRevision.save(entity);
+			reloadEntities();
+			reloadEntity();
+			bMessage.growlSuccessSaved();
+			bLabel.reload(entity);
+			updatePerformed();
+		}
+		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
+		
 	}
 	
 	public void rmEntity() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException

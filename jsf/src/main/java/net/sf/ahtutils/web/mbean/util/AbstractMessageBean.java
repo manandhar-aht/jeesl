@@ -25,6 +25,7 @@ public class AbstractMessageBean implements Serializable
 	
 	public void growlSuccessSaved(){growlSuccess("jeeslFmObjectSaved");}
 	public void growlSuccessRemoved(){growlSuccess("fmObjectRemoved");}
+	
 	public <T extends EjbWithId> void growlSuccessSaved(T t){growlSuccess("jeeslFmObjectSaved");}
 	
 	public void growlError(String key)
@@ -37,7 +38,13 @@ public class AbstractMessageBean implements Serializable
 		FacesContextMessage.info("growl", jeeslTranslationBean.get(jeeslLocaleCode, "jeeslFmSuccess"), jeeslTranslationBean.get(jeeslLocaleCode, key));
 	}
 	
+//	@Override
 	public void errorConstraintViolationDuplicateObject() {FacesContextMessage.error(jeeslTranslationBean.get(jeeslLocaleCode,"fmConstraintViolationDuplicateObject"),"");}
+	
+	
+//	@Override
+	public <E extends Enum<E>> void errorConstraintViolationDuplicateObject(E id) {FacesContextMessage.error(id.toString(),jeeslTranslationBean.get(jeeslLocaleCode,"fmConstraintViolationDuplicateObject"),"");}
+	
 	public void errorConstraintViolationInUse() {errorConstraintViolationInUse(null);}
 	public void errorConstraintViolationInUse(String id) {errorText(id,jeeslTranslationBean.get(jeeslLocaleCode,"fmConstraintViolationInUse"));}
 	public void errorText(String text){errorTextWithId(null,text);}

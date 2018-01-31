@@ -12,6 +12,7 @@ public interface FacesMessageBean
 	void growlSuccessRemoved();
 	
 	void errorConstraintViolationDuplicateObject();
+	<E extends Enum<E>> void errorConstraintViolationDuplicateObject(E id);
 	void errorConstraintViolationInUse();
 	void errorConstraintViolationInUse(String id);
 }

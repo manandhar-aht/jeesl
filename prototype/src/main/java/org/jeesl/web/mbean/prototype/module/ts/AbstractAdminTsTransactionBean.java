@@ -8,6 +8,7 @@ import java.util.Map;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.api.handler.sb.SbDateIntervalSelection;
 import org.jeesl.controller.handler.sb.SbDateHandler;
+import org.jeesl.controller.handler.ui.helper.CodeConfirmationHandler;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
@@ -57,6 +58,10 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 
+	public CodeConfirmationHandler getCch() { return cch; }
+
+	private CodeConfirmationHandler cch;
+
 	public AbstractAdminTsTransactionBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
 	{
 		super(fbTs);
@@ -67,6 +72,7 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
 	{
 		super.initTsSuper(langs,fTs,bMessage);
+		cch = new CodeConfirmationHandler();
 		reloadTransactions();
 	}
 	
@@ -106,9 +112,12 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	
 	public void deleteTransaction() throws UtilsConstraintViolationException
 	{
-		logger.info(AbstractLogMessage.rmEntity(transaction));
-		fTs.deleteTransaction(transaction);
-		transaction=null;
-		reloadTransactions();
+		if(cch.isCodeConfirmed())
+		{
+			logger.info(AbstractLogMessage.rmEntity(transaction));
+			fTs.deleteTransaction(transaction);
+			transaction = null;
+			reloadTransactions();
+		}
 	}
 }

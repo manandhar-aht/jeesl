@@ -63,7 +63,7 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 	
 	protected void initDms(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,SECTION,F,FC,AC> fDms)
 	{
-		super.initAdmin(bTranslation.getLangKeys().toArray(new String[0]),cL,cD,bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fDms=fDms;
 	}
 	

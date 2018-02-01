@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -52,6 +51,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	
 	protected final List<META> metas; public List<META> getMetas() {return metas;}
 
+	private STORAGE storage; @Override public STORAGE getStorage() {return storage;}
 	protected CONTAINER container; @Override public CONTAINER getContainer() {return container;}
 	protected META meta; public META getMeta() {return meta;} public void setMeta(META meta) {this.meta = meta;}
 	protected File xmlFile;
@@ -69,13 +69,22 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		metas = new ArrayList<META>();
 	}
 	
-	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException
+	public <E extends Enum<E>> void initStorage(E code)
+	{
+		try
+		{
+			storage = fFr.fByCode(fbFile.getClassStorage(), code);
+		}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
+	}
+	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException {init(storage,with,withTransaction);}
+	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE initForStorage, W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		metas.clear();
 		reset(true);
 		if(with.getFrContainer()==null)
 		{
-			container = efContainer.build(storage);
+			container = efContainer.build(initForStorage);
 			if(EjbIdFactory.isSaved(with))
 			{
 				if(withTransaction){container = fFr.saveTransaction(container);}
@@ -138,18 +147,6 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		meta.setType(fFr.fByCode(fbFile.getClassType(), JeeslFileType.Code.unknown));
 	}
 	
-/*	public void handleFileUpload(FileUploadEvent event) throws UtilsNotFoundException
-	{
-		logger.info("Handling FileUpload: "+event.getFile().getFileName());
-		xmlFile.setName(event.getFile().getFileName());
-		xmlFile.setSize(event.getFile().getSize());
-		xmlFile.setData(XmlDataFactory.build(event.getFile().getContents()));
-		meta = efMeta.build(container,event.getFile().getFileName(),event.getFile().getSize(),new Date());
-		meta.setType(fFr.fByCode(fbFile.getClassType(), JeeslFileType.Code.unknown));
-		
-		logger.info(meta.toString());
-    }
-*/	
 	public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info("Saving: "+xmlFile.getName());

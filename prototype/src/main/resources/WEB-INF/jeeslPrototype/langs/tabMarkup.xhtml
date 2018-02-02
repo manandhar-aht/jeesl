@@ -6,12 +6,12 @@
     xmlns:p="http://primefaces.org/ui"
 >
 	<p:tabView var="t" value="#{localeCodes}">  
-  		<p:tab title="#{t}">
-  			<p:selectOneMenu value="#{value[t].markup}" effect="fade">  
+  		<p:tab title="#{t.code}">
+  			<p:selectOneMenu value="#{value[t.code].markup}" effect="fade">  
                 <f:selectItems value="#{markups}" var="m" itemLabel="#{m.name[localeCode].lang}" itemValue="#{m}"/>
             </p:selectOneMenu>
   		
-  			<p:inputTextarea value="#{value[t].lang}" style="w100" autocomplete="off"/>
+  			<p:inputTextarea value="#{value[t.code].lang}" style="w100" autocomplete="off"/>
   		</p:tab>  
   	</p:tabView> 
 </ui:composition>

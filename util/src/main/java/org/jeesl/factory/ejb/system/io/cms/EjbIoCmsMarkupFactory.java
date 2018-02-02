@@ -1,41 +1,21 @@
-package org.jeesl.factory.ejb.system.status;
+package org.jeesl.factory.ejb.system.io.cms;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-
-import org.jeesl.factory.txt.system.status.TxtStatusFactory;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
-import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.interfaces.facade.UtilsFacade;
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
-import net.sf.ahtutils.xml.status.Description;
-import net.sf.ahtutils.xml.status.Descriptions;
-import net.sf.exlp.util.xml.JaxbUtil;
-
-public class EjbDescriptionFactory<D extends UtilsDescription>
+public class EjbIoCmsMarkupFactory<M extends JeeslIoCmsMarkup<?>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbDescriptionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbIoCmsMarkupFactory.class);
 	
-    private final Class<D> cD;
+    private final Class<M> cM;
 	
-    public EjbDescriptionFactory(final Class<D> cD)
+    public EjbIoCmsMarkupFactory(final Class<M> cM)
     {
-        this.cD = cD;
+        this.cM = cM;
     } 
-    
-    public static <D extends UtilsDescription> EjbDescriptionFactory<D> factory(final Class<D> cD)
-    {
-        return new EjbDescriptionFactory<D>(cD);
-    }
-	
+ 
+/*	
 	public D create(Description description) throws UtilsConstraintViolationException
 	{
 		if(!description.isSetKey()){throw new UtilsConstraintViolationException("Key not set: "+JaxbUtil.toString(description));}
@@ -162,4 +142,5 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 		}
 		return ejb;
 	}
+	*/
 }

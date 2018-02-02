@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.util;
 
+import java.io.Serializable;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -10,7 +12,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 public interface JeeslProperty <L extends UtilsLang, D extends UtilsDescription,
 								C extends UtilsStatus<C,L,D>,
 								P extends JeeslProperty<L,D,C,P>>
-		extends EjbSaveable,EjbWithLang<L>,EjbWithDescription<D>
+		extends Serializable,EjbSaveable,EjbWithLang<L>,EjbWithDescription<D>
 {
 	C getCategory();
 	void setCategory(C category);

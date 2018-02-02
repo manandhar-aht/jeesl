@@ -18,7 +18,7 @@ public interface JeeslIoCmsElement<L extends UtilsLang,D extends UtilsDescriptio
 									
 									EC extends UtilsStatus<EC,L,D>,
 									ET extends UtilsStatus<ET,L,D>,
-									C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,?,EC,ET,C,M,LOC>,
+									C extends JeeslIoCmsContent<L,D,V,S,?,EC,ET,C,M,LOC>,
 									M extends UtilsStatus<M,L,D>,
 									LOC extends UtilsStatus<LOC,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPositionParent

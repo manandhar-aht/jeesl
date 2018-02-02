@@ -21,7 +21,7 @@ public class IoCmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,EC,ET,C,MT,LOC>,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
-								C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC>,
+								C extends JeeslIoCmsContent<L,D,V,S,E,EC,ET,C,MT,LOC>,
 								MT extends UtilsStatus<MT,L,D>,
 								LOC extends UtilsStatus<LOC,L,D>>
 				extends AbstractFactoryBuilder<L,D>

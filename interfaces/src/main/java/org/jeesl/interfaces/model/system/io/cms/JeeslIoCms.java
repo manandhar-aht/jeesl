@@ -19,7 +19,7 @@ public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
 								
 								V extends JeeslIoCmsVisiblity,
 								S extends JeeslIoCmsSection<L,S>,
-								E extends JeeslIoCmsElement<L,D,CAT,?,V,S,E,EC,ET,C,M,LOC>,
+								E extends JeeslIoCmsElement<L,D,CAT,?,V,S,EC,ET,C,M,LOC>,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<L,D,CAT,?,V,S,E,EC,ET,C,M,LOC>,

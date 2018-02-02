@@ -47,7 +47,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 										CMS extends JeeslIoCms<L,D,CAT,V,S,E,EC,ET,C,M,LOC>,
 										V extends JeeslIoCmsVisiblity,
 										S extends JeeslIoCmsSection<L,S>,
-										E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,
+										E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,EC,ET,C,M,LOC>,
 										EC extends UtilsStatus<EC,L,D>,
 										ET extends UtilsStatus<ET,L,D>,
 										C extends JeeslIoCmsContent<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>,

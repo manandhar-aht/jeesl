@@ -12,7 +12,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslIoCmsElement<L extends UtilsLang,D extends UtilsDescription,
 									CAT extends UtilsStatus<CAT,L,D>,
-									CMS extends JeeslIoCms<L,D,CAT,V,S,?,EC,ET,C,M,LOC>,
+									CMS extends JeeslIoCms<L,D,CAT,V,S,M,LOC>,
 									V extends JeeslIoCmsVisiblity,
 									S extends JeeslIoCmsSection<L,S>,
 									

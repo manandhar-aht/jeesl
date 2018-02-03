@@ -28,7 +28,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class OfxCmsRenderer<L extends UtilsLang,D extends UtilsDescription,
 							CAT extends UtilsStatus<CAT,L,D>,
-							CMS extends JeeslIoCms<L,D,CAT,V,S,M,LOC>,
+							CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 							V extends JeeslIoCmsVisiblity,
 							S extends JeeslIoCmsSection<L,S>,
 							E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,EC,ET,C,M,LOC>,

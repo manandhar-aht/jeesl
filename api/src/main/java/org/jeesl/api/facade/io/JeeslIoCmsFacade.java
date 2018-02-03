@@ -15,14 +15,14 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public interface JeeslIoCmsFacade <L extends UtilsLang,D extends UtilsDescription,
 									CAT extends UtilsStatus<CAT,L,D>,
-									CMS extends JeeslIoCms<L,D,CAT,V,S,M,LOC>,
+									CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 									V extends JeeslIoCmsVisiblity,
 									S extends JeeslIoCmsSection<L,S>,
-									E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,EC,ET,C,M,LOC>,
+									E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,EC,ET,C,MT,LOC>,
 									EC extends UtilsStatus<EC,L,D>,
 									ET extends UtilsStatus<ET,L,D>,
-									C extends JeeslIoCmsContent<L,D,V,S,E,EC,ET,C,M,LOC>,
-									M extends UtilsStatus<M,L,D>,
+									C extends JeeslIoCmsContent<L,D,V,S,E,EC,ET,C,MT,LOC>,
+									MT extends UtilsStatus<MT,L,D>,
 									LOC extends UtilsStatus<LOC,L,D>>
 						extends UtilsFacade
 {

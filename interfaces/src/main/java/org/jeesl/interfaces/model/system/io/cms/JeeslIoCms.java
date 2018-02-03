@@ -16,11 +16,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
-								
-								V extends JeeslIoCmsVisiblity,
 								S extends JeeslIoCmsSection<L,S>,
-
-								M extends UtilsStatus<M,L,D>,
 								LOC extends UtilsStatus<LOC,L,D>>
 		extends Serializable,EjbWithId,
 				EjbSaveable,EjbRemoveable,EjbWithPosition,EjbWithLang<L>,JeeslWithCategory<L,D,CAT>

@@ -289,13 +289,19 @@
 		<s:langs>
 		 	<s:lang key="en" translation="Category"/>
 	        <s:lang key="fr" translation="Category"/>
-    	</s:langs>
+    		</s:langs>
 	</s:translation>
 	<s:translation key="TsInterval">
 		<s:langs>
 		 	<s:lang key="en" translation="Observation Interval"/>
 	        <s:lang key="fr" translation="Observation Interval"/>
-    	</s:langs>
+   	 	</s:langs>
+	</s:translation>
+	<s:translation key="TsScopeType">
+		<s:langs>
+		 	<s:lang key="en" translation="Scope Type"/>
+	        <s:lang key="fr" translation="Scope Type"/>
+   	 	</s:langs>
 	</s:translation>
 	<s:translation key="TsWorkspace">
 		<s:langs>
@@ -307,7 +313,7 @@
 		<s:langs>
 			<s:lang key="en" translation="Unit" />
 			<s:lang key="fr" translation="Unit" />
-    	</s:langs>
+    		</s:langs>
 	</s:translation>
 	<s:translation key="TsStatistic">
 		<s:langs>

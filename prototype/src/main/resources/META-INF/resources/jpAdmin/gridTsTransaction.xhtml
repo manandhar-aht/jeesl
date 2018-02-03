@@ -90,7 +90,7 @@
 			       	</p:dataTable>
 				</aht:slot>
                 <h:form id="fCode">
-                    <jpSec:codeConfirmation update=":#{cc.id}:grid" actionListener="#{cc.attrs.bean.deleteTransaction()}" handler="#{cc.attrs.bean.cch}"/>
+                    <jpSec:codeConfirmation id="codeConfirmator" update=":#{cc.id}:grid" block=":#{cc.id}:grid" actionListener="#{cc.attrs.bean.deleteTransaction()}" handler="#{cc.attrs.bean.cch}"/>
                 </h:form>
 			</aht:row>
 	    </aup:grid>

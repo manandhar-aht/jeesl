@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
@@ -68,9 +69,9 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		super(fbTs);
 	}
 	
-	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
+	protected void postConstructScope(JeeslTranslationBean bTranslation, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
 	{
-		super.initTsSuper(langs,fTs,bMessage);
+		super.initTsSuper(bTranslation.getLangKeys().toArray(new String[bTranslation.getLangKeys().size()]),fTs,bMessage);
 		initLists();
 		reloadScopes();
 	}
@@ -99,16 +100,16 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	{
 		logger.info(AbstractLogMessage.addEntity(fbTs.getClassScope()));
 		scope = efScope.build(null);
-		scope.setName(efLang.createEmpty(langs));
-		scope.setDescription(efDescription.createEmpty(langs));
+		scope.setName(efLang.createEmpty(localeCodes));
+		scope.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	public void select() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(scope));
 		scope = fTs.find(fbTs.getClassScope(), scope);
-		scope = efLang.persistMissingLangs(fTs,langs,scope);
-		scope = efDescription.persistMissingLangs(fTs,langs,scope);
+		scope = efLang.persistMissingLangs(fTs,localeCodes,scope);
+		scope = efDescription.persistMissingLangs(fTs,localeCodes,scope);
 	}
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException

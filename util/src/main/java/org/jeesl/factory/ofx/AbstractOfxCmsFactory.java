@@ -25,7 +25,7 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 								CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 								V extends JeeslIoCmsVisiblity,
 								S extends JeeslIoCmsSection<L,S>,
-								E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,EC,ET,C,M,LOC>,
+								E extends JeeslIoCmsElement<V,S,EC,ET,C,M,LOC>,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<L,D,V,S,E,EC,ET,C,M,LOC>,

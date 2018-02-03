@@ -4,23 +4,19 @@ import java.util.Map;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslIoCmsElement<L extends UtilsLang,D extends UtilsDescription,
-									CAT extends UtilsStatus<CAT,L,D>,
-									CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
+public interface JeeslIoCmsElement<
 									V extends JeeslIoCmsVisiblity,
-									S extends JeeslIoCmsSection<L,S>,
+									S extends JeeslIoCmsSection<?,S>,
 									
-									EC extends UtilsStatus<EC,L,D>,
-									ET extends UtilsStatus<ET,L,D>,
-									C extends JeeslIoCmsContent<L,D,V,S,?,EC,ET,C,M,LOC>,
-									M extends UtilsStatus<M,L,D>,
-									LOC extends UtilsStatus<LOC,L,D>>
+									EC extends UtilsStatus<EC,?,?>,
+									ET extends UtilsStatus<ET,?,?>,
+									C extends JeeslIoCmsContent<?,?,V,S,?,EC,ET,C,M,LOC>,
+									M extends UtilsStatus<M,?,?>,
+									LOC extends UtilsStatus<LOC,?,?>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPositionParent
 {	
 	public enum Attributes{section}

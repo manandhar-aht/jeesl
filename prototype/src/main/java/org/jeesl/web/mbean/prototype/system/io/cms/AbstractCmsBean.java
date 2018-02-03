@@ -48,7 +48,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 										CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 										V extends JeeslIoCmsVisiblity,
 										S extends JeeslIoCmsSection<L,S>,
-										E extends JeeslIoCmsElement<L,D,CAT,CMS,V,S,EC,ET,C,MT,LOC>,
+										E extends JeeslIoCmsElement<V,S,EC,ET,C,MT,LOC>,
 										EC extends UtilsStatus<EC,L,D>,
 										ET extends UtilsStatus<ET,L,D>,
 										C extends JeeslIoCmsContent<L,D,V,S,E,EC,ET,C,MT,LOC>,
@@ -61,15 +61,12 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	final static Logger logger = LoggerFactory.getLogger(AbstractCmsBean.class);
 	
 	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms;
+	private final IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT> fbCms;
 	
-	private final Class<CAT> cCat;
-	private final Class<CMS> cCms;
-	private final Class<S> cSection;
 	private final Class<E> cElement;
 	private final Class<EC> cElementCategory;
 	private final Class<ET> cType;
 	private final Class<MT> cMarkup;
-	private final Class<LOC> cLoc;
 	
 	private String currentLocaleCode;
 	protected String[] cmsLocales; public String[] getCmsLocales() {return cmsLocales;}
@@ -101,21 +98,19 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsBean(IoCmsFactoryBuilder<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fbCms,
+	public AbstractCmsBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT> fbCms,
 			final Class<LOC> cLoc, final Class<CAT> cCat, final Class<CMS> cCms, final Class<S> cSection, final Class<E> cElement, Class<EC> cElementCategory, final Class<ET> cType, final Class<C> cContent, final Class<MT> cMarkup)
 	{
 		super(fbCms.getClassL(),fbCms.getClassD());
-		this.cLoc=cLoc;
-		this.cCat=cCat;
-		this.cCms=cCms;
-		this.cSection=cSection;
+		this.fbCms=fbCms;
+
 		this.cElement=cElement;
 		this.cElementCategory=cElementCategory;
 		this.cType=cType;
 		this.cMarkup=cMarkup;
 		
-		efCms = new EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC>(cCms);
-		efS = new EjbIoCmsSectionFactory<L,S>(cSection);
+		efCms = fbCms.ejbCms();
+		efS = fbCms.ejbSection();
 		efElement = new EjbIoCmsElementFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC>(cElement);
 		efContent = EjbIoCmsContentFactory.factory(cContent);
 		
@@ -143,15 +138,15 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	
 	protected <EN extends Enum<EN>> void initCategory(EN code)
 	{
-		try {category = fCms.fByCode(cCat, code);}
+		try {category = fCms.fByCode(fbCms.getClassCategory(), code);}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 	}
 	
 	protected abstract void reloadCmsDocuments();
 	protected void reloadCmsDocumentsForCategory()
 	{
-		sbhCms.setList(fCms.allForCategory(cCms,category));
-		logger.info(AbstractLogMessage.reloaded(cCms, sbhCms.getList()));
+		sbhCms.setList(fCms.allForCategory(fbCms.getClassCms(),category));
+		logger.info(AbstractLogMessage.reloaded(fbCms.getClassCms(), sbhCms.getList()));
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
@@ -192,7 +187,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	protected abstract void addDocument();
 	public void addDocumentForCategory()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cCms));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbCms.getClassCms()));}
 		cms = efCms.build(category,efS.build());
 		cms.setName(efLang.createEmpty(localeCodes));
 	}
@@ -220,7 +215,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	
 	private void reloadCms()
 	{
-		cms = fCms.find(cCms,cms);
+		cms = fCms.find(fbCms.getClassCms(),cms);
 		opLocale.setTbList(cms.getLocales());
 		
 		cmsLocales = new String[cms.getLocales().size()];
@@ -308,7 +303,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	@Override public void addOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addOpEntity(item));}
-		if(cLoc.isAssignableFrom(item.getClass()))
+		if(fbCms.getClassLocale().isAssignableFrom(item.getClass()))
 		{
 			LOC locale = (LOC)item;
 			if(!cms.getLocales().contains(locale))
@@ -323,7 +318,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	@Override public void rmOpEntity(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmOpEntity(item));}
-		if(cLoc.isAssignableFrom(item.getClass()))
+		if(fbCms.getClassLocale().isAssignableFrom(item.getClass()))
 		{
 			LOC locale = (LOC)item;
 			if(cms.getLocales().contains(locale))
@@ -337,7 +332,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
     
 	public void addSection() 
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cSection));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbCms.getClassSection()));}
 		section = efS.build(cms.getRoot());
 		section.setName(efLang.createEmpty(cmsLocales));
 		for(String k : section.getName().keySet()){section.getName().get(k).setLang("XXX");}

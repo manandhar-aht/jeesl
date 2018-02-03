@@ -12,7 +12,7 @@ public interface JeeslIoCmsContent<L extends UtilsLang,D extends UtilsDescriptio
 								
 								V extends JeeslIoCmsVisiblity,
 								S extends JeeslIoCmsSection<L,S>,
-								E extends JeeslIoCmsElement<L,D,?,?,V,S,EC,ET,C,MT,LOC>,
+								E extends JeeslIoCmsElement<V,S,EC,ET,C,MT,LOC>,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<L,D,V,S,E,EC,ET,C,MT,LOC>,

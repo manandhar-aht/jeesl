@@ -18,10 +18,10 @@ public interface JeeslIoCmsFacade <L extends UtilsLang,D extends UtilsDescriptio
 									CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 									V extends JeeslIoCmsVisiblity,
 									S extends JeeslIoCmsSection<L,S>,
-									E extends JeeslIoCmsElement<V,S,EC,ET,C,MT,LOC>,
+									E extends JeeslIoCmsElement<V,S,EC,ET,C>,
 									EC extends UtilsStatus<EC,L,D>,
 									ET extends UtilsStatus<ET,L,D>,
-									C extends JeeslIoCmsContent<L,D,V,S,E,EC,ET,C,MT,LOC>,
+									C extends JeeslIoCmsContent<V,E,MT>,
 									MT extends UtilsStatus<MT,L,D>,
 									LOC extends UtilsStatus<LOC,L,D>>
 						extends UtilsFacade

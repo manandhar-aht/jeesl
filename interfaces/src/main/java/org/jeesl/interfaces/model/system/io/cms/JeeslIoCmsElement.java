@@ -14,9 +14,7 @@ public interface JeeslIoCmsElement<
 									
 									EC extends UtilsStatus<EC,?,?>,
 									ET extends UtilsStatus<ET,?,?>,
-									C extends JeeslIoCmsContent<?,?,V,S,?,EC,ET,C,M,LOC>,
-									M extends UtilsStatus<M,?,?>,
-									LOC extends UtilsStatus<LOC,?,?>>
+									C extends JeeslIoCmsContent<V,?,?>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPositionParent
 {	
 	public enum Attributes{section}

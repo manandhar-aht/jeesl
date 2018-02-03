@@ -2,22 +2,13 @@ package org.jeesl.interfaces.model.system.io.cms;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslIoCmsContent<L extends UtilsLang,D extends UtilsDescription,
-								
-								V extends JeeslIoCmsVisiblity,
-								S extends JeeslIoCmsSection<L,S>,
-								E extends JeeslIoCmsElement<V,S,EC,ET,C,MT,LOC>,
-								EC extends UtilsStatus<EC,L,D>,
-								ET extends UtilsStatus<ET,L,D>,
-								C extends JeeslIoCmsContent<L,D,V,S,E,EC,ET,C,MT,LOC>,
-								MT extends UtilsStatus<MT,L,D>,
-								LOC extends UtilsStatus<LOC,L,D>>
+public interface JeeslIoCmsContent<V extends JeeslIoCmsVisiblity,
+								E extends JeeslIoCmsElement<V,?,?,?,?>,
+								MT extends UtilsStatus<MT,?,?>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithParentAttributeResolver
 {	
 	public enum Attributes{element}

@@ -27,26 +27,26 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 								CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 								V extends JeeslIoCmsVisiblity,
 								S extends JeeslIoCmsSection<L,S>,
-								E extends JeeslIoCmsElement<V,S,EC,ET,C,M,LOC>,
+								E extends JeeslIoCmsElement<V,S,EC,ET,C>,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
-								C extends JeeslIoCmsContent<L,D,V,S,E,EC,ET,C,M,LOC>,
-								M extends UtilsStatus<M,L,D>,
+								C extends JeeslIoCmsContent<V,E,MT>,
+								MT extends UtilsStatus<MT,L,D>,
 								LOC extends UtilsStatus<LOC,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractOfxCmsFactory.class);
 	
 	protected final String localeCode;
-	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> fCms;
+	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms;
 	
-	private final OfxParagraphFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> ofParagraph;
+	private final OfxParagraphFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> ofParagraph;
 	
-	public AbstractOfxCmsFactory(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC> fCms)
+	public AbstractOfxCmsFactory(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
 	{
 		this.localeCode=localeCode;
 		this.fCms = fCms;
 		
-		ofParagraph = new OfxParagraphFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,M,LOC>(localeCode);
+		ofParagraph = new OfxParagraphFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC>(localeCode);
 	}
 	
 	public Sections build(CMS cms) throws OfxAuthoringException

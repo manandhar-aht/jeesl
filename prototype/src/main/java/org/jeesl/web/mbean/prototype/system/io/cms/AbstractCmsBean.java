@@ -64,8 +64,6 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms;
 	private final IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT> fbCms;
 	
-	private final Class<MT> cMarkup;
-	
 	private String currentLocaleCode;
 	protected String[] cmsLocales; public String[] getCmsLocales() {return cmsLocales;}
 	
@@ -96,13 +94,10 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT> fbCms,
-			Class<EC> cElementCategory, final Class<ET> cType, final Class<C> cContent, final Class<MT> cMarkup)
+	public AbstractCmsBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT> fbCms)
 	{
 		super(fbCms.getClassL(),fbCms.getClassD());
 		this.fbCms=fbCms;
-
-		this.cMarkup=cMarkup;
 		
 		efCms = fbCms.ejbCms();
 		efS = fbCms.ejbSection();
@@ -127,7 +122,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		elementCategories=fCms.allOrderedPositionVisible(fbCms.getClassElementCategory());
 		types.addAll(fCms.allOrderedPositionVisible(fbCms.getClassElementType()));
 		
-		try {markupHtml = fCms.fByCode(cMarkup, JeeslIoCmsContent.Markup.html);}
+		try {markupHtml = fCms.fByCode(fbCms.getClassMarkupType(), JeeslIoCmsContent.Markup.html);}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 	

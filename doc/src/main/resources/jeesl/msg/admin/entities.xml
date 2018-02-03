@@ -149,6 +149,13 @@
 			<s:lang key="fr" translation="File Type"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IoCmsMarkupType">
+		<s:langs>
+			<s:lang key="de" translation="Markup Typ"/>
+			<s:lang key="en" translation="Markup Type"/>
+			<s:lang key="fr" translation="Markup Type"/>
+		</s:langs>
+	</s:translation>
 	
 	<s:translation key="IoTemplateCategory">
 		<s:langs>

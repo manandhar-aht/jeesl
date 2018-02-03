@@ -22,6 +22,7 @@ public interface JeeslTsScope <L extends UtilsLang, D extends UtilsDescription,
 									UNIT extends UtilsStatus<UNIT,L,D>,
 									EC extends JeeslTsEntityClass<L,D,CAT>,
 									INT extends UtilsStatus<INT,L,D>
+//									,AS extends JeeslAttributeSet<L,D,?,?>
 									>
 		extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,EjbWithCode,
 				EjbWithPositionVisibleParent,EjbWithParentAttributeResolver,EjbWithPositionParent,

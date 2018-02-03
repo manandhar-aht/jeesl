@@ -1,15 +1,16 @@
 package org.jeesl.interfaces.model.module.ts;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import java.io.Serializable;
+
+import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslTimeSeries <L extends UtilsLang, D extends UtilsDescription,
-									SCOPE extends JeeslTsScope<L,D,?,?,?,INT>,
+public interface JeeslTimeSeries <SCOPE extends JeeslTsScope<?,?,?,?,?,INT>,
 									BRIDGE extends JeeslTsBridge<?>,
-									INT extends UtilsStatus<INT,L,D>>
-		extends EjbWithId
+									INT extends UtilsStatus<INT,?,?>>
+		extends EjbWithId,Serializable,EjbRemoveable,EjbPersistable
 {
 	public enum Attributes{scope,interval,bridge}
 	

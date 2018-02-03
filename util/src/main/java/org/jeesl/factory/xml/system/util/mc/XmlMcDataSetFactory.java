@@ -2,24 +2,13 @@ package org.jeesl.factory.xml.system.util.mc;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
-import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
-import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
-import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
-import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
-import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
 import org.jeesl.model.xml.module.ts.TimeSeries;
 import org.metachart.xml.chart.Data;
 import org.metachart.xml.chart.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.exlp.util.DateUtil;
 
 public class XmlMcDataSetFactory
@@ -40,7 +29,7 @@ public class XmlMcDataSetFactory
 		return ds;	
 	}
 	
-	public static <DATA extends JeeslTsData<?,?,?,?,?,?>> DataSet build(List<DATA> datas)
+	public static <DATA extends JeeslTsData<?,?,?,?>> DataSet build(List<DATA> datas)
 	{
 		DataSet ds = new DataSet();
 		

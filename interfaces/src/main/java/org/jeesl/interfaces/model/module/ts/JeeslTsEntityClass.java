@@ -14,7 +14,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslTsEntityClass <L extends UtilsLang,D extends UtilsDescription,CAT extends UtilsStatus<CAT,L,D>>
+public interface JeeslTsEntityClass <L extends UtilsLang, D extends UtilsDescription,
+									CAT extends UtilsStatus<CAT,L,D>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,
 				EjbWithPositionVisibleParent,EjbWithParentAttributeResolver,EjbWithPositionParent,

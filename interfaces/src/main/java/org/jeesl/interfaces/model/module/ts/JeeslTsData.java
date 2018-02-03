@@ -1,18 +1,19 @@
 package org.jeesl.interfaces.model.module.ts;
 
+import java.io.Serializable;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface JeeslTsData <L extends UtilsLang, D extends UtilsDescription,
-								TS extends JeeslTimeSeries<L,D,?,?,?>,
-								TRANSACTION extends JeeslTsTransaction<L,D,?,?,?,TS,TRANSACTION,?,?,?,?,?,SAMPLE,?,WS,?>,
+public interface JeeslTsData <TS extends JeeslTimeSeries<?,?,?>,
+								TRANSACTION extends JeeslTsTransaction<?,?,?>,
 								SAMPLE extends JeeslTsSample, 
-								WS extends UtilsStatus<WS,L,D>>
-		extends EjbWithId,EjbWithRecord,EjbSaveable
+								WS extends UtilsStatus<WS,?,?>>
+		extends EjbWithId,EjbWithRecord,EjbSaveable,Serializable,EjbRemoveable,EjbPersistable
 {
 	public enum Attributes{transaction,timeSeries,workspace,record,value}
 	

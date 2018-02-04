@@ -45,6 +45,7 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	
 	private final Class<CAT> cCategory; public Class<CAT> getClassCategory() {return cCategory;}
 	private final Class<SCOPE> cScope; public Class<SCOPE> getClassScope() {return cScope;}
+	private final Class<ST> cScopeType; public Class<ST> getClassScopeType() {return cScopeType;}
 	private final Class<UNIT> cUnit; public Class<UNIT> getClassUnit()  {return cUnit;}
 	private final Class<TS> cTs; public Class<TS> getClassTs() {return cTs;}
 	private final Class<TRANSACTION> cTransaction; public Class<TRANSACTION> getClassTransaction() {return cTransaction;}
@@ -55,11 +56,12 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	private final Class<DATA> cData;  public Class<DATA> getClassData() {return cData;}
 	private final Class<WS> cWs; public Class<WS> getClassWorkspace() {return cWs;}
 	
-	public TsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt,final Class<DATA> cData, final Class<WS> cWs)
+	public TsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<ST> cScopeType, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt,final Class<DATA> cData, final Class<WS> cWs)
 	{
 		super(cL,cD);
 		this.cCategory=cCategory;
 		this.cScope=cScope;
+		this.cScopeType=cScopeType;
 		this.cUnit=cUnit;
 		this.cTs=cTs;		
         this.cTransaction=cTransaction;
@@ -69,25 +71,6 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
         this.cInt=cInt;
         this.cData=cData;
         this.cWs=cWs;
-	}
-	
-	public static <L extends UtilsLang, D extends UtilsDescription,
-					CAT extends UtilsStatus<CAT,L,D>,
-					SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
-					ST extends UtilsStatus<ST,L,D>,
-					UNIT extends UtilsStatus<UNIT,L,D>,
-					TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
-					TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>, SOURCE extends EjbWithLangDescription<L,D>, 
-					BRIDGE extends JeeslTsBridge<EC>,
-					EC extends JeeslTsEntityClass<L,D,CAT>,
-					INT extends UtilsStatus<INT,L,D>,
-					DATA extends JeeslTsData<TS,TRANSACTION,SAMPLE,WS>, SAMPLE extends JeeslTsSample, 
-					USER extends EjbWithId, 
-					WS extends UtilsStatus<WS,L,D>,
-					QAF extends UtilsStatus<QAF,L,D>>
-	TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> factory(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
-	{
-		return new TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cL,cD,cCategory,cScope,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
 	}
 	
 	public EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> ts()

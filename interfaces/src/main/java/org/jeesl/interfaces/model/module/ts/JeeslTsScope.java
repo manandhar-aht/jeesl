@@ -37,6 +37,9 @@ public interface JeeslTsScope <L extends UtilsLang, D extends UtilsDescription,
 	UNIT getUnit();
 	void setUnit(UNIT unit);
 	
+	ST getType();
+	void setType(ST type);
+	
 	String getCode();
 	void setCode(String code);
 	

@@ -40,38 +40,76 @@ public class JeeslGraphicDbUpdater <G extends JeeslGraphic<?,?,G,GT,?,?>, GT ext
 	public <W extends EjbWithCodeGraphic<G>> void update(Class<W> cStatus, List<Status> list)
 	{
 		if(debugOnInfo) {logger.info(StringUtil.stars());}		
-		GT svg;
-		try {svg = fGraphic.fByCode(fbGraphic.getClassGraphicType(), JeeslGraphicType.Code.svg);}
-		catch (UtilsNotFoundException e1) {logger.warn("Type svg not available");return;}
+		
+		
 		
 		for(Status xml : list)
 		{
-			if(xml.isSetGraphic()
-					&& xml.getGraphic().isSetType() && xml.getGraphic().getType().isSetCode() && xml.getGraphic().getType().getCode().equals(JeeslGraphicType.Code.svg.toString())
-					&& xml.getGraphic().isSetFile() && xml.getGraphic().getFile().isSetData())
 			try
 			{
 				W ejb = fGraphic.fByCode(cStatus,xml.getCode());
 				if(debugOnInfo) {logger.info(ejb.toString());}
 				
-				G graphic;
-				try
+				if(xml.isSetGraphic())
 				{
-					graphic = fGraphic.fGraphic(cStatus, ejb.getId());
+					if(xml.getGraphic().isSetType() && xml.getGraphic().getType().isSetCode() && xml.getGraphic().getType().getCode().equals(JeeslGraphicType.Code.svg.toString())
+						&& xml.getGraphic().isSetFile() && xml.getGraphic().getFile().isSetData())
+					{
+						updateSvg(cStatus,ejb,xml);
+					}
+					else if(xml.getGraphic().isSetType() && xml.getGraphic().getType().isSetCode() && xml.getGraphic().getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
+					{
+						updateSymbol(cStatus,ejb,xml);	
+					}
 				}
-				catch (UtilsNotFoundException e)
-				{
-					if(debugOnInfo) {logger.info("Creating new "+fbGraphic.getClassGraphic());}
-					graphic = fGraphic.save(efGraphic.build(svg));
-					ejb.setGraphic(graphic);
-					fGraphic.update(ejb);
-				}
-				graphic.setData(xml.getGraphic().getFile().getData().getValue());
-				fGraphic.update(graphic);
+				
 			}
 			catch (UtilsNotFoundException e) {e.printStackTrace();}
 			catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 			catch (UtilsLockingException e) {e.printStackTrace();}
 		}
+	}
+	
+	public <W extends EjbWithCodeGraphic<G>> void updateSvg(Class<W> cStatus, W ejb, Status xml) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	{
+		GT svg = fGraphic.fByCode(fbGraphic.getClassGraphicType(), JeeslGraphicType.Code.svg);
+		
+		G graphic;
+		try
+		{
+			graphic = fGraphic.fGraphic(cStatus, ejb.getId());
+			graphic.setType(svg);
+		}
+		catch (UtilsNotFoundException e)
+		{
+			if(debugOnInfo) {logger.info("Creating new "+fbGraphic.getClassGraphic());}
+			graphic = fGraphic.save(efGraphic.build(svg));
+			ejb.setGraphic(graphic);
+			fGraphic.update(ejb);
+		}
+		graphic.setData(xml.getGraphic().getFile().getData().getValue());
+		fGraphic.update(graphic);
+	}
+	
+	public <W extends EjbWithCodeGraphic<G>> void updateSymbol(Class<W> cStatus, W ejb, Status xml) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	{
+		GT symbol = fGraphic.fByCode(fbGraphic.getClassGraphicType(), JeeslGraphicType.Code.symbol);
+		
+		G graphic;
+		try
+		{
+			graphic = fGraphic.fGraphic(cStatus, ejb.getId());
+			graphic.setType(symbol);
+		}
+		catch (UtilsNotFoundException e)
+		{
+			if(debugOnInfo) {logger.info("Creating new "+fbGraphic.getClassGraphic());}
+			graphic = fGraphic.save(efGraphic.build(symbol));
+			ejb.setGraphic(graphic);
+			fGraphic.update(ejb);
+		}
+		logger.warn("NYI: Further Processing of symbol");
+		
+		fGraphic.update(graphic);
 	}
 }

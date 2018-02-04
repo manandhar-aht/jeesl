@@ -29,13 +29,15 @@ import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.util.xml.JaxbUtil;
 
-public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription, G extends JeeslGraphic<L,D,G,?,?,?>>
+public class JeeslStatusDbUpdater <L extends UtilsLang, D extends UtilsDescription,
+									S extends UtilsStatus<S,L,D>,
+									G extends JeeslGraphic<L,D,G,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslStatusDbUpdater.class);
 	
 	private final Map<String,Set<Long>> mDbAvailableStatus;
 	private Set<Long> sDeleteLangs,sDeleteDescriptions;
-
+	
 	private EjbStatusFactory<S,L,D> statusEjbFactory;
 	private UtilsFacade fStatus;
 
@@ -44,7 +46,6 @@ public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends Utils
 		mDbAvailableStatus = new Hashtable<String,Set<Long>>();
 		sDeleteLangs = new HashSet<Long>();
 		sDeleteDescriptions = new HashSet<Long>();
-
 	}
 	
 	public void setStatusEjbFactory(EjbStatusFactory<S,L,D> statusEjbFactory) {this.statusEjbFactory = statusEjbFactory;}
@@ -251,7 +252,6 @@ public class JeeslStatusDbUpdater <S extends UtilsStatus<S,L,D>, L extends Utils
 				else{ejb.setVisible(false);}
 				
 				ejb = fStatus.update(ejb);
-				
 				
 			}
 			catch (UtilsConstraintViolationException e){logger.error("",e);}

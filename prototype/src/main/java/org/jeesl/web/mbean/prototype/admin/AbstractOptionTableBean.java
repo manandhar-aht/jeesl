@@ -448,9 +448,9 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		JaxbUtil.info(xml);
 		
 		JeeslStatusDbUpdater asdi = new JeeslStatusDbUpdater();
-        asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(cS, cL, cD,bTranslation.getLangKeys()));
+        asdi.setStatusEjbFactory(EjbStatusFactory.createFactory(cS,cL,cD,bTranslation.getLangKeys()));
         asdi.setFacade(fUtils);
-        DataUpdate dataUpdate = asdi.iuStatus(xml.getStatus(), cS, cL, clParent);
+        DataUpdate dataUpdate = asdi.iuStatus(xml.getStatus(),cS,cL,clParent);
         asdi.deleteUnusedStatus(cS, cL, cD);
         JaxbUtil.info(dataUpdate);
         
@@ -459,6 +459,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
         selectCategory();
 	}
 	
+	@SuppressWarnings("unchecked")
 	private Container getFromRest(String code) throws UtilsConfigurationException
 	{
 		ResteasyClient client = new ResteasyClientBuilder().build();

@@ -23,7 +23,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class EjbTsFactory<L extends UtilsLang,D extends UtilsDescription,
 							CAT extends UtilsStatus<CAT,L,D>,
-							SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+							SCOPE extends JeeslTsScope<L,D,CAT,?,UNIT,EC,INT>,
 							UNIT extends UtilsStatus<UNIT,L,D>,
 							TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 							TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,

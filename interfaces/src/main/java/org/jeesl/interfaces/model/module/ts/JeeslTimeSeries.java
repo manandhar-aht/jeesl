@@ -7,7 +7,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslTimeSeries <SCOPE extends JeeslTsScope<?,?,?,?,?,INT>,
+public interface JeeslTimeSeries <SCOPE extends JeeslTsScope<?,?,?,?,?,?,INT>,
 									BRIDGE extends JeeslTsBridge<?>,
 									INT extends UtilsStatus<INT,?,?>>
 		extends EjbWithId,Serializable,EjbRemoveable,EjbPersistable

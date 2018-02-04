@@ -36,7 +36,7 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
-											SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+											SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
 											ST extends UtilsStatus<ST,L,D>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
 											TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
@@ -63,7 +63,7 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 	protected final SbSingleHandler<EC> sbhClass; public SbSingleHandler<EC> getSbhClass() {return sbhClass;}
 	protected final SbSingleHandler<INT> sbhInterval; public SbSingleHandler<INT> getSbhInterval() {return sbhInterval;}
 	
-	public AbstractAdminTsViewerBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
+	public AbstractAdminTsViewerBean(final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
 	{
 		super(fbTs);
 		sbhScope = new SbSingleHandler<SCOPE>(fbTs.getClassScope(),this);
@@ -74,7 +74,7 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 		mapTsEntity = new HashMap<TS,EjbWithId>();
 	}
 	
-	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
+	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
 	{
 		super.initTsSuper(langs,fTs,bMessage);
 		sbhCategory.toggleAll();

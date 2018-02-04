@@ -25,7 +25,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
-								SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+								SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
+								ST extends UtilsStatus<ST,L,D>,
 								UNIT extends UtilsStatus<UNIT,L,D>,
 								TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 								TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
@@ -72,7 +73,8 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	
 	public static <L extends UtilsLang, D extends UtilsDescription,
 					CAT extends UtilsStatus<CAT,L,D>,
-					SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+					SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
+					ST extends UtilsStatus<ST,L,D>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
 					TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 					TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>, SOURCE extends EjbWithLangDescription<L,D>, 
@@ -83,9 +85,9 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 					USER extends EjbWithId, 
 					WS extends UtilsStatus<WS,L,D>,
 					QAF extends UtilsStatus<QAF,L,D>>
-	TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> factory(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
+	TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> factory(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt, final Class<DATA> cData, final Class<WS> cWs)
 	{
-		return new TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cL,cD,cCategory,cScope,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
+		return new TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cL,cD,cCategory,cScope,cUnit,cTs,cTransaction,cSource,cBridge,cEc,cInt,cData,cWs);
 	}
 	
 	public EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> ts()

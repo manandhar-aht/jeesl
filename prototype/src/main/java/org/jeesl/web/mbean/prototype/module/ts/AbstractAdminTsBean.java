@@ -38,7 +38,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescription,
 									CAT extends UtilsStatus<CAT,L,D>,
-									SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+									SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
 									ST extends UtilsStatus<ST,L,D>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
 									TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
@@ -58,8 +58,8 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminTsBean.class);
 	
-	protected JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
-	protected final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs;
+	protected JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
+	protected final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs;
 	
 	protected List<CAT> categories; public List<CAT> getCategories() {return categories;}
 	
@@ -76,7 +76,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	protected final SbMultiHandler<WS> sbhWorkspace; public SbMultiHandler<WS> getSbhWorkspace() {return sbhWorkspace;}
 	protected final SbMultiHandler<CAT> sbhCategory; public SbMultiHandler<CAT> getSbhCategory() {return sbhCategory;}
 	
-	public AbstractAdminTsBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
+	public AbstractAdminTsBean(final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
 	{
 		super(fbTs.getClassL(),fbTs.getClassD());
 		this.fbTs=fbTs;
@@ -87,7 +87,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 		sbhWorkspace = new SbMultiHandler<WS>(fbTs.getClassWorkspace(),this);
 	}
 	
-	protected void initTsSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
+	protected void initTsSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage)
 	{
 		super.initAdmin(langs,cL,cD,bMessage);
 		this.fTs=fTs;

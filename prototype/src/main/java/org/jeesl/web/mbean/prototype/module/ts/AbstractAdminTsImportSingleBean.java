@@ -52,7 +52,7 @@ import org.jeesl.factory.xml.system.util.mc.XmlMcDataSetFactory;
 
 public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
-											SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+											SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
 											ST extends UtilsStatus<ST,L,D>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
 											TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
@@ -98,9 +98,9 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 	
 	private Comparator<Data> cTsData;
 	
-	public AbstractAdminTsImportSingleBean(final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs) {super(fbTs);}
+	public AbstractAdminTsImportSingleBean(final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs) {super(fbTs);}
 	
-	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver)
+	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, FacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver)
 	{
 		super.initTsSuper(langs,fTs,bMessage);
 		this.xlsResolver=xlsResolver;

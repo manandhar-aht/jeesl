@@ -63,7 +63,8 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 						TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>,
 						
 						CAT extends UtilsStatus<CAT,L,D>,
-						SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+						SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
+						ST extends UtilsStatus<ST,L,D>,
 						UNIT extends UtilsStatus<UNIT,L,D>,
 						TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 						TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
@@ -82,11 +83,11 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(TimeSeriesReport.class);
 
-	private final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
+	private final JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
 	
 	public TimeSeriesReport(String localeCode,
 			final JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport,
-			final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs,
+			final JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs,
 			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport)
 	{
 		super(localeCode,fbReport);

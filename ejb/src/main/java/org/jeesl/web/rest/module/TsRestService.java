@@ -23,7 +23,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public class TsRestService <L extends UtilsLang,
 							D extends UtilsDescription,
 							CAT extends UtilsStatus<CAT,L,D>,
-							SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+							SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
+							ST extends UtilsStatus<ST,L,D>,
 							UNIT extends UtilsStatus<UNIT,L,D>,
 							TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 							TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
@@ -41,11 +42,12 @@ public class TsRestService <L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(TsRestService.class);
 	
-	private final JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
+	private final JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
 	
 	private final Class<UNIT> cUnit;
 	
-	private TsRestService(JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs,final Class<L> cL, final Class<D> cD, final Class<UNIT> cUnit)
+	private TsRestService(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs,
+							final Class<L> cL, final Class<D> cD, final Class<UNIT> cUnit)
 	{
 		super(fTs,cL,cD);
 		this.fTs=fTs;
@@ -56,7 +58,8 @@ public class TsRestService <L extends UtilsLang,
 	public static <L extends UtilsLang,
 					D extends UtilsDescription,
 					CAT extends UtilsStatus<CAT,L,D>,
-					SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+					SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
+					ST extends UtilsStatus<ST,L,D>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
 					TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 					TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>, SOURCE extends EjbWithLangDescription<L,D>, 
@@ -67,10 +70,10 @@ public class TsRestService <L extends UtilsLang,
 					USER extends EjbWithId, 
 					WS extends UtilsStatus<WS,L,D>,
 					QAF extends UtilsStatus<QAF,L,D>>
-			TsRestService<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>
-			factory(JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, final Class<L> cL, final Class<D> cD, final Class<UNIT> cUnit)
+			TsRestService<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>
+			factory(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, final Class<L> cL, final Class<D> cD, final Class<UNIT> cUnit)
 	{
-		return new TsRestService<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(fTs,cL,cD,cUnit);
+		return new TsRestService<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(fTs,cL,cD,cUnit);
 	}
 	
 	@Override public Container exportTsUnit() {return xfContainer.build(fTs.allOrderedPosition(cUnit));}

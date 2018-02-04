@@ -38,7 +38,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 							CAT extends UtilsStatus<CAT,L,D>,
-							SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+							SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
+							ST extends UtilsStatus<ST,L,D>,
 							UNIT extends UtilsStatus<UNIT,L,D>,
 							TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 							TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
@@ -52,14 +53,14 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 							WS extends UtilsStatus<WS,L,D>,
 							QAF extends UtilsStatus<QAF,L,D>>
 					extends UtilsFacadeBean
-					implements JeeslTsFacade<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>
+					implements JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>
 {
-	private final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs;
+	private final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs;
 	
 	private final EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efTs;
 	private EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efBridge;
 	
-	public JeeslTsFacadeBean(EntityManager em, final TsFactoryBuilder<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
+	public JeeslTsFacadeBean(EntityManager em, final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fbTs)
 	{
 		super(em);
 		this.fbTs=fbTs;

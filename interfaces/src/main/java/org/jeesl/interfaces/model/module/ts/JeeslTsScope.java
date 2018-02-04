@@ -19,6 +19,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslTsScope <L extends UtilsLang, D extends UtilsDescription,
 									CAT extends UtilsStatus<CAT,L,D>,
+									ST extends UtilsStatus<ST,L,D>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
 									EC extends JeeslTsEntityClass<L,D,CAT>,
 									INT extends UtilsStatus<INT,L,D>

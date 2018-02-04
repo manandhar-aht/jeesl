@@ -39,6 +39,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsDescription,
 									CAT extends UtilsStatus<CAT,L,D>,
 									SCOPE extends JeeslTsScope<L,D,CAT,UNIT,EC,INT>,
+									ST extends UtilsStatus<ST,L,D>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
 									TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 									TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,

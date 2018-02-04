@@ -55,6 +55,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 
 	protected List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
+	protected List<ST> scopeTypes; public List<ST> getScopeTypes() {return scopeTypes;}
 	protected List<INT> opIntervals; public List<INT> getOpIntervals() {return opIntervals;}
 	protected List<EC> opClasses; public List<EC> getOpClasses() {return opClasses;}
 	
@@ -80,6 +81,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	private void initLists()
 	{
 		units = fTs.all(fbTs.getClassUnit());
+		scopeTypes = fTs.all(fbTs.getClassScopeType());
 		opIntervals = fTs.all(fbTs.getClassInterval());
 		opClasses = fTs.all(fbTs.getClassEntity());
 	}
@@ -118,6 +120,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		logger.info(AbstractLogMessage.saveEntity(scope));
 		scope.setUnit(fTs.find(fbTs.getClassUnit(), scope.getUnit()));
 		scope.setCategory(fTs.find(fbTs.getClassCategory(), scope.getCategory()));
+		if(scope.getType()!=null) {scope.setType(fTs.find(fbTs.getClassScopeType(), scope.getType()));}
 		scope = fTs.save(scope);
 		reloadScopes();
 		updatePerformed();

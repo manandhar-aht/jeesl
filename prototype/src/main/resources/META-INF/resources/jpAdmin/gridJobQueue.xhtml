@@ -27,8 +27,8 @@
 							<f:facet name="header"><aht:pfDataTableHeader title="#{msg.jeeslJobQueue}"/></f:facet>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectJob()}" update=":#{cc.id}:fJob" oncomplete="PF('wvJob').show();"/>
 							<p:column rendered="#{cc.attrs.withCategory}" headerText="#{msg.jeeslJobCategory}"><h:outputText value="#{j.template.category.name[localeCode].lang}"/></p:column>
-							<p:column headerText="#{msg.jeeslJobType}" styleClass="jeeslPfTcCenter"><jtp:statusSymbolizer value="#{j.template.type}" height="12"/></p:column>
-							<p:column headerText="#{msg.jeeslJobPriority}" styleClass="jeeslPfTcCenter"><jtp:statusSymbolizer value="#{j.priority}" height="12"/></p:column>
+							<p:column headerText="#{msg.jeeslJobType}" styleClass="jeeslPfTcCenter"><jtp:symbolizer value="#{j.template.type}" height="12"/></p:column>
+							<p:column headerText="#{msg.jeeslJobPriority}" styleClass="jeeslPfTcCenter"><jtp:symbolizer value="#{j.priority}" height="12"/></p:column>
 							<p:column headerText="#{msg.jeeslJobCreated}"><h:outputText value="#{j.recordCreation}"><f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" /></h:outputText></p:column>
 							<p:column headerText="#{msg.jeeslJobStarted}"><h:outputText value="#{j.recordStart}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>
 							<p:column headerText="#{msg.jeeslJobCompleted}"><h:outputText value="#{j.recordComplete}"><f:convertDateTime pattern="HH:mm:ss" /></h:outputText></p:column>

@@ -11,6 +11,7 @@
 	<xsd:element name="security">
         <xsd:complexType>
             <xsd:sequence>
+            		<xsd:element ref="n:menu" maxOccurs="1"/>
                 <xsd:element ref="sec:category" maxOccurs="unbounded"/>
             </xsd:sequence>
         </xsd:complexType>

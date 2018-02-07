@@ -15,13 +15,14 @@
 	<composite:interface>
 		<composite:attribute name="bean" required="false" default="#{adminSecurityViewsBean}"/>
 		<composite:attribute name="localeCodes" required="false" default="#{appTranslationBean.langKeys}"/>
+		<composite:attribute name="withXls" required="false" default="false"/>
 	</composite:interface>
 	
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
 				<aht:slot id="sCategories" width="4">
-					<h:form id="fCategories"><jpSec:tableCategories bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategory :#{cc.id}:fViews :#{cc.id}:sActions"/></h:form>
+					<h:form id="fCategories"><jpSec:tableCategories bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategory :#{cc.id}:fViews :#{cc.id}:sActions" withXls="#{cc.attrs.withXls}"/></h:form>
 					<h:form id="fCategory"><jpSec:panelCategory bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategories :#{cc.id}:fCategory"/></h:form>
 				</aht:slot>
 				<aht:slot id="sViews" width="4">

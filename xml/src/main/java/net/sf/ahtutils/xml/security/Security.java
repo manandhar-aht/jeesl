@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.jeesl.model.xml.system.navigation.Menu;
 
 
 /**
@@ -21,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/navigation}menu"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}category" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -32,6 +34,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "menu",
     "category"
 })
 @XmlRootElement(name = "security")
@@ -40,8 +43,38 @@ public class Security
 {
 
     private final static long serialVersionUID = 1L;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/navigation", required = true)
+    protected Menu menu;
     @XmlElement(required = true)
     protected List<Category> category;
+
+    /**
+     * Gets the value of the menu property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Menu }
+     *     
+     */
+    public Menu getMenu() {
+        return menu;
+    }
+
+    /**
+     * Sets the value of the menu property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Menu }
+     *     
+     */
+    public void setMenu(Menu value) {
+        this.menu = value;
+    }
+
+    public boolean isSetMenu() {
+        return (this.menu!= null);
+    }
 
     /**
      * Gets the value of the category property.

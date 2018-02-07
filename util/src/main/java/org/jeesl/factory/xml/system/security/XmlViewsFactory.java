@@ -37,7 +37,7 @@ public class XmlViewsFactory <L extends UtilsLang,
 	public XmlViewsFactory(Views q)
 	{
 		this.q=q;
-		comparator = (new SecurityViewComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityViewComparator.Type.position);
+		comparator = (new SecurityViewComparator<V>()).factory(SecurityViewComparator.Type.position);
 	}
 
 	public  Views build(List<V> views)

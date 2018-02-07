@@ -4,27 +4,10 @@ import java.util.Comparator;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-
-public class SecurityViewComparator<L extends UtilsLang,
-									D extends UtilsDescription,
-									C extends JeeslSecurityCategory<L,D>,
-									R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-									V extends JeeslSecurityView<L,D,C,R,U,A>,
-									U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-									A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-									AT extends JeeslSecurityTemplate<L,D,C>,
-									USER extends JeeslUser<R>>
+public class SecurityViewComparator<V extends JeeslSecurityView<?,?,?,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityViewComparator.class);
 
@@ -38,7 +21,7 @@ public class SecurityViewComparator<L extends UtilsLang,
     public Comparator<V> factory(Type type)
     {
         Comparator<V> c = null;
-        SecurityViewComparator<L,D,C,R,V,U,A,AT,USER> factory = new SecurityViewComparator<L,D,C,R,V,U,A,AT,USER>();
+        SecurityViewComparator<V> factory = new SecurityViewComparator<V>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;

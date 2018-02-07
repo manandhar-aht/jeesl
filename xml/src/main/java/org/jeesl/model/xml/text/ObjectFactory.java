@@ -30,11 +30,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Example }
+     * Create an instance of {@link Description }
      * 
      */
-    public Example createExample() {
-        return new Example();
+    public Description createDescription() {
+        return new Description();
     }
 
     /**
@@ -70,11 +70,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Description }
+     * Create an instance of {@link Example }
      * 
      */
-    public Description createDescription() {
-        return new Description();
+    public Example createExample() {
+        return new Example();
     }
 
     /**

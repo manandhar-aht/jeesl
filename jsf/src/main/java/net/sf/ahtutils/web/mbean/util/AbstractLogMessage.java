@@ -319,4 +319,11 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 		sb.append(" ").append(ptt.toTotalTime());
 		return sb.toString();
 	}
+	
+	public static String cacheSearch()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Searching Cache");
+		return sb.toString();
+	}
 }

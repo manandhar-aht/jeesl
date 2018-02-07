@@ -14,6 +14,7 @@
 		<composite:attribute name="update" required="true"/>
 		<composite:attribute name="withAdd" required="false" default="false"/>
         <composite:attribute name="tooltip" required="false" default="#{msg.ttNew}"/>
+        <composite:attribute name="withXls" required="false" default="false"/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -22,6 +23,7 @@
 			<f:facet name="header">
 				<aht:pfDataTableHeader title="#{msg.aupSecurityCategories}">
 					<aht:icon type="jeeslAdd" rendered="#{cc.attrs.withAdd}" listener="#{cc.attrs.bean.addCategory()}" update="#{cc.attrs.update}" tooltip="#{cc.attrs.tooltip}"/>
+					<aht:downloadIcon rendered="#{cc.attrs.withXls}" type="reportXls" value="#{cc.attrs.bean.xlsStream()}" tooltip="#{msg.reportXls}"/>
 				</aht:pfDataTableHeader>
 			</f:facet>
 			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCategories()}" update="@form"/>

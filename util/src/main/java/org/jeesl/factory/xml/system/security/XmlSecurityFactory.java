@@ -1,9 +1,10 @@
 package org.jeesl.factory.xml.system.security;
 
-import net.sf.ahtutils.xml.security.Security;
-
+import org.jeesl.model.xml.system.navigation.Menu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.xml.security.Security;
 
 public class XmlSecurityFactory
 {
@@ -14,4 +15,11 @@ public class XmlSecurityFactory
 		return new Security();
 	}
 	
+	public static Security build(Menu menu)
+	{
+		Security xml = build();
+		xml.setMenu(menu);
+
+		return xml;
+	}
 }

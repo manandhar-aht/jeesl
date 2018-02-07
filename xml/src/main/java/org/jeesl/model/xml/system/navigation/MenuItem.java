@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
+import org.jeesl.model.xml.text.Description;
 
 
 /**
@@ -29,6 +30,7 @@ import net.sf.ahtutils.xml.status.Langs;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}langs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/access}view"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/text}description"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -46,7 +48,8 @@ import net.sf.ahtutils.xml.status.Langs;
     "menuItem",
     "descriptions",
     "langs",
-    "view"
+    "view",
+    "description"
 })
 @XmlRootElement(name = "menuItem")
 public class MenuItem
@@ -62,6 +65,8 @@ public class MenuItem
     protected Langs langs;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/access", required = true)
     protected View view;
+    @XmlElement(namespace = "http://www.jeesl.org/text", required = true)
+    protected Description description;
     @XmlAttribute(name = "name")
     protected String name;
     @XmlAttribute(name = "code")
@@ -190,6 +195,34 @@ public class MenuItem
 
     public boolean isSetView() {
         return (this.view!= null);
+    }
+
+    /**
+     * Gets the value of the description property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Description }
+     *     
+     */
+    public Description getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets the value of the description property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Description }
+     *     
+     */
+    public void setDescription(Description value) {
+        this.description = value;
+    }
+
+    public boolean isSetDescription() {
+        return (this.description!= null);
     }
 
     /**

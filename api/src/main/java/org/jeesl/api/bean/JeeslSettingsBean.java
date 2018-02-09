@@ -1,9 +1,12 @@
 package org.jeesl.api.bean;
 
-public interface JeeslSettingsBean
+import java.io.Serializable;
+
+public interface JeeslSettingsBean extends Serializable
 {
-	public String getPaginatorTemplate();
-	public String getRowsPerPageTemplate();
+	String getPaginatorTemplate();
+	String getRowsPerPageTemplate();
+	String getPaginatorPosition();
 	
-	public String getDateTimePattern();
+	String getDateTimePattern();
 }

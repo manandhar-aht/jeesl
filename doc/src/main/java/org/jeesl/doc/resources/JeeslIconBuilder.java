@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;

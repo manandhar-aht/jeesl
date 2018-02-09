@@ -19,6 +19,7 @@ public class AbstractSettingsBean implements Serializable,JeeslSettingsBean
 	protected String calendarFormat;public String getCalendarFormat(){return calendarFormat;}
 	protected String dateTimePattern; public String getDateTimePattern(){return dateTimePattern;}
 	
+	protected String paginatorPosition; public String getPaginatorPosition() {return paginatorPosition;}
 	protected String paginatorTemplate; @Override public String getPaginatorTemplate() {return paginatorTemplate;}
 	protected String rowsPerPageTemplate; @Override public String getRowsPerPageTemplate(){return rowsPerPageTemplate;}
 	
@@ -30,6 +31,7 @@ public class AbstractSettingsBean implements Serializable,JeeslSettingsBean
 		calendarFormat = "dd.MM.yyyy";
 		dateTimePattern = "dd.MM.yyyy HH:mm:ss";
 		paginatorTemplate = "{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}";
+		paginatorPosition = "bottom";
 		rowsPerPageTemplate = "5,20,50,100";
 		logger.info(AbstractLogMessage.postConstruct(ptt));
 	}

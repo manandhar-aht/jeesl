@@ -58,7 +58,7 @@
 				<aht:slot id="sView" width="3">
 					<h:form id="fView">
 						<p:panel id="pView" header="#{msg.jeeslIoTemplate}"
-									rendered="#{not empty cc.attrs.bean.template}" styleClass="auPanelWithGrid">
+									rendered="#{not empty cc.attrs.bean.template}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
@@ -110,7 +110,7 @@
 				      </p:dataTable>
 					</h:form>
 					<h:form id="fToken">
-						<p:panel header="#{msg.jeeslIoToken}" rendered="#{not empty cc.attrs.bean.token}" styleClass="auPanelWithGrid">
+						<p:panel header="#{msg.jeeslIoToken}" rendered="#{not empty cc.attrs.bean.token}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="aupCancel" mayDisappear="true" listener="#{cc.attrs.bean.cancelToken()}" update=":#{cc.id}:sTokens" tooltip="#{msg.ttCancel}"/>
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveToken()}" update=":#{cc.id}:sTokens" tooltip="#{msg.ttSave}"/>
@@ -150,7 +150,7 @@
 				</aht:slot>
 				<aht:slot id="sDefinition" width="5" rendered="#{(not empty cc.attrs.bean.template) and (cc.attrs.bean.template.id gt 0)}">
 					<h:form id="fDefinition">
-						<p:panel header="#{msg.jeeslIoTemplateDefinition}" rendered="#{not empty cc.attrs.bean.definition}" styleClass="auPanelWithGrid">
+						<p:panel header="#{msg.jeeslIoTemplateDefinition}" rendered="#{not empty cc.attrs.bean.definition}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="aupCancel" mayDisappear="true" listener="#{cc.attrs.bean.cancelDefinition()}" update=":#{cc.id}:row2" tooltip="#{msg.ttCancel}"/>
 								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveDefinition()}" update=":#{cc.id}:row2" tooltip="#{msg.ttSave}"/>
@@ -173,7 +173,7 @@
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sPreview" width="4" rendered="#{not empty cc.attrs.bean.preview}">
-					<p:panel header="#{msg.jeeslIoTemplatePreview}" rendered="#{not empty cc.attrs.bean.definition}" styleClass="auPanelWithGrid">
+					<p:panel header="#{msg.jeeslIoTemplatePreview}" rendered="#{not empty cc.attrs.bean.definition}" styleClass="jeeslPanel">
 						<pre style="white-space: pre-wrap;">#{cc.attrs.bean.preview}</pre>
 					</p:panel>
 				</aht:slot>

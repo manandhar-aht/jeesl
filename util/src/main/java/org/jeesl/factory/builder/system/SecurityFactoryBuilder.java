@@ -93,7 +93,7 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		return new EjbSecurityActionTemplateFactory<C,AT>(cTemplate);
 	}
 	
-	public <M extends JeeslSecurityMenu<V,M>> EjbSecurityMenuFactory<V,M> ejbMenu(Class<M> cM)
+	public EjbSecurityMenuFactory<V,M> ejbMenu(Class<M> cM)
 	{
 		return new EjbSecurityMenuFactory<V,M>(cM);
 	}

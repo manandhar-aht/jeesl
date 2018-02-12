@@ -20,11 +20,39 @@
 		<aup:grid id="grid">
 			<aht:row>
 				<aht:slot id="sCategories" width="3">
-					<h:form id="fCategories"><jpSec:tableCategories bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategory :#{cc.id}:fRoles :#{cc.id}:sRole"/></h:form>
+					<h:form id="fCategories"><jpSec:tableCategories bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategory :#{cc.id}:fRoles :#{cc.id}:sRole" withAdd="true"/></h:form>
 					<h:form id="fCategory"><jpSec:panelCategory bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategories :#{cc.id}:fCategory"/></h:form>
 				</aht:slot>
 				<aht:slot id="sViews" width="3">
-					<h:form id="fRoles"><aupSec:tableRoles bean="#{cc.attrs.bean}" update=":#{cc.id}:fRoles :#{cc.id}:sRole"/></h:form>
+					<h:form id="fRoles">
+						<p:dataTable var="r" value="#{cc.attrs.bean.roles}" draggableRows="true"
+								selection="#{cc.attrs.bean.role}" selectionMode="single" rowKey="#{r.id}"
+								rendered="#{not empty cc.attrs.bean.category}">
+							<f:facet name="header">
+								<aht:pfDataTableHeader title="#{msg.jeeslSecurityRoles}">
+									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addRole()}" update=":#{cc.id}:fRoles :#{cc.id}:sRole" tooltip="#{cc.attrs.tooltip}"/>
+								</aht:pfDataTableHeader>
+							</f:facet>
+							<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener=":#{cc.id}:fRoles :#{cc.id}:sRole"/>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderRoles()}" update="@form"/>
+							<p:column>  
+								<h:outputText value="#{r.position}" />  
+				            </p:column>
+				            <p:column headerText="#{msg.jeeslSecurityRole}">  
+								<h:outputText value="#{r.name[userBean.localeCode].lang}" />  
+				            </p:column>
+				            <p:column rendered="#{cc.attrs.bean.uiShowInvisible}">  
+								<h:graphicImage rendered="#{r.visible}" name="#{iconBean.icon12['securityVisible']}" library="gfx"/>
+				                <h:graphicImage rendered="#{not r.visible}" name="#{iconBean.icon12['securityInvisible']}" library="gfx"/>
+				            </p:column>
+				            <p:column rendered="#{cc.attrs.bean.uiShowDocumentation}">  
+								<h:graphicImage rendered="#{r.documentation}" name="#{iconBean.icon12['aupSecurityDocumentation']}" library="gfx"/>
+				                <h:graphicImage rendered="#{not r.documentation}" name="#{iconBean.icon12['aupSecurityNoDocumentation']}" library="gfx"/>
+				            </p:column>
+				       	</p:dataTable>
+						
+						
+					</h:form>
 				</aht:slot>
 				<aht:slot id="sRole" width="6" renderChildren="#{not empty cc.attrs.bean.role}">
 					<h:form id="fRole">

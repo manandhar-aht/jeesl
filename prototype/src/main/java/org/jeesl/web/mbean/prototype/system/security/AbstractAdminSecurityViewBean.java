@@ -64,8 +64,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
 	{
 		this.bSecurity=bSecurity;
-		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
-		super.initSecuritySuper(langs,fSecurity,bMessage);
+		super.initSecuritySuper(bTranslation.getLangKeys().toArray(new String[0]),fSecurity,bMessage);
 		templates = fSecurity.allOrderedPositionVisible(fbSecurity.getClassTemplate());
 	}
 	

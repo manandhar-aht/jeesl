@@ -47,7 +47,8 @@ public class XmlMenuItemFactory <L extends UtilsLang, D extends UtilsDescription
 		
 		MenuItem xml = build();
 		xml.setCode(menu.getView().getCode());
-		xml.setName(menu.getView().getName().get(localeCode).getLang());
+		if(menu.getView().getName().containsKey(localeCode)) {xml.setName(menu.getView().getName().get(localeCode).getLang());}
+		else {xml.setName("??");}
 		xml.setHref(menu.getView().getUrlMapping());
 		xml.setActive(false);
 		return xml;

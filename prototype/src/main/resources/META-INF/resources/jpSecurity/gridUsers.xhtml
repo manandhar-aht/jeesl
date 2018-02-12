@@ -103,7 +103,7 @@
 					</h:form>
 					<h:form id="fRole">
 						<p:dataTable var="r" value="#{cc.attrs.bean.roles}" rendered="#{cc.attrs.bean.user.id gt 0}">
-								<p:column headerText="#{msg.aupSecurityCategory}">
+								<p:column headerText="#{msg.jeeslSecurityCategory}">
 									<h:outputText value="#{r.category.name[userBean.localeCode].lang}" />
 								</p:column>
 								<p:column headerText="#{msg.jeeslSecurityRole}">

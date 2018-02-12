@@ -30,7 +30,7 @@
 				<p:column>
 					<h:outputText value="#{u.category.position}.#{u.position}"/>
 				</p:column>
-				<p:column headerText="#{msg.aupSecurityCategory}">
+				<p:column headerText="#{msg.jeeslSecurityCategory}">
 					<h:outputText value="#{u.category.name[userBean.localeCode].lang}" />
 				</p:column>
 				<p:column headerText="#{msg.jeeslSecurityCode}">
@@ -49,7 +49,7 @@
 				<p:column>
 					<h:outputText value="#{u.category.position}.#{u.position}"/>
 				</p:column>
-				<p:column headerText="#{msg.aupSecurityCategory}" sortBy="#{u.category.name[userBean.localeCode].lang}" filterBy="#{u.category.name[userBean.localeCode].lang}" filterMatchMode="contains">
+				<p:column headerText="#{msg.jeeslSecurityCategory}" sortBy="#{u.category.name[userBean.localeCode].lang}" filterBy="#{u.category.name[userBean.localeCode].lang}" filterMatchMode="contains">
 					<h:outputText value="#{u.category.name[userBean.localeCode].lang}" />
 				</p:column>
 				<p:column headerText="#{msg.aupSecurityUsecase}" sortBy="#{u.name[userBean.localeCode].lang}" filterBy="#{u.name[userBean.localeCode].lang}" filterMatchMode="contains">

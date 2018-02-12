@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
@@ -58,9 +59,9 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 		efMenu = fbSecurity.ejbMenu(fbSecurity.getClassMenu());
 	}
 	
-	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
+	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
 	{
-		super.initSecuritySuper(langs,fSecurity,bMessage);
+		super.initSecuritySuper(bTranslation.getLangKeys().toArray(new String[0]),fSecurity,bMessage);
 		opViews = fSecurity.all(fbSecurity.getClassView());
 		
 		if(fSecurity.all(fbSecurity.getClassMenu(),1).isEmpty()) {firstInit();}

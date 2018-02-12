@@ -21,7 +21,7 @@
 		<p:dataTable var="c" value="#{cc.attrs.bean.categories}" draggableRows="true"
 			selection="#{cc.attrs.bean.category}" selectionMode="single" rowKey="#{c.id}">
 			<f:facet name="header">
-				<aht:pfDataTableHeader title="#{msg.aupSecurityCategories}">
+				<aht:pfDataTableHeader title="#{msg.jeeslSecurityCategories}">
 					<aht:icon type="jeeslAdd" rendered="#{cc.attrs.withAdd}" listener="#{cc.attrs.bean.addCategory()}" update="#{cc.attrs.update}" tooltip="#{cc.attrs.tooltip}"/>
 					<aht:downloadIcon rendered="#{cc.attrs.withXls}" type="reportXls" value="#{cc.attrs.bean.xlsStream()}" tooltip="#{msg.reportXls}"/>
 				</aht:pfDataTableHeader>
@@ -31,7 +31,7 @@
          <p:column>  
 				<h:outputText value="#{c.position}"/>
          </p:column>
-            <p:column headerText="#{msg.aupSecurityCategory}">  
+            <p:column headerText="#{msg.jeeslSecurityCategory}">  
 				<h:outputText value="#{c.name[userBean.localeCode].lang}"/>
             </p:column>
             <p:column rendered="#{cc.attrs.bean.uiShowInvisible}" styleClass="jeeslPfTcCenter">  

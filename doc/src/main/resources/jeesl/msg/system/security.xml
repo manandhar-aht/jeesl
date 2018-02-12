@@ -7,14 +7,14 @@
     		<s:lang key="fr" translation="Code"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupSecurityCategories">
+	<s:translation key="jeeslSecurityCategories">
     	<s:langs>
     		<s:lang key="de" translation="Kategorien"/>
     		<s:lang key="en" translation="Categories"/>
     		<s:lang key="fr" translation="Categories"/>
     	</s:langs>
     </s:translation>
-    <s:translation key="aupSecurityCategory">
+    <s:translation key="jeeslSecurityCategory">
     	<s:langs>
     		<s:lang key="de" translation="Category"/>
     		<s:lang key="en" translation="Category"/>

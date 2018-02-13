@@ -3,13 +3,13 @@ package org.jeesl.web.mbean.prototype.admin;
 import java.io.Serializable;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.jsf.util.NullNumberBinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
@@ -23,7 +23,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription> 
 	protected Class<L> cL;
 	protected Class<D> cD;
 	
-	protected FacesMessageBean bMessage;
+	protected JeeslFacesMessageBean bMessage;
 	protected JeeslTranslationBean bTranslation;
 	
 	protected boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo){this.debugOnInfo=debugOnInfo;}
@@ -85,7 +85,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription> 
 		nnb = new NullNumberBinder();
 	}
 	
-	protected void initJeeslAdmin(JeeslTranslationBean bTranslation, FacesMessageBean bMessage)
+	protected void initJeeslAdmin(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage)
 	{
 		this.bTranslation=bTranslation;
 		this.localeCodes=bTranslation.getLangKeys().toArray(new String[bTranslation.getLangKeys().size()]);
@@ -93,7 +93,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription> 
 	}
 	
 	@Deprecated
-	protected void initAdmin(String[] langs, final Class<L> cL, final Class<D> cD, FacesMessageBean bMessage)
+	protected void initAdmin(String[] langs, final Class<L> cL, final Class<D> cD, JeeslFacesMessageBean bMessage)
 	{
 		this.localeCodes=langs;
 		this.langs=langs;

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.controller.handler.ui.helper.UiTwiceClickHelper;
@@ -22,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -78,7 +78,7 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(fbConstraint.getClassL(),fbConstraint.getClassD(),cConstraint,cType);
 	}
 	
-	protected void initSuper(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
+	protected void postConstructConstraintDefinition(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
 		super.initConstraint(bTranslation,bMessage,fConstraint);
 		sbhCategory = new SbMultiHandler<CONCAT>(cCategory,fConstraint.allOrderedPosition(cCategory),this);
@@ -152,7 +152,7 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(constraint));}
 		constraint.setType(fConstraint.find(cType,constraint.getType()));
-		constraint.setLevel(fConstraint.find(cLevel,constraint.getLevel()));
+		if(constraint.getLevel()!=null) {constraint.setLevel(fConstraint.find(cLevel,constraint.getLevel()));}
 		constraint = fConstraint.save(constraint);
 		reloadConstraints();
 	}

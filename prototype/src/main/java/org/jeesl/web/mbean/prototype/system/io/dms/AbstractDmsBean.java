@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.system.io.dms;
 import java.io.Serializable;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoDmsFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
@@ -22,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -61,7 +61,7 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 		efFile = fbDms.ejbFile();
 	}
 	
-	protected void initDms(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,SECTION,F,FC,AC> fDms)
+	protected void initDms(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,SECTION,F,FC,AC> fDms)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fDms=fDms;

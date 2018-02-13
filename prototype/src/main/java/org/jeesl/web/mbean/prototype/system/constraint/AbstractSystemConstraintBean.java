@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.factory.builder.system.ConstraintFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
@@ -16,7 +17,6 @@ import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -49,7 +49,7 @@ public abstract class AbstractSystemConstraintBean <L extends UtilsLang, D exten
 		cpAlgorithm = (new SystemConstraintAlgorithmComparator<ALGCAT,ALGO>()).factory(SystemConstraintAlgorithmComparator.Type.position);
 	}
 	
-	protected void initConstraint(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
+	protected void initConstraint(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fConstraint=fConstraint;

@@ -100,6 +100,11 @@
 									<f:selectItems value="#{cc.attrs.bean.types}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
 								</p:selectOneMenu>
 								
+								<p:outputLabel value="#{msg.jeeslConstraintLevel}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.constraint.level}" effect="fade" >
+									<f:selectItems value="#{cc.attrs.bean.levels}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
+								</p:selectOneMenu>
+								
 								<p:outputLabel value="#{msg.jeeslCode}"/>
 								<p:inputText value="#{cc.attrs.bean.constraint.code}" autocomplete="off"/>
 								

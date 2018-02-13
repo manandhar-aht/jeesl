@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.mbean.util;
+package org.jeesl.web.mbean.system;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ public class AbstractMessageBean implements Serializable
 	final static Logger logger = LoggerFactory.getLogger(AbstractMessageBean.class);
 
 	private JeeslTranslationBean jeeslTranslationBean;
-	private String jeeslLocaleCode;
+	protected String jeeslLocaleCode;
 	
 	public void initJeesl(String localeCode, JeeslTranslationBean bTranslation)
 	{

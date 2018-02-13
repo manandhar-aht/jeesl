@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.admin.system.feature;
 import java.io.Serializable;
 
 import org.jeesl.api.bean.JeeslFeatureManagerBean;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.factory.ejb.system.EjbSystemFeatureFactory;
 import org.jeesl.interfaces.model.system.JeeslFeature;
 import org.slf4j.Logger;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 
 public class AbstractAdminFeatureBean <F extends JeeslFeature>
@@ -23,7 +23,7 @@ public class AbstractAdminFeatureBean <F extends JeeslFeature>
 	private UtilsFacade fFeature;
 	
 	private JeeslFeatureManagerBean<F> bFeature;
-	private FacesMessageBean bMessage;
+	private JeeslFacesMessageBean bMessage;
 	
 	private Class<F> cFeature;
 		
@@ -31,7 +31,7 @@ public class AbstractAdminFeatureBean <F extends JeeslFeature>
 
 	private EjbSystemFeatureFactory<F> efFeature;
 	
-	public void initSuper(UtilsFacade fFeature, JeeslFeatureManagerBean<F> bFeature, FacesMessageBean bMessage, final Class<F> cFeature)
+	public void initSuper(UtilsFacade fFeature, JeeslFeatureManagerBean<F> bFeature, JeeslFacesMessageBean bMessage, final Class<F> cFeature)
 	{
 		this.fFeature=fFeature;
 		this.bFeature=bFeature;

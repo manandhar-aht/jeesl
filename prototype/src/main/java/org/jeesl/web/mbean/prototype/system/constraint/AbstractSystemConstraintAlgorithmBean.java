@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.builder.system.ConstraintFactoryBuilder;
@@ -18,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -57,7 +57,7 @@ public abstract class AbstractSystemConstraintAlgorithmBean <L extends UtilsLang
 		sbhAlgorithmCategory = new SbMultiHandler<ALGCAT>(fbConstraint.getClassAlgorithmCategory(),this);
 	}
 	
-	protected void initConstraintAlgorithms(JeeslTranslationBean bTranslation, FacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
+	protected void initConstraintAlgorithms(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
 		super.initConstraint(bTranslation,bMessage,fConstraint);
 		initImplementationSettings();

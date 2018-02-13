@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslSystemNewsFacade;
 import org.jeesl.factory.ejb.system.EjbSystemNewsFactory;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
@@ -15,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -50,7 +50,7 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 		super(cL,cD);
 	}
 
-	protected void initSuper(String[] localeCodes, FacesMessageBean bMessage, JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, Class<NEWS> cNews, Class<USER> cUser)
+	protected void initSuper(String[] localeCodes, JeeslFacesMessageBean bMessage, JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, Class<NEWS> cNews, Class<USER> cUser)
 	{
 		super.initAdmin(localeCodes,cL,cD,bMessage);
 		this.fNews=fNews;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
 import org.jeesl.controller.handler.op.OpStatusSelectionHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
@@ -35,7 +36,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -111,7 +111,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		types = new ArrayList<ET>();
 	}
 	
-	protected void postConstructCms(JeeslTranslationBean bTranslation, String currentLocaleCode, List<LOC> locales, FacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
+	protected void postConstructCms(JeeslTranslationBean bTranslation, String currentLocaleCode, List<LOC> locales, JeeslFacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.currentLocaleCode=currentLocaleCode;

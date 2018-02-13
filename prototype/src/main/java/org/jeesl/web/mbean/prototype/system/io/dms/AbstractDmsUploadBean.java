@@ -6,6 +6,7 @@ import java.util.List;
 import org.jeesl.api.bean.JeeslAttributeBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.callback.JeeslFileRepositoryCallback;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.api.facade.io.JeeslIoDmsFacade;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
@@ -39,7 +40,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -102,7 +102,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 		sbhDms = new SbSingleHandler<DMS>(fbDms.getClassDms(),this);
 	}
 	
-	protected void initDmsUpload(JeeslTranslationBean bTranslation, FacesMessageBean bMessage,
+	protected void initDmsUpload(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
 								JeeslIoDmsFacade<L,D,LOC,DMS,FSTORAGE,ASET,S,FILE,FCONTAINER,ACONTAINER> fDms,
 								JeeslIoFrFacade<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr,
 								JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute,

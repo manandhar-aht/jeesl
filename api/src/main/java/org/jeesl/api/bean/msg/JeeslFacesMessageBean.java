@@ -1,6 +1,8 @@
-package net.sf.ahtutils.interfaces.bean;
+package org.jeesl.api.bean.msg;
 
-public interface FacesMessageBean
+import java.io.Serializable;
+
+public interface JeeslFacesMessageBean extends Serializable
 {
 	void growlSuccess(String key);
 	void growlError(String key);
@@ -15,4 +17,5 @@ public interface FacesMessageBean
 	<E extends Enum<E>> void errorConstraintViolationDuplicateObject(E id);
 	void errorConstraintViolationInUse();
 	void errorConstraintViolationInUse(String id);
+	
 }

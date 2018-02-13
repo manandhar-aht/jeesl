@@ -10,6 +10,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslExportRestFacade;
 import org.jeesl.api.facade.system.graphic.JeeslGraphicFacade;
 import org.jeesl.api.rest.JeeslExportRest;
@@ -41,7 +42,6 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -136,7 +136,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		categories = new ArrayList<EjbWithPosition>();
 	}
 	
-	protected void initUtils(JeeslTranslationBean bTranslation, JeeslGraphicFacade<L,D,?,G,GT,F,FS> fGraphic, FacesMessageBean bMessage)
+	protected void initUtils(JeeslTranslationBean bTranslation, JeeslGraphicFacade<L,D,?,G,GT,F,FS> fGraphic, JeeslFacesMessageBean bMessage)
 	{
 		super.initJeeslAdmin(bTranslation, bMessage);
 		this.fUtils=fGraphic;

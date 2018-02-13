@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.JeeslCalendarFacade;
 import org.jeesl.factory.builder.module.CalendarFactoryBuilder;
 import org.jeesl.factory.ejb.module.calendar.EjbTimeZoneFactory;
@@ -19,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -53,7 +53,7 @@ public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
 		this.fbCalendar=fbCalendar;
 	}
 	
-	public void initSuper(JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, FacesMessageBean bMessage, String[] localeCodes)
+	public void initSuper(JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, JeeslFacesMessageBean bMessage, String[] localeCodes)
 	{
 		super.initAdmin(localeCodes,fbCalendar.getClassL(),fbCalendar.getClassD(),bMessage);
 		this.fCalendar=fCalendar;

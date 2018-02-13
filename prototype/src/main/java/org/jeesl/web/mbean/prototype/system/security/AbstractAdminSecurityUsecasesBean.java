@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslSecurityBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
@@ -23,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
@@ -57,7 +57,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 		categoryType = JeeslSecurityCategory.Type.usecase;
 	}
 	
-	public void postConstructUsecase(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
+	public void postConstructUsecase(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslFacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
 	{
 		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
 		super.initSecuritySuper(langs,fSecurity,bMessage);		
@@ -67,7 +67,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 		opActions = new ArrayList<A>();
 	}
 	
-	private void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, FacesMessageBean bMessage)
+	private void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslFacesMessageBean bMessage)
 	{
 		initSecuritySuper(langs,fSecurity,bMessage);
 		

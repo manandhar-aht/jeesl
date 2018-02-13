@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslAttributeBean;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoAttributeFacade;
 import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeContainerFactory;
@@ -27,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.bean.FacesMessageBean;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -63,7 +63,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	private SET attributeSet; public SET getAttributeSet() {return attributeSet;}
 	private CONTAINER container;
 	
-	public AttributeHandler(FacesMessageBean bMessage,
+	public AttributeHandler(JeeslFacesMessageBean bMessage,
 			final JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute,
 			final JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute,
 			final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute,

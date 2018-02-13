@@ -9,11 +9,19 @@
     	</s:langs>
     </s:translation>
     	<s:translation key="jeeslConstraintAlgorithm">
-    	<s:langs>
-    		<s:lang key="de" translation="Algorithmus"/>
-    		<s:lang key="en" translation="Algorithm"/>
-    		<s:lang key="fr" translation="Algorithm"/>
-    	</s:langs>
+	    	<s:langs>
+	    		<s:lang key="de" translation="Algorithmus"/>
+	    		<s:lang key="en" translation="Algorithm"/>
+	    		<s:lang key="fr" translation="Algorithm"/>
+	    	</s:langs>
+    </s:translation>
+    
+	<s:translation key="jeeslConstraintLevel">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Stufe"/>
+	    		<s:lang key="en" translation="Level"/>
+	    		<s:lang key="fr" translation="Level"/>
+	    	</s:langs>
     </s:translation>
 	
 	<s:translation key="jeeslConstraintScopes">

@@ -21,7 +21,7 @@ public class ConstraintFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 									CONSTRAINT extends JeeslConstraint<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>,
 									LEVEL extends UtilsStatus<LEVEL,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
-RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
+									RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
 				extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(ConstraintFactoryBuilder.class);
@@ -44,9 +44,11 @@ RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,T
 		this.cScope=cScope;
 		this.cConstraint=cConstraint;
 	}
-	
+
+
 	public EjbConstraintAlgorithmFactory<L,D,ALGCAT,ALGO> algorithm()
 	{
 		return new EjbConstraintAlgorithmFactory<L,D,ALGCAT,ALGO>(cAlgorithm);
 	}
+
 }

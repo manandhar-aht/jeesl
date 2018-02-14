@@ -70,7 +70,6 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		super(fbSecurity.getClassL(),fbSecurity.getClassD());
 		this.fbSecurity=fbSecurity;
 		efUser = fbSecurity.ejbUser();
-
 	}
 	
 	public void initSuper(JeeslUserFacade<USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, JeeslFacesMessageBean bMessage)
@@ -158,7 +157,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	{
 		if(performPasswordCheck && EjbWithPwd.class.isAssignableFrom(fbSecurity.getClassUser()))
 		{
-			logger.info("Checking PWD");
+			if(debugOnInfo) {logger.info("Checking PWD");}
 			if(pwd1.length()!=pwd2.length())
 			{
 				bMessage.growlError("fmPwdDidNotMatch");
@@ -181,10 +180,11 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 				}
 			}
 		}
+		else {logger.warn("Password Checking and updating deactivated");}
 	}
 	
 	
-	protected void constraintViolationOnSave() {}
+	protected void constraintViolationOnSave() {logger.warn("constraintViolationOnSave, this should be @Overriden");}
 	protected void constraintViolationOnRemove() {}
 	protected void passwordsDoNotMatch() {}
 

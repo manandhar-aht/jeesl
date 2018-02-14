@@ -177,8 +177,8 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 
 		TypedQuery<CACHE> tQ = em.createQuery(cQ);
 		try	{return tQ.getSingleResult();}
-		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found for template:"+template.getCode()+" and cache.code="+code);}
-		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("Results not unique for template:"+template.getCode()+" and cache.code="+code);}
+		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found for template:"+template.getCode()+"/"+template.getType().getCode()+" and cache.code="+code);}
+		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("Results not unique for template:"+template.getCode()+"/"+template.getType().getCode()+" and cache.code="+code);}
 	}
 
 	@Override

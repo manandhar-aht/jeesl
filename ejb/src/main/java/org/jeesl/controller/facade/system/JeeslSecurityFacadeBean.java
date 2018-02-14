@@ -211,6 +211,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 	@Override public List<R> allRolesForUser(USER user)
 	{
 		user = em.find(fbSecurity.getClassUser(), user.getId());
+		user.getRoles().size();
 		return user.getRoles();
 	}
 	

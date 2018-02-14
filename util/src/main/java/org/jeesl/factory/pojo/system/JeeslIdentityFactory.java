@@ -1,5 +1,7 @@
 package org.jeesl.factory.pojo.system;
 
+import java.util.List;
+
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
@@ -21,6 +23,8 @@ public class JeeslIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 
 	final static Logger logger = LoggerFactory.getLogger(JeeslIdentityFactory.class);
 
+	public static boolean debugOnInfo = true;
+	
 	private final SecurityFactoryBuilder<?,?,?,R,V,U,A,?,?,USER> fbSecurity;
 	final Class<I>  cIdentity;
 
@@ -52,11 +56,8 @@ public class JeeslIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 			
 			for(A a : fSecurity.allActionsForUser(user)){identity.allowAction(a);}
 			
-			logger.info("Roles");
-			for(R r : fSecurity.allRolesForUser(user))
-			{
-				identity.allowRole(r);
-			}
+			if(debugOnInfo) {logger.info("Adding roles for user "+user.toString());}
+			for(R r : fSecurity.allRolesForUser(user)){identity.allowRole(r);}
 			for(V v : fSecurity.allViewsForUser(user)){identity.allowView(v);}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

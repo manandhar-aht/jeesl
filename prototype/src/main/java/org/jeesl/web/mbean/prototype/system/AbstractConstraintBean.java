@@ -65,13 +65,27 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 		for(CONSTRAINT c : fConstraint.all(fbConstraint.getClassConstraint()))
 		{
 			i++;
-			String keyScope = c.getScope().getCode();
-			if(!mapConstraints.containsKey(keyScope)) {mapConstraints.put(keyScope, new HashMap<String,CONSTRAINT>());}
-			mapConstraints.get(keyScope).put(c.getCode(),c);
+			update(c);
 		}
 		logger.info("Loaded "+i+" "+fbConstraint.getClassConstraint());
 	}
 	
+	
+	
+	@Override public void update(CONSTRAINT constraint)
+	{
+		String keyScope = constraint.getScope().getCode();
+		if(!mapConstraints.containsKey(keyScope)) {mapConstraints.put(keyScope, new HashMap<String,CONSTRAINT>());}
+		mapConstraints.get(keyScope).put(constraint.getCode(),constraint);
+	}
+	
+	@Override
+	public <SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT get(SID sId, CID cId) throws UtilsNotFoundException
+	{
+		if(!mapConstraints.containsKey(sId.toString())) {throw new UtilsNotFoundException("Scope "+sId+" not available");}
+		if(!mapConstraints.get(sId.toString()).containsKey(cId.toString())) {throw new UtilsNotFoundException("Contraint "+cId+" not available in Scope "+sId);}
+		return mapConstraints.get(sId.toString()).get(cId.toString());
+	}
 	
 	// ************************************************************************************************
 	//Below is depreacated
@@ -205,12 +219,4 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 	    	
 	    	return xml;
     }
-
-	@Override
-	public <SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT get(SID sId, CID cId) throws UtilsNotFoundException
-	{
-		if(!mapConstraints.containsKey(sId.toString())) {throw new UtilsNotFoundException("Scope "+sId+" not available");}
-		if(!mapConstraints.get(sId.toString()).containsKey(cId.toString())) {throw new UtilsNotFoundException("Contraint "+cId+" not available in Scope "+sId);}
-		return mapConstraints.get(sId.toString()).get(cId.toString());
-	}
 }

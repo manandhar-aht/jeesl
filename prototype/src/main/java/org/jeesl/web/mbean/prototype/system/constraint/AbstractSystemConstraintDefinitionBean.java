@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.msg.JeeslConstraintsBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
@@ -16,7 +17,6 @@ import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintResolution;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintScope;
 import org.jeesl.interfaces.model.system.constraint.algorithm.JeeslConstraintAlgorithm;
-import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +43,8 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSystemConstraintDefinitionBean.class);
+	
+	private JeeslConstraintsBean<CONSTRAINT> bConstraint;
 	
 	private final Class<CONCAT> cCategory;
 	private final Class<CONSTRAINT> cConstraint;
@@ -78,9 +80,10 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(fbConstraint.getClassL(),fbConstraint.getClassD(),cConstraint,cType);
 	}
 	
-	protected void postConstructConstraintDefinition(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
+	protected void postConstructConstraintDefinition(JeeslConstraintsBean<CONSTRAINT> bConstraint, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
 		super.initConstraint(bTranslation,bMessage,fConstraint);
+		this.bConstraint=bConstraint;
 		sbhCategory = new SbMultiHandler<CONCAT>(cCategory,fConstraint.allOrderedPosition(cCategory),this);
 		types = fConstraint.allOrderedPosition(cType);
 		levels = fConstraint.allOrderedPosition(cLevel);
@@ -155,6 +158,8 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 		if(constraint.getLevel()!=null) {constraint.setLevel(fConstraint.find(cLevel,constraint.getLevel()));}
 		constraint = fConstraint.save(constraint);
 		reloadConstraints();
+		
+		bConstraint.update(constraint);
 	}
 	
 	public void selectConstraint() throws UtilsConstraintViolationException, UtilsLockingException

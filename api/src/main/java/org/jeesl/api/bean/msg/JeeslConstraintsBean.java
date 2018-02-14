@@ -11,4 +11,5 @@ public interface JeeslConstraintsBean <CONSTRAINT extends JeeslConstraint<?,?,?,
 	ConstraintScope getScope(String category, String scope, String lang);
 	
 	<SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT get(SID sId, CID cId) throws UtilsNotFoundException;
+	void update(CONSTRAINT constraint);
 }

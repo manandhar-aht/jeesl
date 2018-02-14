@@ -1,8 +1,8 @@
 package org.jeesl.web.mbean.prototype.system.constraint;
 
-import org.jeesl.api.bean.JeeslConstraintsBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslConstraintMessageBean;
+import org.jeesl.api.bean.msg.JeeslConstraintsBean;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintResolution;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintScope;
@@ -11,6 +11,7 @@ import org.jeesl.web.mbean.system.AbstractMessageBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -32,26 +33,50 @@ public class AbstractConstraintMessageBean <L extends UtilsLang, D extends Utils
 	
 	private final static boolean debugOnInfo=true;
 	
-	protected void postConstruct(String localeCode, JeeslTranslationBean bTranslation, JeeslConstraintsBean bConstraint)
+	private JeeslConstraintsBean<CONSTRAINT> bConstraint;
+	
+	protected void postConstruct(String localeCode, JeeslTranslationBean bTranslation, JeeslConstraintsBean<CONSTRAINT> bConstraint)
 	{
 		super.initJeesl(localeCode,bTranslation);
+		this.bConstraint=bConstraint;
 	}
 	
-	@Override
-	public void show(CONSTRAINT constraint)
+	@Override public <FID extends Enum<FID>> void show(FID fId, CONSTRAINT constraint)
 	{
 		if(debugOnInfo)
 		{
 			StringBuffer sb = new StringBuffer();
-			sb.append("Show "+constraint.toString()+" for "+jeeslLocaleCode);
+			sb.append("Show ").append(constraint.toString());
+			sb.append(" in locale "+jeeslLocaleCode);
+			sb.append(" for FacesId:");if(fId!=null) {sb.append(fId.toString());}else {sb.append("null");}
 			sb.append(" ").append(constraint.getLevel().getName().get(jeeslLocaleCode).getLang());
 			sb.append(" ").append(constraint.getDescription().get(jeeslLocaleCode).getLang());
 			logger.info(sb.toString());
 		}
+		String facesId = null;
+		if(fId!=null) {facesId=fId.toString();}
 		
-		FacesContextMessage.error(null, constraint.getLevel().getName().get(jeeslLocaleCode).getLang(), constraint.getDescription().get(jeeslLocaleCode).getLang());
+		FacesContextMessage.error(facesId, constraint.getLevel().getName().get(jeeslLocaleCode).getLang(), constraint.getDescription().get(jeeslLocaleCode).getLang());
+	}
+	
+	@Override public <FID extends Enum<FID>, SID extends Enum<SID>, CID extends Enum<CID>> void show(FID fId, SID sId, CID cId)
+	{
+		if(debugOnInfo)
+		{
+			StringBuffer sb = new StringBuffer();
+			sb.append("SID").append(sId.toString());
+			sb.append("CID").append(cId.toString());
+		}
+		
+		try
+		{
+			show(fId,bConstraint.get(sId, cId));
+		}
+		catch (UtilsNotFoundException e)
+		{
+			FacesContextMessage.error(fId.toString(), "ERROR", e.getMessage());
+		}
 		
 	}
-
-
+	
 }

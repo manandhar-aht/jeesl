@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.jeesl.api.bean.JeeslConstraintsBean;
+import org.jeesl.api.bean.msg.JeeslConstraintsBean;
 import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.monitor.ProcessingTimeTracker;
 import org.jeesl.factory.builder.system.ConstraintFactoryBuilder;
@@ -17,6 +17,7 @@ import org.jeesl.interfaces.model.system.constraint.algorithm.JeeslConstraintAlg
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.factory.xml.system.XmlConstraintFactory;
 import net.sf.ahtutils.factory.xml.system.XmlConstraintScopeFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -40,7 +41,7 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 									LEVEL extends UtilsStatus<LEVEL,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
 									RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
-							implements Serializable,JeeslConstraintsBean
+							implements Serializable,JeeslConstraintsBean<CONSTRAINT>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractConstraintBean.class);
 	private static final long serialVersionUID = 1L;
@@ -204,4 +205,12 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 	    	
 	    	return xml;
     }
+
+	@Override
+	public <SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT get(SID sId, CID cId) throws UtilsNotFoundException
+	{
+		if(!mapConstraints.containsKey(sId.toString())) {throw new UtilsNotFoundException("Scope "+sId+" not available");}
+		if(!mapConstraints.get(sId.toString()).containsKey(cId.toString())) {throw new UtilsNotFoundException("Contraint "+cId+" not available in Scope "+sId);}
+		return mapConstraints.get(sId.toString()).get(cId.toString());
+	}
 }

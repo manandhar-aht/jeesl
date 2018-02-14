@@ -20,5 +20,6 @@ public interface JeeslConstraintMessageBean<L extends UtilsLang, D extends Utils
 											RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
 				extends JeeslFacesMessageBean
 {
-	void show(CONSTRAINT constraint);
+	<FID extends Enum<FID>> void show(FID fId, CONSTRAINT constraint);
+	<FID extends Enum<FID>, SID extends Enum<SID>, CID extends Enum<CID>> void show(FID fId, SID sId, CID cId);
 }

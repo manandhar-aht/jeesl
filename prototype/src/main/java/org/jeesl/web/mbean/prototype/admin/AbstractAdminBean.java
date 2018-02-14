@@ -89,6 +89,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription> 
 	{
 		this.bTranslation=bTranslation;
 		this.localeCodes=bTranslation.getLangKeys().toArray(new String[bTranslation.getLangKeys().size()]);
+		this.langs=localeCodes;
 		this.bMessage=bMessage;
 	}
 	

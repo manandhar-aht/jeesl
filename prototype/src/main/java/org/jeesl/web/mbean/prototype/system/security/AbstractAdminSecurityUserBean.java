@@ -52,7 +52,6 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity;
 	
 	protected List<USER> users;public List<USER> getUsers() {return users;}
-	private List<USER> fvUsers; public List<USER> getFvUsers() {return fvUsers;} public void setFvUsers(List<USER> fvUsers) {this.fvUsers = fvUsers;}
 	protected List<R> roles; public List<R> getRoles() {return roles;}
 	
 	protected USER user; public USER getUser(){return user;} public void setUser(USER user){this.user = user;}
@@ -74,12 +73,11 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 
 	}
 	
-	public void initSuper(JeeslUserFacade<USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, JeeslFacesMessageBean bUtilsMessage)
+	public void initSuper(JeeslUserFacade<USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, JeeslFacesMessageBean bMessage)
 	{
-		super.initAdmin(langs, cL, cD, bUtilsMessage);
+		super.initAdmin(langs, cL, cD, bMessage);
 		this.fUtilsUser=fUtilsUser;
 		this.fUtilsSecurity=fUtilsSecurity;
-		
 		
 		mapRoles = new Hashtable<Long,Boolean>();
 		roles = new ArrayList<R>();

@@ -283,7 +283,7 @@
 			<s:lang key="fr" translation="Algorithm Category"/>
 		</s:langs>
 	</s:translation>
-	<s:translation key="SecurityPasswordStrength">
+	<s:translation key="SecurityPasswordRating">
 		<s:langs>
 			<s:lang key="de" translation="Passwortstärke" />
 			<s:lang key="en" translation="Password Strength" />

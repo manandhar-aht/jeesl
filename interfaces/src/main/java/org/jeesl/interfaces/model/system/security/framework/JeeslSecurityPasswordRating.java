@@ -12,9 +12,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 
-public interface JeeslSecurityPasswordStrength <S extends UtilsStatus<S,L,D>,
+public interface JeeslSecurityPasswordRating <S extends UtilsStatus<S,L,D>,
 									L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
 		extends Serializable,EjbPersistable,JeeslOptionRestDownload,UtilsStatusFixedCode,EjbWithCodeGraphic<G>
 {
-	public enum Code{s0,s1,s2,s3,s4}
+	public enum Code{r0,r1,r2,r3,r4}
+	public static final String codePrefix = "r";
 }

@@ -92,7 +92,7 @@
 								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}" mayDisappear="true"/>
 								<aht:icon type="jeeslDelete" rendered="#{cc.attrs.bean.sheet.id gt 0}" listener="#{cc.attrs.bean.rmSheet()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.sheet.visible}"/>
 								<p:outputLabel value="#{msg.jeeslCode}"/>
@@ -228,11 +228,11 @@
 								<p:inputText value="#{cc.attrs.bean.column.queryTrafficLight}" rendered="#{not empty cc.attrs.bean.column.trafficLightScope}"/>
 								
 							</p:panelGrid>
-							<p:panelGrid id="pgColumnData" columns="2" columnClasses="auPwg50,auPwg50">
+							<p:panelGrid id="pgColumnData" columns="2" columnClasses="jeeslGrid50,jeeslGrid50">
 								<aht:tabTranslationEditor value="#{cc.attrs.bean.column}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 								
-								<p:panelGrid columns="1" columnClasses="auPwg100">
-									<p:panelGrid id="pgWidth" columns="3" columnClasses="auPwg40,auPwg50,auPwg10">
+								<p:panelGrid columns="1" columnClasses="jeeslGrid100">
+									<p:panelGrid id="pgWidth" columns="3" columnClasses="jeeslGrid40,jeeslGrid40,jeeslGrid20">
 										<p:outputLabel value="#{msg.jeeslIoReportColumWidth}"/>
 										<p:selectOneMenu value="#{cc.attrs.bean.column.columWidth}" effect="fade" autoWidth="false">
 											<f:selectItems value="#{cc.attrs.bean.columnWidths}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
@@ -240,7 +240,7 @@
 										<p:inputText value="#{cc.attrs.bean.column.columSize}"/>
 									</p:panelGrid>
 									
-									<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60">
+									<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60">
 										<p:outputLabel value="#{msg.jeeslIoReportStyleHeader}"/>
 										<p:selectOneMenu value="#{cc.attrs.bean.column.styleHeader}" effect="fade" autoWidth="false">
 											<f:selectItems value="#{cc.attrs.bean.styles}" var="i" itemLabel="#{i.name[userBean.localeCode].lang}" itemValue="#{i}"/>
@@ -319,7 +319,7 @@
 								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveRow()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="jeeslDelete" rendered="#{cc.attrs.bean.row.id gt 0}" listener="#{cc.attrs.bean.rmRow()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.row.visible}"/>
 								<p:outputLabel value="#{msg.jeeslIoReportRowType}"/>
@@ -329,10 +329,10 @@
 								<p:outputLabel value="#{msg.jeeslIoReportQueryCell}"/>
 								<p:inputText value="#{cc.attrs.bean.row.queryCell}"/>
 							</p:panelGrid>
-							<p:panelGrid columns="2" columnClasses="auPwg40,auPwg60">
+							<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60">
 								<aht:tabTranslationEditor value="#{cc.attrs.bean.row}" withDescription="true"
 									labelTranslation="#{msg.Name}" labelDescription="#{msg.Description}" keys="#{cc.attrs.localeKeys}" />
-								<p:panelGrid id="pgType" columns="2" columnClasses="auPwg40,auPwg60">
+								<p:panelGrid id="pgType" columns="2" columnClasses="jeeslGrid40,jeeslGrid60">
 									<p:outputLabel value="#{msg.jeeslIoReportOffsetRows}"/>
 									<p:inputText value="#{cc.attrs.bean.row.offsetRows}"/>
 									

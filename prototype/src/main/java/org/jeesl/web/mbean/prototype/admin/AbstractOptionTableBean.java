@@ -462,8 +462,13 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	@SuppressWarnings("unchecked")
 	private Container getFromRest(String code) throws UtilsConfigurationException
 	{
+		StringBuilder url = new StringBuilder();
+		if(code.startsWith(JeeslExportRestFacade.packageJeesl)) {url.append(JeeslExportRestFacade.url);}
+		
 		ResteasyClient client = new ResteasyClientBuilder().build();
-		ResteasyWebTarget restTarget = client.target(JeeslExportRestFacade.url);
+		
+		
+		ResteasyWebTarget restTarget = client.target(url.toString());
 		JeeslExportRest<L,D> rest = restTarget.proxy(JeeslExportRest.class);
 		return rest.exportStatus(code);
 	}

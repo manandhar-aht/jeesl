@@ -9,5 +9,7 @@ public interface JeeslExportRestFacade
 //	public final static String url = "http://192.168.202.26:8080/jeesl";
 	public final static String url = "http://www.jeesl.org/jeesl";
 	
+	public final static String packageJeesl = "org.jeesl";
+	
 	Container exportJeeslReferenceRest(String code) throws UtilsConfigurationException;
 }

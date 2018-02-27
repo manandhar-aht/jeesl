@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean.user;
+package org.jeesl.web.mbean.prototype.user;
 
 import java.io.Serializable;
 import java.util.Map;

@@ -101,6 +101,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	
 	public void reset()
 	{
+		if(debugOnInfo) {logger.info("Resettings Menu");}
 		mapKey.clear();
 		mapMenu.clear();
 		mapChild.clear();

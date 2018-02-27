@@ -1,10 +1,12 @@
 package net.sf.ahtutils.report.revert.excel;
 
+import java.beans.Introspector;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import net.sf.ahtutils.xml.report.XlsSheet;
 import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.reflect.MethodUtils;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -247,7 +250,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			}
 			catch (Exception e)
 			{
-			    if (logger.isTraceEnabled()) {logger.warn("Could not read " +CellReference.convertNumToColString(j) +"." +(row.getRowNum()+1) +": " +property);}
+			    if (logger.isTraceEnabled()) {logger.warn("Could not read " +CellReference.convertNumToColString(j) +"." +(row.getRowNum()+1) +": " +property +" because of " +e.getMessage());}
 			}
 			if (!validated)
 			{
@@ -319,7 +322,24 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				m = method;
 			    }
 			}
-
+			
+			if (m== null)
+			{
+				// Using superclass
+				Method[] methodsOfParent = targetClass.getSuperclass().getDeclaredMethods();
+				for (Method method : methodsOfParent)
+				{
+					if (method.getName().equals(methodName))
+					{
+						parameter = method.getParameterTypes()[0];
+						if (Modifier.isPrivate(method.getModifiers()))
+						{
+							method.setAccessible(true);
+						}
+						m = method;
+					}
+				}
+			}
 			// Determine parameter type of setter
 			// Type t = m.getGenericParameterTypes()[0];
 			// String parameterClass = t.getTypeName();
@@ -391,19 +411,19 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 				{
 				    if (parameters[0].getClass().getName().equals("java.lang.Double"))
 				    {
-					Double n			= (Double) parameters[0];
-					if (n % 1 == 0)
-					{
-					    parameters[0]	= "" +n.intValue();
-					}
-					else
-					{
-					    parameters[0]	= "" +n;
-					}
+						Double n			= (Double) parameters[0];
+						if (n % 1 == 0)
+						{
+							parameters[0]	= "" +n.intValue();
+						}
+						else
+						{
+							parameters[0]	= "" +n;
+						}
 				    }
 				    else
 				    {
-					parameters[0] = parameters[0] +"";
+						parameters[0] = parameters[0] +"";
 				    }
 				}
 				
@@ -425,11 +445,15 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
                                     logger.trace("Parameter Class is " +parameters[0].getClass().getSimpleName() + " and original entity property is " +parameterClass);
                                 }
                             try {
-                                m.invoke(target, parameters[0]);
-                            } catch (Throwable ex) {
+                               //m.invoke(target, parameters[0]);
+							   BeanUtils.setProperty(target,Introspector.decapitalize(property),parameters[0]);
+                            } catch (IllegalAccessException ex) {
                                 logger.error("Could not set " +m.getName() +" with " +parameters[0] +": " +ex.getMessage());
 				return false;
-                            }
+                            } catch (InvocationTargetException ex) {
+								logger.error("Could not set " +m.getName() +" with " +parameters[0] +": " +ex.getMessage());
+								return false;
+				}
 
 			}
 			else

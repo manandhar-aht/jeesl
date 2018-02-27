@@ -69,6 +69,26 @@ public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 		return xml;
 	}
 	
+	public static <E extends Enum<E>> void plus(Figures figures, E code, Double value)
+	{
+		if(value!=null)
+		{
+			boolean added = false;
+			for(Finance f : figures.getFinance())
+			{
+				if(f.getCode().equals(code.toString()))
+				{
+					f.setValue(f.getValue()+value);
+					added = true;
+				}
+			}
+			if(!added)
+			{
+				XmlFinanceFactory.add(figures, code, value);
+			}
+		}
+	}
+	
 	public static <E extends Enum<E>> void add(Figures figures, E code, Integer value)
 	{
 		if(value!=null){figures.getFinance().add(XmlFinanceFactory.build(code, value));}

@@ -185,6 +185,15 @@ public class AbstractIconBean implements Serializable
 		mapStatic.put("jeeslUpload", "ui/jeesl/control/upload.png");
 	}
 	
+	protected void geojsf()
+	{
+		mapStatic.put("geoJsfAdd", "ui/jeesl/control/add.png");
+		mapStatic.put("geoJsfCancel", "ui/jeesl/control/cancel.png");
+		mapStatic.put("geoJsfDelete", "ui/jeesl/control/delete.png");
+		mapStatic.put("geoJsfRemove", "ui/jeesl/control/remove.png");
+		mapStatic.put("geoJsfSave", "ui/jeesl/control/save.png");
+	}
+	
 	protected void jeeslSecurity()
 	{
 		mapStatic.put("jeeslSecurityDocumentation", "ui/jeesl/security/documentation.png");

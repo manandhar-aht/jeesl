@@ -11,7 +11,7 @@ public interface JeeslExportRestFacade
 	public final static String urlGeojsf = "http://192.168.202.26:8080/geojsf";
 	
 	public final static String packageJeesl = "org.jeesl";
-	public final static String packageGeojsf = "org.jeesl";
+	public final static String packageGeojsf = "org.geojsf";
 	
 	Container exportJeeslReferenceRest(String code) throws UtilsConfigurationException;
 }

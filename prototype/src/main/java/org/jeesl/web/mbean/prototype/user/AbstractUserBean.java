@@ -1,8 +1,10 @@
 package org.jeesl.web.mbean.prototype.user;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Locale;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.jeesl.api.bean.JeeslMenuBean;
@@ -77,5 +79,12 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 		else if(localeCode.equals("kin")){locale = new Locale.Builder().setLanguage("rw").setRegion("RW").build();}
 		
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+	}
+	
+	public void logout() throws IOException
+	{
+	    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+	    ec.invalidateSession();
+	    ec.redirect(ec.getRequestContextPath());
 	}
 }

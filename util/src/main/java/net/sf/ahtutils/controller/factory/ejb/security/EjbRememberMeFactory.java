@@ -23,7 +23,7 @@ public class EjbRememberMeFactory <L extends UtilsLang, D extends UtilsDescripti
 									A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 									AT extends JeeslSecurityTemplate<L,D,C>,
 									USER extends JeeslUser<R>,
-									REM extends JeeslRememberMe<L,D,C,R,V,U,A,AT,USER>>
+									REM extends JeeslRememberMe<USER>>
 {		
 	private final Class<REM> cRem;
 	
@@ -40,7 +40,7 @@ public class EjbRememberMeFactory <L extends UtilsLang, D extends UtilsDescripti
 				   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 				   AT extends JeeslSecurityTemplate<L,D,C>,
 				   USER extends JeeslUser<R>,
-				   REM extends JeeslRememberMe<L,D,C,R,V,U,A,AT,USER>>
+				   REM extends JeeslRememberMe<USER>>
 		EjbRememberMeFactory<L,D,C,R,V,U,A,AT,USER,REM> factory(final Class<REM> cRem)
 	{
 		return new EjbRememberMeFactory<L,D,C,R,V,U,A,AT,USER,REM>(cRem);

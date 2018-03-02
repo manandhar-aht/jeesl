@@ -165,6 +165,34 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
         return result;
 	}
 	
+	@Override public JsonSurveyValue surveyCountAnswers(QUESTION question)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+        CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
+        Root<ANSWER> answer = cQ.from(fbAnalyis.getClassAnswer());
+        
+        Path<QUESTION> pQuestion = answer.get(JeeslSurveyAnswer.Attributes.question.toString());
+        predicates.add(cB.equal(pQuestion, question));
+        
+        Expression<Long> eTa = cB.count(answer.<Long>get("id"));
+        
+        cQ.groupBy(pQuestion.get("id"));
+        cQ.multiselect(pQuestion.get("id"),eTa);
+        
+        cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+        TypedQuery<Tuple> tQ = em.createQuery(cQ);
+        List<Tuple> tuples = tQ.getResultList();
+        
+        JsonSurveyValues values = JsonSurveyValuesFactory.build();
+        for(Tuple t : tuples)
+        {
+        		JsonSurveyValue v = JsonSurveyValueFactory.build((Long)t.get(0), (Long)t.get(1));
+	        	values.getValues().add(v);
+        }
+        return values.getValues().get(0);
+	}
+	
 	@Override public JsonFlatFigures surveyCountAnswer(List<QUESTION> questions, SURVEY survey, List<CORRELATION> correlations)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();

@@ -1,8 +1,8 @@
 package org.jeesl.web.mbean.prototype.module.survey;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -43,6 +43,7 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
+import org.jeesl.model.json.module.survey.JsonSurveyValue;
 import org.jeesl.util.comparator.ejb.PositionComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,6 +115,8 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	protected OPTIONS optionSet; public OPTIONS getOptionSet() {return optionSet;} public void setOptionSet(OPTIONS optionSet) {this.optionSet = optionSet;}
 	private SCORE score; public SCORE getScore() {return score;} public void setScore(SCORE score) {this.score = score;}
 	protected OPTION option; public OPTION getOption(){return option;} public void setOption(OPTION option){this.option = option;}
+	
+	private JsonSurveyValue questionCount; public JsonSurveyValue getQuestionCount() {return questionCount;}
 	
 	private UiHelperSurvey<VERSION,SECTION> uiHelper; public UiHelperSurvey<VERSION,SECTION> getUiHelper() {return uiHelper;}
 	private Comparator<OPTION> cmpOption;
@@ -414,11 +417,12 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		reloadQuestion();
 		clear(false,false,false,false,true,true,true,true,true);
 	}
-	
+
 	private void reloadQuestion()
 	{
 		question = fCore.find(fbTemplate.getClassQuestion(),question);
 		question = fCore.load(question);
+//		questionCount = fAnalysis.surveyCountAnswers(question);
 		Collections.sort(question.getOptions(),cmpOption);
 		options.clear(); options.addAll(question.getOptions());
 		reloadConditions();

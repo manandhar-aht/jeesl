@@ -253,6 +253,9 @@
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
 
+							<p:outputLabel rendered="false" value="#{cc.attrs.bean.questionCount.count}"/>
+							<h:outputText rendered="false" value="Answers linked with this question"/>
+
 							<p:outputLabel value="#{msg.aupSurveyQuestionCode}"/>
 							<p:inputText value="#{cc.attrs.bean.question.code}"/>
 							

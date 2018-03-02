@@ -24,7 +24,7 @@ public interface UtilsEventTracker <L extends UtilsLang,
 									AT extends JeeslSecurityTemplate<L,D,C>,
 									USER extends JeeslUser<R>,
 									E extends EjbWithId>
-		extends EjbWithId,EjbWithRecord,EjbWithUser<L,D,C,R,V,U,A,AT,USER>
+		extends EjbWithId,EjbWithRecord,EjbWithUser<USER>
 {
 	E getEvent();
 	void setEvent(E event);

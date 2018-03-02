@@ -27,7 +27,7 @@ public interface JeeslRememberMe <L extends UtilsLang, D extends UtilsDescriptio
 							USER extends JeeslUser<R>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithValidUntil,
-				EjbWithUser<L,D,C,R,V,U,A,AT,USER>
+				EjbWithUser<USER>
 {	
 
 }

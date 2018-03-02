@@ -23,7 +23,7 @@ public interface UtilsActionTracker <L extends UtilsLang,
 									A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 									AT extends JeeslSecurityTemplate<L,D,C>,
 									USER extends JeeslUser<R>>
-		extends EjbWithId,EjbWithRecord,EjbWithUser<L,D,C,R,V,U,A,AT,USER>
+		extends EjbWithId,EjbWithRecord,EjbWithUser<USER>
 {
 	
 }

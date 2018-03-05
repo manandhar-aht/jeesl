@@ -7,7 +7,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface UtilsQaTestDiscussion<STAFF extends UtilsQaStaff<?,?,?,?,?>,
-										QAT extends UtilsQaTest<?,?,?,?,?,?,?,?,?,STAFF,?,?,?,?,?,QAT,?,?,?,?,?,?,?,?,?>>
+										QAT extends UtilsQaTest<?,?,?,?,?,?>>
 			extends Serializable,EjbSaveable,EjbWithRecord,EjbWithId
 {
 	QAT getTest();

@@ -9,7 +9,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface UtilsQaResult<STAFF extends UtilsQaStaff<?,?,?,?,?>,
-				QAT extends UtilsQaTest<?,?,?,?,?,?,?,?,?,STAFF,?,?,?,?,?,QAT,?,?,?,?,?,?,?,QARS,?>,
+				QAT extends UtilsQaTest<?,?,?,?,?,?>,
 				QARS extends UtilsStatus<QARS,?,?>>
 			extends Serializable,EjbSaveable,EjbWithRecord,EjbWithId
 {

@@ -11,7 +11,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
 public interface UtilsQaCategory<QA extends UtilsQualityAssurarance<?,?,?>,
-								QAT extends UtilsQaTest<?,?,?,?,?,?,?,?,?,?,?,QA,?,?,?,QAT,?,?,?,?,?,?,?,?,?>>
+								QAT extends UtilsQaTest<?,?,?,?,?,?>>
 			extends Serializable,EjbSaveable,EjbWithCode,EjbWithNr,EjbWithId,EjbWithName
 {
 	QA getQa();

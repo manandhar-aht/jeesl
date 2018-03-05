@@ -16,7 +16,7 @@ public interface UtilsQaStaff<
 					USER extends JeeslUser<R>,
 					GROUP extends UtilsQaGroup<?,QA,?>,
 					QA extends UtilsQualityAssurarance<?,?,QASH>,
-					QASH extends UtilsQaStakeholder<?,?,?,R,?,?,?,?,USER,?,GROUP,QA,?,?,?,?,?,?,QASH,?,?,?,?,?,?>>
+					QASH extends UtilsQaStakeholder<QA>>
 			extends Serializable,EjbSaveable,EjbPersistable,EjbWithId,JeeslStaff<R,USER,QA,QA>
 {
 	QASH getStakeholder();

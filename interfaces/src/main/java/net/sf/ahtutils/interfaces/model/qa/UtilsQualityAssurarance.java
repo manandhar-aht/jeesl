@@ -8,7 +8,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public interface UtilsQualityAssurarance<
 					STAFF extends UtilsQaStaff<?,?,?,?,QASH>,
 					QAC extends UtilsQaCategory<?,?>,
-					QASH extends UtilsQaStakeholder<?,?,?,?,?,?,?,?,?,STAFF,?,?,?,?,QAC,?,?,?,QASH,?,?,?,?,?,?>>
+					QASH extends UtilsQaStakeholder<?>>
 			extends Serializable,EjbWithId
 {
 	List<QAC> getCategories();

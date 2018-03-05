@@ -425,7 +425,6 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	public <X extends JeeslOptionRest, S extends UtilsStatus, W extends EjbWithCodeGraphic<G>> void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
 	{
 		logger.info("Downloading REST");
-
 		
 		Class<X> cX = (Class<X>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(JeeslOptionRest.class);
 		Class<S> cS = (Class<S>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(UtilsStatus.class);

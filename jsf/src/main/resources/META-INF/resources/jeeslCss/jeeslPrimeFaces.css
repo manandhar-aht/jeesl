@@ -131,7 +131,7 @@
 .jeeslTree .ui-widget-content {background-color: transparent;}
 .jeeslTree {background-color: #f1f1f1;}
 
-.jeeslPanel * .ui-widget-header .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield {display: inline-stack;border: 0;white-space: normal;overflow: hidden;font-weight: normal;width: 100%;text-align: left;}
+.jeeslPanel * .ui-widget-header .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield {display: inline-stack;border: 0;white-space: normal;overflow: hidden;font-weight: normal;width: 92%;text-align: left;}
 
 .jeeslPanel .ui-panelgrid .ui-panelgrid-cell {padding-right: 13px;}
 

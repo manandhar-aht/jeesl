@@ -8,6 +8,7 @@ import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.builder.system.JobFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
@@ -32,7 +33,8 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 									FT extends UtilsStatus<FT,L,D>,
 									STATUS extends UtilsStatus<STATUS,L,D>,
 									ROBOT extends JeeslJobRobot<L,D>,
-									CACHE extends JeeslJobCache<TEMPLATE>,
+									CACHE extends JeeslJobCache<TEMPLATE,CONTAINER>,
+									CONTAINER extends JeeslFileContainer<?,?>,
 									USER extends EjbWithEmail
 									>
 					extends AbstractAdminBean<L,D>
@@ -41,7 +43,7 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminJobBean.class);
 	
-	protected JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob;
+	protected JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,CONTAINER,USER> fJob;
 	protected final JobFactoryBuilder<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fbJob;
 	
 	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
@@ -58,7 +60,7 @@ public abstract class AbstractAdminJobBean <L extends UtilsLang,D extends UtilsD
 		sbhPriority = new SbMultiHandler<PRIORITY>(fbJob.getClassPriority(),this);
 	}
 	
-	protected void postConstructAbstractJob(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,USER> fJob)
+	protected void postConstructAbstractJob(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslJobFacade<L,D,TEMPLATE,CATEGORY,TYPE,JOB,PRIORITY,FEEDBACK,FT,STATUS,ROBOT,CACHE,CONTAINER,USER> fJob)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fJob=fJob;

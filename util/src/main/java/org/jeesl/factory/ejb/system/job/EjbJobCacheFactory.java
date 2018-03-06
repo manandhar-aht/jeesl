@@ -25,7 +25,7 @@ public class EjbJobCacheFactory <L extends UtilsLang,D extends UtilsDescription,
 									FT extends UtilsStatus<FT,L,D>,
 									STATUS extends UtilsStatus<STATUS,L,D>,
 									ROBOT extends JeeslJobRobot<L,D>,
-									CACHE extends JeeslJobCache<TEMPLATE>,
+									CACHE extends JeeslJobCache<TEMPLATE,?>,
 									USER extends EjbWithEmail
 									>
 {

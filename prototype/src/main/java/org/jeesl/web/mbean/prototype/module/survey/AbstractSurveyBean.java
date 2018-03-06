@@ -93,7 +93,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 						TOOL extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,DATTRIBUTE,AQ,ATT>,
 						ATT extends UtilsStatus<ATT,L,D>,
 						TOOLCACHETEMPLATE extends JeeslJobTemplate<L,D,?,?,?>,
-						CACHE extends JeeslJobCache<TOOLCACHETEMPLATE>>
+						CACHE extends JeeslJobCache<TOOLCACHETEMPLATE,?>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
 {

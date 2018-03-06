@@ -3,6 +3,7 @@ package org.jeesl.api.facade.system;
 import java.util.Date;
 import java.util.List;
 
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.job.JeeslJob;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobFeedback;
@@ -28,7 +29,8 @@ public interface JeeslJobFacade <L extends UtilsLang,D extends UtilsDescription,
 								FT extends UtilsStatus<FT,L,D>,
 								STATUS extends UtilsStatus<STATUS,L,D>,
 								ROBOT extends JeeslJobRobot<L,D>,
-								CACHE extends JeeslJobCache<TEMPLATE>,
+								CACHE extends JeeslJobCache<TEMPLATE,CONTAINER>,
+								CONTAINER extends JeeslFileContainer<?,?>,
 								USER extends EjbWithEmail
 								>
 			extends UtilsFacade

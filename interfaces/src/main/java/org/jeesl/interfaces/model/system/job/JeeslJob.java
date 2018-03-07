@@ -20,7 +20,7 @@ public interface JeeslJob<TEMPLATE extends JeeslJobTemplate<?,?,?,?,?>,
 {	
 	public static enum Attributes{template,status,priority,recordCreation,recordStart,code};
 	
-	public static enum Type{reportXml,reportXlsx}
+	public static enum Type{reportXml,reportXlsx,reportZip}
 	
 	TEMPLATE getTemplate();
 	void setTemplate(TEMPLATE template);

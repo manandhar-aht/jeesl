@@ -72,7 +72,6 @@ public class ReportHandler {
 	 */
 	public ReportHandler(String reportFile) throws ReportException
 	{
-		
 		logger.info("Initializing report handling system");
 		mrl = new MultiResourceLoader();
 		configFileLocation = reportFile.substring(0, reportFile.lastIndexOf("/")) +"/";
@@ -93,11 +92,9 @@ public class ReportHandler {
 		mrl.addPath(configFileLocation);
 		mrl.addPath("src/main/resource/" +reportRoot);
 		mrl.addPath("src/main/" +reportRoot);
-		try {
-			mrl.searchIs("reports.xml");
-		} catch (FileNotFoundException e1) {
-			throw new ReportException("Error: reportRoot " +reportRoot +" does not exist!");
-		}
+		
+		try {mrl.searchIs("reports.xml");}
+		catch (FileNotFoundException ee) {throw new ReportException("Error: reportRoot " +reportRoot +" does not exist!");}
 			
 		
 		logger.info("Read report configuration from " +configFileLocation +" containing " +reports.getReport().size() +" reports.");
@@ -115,10 +112,12 @@ public class ReportHandler {
 		}
 		
 		//Reading resources file from reportRoot if available
-		try {
+		try
+		{
 			templates = (Templates)JaxbUtil.loadJAXB(reportRoot +"templates.xml", Templates.class);
 			logger.info("Read templates definitions from " +reportRoot +"templates.xml");
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			logger.warn("Problem loading templates.xml from " +reportRoot +" - no templates needed?");
 		}
 	}
@@ -298,20 +297,20 @@ public class ReportHandler {
 	public JasperReport getCompiledReport(String reportId, String subreport, String format, String type) throws ReportException
 	{
 		Jr report = null;
-		try {
-			if (null != subreport)
-				{
-					report = ReportXpath.getSr(reports, reportId, subreport, format);
-				}
+		try
+		{
+			if (subreport != null)
+			{
+				report = ReportXpath.getSr(reports, reportId, subreport, format);
+			}
 			else
-				{
-					report = ReportXpath.getMr(reports, reportId, format);
-				}
-		} catch (ExlpXpathNotFoundException e1) {
-			throw new ReportException("XPath has not been found when trying to find report with id " +reportId +"! " +e1.getMessage());
-		} catch (ExlpXpathNotUniqueException e1) {
-			throw new ReportException("XPath search found non-unique results when trying to find report with id " +reportId +"! " +e1.getMessage());
+			{
+				report = ReportXpath.getMr(reports, reportId, format);
+			}
 		}
+		catch (ExlpXpathNotFoundException e1) {throw new ReportException("XPath has not been found when trying to find report with id " +reportId +"! " +e1.getMessage());}
+		catch (ExlpXpathNotUniqueException e1) {throw new ReportException("XPath search found non-unique results when trying to find report with id " +reportId +"! " +e1.getMessage());}
+		
 		String reportDir = (String)JXPathContext.newContext(reports).getValue("report[@id='"+ reportId +"']/@dir");
 		String location = "jasper";
 		if (report.isSetAlternateDir())
@@ -322,15 +321,21 @@ public class ReportHandler {
 		{
 			location = location +"/" +reportDir +"/" +format +"/ltr/"  +type +report.getName() +".jasper";
 		}
+		
 		JasperReport reportCompiled = null;
 		try
 		{
 			reportCompiled = (JasperReport)JRLoader.loadObject(mrl.searchIs(location));
-		} catch (FileNotFoundException e) {
+			logger.info("Compiled Report found at "+location);
+		}
+		catch (FileNotFoundException e)
+		{
 			logger.warn("Requested compiled report jasper file for report " +reportId +" could not be found at " +location +"! - Trying to recompile it from jrxml.");
 			JasperDesign design = getReport(reportId, subreport, format, type);
 			reportCompiled      = (JasperReport) getCompiledReport(design);
-		} catch (JRException e) {
+		}
+		catch (JRException e)
+		{
 			throw new ReportException("Internal JasperReports error when trying to get requested compiled report design for report " +reportId +": " +e.getMessage());
 		}
 		return reportCompiled;

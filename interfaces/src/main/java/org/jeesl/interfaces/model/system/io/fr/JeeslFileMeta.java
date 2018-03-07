@@ -29,4 +29,7 @@ public interface JeeslFileMeta<CONTAINER extends JeeslFileContainer<?,?>,
 	
 	String getMd5Hash();
 	void setMd5Hash(String md5Hash);
+	
+	String getCategory();
+	void setCategory(String category);
 }

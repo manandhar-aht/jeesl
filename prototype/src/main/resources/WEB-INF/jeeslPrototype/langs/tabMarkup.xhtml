@@ -5,13 +5,21 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui"
 >
-	<p:tabView var="t" value="#{localeCodes}">  
+	<p:tabView var="t" value="#{locales}">  
   		<p:tab title="#{t.code}">
-  			<p:selectOneMenu value="#{value[t.code].markup}" effect="fade">  
+  			<p:selectOneMenu value="#{value[t.code].type}" effect="fade" rendered="false">  
                 <f:selectItems value="#{markups}" var="m" itemLabel="#{m.name[localeCode].lang}" itemValue="#{m}"/>
             </p:selectOneMenu>
   		
-  			<p:inputTextarea value="#{value[t.code].lang}" style="w100" autocomplete="off"/>
+  			<p:inputTextarea value="#{value[t.code].content}" style="w100" autocomplete="off" rendered="#{value[t.code].type.code eq 'text'}"/>
+  			<p:textEditor value="#{value[t.code].content}" height="300" style="margin-bottom:10px" rendered="#{value[t.code].type.code eq 'xhtml'}">
+		        <f:facet name="toolbar">
+		             <span class="ql-formats">
+		                <button class="ql-bold"></button>
+		                <button class="ql-italic"></button>
+		            </span>
+		        </f:facet>
+		    </p:textEditor>
   		</p:tab>  
   	</p:tabView> 
 </ui:composition>

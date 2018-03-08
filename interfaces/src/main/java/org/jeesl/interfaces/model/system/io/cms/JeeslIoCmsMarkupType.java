@@ -15,5 +15,5 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 public interface JeeslIoCmsMarkupType <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
 					extends Serializable,EjbPersistable,JeeslOptionRestDownload,EjbWithCodeGraphic<G>,UtilsStatusFixedCode		
 {	
-	public enum Code{text}
+	public enum Code{text,xhtml}
 }

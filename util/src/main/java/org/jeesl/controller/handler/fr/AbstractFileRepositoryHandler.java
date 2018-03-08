@@ -137,13 +137,15 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		xmlFile = XmlFileFactory.build("");
 	}
 	
-	public void addFile(String name, byte[] bytes) throws UtilsNotFoundException
+	public void addFile(String name, byte[] bytes) throws UtilsNotFoundException {addFile(name, bytes, null);}
+	public void addFile(String name, byte[] bytes, String category) throws UtilsNotFoundException
 	{
 		addFile();
 		xmlFile.setName(name);
 		xmlFile.setSize(bytes.length);
 		xmlFile.setData(XmlDataFactory.build(bytes));
 		meta = efMeta.build(container,name,bytes.length,new Date());
+		meta.setCategory(category);
 		meta.setType(fFr.fByCode(fbFile.getClassType(), JeeslFileType.Code.unknown));
 	}
 	

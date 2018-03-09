@@ -84,7 +84,6 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	private AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> attributeHandler; public AttributeHandler<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> getAttributeHandler() {return attributeHandler;}
 	private JeeslFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fileHandler; public JeeslFileRepositoryHandler<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> getFileHandler() {return fileHandler;}
 
-	
 	private List<FILE> files; public List<FILE> getFiles() {return files;} public void setFiles(List<FILE> files) {this.files = files;}
 
 	private TreeNode tree; public TreeNode getTree() {return tree;}

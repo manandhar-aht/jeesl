@@ -45,7 +45,7 @@
 				</aht:slot>
 				<aht:slot id="sDm" width="4">
 					<h:form id="fSet">
-						<p:panel header="#{msg.jeeslIoDmsSystem}" rendered="#{not empty cc.attrs.bean.dm}" styleClass="auPanelWithGrid">
+						<p:panel header="#{msg.jeeslIoDmsSystem}" rendered="#{not empty cc.attrs.bean.dm}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetDm()}" update=":#{cc.id}:grid" tooltip="#{msg.ttCancel}" mayDisappear="true"/>
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveDm()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>

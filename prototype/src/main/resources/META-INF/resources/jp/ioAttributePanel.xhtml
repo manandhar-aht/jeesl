@@ -25,7 +25,7 @@
 	
 	<composite:implementation>
 		<ui:fragment rendered="#{cc.attrs.withSave}">
-			<p:panel id="pQuestions" styleClass="auPanelWithGrid" header="#{cc.attrs.handler.attributeSet.name[localeCode].lang}">
+			<p:panel id="pQuestions" header="#{cc.attrs.handler.attributeSet.name[localeCode].lang}" styleClass="jeeslPanel">
 				<f:facet name="actions">
 					<aht:icon id="btSave" type="jeeslSave" listener="#{cc.attrs.handler.save()}" update="@form #{cc.attrs.update}" tooltip="#{msg.jeeslSurveyTtSaveSection}" />
 				</f:facet>

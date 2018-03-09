@@ -1,9 +1,12 @@
 package org.jeesl.controller.handler.fr;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.jeesl.api.bean.callback.JeeslFileRepositoryCallback;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
@@ -50,6 +53,9 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	protected final EjbIoFrMetaFactory<CONTAINER,META> efMeta;
 	
 	protected final List<META> metas; public List<META> getMetas() {return metas;}
+	
+	private String zipName; public String getZipName() {return zipName;} public void setZipName(String zipName) {this.zipName = zipName;}
+	private String zipPrefix; public String getZipPrefix() {return zipPrefix;} public void setZipPrefix(String zipPrefix) {this.zipPrefix = zipPrefix;}
 
 	private STORAGE storage; @Override public STORAGE getStorage() {return storage;}
 	protected CONTAINER container; @Override public CONTAINER getContainer() {return container;}
@@ -67,6 +73,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		efContainer = fbFile.ejbContainer();
 		efMeta = fbFile.ejbMeta();
 		metas = new ArrayList<META>();
+		zipName = "zip.zip";
 	}
 	
 	public <E extends Enum<E>> void initStorage(E code)
@@ -156,4 +163,31 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		reload();
 		reset(true);
     }
+	
+	public byte[] zip() throws Exception
+	{
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ZipOutputStream zof = new ZipOutputStream(bos);
+		
+		for(META m : metas)
+		{
+			StringBuilder sb = new StringBuilder();
+			if(zipPrefix!=null && zipPrefix.length()>0)
+			{
+				sb.append(zipPrefix).append("/");
+			}
+			sb.append(m.getName());
+			
+			ZipEntry ze = new ZipEntry(sb.toString());
+			zof.putNextEntry(ze);
+			
+			zof.write(fFr.loadFromFileRepository(m));
+
+			zof.closeEntry();
+			
+		}
+		zof.close();
+		bos.close();
+		return bos.toByteArray();
+	}
 }

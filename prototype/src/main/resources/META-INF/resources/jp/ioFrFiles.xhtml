@@ -15,6 +15,11 @@
 		<composite:attribute name="handler" required="true"/>
 		<composite:attribute name="update" required="true"/>
 		<composite:attribute name="componentPrefix" required="false" default=""/>
+		<composite:attribute name="allowUpload" required="false" default="true"/>
+		
+		<composite:attribute name="withCategory" required="false" default="false"/>
+		<composite:attribute name="labelCategory" required="false" default="#{msg.jeeslType}"/>
+		<composite:attribute name="mapCategory" required="false" default=""/>
 	</composite:interface>
 	
 	<composite:implementation>
@@ -22,7 +27,10 @@
 			<p:dataTable id="dtJeeslFiles" var="meta" value="#{cc.attrs.handler.metas}" rowKey="#{meta.id}" selection="#{cc.attrs.handler.meta}" selectionMode="single">
 				<f:facet name="header">
 					<aht:pfDataTableHeader id="dthJeeslFiles" title="#{msg.jeeslIoFiles}">
-						<aht:icon id="iconJeeslFileAdd" type="jeeslAdd" listener="#{cc.attrs.handler.addFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:opUpload" oncomplete="PF('wvUpload').show();"/>
+						<aht:icon id="iconJeeslFileAdd" type="jeeslAdd"
+							listener="#{cc.attrs.handler.addFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:opUpload" oncomplete="PF('wvUpload').show();"
+							rendered="#{cc.attrs.allowUpload}"/>
+						<jeesl:downloadIcon type="reportZip" value="#{cc.attrs.handler.zipStream()}" tooltip="#{msg.reportZip}"/>
 					</aht:pfDataTableHeader>
 				</f:facet>
 				<p:ajax event="rowSelect" listener="#{cc.attrs.handler.selectFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fDownload" />
@@ -36,6 +44,11 @@
 				<p:column>
 					<f:facet name="header"><h:outputText value="#{msg.jeeslIoFileName}"/></f:facet>
 					<h:outputText value="#{meta.name}"/>
+				</p:column>
+				<p:column rendered="#{cc.attrs.withCategory}">
+					<f:facet name="header"><h:outputText value="#{cc.attrs.labelCategory}"/></f:facet>
+					<h:outputText value="#{meta.category}" rendered="#{empty cc.attrs.mapCategory}"/>
+					<h:outputText value="#{cc.attrs.mapCategory[meta.category].name[localeCode].lang}" rendered="#{not empty cc.attrs.mapCategory}"/>
 				</p:column>
 			</p:dataTable>
 		</h:form>
@@ -52,11 +65,11 @@
 						sizeLimit="#{cc.attrs.handler.storage.fileSizeLimit}" fileLimit="100" />
 				</h:form>
 				<h:form id="fConfirm" >
-					<p:panel header="#{msg.jeeslIoFileUpload}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.handler.meta}">
+					<p:panel header="#{msg.jeeslIoFileUpload}" rendered="#{not empty cc.attrs.handler.meta}" styleClass="jeeslPanel" >
 						<f:facet name="actions">
 							<aht:icon id="iconJeeslFileSave" type="jeeslSave" listener="#{cc.attrs.handler.saveFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fFiles" oncomplete="PF('wvUpload').hide();"/> 
 						</f:facet>
-						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
+						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 							<p:outputLabel value="#{msg.jeeslIoFileName}"/>
 							<h:outputText value="#{cc.attrs.handler.meta.name}"/>
 							<p:outputLabel value="#{msg.jeeslIoFileSize}"/>
@@ -65,6 +78,13 @@
 							<h:outputText value="#{cc.attrs.handler.meta.record}">
 								<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
 							</h:outputText>
+						</p:panelGrid>
+						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70" rendered="#{cc.attrs.withCategory}">
+							<p:outputLabel value="#{cc.attrs.labelCategory}"/>
+							<p:selectOneMenu value="#{cc.attrs.handler.meta.category}" effect="fade" autoWidth="false">
+								<f:selectItems value="#{cc.attrs.mapCategory.values}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t.code}"/>
+							</p:selectOneMenu>
+							
 						</p:panelGrid>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 					</p:panel>

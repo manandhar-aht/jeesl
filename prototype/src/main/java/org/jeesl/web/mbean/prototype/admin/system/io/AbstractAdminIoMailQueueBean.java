@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.admin.system.io;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.api.handler.sb.SbDateIntervalSelection;
@@ -12,6 +13,7 @@ import org.jeesl.factory.builder.io.MailFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,12 +53,13 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	{
 		super(fbMail.getClassL(),fbMail.getClassD());
 		sbhDate = new SbDateHandler(this);
+		sbhDate.setEnforceStartOfDay(true);
 		sbhDate.initWeeksToNow(2);
 	}
 	
-	protected void initSuper(String[] langs, JeeslFacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
+	protected void postConstructMailQueue(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
 	{
-		super.initAdmin(langs,cLang,cDescription,bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fMail=fMail;
 		
 		this.cMail=cMail;
@@ -102,7 +105,9 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	//*************************************************************************************
 	protected void reloadMails()
 	{
-		mails = fMail.fMails(sbhCategory.getSelected(),sbhStatus.getSelected(),sbhDate.getDate1(),sbhDate.getDate2());
+		DateTime dt = new DateTime(sbhDate.getDate2());
+		
+		mails = fMail.fMails(sbhCategory.getSelected(),sbhStatus.getSelected(),sbhDate.getDate1(),dt.plusDays(1).toDate());
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cMail,mails));}
 //		Collections.sort(templates, comparatorTemplate);
 	}

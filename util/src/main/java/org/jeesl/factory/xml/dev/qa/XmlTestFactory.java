@@ -31,6 +31,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.qa.Test;
 
 public class XmlTestFactory<L extends UtilsLang, D extends UtilsDescription,
+							L2 extends UtilsLang, D2 extends UtilsDescription,
 							C extends JeeslSecurityCategory<L,D>,
 							R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 							V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -50,7 +51,7 @@ public class XmlTestFactory<L extends UtilsLang, D extends UtilsDescription,
 							QASH extends UtilsQaStakeholder<QA>,
 							QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
 							QATI extends UtilsQaTestInfo<QATC>,
-							QATC extends UtilsStatus<QATC,L,D>,
+							QATC extends UtilsStatus<QATC,L2,D2>,
 							QATS extends UtilsStatus<QATS,L,D>,
 							QARS extends UtilsStatus<QARS,L,D>,
 							QAUS extends UtilsStatus<QAUS,L,D>>
@@ -63,8 +64,8 @@ public class XmlTestFactory<L extends UtilsLang, D extends UtilsDescription,
 	
 	private XmlStatusFactory<QATS,L,D> xfDeveloperStatus;
 	
-	private JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
-	public void lazyLoader(JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,Class<QAT> cQAT)
+	private JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
+	public void lazyLoader(JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,Class<QAT> cQAT)
 	{
 		this.fQa=fQa;
 		this.cQAT=cQAT;
@@ -118,19 +119,19 @@ public class XmlTestFactory<L extends UtilsLang, D extends UtilsDescription,
 		
 		if(q.isSetResults())
 		{
-			XmlResultsFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlResultsFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getResults());
+			XmlResultsFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlResultsFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getResults());
 			xml.setResults(f.build(test));
 		}
 		
 		if(q.isSetInfo() && test.getInfo()!=null)
 		{
-			XmlInfoFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlInfoFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getInfo());
+			XmlInfoFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlInfoFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getInfo());
 			xml.setInfo(f.build(test.getInfo()));
 		}
 		
 		if(q.isSetGroups())
 		{
-			XmlGroupsFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlGroupsFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getGroups());
+			XmlGroupsFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlGroupsFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getGroups());
 			xml.setGroups(f.build(test));
 		}
 		

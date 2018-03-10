@@ -27,8 +27,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.qa.Groups;
 
-public class XmlGroupsFactory<L extends UtilsLang,
-D extends UtilsDescription,
+public class XmlGroupsFactory<L extends UtilsLang, D extends UtilsDescription,
+								L2 extends UtilsLang, D2 extends UtilsDescription,
 C extends JeeslSecurityCategory<L,D>,
 R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -48,7 +48,7 @@ QAR extends UtilsQaResult<STAFF,QAT,QARS>,
 QASH extends UtilsQaStakeholder<QA>,
 QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
 QATI extends UtilsQaTestInfo<QATC>,
-QATC extends UtilsStatus<QATC,L,D>,
+QATC extends UtilsStatus<QATC,L2,D2>,
 QATS extends UtilsStatus<QATS,L,D>,
 QARS extends UtilsStatus<QARS,L,D>,
 QAUS extends UtilsStatus<QAUS,L,D>>
@@ -68,7 +68,7 @@ QAUS extends UtilsStatus<QAUS,L,D>>
 		
 		if(q.isSetGroup() && test.getGroups()!=null)
 		{
-			XmlGroupFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlGroupFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getGroup().get(0));
+			XmlGroupFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlGroupFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getGroup().get(0));
 			for(GROUP g : test.getGroups())
 			{
 				xml.getGroup().add(f.build(g));

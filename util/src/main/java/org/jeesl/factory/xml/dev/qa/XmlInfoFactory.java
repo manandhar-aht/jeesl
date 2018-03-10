@@ -30,6 +30,7 @@ import net.sf.ahtutils.xml.qa.Comment;
 import net.sf.ahtutils.xml.qa.Info;
 
 public class XmlInfoFactory<L extends UtilsLang, D extends UtilsDescription,
+						L2 extends UtilsLang, D2 extends UtilsDescription,
 						C extends JeeslSecurityCategory<L,D>,
 						R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 						V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -49,7 +50,7 @@ public class XmlInfoFactory<L extends UtilsLang, D extends UtilsDescription,
 						QASH extends UtilsQaStakeholder<QA>,
 						QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
 						QATI extends UtilsQaTestInfo<QATC>,
-						QATC extends UtilsStatus<QATC,L,D>,
+						QATC extends UtilsStatus<QATC,L2,D2>,
 						QATS extends UtilsStatus<QATS,L,D>,
 						QARS extends UtilsStatus<QARS,L,D>,
 						QAUS extends UtilsStatus<QAUS,L,D>>
@@ -57,12 +58,12 @@ public class XmlInfoFactory<L extends UtilsLang, D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(XmlInfoFactory.class);
 		
 	private Info q;
-	private XmlStatusFactory<QATC,L,D> xfCondition;
+	private XmlStatusFactory<QATC,L2,D2> xfCondition;
 	
 	public XmlInfoFactory(Info q)
 	{
 		this.q=q;
-		if(q.isSetStatus()){xfCondition = new XmlStatusFactory<QATC,L,D>(null,q.getStatus());}
+		if(q.isSetStatus()){xfCondition = new XmlStatusFactory<QATC,L2,D2>(null,q.getStatus());}
 	}
 	
 	public Info build(QATI info)

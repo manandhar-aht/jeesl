@@ -41,8 +41,8 @@ import net.sf.ahtutils.xml.qa.Qa;
 import net.sf.ahtutils.xml.qa.Test;
 import net.sf.ahtutils.xml.security.Staff;
 
-public class QaRestService <L extends UtilsLang,
-							D extends UtilsDescription,
+public class QaRestService <L extends UtilsLang, D extends UtilsDescription,
+							L2 extends UtilsLang, D2 extends UtilsDescription,
 							C extends JeeslSecurityCategory<L,D>,
 							R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 							V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -62,7 +62,7 @@ public class QaRestService <L extends UtilsLang,
 							QASH extends UtilsQaStakeholder<QA>,
 							QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
 							QATI extends UtilsQaTestInfo<QATC>,
-							QATC extends UtilsStatus<QATC,L,D>,
+							QATC extends UtilsStatus<QATC,L2,D2>,
 							QATS extends UtilsStatus<QATS,L,D>,
 							QARS extends UtilsStatus<QARS,L,D>,
 							QAUS extends UtilsStatus<QAUS,L,D>>
@@ -70,32 +70,32 @@ public class QaRestService <L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(QaRestService.class);
 	
-	private JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
+	private JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
 		
 	private final Class<GROUP> cGroup;
 	private final Class<QA> cQa;
 	
 	private XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,QA,QA> xfStaff;
-	private XmlGroupFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> xfGroup;
-	private XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> xfCategory;
-	private XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> xfFrDuration;
+	private XmlGroupFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> xfGroup;
+	private XmlCategoryFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> xfCategory;
+	private XmlCategoryFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> xfFrDuration;
 	
-	private QaRestService(JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa, final Class<L> cL, final Class<D> cD,final Class<GROUP> cGroup,final Class<QA> cQa,final Class<QAC> cQAC,final Class<QAT> cQAT)
+	private QaRestService(JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa, final Class<L> cL, final Class<D> cD,final Class<GROUP> cGroup,final Class<QA> cQa,final Class<QAC> cQAC,final Class<QAT> cQAT)
 	{
 		this.fQa=fQa;
 		this.cGroup=cGroup;
 		this.cQa=cQa;
 		
 		xfStaff = new XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,QA,QA>(QaQuery.staff());
-		xfGroup = new XmlGroupFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(QaQuery.group());
-		xfCategory = new XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(QaQuery.category());
-		xfFrDuration = new XmlCategoryFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(QaQuery.frDuration());
+		xfGroup = new XmlGroupFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(QaQuery.group());
+		xfCategory = new XmlCategoryFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(QaQuery.category());
+		xfFrDuration = new XmlCategoryFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(QaQuery.frDuration());
 		
 		xfFrDuration.lazyLoader(fQa,cQAC,cQAT);
 	}
 	
-	public static <L extends UtilsLang,
-					D extends UtilsDescription,
+	public static <L extends UtilsLang, D extends UtilsDescription,
+					L2 extends UtilsLang, D2 extends UtilsDescription,
 					C extends JeeslSecurityCategory<L,D>,
 					R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 					V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -115,14 +115,14 @@ public class QaRestService <L extends UtilsLang,
 					QASH extends UtilsQaStakeholder<QA>,
 					QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
 					QATI extends UtilsQaTestInfo<QATC>,
-					QATC extends UtilsStatus<QATC,L,D>,
+					QATC extends UtilsStatus<QATC,L2,D2>,
 					QATS extends UtilsStatus<QATS,L,D>,
 					QARS extends UtilsStatus<QARS,L,D>,
 					QAUS extends UtilsStatus<QAUS,L,D>>
-		QaRestService<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>
-			factory(JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,final Class<L> cL,final Class<D> cD,final Class<GROUP> cGroup,final Class<QA> cQa,final Class<QAC> cQAC,final Class<QAT> cQAT)
+		QaRestService<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>
+			factory(JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,final Class<L> cL,final Class<D> cD,final Class<GROUP> cGroup,final Class<QA> cQa,final Class<QAC> cQAC,final Class<QAT> cQAT)
 	{
-		return new QaRestService<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(fQa,cL,cD,cGroup,cQa,cQAC,cQAT);
+		return new QaRestService<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(fQa,cL,cD,cGroup,cQa,cQAC,cQAT);
 	}
 
 	public Qa qaGroups(long qaId)

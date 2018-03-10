@@ -27,8 +27,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.qa.Group;
 
-public class XmlGroupFactory<L extends UtilsLang,
-D extends UtilsDescription,
+public class XmlGroupFactory<L extends UtilsLang, D extends UtilsDescription,
+							L2 extends UtilsLang, D2 extends UtilsDescription,
 C extends JeeslSecurityCategory<L,D>,
 R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -48,7 +48,7 @@ QAR extends UtilsQaResult<STAFF,QAT,QARS>,
 QASH extends UtilsQaStakeholder<QA>,
 QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
 QATI extends UtilsQaTestInfo<QATC>,
-QATC extends UtilsStatus<QATC,L,D>,
+QATC extends UtilsStatus<QATC,L2,D2>,
 QATS extends UtilsStatus<QATS,L,D>,
 QARS extends UtilsStatus<QARS,L,D>,
 QAUS extends UtilsStatus<QAUS,L,D>>

@@ -38,8 +38,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class UtilsQaFacadeBean <L extends UtilsLang,
-								D extends UtilsDescription,
+public class UtilsQaFacadeBean <L extends UtilsLang, D extends UtilsDescription,
+								L2 extends UtilsLang, D2 extends UtilsDescription,
 								C extends JeeslSecurityCategory<L,D>,
 								R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 								V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -59,11 +59,11 @@ public class UtilsQaFacadeBean <L extends UtilsLang,
 								QASH extends UtilsQaStakeholder<QA>,
 								QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
 								QATI extends UtilsQaTestInfo<QATC>,
-								QATC extends UtilsStatus<QATC,L,D>,
+								QATC extends UtilsStatus<QATC,L2,D2>,
 								QATS extends UtilsStatus<QATS,L,D>,
 								QARS extends UtilsStatus<QARS,L,D>,
 								QAUS extends UtilsStatus<QAUS,L,D>> 
-		extends UtilsFacadeBean implements JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>
+		extends UtilsFacadeBean implements JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>
 {
 	final static Logger logger = LoggerFactory.getLogger(UtilsQaFacadeBean.class);
 	

@@ -28,8 +28,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.qa.Category;
 
-public class XmlCategoryFactory<L extends UtilsLang,
-								D extends UtilsDescription,
+public class XmlCategoryFactory<L extends UtilsLang, D extends UtilsDescription,
+								L2 extends UtilsLang, D2 extends UtilsDescription,
 								C extends JeeslSecurityCategory<L,D>,
 								R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 								V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -49,7 +49,7 @@ public class XmlCategoryFactory<L extends UtilsLang,
 								QASH extends UtilsQaStakeholder<QA>,
 								QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
 								QATI extends UtilsQaTestInfo<QATC>,
-								QATC extends UtilsStatus<QATC,L,D>,
+								QATC extends UtilsStatus<QATC,L2,D2>,
 								QATS extends UtilsStatus<QATS,L,D>,
 								QARS extends UtilsStatus<QARS,L,D>,
 								QAUS extends UtilsStatus<QAUS,L,D>>
@@ -65,8 +65,8 @@ public class XmlCategoryFactory<L extends UtilsLang,
 	
 	private Class<QAC> cQAC;
 	private Class<QAT> cQAT;
-	private JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
-	public void lazyLoader(JeeslQaFacade<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,Class<QAC> cQAC, Class<QAT> cQAT)
+	private JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
+	public void lazyLoader(JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,Class<QAC> cQAC, Class<QAT> cQAT)
 	{
 		this.fQa=fQa;
 		this.cQAC=cQAC;
@@ -85,7 +85,7 @@ public class XmlCategoryFactory<L extends UtilsLang,
 		
 		if(q.isSetTest())
 		{
-			XmlTestFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlTestFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getTest().get(0));
+			XmlTestFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlTestFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getTest().get(0));
 			f.lazyLoader(fQa, cQAT);
 			for(QAT test : category.getTests())
 			{

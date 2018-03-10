@@ -27,31 +27,31 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.qa.Results;
 
-public class XmlResultsFactory<L extends UtilsLang,
-D extends UtilsDescription,
-C extends JeeslSecurityCategory<L,D>,
-R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-V extends JeeslSecurityView<L,D,C,R,U,A>,
-U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-AT extends JeeslSecurityTemplate<L,D,C>,
-USER extends JeeslUser<R>,
-STAFF extends UtilsQaStaff<R,USER,GROUP,QA,QASH>,
-GROUP extends UtilsQaGroup<STAFF,QA,QASS>,
-QA extends UtilsQualityAssurarance<STAFF,QAC,QASH>,
-QASD extends UtilsQaSchedule<QA,QASS>,
-QASS extends UtilsQaScheduleSlot<GROUP,QASD>,
-QAC extends UtilsQaCategory<QA,QAT>,
-QAT extends UtilsQaTest<GROUP,QAC,QAR,QATD,QATI,QATS>,
-QAU extends UtilsQaUsability,
-QAR extends UtilsQaResult<STAFF,QAT,QARS>,
-QASH extends UtilsQaStakeholder<QA>,
-QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
-QATI extends UtilsQaTestInfo<QATC>,
-QATC extends UtilsStatus<QATC,L,D>,
-QATS extends UtilsStatus<QATS,L,D>,
-QARS extends UtilsStatus<QARS,L,D>,
-QAUS extends UtilsStatus<QAUS,L,D>>
+public class XmlResultsFactory<L extends UtilsLang, D extends UtilsDescription,
+								L2 extends UtilsLang, D2 extends UtilsDescription,
+								C extends JeeslSecurityCategory<L,D>,
+								R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
+								V extends JeeslSecurityView<L,D,C,R,U,A>,
+								U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
+								A extends JeeslSecurityAction<L,D,R,V,U,AT>,
+								AT extends JeeslSecurityTemplate<L,D,C>,
+								USER extends JeeslUser<R>,
+								STAFF extends UtilsQaStaff<R,USER,GROUP,QA,QASH>,
+								GROUP extends UtilsQaGroup<STAFF,QA,QASS>,
+								QA extends UtilsQualityAssurarance<STAFF,QAC,QASH>,
+								QASD extends UtilsQaSchedule<QA,QASS>,
+								QASS extends UtilsQaScheduleSlot<GROUP,QASD>,
+								QAC extends UtilsQaCategory<QA,QAT>,
+								QAT extends UtilsQaTest<GROUP,QAC,QAR,QATD,QATI,QATS>,
+								QAU extends UtilsQaUsability,
+								QAR extends UtilsQaResult<STAFF,QAT,QARS>,
+								QASH extends UtilsQaStakeholder<QA>,
+								QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
+								QATI extends UtilsQaTestInfo<QATC>,
+								QATC extends UtilsStatus<QATC,L2,D2>,
+								QATS extends UtilsStatus<QATS,L,D>,
+								QARS extends UtilsStatus<QARS,L,D>,
+								QAUS extends UtilsStatus<QAUS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlResultsFactory.class);
 		
@@ -69,7 +69,7 @@ QAUS extends UtilsStatus<QAUS,L,D>>
 	
 		if(q.isSetResult())
 		{
-			XmlResultFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlResultFactory<L,D,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getResult().get(0));
+			XmlResultFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> f = new XmlResultFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>(q.getResult().get(0));
 			for(QAR result : test.getResults())
 			{
 				xml.getResult().add(f.build(result));

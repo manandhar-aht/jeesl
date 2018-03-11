@@ -52,7 +52,7 @@ public class XmlTestFactory<L extends UtilsLang, D extends UtilsDescription,
 							QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
 							QATI extends UtilsQaTestInfo<QATC>,
 							QATC extends UtilsStatus<QATC,L2,D2>,
-							QATS extends UtilsStatus<QATS,L,D>,
+							QATS extends UtilsStatus<QATS,L2,D2>,
 							QARS extends UtilsStatus<QARS,L,D>,
 							QAUS extends UtilsStatus<QAUS,L,D>>
 {
@@ -62,7 +62,7 @@ public class XmlTestFactory<L extends UtilsLang, D extends UtilsDescription,
 	
 	private Class<QAT> cQAT;
 	
-	private XmlStatusFactory<QATS,L,D> xfDeveloperStatus;
+	private XmlStatusFactory<QATS,L2,D2> xfDeveloperStatus;
 	
 	private JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa;
 	public void lazyLoader(JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,Class<QAT> cQAT)
@@ -74,7 +74,7 @@ public class XmlTestFactory<L extends UtilsLang, D extends UtilsDescription,
 	public XmlTestFactory(Test q)
 	{
 		this.q=q;
-		if(q.isSetStatus()){xfDeveloperStatus = new XmlStatusFactory<QATS,L,D>(null,q.getStatus());}
+		if(q.isSetStatus()){xfDeveloperStatus = new XmlStatusFactory<QATS,L2,D2>(null,q.getStatus());}
 	}
 	
 	public static Test build()
@@ -108,7 +108,7 @@ public class XmlTestFactory<L extends UtilsLang, D extends UtilsDescription,
 		
 		if(q.isSetStatement() && test.getClientStatus()!=null)
 		{
-			XmlStatementFactory<QATS,L,D> f = new XmlStatementFactory<QATS,L,D>(null,q.getStatement());
+			XmlStatementFactory<QATS,L2,D2> f = new XmlStatementFactory<QATS,L2,D2>(null,q.getStatement());
 			xml.setStatement(f.build(test.getClientStatus()));
 		}
 		

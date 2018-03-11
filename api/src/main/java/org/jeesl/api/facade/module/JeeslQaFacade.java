@@ -50,7 +50,7 @@ public interface JeeslQaFacade
 				QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
 				QATI extends UtilsQaTestInfo<QATC>,
 				QATC extends UtilsStatus<QATC,L2,D2>,
-				QATS extends UtilsStatus<QATS,L,D>,
+				QATS extends UtilsStatus<QATS,L2,D2>,
 				QARS extends UtilsStatus<QARS,L,D>,
 				QAUS extends UtilsStatus<QAUS,L,D>>
 

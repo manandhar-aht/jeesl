@@ -55,8 +55,8 @@
 .auPanelWithGrid .ui-panelgrid {width: 100%;}
 .jeeslPanel .ui-panelgrid {width: 100%;}
 
-.auPanelWithGrid .ui-spinner-button {left:0!important}
-.jeeslPanel .ui-spinner-button {left:0!important}
+/* .auPanelWithGrid .ui-spinner-button {left:0!important} */
+/* .jeeslPanel .ui-spinner-button {left:0!important} */
 
 /* This one makes the shadows for input components disappear */
 .jeeslPanel * .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield, .jeeslPanel * .ui-widget-header .ui-inputfield {box-shadow: none !important;}
@@ -131,7 +131,24 @@
 .jeeslTree .ui-widget-content {background-color: transparent;}
 .jeeslTree {background-color: #f1f1f1;}
 
-.jeeslPanel * .ui-widget-header .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield {display: inline-stack;border: 0;white-space: normal;overflow: hidden;font-weight: normal;width: 92%;text-align: left;}
+.jeeslPanel * .ui-widget-header .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield {display: inline-stack;border: 0;white-space: normal;overflow: hidden;font-weight: normal;width: 100%;text-align: left;}
+
+/*calendar button fix !!!!!!!!!!!!!*/
+input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker"]{width: 82% !important;}
+input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-focus"]{width: 82% !important;}
+input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-hover"]{width: 82% !important;}
+input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-hover ui-state-focus"]{width: 82% !important;}
+input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-focus ui-state-hover"]{width: 82% !important;}
+.datePickerContainer .hasDatepicker {width: 82% !important;}
+
+/*spinner on right */
+input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all"]{text-align:"left";width: 96% !important;}
+input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-focus"]{text-align:"left";width: 96% !important;}
+input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-hover"]{text-align:"left";width: 96% !important;}
+input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-hover ui-state-focus"]{text-align:"left";width: 96% !important;}
+input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-focus ui-state-hover"]{text-align:"left";width: 96% !important;}
+
+
 
 .jeeslPanel .ui-panelgrid .ui-panelgrid-cell {padding-right: 13px;}
 

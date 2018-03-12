@@ -56,18 +56,18 @@ public class XmlResultFactory<L extends UtilsLang, D extends UtilsDescription,
 							QATI extends UtilsQaTestInfo<QATC>,
 							QATC extends UtilsStatus<QATC,L2,D2>,
 							QATS extends UtilsStatus<QATS,L2,D2>,
-							QARS extends UtilsStatus<QARS,L,D>,
+							QARS extends UtilsStatus<QARS,L2,D2>,
 							QAUS extends UtilsStatus<QAUS,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlResultFactory.class);
 		
 	private Result q;
-	private XmlStatusFactory<QARS,L,D> xfResultStatus;
+	private XmlStatusFactory<QARS,L2,D2> xfResultStatus;
 	
 	public XmlResultFactory(Result q)
 	{
 		this.q=q;
-		if(q.isSetStatus()) {xfResultStatus = new XmlStatusFactory<QARS,L,D>(null,q.getStatus());}
+		if(q.isSetStatus()) {xfResultStatus = new XmlStatusFactory<QARS,L2,D2>(null,q.getStatus());}
 	}
 	
 	public static Test build()

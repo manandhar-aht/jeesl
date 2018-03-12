@@ -45,6 +45,8 @@ public interface JeeslTsFacade <L extends UtilsLang,
 	<T extends EjbWithId> BRIDGE fBridge(Class<BRIDGE> cBridge, EC entityClass, T ejb) throws UtilsNotFoundException;
 	<T extends EjbWithId> BRIDGE fcBridge(Class<BRIDGE> cBridge, EC entityClass, T ejb) throws UtilsConstraintViolationException;
 	
+	boolean isTimeSeriesAllowed(EC c, SCOPE scope, INT interval);
+	
 	List<TS> fTimeSeries(SCOPE scope, INT interval, EC entityClass);
 	TS fTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException;
 	TS fcTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException;

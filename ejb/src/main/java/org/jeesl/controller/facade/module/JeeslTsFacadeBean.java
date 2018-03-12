@@ -67,7 +67,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 
 		efTs = new EjbTsFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(fbTs.getClassTs());
 	}
-
+	
 	@Override public List<SCOPE> findScopes(Class<SCOPE> cScope, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleScopes)
 	{
 		List<ParentPredicate<CAT>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
@@ -103,6 +103,12 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 		select.where(cB.equal(pClass, entityClass),cB.equal(pRef, ejb.getId()));
 		try	{return em.createQuery(select).getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cBridge.getName()+" found for entityClass/refId");}
+	}
+	
+	@Override public boolean isTimeSeriesAllowed(EC c, SCOPE scope, INT interval)
+	{
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override public List<TS> fTimeSeries(SCOPE scope, INT interval, EC entityClass)

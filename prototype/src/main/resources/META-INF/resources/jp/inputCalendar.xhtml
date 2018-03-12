@@ -17,8 +17,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup styleClass="datePickerContainer" layout="block" style="width: 100%">
-			<p:calendar id="pCalendar"
+			<p:calendar styleClass="datePickerContainer" id="pCalendar"
 						value="#{cc.attrs.value}"
 						showOn="button"
 						pattern="#{appSettingsBean.calendarFormat}"
@@ -27,6 +26,5 @@
 						required="#{cc.attrs.required}">
                 <p:ajax event="dateSelect" update="#{cc.attrs.update}"/>
             </p:calendar>
-		</h:panelGroup>
 	</composite:implementation>
 </html>

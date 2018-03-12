@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.rest.security;
+package org.jeesl.api.rest.system.security;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -9,10 +9,10 @@ import javax.ws.rs.core.MediaType;
 import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
-public interface UtilsSecurityRoleImport
+public interface JeeslSecurityRestUsecaseImport
 {
-	@POST @Path("/admin/security/roles")
+	@POST @Path("/admin/security/usecases")
 	@Produces(MediaType.APPLICATION_XML)
 	@Consumes(MediaType.APPLICATION_XML)
-	DataUpdate iuSecurityRoles(Security roles);
+	DataUpdate iuSecurityUsecases(Security usecases);
 }

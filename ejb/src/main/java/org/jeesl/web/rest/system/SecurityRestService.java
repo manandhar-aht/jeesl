@@ -135,6 +135,11 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	
 	public DataUpdate iuSecurityTemplates(Security templates){return initTemplates.iuSecurityTemplates(templates);}
 	public DataUpdate iuSecurityViews(Access views){return initViews.iuViews(views);}
+	public DataUpdate importSecurityViews(Security views)
+	{
+		logger.info("NYI");
+		return null;
+	}
 	public DataUpdate iuSecurityRoles(Security roles){return initRoles.iuSecurityRoles(roles);}
 	public DataUpdate iuSecurityUsecases(Security usecases){return initUsecases.iuSecurityUsecases(usecases);}
 

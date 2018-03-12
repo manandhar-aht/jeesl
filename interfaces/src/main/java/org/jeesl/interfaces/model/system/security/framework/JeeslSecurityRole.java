@@ -31,7 +31,6 @@ public interface JeeslSecurityRole<L extends UtilsLang, D extends UtilsDescripti
 					JeeslSecurityWithCategory<C>,
 					JeeslSecurityWithViews<V>,
 					JeeslSecurityWithActions<A>
-//					UtilsSecurityWithActionTemplates<L,D,C,R,V,U,A,AT,USER>
 					
 {
 	public static final String extractId = "securityRoles";

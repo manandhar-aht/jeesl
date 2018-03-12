@@ -4,14 +4,14 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +21,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.security.Staff;
 import net.sf.ahtutils.xml.status.Domain;
 
-public class XmlStaffFactory<L extends UtilsLang,
-							D extends UtilsDescription,
+public class XmlStaffFactory<L extends UtilsLang, D extends UtilsDescription,
 							C extends JeeslSecurityCategory<L,D>,
 							R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 							V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -38,7 +37,7 @@ public class XmlStaffFactory<L extends UtilsLang,
 	private Staff q;
 	
 	private XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> xfRole;
-	private XmlUserFactory<L,D,C,R,V,U,A,AT,USER> xfUser;
+	private XmlUserFactory<USER> xfUser;
 	
 	public XmlStaffFactory(Staff q){this(null,q);}
 	public XmlStaffFactory(String localeCode, Staff q)
@@ -46,7 +45,7 @@ public class XmlStaffFactory<L extends UtilsLang,
 		this.q=q;
 		
 		if(q.isSetRole()){xfRole = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(localeCode,q.getRole());}
-		if(q.isSetUser()){xfUser = new XmlUserFactory<L,D,C,R,V,U,A,AT,USER>(q.getUser());}
+		if(q.isSetUser()){xfUser = new XmlUserFactory<USER>(q.getUser());}
 	}
 	
 	public static Staff build()

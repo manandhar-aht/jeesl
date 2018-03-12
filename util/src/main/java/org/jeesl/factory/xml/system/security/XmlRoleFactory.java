@@ -31,39 +31,29 @@ public class XmlRoleFactory<L extends UtilsLang, D extends UtilsDescription,
 	private String localeCode;
 	private Role q;
 	
-	public XmlRoleFactory(Role q)
-	{
-		this.q=q;
-	}
+	private XmlLangsFactory<L> xfLangs;
+	private XmlDescriptionsFactory<D> xfDescriptions;
+	
+	public XmlRoleFactory(Role q){this(null,q);}
 	public XmlRoleFactory(String localeCode, Role q)
 	{
 		this.localeCode=localeCode;
 		this.q=q;
+		
+		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
+		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
 	}
-	public XmlRoleFactory(Role q,String localeCode)
-	{
-		this.localeCode=localeCode;
-		this.q=q;
-	}
-	
-	public static Role create(String code, String label)
-	{
-		Role xml = new Role();
-		xml.setCode(code);
-		xml.setLabel(label);
-		return xml;
-	}
-	
+		
 	public Role build(R role)
 	{
-    	if(logger.isTraceEnabled())
-    	{
-    		logger.info(StringUtil.stars());
-    		logger.info(role.toString());
-    		logger.info("Query: "+q.isSetDocumentation());
-    		logger.info("\t"+(role.getDocumentation()!=null));
-    		if(role.getDocumentation()!=null){logger.info("\t"+role.getDocumentation());}
-    	}
+	    	if(logger.isTraceEnabled())
+	    	{
+	    		logger.info(StringUtil.stars());
+	    		logger.info(role.toString());
+	    		logger.info("Query: "+q.isSetDocumentation());
+	    		logger.info("\t"+(role.getDocumentation()!=null));
+	    		if(role.getDocumentation()!=null){logger.info("\t"+role.getDocumentation());}
+	    	}
 		
 		Role xml = new Role();
 		if(q.isSetId()){xml.setId(role.getId());}
@@ -72,17 +62,9 @@ public class XmlRoleFactory<L extends UtilsLang, D extends UtilsDescription,
 		if(q.isSetVisible()){xml.setVisible(role.isVisible());}
 		if(q.isSetDocumentation() && role.getDocumentation()!=null){xml.setDocumentation(role.getDocumentation());}
 		
-		if(q.isSetLangs())
-		{
-			XmlLangsFactory<L> f = new XmlLangsFactory<L>(q.getLangs());
-			xml.setLangs(f.getUtilsLangs(role.getName()));
-		}
+		if(q.isSetLangs()){xml.setLangs(xfLangs.getUtilsLangs(role.getName()));}
 		
-		if(q.isSetDescriptions())
-		{
-			XmlDescriptionsFactory<D> f = new XmlDescriptionsFactory<D>(q.getDescriptions());
-			xml.setDescriptions(f.create(role.getDescription()));
-		}
+		if(q.isSetDescriptions()) {xml.setDescriptions(xfDescriptions.create(role.getDescription()));}
 		
 		if(q.isSetViews())
 		{
@@ -110,10 +92,18 @@ public class XmlRoleFactory<L extends UtilsLang, D extends UtilsDescription,
 		return xml;
 	}
 	
+	public static Role create(String code, String label)
+	{
+		Role xml = new Role();
+		xml.setCode(code);
+		xml.setLabel(label);
+		return xml;
+	}
+	
     public static net.sf.ahtutils.xml.security.Role build(String code)
     {
-    	net.sf.ahtutils.xml.security.Role role = new net.sf.ahtutils.xml.security.Role();
-    	role.setCode(code);
-    	return role;
+	    	net.sf.ahtutils.xml.security.Role role = new net.sf.ahtutils.xml.security.Role();
+	    	role.setCode(code);
+	    	return role;
     }
 }

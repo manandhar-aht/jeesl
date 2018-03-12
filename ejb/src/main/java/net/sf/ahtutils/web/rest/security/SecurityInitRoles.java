@@ -3,6 +3,7 @@ package net.sf.ahtutils.web.rest.security;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.api.rest.system.security.JeeslSecurityRestRoleImport;
 import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
+import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.factory.xml.system.io.sync.XmlDataUpdateFactory;
 import org.jeesl.factory.xml.system.io.sync.XmlResultFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
@@ -44,9 +45,10 @@ public class SecurityInitRoles <L extends UtilsLang,D extends UtilsDescription,
 	
 	private JeeslDbCodeEjbUpdater<R> updateRole;
 	
-	public SecurityInitRoles(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+	public SecurityInitRoles(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,
+			final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{       
-        super(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
+        super(fbSecurity,cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
 	}
 	
 	public DataUpdate iuSecurityRoles(Security security)

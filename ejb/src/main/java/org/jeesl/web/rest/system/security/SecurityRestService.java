@@ -5,6 +5,7 @@ import java.util.Comparator;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.api.rest.system.security.JeeslSecurityRestExport;
+import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.factory.xml.system.security.XmlActionFactory;
 import org.jeesl.factory.xml.system.security.XmlActionsFactory;
 import org.jeesl.factory.xml.system.security.XmlCategoryFactory;
@@ -96,7 +97,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	private SecurityInitUsecases<L,D,C,R,V,U,A,AT,M,USER> initUsecases;
 	
 	private SecurityRestService(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,
-			
+			SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,
 			final Class<L> cL,final Class<D> cD,final Class<C> cCategory,final Class<V> cView,final Class<R> cRole,final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
 	{
 		this.fSecurity=fSecurity;
@@ -124,10 +125,10 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		comparatorUsecase = (new SecurityUsecaseComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityUsecaseComparator.Type.position);
 		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityActionComparator.Type.position);
 		
-		initViews = new SecurityInitViews<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
-		initTemplates = new SecurityInitTemplates<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
-		initRoles = new SecurityInitRoles<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
-		initUsecases = new SecurityInitUsecases<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
+		initViews = new SecurityInitViews<L,D,C,R,V,U,A,AT,M,USER>(fbSecurity,cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
+		initTemplates = new SecurityInitTemplates<L,D,C,R,V,U,A,AT,M,USER>(fbSecurity,cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
+		initRoles = new SecurityInitRoles<L,D,C,R,V,U,A,AT,M,USER>(fbSecurity,cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
+		initUsecases = new SecurityInitUsecases<L,D,C,R,V,U,A,AT,M,USER>(fbSecurity,cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
@@ -140,9 +141,9 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					AT extends JeeslSecurityTemplate<L,D,C>,
 					USER extends JeeslUser<R>>
 		SecurityRestService<L,D,C,R,V,U,A,AT,M,USER>
-		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<L> cL,final Class<D> cD,final Class<C> cCategory, final Class<V> cView, final Class<R> cRole, final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
+		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity, final Class<L> cL,final Class<D> cD,final Class<C> cCategory, final Class<V> cView, final Class<R> cRole, final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
 	{
-		return new SecurityRestService<L,D,C,R,V,U,A,AT,M,USER>(fSecurity,cL,cD,cCategory,cView,cRole,cUsecase,cAction,cTemplate,cUser);
+		return new SecurityRestService<L,D,C,R,V,U,A,AT,M,USER>(fSecurity,fbSecurity,cL,cD,cCategory,cView,cRole,cUsecase,cAction,cTemplate,cUser);
 	}
 	
 	public DataUpdate iuSecurityTemplates(Security templates){return initTemplates.iuSecurityTemplates(templates);}
@@ -152,6 +153,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		logger.info("NYI");
 		return null;
 	}
+	
 	public DataUpdate iuSecurityRoles(Security roles){return initRoles.iuSecurityRoles(roles);}
 	public DataUpdate iuSecurityUsecases(Security usecases){return initUsecases.iuSecurityUsecases(usecases);}
 

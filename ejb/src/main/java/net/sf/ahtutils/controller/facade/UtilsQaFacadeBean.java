@@ -62,7 +62,7 @@ public class UtilsQaFacadeBean <L extends UtilsLang, D extends UtilsDescription,
 								QATC extends UtilsStatus<QATC,L2,D2>,
 								QATS extends UtilsStatus<QATS,L2,D2>,
 								QARS extends UtilsStatus<QARS,L2,D2>,
-								QAUS extends UtilsStatus<QAUS,L,D>> 
+								QAUS extends UtilsStatus<QAUS,L2,D2>> 
 		extends UtilsFacadeBean implements JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>
 {
 	final static Logger logger = LoggerFactory.getLogger(UtilsQaFacadeBean.class);

@@ -65,7 +65,7 @@ public class QaRestService <L extends UtilsLang, D extends UtilsDescription,
 							QATC extends UtilsStatus<QATC,L2,D2>,
 							QATS extends UtilsStatus<QATS,L2,D2>,
 							QARS extends UtilsStatus<QARS,L2,D2>,
-							QAUS extends UtilsStatus<QAUS,L,D>>
+							QAUS extends UtilsStatus<QAUS,L2,D2>>
 					//implements UtilsQualityAssuranceRest
 {
 	final static Logger logger = LoggerFactory.getLogger(QaRestService.class);
@@ -118,7 +118,7 @@ public class QaRestService <L extends UtilsLang, D extends UtilsDescription,
 					QATC extends UtilsStatus<QATC,L2,D2>,
 					QATS extends UtilsStatus<QATS,L2,D2>,
 					QARS extends UtilsStatus<QARS,L2,D2>,
-					QAUS extends UtilsStatus<QAUS,L,D>>
+					QAUS extends UtilsStatus<QAUS,L2,D2>>
 		QaRestService<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS>
 			factory(JeeslQaFacade<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS,QAUS> fQa,final Class<L> cL,final Class<D> cD,final Class<GROUP> cGroup,final Class<QA> cQa,final Class<QAC> cQAC,final Class<QAT> cQAT)
 	{

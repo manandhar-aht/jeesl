@@ -51,15 +51,18 @@ public class XmlResultsFactory<L extends UtilsLang, D extends UtilsDescription,
 								QATC extends UtilsStatus<QATC,L2,D2>,
 								QATS extends UtilsStatus<QATS,L2,D2>,
 								QARS extends UtilsStatus<QARS,L2,D2>,
-								QAUS extends UtilsStatus<QAUS,L,D>>
+								QAUS extends UtilsStatus<QAUS,L2,D2>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlResultsFactory.class);
 		
 	private Results q;
 	
+	private XmlResultFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QARS> xfResult;
+	
 	public XmlResultsFactory(Results q)
 	{
 		this.q=q;
+		if(q.isSetResult()) {xfResult = new XmlResultFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QARS>(q.getResult().get(0));}
 	}
 	
 	
@@ -69,10 +72,9 @@ public class XmlResultsFactory<L extends UtilsLang, D extends UtilsDescription,
 	
 		if(q.isSetResult())
 		{
-			XmlResultFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS> f = new XmlResultFactory<L,D,L2,D2,C,R,V,U,A,AT,USER,STAFF,GROUP,QA,QASD,QASS,QAC,QAT,QAU,QAR,QASH,QATD,QATI,QATC,QATS,QARS>(q.getResult().get(0));
 			for(QAR result : test.getResults())
 			{
-				xml.getResult().add(f.build(result));
+				xml.getResult().add(xfResult.build(result));
 			}
 		}
 		

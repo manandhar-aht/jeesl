@@ -2,13 +2,13 @@ package org.jeesl.factory.xml.dev.qa;
 
 import org.jeesl.factory.xml.system.security.XmlStaffFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +20,6 @@ import net.sf.ahtutils.interfaces.model.qa.UtilsQaScheduleSlot;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaStaff;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaStakeholder;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaTest;
-import net.sf.ahtutils.interfaces.model.qa.UtilsQaTestDiscussion;
-import net.sf.ahtutils.interfaces.model.qa.UtilsQaTestInfo;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQaUsability;
 import net.sf.ahtutils.interfaces.model.qa.UtilsQualityAssurarance;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -48,14 +46,10 @@ public class XmlResultFactory<L extends UtilsLang, D extends UtilsDescription,
 							QASD extends UtilsQaSchedule<QA,QASS>,
 							QASS extends UtilsQaScheduleSlot<GROUP,QASD>,
 							QAC extends UtilsQaCategory<QA,QAT>,
-							QAT extends UtilsQaTest<GROUP,QAC,QAR,QATD,QATI,QATS>,
+							QAT extends UtilsQaTest<GROUP,QAC,QAR,?,?,?>,
 							QAU extends UtilsQaUsability,
 							QAR extends UtilsQaResult<STAFF,QAT,QARS>,
 							QASH extends UtilsQaStakeholder<QA>,
-							QATD extends UtilsQaTestDiscussion<STAFF,QAT>,
-							QATI extends UtilsQaTestInfo<QATC>,
-							QATC extends UtilsStatus<QATC,L2,D2>,
-							QATS extends UtilsStatus<QATS,L2,D2>,
 							QARS extends UtilsStatus<QARS,L2,D2>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlResultFactory.class);

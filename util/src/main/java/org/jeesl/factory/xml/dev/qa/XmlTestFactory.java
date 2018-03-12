@@ -54,7 +54,7 @@ public class XmlTestFactory<L extends UtilsLang, D extends UtilsDescription,
 							QATC extends UtilsStatus<QATC,L2,D2>,
 							QATS extends UtilsStatus<QATS,L2,D2>,
 							QARS extends UtilsStatus<QARS,L2,D2>,
-							QAUS extends UtilsStatus<QAUS,L,D>>
+							QAUS extends UtilsStatus<QAUS,L2,D2>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlTestFactory.class);
 		

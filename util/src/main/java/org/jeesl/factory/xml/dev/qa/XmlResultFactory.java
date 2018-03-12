@@ -56,18 +56,19 @@ public class XmlResultFactory<L extends UtilsLang, D extends UtilsDescription,
 							QATI extends UtilsQaTestInfo<QATC>,
 							QATC extends UtilsStatus<QATC,L2,D2>,
 							QATS extends UtilsStatus<QATS,L2,D2>,
-							QARS extends UtilsStatus<QARS,L2,D2>,
-							QAUS extends UtilsStatus<QAUS,L,D>>
+							QARS extends UtilsStatus<QARS,L2,D2>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlResultFactory.class);
 		
 	private Result q;
 	private XmlStatusFactory<QARS,L2,D2> xfResultStatus;
+	private XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,QA,QA> xfStaff;
 	
 	public XmlResultFactory(Result q)
 	{
 		this.q=q;
 		if(q.isSetStatus()) {xfResultStatus = new XmlStatusFactory<QARS,L2,D2>(null,q.getStatus());}
+		if(q.isSetStaff()) {xfStaff = new XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,QA,QA>(q.getStaff());}
 	}
 	
 	public static Test build()
@@ -85,13 +86,7 @@ public class XmlResultFactory<L extends UtilsLang, D extends UtilsDescription,
 		if(q.isSetRecord() && result.getRecord()!=null){xml.setRecord(DateUtil.toXmlGc(result.getRecord()));}
 		
 		if(q.isSetStatus()){xml.setStatus(xfResultStatus.build(result.getStatus()));}
-		
-		if(q.isSetStaff())
-		{
-			XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,QA,QA> f = new XmlStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,QA,QA>(q.getStaff());
-			xml.setStaff(f.build(result.getStaff()));
-		}
-		
+		if(q.isSetStaff()) {xml.setStaff(xfStaff.build(result.getStaff()));}
 		if(q.isSetActual()){xml.setActual(buildActual(result.getActualResult()));}
 		if(q.isSetComment()){xml.setComment(buildComment(result.getComment()));}
 		

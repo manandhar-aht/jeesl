@@ -4,14 +4,14 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,14 +35,18 @@ public class XmlStaffFactory<L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlStaffFactory.class);
 		
-	private String lang;
 	private Staff q;
 	
+	private XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> xfRole;
+	private XmlUserFactory<L,D,C,R,V,U,A,AT,USER> xfUser;
+	
 	public XmlStaffFactory(Staff q){this(null,q);}
-	public XmlStaffFactory(String lang, Staff q)
+	public XmlStaffFactory(String localeCode, Staff q)
 	{
-		this.lang=lang;
 		this.q=q;
+		
+		if(q.isSetRole()){xfRole = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(localeCode,q.getRole());}
+		if(q.isSetUser()){xfUser = new XmlUserFactory<L,D,C,R,V,U,A,AT,USER>(q.getUser());}
 	}
 	
 	public static Staff build()
@@ -58,17 +62,8 @@ public class XmlStaffFactory<L extends UtilsLang,
 		
 		if(q.isSetId()){xml.setId(staff.getId());}
 		
-		if(q.isSetUser())
-		{
-			XmlUserFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlUserFactory<L,D,C,R,V,U,A,AT,USER>(q.getUser());
-			xml.setUser(f.build(staff.getUser()));
-		}
-		
-		if(q.isSetRole())
-		{
-			XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> f = new XmlRoleFactory<L,D,C,R,V,U,A,AT,USER>(lang,q.getRole());
-			xml.setRole(f.build(staff.getRole()));
-		}
+		if(q.isSetUser()){xml.setUser(xfUser.build(staff.getUser()));}
+		if(q.isSetRole()){xml.setRole(xfRole.build(staff.getRole()));}
 		
 		if(q.isSetDomain())
 		{

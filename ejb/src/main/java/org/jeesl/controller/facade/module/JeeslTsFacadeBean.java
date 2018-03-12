@@ -105,7 +105,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cBridge.getName()+" found for entityClass/refId");}
 	}
 	
-	@Override public boolean isTimeSeriesAllowed(EC c, SCOPE scope, INT interval)
+	@Override public boolean isTimeSeriesAllowed(SCOPE scope, INT interval, EC c)
 	{
 		// TODO Auto-generated method stub
 		return false;

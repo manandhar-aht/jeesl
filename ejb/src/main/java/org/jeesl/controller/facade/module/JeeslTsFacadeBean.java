@@ -107,8 +107,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	
 	@Override public boolean isTimeSeriesAllowed(SCOPE scope, INT interval, EC c)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return scope.getIntervals().contains(interval) && scope.getClasses().contains(c);
 	}
 
 	@Override public List<TS> fTimeSeries(SCOPE scope, INT interval, EC entityClass)

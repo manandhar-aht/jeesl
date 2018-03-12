@@ -7,9 +7,11 @@ import org.jeesl.factory.xml.system.io.sync.XmlDataUpdateFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.web.rest.system.security.updater.AbstractSecurityUpdater;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +33,9 @@ public class SecurityInitTemplates <L extends UtilsLang,
  								U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
  								A extends JeeslSecurityAction<L,D,R,V,U,AT>,
  								AT extends JeeslSecurityTemplate<L,D,C>,
+ 								M extends JeeslSecurityMenu<V,M>,
  								USER extends JeeslUser<R>>
-		extends AbstractSecurityInit<L,D,C,R,V,U,A,AT,USER>
+		extends AbstractSecurityUpdater<L,D,C,R,V,U,A,AT,M,USER>
 		implements JeeslSecurityRestTemplateImport
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityInitTemplates.class);

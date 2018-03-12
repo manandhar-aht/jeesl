@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.rest.security;
+package org.jeesl.web.rest.system.security.updater;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase
 import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithActions;
 import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithViews;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.access.Views;
 import net.sf.ahtutils.xml.security.Security;
 
-public class AbstractSecurityInit <L extends UtilsLang,
+public class AbstractSecurityUpdater <L extends UtilsLang,
  								D extends UtilsDescription, 
  								C extends JeeslSecurityCategory<L,D>,
  								R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
@@ -38,9 +39,10 @@ public class AbstractSecurityInit <L extends UtilsLang,
  								U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
  								A extends JeeslSecurityAction<L,D,R,V,U,AT>,
  								AT extends JeeslSecurityTemplate<L,D,C>,
+ 								M extends JeeslSecurityMenu<V,M>,
  								USER extends JeeslUser<R>>
 {
-	final static Logger logger = LoggerFactory.getLogger(AbstractSecurityInit.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractSecurityUpdater.class);
 	
     protected final Class<L> cL;
     protected final Class<D> cD;
@@ -55,68 +57,9 @@ public class AbstractSecurityInit <L extends UtilsLang,
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected EjbLangFactory<L> ejbLangFactory;
 	protected EjbDescriptionFactory<D> ejbDescriptionFactory;
-	
-	public static <L extends UtilsLang,
-	   			   D extends UtilsDescription, 
-	   			   C extends JeeslSecurityCategory<L,D>,
-	   			   R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-	   			   V extends JeeslSecurityView<L,D,C,R,U,A>,
-	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-	   			   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-	   			   AT extends JeeslSecurityTemplate<L,D,C>,
-	   			   USER extends JeeslUser<R>>
-		SecurityInitRoles<L,D,C,R,V,U,A,AT,USER>
-		factoryRoles(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
-	{
-		return new SecurityInitRoles<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fSecurity);
-	}
-	
-	public static <L extends UtilsLang,
-	   			   D extends UtilsDescription, 
-	   			   C extends JeeslSecurityCategory<L,D>,
-	   			   R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-	   			   V extends JeeslSecurityView<L,D,C,R,U,A>,
-	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-	   			   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-	   			   AT extends JeeslSecurityTemplate<L,D,C>,
-	   			   USER extends JeeslUser<R>>
-		SecurityInitViews<L,D,C,R,V,U,A,AT,USER>
-		factoryViews(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
-	{
-		return new SecurityInitViews<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
-	}
-	
-	public static <L extends UtilsLang,
-	   			   D extends UtilsDescription, 
-	   			   C extends JeeslSecurityCategory<L,D>,
-	   			   R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-	   			   V extends JeeslSecurityView<L,D,C,R,U,A>,
-	   			   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-	   			   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-	   			   AT extends JeeslSecurityTemplate<L,D,C>,
-	   			   USER extends JeeslUser<R>>
-		SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER>
-		factoryUsecases(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
-	{
-		return new SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
-	}
-	
-	public static <L extends UtilsLang,
-				   D extends UtilsDescription, 
-				   C extends JeeslSecurityCategory<L,D>,
-				   R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-				   V extends JeeslSecurityView<L,D,C,R,U,A>,
-				   U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-				   A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-				   AT extends JeeslSecurityTemplate<L,D,C>,
-				   USER extends JeeslUser<R>>
-		SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER>
-		factoryTemplates(final Class<L> cL,final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV, final Class<U> cU, final Class<A> cA,final Class<AT> cT, final Class<USER> cUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
-	{
-		return new SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER>(cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
-	}
-	
-	public AbstractSecurityInit(final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+				
+	public AbstractSecurityUpdater(
+			final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
 	{       
         this.cL = cL;
         this.cD = cD;

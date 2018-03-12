@@ -1,4 +1,4 @@
-package org.jeesl.web.rest.system;
+package org.jeesl.web.rest.system.security;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,12 +23,14 @@ import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.util.comparator.ejb.system.security.SecurityActionComparator;
 import org.jeesl.util.comparator.ejb.system.security.SecurityRoleComparator;
 import org.jeesl.util.comparator.ejb.system.security.SecurityUsecaseComparator;
 import org.jeesl.util.comparator.ejb.system.security.SecurityViewComparator;
 import org.jeesl.util.query.xml.SecurityQuery;
+import org.jeesl.web.rest.system.security.updater.AbstractSecurityUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +40,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.rest.security.UtilsSecurityViewImport;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.web.rest.security.AbstractSecurityInit;
 import net.sf.ahtutils.web.rest.security.SecurityInitRoles;
 import net.sf.ahtutils.web.rest.security.SecurityInitTemplates;
 import net.sf.ahtutils.web.rest.security.SecurityInitUsecases;
@@ -62,6 +63,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 								U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 								A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 								AT extends JeeslSecurityTemplate<L,D,C>,
+								M extends JeeslSecurityMenu<V,M>,
 								USER extends JeeslUser<R>>
 				implements JeeslSecurityRestExport,UtilsSecurityViewImport
 {
@@ -88,12 +90,14 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	private Comparator<U> comparatorUsecase;
 	private Comparator<A> comparatorAction;
 	
-	private SecurityInitViews<L,D,C,R,V,U,A,AT,USER> initViews;
-	private SecurityInitTemplates<L,D,C,R,V,U,A,AT,USER> initTemplates;
-	private SecurityInitRoles<L,D,C,R,V,U,A,AT,USER> initRoles;
-	private SecurityInitUsecases<L,D,C,R,V,U,A,AT,USER> initUsecases;
+	private SecurityInitViews<L,D,C,R,V,U,A,AT,M,USER> initViews;
+	private SecurityInitTemplates<L,D,C,R,V,U,A,AT,M,USER> initTemplates;
+	private SecurityInitRoles<L,D,C,R,V,U,A,AT,M,USER> initRoles;
+	private SecurityInitUsecases<L,D,C,R,V,U,A,AT,M,USER> initUsecases;
 	
-	private SecurityRestService(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,final Class<L> cL,final Class<D> cD,final Class<C> cCategory,final Class<V> cView,final Class<R> cRole,final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
+	private SecurityRestService(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,
+			
+			final Class<L> cL,final Class<D> cD,final Class<C> cCategory,final Class<V> cView,final Class<R> cRole,final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
 	{
 		this.fSecurity=fSecurity;
 		this.cCategory=cCategory;
@@ -120,17 +124,25 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		comparatorUsecase = (new SecurityUsecaseComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityUsecaseComparator.Type.position);
 		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityActionComparator.Type.position);
 		
-		initViews = AbstractSecurityInit.factoryViews(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
-		initTemplates = AbstractSecurityInit.factoryTemplates(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
-		initRoles = AbstractSecurityInit.factoryRoles(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
-		initUsecases = AbstractSecurityInit.factoryUsecases(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
+		initViews = new SecurityInitViews<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
+		initTemplates = new SecurityInitTemplates<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
+		initRoles = new SecurityInitRoles<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
+		initUsecases = new SecurityInitUsecases<L,D,C,R,V,U,A,AT,M,USER>(cL,cD,cCategory,cRole,cView,cUsecase,cAction,cTemplate,cUser,fSecurity);
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,C extends JeeslSecurityCategory<L,D>,R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,V extends JeeslSecurityView<L,D,C,R,U,A>,U extends JeeslSecurityUsecase<L,D,C,R,V,A>,A extends JeeslSecurityAction<L,D,R,V,U,AT>,AT extends JeeslSecurityTemplate<L,D,C>,USER extends JeeslUser<R>>
-		SecurityRestService<L,D,C,R,V,U,A,AT,USER>
+	public static <L extends UtilsLang,D extends UtilsDescription,
+					C extends JeeslSecurityCategory<L,D>,
+					R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
+					V extends JeeslSecurityView<L,D,C,R,U,A>,
+					U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
+					A extends JeeslSecurityAction<L,D,R,V,U,AT>,
+					M extends JeeslSecurityMenu<V,M>,
+					AT extends JeeslSecurityTemplate<L,D,C>,
+					USER extends JeeslUser<R>>
+		SecurityRestService<L,D,C,R,V,U,A,AT,M,USER>
 		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, final Class<L> cL,final Class<D> cD,final Class<C> cCategory, final Class<V> cView, final Class<R> cRole, final Class<U> cUsecase,final Class<A> cAction,final Class<AT> cTemplate,final Class<USER> cUser)
 	{
-		return new SecurityRestService<L,D,C,R,V,U,A,AT,USER>(fSecurity,cL,cD,cCategory,cView,cRole,cUsecase,cAction,cTemplate,cUser);
+		return new SecurityRestService<L,D,C,R,V,U,A,AT,M,USER>(fSecurity,cL,cD,cCategory,cView,cRole,cUsecase,cAction,cTemplate,cUser);
 	}
 	
 	public DataUpdate iuSecurityTemplates(Security templates){return initTemplates.iuSecurityTemplates(templates);}

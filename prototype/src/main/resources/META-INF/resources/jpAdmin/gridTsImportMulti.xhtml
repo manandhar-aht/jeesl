@@ -42,10 +42,24 @@
 						    </p:panel>
 						</p:tab>
 						<p:tab id="wUpload" title="Upload Excel File">
-						    <p:panel id="pUpload" header="#{msg.aupTsUpload}" styleClass="auPanelWithGrid">
-							<p:fileUpload fileUploadListener="#{cc.attrs.bean.uploadData}" mode="advanced" dragDropSupport="false"
+						    <p:panel id="pUpload" rendered="#{empty cc.attrs.bean.forbiddenScopes}" header="#{msg.aupTsUpload}" styleClass="auPanelWithGrid">
+								<p:fileUpload oncomplete="PF('forbiddenScopes').show();" fileUploadListener="#{cc.attrs.bean.uploadData}" mode="advanced" dragDropSupport="false"
                                                             update="@form" sizeLimit="10000000"  process="@form" fileLimit="1" allowTypes="/(\.|\/)(xlsx)$/" />
 						    </p:panel>
+							<p:panel id="pScopeProblemsSummary" header="#{msg.validationSummary}" styleClass="auPanelWithGrid" rendered="#{not empty cc.attrs.bean.forbiddenScopes or not empty cc.attrs.bean.failedScopes}">
+								<h:outputText value="There are problems with the given scope codes. Please check:"  />
+
+								<br/>
+								<br/>
+								<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+									<p:outputLabel rendered="#{not empty cc.attrs.bean.failedScopes}" value="#{msg.checkScopeCodesForExistence}"/>
+									<h:outputText  rendered="#{not empty cc.attrs.bean.failedScopes}" value="#{cc.attrs.bean.listFailedScopes()}"/>
+									
+									<p:outputLabel rendered="#{not empty cc.attrs.bean.forbiddenScopes}" value="#{msg.checkScopeCodesForConfiguration}" />
+									<h:outputText  rendered="#{not empty cc.attrs.bean.forbiddenScopes}" value="#{cc.attrs.bean.listForbiddenScopes()}" />
+								</p:panelGrid>
+						    </p:panel>
+						    <br/>
 						</p:tab>
 						<p:tab id="wStations" title="Handle new Stations" rendered="#{not empty cc.attrs.bean.stationsValidationList}">
 						    <p:panel rendered="#{not empty cc.attrs.bean.stationsValidationList}" id="pStationsImport" header="#{msg.stationsImport}" styleClass="auPanelWithGrid">

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.rest.security;
+package org.jeesl.web.rest.system.security.updater;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.api.rest.system.security.JeeslSecurityRestRoleImport;
@@ -14,7 +14,6 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplat
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.web.rest.system.security.updater.AbstractSecurityUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +28,7 @@ import net.sf.ahtutils.xml.security.Usecase;
 import net.sf.ahtutils.xml.security.Usecases;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
-public class SecurityInitRoles <L extends UtilsLang,D extends UtilsDescription, 
+public class SecurityRoleUpdater <L extends UtilsLang,D extends UtilsDescription, 
  								C extends JeeslSecurityCategory<L,D>,
  								R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
  								V extends JeeslSecurityView<L,D,C,R,U,A>,
@@ -41,20 +40,31 @@ public class SecurityInitRoles <L extends UtilsLang,D extends UtilsDescription,
 		extends AbstractSecurityUpdater<L,D,C,R,V,U,A,AT,M,USER>
 		implements JeeslSecurityRestRoleImport
 {
-	final static Logger logger = LoggerFactory.getLogger(SecurityInitRoles.class);
+	final static Logger logger = LoggerFactory.getLogger(SecurityRoleUpdater.class);
 	
 	private JeeslDbCodeEjbUpdater<R> updateRole;
 	
-	public SecurityInitRoles(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,
-			final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+	public SecurityRoleUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
 	{       
-        super(fbSecurity,cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
+        super(fbSecurity,fSecurity);
+	}
+	
+	@Override protected void iuChilds(C aclCategory, net.sf.ahtutils.xml.security.Category category) throws UtilsConfigurationException
+	{
+		if(category.isSetRoles() && category.getRoles().isSetRole())
+		{
+			for(net.sf.ahtutils.xml.security.Role role : category.getRoles().getRole())
+			{
+				updateRole.actualAdd(role.getCode());
+				iuRole(aclCategory, role);
+			}
+		}
 	}
 	
 	public DataUpdate iuSecurityRoles(Security security)
 	{
-		updateRole = JeeslDbCodeEjbUpdater.createFactory(cR);
-		updateRole.dbEjbs(fSecurity.all(cR));
+		updateRole = JeeslDbCodeEjbUpdater.createFactory(fbSecurity.getClassRole());
+		updateRole.dbEjbs(fSecurity.all(fbSecurity.getClassRole()));
 
 		DataUpdate du = XmlDataUpdateFactory.build();
 		try
@@ -74,32 +84,22 @@ public class SecurityInitRoles <L extends UtilsLang,D extends UtilsDescription,
 		return du;
 	}
 	
-	@Override protected void iuChilds(C aclCategory, net.sf.ahtutils.xml.security.Category category) throws UtilsConfigurationException
-	{
-		if(category.isSetRoles() && category.getRoles().isSetRole())
-		{
-			for(net.sf.ahtutils.xml.security.Role role : category.getRoles().getRole())
-			{
-				updateRole.actualAdd(role.getCode());
-				iuRole(aclCategory, role);
-			}
-		}
-	}
+
 	
 	private void iuRole(C category, net.sf.ahtutils.xml.security.Role role) throws UtilsConfigurationException
 	{
 		R ejb;
 		try
 		{
-			ejb = fSecurity.fByCode(cR,role.getCode());
-			ejbLangFactory.rmLang(fSecurity,ejb);
-			ejbDescriptionFactory.rmDescription(fSecurity,ejb);
+			ejb = fSecurity.fByCode(fbSecurity.getClassRole(),role.getCode());
+			efLang.rmLang(fSecurity,ejb);
+			efDescription.rmDescription(fSecurity,ejb);
 		}
 		catch (UtilsNotFoundException e)
 		{
 			try
 			{
-				ejb = cR.newInstance();
+				ejb = fbSecurity.getClassRole().newInstance();
 				ejb.setCategory(category);
 				ejb.setCode(role.getCode());
 				ejb = fSecurity.persist(ejb);				
@@ -115,8 +115,8 @@ public class SecurityInitRoles <L extends UtilsLang,D extends UtilsDescription,
 			if(role.isSetVisible()){ejb.setVisible(role.isVisible());}else{ejb.setVisible(true);}
 			if(role.isSetPosition()){ejb.setPosition(role.getPosition());}else{ejb.setPosition(0);}
 			
-			ejb.setName(ejbLangFactory.getLangMap(role.getLangs()));
-			ejb.setDescription(ejbDescriptionFactory.create(role.getDescriptions()));
+			ejb.setName(efLang.getLangMap(role.getLangs()));
+			ejb.setDescription(efDescription.create(role.getDescriptions()));
 			ejb.setCategory(category);
 			ejb=fSecurity.update(ejb);
 
@@ -137,7 +137,7 @@ public class SecurityInitRoles <L extends UtilsLang,D extends UtilsDescription,
 		{
 			for(Usecase usecase : usecases.getUsecase())
 			{
-				U ejbUsecase = fSecurity.fByCode(cU, usecase.getCode());
+				U ejbUsecase = fSecurity.fByCode(fbSecurity.getClassUsecase(), usecase.getCode());
 				ejb.getUsecases().add(ejbUsecase);
 			}
 			ejb = fSecurity.update(ejb);

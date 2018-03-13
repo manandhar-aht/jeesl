@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.rest.security;
+package org.jeesl.web.rest.system.security.updater;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.api.rest.system.security.JeeslSecurityRestTemplateImport;
@@ -8,7 +8,6 @@ import org.jeesl.factory.xml.system.io.sync.XmlDataUpdateFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.web.rest.system.security.updater.AbstractSecurityUpdater;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -26,7 +25,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
-public class SecurityInitTemplates <L extends UtilsLang,
+public class SecurityTemplateUpdater <L extends UtilsLang,
  								D extends UtilsDescription, 
  								C extends JeeslSecurityCategory<L,D>,
  								R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
@@ -39,20 +38,19 @@ public class SecurityInitTemplates <L extends UtilsLang,
 		extends AbstractSecurityUpdater<L,D,C,R,V,U,A,AT,M,USER>
 		implements JeeslSecurityRestTemplateImport
 {
-	final static Logger logger = LoggerFactory.getLogger(SecurityInitTemplates.class);
+	final static Logger logger = LoggerFactory.getLogger(SecurityTemplateUpdater.class);
 	
 	private JeeslDbCodeEjbUpdater<R> updateRole;
 	
-	public SecurityInitTemplates(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,
-			final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+	public SecurityTemplateUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
 	{       
-        super(fbSecurity,cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
+        super(fbSecurity,fSecurity);
 	}
 	
 	public DataUpdate iuSecurityTemplates(Security security)
 	{
-		updateRole = JeeslDbCodeEjbUpdater.createFactory(cR);
-		updateRole.dbEjbs(fSecurity.all(cR));
+		updateRole = JeeslDbCodeEjbUpdater.createFactory(fbSecurity.getClassRole());
+		updateRole.dbEjbs(fSecurity.all(fbSecurity.getClassRole()));
 
 		DataUpdate du = XmlDataUpdateFactory.build();
 		logger.warn("NYI iuSecurityTemplates");
@@ -90,15 +88,15 @@ public class SecurityInitTemplates <L extends UtilsLang,
 		AT ejb;
 		try
 		{
-			ejb = fSecurity.fByCode(cT,role.getCode());
-			ejbLangFactory.rmLang(fSecurity,ejb);
-			ejbDescriptionFactory.rmDescription(fSecurity,ejb);
+			ejb = fSecurity.fByCode(fbSecurity.getClassTemplate(),role.getCode());
+			efLang.rmLang(fSecurity,ejb);
+			efDescription.rmDescription(fSecurity,ejb);
 		}
 		catch (UtilsNotFoundException e)
 		{
 			try
 			{
-				ejb = cT.newInstance();
+				ejb = fbSecurity.getClassTemplate().newInstance();
 				ejb.setCategory(category);
 				ejb.setCode(role.getCode());
 				ejb = fSecurity.persist(ejb);				
@@ -113,8 +111,8 @@ public class SecurityInitTemplates <L extends UtilsLang,
 			if(role.isSetVisible()){ejb.setVisible(role.isVisible());}else{ejb.setVisible(true);}
 			if(role.isSetPosition()){ejb.setPosition(role.getPosition());}else{ejb.setPosition(0);}
 			
-			ejb.setName(ejbLangFactory.getLangMap(role.getLangs()));
-			ejb.setDescription(ejbDescriptionFactory.create(role.getDescriptions()));
+			ejb.setName(efLang.getLangMap(role.getLangs()));
+			ejb.setDescription(efDescription.create(role.getDescriptions()));
 			ejb.setCategory(category);
 			ejb=fSecurity.update(ejb);
 		}

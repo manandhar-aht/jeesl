@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.rest.security;
+package org.jeesl.web.rest.system.security.updater;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.controller.db.updater.JeeslDbCodeEjbUpdater;
@@ -10,7 +10,6 @@ import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.web.rest.system.security.updater.AbstractSecurityUpdater;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -31,7 +30,7 @@ import net.sf.ahtutils.xml.access.Category;
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
-public class SecurityInitViews <L extends UtilsLang,
+public class SecurityViewUpdater <L extends UtilsLang,
  								D extends UtilsDescription, 
  								C extends JeeslSecurityCategory<L,D>,
  								R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
@@ -43,25 +42,24 @@ public class SecurityInitViews <L extends UtilsLang,
  								USER extends JeeslUser<R>>
 		extends AbstractSecurityUpdater<L,D,C,R,V,U,A,AT,M,USER>
 {
-	final static Logger logger = LoggerFactory.getLogger(SecurityInitViews.class);
+	final static Logger logger = LoggerFactory.getLogger(SecurityViewUpdater.class);
 	
 	private JeeslDbCodeEjbUpdater<V> updateView;
 	private JeeslDbCodeEjbUpdater<A> updateAction;
 	
-	public SecurityInitViews(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,
-			final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+	public SecurityViewUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
 	{       
-        super(fbSecurity,cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
+        super(fbSecurity,fSecurity);
 	}
 	
 	@Deprecated public DataUpdate iuViews(Access access)
 	{
 		logger.trace("iuViews starting ...");
-		updateView = JeeslDbCodeEjbUpdater.createFactory(cV);
-		updateAction = JeeslDbCodeEjbUpdater.createFactory(cA);
+		updateView = JeeslDbCodeEjbUpdater.createFactory(fbSecurity.getClassView());
+		updateAction = JeeslDbCodeEjbUpdater.createFactory(fbSecurity.getClassAction());
 		
-		updateView.dbEjbs(fSecurity.all(cV));
-		updateAction.dbEjbs(fSecurity.all(cA));
+		updateView.dbEjbs(fSecurity.all(fbSecurity.getClassView()));
+		updateAction.dbEjbs(fSecurity.all(fbSecurity.getClassAction()));
 
 		DataUpdate du = XmlDataUpdateFactory.build();
 		try
@@ -99,20 +97,20 @@ public class SecurityInitViews <L extends UtilsLang,
 	@Deprecated private void iuView(C category, View view) throws UtilsConfigurationException
 	{
 		DataUpdateTracker dut = new DataUpdateTracker(true);
-		dut.setType(XmlTypeFactory.build(cV.getName(),"DB Import/Update"));
+		dut.setType(XmlTypeFactory.build(fbSecurity.getClassView().getName(),"DB Import/Update"));
 		
 		V ejb;
 		try
 		{
-			ejb = fSecurity.fByCode(cV,view.getCode());
-			ejbLangFactory.rmLang(fSecurity,ejb);
-			ejbDescriptionFactory.rmDescription(fSecurity,ejb);
+			ejb = fSecurity.fByCode(fbSecurity.getClassView(),view.getCode());
+			efLang.rmLang(fSecurity,ejb);
+			efDescription.rmDescription(fSecurity,ejb);
 		}
 		catch (UtilsNotFoundException e)
 		{
 			try
 			{
-				ejb = cV.newInstance();
+				ejb = fbSecurity.getClassView().newInstance();
 				ejb.setCategory(category);
 				ejb.setCode(view.getCode());
 				ejb = fSecurity.persist(ejb);
@@ -130,8 +128,8 @@ public class SecurityInitViews <L extends UtilsLang,
 			if(view.isSetVisible()){ejb.setVisible(view.isVisible());}else{ejb.setVisible(true);}
 			if(view.isSetPosition()){ejb.setPosition(view.getPosition());}else{ejb.setPosition(0);}
 			
-			ejb.setName(ejbLangFactory.getLangMap(view.getLangs()));
-			ejb.setDescription(ejbDescriptionFactory.create(view.getDescriptions()));
+			ejb.setName(efLang.getLangMap(view.getLangs()));
+			ejb.setDescription(efDescription.create(view.getDescriptions()));
 			ejb.setCategory(category);
 			
 			ejb.setPackageName(null);
@@ -172,15 +170,15 @@ public class SecurityInitViews <L extends UtilsLang,
 		A ebj;
 		try
 		{
-			ebj = fSecurity.fByCode(cA,action.getCode());
-			ejbLangFactory.rmLang(fSecurity,ebj);
-			ejbDescriptionFactory.rmDescription(fSecurity,ebj);
+			ebj = fSecurity.fByCode(fbSecurity.getClassAction(),action.getCode());
+			efLang.rmLang(fSecurity,ebj);
+			efDescription.rmDescription(fSecurity,ebj);
 		}
 		catch (UtilsNotFoundException e)
 		{
 			try
 			{
-				ebj = cA.newInstance();
+				ebj = fbSecurity.getClassAction().newInstance();
 				ebj.setView(ejbView);
 				ebj.setCode(action.getCode());
 				ebj = fSecurity.persist(ebj);
@@ -195,8 +193,8 @@ public class SecurityInitViews <L extends UtilsLang,
 			ebj.setVisible(true);
 			ebj.setPosition(0);
 			
-			ebj.setName(ejbLangFactory.getLangMap(action.getLangs()));
-			ebj.setDescription(ejbDescriptionFactory.create(action.getDescriptions()));
+			ebj.setName(efLang.getLangMap(action.getLangs()));
+			ebj.setDescription(efDescription.create(action.getDescriptions()));
 			ebj.setView(ejbView);
 			ebj=fSecurity.update(ebj);
 		}

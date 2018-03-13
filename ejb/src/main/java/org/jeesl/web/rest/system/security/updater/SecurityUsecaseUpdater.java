@@ -1,4 +1,4 @@
-package net.sf.ahtutils.web.rest.security;
+package org.jeesl.web.rest.system.security.updater;
 
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.api.rest.system.security.JeeslSecurityRestUsecaseImport;
@@ -9,7 +9,6 @@ import org.jeesl.factory.xml.system.io.sync.XmlResultFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.web.rest.system.security.updater.AbstractSecurityUpdater;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -27,7 +26,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
-public class SecurityInitUsecases <L extends UtilsLang,
+public class SecurityUsecaseUpdater <L extends UtilsLang,
  								D extends UtilsDescription, 
  								C extends JeeslSecurityCategory<L,D>,
  								R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
@@ -40,21 +39,20 @@ public class SecurityInitUsecases <L extends UtilsLang,
 		extends AbstractSecurityUpdater<L,D,C,R,V,U,A,AT,M,USER>
 		implements JeeslSecurityRestUsecaseImport
 {
-	final static Logger logger = LoggerFactory.getLogger(SecurityInitUsecases.class);
+	final static Logger logger = LoggerFactory.getLogger(SecurityUsecaseUpdater.class);
 	
 	private JeeslDbCodeEjbUpdater<U> updateUsecases;
 	
-	public SecurityInitUsecases(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,
-			final Class<L> cL, final Class<D> cD,final Class<C> cC,final Class<R> cR, final Class<V> cV,final Class<U> cU,final Class<A> cA,final Class<AT> cT,final Class<USER> cUser,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+	public SecurityUsecaseUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
 	{       
-        super(fbSecurity,cL,cD,cC,cR,cV,cU,cA,cT,cUser,fAcl);
+        super(fbSecurity,fSecurity);
 	}
 	
 	@Override public DataUpdate iuSecurityUsecases(Security usecases)
 	{
-		logger.trace("iuSecurityUsecases starting ..."+fSecurity.allForType(cC,JeeslSecurityCategory.Type.usecase.toString()).size());
-		updateUsecases = JeeslDbCodeEjbUpdater.createFactory(cU);
-		updateUsecases.dbEjbs(fSecurity.all(cU));
+		logger.trace("iuSecurityUsecases starting ..."+fSecurity.allForType(fbSecurity.getClassCategory(),JeeslSecurityCategory.Type.usecase.toString()).size());
+		updateUsecases = JeeslDbCodeEjbUpdater.createFactory(fbSecurity.getClassUsecase());
+		updateUsecases.dbEjbs(fSecurity.all(fbSecurity.getClassUsecase()));
 
 		DataUpdate du = XmlDataUpdateFactory.build();
 		try
@@ -68,10 +66,10 @@ public class SecurityInitUsecases <L extends UtilsLang,
 			du.setResult(XmlResultFactory.buildFail());
 		}
 		
-		logger.trace("Before: UC "+fSecurity.all(cU).size());
+		logger.trace("Before: UC "+fSecurity.all(fbSecurity.getClassUsecase()).size());
 		updateUsecases.remove(fSecurity);
-		logger.trace("After: UC "+fSecurity.all(cU).size());
-		logger.trace("iuSecurityUsecases finished "+fSecurity.allForType(cC,JeeslSecurityCategory.Type.usecase.toString()).size());
+		logger.trace("After: UC "+fSecurity.all(fbSecurity.getClassUsecase()).size());
+		logger.trace("iuSecurityUsecases finished "+fSecurity.allForType(fbSecurity.getClassCategory(),JeeslSecurityCategory.Type.usecase.toString()).size());
 
 		return du;
 	}
@@ -95,15 +93,15 @@ public class SecurityInitUsecases <L extends UtilsLang,
 		U ebj;
 		try
 		{
-			ebj = fSecurity.fByCode(cU,usecase.getCode());
-			ejbLangFactory.rmLang(fSecurity,ebj);
-			ejbDescriptionFactory.rmDescription(fSecurity,ebj);
+			ebj = fSecurity.fByCode(fbSecurity.getClassUsecase(),usecase.getCode());
+			efLang.rmLang(fSecurity,ebj);
+			efDescription.rmDescription(fSecurity,ebj);
 		}
 		catch (UtilsNotFoundException e)
 		{
 			try
 			{
-				ebj = cU.newInstance();
+				ebj = fbSecurity.getClassUsecase().newInstance();
 				ebj.setCategory(category);
 				ebj.setCode(usecase.getCode());
 				ebj = fSecurity.persist(ebj);
@@ -118,8 +116,8 @@ public class SecurityInitUsecases <L extends UtilsLang,
 			if(usecase.isSetVisible()){ebj.setVisible(usecase.isVisible());}else{ebj.setVisible(true);}
 			if(usecase.isSetPosition()){ebj.setPosition(usecase.getPosition());}else{ebj.setPosition(0);}
 			
-			ebj.setName(ejbLangFactory.getLangMap(usecase.getLangs()));
-			ebj.setDescription(ejbDescriptionFactory.create(usecase.getDescriptions()));
+			ebj.setName(efLang.getLangMap(usecase.getLangs()));
+			ebj.setDescription(efDescription.create(usecase.getDescriptions()));
 			ebj.setCategory(category);
 			ebj=fSecurity.update(ebj);
 			

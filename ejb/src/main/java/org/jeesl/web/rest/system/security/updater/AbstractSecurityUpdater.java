@@ -31,6 +31,7 @@ import net.sf.ahtutils.xml.access.Category;
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.access.Views;
 import net.sf.ahtutils.xml.security.Security;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AbstractSecurityUpdater <L extends UtilsLang,
  								D extends UtilsDescription, 
@@ -50,6 +51,8 @@ public class AbstractSecurityUpdater <L extends UtilsLang,
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
 	protected EjbLangFactory<L> efLang;
 	protected EjbDescriptionFactory<D> efDescription;
+	
+	private final JeeslDbCodeEjbUpdater<C> dbCleanerCategory;
 				
 	public AbstractSecurityUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,
 			JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
@@ -60,9 +63,11 @@ public class AbstractSecurityUpdater <L extends UtilsLang,
 		
 		efLang = EjbLangFactory.factory(fbSecurity.getClassL());
 		efDescription = EjbDescriptionFactory.factory(fbSecurity.getClassD());
+		
+		dbCleanerCategory = JeeslDbCodeEjbUpdater.createFactory(fbSecurity.getClassCategory());
 	}
 	
-	@Deprecated protected void iuCategory(Access access, JeeslSecurityCategory.Type type) throws UtilsConfigurationException
+	@Deprecated protected void iuCategoryAccess(Access access, JeeslSecurityCategory.Type type) throws UtilsConfigurationException
 	{
 		logger.info("i/u "+type+" with "+access.getCategory().size()+" categories");
 		
@@ -71,7 +76,7 @@ public class AbstractSecurityUpdater <L extends UtilsLang,
 
 		for(Category category : access.getCategory())
 		{
-			updateCategory.actualAdd(category.getCode());
+			updateCategory.handled(category.getCode());
 			C ejbCategory;
 			try
 			{
@@ -116,31 +121,29 @@ public class AbstractSecurityUpdater <L extends UtilsLang,
 	
 	protected void iuCategory(Security security, JeeslSecurityCategory.Type type) throws UtilsConfigurationException
 	{
-		logger.info("i/u "+type+" with "+security.getCategory().size()+" categories");
+		logger.info("i/u "+Security.class.getSimpleName()+"."+type+" with "+security.getCategory().size()+" categories");
 		
-		JeeslDbCodeEjbUpdater<C> updateCategory = JeeslDbCodeEjbUpdater.createFactory(fbSecurity.getClassCategory());
-		
-		updateCategory.dbEjbs(fSecurity.allForType(fbSecurity.getClassCategory(),type.toString()));
+		dbCleanerCategory.clear();dbCleanerCategory.dbEjbs(fSecurity.allForType(fbSecurity.getClassCategory(),type.toString()));
 
-		for(net.sf.ahtutils.xml.security.Category category : security.getCategory())
+		for(net.sf.ahtutils.xml.security.Category xCategory : security.getCategory())
 		{
-			updateCategory.actualAdd(category.getCode());
+			dbCleanerCategory.handled(xCategory.getCode());
 			
-			C ejbCategory;
+			C eCategory;
 			try
 			{
-				ejbCategory = fSecurity.fByTypeCode(fbSecurity.getClassCategory(),type.toString(),category.getCode());
-				efLang.rmLang(fSecurity,ejbCategory);
-				efDescription.rmDescription(fSecurity,ejbCategory);
+				eCategory = fSecurity.fByTypeCode(fbSecurity.getClassCategory(),type.toString(),xCategory.getCode());
+				efLang.rmLang(fSecurity,eCategory);
+				efDescription.rmDescription(fSecurity,eCategory);
 			}
 			catch (UtilsNotFoundException e)
 			{
 				try
 				{
-					ejbCategory = fbSecurity.getClassCategory().newInstance();
-					ejbCategory.setType(type.toString());
-					ejbCategory.setCode(category.getCode());
-					ejbCategory = (C)fSecurity.persist(ejbCategory);
+					eCategory = fbSecurity.getClassCategory().newInstance();
+					eCategory.setType(type.toString());
+					eCategory.setCode(xCategory.getCode());
+					eCategory = (C)fSecurity.persist(eCategory);
 				}
 				catch (InstantiationException e2) {throw new UtilsConfigurationException(e2.getMessage());}
 				catch (IllegalAccessException e2) {throw new UtilsConfigurationException(e2.getMessage());}
@@ -149,20 +152,20 @@ public class AbstractSecurityUpdater <L extends UtilsLang,
 			
 			try
 			{
-				ejbCategory.setName(efLang.getLangMap(category.getLangs()));
-				ejbCategory.setDescription(efDescription.create(category.getDescriptions()));
+				eCategory.setName(efLang.getLangMap(xCategory.getLangs()));
+				eCategory.setDescription(efDescription.create(xCategory.getDescriptions()));
 				
-				if(category.isSetVisible()){ejbCategory.setVisible(category.isVisible());}else{ejbCategory.setVisible(true);}
-				if(category.isSetPosition()){ejbCategory.setPosition(category.getPosition());}else{ejbCategory.setPosition(0);}
+				if(xCategory.isSetVisible()){eCategory.setVisible(xCategory.isVisible());}else{eCategory.setVisible(true);}
+				if(xCategory.isSetPosition()){eCategory.setPosition(xCategory.getPosition());}else{eCategory.setPosition(0);}
 				
-				ejbCategory=(C)fSecurity.update(ejbCategory);
-				iuChilds(ejbCategory,category);
+				eCategory=(C)fSecurity.update(eCategory);
+				iuChilds(eCategory,xCategory);
 			}
 			catch (UtilsConstraintViolationException e) {logger.error("",e);}
 			catch (UtilsLockingException e) {logger.error("",e);}
 		}
 		
-		updateCategory.remove(fSecurity);
+		dbCleanerCategory.remove(fSecurity);
 		logger.trace("initUpdateUsecaseCategories finished");
 	}
 	
@@ -170,7 +173,7 @@ public class AbstractSecurityUpdater <L extends UtilsLang,
 	{
 		logger.error("This method *must* be overridden!");
 	}
-	protected void iuChilds(C aclCategory, net.sf.ahtutils.xml.security.Category category) throws UtilsConfigurationException
+	protected void iuChilds(C eCategory, net.sf.ahtutils.xml.security.Category category) throws UtilsConfigurationException
 	{
 		logger.error("This method *must* be overridden!");
 	}

@@ -32,7 +32,7 @@ public class JeeslMsgBuilder
 	public static final String jeeslSystemPath = "utils"+File.separator+"jeesl"+File.separator+"system"+File.separator;
 	
 	public static final String generic = "jeesl/msg/generic.xml";
-	public static final String report = "jeesl/msg/report.xml";
+
 	public static final String query = "jeesl/msg/util/query.xml";
 	public static final String tooltip = "jeesl/msg/tooltip.xml";
 	public static final String entities = "jeesl/msg/admin/entities.xml";
@@ -66,6 +66,7 @@ public class JeeslMsgBuilder
 	public static final String ioCms = "jeesl/msg/module/cms.xml";
 	
 	//System
+	public static final String systemReport = "jeesl/msg/system/report.xml";
 	public static final String systemNews = "jeesl/msg/admin/system/news.xml";
 	public static final String systemJob = "jeesl/msg/system/job.xml";
 	public static final String systemProperty = "jeesl/msg/admin/system/property.xml";

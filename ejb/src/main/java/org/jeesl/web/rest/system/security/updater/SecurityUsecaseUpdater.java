@@ -82,7 +82,7 @@ public class SecurityUsecaseUpdater <L extends UtilsLang,
 			logger.trace("iuChilds "+category.getCode()+ " "+category.getUsecases().getUsecase().size());
 			for(net.sf.ahtutils.xml.security.Usecase usecase : category.getUsecases().getUsecase())
 			{
-				updateUsecases.actualAdd(usecase.getCode());
+				updateUsecases.handled(usecase.getCode());
 				iuUsecase(aclCategory, usecase);
 			}
 		}
@@ -121,6 +121,7 @@ public class SecurityUsecaseUpdater <L extends UtilsLang,
 			ebj.setCategory(category);
 			ebj=fSecurity.update(ebj);
 			
+			ebj = fSecurity.load(fbSecurity.getClassUsecase(), ebj);
 			ebj = iuListViewsSecurity(ebj,usecase.getViews());
 			ebj = iuListActions(ebj, usecase.getActions());
 		}

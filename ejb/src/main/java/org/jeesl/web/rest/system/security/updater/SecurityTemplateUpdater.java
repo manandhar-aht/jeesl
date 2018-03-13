@@ -77,7 +77,7 @@ public class SecurityTemplateUpdater <L extends UtilsLang,
 		{
 			for(net.sf.ahtutils.xml.security.Template template : templates.getTemplates().getTemplate())
 			{
-				updateRole.actualAdd(template.getCode());
+				updateRole.handled(template.getCode());
 				iuTemplate(category, template);
 			}
 		}

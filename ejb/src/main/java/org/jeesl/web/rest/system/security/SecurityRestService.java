@@ -85,7 +85,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	private Comparator<U> comparatorUsecase;
 	private Comparator<A> comparatorAction;
 	
-	private SecurityViewUpdater<L,D,C,R,V,U,A,AT,M,USER> initViews;
+	private SecurityViewUpdater<L,D,C,R,V,U,A,AT,M,USER> viewUpdater;
 	private SecurityTemplateUpdater<L,D,C,R,V,U,A,AT,M,USER> initTemplates;
 	private SecurityRoleUpdater<L,D,C,R,V,U,A,AT,M,USER> initRoles;
 	private SecurityUsecaseUpdater<L,D,C,R,V,U,A,AT,M,USER> initUsecases;
@@ -113,7 +113,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 		comparatorUsecase = (new SecurityUsecaseComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityUsecaseComparator.Type.position);
 		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityActionComparator.Type.position);
 		
-		initViews = new SecurityViewUpdater<L,D,C,R,V,U,A,AT,M,USER>(fbSecurity,fSecurity);
+		viewUpdater = new SecurityViewUpdater<L,D,C,R,V,U,A,AT,M,USER>(fbSecurity,fSecurity);
 		initTemplates = new SecurityTemplateUpdater<L,D,C,R,V,U,A,AT,M,USER>(fbSecurity,fSecurity);
 		initRoles = new SecurityRoleUpdater<L,D,C,R,V,U,A,AT,M,USER>(fbSecurity,fSecurity);
 		initUsecases = new SecurityUsecaseUpdater<L,D,C,R,V,U,A,AT,M,USER>(fbSecurity,fSecurity);
@@ -135,12 +135,8 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	}
 	
 	public DataUpdate iuSecurityTemplates(Security templates){return initTemplates.iuSecurityTemplates(templates);}
-	public DataUpdate iuSecurityViews(Access views){return initViews.iuViews(views);}
-	public DataUpdate importSecurityViews(Security views)
-	{
-		logger.info("NYI");
-		return null;
-	}
+	public DataUpdate iuSecurityViews(Access views){return viewUpdater.iuViewsAccess(views);}
+	public DataUpdate importSecurityViews(Security views){return viewUpdater.iuViews(views);}
 	
 	public DataUpdate iuSecurityRoles(Security roles){return initRoles.iuSecurityRoles(roles);}
 	public DataUpdate iuSecurityUsecases(Security usecases){return initUsecases.iuSecurityUsecases(usecases);}

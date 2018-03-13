@@ -33,6 +33,8 @@ public class JeeslDbCodeEjbUpdater<C extends EjbWithCode>
 		return new JeeslDbCodeEjbUpdater<C>(codeClass);
 	}
 	
+	public void clear() {ejbInDb.clear();}
+	
 	public void dbEjbs(List<C> list)
 	{
 		for(C c : list){ejbInDb.put(c.getCode(), c);}
@@ -43,8 +45,7 @@ public class JeeslDbCodeEjbUpdater<C extends EjbWithCode>
 		for(C c : fUtils.all(codeClass)){ejbInDb.put(c.getCode(), c);}
 	}
 	
-	@Deprecated
-	public void actualAdd(String code)
+	public void handled(String code)
 	{
 		if(ejbInDb.containsKey(code))
 		{

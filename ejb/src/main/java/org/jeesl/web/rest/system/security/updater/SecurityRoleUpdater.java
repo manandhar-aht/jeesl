@@ -55,7 +55,7 @@ public class SecurityRoleUpdater <L extends UtilsLang,D extends UtilsDescription
 		{
 			for(net.sf.ahtutils.xml.security.Role role : category.getRoles().getRole())
 			{
-				updateRole.actualAdd(role.getCode());
+				updateRole.handled(role.getCode());
 				iuRole(aclCategory, role);
 			}
 		}
@@ -118,8 +118,9 @@ public class SecurityRoleUpdater <L extends UtilsLang,D extends UtilsDescription
 			ejb.setName(efLang.getLangMap(role.getLangs()));
 			ejb.setDescription(efDescription.create(role.getDescriptions()));
 			ejb.setCategory(category);
-			ejb=fSecurity.update(ejb);
+			ejb = fSecurity.update(ejb);
 
+			ejb = fSecurity.load(fbSecurity.getClassRole(), ejb);
 			ejb = iuListViewsSecurity(ejb, role.getViews());
 			ejb = iuListActions(ejb, role.getActions());
 			ejb = iuUsecasesForRole(ejb, role.getUsecases());

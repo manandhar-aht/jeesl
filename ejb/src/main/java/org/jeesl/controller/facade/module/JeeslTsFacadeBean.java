@@ -130,6 +130,10 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	
 	@Override public TS fcTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException
 	{
+		if (!isTimeSeriesAllowed(scope, interval, bridge.getEntityClass()))
+		{
+			throw new UtilsConstraintViolationException("The requested time series combintaion of scope, interval and bridge ist not allowed for " +scope.getCode() +", " +interval.getCode() +", " +bridge.getEntityClass().getCode());
+		}
 		try {return fTimeSeries(scope, interval, bridge);}
 		catch (UtilsNotFoundException e)
 		{

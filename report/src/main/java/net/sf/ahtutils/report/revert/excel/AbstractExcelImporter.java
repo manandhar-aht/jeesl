@@ -28,6 +28,7 @@ import net.sf.ahtutils.xml.xpath.ReportXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.reflect.MethodUtils;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -189,7 +190,7 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	{
 	    // Get the next row
 	    Row row = activeSheet.getRow(i);
-	    if (row==null) {continue;}
+	    if (row==null || isEmptyRow(row)) {continue;}
 	    // Create a new Entity
 	    C entity = (C) Class.forName(structure.getTargetClass()).newInstance();
             if (entity instanceof EjbWithId)
@@ -488,6 +489,23 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 			
 		}
 	 
+	private boolean isEmptyRow(Row row)
+	{
+		boolean isEmptyRow = true;
+			for(int cellNum = row.getFirstCellNum(); cellNum < row.getLastCellNum(); cellNum++)
+			{
+			   Cell cell = row.getCell(cellNum);
+			   if(cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK && StringUtils.isNotBlank(cell.toString()))
+			   {
+				   isEmptyRow = false;
+			   }    
+			}
+		if (isEmptyRow) 
+		{
+			logger.warn("Row " +row.getRowNum() + " seems to be empty and will be ignored!");
+		}
+		return isEmptyRow;
+   }
 	 
 	public Hashtable<String, Object> getTempPropertyStore() {return tempPropertyStore;}
 	public void setTempPropertyStore(Hashtable<String, Object> tempPropertyStore) {this.tempPropertyStore = tempPropertyStore;}

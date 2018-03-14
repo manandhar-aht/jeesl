@@ -93,7 +93,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription> 
 		this.bMessage=bMessage;
 	}
 	
-	@Deprecated
+	@Deprecated //Use initJeeslAdmin instead
 	protected void initAdmin(String[] langs, final Class<L> cL, final Class<D> cD, JeeslFacesMessageBean bMessage)
 	{
 		this.localeCodes=langs;

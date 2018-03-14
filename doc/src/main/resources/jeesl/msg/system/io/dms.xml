@@ -35,6 +35,13 @@
 			<s:lang key="fr" translation="Documents"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="jeeslIoDmsDocument">
+		<s:langs>
+			<s:lang key="de" translation="Dokument"/>
+			<s:lang key="en" translation="Document"/>
+			<s:lang key="fr" translation="Document"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="jeeslIoDmsFiles">
 		<s:langs>
 			<s:lang key="de" translation="Dateien"/>
@@ -42,12 +49,28 @@
 			<s:lang key="fr" translation="Files"/>
 		</s:langs>
 	</s:translation>
-	
 	<s:translation key="jeeslIoDmsFile">
-    	<s:langs>
-    		<s:lang key="de" translation="Datei"/>
-    		<s:lang key="en" translation="File"/>
-    		<s:lang key="fr" translation="File"/>
-    	</s:langs>
+		<s:langs>
+	    		<s:lang key="de" translation="Datei"/>
+	    		<s:lang key="en" translation="File"/>
+	    		<s:lang key="fr" translation="File"/>
+		</s:langs>
+	</s:translation>
+	
+	<s:translation key="jeeslIoDmsViews">
+		<s:langs>
+	    		<s:lang key="de" translation="Ansichten"/>
+	    		<s:lang key="en" translation="Views"/>
+	    		<s:lang key="fr" translation="Views"/>
+		</s:langs>
+	</s:translation>	
+	<s:translation key="jeeslIoDmsView">
+		<s:langs>
+	    		<s:lang key="de" translation="Ansicht"/>
+	    		<s:lang key="en" translation="View"/>
+	    		<s:lang key="fr" translation="View"/>
+		</s:langs>
    </s:translation>
+   
+   
 </s:translations>

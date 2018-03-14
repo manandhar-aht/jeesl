@@ -10,12 +10,14 @@ import org.jeesl.api.facade.io.JeeslIoDmsFacade;
 import org.jeesl.factory.builder.io.IoAttributeFactoryBuilder;
 import org.jeesl.factory.builder.io.IoDmsFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsFactory;
+import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsViewFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
-import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.slf4j.Logger;
@@ -33,10 +35,11 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 													STORAGE extends JeeslFileStorage<L,D,?>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
 													S extends JeeslIoDmsSection<L,D,S>,
-													F extends JeeslIoDmsFile<L,S,FC,AC>,
+													F extends JeeslIoDmsDocument<L,S,FC,AC>,
+													VIEW extends JeeslIoDmsView<L,DMS>,
 													FC extends JeeslFileContainer<?,?>,
 													AC extends JeeslAttributeContainer<?,?>>
-					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC>
+					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,FC,AC>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -45,24 +48,27 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 	private final IoAttributeFactoryBuilder<L,D,?,?,?,?,AS,?,?,?> fbAttribute;
 	
 	private final EjbIoDmsFactory<DMS> efDms;
+	private final EjbIoDmsViewFactory<DMS,VIEW> efView;
 	
 	private List<DMS> dms; public List<DMS> getDms() {return dms;}
 	protected final List<AS> sets; public List<AS> getSets() {return sets;}
 	protected final List<STORAGE> storages; public List<STORAGE> getStorages() {return storages;}
-//	private List<ITEM> items; public List<ITEM> getItems() {return items;}
-	
+	private List<VIEW> dmsViews; public List<VIEW> getDmsViews() {return dmsViews;}
 
-	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F> fbDms, final IoAttributeFactoryBuilder<L,D,?,?,?,?,AS,?,?,?> fbAttribute)
+	private VIEW dmsView; public VIEW getDmsView() {return dmsView;} public void setDmsView(VIEW dmsView) {this.dmsView = dmsView;}
+
+	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F,VIEW> fbDms, final IoAttributeFactoryBuilder<L,D,?,?,?,?,AS,?,?,?> fbAttribute)
 	{
 		super(fbDms);
 		this.fbAttribute=fbAttribute;
 		efDms = fbDms.ejbDms();
+		efView = fbDms.ejbView();
 		
 		sets = new ArrayList<AS>();
 		storages = new ArrayList<STORAGE>();
 	}
 	
-	protected void initDmsConfig(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC> fDms)
+	protected void initDmsConfig(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,FC,AC> fDms)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
 		initPageConfiguration();
@@ -83,7 +89,7 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 
 	}
 	
-	protected void reloadDms()
+	private void reloadDms()
 	{
 		dms = fDms.all(fbDms.getClassDms());
 		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbDms.getClassDms(),dms));}
@@ -119,12 +125,24 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 	public void selectDm()
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(dm));}
+		reloadDm();
 //		set = efLang.persistMissingLangs(fAttribute,localeCodes,set);
 //		set = efDescription.persistMissingLangs(fAttribute,localeCodes,set);
 //		reloadItems();
 //		reset(false,true);
 	}
 	
+	private void reloadDm()
+	{
+		dm = fDms.find(fbDms.getClassDms(),dm);
+		dmsViews = fDms.allForParent(fbDms.getClassView(), dm);
+	}
+	
+	public void addView()
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.addEntity(fbDms.getClassView()));}
+		dmsView = efView.build(dm, dmsViews);
+	}
 	
 //	public void reorderSets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, fbAttribute.getClassSet(), sets);Collections.sort(sets, comparatorSet);}
 //	public void reorderItems() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, items);}

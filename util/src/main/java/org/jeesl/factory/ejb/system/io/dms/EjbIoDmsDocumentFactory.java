@@ -2,18 +2,19 @@ package org.jeesl.factory.ejb.system.io.dms;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbIoDmsFileFactory <SECTION extends JeeslIoDmsSection<?,?,SECTION>,FILE extends JeeslIoDmsFile<?,SECTION,?,?>>
+
+public class EjbIoDmsDocumentFactory <SECTION extends JeeslIoDmsSection<?,?,SECTION>,FILE extends JeeslIoDmsDocument<?,SECTION,?,?>>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbIoDmsFileFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbIoDmsDocumentFactory.class);
 	
 	private final Class<FILE> cFile;
 
-	public EjbIoDmsFileFactory(final Class<FILE> cFile)
+	public EjbIoDmsDocumentFactory(final Class<FILE> cFile)
 	{
         this.cFile = cFile;
 	}

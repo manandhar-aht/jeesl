@@ -76,7 +76,7 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 	
 	protected void initAttribute(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{
-		super.initAdmin(bTranslation.getLangKeys().toArray(new String[0]),cL,cD,bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fAttribute=fAttribute;
 		this.bAttribute=bAttribute;
 		initPageConfiguration();

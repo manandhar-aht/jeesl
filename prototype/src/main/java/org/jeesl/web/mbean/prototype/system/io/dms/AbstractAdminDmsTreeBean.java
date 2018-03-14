@@ -12,8 +12,9 @@ import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
-import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.primefaces.event.NodeCollapseEvent;
@@ -38,10 +39,11 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
 											STORAGE extends JeeslFileStorage<L,D,?>,
 											AS extends JeeslAttributeSet<L,D,?,?>,
 											S extends JeeslIoDmsSection<L,D,S>,
-											F extends JeeslIoDmsFile<L,S,FC,AC>,
+											F extends JeeslIoDmsDocument<L,S,FC,AC>,
+											VIEW extends JeeslIoDmsView<L,DMS>,
 											FC extends JeeslFileContainer<?,?>,
 											AC extends JeeslAttributeContainer<?,?>>
-					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC>
+					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,FC,AC>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -53,13 +55,13 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
 	private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 	
-	public AbstractAdminDmsTreeBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F> fbDms)
+	public AbstractAdminDmsTreeBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F,VIEW> fbDms)
 	{
 		super(fbDms);
 		sbhDms = new SbSingleHandler<DMS>(fbDms.getClassDms(),this);
 	}
 	
-	protected void initDmsConfig(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,FC,AC> fDms)
+	protected void initDmsConfig(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,FC,AC> fDms)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
 		initPageConfiguration();

@@ -3,8 +3,9 @@ package org.jeesl.api.facade.io;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
-import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsFile;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 
@@ -18,7 +19,8 @@ public interface JeeslIoDmsFacade <L extends UtilsLang,D extends UtilsDescriptio
 									STORAGE extends JeeslFileStorage<L,D,?>,
 									AS extends JeeslAttributeSet<L,D,?,?>,
 									S extends JeeslIoDmsSection<L,D,S>,
-									FILE extends JeeslIoDmsFile<L,S,FC,AC>,
+									FILE extends JeeslIoDmsDocument<L,S,FC,AC>,
+									VIEW extends JeeslIoDmsView<L,DMS>,
 									FC extends JeeslFileContainer<?,?>,
 									AC extends JeeslAttributeContainer<?,?>>
 						extends UtilsFacade

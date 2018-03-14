@@ -48,7 +48,7 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
+public abstract class AbstractDmsViewBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 											DMS extends JeeslIoDms<L,D,FSTORAGE,ASET,S>,
 											S extends JeeslIoDmsSection<L,D,S>,
 											FILE extends JeeslIoDmsDocument<L,S,FCONTAINER,ACONTAINER>,
@@ -73,7 +73,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 					implements Serializable,AttributeBean<ACONTAINER>,JeeslFileRepositoryCallback
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractDmsUploadBean.class);	
+	final static Logger logger = LoggerFactory.getLogger(AbstractDmsViewBean.class);	
 
 	private JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute; 
 	private JeeslIoFrFacade<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr;
@@ -93,7 +93,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 	private FILE file; public FILE getFile() {return file;} public void setFile(FILE file) {this.file = file;}
 
-	public AbstractDmsUploadBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,FSTORAGE,S,FILE,VIEW> fbDms,
+	public AbstractDmsViewBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,FSTORAGE,S,FILE,VIEW> fbDms,
 								final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute,
 								final IoFileRepositoryFactoryBuilder<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fbFr)
 	{
@@ -103,7 +103,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 		sbhDms = new SbSingleHandler<DMS>(fbDms.getClassDms(),this);
 	}
 	
-	protected void postConstructDmsUpload(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
+	protected void postConstructDmsView(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
 								JeeslIoDmsFacade<L,D,LOC,DMS,FSTORAGE,ASET,S,FILE,VIEW,FCONTAINER,ACONTAINER> fDms,
 								JeeslIoFrFacade<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr,
 								JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute,

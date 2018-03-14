@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.db.UtilsDbShell;
 import net.sf.exlp.exception.ExlpUnsupportedOsException;
 import net.sf.exlp.factory.xml.config.XmlParameterFactory;
+import net.sf.exlp.shell.cmd.ShellCmdQuote;
 
 public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShell
 {
@@ -134,8 +135,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sbFile.append(File.separator);
 		sbFile.append(pDbName.getValue());
 		sbFile.append(".sql");
-		
-		sb.append(" '").append(FilenameUtils.separatorsToSystem(sbFile.toString())).append("'");
+		sb.append(" ").append(ShellCmdQuote.quote(sbFile.toString()));
 		
 		super.addLine(sb.toString());
 		return sb.toString();

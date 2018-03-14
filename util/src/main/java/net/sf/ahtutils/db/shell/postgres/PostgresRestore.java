@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.db.UtilsDbShell;
 import net.sf.exlp.exception.ExlpUnsupportedOsException;
 import net.sf.exlp.factory.xml.config.XmlParameterFactory;
+import net.sf.exlp.shell.cmd.ShellCmdQuote;
 
 public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShell
 {
@@ -134,8 +135,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sbFile.append(File.separator);
 		sbFile.append(pDbName.getValue());
 		sbFile.append(".sql");
-		
-		sb.append(" '").append(FilenameUtils.separatorsToSystem(sbFile.toString())).append("'");
+		sb.append(" ").append(ShellCmdQuote.quote(sbFile.toString()));
 		
 		super.addLine(sb.toString());
 		return sb.toString();
@@ -155,7 +155,13 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sb.append(" --no-owner");
 		sb.append(" --data-only");
 		sb.append(" -t " + table.toLowerCase());
-		sb.append(" '").append(pDirRestore.getValue()).append(File.separator).append(pDbName.getValue()).append(".sql'");
+		
+		StringBuilder sbFile = new StringBuilder();
+		sbFile.append(pDirRestore.getValue());
+		sbFile.append(File.separator);
+		sbFile.append(pDbName.getValue());
+		sbFile.append(".sql");
+		sb.append(" ").append(ShellCmdQuote.quote(sbFile.toString()));
 		
 		// Trigger http://dba.stackexchange.com/questions/23000/disable-constraints-before-using-pg-restore-exe
 		// http://www.postgresonline.com/special_feature.php?sf_name=postgresql83_pg_dumprestore_cheatsheet

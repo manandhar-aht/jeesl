@@ -2,7 +2,6 @@ package org.jeesl.interfaces.model.system.io.report;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;

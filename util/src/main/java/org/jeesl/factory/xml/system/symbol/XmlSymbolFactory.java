@@ -2,9 +2,9 @@ package org.jeesl.factory.xml.system.symbol;
 
 import org.jeesl.factory.xml.system.status.XmlStyleFactory;
 import org.jeesl.factory.xml.system.status.XmlStylesFactory;
-import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
-import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
-import org.jeesl.interfaces.model.system.symbol.JeeslGraphicStyle;
+import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
+import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicFigure;
+import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

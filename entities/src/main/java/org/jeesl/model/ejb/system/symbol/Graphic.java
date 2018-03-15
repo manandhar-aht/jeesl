@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.ManyToOne;
 
-import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
+import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
 import org.jeesl.model.ejb.system.status.Description;
 import org.jeesl.model.ejb.system.status.Lang;
 

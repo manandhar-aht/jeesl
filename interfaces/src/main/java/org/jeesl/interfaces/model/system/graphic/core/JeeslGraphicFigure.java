@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.symbol;
+package org.jeesl.interfaces.model.system.graphic.core;
 
 import java.io.Serializable;
 

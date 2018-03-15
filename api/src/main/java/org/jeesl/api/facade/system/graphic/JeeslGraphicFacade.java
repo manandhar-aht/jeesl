@@ -2,8 +2,8 @@ package org.jeesl.api.facade.system.graphic;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
-import org.jeesl.interfaces.model.system.symbol.JeeslGraphicFigure;
+import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
+import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;

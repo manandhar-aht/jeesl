@@ -142,6 +142,15 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 	{
 		if(debugOnInfo) {logger.info(AbstractLogMessage.addEntity(fbDms.getClassView()));}
 		dmsView = efView.build(dm, dmsViews);
+		dmsView.setName(efLang.createEmpty(localeCodes));
+	}
+	
+	public void saveView() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(dmsView));}
+
+		dmsView = fDms.save(dmsView);
+		reloadDm();
 	}
 	
 //	public void reorderSets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, fbAttribute.getClassSet(), sets);Collections.sort(sets, comparatorSet);}

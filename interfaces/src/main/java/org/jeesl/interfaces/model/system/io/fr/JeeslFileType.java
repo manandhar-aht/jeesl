@@ -2,9 +2,9 @@ package org.jeesl.interfaces.model.system.io.fr;
 
 import java.io.Serializable;
 
+import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
 import org.jeesl.interfaces.model.system.graphic.with.EjbWithCodeGraphic;
 import org.jeesl.interfaces.model.system.option.JeeslOptionRestDownload;
-import org.jeesl.interfaces.model.system.symbol.JeeslGraphic;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;

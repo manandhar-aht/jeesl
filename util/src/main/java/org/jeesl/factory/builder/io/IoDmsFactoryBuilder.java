@@ -7,6 +7,7 @@ import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsSectionFactory;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsViewFactory;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsLayer;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
@@ -22,7 +23,8 @@ public class IoDmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								STORAGE extends JeeslFileStorage<L,D,?>,
 								SECTION extends JeeslIoDmsSection<L,D,SECTION>,
 								FILE extends JeeslIoDmsDocument<L,SECTION,?,?>,
-								VIEW extends JeeslIoDmsView<L,DMS>>
+								VIEW extends JeeslIoDmsView<L,DMS>,
+								LAYER extends JeeslIoDmsLayer<VIEW,?>>
 				extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDmsFactoryBuilder.class);

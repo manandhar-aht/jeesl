@@ -26,6 +26,7 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsLayer;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -53,6 +54,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 											S extends JeeslIoDmsSection<L,D,S>,
 											FILE extends JeeslIoDmsDocument<L,S,FCONTAINER,ACONTAINER>,
 											VIEW extends JeeslIoDmsView<L,DMS>,
+											LAYER extends JeeslIoDmsLayer<VIEW,AITEM>,
 											
 											FSTORAGE extends JeeslFileStorage<L,D,FENGINE>,
 											FENGINE extends UtilsStatus<FENGINE,L,D>,
@@ -69,7 +71,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 											ACONTAINER extends JeeslAttributeContainer<ASET,ADATA>,
 											ADATA extends JeeslAttributeData<ACRITERIA,AOPTION,ACONTAINER>
 >
-					extends AbstractDmsBean<L,D,LOC,DMS,FSTORAGE,ASET,S,FILE,VIEW,FCONTAINER,ACONTAINER>
+					extends AbstractDmsBean<L,D,LOC,DMS,FSTORAGE,ASET,S,FILE,VIEW,LAYER,FCONTAINER,AITEM,ACONTAINER>
 					implements Serializable,AttributeBean<ACONTAINER>,JeeslFileRepositoryCallback
 {
 	private static final long serialVersionUID = 1L;
@@ -93,7 +95,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	private S section; public S getSection() {return section;} public void setSection(S section) {this.section = section;}
 	private FILE file; public FILE getFile() {return file;} public void setFile(FILE file) {this.file = file;}
 
-	public AbstractDmsUploadBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,FSTORAGE,S,FILE,VIEW> fbDms,
+	public AbstractDmsUploadBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,FSTORAGE,S,FILE,VIEW,LAYER> fbDms,
 								final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute,
 								final IoFileRepositoryFactoryBuilder<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fbFr)
 	{

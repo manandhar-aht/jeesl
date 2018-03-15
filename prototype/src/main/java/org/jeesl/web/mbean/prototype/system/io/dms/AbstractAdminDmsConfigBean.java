@@ -13,9 +13,11 @@ import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsFactory;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsViewFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsLayer;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -37,9 +39,11 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 													S extends JeeslIoDmsSection<L,D,S>,
 													F extends JeeslIoDmsDocument<L,S,FC,AC>,
 													VIEW extends JeeslIoDmsView<L,DMS>,
+													LAYER extends JeeslIoDmsLayer<VIEW,AI>,
 													FC extends JeeslFileContainer<?,?>,
+													AI extends JeeslAttributeItem<?,AS>,
 													AC extends JeeslAttributeContainer<?,?>>
-					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,FC,AC>
+					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,LAYER,FC,AI,AC>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -57,7 +61,7 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 
 	private VIEW dmsView; public VIEW getDmsView() {return dmsView;} public void setDmsView(VIEW dmsView) {this.dmsView = dmsView;}
 
-	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F,VIEW> fbDms, final IoAttributeFactoryBuilder<L,D,?,?,?,?,AS,?,?,?> fbAttribute)
+	public AbstractAdminDmsConfigBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F,VIEW,LAYER> fbDms, final IoAttributeFactoryBuilder<L,D,?,?,?,?,AS,?,?,?> fbAttribute)
 	{
 		super(fbDms);
 		this.fbAttribute=fbAttribute;

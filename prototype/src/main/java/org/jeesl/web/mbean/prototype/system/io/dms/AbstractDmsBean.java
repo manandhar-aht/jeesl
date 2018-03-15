@@ -11,9 +11,11 @@ import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsDocumentFactory;
 import org.jeesl.factory.ejb.system.io.dms.EjbIoDmsSectionFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
+import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDms;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
+import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsLayer;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -36,7 +38,9 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 													SECTION extends JeeslIoDmsSection<L,D,SECTION>,
 													F extends JeeslIoDmsDocument<L,SECTION,FC,AC>,
 													VIEW extends JeeslIoDmsView<L,DMS>,
+													LAYER extends JeeslIoDmsLayer<VIEW,AI>,
 													FC extends JeeslFileContainer<?,?>,
+													AI extends JeeslAttributeItem<?,AS>,
 													AC extends JeeslAttributeContainer<?,?>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
@@ -45,7 +49,7 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 	final static Logger logger = LoggerFactory.getLogger(AbstractDmsBean.class);
 	
 	protected JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,SECTION,F,VIEW,FC,AC> fDms;
-	protected final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,SECTION,F,VIEW> fbDms;
+	protected final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,SECTION,F,VIEW,LAYER> fbDms;
 	
 	protected final EjbIoDmsSectionFactory<SECTION> efSection;
 	protected final EjbIoDmsDocumentFactory<SECTION,F> efFile;
@@ -53,7 +57,7 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 	protected DMS dm; public DMS getDm() {return dm;} public void setDm(DMS dm) {this.dm = dm;}
 	protected final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 
-	public AbstractDmsBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,SECTION,F,VIEW> fbDms)
+	public AbstractDmsBean(IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,SECTION,F,VIEW,LAYER> fbDms)
 	{
 		super(fbDms.getClassL(),fbDms.getClassD());
 		this.fbDms=fbDms;

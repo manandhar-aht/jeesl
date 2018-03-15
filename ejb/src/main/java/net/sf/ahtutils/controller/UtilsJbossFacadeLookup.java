@@ -27,13 +27,17 @@ public class UtilsJbossFacadeLookup
 	
 	public UtilsJbossFacadeLookup(String appName, String moduleName)
 	{
-		this(appName,moduleName,null,null,null);
+		this(appName,moduleName,null,4447,null,null);
 	}
 	public UtilsJbossFacadeLookup(String appName, String moduleName, String host)
 	{
-		this(appName,moduleName,host,null,null);
+		this(appName,moduleName,host,4447,null,null);
 	}
 	public UtilsJbossFacadeLookup(String appName, String moduleName, String host, String username, String password)
+	{
+		this(appName,moduleName,host,4447,username,password);
+	}
+	public UtilsJbossFacadeLookup(String appName, String moduleName, String host, int port, String username, String password)
 	{
 		this.appName=appName;
 		this.moduleName=moduleName;
@@ -46,7 +50,7 @@ public class UtilsJbossFacadeLookup
 		if(host==null){host="localhost";}
 		logger.info("Connecting to "+host);
 		properties.put("remote.connection.default.host", host);
-		properties.put("remote.connection.default.port", "4447");
+		properties.put("remote.connection.default.port", Integer.valueOf(port).toString());
 
 		properties.put("remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMOUS", "false");
 		if(username!=null){properties.put("remote.connection.default.username", username);}

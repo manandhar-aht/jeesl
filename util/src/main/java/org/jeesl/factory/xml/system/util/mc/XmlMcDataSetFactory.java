@@ -21,10 +21,14 @@ public class XmlMcDataSetFactory
 		
 		for(org.jeesl.model.xml.module.ts.Data tsD: timeSeries.getData())
 		{
-			Data cd = new Data();
-			cd.setRecord(tsD.getRecord());
-			cd.setY(tsD.getValue());
-			ds.getData().add(cd);
+			if (tsD.isSetValue())
+			{
+				Data cd = new Data();
+				cd.setRecord(tsD.getRecord());
+
+				cd.setY(tsD.getValue());
+				ds.getData().add(cd);
+			}
 		}
 		return ds;	
 	}

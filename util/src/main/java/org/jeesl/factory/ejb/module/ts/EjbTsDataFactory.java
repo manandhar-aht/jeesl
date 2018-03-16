@@ -46,10 +46,17 @@ public class EjbTsDataFactory<L extends UtilsLang, D extends UtilsDescription,
 	
 	public DATA build(WS workspace, TS timeSeries, TRANSACTION transaction, Data data)
 	{
-		return build(workspace,timeSeries,transaction,data.getRecord().toGregorianCalendar().getTime(),data.getValue());
+		if (data.isSetValue())
+		{
+			return build(workspace,timeSeries,transaction,data.getRecord().toGregorianCalendar().getTime(),data.getValue());
+		}
+		else
+		{
+			return build(workspace,timeSeries,transaction,data.getRecord().toGregorianCalendar().getTime(),null);
+		}
 	}
 	
-	public DATA build(WS workspace, TS timeSeries, TRANSACTION transaction, Date date, double value)
+	public DATA build(WS workspace, TS timeSeries, TRANSACTION transaction, Date date, Double value)
 	{
 		DATA ejb = null;
 		try

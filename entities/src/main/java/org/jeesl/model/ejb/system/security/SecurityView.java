@@ -101,6 +101,10 @@ public class SecurityView implements JeeslSecurityView<Lang,Description,Security
 	@Override public Boolean getAccessLogin() {return accessLogin;}
 	@Override public void setAccessLogin(Boolean accessLogin) {this.accessLogin = accessLogin;}
 	
+	private Boolean redirect;
+	@Override public Boolean getRedirect() {return redirect;}
+	@Override public void setRedirect(Boolean redirect) {this.redirect = redirect;}
+	
 	private String packageName;
 	@Override public String getPackageName() {return packageName;}
 	@Override public void setPackageName(String packageName) {this.packageName = packageName;}

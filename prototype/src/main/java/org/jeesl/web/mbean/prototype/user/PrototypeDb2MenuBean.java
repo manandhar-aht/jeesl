@@ -66,7 +66,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	private I identity;
 	private String localeCode;
 	private boolean setupRequired=false;
-	private boolean debugOnInfo; protected void setLogInfo(boolean log) {debugOnInfo = log;}
+	private boolean debugOnInfo; protected void setDebugOnInfo(boolean log) {debugOnInfo = log;}
 
 	public PrototypeDb2MenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity, final Class<M> cMenu)
 	{

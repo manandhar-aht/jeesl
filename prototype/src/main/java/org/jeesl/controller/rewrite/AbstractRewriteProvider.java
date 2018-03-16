@@ -1,6 +1,7 @@
 package org.jeesl.controller.rewrite;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.jeesl.api.bean.JeeslSecurityBean;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
@@ -65,9 +66,10 @@ public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends Ut
 	{
 		ConfigurationBuilder config = ConfigurationBuilder.begin();
 		config = config.addRule(Join.path("/").to("index.jsf"));
-		for(V view : bSecurity.getViews())
+		List<V> views = bSecurity.getViews();
+		for(V view : views)
 		{
-			logger.info("Building Rule for "+view.toString());
+			logger.debug("Building Rule for "+view.toString());
 			
 			config = config.addRule(Join.path(view.getViewPattern()).to(forwardDeactivated)).when(Direction.isInbound().andNot(pageActive));
 			config = config.addRule(Join.path(view.getUrlMapping()).to(forwardDeactivated)).when(Direction.isInbound().andNot(pageActive));
@@ -80,6 +82,7 @@ public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends Ut
 			
 			config = config.addRule(Join.path(view.getUrlMapping()).to(view.getViewPattern())).when(Direction.isInbound().and(pageActive));
 		}
+		logger.info("Rules created for "+views.size()+" Views");
 		return config;
 	}
 	

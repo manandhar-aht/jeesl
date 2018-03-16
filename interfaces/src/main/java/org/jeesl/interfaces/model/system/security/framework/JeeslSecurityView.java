@@ -57,4 +57,7 @@ public interface JeeslSecurityView<L extends UtilsLang,
 	
 	public Boolean getDocumentation();
 	public void setDocumentation(Boolean documentation);
+	
+//	public Boolean getRedirect();
+//	public void setRedirect(Boolean redirect);
 }

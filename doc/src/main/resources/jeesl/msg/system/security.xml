@@ -150,11 +150,11 @@
     		<s:lang key="fr" translation="View Pattern"/>
     	</s:langs>
     </s:translation>
-    <s:translation key="aupSecurityViewMapping">
+    <s:translation key="jeeslSecurityViewMapping">
     	<s:langs>
-    		<s:lang key="de" translation="View Mapping"/>
-    		<s:lang key="en" translation="View Mapping"/>
-    		<s:lang key="fr" translation="View Mapping"/>
+    		<s:lang key="de" translation="Mapping"/>
+    		<s:lang key="en" translation="Mapping"/>
+    		<s:lang key="fr" translation="Mapping"/>
     	</s:langs>
     </s:translation>
     <s:translation key="aupSecurityViewUrlBase">
@@ -222,10 +222,18 @@
 	    	</s:langs>
     </s:translation>
 	<s:translation key="jeeslSecurityMenu">
-	    	<s:langs>
+		<s:langs>
 	    		<s:lang key="de" translation="Menü"/>
 	    		<s:lang key="en" translation="Menu"/>
 	    		<s:lang key="fr" translation="Menu"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="jeeslSecurityRedirect">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Umleitung"/>
+	    		<s:lang key="en" translation="Redirect"/>
+	    		<s:lang key="fr" translation="Umleitung"/>
 	    	</s:langs>
-    </s:translation>
+    </s:translation>  
+    
 </s:translations>

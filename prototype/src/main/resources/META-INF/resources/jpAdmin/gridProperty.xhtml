@@ -21,24 +21,24 @@
 				<aht:slot id="sProperties" width="7">
 					<h:form id="fProperties">
 						<p:dataTable var="p" value="#{cc.attrs.bean.properties}"
-							selection="#{cc.attrs.bean.prop}" selectionMode="single" rowKey="#{p.id}">
+								selection="#{cc.attrs.bean.prop}" selectionMode="single" rowKey="#{p.id}">
 							<f:facet name="header"><aht:pfDataTableHeader title="#{msg.jeeslProperties}"/></f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sProperties :#{cc.id}:sProperty" listener="#{cc.attrs.bean.selectProperty}"/>  
-				            <p:column headerText="#{msg.jeeslCategory}">  
+			            <p:column headerText="#{msg.jeeslCategory}">  
 								<h:outputText value="#{p.category.name[localeCode].lang}" />  
-				            </p:column>
-				            <p:column headerText="#{msg.jeeslPropertyKey}">  
+			            </p:column>
+			            <p:column headerText="#{msg.jeeslPropertyKey}">  
 								<h:outputText value="#{p.key}" />  
-				            </p:column>
-				            <p:column headerText="#{msg.jeeslPropertyValue}">  
+			            </p:column>
+			            <p:column headerText="#{msg.jeeslPropertyValue}">  
 								<h:outputText value="#{p.value}" />  
-				            </p:column>
-				       	</p:dataTable>
+			            </p:column>
+						</p:dataTable>
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sProperty" width="5">
 					<h:form id="fProperty">
-						<p:panel header="#{msg.jeeslProperty}" rendered="#{not empty cc.attrs.bean.prop}" styleClass="auPanelWithGrid">
+						<p:panel header="#{msg.jeeslProperty}" rendered="#{not empty cc.attrs.bean.prop}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveProperty()}" update=":#{cc.id}:sProperties" tooltip="#{msg.ttSave}"/>
 							</f:facet>

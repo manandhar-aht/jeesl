@@ -67,9 +67,16 @@
 								<p:selectOneMenu value="#{cc.attrs.bean.view.category}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[userBean.localeCode].lang}" itemValue="#{c}"/>
 								</p:selectOneMenu>
-												
-								<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
+							</p:panelGrid>
+							<p:panelGrid columns="4" columnClasses="jeeslGrid10,jeeslGrid40,jeeslGrid10,jeeslGrid40">
 								<p:selectBooleanCheckbox rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{cc.attrs.bean.view.visible}"/>
+								<p:outputLabel rendered="#{cc.attrs.bean.uiShowInvisible}" value="#{msg.aupSecurityVisible}"/>
+														
+								<p:triStateCheckbox value="#{cc.attrs.bean.tsb.a}"/>
+								<p:outputLabel value="#{msg.jeeslSecurityRedirect}"/>
+							</p:panelGrid>	
+							<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">				
+								
 								
 								<p:outputLabel value="#{msg.jeeslSecurityCode}"/>
 								<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.view.code}"/>
@@ -90,7 +97,7 @@
 								<p:inputText value="#{cc.attrs.bean.view.packageName}"/>
 								<p:outputLabel value="#{msg.aupSecurityViewPattern}"/>
 								<p:inputText value="#{cc.attrs.bean.view.viewPattern}"/>
-								<p:outputLabel value="#{msg.aupSecurityViewMapping}"/>
+								<p:outputLabel value="#{msg.jeeslSecurityViewMapping}"/>
 								<p:inputText value="#{cc.attrs.bean.view.urlMapping}"/>
 								<p:outputLabel value="#{msg.aupSecurityViewUrlBase}"/>
 								<p:inputText value="#{cc.attrs.bean.view.urlBase}"/>

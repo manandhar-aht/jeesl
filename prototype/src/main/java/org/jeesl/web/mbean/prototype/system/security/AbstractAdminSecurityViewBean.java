@@ -19,6 +19,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplat
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.jsf.util.TriStateBinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,11 +55,13 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
 	
 	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity;
+	private final TriStateBinder tsb; public TriStateBinder getTsb() {return tsb;}
 	
 	public AbstractAdminSecurityViewBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		super(fbSecurity);
 		categoryType = JeeslSecurityCategory.Type.view;
+		tsb = new TriStateBinder();
 	}
 	
 	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslFacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
@@ -94,7 +97,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	private void reloadView()
 	{
 		view = fSecurity.load(fbSecurity.getClassView(),view);
-		
+		tsb.booleanToA(view.getRedirect());
 		roles = view.getRoles();
 		Collections.sort(roles,comparatorRole);
 		
@@ -121,6 +124,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		view = efView.build(category,"",views);
 		view.setName(efLang.createEmpty(langs));
 		view.setDescription(efDescription.createEmpty(langs));
+		tsb.booleanToA(view.getRedirect());
 	}
 	
 	public void selectView()
@@ -145,6 +149,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	{
 		logger.info(AbstractLogMessage.saveEntity(view));
 		view.setCategory(fSecurity.find(fbSecurity.getClassCategory(), view.getCategory()));
+		view.setRedirect(tsb.aToBoolean());
 		view = fSecurity.save(view);
 		reloadView();
 		reloadViews();

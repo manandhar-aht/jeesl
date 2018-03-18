@@ -3,6 +3,7 @@ package org.jeesl.web.mbean.prototype.system.security;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
@@ -49,10 +50,10 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang, D extends Uti
 		super(fbSecurity);
 	}
 	
-	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslFacesMessageBean bMessage)
+	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslFacesMessageBean bMessage)
 	{
 		categoryType = JeeslSecurityCategory.Type.action;
-		initSecuritySuper(langs,fSecurity,bMessage);
+		initSecuritySuper(bTranslation.getLangKeys().toArray(new String[0]),fSecurity,bMessage);
 	}
 	
 	@Override public void categorySelected() throws UtilsNotFoundException

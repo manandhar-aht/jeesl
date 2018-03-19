@@ -58,4 +58,12 @@ public class FileRepositoryFileStorage<STORAGE extends JeeslFileStorage<?,?,?>,
 		File l5 = new File(l4,uid.substring(8,10));
 		return new File(l5,uid);
 	}
+
+	@Override
+	public void delteFileFromRepository(META meta) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		File f = build(meta.getCode());
+		if(f.exists()) {f.delete();}
+		else {logger.warn("Requesting a delete, but file is not there!! "+f.getAbsolutePath());}
+	}
 }

@@ -63,4 +63,19 @@
 	    		<s:lang key="fr" translation="Upload"/>
 	    	</s:langs>
     </s:translation>
+    	<s:translation key="ttJeeslIoFileDelete">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Lösche Datei"/>
+	    		<s:lang key="en" translation="Delete File"/>
+	    		<s:lang key="fr" translation="Delte File"/>
+	    	</s:langs>
+    </s:translation>
+        	<s:translation key="jeeslIoFileDownload">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Lade Datei"/>
+	    		<s:lang key="en" translation="Donwload File"/>
+	    		<s:lang key="fr" translation="Donwload File"/>
+	    	</s:langs>
+    </s:translation>
+    
 </s:translations>

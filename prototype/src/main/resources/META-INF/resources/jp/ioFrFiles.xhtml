@@ -6,6 +6,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
+    xmlns:j="http://www.jeesl.org/jsf"
     xmlns:jeesl="http://www.jeesl.org/jsf"
     xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
@@ -16,6 +17,7 @@
 		<composite:attribute name="update" required="true"/>
 		<composite:attribute name="componentPrefix" required="false" default=""/>
 		<composite:attribute name="allowUpload" required="false" default="true"/>
+		<composite:attribute name="allowDelete" required="false" default="false"/>
 		
 		<composite:attribute name="withCategory" required="false" default="false"/>
 		<composite:attribute name="labelCategory" required="false" default="#{msg.jeeslType}"/>
@@ -30,16 +32,19 @@
 						<aht:icon id="iconJeeslFileAdd" type="jeeslAdd"
 							listener="#{cc.attrs.handler.addFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:opUpload" oncomplete="PF('wvUpload').show();"
 							rendered="#{cc.attrs.allowUpload}"/>
-						<jeesl:downloadIcon type="reportZip" value="#{cc.attrs.handler.zipStream()}" tooltip="#{msg.reportZip}"/>
+						<j:downloadIcon type="reportZip" value="#{cc.attrs.handler.zipStream()}" tooltip="#{msg.reportZip}"/>
+						<j:icon type="jeeslDelete" listener="#{cc.attrs.handler.deleteFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fFiles #{cc.attrs.componentPrefix}:#{cc.id}:fDownload"
+								mayDisappear="true" tooltip="#{msg.ttJeeslIoFileDelete}"
+								rendered="#{(cc.attrs.allowDelete) and (not empty cc.attrs.handler.meta) and (cc.attrs.handler.meta.id gt 0)}" />
 					</aht:pfDataTableHeader>
 				</f:facet>
-				<p:ajax event="rowSelect" listener="#{cc.attrs.handler.selectFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fDownload" />
+				<p:ajax event="rowSelect" listener="#{cc.attrs.handler.selectFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fDownload #{cc.attrs.componentPrefix}:#{cc.id}:fFiles" />
 				<p:column rendered="true" styleClass="jeeslColumnCentered">
 					<jtp:symbolizer value="#{meta.type}"/>
 				</p:column>
 				<p:column>
 					<f:facet name="header"><h:outputText value="#{msg.jeeslIoFileSize}"/></f:facet>
-					<h:outputText value="#{jeesl:humanFileSize(meta.size)}"/>
+					<h:outputText value="#{j:humanFileSize(meta.size)}"/>
 				</p:column>
 				<p:column>
 					<f:facet name="header"><h:outputText value="#{msg.jeeslIoFileName}"/></f:facet>
@@ -73,7 +78,7 @@
 							<p:outputLabel value="#{msg.jeeslIoFileName}"/>
 							<h:outputText value="#{cc.attrs.handler.meta.name}"/>
 							<p:outputLabel value="#{msg.jeeslIoFileSize}"/>
-							<h:outputText value="#{jeesl:humanFileSize(cc.attrs.handler.meta.size)}"/>
+							<h:outputText value="#{j:humanFileSize(cc.attrs.handler.meta.size)}"/>
 							<p:outputLabel value="#{msg.jeeslIoFileRecord}"/>
 							<h:outputText value="#{cc.attrs.handler.meta.record}">
 								<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
@@ -84,7 +89,6 @@
 							<p:selectOneMenu value="#{cc.attrs.handler.meta.category}" effect="fade" autoWidth="false">
 								<f:selectItems value="#{cc.attrs.mapCategory.values}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t.code}"/>
 							</p:selectOneMenu>
-							
 						</p:panelGrid>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 					</p:panel>

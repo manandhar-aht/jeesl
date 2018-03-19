@@ -109,7 +109,8 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 			reload();
 		}
 	}
-	
+
+	public void reset() {reset(true);}
 	private void reset(boolean rMeta)
 	{
 		if(rMeta) {meta=null;}
@@ -117,6 +118,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	
 	public void reload()
 	{
+		container = fFr.find(fbFile.getClassContainer(), container);
 		metas.clear();
 		metas.addAll(fFr.allForParent(fbFile.getClassMeta(),container));
 		logger.info("Reloaded "+fbFile.getClassMeta().getSimpleName()+" "+metas.size());
@@ -131,11 +133,6 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	{
 		return null;
 //		return new ByteArrayInputStream(file.getData().getValue());
-	}
-	
-	public void reset()
-	{
-		
 	}
 	
 	public void addFile()
@@ -163,6 +160,14 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		reload();
 		reset(true);
     }
+	
+	public void deleteFile() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info("Delteing: "+meta.toString());
+		fFr.delteFileFromRepository(meta);
+		reload();
+		reset(true);
+	}
 	
 	public byte[] zip() throws Exception
 	{

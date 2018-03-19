@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
 import org.jeesl.controller.handler.fr.storage.FileRepositoryFileStorage;
+import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
 import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryStore;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
@@ -35,12 +36,13 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoFrFacadeBean.class);
 
+	private final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
 	private final Map<STORAGE,JeeslFileRepositoryStore<META>> mapStorages;
 	
-	public JeeslIoFrFacadeBean(EntityManager em)
+	public JeeslIoFrFacadeBean(EntityManager em, IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile)
 	{
 		super(em);
-		
+		this.fbFile=fbFile;
 		mapStorages = new HashMap<STORAGE,JeeslFileRepositoryStore<META>>();
 	}
 	
@@ -66,5 +68,16 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 	@Override public byte[] loadFromFileRepository(META meta) throws UtilsNotFoundException
 	{
 		return build(meta.getContainer().getStorage()).loadFromFileRepository(meta);
+	}
+
+	@Override
+	public void delteFileFromRepository(META meta) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		meta = this.find(fbFile.getClassMeta(),meta);
+		build(meta.getContainer().getStorage()).delteFileFromRepository(meta);
+		logger.trace("Removing Meta "+meta.getContainer().getMetas().size());
+		meta.getContainer().getMetas().remove(meta);
+		logger.trace("Removing Meta "+meta.getContainer().getMetas().size());
+		this.rm(meta);
 	}
 }

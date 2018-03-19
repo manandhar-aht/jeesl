@@ -13,4 +13,5 @@ public interface JeeslFileRepositoryStore <META extends JeeslFileMeta<?,?>>
 {
 	public META saveToFileRepository(META meta, byte[] bytes) throws UtilsConstraintViolationException, UtilsLockingException;
 	public byte[] loadFromFileRepository(META meta) throws UtilsNotFoundException;
+	public void delteFileFromRepository(META meta) throws UtilsConstraintViolationException, UtilsLockingException;
 }

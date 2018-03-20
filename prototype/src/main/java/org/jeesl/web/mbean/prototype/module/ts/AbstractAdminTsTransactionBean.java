@@ -67,6 +67,7 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	{
 		super(fbTs);
 		sbDateHandler = new SbDateHandler(this);
+		sbDateHandler.setEnforceStartOfDay(true);
 		sbDateHandler.initMonthsToNow(2);
 	}
 	
@@ -84,7 +85,7 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	
 	private void reloadTransactions()
 	{
-		transactions = fTs.fTransactions(null,sbDateHandler.getDate1(),sbDateHandler.getDate2());
+		transactions = fTs.fTransactions(null,sbDateHandler.getDate1(),sbDateHandler.toDate2Plus1());
 	}
 	
 	public void selectTransaction()

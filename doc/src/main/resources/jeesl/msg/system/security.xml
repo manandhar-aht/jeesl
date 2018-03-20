@@ -235,5 +235,13 @@
 	    		<s:lang key="fr" translation="Umleitung"/>
 	    	</s:langs>
     </s:translation>  
+   	<s:translation key="ttJeeslSecurityNoPageSpecifcActionsDefined">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Keine seitenspezifische Aktionen definiert"/>
+	    		<s:lang key="en" translation="No page specifc actions defined"/>
+	    		<s:lang key="fr" translation="No page specifc actions defined"/>
+	    	</s:langs>
+    </s:translation>  
+    
     
 </s:translations>

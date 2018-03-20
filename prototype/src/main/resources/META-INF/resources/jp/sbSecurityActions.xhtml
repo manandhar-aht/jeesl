@@ -16,11 +16,11 @@
 	<composite:implementation>
 		<aup:statusBarItem orientation="left" childs="#{cc.attrs.handler.actions}">
 			<aup:sbCheckmark value="#{cc.attrs.handler.mapAllow[var.toCode]}"/>
-			<h:outputText value="#{var.toName[userBean.localeCode].lang}"/>
+			<h:outputText value="#{var.toName[localeCode].lang}"/>
 			<f:facet name="label">
 				<h:graphicImage rendered="#{cc.attrs.handler.noActions}" library="jeeslPrototypeGfx" name="12/sb/shield-grey.png" id="sbGiSecurityGrey"/>
 				<h:graphicImage rendered="#{not cc.attrs.handler.noActions}" library="jeeslPrototypeGfx" name="12/sb/shield.png"/>
-				<p:tooltip rendered="#{cc.attrs.handler.noActions}" for="sbGiSecurityGrey" value="#{msg.NoViewSecurities}" />
+				<p:tooltip rendered="#{cc.attrs.handler.noActions}" for="sbGiSecurityGrey" value="#{msg.ttJeeslSecurityNoPageSpecifcActionsDefined}" />
 			</f:facet>
 		</aup:statusBarItem>
 	</composite:implementation>

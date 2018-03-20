@@ -96,4 +96,10 @@ public class SbDateHandler implements Serializable
 		DateTime dt2 = new DateTime(date2);
 		date2 = dt2.withTimeAtStartOfDay().withDayOfMonth(1).plusMonths(1).minusDays(1).toDate();
 	}
+	
+	public Date toDate2Plus1()
+	{
+		DateTime dt2 = new DateTime(date2);
+		return dt2.plusDays(1).toDate();
+	}
 }

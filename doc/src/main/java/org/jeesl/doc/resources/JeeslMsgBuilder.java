@@ -27,12 +27,16 @@ public class JeeslMsgBuilder
 	final static Logger logger = LoggerFactory.getLogger(JeeslMsgBuilder.class);
 	
 	public static final String jeeslPath = "utils"+File.separator+"jeesl"+File.separator;
+	public static final String jeeslDevPath = "utils"+File.separator+"jeesl"+File.separator+"dev"+File.separator;
 	public static final String jeeslIoPath = "utils"+File.separator+"jeesl"+File.separator+"io"+File.separator;
 	public static final String jeeslAdminPath = "utils"+File.separator+"jeesl"+File.separator+"admin"+File.separator;
 	public static final String jeeslSystemPath = "utils"+File.separator+"jeesl"+File.separator+"system"+File.separator;
 	
 	public static final String generic = "jeesl/msg/generic.xml";
 
+	//Development
+	public static final String devStaging = "jeesl/msg/development/staging.xml";
+	
 	public static final String query = "jeesl/msg/util/query.xml";
 	public static final String tooltip = "jeesl/msg/tooltip.xml";
 	public static final String entities = "jeesl/msg/admin/entities.xml";

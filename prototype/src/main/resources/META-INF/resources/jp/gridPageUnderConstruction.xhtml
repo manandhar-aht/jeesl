@@ -18,12 +18,24 @@
 	
 	<composite:implementation>
 		<jp:grid id="grid">
-			<aht:row >
+			<aht:row>
+				<aht:slot width="4">
+					<p:graphicImage library="jeeslPrototypeGfx" name="ui/underConstruction.svg"/>
+				</aht:slot>
+				<aht:slot width="2">
+					
+				</aht:slot>
 				<aht:slot id="sDocuments" width="6">
-					<p:panel header="#{cc.attrs.security.view.name[localeCode].lang}" styleClass="jeeslPanel">
-						<p:panelGrid columns="2" columnClasses="jeeslGrid40,jeeslGrid60">
-							<jp:icon value="#{appIconBean.iconPageUnderConstruction}" tooltip="#{appIconBean.iconPageUnderConstruction.description[localeCode].lang}"/>
+					<p:panel header="#{msg.jeeslDevUnderConstruction}" styleClass="jeeslPanel">
+						<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							<p:outputLabel value="#{msg.aupSecurityView}"/>
 							<h:outputText value="#{cc.attrs.security.view.name[localeCode].lang}"/>
+							<p:outputLabel value="#{msg.aupSecurityViewPattern}"/>
+							<h:outputText value="#{cc.attrs.security.view.viewPattern}"/>
+							<p:outputLabel value="#{msg.jeeslSecurityViewMapping}"/>
+							<h:outputText value="#{cc.attrs.security.view.urlMapping}"/>
+							<p:outputLabel value="#{msg.jeeslDescription}"/>
+							<h:outputText value="#{cc.attrs.security.view.description[localeCode].lang}"/>
 						</p:panelGrid>
 					</p:panel>
 				</aht:slot>

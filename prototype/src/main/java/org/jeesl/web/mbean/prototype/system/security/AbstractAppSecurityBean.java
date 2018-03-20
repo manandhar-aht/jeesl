@@ -44,6 +44,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	
 	private final Map<String,V> mapUrlPattern;
 	private final Map<String,V> mapUrlMapping;
+	private final Map<String,V> mapCodeView;
 	private final Map<V,List<R>> mapRoles;
 
 	public AbstractAppSecurityBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
@@ -52,6 +53,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		
 		mapUrlPattern = new HashMap<String,V>();
 		mapUrlMapping = new HashMap<String,V>();
+		mapCodeView = new HashMap<String,V>();
 		mapRoles = new HashMap<V,List<R>>();
 	}
 	
@@ -76,6 +78,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		logger.info("Updating "+view.getCode());
 		mapUrlPattern.put(view.getViewPattern(),view);
 		mapUrlMapping.put(view.getUrlMapping(),view);
+		mapCodeView.put(view.getCode(),view);
 	}
 	
 	public void update(R role)
@@ -87,7 +90,13 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	{
 
 	}
-		
+	
+	@Override public V findViewByCode(String code)
+	{
+		if(mapCodeView.containsKey(code)) {return mapCodeView.get(code);}
+		else {return null;}
+	}
+	
 	@Override public V findViewByHttpPattern(String pattern)
 	{
 		if(mapUrlPattern.containsKey(pattern)) {return mapUrlPattern.get(pattern);}

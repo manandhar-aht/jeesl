@@ -21,6 +21,7 @@ import org.jeesl.model.xml.system.navigation.Menu;
 import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
+import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.event.TreeDragDropEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
@@ -51,8 +52,9 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 	private EjbSecurityMenuFactory<V,M> efMenu;
 	
 	private TreeNode tree; public TreeNode getTree() {return tree;}
-    private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
-
+	private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
+	private M menu; public M getMenu() {return menu;}
+	
 	public AbstractAdminSecurityMenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		super(fbSecurity);
@@ -153,7 +155,13 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
         		index++;
         }
         propagateChanges();
-	}
-	
+	}	
 	protected abstract void propagateChanges();
+	
+    @SuppressWarnings("unchecked")
+	public void onNodeSelect(NodeSelectEvent event)
+    {
+    		logger.info("Selected "+event.getTreeNode().toString());
+    		menu = (M)event.getTreeNode().getData();
+    }
 }

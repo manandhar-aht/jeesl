@@ -1,4 +1,4 @@
-package net.sf.ahtutils.jsf.components.html;
+package org.jeesl.jsf.components.html;
 
 import java.io.IOException;
 
@@ -10,10 +10,10 @@ import javax.faces.context.ResponseWriter;
 
 import net.sf.ahtutils.jsf.util.ComponentAttribute;
 
-@FacesComponent("net.sf.ahtutils.jsf.components.html.Li")
-public class Li extends UIPanel
+@FacesComponent("org.jeesl.jsf.components.html.Div")
+public class Div extends UIPanel
 {	
-	private static enum Properties {styleClass}
+	private static enum Properties {renderChildren}
 	
 	@Override public boolean getRendersChildren(){return true;}
 	
@@ -21,24 +21,27 @@ public class Li extends UIPanel
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 		ResponseWriter responseWriter = context.getResponseWriter();
-		responseWriter.startElement("li", this);
-		
-		responseWriter.writeAttribute("class",ComponentAttribute.get(Properties.styleClass.toString(), "", context, this),null);
+		responseWriter.startElement("div", this);
 	}
 
 	@Override
 	public void encodeEnd(FacesContext context) throws IOException
 	{
 		ResponseWriter responseWriter = context.getResponseWriter();
-		responseWriter.endElement("li");
+		responseWriter.endElement("div");
 	}
 	
 	@Override
 	public void encodeChildren(FacesContext context) throws IOException
 	{
-		for(UIComponent uic : this.getChildren())
+		ResponseWriter responseWriter = context.getResponseWriter();
+		responseWriter.write("test");
+		if(ComponentAttribute.getBoolean(Properties.renderChildren, true, context, this))
 		{
-			uic.encodeAll(context);
+			for(UIComponent uic : this.getChildren())
+			{
+				uic.encodeAll(context);
+			}
 		}
 	}
 }

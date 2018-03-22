@@ -1,8 +1,8 @@
-.pf-panel-header-action-icon{
-    float:right;
-    cursor:pointer;
-    margin-left: 5px;
-}
+
+ /* Icons */
+.pf-panel-header-action-icon{float:right; cursor:pointer;  margin-left: 5px;}
+.jeeslPanelHeaderIcon{float:right; cursor:pointer;  margin-left: 5px;}
+.jeeslGridCellIcon{float:right; cursor:pointer;  margin-left: 5px;}
 
 .pf-dataTable-header-action-icon{
 	cursor:pointer;
@@ -112,6 +112,8 @@
 .jeeslGrid90 {width: 90% !important; border-style: none;}
 .jeeslGrid95 {width: 95% !important; border-style: none;}
 .jeeslGrid100 {width: 100% !important; border-style: none;}
+
+.jeeslW100 {width: 100%;}
 
 .pf-panel-with-tree {.ui-panel-content.padding: 0px;}
 .pf-panel-with-tree .ui-tree {border: none; width: 100%;}

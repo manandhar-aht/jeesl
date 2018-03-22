@@ -21,6 +21,7 @@ public class ComponentAttribute
 		return new Boolean(value);
 	}
 	
+	public static <E extends Enum<E>> boolean getBoolean(E attribute, boolean defaultValue, FacesContext context, UIComponent component) {return getBoolean(attribute.toString(), defaultValue, context, component);}
 	public static boolean getBoolean(String attribute, boolean defaultValue, FacesContext context, UIComponent component)
 	{
 		String value = get(attribute,null,context,component);

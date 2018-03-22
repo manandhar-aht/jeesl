@@ -1,5 +1,6 @@
 package org.jeesl.interfaces.model.system.graphic.core;
 
+import java.io.Serializable;
 import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -11,7 +12,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public interface JeeslGraphic<L extends UtilsLang, D extends UtilsDescription,
 								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
 								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
-		extends EjbWithId,EjbSaveable
+		extends Serializable,EjbWithId,EjbSaveable
 {		
 	Long getVersionLock();
 	

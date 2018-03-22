@@ -13,7 +13,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 public interface JeeslTsTransaction <SOURCE extends EjbWithLangDescription<?,?>, 
 								DATA extends JeeslTsData<?,?,?,?>,
 								USER extends EjbWithId>
-		extends EjbWithId,EjbSaveable,EjbWithRecord,Serializable,EjbRemoveable,EjbPersistable
+		extends Serializable,EjbWithId,EjbSaveable,EjbWithRecord,EjbRemoveable,EjbPersistable
 {
 	public enum Attributes{user,record}
 	

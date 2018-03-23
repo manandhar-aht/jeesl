@@ -75,23 +75,23 @@ public class UtilsJbossWildflyFacadeLookup
         sb.append("ejb:");
         sb.append(appName).append("/");
         sb.append(moduleName).append("/");
-        sb.append(distinctName).append("/");
+        /*sb.append(distinctName).append("/");*/
         sb.append(beanName);
         sb.append("!").append(viewClassName);
-        logger.trace("Trying: "+sb.toString());
+        logger.info("Trying: "+sb.toString());
         return (F) context.lookup(sb.toString());
     }
    
    private Context createContext(Properties properties) throws NamingException
    {
-		Hashtable<String,String> jndiProperties = new Hashtable<String,String>();
+		Properties jndiProperties = new Properties();
 		jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 		jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
-		jndiProperties.put(Context.SECURITY_PRINCIPAL, properties.getProperty("remote.connection.default.username"));
-		jndiProperties.put(Context.SECURITY_CREDENTIALS, properties.getProperty("remote.connection.default.password"));
+//		jndiProperties.put(Context.SECURITY_PRINCIPAL, properties.getProperty("remote.connection.default.username"));
+//		jndiProperties.put(Context.SECURITY_CREDENTIALS, properties.getProperty("remote.connection.default.password"));
 		String url = "remote://"+ properties.getProperty("remote.connection.default.host")+":"+  properties.getProperty("remote.connection.default.port");
 
-		logger.debug(url);
+		logger.info(url);
 		jndiProperties.put(Context.PROVIDER_URL, url);
 		return new InitialContext(jndiProperties);
    }

@@ -52,9 +52,9 @@ public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends Ut
 	public AbstractRewriteProvider(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		debugOnInfo = false;
-		forwardDeactivated = "/jsf/settings/access/deactivated.xhtml";
-		forwardLogin = "/jsf/settings/access/login.xhtml";
-		forwardDenied = "/jsf/settings/access/denied.xhtml";
+		forwardDeactivated = "/jsf/settings/system/security/access/pageDeactivated.xhtml";
+		forwardLogin = "/jsf/settings/system/security/access/loginRequired.xhtml";
+		forwardDenied = "/jsf/settings/system/security/access/denied.xhtml";
 	}
 	
 	public void postConstruct(JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)

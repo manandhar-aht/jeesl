@@ -1,4 +1,4 @@
-package net.sf.ahtutils.jsf.components;
+package org.jeesl.jsf.components.output;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +12,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@FacesComponent(value="net.sf.ahtutils.jsf.components.Highlight")
+@FacesComponent(value="org.jeesl.jsf.components.output.Highlight")
 public class Highlight extends UINamingContainer
 {
 	final static Logger logger = LoggerFactory.getLogger(Highlight.class);

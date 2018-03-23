@@ -8,5 +8,6 @@ public interface JeeslSettingsBean extends Serializable
 	String getRowsPerPageTemplate();
 	String getPaginatorPosition();
 	
+	String getDatePattern();
 	String getDateTimePattern();
 }

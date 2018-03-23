@@ -1,6 +1,7 @@
 package org.jeesl.model.ejb;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 import org.jeesl.interfaces.util.query.JeeslQuery;
@@ -32,6 +33,16 @@ public abstract class AbstractEjbQuery implements Serializable,JeeslQuery
 	private Integer maxResults;
 	@Override public Integer getMaxResults() {return maxResults;}
 	@Override public void setMaxResults(Integer maxResults) {this.maxResults = maxResults;}
+	
+	private Date fromDate1;
+	public Date getFromDate1() {return fromDate1;}
+	public void setFromDate1(Date fromDate1) {this.fromDate1 = fromDate1;}
+	public boolean withFromDate1() {return fromDate1!=null;}
+
+	private Date toDate1;
+	public Date getToDate1() {return toDate1;}
+	public void setToDate1(Date toDate1) {this.toDate1 = toDate1;}
+	public boolean withToDate1() {return toDate1!=null;}
 	
 	//Sorting
 	private String sortBy;

@@ -54,6 +54,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Label }
+     * 
+     */
+    public Label createLabel() {
+        return new Label();
+    }
+
+    /**
      * Create an instance of {@link Challenge }
      * 
      */

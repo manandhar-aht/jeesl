@@ -65,9 +65,7 @@ public class Finance
     protected Double value;
     @XmlAttribute(name = "symbol")
     protected String symbol;
-    @XmlAttribute(name = "counter")
-    protected Double counter;
-    
+
     /**
      * Gets the value of the finance property.
      * 
@@ -312,19 +310,5 @@ public class Finance
     public boolean isSetSymbol() {
         return (this.symbol!= null);
     }
-
-	/**
-	 * @return the counter
-	 */
-	public Double getCounter() {
-		return counter;
-	}
-
-	/**
-	 * @param counter the counter to set
-	 */
-	public void setCounter(Double counter) {
-		this.counter = counter;
-	}
 
 }

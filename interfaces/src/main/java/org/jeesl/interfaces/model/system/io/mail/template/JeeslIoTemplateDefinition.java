@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.io.templates;
+package org.jeesl.interfaces.model.system.io.mail.template;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;

@@ -11,9 +11,9 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.io.JeeslIoTemplateFacade;
-import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
-import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
-import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

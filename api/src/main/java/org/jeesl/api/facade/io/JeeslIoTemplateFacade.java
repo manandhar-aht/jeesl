@@ -2,9 +2,9 @@ package org.jeesl.api.facade.io;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
-import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
-import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateToken;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;

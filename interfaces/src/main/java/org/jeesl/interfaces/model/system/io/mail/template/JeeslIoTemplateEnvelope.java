@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.io.templates;
+package org.jeesl.interfaces.model.system.io.mail.template;
 
 import java.io.Serializable;
 import java.util.Map;

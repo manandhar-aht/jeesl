@@ -1,9 +1,9 @@
 package org.jeesl.factory.builder.io;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
-import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
-import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
-import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

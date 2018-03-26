@@ -16,7 +16,7 @@ public class IoTemplateFactoryBuilder<L extends UtilsLang,D extends UtilsDescrip
 									TYPE extends UtilsStatus<TYPE,L,D>,
 									TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 									SCOPE extends UtilsStatus<SCOPE,L,D>,
-									DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+									DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
 									TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 		extends AbstractFactoryBuilder<L,D>
 {

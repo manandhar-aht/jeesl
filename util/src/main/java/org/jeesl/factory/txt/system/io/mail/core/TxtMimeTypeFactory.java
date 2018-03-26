@@ -1,4 +1,4 @@
-package org.jeesl.factory.txt.system.io.mail;
+package org.jeesl.factory.txt.system.io.mail.core;
 
 import javax.activation.MimetypesFileTypeMap;
 

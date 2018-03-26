@@ -1,4 +1,4 @@
-package org.jeesl.factory.txt.system.io;
+package org.jeesl.factory.txt.system.io.mail.template;
 
 import java.util.HashMap;
 import java.util.Map;

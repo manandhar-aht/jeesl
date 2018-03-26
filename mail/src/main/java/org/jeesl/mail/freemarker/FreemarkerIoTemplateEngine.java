@@ -5,7 +5,7 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.factory.txt.system.io.TxtIoTemplateFactory;
+import org.jeesl.factory.txt.system.io.mail.template.TxtIoTemplateFactory;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateToken;

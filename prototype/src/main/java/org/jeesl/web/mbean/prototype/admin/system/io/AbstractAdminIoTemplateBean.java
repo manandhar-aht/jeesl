@@ -11,12 +11,13 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoTemplateFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
+import org.jeesl.factory.builder.io.IoTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateDefinitionFactory;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateFactory;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateFactoryFactory;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateTokenFactory;
-import org.jeesl.factory.txt.system.io.TxtIoTemplateFactory;
-import org.jeesl.factory.txt.system.io.TxtIoTemplateTokenFactory;
+import org.jeesl.factory.txt.system.io.mail.template.TxtIoTemplateFactory;
+import org.jeesl.factory.txt.system.io.mail.template.TxtIoTemplateTokenFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;
@@ -56,9 +57,10 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoTemplateBean.class);
 	
 	protected JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate;
+	private final IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fbTemplate;
+	
 	
 	private Class<TYPE> cType;
-	private Class<CATEGORY> cCategory;
 	private Class<TEMPLATE> cTemplate;
 	private Class<SCOPE> cScope;
 	private Class<DEFINITION> cDefinition;
@@ -89,23 +91,23 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	private int tabIndex; public int getTabIndex() {return tabIndex;} public void setTabIndex(int tabIndex) {this.tabIndex = tabIndex;}
 	private String preview; public String getPreview() {return preview;}
 	
-	public AbstractAdminIoTemplateBean(final Class<L> cL, final Class<D> cD)
+	public AbstractAdminIoTemplateBean(IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fbTemplate)
 	{
-		super(cL,cD);
+		super(fbTemplate.getClassL(),fbTemplate.getClassD());
+		this.fbTemplate=fbTemplate;
 	}
 	
-	protected void initSuper(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<SCOPE> cScope, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
+	protected void initSuper(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<SCOPE> cScope, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fTemplate=fTemplate;
-		this.cCategory=cCategory;
 		this.cType=cType;
 		this.cTemplate=cTemplate;
 		this.cScope=cScope;
 		this.cDefinition=cDefinition;
 		this.cToken=cToken;
 		
-		EjbIoTemplateFactoryFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> ef = EjbIoTemplateFactoryFactory.factory(cLang,cDescription,cTemplate,cDefinition,cToken);
+		EjbIoTemplateFactoryFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> ef = EjbIoTemplateFactoryFactory.factory(cL,cD,cTemplate,cDefinition,cToken);
 		efTemplate = ef.template();
 		efDefinition = ef.definition();
 		efToken = ef.token();
@@ -117,9 +119,9 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 		fmEngine = new FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>();
 		
 		types = fTemplate.allOrderedPositionVisible(cType);
-		categories = fTemplate.allOrderedPositionVisible(cCategory);
+		categories = fTemplate.allOrderedPositionVisible(fbTemplate.getClassCategory());
 		
-		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,categories,this);
+		sbhCategory = new SbMultiHandler<CATEGORY>(fbTemplate.getClassCategory(),categories,this);
 		reloadTemplates();
 	}
 	
@@ -174,7 +176,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(template));}
-		if(template.getCategory()!=null){template.setCategory(fTemplate.find(cCategory, template.getCategory()));}
+		if(template.getCategory()!=null){template.setCategory(fTemplate.find(fbTemplate.getClassCategory(), template.getCategory()));}
 		if(template.getScope()!=null){template.setScope(fTemplate.find(cScope, template.getScope()));}
 		template = fTemplate.save(template);
 		reloadTemplates();

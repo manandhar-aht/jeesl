@@ -1,4 +1,4 @@
-package org.jeesl.factory.txt.system.io;
+package org.jeesl.factory.txt.system.io.mail.template;
 
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.templates.JeeslIoTemplateDefinition;

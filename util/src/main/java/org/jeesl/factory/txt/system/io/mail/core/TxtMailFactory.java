@@ -1,4 +1,4 @@
-package org.jeesl.factory.txt.system.io.mail;
+package org.jeesl.factory.txt.system.io.mail.core;
 
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.slf4j.Logger;

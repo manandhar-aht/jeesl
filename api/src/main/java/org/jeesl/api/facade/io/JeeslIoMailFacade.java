@@ -3,7 +3,7 @@ package org.jeesl.api.facade.io;
 import java.util.Date;
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;

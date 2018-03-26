@@ -11,7 +11,8 @@ import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestImport;
 import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestSpooler;
 import org.jeesl.factory.xml.mail.XmlMailFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlMailsFactory;
-import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.jeesl.model.xml.system.io.mail.Mails;
@@ -89,12 +90,12 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 				eMail.setCounter(eMail.getCounter()+1);
 				if(eMail.getCounter()>5)
 				{
-					eMail.setStatus(fMail.fByCode(cStatus, JeeslIoMail.Status.failed));
+					eMail.setStatus(fMail.fByCode(cStatus, JeeslMailStatus.Status.failed));
 					eMail = fMail.update(eMail);
 				}
 				else
 				{
-					eMail.setStatus(fMail.fByCode(cStatus, JeeslIoMail.Status.spooling));
+					eMail.setStatus(fMail.fByCode(cStatus, JeeslMailStatus.Status.spooling));
 					eMail = fMail.update(eMail);
 					Mail xMail = JaxbUtil.loadJAXB(IOUtils.toInputStream(eMail.getXml(), "UTF-8"), Mail.class);
 					xMail.setId(eMail.getId());
@@ -116,7 +117,7 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 		try
 		{
 			MAIL eMail = fMail.find(cMail,id);
-			eMail.setStatus(fMail.fByCode(cStatus, JeeslIoMail.Status.sent));
+			eMail.setStatus(fMail.fByCode(cStatus, JeeslMailStatus.Status.sent));
 			eMail.setRecordSent(new Date());
 			eMail = fMail.update(eMail);
 			xMail.setId(eMail.getId());

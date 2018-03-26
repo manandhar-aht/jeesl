@@ -2,7 +2,7 @@ package org.jeesl.factory.ejb.system.io.mail;
 
 import java.util.Date;
 
-import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

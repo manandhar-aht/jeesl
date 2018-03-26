@@ -11,7 +11,8 @@ import org.jeesl.controller.handler.sb.SbDateHandler;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.builder.io.MailFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
-import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -75,8 +76,8 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 		try
 		{
 			sbhStatus = new SbMultiHandler<STATUS>(cStatus,fMail.allOrderedPositionVisible(cStatus),this);
-			sbhStatus.select(fMail.fByCode(cStatus,JeeslIoMail.Status.queue));
-			sbhStatus.select(fMail.fByCode(cStatus,JeeslIoMail.Status.spooling));
+			sbhStatus.select(fMail.fByCode(cStatus,JeeslMailStatus.Status.queue));
+			sbhStatus.select(fMail.fByCode(cStatus,JeeslMailStatus.Status.spooling));
 		}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 	}

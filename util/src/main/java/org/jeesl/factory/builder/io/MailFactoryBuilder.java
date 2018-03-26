@@ -2,7 +2,7 @@ package org.jeesl.factory.builder.io;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.mail.EjbIoMailFactory;
-import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

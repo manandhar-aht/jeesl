@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.io.mail;
+package org.jeesl.interfaces.model.system.io.mail.core;
 
 import java.io.Serializable;
 
@@ -12,8 +12,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 
-public interface JeeslMailStatus <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
+public interface JeeslMailRetention <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
 					extends Serializable,EjbPersistable,JeeslOptionRestDownload,EjbWithCodeGraphic<G>,UtilsStatusFixedCode	
 {	
-	public enum Code{queue,spooling,sent,failed}
+	public static enum Code{fully,partially,toDelete};
 }

@@ -15,7 +15,8 @@ import javax.persistence.criteria.Root;
 import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.factory.builder.io.MailFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.mail.EjbIoMailFactory;
-import org.jeesl.interfaces.model.system.io.mail.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,8 +62,8 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 
 		try
 		{
-			STATUS statusSpooling = fByCode(fbMail.getClassStatus(), JeeslIoMail.Status.spooling);
-			STATUS statusQueue = fByCode(fbMail.getClassStatus(), JeeslIoMail.Status.queue);
+			STATUS statusSpooling = fByCode(fbMail.getClassStatus(), JeeslMailStatus.Status.spooling);
+			STATUS statusQueue = fByCode(fbMail.getClassStatus(), JeeslMailStatus.Status.queue);
 			cQ.where(cB.or(cB.equal(pStatus,statusSpooling),cB.equal(pStatus,statusQueue)));
 			cQ.select(cB.count(mail));
 			TypedQuery<Long> tQ = em.createQuery(cQ);
@@ -105,7 +106,7 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 	
 	@Override public void queueMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
-		STATUS status = this.fByCode(fbMail.getClassStatus(), JeeslIoMail.Status.queue);
+		STATUS status = this.fByCode(fbMail.getClassStatus(), JeeslMailStatus.Status.queue);
 		RETENTION retention = this.fByCode(fbMail.getClassRetention(), JeeslIoMail.Retention.fully);
 		MAIL ejb = efMail.build(category,status,mail,retention);
 		ejb = this.persist(ejb);
@@ -117,8 +118,8 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 		List<MAIL> mails = new ArrayList<MAIL>();
 		try
 		{
-			STATUS statusSpooling = fByCode(fbMail.getClassStatus(), JeeslIoMail.Status.spooling);
-			STATUS statusQueue = fByCode(fbMail.getClassStatus(), JeeslIoMail.Status.queue);
+			STATUS statusSpooling = fByCode(fbMail.getClassStatus(), JeeslMailStatus.Status.spooling);
+			STATUS statusQueue = fByCode(fbMail.getClassStatus(), JeeslMailStatus.Status.queue);
 			
 			mails.addAll(fMails(statusSpooling,maxResult));
 			

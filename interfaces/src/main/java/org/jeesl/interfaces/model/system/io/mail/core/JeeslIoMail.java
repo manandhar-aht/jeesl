@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.io.mail;
+package org.jeesl.interfaces.model.system.io.mail.core;
 
 import java.util.Date;
 
@@ -18,7 +18,7 @@ public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 		extends EjbWithId,EjbSaveable,EjbRemoveable
 {	
 	
-	public static enum Status{queue,spooling,sent,failed};
+
 	public static enum Retention{fully,partially,toDelete};
 	public static enum Attributes{category,status,recordCreation,recordSpool};
 	

@@ -18,8 +18,6 @@ public class AbstractSettingsBean implements Serializable,JeeslSettingsBean
 	protected String positionMenu2;public String getPositionMenu2() {return positionMenu2;}
 	protected String calendarFormat;public String getCalendarFormat(){return calendarFormat;}
 	
-
-	
 	protected String paginatorPosition; public String getPaginatorPosition() {return paginatorPosition;}
 	protected String paginatorTemplate; @Override public String getPaginatorTemplate() {return paginatorTemplate;}
 	protected String rowsPerPageTemplate; @Override public String getRowsPerPageTemplate(){return rowsPerPageTemplate;}
@@ -37,11 +35,8 @@ public class AbstractSettingsBean implements Serializable,JeeslSettingsBean
 		logger.info(AbstractLogMessage.postConstruct(ptt));
 	}
 	
-	protected String datePattern;
-	@Override public String getDatePattern(){return datePattern;}
-	
-	protected String dateTimePattern;
-	@Override public String getDateTimePattern(){return dateTimePattern;}
+	protected String datePattern; @Override public String getDatePattern(){return datePattern;}
+	protected String dateTimePattern; @Override public String getDateTimePattern(){return dateTimePattern;}
 	
 	private void initCalendarPattern()
 	{

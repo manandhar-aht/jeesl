@@ -75,7 +75,7 @@ public class UtilsJbossWildflyFacadeLookup
         sb.append("ejb:");
         sb.append(appName).append("/");
         sb.append(moduleName).append("/");
-        /*sb.append(distinctName).append("/");*/
+        sb.append(distinctName).append("/");
         sb.append(beanName);
         sb.append("!").append(viewClassName);
         logger.info("Trying: "+sb.toString());

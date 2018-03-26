@@ -20,7 +20,7 @@ public class XmlTemplateFactory <L extends UtilsLang,D extends UtilsDescription,
 								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
 								DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
-								TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
+								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlTemplateFactory.class);
 	

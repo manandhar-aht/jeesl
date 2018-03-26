@@ -13,7 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.io.JeeslIoMailFacade;
-import org.jeesl.factory.builder.io.MailFactoryBuilder;
+import org.jeesl.factory.builder.io.IoMailFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.mail.EjbIoMailFactory;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
@@ -38,13 +38,13 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoMailFacadeBean.class);
 		
-	private final MailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail;
+	private final IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail;
 	
 
 	
 	private EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION> efMail;
 	
-	public JeeslIoMailFacadeBean(EntityManager em, MailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail)
+	public JeeslIoMailFacadeBean(EntityManager em, IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail)
 	{
 		super(em);
 		this.fbMail = fbMail;

@@ -20,7 +20,7 @@ public class EjbIoTemplateTokenFactory<L extends UtilsLang,D extends UtilsDescri
 								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
 								DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
-								TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
+								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoTemplateTokenFactory.class);
 	

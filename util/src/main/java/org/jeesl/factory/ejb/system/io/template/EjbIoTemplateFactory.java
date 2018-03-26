@@ -24,7 +24,7 @@ public class EjbIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription
 								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
 								DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
-								TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
+								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoTemplateFactory.class);
 	
@@ -76,7 +76,7 @@ public class EjbIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription
 					TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 					SCOPE extends UtilsStatus<SCOPE,L,D>,
 					DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
-					TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
+					TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 		Map<String,TEMPLATE> buildMap(List<TEMPLATE> templates)
 	{
 		Map<String,TEMPLATE> map = new HashMap<String,TEMPLATE>();

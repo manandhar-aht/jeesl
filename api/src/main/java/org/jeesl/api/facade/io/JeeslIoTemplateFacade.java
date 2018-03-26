@@ -18,7 +18,7 @@ public interface JeeslIoTemplateFacade <L extends UtilsLang,D extends UtilsDescr
 										TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 										SCOPE extends UtilsStatus<SCOPE,L,D>,
 										DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
-										TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
+										TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 			extends UtilsFacade
 {	
 	TEMPLATE load(TEMPLATE template);

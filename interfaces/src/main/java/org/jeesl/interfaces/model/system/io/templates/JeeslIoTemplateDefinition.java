@@ -15,7 +15,7 @@ public interface JeeslIoTemplateDefinition<L extends UtilsLang,D extends UtilsDe
 								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
 								DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
-								TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
+								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithParentAttributeResolver,
 				EjbWithDescription<D>
 {	

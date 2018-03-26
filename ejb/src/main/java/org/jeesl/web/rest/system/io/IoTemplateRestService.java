@@ -24,7 +24,7 @@ public class IoTemplateRestService <L extends UtilsLang,D extends UtilsDescripti
 									TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 									SCOPE extends UtilsStatus<SCOPE,L,D>,
 									DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
-									TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
+									TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 		extends AbstractJeeslRestService<L,D>
 		implements JeeslIoTemplateRestExport,JeeslIoTemplateRestImport
 {
@@ -60,7 +60,7 @@ public class IoTemplateRestService <L extends UtilsLang,D extends UtilsDescripti
 					TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 					SCOPE extends UtilsStatus<SCOPE,L,D>,
 					DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
-					TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
+					TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 		IoTemplateRestService<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>
 		factory(JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<TYPE> cType, final Class<TEMPLATE> cTemplate, final Class<SCOPE> cScope, final Class<DEFINITION> cDefinition, final Class<TOKEN> cToken)
 	{

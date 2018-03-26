@@ -29,7 +29,7 @@
 							selection="#{cc.attrs.bean.template}" selectionMode="single" rowKey="#{t.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoTemplates}">
-									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addTemplate()}" update=":#{cc.id}:sView :#{cc.id}:sTokens :#{cc.id}:row2" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addTemplate()}" update=":#{cc.id}:sView :#{cc.id}:sTokens :#{cc.id}:row2" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTemplates()}" update="@form"/>
@@ -60,9 +60,9 @@
 						<p:panel id="pView" header="#{msg.jeeslIoTemplate}"
 									rendered="#{not empty cc.attrs.bean.template}" styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<aht:icon type="aupCancel" listener="#{cc.attrs.bean.cancelTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
-								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="aupDelete" rendered="#{cc.attrs.bean.template.id gt 0}" listener="#{cc.attrs.bean.rmTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
+								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslDelete" rendered="#{cc.attrs.bean.template.id gt 0}" listener="#{cc.attrs.bean.rmTemplate()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupCategory}"/>
@@ -90,31 +90,31 @@
 							selection="#{cc.attrs.bean.token}" selectionMode="single" rowKey="#{token.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoTokens}">
-									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addToken()}" update=":#{cc.id}:fTokens :#{cc.id}:fToken" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addToken()}" update=":#{cc.id}:fTokens :#{cc.id}:fToken" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTokens()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:fToken" listener="#{cc.attrs.bean.selectToken()}"/>
-				         <p:column rendered="true">  
-								<h:outputText value="#{token.position}"/>
-				         </p:column>
-				         <p:column headerText="#{msg.aupCode}">  
-								<h:outputText value="#{token.code}"/>
-				         </p:column>
-				         <p:column headerText="#{msg.aupName}">  
-								<h:outputText value="#{token.name[userBean.localeCode].lang}"/>
-				         </p:column>
-				          <p:column headerText="#{msg.jeeslExample}">  
-								<h:outputText value="#{token.example}"/>
-				         </p:column>
-				      </p:dataTable>
-					</h:form>
-					<h:form id="fToken">
+					         <p:column rendered="true">  
+									<h:outputText value="#{token.position}"/>
+					         </p:column>
+					         <p:column headerText="#{msg.aupCode}">  
+									<h:outputText value="#{token.code}"/>
+					         </p:column>
+					         <p:column headerText="#{msg.aupName}">  
+									<h:outputText value="#{token.name[userBean.localeCode].lang}"/>
+					         </p:column>
+					          <p:column headerText="#{msg.jeeslExample}">  
+									<h:outputText value="#{token.example}"/>
+					         </p:column>
+					      </p:dataTable>
+						</h:form>
+						<h:form id="fToken">
 						<p:panel header="#{msg.jeeslIoToken}" rendered="#{not empty cc.attrs.bean.token}" styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<aht:icon type="aupCancel" mayDisappear="true" listener="#{cc.attrs.bean.cancelToken()}" update=":#{cc.id}:sTokens" tooltip="#{msg.jeeslTtCancel}"/>
-								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveToken()}" update=":#{cc.id}:sTokens" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="aupDelete" mayDisappear="true" rendered="#{cc.attrs.bean.token.id gt 0}" listener="#{cc.attrs.bean.rmToken()}" update=":#{cc.id}:sTokens" tooltip="#{msg.ttDelete}"/>
+								<aht:icon type="jeeslCancel" mayDisappear="true" listener="#{cc.attrs.bean.cancelToken()}" update=":#{cc.id}:sTokens" tooltip="#{msg.jeeslTtCancel}"/>
+								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveToken()}" update=":#{cc.id}:sTokens" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslDelete" mayDisappear="true" rendered="#{cc.attrs.bean.token.id gt 0}" listener="#{cc.attrs.bean.rmToken()}" update=":#{cc.id}:sTokens" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
@@ -138,11 +138,11 @@
 							selection="#{cc.attrs.bean.definition}" selectionMode="single" rowKey="#{d.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoTemplateDefinitions}">
-									<aht:icon type="aupAdd" listener="#{cc.attrs.bean.addDefinition()}" update=":#{cc.id}:row2" tooltip="#{msg.ttNew}"/>
+									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addDefinition()}" update=":#{cc.id}:row2" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sDefinition" listener="#{cc.attrs.bean.selectDefinition()}"/>
-				         <p:column headerText="#{msg.aupType}">  
+				         <p:column headerText="#{msg.jeeslType}">  
 								<h:outputText value="#{d.type.name[userBean.localeCode].lang}"/>
 				         </p:column>
 				   	</p:dataTable>
@@ -152,9 +152,9 @@
 					<h:form id="fDefinition">
 						<p:panel header="#{msg.jeeslIoTemplateDefinition}" rendered="#{not empty cc.attrs.bean.definition}" styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<aht:icon type="aupCancel" mayDisappear="true" listener="#{cc.attrs.bean.cancelDefinition()}" update=":#{cc.id}:row2" tooltip="#{msg.jeeslTtCancel}"/>
-								<aht:icon type="aupSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveDefinition()}" update=":#{cc.id}:row2" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="aupDelete" mayDisappear="true" rendered="#{cc.attrs.bean.definition.id gt 0}" listener="#{cc.attrs.bean.rmDefinition()}" update=":#{cc.id}:row2" tooltip="#{msg.ttDelete}"/>
+								<aht:icon type="jeeslCancel" mayDisappear="true" listener="#{cc.attrs.bean.cancelDefinition()}" update=":#{cc.id}:row2" tooltip="#{msg.jeeslTtCancel}"/>
+								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveDefinition()}" update=":#{cc.id}:row2" tooltip="#{msg.ttSave}"/>
+								<aht:icon type="jeeslDelete" mayDisappear="true" rendered="#{cc.attrs.bean.definition.id gt 0}" listener="#{cc.attrs.bean.rmDefinition()}" update=":#{cc.id}:row2" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupType}"/>

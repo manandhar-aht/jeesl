@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoTemplateFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
@@ -47,7 +48,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 											TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 											SCOPE extends UtilsStatus<SCOPE,L,D>,
 											DEFINITION extends JeeslIoTemplateDefinition<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
-											TOKEN extends JeeslIoTemplateToken<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>>
+											TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean
 {
@@ -93,9 +94,9 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 		super(cL,cD);
 	}
 	
-	protected void initSuper(String[] langs, JeeslFacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<SCOPE> cScope, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
+	protected void initSuper(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate, final Class<L> cLang, final Class<D> cDescription,  Class<CATEGORY> cCategory, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<SCOPE> cScope, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
 	{
-		super.initAdmin(langs,cLang,cDescription,bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fTemplate=fTemplate;
 		this.cCategory=cCategory;
 		this.cType=cType;

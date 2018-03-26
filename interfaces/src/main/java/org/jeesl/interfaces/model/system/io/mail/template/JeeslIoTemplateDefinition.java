@@ -10,7 +10,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslIoTemplateDefinition<D extends UtilsDescription,
 								TYPE extends UtilsStatus<TYPE,?,D>,
-								TEMPLATE extends JeeslIoTemplate<?,D,?,TYPE,TEMPLATE,?,?,?>
+								TEMPLATE extends JeeslIoTemplate<?,D,?,?,?,?>
 								>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithParentAttributeResolver,
 				EjbWithDescription<D>

@@ -17,11 +17,9 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslIoTemplate<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								TYPE extends UtilsStatus<TYPE,L,D>,
-								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
-								DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>
+								DEFINITION extends JeeslIoTemplateDefinition<D,?,?>,
+								TOKEN extends JeeslIoTemplateToken<L,D,?>
 								>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,

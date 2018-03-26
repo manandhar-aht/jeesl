@@ -13,7 +13,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslIoTemplateToken<L extends UtilsLang,D extends UtilsDescription,
-								TEMPLATE extends JeeslIoTemplate<L,D,?,?,TEMPLATE,?,?,?>
+								TEMPLATE extends JeeslIoTemplate<L,D,?,?,?,?>
 								>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,

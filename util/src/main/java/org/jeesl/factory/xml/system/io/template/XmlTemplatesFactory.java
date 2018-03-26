@@ -14,7 +14,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class XmlTemplatesFactory <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
-								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
 								DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
 								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>

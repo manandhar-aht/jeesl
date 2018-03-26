@@ -13,12 +13,17 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class TxtIoTemplateTokenFactory
+public class TxtIoTemplateTokenFactory <L extends UtilsLang,D extends UtilsDescription,
+										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
+										TYPE extends UtilsStatus<TYPE,L,D>,
+										TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
+										SCOPE extends UtilsStatus<SCOPE,L,D>,
+										DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
+										TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 {
 	final static Logger logger = LoggerFactory.getLogger(TxtIoTemplateTokenFactory.class);
 		
-	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
-		Map<String,String> buildModel(TEMPLATE template)
+	public Map<String,String> buildModel(TEMPLATE template)
 	{
 		Map<String,String> model = new HashMap<String,String>();
 		for(TOKEN token : template.getTokens())

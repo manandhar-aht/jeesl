@@ -21,7 +21,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class EjbIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								TYPE extends UtilsStatus<TYPE,L,D>,
-								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
 								DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
 								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
@@ -33,7 +33,7 @@ public class EjbIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription
 	private EjbLangFactory<L> efLang;
 	private EjbDescriptionFactory<D> efDescription;
     
-	protected EjbIoTemplateFactory(final Class<L> cL,final Class<D> cD,final Class<TEMPLATE> cTemplate)
+	public EjbIoTemplateFactory(final Class<L> cL,final Class<D> cD,final Class<TEMPLATE> cTemplate)
 	{       
         this.cTemplate = cTemplate;
 		efLang = EjbLangFactory.factory(cL);
@@ -70,14 +70,7 @@ public class EjbIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription
 		return ejb;
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription,
-					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					TYPE extends UtilsStatus<TYPE,L,D>,
-					TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
-					SCOPE extends UtilsStatus<SCOPE,L,D>,
-					DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-					TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
-		Map<String,TEMPLATE> buildMap(List<TEMPLATE> templates)
+	public Map<String,TEMPLATE> buildMap(List<TEMPLATE> templates)
 	{
 		Map<String,TEMPLATE> map = new HashMap<String,TEMPLATE>();
 		for(TEMPLATE t : templates){map.put(t.getCode(),t);}

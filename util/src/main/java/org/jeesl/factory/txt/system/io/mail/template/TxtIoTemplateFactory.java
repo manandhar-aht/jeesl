@@ -11,12 +11,17 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class TxtIoTemplateFactory
+public class TxtIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
+									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
+									TYPE extends UtilsStatus<TYPE,L,D>,
+									TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
+									SCOPE extends UtilsStatus<SCOPE,L,D>,
+									DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
+									TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 {
 	final static Logger logger = LoggerFactory.getLogger(TxtIoTemplateFactory.class);
 		
-	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
-		String buildCode(TEMPLATE template, DEFINITION definition, String localeCode)
+	public String buildCode(TEMPLATE template, DEFINITION definition, String localeCode)
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append(template.getCode());
@@ -25,7 +30,7 @@ public class TxtIoTemplateFactory
 		return sb.toString();
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
+	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 		String buildCode(DEFINITION definition, String localeCode)
 	{
 		StringBuffer sb = new StringBuffer();
@@ -35,8 +40,7 @@ public class TxtIoTemplateFactory
 		return sb.toString();
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
-		String buildCode(TEMPLATE template, TYPE type, String localeCode)
+	public String buildCode(TEMPLATE template, TYPE type, String localeCode)
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append(template.getCode());
@@ -45,8 +49,7 @@ public class TxtIoTemplateFactory
 		return sb.toString();
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>,TC extends Enum<TC>>
-		String buildCode(TEMPLATE template, TC typeCode, String localeCode)
+	public <TC extends Enum<TC>> String buildCode(TEMPLATE template, TC typeCode, String localeCode)
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append(template.getCode());
@@ -65,7 +68,7 @@ public class TxtIoTemplateFactory
 		return sb.toString();
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
+	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 		String buildCode(JeeslIoTemplateEnvelope<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> envelope)
 	{
 		StringBuffer sb = new StringBuffer();

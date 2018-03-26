@@ -46,7 +46,7 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends UtilsDescription,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 											TYPE extends UtilsStatus<TYPE,L,D>,
-											TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+											TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 											SCOPE extends UtilsStatus<SCOPE,L,D>,
 											DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
 											TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
@@ -116,7 +116,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 		comparatorToken = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateTokenComparator.Type.position);
 		comparatorDefinition = new IoTemplateDefinitionComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateDefinitionComparator.Type.position);
 		
-		fmEngine = new FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>();
+		fmEngine = new FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>(fbTemplate);
 		
 		types = fTemplate.allOrderedPositionVisible(cType);
 		categories = fTemplate.allOrderedPositionVisible(fbTemplate.getClassCategory());
@@ -286,8 +286,8 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
     	{
     		fmEngine.addTemplate(definition);
     		
-    		String fmTemplate = TxtIoTemplateFactory.buildCode(template, definition, langs[tabIndex]);
-    		Map<String,String> model = TxtIoTemplateTokenFactory.buildModel(template);
+    		String fmTemplate = fbTemplate.txtTemplate().buildCode(template, definition, langs[tabIndex]);
+    		Map<String,String> model = fbTemplate.txtToken().buildModel(template);
     		
     		preview = null;
 			preview = fmEngine.process(fmTemplate,model);

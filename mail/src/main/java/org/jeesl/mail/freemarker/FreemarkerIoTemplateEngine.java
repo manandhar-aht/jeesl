@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.factory.builder.io.IoTemplateFactoryBuilder;
 import org.jeesl.factory.txt.system.io.mail.template.TxtIoTemplateFactory;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
@@ -25,18 +26,21 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescription,
 										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 										TYPE extends UtilsStatus<TYPE,L,D>,
-										TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>,
+										TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 										SCOPE extends UtilsStatus<SCOPE,L,D>,
 										DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
 										TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
 {
 	final static Logger logger = LoggerFactory.getLogger(FreemarkerIoTemplateEngine.class);
 
+	private IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fbTemplate;
+	
 	private StringTemplateLoader fmStringTemplates;
 	private Configuration fmConfiguration;
 	
-	public FreemarkerIoTemplateEngine()
+	public FreemarkerIoTemplateEngine(IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fbTemplate)
 	{
+		this.fbTemplate=fbTemplate;
 		fmConfiguration = new Configuration(Configuration.getVersion());
 		fmStringTemplates = new StringTemplateLoader();
 		fmConfiguration.setTemplateLoader(fmStringTemplates);
@@ -66,7 +70,7 @@ public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescr
 		for(String localeCode : definition.getDescription().keySet())
 		{
 			D description = definition.getDescription().get(localeCode);
-			String code = TxtIoTemplateFactory.buildCode(definition.getTemplate(),definition,localeCode);
+			String code = fbTemplate.txtTemplate().buildCode(definition.getTemplate(),definition,localeCode);
 			fmStringTemplates.removeTemplate(code);
 			fmStringTemplates.putTemplate(code,description.getLang());
 		}

@@ -36,12 +36,20 @@
         <source>jeeslPrototype/langs/tabMarkup.xhtml</source>
     </tag>
     <tag>
+        <tag-name>inputTabText</tag-name>
+        <source>jeeslPrototype/langs/tabText.xhtml</source>
+    </tag>
+    <tag>
         <tag-name>inputAttribute</tag-name>
         <source>jeeslPrototype/input/attribute.xhtml</source>
     </tag>
     <tag>
         <tag-name>reportHeader</tag-name>
         <source>jeeslPrototype/report/header.xhtml</source>
+    </tag>
+        <tag>
+        <tag-name>reportFooter</tag-name>
+        <source>jeeslPrototype/report/footer.xhtml</source>
     </tag>
     <tag>
         <tag-name>reportFlat</tag-name>

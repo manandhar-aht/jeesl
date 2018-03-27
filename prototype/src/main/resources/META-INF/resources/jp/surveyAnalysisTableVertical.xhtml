@@ -38,7 +38,7 @@
 			</p:column>
 			<p:columns var="path" value="#{cc.attrs.bean.mapToolPathEntities[tool]}">
             	<f:facet name="header">
-            		<jeesl:outputXpath value="#{path.ejb}" xpath="#{cc.attrs.bean.mapToolPathAttribute[tool].xpath}" localeCode="#{localeCode}"/>	
+            		<jeesl:outputXpath value="#{path.ejb}" xpath="#{cc.attrs.bean.mapToolPathAttribute[tool].xpath}" localeCode="#{localeCode}"/>
             	</f:facet>
             	<h:outputText value="#{cc.attrs.bean.mapToolPathValue[tool].m[option][path].count}"/>
           </p:columns>

@@ -40,6 +40,8 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		this.bean=bean;
 		debugOnInfo = false;
 		this.list = new ArrayList<T>();
+		
+		if(list==null) {list=new ArrayList<T>();}
 		update(list);
 		try
 		{

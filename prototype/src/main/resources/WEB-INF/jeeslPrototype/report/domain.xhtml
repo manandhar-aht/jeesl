@@ -5,8 +5,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:jeesl="http://www.jeesl.org/jsf">
+	xmlns:j="http://www.jeesl.org/jsf">
 	<c:forEach var="c" items="#{report.columns}">
-		<p:column styleClass="jeeslDtColumnTrafficLight"><jeesl:trafficLightXpath value="#{value}" xpath="#{c.queryCell}" xpathref="#{c.queryTrafficLight}" column="#{c}" scope="#{c.trafficLightScope}"/></p:column>
+		<p:column styleClass="jeeslDtColumnTrafficLight">
+			<j:trafficLightXpath value="#{value}" xpath="#{c.queryCell}" xpathref="#{c.queryTrafficLight}" column="#{c}" scope="#{c.trafficLightScope}"/>
+		</p:column>
 	</c:forEach>
 </ui:composition>

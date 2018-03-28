@@ -5,7 +5,7 @@ import java.util.Map;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 
 public interface JeeslReportHeader <REPORT extends JeeslIoReport<?,?,?,?>>
-			extends JeeslReport
+			extends JeeslReport<REPORT>
 {		
 	Map<Long,String> getMapAggregationLabels();
 }

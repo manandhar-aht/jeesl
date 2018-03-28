@@ -69,7 +69,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 											TLS extends UtilsStatus<TLS,L,D>,
 											FILLING extends UtilsStatus<FILLING,L,D>,
 											TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
-					implements JeeslReport//<REPORT>
+					implements JeeslReport<REPORT>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslReport.class);
 	

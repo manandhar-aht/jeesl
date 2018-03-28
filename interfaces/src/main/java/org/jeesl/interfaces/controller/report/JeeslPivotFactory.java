@@ -11,7 +11,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.finance.Finance;
 
-public interface JeeslPivotFactory <L extends UtilsLang, D extends UtilsDescription, A extends UtilsStatus<A,L,D>> //extends JeeslReportAggregationLevelFactory
+public interface JeeslPivotFactory <L extends UtilsLang, D extends UtilsDescription,
+									A extends UtilsStatus<A,L,D>>
 {	
 	int getSizeAggregation();
 	int getSizeValue();

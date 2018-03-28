@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 
-public interface JeeslXlsReport //<REPORT extends JeeslIoReport<?,?,?,?>>
+public interface JeeslXlsReport <REPORT extends JeeslIoReport<?,?,?,?>>
 							extends JeeslReport//<REPORT>
 {		
 	public static String mimeType = "application/msexcel";

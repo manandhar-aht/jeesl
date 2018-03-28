@@ -2,7 +2,10 @@ package org.jeesl.interfaces.controller.report;
 
 import java.io.InputStream;
 
-public interface JeeslPdfReport extends JeeslReport
+import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
+
+public interface JeeslPdfReport <REPORT extends JeeslIoReport<?,?,?,?>>
+			extends JeeslReport
 {	
 	public static String mimeType = "application/pdf";
 	

@@ -15,6 +15,7 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.factory.xls.system.io.report.XlsFactory;
 import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
+import org.jeesl.interfaces.controller.report.JeeslReport;
 import org.jeesl.interfaces.factory.txt.JeeslReportAggregationLevelFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
@@ -68,6 +69,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 											TLS extends UtilsStatus<TLS,L,D>,
 											FILLING extends UtilsStatus<FILLING,L,D>,
 											TRANSFORMATION extends UtilsStatus<TRANSFORMATION,L,D>>
+					implements JeeslReport//<REPORT>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslReport.class);
 	

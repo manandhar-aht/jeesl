@@ -92,7 +92,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected Map<GROUP,List<COLUMN>> mapGroupColumns; public Map<GROUP,List<COLUMN>> getMapGroupColumns() {return mapGroupColumns;}
 	protected Map<GROUP,Boolean> mapGroupVisibilityToggle; public Map<GROUP, Boolean> getMapGroupVisibilityToggle() {return mapGroupVisibilityToggle;}
 
-	protected REPORT ioReport; public REPORT getIoReport() {return ioReport;}
+	protected REPORT ioReport; @Override public REPORT getIoReport() {return ioReport;}
 	protected SHEET ioSheet; public SHEET getIoSheet() {return ioSheet;}
 
 	protected FILLING reportFilling;

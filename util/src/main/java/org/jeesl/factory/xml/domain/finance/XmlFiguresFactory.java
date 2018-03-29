@@ -21,6 +21,17 @@ public class XmlFiguresFactory
 	public static Figures build(String code){return (build(null,code,null));}
 	public static Figures build(){return build(null,null,null);}
 	
+	public static Figures build(Figures... figures)
+	{
+		Figures result = build();
+		for(Figures f : figures)
+		{
+			result.getFigures().add(f);
+		}
+		
+		return result;
+	}
+	
 	public static Figures label(String label){return build(null,null,label);}
 	
 	public static Figures build(Long id, String code, String label)

@@ -536,7 +536,7 @@ public class UtilsFacadeBean implements UtilsFacade
 		return tQ.getResultList();
 	}
 	
-	@Override public <L extends UtilsLang, D extends UtilsDescription, T extends UtilsStatus<T,L,D>, W extends JeeslWithType<L,D,T>> List<W> allForType(Class<W> w, T type)
+	@Override public <L extends UtilsLang, D extends UtilsDescription, T extends UtilsStatus<T,L,D>, W extends JeeslWithType<T>> List<W> allForType(Class<W> w, T type)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<W> cQ = cB.createQuery(w);

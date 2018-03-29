@@ -7,7 +7,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslWithSurveyType<SURVEY extends JeeslSurvey<?,?,?,?,?>,
-										W extends JeeslWithType<?,?,TYPE>,
+										W extends JeeslWithType<TYPE>,
 										TYPE extends UtilsStatus<TYPE,?,?>>
 			extends EjbWithId, JeeslWithSurvey<SURVEY>
 {

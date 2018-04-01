@@ -495,7 +495,7 @@ public class AbstractDummyFacade implements UtilsFacade
 	}
 
 	@Override
-	public <L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S, L, D>, W extends JeeslWithStatus<L, D, S>> List<W> allForStatus(
+	public <L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S, L, D>, W extends JeeslWithStatus<S>> List<W> allForStatus(
 			Class<W> w, S status) {
 		// TODO Auto-generated method stub
 		return null;

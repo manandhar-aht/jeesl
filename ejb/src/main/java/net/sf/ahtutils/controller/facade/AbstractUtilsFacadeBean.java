@@ -108,7 +108,7 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	
 	@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C,L,D>, W extends JeeslWithCategory<L, D, C>> List<W> allForCategory(Class<W> w, C category) {return fUtils.allForCategory(w, category);}
 	@Override public <L extends UtilsLang, D extends UtilsDescription, T extends UtilsStatus<T,L,D>, W extends JeeslWithType<T>> List<W> allForType(Class<W> w, T type) {return fUtils.allForType(w, type);}
-	@Override public <L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S,L,D>, W extends JeeslWithStatus<L, D, S>> List<W> allForStatus(Class<W> w, S status) {return fUtils.allForStatus(w, status);}
+	@Override public <L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S,L,D>, W extends JeeslWithStatus<S>> List<W> allForStatus(Class<W> w, S status) {return fUtils.allForStatus(w, status);}
 	
 	// Ordering
 	public <T extends EjbWithPosition> List<T> allOrderedPosition(Class<T> type) {return fUtils.allOrderedPosition(type);}

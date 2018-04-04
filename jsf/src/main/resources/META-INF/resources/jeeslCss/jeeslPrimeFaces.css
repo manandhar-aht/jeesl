@@ -140,12 +140,6 @@
 .jeeslPanel *.ui-calendar > .hasDatepicker {
      width: 85%;
  }
- /*.jeeslPanel * input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker"]{width: 85% !important;}*/
- /*.jeeslPanel * input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-focus"]{width: 85% !important;}*/
- /*.jeeslPanel * input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-hover"]{width: 85% !important;}*/
- /*.jeeslPanel * input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-hover ui-state-focus"]{width: 85% !important;}*/
- /*.jeeslPanel * input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-focus ui-state-hover"]{width: 85% !important;}*/
- /*.jeeslPanel * .datePickerContainer .hasDatepicker {width: 85% !important;}*/
 
 /*spinner on right */
 input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all"]{text-align:left;width: 96% !important;}

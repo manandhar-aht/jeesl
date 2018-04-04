@@ -323,7 +323,7 @@ ul.aupHeadlineBreadcrumb,
 }
 
 .aupStatusBarDpFirst > .ui-inputfield {
-	text-alignment: right;
+	text-align: right;
 }
 
 .aupDateGraphic {

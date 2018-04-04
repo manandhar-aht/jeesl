@@ -64,8 +64,6 @@
 /* Makes all input elements use the full width of the parent container
    For SelectOneMenu this is realized by introducing a p:panelGrid with layout=block that renders a DIV
 */
-.jeeslPanel * .ui-widget-header .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield {width: 100%; padding: 2px;}
-
 
 /***********************************************************************************/
 
@@ -133,22 +131,28 @@
 .jeeslTree .ui-widget-content {background-color: transparent;}
 .jeeslTree {background-color: #f1f1f1;}
 
-.jeeslPanel * .ui-widget-header .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield {display: inline-stack;border: 0;white-space: normal;overflow: hidden;font-weight: normal;width: 100%;text-align: left;}
+.jeeslPanel * .ui-widget-header .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield {display:inline; border: 0;white-space: normal;overflow: hidden;font-weight: normal;width: 85%;text-align: left; padding: 2px;}
+
+.ui-selectonemenu > .ui-inputfield {background: transparent;}
 
 /*calendar button fix !!!!!!!!!!!!!*/
-input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker"]{width: 82% !important;}
-input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-focus"]{width: 82% !important;}
-input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-hover"]{width: 82% !important;}
-input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-hover ui-state-focus"]{width: 82% !important;}
-input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-focus ui-state-hover"]{width: 82% !important;}
-.datePickerContainer .hasDatepicker {width: 82% !important;}
+ /* Guarantuees that the p:calendar is shown without linebreak between input field and button */
+.jeeslPanel *.ui-calendar > .hasDatepicker {
+     width: 85%;
+ }
+ /*.jeeslPanel * input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker"]{width: 85% !important;}*/
+ /*.jeeslPanel * input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-focus"]{width: 85% !important;}*/
+ /*.jeeslPanel * input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-hover"]{width: 85% !important;}*/
+ /*.jeeslPanel * input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-hover ui-state-focus"]{width: 85% !important;}*/
+ /*.jeeslPanel * input[class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker ui-state-focus ui-state-hover"]{width: 85% !important;}*/
+ /*.jeeslPanel * .datePickerContainer .hasDatepicker {width: 85% !important;}*/
 
 /*spinner on right */
-input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all"]{text-align:"left";width: 96% !important;}
-input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-focus"]{text-align:"left";width: 96% !important;}
-input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-hover"]{text-align:"left";width: 96% !important;}
-input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-hover ui-state-focus"]{text-align:"left";width: 96% !important;}
-input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-focus ui-state-hover"]{text-align:"left";width: 96% !important;}
+input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all"]{text-align:left;width: 96% !important;}
+input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-focus"]{text-align:left;width: 96% !important;}
+input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-hover"]{text-align:left;width: 96% !important;}
+input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-hover ui-state-focus"]{text-align:left;width: 96% !important;}
+input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-state-focus ui-state-hover"]{text-align:left;width: 96% !important;}
 
 
 

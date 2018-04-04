@@ -1,5 +1,12 @@
 package org.jeesl.controller.facade;
 
+import java.security.Security;
+import java.util.Properties;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import org.jboss.ejb.client.ContextSelector;
 import org.jboss.ejb.client.EJBClientConfiguration;
 import org.jboss.ejb.client.EJBClientContext;
@@ -9,34 +16,27 @@ import org.jboss.sasl.JBossSaslProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import java.security.Security;
-import java.util.Hashtable;
-import java.util.Properties;
-
-public class UtilsJbossWildflyFacadeLookup
+public class JeeslWildflyFacadeLookup
 {
-	final static Logger logger = LoggerFactory.getLogger(UtilsJbossWildflyFacadeLookup.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslWildflyFacadeLookup.class);
 
 	private String appName;
 	private String moduleName;
 	private final Properties properties = new Properties();
 
-	public UtilsJbossWildflyFacadeLookup(String appName, String moduleName)
+	public JeeslWildflyFacadeLookup(String appName, String moduleName)
 	{
-		this(appName,moduleName,null,4447,null,null);
+		this(appName,moduleName,null,8080,null,null);
 	}
-	public UtilsJbossWildflyFacadeLookup(String appName, String moduleName, String host)
+	public JeeslWildflyFacadeLookup(String appName, String moduleName, String host)
 	{
-		this(appName,moduleName,host,4447,null,null);
+		this(appName,moduleName,host,8080,null,null);
 	}
-	public UtilsJbossWildflyFacadeLookup(String appName, String moduleName, String host, String username, String password)
+	public JeeslWildflyFacadeLookup(String appName, String moduleName, String host, String username, String password)
 	{
-		this(appName,moduleName,host,4447,username,password);
+		this(appName,moduleName,host,8080,username,password);
 	}
-	public UtilsJbossWildflyFacadeLookup(String appName, String moduleName, String host, int port, String username, String password)
+	public JeeslWildflyFacadeLookup(String appName, String moduleName, String host, int port, String username, String password)
 	{
 		this.appName=appName;
 		this.moduleName=moduleName;

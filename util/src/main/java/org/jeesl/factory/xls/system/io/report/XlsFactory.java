@@ -190,7 +190,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		if(jeeslReport instanceof JeeslReportSelectorTransformation)
 		{
-			JeeslReportSelectorTransformation<TRANSFORMATION,L,D> jr = ((JeeslReportSelectorTransformation<TRANSFORMATION,L,D>)jeeslReport);
+			JeeslReportSelectorTransformation<L,D,REPORT,TRANSFORMATION> jr = ((JeeslReportSelectorTransformation<L,D,REPORT,TRANSFORMATION>)jeeslReport);
 			transformation = JeeslReportSetting.Transformation.valueOf(jr.getReportSettingTransformation().getCode());
 		}
 		logger.info("Tranformation:"+transformation+" instanceof:"+(jeeslReport instanceof JeeslReportSelectorTransformation));

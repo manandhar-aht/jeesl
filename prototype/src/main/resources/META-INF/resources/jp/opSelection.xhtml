@@ -18,8 +18,8 @@
 	<composite:attribute name="allowRemove" required="false" default="true"/>
 	
 	<composite:attribute name="tableHeader" required="false" default="Entites"/>
-	<composite:attribute name="colHeaderName" required="false" default="#{msg.aupName}"/>
-	<composite:attribute name="colHeaderLang" required="false" default="#{msg.aupName}"/>
+	<composite:attribute name="colHeaderName" required="false" default="#{msg.jeeslName}"/>
+	<composite:attribute name="colHeaderLang" required="false" default="#{msg.jeeslName}"/>
 	
 	<composite:attribute name="showPageTable" required="false" default="true"/>
 	<composite:attribute name="showStatusSymbol" required="false" default="false"/>
@@ -35,14 +35,14 @@
 			selection="#{cc.attrs.handler.tb}" selectionMode="single" rowKey="#{p.id}">
 		<f:facet name="header">
 			<aht:pfDataTableHeader id="dth" title="#{cc.attrs.tableHeader}">
-				<h:graphicImage id="giProjectSelection" rendered="#{cc.attrs.allowAdd}" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['jeeslAdd']}"/>
+				<h:graphicImage id="giProjectSelection" rendered="#{cc.attrs.allowAdd}" styleClass="pf-panel-header-action-icon" library="gfx" name="#{appIconBean.icon12['jeeslAdd']}"/>
 				<p:tooltip for="giProjectSelection" value="#{msg.ttAdd}"/>
 				<aht:icon type="jeeslRemove" rendered="#{(not empty cc.attrs.handler.tb) and (cc.attrs.allowRemove)}" listener="#{cc.attrs.handler.removeEntity()}" update="#{cc.attrs.update}" mayDisappear="true"/>
 			</aht:pfDataTableHeader>
 		</f:facet>
 		<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.selectTb}"/>
 		<p:column rendered="#{cc.attrs.showStatusSymbol}">
-			<jtp:statusSymbolizer value="#{p}"/>
+			<jtp:symbolizer value="#{p}"/>
 		</p:column>
 		<p:column headerText="#{cc.attrs.colHeaderName}" rendered="#{cc.attrs.handler.showName}">
 			<h:outputText value="#{p.name}" />
@@ -57,12 +57,12 @@
 					 rows="#{cc.attrs.opRows}" rowsPerPageTemplate="#{cc.attrs.rowsPerPageTemplate}" paginator="true" paginatorPosition="bottom" paginatorTemplate="#{cc.attrs.paginatorTemplate}">>
 			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.addEntity()}" oncomplete="PF('wv-#{cc.clientId}').hide();"/>
 			<p:column rendered="#{cc.attrs.showStatusSymbol}">
-				<jtp:statusSymbolizer value="#{var}"/>
+				<jtp:symbolizer value="#{var}"/>
 			</p:column>
 			<p:column headerText="#{cc.attrs.colHeaderName}" rendered="#{cc.attrs.handler.showName}" filterBy="#{var.name}" filterMatchMode="contains">
 				<h:outputText value="#{var.name}" />
 			</p:column>
-			<p:column headerText="#{msg.colHeaderLang}" rendered="#{cc.attrs.handler.showLang}">
+			<p:column headerText="#{cc.attrs.colHeaderLang}" rendered="#{cc.attrs.handler.showLang}">
 				<h:outputText value="#{var.name[cc.attrs.localeCode].lang}" />
 			</p:column>
 		</p:dataTable>

@@ -21,7 +21,7 @@
 						 selection="#{cc.attrs.bean.tblUsecase}" selectionMode="single" rowKey="#{u.id}">
 				<f:facet name="header">
 					<aht:pfDataTableHeader id="dth" title="#{msg.aupSecurityUsecases}">
-						<h:graphicImage id="giUsecaseAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{iconBean.icon12['jeeslAdd']}"/>
+						<h:graphicImage id="giUsecaseAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{appIconBean.icon12['jeeslAdd']}"/>
                         <p:tooltip for="giUsecaseAdd" value="#{msg.ttAdd}"/>
 						<aht:icon rendered="#{cc.attrs.withRemove and (not empty cc.attrs.bean.tblUsecase)}" type="jeeslRemove" mayDisappear="true" listener="#{cc.attrs.bean.opRmUsecase()}" update="#{cc.attrs.update}" tooltip="#{msg.ttRemove}"/>
 					</aht:pfDataTableHeader>

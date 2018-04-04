@@ -26,7 +26,7 @@ public interface JeeslConstraint<L extends UtilsLang, D extends UtilsDescription
 					EjbWithPosition,
 					EjbWithParentAttributeResolver,
 					EjbWithLangDescription<L,D>,
-					JeeslWithType<L,D,TYPE>,
+					JeeslWithType<TYPE>,
 					JeeslWithLevel<L,D,LEVEL>
 {
 	public static enum Attributes{scope,code};

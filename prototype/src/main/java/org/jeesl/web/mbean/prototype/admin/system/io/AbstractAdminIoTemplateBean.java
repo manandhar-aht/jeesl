@@ -16,8 +16,6 @@ import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateDefinitionFactory;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateFactory;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateFactoryFactory;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateTokenFactory;
-import org.jeesl.factory.txt.system.io.mail.template.TxtIoTemplateFactory;
-import org.jeesl.factory.txt.system.io.mail.template.TxtIoTemplateTokenFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
@@ -81,7 +79,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	private EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> efDefinition;
 	private EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> efToken;
 	
-	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
+	protected final SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	private FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fmEngine;
 	
 	private Comparator<TEMPLATE> comparatorTemplate;
@@ -95,6 +93,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	{
 		super(fbTemplate.getClassL(),fbTemplate.getClassD());
 		this.fbTemplate=fbTemplate;
+		sbhCategory = new SbMultiHandler<CATEGORY>(fbTemplate.getClassCategory(),this);
 	}
 	
 	protected void initSuper(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<SCOPE> cScope, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
@@ -119,10 +118,21 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 		fmEngine = new FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>(fbTemplate);
 		
 		types = fTemplate.allOrderedPositionVisible(cType);
-		categories = fTemplate.allOrderedPositionVisible(fbTemplate.getClassCategory());
 		
-		sbhCategory = new SbMultiHandler<CATEGORY>(fbTemplate.getClassCategory(),categories,this);
-		reloadTemplates();
+		categories = fTemplate.allOrderedPositionVisible(fbTemplate.getClassCategory());
+		initPageConfiguration();
+		try
+		{
+			toggled(fbTemplate.getClassCategory());
+		}
+		catch (UtilsLockingException e) {e.printStackTrace();}
+		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+	}
+	
+	protected void initPageConfiguration()
+	{
+		sbhCategory.setList(fTemplate.allOrderedPositionVisible(fbTemplate.getClassCategory()));
+		sbhCategory.selectAll();
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException

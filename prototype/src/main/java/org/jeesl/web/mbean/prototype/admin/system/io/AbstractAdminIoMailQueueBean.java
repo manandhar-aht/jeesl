@@ -46,7 +46,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	
 	private MAIL mail; public MAIL getMail() {return mail;} public void setMail(MAIL mail) {this.mail = mail;}
 	
-	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
+	protected final SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 	private final SbDateHandler sbhDate; public SbDateHandler getSbhDate() {return sbhDate;}
 
@@ -56,6 +56,8 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 		sbhDate = new SbDateHandler(this);
 		sbhDate.setEnforceStartOfDay(true);
 		sbhDate.initWeeksToNow(2);
+		
+		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,this);
 	}
 	
 	protected void postConstructMailQueue(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
@@ -69,10 +71,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 		
 		categories = fMail.allOrderedPositionVisible(cCategory);
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cCategory,categories));}
-		
-		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,categories,this);
-		sbhCategory.selectAll();
-		
+
 		try
 		{
 			sbhStatus = new SbMultiHandler<STATUS>(cStatus,fMail.allOrderedPositionVisible(cStatus),this);
@@ -80,6 +79,14 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 			sbhStatus.select(fMail.fByCode(cStatus,JeeslMailStatus.Status.spooling));
 		}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
+		initPageConfiguration();
+		reloadMails();
+	}
+	
+	protected void initPageConfiguration()
+	{
+		sbhCategory.setList(categories);
+		sbhCategory.selectAll();
 	}
 	
 	public void toggled(Class<?> c)

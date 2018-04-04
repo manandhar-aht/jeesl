@@ -162,3 +162,8 @@ input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-st
 .ui-selectonemenu {	padding-right: 1em !important;}
 /* caption let the table stay on one line */
 .ui-selectonemenu-panel{display: table-caption} 
+
+/* adjust rendered html content on vacancys.xhtml    */
+.jeeslHTML * p {margin: 0 0 -10px 15px; padding-top: 5px}
+.jeeslHTML * ul li {display: list-item; list-style-type: disc; list-style-position: inside; margin-left: 20px;}
+.jeeslHTML * ol li {display: list-item; list-style-type: numbers; list-style-position: inside; margin-left: 20px;}

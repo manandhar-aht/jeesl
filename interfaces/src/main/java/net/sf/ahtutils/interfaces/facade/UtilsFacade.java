@@ -66,8 +66,8 @@ public interface UtilsFacade  extends UtilsIdFacade
 	
 	//Category,Type,Status ...
 	<L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C,L,D>, W extends JeeslWithCategory<L,D,C>> List<W> allForCategory(Class<W> w, C category);
-	<L extends UtilsLang, D extends UtilsDescription, T extends UtilsStatus<T,L,D>, W extends JeeslWithType<L,D,T>> List<W> allForType(Class<W> w, T type);
-	<L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S,L,D>, W extends JeeslWithStatus<L,D,S>> List<W> allForStatus(Class<W> w, S status);
+	<L extends UtilsLang, D extends UtilsDescription, T extends UtilsStatus<T,L,D>, W extends JeeslWithType<T>> List<W> allForType(Class<W> w, T type);
+	<L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S,L,D>, W extends JeeslWithStatus<S>> List<W> allForStatus(Class<W> w, S status);
 	
 	// ORDERING
 	<T extends Object> List<T> allOrdered(Class<T> cl, String by, boolean ascending);

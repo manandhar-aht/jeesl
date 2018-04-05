@@ -135,7 +135,7 @@
 
 .jeeslPanel * .ui-widget-header .ui-inputfield, .jeeslPanel * .ui-widget-content .ui-inputfield {display:inline; border: 0;white-space: normal;overflow: hidden;font-weight: normal;width: 85%;text-align: left; padding: 2px;}
 
-.ui-selectonemenu > .ui-inputfield {background: transparent;}
+/*.ui-selectonemenu > .ui-inputfield {background: transparent;}*/
 
 /*calendar button fix !!!!!!!!!!!!!*/
  /* Guarantuees that the p:calendar is shown without linebreak between input field and button */

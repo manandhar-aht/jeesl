@@ -98,6 +98,10 @@ public class JbossModuleConfigurator
 		{
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:5.1.43"),dirMain);
 		}
+		else if(version.equals("7.1"))
+		{
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:5.1.46"),dirMain);
+		}
 		else
 		{
 			logger.warn("NO MYSQL");

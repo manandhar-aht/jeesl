@@ -4,6 +4,8 @@
 .jeeslPanelHeaderIcon{float:right; cursor:pointer;  margin-left: 5px;}
 .jeeslGridCellIcon{float:right; cursor:pointer;  margin-left: 5px;}
 
+.ui-growl {left:20px;}
+
 .pf-dataTable-header-action-icon{
 	cursor:pointer;
 	margin-left: 5px;

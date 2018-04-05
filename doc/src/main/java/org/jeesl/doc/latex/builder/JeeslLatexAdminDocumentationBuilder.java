@@ -14,26 +14,26 @@ public class JeeslLatexAdminDocumentationBuilder extends AbstractLatexDocumentat
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslLatexAdminDocumentationBuilder.class);
 	
-	private static enum Code {accessIntroduction};
+	private enum Code {accessIntroduction};
 							 
-	public static enum MaintenanceCode {mArchitectureIntroductionJgPgGeoMg,mLoggingIntroduction,mJboss,mDisasterRecovery,mScp}
+	public enum MaintenanceCode {mArchitectureIntroductionJgPgGeoMg,mLoggingIntroduction,mJboss,mDisasterRecovery,mScp}
 	
-	public static enum BackupCode {bPostgres}
+	public enum BackupCode {bPostgres}
 	
-	public static enum SecurityCode {sConceptIntroduction,secViews,secUsecases,secRoles,sActualUsecases,sActualRoles,sActualViews}
+	public enum SecurityCode {sConceptIntroduction,secViews,secUsecases,secRoles,sActualUsecases,sActualRoles,sActualViews}
 							 
-	public static enum InstallationCode {instIntroduction,instDebian,instJava,instJboss,instPostGis,instMySql,instMaven}
-	public static enum InstallationArchitecture {debian,debianSqueeze,debianWheezy,debianJessie,debianRaspberry,devJava7FX}
+	public enum InstallationCode {instIntroduction,instDebian,instJava,instJboss,instPostGis,instMySql,instMaven}
+	public enum InstallationArchitecture {debian,debianSqueeze,debianWheezy,debianJessie,debianRaspberry,devJava7FX}
 	
-	public static enum JBossClassifier {as7,eap6,eap6Source,mysql,postgis}
+	public enum JBossClassifier {as7,eap6,eap6Source,mysql,postgis}
 	
-	public static enum RequirementsCode {reqIntroduction,reqHardware,reqAdmin,reqDeveloper}
-	public static enum RequirementsClassifier {reqHardware,reqAdmin,reqDeveloper,reqNetwork}
+	public enum RequirementsCode {reqIntroduction,reqHardware,reqAdmin,reqDeveloper}
+	public enum RequirementsClassifier {reqHardware,reqAdmin,reqDeveloper,reqNetwork}
 	
-	public static enum ToolsCode {toolsOsticket,toolsApache}
-	public static enum SystemCode {systemWs,systemTsStructure}
+	public enum ToolsCode {toolsOsticket,toolsApache}
+	public enum SystemCode {systemWs,systemTsStructure}
 	
-	public static enum Survey {surveyQuestion,surveySection}
+	public enum Survey {surveyQuestion,surveySection}
 		
 	public JeeslLatexAdminDocumentationBuilder(Configuration config, Translations translations,String[] langs, ConfigurationProvider cp)
 	{

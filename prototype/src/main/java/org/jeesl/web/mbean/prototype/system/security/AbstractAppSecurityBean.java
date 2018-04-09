@@ -46,6 +46,8 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	private final Map<String,V> mapUrlMapping;
 	private final Map<String,V> mapCodeView;
 	private final Map<V,List<R>> mapRoles;
+	
+	private boolean debugOnInfo; protected void setDebugOnInfo(boolean log) {debugOnInfo = log;}
 
 	public AbstractAppSecurityBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
@@ -55,6 +57,8 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		mapUrlMapping = new HashMap<String,V>();
 		mapCodeView = new HashMap<String,V>();
 		mapRoles = new HashMap<V,List<R>>();
+		
+		debugOnInfo = false;
 	}
 	
 	protected void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
@@ -70,12 +74,12 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		{
 			update(v);
 		}
-		logger.info(AbstractLogMessage.reloaded(fbSecurity.getClassView(), views));
+		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbSecurity.getClassView(), views));}
 	}
 	
 	public void update(V view)
 	{
-		logger.info("Updating "+view.getCode());
+		if(debugOnInfo) {logger.info("Updating "+view.getCode());}
 		mapUrlPattern.put(view.getViewPattern(),view);
 		mapUrlMapping.put(view.getUrlMapping(),view);
 		mapCodeView.put(view.getCode(),view);

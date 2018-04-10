@@ -59,13 +59,19 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 		{
 			if(section.isVisible())
 			{
-				xml.getContent().add(build(section));
+				xml.getContent().add(buildSection(section));
 			}
 		}
 		return xml;
 	}
+	
+	public Section build(S section) throws OfxAuthoringException
+	{
+		S root = fCms.load(section,true);
+		return buildSection(root);
+	}
  
-	private Section build(S section) throws OfxAuthoringException
+	private Section buildSection(S section) throws OfxAuthoringException
 	{
 		Section xml = XmlSectionFactory.build();
 		xml.getContent().add(XmlTitleFactory.build(section.getName().get(localeCode).getLang()));
@@ -92,7 +98,7 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 	
 	protected void buildJeesl(List<Serializable> list, E element) throws OfxAuthoringException
 	{
-		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString())) {list.add(ofParagraph.build(element));}
+		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString())) {list.addAll(ofParagraph.build(element).getContent());}
 		else {logger.warn("Unhandled "+element.getType().getCode());}
 	}
 }

@@ -21,6 +21,7 @@ import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -122,13 +123,13 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		elementCategories=fCms.allOrderedPositionVisible(fbCms.getClassElementCategory());
 		types.addAll(fCms.allOrderedPositionVisible(fbCms.getClassElementType()));
 		
-		try {markupHtml = fCms.fByCode(fbCms.getClassMarkupType(), JeeslIoCmsContent.Markup.html);}
+		try {markupHtml = fCms.fByCode(fbCms.getClassMarkupType(), JeeslIoCmsMarkupType.Code.xhtml);}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 	
 	protected <EN extends Enum<EN>> void initCategory(EN code)
 	{
-		try {category = fCms.fByCode(fbCms.getClassCategory(), code);}
+		try {category = fCms.fByCode(fbCms.getClassCategory(), code.toString());}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 	}
 	

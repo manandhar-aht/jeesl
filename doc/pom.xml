@@ -59,6 +59,10 @@
 			<groupId>org.openfuxml</groupId>
 			<artifactId>ofx-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.openfuxml</groupId>
+			<artifactId>ofx-wiki</artifactId>
+		</dependency>
 		
 		<!-- MetaChart -->
 		<dependency>

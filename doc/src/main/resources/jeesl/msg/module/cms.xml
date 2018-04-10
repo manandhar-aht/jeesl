@@ -14,6 +14,13 @@
 	    		<s:lang key="fr" translation="Document"/>
 	    	</s:langs>
     </s:translation>
+	<s:translation key="jeeslCmsDocumentStructure">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Struktur"/>
+	    		<s:lang key="en" translation="Structure"/>
+	    		<s:lang key="fr" translation="Structure"/>
+	    	</s:langs>
+    </s:translation>  
 	<s:translation key="jeeslCmsSection">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Abschnitt"/>

@@ -16,7 +16,6 @@ public interface JeeslIoCmsContent<V extends JeeslIoCmsVisiblity,
 					EjbWithId,EjbSaveable,EjbRemoveable,EjbWithParentAttributeResolver
 {	
 	public enum Attributes{element}
-	public enum Markup{html}
 	
 	E getElement();
 	void setElement(E element);

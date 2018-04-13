@@ -14,10 +14,11 @@ import org.jboss.ejb.client.EJBClientContext;
 import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
 import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
 import org.jboss.sasl.JBossSaslProvider;
+import org.jeesl.api.facade.JeeslFacadeLookup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UtilsJbossFacadeLookup
+public class UtilsJbossFacadeLookup implements JeeslFacadeLookup
 {
 	final static Logger logger = LoggerFactory.getLogger(UtilsJbossFacadeLookup.class);
 	
@@ -63,7 +64,7 @@ public class UtilsJbossFacadeLookup
 	}
 	   
 	@SuppressWarnings("unchecked")
-	public <F extends Object> F lookup(Class<F> facade) throws NamingException
+	@Override public <F extends Object> F lookup(Class<F> facade) throws NamingException
     {
         final Context context = createContext();
         

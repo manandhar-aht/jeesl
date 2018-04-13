@@ -13,10 +13,11 @@ import org.jboss.ejb.client.EJBClientContext;
 import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
 import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
 import org.jboss.sasl.JBossSaslProvider;
+import org.jeesl.api.facade.JeeslFacadeLookup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JeeslWildflyFacadeLookup
+public class JeeslWildflyFacadeLookup implements JeeslFacadeLookup
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslWildflyFacadeLookup.class);
 

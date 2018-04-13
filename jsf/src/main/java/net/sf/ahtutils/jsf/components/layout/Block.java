@@ -37,7 +37,7 @@ public class Block extends UIPanel
 		responseWriter.writeAttribute("id",getClientId(context),"id");
 		
 		StringBuffer sbStyleClass = new StringBuffer();
-		sbStyleClass.append("auGrid_");
+		sbStyleClass.append("jeeslBlock_");
 		if(map.containsKey(Properties.width.toString()))
 		{
 			sbStyleClass.append(map.get(Properties.width.toString()));

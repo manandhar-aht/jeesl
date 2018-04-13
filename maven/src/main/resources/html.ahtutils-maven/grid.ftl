@@ -213,3 +213,45 @@ body {min-width: ${width}px;}
   Move to separate stylesheet if invalid CSS is a problem.
 */
 .clearfix, .auContainer, .container_16 {zoom: 1;}
+
+
+/* `JeeslBlock >> Global
+----------------------------------------------------------------------------------------------------*/
+[class*="jeeslBlock"] {
+  display: table;
+  float: left;
+  margin-left: 2px;
+  margin-right: 3px;
+}
+
+/* JeeslBlock >> Children
+----------------------------------------------------------------------------------------------------*/
+
+[class*="jeeslBlock"] {margin-top: ${doublegutter}px;}
+
+[class*="jeeslBlock"] > div {margin-bottom: ${doublegutter}px;}
+[class*="jeeslBlock"] > div:last-child {margin-bottom: 0px;}
+
+[class*="jeeslBlock"] > form {margin-bottom: ${doublegutter}px;}
+[class*="jeeslBlock"] > form:last-child {margin-bottom: 0px;}
+
+[class*="jeeslBlock"] > form > div {margin-bottom: ${doublegutter}px;}
+[class*="jeeslBlock"] > form > div:last-child {margin-bottom: 0px;}
+
+[class*="jeeslBlockSpace"] > div {margin-bottom: ${doublegutter}px;}
+[class*="jeeslBlockSpace"] > div:last-child {margin-bottom: 0px;}
+
+/* JeeslBlock >> 12 Columns
+----------------------------------------------------------------------------------------------------*/
+.auContainer .jeeslBlock_1  {width: ${slot1}px;}
+.auContainer .jeeslBlock_2  {width: ${slot2}px;}
+.auContainer .jeeslBlock_3  {width: ${slot3}px;}
+.auContainer .jeeslBlock_4  {width: ${slot4}px;}
+.auContainer .jeeslBlock_5  {width: ${slot5}px;}
+.auContainer .jeeslBlock_6  {width: ${slot6}px;}
+.auContainer .jeeslBlock_7  {width: ${slot7}px;}
+.auContainer .jeeslBlock_8  {width: ${slot8}px;}
+.auContainer .jeeslBlock_9  {width: ${slot9}px;}
+.auContainer .jeeslBlock_10 {width: ${slot10}px;}
+.auContainer .jeeslBlock_11 {width: ${slot11}px;}
+.auContainer .jeeslBlock_12 {width: ${slot12}px;}

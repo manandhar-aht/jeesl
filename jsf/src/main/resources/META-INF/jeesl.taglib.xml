@@ -23,8 +23,13 @@
             <component-type>net.sf.ahtutils.jsf.components.layout.Slot</component-type>
         </component>
     </tag>
-    
-    	<tag>
+   	<tag>
+        <tag-name>block</tag-name>
+        <component>
+            <component-type>net.sf.ahtutils.jsf.components.layout.Block</component-type>
+        </component>
+    </tag> 
+    <tag>
         <tag-name>li</tag-name>
         <component>
             <component-type>org.jeesl.jsf.components.html.Li</component-type>

@@ -30,45 +30,45 @@ public class LoopingPivotAggregator implements JeeslPivotAggregator
     
     public LoopingPivotAggregator(JeeslComparatorProvider<EjbWithId> cProvider, JeeslPivotFactory<?,?,?> pivotFactory)
     {
-    		this(cProvider,pivotFactory.getSizeAggregation());
-    		this.pivotFactory=pivotFactory;
+		this(cProvider,pivotFactory.getSizeAggregation());
+		this.pivotFactory=pivotFactory;
     }
     public LoopingPivotAggregator(JeeslComparatorProvider<EjbWithId> cProvider, int size)
     {
-	    	this.cProvider=cProvider;
-	    	list = new ArrayList<DynamicPivotData>();
-	    	entitySet = new ArrayList<Set<EjbWithId>>();
-	    
-	    	for(int i=0;i<size;i++)
-	    	{
-	    		entitySet.add(new HashSet<EjbWithId>());
-	    	}
+    	this.cProvider=cProvider;
+    	list = new ArrayList<DynamicPivotData>();
+    	entitySet = new ArrayList<Set<EjbWithId>>();
+    
+    	for(int i=0;i<size;i++)
+    	{
+    		entitySet.add(new HashSet<EjbWithId>());
+    	}
     }
     
     @Override public void addAll(List<DynamicPivotData> dpds)
     {
-    		for(DynamicPivotData dpd : dpds){add(dpd);}
+		for(DynamicPivotData dpd : dpds){add(dpd);}
     }
     
     @Override public void add(DynamicPivotData dpd)
     {
-	    	for(int i=0;i<dpd.getSize();i++)
-	    	{
-	    		EjbWithId entity = dpd.getEntity(i);
-	    		if(!entitySet.get(i).contains(entity))
-	    		{
-	    			if(debug)
-	    			{
-	    				StringBuffer sb = new StringBuffer();
-	    				sb.append("Adding ").append(i);
-	    				sb.append(" ").append(entity.getClass().getSimpleName());
-	    				logger.info(sb.toString());
-	    			}
-	    			
-	    			entitySet.get(i).add(entity);
-	    		}
-	    	}
-	    	list.add(dpd);
+    	for(int i=0;i<dpd.getSize();i++)
+    	{
+    		EjbWithId entity = dpd.getEntity(i);
+    		if(!entitySet.get(i).contains(entity))
+    		{
+    			if(debug)
+    			{
+    				StringBuffer sb = new StringBuffer();
+    				sb.append("Adding ").append(i);
+    				sb.append(" ").append(entity.getClass().getSimpleName());
+    				logger.info(sb.toString());
+    			}
+    			
+    			entitySet.get(i).add(entity);
+    		}
+    	}
+    	list.add(dpd);
     }
     
     @Override public List<EjbWithId> list(int index)
@@ -116,40 +116,40 @@ public class LoopingPivotAggregator implements JeeslPivotAggregator
     
     @Override public Double[] values(EjbWithId... selectors)
     {
-	    	return values(pivotFactory.getSizeValue(),selectors);
+    	return values(pivotFactory.getSizeValue(),selectors);
     }
     
     @Override public Double[] values(int size, EjbWithId... selectors)
     {
-    		if(pivotFactory!=null && pivotFactory.getSizeAggregation()!=selectors.length) {logger.warn("The number of selectors is not corect");}
-    	
-	    	double[] values = new double[size]; 
-	    	for(int i=0;i<size;i++){values[i]=0;}
+		if(pivotFactory!=null && pivotFactory.getSizeAggregation()!=selectors.length) {logger.warn("The number of selectors is not corect");}
 	
-	    	boolean oneMatches = false;
-	    	for(DynamicPivotData dpd : list)
-	    	{
-	    		boolean selectorMatches = true;
-	    		for(int i=0;i<selectors.length;i++)
-	    		{
-	    			EjbWithId selector = selectors[i];
-	    			if(selector!=null)
-	    			{
-	    				if(!selector.equals(dpd.getEntity(i))){selectorMatches=false;}
-	    			}
-	    		}
-	    		
-	    		if(selectorMatches)
-	    		{
-	    			for(int i=0;i<size;i++)
-	    			{
-	    				values[i]=values[i]+dpd.getValues()[i];
-	    			}
-	    			oneMatches=true;
-	    		}
-	    	}
-	    	if(!oneMatches){return null;}
-	    	return ArrayUtils.toObject(values);
+    	double[] values = new double[size]; 
+    	for(int i=0;i<size;i++){values[i]=0;}
+
+    	boolean oneMatches = false;
+    	for(DynamicPivotData dpd : list)
+    	{
+    		boolean selectorMatches = true;
+    		for(int i=0;i<selectors.length;i++)
+    		{
+    			EjbWithId selector = selectors[i];
+    			if(selector!=null)
+    			{
+    				if(!selector.equals(dpd.getEntity(i))){selectorMatches=false;}
+    			}
+    		}
+    		
+    		if(selectorMatches)
+    		{
+    			for(int i=0;i<size;i++)
+    			{
+    				values[i]=values[i]+dpd.getValues()[i];
+    			}
+    			oneMatches=true;
+    		}
+    	}
+    	if(!oneMatches){return null;}
+    	return ArrayUtils.toObject(values);
     }
 	
     @Override public int size() {return list.size();}

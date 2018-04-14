@@ -1,4 +1,4 @@
-package org.jeesl.model.json.util.db;
+package org.jeesl.model.json.util.db.one;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class JsonTuple1 <T extends EjbWithId> implements Serializable
+public class Json1Tuple <T extends EjbWithId> implements Serializable
 {
 	public static final long serialVersionUID=1;
 

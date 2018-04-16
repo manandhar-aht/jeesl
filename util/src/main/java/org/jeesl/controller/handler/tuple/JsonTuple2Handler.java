@@ -53,6 +53,7 @@ public class JsonTuple2Handler <X extends EjbWithId, Y extends EjbWithId> implem
 	public void init(Json2Tuples<X,Y> tuples)
 	{
 		map.clear();
+		listX.clear();
 		listY.clear();
 	
 		for(Json2Tuple<X,Y> t : tuples.getTuples())
@@ -60,6 +61,7 @@ public class JsonTuple2Handler <X extends EjbWithId, Y extends EjbWithId> implem
 			t.setSum(AmountRounder.two(t.getSum()/sumDivider));
 		}
 		
+		listX.addAll(tf.toListX(tuples));
 		listY.addAll(tf.toListY(tuples));
 		map.putAll(tf.toMap(tuples));
 	}

@@ -72,6 +72,16 @@ public class Json2TuplesFactory <X extends EjbWithId, Y extends EjbWithId>
 		return new ArrayList<Y>(set);
 	}
 	
+	public List<X> toListX(Json2Tuples<X,Y> tuples)
+	{
+		Set<X> set = new HashSet<X>();
+		for(Json2Tuple<X,Y> t : tuples.getTuples())
+		{
+			if(!set.contains(t.getEjb1())) {set.add(t.getEjb1());}
+		}
+		return new ArrayList<X>(set);
+	}
+	
 	public Map<X,Map<Y,Json2Tuple<X,Y>>> toMap(Json2Tuples<X,Y> tuples)
 	{
 		Map<X,Map<Y,Json2Tuple<X,Y>>> map = new HashMap<X,Map<Y,Json2Tuple<X,Y>>>();

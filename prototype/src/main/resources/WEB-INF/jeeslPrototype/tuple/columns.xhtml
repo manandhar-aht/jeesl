@@ -1,0 +1,16 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:jtp="http://jsf.jeesl.org/prototype/tag">
+        
+    <c:set var="loc" value="#{not empty loc ? loc : localeCode}"/>
+    <c:set var="handler" value="#{handler}"/>
+
+    <p:columns var="y" value="#{handler.listY}" columnIndexVar="colIndex" styleClass="jeeslPfTcCenter">
+		<h:outputText value="#{handler.map[x][y].sum}" />
+	</p:columns>
+</ui:composition>

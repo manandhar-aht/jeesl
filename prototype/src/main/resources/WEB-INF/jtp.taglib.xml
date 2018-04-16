@@ -125,4 +125,13 @@
         <tag-name>figureSymbolizer</tag-name>
         <source>jeeslPrototype/symbolizer/figure.xhtml</source>
     </tag>
+    
+    <tag>
+        <tag-name>tupleHeader</tag-name>
+        <source>jeeslPrototype/tuple/header.xhtml</source>
+    </tag>
+    <tag>
+        <tag-name>tupleColumns</tag-name>
+        <source>jeeslPrototype/tuple/columns.xhtml</source>
+    </tag>
 </facelet-taglib>

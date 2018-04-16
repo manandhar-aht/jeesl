@@ -64,13 +64,4 @@ public class Json1TuplesFactory <T extends EjbWithId>
 		
 		return json;
 	}
-	
-	public static <T extends EjbWithId> Json1Tuples<T> unsetEjb(Json1Tuples<T> tuples)
-	{
-		for(Json1Tuple<T> t : tuples.getTuples())
-		{
-			t.setEjb(null);
-		}
-		return tuples;
-	}
 }

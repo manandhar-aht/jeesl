@@ -74,6 +74,7 @@ public class CssGridBuilder extends AbstractFreemarkerFileFactory
 		}
 		
 		createSlots(slot, gutter);
+		createBlockSlots(slot, gutter);
 	}
 	
 	private void createSlots(int slot, int gutter)
@@ -83,7 +84,29 @@ public class CssGridBuilder extends AbstractFreemarkerFileFactory
 		{
 			int px = i*slot;
 			px = px + (i-1)*margin;
+
+/*  add extra 10px to auGrid_12 - avoid last element from going to next	line (for later use)*/			
+//			if (i<=11){px = px + (i-1)*margin;}
+//  		if (i>=12){px = px + (i-1)*margin+10;}
+			
 			freemarkerNodeModel.put("slot"+i, ""+px);
+		}
+	}
+	
+
+	/**
+	 * creating smaller slots for blocks 
+	 * @param blockslot
+	 * @param gutter
+	 */
+	private void createBlockSlots(int blockslot, int gutter)
+	{
+		int margin = gutter*2;
+		for(int i=1;i<=12;i++)
+		{
+			int px = i*blockslot-4;
+			px = px + (i-1)*margin;
+			freemarkerNodeModel.put("blockslot"+i, ""+px);
 		}
 	}
 }

@@ -220,12 +220,15 @@ body {min-width: ${width}px;}
 [class*="jeeslBlock"] {
   display: table;
   float: left;
-  margin-left: 2px;
-  margin-right: 3px;
+  margin-left: -5px;
+  margin-right: 5px;
 }
 
 /* JeeslBlock >> Children
 ----------------------------------------------------------------------------------------------------*/
+
+[class*="jeeslBlock"] > div:first-child {margin-left: 5px;margin-right: 5px;}
+[class*="jeeslBlock"] > div:last-child {margin-left: 5px;margin-right: 5px;}
 
 [class*="jeeslBlock"] {margin-top: ${doublegutter}px;}
 
@@ -243,15 +246,15 @@ body {min-width: ${width}px;}
 
 /* JeeslBlock >> 12 Columns
 ----------------------------------------------------------------------------------------------------*/
-.auContainer .jeeslBlock_1  {width: ${slot1}px;}
-.auContainer .jeeslBlock_2  {width: ${slot2}px;}
-.auContainer .jeeslBlock_3  {width: ${slot3}px;}
-.auContainer .jeeslBlock_4  {width: ${slot4}px;}
-.auContainer .jeeslBlock_5  {width: ${slot5}px;}
-.auContainer .jeeslBlock_6  {width: ${slot6}px;}
-.auContainer .jeeslBlock_7  {width: ${slot7}px;}
-.auContainer .jeeslBlock_8  {width: ${slot8}px;}
-.auContainer .jeeslBlock_9  {width: ${slot9}px;}
-.auContainer .jeeslBlock_10 {width: ${slot10}px;}
-.auContainer .jeeslBlock_11 {width: ${slot11}px;}
-.auContainer .jeeslBlock_12 {width: ${slot12}px;}
+.auContainer .jeeslBlock_1  {width: ${blockslot1}px;}
+.auContainer .jeeslBlock_2  {width: ${blockslot2}px;}
+.auContainer .jeeslBlock_3  {width: ${blockslot3}px;}
+.auContainer .jeeslBlock_4  {width: ${blockslot4}px;}
+.auContainer .jeeslBlock_5  {width: ${blockslot5}px;}
+.auContainer .jeeslBlock_6  {width: ${blockslot6}px;}
+.auContainer .jeeslBlock_7  {width: ${blockslot7}px;}
+.auContainer .jeeslBlock_8  {width: ${blockslot8}px;}
+.auContainer .jeeslBlock_9  {width: ${blockslot9}px;}
+.auContainer .jeeslBlock_10 {width: ${blockslot10}px;}
+.auContainer .jeeslBlock_11 {width: ${blockslot11}px;}
+.auContainer .jeeslBlock_12 {width: ${blockslot12}px;}

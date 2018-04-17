@@ -104,7 +104,9 @@ public class CssGridBuilder extends AbstractFreemarkerFileFactory
 		int margin = gutter*2;
 		for(int i=1;i<=12;i++)
 		{
-			int px = i*blockslot-4;
+// for testusing 4px smaler blocks: //	int px = i*blockslot-4;
+			
+			int px = i*blockslot;
 			px = px + (i-1)*margin;
 			freemarkerNodeModel.put("blockslot"+i, ""+px);
 		}

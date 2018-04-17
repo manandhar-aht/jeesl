@@ -1,10 +1,13 @@
 package org.jeesl.interfaces.model.system.io.report;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -19,7 +22,7 @@ public interface JeeslReportSheet<L extends UtilsLang,D extends UtilsDescription
 									WORKBOOK extends JeeslReportWorkbook<?,?>,
 									GROUP extends JeeslReportColumnGroup<L,D,?,?,?>,
 									ROW extends JeeslReportRow<L,D,?,?,IMPLEMENTATION,WORKBOOK,?,GROUP,?,ROW,?,?,?,?,?,?,?,?,?,?>>
-		extends EjbWithId,EjbSaveable,
+		extends Serializable,EjbRemoveable,EjbPersistable,EjbWithId,EjbSaveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,
 				EjbWithLang<L>,EjbWithDescription<D>
 {	

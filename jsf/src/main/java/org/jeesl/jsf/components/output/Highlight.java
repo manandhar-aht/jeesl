@@ -95,7 +95,11 @@ public class Highlight extends UINamingContainer
 			try {writer.close();} catch (IOException e) {e.printStackTrace();}
 			return s;
 		}
-		else {return resourceNotFound(input);}
+		else
+		{
+			logger.warn("Resource not found "+input);
+			return resourceNotFound(input);
+		}
 	}
 	
 	private String build(List<String> list, int from, int to)

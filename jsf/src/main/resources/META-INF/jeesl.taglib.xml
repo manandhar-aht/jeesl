@@ -61,12 +61,7 @@
         </component>
     </tag>
     
-	<tag>
-        <tag-name>highlight</tag-name>
-        <component>
-            <component-type>org.jeesl.jsf.components.output.Highlight</component-type>
-        </component>
-    </tag>
+
     <tag>
         <tag-name>security</tag-name>
         <component>

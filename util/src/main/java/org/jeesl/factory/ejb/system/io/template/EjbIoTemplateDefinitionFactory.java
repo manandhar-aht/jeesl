@@ -27,7 +27,7 @@ public class EjbIoTemplateDefinitionFactory<L extends UtilsLang,D extends UtilsD
 	
 	private EjbDescriptionFactory<D> efDescription;
     
-	protected EjbIoTemplateDefinitionFactory(final Class<D> cD,final Class<DEFINITION> cDefinition)
+	public EjbIoTemplateDefinitionFactory(final Class<D> cD,final Class<DEFINITION> cDefinition)
 	{       
         this.cDefinition = cDefinition;
 		efDescription = EjbDescriptionFactory.factory(cD);

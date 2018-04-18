@@ -14,7 +14,6 @@ import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.builder.io.IoTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateDefinitionFactory;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateFactory;
-import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateFactoryFactory;
 import org.jeesl.factory.ejb.system.io.template.EjbIoTemplateTokenFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
@@ -57,13 +56,6 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	protected JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate;
 	private final IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fbTemplate;
 	
-	
-	private Class<TYPE> cType;
-	private Class<TEMPLATE> cTemplate;
-	private Class<SCOPE> cScope;
-	private Class<DEFINITION> cDefinition;
-	private Class<TOKEN> cToken;
-	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
 	private List<TYPE> types; public List<TYPE> getTypes() {return types;}
 	private List<SCOPE> scopes;public List<SCOPE> getScopes() {return scopes;}
@@ -96,20 +88,14 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 		sbhCategory = new SbMultiHandler<CATEGORY>(fbTemplate.getClassCategory(),this);
 	}
 	
-	protected void initSuper(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate, Class<TYPE> cType, Class<TEMPLATE> cTemplate, Class<SCOPE> cScope, Class<DEFINITION> cDefinition, Class<TOKEN> cToken)
+	protected void postConstructTemplate(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fTemplate)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fTemplate=fTemplate;
-		this.cType=cType;
-		this.cTemplate=cTemplate;
-		this.cScope=cScope;
-		this.cDefinition=cDefinition;
-		this.cToken=cToken;
 		
-		EjbIoTemplateFactoryFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> ef = EjbIoTemplateFactoryFactory.factory(cL,cD,cTemplate,cDefinition,cToken);
-		efTemplate = ef.template();
-		efDefinition = ef.definition();
-		efToken = ef.token();
+		efTemplate = fbTemplate.ejbTemplate();
+		efDefinition = fbTemplate.ejbDefinition();
+		efToken = fbTemplate.ejbTtoken();
 		
 		comparatorTemplate = new IoTemplateComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateComparator.Type.position);
 		comparatorToken = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateTokenComparator.Type.position);
@@ -117,7 +103,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 		
 		fmEngine = new FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>(fbTemplate);
 		
-		types = fTemplate.allOrderedPositionVisible(cType);
+		types = fTemplate.allOrderedPositionVisible(fbTemplate.getClassType());
 		
 		categories = fTemplate.allOrderedPositionVisible(fbTemplate.getClassCategory());
 		initPageConfiguration();
@@ -138,7 +124,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.toggled(c));
-		scopes = fTemplate.all(cScope);
+		scopes = fTemplate.all(fbTemplate.getClassScope());
 		reloadTemplates();
 		cancelTemplate();
 	}
@@ -147,13 +133,13 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	private void reloadTemplates()
 	{
 		templates = fTemplate.fTemplates(sbhCategory.getSelected(), true);
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cTemplate,templates));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTemplate.getClassTemplate(),templates));}
 		Collections.sort(templates, comparatorTemplate);
 	}
 	
 	public void addTemplate() throws UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cTemplate));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassTemplate()));}
 		template = efTemplate.build(null);
 		template.setName(efLang.createEmpty(langs));
 		template.setDescription(efDescription.createEmpty(langs));
@@ -164,7 +150,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	public void selectTemplate()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
-		template = fTemplate.find(cTemplate,template);
+		template = fTemplate.find(fbTemplate.getClassTemplate(),template);
 		template = efLang.persistMissingLangs(fTemplate,langs,template);
 		template = efDescription.persistMissingLangs(fTemplate,langs,template);
 		reloadTemplate();
@@ -187,7 +173,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(template));}
 		if(template.getCategory()!=null){template.setCategory(fTemplate.find(fbTemplate.getClassCategory(), template.getCategory()));}
-		if(template.getScope()!=null){template.setScope(fTemplate.find(cScope, template.getScope()));}
+		if(template.getScope()!=null){template.setScope(fTemplate.find(fbTemplate.getClassScope(), template.getScope()));}
 		template = fTemplate.save(template);
 		reloadTemplates();
 		reloadTemplate();
@@ -213,7 +199,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	//*************************************************************************************
 	public void addToken() throws UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cToken));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassToken()));}
 		token = efToken.build(template);
 		token.setName(efLang.createEmpty(langs));
 		token.setDescription(efDescription.createEmpty(langs));
@@ -222,7 +208,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	public void selectToken() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(token));}
-		token = fTemplate.find(cToken, token);
+		token = fTemplate.find(fbTemplate.getClassToken(), token);
 	}
 	
 	public void saveToken() throws UtilsLockingException, UtilsNotFoundException
@@ -256,7 +242,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	//*************************************************************************************
 	public void addDefinition() throws UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cDefinition));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassDefinition()));}
 		definition = efDefinition.build(template,null);
 		definition.setDescription(efDescription.createEmpty(langs));
 		preview = null;
@@ -265,7 +251,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 	public void selectDefinition() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(definition));}
-		definition = fTemplate.find(cDefinition, definition);
+		definition = fTemplate.find(fbTemplate.getClassDefinition(), definition);
 		renderPreview();
 	}
 	
@@ -274,7 +260,7 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(definition));}
 		try
 		{
-			definition.setType(fTemplate.find(cType, definition.getType()));
+			definition.setType(fTemplate.find(fbTemplate.getClassType(), definition.getType()));
 			definition = fTemplate.save(definition);
 			renderPreview();
 			bMessage.growlSuccessSaved();
@@ -309,8 +295,8 @@ public abstract class AbstractAdminIoTemplateBean <L extends UtilsLang,D extends
     }
     
 	//*************************************************************************************
-	protected void reorderTemplates() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, cTemplate, templates);Collections.sort(templates, comparatorTemplate);}
-	protected void reorderTokens() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, cToken, tokens);Collections.sort(tokens, comparatorToken);}
+	protected void reorderTemplates() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, fbTemplate.getClassTemplate(), templates);Collections.sort(templates, comparatorTemplate);}
+	protected void reorderTokens() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, fbTemplate.getClassToken(), tokens);Collections.sort(tokens, comparatorToken);}
 	
 	protected void updatePerformed(){}	
 	

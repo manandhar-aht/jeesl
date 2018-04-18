@@ -29,7 +29,7 @@ public class EjbIoTemplateTokenFactory<L extends UtilsLang,D extends UtilsDescri
 	private EjbLangFactory<L> efLang;
 	private EjbDescriptionFactory<D> efDescription;
     
-	protected EjbIoTemplateTokenFactory(final Class<L> cL,final Class<D> cD,final Class<TOKEN> cToken)
+	public EjbIoTemplateTokenFactory(final Class<L> cL,final Class<D> cD,final Class<TOKEN> cToken)
 	{       
         this.cToken = cToken;
 		efLang = EjbLangFactory.factory(cL);

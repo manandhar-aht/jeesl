@@ -191,4 +191,16 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 		if(actionCode==null){return false;}
 		else {return (mapAllow.containsKey(actionCode) && mapAllow.get(actionCode));}
 	}
+	
+	public void debug(boolean debug)
+	{
+		if(debug)
+		{
+			logger.info("Debugging SecurityHandler ("+pageCode+")");
+			for(String key : mapAllow.keySet())
+			{
+				logger.info("\t"+key+": "+mapAllow.get(key));
+			}
+		}
+	}
 }

@@ -18,7 +18,7 @@
 
 	<composite:implementation>
 		<p:commandLink rendered="#{cc.attrs.disabled}" ajax="false" onclick="#{cc.attrs.onclick} PF('#{cc.clientId}-toolTip').hide();" icon="ui-icon-arrowthick-1-s">
-			<h:graphicImage id="downloadIcon" styleClass="#{cc.attrs.styleClass}" library="gfx" name="#{iconBean.icon12[cc.attrs.type]}"/>
+			<h:graphicImage id="downloadIcon" styleClass="#{cc.attrs.styleClass}" library="gfx" name="#{appIconBean.icon12[cc.attrs.type]}"/>
 			<p:fileDownload value="#{cc.attrs.value}" />
             <p:tooltip widgetVar="#{cc.clientId}-toolTip" for="downloadIcon" value="#{cc.attrs.tooltip}" />
 		</p:commandLink>

@@ -140,7 +140,7 @@
 /*calendar button fix !!!!!!!!!!!!!*/
  /* Guarantuees that the p:calendar is shown without linebreak between input field and button */
 .jeeslPanel *.ui-calendar > .hasDatepicker {
-     width: 85%;
+     width: 82%;
  }
 
 /*spinner on right */

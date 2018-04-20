@@ -85,7 +85,7 @@ public class EjbLangFactory<L extends UtilsLang>
 		return map;
 	}
 	
-	public Map<String,L> clone(Map<String,L> original) 
+	public Map<String,L> clone(Map<String,L> original)
 	{
 		Map<String,L> map = new Hashtable<String,L>();
 		for(String key : original.keySet())
@@ -116,7 +116,6 @@ public class EjbLangFactory<L extends UtilsLang>
 		if(lang.getTranslation()==null){throw new UtilsConstraintViolationException("Translation not set for: "+JaxbUtil.toString(lang));}
 		return createLang(lang.getKey(), lang.getTranslation());
 	}
-	
 	
 	public <T extends EjbWithLang<L>, LOC extends UtilsStatus<LOC,L,D>, D extends UtilsDescription> T persistMissingLangs(UtilsFacade fUtils, List<LOC> locales, T ejb)
 	{
@@ -149,6 +148,24 @@ public class EjbLangFactory<L extends UtilsLang>
 			}
 		}
 		return ejb;
+	}
+	
+	public <LOC extends UtilsStatus<LOC,L,?>> Map<String,L> checkMissigLangs(UtilsFacade fUtils, List<LOC> locales, Map<String,L> map)
+	{
+		for(LOC loc : locales)
+		{
+			if(!map.containsKey(loc.getCode()))
+			{
+				try
+				{
+					L l = fUtils.persist(createLang(loc.getCode(), ""));
+					map.put(loc.getCode(), l);
+				}
+				catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+//				catch (UtilsLockingException e) {e.printStackTrace();}
+			}
+		}
+		return map;
 	}
 	
 	public <M extends EjbWithLang<L>> void rmLang(UtilsFacade fUtils, M ejb)

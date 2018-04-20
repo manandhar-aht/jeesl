@@ -65,7 +65,7 @@ public abstract class AbstractSymbolizerServlet<L extends UtilsLang, D extends U
         return XmlImageFactory.idHeight(id,size);
 	}
 	
-	protected Image getGraphicInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected Image getGraphicInfo(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		if (request.getPathInfo() == null)
 		{
@@ -100,7 +100,7 @@ public abstract class AbstractSymbolizerServlet<L extends UtilsLang, D extends U
         return image;
 	}
 	
-	protected void respond(HttpServletRequest request, HttpServletResponse response,byte[] bytes, String suffix) throws ServletException, IOException
+	protected void respond(HttpServletRequest request, HttpServletResponse response,byte[] bytes, String suffix) throws IOException
     {
 		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 		

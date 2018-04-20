@@ -93,20 +93,28 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		}
 	}
 	
-	public void update(List<T> list)
+	public void update(List<T> list){update(list, null);}
+	public void update(List<T> list, T preferred)
 	{
 		this.list.clear();
 		this.list.addAll(list);
+
 		
 		if(selection!=null)
 		{
 			if(!this.list.contains(selection)){selection=null;}	
 		}
+		if(selection==null && preferred!=null)
+		{
+			if(this.list.contains(preferred)) {selection=preferred;}
+		}
+		
 		if(selection==null && !this.list.isEmpty())
 		{
 			selection=this.list.get(0);
 		}
 	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public <E extends Enum<E>, S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> void add(UtilsFacade fUtils, Class<S> c, E code)

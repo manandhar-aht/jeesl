@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -59,7 +58,7 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 		fSvgFigure = SvgFigureFactory.factory();
 	}
 	
-	protected void process(HttpServletRequest request, HttpServletResponse response, G graphic, Image image) throws ServletException, IOException, TranscoderException, UtilsProcessingException
+	protected void process(HttpServletRequest request, HttpServletResponse response, G graphic, Image image) throws IOException, TranscoderException, UtilsProcessingException
     {
 		byte[] bytes = null;
     	
@@ -81,7 +80,7 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 	    	}
 	}
 	
-	protected void process(HttpServletRequest request, HttpServletResponse response, JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic, G graphic, Image image) throws ServletException, IOException, TranscoderException, UtilsProcessingException
+	protected void process(HttpServletRequest request, HttpServletResponse response, JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic, G graphic, Image image) throws IOException, TranscoderException, UtilsProcessingException
     {
 		byte[] bytes = null;
     	
@@ -114,7 +113,7 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 	}
 	
     @SuppressWarnings("unchecked")
-	protected void symbolizer(JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic , HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected void symbolizer(JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic , HttpServletRequest request, HttpServletResponse response) throws IOException
     {
 		Image m = getGraphicInfo(request,response);
 		

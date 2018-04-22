@@ -15,7 +15,7 @@
 
 	<jp:sbItem orientation="right" childs="#{handler.list}" rendered="#{rendered}">
 		<f:facet name="label">
-			<jtp:statusSymbolizer rendered="#{not empty icon}" value="#{icon}" height="12"/>
+			<jtp:symbolizer rendered="#{not empty icon}" value="#{icon}" height="12"/>
 			#{label}
 			<h:outputText rendered="#{counter}" value="(#{fn:length(handler.selected)}/#{fn:length(handler.list)})"/>
 		</f:facet>

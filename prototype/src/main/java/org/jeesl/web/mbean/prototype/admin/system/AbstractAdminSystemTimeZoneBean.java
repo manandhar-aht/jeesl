@@ -58,7 +58,7 @@ public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
 		super.initAdmin(localeCodes,fbCalendar.getClassL(),fbCalendar.getClassD(),bMessage);
 		this.fCalendar=fCalendar;
 
-		efZone = fbCalendar.zone();
+		efZone = fbCalendar.ejbZone();
 		
 		comparatorTimeZone = (new TimeZoneComparator<L,D,CALENDAR,ZONE,CT,ITEM,IT>()).factory(TimeZoneComparator.Type.offset);
 		reload();	

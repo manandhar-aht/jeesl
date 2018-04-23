@@ -27,7 +27,7 @@ public class CalendarFactoryBuilder<L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(CalendarFactoryBuilder.class);
 	
 	private final Class<ZONE> cZone; public Class<ZONE> getClassZone()	{return cZone;}
-	private final Class<IT> cItemType;
+	private final Class<IT> cItemType; public Class<IT> getClassItemType()	{return cItemType;}
 
 	public CalendarFactoryBuilder(final Class<L> cL,final Class<D> cD,final Class<ZONE> cZone, final Class<IT> cItemType)
 	{       
@@ -36,9 +36,9 @@ public class CalendarFactoryBuilder<L extends UtilsLang,
         this.cItemType = cItemType;
 	}
 	
-	public EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> zone(){return new EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT>(cZone);}
+	public EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> ejbZone(){return new EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT>(cZone);}
 	
 	public TxtCalendarItemFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> txtItem() {return new TxtCalendarItemFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT>();}
 	
-	public CalendarItemHandler<L,D,CALENDAR,ZONE,CT,ITEM,IT> itemHandler(final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar){return new CalendarItemHandler<L,D,CALENDAR,ZONE,CT,ITEM,IT>(fCalendar,cZone,cItemType,zone(),txtItem());}
+	public CalendarItemHandler<L,D,CALENDAR,ZONE,CT,ITEM,IT> itemHandler(final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar){return new CalendarItemHandler<L,D,CALENDAR,ZONE,CT,ITEM,IT>(fCalendar,this);}
 }

@@ -3,6 +3,7 @@ package org.jeesl.controller.handler;
 import java.io.Serializable;
 
 import org.jeesl.api.facade.module.JeeslCalendarFacade;
+import org.jeesl.factory.builder.module.CalendarFactoryBuilder;
 import org.jeesl.factory.ejb.module.calendar.EjbTimeZoneFactory;
 import org.jeesl.factory.txt.module.calendar.TxtCalendarItemFactory;
 import org.jeesl.interfaces.model.module.calendar.JeeslCalendar;
@@ -31,27 +32,25 @@ public class CalendarItemHandler <L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(CalendarItemHandler.class);
 	private boolean debug = true;
 
-	private final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar;
+	protected final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar;
+	private final CalendarFactoryBuilder<L,D,CALENDAR,ZONE,CT,ITEM,IT> fbCalendar;
+	
 	private final EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> efZone;
 	private final TxtCalendarItemFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> tfItem;
-
-	private final Class<ZONE> cZone;
-	private final Class<IT> cItemType;
 	
 	private ZONE timeZone; public ZONE getTimeZone() {return timeZone;} public void setTimeZone(ZONE timeZone) {this.timeZone = timeZone;}
 
 	private ITEM item; public ITEM getItem() {return item;} public void setItem(ITEM item) {this.item = item;}
 
 	
-	public CalendarItemHandler(final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, final Class<ZONE> cZone, final Class<IT> cItemType, EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> efZone, final TxtCalendarItemFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> tfItem)
+	public CalendarItemHandler(final JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar,
+			CalendarFactoryBuilder<L,D,CALENDAR,ZONE,CT,ITEM,IT> fbCalendar)
 	{
 		this.fCalendar=fCalendar;
+		this.fbCalendar=fbCalendar;
 		
-		this.cZone=cZone;
-		this.cItemType=cItemType;
-		
-		this.efZone=efZone;
-		this.tfItem=tfItem;
+		efZone=fbCalendar.ejbZone();
+		tfItem=fbCalendar.txtItem();
 	}
 	
 	public void updateItem(ITEM item)
@@ -63,8 +62,8 @@ public class CalendarItemHandler <L extends UtilsLang,
 	{
 		StringBuilder sb = new StringBuilder();
 
-		item.setStartZone(fCalendar.find(cZone,item.getStartZone()));
-		item.setEndZone(fCalendar.find(cZone,item.getEndZone()));
+		item.setStartZone(fCalendar.find(fbCalendar.getClassZone(),item.getStartZone()));
+		item.setEndZone(fCalendar.find(fbCalendar.getClassZone(),item.getEndZone()));
 		
 		if(debug)
 		{
@@ -74,7 +73,7 @@ public class CalendarItemHandler <L extends UtilsLang,
 		}
 		
 		item = efZone.toUtc(item);
-		item.setType(fCalendar.find(cItemType,item.getType()));
+		item.setType(fCalendar.find(fbCalendar.getClassItemType(),item.getType()));
 		item = fCalendar.save(item);
 		
 		if(debug)
@@ -83,4 +82,9 @@ public class CalendarItemHandler <L extends UtilsLang,
 			logger.info(sb.toString());
 		}
 	}
+	
+	 public void toggleAllDay()
+	 {
+		 logger.info("toggleAllDay "+item.isAllDay());	 
+	 }
 }

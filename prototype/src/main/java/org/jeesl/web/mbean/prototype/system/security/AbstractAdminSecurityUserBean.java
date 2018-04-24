@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.controller.audit.UtilsRevisionPageFlow;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -95,14 +96,14 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		users = fUtilsUser.all(fbSecurity.getClassUser());
 	}
 
-	public void addUser()
+	public void addUser() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassUser()));}
 		user = efUser.build();
 		if(revision!=null){revision.pageFlowPrimaryAdd();}
 		postAdd();
 	}
-	protected abstract void postAdd();
+	protected abstract void postAdd() throws UtilsNotFoundException;
 	
 	public void selectUser()
 	{

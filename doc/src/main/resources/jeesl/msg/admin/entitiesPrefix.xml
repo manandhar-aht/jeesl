@@ -163,11 +163,18 @@
 			<s:lang key="fr" translation="Language"/>
 		</s:langs>
 	</s:translation>
-		<s:translation key="Locale">
+	<s:translation key="Locale">
 		<s:langs>
 			<s:lang key="de" translation="Sprache"/>
 			<s:lang key="en" translation="Language"/>
 			<s:lang key="fr" translation="Language"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="UserRealm">
+		<s:langs>
+			<s:lang key="de" translation="Bereich"/>
+			<s:lang key="en" translation="Realm"/>
+			<s:lang key="fr" translation="Realm"/>
 		</s:langs>
 	</s:translation>
 	

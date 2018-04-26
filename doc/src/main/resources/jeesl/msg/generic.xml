@@ -78,4 +78,11 @@
     		<s:lang key="fr" translation="Session"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="jeeslSearch">
+		<s:langs>
+    		<s:lang key="de" translation="Suche"/>
+    		<s:lang key="en" translation="Search"/>
+    		<s:lang key="fr" translation="Search"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

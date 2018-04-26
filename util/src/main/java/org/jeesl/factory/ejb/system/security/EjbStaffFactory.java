@@ -7,28 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class EjbStaffFactory <L extends UtilsLang, D extends UtilsDescription,
-						C extends JeeslSecurityCategory<L,D>,
-						R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-						V extends JeeslSecurityView<L,D,C,R,U,A>,
-						U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-						A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-						AT extends JeeslSecurityTemplate<L,D,C>,
+public class EjbStaffFactory <R extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
 						USER extends JeeslUser<R>,
 						STAFF extends JeeslStaff<R,USER,D1,D2>,
 						D1 extends EjbWithId, D2 extends EjbWithId>
@@ -37,19 +24,13 @@ public class EjbStaffFactory <L extends UtilsLang, D extends UtilsDescription,
 	
 	final Class<STAFF> cStaff;
 	
-    public static <L extends UtilsLang, D extends UtilsDescription,
-					C extends JeeslSecurityCategory<L,D>,
-					R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
-					V extends JeeslSecurityView<L,D,C,R,U,A>,
-					U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
-					A extends JeeslSecurityAction<L,D,R,V,U,AT>,
-					AT extends JeeslSecurityTemplate<L,D,C>,
+    private static <R extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
 					USER extends JeeslUser<R>,
 					STAFF extends JeeslStaff<R,USER,D1,D2>,
 					D1 extends EjbWithId, D2 extends EjbWithId>
-    	EjbStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2> factory(final Class<STAFF> cStaff)
+    	EjbStaffFactory<R,USER,STAFF,D1,D2> factory(final Class<STAFF> cStaff)
     {
-        return new EjbStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2>(cStaff);
+        return new EjbStaffFactory<R,USER,STAFF,D1,D2>(cStaff);
     }
     
     public EjbStaffFactory(final Class<STAFF> cStaff)

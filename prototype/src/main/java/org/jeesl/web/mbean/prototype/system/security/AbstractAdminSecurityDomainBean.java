@@ -48,12 +48,10 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityDomainBean.class);
 
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity;
 	protected JeeslUserFacade<USER> fUser;
-	
-	protected Class<C> cCategory;
-	protected Class<R> cRole;
-	protected Class<USER> cUser;
-	protected Class<STAFF> cStaff;
+
+	protected final Class<STAFF> cStaff;
 	
 	protected List<R> roles; public List<R> getRoles(){return roles;}
 	protected List<D1> domains; public List<D1> getDomains(){return domains;}
@@ -62,29 +60,23 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	protected D1 domain; public D1 getDomain(){return domain;} public void setDomain(D1 domain){this.domain = domain;}
 	protected STAFF staff; public STAFF getStaff(){return staff;} public void setStaff(STAFF staff) {this.staff = staff;}
 	
-	protected EjbStaffFactory<L,D,C,R,V,U,A,AT,USER,STAFF,D1,D2> efStaff;
+	protected EjbStaffFactory<R,USER,STAFF,D1,D2> efStaff;
 	
 	private OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> opContactHandler;
 	@Override public OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER> getOpUserHandler() {return opContactHandler;}
 	
-	public AbstractAdminSecurityDomainBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
+	public AbstractAdminSecurityDomainBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity, Class<STAFF> cStaff)
 	{
-		
+		this.fbSecurity=fbSecurity;
+		this.cStaff=cStaff;
+		efStaff = fbSecurity.ejbStaff(cStaff);
 	}
 	
-	protected void initSuper(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslUserFacade<USER> fUser
-			, Class<C> cCategory, Class<R> cRole, Class<USER> cUser, Class<STAFF> cStaff)
+	protected void initSuper(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslUserFacade<USER> fUser)
 	{
 		this.fSecurity=fSecurity;
 		this.fUser=fUser;
-		
-		this.cCategory=cCategory;
-		this.cRole=cRole;
-		this.cUser=cUser;
-		this.cStaff=cStaff;
-		
-		efStaff = EjbStaffFactory.factory(cStaff);
-		
+	
 		opContactHandler = new OverlayUserSelectionHandler<L,D,C,R,V,U,A,AT,USER>(this);
 	}
 	
@@ -93,7 +85,7 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 		roles = new ArrayList<R>();
 		try
 		{
-			for(R r : fSecurity.allForCategory(cRole, cCategory, category))
+			for(R r : fSecurity.allForCategory(fbSecurity.getClassRole(), fbSecurity.getClassCategory(), category))
 			{
 				if(r.isVisible())
 				{
@@ -137,8 +129,8 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	{
 		try
 		{
-			staff.setUser(fSecurity.find(cUser,staff.getUser()));
-			staff.setRole(fSecurity.find(cRole,staff.getRole()));
+			staff.setUser(fSecurity.find(fbSecurity.getClassUser(),staff.getUser()));
+			staff.setRole(fSecurity.find(fbSecurity.getClassRole(),staff.getRole()));
 			logger.info(AbstractLogMessage.saveEntity(staff));
 			staff = fSecurity.save(staff);
 			reloadStaffs();
@@ -167,13 +159,13 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	public List<USER> autoComplete(String query)
 	{
 		List<USER> users = fUser.likeNameFirstLast(query);
-		logger.info(AbstractLogMessage.autoComplete(cUser,query,users.size()));
+		logger.info(AbstractLogMessage.autoComplete(fbSecurity.getClassUser(),query,users.size()));
 		return users;
 	}
 
 	public void autoCompleteSelect()
 	{
-		staff.setUser(fUser.find(cUser,staff.getUser()));
+		staff.setUser(fUser.find(fbSecurity.getClassUser(),staff.getUser()));
 		logger.info(AbstractLogMessage.autoCompleteSelect(staff.getUser()));
 	}
 	
@@ -181,6 +173,6 @@ public class AbstractAdminSecurityDomainBean <L extends UtilsLang,
 	public void selectOpUser(USER user) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.selectEntity(user));
-		staff.setUser(fUser.find(cUser,user));
+		staff.setUser(fUser.find(fbSecurity.getClassUser(),user));
 	}
 }

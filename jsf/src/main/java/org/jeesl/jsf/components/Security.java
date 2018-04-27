@@ -1,4 +1,4 @@
-package net.sf.ahtutils.jsf.components;
+package org.jeesl.jsf.components;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import net.sf.ahtutils.jsf.util.ComponentAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@FacesComponent("net.sf.ahtutils.jsf.components.Security")
+@FacesComponent("org.jeesl.jsf.components.Security")
 public class Security extends UIPanel
 {
 	final static Logger logger = LoggerFactory.getLogger(Security.class);

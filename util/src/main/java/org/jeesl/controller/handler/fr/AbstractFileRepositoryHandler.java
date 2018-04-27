@@ -14,6 +14,7 @@ import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrContainerFactory;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrMetaFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
+import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
@@ -194,5 +195,18 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		zof.close();
 		bos.close();
 		return bos.toByteArray();
+	}
+	
+	public void copyTo(JeeslFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> target) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info("Copy To");
+		for(META oldMeta : metas)
+		{
+			META newMeta = efMeta.build(target.getContainer(), oldMeta.getName(), oldMeta.getSize(), oldMeta.getRecord());
+			newMeta.setCategory(oldMeta.getCategory());
+			newMeta.setMd5Hash(oldMeta.getMd5Hash());
+			newMeta.setType(oldMeta.getType());
+			fFr.saveToFileRepository(newMeta, fFr.loadFromFileRepository(oldMeta));
+		}
 	}
 }

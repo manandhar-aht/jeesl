@@ -9,6 +9,7 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslWithFileRepositoryContainer;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -27,4 +28,6 @@ public interface JeeslFileRepositoryHandler <L extends UtilsLang, D extends Util
 	//Default behaiviour should be transaction=false
 	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException;
 	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException;
+	
+	void copyTo(JeeslFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> target) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException;
 }

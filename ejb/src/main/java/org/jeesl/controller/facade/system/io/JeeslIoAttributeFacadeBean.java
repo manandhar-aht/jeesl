@@ -25,6 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -123,5 +125,16 @@ public class JeeslIoAttributeFacadeBean<L extends UtilsLang, D extends UtilsDesc
 
 		TypedQuery<DATA> tQ = em.createQuery(cQ);
 		return tQ.getResultList();
+	}
+
+	@Override
+	public CONTAINER copy(CONTAINER container) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		CONTAINER c = this.save(fbAttribute.ejbContainer().build(container.getSet()));
+		for(DATA data : this.fAttributeData(container))
+		{
+			this.save(fbAttribute.ejbData().copy(c,data));
+		}
+		return c;
 	}	
 }

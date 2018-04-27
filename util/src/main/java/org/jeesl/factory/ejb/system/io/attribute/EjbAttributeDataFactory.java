@@ -1,5 +1,8 @@
 package org.jeesl.factory.ejb.system.io.attribute;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
@@ -33,6 +36,23 @@ public class EjbAttributeDataFactory<CRITERIA extends JeeslAttributeCriteria<?,?
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
+		return ejb;
+	}
+	
+	public DATA copy(CONTAINER container, DATA data)
+	{
+		DATA ejb = build(container, data.getCriteria());
+		ejb.setValueString(data.getValueString());
+		ejb.setValueBoolean(data.getValueBoolean());
+		ejb.setValueInteger(data.getValueInteger());
+		ejb.setValueDouble(data.getValueDouble());
+		ejb.setValueRecord(data.getValueRecord());
+		ejb.setValueOption(data.getValueOption());
+		
+		List<OPTION> list = new ArrayList<OPTION>();
+		list.addAll(data.getValueOptions());
+		
+		ejb.setValueOptions(list);
 		return ejb;
 	}
 }

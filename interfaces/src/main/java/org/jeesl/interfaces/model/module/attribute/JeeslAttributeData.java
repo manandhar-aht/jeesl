@@ -10,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?,?,?>,
 							OPTION extends JeeslAttributeOption<?,?,CRITERIA>,
 							CONTAINER extends JeeslAttributeContainer<?,?>>
-		extends Serializable,EjbSaveable,EjbRemoveable
+		extends Serializable,EjbSaveable,EjbRemoveable,Cloneable
 {
 	public static enum Attributes{container,criteria};
 	

@@ -8,6 +8,7 @@ import java.util.Set;
 import org.jeesl.api.bean.location.JeeslLocation4Cache;
 import org.jeesl.controller.handler.location.HierarchicalLocationUpdateParameter;
 import org.jeesl.interfaces.controller.handler.location.JeeslLocation4Store;
+import org.jeesl.interfaces.controller.handler.location.JeeslLocationSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,18 +22,18 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	private final JeeslLocation4Cache<L1,L2,L3,L4> cache4;
 	
 	protected final List<L4> list4; public List<L4> getList4() {return list4;}
-	
-	protected final Set<L4> allowedL4;
-	
+	protected final Set<L4> allow4;
+	protected final Set<L4> ignore4;
 	protected L4 l4; public L4 getL4(){return l4;} public void setL4(L4 l4){this.l4 = l4;}
 	
-	public SbLocation4Handler(JeeslLocation4Cache<L1,L2,L3,L4> cache4, JeeslLocation4Store<L1,L2,L3,L4> store4)
+	public SbLocation4Handler(JeeslLocationSelected callback, JeeslLocation4Cache<L1,L2,L3,L4> cache4, JeeslLocation4Store<L1,L2,L3,L4> store4)
 	{
-		super(cache4,store4);
+		super(callback,cache4,store4);
 		this.cache4=cache4;
 		this.store4=store4;
 		list4 = new ArrayList<L4>();
-		allowedL4 = new HashSet<L4>();
+		allow4 = new HashSet<L4>();
+		ignore4 = new HashSet<L4>();
 	}
 	
 	protected void reset4(boolean r1, boolean r2, boolean r3, boolean r4)
@@ -45,8 +46,8 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	{
 		for(L4 ejb : list)
 		{
-			if(!allowedL4.contains(ejb)) {allowedL4.add(ejb);}
-			if(!allowedL3.contains(getParent4(ejb)))
+			if(!allow4.contains(ejb)) {allow4.add(ejb);}
+			if(!allow3.contains(getParent4(ejb)))
 			{
 				List<L3> upper = new ArrayList<L3>();
 				upper.add(getParent4(ejb));
@@ -56,17 +57,18 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	}
 	
 	
-	public void ui4(L4 ejb) {select4(ejb,HierarchicalLocationUpdateParameter.build(false,true,true,true));}
+	public void ui4(L4 ejb) {select4(ejb,HierarchicalLocationUpdateParameter.build(false,true,true,true,true));}
 	public void select4(L4 ejb, HierarchicalLocationUpdateParameter hlup)
 	{
 		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString());}
 		this.l4=ejb;
 		store4.setL4(ejb);
 		clearL5List();
-		if(hlup.isFillParent()) {select3(getParent4(l4),hlup.withSelectChild(false));}
+		if(hlup.isFillParent()) {select3(getParent4(l4),hlup.copy().selectChild(false).fireEvent(false));}
 		if(hlup.isFillChilds()) {fillL5List();}
-		if(hlup.isSelectChild()) {selectDefaultL5(hlup.withFillParent(false));}
+		if(hlup.isSelectChild()) {selectDefaultL5(hlup.copy().fillParent(false).fireEvent(false));}
 		if(hlup.isCallback()) {selected4();}
+		if(hlup.isFireEvent()) {fireEvent();}
 	}
 	
 	protected L3 getParent4(L4 l4) {return null;}
@@ -78,18 +80,29 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	{
 		for(L4 ejb : cache4.cacheL4(l3))
 		{
-			if(viewIsGlobal || allowedL4.contains(ejb)) {list4.add(ejb);}
+			if((viewIsGlobal || allow4.contains(ejb)) && !ignore4.contains(ejb)) {list4.add(ejb);}
 		}
 	}
 	@Override protected void selectDefaultL4(HierarchicalLocationUpdateParameter hlup)
 	{
 		reset(4);
-		if(!list4.isEmpty()) {select4(list4.get(0),hlup.withFillParent(false));}
+		if(!list4.isEmpty()) {select4(list4.get(0),hlup.fillParent(false));}
 	}
-	
 	
 	//Methods for next level
 	protected void clearL5List() {}
 	protected void fillL5List() {}
 	protected void selectDefaultL5(HierarchicalLocationUpdateParameter hlup) {}
+	
+	public void debug(boolean debug)
+	{
+		if(debug)
+		{
+			super.debug(debug);
+			StringBuilder sb = new StringBuilder();
+			sb.append("\tLevel 4 ").append(list4.size()).append("elements ");
+			if(l4!=null) {sb.append(l4.getClass().getSimpleName()).append(": ").append(l4.toString());}else {sb.append(": null");}
+			logger.info(sb.toString());
+		}
+	}
 }

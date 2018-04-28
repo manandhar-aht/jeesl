@@ -23,37 +23,47 @@ public class HierarchicalLocationUpdateParameter implements Cloneable
 	public boolean isCallback() {return callback;}
 	public void setCallback(boolean callback) {this.callback = callback;}
 	
-	public static HierarchicalLocationUpdateParameter build(boolean fillParent, boolean fillChilds, boolean selectChild, boolean callback)
+	private boolean fireEvent;
+	public boolean isFireEvent() {return fireEvent;}
+	public void setFireEvent(boolean fireEvent) {this.fireEvent = fireEvent;}
+	
+	public static HierarchicalLocationUpdateParameter build(boolean fillParent, boolean fillChilds, boolean selectChild, boolean callback, boolean fireEvent)
 	{
 		HierarchicalLocationUpdateParameter hlup = new HierarchicalLocationUpdateParameter();
 		hlup.setFillParent(fillParent);
 		hlup.setFillChilds(fillChilds);
 		hlup.setSelectChild(selectChild);
 		hlup.setCallback(callback);
+		hlup.setFireEvent(fireEvent);
 		return hlup;
 	}
 	
-	public static HierarchicalLocationUpdateParameter copy(HierarchicalLocationUpdateParameter hlup)
+	public HierarchicalLocationUpdateParameter copy()
 	{
-		HierarchicalLocationUpdateParameter newHlup = new HierarchicalLocationUpdateParameter();
-		newHlup.setFillParent(hlup.isFillParent());
-		newHlup.setFillChilds(hlup.isFillChilds());
-		newHlup.setSelectChild(hlup.isSelectChild());
-		newHlup.setCallback(hlup.isCallback());
-		return newHlup;
-	}
-	
-	public HierarchicalLocationUpdateParameter withFillParent(boolean value)
-	{
-		HierarchicalLocationUpdateParameter next = HierarchicalLocationUpdateParameter.copy(this);
-		next.setFillParent(value);
+		HierarchicalLocationUpdateParameter next = new HierarchicalLocationUpdateParameter();
+		next.setFillParent(this.isFillParent());
+		next.setFillChilds(this.isFillChilds());
+		next.setSelectChild(this.isSelectChild());
+		next.setCallback(this.isCallback());
+		next.setFireEvent(this.isFireEvent());
 		return next;
 	}
 	
-	public HierarchicalLocationUpdateParameter withSelectChild(boolean value)
+	public HierarchicalLocationUpdateParameter fillParent(boolean value)
 	{
-		HierarchicalLocationUpdateParameter next = HierarchicalLocationUpdateParameter.copy(this);
-		next.setSelectChild(false);
-		return next;
+		setFillParent(value);
+		return this;
+	}
+	
+	public HierarchicalLocationUpdateParameter selectChild(boolean value)
+	{
+		setSelectChild(value);
+		return this;
+	}
+	
+	public HierarchicalLocationUpdateParameter fireEvent(boolean value)
+	{
+		setFireEvent(value);
+		return this;
 	}
 }

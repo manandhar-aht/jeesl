@@ -305,12 +305,14 @@
             <scope>compile</scope>
             <version>4.7</version>
         </dependency>
-        <dependency>
+        
+        <!-- 2018-04-29 antlr4-maven-plugin deactivatd by tk -->
+<!--        <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-maven-plugin</artifactId>
             <version>4.7</version>
         </dependency>
-        <dependency>
+-->      <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <exclusions>

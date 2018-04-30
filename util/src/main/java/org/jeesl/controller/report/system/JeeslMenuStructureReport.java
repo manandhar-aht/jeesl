@@ -1,5 +1,6 @@
 package org.jeesl.controller.report.system;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -23,7 +24,6 @@ import org.jeesl.util.comparator.ejb.system.security.SecurityViewComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.xml.security.Security;

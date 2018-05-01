@@ -16,7 +16,7 @@ public class Day implements Serializable
 	private int nr;
 	public int getNr() {return nr;}
 	public void setNr(int nr) {this.nr = nr;}
-	
+
 	@JsonProperty("name")
 	private String name;
 	public String getName() {return name;}
@@ -26,4 +26,9 @@ public class Day implements Serializable
 	private boolean weekend;
 	public boolean isWeekend() {return weekend;}
 	public void setWeekend(boolean weekend) {this.weekend = weekend;}
+	
+	@JsonProperty("today")
+	private boolean today;
+	public boolean isToday() {return today;}
+	public void setToday(boolean today) {this.today = today;}
 }

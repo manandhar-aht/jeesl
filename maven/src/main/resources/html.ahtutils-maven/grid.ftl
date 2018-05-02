@@ -221,22 +221,22 @@ body {min-width: ${width}px;}
 
 /* JeeslBlock >> Children
 ----------------------------------------------------------------------------------------------------*/
-[class*="jeeslBlock"] > div:first-child { margin-left: 5px; margin-right: -34px; padding-inline-start: 0px; padding-right: 7px; margin-top: -5px; margin-bottom: 0px;}
-[class*="jeeslBlock"] > div:last-child { margin-left: 5px; margin-right: -32px; padding-left: 32px; padding-right: 25px; margin-top: -5px;}
+[class*="jeeslBlock"] > div:first-child { margin-left: 5px; margin-right: -34px; padding-inline-start: 0px; padding-right: 7px; margin-top: 1px; margin-bottom: -10px;}
+[class*="jeeslBlock"] > div:last-child { margin-left: 5px; margin-right: -32px; padding-left: 32px; padding-right: 25px; margin-top:1px; margin-bottom: -10px;}
 
 [class*="jeeslBlock"] {margin-top: 5px;}
 
 [class*="jeeslBlock"] > div {margin-bottom: ${doublegutter}px;}
-[class*="jeeslBlock"] > div:last-child {margin-bottom: 0px;}
+[class*="jeeslBlock"] > div:last-child {margin-bottom: -5px;}
 
 [class*="jeeslBlock"] > form {margin-bottom: ${doublegutter}px;}
-[class*="jeeslBlock"] > form:last-child {margin-bottom: 0px;}
+[class*="jeeslBlock"] > form:last-child {margin-bottom: -5px;}
 
 [class*="jeeslBlock"] > form > div {margin-bottom: ${doublegutter}px;}
-[class*="jeeslBlock"] > form > div:last-child {margin-bottom: 0px;}
+[class*="jeeslBlock"] > form > div:last-child {margin-bottom: -5px;}
 
 [class*="jeeslBlockSpace"] > div {margin-bottom: ${doublegutter}px;}
-[class*="jeeslBlockSpace"] > div:last-child {margin-bottom: 0px;}
+[class*="jeeslBlockSpace"] > div:last-child {margin-bottom: -5px;}
 
 /* JeeslBlock >> 12 Columns
 ----------------------------------------------------------------------------------------------------*/

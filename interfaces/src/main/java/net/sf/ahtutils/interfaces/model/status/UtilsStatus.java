@@ -14,7 +14,7 @@ public interface UtilsStatus<S extends UtilsStatus<S,L,D>, L extends UtilsLang, 
 			extends EjbRemoveable,EjbWithId,EjbWithCode,EjbWithPositionVisible,EjbWithImage,EjbWithImageAlt,
 						EjbWithLangDescription<L,D>,EjbWithParent
 {	
-	public enum EjbAttributes{code}
+	public enum EjbAttributes{code,parent}
 	
 	public String getStyle();
 	public void setStyle(String style);

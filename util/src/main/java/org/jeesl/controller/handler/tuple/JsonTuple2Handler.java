@@ -31,11 +31,7 @@ public class JsonTuple2Handler <X extends EjbWithId, Y extends EjbWithId> implem
 
 	private boolean withSum; public boolean isWithSum() {return withSum;} public void setWithSum(boolean withSum) {this.withSum = withSum;}
 
-	private int sumDivider;
-	
-	public void setSumDivider(int sumDivider) {
-		this.sumDivider = sumDivider;
-	}
+	private int sumDivider; public void setSumDivider(int sumDivider) {this.sumDivider = sumDivider;}
 
 	public JsonTuple2Handler(UtilsFacade fUtils, Class<X> cX, Class<Y> cY)
 	{
@@ -64,5 +60,10 @@ public class JsonTuple2Handler <X extends EjbWithId, Y extends EjbWithId> implem
 		listX.addAll(tf.toListX(tuples));
 		listY.addAll(tf.toListY(tuples));
 		map.putAll(tf.toMap(tuples));
+	}
+	
+	public boolean contains(X x, Y y)
+	{
+		return map.containsKey(x) && map.get(x).containsKey(y);
 	}
 }

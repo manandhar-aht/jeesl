@@ -226,8 +226,9 @@ body {min-width: ${width}px;}
 
 [class*="jeeslBlock"] {margin-top: 5px;}
 
-[class*="jeeslBlock"] > div {margin-bottom: ${doublegutter}px;}
-[class*="jeeslBlock"] > div:last-child {margin-bottom: -5px;}
+[class*="jeeslBlock"] {margin-top: 0px;}
+[class*="jeeslBlock"] > div:first-child {margin-bottom: -10px;}
+[class*="jeeslBlock"] > div {margin-bottom: 10px;}
 
 [class*="jeeslBlock"] > form {margin-bottom: ${doublegutter}px;}
 [class*="jeeslBlock"] > form:last-child {margin-bottom: -5px;}

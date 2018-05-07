@@ -130,16 +130,35 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	
 	public <W extends JeeslWithAttributeContainer<CONTAINER>> void prepare(W ejb)
 	{
-		data.clear();
-		if(ejb.getAttributeContainer()==null)
+		if(ejb.getAttributeContainer()!=null)
 		{
-			container = efContainer.build(attributeSet);
+			container = ejb.getAttributeContainer();
+			prepare();
 		}
 		else
 		{
-			container = ejb.getAttributeContainer();
+			container=null;
+			prepare(container);
 		}
 		
+	}
+	
+	public void prepare(CONTAINER container)
+	{
+		if(container!=null)
+		{
+			this.container=container;
+		}
+		else
+		{
+			this.container = efContainer.build(attributeSet);
+		}		
+		prepare();
+	}
+	
+	private void prepare()
+	{
+		data.clear();
 		if(EjbIdFactory.isSaved(container))
 		{
 			reloadData();

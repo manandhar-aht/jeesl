@@ -32,8 +32,7 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 											ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 											CONTAINER extends JeeslAttributeContainer<SET,DATA>,
 											DATA extends JeeslAttributeData<CRITERIA,OPTION,CONTAINER>>
-					implements Serializable,
-								JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
+					implements JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAppAttributeBean.class);
@@ -109,6 +108,11 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 		mapTableHeader.put(s, listTable);
 	}
 	
+	@Override public void updateCriteria(CRITERIA c)
+	{
+		logger.info("Need to implement propagation of Criteria Update");
+	}
+	
 	private final Map<CRITERIA,List<OPTION>> mapOption;
 	@Override public Map<CRITERIA,List<OPTION>> getMapOption() {return mapOption;}
 	private void reloadOptions()
@@ -131,6 +135,4 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 		}
 		return sb.toString();
 	}
-	
-	
 }

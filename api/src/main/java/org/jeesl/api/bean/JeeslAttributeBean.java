@@ -1,5 +1,6 @@
 package org.jeesl.api.bean;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ public interface JeeslAttributeBean<L extends UtilsLang, D extends UtilsDescript
 									ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 									CONTAINER extends JeeslAttributeContainer<SET,DATA>,
 									DATA extends JeeslAttributeData<CRITERIA,OPTION,CONTAINER>>
+	extends Serializable
 {	
 	List<CATEGORY> getCategories();
 	void reloadCategories();
@@ -30,7 +32,9 @@ public interface JeeslAttributeBean<L extends UtilsLang, D extends UtilsDescript
 	List<TYPE> getTypes();
 	void reloadTypes();
 	
+	void updateCriteria(CRITERIA c);
 	void updateSet(SET set);
+	
 	Map<SET,List<CRITERIA>> getMapCriteria();
 	Map<SET,List<CRITERIA>> getMapTableHeader();
 	

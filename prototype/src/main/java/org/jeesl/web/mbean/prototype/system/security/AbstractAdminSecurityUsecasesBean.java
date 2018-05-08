@@ -201,5 +201,5 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 		}
 	}
 	
-	protected void reorderUsecases() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, usecases);}
+	public void reorderUsecases() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, usecases);}
 }

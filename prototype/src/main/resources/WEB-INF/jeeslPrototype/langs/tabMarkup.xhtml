@@ -5,10 +5,7 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui"
->
-	<h:outputText value="#{locales.size()}"/>
-	<h:outputText value="#{locales[0].code}"/>
-	
+>	
 	<p:tabView var="t" value="#{locales}" rendered="#{locales.size() gt 1}">  
   		<p:tab title="#{t.code}">
   			<p:selectOneMenu value="#{value[t.code].type}" effect="fade" rendered="false">  

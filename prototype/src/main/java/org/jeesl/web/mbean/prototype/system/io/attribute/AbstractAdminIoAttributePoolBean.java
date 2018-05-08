@@ -98,6 +98,7 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 		criteria.setCategory(fAttribute.find(fbAttribute.getClassCategory(),criteria.getCategory()));
 		criteria.setType(fAttribute.find(fbAttribute.getClassType(),criteria.getType()));
 		criteria = fAttribute.save(criteria);
+		bAttribute.updateCriteria(criteria);
 		reloadCriterias();
 		reloadOptions();
 	}
@@ -146,8 +147,9 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 	
 	public void saveOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(criteria));}
+		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(option));}
 		option = fAttribute.save(option);
+		bAttribute.updateCriteria(option.getCriteria());
 		reloadOptions();
 	}
 	
@@ -156,6 +158,7 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 		if(debugOnInfo) {logger.info(AbstractLogMessage.rmEntity(criteria));}
 		fAttribute.rm(option);
 		reloadOptions();
+		bAttribute.updateCriteria(option.getCriteria());
 		reset(false,true);
 	}
 	

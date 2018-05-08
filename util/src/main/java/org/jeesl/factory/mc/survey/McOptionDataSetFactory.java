@@ -33,7 +33,7 @@ public class McOptionDataSetFactory <OPTION extends EjbWithId>
 		
         for(JsonFlatFigure f : figures.getFigures())
         {
-        		dsOption.getData().add(XmlDataFactory.build(tfName.build(map.get(f.getL2()))));
+        	dsOption.getData().add(XmlDataFactory.build(tfName.build(map.get(f.getL2()))));
             dsValue.getData().add(XmlDataFactory.build(f.getL3()));
         }
         

@@ -1,6 +1,5 @@
 package org.jeesl.web.mbean.prototype.module.survey;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +17,7 @@ import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
 import org.jeesl.api.facade.system.JeeslJobFacade;
 import org.jeesl.controller.handler.module.SurveyAnalysisCacheHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
+import org.jeesl.controller.processor.survey.analysis.SurveySelectOneProcessor;
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
@@ -64,20 +64,12 @@ import org.metachart.xml.chart.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
-import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
-import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
-import net.sf.exlp.util.io.JsonUtil;
-import net.sf.exlp.util.xml.JaxbUtil;
 
 public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
@@ -107,11 +99,11 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 						DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
 						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,
 						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-						AT extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,DATTRIBUTE,AQ,ATT>,
+						TOOL extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,DATTRIBUTE,AQ,ATT>,
 						ATT extends UtilsStatus<ATT,L,D>,
 						TOOLCACHETEMPLATE extends JeeslJobTemplate<L,D,?,?,?>,
 						CACHE extends JeeslJobCache<TOOLCACHETEMPLATE,?>>
-					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT,TOOLCACHETEMPLATE,CACHE>
+					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT,TOOLCACHETEMPLATE,CACHE>
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -123,49 +115,49 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH> efDomainQuery;
 	
 	private final Map<QUESTION,DataSet> mapDsOption; public Map<QUESTION, DataSet> getMapDsOption() {return mapDsOption;}
-	private final Map<QUESTION,List<AT>> mapTool; public Map<QUESTION,List<AT>> getMapTool() {return mapTool;}
+	private final Map<QUESTION,List<TOOL>> mapTool; public Map<QUESTION,List<TOOL>> getMapTool() {return mapTool;}
 	private final Map<SECTION,List<QUESTION>> mapQuestion; public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
 	
-	private final Map<AT,String> mapToolAttributeXpath; public Map<AT, String> getMapToolAttributeXpath() {return mapToolAttributeXpath;}
-	private final Map<AT,DATTRIBUTE> mapToolPathAttribute; public Map<AT,DATTRIBUTE> getMapToolPathAttribute() {return mapToolPathAttribute;}
-	private final Map<AT,List<JsonSurveyValue>> mapToolPathEntities; public Map<AT,List<JsonSurveyValue>> getMapToolPathEntities() {return mapToolPathEntities;}
-	private final Map<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>> mapToolPathValue; public Map<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>> getMapToolPathValue() {return mapToolPathValue;}
+	private final Map<TOOL,String> mapToolAttributeXpath; public Map<TOOL,String> getMapToolAttributeXpath() {return mapToolAttributeXpath;}
+	private final Map<TOOL,DATTRIBUTE> mapToolPathAttribute; public Map<TOOL,DATTRIBUTE> getMapToolPathAttribute() {return mapToolPathAttribute;}
+	private final Map<TOOL,List<JsonSurveyValue>> mapToolPathEntities; public Map<TOOL,List<JsonSurveyValue>> getMapToolPathEntities() {return mapToolPathEntities;}
+	private final Map<TOOL,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>> mapToolPathValue; public Map<TOOL,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>> getMapToolPathValue() {return mapToolPathValue;}
 
-	private final Map<AT,List<JsonSurveyValue>> mapToolOption; public Map<AT,List<JsonSurveyValue>> getMapToolOption() {return mapToolOption;}
-	private final Map<AT,JsonFlatFigures> mapToolTableOptionGlobal; public Map<AT,JsonFlatFigures> getMapToolTableOptionGlobal() {return mapToolTableOptionGlobal;}
+	private final Map<TOOL,List<JsonSurveyValue>> mapToolOption; public Map<TOOL,List<JsonSurveyValue>> getMapToolOption() {return mapToolOption;}
+	private final Map<TOOL,JsonFlatFigures> mapToolTableOptionGlobal; public Map<TOOL,JsonFlatFigures> getMapToolTableOptionGlobal() {return mapToolTableOptionGlobal;}
 
-	private final Map<AT,List<JsonSurveyValue>> mapToolBoolean; public Map<AT,List<JsonSurveyValue>> getMapToolBoolean() {return mapToolBoolean;}
+	private final Map<TOOL,List<JsonSurveyValue>> mapToolBoolean; public Map<TOOL,List<JsonSurveyValue>> getMapToolBoolean() {return mapToolBoolean;}
 	
-	private final Map<AT,JsonFlatFigures> mapToolTableText; public Map<AT,JsonFlatFigures> getMapToolTableText() {return mapToolTableText;}
-	private final Map<AT,JsonFlatFigures> mapToolTableRemark; public Map<AT,JsonFlatFigures> getMapToolTableRemark() {return mapToolTableRemark;}
+	private final Map<TOOL,JsonFlatFigures> mapToolTableText; public Map<TOOL,JsonFlatFigures> getMapToolTableText() {return mapToolTableText;}
+	private final Map<TOOL,JsonFlatFigures> mapToolTableRemark; public Map<TOOL,JsonFlatFigures> getMapToolTableRemark() {return mapToolTableRemark;}
 
 	protected final SbSingleHandler<ANALYSIS> sbhAnalysis; public SbSingleHandler<ANALYSIS> getSbhAnalysis() {return sbhAnalysis;}
 	
-	private DataSet ds; public DataSet getDs() {return ds;}
+	private SurveySelectOneProcessor<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT,TOOLCACHETEMPLATE,CACHE> s1Processor;
 
 	public AbstractSurveyReportBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
-			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT,TOOLCACHETEMPLATE> fbAnalysis)
+			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT,TOOLCACHETEMPLATE> fbAnalysis)
 	{
 		super(fbTemplate,fbCore,fbAnalysis);
 		
 		efDomainQuery = fbAnalysis.ejbDomainQuery();
 		
 		mapQuestion = new HashMap<SECTION,List<QUESTION>>();
-		mapTool = new HashMap<QUESTION,List<AT>>();
+		mapTool = new HashMap<QUESTION,List<TOOL>>();
 		mapDsOption = new HashMap<QUESTION,DataSet>();
 		
-		mapToolAttributeXpath = new HashMap<AT,String>();
-		mapToolPathAttribute = new HashMap<AT,DATTRIBUTE>();
-		mapToolPathEntities = new HashMap<AT,List<JsonSurveyValue>>();
-		mapToolPathValue = new HashMap<AT,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>>();
+		mapToolAttributeXpath = new HashMap<TOOL,String>();
+		mapToolPathAttribute = new HashMap<TOOL,DATTRIBUTE>();
+		mapToolPathEntities = new HashMap<TOOL,List<JsonSurveyValue>>();
+		mapToolPathValue = new HashMap<TOOL,Nested2Map<JsonSurveyValue,JsonSurveyValue,JsonSurveyValue>>();
 		
-		mapToolOption = new HashMap<AT,List<JsonSurveyValue>>();
-		mapToolTableOptionGlobal = new HashMap<AT,JsonFlatFigures>();
+		mapToolOption = new HashMap<TOOL,List<JsonSurveyValue>>();
+		mapToolTableOptionGlobal = new HashMap<TOOL,JsonFlatFigures>();
 		
-		mapToolBoolean = new HashMap<AT,List<JsonSurveyValue>>(); 
-		mapToolTableText = new HashMap<AT,JsonFlatFigures>();
-		mapToolTableRemark = new HashMap<AT,JsonFlatFigures>();
+		mapToolBoolean = new HashMap<TOOL,List<JsonSurveyValue>>(); 
+		mapToolTableText = new HashMap<TOOL,JsonFlatFigures>();
+		mapToolTableRemark = new HashMap<TOOL,JsonFlatFigures>();
 		
 		sbhAnalysis = new SbSingleHandler<ANALYSIS>(fbAnalysis.getClassAnalysis(),this);
 		sections = new ArrayList<SECTION>();
@@ -174,14 +166,16 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	protected void initSuperReport(String userLocale, String[] localeCodes, JeeslFacesMessageBean bMessage,
 			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fCore,
 			JeeslSurveyCoreFacade<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey,
-			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fAnalysis,
+			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT> fAnalysis,
 			JeeslJobFacade<L,D,TOOLCACHETEMPLATE,?,?,?,?,?,?,?,?,CACHE,?,?> fJob,
 			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey,
 			JeeslReportAggregationLevelFactory tfName)
 	{
 		super.initSuperSurvey(new ArrayList<String>(Arrays.asList(localeCodes)),bMessage,fCore,fSurvey,fAnalysis,bSurvey);
 		this.fJob=fJob;
-		cacheHandler = new SurveyAnalysisCacheHandler<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT,TOOLCACHETEMPLATE,CACHE>(fJob,fAnalysis);
+		cacheHandler = new SurveyAnalysisCacheHandler<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT,TOOLCACHETEMPLATE,CACHE>(fJob,fAnalysis);
+		s1Processor = new SurveySelectOneProcessor<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT,TOOLCACHETEMPLATE,CACHE>(bSurvey,cacheHandler,efTool,tfName);
+		
 		mfOption = new McOptionDataSetFactory<OPTION>(tfName);
 		initPageSettings();
 		
@@ -250,13 +244,14 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 				try
 				{
 					AQ analysis = fAnalysis.fAnalysis(sbhAnalysis.getSelection(), q);
-					List<AT> tools = new ArrayList<AT>();
+					List<TOOL> tools = new ArrayList<TOOL>();
 					mapQuestion.get(section).add(q);
-					for(AT tool : fCore.allForParent(fbAnalysis.getClassAnalysisTool(), analysis))
+					for(TOOL tool : fCore.allForParent(fbAnalysis.getClassAnalysisTool(), analysis))
 					{
 						if(tool.isVisible())
 						{
 							if(debugOnInfo) {logger.info("Crunching data for tool:"+tool.toString()+" "+tool.getElement().getCode());}
+							
 							Set<Long> optionIds = new HashSet<Long>();
 							mapToolPathEntities.put(tool,new ArrayList<JsonSurveyValue>());
 							tool = fAnalysis.load(tool);
@@ -266,18 +261,16 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 								if(debugOnInfo) {logger.info("Handling :"+JeeslSurveyAnalysisTool.Elements.selectOne+" withDomainQuery:"+efTool.withDomainQuery(tool));}
 								JsonFlatFigures ff = cacheHandler.surveyStatisticOption(q, sbhSurvey.getSelection(), tool);
 								
-								
 								for(JsonFlatFigure f : ff.getFigures())
 								{
 									optionIds.add(f.getL2());
 								}
 								mapToolTableOptionGlobal.put(tool,ff);
+								
 								if(!efTool.withDomainQuery(tool))
 								{
 									DataSet ds2 = mfOption.build(ff,bSurvey.getMapOption().get(q));
 									mapDsOption.put(q,ds2);
-									JaxbUtil.info(ds2);
-									this.ds=ds2;
 								}
 								else
 								{
@@ -367,7 +360,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		}
 	}
 	
-	private void buildPathEntities(AT tool, Set<Long> pathIds)
+	private void buildPathEntities(TOOL tool, Set<Long> pathIds)
 	{
 		PATH path = efDomainQuery.toEffectiveAttribute(tool.getQuery());
 		

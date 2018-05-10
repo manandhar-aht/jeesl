@@ -20,6 +20,7 @@
 		<composite:attribute name="bean" required="true"/>
 		<composite:attribute name="update" required="false"/>
 		<composite:attribute name="withSave" required="false" default="true"/>
+		<composite:attribute name="withLabel" required="false" default="true"/>
 		<composite:attribute name="datePattern" required="false" default="dd.MM.yyyy" />
 	</composite:interface>
 	
@@ -29,9 +30,9 @@
 				<f:facet name="actions">
 					<aht:icon id="btSave" type="jeeslSave" listener="#{cc.attrs.handler.save()}" update="@form #{cc.attrs.update}" tooltip="#{msg.jeeslSurveyTtSaveSection}" />
 				</f:facet>
-				<ui:repeat id="repeatC" value="#{appAttributeBean.mapCriteria[cc.attrs.handler.attributeSet]}"  var="c">	
-					<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
-						<p:outputLabel value="#{c.name[localeCode].lang}"/>
+				<ui:repeat id="repeatC" value="#{appAttributeBean.mapCriteria[cc.attrs.handler.attributeSet]}" var="c">	
+					<p:panelGrid columns="#{cc.attrs.withLabel ? 2 : 1}" columnClasses="#{cc.attrs.withLabel ? 'jeeslGrid30,jeeslGrid70' : 'jeeslGrid100'}">
+						<p:outputLabel value="#{c.name[localeCode].lang}" rendered="#{cc.attrs.withLabel}"/>
 						<jtp:inputAttribute attributeHandler="#{cc.attrs.handler}" criteria="#{c}"/>
 					</p:panelGrid>
 				</ui:repeat>
@@ -39,8 +40,8 @@
 		</ui:fragment>
 		<ui:fragment rendered="#{not cc.attrs.withSave}">
 			<ui:repeat id="repeatG" value="#{appAttributeBean.mapCriteria[cc.attrs.handler.attributeSet]}"  var="c">	
-				<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
-					<p:outputLabel value="#{c.name[localeCode].lang}"/>
+				<p:panelGrid columns="#{cc.attrs.withLabel ? 2 : 1}" columnClasses="#{cc.attrs.withLabel ? 'jeeslGrid30,jeeslGrid70' : 'jeeslGrid100'}">
+					<p:outputLabel value="#{c.name[localeCode].lang}" rendered="#{cc.attrs.withLabel}"/>
 					<jtp:inputAttribute attributeHandler="#{cc.attrs.handler}" criteria="#{c}"/>
 				</p:panelGrid>
 			</ui:repeat>

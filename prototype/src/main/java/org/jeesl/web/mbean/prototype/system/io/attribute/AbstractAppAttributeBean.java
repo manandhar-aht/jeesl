@@ -1,6 +1,5 @@
 package org.jeesl.web.mbean.prototype.system.io.attribute;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

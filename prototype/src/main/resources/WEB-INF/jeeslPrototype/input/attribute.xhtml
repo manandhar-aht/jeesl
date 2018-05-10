@@ -6,16 +6,18 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui"
     xmlns:jp="http://jsf.jeesl.org/prototype"
+    xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 >
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 
 	<ui:fragment>
 		<p:selectBooleanCheckbox value="#{attributeHandler.data[criteria].valueBoolean}" rendered="#{criteria.type.code eq 'bool'}"/>
 		<p:inputText value="#{attributeHandler.data[criteria].valueString}" rendered="#{criteria.type.code eq 'text'}"/>
+		<jtp:inputRemark value="#{attributeHandler.data[criteria].valueString}" rendered="#{criteria.type.code eq 'remark'}"/>
 		
 		<jp:inputCalendar value="#{attributeHandler.data[criteria].valueRecord}" rendered="#{criteria.type.code eq 'date'}"/>
 		
-		<p:selectOneMenu id="sOne" value="#{attributeHandler.data[criteria].valueOption}" effect="fade" rendered="#{criteria.type.code eq 'selectOne'}">
+		<p:selectOneMenu id="sOne" value="#{attributeHandler.data[criteria].valueOption}" effect="fade" rendered="#{criteria.type.code eq 'selectOne'}" autoWidth="false">
 			<f:selectItems value="#{appAttributeBean.mapOption[criteria]}" var="o" itemLabel="#{o.name[loc].lang}" itemValue="#{o}"/>
 		</p:selectOneMenu>
 		

@@ -1,7 +1,6 @@
 package org.jeesl.web.mbean.prototype.system;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslLabelBean;
@@ -25,7 +24,6 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(AbstractLabelBean.class);
 	
 	private TranslationHandler<L,D,RE,RA> th;
-	
 	
 	public Map<String, Map<String,L>> getEntities() {return th.getEntities();}
 	public Map<String, Map<String, Map<String,L>>> getLabels() {return th.getLabels();}

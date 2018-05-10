@@ -130,7 +130,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	
 	public <W extends JeeslWithAttributeContainer<CONTAINER>> void prepare(W ejb)
 	{
-		if(ejb.getAttributeContainer()!=null)
+		if(ejb!=null && ejb.getAttributeContainer()!=null)
 		{
 			container = ejb.getAttributeContainer();
 			prepare();
@@ -140,7 +140,6 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 			container=null;
 			prepare(container);
 		}
-		
 	}
 	
 	public void prepare(CONTAINER container)

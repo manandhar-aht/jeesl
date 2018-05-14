@@ -1,4 +1,4 @@
-package org.jeesl.factory.json.util.db.one;
+package org.jeesl.factory.json.util.db.tuple.one;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.persistence.Tuple;
 
 import org.jeesl.model.json.util.db.one.Json1Tuple;
-import org.jeesl.model.json.util.db.one.Json1Tuples;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
@@ -28,8 +27,16 @@ public class Json1TupleFactory<T extends EjbWithId>
 		}
 		return result;
 	}
+		
+	public Json1Tuple<T> buildSum(Tuple tuple)
+	{
+		Json1Tuple<T> json = new Json1Tuple<T>();
+		json.setId((Long)tuple.get(0));		
+		json.setSum((Double)tuple.get(1));
+    	return json;
+	}
 	
-	public static <T extends EjbWithId> Map<Long,Json1Tuple<T>> toMap(List<Json1Tuple<T>> list)
+	public static <T extends EjbWithId> Map<Long,Json1Tuple<T>> toIdMap(List<Json1Tuple<T>> list)
 	{
 		Map<Long,Json1Tuple<T>> map = new HashMap<Long,Json1Tuple<T>>();
 		for(Json1Tuple<T> t : list)
@@ -37,13 +44,5 @@ public class Json1TupleFactory<T extends EjbWithId>
 			map.put(t.getId(),t);
 		}
 		return map;
-	}
-	
-	public Json1Tuple<T> buildSum(Tuple tuple)
-	{
-		Json1Tuple<T> json = new Json1Tuple<T>();
-		json.setId((Long)tuple.get(0));		
-		json.setSum((Double)tuple.get(1));
-    	return json;
 	}
 }

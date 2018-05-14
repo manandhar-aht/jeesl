@@ -98,4 +98,17 @@ public class Json2TuplesFactory <X extends EjbWithId, Y extends EjbWithId>
 		
 		return map;
 	}
+	
+	public static <X extends EjbWithId, Y extends EjbWithId> Map<Long,Map<Long,Json2Tuple<X,Y>>> toIdMap(Json2Tuples<X,Y> tuples)
+	{
+		Map<Long,Map<Long,Json2Tuple<X,Y>>> map = new HashMap<Long,Map<Long,Json2Tuple<X,Y>>>();
+		
+		for(Json2Tuple<X,Y> t : tuples.getTuples())
+		{
+			if(!map.containsKey(t.getId1())) {map.put(t.getId1(), new HashMap<Long,Json2Tuple<X,Y>>());}
+			map.get(t.getId1()).put(t.getId2(),t);
+		}
+		
+		return map;
+	}
 }

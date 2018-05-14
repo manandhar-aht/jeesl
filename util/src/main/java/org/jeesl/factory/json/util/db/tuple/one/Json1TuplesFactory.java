@@ -1,4 +1,4 @@
-package org.jeesl.factory.json.util.db.one;
+package org.jeesl.factory.json.util.db.tuple.one;
 
 import java.util.HashSet;
 import java.util.List;

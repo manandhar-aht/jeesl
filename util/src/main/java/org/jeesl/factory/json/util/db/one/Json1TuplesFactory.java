@@ -23,6 +23,7 @@ public class Json1TuplesFactory <T extends EjbWithId>
 	private final Set<Long> setId;
 	private final Json1TupleFactory<T> jtf;
 	
+	public Json1TuplesFactory(Class<T> cT) {this(null,cT);}
 	public Json1TuplesFactory(UtilsFacade fUtils, Class<T> cT)
 	{
 		this.cT=cT;
@@ -56,10 +57,13 @@ public class Json1TuplesFactory <T extends EjbWithId>
         	json.getTuples().add(j);
         }
 		
-		Map<Long,T> map = EjbIdFactory.toIdMap(fUtils.find(cT,setId));
-		for(Json1Tuple<T> t : json.getTuples())
+		if(fUtils!=null)
 		{
-			t.setEjb(map.get(t.getId()));
+			Map<Long,T> map = EjbIdFactory.toIdMap(fUtils.find(cT,setId));
+			for(Json1Tuple<T> t : json.getTuples())
+			{
+				t.setEjb(map.get(t.getId()));
+			}
 		}
 		
 		return json;

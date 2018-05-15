@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.module.survey;
+package org.jeesl.web.mbean.prototype.system.io;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -45,6 +45,7 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
+import org.jeesl.web.mbean.prototype.module.survey.AbstractSurveyBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +58,7 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
+public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 						SS extends UtilsStatus<SS,L,D>,
 						SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
@@ -93,7 +94,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSurveyDomainBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractDomainQueryBean.class);
 	
 	protected List<DENTITY> entities; public List<DENTITY> getEntities(){return entities;}
 	protected List<QUERY> queries; public List<QUERY> getQueries(){return queries;}
@@ -112,7 +113,7 @@ public abstract class AbstractAdminSurveyDomainBean <L extends UtilsLang, D exte
 	private final EjbSurveyDomainPathFactory<L,D,QUERY,PATH,DENTITY,DATTRIBUTE> efDomainPath;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public AbstractAdminSurveyDomainBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+	public AbstractDomainQueryBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
 			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT,TOOLCACHETEMPLATE> fbAnalysis)
 	{

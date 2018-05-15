@@ -10,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslSurveyDomain<L extends UtilsLang,
+public interface JeeslDomain<L extends UtilsLang,
 									ENTITY extends JeeslRevisionEntity<L,?,?,?,?>
 									>
 			extends Serializable,EjbWithId,EjbSaveable,

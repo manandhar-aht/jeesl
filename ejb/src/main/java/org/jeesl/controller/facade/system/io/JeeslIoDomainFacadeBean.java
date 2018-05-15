@@ -6,9 +6,9 @@ import javax.persistence.EntityManager;
 
 import org.jeesl.api.facade.io.JeeslIoDomainFacade;
 import org.jeesl.factory.builder.io.IoDomainFactoryBuilder;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomain;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainPath;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainQuery;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
@@ -20,9 +20,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class JeeslIoDomainFacadeBean <L extends UtilsLang, D extends UtilsDescription, 
 				
-				DOMAIN extends JeeslSurveyDomain<L,DENTITY>,
-				QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN,PATH>,
-				PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
+				DOMAIN extends JeeslDomain<L,DENTITY>,
+				QUERY extends JeeslDomainQuery<L,D,DOMAIN,PATH>,
+				PATH extends JeeslDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 				DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>>
 	extends UtilsFacadeBean implements JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE>

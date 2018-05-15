@@ -23,9 +23,9 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomain;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainPath;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainQuery;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
@@ -69,9 +69,9 @@ public class SurveyAnalysisCacheHandler<L extends UtilsLang, D extends UtilsDesc
 										OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 										OPTION extends JeeslSurveyOption<L,D>,
 										CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
-										DOMAIN extends JeeslSurveyDomain<L,DENTITY>,
-										QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN,PATH>,
-										PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
+										DOMAIN extends JeeslDomain<L,DENTITY>,
+										QUERY extends JeeslDomainQuery<L,D,DOMAIN,PATH>,
+										PATH extends JeeslDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 										DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 										DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
 										ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,

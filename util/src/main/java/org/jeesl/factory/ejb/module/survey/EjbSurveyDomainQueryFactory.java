@@ -2,9 +2,9 @@ package org.jeesl.factory.ejb.module.survey;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomain;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainPath;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainQuery;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,9 +12,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class EjbSurveyDomainQueryFactory<L extends UtilsLang, D extends UtilsDescription,
-										DOMAIN extends JeeslSurveyDomain<L,?>,
-										QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN,PATH>,
-										PATH extends JeeslSurveyDomainPath<L,D,QUERY,?,?>
+										DOMAIN extends JeeslDomain<L,?>,
+										QUERY extends JeeslDomainQuery<L,D,DOMAIN,PATH>,
+										PATH extends JeeslDomainPath<L,D,QUERY,?,?>
 										>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDomainQueryFactory.class);

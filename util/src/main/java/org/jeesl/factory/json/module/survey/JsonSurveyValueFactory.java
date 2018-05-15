@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainPath;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.model.json.module.survey.JsonSurveyValue;
@@ -53,7 +53,7 @@ public class JsonSurveyValueFactory
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <PATH extends JeeslSurveyDomainPath<?,?,?,DENTITY,DATTRIBUTE>,
+	public static <PATH extends JeeslDomainPath<?,?,?,DENTITY,DATTRIBUTE>,
 					DENTITY extends JeeslRevisionEntity<?,?,?,?,DATTRIBUTE>,
 					DATTRIBUTE extends JeeslRevisionAttribute<?,?,DENTITY,?,?>>
 		List<JsonSurveyValue> build(UtilsFacade fUtils, Set<Long> ids, PATH path) throws ClassNotFoundException

@@ -2,7 +2,7 @@ package org.jeesl.factory.ejb.module.survey;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class EjbSurveyDomainFactory<L extends UtilsLang, D extends UtilsDescription,	
-				DOMAIN extends JeeslSurveyDomain<L,DENTITY>,
+				DOMAIN extends JeeslDomain<L,DENTITY>,
 				DENTITY extends JeeslRevisionEntity<L,D,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDomainFactory.class);

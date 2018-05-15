@@ -3,7 +3,7 @@ package org.jeesl.interfaces.model.module.survey.analysis;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 
@@ -18,7 +18,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyAnalysis<L extends UtilsLang, D extends UtilsDescription,
 										TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,?>,
-										DOMAIN extends JeeslSurveyDomain<L,?>,
+										DOMAIN extends JeeslDomain<L,?>,
 										DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 										DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>>
 			extends Serializable,EjbWithId,

@@ -12,9 +12,9 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslSurveyDomainQuery<L extends UtilsLang, D extends UtilsDescription,
-										DOMAIN extends JeeslSurveyDomain<L,?>,
-										PATH extends JeeslSurveyDomainPath<?,?,?,?,?>
+public interface JeeslDomainQuery<L extends UtilsLang, D extends UtilsDescription,
+										DOMAIN extends JeeslDomain<L,?>,
+										PATH extends JeeslDomainPath<?,?,?,?,?>
 										>
 			extends Serializable,EjbWithId,
 					EjbSaveable,EjbRemoveable,

@@ -2,7 +2,7 @@ package org.jeesl.interfaces.model.module.survey.analysis;
 
 import java.io.Serializable;
 
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainQuery;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -16,7 +16,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyAnalysisTool<L extends UtilsLang, D extends UtilsDescription,
 											QE extends UtilsStatus<QE,L,D>,
-											QUERY extends JeeslSurveyDomainQuery<L,D,?,?>,
+											QUERY extends JeeslDomainQuery<L,D,?,?>,
 											DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>,
 											AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?>,
 											ATT extends UtilsStatus<ATT,L,D>>

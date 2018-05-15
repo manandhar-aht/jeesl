@@ -12,8 +12,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescription,
-										QUERY extends JeeslSurveyDomainQuery<L,D,?,?>,
+public interface JeeslDomainPath<L extends UtilsLang, D extends UtilsDescription,
+										QUERY extends JeeslDomainQuery<L,D,?,?>,
 										ENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
 										ATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>
 										>

@@ -13,9 +13,9 @@ import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelati
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomain;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainPath;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainQuery;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.util.ReflectionUtil;
@@ -30,9 +30,9 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 									  ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,DATA,?>,
 									  DATA extends JeeslSurveyData<?,?,SURVEY,ANSWER,CORRELATION>,
 									  CORRELATION extends JeeslSurveyCorrelation<?,?,DATA>,
-									  DOMAIN extends JeeslSurveyDomain<?,DENTITY>,
-									  QUERY extends JeeslSurveyDomainQuery<?,?,DOMAIN,PATH>,
-									  PATH extends JeeslSurveyDomainPath<?,?,QUERY,DENTITY,DATTRIBUTE>,
+									  DOMAIN extends JeeslDomain<?,DENTITY>,
+									  QUERY extends JeeslDomainQuery<?,?,DOMAIN,PATH>,
+									  PATH extends JeeslDomainPath<?,?,QUERY,DENTITY,DATTRIBUTE>,
 									  DENTITY extends JeeslRevisionEntity<?,?,?,?,DATTRIBUTE>,
 									  DATTRIBUTE extends JeeslRevisionAttribute<?,?,DENTITY,?,?>,
 									  ANALYSIS extends JeeslSurveyAnalysis<?,?,?,DOMAIN,DENTITY,DATTRIBUTE>,

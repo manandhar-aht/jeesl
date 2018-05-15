@@ -15,9 +15,9 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainPathFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomain;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainPath;
-import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainQuery;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
@@ -34,9 +34,9 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends UtilsDescription,
-						DOMAIN extends JeeslSurveyDomain<L,DENTITY>,
-						QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN,PATH>,
-						PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
+						DOMAIN extends JeeslDomain<L,DENTITY>,
+						QUERY extends JeeslDomainQuery<L,D,DOMAIN,PATH>,
+						PATH extends JeeslDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 						DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 						DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>>
 					extends AbstractAdminBean<L,D>
@@ -121,7 +121,7 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	@Override public void selectSbSingle(EjbWithId ejb)
 	{
 		if(ejb==null) {reset(true,true,true,true);}
-		else if(JeeslSurveyDomain.class.isAssignableFrom(ejb.getClass()))
+		else if(JeeslDomain.class.isAssignableFrom(ejb.getClass()))
 		{
 			domain = (DOMAIN)ejb;
 			if(EjbIdFactory.isSaved(domain))

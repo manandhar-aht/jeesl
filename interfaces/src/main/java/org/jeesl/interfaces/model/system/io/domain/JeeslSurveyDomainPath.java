@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.survey.correlation;
+package org.jeesl.interfaces.model.system.io.domain;
 
 import java.io.Serializable;
 
@@ -14,8 +14,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescription,
 										QUERY extends JeeslSurveyDomainQuery<L,D,?,?>,
-										DENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
-										DATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>
+										ENTITY extends JeeslRevisionEntity<L,D,?,?,?>,
+										ATTRIBUTE extends JeeslRevisionAttribute<L,D,?,?,?>
 										>
 			extends Serializable,EjbWithId,
 					EjbSaveable,EjbRemoveable,
@@ -26,9 +26,9 @@ public interface JeeslSurveyDomainPath<L extends UtilsLang, D extends UtilsDescr
 	QUERY getQuery();
 	void setQuery(QUERY query);
 	
-	DENTITY getEntity();
-	void setEntity(DENTITY entity);
+	ENTITY getEntity();
+	void setEntity(ENTITY entity);
 	
-	DATTRIBUTE getAttribute();
-	void setAttribute(DATTRIBUTE attribute);
+	ATTRIBUTE getAttribute();
+	void setAttribute(ATTRIBUTE attribute);
 }

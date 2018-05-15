@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPath;
+import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainPath;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.model.json.module.survey.JsonSurveyValue;

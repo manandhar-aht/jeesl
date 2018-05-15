@@ -3,7 +3,7 @@ package org.jeesl.interfaces.model.module.survey.analysis;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomain;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 

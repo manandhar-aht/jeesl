@@ -2,7 +2,7 @@ package org.jeesl.interfaces.model.module.survey.analysis;
 
 import java.io.Serializable;
 
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainQuery;
+import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainQuery;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;

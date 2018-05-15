@@ -6,9 +6,9 @@ import javax.persistence.EntityManager;
 
 import org.jeesl.api.facade.io.JeeslIoDomainFacade;
 import org.jeesl.factory.builder.io.IoDomainFactoryBuilder;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPath;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainQuery;
+import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainPath;
+import org.jeesl.interfaces.model.system.io.domain.JeeslSurveyDomainQuery;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;

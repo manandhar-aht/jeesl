@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.survey.correlation;
+package org.jeesl.interfaces.model.system.io.domain;
 
 import java.io.Serializable;
 
@@ -11,11 +11,11 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslSurveyDomain<L extends UtilsLang,
-									DENTITY extends JeeslRevisionEntity<L,?,?,?,?>
+									ENTITY extends JeeslRevisionEntity<L,?,?,?,?>
 									>
 			extends Serializable,EjbWithId,EjbSaveable,
 					EjbWithPosition,EjbWithLang<L>//,EjbWithDescription<D>
 {
-	DENTITY getEntity();
-	void setEntity(DENTITY entiy);
+	ENTITY getEntity();
+	void setEntity(ENTITY entiy);
 }

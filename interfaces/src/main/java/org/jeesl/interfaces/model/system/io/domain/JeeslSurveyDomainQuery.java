@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.survey.correlation;
+package org.jeesl.interfaces.model.system.io.domain;
 
 import java.io.Serializable;
 import java.util.List;

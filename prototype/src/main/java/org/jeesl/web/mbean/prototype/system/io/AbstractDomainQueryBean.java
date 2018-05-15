@@ -5,48 +5,21 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoDomainFacade;
-import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
-import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
-import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoDomainFactoryBuilder;
-import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
-import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
-import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainPathFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomain;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainPath;
 import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyDomainQuery;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.job.JeeslJobCache;
-import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -56,43 +29,16 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
-						SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
-						SS extends UtilsStatus<SS,L,D>,
-						SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
-						VALGORITHM extends JeeslSurveyValidationAlgorithm<L,D>,
-						TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,ANALYSIS>,
-						VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
-						TS extends UtilsStatus<TS,L,D>,
-						TC extends UtilsStatus<TC,L,D>,
-						SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-						QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
-						CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-						QE extends UtilsStatus<QE,L,D>,
-						SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
-						UNIT extends UtilsStatus<UNIT,L,D>,
-						ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-						MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-						DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
-						OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-						OPTION extends JeeslSurveyOption<L,D>,
-						CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
+public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends UtilsDescription,
 						DOMAIN extends JeeslSurveyDomain<L,DENTITY>,
 						QUERY extends JeeslSurveyDomainQuery<L,D,DOMAIN,PATH>,
 						PATH extends JeeslSurveyDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 						DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
-						DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
-						ANALYSIS extends JeeslSurveyAnalysis<L,D,TEMPLATE,DOMAIN,DENTITY,DATTRIBUTE>,
-						AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>,
-						AT extends JeeslSurveyAnalysisTool<L,D,QE,QUERY,DATTRIBUTE,AQ,ATT>,
-						ATT extends UtilsStatus<ATT,L,D>,
-						TOOLCACHETEMPLATE extends JeeslJobTemplate<L,D,?,?,?>,
-						CACHE extends JeeslJobCache<TOOLCACHETEMPLATE,?>>
+						DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
 {
@@ -123,39 +69,31 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	protected final Comparator<DENTITY> cpDomainEntity;
 	
 //	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public AbstractDomainQueryBean(IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fbDomain,
-			SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
-			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
-			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT,TOOLCACHETEMPLATE> fbAnalysis)
+	public AbstractDomainQueryBean(IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fbDomain)
 	{
 		super(fbDomain.getClassL(),fbDomain.getClassD());
 
 		this.fbDomain=fbDomain;
 		
-		sbhDomain = new SbSingleHandler<DOMAIN>(fbAnalysis.getClassDomain(),this);
+		sbhDomain = new SbSingleHandler<DOMAIN>(fbDomain.getClassDomain(),this);
 		sbhDomain.setDebugOnInfo(true);
 		
-		efDomain = fbAnalysis.ejbDomain();
-		efDomainQuery = fbAnalysis.ejbDomainQuery();
-		efDomainPath = fbAnalysis.ejbDomainPath();
+		efDomain = fbDomain.ejbDomain();
+		efDomainQuery = fbDomain.ejbDomainQuery();
+		efDomainPath = fbDomain.ejbDomainPath();
 		
 		cpDomainEntity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
 	protected void initSuperDomain(String userLocale, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
-			JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fDomain,
-
-			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
-			JeeslSurveyCoreFacade<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
-			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fAnalysis,
-			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
+			JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fDomain)
 	{
-		super.initAdmin(bTranslation.getLangKeys().toArray(new String[bTranslation.getLangKeys().size()]),cL,cD,bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fDomain=fDomain;
 //		super.initSuperSurvey(bTranslation.getLangKeys(),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 //		initPageSettings();
 		
-		entities = fCore.allOrderedPositionVisible(fbDomain.getClassDomainEntity());
+		entities = fDomain.allOrderedPositionVisible(fbDomain.getClassDomainEntity());
 		Collections.sort(entities,cpDomainEntity);
 		reloadDomains();
 		if(sbhDomain.getHasSome())

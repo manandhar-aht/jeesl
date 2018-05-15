@@ -65,7 +65,7 @@ public interface JeeslSurveyAnalysisFacade <L extends UtilsLang, D extends Utils
 	
 	AQ fAnalysis(ANALYSIS analysis, QUESTION question) throws UtilsNotFoundException;
 	
-	List<DATTRIBUTE> fDomainAttributes(DENTITY entity);
+//	List<DATTRIBUTE> fDomainAttributes(DENTITY entity);
 	
 	JsonFlatFigures surveyCountRecords(List<SURVEY> surveys);
 	JsonSurveyValue surveyCountAnswers(QUESTION question);

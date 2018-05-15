@@ -8,10 +8,12 @@ import java.util.List;
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
+import org.jeesl.api.facade.io.JeeslIoDomainFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
+import org.jeesl.factory.builder.io.IoDomainFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
@@ -19,6 +21,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainPathFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
+import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
@@ -45,7 +48,7 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
 import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
-import org.jeesl.web.mbean.prototype.module.survey.AbstractSurveyBean;
+import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,11 +93,14 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 						ATT extends UtilsStatus<ATT,L,D>,
 						TOOLCACHETEMPLATE extends JeeslJobTemplate<L,D,?,?,?>,
 						CACHE extends JeeslJobCache<TOOLCACHETEMPLATE,?>>
-					extends AbstractSurveyBean<L,D,LOC,SURVEY,SS,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT,TOOLCACHETEMPLATE,CACHE>
-					implements Serializable
+					extends AbstractAdminBean<L,D>
+					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDomainQueryBean.class);
+	
+	protected JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fDomain;
+
 	
 	protected List<DENTITY> entities; public List<DENTITY> getEntities(){return entities;}
 	protected List<QUERY> queries; public List<QUERY> getQueries(){return queries;}
@@ -108,36 +114,48 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	
 	protected final SbSingleHandler<DOMAIN> sbhDomain; public SbSingleHandler<DOMAIN> getSbhDomain() {return sbhDomain;}
 	
+	private final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fbDomain;
+	
 	private final EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> efDomain;
 	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH> efDomainQuery;
 	private final EjbSurveyDomainPathFactory<L,D,QUERY,PATH,DENTITY,DATTRIBUTE> efDomainPath;
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public AbstractDomainQueryBean(SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+	protected final Comparator<DENTITY> cpDomainEntity;
+	
+//	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public AbstractDomainQueryBean(IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fbDomain,
+			SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 			SurveyCoreFactoryBuilder<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> fbCore,
 			SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT,TOOLCACHETEMPLATE> fbAnalysis)
 	{
-		super(fbTemplate,fbCore,fbAnalysis);
+		super(fbDomain.getClassL(),fbDomain.getClassD());
 
+		this.fbDomain=fbDomain;
+		
 		sbhDomain = new SbSingleHandler<DOMAIN>(fbAnalysis.getClassDomain(),this);
 		sbhDomain.setDebugOnInfo(true);
 		
 		efDomain = fbAnalysis.ejbDomain();
 		efDomainQuery = fbAnalysis.ejbDomainQuery();
 		efDomainPath = fbAnalysis.ejbDomainPath();
+		
+		cpDomainEntity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
 	protected void initSuperDomain(String userLocale, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
+			JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fDomain,
+
 			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
 			JeeslSurveyCoreFacade<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
 			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fAnalysis,
 			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
 	{
-		super.initSuperSurvey(bTranslation.getLangKeys(),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
-		initPageSettings();
-		super.initLocales(userLocale);
+		super.initAdmin(bTranslation.getLangKeys().toArray(new String[bTranslation.getLangKeys().size()]),cL,cD,bMessage);
+		this.fDomain=fDomain;
+//		super.initSuperSurvey(bTranslation.getLangKeys(),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
+//		initPageSettings();
 		
-		entities = fCore.allOrderedPositionVisible(fbAnalysis.getClassDomainEntity());
+		entities = fCore.allOrderedPositionVisible(fbDomain.getClassDomainEntity());
 		Collections.sort(entities,cpDomainEntity);
 		reloadDomains();
 		if(sbhDomain.getHasSome())
@@ -159,7 +177,7 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 		}
 	}
 	
-	@Override protected void initPageSettings(){}
+//	@Override protected void initPageSettings(){}
 	
 	@SuppressWarnings("unchecked")
 	@Override public void selectSbSingle(EjbWithId ejb)
@@ -190,12 +208,12 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	
 	private void reloadDomains()
 	{
-		sbhDomain.setList(fAnalysis.all(fbAnalysis.getClassDomain()));
+		sbhDomain.setList(fDomain.all(fbDomain.getClassDomain()));
 	}
 	
 	public void addDomain()
 	{
-		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassDomain()));
+		logger.info(AbstractLogMessage.addEntity(fbDomain.getClassDomain()));
 		domain = efDomain.build(null,sbhDomain.getList());
 		domain.setName(efLang.createEmpty(localeCodes));
 	}
@@ -203,8 +221,8 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(domain));
-		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
-		domain = fAnalysis.save(domain);
+		domain.setEntity(fDomain.find(fbDomain.getClassDomainEntity(),domain.getEntity()));
+		domain = fDomain.save(domain);
 		sbhDomain.setSelection(domain);
 		reloadDomains();
 		reloadQueries();
@@ -214,19 +232,19 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	{
 		reset(false,true,true,true);
 		logger.info(AbstractLogMessage.selectEntity(domain));
-		domain = efLang.persistMissingLangs(fAnalysis,localeCodes,domain);
+		domain = efLang.persistMissingLangs(fDomain,localeCodes,domain);
 		sbhDomain.setSelection(domain);
 		reloadQueries();
 	}
 	
 	private void reloadQueries()
 	{
-		queries = fAnalysis.allForParent(fbAnalysis.getClassDomainQuery(), domain);
+		queries = fDomain.allForParent(fbDomain.getClassDomainQuery(), domain);
 	}
 	
 	public void addQuery()
 	{
-		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassDomainQuery()));
+		logger.info(AbstractLogMessage.addEntity(fbDomain.getClassDomainQuery()));
 		query = efDomainQuery.build(domain, queries);
 		query.setName(efLang.createEmpty(localeCodes));
 		query.setDescription(efDescription.createEmpty(localeCodes));
@@ -236,12 +254,12 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	{
 		logger.info(AbstractLogMessage.saveEntity(query));
 //		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
-		query = fAnalysis.save(query);
+		query = fDomain.save(query);
 		reloadQueries();
 		reloadPaths();
 		if(paths.isEmpty())
 		{
-			path = fAnalysis.save(efDomainPath.build(query,domain.getEntity(),paths));
+			path = fDomain.save(efDomainPath.build(query,domain.getEntity(),paths));
 			reloadPaths();
 		}
 	}
@@ -250,7 +268,7 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	{
 		logger.info(AbstractLogMessage.rmEntity(query));
 //		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
-		fAnalysis.rm(query);
+		fDomain.rm(query);
 		reloadQueries();
 		reset(false,true,true,true);
 	}
@@ -259,14 +277,14 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	{
 		reset(false,false,true,true);
 		logger.info(AbstractLogMessage.selectEntity(query));
-		query = efLang.persistMissingLangs(fAnalysis,localeCodes,query);
-		query = efDescription.persistMissingLangs(fAnalysis,localeCodes,query);
+		query = efLang.persistMissingLangs(fDomain,localeCodes,query);
+		query = efDescription.persistMissingLangs(fDomain,localeCodes,query);
 		reloadPaths();
 	}
 	
 	private void reloadPaths()
 	{
-		paths = fAnalysis.allForParent(fbAnalysis.getClassDomainPath(), query);
+		paths = fDomain.allForParent(fbDomain.getClassDomainPath(), query);
 		if(!paths.isEmpty())
 		{
 			PATH p = paths.get(paths.size()-1);
@@ -294,7 +312,7 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	
 	public void addPath()
 	{
-		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassDomainQuery()));
+		logger.info(AbstractLogMessage.addEntity(fbDomain.getClassDomainQuery()));
 		path = efDomainPath.build(query,entity,paths);
 		reloadAttributes();
 	}
@@ -303,7 +321,7 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	{
 		logger.info(AbstractLogMessage.saveEntity(path));
 //		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
-		path = fAnalysis.save(path);
+		path = fDomain.save(path);
 		reloadPaths();
 		reloadAttributes();
 		reloadPath();
@@ -321,17 +339,17 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	{
 		logger.info(AbstractLogMessage.rmEntity(path));
 //		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
-		fAnalysis.rm(path);
+		fDomain.rm(path);
 		reloadPaths();
 		reset(false,false,true,true);
 	}
 	
 	private void reloadAttributes()
 	{
-		attributes = fAnalysis.fDomainAttributes(path.getEntity());
-		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbAnalysis.getClassDomainAttribute(), attributes, path.getEntity()));}
+		attributes = fDomain.fDomainAttributes(path.getEntity());
+		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbDomain.getClassDomainAttribute(), attributes, path.getEntity()));}
 	}
 	
-	public void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, sbhDomain.getList());}
-	public void reorderQueries() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAnalysis, queries);}
+	public void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fDomain, sbhDomain.getList());}
+	public void reorderQueries() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fDomain, queries);}
 }

@@ -129,6 +129,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected final SbSingleHandler<SURVEY> sbhSurvey; public SbSingleHandler<SURVEY> getSbhSurvey() {return sbhSurvey;}
 	protected final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	
+	//???
 	protected final Comparator<DENTITY> cpDomainEntity;
 	
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}

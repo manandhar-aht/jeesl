@@ -125,7 +125,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	{
 		return this.oneForParents(fbAnalyis.getClassAnalysisQuestion(), JeeslSurveyAnalysisQuestion.Attributes.analysis.toString(), analysis, JeeslSurveyAnalysisQuestion.Attributes.question.toString(), question);
 	}
-	
+/*	
 	@Override
 	public List<DATTRIBUTE> fDomainAttributes(DENTITY entity)
 	{
@@ -133,7 +133,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 		entity.getAttributes().size();
 		return entity.getAttributes();
 	}
-	
+*/	
 	@Override public JsonFlatFigures surveyCountRecords(List<SURVEY> surveys)
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();

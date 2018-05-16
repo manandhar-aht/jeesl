@@ -28,7 +28,7 @@
 				<h:outputText value="#{a.position}" />  
             </p:column>
             <p:column headerText="#{msg.aupSecurityAction}">  
-				<h:outputText value="#{a.toName[userBean.localeCode].lang}"/>
+				<h:outputText value="#{a.toName()[userBean.localeCode].lang}"/>
 				<h:graphicImage rendered="#{not empty a.template}" name="12/ui/template.png" library="aupGfx"/>
             </p:column>
        	</p:dataTable>

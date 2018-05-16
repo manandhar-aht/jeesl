@@ -21,7 +21,7 @@ import org.jeesl.controller.processor.survey.analysis.SurveySelectOneProcessor;
 import org.jeesl.factory.builder.module.survey.SurveyAnalysisFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
+import org.jeesl.factory.ejb.system.io.domain.EjbSurveyDomainQueryFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveyValueFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveyValuesFactory;

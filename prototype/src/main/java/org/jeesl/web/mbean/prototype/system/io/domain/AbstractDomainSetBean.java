@@ -39,6 +39,7 @@ public abstract class AbstractDomainSetBean <L extends UtilsLang, D extends Util
 	final static Logger logger = LoggerFactory.getLogger(AbstractDomainSetBean.class);
 
 	private List<SET> sets; public List<SET> getSets(){return sets;}
+	private List<DOMAIN> domains; public List<DOMAIN> getDomains(){return domains;}
 	private List<ITEM> items; public List<ITEM> getItems(){return items;}
 	
 	private SET set; public SET getSet() {return set;} public void setSet(SET set) {this.set = set;}
@@ -53,6 +54,7 @@ public abstract class AbstractDomainSetBean <L extends UtilsLang, D extends Util
 			JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE,SET,ITEM> fDomain)
 	{
 		super.postConstructDomain(bTranslation,bMessage,fDomain);
+		domains = fDomain.all(fbDomain.getClassDomain());
 		reloadSets();
 	}
 	
@@ -69,19 +71,19 @@ public abstract class AbstractDomainSetBean <L extends UtilsLang, D extends Util
 	
 	public void addSet()
 	{
-		logger.info(AbstractLogMessage.addEntity(fbDomain.getClassDomain()));
-//		domain = efDomain.build(null,sbhDomain.getList());
-//		domain.setName(efLang.createEmpty(localeCodes));
+		logger.info(AbstractLogMessage.addEntity(fbDomain.getClassDomainSet()));
+		set = fbDomain.ejbSet().build(null,sets);
+		set.setName(efLang.createEmpty(localeCodes));
+		set.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	public void saveSet() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(set));
-//		domain.setEntity(fDomain.find(fbDomain.getClassDomainEntity(),domain.getEntity()));
-//		domain = fDomain.save(domain);
-//		sbhDomain.setSelection(domain);
+		set.setDomain(fDomain.find(fbDomain.getClassDomain(),set.getDomain()));
+		set = fDomain.save(set);
 		reloadSets();
-//		reloadQueries();
+		reloadItems();
 	}
 	
 	public void selectSet()
@@ -89,27 +91,27 @@ public abstract class AbstractDomainSetBean <L extends UtilsLang, D extends Util
 		reset(false,true);
 		logger.info(AbstractLogMessage.selectEntity(set));
 		set = efLang.persistMissingLangs(fDomain,localeCodes,set);
+		set = efDescription.persistMissingLangs(fDomain,localeCodes,set);
 
 		reloadItems();
 	}
 	
 	private void reloadItems()
 	{
-//		items = fDomain.allForParent(fbDomain.getClassDomainQuery(), itemSet);
+		queries = fDomain.allForParent(fbDomain.getClassDomainQuery(), set.getDomain());
+		items = fDomain.allForParent(fbDomain.getClassDomainItem(), set);
 	}
 	
 	public void addItem()
 	{
-		logger.info(AbstractLogMessage.addEntity(fbDomain.getClassDomainQuery()));
-//		query = efDomainQuery.build(domain, queries);
-//		query.setName(efLang.createEmpty(localeCodes));
-//		query.setDescription(efDescription.createEmpty(localeCodes));
+		logger.info(AbstractLogMessage.addEntity(fbDomain.getClassDomainItem()));
+		item = fbDomain.ejbItem().build(set,null,items);
 	}
 	
 	public void saveItem() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.info(AbstractLogMessage.saveEntity(item));
-//		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
+		item.setQuery(fDomain.find(fbDomain.getClassDomainQuery(),item.getQuery()));
 		item = fDomain.save(item);
 		reloadItems();
 	}

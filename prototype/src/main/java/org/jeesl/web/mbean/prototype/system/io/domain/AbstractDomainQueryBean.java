@@ -10,9 +10,9 @@ import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoDomainFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoDomainFactoryBuilder;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainPathFactory;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
+import org.jeesl.factory.ejb.system.io.domain.EjbSurveyDomainFactory;
+import org.jeesl.factory.ejb.system.io.domain.EjbSurveyDomainPathFactory;
+import org.jeesl.factory.ejb.system.io.domain.EjbSurveyDomainQueryFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
@@ -49,7 +49,6 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	final static Logger logger = LoggerFactory.getLogger(AbstractDomainQueryBean.class);
 
 	protected List<ENTITY> entities; public List<ENTITY> getEntities(){return entities;}
-	protected List<QUERY> queries; public List<QUERY> getQueries(){return queries;}
 	protected List<PATH> paths; public List<PATH> getPaths(){return paths;}
 	protected List<DATTRIBUTE> attributes; public List<DATTRIBUTE> getAttributes(){return attributes;}
 	

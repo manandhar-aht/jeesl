@@ -1,4 +1,4 @@
-package org.jeesl.factory.ejb.module.survey;
+package org.jeesl.factory.ejb.system.io.domain;
 
 import java.util.List;
 

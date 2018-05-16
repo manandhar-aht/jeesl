@@ -1,9 +1,11 @@
 package org.jeesl.factory.builder.io;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainPathFactory;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
+import org.jeesl.factory.ejb.system.io.domain.EjbDomainItemFactory;
+import org.jeesl.factory.ejb.system.io.domain.EjbDomainSetFactory;
+import org.jeesl.factory.ejb.system.io.domain.EjbSurveyDomainFactory;
+import org.jeesl.factory.ejb.system.io.domain.EjbSurveyDomainPathFactory;
+import org.jeesl.factory.ejb.system.io.domain.EjbSurveyDomainQueryFactory;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainItem;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
@@ -62,5 +64,15 @@ public class IoDomainFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	public EjbSurveyDomainPathFactory<L,D,QUERY,PATH,ENTITY,DATTRIBUTE> ejbDomainPath()
 	{
 		return new EjbSurveyDomainPathFactory<L,D,QUERY,PATH,ENTITY,DATTRIBUTE>(cDomainPath);
+	}
+	
+	public EjbDomainSetFactory<L,D,DOMAIN,SET> ejbSet()
+	{
+		return new EjbDomainSetFactory<L,D,DOMAIN,SET>(cDomainSet);
+	}
+	
+	public EjbDomainItemFactory<QUERY,SET,ITEM> ejbItem()
+	{
+		return new EjbDomainItemFactory<QUERY,SET,ITEM>(cDomainItem);
 	}
 }

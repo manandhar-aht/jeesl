@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.system.io.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
@@ -38,6 +39,7 @@ public abstract class AbstractDomainBean <L extends UtilsLang, D extends UtilsDe
 	
 	protected final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE,SET,ITEM> fbDomain;
 	
+	protected List<QUERY> queries; public List<QUERY> getQueries(){return queries;}
 	
 //	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AbstractDomainBean(IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE,SET,ITEM> fbDomain)

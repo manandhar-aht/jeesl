@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslIoDomainSets">
+    	<s:langs>
+    		<s:lang key="de" translation="Domain Sets"/>
+    		<s:lang key="en" translation="Domain Sets"/>
+    		<s:lang key="fr" translation="Domain Sets"/>
+    	</s:langs>
+    </s:translation>
+   	<s:translation key="jeeslIoDomainSet">
+    	<s:langs>
+    		<s:lang key="de" translation="Domain Set"/>
+    		<s:lang key="en" translation="Domain Set"/>
+    		<s:lang key="fr" translation="Domain Set"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslDomain">
+    	<s:langs>
+    		<s:lang key="de" translation="Domäne"/>
+    		<s:lang key="en" translation="Domain"/>
+    		<s:lang key="fr" translation="Domain"/>
+    	</s:langs>
+    </s:translation>
+</s:translations>

@@ -18,6 +18,7 @@ import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsLayer;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -32,9 +33,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-													DMS extends JeeslIoDms<L,D,STORAGE,AS,SECTION>,
+													DMS extends JeeslIoDms<L,D,STORAGE,AS,DS,SECTION>,
 													STORAGE extends JeeslFileStorage<L,D,?>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
+													DS extends JeeslDomainSet<L,D,?>,
 													SECTION extends JeeslIoDmsSection<L,D,SECTION>,
 													F extends JeeslIoDmsDocument<L,SECTION,FC,AC>,
 													VIEW extends JeeslIoDmsView<L,DMS>,
@@ -48,7 +50,7 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDmsBean.class);
 	
-	protected JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,SECTION,F,VIEW,FC,AC> fDms;
+	protected JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,DS,SECTION,F,VIEW,FC,AC> fDms;
 	protected final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,SECTION,F,VIEW,LAYER> fbDms;
 	
 	protected final EjbIoDmsSectionFactory<SECTION> efSection;
@@ -67,7 +69,7 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 		efFile = fbDms.ejbFile();
 	}
 	
-	protected void initDms(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,SECTION,F,VIEW,FC,AC> fDms)
+	protected void initDms(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,DS,SECTION,F,VIEW,FC,AC> fDms)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fDms=fDms;

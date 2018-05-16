@@ -17,6 +17,7 @@ import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsLayer;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.primefaces.event.NodeCollapseEvent;
@@ -37,9 +38,10 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-											DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
+											DMS extends JeeslIoDms<L,D,STORAGE,AS,DS,S>,
 											STORAGE extends JeeslFileStorage<L,D,?>,
 											AS extends JeeslAttributeSet<L,D,?,?>,
+											DS extends JeeslDomainSet<L,D,?>,
 											S extends JeeslIoDmsSection<L,D,S>,
 											F extends JeeslIoDmsDocument<L,S,FC,AC>,
 											VIEW extends JeeslIoDmsView<L,DMS>,
@@ -47,7 +49,7 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
 											FC extends JeeslFileContainer<?,?>,
 											AI extends JeeslAttributeItem<?,AS>,
 											AC extends JeeslAttributeContainer<?,?>>
-					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,LAYER,FC,AI,AC>
+					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,DS,S,F,VIEW,LAYER,FC,AI,AC>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -65,7 +67,7 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
 		sbhDms = new SbSingleHandler<DMS>(fbDms.getClassDms(),this);
 	}
 	
-	protected void initDmsConfig(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,FC,AC> fDms)
+	protected void initDmsConfig(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,DS,S,F,VIEW,FC,AC> fDms)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
 		initPageConfiguration();

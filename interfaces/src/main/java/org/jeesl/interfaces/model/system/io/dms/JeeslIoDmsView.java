@@ -11,7 +11,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslIoDmsView<L extends UtilsLang,
-								DMS extends JeeslIoDms<L,?,?,?,?>>
+								DMS extends JeeslIoDms<L,?,?,?,?,?>>
 					extends Serializable,EjbWithId,EjbRemoveable,EjbPersistable,EjbSaveable,
 							EjbWithPositionVisibleParent,EjbWithLang<L>
 							

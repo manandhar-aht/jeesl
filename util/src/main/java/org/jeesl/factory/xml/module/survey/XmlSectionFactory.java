@@ -2,9 +2,6 @@ package org.jeesl.factory.xml.module.survey;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.factory.xml.system.lang.XmlDescriptionFactory;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -18,9 +15,6 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
-import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,7 +58,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,
 		this.localeCode=localeCode;
 		this.q=q;
 		
-		if(q.isSetQuestion()){xfQuestion = new XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(q.getQuestion().get(0));}
+		if(q.isSetQuestion()){xfQuestion = new XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,q.getQuestion().get(0));}
 	}
 	
 	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)

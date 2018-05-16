@@ -29,6 +29,7 @@ import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsLayer;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
@@ -50,7 +51,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-											DMS extends JeeslIoDms<L,D,FSTORAGE,ASET,S>,
+											DMS extends JeeslIoDms<L,D,FSTORAGE,ASET,DS,S>,
 											S extends JeeslIoDmsSection<L,D,S>,
 											FILE extends JeeslIoDmsDocument<L,S,FCONTAINER,ACONTAINER>,
 											VIEW extends JeeslIoDmsView<L,DMS>,
@@ -62,6 +63,8 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 											FMETA extends JeeslFileMeta<FCONTAINER,FTYPE>,
 											FTYPE extends UtilsStatus<FTYPE,L,D>,
 											
+											DS extends JeeslDomainSet<L,D,?>,
+											
 											ACATEGORY extends UtilsStatus<ACATEGORY,L,D>,
 											ACRITERIA extends JeeslAttributeCriteria<L,D,ACATEGORY,ATYPE>,
 											ATYPE extends UtilsStatus<ATYPE,L,D>,
@@ -71,7 +74,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 											ACONTAINER extends JeeslAttributeContainer<ASET,ADATA>,
 											ADATA extends JeeslAttributeData<ACRITERIA,AOPTION,ACONTAINER>
 >
-					extends AbstractDmsBean<L,D,LOC,DMS,FSTORAGE,ASET,S,FILE,VIEW,LAYER,FCONTAINER,AITEM,ACONTAINER>
+					extends AbstractDmsBean<L,D,LOC,DMS,FSTORAGE,ASET,DS,S,FILE,VIEW,LAYER,FCONTAINER,AITEM,ACONTAINER>
 					implements Serializable,AttributeBean<ACONTAINER>,JeeslFileRepositoryCallback
 {
 	private static final long serialVersionUID = 1L;
@@ -106,7 +109,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	}
 	
 	protected void postConstructDmsUpload(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
-								JeeslIoDmsFacade<L,D,LOC,DMS,FSTORAGE,ASET,S,FILE,VIEW,FCONTAINER,ACONTAINER> fDms,
+								JeeslIoDmsFacade<L,D,LOC,DMS,FSTORAGE,ASET,DS,S,FILE,VIEW,FCONTAINER,ACONTAINER> fDms,
 								JeeslIoFrFacade<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr,
 								JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute,
 								JeeslAttributeBean<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> bAttribute,

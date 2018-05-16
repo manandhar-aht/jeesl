@@ -100,5 +100,8 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 	    	}
 	}
     
-    @Override public String get(String lang, String key){return tm.translate(lang, key);}
+    @Override public String get(String lang, String key)
+    {
+    	return tm.translate(lang, key);
+    }
 }

@@ -19,7 +19,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class IoDmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-								DMS extends JeeslIoDms<L,D,STORAGE,?,SECTION>,
+								DMS extends JeeslIoDms<L,D,STORAGE,?,?,SECTION>,
 								STORAGE extends JeeslFileStorage<L,D,?>,
 								SECTION extends JeeslIoDmsSection<L,D,SECTION>,
 								FILE extends JeeslIoDmsDocument<L,SECTION,?,?>,

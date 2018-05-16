@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsLayer;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.slf4j.Logger;
@@ -23,9 +24,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslIoDmsFacadeBean<L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-								DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
+								DMS extends JeeslIoDms<L,D,STORAGE,AS,DS,S>,
 								STORAGE extends JeeslFileStorage<L,D,?>,
 								AS extends JeeslAttributeSet<L,D,?,?>,
+								DS extends JeeslDomainSet<L,D,?>,
 								S extends JeeslIoDmsSection<L,D,S>,
 								F extends JeeslIoDmsDocument<L,S,FC,AC>,
 								VIEW extends JeeslIoDmsView<L,DMS>,
@@ -34,7 +36,7 @@ public class JeeslIoDmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 								AI extends JeeslAttributeItem<?,AS>,
 								AC extends JeeslAttributeContainer<?,?>>
 					extends UtilsFacadeBean
-					implements JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,FC,AC>
+					implements JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,DS,S,F,VIEW,FC,AC>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDmsFacadeBean.class);
 	

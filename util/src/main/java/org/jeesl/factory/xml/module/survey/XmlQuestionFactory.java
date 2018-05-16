@@ -40,7 +40,7 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlQuestionFactory.class);
 		
-	private String lang;
+	private String localeCode;
 	private Question q;
 	
 	private XmlScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> xfScore;
@@ -49,9 +49,9 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 	//TODO tk: remove this constructor
 	public XmlQuestionFactory(Question q){this(null,q);}
 	
-	public XmlQuestionFactory(String lang, Question q)
+	public XmlQuestionFactory(String localeCode, Question q)
 	{
-		this.lang=lang;
+		this.localeCode=localeCode;
 		this.q=q;
 		if(q.isSetScore()){xfScore = new XmlScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(q.getScore());}
 	}
@@ -65,12 +65,14 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 		if(q.isSetCode()){xml.setCode(ejb.getCode());}
 		if(q.isSetTopic()){xml.setTopic(ejb.getTopic());}
 		
-		if(q.isSetQuestion() && ejb.getQuestion()!=null){xml.setQuestion(net.sf.ahtutils.factory.xml.text.XmlQuestionFactory.build(ejb.getQuestion()));}
+		// MultiLang Issue
+		//	if(q.isSetQuestion() && ejb.getQuestion()!=null){xml.setQuestion(net.sf.ahtutils.factory.xml.text.XmlQuestionFactory.build(ejb.getQuestion()));}
+		if(q.isSetQuestion() && ejb.getName().containsKey(localeCode)){xml.setQuestion(net.sf.ahtutils.factory.xml.text.XmlQuestionFactory.build(ejb.getName().get(localeCode).getLang()));}
 		if(q.isSetRemark() && ejb.getRemark()!=null){xml.setRemark(XmlRemarkFactory.build(ejb.getRemark()));}
 		
 		if(q.isSetUnit() && ejb.getUnit()!=null)
 		{
-			XmlUnitFactory f = new XmlUnitFactory(lang,q.getUnit());
+			XmlUnitFactory f = new XmlUnitFactory(localeCode,q.getUnit());
 			xml.setUnit(f.build(ejb.getUnit()));
 		}
 		

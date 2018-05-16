@@ -7,7 +7,7 @@ import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbIoDmsViewFactory <DMS extends JeeslIoDms<?,?,?,?,?>,
+public class EjbIoDmsViewFactory <DMS extends JeeslIoDms<?,?,?,?,?,?>,
 								 VIEW extends JeeslIoDmsView<?,DMS>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoDmsViewFactory.class);

@@ -20,6 +20,7 @@ import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsDocument;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsLayer;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsSection;
 import org.jeesl.interfaces.model.system.io.dms.JeeslIoDmsView;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.slf4j.Logger;
@@ -33,9 +34,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-													DMS extends JeeslIoDms<L,D,STORAGE,AS,S>,
+													DMS extends JeeslIoDms<L,D,STORAGE,AS,DS,S>,
 													STORAGE extends JeeslFileStorage<L,D,?>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
+													DS extends JeeslDomainSet<L,D,?>,
 													S extends JeeslIoDmsSection<L,D,S>,
 													F extends JeeslIoDmsDocument<L,S,FC,AC>,
 													VIEW extends JeeslIoDmsView<L,DMS>,
@@ -43,7 +45,7 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 													FC extends JeeslFileContainer<?,?>,
 													AI extends JeeslAttributeItem<?,AS>,
 													AC extends JeeslAttributeContainer<?,?>>
-					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,LAYER,FC,AI,AC>
+					extends AbstractDmsBean<L,D,LOC,DMS,STORAGE,AS,DS,S,F,VIEW,LAYER,FC,AI,AC>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
@@ -56,6 +58,7 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 	
 	private List<DMS> dms; public List<DMS> getDms() {return dms;}
 	protected final List<AS> sets; public List<AS> getSets() {return sets;}
+	protected final List<DS> domainSets; public List<DS> getDomainSets() {return domainSets;}
 	protected final List<STORAGE> storages; public List<STORAGE> getStorages() {return storages;}
 	private List<VIEW> dmsViews; public List<VIEW> getDmsViews() {return dmsViews;}
 
@@ -69,10 +72,11 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 		efView = fbDms.ejbView();
 		
 		sets = new ArrayList<AS>();
+		domainSets = new ArrayList<DS>();
 		storages = new ArrayList<STORAGE>();
 	}
 	
-	protected void initDmsConfig(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,S,F,VIEW,FC,AC> fDms)
+	protected void initDmsConfig(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,DS,S,F,VIEW,FC,AC> fDms)
 	{
 		super.initDms(bTranslation,bMessage,fDms);
 		initPageConfiguration();

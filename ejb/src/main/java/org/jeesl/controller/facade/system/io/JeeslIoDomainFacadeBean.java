@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import org.jeesl.api.facade.io.JeeslIoDomainFacade;
 import org.jeesl.factory.builder.io.IoDomainFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainItem;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
@@ -20,21 +21,21 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class JeeslIoDomainFacadeBean <L extends UtilsLang, D extends UtilsDescription, 
-				
 				DOMAIN extends JeeslDomain<L,DENTITY>,
 				QUERY extends JeeslDomainQuery<L,D,DOMAIN,PATH>,
 				PATH extends JeeslDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 				DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
-				SET extends JeeslDomainSet<L,D>>
-	extends UtilsFacadeBean implements JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE>
+				SET extends JeeslDomainSet<L,D,DOMAIN>,
+				ITEM extends JeeslDomainItem<QUERY,SET>>
+	extends UtilsFacadeBean implements JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,SET,ITEM>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDomainFacadeBean.class);
 		
-	private final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,SET> fbDomain;
+	private final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,SET,ITEM> fbDomain;
 	
 	public JeeslIoDomainFacadeBean(EntityManager em,
-			final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,SET> fbDomain)
+			final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,SET,ITEM> fbDomain)
 	{
 		super(em);
 		this.fbDomain=fbDomain;

@@ -16,13 +16,13 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainItem;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
-import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,14 +40,13 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 						PATH extends JeeslDomainPath<L,D,QUERY,ENTITY,DATTRIBUTE>,
 						ENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 						DATTRIBUTE extends JeeslRevisionAttribute<L,D,ENTITY,?,?>,
-						SET extends JeeslDomainSet<L,D>>
-					extends AbstractAdminBean<L,D>
+						SET extends JeeslDomainSet<L,D,DOMAIN>,
+						ITEM extends JeeslDomainItem<QUERY,SET>>
+					extends AbstractDomainBean<L,D,DOMAIN,QUERY,PATH,ENTITY,DATTRIBUTE,SET,ITEM>
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDomainQueryBean.class);
-	
-	protected JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,ENTITY,DATTRIBUTE> fDomain;
 
 	protected List<ENTITY> entities; public List<ENTITY> getEntities(){return entities;}
 	protected List<QUERY> queries; public List<QUERY> getQueries(){return queries;}
@@ -61,8 +60,6 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	
 	protected final SbSingleHandler<DOMAIN> sbhDomain; public SbSingleHandler<DOMAIN> getSbhDomain() {return sbhDomain;}
 	
-	private final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,ENTITY,DATTRIBUTE,SET> fbDomain;
-	
 	private final EjbSurveyDomainFactory<L,D,DOMAIN,ENTITY> efDomain;
 	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH> efDomainQuery;
 	private final EjbSurveyDomainPathFactory<L,D,QUERY,PATH,ENTITY,DATTRIBUTE> efDomainPath;
@@ -70,11 +67,9 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	protected final Comparator<ENTITY> cpDomainEntity;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public AbstractDomainQueryBean(IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,ENTITY,DATTRIBUTE,SET> fbDomain)
+	public AbstractDomainQueryBean(IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,ENTITY,DATTRIBUTE,SET,ITEM> fbDomain)
 	{
-		super(fbDomain.getClassL(),fbDomain.getClassD());
-
-		this.fbDomain=fbDomain;
+		super(fbDomain);
 		
 		sbhDomain = new SbSingleHandler<DOMAIN>(fbDomain.getClassDomain(),this);
 		sbhDomain.setDebugOnInfo(true);
@@ -87,10 +82,9 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 	}
 	
 	protected void postConstructDomainQuery(String userLocale, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
-			JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,ENTITY,DATTRIBUTE> fDomain)
+			JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,ENTITY,DATTRIBUTE,SET,ITEM> fDomain)
 	{
-		super.initJeeslAdmin(bTranslation,bMessage);
-		this.fDomain=fDomain;
+		super.postConstructDomain(bTranslation,bMessage,fDomain);
 //		super.initSuperSurvey(bTranslation.getLangKeys(),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 //		initPageSettings();
 		

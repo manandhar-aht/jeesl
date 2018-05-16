@@ -1,28 +1,19 @@
 package org.jeesl.web.mbean.prototype.system.io.domain;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoDomainFacade;
-import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoDomainFactoryBuilder;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainPathFactory;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
-import org.jeesl.factory.ejb.util.EjbIdFactory;
-import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainItem;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
-import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +22,6 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractDomainSetBean <L extends UtilsLang, D extends UtilsDescription,
@@ -40,246 +30,105 @@ public abstract class AbstractDomainSetBean <L extends UtilsLang, D extends Util
 						PATH extends JeeslDomainPath<L,D,QUERY,ENTITY,ATTRIBUTE>,
 						ENTITY extends JeeslRevisionEntity<L,D,?,?,ATTRIBUTE>,
 						ATTRIBUTE extends JeeslRevisionAttribute<L,D,ENTITY,?,?>,
-						SET extends JeeslDomainSet<L,D>>
-					extends AbstractDomainBean<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE,SET>
-					implements Serializable,SbSingleBean
+						SET extends JeeslDomainSet<L,D,DOMAIN>,
+						ITEM extends JeeslDomainItem<QUERY,SET>>
+					extends AbstractDomainBean<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE,SET,ITEM>
+					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDomainSetBean.class);
 
-	protected List<ENTITY> entities; public List<ENTITY> getEntities(){return entities;}
-	protected List<QUERY> queries; public List<QUERY> getQueries(){return queries;}
-	protected List<PATH> paths; public List<PATH> getPaths(){return paths;}
-	protected List<ATTRIBUTE> attributes; public List<ATTRIBUTE> getAttributes(){return attributes;}
+	private List<SET> sets; public List<SET> getSets(){return sets;}
+	private List<ITEM> items; public List<ITEM> getItems(){return items;}
 	
-	private DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
-	private QUERY query; public QUERY getQuery() {return query;} public void setQuery(QUERY query) {this.query = query;}
-	private PATH path; public PATH getPath() {return path;} public void setPath(PATH path) {this.path = path;}
-	private ENTITY entity; public ENTITY getEntity() {return entity;}
+	private SET set; public SET getSet() {return set;} public void setSet(SET set) {this.set = set;}
+	private ITEM item; public ITEM getItem() {return item;} public void setItem(ITEM item) {this.item = item;}
 	
-	protected final SbSingleHandler<DOMAIN> sbhDomain; public SbSingleHandler<DOMAIN> getSbhDomain() {return sbhDomain;}
-	
-	private final EjbSurveyDomainFactory<L,D,DOMAIN,ENTITY> efDomain;
-	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH> efDomainQuery;
-	private final EjbSurveyDomainPathFactory<L,D,QUERY,PATH,ENTITY,ATTRIBUTE> efDomainPath;
-	
-	protected final Comparator<ENTITY> cpDomainEntity;
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public AbstractDomainSetBean(IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE,SET> fbDomain)
+	public AbstractDomainSetBean(IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE,SET,ITEM> fbDomain)
 	{
 		super(fbDomain);
-		
-		sbhDomain = new SbSingleHandler<DOMAIN>(fbDomain.getClassDomain(),this);
-		sbhDomain.setDebugOnInfo(true);
-		
-		efDomain = fbDomain.ejbDomain();
-		efDomainQuery = fbDomain.ejbDomainQuery();
-		efDomainPath = fbDomain.ejbDomainPath();
-		
-		cpDomainEntity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
 	protected void postConstructDomainQuery(String userLocale, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
-			JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE> fDomain)
+			JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE,SET,ITEM> fDomain)
 	{
 		super.postConstructDomain(bTranslation,bMessage,fDomain);
-		
-		entities = fDomain.allOrderedPositionVisible(fbDomain.getClassDomainEntity());
-		Collections.sort(entities,cpDomainEntity);
-		reloadDomains();
-		if(sbhDomain.getHasSome())
-		{
-			sbhDomain.selectDefault();
-			domain = sbhDomain.getSelection();
-			reloadQueries();
-		}
-		else
-		{
-			try
-			{
-				addDomain();
-				sbhDomain.selectSbSingle(domain);
-				sbhDomain.selectSbSingle(domain);
-			}
-			catch (UtilsLockingException e) {logger.error(e.getMessage());}
-			catch (UtilsConstraintViolationException e) {logger.error(e.getMessage());}
-		}
+		reloadSets();
 	}
 	
-//	@Override protected void initPageSettings(){}
-	
-	@SuppressWarnings("unchecked")
-	@Override public void selectSbSingle(EjbWithId ejb)
+	private void reset(boolean rSet, boolean rItem)
 	{
-		if(ejb==null) {reset(true,true,true,true);}
-		else if(JeeslDomain.class.isAssignableFrom(ejb.getClass()))
-		{
-			domain = (DOMAIN)ejb;
-			if(EjbIdFactory.isSaved(domain))
-			{
-				selectDomain();
-			}
-			logger.info("Twice:"+sbhDomain.getTwiceSelected()+" for "+domain.toString());
-		}
-		else
-		{
-			logger.info("NOT Assignable");
-		}
+		if(rSet){}
+		if(rItem){}
 	}
 	
-	private void reset(boolean rDomain, boolean rQuery, boolean rPath, boolean rEntity)
+	private void reloadSets()
 	{
-		if(rDomain){domain = null;}
-		if(rQuery){query = null;}
-		if(rPath){path = null;}
-		if(rEntity){entity = null;}
+		sets = fDomain.allOrderedPosition(fbDomain.getClassDomainSet());
 	}
 	
-	private void reloadDomains()
-	{
-		sbhDomain.setList(fDomain.all(fbDomain.getClassDomain()));
-	}
-	
-	public void addDomain()
+	public void addSet()
 	{
 		logger.info(AbstractLogMessage.addEntity(fbDomain.getClassDomain()));
-		domain = efDomain.build(null,sbhDomain.getList());
-		domain.setName(efLang.createEmpty(localeCodes));
+//		domain = efDomain.build(null,sbhDomain.getList());
+//		domain.setName(efLang.createEmpty(localeCodes));
 	}
 	
-	public void saveDomain() throws UtilsConstraintViolationException, UtilsLockingException
+	public void saveSet() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info(AbstractLogMessage.saveEntity(domain));
-		domain.setEntity(fDomain.find(fbDomain.getClassDomainEntity(),domain.getEntity()));
-		domain = fDomain.save(domain);
-		sbhDomain.setSelection(domain);
-		reloadDomains();
-		reloadQueries();
+		logger.info(AbstractLogMessage.saveEntity(set));
+//		domain.setEntity(fDomain.find(fbDomain.getClassDomainEntity(),domain.getEntity()));
+//		domain = fDomain.save(domain);
+//		sbhDomain.setSelection(domain);
+		reloadSets();
+//		reloadQueries();
 	}
 	
-	public void selectDomain()
+	public void selectSet()
 	{
-		reset(false,true,true,true);
-		logger.info(AbstractLogMessage.selectEntity(domain));
-		domain = efLang.persistMissingLangs(fDomain,localeCodes,domain);
-		sbhDomain.setSelection(domain);
-		reloadQueries();
+		reset(false,true);
+		logger.info(AbstractLogMessage.selectEntity(set));
+		set = efLang.persistMissingLangs(fDomain,localeCodes,set);
+
+		reloadItems();
 	}
 	
-	private void reloadQueries()
+	private void reloadItems()
 	{
-		queries = fDomain.allForParent(fbDomain.getClassDomainQuery(), domain);
+//		items = fDomain.allForParent(fbDomain.getClassDomainQuery(), itemSet);
 	}
 	
-	public void addQuery()
-	{
-		logger.info(AbstractLogMessage.addEntity(fbDomain.getClassDomainQuery()));
-		query = efDomainQuery.build(domain, queries);
-		query.setName(efLang.createEmpty(localeCodes));
-		query.setDescription(efDescription.createEmpty(localeCodes));
-	}
-	
-	public void saveQuery() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info(AbstractLogMessage.saveEntity(query));
-//		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
-		query = fDomain.save(query);
-		reloadQueries();
-		reloadPaths();
-		if(paths.isEmpty())
-		{
-			path = fDomain.save(efDomainPath.build(query,domain.getEntity(),paths));
-			reloadPaths();
-		}
-	}
-	
-	public void deleteQuery() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info(AbstractLogMessage.rmEntity(query));
-//		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
-		fDomain.rm(query);
-		reloadQueries();
-		reset(false,true,true,true);
-	}
-	
-	public void selectQuery()
-	{
-		reset(false,false,true,true);
-		logger.info(AbstractLogMessage.selectEntity(query));
-		query = efLang.persistMissingLangs(fDomain,localeCodes,query);
-		query = efDescription.persistMissingLangs(fDomain,localeCodes,query);
-		reloadPaths();
-	}
-	
-	private void reloadPaths()
-	{
-		paths = fDomain.allForParent(fbDomain.getClassDomainPath(), query);
-		if(!paths.isEmpty())
-		{
-			PATH p = paths.get(paths.size()-1);
-			if(p.getAttribute()!=null)
-			{
-				if(p.getAttribute().getRelation()!=null)
-				{
-					entity = p.getAttribute().getEntity();
-				}
-			}
-		}
-	}
-	
-	private void reloadPath()
-	{
-		entity = null;
-		if(path.getAttribute()!=null)
-		{
-			if(path.getAttribute().getRelation()!=null)
-			{
-				entity = path.getAttribute().getEntity();
-			}
-		}
-	}
-	
-	public void addPath()
+	public void addItem()
 	{
 		logger.info(AbstractLogMessage.addEntity(fbDomain.getClassDomainQuery()));
-		path = efDomainPath.build(query,entity,paths);
-		reloadAttributes();
+//		query = efDomainQuery.build(domain, queries);
+//		query.setName(efLang.createEmpty(localeCodes));
+//		query.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
-	public void savePath() throws UtilsConstraintViolationException, UtilsLockingException
+	public void saveItem() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info(AbstractLogMessage.saveEntity(path));
+		logger.info(AbstractLogMessage.saveEntity(item));
 //		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
-		path = fDomain.save(path);
-		reloadPaths();
-		reloadAttributes();
-		reloadPath();
+		item = fDomain.save(item);
+		reloadItems();
 	}
 	
-	public void selectPath()
+	public void deleteItem() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		reset(false,false,false,true);
-		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(path));}
-		reloadAttributes();
-		reloadPath();
-	}
-	
-	public void deletePath() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		logger.info(AbstractLogMessage.rmEntity(path));
+		logger.info(AbstractLogMessage.rmEntity(item));
 //		domain.setEntity(fAnalysis.find(fbAnalysis.getClassDomainEntity(),domain.getEntity()));
-		fDomain.rm(path);
-		reloadPaths();
-		reset(false,false,true,true);
+		fDomain.rm(item);
+		reloadItems();
+		reset(false,true);
 	}
 	
-	private void reloadAttributes()
+	public void selectItem()
 	{
-		attributes = fDomain.fDomainAttributes(path.getEntity());
-		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbDomain.getClassDomainAttribute(), attributes, path.getEntity()));}
+		reset(false,false);
+		logger.info(AbstractLogMessage.selectEntity(item));
 	}
 	
-	public void reorderDomains() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fDomain, sbhDomain.getList());}
-	public void reorderQueries() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fDomain, queries);}
+	public void reorderSets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fDomain, sets);}
+	public void reorderItems() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fDomain, items);}
 }

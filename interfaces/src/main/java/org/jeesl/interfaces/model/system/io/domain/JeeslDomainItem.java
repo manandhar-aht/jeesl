@@ -8,10 +8,10 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisiblePare
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslDomainItem <QUERY extends JeeslDomainQuery<?,?,?,?>,
-									SET extends JeeslDomainSet<?,?>>
+									SET extends JeeslDomainSet<?,?,?>>
 		extends Serializable,EjbWithId,EjbSaveable,EjbWithPositionVisibleParent,EjbRemoveable
 {
-	public enum Attributes{itemSet,criteria}
+	public enum Attributes{itemSet,query}
 	
 	SET getItemSet();
 	void setItemSet(SET itemSet);

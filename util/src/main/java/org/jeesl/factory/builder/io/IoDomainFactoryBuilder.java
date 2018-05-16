@@ -5,6 +5,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainPathFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDomainQueryFactory;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainItem;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
@@ -22,7 +23,8 @@ public class IoDomainFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 				PATH extends JeeslDomainPath<L,D,QUERY,ENTITY,DATTRIBUTE>,
 				ENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
 				DATTRIBUTE extends JeeslRevisionAttribute<L,D,ENTITY,?,?>,
-				SET extends JeeslDomainSet<L,D>>
+				SET extends JeeslDomainSet<L,D,DOMAIN>,
+				ITEM extends JeeslDomainItem<QUERY,SET>>
 			extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDomainFactoryBuilder.class);
@@ -32,8 +34,10 @@ public class IoDomainFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	private final Class<PATH> cDomainPath; public Class<PATH> getClassDomainPath() {return cDomainPath;}
 	private final Class<ENTITY> cDomainEntity; public Class<ENTITY> getClassDomainEntity() {return cDomainEntity;}
 	private final Class<DATTRIBUTE> cDomainAttribute; public Class<DATTRIBUTE> getClassDomainAttribute() {return cDomainAttribute;}
+	private final Class<SET> cDomainSet; public Class<SET> getClassDomainSet() {return cDomainSet;}
+	private final Class<ITEM> cDomainItem; public Class<ITEM> getClassDomainItem() {return cDomainItem;}
 	
-	public IoDomainFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<DOMAIN> cDomain, final Class<QUERY> cDomainQuery, final Class<PATH> cDomainPath, final Class<ENTITY> cDomainEntity, final Class<DATTRIBUTE> cDomainAttribute)
+	public IoDomainFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<DOMAIN> cDomain, final Class<QUERY> cDomainQuery, final Class<PATH> cDomainPath, final Class<ENTITY> cDomainEntity, final Class<DATTRIBUTE> cDomainAttribute, final Class<SET> cDomainSet, final Class<ITEM> cDomainItem)
 	{
 		super(cL,cD);
 		this.cDomain=cDomain;
@@ -41,6 +45,8 @@ public class IoDomainFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cDomainPath=cDomainPath;
 		this.cDomainEntity=cDomainEntity;
 		this.cDomainAttribute=cDomainAttribute;
+		this.cDomainSet=cDomainSet;
+		this.cDomainItem=cDomainItem;
 	}
 	
 	public EjbSurveyDomainFactory<L,D,DOMAIN,ENTITY> ejbDomain()

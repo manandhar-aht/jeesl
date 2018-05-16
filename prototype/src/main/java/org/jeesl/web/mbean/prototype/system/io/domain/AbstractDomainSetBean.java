@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.system.io;
+package org.jeesl.web.mbean.prototype.system.io.domain;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -18,6 +18,7 @@ import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.util.comparator.ejb.system.io.revision.RevisionEntityComparator;
@@ -33,47 +34,41 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends UtilsDescription,
-						DOMAIN extends JeeslDomain<L,DENTITY>,
+public abstract class AbstractDomainSetBean <L extends UtilsLang, D extends UtilsDescription,
+						DOMAIN extends JeeslDomain<L,ENTITY>,
 						QUERY extends JeeslDomainQuery<L,D,DOMAIN,PATH>,
-						PATH extends JeeslDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
-						DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
-						DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>>
-					extends AbstractAdminBean<L,D>
+						PATH extends JeeslDomainPath<L,D,QUERY,ENTITY,ATTRIBUTE>,
+						ENTITY extends JeeslRevisionEntity<L,D,?,?,ATTRIBUTE>,
+						ATTRIBUTE extends JeeslRevisionAttribute<L,D,ENTITY,?,?>,
+						SET extends JeeslDomainSet<L,D>>
+					extends AbstractDomainBean<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE,SET>
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractDomainQueryBean.class);
-	
-	protected JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fDomain;
+	final static Logger logger = LoggerFactory.getLogger(AbstractDomainSetBean.class);
 
-	
-	protected List<DENTITY> entities; public List<DENTITY> getEntities(){return entities;}
+	protected List<ENTITY> entities; public List<ENTITY> getEntities(){return entities;}
 	protected List<QUERY> queries; public List<QUERY> getQueries(){return queries;}
 	protected List<PATH> paths; public List<PATH> getPaths(){return paths;}
-	protected List<DATTRIBUTE> attributes; public List<DATTRIBUTE> getAttributes(){return attributes;}
+	protected List<ATTRIBUTE> attributes; public List<ATTRIBUTE> getAttributes(){return attributes;}
 	
 	private DOMAIN domain; public DOMAIN getDomain() {return domain;} public void setDomain(DOMAIN domain) {this.domain = domain;}
 	private QUERY query; public QUERY getQuery() {return query;} public void setQuery(QUERY query) {this.query = query;}
 	private PATH path; public PATH getPath() {return path;} public void setPath(PATH path) {this.path = path;}
-	private DENTITY entity; public DENTITY getEntity() {return entity;}
+	private ENTITY entity; public ENTITY getEntity() {return entity;}
 	
 	protected final SbSingleHandler<DOMAIN> sbhDomain; public SbSingleHandler<DOMAIN> getSbhDomain() {return sbhDomain;}
 	
-	private final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fbDomain;
-	
-	private final EjbSurveyDomainFactory<L,D,DOMAIN,DENTITY> efDomain;
+	private final EjbSurveyDomainFactory<L,D,DOMAIN,ENTITY> efDomain;
 	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH> efDomainQuery;
-	private final EjbSurveyDomainPathFactory<L,D,QUERY,PATH,DENTITY,DATTRIBUTE> efDomainPath;
+	private final EjbSurveyDomainPathFactory<L,D,QUERY,PATH,ENTITY,ATTRIBUTE> efDomainPath;
 	
-	protected final Comparator<DENTITY> cpDomainEntity;
+	protected final Comparator<ENTITY> cpDomainEntity;
 	
-//	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public AbstractDomainQueryBean(IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fbDomain)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public AbstractDomainSetBean(IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE,SET> fbDomain)
 	{
-		super(fbDomain.getClassL(),fbDomain.getClassD());
-
-		this.fbDomain=fbDomain;
+		super(fbDomain);
 		
 		sbhDomain = new SbSingleHandler<DOMAIN>(fbDomain.getClassDomain(),this);
 		sbhDomain.setDebugOnInfo(true);
@@ -85,13 +80,10 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 		cpDomainEntity = new RevisionEntityComparator().factory(RevisionEntityComparator.Type.position);
 	}
 	
-	protected void initSuperDomain(String userLocale, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
-			JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fDomain)
+	protected void postConstructDomainQuery(String userLocale, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
+			JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,ENTITY,ATTRIBUTE> fDomain)
 	{
-		super.initJeeslAdmin(bTranslation,bMessage);
-		this.fDomain=fDomain;
-//		super.initSuperSurvey(bTranslation.getLangKeys(),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
-//		initPageSettings();
+		super.postConstructDomain(bTranslation,bMessage,fDomain);
 		
 		entities = fDomain.allOrderedPositionVisible(fbDomain.getClassDomainEntity());
 		Collections.sort(entities,cpDomainEntity);

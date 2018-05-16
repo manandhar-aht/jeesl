@@ -9,6 +9,7 @@ import org.jeesl.factory.builder.io.IoDomainFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
 import org.jeesl.interfaces.model.system.io.domain.JeeslDomainQuery;
+import org.jeesl.interfaces.model.system.io.domain.JeeslDomainSet;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
@@ -24,19 +25,19 @@ public class JeeslIoDomainFacadeBean <L extends UtilsLang, D extends UtilsDescri
 				QUERY extends JeeslDomainQuery<L,D,DOMAIN,PATH>,
 				PATH extends JeeslDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
 				DENTITY extends JeeslRevisionEntity<L,D,?,?,DATTRIBUTE>,
-				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>>
+				DATTRIBUTE extends JeeslRevisionAttribute<L,D,DENTITY,?,?>,
+				SET extends JeeslDomainSet<L,D>>
 	extends UtilsFacadeBean implements JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDomainFacadeBean.class);
 		
-	private final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fbDomain;
+	private final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,SET> fbDomain;
 	
 	public JeeslIoDomainFacadeBean(EntityManager em,
-			final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE> fbDomain)
+			final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,SET> fbDomain)
 	{
 		super(em);
 		this.fbDomain=fbDomain;
-		
 	}
 	
 	@Override

@@ -540,7 +540,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	public void reorderReports() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassReport(), reports);Collections.sort(reports, comparatorReport);}
 	public void reorderSheets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassSheet(), sheets);Collections.sort(sheets, comparatorSheet);}
 	public void reorderGroups() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassGroup(), groups);Collections.sort(groups, comparatorGroup);}
-	protected void reorderColumns() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassColumn(), columns);Collections.sort(columns, comparatorColumn);}
+	public void reorderColumns() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassColumn(), columns);Collections.sort(columns, comparatorColumn);}
 	public void reorderRows() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fReport, fbReport.getClassRow(), rows);Collections.sort(rows, comparatorRow);}
 	
 	protected void updatePerformed(){}	

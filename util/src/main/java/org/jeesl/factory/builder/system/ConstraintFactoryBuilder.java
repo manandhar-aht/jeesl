@@ -29,20 +29,31 @@ public class ConstraintFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	private final Class<SCOPE> cScope; public Class<SCOPE> getClassScope() {return cScope;}
 	private final Class<ALGCAT> cAlgorithmCategory; public Class<ALGCAT> getClassAlgorithmCategory() {return cAlgorithmCategory;}
 	private final Class<ALGO> cAlgorithm; public Class<ALGO> getClassAlgorithm() {return cAlgorithm;}
-	
+	private final Class<CONCAT> cCategory; public Class<CONCAT> getClassConstraintCategory() {return cCategory;}
 	private final Class<CONSTRAINT> cConstraint; public Class<CONSTRAINT> getClassConstraint() {return cConstraint;}
+	private final Class<LEVEL> cLevel; public Class<LEVEL> getClassConstraintLevel() {return cLevel;}
+	private final Class<TYPE> cType; public Class<TYPE> getClassConstraintType() {return cType;}
+	private final Class<RESOLUTION> cResolution; public Class<RESOLUTION> getClassConstraintResolution() {return cResolution;}
 	
 	public ConstraintFactoryBuilder(final Class<L> cL, final Class<D> cD,
 								final Class<ALGCAT> cAlgorithmCategory,
 								final Class<ALGO> cAlgorithm,
 								final Class<SCOPE> cScope,
-								final Class<CONSTRAINT> cConstraint)
+								final Class<CONCAT> cCategory,
+								final Class<CONSTRAINT> cConstraint,
+								final Class<LEVEL> cLevel,
+								final Class<TYPE> cType,
+								final Class<RESOLUTION> cResolution)
 	{
 		super(cL,cD);
 		this.cAlgorithmCategory=cAlgorithmCategory;
 		this.cAlgorithm=cAlgorithm;
 		this.cScope=cScope;
+		this.cCategory=cCategory;
 		this.cConstraint=cConstraint;
+		this.cLevel=cLevel;
+		this.cType=cType;
+		this.cResolution=cResolution;
 	}
 
 

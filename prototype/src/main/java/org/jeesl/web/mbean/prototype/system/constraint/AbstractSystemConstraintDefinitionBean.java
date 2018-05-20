@@ -37,7 +37,6 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 										LEVEL extends UtilsStatus<LEVEL,L,D>,
 										TYPE extends UtilsStatus<TYPE,L,D>,
 										RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
-//					extends AbstractAdminBean<L,D>
 					extends AbstractSystemConstraintBean<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>
 					implements Serializable,SbToggleBean
 {
@@ -45,11 +44,6 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	final static Logger logger = LoggerFactory.getLogger(AbstractSystemConstraintDefinitionBean.class);
 	
 	private JeeslConstraintsBean<CONSTRAINT> bConstraint;
-	
-	private final Class<CONCAT> cCategory;
-	private final Class<CONSTRAINT> cConstraint;
-	private final Class<LEVEL> cLevel;
-	private final Class<TYPE> cType;
 	
 	private List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	private List<CONSTRAINT> constraints; public List<CONSTRAINT> getConstraints() {return constraints;}
@@ -65,28 +59,22 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	protected SbMultiHandler<CONCAT> sbhCategory; public SbMultiHandler<CONCAT> getSbhCategory() {return sbhCategory;}
 	private final UiTwiceClickHelper ui2; public UiTwiceClickHelper getUi2() {return ui2;}
 
-	public AbstractSystemConstraintDefinitionBean(
-			ConstraintFactoryBuilder<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fbConstraint,
-			Class<SCOPE> cScope, Class<CONCAT> cCategory, Class<CONSTRAINT> cConstraint, Class<LEVEL> cLevel, Class<TYPE> cType)
+	public AbstractSystemConstraintDefinitionBean(ConstraintFactoryBuilder<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fbConstraint)
 	{
 		super(fbConstraint);
-		this.cCategory=cCategory;
-		this.cConstraint=cConstraint;
-		this.cLevel=cLevel;
-		this.cType=cType;
 		
 		ui2 = new UiTwiceClickHelper();
-		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(fbConstraint.getClassL(),fbConstraint.getClassD(),cScope,cCategory);
-		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(fbConstraint.getClassL(),fbConstraint.getClassD(),cConstraint,cType);
+		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(fbConstraint.getClassL(),fbConstraint.getClassD(),fbConstraint.getClassScope(),fbConstraint.getClassConstraintCategory());
+		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(fbConstraint.getClassL(),fbConstraint.getClassD(),fbConstraint.getClassConstraint(),fbConstraint.getClassConstraintType());
 	}
 	
 	protected void postConstructConstraintDefinition(JeeslConstraintsBean<CONSTRAINT> bConstraint, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
 		super.initConstraint(bTranslation,bMessage,fConstraint);
 		this.bConstraint=bConstraint;
-		sbhCategory = new SbMultiHandler<CONCAT>(cCategory,fConstraint.allOrderedPosition(cCategory),this);
-		types = fConstraint.allOrderedPosition(cType);
-		levels = fConstraint.allOrderedPosition(cLevel);
+		sbhCategory = new SbMultiHandler<CONCAT>(fbConstraint.getClassConstraintCategory(),fConstraint.allOrderedPosition(fbConstraint.getClassConstraintCategory()),this);
+		types = fConstraint.allOrderedPosition(fbConstraint.getClassConstraintType());
+		levels = fConstraint.allOrderedPosition(fbConstraint.getClassConstraintLevel());
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
@@ -128,7 +116,7 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	public void saveScope() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(scope));}
-		scope.setCategory(fConstraint.find(cCategory,scope.getCategory()));
+		scope.setCategory(fConstraint.find(fbConstraint.getClassConstraintCategory(),scope.getCategory()));
 		scope = fConstraint.save(scope);
 		reloadScopes();
 		reloadConstraints();
@@ -138,12 +126,12 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	
 	public void reloadConstraints()
 	{
-		constraints = fConstraint.allForParent(cConstraint,scope);
+		constraints = fConstraint.allForParent(fbConstraint.getClassConstraint(),scope);
 	}
 	
 	public void addConstraint() throws UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cConstraint));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbConstraint.getClassConstraint()));}
 		constraint = efConstraint.build(scope,null);
 		constraint.setName(efLang.createEmpty(localeCodes));
 		constraint.setDescription(efDescription.createEmpty(localeCodes));
@@ -154,8 +142,8 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	public void saveConstraint() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(constraint));}
-		constraint.setType(fConstraint.find(cType,constraint.getType()));
-		if(constraint.getLevel()!=null) {constraint.setLevel(fConstraint.find(cLevel,constraint.getLevel()));}
+		constraint.setType(fConstraint.find(fbConstraint.getClassConstraintType(),constraint.getType()));
+		if(constraint.getLevel()!=null) {constraint.setLevel(fConstraint.find(fbConstraint.getClassConstraintLevel(),constraint.getLevel()));}
 		constraint = fConstraint.save(constraint);
 		reloadConstraints();
 		
@@ -165,7 +153,7 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	public void selectConstraint() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(constraint));}
-		constraint = fConstraint.find(cConstraint,constraint);
+		constraint = fConstraint.find(fbConstraint.getClassConstraint(),constraint);
 		efConstraint.updateLD(fConstraint, constraint, localeCodes);
 		ui2.checkB(constraint);
 	}

@@ -48,6 +48,12 @@ public class TxtStatusFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang,
 	}
 	
 	public static <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
+			String label(String lang, S ejb)
+	{
+		return ejb.getName().get(lang).getLang();
+	}
+	
+	public static <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
 		List<String> toCodes(List<S> list)
 	{
 		List<String> result = new ArrayList<String>();

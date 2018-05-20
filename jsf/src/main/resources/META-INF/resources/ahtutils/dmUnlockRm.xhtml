@@ -18,10 +18,10 @@
         
 <composite:implementation>
 <h:panelGroup>
-  <h:graphicImage rendered="#{!cc.attrs.dm.mapUnlock[cc.attrs.for.id]}" name="#{iconBean.icon12['dmUnlockDeactivated']}" library="gfx">
+  <h:graphicImage rendered="#{!cc.attrs.dm.mapUnlock[cc.attrs.for.id]}" name="#{appIconBean.icon12['dmUnlockDeactivated']}" library="gfx">
     <p:ajax update="#{cc.attrs.updateUnlock}" event="click" listener="#{cc.attrs.dm.unlock(cc.attrs.for)}"/>
   </h:graphicImage>
-  <h:graphicImage rendered="#{cc.attrs.dm.mapUnlock[cc.attrs.for.id]}" name="#{iconBean.icon12['dmUnlocked']}" library="gfx">
+  <h:graphicImage rendered="#{cc.attrs.dm.mapUnlock[cc.attrs.for.id]}" name="#{appIconBean.icon12['dmUnlocked']}" library="gfx">
     <p:ajax update="#{cc.attrs.updateRm}" event="click" listener="#{cc.attrs.bean.rm(cc.attrs.for)}"/>
   </h:graphicImage>
 </h:panelGroup>

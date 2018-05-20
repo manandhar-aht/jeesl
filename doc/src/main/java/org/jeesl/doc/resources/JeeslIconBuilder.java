@@ -70,7 +70,7 @@ public class JeeslIconBuilder
 	{
 		File base = new File(prefix+"/jeesl/prototype/src/main/resources/META-INF/resources/jeeslPrototypeGfx/12/ui");
 		copy(FilenameUtils.normalize(base.getAbsolutePath()),"control",   "delete","clone","download","filter","move","remove","save","search","upload");
-		copy(FilenameUtils.normalize(base.getAbsolutePath()),"control/dm",   "circleMinusGrey","circleMinusRed","circlePlusGrey","circlePlusGreen");
+		copy(FilenameUtils.normalize(base.getAbsolutePath()),"control/dm",   "circleMinusGrey","circleMinusRed","circleGrey","circleGreen");
 		copy(FilenameUtils.normalize(base.getAbsolutePath()),"security",   "check-mark","documentation","x-mark");
 		copy(FilenameUtils.normalize(base.getAbsolutePath()),"system/io/file",   "pdf");
 	}

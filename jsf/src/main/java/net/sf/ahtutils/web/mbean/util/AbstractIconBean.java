@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,8 +189,8 @@ public class AbstractIconBean implements Serializable
 	{
 		mapStatic.put("dmUnlockDeactivated", "ui/jeesl/control/dm/circleMinusGrey.png");
 		mapStatic.put("dmUnlocked", "ui/jeesl/control/dm/circleMinusRed.png");
-		mapStatic.put("dmNotSelected", "ui/jeesl/control/dm/circlePlusGrey.png");
-		mapStatic.put("dmSelected", "ui/jeesl/control/dm/circlePlusGrey.png");
+		mapStatic.put("dmNotSelected", "ui/jeesl/control/dm/circleGrey.png");
+		mapStatic.put("dmSelected", "ui/jeesl/control/dm/circleGreen.png");
 	}
 	
 	protected void geojsf()

@@ -3,6 +3,7 @@ package org.jeesl.factory.xml.mail;
 import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
 
+import org.jeesl.interfaces.model.system.security.user.JeeslSimpleUser;
 import org.jeesl.model.xml.system.io.mail.EmailAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,5 +33,13 @@ public class XmlEmailAddressFactory
     	xml.setName(address.getPersonal());
     	xml.setEmail(address.getAddress());
     	return xml;
+    }
+    
+    public static EmailAddress build(JeeslSimpleUser user)
+    {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append(user.getFirstName());
+    	sb.append(" ").append(user.getLastName());
+    	return create(sb.toString(),user.getEmail());
     }
 }

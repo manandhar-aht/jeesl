@@ -171,6 +171,13 @@
 			<s:lang key="fr" translation="Template Type"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IoTemplateTokenType">
+		<s:langs>
+			<s:lang key="de" translation="Token Typ"/>
+			<s:lang key="en" translation="Token Type"/>
+			<s:lang key="fr" translation="Token Type"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="IoTemplateScope">
 		<s:langs>
 			<s:lang key="de" translation="Vorlagen Zweck"/>

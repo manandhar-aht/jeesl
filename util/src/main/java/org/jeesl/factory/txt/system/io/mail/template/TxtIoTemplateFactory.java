@@ -58,8 +58,15 @@ public class TxtIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription
 		return sb.toString();
 	}
 	
-	public static <TE extends Enum<TE>, TC extends Enum<TC>>
-		String buildCode(TE templateCode, TC typeCode, String localeCode)
+	public static  <TC extends Enum<TC>> String buildCode(String template, TC typeCode, String localeCode)
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append(template);
+		sb.append("-").append(typeCode.toString());
+		sb.append("-").append(localeCode);
+		return sb.toString();
+	}
+	public static <TE extends Enum<TE>, TC extends Enum<TC>> String buildCode(TE templateCode, TC typeCode, String localeCode)
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append(templateCode.toString());

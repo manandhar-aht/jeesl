@@ -1,6 +1,7 @@
 package org.jeesl.factory.xml.mail;
 
 import org.jeesl.model.xml.system.io.mail.Bcc;
+import org.jeesl.model.xml.system.io.mail.EmailAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,5 +12,12 @@ public class XmlBccFactory
     public static Bcc build()
     {    	
     	return new Bcc();
+    }
+    
+    public static Bcc build(EmailAddress address)
+    {
+    	Bcc bcc = build();
+    	bcc.getEmailAddress().add(address);
+    	return bcc;
     }
 }

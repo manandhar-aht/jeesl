@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.factory.builder.io.IoTemplateFactoryBuilder;
-import org.jeesl.factory.txt.system.io.mail.template.TxtIoTemplateFactory;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Element;
 
 import freemarker.cache.StringTemplateLoader;
 import freemarker.core.InvalidReferenceException;
+import freemarker.ext.dom.NodeModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -81,6 +82,18 @@ public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescr
 		Template ftl = fmConfiguration.getTemplate(code);
 		StringWriter sw = new StringWriter();
 		ftl.process(model, sw);
+		sw.flush();
+		return sw.toString();
+	}
+	
+	public String process(String code, Element root) throws IOException, TemplateException, InvalidReferenceException
+	{
+		NodeModel.simplify(root);
+		
+		Template ftl = fmConfiguration.getTemplate(code);
+		StringWriter sw = new StringWriter();
+		ftl.process(NodeModel.wrap(root), sw);
+		
 		sw.flush();
 		return sw.toString();
 	}

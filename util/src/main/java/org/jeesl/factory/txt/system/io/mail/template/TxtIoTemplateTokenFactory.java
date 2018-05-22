@@ -24,9 +24,9 @@ public class TxtIoTemplateTokenFactory <L extends UtilsLang,D extends UtilsDescr
 {
 	final static Logger logger = LoggerFactory.getLogger(TxtIoTemplateTokenFactory.class);
 		
-	public Map<String,String> buildModel(TEMPLATE template)
+	public Map<String,Object> buildModel(TEMPLATE template)
 	{
-		Map<String,String> model = new HashMap<String,String>();
+		Map<String,Object> model = new HashMap<String,Object>();
 		for(TOKEN token : template.getTokens())
 		{
 			model.put(token.getCode(), token.getExample());

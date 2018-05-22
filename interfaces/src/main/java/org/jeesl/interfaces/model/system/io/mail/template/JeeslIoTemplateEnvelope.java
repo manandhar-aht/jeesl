@@ -31,7 +31,7 @@ public class JeeslIoTemplateEnvelope<L extends UtilsLang,D extends UtilsDescript
 	public TYPE getType() {return type;}
 	public void setType(TYPE type) {this.type = type;}
 	
-	private Map<String,String> model;
-	public Map<String, String> getModel() {return model;}
-	public void setModel(Map<String, String> model) {this.model = model;}
+	private Map<String,Object> model;
+	public Map<String,Object> getModel() {return model;}
+	public void setModel(Map<String,Object> model) {this.model = model;}
 }

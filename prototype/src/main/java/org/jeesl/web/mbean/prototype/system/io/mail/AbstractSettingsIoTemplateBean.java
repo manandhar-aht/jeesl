@@ -290,7 +290,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
     		fmEngine.addTemplate(definition);
     		
     		String fmTemplate = fbTemplate.txtTemplate().buildCode(template, definition, langs[tabIndex]);
-    		Map<String,String> model = fbTemplate.txtToken().buildModel(template);
+    		Map<String,Object> model = fbTemplate.txtToken().buildModel(template);
     		
     		preview = null;
 			preview = fmEngine.process(fmTemplate,model);

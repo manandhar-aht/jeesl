@@ -2,6 +2,7 @@ package org.jeesl.mail.freemarker;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -40,6 +42,8 @@ public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescr
 	private StringTemplateLoader fmStringTemplates;
 	private Configuration fmConfiguration;
 	
+	protected final Map<String,TEMPLATE> mapTemplate;
+	
 	public FreemarkerIoTemplateEngine(IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate)
 	{
 		this.fbTemplate=fbTemplate;
@@ -49,6 +53,8 @@ public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescr
 		fmConfiguration.setLogTemplateExceptions(false);
 		fmConfiguration.setDefaultEncoding("UTF-8");
 		fmConfiguration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+		
+		mapTemplate = new HashMap<String,TEMPLATE>();
 	}
 	
 	public void addTemplates(List<TEMPLATE> templates)
@@ -57,6 +63,7 @@ public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescr
 		{
 			addTemplate(template);
 		}
+		mapTemplate.putAll(fbTemplate.ejbTemplate().buildMap(templates));
 	}
 		
 	public void addTemplate(TEMPLATE template)
@@ -78,7 +85,13 @@ public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescr
 		}
 	}
 	
-	public String process(String code, Map<String,String> model) throws IOException, TemplateException, InvalidReferenceException
+	public TEMPLATE resolveTemplate(String templateCode) throws UtilsProcessingException
+	{
+		if(!mapTemplate.containsKey(templateCode)){throw new UtilsProcessingException("Template with code "+templateCode+" not available");}
+		return mapTemplate.get(templateCode);
+	}
+	
+	public String process(String code, Map<String,Object> model) throws IOException, TemplateException, InvalidReferenceException
 	{
 		Template ftl = fmConfiguration.getTemplate(code);
 		StringWriter sw = new StringWriter();

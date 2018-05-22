@@ -37,24 +37,19 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 					implements JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoTemplateFacadeBean.class);
+
 	
-	private final Class<CATEGORY> cCategory;
-	private final Class<TEMPLATE> cTemplate;
+	private final IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate;
 	
-	private IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate;
-	
-	public JeeslIoTemplateFacadeBean(EntityManager em,IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate,
-			
-			final Class<CATEGORY> cCategory, final Class<TEMPLATE> cTemplate)
+	public JeeslIoTemplateFacadeBean(EntityManager em,IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate)
 	{
 		super(em);
-		this.cCategory=cCategory;
-		this.cTemplate=cTemplate;
+		this.fbTemplate=fbTemplate;
 	}
 	
 	@Override public TEMPLATE load(TEMPLATE template)
 	{
-		template = em.find(cTemplate, template.getId());
+		template = em.find(fbTemplate.getClassTemplate(), template.getId());
 		template.getTokens().size();
 		template.getDefinitions().size();
 		return template;
@@ -66,7 +61,7 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 		List<TEMPLATE> result = new ArrayList<TEMPLATE>();
 		List<CATEGORY> categories = new ArrayList<CATEGORY>();
 		
-		try {categories.add(this.fByCode(cCategory, category));}
+		try {categories.add(this.fByCode(fbTemplate.getClassCategory(), category));}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 		if(categories.isEmpty()){return result;}
 		
@@ -81,15 +76,15 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 	
 	@Override public List<TEMPLATE> fTemplates(List<CATEGORY> categories, boolean showInvisibleEntities)
 	{
-		List<ParentPredicate<CATEGORY>> ppCategory = ParentPredicate.createFromList(cCategory,"category",categories);
-		return allForOrParents(cTemplate,ppCategory);
+		List<ParentPredicate<CATEGORY>> ppCategory = ParentPredicate.createFromList(fbTemplate.getClassCategory(),"category",categories);
+		return allForOrParents(fbTemplate.getClassTemplate(),ppCategory);
 	}
 	
 	@Override public List<TEMPLATE> fTemplates(CATEGORY category, SCOPE scope)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(cTemplate);
-		Root<TEMPLATE> template = cQ.from(cTemplate);
+		CriteriaQuery<TEMPLATE> cQ = cB.createQuery(fbTemplate.getClassTemplate());
+		Root<TEMPLATE> template = cQ.from(fbTemplate.getClassTemplate());
 		
 		Path<CATEGORY> pCategory = template.get(JeeslIoTemplate.Attributes.category.toString());
 		Path<SCOPE> pScope = template.get(JeeslIoTemplate.Attributes.scope.toString());
@@ -104,7 +99,7 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 
 	@Override public DEFINITION fDefinition(TYPE type, String code) throws UtilsNotFoundException
 	{
-		TEMPLATE t = this.fByCode(cTemplate, code);
+		TEMPLATE t = this.fByCode(fbTemplate.getClassTemplate(), code);
 		for(DEFINITION d : t.getDefinitions())
 		{
 			if(d.getType().equals(type)){return d;}

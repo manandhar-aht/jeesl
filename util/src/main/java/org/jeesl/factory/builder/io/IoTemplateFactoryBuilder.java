@@ -34,6 +34,7 @@ public class IoTemplateFactoryBuilder<L extends UtilsLang,D extends UtilsDescrip
 	private final Class<SCOPE> cScope; public Class<SCOPE> getClassScope(){return cScope;}
 	private final Class<DEFINITION> cDefinition; public Class<DEFINITION> getClassDefinition(){return cDefinition;}
 	private final Class<TOKEN> cToken; public Class<TOKEN> getClassToken(){return cToken;}
+	private final Class<TOKENTYPE> cTokenType; public Class<TOKENTYPE> getClassTokenType(){return cTokenType;}
 	
 	public IoTemplateFactoryBuilder(final Class<L> cL, final Class<D> cD,
 									final Class<CATEGORY> cCategory,
@@ -41,7 +42,8 @@ public class IoTemplateFactoryBuilder<L extends UtilsLang,D extends UtilsDescrip
 									final Class<TEMPLATE> cTemplate,
 									final Class<SCOPE> cScope,
 									final Class<DEFINITION> cDefinition,
-									final Class<TOKEN> cToken)
+									final Class<TOKEN> cToken,
+									final Class<TOKENTYPE> cTokenType)
 	{
 		super(cL,cD);
 		this.cCategory=cCategory;
@@ -50,6 +52,7 @@ public class IoTemplateFactoryBuilder<L extends UtilsLang,D extends UtilsDescrip
 		this.cScope=cScope;
 		this.cDefinition=cDefinition;
 		this.cToken=cToken;
+		this.cTokenType=cTokenType;
 	}
 	
 	public EjbIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> ejbTemplate()

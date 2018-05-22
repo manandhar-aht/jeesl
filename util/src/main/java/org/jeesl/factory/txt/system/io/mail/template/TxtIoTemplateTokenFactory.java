@@ -19,7 +19,8 @@ public class TxtIoTemplateTokenFactory <L extends UtilsLang,D extends UtilsDescr
 										TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 										SCOPE extends UtilsStatus<SCOPE,L,D>,
 										DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-										TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
+										TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,TOKENTYPE>,
+										TOKENTYPE extends UtilsStatus<TOKENTYPE,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(TxtIoTemplateTokenFactory.class);
 		

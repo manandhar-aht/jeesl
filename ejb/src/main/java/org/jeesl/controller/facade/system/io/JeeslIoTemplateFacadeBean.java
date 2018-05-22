@@ -31,7 +31,7 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 						TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 						SCOPE extends UtilsStatus<SCOPE,L,D>,
 						DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-						TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>,
+						TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,TOKENTYPE>,
 						TOKENTYPE extends UtilsStatus<TOKENTYPE,L,D>>
 					extends UtilsFacadeBean
 					implements JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>

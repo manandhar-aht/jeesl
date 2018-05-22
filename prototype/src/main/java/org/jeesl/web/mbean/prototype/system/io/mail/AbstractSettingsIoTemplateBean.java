@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.system.io.mail;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -46,7 +47,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 											TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 											SCOPE extends UtilsStatus<SCOPE,L,D>,
 											DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-											TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>,
+											TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,TOKENTYPE>,
 											TOKENTYPE extends UtilsStatus<TOKENTYPE,L,D>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean
@@ -58,11 +59,12 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 	private final IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate;
 	
 	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
-	private List<TYPE> types; public List<TYPE> getTypes() {return types;}
+	private final List<TYPE> types; public List<TYPE> getTypes() {return types;}
 	private List<SCOPE> scopes;public List<SCOPE> getScopes() {return scopes;}
 	private List<TEMPLATE> templates; public List<TEMPLATE> getTemplates() {return templates;}
 	private List<DEFINITION> definitions; public List<DEFINITION> getDefinitions() {return definitions;}
 	private List<TOKEN> tokens; public List<TOKEN> getTokens() {return tokens;}
+	private final List<TOKENTYPE> tokenTypes; public List<TOKENTYPE> getTokenTypes() {return tokenTypes;}
 	
 	private TEMPLATE template; public TEMPLATE getTemplate() {return template;} public void setTemplate(TEMPLATE template) {this.template = template;}
 	private DEFINITION definition; public DEFINITION getDefinition() {return definition;} public void setDefinition(DEFINITION definition) {this.definition = definition;}
@@ -70,7 +72,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 	
 	private EjbIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> efTemplate;
 	private EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> efDefinition;
-	private EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> efToken;
+	private EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> efToken;
 	
 	protected final SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	private FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fmEngine;
@@ -86,6 +88,8 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 	{
 		super(fbTemplate.getClassL(),fbTemplate.getClassD());
 		this.fbTemplate=fbTemplate;
+		types = new ArrayList<TYPE>();
+		tokenTypes = new ArrayList<TOKENTYPE>();
 		sbhCategory = new SbMultiHandler<CATEGORY>(fbTemplate.getClassCategory(),this);
 	}
 	
@@ -99,12 +103,13 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		efToken = fbTemplate.ejbTtoken();
 		
 		comparatorTemplate = new IoTemplateComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateComparator.Type.position);
-		comparatorToken = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateTokenComparator.Type.position);
+		comparatorToken = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>().factory(IoTemplateTokenComparator.Type.position);
 		comparatorDefinition = new IoTemplateDefinitionComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateDefinitionComparator.Type.position);
 		
 		fmEngine = new FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>(fbTemplate);
 		
-		types = fTemplate.allOrderedPositionVisible(fbTemplate.getClassType());
+		types.addAll(fTemplate.allOrderedPositionVisible(fbTemplate.getClassType()));
+		tokenTypes.addAll(fTemplate.allOrderedPositionVisible(fbTemplate.getClassTokenType()));
 		
 		categories = fTemplate.allOrderedPositionVisible(fbTemplate.getClassCategory());
 		initPageConfiguration();
@@ -217,6 +222,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(token));}
 		try
 		{
+			if(token.getType()!=null) {token.setType(fTemplate.find(fbTemplate.getClassTokenType(), token.getType()));}
 			token = fTemplate.save(token);
 			reloadTemplate();
 			bMessage.growlSuccessSaved();

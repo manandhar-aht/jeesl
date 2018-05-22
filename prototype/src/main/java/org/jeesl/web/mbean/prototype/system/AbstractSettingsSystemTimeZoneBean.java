@@ -1,10 +1,11 @@
-package org.jeesl.web.mbean.prototype.admin.system;
+package org.jeesl.web.mbean.prototype.system;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.JeeslCalendarFacade;
 import org.jeesl.factory.builder.module.CalendarFactoryBuilder;
@@ -24,7 +25,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
+public class AbstractSettingsSystemTimeZoneBean <L extends UtilsLang,
 											D extends UtilsDescription,
 											CALENDAR extends JeeslCalendar<L,D,CALENDAR,ZONE,CT,ITEM,IT>,
 											ZONE extends JeeslCalendarTimeZone<L,D,CALENDAR,ZONE,CT,ITEM,IT>,
@@ -35,7 +36,7 @@ public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
 		implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSystemTimeZoneBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractSettingsSystemTimeZoneBean.class);
 	
 	private JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar;
 	private final CalendarFactoryBuilder<L,D,CALENDAR,ZONE,CT,ITEM,IT> fbCalendar;
@@ -47,15 +48,15 @@ public class AbstractAdminSystemTimeZoneBean <L extends UtilsLang,
 	private Comparator<ZONE> comparatorTimeZone;
 	private EjbTimeZoneFactory<L,D,CALENDAR,ZONE,CT,ITEM,IT> efZone;
 	
-	public AbstractAdminSystemTimeZoneBean(final CalendarFactoryBuilder<L,D,CALENDAR,ZONE,CT,ITEM,IT> fbCalendar)
+	public AbstractSettingsSystemTimeZoneBean(final CalendarFactoryBuilder<L,D,CALENDAR,ZONE,CT,ITEM,IT> fbCalendar)
 	{
 		super(fbCalendar.getClassL(),fbCalendar.getClassD());
 		this.fbCalendar=fbCalendar;
 	}
 	
-	public void initSuper(JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, JeeslFacesMessageBean bMessage, String[] localeCodes)
+	public void postConstructTimeZone(JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage)
 	{
-		super.initAdmin(localeCodes,fbCalendar.getClassL(),fbCalendar.getClassD(),bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fCalendar=fCalendar;
 
 		efZone = fbCalendar.ejbZone();

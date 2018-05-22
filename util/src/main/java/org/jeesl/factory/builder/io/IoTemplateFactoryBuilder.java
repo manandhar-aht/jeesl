@@ -22,7 +22,7 @@ public class IoTemplateFactoryBuilder<L extends UtilsLang,D extends UtilsDescrip
 									TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 									SCOPE extends UtilsStatus<SCOPE,L,D>,
 									DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-									TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>,
+									TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,TOKENTYPE>,
 									TOKENTYPE extends UtilsStatus<TOKENTYPE,L,D>>
 		extends AbstractFactoryBuilder<L,D>
 {
@@ -65,14 +65,14 @@ public class IoTemplateFactoryBuilder<L extends UtilsLang,D extends UtilsDescrip
 		return new EjbIoTemplateDefinitionFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>(cD,cDefinition);
 	}
 	
-	public EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> ejbTtoken()
+	public EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> ejbTtoken()
 	{
-		return new EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>(cL,cD,cToken);
+		return new EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>(cL,cD,cToken);
 	}
 	
-	public TxtIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> txtToken()
+	public TxtIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> txtToken()
 	{
-		return new TxtIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>();
+		return new TxtIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>();
 	}
 	
 	public TxtIoTemplateFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> txtTemplate()

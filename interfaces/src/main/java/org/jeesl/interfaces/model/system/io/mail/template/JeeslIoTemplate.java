@@ -19,7 +19,7 @@ public interface JeeslIoTemplate<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
 								DEFINITION extends JeeslIoTemplateDefinition<D,?,?>,
-								TOKEN extends JeeslIoTemplateToken<L,D,?>
+								TOKEN extends JeeslIoTemplateToken<L,D,?,?>
 								>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,

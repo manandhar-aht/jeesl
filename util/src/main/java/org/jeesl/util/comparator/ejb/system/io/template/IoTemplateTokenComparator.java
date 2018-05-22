@@ -19,7 +19,8 @@ public class IoTemplateTokenComparator<L extends UtilsLang,D extends UtilsDescri
 								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
 								DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
+								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,TOKENTYPE>,
+								TOKENTYPE extends UtilsStatus<TOKENTYPE,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoTemplateTokenComparator.class);
 
@@ -33,7 +34,7 @@ public class IoTemplateTokenComparator<L extends UtilsLang,D extends UtilsDescri
     public Comparator<TOKEN> factory(Type type)
     {
         Comparator<TOKEN> c = null;
-        IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> factory = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>();
+        IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> factory = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>();
         switch (type)
         {
             case position: c = factory.new PositionCodeComparator();break;

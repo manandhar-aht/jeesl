@@ -17,7 +17,7 @@ public class TxtIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription
 									TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 									SCOPE extends UtilsStatus<SCOPE,L,D>,
 									DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-									TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
+									TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(TxtIoTemplateFactory.class);
 		
@@ -30,7 +30,7 @@ public class TxtIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription
 		return sb.toString();
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
+	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,?>>
 		String buildCode(DEFINITION definition, String localeCode)
 	{
 		StringBuffer sb = new StringBuffer();
@@ -75,7 +75,7 @@ public class TxtIoTemplateFactory<L extends UtilsLang,D extends UtilsDescription
 		return sb.toString();
 	}
 	
-	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
+	public static <L extends UtilsLang,D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, TYPE extends UtilsStatus<TYPE,L,D>, TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>, SCOPE extends UtilsStatus<SCOPE,L,D>,DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>, TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,?>>
 		String buildCode(JeeslIoTemplateEnvelope<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> envelope)
 	{
 		StringBuffer sb = new StringBuffer();

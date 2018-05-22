@@ -13,7 +13,7 @@ public class JeeslIoTemplateEnvelope<L extends UtilsLang,D extends UtilsDescript
 								TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
 								DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>
+								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,?>
 								>
 			implements Serializable
 {	

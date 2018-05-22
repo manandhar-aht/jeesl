@@ -30,16 +30,17 @@ public class FreemarkerIoTemplateEngine<L extends UtilsLang,D extends UtilsDescr
 										TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 										SCOPE extends UtilsStatus<SCOPE,L,D>,
 										DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-										TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
+										TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>,
+										TOKENTYPE extends UtilsStatus<TOKENTYPE,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(FreemarkerIoTemplateEngine.class);
 
-	private IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fbTemplate;
+	private IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate;
 	
 	private StringTemplateLoader fmStringTemplates;
 	private Configuration fmConfiguration;
 	
-	public FreemarkerIoTemplateEngine(IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN> fbTemplate)
+	public FreemarkerIoTemplateEngine(IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate)
 	{
 		this.fbTemplate=fbTemplate;
 		fmConfiguration = new Configuration(Configuration.getVersion());

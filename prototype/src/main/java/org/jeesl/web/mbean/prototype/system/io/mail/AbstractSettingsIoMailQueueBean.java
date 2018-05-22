@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system.io;
+package org.jeesl.web.mbean.prototype.system.io.mail;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +24,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractSettingsIoMailQueueBean <L extends UtilsLang,D extends UtilsDescription,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 											MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
 											STATUS extends UtilsStatus<STATUS,L,D>,
@@ -33,7 +33,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 					implements Serializable,SbToggleBean,SbDateIntervalSelection
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoMailQueueBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractSettingsIoMailQueueBean.class);
 	
 	protected JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail;
 	
@@ -50,7 +50,7 @@ public class AbstractAdminIoMailQueueBean <L extends UtilsLang,D extends UtilsDe
 	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 	private final SbDateHandler sbhDate; public SbDateHandler getSbhDate() {return sbhDate;}
 
-	public AbstractAdminIoMailQueueBean(IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail)
+	public AbstractSettingsIoMailQueueBean(IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail)
 	{
 		super(fbMail.getClassL(),fbMail.getClassD());
 		sbhDate = new SbDateHandler(this);

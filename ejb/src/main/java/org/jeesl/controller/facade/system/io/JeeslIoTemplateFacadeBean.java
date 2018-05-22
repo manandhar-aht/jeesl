@@ -11,6 +11,7 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.io.JeeslIoTemplateFacade;
+import org.jeesl.factory.builder.io.IoTemplateFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateToken;
@@ -30,16 +31,21 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 						TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
 						SCOPE extends UtilsStatus<SCOPE,L,D>,
 						DEFINITION extends JeeslIoTemplateDefinition<D,TYPE,TEMPLATE>,
-						TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>>
+						TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE>,
+						TOKENTYPE extends UtilsStatus<TOKENTYPE,L,D>>
 					extends UtilsFacadeBean
-					implements JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>
+					implements JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoTemplateFacadeBean.class);
 	
 	private final Class<CATEGORY> cCategory;
 	private final Class<TEMPLATE> cTemplate;
 	
-	public JeeslIoTemplateFacadeBean(EntityManager em, final Class<CATEGORY> cCategory, final Class<TEMPLATE> cTemplate)
+	private IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate;
+	
+	public JeeslIoTemplateFacadeBean(EntityManager em,IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate,
+			
+			final Class<CATEGORY> cCategory, final Class<TEMPLATE> cTemplate)
 	{
 		super(em);
 		this.cCategory=cCategory;

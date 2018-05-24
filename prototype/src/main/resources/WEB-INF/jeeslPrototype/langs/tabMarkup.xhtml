@@ -12,36 +12,13 @@
                 <f:selectItems value="#{markups}" var="m" itemLabel="#{m.name[localeCode].lang}" itemValue="#{m}"/>
             </p:selectOneMenu>
   		
-  			<p:inputTextarea value="#{value[t.code].content}" style="w100" autocomplete="off" rendered="#{value[t.code].type.code eq 'text'}"/>
-  			<p:textEditor value="#{value[t.code].content}" height="300" style="margin-bottom:10px" rendered="#{value[t.code].type.code eq 'xhtml'}">
-		        <f:facet name="toolbar">
-		             <span class="ql-formats">
-		                <button class="ql-bold"></button>
-		                <button class="ql-italic"></button>
-		            </span>
-					<span class="ql-formats">
-						<button class="ql-list" value="ordered"></button>
-						<button class="ql-list" value="bullet"></button>
-					</span>
-		        </f:facet>
-		    </p:textEditor>
+  			<jtp:inputMarkup value="#{value[t.code]}"/>
+  			
   		</p:tab>  
   	</p:tabView>
   	
   	<ui:fragment rendered="#{locales.size() eq 1}">
-  		<p:inputTextarea value="#{value[locales[0].code].content}" style="w100" autocomplete="off" rendered="#{value[locales[0].code].type.code eq 'text'}"/>
-  			<p:textEditor value="#{value[locales[0].code].content}" height="300" style="margin-bottom:10px" rendered="#{value[locales[0].code].type.code eq 'xhtml'}">
-		        <f:facet name="toolbar">
-		             <span class="ql-formats">
-		                <button class="ql-bold"></button>
-		                <button class="ql-italic"></button>
-		            </span>
-					<span class="ql-formats">
-						<button class="ql-list" value="ordered"></button>
-						<button class="ql-list" value="bullet"></button>
-					</span>
-		        </f:facet>
-		    </p:textEditor>
+  		<jtp:inputMarkup value="#value[locales[0].code]}"/>
   	</ui:fragment>
   	
 </ui:composition>

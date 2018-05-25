@@ -714,16 +714,18 @@ public class UtilsFacadeBean implements UtilsFacade
 	}
 	
 	public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1){return allForParent(type,p1Name, p1,0);}
-	public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1,int maxResults)
+	public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> c, String p1Name, I p1,int maxResults)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-	    CriteriaQuery<T> criteriaQuery = cB.createQuery(type);
+	    CriteriaQuery<T> criteriaQuery = cB.createQuery(c);
 	    
-	    Root<T> fromType = criteriaQuery.from(type);
-	    Path<Object> p1Path = fromType.get(p1Name);
+	    Root<T> root = criteriaQuery.from(c);
+	    Path<Object> p1Path = root.get(p1Name);
 	    
-	    CriteriaQuery<T> select = criteriaQuery.select(fromType);
-	    select.where( cB.equal(p1Path, p1.getId()));
+	    CriteriaQuery<T> select = criteriaQuery.select(root);
+	    select.where(cB.equal(p1Path, p1.getId()));
+	    
+	    if(EjbWithPosition.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
 	    
 		TypedQuery<T> q = em.createQuery(select);
 		if(maxResults>0){q.setMaxResults(maxResults);}

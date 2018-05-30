@@ -507,4 +507,10 @@ public class AbstractDummyFacade implements UtilsFacade
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public <T extends EjbWithId> long maxId(Class<T> c) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

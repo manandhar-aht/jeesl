@@ -1146,4 +1146,22 @@ public class UtilsFacadeBean implements UtilsFacade
 		try	{return q.getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+type.getSimpleName()+" for "+parentName+".id="+p.getId()+" year="+year);}
 	}
+	
+	@Override
+	public <T extends EjbWithId> long maxId(Class<T> c)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+	    CriteriaQuery<T> criteriaQuery = cB.createQuery(c);
+	    Root<T> from = criteriaQuery.from(c);
+	    
+	    Expression<Long> eId = from.get("id");
+	    
+	    CriteriaQuery<T> select = criteriaQuery.select(from);
+	    select.orderBy(cB.desc(eId));
+	    
+	    TypedQuery<T> q = em.createQuery(select);
+		q.setMaxResults(1);
+		try	{return q.getSingleResult().getId();}
+		catch (NoResultException ex){return 0;}
+	}
 }

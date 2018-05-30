@@ -3,6 +3,8 @@ package org.jeesl.controller.processor.finance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.xml.finance.Finance;
+
 public class AmountRounder
 {
 	final static Logger logger = LoggerFactory.getLogger(AmountRounder.class);
@@ -15,6 +17,12 @@ public class AmountRounder
 	public static double one(double value)
 	{
 		return Math.round(value*10)/10.0d;
+	}
+	
+	public static Finance two(Finance finance)
+	{
+		finance.setValue(two(finance.getValue()));
+		return finance;
 	}
 	
 	public static double two(double value)
@@ -32,8 +40,9 @@ public class AmountRounder
 		return percentZero(Integer.valueOf(a).doubleValue(),Integer.valueOf(b).doubleValue());
 	}
 	
-	public static double percentTwo(double a, double b)
+	public static Double percentTwo(double a, double b)
 	{
+		if(b==0) {return null;}
 		double ratio = a/b;
 		return two(100d*ratio);
 	}

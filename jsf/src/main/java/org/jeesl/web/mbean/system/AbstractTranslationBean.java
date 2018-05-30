@@ -43,7 +43,12 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 		locales = new ArrayList<LOC>();
 		this.fbStatus=fbStatus;
 		mapLocales = new HashMap<String,LOC>();
-	}	
+	}
+	
+	public void ping()
+	{
+		
+	}
 	
 	protected void initMap(ClassLoader cl, String fXml, UtilsFacade fUtils)
 	{

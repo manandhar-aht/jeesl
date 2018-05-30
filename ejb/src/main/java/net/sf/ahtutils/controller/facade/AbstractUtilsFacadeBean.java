@@ -90,9 +90,10 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	public <T extends EjbWithId> T find(Class<T> type, T t) {return fUtils.find(type, t);}
 	public <T extends Object> T find(Class<T> type, long id) throws UtilsNotFoundException {return fUtils.find(type, id);}
 	public <T extends EjbWithName> T fByName(Class<T> type, String name) throws UtilsNotFoundException {return fUtils.fByName(type, name);}
-	@Override public <T extends EjbWithEmail> T fByEmail(Class<T> clazz, String email) throws UtilsNotFoundException {return fUtils.fByEmail(clazz, email);}
-	@Override public <T extends EjbWithId> List<T> find(Class<T> cl, List<Long> ids) {return fUtils.find(cl, ids);}
-	@Override public <T extends EjbWithId> List<T> find(Class<T> cl, Set<Long> ids){return fUtils.find(cl, ids);}
+	@Override public <T extends EjbWithEmail> T fByEmail(Class<T> c, String email) throws UtilsNotFoundException {return fUtils.fByEmail(c, email);}
+	@Override public <T extends EjbWithId> List<T> find(Class<T> c, List<Long> ids) {return fUtils.find(c, ids);}
+	@Override public <T extends EjbWithId> List<T> find(Class<T> c, Set<Long> ids){return fUtils.find(c, ids);}
+	@Override public <T extends EjbWithId> long maxId(Class<T> c) {return fUtils.maxId(c);}
 	
 	//Code
 	@Override public <T extends EjbWithCode, E extends Enum<E>> T fByCode(Class<T> c, E code) throws UtilsNotFoundException {return fUtils.fByCode(c, code);}
@@ -162,9 +163,7 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	public <T extends EjbWithTimeline, AND extends EjbWithId, OR extends EjbWithId> List<T> between(Class<T> clTimeline, Date from, Date to, List<ParentPredicate<AND>> lpAnd, List<ParentPredicate<OR>> lpOr) {return fUtils.between(clTimeline, from, to, lpAnd, lpOr);}
 	
 	//Year
-	public <T extends EjbWithYear, P extends EjbWithId> T fByYear(Class<T> type, String p1Name, P p, int year) throws UtilsNotFoundException {return fUtils.fByYear(type, p1Name, p, year);}
-
-	
+	public <T extends EjbWithYear, P extends EjbWithId> T fByYear(Class<T> type, String p1Name, P p, int year) throws UtilsNotFoundException {return fUtils.fByYear(type, p1Name, p, year);}	
 
 	//@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsSecurityCategory<L, D, C, R, V, U, A, USER>, R extends UtilsSecurityRole<L, D, C, R, V, U, A, USER>, V extends UtilsSecurityView<L, D, C, R, V, U, A, USER>, U extends UtilsSecurityUsecase<L, D, C, R, V, U, A, USER>, A extends UtilsSecurityAction<L, D, C, R, V, U, A, USER>, USER extends UtilsUser<L, D, C, R, V, U, A, USER>> List<USER> likeNameFirstLast(Class<USER> c, String query) {return fUtils.likeNameFirstLast(c,query);}
 }

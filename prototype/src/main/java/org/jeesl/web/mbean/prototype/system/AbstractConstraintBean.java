@@ -57,11 +57,17 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 		mapConstraints = new HashMap<String,Map<String,CONSTRAINT>>();
 	}
 	
+	public void ping()
+	{
+		
+	}
+	
 	protected void postConstruct(JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
 		this.fConstraint=fConstraint;
 		
 		int i=0;
+		logger.info("Loading "+fbConstraint.getClassConstraint());
 		for(CONSTRAINT c : fConstraint.all(fbConstraint.getClassConstraint()))
 		{
 			i++;

@@ -1,6 +1,7 @@
 package org.jeesl.factory.txt.system.status;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -50,6 +51,14 @@ public class TxtStatusFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang,
 			String label(String lang, S ejb)
 	{
 		return ejb.getName().get(lang).getLang();
+	}
+	
+	public static <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
+	List<String> toCodes(Collection<S> list)
+	{
+		List<String> result = new ArrayList<String>();
+		for(S ejb : list){result.add(ejb.getCode());}
+		return toCodes(new ArrayList<S>(list));
 	}
 	
 	public static <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>

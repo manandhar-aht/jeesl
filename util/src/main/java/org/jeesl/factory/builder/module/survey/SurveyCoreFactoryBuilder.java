@@ -7,6 +7,7 @@ import org.jeesl.controller.handler.SurveyHandler;
 import org.jeesl.controller.processor.survey.SurveyScoreProcessor;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyCorrelationFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
@@ -95,6 +96,11 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	public EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION> answer()
 	{
 		return new EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION>(cAnswer);
+	}
+	
+	public EjbSurveyCorrelationFactory<ANSWER,DATA,CORRELATION> ejbCorrelation()
+	{
+		return new EjbSurveyCorrelationFactory<ANSWER,DATA,CORRELATION>();
 	}
 	
 	public EjbSurveyMatrixFactory<ANSWER,MATRIX,OPTION> ejbMatrix()

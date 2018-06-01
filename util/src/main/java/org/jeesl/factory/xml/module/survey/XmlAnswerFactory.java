@@ -1,9 +1,6 @@
 package org.jeesl.factory.xml.module.survey;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -17,9 +14,6 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
-import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.model.xml.jeesl.QuerySurvey;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
@@ -65,8 +59,8 @@ public class XmlAnswerFactory<L extends UtilsLang,D extends UtilsDescription,
 	{
 		this.q=q;
 		
-		if(q.isSetData()){xfQuestion = new XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(q.getQuestion());}
-		if(q.isSetData()){xfData = new XmlDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,q.getData());}
+		if(q.isSetData()) {xfQuestion = new XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(q.getQuestion());}
+		if(q.isSetData()) {xfData = new XmlDataFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,q.getData());}
 		if(q.isSetOption()) {xfOption = new XmlOptionFactory<L,D,OPTION>(localeCode,q.getOption());}
 		if(q.isSetMatrix()) {xfMatrix = new XmlMatrixFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getMatrix());}
 	}

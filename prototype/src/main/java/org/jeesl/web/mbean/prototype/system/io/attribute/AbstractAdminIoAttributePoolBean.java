@@ -163,4 +163,5 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 	}
 	
 	public void reorderCriterias() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, fbAttribute.getClassCriteria(),criterias);Collections.sort(criterias,cpCriteria);}
+	public void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, options);}
 }

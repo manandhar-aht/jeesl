@@ -14,12 +14,13 @@
 	<composite:interface>
 		<composite:attribute name="bean" required="true"/>
 		<composite:attribute name="localeKeys" required="false" default="#{appTranslationBean.langKeys}"/>
+		<composite:attribute name="withCode" required="false" default="false"/>
 	</composite:interface>
 	
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sCriterias" width="7">
+				<aht:slot id="sCriterias" width="8">
 					<h:form id="fCategories">
 						<p:dataTable var="c" value="#{cc.attrs.bean.criterias}" draggableRows="true"
 							selection="#{cc.attrs.bean.criteria}" selectionMode="single" rowKey="#{c.id}">
@@ -30,22 +31,25 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCriterias()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sCriteria" listener="#{cc.attrs.bean.selectCriteria()}"/>
-							<p:column >  
+							<p:column>  
 								<h:outputText value="#{c.category.position}.#{c.position}"/>
 					      	</p:column>
+					      	<p:column headerText="#{msg.jeeslCode}" rendered="#{cc.attrs.withCode}">  
+								<h:outputText value="#{c.code}"/>
+					     	</p:column>
 					      	<p:column headerText="#{msg.jeeslCategory}" rendered="#{cc.attrs.bean.sbhCategory.hasMore}">  
 								<h:outputText value="#{c.category.name[localeCode].lang}"/>
 					     	</p:column>
-				         <p:column headerText="#{msg.jeeslIoAttribute}">  
-								<h:outputText value="#{c.name[localeCode].lang}"/>
-				         </p:column>
+					         <p:column headerText="#{msg.jeeslIoAttribute}">  
+									<h:outputText value="#{c.name[localeCode].lang}"/>
+					         </p:column>
 							<p:column styleClass="jeeslColumnCentered">  
 								<aup:iconCheckmark value="#{c.visible}"/>
-				         </p:column>
+							</p:column>
 					   	</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sCriteria" width="5">
+				<aht:slot id="sCriteria" width="4">
 					<h:form id="fCriteria">
 						<p:panel id="pView" header="#{msg.jeeslIoAttribute}" rendered="#{not empty cc.attrs.bean.criteria}" styleClass="jeeslPanel">
 							<f:facet name="actions">

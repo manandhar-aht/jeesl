@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.model.xml.jeesl.QuerySurvey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +50,7 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 	//TODO tk: remove this constructor
 	public XmlQuestionFactory(Question q){this(null,q);}
 	
+	public XmlQuestionFactory(QuerySurvey q){this(q.getLocaleCode(),q.getQuestion());}
 	public XmlQuestionFactory(String localeCode, Question q)
 	{
 		this.localeCode=localeCode;

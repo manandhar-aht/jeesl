@@ -10,7 +10,6 @@
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupSec="http://ahtutils.sourceforge.net/prototype/security"
-	xmlns:jpSec="http://jsf.jeesl.org/prototype/security"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
@@ -51,8 +50,6 @@
 				                <h:graphicImage rendered="#{not r.documentation}" name="#{iconBean.icon12['aupSecurityNoDocumentation']}" library="gfx"/>
 				            </p:column>
 				       	</p:dataTable>
-						
-						
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sRole" width="6" renderChildren="#{not empty cc.attrs.bean.role}">
@@ -84,7 +81,7 @@
 						
 					</h:form>
 					<h:form id="fViews"><aupSec:addViews rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fViews :#{cc.id}:fAction" views="#{cc.attrs.bean.views}"/></h:form>
-					<h:form id="fAction"><jSec:addActions rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fAction" actions="#{cc.attrs.bean.actions}"/></h:form>
+					<h:form id="fAction"><jpSec:addActions rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fAction" actions="#{cc.attrs.bean.actions}"/></h:form>
 					<h:form id="fUsecase"><aupSec:addUsecases rendered="#{cc.attrs.bean.role.id gt 0}" bean="#{cc.attrs.bean}" update=":#{cc.id}:fUsecase" usecases="#{cc.attrs.bean.usecases}"/></h:form>
 				</aht:slot>
 			</aht:row>

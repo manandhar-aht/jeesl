@@ -2,9 +2,6 @@ package org.jeesl.factory.xml.module.survey;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
-import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisTool;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -18,15 +15,13 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.interfaces.model.system.io.domain.JeeslDomain;
-import org.jeesl.interfaces.model.system.io.domain.JeeslDomainPath;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.xml.survey.Data;
 import net.sf.ahtutils.xml.survey.Survey;
 import net.sf.exlp.util.DateUtil;
 
@@ -96,7 +91,6 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,
 		
 		if(q.isSetData())
 		{
-			
 			for(DATA data : ejb.getSurveyData())
 			{
 				xml.getData().add(xfData.build(data));
@@ -105,10 +99,17 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,
 		return xml;
 	}
 	
+	public static Survey build() {return new Survey();}
 	public static Survey id()
 	{
-		Survey xml = new Survey();
+		Survey xml = build();
 		xml.setId(0);
+		return xml;
+	}
+	public static Survey build(Data data)
+	{
+		Survey xml = build();
+		xml.getData().add(data);
 		return xml;
 	}
 }

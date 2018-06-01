@@ -28,9 +28,22 @@ public class PostgresCopy
 		else{return s;}
 	}
 	
-	public static String bool(boolean value)
+	public static String bool(Boolean value)
 	{
-		if(value){return "t";}
-		else{return "f";}
+		if(value==null) {return nul;}
+		else
+		{
+			if(value){return "t";}
+			else{return "f";}
+		}
+	}
+	
+	public static String doubl(Double value)
+	{
+		if(value==null) {return nul;}
+		else
+		{
+			return value.toString();
+		}
 	}
 }

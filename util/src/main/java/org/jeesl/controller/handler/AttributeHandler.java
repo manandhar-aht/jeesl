@@ -93,6 +93,13 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 		if(debugOnInfo) {logger.info("Initialized with Attribute Set: "+this.attributeSet.toString());}
 	}
 	
+	public void reset()
+	{
+		data.clear();
+		options.clear();
+		container = null;
+	}
+	
 	public void reloadData()
 	{
 		data.clear();

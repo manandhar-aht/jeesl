@@ -103,6 +103,17 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 		return map;
 	}
 	
+	public Map<DATA,List<ANSWER>> toDataMap(List<ANSWER> answers)
+	{
+		Map<DATA,List<ANSWER>> map = new HashMap<DATA,List<ANSWER>>();
+		for(ANSWER a : answers)
+		{
+			if(!map.containsKey(a.getData())) {map.put(a.getData(), new ArrayList<ANSWER>());}
+			map.get(a.getData()).add(a);
+		}
+		return map;
+	}
+	
 	public boolean belongsToSection(ANSWER answer, SECTION section, boolean defaultResult)
 	{
 		if(section==null){return defaultResult;}

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.jeesl.factory.xml.module.survey.XmlAnswerFactory;
 import org.jeesl.factory.xml.module.survey.XmlCorrelationFactory;
 import org.jeesl.factory.xml.module.survey.XmlDataFactory;
+import org.jeesl.factory.xml.module.survey.XmlQuestionFactory;
 import org.jeesl.factory.xml.module.survey.XmlScoreFactory;
 import org.jeesl.factory.xml.module.survey.XmlSurveyFactory;
 import org.jeesl.factory.xml.module.survey.XmlTemplateFactory;
@@ -174,7 +175,7 @@ public class SurveyQuery
 	
 	
 	//JEESL
-	public static enum KeyJeesl {data,answer,template}
+	public static enum KeyJeesl {data,answer,template,questionCode}
 	
 	private static Map<KeyJeesl,QuerySurvey> mQueriesJeesl;
 	
@@ -189,6 +190,7 @@ public class SurveyQuery
 			{
 				case data: q.setData(data());break;
 				case answer: q.setAnswer(answer());break;
+				case questionCode: q.setQuestion(question());break;
 				case template: q.setTemplate(template());break;
 			}
 			mQueriesJeesl.put(key, q);
@@ -211,6 +213,13 @@ public class SurveyQuery
 		Template xml = new Template();
 		xml.setId(0);
 		xml.getSection().add(exSection());
+		return xml;
+	}
+	
+	private static Question question()
+	{
+		Question xml = XmlQuestionFactory.id();
+		xml.setCode("");
 		return xml;
 	}
 	

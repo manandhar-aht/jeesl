@@ -75,7 +75,7 @@
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectItem()}" update=":#{cc.id}:sItems"/>
 							<p:column>  
 								<h:graphicImage rendered="#{not i.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
-                     		<h:outputText rendered="#{i.visible}" value="#{i.position}" />	
+                     			<h:outputText rendered="#{i.visible}" value="#{i.position}" />	
 						    </p:column>
 						    <p:column>  
 								<h:graphicImage rendered="#{i.tableHeader}" name="12/ui/system/io/attribute/table.png"  library="jeeslPrototypeGfx"/>

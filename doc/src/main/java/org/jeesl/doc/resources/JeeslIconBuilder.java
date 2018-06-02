@@ -36,7 +36,8 @@ public class JeeslIconBuilder
 	
 	public void svg() throws UtilsConfigurationException 
 	{
-		build("jeesl/svg/icon/ui","control","add","cancel");
+		build("jeesl/svg/icon/ui","control",  "add","cancel");
+		build("jeesl/svg/icon/ui","io/attribute",  "empty");
 	}
 		
 	private void build(String resourceDir, String targetDir, String... items) throws UtilsConfigurationException 
@@ -53,6 +54,8 @@ public class JeeslIconBuilder
 		{
 			InputStream is = mrl.searchIs(resourceDir+"/"+targetDir+"/"+item+".svg");
 			File fTarget = new File(baseIcon,targetDir+File.separator+item+".png");
+			
+			if(!fTarget.getParentFile().exists()) {throw new UtilsConfigurationException("Directory "+fTarget.getParentFile().getAbsolutePath()+" does not exist");}
 			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			
@@ -89,6 +92,8 @@ public class JeeslIconBuilder
 		{
 			InputStream is = mrl.searchIs(resourceDir+"/"+targetDir+"/"+item+".png");
 			File fTarget = new File(baseIcon,targetDir+File.separator+item+".png");
+			
+			if(!fTarget.getParentFile().exists()) {throw new UtilsConfigurationException("Directory "+fTarget.getParentFile().getAbsolutePath()+" does not exist");}
 			
 			logger.info("Writing to "+fTarget);
 			FileIO.writeFileIfDiffers(IOUtils.toByteArray(is), fTarget);

@@ -211,6 +211,11 @@ public class AbstractIconBean implements Serializable
 		mapStatic.put("jeeslSecurityInvisible", "ui/jeesl/security/x-mark.png");
 	}
 	
+	protected void jeeslIo()
+	{
+		mapStatic.put("jeeslIoAttributeEmpty", "ui/jeesl/io/attribute/empty.png");
+	}
+	
 	protected void jeeslFile()
 	{
 		mapStatic.put("reportPdf", "ui/jeesl/system/io/file/pdf.png");

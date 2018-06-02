@@ -45,6 +45,7 @@
 					         </p:column>
 							<p:column styleClass="jeeslColumnCentered">  
 								<aup:iconCheckmark value="#{c.visible}"/>
+								<aup:iconCheckmark value="#{c.allowEmpty}"/>
 							</p:column>
 					   	</p:dataTable>
 					</h:form>
@@ -66,6 +67,9 @@
 								<p:inputText  value="#{cc.attrs.bean.criteria.code}" autocomplete="off"/>
 								<p:outputLabel value="#{msg.aupSecurityVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.criteria.visible}"/>
+								
+								<p:outputLabel value="#{msg.jeeslIoAttributeAllowEmpty}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.criteria.allowEmpty}" />
 								<p:outputLabel value="#{msg.jeeslType}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.criteria.type}" effect="fade" >
 									<f:selectItems value="#{appAttributeBean.types}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
@@ -92,9 +96,9 @@
 							<p:column headerText="#{msg.jeeslCode}">  
 									<h:outputText value="#{o.code}"/>
 					     	</p:column>
-				         <p:column headerText="#{msg.jeeslIoAttributeOption}">  
+							<p:column headerText="#{msg.jeeslIoAttributeOption}">  
 								<h:outputText value="#{o.name[localeCode].lang}"/>
-				         </p:column>
+							</p:column>
 					   	</p:dataTable>
 					</h:form>
 					<h:form id="fOption">

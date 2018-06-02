@@ -33,4 +33,7 @@ public interface JeeslAttributeCriteria<L extends UtilsLang, D extends UtilsDesc
 	
 	TYPE getType();
 	void setType(TYPE type);
+	
+	Boolean getAllowEmpty();
+	void setAllowEmpty(Boolean allowEmpty);
 }

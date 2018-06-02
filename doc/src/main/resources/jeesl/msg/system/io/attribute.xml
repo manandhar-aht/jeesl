@@ -64,17 +64,24 @@
 	    	</s:langs>
     </s:translation> 
 	<s:translation key="jeeslIoAttributeOptions">
-	    	<s:langs>
-	    		<s:lang key="de" translation="Optionen"/>
-	    		<s:lang key="en" translation="Options"/>
-	    		<s:lang key="fr" translation="Options"/>
-	    	</s:langs>
+    	<s:langs>
+    		<s:lang key="de" translation="Optionen"/>
+    		<s:lang key="en" translation="Options"/>
+    		<s:lang key="fr" translation="Options"/>
+    	</s:langs>
     </s:translation>  
 	<s:translation key="jeeslIoAttributeOption">
-	    	<s:langs>
-	    		<s:lang key="de" translation="Option"/>
-	    		<s:lang key="en" translation="Option"/>
-	    		<s:lang key="fr" translation="Option"/>
-	    	</s:langs>
-    </s:translation>    
+    	<s:langs>
+    		<s:lang key="de" translation="Option"/>
+    		<s:lang key="en" translation="Option"/>
+    		<s:lang key="fr" translation="Option"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslIoAttributeAllowEmpty">
+    	<s:langs>
+    		<s:lang key="de" translation="Erlaube Leer"/>
+    		<s:lang key="en" translation="Allow Empty"/>
+    		<s:lang key="fr" translation="Allow Empty"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

@@ -5,12 +5,14 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
 >
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 
 	<p:columns var="criteria" value="#{appAttributeBean.mapTableHeader[handler.attributeSet]}">
 		<f:facet name="header"><h:outputText value="#{criteria.name[loc].lang}"/></f:facet>
 		<h:outputText value="#{handler.containers[var.attributeContainer][criteria].valueString}" rendered="#{criteria.type.code eq 'text'}"/>
+		<jp:iconCheckmark value="#{handler.containers[var.attributeContainer][criteria].valueBoolean}" rendered="#{(criteria.type.code eq 'bool') and (not empty handler.containers[var.attributeContainer][criteria].valueBoolean)}"/>
 	</p:columns>	
 	
 </ui:composition>

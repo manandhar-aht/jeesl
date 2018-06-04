@@ -214,6 +214,8 @@ public class AbstractIconBean implements Serializable
 	protected void jeeslIo()
 	{
 		mapStatic.put("jeeslIoAttributeEmpty", "ui/jeesl/io/attribute/empty.png");
+		mapStatic.put("jeeslIoAttributeCriteriaWithDescription", "ui/jeesl/io/attribute/criteriaWithDescription.png");
+		mapStatic.put("jeeslIoAttributeCriteriaWithoutDescription", "ui/jeesl/io/attribute/criteriaWithoutDescription.png");
 	}
 	
 	protected void jeeslFile()

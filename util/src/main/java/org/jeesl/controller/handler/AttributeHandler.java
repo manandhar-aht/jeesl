@@ -46,7 +46,8 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(AttributeHandler.class);
 	private static final long serialVersionUID = 1L;
 
-	private boolean debugOnInfo = true;
+	private final boolean debugOnInfo = true;
+	private boolean showDescription; public boolean isShowDescription() {return showDescription;}
 	
 	private final JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute;
 	private final JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute;
@@ -74,12 +75,20 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 		this.fbAttribute=fbAttribute;
 		this.bean=bean;
 		
+		showDescription = false;
+		
 		efContainer = fbAttribute.ejbContainer();
 		efData = fbAttribute.ejbData();
 		
 		data = new HashMap<CRITERIA,DATA>();
 		options = new HashMap<CRITERIA,String[]>();
 		containers = new HashMap<CONTAINER,Map<CRITERIA,DATA>>();
+	}
+	
+	public void toggleDescription()
+	{
+		showDescription = !showDescription;
+		logger.info("Changed Description to "+showDescription);
 	}
 	
 	public <E extends Enum<E>> void init(E code)

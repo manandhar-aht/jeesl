@@ -10,7 +10,6 @@
 	xmlns:j="http://www.jeesl.org/jsf"
 	xmlns:jp="http://jsf.jeesl.org/prototype"
 	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
-	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdm="http://ahtutils.sourceforge.net/prototype/admin"
 	xmlns:composite="http://java.sun.com/jsf/composite">
@@ -21,19 +20,27 @@
 		<composite:attribute name="update" required="false"/>
 		<composite:attribute name="withSave" required="false" default="true"/>
 		<composite:attribute name="withLabel" required="false" default="true"/>
+		<composite:attribute name="withDescriptionToggle" required="false" default="false"/>
 		<composite:attribute name="datePattern" required="false" default="dd.MM.yyyy" />
 		<composite:attribute name="columnClasses" required="false" default="jeeslGrid30,jeeslGrid70" />
+		
 	</composite:interface>
 	
 	<composite:implementation>
 		<ui:fragment rendered="#{cc.attrs.withSave}">
 			<p:panel id="pQuestions" header="#{cc.attrs.handler.attributeSet.name[localeCode].lang}" styleClass="jeeslPanel">
 				<f:facet name="actions">
-					<aht:icon id="btSave" type="jeeslSave" listener="#{cc.attrs.handler.save()}" update="@form #{cc.attrs.update}" tooltip="#{msg.jeeslSurveyTtSaveSection}" />
+					<j:icon type="jeeslSave" listener="#{cc.attrs.handler.save()}" update="@form #{cc.attrs.update}" tooltip="#{msg.jeeslSurveyTtSaveSection}" />
+					<j:icon type="jeeslIoAttributeCriteriaWithDescription" listener="#{cc.attrs.handler.toggleDescription()}" update="@form" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{cc.attrs.withDescriptionToggle and cc.attrs.handler.showDescription}" mayDisappear="true"/>
+					<j:icon type="jeeslIoAttributeCriteriaWithoutDescription" listener="#{cc.attrs.handler.toggleDescription()}" update="@form" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{cc.attrs.withDescriptionToggle and (not cc.attrs.handler.showDescription)}" mayDisappear="true"/>
 				</f:facet>
 				<ui:repeat id="repeatC" value="#{appAttributeBean.mapCriteria[cc.attrs.handler.attributeSet]}" var="c">	
 					<p:panelGrid columns="#{cc.attrs.withLabel ? 2 : 1}" columnClasses="#{cc.attrs.withLabel ? cc.attrs.columnClasses : 'jeeslGrid100'}">
-						<p:outputLabel value="#{c.name[localeCode].lang}" rendered="#{cc.attrs.withLabel}"/>
+						<ui:fragment rendered="#{cc.attrs.withLabel}">
+							<p:outputLabel value="#{c.name[localeCode].lang}" />
+							<h:outputText value="&lt;br/&gt;" escape="false"  rendered="#{cc.attrs.handler.showDescription}"/>
+							<h:outputText rendered="#{cc.attrs.handler.showDescription}" value="#{c.description[localeCode].lang}" styleClass="jeeslItalic"/>
+						</ui:fragment>
 						<jtp:inputAttribute attributeHandler="#{cc.attrs.handler}" criteria="#{c}"/>
 					</p:panelGrid>
 				</ui:repeat>

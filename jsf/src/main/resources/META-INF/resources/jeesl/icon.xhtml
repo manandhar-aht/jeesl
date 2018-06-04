@@ -55,7 +55,7 @@
 						styleClass="#{cc.attrs.styleClass}"
 						library="gfx"
 						name="#{appIconBean.icon12[cc.attrs.type]}"/>
-						<p:tooltip for="image2" value="#{cc.attrs.tooltip}" />
+						<p:tooltip for="image2" value="#{cc.attrs.tooltip}" showDelay="1500"/>
 				</p:commandLink>
 			</c:if>
 			<c:if test="#{cc.attrs.mayDisappear}">
@@ -71,7 +71,7 @@
 						styleClass="#{cc.attrs.styleClass}"
 						library="gfx"
 						name="#{appIconBean.icon12[cc.attrs.type]}"/>
-						<p:tooltip for="image2" value="#{cc.attrs.tooltip}" widgetVar="wvTtDisappear"/>
+						<p:tooltip for="image2" value="#{cc.attrs.tooltip}" widgetVar="wvTtDisappear" showDelay="1500"/>
 				</p:commandLink>
 			</c:if>
 		</c:if>

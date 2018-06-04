@@ -107,9 +107,24 @@ public abstract class AbstractAppAttributeBean <L extends UtilsLang, D extends U
 		mapTableHeader.put(s, listTable);
 	}
 	
-	@Override public void updateCriteria(CRITERIA c)
+	/* 
+	 * Updates the Hashmap where the given criteria is used
+	 */
+	@Override public void updateCriteria(CRITERIA criteria)
 	{
-		logger.info("Need to implement propagation of Criteria Update");
+		for(List<CRITERIA> list : mapCriteria.values())
+		{
+			int index = -1;
+			for(int i=0;i<list.size();i++){if(list.get(i).equals(criteria)){index=i;break;}}
+			if(index>=0){list.set(index,criteria);}
+		}
+		for(List<CRITERIA> list : mapTableHeader.values())
+		{
+			int index = -1;
+			for(int i=0;i<list.size();i++){if(list.get(i).equals(criteria)){index=i;break;}}
+			if(index>=0){list.set(index,criteria);}
+		}
+		
 	}
 	
 	private final Map<CRITERIA,List<OPTION>> mapOption;

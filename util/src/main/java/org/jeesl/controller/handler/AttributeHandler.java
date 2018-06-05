@@ -88,7 +88,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	public void toggleDescription()
 	{
 		showDescription = !showDescription;
-		logger.info("Changed Description to "+showDescription);
+		if(debugOnInfo) {logger.info("Changed Description to "+showDescription);}
 	}
 	
 	public <E extends Enum<E>> void init(E code)

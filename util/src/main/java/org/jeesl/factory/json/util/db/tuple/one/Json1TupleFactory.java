@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.persistence.Tuple;
 
-import org.jeesl.model.json.util.db.one.Json1Tuple;
+import org.jeesl.model.json.util.db.tuple.one.Json1Tuple;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 

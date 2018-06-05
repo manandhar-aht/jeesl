@@ -8,8 +8,8 @@ import java.util.Set;
 import javax.persistence.Tuple;
 
 import org.jeesl.factory.ejb.util.EjbIdFactory;
-import org.jeesl.model.json.util.db.one.Json1Tuple;
-import org.jeesl.model.json.util.db.one.Json1Tuples;
+import org.jeesl.model.json.util.db.tuple.one.Json1Tuple;
+import org.jeesl.model.json.util.db.tuple.one.Json1Tuples;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;

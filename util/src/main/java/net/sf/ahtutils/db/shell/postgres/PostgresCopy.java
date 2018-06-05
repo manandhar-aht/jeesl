@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+
 public class PostgresCopy
 {
 	final static Logger logger = LoggerFactory.getLogger(PostgresCopy.class);
@@ -44,6 +46,24 @@ public class PostgresCopy
 		else
 		{
 			return value.toString();
+		}
+	}
+	
+	public static String integ(Integer value)
+	{
+		if(value==null) {return nul;}
+		else
+		{
+			return value.toString();
+		}
+	}
+	
+	public static String ejb(EjbWithId value)
+	{
+		if(value==null) {return nul;}
+		else
+		{
+			return Long.valueOf(value.getId()).toString();
 		}
 	}
 }

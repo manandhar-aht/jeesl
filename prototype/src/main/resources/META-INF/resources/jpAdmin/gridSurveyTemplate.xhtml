@@ -175,12 +175,16 @@
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:row1" rendered="#{(cc.attrs.bean.section.id gt 0) and (cc.attrs.bean.questions.isEmpty())}"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
-						<p:panelGrid columns="4" columnClasses="jeeslGrid30,jeeslGrid20,jeeslGrid30,jeeslGrid20">
+						<p:panelGrid columns="6" columnClasses="jeeslGrid30,jeeslGrid20,jeeslGrid10,jeeslGrid10,jeeslGrid20,jeeslGrid10">
 							<p:outputLabel value="#{msg.jeeslVisible}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.visible}" />
 							
+							<p:outputLabel value="#{msg.jeeslId}"/>
+							<h:outputText value="#{cc.attrs.bean.section.id}"/>
+							
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<h:outputText value="#{cc.attrs.bean.section.position}"/>
+	
 						</p:panelGrid>
 						
 						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">

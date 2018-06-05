@@ -1,4 +1,4 @@
-package org.jeesl.model.json.util.db.tuple.one;
+package org.jeesl.model.json.db.tuple.one;
 
 import java.io.Serializable;
 import java.util.ArrayList;

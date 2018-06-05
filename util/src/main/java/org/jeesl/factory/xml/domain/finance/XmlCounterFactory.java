@@ -22,6 +22,10 @@ public class XmlCounterFactory
 	{
 		return create(code.toString(),counter);
 	}
+	public static <E extends Enum<E>> Counter build(E code, long counter)
+	{
+		return create(code.toString(),Long.valueOf(counter).intValue());
+	}
 	
 	public static <E extends Enum<E>> void add(Figures figures, E code, Integer value)
 	{

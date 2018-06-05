@@ -1,13 +1,13 @@
-package org.jeesl.model.json.util.db.tuple.two;
+package org.jeesl.model.json.db.tuple.three;
 
-import org.jeesl.model.json.util.db.tuple.JsonTuple;
+import org.jeesl.model.json.db.tuple.AbstractJsonTuple;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class Json2Tuple <X extends EjbWithId, Y extends EjbWithId> extends JsonTuple
+public class Json3Tuple <X extends EjbWithId, Y extends EjbWithId, Z extends EjbWithId> extends AbstractJsonTuple
 {
 	public static final long serialVersionUID=1;
 
@@ -21,6 +21,11 @@ public class Json2Tuple <X extends EjbWithId, Y extends EjbWithId> extends JsonT
 	public Y getEjb2() {return ejb2;}
 	public void setEjb2(Y ejb2) {this.ejb2=ejb2;}
 	
+	@JsonIgnore
+	private Z ejb3;
+	public Z getEjb3() {return ejb3;}
+	public void setEjb3(Z ejb3) {this.ejb3=ejb3;}
+	
 	@JsonProperty("id1")
 	private Long id1;
 	public Long getId1() {return id1;}
@@ -30,4 +35,9 @@ public class Json2Tuple <X extends EjbWithId, Y extends EjbWithId> extends JsonT
 	private Long id2;
 	public Long getId2() {return id2;}
 	public void setId2(Long id2) {this.id2 = id2;}
+	
+	@JsonProperty("id3")
+	private Long id3;
+	public Long getId3() {return id3;}
+	public void setId3(Long id3) {this.id3 = id3;}
 }

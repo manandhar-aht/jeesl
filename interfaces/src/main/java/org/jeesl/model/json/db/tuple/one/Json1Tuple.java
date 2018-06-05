@@ -1,13 +1,13 @@
-package org.jeesl.model.json.util.db.tuple.one;
+package org.jeesl.model.json.db.tuple.one;
 
-import org.jeesl.model.json.util.db.tuple.JsonTuple;
+import org.jeesl.model.json.db.tuple.AbstractJsonTuple;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class Json1Tuple <T extends EjbWithId> extends JsonTuple
+public class Json1Tuple <T extends EjbWithId> extends AbstractJsonTuple
 {
 	public static final long serialVersionUID=1;
 

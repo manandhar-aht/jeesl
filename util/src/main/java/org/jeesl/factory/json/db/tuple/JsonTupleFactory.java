@@ -28,10 +28,8 @@ public class JsonTupleFactory
 	public static <A extends EjbWithId, B extends EjbWithId, C extends EjbWithId> JsonTuple build(Json3Tuple<A,B,C> tuple)
 	{
 		JsonTuple json = build();
-		json.setCount(tuple.getCount());
+		json.setL1(tuple.getCount());
 		json.setSum(tuple.getSum());
-		
-		logger.info("id3 "+tuple.getId3());
 		
 		json.setId1(tuple.getId1());
 		json.setId2(tuple.getId2());

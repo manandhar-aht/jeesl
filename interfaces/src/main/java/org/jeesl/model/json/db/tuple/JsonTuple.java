@@ -27,4 +27,11 @@ public class JsonTuple extends AbstractJsonTuple implements Serializable
 	private Long id4;
 	public Long getId4() {return id4;}
 	public void setId4(Long id4) {this.id4 = id4;}
+	
+	
+	
+	@JsonProperty("l1")
+	private Long l1;
+	public Long getL1() {return l1;}
+	public void setL1(Long l1) {this.l1 = l1;}
 }

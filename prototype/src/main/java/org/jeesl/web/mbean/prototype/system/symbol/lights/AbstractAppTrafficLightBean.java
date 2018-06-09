@@ -32,8 +32,7 @@ public class AbstractAppTrafficLightBean <L extends UtilsLang,D extends UtilsDes
 		this.fLight=fLight;
 	}
 	
-	protected List<LIGHT> trafficLights;
-	public List<LIGHT> getTrafficLights(){return trafficLights;}
+	protected List<LIGHT> trafficLights; public List<LIGHT> getTrafficLights(){return trafficLights;}
 	
 	@Override public void refreshTrafficLights()
 	{

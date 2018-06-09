@@ -1,9 +1,12 @@
 package org.jeesl.factory.xml.domain.finance;
 
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +14,10 @@ import net.sf.ahtutils.xml.finance.Counter;
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 import net.sf.ahtutils.xml.text.Remark;
+import net.sf.ahtutils.xml.xpath.FiguresXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
+import net.sf.exlp.exception.ExlpXpathNotUniqueException;
+import net.sf.exlp.util.io.StringUtil;
 
 public class XmlFiguresFactory
 {
@@ -93,5 +100,65 @@ public class XmlFiguresFactory
 			}
 		}
 		return false;
+	}
+	
+	public static Figures add(Figures a, Figures b)
+	{
+		Set<String> figureCodes = new HashSet<String>();
+		Set<String> financeCodes = new HashSet<String>();
+		Set<String> counterCodes = new HashSet<String>();
+		
+		if(a!=null)
+		{
+			for(Figures f : a.getFigures()) {if(!figureCodes.contains(f.getCode())) {figureCodes.add(f.getCode());}}
+			for(Finance f : a.getFinance()) {if(!financeCodes.contains(f.getCode())) {financeCodes.add(f.getCode());}}
+			for(Counter c : a.getCounter()) {if(!counterCodes.contains(c.getCode())) {counterCodes.add(c.getCode());}}
+		}
+		if(b!=null)
+		{
+			for(Figures f : b.getFigures()) {if(!figureCodes.contains(f.getCode())) {figureCodes.add(f.getCode());}}
+			for(Finance f : b.getFinance()) {if(!financeCodes.contains(f.getCode())) {financeCodes.add(f.getCode());}}
+			for(Counter c : b.getCounter()) {if(!counterCodes.contains(c.getCode())) {counterCodes.add(c.getCode());}}
+		}
+		
+		logger.info("Adding");
+		logger.info("figureCodes: "+StringUtils.join(figureCodes, ", "));
+		logger.info("financeCodes: "+StringUtils.join(financeCodes, ", "));
+		logger.info("counterCodes: "+StringUtils.join(counterCodes, ", "));
+
+		Figures xml = XmlFiguresFactory.build();
+		for(String code : figureCodes)
+		{
+			logger.info("code "+code);
+			Figures f = XmlFiguresFactory.add(FiguresXpath.getChild(a, code),FiguresXpath.getChild(b, code));
+			f.setCode(code);
+			
+			xml.getFigures().add(f);
+		}
+		for(String code : financeCodes)
+		{
+			logger.info("FinanceCode "+code);
+			Finance f = XmlFinanceFactory.create(code,0d);
+			
+			boolean codeAvailable = false;
+			if(a!=null)
+			{
+				try {XmlFinanceFactory.add(f, FiguresXpath.getFinance(a, code).getValue());}
+				catch (ExlpXpathNotFoundException e) {}
+				catch (ExlpXpathNotUniqueException e) {}
+				codeAvailable = true;
+			}
+			if(b!=null)
+			{
+				try {XmlFinanceFactory.add(f, FiguresXpath.getFinance(b, code).getValue());}
+				catch (ExlpXpathNotFoundException e) {}
+				catch (ExlpXpathNotUniqueException e) {}
+				codeAvailable = true;
+			}
+			
+			if(codeAvailable) {xml.getFinance().add(f);}
+		}
+		
+		return xml;
 	}
 }

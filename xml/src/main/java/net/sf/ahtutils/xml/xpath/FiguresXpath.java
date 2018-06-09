@@ -2,19 +2,16 @@ package net.sf.ahtutils.xml.xpath;
 
 import java.util.List;
 
+import org.apache.commons.jxpath.JXPathContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.xml.finance.Counter;
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 import net.sf.ahtutils.xml.finance.Time;
-import net.sf.ahtutils.xml.security.Staff;
-import net.sf.ahtutils.xml.security.Staffs;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
-
-import org.apache.commons.jxpath.JXPathContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FiguresXpath
 {
@@ -32,6 +29,18 @@ public class FiguresXpath
 		if(list.size()==0){throw new ExlpXpathNotFoundException("No "+Finance.class.getSimpleName()+" for code="+code);}
 		else if(list.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+Finance.class.getSimpleName()+" for code="+code);}
 		return list.get(0);
+	}
+	
+	public static Figures getChild(Figures figures, String code)
+	{
+		if(figures!=null)
+		{
+			for(Figures f : figures.getFigures())
+			{
+				if(f.getCode().equals(code)) {return f;}
+			}
+		}
+		return null;
 	}
 	
 	public static <E extends Enum<E>, C extends Enum<C>> Finance getFiguresFinance(Figures figures, E figureCode, C financeCode) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException

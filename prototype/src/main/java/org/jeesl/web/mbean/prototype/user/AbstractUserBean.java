@@ -81,6 +81,8 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
 	}
 	
+	
+	
 	public void logout() throws IOException
 	{
 	    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();

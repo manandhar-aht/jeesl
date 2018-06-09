@@ -112,6 +112,14 @@ public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 		}
 	}
 	
+	public static void add(Finance f, Double value)
+	{
+		if(value!=null)
+		{
+			f.setValue(f.getValue()+value);
+		}
+	}
+	
 	public static void addId(Figures figures, EjbWithId ejb, Double[] values, int index)
 	{
 		if(values!=null)

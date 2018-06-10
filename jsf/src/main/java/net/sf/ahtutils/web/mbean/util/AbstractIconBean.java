@@ -221,5 +221,6 @@ public class AbstractIconBean implements Serializable
 	protected void jeeslFile()
 	{
 		mapStatic.put("reportPdf", "ui/jeesl/system/io/file/pdf.png");
+		mapStatic.put("reportXls", "ui/jeesl/system/io/file/xls.png");
 	}
 }

@@ -17,11 +17,13 @@ public class Json1Tuples <T extends EjbWithId> implements Serializable
 	public List<Json1Tuple<T>> getTuples() {if(tuples==null){tuples = new ArrayList<Json1Tuple<T>>();} return tuples;}
 	public void setTuples(List<Json1Tuple<T>> tuples) {this.tuples = tuples;}
 
-
+	private boolean ejbLoaded;
+	public boolean isEjbLoaded() {return ejbLoaded;}
+	public void setEjbLoaded(boolean ejbLoaded) {this.ejbLoaded = ejbLoaded;}
+	
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-		
 		return sb.toString();
 	}
 }

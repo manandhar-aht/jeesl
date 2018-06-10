@@ -22,7 +22,6 @@ public class JsonTuple2Handler <X extends EjbWithId, Y extends EjbWithId> implem
 
 	final static Logger logger = LoggerFactory.getLogger(JsonTuple2Handler.class);
 	
-//	private final UtilsFacade fUtils;
 	private final Json2TuplesFactory<X,Y> tf;
 	
 	private final Map<X,Map<Y,Json2Tuple<X,Y>>> map; public Map<X,Map<Y,Json2Tuple<X,Y>>> getMap() {return map;}
@@ -32,10 +31,10 @@ public class JsonTuple2Handler <X extends EjbWithId, Y extends EjbWithId> implem
 	private boolean withSum; public boolean isWithSum() {return withSum;} public void setWithSum(boolean withSum) {this.withSum = withSum;}
 
 	private int sumDivider; public void setSumDivider(int sumDivider) {this.sumDivider = sumDivider;}
-
+	public int getDimension() {return 2;}
+	
 	public JsonTuple2Handler(UtilsFacade fUtils, Class<X> cX, Class<Y> cY)
 	{
-//		this.fUtils = fUtils;
 		tf = new Json2TuplesFactory<X,Y>(fUtils,cX,cY);
 		
 		listX = new ArrayList<X>();

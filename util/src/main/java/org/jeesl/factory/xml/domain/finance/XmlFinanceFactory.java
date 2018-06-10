@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.controller.processor.finance.AmountRounder;
 import org.jeesl.interfaces.model.module.currency.UtilsCurrency;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.model.xml.jeesl.QueryFinance;
@@ -117,6 +118,14 @@ public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 		if(value!=null)
 		{
 			f.setValue(f.getValue()+value);
+		}
+	}
+	public static void substract(Finance f, Double value, Integer decimals)
+	{
+		if(value!=null)
+		{
+			if(decimals!=null) {f.setValue(AmountRounder.flex(decimals, f.getValue()-value));}
+			else {f.setValue(f.getValue()-value);}
 		}
 	}
 	

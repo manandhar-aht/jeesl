@@ -17,11 +17,17 @@ import net.sf.ahtutils.xml.text.Remark;
 import net.sf.ahtutils.xml.xpath.FiguresXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
-import net.sf.exlp.util.io.StringUtil;
 
 public class XmlFiguresFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlFiguresFactory.class);
+	
+	private final Integer decimals;
+	
+	public XmlFiguresFactory(Integer decimals)
+	{
+		this.decimals=decimals;
+	}
 	
 	public static Figures build(long id){return build(id,null,null);}
 	public static <E extends Enum<E>> Figures build(E code){return build(code.toString());}
@@ -151,6 +157,57 @@ public class XmlFiguresFactory
 			if(b!=null)
 			{
 				try {XmlFinanceFactory.add(f, FiguresXpath.getFinance(b, code).getValue());}
+				catch (ExlpXpathNotFoundException e) {}
+				catch (ExlpXpathNotUniqueException e) {}
+				codeAvailable = true;
+			}
+			if(codeAvailable) {xml.getFinance().add(f);}
+		}
+		
+		return xml;
+	}
+	
+	public Figures substract(Figures a, Figures b)
+	{
+		Set<String> figureCodes = new HashSet<String>();
+		Set<String> financeCodes = new HashSet<String>();
+		Set<String> counterCodes = new HashSet<String>();
+		
+		if(a!=null)
+		{
+			for(Figures f : a.getFigures()) {if(!figureCodes.contains(f.getCode())) {figureCodes.add(f.getCode());}}
+			for(Finance f : a.getFinance()) {if(!financeCodes.contains(f.getCode())) {financeCodes.add(f.getCode());}}
+			for(Counter c : a.getCounter()) {if(!counterCodes.contains(c.getCode())) {counterCodes.add(c.getCode());}}
+		}
+		if(b!=null)
+		{
+			for(Figures f : b.getFigures()) {if(!figureCodes.contains(f.getCode())) {figureCodes.add(f.getCode());}}
+			for(Finance f : b.getFinance()) {if(!financeCodes.contains(f.getCode())) {financeCodes.add(f.getCode());}}
+			for(Counter c : b.getCounter()) {if(!counterCodes.contains(c.getCode())) {counterCodes.add(c.getCode());}}
+		}
+
+		Figures xml = XmlFiguresFactory.build();
+		for(String code : figureCodes)
+		{
+			Figures f = this.substract(FiguresXpath.getChild(a, code),FiguresXpath.getChild(b, code));
+			f.setCode(code);
+			xml.getFigures().add(f);
+		}
+		for(String code : financeCodes)
+		{
+			Finance f = XmlFinanceFactory.create(code,0d);
+			
+			boolean codeAvailable = false;
+			if(a!=null)
+			{
+				try {XmlFinanceFactory.add(f, FiguresXpath.getFinance(a, code).getValue());}
+				catch (ExlpXpathNotFoundException e) {}
+				catch (ExlpXpathNotUniqueException e) {}
+				codeAvailable = true;
+			}
+			if(b!=null)
+			{
+				try {XmlFinanceFactory.substract(f, FiguresXpath.getFinance(b, code).getValue(), decimals);}
 				catch (ExlpXpathNotFoundException e) {}
 				catch (ExlpXpathNotUniqueException e) {}
 				codeAvailable = true;

@@ -19,6 +19,12 @@ public class AmountRounder
 		return Math.round(value*10)/10.0d;
 	}
 	
+	public static double flex(int decimals, double value)
+	{
+		double power = 10^decimals;
+		return Math.round(value*power)/power;
+	}
+	
 	public static Finance two(Finance finance)
 	{
 		finance.setValue(two(finance.getValue()));

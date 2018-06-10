@@ -11,7 +11,7 @@ import org.jeesl.model.json.db.tuple.one.Json1Tuple;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class Json1TupleFactory<T extends EjbWithId>
+public class Json1TupleFactory<A extends EjbWithId>
 {
 	public Json1TupleFactory()
 	{
@@ -28,10 +28,16 @@ public class Json1TupleFactory<T extends EjbWithId>
 		return result;
 	}
 		
-	public Json1Tuple<T> buildSum(Tuple tuple)
+	public Json1Tuple<A> build(Tuple tuple)
 	{
-		Json1Tuple<T> json = new Json1Tuple<T>();
+		Json1Tuple<A> json = new Json1Tuple<A>();
 		json.setId((Long)tuple.get(0));		
+    	return json;
+	}
+	
+	public Json1Tuple<A> buildSum(Tuple tuple)
+	{
+		Json1Tuple<A> json = build(tuple);	
 		json.setSum((Double)tuple.get(1));
     	return json;
 	}

@@ -75,7 +75,7 @@ public class JeeslIconBuilder
 		copy(FilenameUtils.normalize(base.getAbsolutePath()),"control",   "delete","clone","download","filter","move","remove","save","search","upload","refresh","clean");
 		copy(FilenameUtils.normalize(base.getAbsolutePath()),"control/dm",   "circleMinusGrey","circleMinusRed","circleGrey","circleGreen");
 		copy(FilenameUtils.normalize(base.getAbsolutePath()),"security",   "check-mark","documentation","x-mark");
-		copy(FilenameUtils.normalize(base.getAbsolutePath()),"system/io/file",   "pdf");
+		copy(FilenameUtils.normalize(base.getAbsolutePath()),"system/io/file",   "pdf","xls");
 	}
 	
 	private void copy(String resourceDir, String targetDir, String... items) throws UtilsConfigurationException 

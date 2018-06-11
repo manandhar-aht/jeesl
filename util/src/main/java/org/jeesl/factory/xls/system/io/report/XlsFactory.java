@@ -134,7 +134,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	public void write(Object report, OutputStream os) throws IOException {write(null,report,os);}
-	public void write(JeeslReport jeeslReport, Object report, OutputStream os) throws IOException
+	public void write(JeeslReport<REPORT> jeeslReport, Object report, OutputStream os) throws IOException
 	{
 		Map<SHEET,Boolean> mapSheetVisibilityToggle = null; 
 		
@@ -161,7 +161,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 						
 			for(ROW ioRow : rows)
 			{
-				logger.trace(ioRow.getPosition()+" "+ioRow.getName().get(localeCode).getLang());
+//				logger.info(ioRow.getPosition()+" "+ioRow.getName().get(localeCode).getLang());
 				switch(JeeslReportRowType.Code.valueOf(ioRow.getType().getCode()))
 				{
 					case label: xfRow.label(sheet, rowNr, ioRow); break;
@@ -248,11 +248,16 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	private void applyDomainTable(JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, List<COLUMN> columns, XlsCellFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell)
 	{
+		logger.info("Applying Domain Table for "+ioSheet.getQueryTable());
+		
 		@SuppressWarnings("unchecked")
 		Iterator<Pointer> iterator = context.iteratePointers(ioSheet.getQueryTable());
 		logger.trace("Beginning iteration");
+		int i=0;
         while (iterator.hasNext())
         {
+        	i++;
+//        	logger.info("Row "+i);
         	Row xlsRow = sheet.createRow(rowNr.intValue());
         	
             Pointer pointerToItem = iterator.next();

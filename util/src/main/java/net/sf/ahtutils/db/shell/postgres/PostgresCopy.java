@@ -2,6 +2,9 @@ package net.sf.ahtutils.db.shell.postgres;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -28,6 +31,25 @@ public class PostgresCopy
 		sb.append(" ").append(fields);
 		sb.append(" VALUES (").append(values).append(")");
 		sb.append(" WHERE id=").append(id);
+		sb.append(";");
+		bw.write(sb.toString());
+		bw.newLine();
+	}
+	
+	public static void update(BufferedWriter bw, String table, Map<String,String> mapValues, Map<String,String> mapWhere) throws IOException
+	{
+		List<String> values = new ArrayList<String>();
+		for(String key : mapValues.keySet()){values.add(key+"="+mapValues.get(key));}
+		
+		List<String> where = new ArrayList<String>();
+		for(String key : mapWhere.keySet()){where.add(key+"="+mapWhere.get(key));}
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("UPDATE ").append(table);
+		sb.append(" SET ").append(StringUtils.join(values, ", "));
+		
+		sb.append(" WHERE ").append(StringUtils.join(where, ", "));
+		sb.append(";");
 		bw.write(sb.toString());
 		bw.newLine();
 	}
@@ -76,10 +98,8 @@ public class PostgresCopy
 	public static String ejb(EjbWithId value)
 	{
 		if(value==null) {return nul;}
-		else
-		{
-			return Long.valueOf(value.getId()).toString();
-		}
+		else if(value.getId()==0){return nul;}
+		else {return Long.valueOf(value.getId()).toString();}
 	}
 	
 	public static String update(String s)

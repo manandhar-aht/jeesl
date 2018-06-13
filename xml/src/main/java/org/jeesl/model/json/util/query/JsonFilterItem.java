@@ -1,6 +1,7 @@
 package org.jeesl.model.json.util.query;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,6 +27,15 @@ public class JsonFilterItem implements Serializable
 	public List<Long> getIds() {return ids;}
 	public void setIds(List<Long> ids) {this.ids = ids;}
 	
+	@JsonProperty("date")
+	private Date date;
+	
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

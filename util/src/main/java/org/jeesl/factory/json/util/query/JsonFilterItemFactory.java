@@ -1,6 +1,7 @@
 package org.jeesl.factory.json.util.query;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.jeesl.factory.ejb.util.EjbIdFactory;
@@ -22,6 +23,15 @@ public class JsonFilterItemFactory
 		json.setType(type.toString());
 		json.setIds(EjbIdFactory.toLongs(list));
 		Collections.sort(json.getIds());
+		return json;
+	}
+	
+	public static JsonFilterItem build(String code, Date date) 
+	{
+		JsonFilterItem json = new JsonFilterItem();
+		json.setClassName(date.getClass().getName());
+		json.setType(code);
+		json.setDate(date);
 		return json;
 	}
 }

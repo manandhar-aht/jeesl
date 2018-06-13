@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 public class JsonFilter implements Serializable
 {
 	public static final long serialVersionUID=1;
-	public enum Type{idList}
+	public enum Type{idList,date}
 	
 	@JsonProperty("localeCode")
 	private String localeCode;

@@ -18,6 +18,7 @@
 		<jp:inputCalendar value="#{attributeHandler.data[criteria].valueRecord}" rendered="#{criteria.type.code eq 'date'}"/>
 		
 		<p:selectOneMenu id="sOne" value="#{attributeHandler.data[criteria].valueOption}" effect="fade" rendered="#{criteria.type.code eq 'selectOne'}" autoWidth="false">
+			<c:if test="#{criteria.allowEmpty}"><f:selectItem itemLabel="--"/></c:if>
 			<f:selectItems value="#{appAttributeBean.mapOption[criteria]}" var="o" itemLabel="#{o.name[loc].lang}" itemValue="#{o}"/>
 		</p:selectOneMenu>
 		

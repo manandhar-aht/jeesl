@@ -202,12 +202,12 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 		{
 			container = fAttribute.save(container);
 		}
+		logger.info("Saving data: "+data.values().size());
 		for(DATA d : data.values())
 		{
 			d.setContainer(container);
 			if(options.containsKey(d.getCriteria()))
 			{
-				
 				String[] tmp = options.get(d.getCriteria());
 				List<OPTION> l = new ArrayList<OPTION>();
 				for(String s : tmp)
@@ -223,6 +223,15 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 				else {d.setValueOptions(l);}
 			}
 			else {d.setValueOptions(null);}
+			
+			if(d.getCriteria().getType().getCode().equals(JeeslAttributeCriteria.Types.selectOne.toString()))
+			{
+				if(d.getValueOption()!=null)
+				{
+					d.setValueOption(fAttribute.find(fbAttribute.getClassOption(), d.getValueOption()));
+				}
+			}
+			
 			fAttribute.save(d);
 		}
 		reloadData();

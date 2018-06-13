@@ -2,15 +2,16 @@ package org.jeesl.api.facade.system;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithCategory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
@@ -19,14 +20,14 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.util.UtilsStaffPool;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslSecurityFacade <L extends UtilsLang,
-										D extends UtilsDescription,
+public interface JeeslSecurityFacade <L extends UtilsLang, D extends UtilsDescription,
 										C extends JeeslSecurityCategory<L,D>,
 										R extends JeeslSecurityRole<L,D,C,V,U,A,USER>,
 										V extends JeeslSecurityView<L,D,C,R,U,A>,
 										U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 										A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 										AT extends JeeslSecurityTemplate<L,D,C>,
+										M extends JeeslSecurityMenu<V,M>,
 										USER extends JeeslUser<R>>
 	extends UtilsFacade
 {	
@@ -34,7 +35,6 @@ public interface JeeslSecurityFacade <L extends UtilsLang,
 	R load(Class<R> cRole, R role);
 	V load(Class<V> cView, V view);
 	U load(Class<U> cUsecase, U usecase);
-//	UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER> load(Class<UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER>> cRole, UtilsSecurityWithViews<L,D,C,R,V,U,A,AT,USER> sww);
 	
 	List<V> allViewsForUser(USER user);
 	

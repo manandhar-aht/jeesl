@@ -69,7 +69,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityRestService.class);
 	
-	private JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	private JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity;
 	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity;
 	
 	
@@ -90,7 +90,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 	private SecurityRoleUpdater<L,D,C,R,V,U,A,AT,M,USER> initRoles;
 	private SecurityUsecaseUpdater<L,D,C,R,V,U,A,AT,M,USER> initUsecases;
 	
-	private SecurityRestService(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity,
+	private SecurityRestService(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity,
 			SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		this.fSecurity=fSecurity;
@@ -129,7 +129,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					AT extends JeeslSecurityTemplate<L,D,C>,
 					USER extends JeeslUser<R>>
 		SecurityRestService<L,D,C,R,V,U,A,AT,M,USER>
-		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
+		factory(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
 	{
 		return new SecurityRestService<L,D,C,R,V,U,A,AT,M,USER>(fSecurity,fbSecurity);
 	}

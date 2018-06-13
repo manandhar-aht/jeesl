@@ -48,14 +48,14 @@ public class AbstractSecurityUpdater <L extends UtilsLang,
 	
 	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity;
 	
-	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity;
 	protected EjbLangFactory<L> efLang;
 	protected EjbDescriptionFactory<D> efDescription;
 	
 	private final JeeslDbCodeEjbUpdater<C> dbCleanerCategory;
 				
 	public AbstractSecurityUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,
-			JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fAcl)
+			JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fAcl)
 	{
 		this.fbSecurity=fbSecurity;
 

@@ -42,7 +42,7 @@ public class SecurityTemplateUpdater <L extends UtilsLang,
 	
 	private JeeslDbCodeEjbUpdater<R> updateRole;
 	
-	public SecurityTemplateUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
+	public SecurityTemplateUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity)
 	{       
         super(fbSecurity,fSecurity);
 	}

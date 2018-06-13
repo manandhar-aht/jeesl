@@ -40,7 +40,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	final static Logger logger = LoggerFactory.getLogger(AbstractJsfSecurityHandler.class);
 	public static final long serialVersionUID=1;
 
-	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,?,USER> fSecurity;
 	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity;
 	
 	protected I identity;
@@ -62,7 +62,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	
 	protected boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 
-	public AbstractJsfSecurityHandler(I identity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, String pageCode, Class<V> cV)
+	public AbstractJsfSecurityHandler(I identity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,?,USER> fSecurity, String pageCode, Class<V> cV)
 	{
 		this.identity=identity;
 		this.fSecurity=fSecurity;
@@ -94,7 +94,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 	
-	public AbstractJsfSecurityHandler(I identity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity, V view, Class<V> cV)
+	public AbstractJsfSecurityHandler(I identity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,?,USER> fSecurity, JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity, V view, Class<V> cV)
 	{
 		this.identity=identity;
 		this.fSecurity=fSecurity;

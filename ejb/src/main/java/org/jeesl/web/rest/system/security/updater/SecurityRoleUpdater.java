@@ -44,7 +44,7 @@ public class SecurityRoleUpdater <L extends UtilsLang,D extends UtilsDescription
 	
 	private JeeslDbCodeEjbUpdater<R> updateRole;
 	
-	public SecurityRoleUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
+	public SecurityRoleUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity)
 	{       
         super(fbSecurity,fSecurity);
 	}

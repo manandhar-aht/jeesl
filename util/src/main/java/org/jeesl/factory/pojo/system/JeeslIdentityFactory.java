@@ -45,7 +45,7 @@ public class JeeslIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 		return new JeeslIdentityFactory<I,R,V,U,A,USER>(fbSecurity,cIdentity);
 	}
 
-	public I create(JeeslSecurityFacade<?,?,?,R,V,U,A,?,USER> fSecurity, USER user)
+	public I create(JeeslSecurityFacade<?,?,?,R,V,U,A,?,?,USER> fSecurity, USER user)
 	{		
 		I identity = null;
 		

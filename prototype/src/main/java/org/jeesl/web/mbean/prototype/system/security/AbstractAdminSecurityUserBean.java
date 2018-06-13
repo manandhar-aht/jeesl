@@ -49,7 +49,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityUserBean.class);
 
 	protected JeeslUserFacade<USER> fUtilsUser;
-	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity;
+	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fUtilsSecurity;
 	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity;
 	
 	protected List<USER> users;public List<USER> getUsers() {return users;}
@@ -73,7 +73,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		efUser = fbSecurity.ejbUser();
 	}
 	
-	public void initSuper(JeeslUserFacade<USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fUtilsSecurity, JeeslFacesMessageBean bMessage)
+	public void initSuper(JeeslUserFacade<USER> fUtilsUser, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fUtilsSecurity, JeeslFacesMessageBean bMessage)
 	{
 		super.initAdmin(langs, cL, cD, bMessage);
 		this.fUtilsUser=fUtilsUser;

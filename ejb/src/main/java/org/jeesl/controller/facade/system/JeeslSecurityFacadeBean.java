@@ -19,6 +19,7 @@ import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
@@ -44,9 +45,10 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 									U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 									A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 									AT extends JeeslSecurityTemplate<L,D,C>,
+									M extends JeeslSecurityMenu<V,M>,
 									USER extends JeeslUser<R>>
 							extends UtilsFacadeBean
-							implements JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER>
+							implements JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslSecurityFacadeBean.class);
 	

@@ -37,7 +37,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAppSecurityBean.class);
 	
-	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity;
 	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity;
 
 	private List<V> views; @Override public List<V> getViews() {return views;}
@@ -61,7 +61,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		debugOnInfo = false;
 	}
 	
-	protected void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity)
+	protected void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity)
 	{
 		this.fSecurity=fSecurity;
 		reload();

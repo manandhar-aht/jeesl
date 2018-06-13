@@ -50,7 +50,7 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang, D extends Uti
 		super(fbSecurity);
 	}
 	
-	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslFacesMessageBean bMessage)
+	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslFacesMessageBean bMessage)
 	{
 		categoryType = JeeslSecurityCategory.Type.action;
 		initSecuritySuper(bTranslation.getLangKeys().toArray(new String[0]),fSecurity,bMessage);

@@ -64,7 +64,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		tsb = new TriStateBinder();
 	}
 	
-	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, JeeslFacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
+	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslFacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
 	{
 		this.bSecurity=bSecurity;
 		super.initSecuritySuper(bTranslation.getLangKeys().toArray(new String[0]),fSecurity,bMessage);

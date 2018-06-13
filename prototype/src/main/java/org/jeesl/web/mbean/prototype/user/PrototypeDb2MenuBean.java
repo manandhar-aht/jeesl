@@ -51,7 +51,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	
 	private final Class<M> cMenu;
 	
-	private JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity;
+	private JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity;
 	
 	private final XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER> xfMenuItem;
 	private final EjbSecurityMenuFactory<V,M> efMenu;
@@ -86,7 +86,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		setupRequired = false;
 	}
 	
-	public void initSuper(String localeCode, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,USER> fSecurity, I identity)
+	public void initSuper(String localeCode, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, I identity)
 	{
 		this.fSecurity=fSecurity;
 		prepare(localeCode, identity);

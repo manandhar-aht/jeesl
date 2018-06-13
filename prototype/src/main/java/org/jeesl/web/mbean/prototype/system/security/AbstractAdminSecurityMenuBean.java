@@ -114,7 +114,7 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 	public void reload()
     {
 		List<M> list = fSecurity.all(fbSecurity.getClassMenu());
-		Map<M,List<M>> map = efMenu.toMapParent(list);
+		Map<M,List<M>> map = efMenu.toMapChild(list);
 	    	tree = new DefaultTreeNode(null, null);
 	    	
 	    	buildTree(tree, efMenu.toListRoot(list),map);

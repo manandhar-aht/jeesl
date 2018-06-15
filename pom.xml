@@ -24,7 +24,6 @@
 		<module>test</module>
 		<module>xml</module>
 		<module>interfaces</module>
-		<module>security</module>
 		<module>jsf</module>
 		<module>maven</module>
 		<module>bom</module>

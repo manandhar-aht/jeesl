@@ -95,11 +95,6 @@
 		    </dependency>
         	<dependency>
         		<groupId>org.jeesl</groupId>
-        		<artifactId>jeesl-security</artifactId>
-        		<version>${project.version}</version>
-        	</dependency>
-        	<dependency>
-        		<groupId>org.jeesl</groupId>
         		<artifactId>jeesl-rengine</artifactId>
         		<version>${project.version}</version>
         	</dependency>

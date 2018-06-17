@@ -109,6 +109,7 @@ public class PostgresCopy
 		if(s==null || s.isEmpty()){}
 		else
 		{
+			s = s.replaceAll("'", "''");
 			sb.append(s);
 		}
 		sb.append("'");
@@ -117,7 +118,11 @@ public class PostgresCopy
 	public static String update(Boolean value)
 	{
 		if(value==null) {return nul;}
-		return value.toString();
+		else
+		{
+			if(value){return "'t'";}
+			else{return "'f'";}
+		}
 	}
 	public static String update(Integer value)
 	{

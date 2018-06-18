@@ -45,6 +45,8 @@ public interface JeeslIoRevisionFacade <L extends UtilsLang,D extends UtilsDescr
 	List<RS> findRevisionScopes(List<RC> categories, boolean showInvisibleScopes);
 	List<RE> findRevisionEntities(List<RC> categories, boolean showInvisibleEntities);
 	
+//	<E extends Enum<E>> RA findRevisionAttribute(Class<?> c, E code);
+	
 	void rm(Class<RVM> cMappingView, RVM mapping) throws UtilsConstraintViolationException;
 	
 	<W extends EjbWithRevisionAttributes<RA>> RA save(Class<W> cW, W entity, RA attribute) throws UtilsLockingException, UtilsConstraintViolationException;

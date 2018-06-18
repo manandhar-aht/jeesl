@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslLabelBean;
+import org.jeesl.api.bean.JeeslLabelResolver;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.controller.handler.TranslationHandler;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
@@ -18,7 +19,7 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 								RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 								RA extends JeeslRevisionAttribute<L,D,RE,?,?>>
 								
-					implements Serializable,JeeslLabelBean<RE>
+					implements Serializable,JeeslLabelBean<RE>,JeeslLabelResolver
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractLabelBean.class);
@@ -45,6 +46,12 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 	{
 		
 		th.reload(re);
+	}
+	
+	@Override
+	public <E extends Enum<E>> String xpath(Class<?> c, E code)
+	{
+		return "@name";
 	}
 	
 	

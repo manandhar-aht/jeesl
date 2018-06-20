@@ -53,6 +53,11 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 	{
 		return "@name";
 	}
+	@Override
+	public String entity(String localeCode, Class<?> c)
+	{
+		return th.getMapEntities().get(c.getName()).getName().get(localeCode).getLang();
+	}
 	
 	
 }

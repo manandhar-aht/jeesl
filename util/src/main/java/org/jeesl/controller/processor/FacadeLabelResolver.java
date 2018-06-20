@@ -44,4 +44,15 @@ implements JeeslLabelResolver
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		return "@id";
 	}
+	
+	@Override public String entity(String localeCode, Class<?> c)
+	{
+		try
+		{
+			RE entity = fRevision.fByCode(fbRevision.getClassEntity(), c.getName());
+			return entity.getName().get(localeCode).getLang();
+		}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
+		return c.getSimpleName();
+	}
 }

@@ -40,15 +40,12 @@ public class JeeslPivotFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>> extend
 	public void clear()
 	{
 		mapFieldId.clear();
-		
-		fields = new PivotFields();
-		fieldList = new PivotFieldList();
 	}
 	
 	public <E extends Enum<E>> void addXPathField(Class<?> c, Collection<?> collection, E code)
 	{
 		PivotField json = new PivotField();
-		json.setId("id"+(fieldList.getFields().size()+1));
+		json.setId("id"+(container.getFieldList().size()+1));
 		json.setLabel(labelResolver.entity(localeCode,c));		
 		
 		String xpath = labelResolver.xpath(c, code);
@@ -59,14 +56,14 @@ public class JeeslPivotFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>> extend
 			json.getMap().put(ejb.getId(),context.getValue(xpath).toString());
 		}
 		
-		fieldList.getFields().add(json);
+		container.getFieldList().add(json);
 		mapFieldId.put(c, json.getId());
 	}
 	
 	public <E extends Enum<E>> void addStatusField(Class<?> c, Collection<?> collection)
 	{
 		PivotField json = new PivotField();
-		json.setId("id"+(fieldList.getFields().size()+1));
+		json.setId("id"+(container.getFieldList().size()+1));
 		json.setLabel(labelResolver.entity(localeCode,c));		
 		
 		String xpath = "name[@name='"+localeCode+"']/lang";
@@ -77,7 +74,7 @@ public class JeeslPivotFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>> extend
 			json.getMap().put(ejb.getId(),context.getValue(xpath).toString());
 		}
 		
-		fieldList.getFields().add(json);
+		container.getFieldList().add(json);
 		mapFieldId.put(c, json.getId());
 	}
 	
@@ -85,7 +82,7 @@ public class JeeslPivotFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>> extend
 	{
 		for(Class<?> c : rows)
 		{
-			fields.getRows().add(mapFieldId.get(c));
+			container.getFields().getRows().add(mapFieldId.get(c));
 		}
 	}
 	
@@ -93,7 +90,7 @@ public class JeeslPivotFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>> extend
 	{
 		for(Class<?> c : columns)
 		{
-			fields.getColumns().add(mapFieldId.get(c));
+			container.getFields().getColumns().add(mapFieldId.get(c));
 		}
 	}
 }

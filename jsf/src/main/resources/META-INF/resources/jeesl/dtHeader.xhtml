@@ -12,7 +12,8 @@
 	</composite:interface>
         
 	<composite:implementation>
-        #{cc.attrs.title}
+        <h:outputText value="#{cc.attrs.title}"/>
+        
         <c:if test="#{!empty cc.facets.header}">
 			<composite:renderFacet name="header"/>
 		</c:if>

@@ -359,6 +359,14 @@
 			<s:lang key="en" translation="Datenursprung" />
 			<s:lang key="en" translation="Data Source" />
 			<s:lang key="fr" translation="Data Source" />
-    		</s:langs>
+		</s:langs>
 	</s:translation>
+	<s:translation key="ApprovalProcessCategory">
+		<s:langs>
+			<s:lang key="en" translation="Approval Process Category" />
+			<s:lang key="en" translation="Approval Process Category" />
+			<s:lang key="fr" translation="Approval Process Category" />
+		</s:langs>
+	</s:translation>
+	
 </s:translations>

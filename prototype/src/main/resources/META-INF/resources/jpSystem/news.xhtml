@@ -17,7 +17,7 @@
 	
 	<composite:implementation>
 		<ui:repeat var="news" value="#{cc.attrs.bean.news}">
-			<p:panel header="#{news.name[localeCode].lang}">
+			<p:panel header="#{news.name[localeCode].lang}" styleClass="jeeslPanel">
 				<h:outputText value="#{news.description[localeCode].lang}"/>
 			</p:panel>
 		</ui:repeat>

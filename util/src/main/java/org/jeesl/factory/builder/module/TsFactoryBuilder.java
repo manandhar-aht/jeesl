@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
 import org.jeesl.interfaces.model.module.ts.JeeslTsDataPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
@@ -29,6 +30,7 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 								SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
 								ST extends UtilsStatus<ST,L,D>,
 								UNIT extends UtilsStatus<UNIT,L,D>,
+								MP extends JeeslTsMultiPoint<L,D,UNIT>,
 								TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 								TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
 								SOURCE extends EjbWithLangDescription<L,D>, 

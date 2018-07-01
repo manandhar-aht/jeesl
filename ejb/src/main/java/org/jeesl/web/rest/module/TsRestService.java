@@ -5,6 +5,7 @@ import org.jeesl.api.rest.module.ts.JeeslTsRestExport;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.JeeslTsDataPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
@@ -33,6 +34,7 @@ public class TsRestService <L extends UtilsLang,
 							EC extends JeeslTsEntityClass<L,D,CAT>,
 							INT extends UtilsStatus<INT,L,D>,
 							DATA extends JeeslTsData<TS,TRANSACTION,SAMPLE,WS>,
+							POINT extends JeeslTsDataPoint<DATA>,
 							SAMPLE extends JeeslTsSample, 
 							USER extends EjbWithId, 
 							WS extends UtilsStatus<WS,L,D>,
@@ -42,11 +44,11 @@ public class TsRestService <L extends UtilsLang,
 {
 	final static Logger logger = LoggerFactory.getLogger(TsRestService.class);
 	
-	private final JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs;
+	private final JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs;
 	
 	private final Class<UNIT> cUnit;
 	
-	private TsRestService(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs,
+	private TsRestService(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs,
 							final Class<L> cL, final Class<D> cD, final Class<UNIT> cUnit)
 	{
 		super(fTs,cL,cD);
@@ -66,14 +68,15 @@ public class TsRestService <L extends UtilsLang,
 					BRIDGE extends JeeslTsBridge<EC>,
 					EC extends JeeslTsEntityClass<L,D,CAT>,
 					INT extends UtilsStatus<INT,L,D>,
-					DATA extends JeeslTsData<TS,TRANSACTION,SAMPLE,WS>, SAMPLE extends JeeslTsSample, 
+					DATA extends JeeslTsData<TS,TRANSACTION,SAMPLE,WS>, SAMPLE extends JeeslTsSample,
+					POINT extends JeeslTsDataPoint<DATA>,
 					USER extends EjbWithId, 
 					WS extends UtilsStatus<WS,L,D>,
 					QAF extends UtilsStatus<QAF,L,D>>
-			TsRestService<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>
-			factory(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> fTs, final Class<L> cL, final Class<D> cD, final Class<UNIT> cUnit)
+			TsRestService<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF>
+			factory(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs, final Class<L> cL, final Class<D> cD, final Class<UNIT> cUnit)
 	{
-		return new TsRestService<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(fTs,cL,cD,cUnit);
+		return new TsRestService<L,D,CAT,SCOPE,ST,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF>(fTs,cL,cD,cUnit);
 	}
 	
 	@Override public Container exportTsUnit() {return xfContainer.build(fTs.allOrderedPosition(cUnit));}

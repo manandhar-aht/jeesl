@@ -6,6 +6,7 @@ import java.util.List;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.JeeslTsDataPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
@@ -33,6 +34,7 @@ public interface JeeslTsFacade <L extends UtilsLang,
 								EC extends JeeslTsEntityClass<L,D,CAT>,
 								INT extends UtilsStatus<INT,L,D>,
 								DATA extends JeeslTsData<TS,TRANSACTION,SAMPLE,WS>,
+								POINT extends JeeslTsDataPoint<DATA>,
 								SAMPLE extends JeeslTsSample, 
 								USER extends EjbWithId, 
 								WS extends UtilsStatus<WS,L,D>,

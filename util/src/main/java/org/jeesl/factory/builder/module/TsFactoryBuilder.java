@@ -51,6 +51,7 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	private final Class<SCOPE> cScope; public Class<SCOPE> getClassScope() {return cScope;}
 	private final Class<ST> cScopeType; public Class<ST> getClassScopeType() {return cScopeType;}
 	private final Class<UNIT> cUnit; public Class<UNIT> getClassUnit()  {return cUnit;}
+	private final Class<MP> cMp; public Class<MP> getClassMp() {return cMp;}
 	private final Class<TS> cTs; public Class<TS> getClassTs() {return cTs;}
 	private final Class<TRANSACTION> cTransaction; public Class<TRANSACTION> getClassTransaction() {return cTransaction;}
 	private final Class<SOURCE> cSource; public Class<SOURCE> getClassSource() {return cSource;}
@@ -58,22 +59,29 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	private final Class<EC> cEc; public Class<EC> getClassEntity() {return cEc;}
 	private final Class<INT> cInt; public Class<INT> getClassInterval() {return cInt;}
 	private final Class<DATA> cData;  public Class<DATA> getClassData() {return cData;}
+	private final Class<POINT> cPoint;  public Class<POINT> getClassPoint() {return cPoint;}
 	private final Class<WS> cWs; public Class<WS> getClassWorkspace() {return cWs;}
 	
-	public TsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope, final Class<ST> cScopeType, final Class<UNIT> cUnit, final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt,final Class<DATA> cData, final Class<WS> cWs)
+	public TsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope,
+							final Class<ST> cScopeType, final Class<UNIT> cUnit, final Class<MP> cMp,
+							final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt,
+							final Class<DATA> cData, final Class<POINT> cPoint,
+							final Class<WS> cWs)
 	{
 		super(cL,cD);
 		this.cCategory=cCategory;
 		this.cScope=cScope;
 		this.cScopeType=cScopeType;
 		this.cUnit=cUnit;
-		this.cTs=cTs;		
+		this.cTs=cTs;
+		this.cMp=cMp;
         this.cTransaction=cTransaction;
         this.cSource=cSource;
         this.cBridge=cBridge;
         this.cEc=cEc;
         this.cInt=cInt;
         this.cData=cData;
+        this.cPoint=cPoint;
         this.cWs=cWs;
 	}
 	

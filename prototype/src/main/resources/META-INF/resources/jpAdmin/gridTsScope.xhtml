@@ -128,7 +128,7 @@
 							<p:column headerText="#{msg.jeeslTsClass}">
 								<h:outputText value="#{c.name[localeCode].lang}" />
 							</p:column>
-						</p:dataTable>				  
+						</p:dataTable>		  
 						<p:overlayPanel for="dtClasses:dth:giAdd" widgetVar="wvOpClassSelection" appendToBody="false">
 							<p:dataTable id="dtOpSector" var="c" value="#{cc.attrs.bean.opClasses}" rowKey="#{c.id}"
 				                         selection="#{cc.attrs.bean.opClass}" selectionMode="single">

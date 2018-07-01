@@ -60,6 +60,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected List<SCOPE> scopes; public List<SCOPE> getScopes() {return scopes;}
 	protected List<UNIT> units; public List<UNIT> getUnits() {return units;}
 	protected List<ST> scopeTypes; public List<ST> getScopeTypes() {return scopeTypes;}
+	protected List<MP> multiPoints; public List<MP> getMultiPoints() {return multiPoints;}
 	protected List<INT> opIntervals; public List<INT> getOpIntervals() {return opIntervals;}
 	protected List<EC> opClasses; public List<EC> getOpClasses() {return opClasses;}
 	

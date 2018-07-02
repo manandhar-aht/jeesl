@@ -58,7 +58,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 											SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
 											ST extends UtilsStatus<ST,L,D>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											MP extends JeeslTsMultiPoint<L,D,UNIT>,
+											MP extends JeeslTsMultiPoint<L,D,SCOPE,UNIT>,
 											TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 											TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
 											SOURCE extends EjbWithLangDescription<L,D>, 

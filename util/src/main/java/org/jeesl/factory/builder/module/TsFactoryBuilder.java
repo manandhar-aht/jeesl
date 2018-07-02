@@ -5,6 +5,7 @@ import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsFactory;
+import org.jeesl.factory.ejb.module.ts.EjbTsMutliPointFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsScopeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsTransactionFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
@@ -30,7 +31,7 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 								SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
 								ST extends UtilsStatus<ST,L,D>,
 								UNIT extends UtilsStatus<UNIT,L,D>,
-								MP extends JeeslTsMultiPoint<L,D,UNIT>,
+								MP extends JeeslTsMultiPoint<L,D,SCOPE,UNIT>,
 								TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 								TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
 								SOURCE extends EjbWithLangDescription<L,D>, 
@@ -112,6 +113,11 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	
 	public EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> entityClass()
 	{
-	return new EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cEc);
+		return new EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cEc);
+	}
+	
+	public EjbTsMutliPointFactory<L,D,CAT,SCOPE,ST,UNIT,MP,EC,INT> ejbMultiPoint()
+	{
+		return new EjbTsMutliPointFactory<L,D,CAT,SCOPE,ST,UNIT,MP,EC,INT>(cMp);
 	}
 }

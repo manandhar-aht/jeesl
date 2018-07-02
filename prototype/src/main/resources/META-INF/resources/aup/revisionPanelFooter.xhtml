@@ -18,7 +18,7 @@
 		<h:panelGroup layout="block" styleClass="meis-revision-footer" rendered="#{cc.attrs.revision.showFooter}">
 			<h:panelGroup layout="block" styleClass="meis-revision-icon">
 				<h:graphicImage id="iconRevision" value="#{iconBean.icon(12,'revision')}">
-					<p:ajax update="#{cc.attrs.updateToggle}" event="click" listener="#{cc.listener}"/>
+					<p:ajax event="click" listener="#{cc.listener}" update="#{cc.attrs.updateToggle}" />
                 </h:graphicImage>
                 <p:tooltip for="iconRevision" value="#{cc.attrs.tooltip}"/>
 			</h:panelGroup>

@@ -14,7 +14,7 @@
     		<s:lang key="fr" translation="Scope"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupTsUnit">
+	<s:translation key="jeeslTsUnit">
     	<s:langs>
     		<s:lang key="de" translation="Einheit"/>
     		<s:lang key="en" translation="Unit"/>
@@ -188,6 +188,20 @@
     		<s:lang key="de" translation="Importiert von"/>
     		<s:lang key="en" translation="Imported by"/>
     		<s:lang key="fr" translation="Imported by"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslTsMultiPoints">
+    	<s:langs>
+    		<s:lang key="de" translation="Mehrfach-Punkte"/>
+    		<s:lang key="en" translation="Multi Points"/>
+    		<s:lang key="fr" translation="Multi Points"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslTsMultiPoint">
+    	<s:langs>
+    		<s:lang key="de" translation="Mehrfach-Punkt"/>
+    		<s:lang key="en" translation="Multi Point"/>
+    		<s:lang key="fr" translation="Multi Point"/>
     	</s:langs>
     </s:translation>
 </s:translations>

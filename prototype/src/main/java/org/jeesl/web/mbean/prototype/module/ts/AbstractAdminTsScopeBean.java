@@ -38,7 +38,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 											SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
 											ST extends UtilsStatus<ST,L,D>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
-											MP extends JeeslTsMultiPoint<L,D,UNIT>,
+											MP extends JeeslTsMultiPoint<L,D,SCOPE,UNIT>,
 											TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 											TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
 											SOURCE extends EjbWithLangDescription<L,D>, 
@@ -65,6 +65,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	protected List<EC> opClasses; public List<EC> getOpClasses() {return opClasses;}
 	
 	protected SCOPE scope; public void setScope(SCOPE scope) {this.scope = scope;} public SCOPE getScope() {return scope;}
+	private MP multiPoint; public MP getMultiPoint() {return multiPoint;} public void setMultiPoint(MP multiPoint) {this.multiPoint = multiPoint;}
 	protected INT opInterval;public INT getOpInterval(){return opInterval;}public void setOpInterval(INT opInterval){this.opInterval = opInterval;}
 	protected INT tbInterval;public INT getTbInterval(){return tbInterval;}public void setTbInterval(INT tbInterval){this.tbInterval = tbInterval;}	
 	
@@ -94,8 +95,18 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException
 	{
 		super.toggled(c);
-		if(fbTs.getClassCategory().isAssignableFrom(c)){reloadScopes();cancel();}
+		if(fbTs.getClassCategory().isAssignableFrom(c)){reloadScopes();reset(true,true);}
 	}
+	
+	public void cancelScope(){reset(true,true);}
+	public void cancelMultiPoint(){reset(false,true);}
+	public void reset(boolean rScope, boolean rMultiPoint)
+	{
+		if(rScope) {scope = null;}
+		if(rMultiPoint) {multiPoint = null;}
+	}
+	
+	protected void updatePerformed(){}
 	
 	public void reloadScopes()
 	{
@@ -118,6 +129,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		scope = fTs.find(fbTs.getClassScope(), scope);
 		scope = efLang.persistMissingLangs(fTs,localeCodes,scope);
 		scope = efDescription.persistMissingLangs(fTs,localeCodes,scope);
+		reloadMultiPoints();
 	}
 	
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -128,24 +140,23 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		if(scope.getType()!=null) {scope.setType(fTs.find(fbTs.getClassScopeType(), scope.getType()));}
 		scope = fTs.save(scope);
 		reloadScopes();
+		reloadMultiPoints();
 		updatePerformed();
+	}
+	
+	public void changeScopeType() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.selectOneMenuChange(scope.getType()));
+		if(scope.getType()!=null) {scope.setType(fTs.find(fbTs.getClassScopeType(), scope.getType()));}
 	}
 	
 	public void rm() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(scope));
 		fTs.rm(scope);
-		scope=null;
+		reset(true,true);
 		reloadScopes();
 	}
-	
-	public void cancel()
-	{
-		scope = null;
-	}
-	
-	protected void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, fbTs.getClassScope(), scopes);Collections.sort(scopes, comparatorScope);}
-	protected void updatePerformed(){}
 	
 	//OverlayPanel Interval
 	public void opAddInterval() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -203,6 +214,35 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(tbClass));}
 	}
 	
+	private void reloadMultiPoints()
+	{
+		multiPoints = fTs.allForParent(fbTs.getClassMp(),scope);
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassMp(), multiPoints, scope));}
+	}
+	
+	public void addMultiPoint()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTs.getClassMp()));}
+		multiPoint = fbTs.ejbMultiPoint().build(scope, multiPoints);
+		multiPoint.setName(efLang.createEmpty(localeCodes));
+		multiPoint.setDescription(efDescription.createEmpty(localeCodes));
+	}
+	
+	public void selectMultiPoint() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(multiPoint));}
+		multiPoint = fTs.find(fbTs.getClassMp(), multiPoint);
+		multiPoint = efLang.persistMissingLangs(fTs,localeCodes,multiPoint);
+		multiPoint = efDescription.persistMissingLangs(fTs,localeCodes,multiPoint);
+	}
+	
+	public void saveMultiPoint() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(multiPoint));}
+		multiPoint.setUnit(fTs.find(fbTs.getClassUnit(),multiPoint.getUnit()));
+		multiPoint = fTs.save(multiPoint);
+		reloadMultiPoints();
+	}
 	
 	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
 	{
@@ -213,4 +253,8 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 			logger.info(uiShowInvisible+" showInvisible a:"+viewCode);
 		}
 	}
+	
+	public void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, fbTs.getClassScope(), scopes);Collections.sort(scopes, comparatorScope);}
+	public void reorderMultiPoints() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTs, fbTs.getClassMp(), multiPoints);}
+
 }

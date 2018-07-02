@@ -15,12 +15,16 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslTsMultiPoint <L extends UtilsLang, D extends UtilsDescription,
+									SCOPE extends JeeslTsScope<L,D,?,?,UNIT,?,?>,
 									UNIT extends UtilsStatus<UNIT,L,D>>
 		extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,EjbWithNonUniqueCode,
 				EjbWithParentAttributeResolver,EjbWithPositionParent,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
-	public enum Statistic{none}
+	public enum Attributes{scope}
+	
+	SCOPE getScope();
+	void setScope(SCOPE scope);
 	
 	UNIT getUnit();
 	void setUnit(UNIT unit);

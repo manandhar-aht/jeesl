@@ -57,17 +57,17 @@ public class SbLocation2Handler <L1 extends EjbWithId, L2 extends EjbWithId> ext
 	}
 	
 	public void ui2(L2 province) {select2(province,HierarchicalLocationUpdateParameter.build(false,true,true,true,true));}
-	public void select2(L2 district, HierarchicalLocationUpdateParameter hlup)
+	public void select2(L2 district, HierarchicalLocationUpdateParameter hup)
 	{
-		if(debugOnInfo) {logger.info("Select "+district.getClass().getSimpleName()+" "+district.toString());}
+		if(debugOnInfo) {logger.info("select2 "+district.getClass().getSimpleName()+" "+district.toString()+" "+hup.toString());}
 		this.l2=district;
 		store2.setL2(district);
 		clearL3List();
-		if(hlup.isFillParent()) {select1(getParent2(l2),hlup.copy().selectChild(false).fireEvent(false));}
-		if(hlup.isFillChilds()) {fillL3List();}
-		if(hlup.isSelectChild()) {selectDefaultL3(hlup.copy().fillParent(false).fillParent(false));}
-		if(hlup.isCallback()) {selected2();}
-		if(hlup.isFireEvent()) {fireEvent();}
+		if(hup.isFillParent()) {select1(getParent2(l2),hup.copy().selectChild(false).fireEvent(false));}
+		if(hup.isFillChilds()) {fillL3List();}
+		if(hup.isSelectChild()) {selectDefaultL3(hup.copy().fillParent(false).fillParent(false));}
+		if(hup.isCallback()) {selected2();}
+		if(hup.isFireEvent()) {fireEvent();}
 	}
 	
 	protected L1 getParent2(L2 l2) {return null;}
@@ -82,10 +82,11 @@ public class SbLocation2Handler <L1 extends EjbWithId, L2 extends EjbWithId> ext
 			if((viewIsGlobal || allow2.contains(ejb)) && !ignore2.contains(ejb)) {list2.add(ejb);}
 		}
 	}
-	@Override protected void selectDefaultL2(HierarchicalLocationUpdateParameter hlup)
+	@Override protected void selectDefaultL2(HierarchicalLocationUpdateParameter hup)
 	{
+		if(debugOnInfo) {logger.info("selectDefaultL2 "+hup.toString());}
 		reset(2);
-		if(!list2.isEmpty()) {select2(list2.get(0),hlup.fillParent(false));}
+		if(!list2.isEmpty()) {select2(list2.get(0),hup.fillParent(false));}
 	}
 	
 	

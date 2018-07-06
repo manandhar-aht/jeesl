@@ -81,7 +81,7 @@ public class SbLocation5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	{
 		for(L5 ejb : cache5.cacheL5(l4))
 		{
-			if((viewIsGlobal || includeAll5 || allow5.contains(ejb)) && !ignore5.contains(ejb)) {list5.add(ejb);}
+			if((viewIsGlobal || includeAll5 || allow5.contains(ejb) || list4.contains(getParent5(ejb))) && !ignore5.contains(ejb)) {list5.add(ejb);}
 		}
 	}
 	@Override protected void selectDefaultL5(HierarchicalLocationUpdateParameter hlup)

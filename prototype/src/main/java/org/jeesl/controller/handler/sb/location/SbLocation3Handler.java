@@ -58,17 +58,17 @@ public class SbLocation3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	
 	
 	public void ui3(L3 ejb) {select3(ejb,HierarchicalLocationUpdateParameter.build(false,true,true,true,true));}
-	public void select3(L3 ejb, HierarchicalLocationUpdateParameter hlup)
+	public void select3(L3 ejb, HierarchicalLocationUpdateParameter hup)
 	{
-		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString());}
+		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString()+" "+hup.toString());}
 		this.l3=ejb;
 		store3.setL3(ejb);
 		clearL4List();
-		if(hlup.isFillParent()) {select2(getParent3(l3),hlup.copy().selectChild(false).fireEvent(false));}
-		if(hlup.isFillChilds()) {fillL4List();}
-		if(hlup.isSelectChild()) {selectDefaultL4(hlup.copy().fillParent(false).fireEvent(false));}
-		if(hlup.isCallback()) {selected3();}
-		if(hlup.isFireEvent()) {fireEvent();}
+		if(hup.isFillParent()) {select2(getParent3(l3),hup.copy().selectChild(false).fireEvent(false));}
+		if(hup.isFillChilds()) {fillL4List();}
+		if(hup.isSelectChild()) {selectDefaultL4(hup.copy().fillParent(false).fireEvent(false));}
+		if(hup.isCallback()) {selected3();}
+		if(hup.isFireEvent()) {fireEvent();}
 	}
 	
 	protected L2 getParent3(L3 l3) {return null;}
@@ -80,13 +80,14 @@ public class SbLocation3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	{
 		for(L3 ejb : cache3.cacheL3(l2))
 		{
-			if((viewIsGlobal || allow3.contains(ejb)) && !ignore3.contains(ejb)) {list3.add(ejb);}
+			if((viewIsGlobal || allow3.contains(ejb) || list2.contains(getParent3(ejb))) && !ignore3.contains(ejb)) {list3.add(ejb);}
 		}
 	}
-	@Override protected void selectDefaultL3(HierarchicalLocationUpdateParameter hlup)
+	@Override protected void selectDefaultL3(HierarchicalLocationUpdateParameter hup)
 	{
+		if(debugOnInfo) {logger.info("selectDefaultL3 "+hup.toString());}
 		reset(3);
-		if(!list3.isEmpty()) {select3(list3.get(0),hlup.fillParent(false));}
+		if(!list3.isEmpty()) {select3(list3.get(0),hup.fillParent(false));}
 	}
 	
 	

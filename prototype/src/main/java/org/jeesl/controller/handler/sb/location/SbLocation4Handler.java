@@ -80,7 +80,7 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	{
 		for(L4 ejb : cache4.cacheL4(l3))
 		{
-			if((viewIsGlobal || allow4.contains(ejb)) && !ignore4.contains(ejb)) {list4.add(ejb);}
+			if((viewIsGlobal || allow4.contains(ejb) || list3.contains(getParent4(ejb))) && !ignore4.contains(ejb)) {list4.add(ejb);}
 		}
 	}
 	@Override protected void selectDefaultL4(HierarchicalLocationUpdateParameter hlup)

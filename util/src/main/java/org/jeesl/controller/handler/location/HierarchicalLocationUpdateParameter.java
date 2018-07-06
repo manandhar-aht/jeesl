@@ -66,4 +66,15 @@ public class HierarchicalLocationUpdateParameter implements Cloneable
 		setFireEvent(value);
 		return this;
 	}
+	
+	public String toString()
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("fillParent:").append(fillParent);
+		sb.append(" fillChilds:").append(fillChilds);
+		sb.append(" selectChild:").append(selectChild);
+		sb.append(" callback:").append(callback);
+		sb.append(" fireEvent:").append(fireEvent);
+		return sb.toString();
+	}
 }

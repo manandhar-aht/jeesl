@@ -12,6 +12,7 @@ public class TxtMailFactory
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append(mail.getHeader().getSubject());
+		sb.append(" -> ").append(mail.getHeader().getTo().getEmailAddress().get(0).getEmail());
 		return sb.toString();
 	}
 }

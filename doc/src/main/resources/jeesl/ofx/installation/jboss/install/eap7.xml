@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ofx:section xmlns:ofx="http://www.openfuxml.org"
+			xmlns:text="http://www.openfuxml.org/text"
+			xmlns:ed="http://www.openfuxml.org/editorial"
+			container="true" classifier="eap6">
+		<ofx:title lang="en">EAP 6.3</ofx:title>
+		
+		<ofx:section classifier="eap6Source">
+			<ofx:title lang="en">Build JBoss EAP 7 from source</ofx:title>
+			
+				<!-- https://github.com/hasalex/eap-build -->
+			
+				<ofx:paragraph lang="en">
+					Using the <text:emphasis italic="true">EAP Build Tools</text:emphasis> is a convenient way to compile and package
+					<text:emphasis italic="true">JBoss EAP 6</text:emphasis> from source.
+					The prerequisites for the bash script are
+					<text:emphasis style="typewriter">unzip</text:emphasis>,
+					<text:emphasis style="typewriter">curl</text:emphasis>,
+					<text:emphasis style="typewriter">xmlstarlet</text:emphasis>,
+					<text:emphasis style="typewriter">maven</text:emphasis>
+					and an installed <text:emphasis italic="true">Java JDK</text:emphasis>.
+				</ofx:paragraph>
+				
+				<ofx:paragraph lang="en">
+				
+				</ofx:paragraph>
+				
+				<ofx:listing>
+				<ofx:raw>apt-get install unzip curl xmlstarlet</ofx:raw>
+			</ofx:listing>
+				
+				<ofx:paragraph lang="en">
+					The bash script can be downloaded by <text:emphasis style="typewriter">git</text:emphasis> and the command
+					<text:emphasis style="typewriter">build-eap.sh</text:emphasis> downloads and compiles the latest version available:
+				</ofx:paragraph>
+			
+					<ofx:listing>
+				<ofx:raw>git clone git://github.com/hasalex/eap-build.git
+cd eap-build
+./build-eap7.sh</ofx:raw>
+			</ofx:listing>
+			
+			<ofx:paragraph lang="en">
+				The build will take a while, especially when it will be executed for the first time.
+				Several files like the sources (36 MB) and the repository (561 MB) will be downloaded.
+				During the build process (<text:emphasis italic="true">Launching Maven build</text:emphasis>
+				multiple additional Maven dependencies will be downloaded, too. The process can be observed with
+				<text:emphasis style="typewriter">tail -f eap-build/work/build.log</text:emphasis>.
+			</ofx:paragraph>
+			
+			<ofx:paragraph lang="en">
+				The result of the compile and packaging process is a ZIP file
+				<text:emphasis bold="true">jboss-eap-6.3.3.zip</text:emphasis> being available in the directory
+				<text:emphasis bold="true">dist</text:emphasis>.
+			</ofx:paragraph>
+			
+		</ofx:section>
+		
+		<ofx:section>
+			<ofx:title lang="en">Installation</ofx:title>
+		
+			<ofx:paragraph lang="de" version="1">
+				The Application server needs to be installed in
+				<text:emphasis italic="true">/opt</text:emphasis>. Before beginning the installation, a user will be added and
+				the access rights will be adjusted:
+			</ofx:paragraph>
+		
+			<ofx:listing>
+				<ofx:raw>addgroup jboss
+useradd -g jboss jboss
+chown -R jboss:jboss /opt/jboss-eap-6.3</ofx:raw>
+			</ofx:listing>
+			
+		</ofx:section>
+		
+		<ofx:section>
+			<ofx:title lang="en">Configuration</ofx:title>
+			
+			<ofx:section>
+				<ofx:title lang="en">Startup Settings</ofx:title>
+				
+				<ofx:paragraph lang="en" version="1">
+					The startup settings for JBoss Application Server are stored in the file
+					<text:emphasis style="typewriter">jboss/bin/standalone.conf</text:emphasis>, changes should be done
+					in the section <text:emphasis italic="true">Specify options to pass to the Java VM</text:emphasis>
+					which has the following default settings:
+				</ofx:paragraph>
+				<ofx:listing>
+					<ofx:raw>#
+# Specify options to pass to the Java VM.
+#
+if [ "x$JAVA_OPTS" = "x" ]; then
+   JAVA_OPTS="-Xms1024m -Xmx2048m -XX:MaxPermSize=512m -Djava.net.preferIPv4Stack=true"
+   JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=$JBOSS_MODULES_SYSTEM_PKGS"
+   JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true -Duser.language=en"
+   JAVA_OPTS="$JAVA_OPTS -DGEOSERVER_DATA_DIR=/Applications/Development/geoserver"
+   # Add you configuration here
+else
+   echo "JAVA_OPTS already set in environment; overriding default settings with values: $JAVA_OPTS"
+fi</ofx:raw>
+				</ofx:listing>
+				
+				<ofx:paragraph lang="en" version="1">
+					The default memory settings are not sufficient to serve multiple users at once and should be increased:
+				</ofx:paragraph>
+				<ofx:listing setting="shell" external="listing/admin/installation/jboss/config/eap6/standalone.mem.txt"/>
+
+				<ofx:paragraph lang="en" version="2">
+					In some cases internal algorithms try to access a graphical user interface, which is not
+					necessary in this setup. This will be prevented by starting in 
+					<text:emphasis bold="true">headless</text:emphasis> mode.
+					To avoid debug outputs in a language different than English,
+					the language should explicitly be set to
+					<text:emphasis bold="true">en</text:emphasis>.
+				</ofx:paragraph>
+					<ofx:paragraph lang="de" version="1">
+					Um Ausgaben in einer anderen Sprache als Englisch zu vermeiden,
+					sollte die Sprache in der Datei <text:emphasis style="typewriter">$jboss/bin/standalone.conf</text:emphasis>
+					explizit mit folgender Option gesetzt werden:
+				</ofx:paragraph>
+				<ofx:listing>
+					<ofx:raw>JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true -Duser.language=en"</ofx:raw>
+				</ofx:listing>
+			</ofx:section>
+			
+			<ofx:section>
+				<ofx:title lang="en">Data Source</ofx:title>
+				
+				<ofx:paragraph lang="en" version="1">
+					The data source describes the connection to the database and registers it internally on
+					the application server. The password shown in the given listing is an example and should
+					be changed for production use.
+				</ofx:paragraph>
+				<ofx:listing external="listing/admin/installation/jboss/config/ds-postgres.xml"/>
+				
+				<ofx:section container="true" classifier="postgis">
+					<ofx:title lang="en">PostGIS Database Driver</ofx:title>
+					
+					<ofx:paragraph lang="en" version="1">
+						The database driver for PostgreSQL has to be registered in
+						<text:emphasis style="typewriter">/standalone/configuration/standalone.conf</text:emphasis>
+						in the section <text:emphasis italic="true">server/profile/subsystem</text:emphasis> of the subsystem
+						
+						<text:emphasis italic="true">urn:jboss:domain:datasources:1.1</text:emphasis> as a new driver:
+					</ofx:paragraph>
+					<ofx:listing external="listing/admin/installation/jboss/config/ds-driver-postgres.xml"/>
+				</ofx:section>
+			</ofx:section>
+			
+			<ofx:section>
+				<ofx:title lang="en">Network Connections</ofx:title>
+				
+				<ofx:paragraph lang="en" version="1">
+					The default configuration of JBoss is to only listen on connections originated from
+					<text:emphasis italic="true">localhost</text:emphasis>. To enable access from other systems, the settings for the
+					<text:emphasis italic="true">public interface</text:emphasis> have to be changed to
+					<text:emphasis style="typewriter">/standalone/configuration/standalone.conf</text:emphasis> in the
+					<text:emphasis italic="true">interfaces</text:emphasis> section (near at the end of the file).
+				</ofx:paragraph>
+				
+				<ofx:listing>
+					<ofx:raw><![CDATA[<interface name="public">
+	<any-address/>
+</interface>]]></ofx:raw>
+				</ofx:listing>
+				
+			</ofx:section>
+			
+			<ofx:section>
+				<ofx:title lang="en">Modules</ofx:title>
+				
+				<ofx:paragraph lang="en" version="1">
+					All modules can be automatically installed by unpacking the provided archive
+					<text:emphasis style="typewriter">jboss-modules-tgz</text:emphasis> in the directory
+					<text:emphasis style="typewriter">/opt/jboss-eap-6.1/modules/system/layers/base</text:emphasis>.
+					The following subsections describe the differences to the original configuration files.
+				</ofx:paragraph>
+				
+				<ofx:section classifier="postgis">
+					<ofx:title lang="en">PostgreSQL Module</ofx:title>
+					
+					<ofx:paragraph lang="en" version="1">
+						Similar to the setup of other JDBC database drivers for JBoss,
+						a module <text:emphasis bold="true">org.postgresql</text:emphasis> has to be registered.
+						In the directory <text:emphasis style="typewriter">/modules/org/postgresql/main</text:emphasis>
+						a new file named <text:emphasis style="typewriter">module.xml</text:emphasis> must be created
+						with the following content:
+					</ofx:paragraph>
+					<ofx:listing>
+						<ofx:raw><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.0" name="org.postgresql">
+	<resources>
+		<resource-root path="postgresql-9.1-903.jdbc4.jar"/>
+		<resource-root path="postgis-1.5.3.jar"/>
+	</resources>
+	<dependencies>
+		<module name="javax.api"/>
+		<module name="javax.transaction.api"/>
+	</dependencies>
+</module>]]></ofx:raw>
+				</ofx:listing>
+				</ofx:section>
+				
+				<ofx:section classifier="mysql">
+					<ofx:title lang="en">MySQL Module</ofx:title>
+					
+					<ofx:paragraph lang="en" version="1">
+						TBD
+					</ofx:paragraph>
+					<ofx:listing>
+						<ofx:raw><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.0" name="com.mysql">
+	<resources>
+		<resource-root path="mysql-connector-java-5.1.18-bin.jar"/>
+	</resources>
+	<dependencies>
+		<module name="javax.api"/>
+	</dependencies>
+</module>]]></ofx:raw>
+				</ofx:listing>
+					
+				</ofx:section>
+				
+				<ofx:section>
+					<ofx:title lang="en">Entity Versioning (EnVers)</ofx:title>
+					
+					<ofx:paragraph lang="en" version="1">
+						TBD
+					</ofx:paragraph>
+					
+					<ofx:listing setting="xml">
+						<ofx:raw><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="org.hibernate.envers">
+    <resources>
+        <resource-root path="hibernate-envers-4.2.0.Final-redhat-1.jar"/>
+    </resources>
+    <dependencies>
+        <module name="org.hibernate"/>
+        <module name="org.jboss.logging"/>
+        <module name="org.dom4j"/>
+        <module name="javax.api"/>
+        <module name="javax.persistence.api"/>
+        <module name="javax.transaction.api"/>
+		<module name="org.hibernate.commons-annotations"/>
+        <module name="org.javassist"/>
+    </dependencies>
+</module>]]></ofx:raw>
+				</ofx:listing>
+					
+				</ofx:section>
+				
+				<ofx:section>
+					<ofx:title lang="en">Hibernate Module</ofx:title>
+					
+					<ofx:paragraph lang="en" version="1">
+						The module <text:emphasis bold="true">hibernate</text:emphasis> already exists in the directory
+						<text:emphasis style="typewriter">/modules/hibernate/main</text:emphasis>
+						and must be extended:
+					</ofx:paragraph>
+															<ofx:listing>
+						<ofx:raw><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="org.hibernate">
+	<resources>
+		<resource-root path="hibernate-core-4.2.0.Final-redhat-1.jar"/>
+		<resource-root path="hibernate-entitymanager-4.2.0.Final-redhat-1.jar"/>
+		<resource-root path="hibernate-infinispan-4.2.0.Final-redhat-1.jar"/>
+		<resource-root path="hibernate-spatial-4.0-M1.jar"/>
+		<resource-root path="jts-1.12.jar"/>
+		<!-- Insert resources here -->
+	</resources>
+	<dependencies>
+		<module name="asm.asm"/>
+		<module name="javax.api"/>
+		<module name="javax.persistence.api"/>
+		<module name="javax.transaction.api"/>
+		<module name="javax.validation.api"/>
+		<module name="org.antlr"/>
+		<module name="org.apache.commons.collections"/>
+		<module name="org.dom4j"/>
+		<module name="org.infinispan" optional="true"/>
+		<module name="org.javassist"/>
+		<module name="org.jboss.as.jpa.hibernate" slot="4" optional="true"/>
+		<module name="org.jboss.logging"/>
+		<module name="org.postgresql"/>
+		<module name="org.hibernate.envers" services="import" optional="true"/>
+		<module name="org.hibernate.commons-annotations"/>
+	</dependencies>
+</module>
+]]></ofx:raw>
+				</ofx:listing>
+				</ofx:section>
+				
+			</ofx:section>
+		
+		</ofx:section>
+		
+		
+		<ofx:section>
+			<ofx:title lang="en">Deployment</ofx:title>
+			
+			<ofx:listing setting="shell" external="listing/admin/installation/jboss/deployment/eap6/log/start.txt"/>
+			
+			<ofx:paragraph lang="en" version="1">
+					The application is deployed using the command line tool
+					<text:emphasis style="typewriter">/opt/jboss-eap-6.1/bin/jboss-cli.sh</text:emphasis>.
+					The easiest way is to start <text:emphasis style="typewriter">jboss-cli.sh</text:emphasis>
+					from the directory where the file
+					<text:emphasis style="typewriter">meis.ear</text:emphasis>
+					is located. Detailed instructions for deployment and undeployment are given in section 
+					<text:emphasis italic="true">System Maintenance</text:emphasis>.
+			</ofx:paragraph>
+			
+			<ofx:listing>
+				<ofx:raw>You are disconnected at the moment. Type 'connect' to connect to the server or
+'help' for the list of supported commands.
+[disconnected /] connect
+[standalone@localhost:9999 /] deploy meis.ear
+[standalone@localhost:9999 /] undeploy meis.ear</ofx:raw>
+			</ofx:listing>
+			
+		</ofx:section>
+		
+		<ofx:section>
+			<ofx:title lang="en">Start JBoss as a Service</ofx:title>
+			
+			<ofx:paragraph lang="en" version="1">
+				This paragraph describes how to set up a Linux service to start and stop your JBoss Application Server.
+				The advantage of a Linux service is that it will run no matter which user is logged onto the machine. 
+				You can also configure the service to start automatically if the system is rebooted.
+				Perform the following commands to start with the service installation.
+			</ofx:paragraph>
+			
+			<ofx:section container="true" classifier="debianWheezy">
+				<ofx:listing setting="shell" external="listing/admin/installation/jboss/service/preparation.txt"/>
+				<ofx:paragraph lang="en" version="1">
+					The next step is to configure the service with the shown script below. 
+					Copy this script to your clipboard and past it into the <ed:glossary code="vi"/>
+					terminal (or similar editor) and save your configuration.
+					Verify your installation with of the JBoss Application Server by starting and stopping it
+					(monitor this events with the log terminal).
+					Use the commands "/etc/init.d/jboss {start|stop|log}" to perform this test.
+				</ofx:paragraph>
+				<ofx:listing setting="shell" external="listing/admin/installation/jboss/service/etcInitD.txt"/>
+				<ofx:paragraph lang="en" version="1">
+					To activate the service, the shell command
+					<text:emphasis style="typewriter">sudo update-rc.d jboss defaults</text:emphasis>
+					has to be executed.
+				</ofx:paragraph>
+			</ofx:section>
+			
+			<ofx:section container="true" classifier="debianJessie">
+				<ofx:paragraph lang="en" version="1">
+					Do this as root 		
+				</ofx:paragraph>
+					
+				<ofx:listing external="/jeesl-doc/src/main/resources/jeesl/listing/installation/jboss/service/jboss.service"/>
+				<ofx:listing>
+						<ofx:raw>touch /etc/systemd/system/jboss.service
+systemctl daemon-reload
+systemctl enable jboss.service
+systemctl start jboss.service
+systemctl status jboss.service
+journalctl -u jboss.service</ofx:raw>
+				</ofx:listing>
+			</ofx:section>
+			
+		</ofx:section>
+	</ofx:section>

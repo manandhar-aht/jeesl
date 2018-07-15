@@ -101,6 +101,7 @@ public class JbossModuleConfigurator
 		else if(version.equals("7.1"))
 		{
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:5.1.46"),dirMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.mariadb.jdbc:mariadb-java-client:2.2.5"),dirMain);
 		}
 		else
 		{

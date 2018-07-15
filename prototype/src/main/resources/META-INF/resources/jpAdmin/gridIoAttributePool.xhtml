@@ -5,6 +5,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://www.jeesl.org/jsf"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
@@ -26,7 +27,7 @@
 							selection="#{cc.attrs.bean.criteria}" selectionMode="single" rowKey="#{c.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoAttributes}">
-									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addCriteria()}" update=":#{cc.id}:grid" tooltip="#{msg.ttNew}" rendered="#{cc.attrs.bean.sbhCategory.hasSelected}"/>
+									<j:icon type="jeeslAdd" listener="#{cc.attrs.bean.addCriteria()}" update=":#{cc.id}:grid" tooltip="#{msg.ttNew}" rendered="#{cc.attrs.bean.sbhCategory.hasSelected}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCriterias()}" update="@form"/>
@@ -54,9 +55,9 @@
 					<h:form id="fCriteria">
 						<p:panel id="pView" header="#{msg.jeeslIoAttribute}" rendered="#{not empty cc.attrs.bean.criteria}" styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetCriteria()}" update=":#{cc.id}:grid" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
-								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveCriteria()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteCriteria()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.criteria.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+								<j:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetCriteria()}" update=":#{cc.id}:grid" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
+								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveCriteria()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>
+								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteCriteria()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.criteria.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslCategory}" rendered="#{cc.attrs.bean.sbhCategory.hasMore}"/>
@@ -85,7 +86,7 @@
 							selection="#{cc.attrs.bean.option}" selectionMode="single" rowKey="#{o.id}">
 							<f:facet name="header">
 								<aht:pfDataTableHeader title="#{msg.jeeslIoAttributeOptions}">
-									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addOption()}" update=":#{cc.id}:fOptions :#{cc.id}:fOption" tooltip="#{msg.ttNew}"/>
+									<j:icon type="jeeslAdd" listener="#{cc.attrs.bean.addOption()}" update=":#{cc.id}:fOptions :#{cc.id}:fOption" tooltip="#{msg.ttNew}"/>
 								</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderOptions()}" update="@form"/>
@@ -104,9 +105,9 @@
 					<h:form id="fOption">
 						<p:panel id="pView" header="#{msg.jeeslIoAttributeOption}" rendered="#{not empty cc.attrs.bean.option}" styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetOption()}" update=":#{cc.id}:sCriteria" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
-								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveOption()}" update=":#{cc.id}:sCriteria" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteOption()}" update=":#{cc.id}:sCriteria" rendered="#{cc.attrs.bean.option.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+								<j:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetOption()}" update=":#{cc.id}:sCriteria" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
+								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveOption()}" update=":#{cc.id}:sCriteria" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>
+								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteOption()}" update=":#{cc.id}:sCriteria" rendered="#{cc.attrs.bean.option.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslCode}"/>

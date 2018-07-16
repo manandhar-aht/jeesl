@@ -13,7 +13,7 @@ public class SqlDbConnectionsFactory
 		fileds.add("xact_start");
 		fileds.add("query_start");
 		fileds.add("state_change");
-		fileds.add("waiting");
+//		fileds.add("waiting");
 		fileds.add("state");
 		fileds.add("query");
 

@@ -95,8 +95,15 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 		fileds.add("xact_start");
 		fileds.add("query");
 		
+		StringBuffer sb = new StringBuffer();
+		sb.append("SELECT "+StringUtil.join(fileds, ","));
+		sb.append(" FROM pg_stat_activity");
+		sb.append(" WHERE datname='"+dbName+"'");
+		logger.info(sb.toString());
+		
+		
 		List<Object[]> data = new ArrayList<Object[]>();
-		for(Object o : em.createNativeQuery("SELECT "+StringUtil.join(fileds, ",")+" FROM pg_stat_activity WHERE datname='"+dbName+"'").getResultList())
+		for(Object o : em.createNativeQuery(sb.toString()).getResultList())
 		{
 			Object[] array = (Object[])o;
 			data.add(array);

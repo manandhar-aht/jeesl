@@ -60,7 +60,7 @@ public class DbConnectionsReport <L extends UtilsLang,D extends UtilsDescription
 		headers.add("Transaction");
 		headers.add("Query");
 		headers.add("Change");
-		headers.add("Waiting");
+//		headers.add("Waiting");
 		headers.add("State");
 		headers.add("Query");
 

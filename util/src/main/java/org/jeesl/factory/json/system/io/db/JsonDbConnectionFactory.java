@@ -19,9 +19,9 @@ public class JsonDbConnectionFactory
 		if(array[0]!=null){tsTransaction = (Timestamp)array[0];}
 		if(array[1]!=null){tsQuery = (Timestamp)array[1];}
 		if(array[2]!=null){tsState = (Timestamp)array[2];}
-		if(array[3]!=null){waiting = (Boolean)array[3];}
-		if(array[4]!=null){state = (String)array[4];}
-		if(array[5]!=null){query = (String)array[5];}
+//		if(array[3]!=null){waiting = (Boolean)array[3];}
+		if(array[3]!=null){state = (String)array[3];}
+		if(array[4]!=null){query = (String)array[4];}
         
 		return build(tsTransaction,tsQuery,tsState,waiting,state,query);
 	}

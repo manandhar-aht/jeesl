@@ -16,7 +16,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 public class GraphicType implements Serializable,EjbRemoveable,EjbPersistable,
 								UtilsStatus<GraphicType,Lang,Description>
 {
-	public static enum Code {welcome}
+	public enum Code {welcome}
 	public static final long serialVersionUID=1;
 	
 	private long id;

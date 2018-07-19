@@ -222,4 +222,9 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	}
 	
 	public void reorderFiles() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fDms, files);}
+
+	public void resetFile()
+	{
+		if(debugOnInfo){logger.info("Action canceled.");}
+	}
 }

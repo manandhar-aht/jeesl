@@ -157,4 +157,14 @@ public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends Ut
 		if(appendToTree) {new DefaultTreeNode(section, tree);}
 //		reloadSection();
 	}
+
+	public void deleteSection()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(section));}
+	}
+
+	public void cancelSection()
+	{
+		if(debugOnInfo){logger.info("Action canceled.");}
+	}
 }

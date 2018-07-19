@@ -74,7 +74,7 @@
 								<p:outputLabel value="#{msg.jeeslVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.file.visible}"/>
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.file}" withDescription="false" keys="#{cc.attrs.localeKeys}" />
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.file}" keys="#{cc.attrs.localeKeys}" />
 						</p:panel>
 					</h:form>
 					<h:form id="fAttrbute" rendered="#{(not empty cc.attrs.bean.file) and (cc.attrs.bean.file.id gt 0)}">

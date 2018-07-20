@@ -46,7 +46,7 @@ public class AttributeHandler<L extends UtilsLang, D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(AttributeHandler.class);
 	private static final long serialVersionUID = 1L;
 
-	private final boolean debugOnInfo = true;
+	private final boolean debugOnInfo = false;
 	private boolean showDescription; public boolean isShowDescription() {return showDescription;}
 	
 	private final JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute;

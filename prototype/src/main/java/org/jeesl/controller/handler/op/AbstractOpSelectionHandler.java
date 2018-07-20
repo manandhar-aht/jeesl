@@ -24,7 +24,7 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
     protected T tb; @Override public T getTb() {return tb;} @Override public void setTb(T tbEntity) {this.tb = tbEntity;}
 
     protected List<T> opList; @Override public List<T> getOpList() {return opList;} @Override public void setOpList(List<T> list) {opList.clear(); opList.addAll(list);}
-    protected List<T> tbList; @Override public List<T> getTbList() {return tbList;} @Override public void setTbList(List<T> list) {tbList.clear(); tbList.addAll(list);}
+    protected final List<T> tbList; @Override public List<T> getTbList() {return tbList;} @Override public void setTbList(List<T> list) {tbList.clear(); tbList.addAll(list);}
     
     protected OpEntityBean bean;
 
@@ -33,32 +33,34 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
     
     public AbstractOpSelectionHandler(OpEntityBean bean, List<T> opList)
     {
-	    	this.bean=bean;
-	    	this.opList=opList;
-	    	showName=false;
-	    	showLang=false;
-	    	if(opList==null){opList = new ArrayList<T>();}
-	    	tbList = new ArrayList<T>(); 
+    	this.bean=bean;
+    	this.opList=opList;
+    	showName=false;
+    	showLang=false;
+    	if(opList==null){opList = new ArrayList<T>();}
+    	tbList = new ArrayList<T>(); 
     }
     
-    protected void reset(boolean rTb, boolean rOp)
+    public void reset() {reset(true,true,true);}
+    protected void reset(boolean rTbList, boolean rTb, boolean rOp)
     {
+    	if(rTbList) {tbList.clear();}
         if(rTb){tb=null;}
         if(rOp){op=null;}
     }
     
     @Override public void clearTable()
     {
-	    	tbList.clear();
-	    	tb = null;
+    	tbList.clear();
+    	tb = null;
     }
     
 	@Override public void selectTb() {}
 	
 	@Override public void addEntity(T item) throws UtilsLockingException, UtilsConstraintViolationException
     {
-	    	op = item;
-	    	addEntity();
+    	op = item;
+    	addEntity();
 	}
 	
 	@SuppressWarnings({"unchecked" })
@@ -80,7 +82,7 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
 	        	tbList.add(op);
 	        	bean.addOpEntity(op);
         }
-        reset(true,true);
+        reset(false,true,true);
     }
 
     @Override public void removeEntity() throws UtilsLockingException, UtilsConstraintViolationException
@@ -90,6 +92,6 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
         	tbList.remove(tb);
         	bean.rmOpEntity(tb);
         }
-        reset(true,true);
+        reset(false,true,true);
     }
 }

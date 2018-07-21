@@ -27,7 +27,7 @@ implements JeeslLabelResolver
 		this.fbRevision=fbRevision;
 	}
 
-	@Override public <E extends Enum<E>> String xpath(Class<?> c, E code)
+	@Override public <E extends Enum<E>> String xpath(String localeCode, Class<?> c, E code)
 	{
 		try
 		{
@@ -36,12 +36,15 @@ implements JeeslLabelResolver
 			logger.info(entity.toString()+" for "+code.toString());
 			for(RA ra : entity.getAttributes())
 			{
-				if(ra.getCode().equals(code.toString())) {return ra.getXpath();}
-				logger.info("\t"+ra.toString()+" "+ra.getCode());
+				if(ra.getCode().equals(code.toString()) && ra.getXpath()!=null && ra.getXpath().trim().length()>0)
+				{
+					return ra.getXpath();
+				}
+//				logger.info("\t"+ra.toString()+" "+ra.getCode());
 			}
-			
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
+		logger.warn("No XPATH devfined for "+c.getSimpleName()+" and attribute:"+code.toString());
 		return "@id";
 	}
 	

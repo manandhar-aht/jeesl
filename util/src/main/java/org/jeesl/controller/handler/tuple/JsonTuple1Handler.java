@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.controller.processor.finance.AmountRounder;
-import org.jeesl.factory.json.db.tuple.one.Json1TuplesFactory;
-import org.jeesl.model.json.db.tuple.one.Json1Tuple;
-import org.jeesl.model.json.db.tuple.one.Json1Tuples;
+import org.jeesl.factory.json.db.tuple.t1.Json1TuplesFactory;
+import org.jeesl.model.json.db.tuple.t1.Json1Tuple;
+import org.jeesl.model.json.db.tuple.t1.Json1Tuples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

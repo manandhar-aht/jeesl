@@ -49,7 +49,7 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	@Override
-	public <E extends Enum<E>> String xpath(Class<?> c, E code)
+	public <E extends Enum<E>> String xpath(String localeCode, Class<?> c, E code)
 	{
 		return "@name";
 	}

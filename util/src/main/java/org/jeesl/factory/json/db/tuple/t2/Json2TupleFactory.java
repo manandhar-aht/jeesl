@@ -1,4 +1,4 @@
-package org.jeesl.factory.json.db.tuple.two;
+package org.jeesl.factory.json.db.tuple.t2;
 
 import javax.persistence.Tuple;
 

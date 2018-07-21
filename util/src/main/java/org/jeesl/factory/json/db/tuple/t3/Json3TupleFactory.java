@@ -1,8 +1,8 @@
-package org.jeesl.factory.json.db.tuple.three;
+package org.jeesl.factory.json.db.tuple.t3;
 
 import javax.persistence.Tuple;
 
-import org.jeesl.model.json.db.tuple.three.Json3Tuple;
+import org.jeesl.model.json.db.tuple.t3.Json3Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

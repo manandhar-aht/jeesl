@@ -1,4 +1,4 @@
-package org.jeesl.factory.json.db.tuple.two;
+package org.jeesl.factory.json.db.tuple.t2;
 
 import java.util.ArrayList;
 import java.util.HashMap;

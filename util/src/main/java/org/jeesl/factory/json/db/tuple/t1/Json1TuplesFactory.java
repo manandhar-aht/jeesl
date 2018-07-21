@@ -1,4 +1,4 @@
-package org.jeesl.factory.json.db.tuple.one;
+package org.jeesl.factory.json.db.tuple.t1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,8 +10,8 @@ import java.util.Set;
 import javax.persistence.Tuple;
 
 import org.jeesl.factory.ejb.util.EjbIdFactory;
-import org.jeesl.model.json.db.tuple.one.Json1Tuple;
-import org.jeesl.model.json.db.tuple.one.Json1Tuples;
+import org.jeesl.model.json.db.tuple.t1.Json1Tuple;
+import org.jeesl.model.json.db.tuple.t1.Json1Tuples;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;

@@ -1,7 +1,7 @@
 package org.jeesl.factory.json.db.tuple;
 
 import org.jeesl.model.json.db.tuple.JsonTuple;
-import org.jeesl.model.json.db.tuple.three.Json3Tuple;
+import org.jeesl.model.json.db.tuple.t3.Json3Tuple;
 import org.jeesl.model.json.db.tuple.two.Json2Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

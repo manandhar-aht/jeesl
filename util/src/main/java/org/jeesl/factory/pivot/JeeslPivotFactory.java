@@ -8,11 +8,7 @@ import org.apache.commons.jxpath.JXPathContext;
 import org.jeesl.api.bean.JeeslLabelResolver;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.metachart.factory.json.pivot.McPivotFactory;
-import org.metachart.factory.json.pivot.PivotValueFactory;
 import org.metachart.model.json.pivot.PivotField;
-import org.metachart.model.json.pivot.PivotFieldList;
-import org.metachart.model.json.pivot.PivotFields;
-import org.metachart.model.json.pivot.PivotValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,20 +35,24 @@ public class JeeslPivotFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>> extend
 	
 	public void clear()
 	{
-		mapFieldId.clear();
+		super.clear();
+		if(mapFieldId!=null) {mapFieldId.clear();}
 	}
 	
 	public <E extends Enum<E>> void addXPathField(Class<?> c, Collection<?> collection, E code)
 	{
 		PivotField json = new PivotField();
+		json.setMap(new HashMap<Long,String>());
 		json.setId("id"+(container.getFieldList().size()+1));
 		json.setLabel(labelResolver.entity(localeCode,c));		
 		
-		String xpath = labelResolver.xpath(c, code);
+		String xpath = labelResolver.xpath(localeCode,c,code);
 		for(Object o : collection)
 		{
 			EjbWithId ejb = (EjbWithId)o;
-			JXPathContext context = JXPathContext.newContext(ejb);
+//			logger.info(o.getClass().getSimpleName()+" id:"+ejb.getId()+" xpath:"+xpath);
+			
+			JXPathContext context = JXPathContext.newContext(ejb);			
 			json.getMap().put(ejb.getId(),context.getValue(xpath).toString());
 		}
 		
@@ -62,15 +62,19 @@ public class JeeslPivotFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>> extend
 	
 	public <E extends Enum<E>> void addStatusField(Class<?> c, Collection<?> collection)
 	{
+		logger.info(c.getSimpleName()+" size"+collection.size());
+		
 		PivotField json = new PivotField();
+		json.setMap(new HashMap<Long,String>());
 		json.setId("id"+(container.getFieldList().size()+1));
 		json.setLabel(labelResolver.entity(localeCode,c));		
 		
 		String xpath = "name[@name='"+localeCode+"']/lang";
+//		xpath = "name/de/lang";
 		for(Object o : collection)
 		{
 			EjbWithId ejb = (EjbWithId)o;
-			JXPathContext context = JXPathContext.newContext(ejb);
+			JXPathContext context = JXPathContext.newContext(o);	
 			json.getMap().put(ejb.getId(),context.getValue(xpath).toString());
 		}
 		

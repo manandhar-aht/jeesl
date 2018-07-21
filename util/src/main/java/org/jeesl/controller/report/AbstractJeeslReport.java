@@ -34,6 +34,7 @@ import org.jeesl.util.comparator.ejb.system.io.report.IoReportColumnComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportGroupComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportRowComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportSheetComparator;
+import org.metachart.model.json.pivot.PivotSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -108,6 +109,8 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected JeeslComparatorProvider<EjbWithId> cProvider;
 	protected final JobCodeProcessor jobCodeProcessor;
 	
+	protected PivotSettings pivotSettings; public PivotSettings getPivotSettings() {return pivotSettings;}
+
 	protected JsonFlatFigures flats; public JsonFlatFigures getFlats() {return flats;}
 	protected List<Object> jsonDataList; public List<Object> getJsonDataList() {return jsonDataList;} public void setJsonDataList(List<Object> jsonDataList) {this.jsonDataList = jsonDataList;}
 	protected String jsonStream; public String getJsonStream() {return jsonStream;}

@@ -2,7 +2,7 @@ package org.jeesl.controller.processor;
 
 import org.jeesl.api.bean.JeeslLabelResolver;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
-import org.jeesl.factory.builder.system.RevisionFactoryBuilder;
+import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
@@ -18,10 +18,10 @@ implements JeeslLabelResolver
 	final static Logger logger = LoggerFactory.getLogger(FacadeLabelResolver.class);
 	
 	private final JeeslIoRevisionFacade<?,?,?,?,?,?,?,RE,?,?,?,?> fRevision;
-	private final RevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision;
+	private final IoRevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision;
 	
 	public FacadeLabelResolver(JeeslIoRevisionFacade<?,?,?,?,?,?,?,RE,?,?,?,?> fRevision,
-													RevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision)
+			IoRevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision)
 	{
 		this.fRevision=fRevision;
 		this.fbRevision=fbRevision;

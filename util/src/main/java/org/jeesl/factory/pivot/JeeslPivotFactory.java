@@ -50,7 +50,7 @@ public class JeeslPivotFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>> extend
 		for(Object o : collection)
 		{
 			EjbWithId ejb = (EjbWithId)o;
-//			logger.info(o.getClass().getSimpleName()+" id:"+ejb.getId()+" xpath:"+xpath);
+			logger.info(o.getClass().getSimpleName()+" id:"+ejb.getId()+" xpath:"+xpath);
 			
 			JXPathContext context = JXPathContext.newContext(ejb);			
 			json.getMap().put(ejb.getId(),context.getValue(xpath).toString());

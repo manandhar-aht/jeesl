@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.jxpath.JXPathContext;
+import org.apache.commons.jxpath.JXPathNotFoundException;
 import org.jeesl.api.bean.JeeslLabelResolver;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.metachart.factory.json.pivot.McPivotFactory;
@@ -50,10 +51,19 @@ public class JeeslPivotFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>> extend
 		for(Object o : collection)
 		{
 			EjbWithId ejb = (EjbWithId)o;
-			logger.info(o.getClass().getSimpleName()+" id:"+ejb.getId()+" xpath:"+xpath);
+//			logger.info(o.getClass().getSimpleName()+" id:"+ejb.getId()+" xpath:"+xpath);
 			
-			JXPathContext context = JXPathContext.newContext(ejb);			
-			json.getMap().put(ejb.getId(),context.getValue(xpath).toString());
+			StringBuffer sb = new StringBuffer();
+			JXPathContext context = JXPathContext.newContext(ejb);
+			try
+			{
+				sb.append(context.getValue(xpath).toString());
+			}
+			catch (JXPathNotFoundException e)
+			{
+				logger.warn("No Value for "+xpath+" in "+o.toString());
+			}
+			json.getMap().put(ejb.getId(),sb.toString());
 		}
 		
 		container.getFieldList().add(json);

@@ -18,27 +18,29 @@ import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C extends EjbWithId>
+//			extends Json2TuplesFactory<A,B>
 {
 	final static Logger logger = LoggerFactory.getLogger(Json3TuplesFactory.class);
 	
 	private final Json3TupleFactory<A,B,C> jtf;
 	
-	private final Class<A> cA;
-	private final Class<B> cB;
-	private final Class<C> cC;
+	protected final Class<A> cA;
+	protected final Class<B> cB;
+	protected final Class<C> cC;
 	
-	private final Set<Long> setId1;
-	private final Set<Long> setId2;
-	private final Set<Long> setId3;
+	protected final Set<Long> setId1;
+	protected final Set<Long> setId2;
+	protected final Set<Long> setId3;
 	
-	private final Map<Long,A> mapA; public Map<Long,A> getMapA() {return mapA;}
-	private final Map<Long,B> mapB; public Map<Long,B> getMapB() {return mapB;}
-	private final Map<Long,C> mapC; public Map<Long,C> getMapC() {return mapC;}
+	protected final Map<Long,A> mapA; public Map<Long,A> getMapA() {return mapA;}
+	protected final Map<Long,B> mapB; public Map<Long,B> getMapB() {return mapB;}
+	protected final Map<Long,C> mapC; public Map<Long,C> getMapC() {return mapC;}
 
-	private Json3Tuples<A,B,C> tuples; public Json3Tuples<A, B, C> getTuples() {return tuples;} public void setTuples(Json3Tuples<A, B, C> tuples) {this.tuples = tuples;}
+	private Json3Tuples<A,B,C> tuples; public Json3Tuples<A,B,C> get3Tuples() {return tuples;} public void set3Tuples(Json3Tuples<A, B, C> tuples) {this.tuples = tuples;}
 
 	public Json3TuplesFactory(Class<A> cA, Class<B> cB, Class<C> cC)
 	{
+//		super(cA,cB);
 		this.cA=cA;
 		this.cB=cB;
 		this.cC=cC;
@@ -54,7 +56,7 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
 		jtf = new Json3TupleFactory<A,B,C>();
 	}
 	
-	public Json3Tuples<A,B,C> buildSum(List<Tuple> tuples)
+	public Json3Tuples<A,B,C> build3Sum(List<Tuple> tuples)
 	{
 		Json3Tuples<A,B,C> json = new Json3Tuples<A,B,C>();
 		for(Tuple t : tuples)
@@ -64,7 +66,7 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
 		return json;
 	}
 	
-	public Json3Tuples<A,B,C> buildCount(List<Tuple> tuples)
+	public Json3Tuples<A,B,C> build3Count(List<Tuple> tuples)
 	{
 		Json3Tuples<A,B,C> json = new Json3Tuples<A,B,C>();
 		for(Tuple t : tuples)
@@ -74,7 +76,7 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
 		return json;
 	}
 	
-	private void clear()
+	protected void clear()
 	{
 		setId1.clear();
 		setId2.clear();

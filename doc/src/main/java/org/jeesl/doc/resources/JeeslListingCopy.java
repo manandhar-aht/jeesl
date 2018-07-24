@@ -34,6 +34,7 @@ public class JeeslListingCopy
 	
 	public static final String dbPostgresCreateDebianWheezy = "admin/db/postgres/create/debian/wheezy.sql";
 	public static final String dbPostgresCreateDebianJessie = "admin/db/postgres/create/debian/jessie.sql";
+	public static final String dbPostgresCreateDebianStretch = "admin/db/postgres/create/debian/stretch.sql";
 	public static final String dbPostgresCreateOsxYosemite = "admin/db/postgres/create/osx/yosemite.sql";
 	
 	public static final String dbPostgresTemplateDebianWheezy = "admin/db/postgres/template/debian/wheezy.sql";

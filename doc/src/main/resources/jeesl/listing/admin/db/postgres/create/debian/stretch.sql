@@ -1,0 +1,7 @@
+psql -U postgres -c "CREATE USER @@@APP@@@ WITH PASSWORD '@@@APP@@@';"
+psql -U postgres -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '@@@APP@@@' AND pid <> pg_backend_pid();"
+psql -U postgres -c "DROP DATABASE IF EXISTS @@@APP@@@;"
+psql -U postgres -c "CREATE DATABASE @@@APP@@@ OWNER @@@APP@@@ ENCODING 'UTF8';"
+psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE @@@APP@@@ TO @@@APP@@@;"
+psql -U postgres -d @@@APP@@@ -c "CREATE EXTENSION postgis;"
+psql -U postgres -d @@@APP@@@ -c "ALTER USER postgres WITH PASSWORD 'changeme';"

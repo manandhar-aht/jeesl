@@ -98,6 +98,13 @@
 			<s:lang key="fr" translation="CMS Element Category"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="IoDmsViewType">
+		<s:langs>
+			<s:lang key="de" translation="DMS View Type"/>
+			<s:lang key="en" translation="DMS View Type"/>
+			<s:lang key="fr" translation="DMS View Type"/>
+		</s:langs>
+	</s:translation>	
 	<s:translation key="IoMailCategory">
 		<s:langs>
 			<s:lang key="de" translation="Mail Kategorie"/>

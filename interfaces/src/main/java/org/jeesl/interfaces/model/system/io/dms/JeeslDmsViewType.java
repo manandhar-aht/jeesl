@@ -17,5 +17,5 @@ public interface JeeslDmsViewType <S extends UtilsStatus<S,L,D>,
 										G extends JeeslGraphic<L,D,G,?,?,?>>
 		extends Serializable,EjbPersistable,JeeslOptionRestDownload,UtilsStatusFixedCode,EjbWithCodeGraphic<G>
 {
-
+	public enum Code{tree}
 }

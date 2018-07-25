@@ -39,7 +39,7 @@ public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescri
 													DS extends JeeslDomainSet<L,D,?>,
 													SECTION extends JeeslIoDmsSection<L,D,SECTION>,
 													F extends JeeslIoDmsDocument<L,SECTION,FC,AC>,
-													VIEW extends JeeslIoDmsView<L,DMS>,
+													VIEW extends JeeslIoDmsView<L,D,DMS>,
 													LAYER extends JeeslIoDmsLayer<VIEW,AI>,
 													FC extends JeeslFileContainer<?,?>,
 													AI extends JeeslAttributeItem<?,AS>,

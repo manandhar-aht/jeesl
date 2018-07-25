@@ -87,7 +87,7 @@
 					<h:form id="fDmsView">
 						<p:panel header="#{msg.jeeslIoDmsView}" rendered="#{not empty cc.attrs.bean.dmsView}" styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetView()}" update=":#{cc.id}:sDm" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
+								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelView()}" update=":#{cc.id}:sDm" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveView()}" update=":#{cc.id}:sDm" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteView()}" update=":#{cc.id}:sDm" rendered="#{cc.attrs.bean.dmsView.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>

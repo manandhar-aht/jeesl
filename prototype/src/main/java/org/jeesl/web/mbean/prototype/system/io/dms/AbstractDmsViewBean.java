@@ -54,7 +54,7 @@ public abstract class AbstractDmsViewBean <L extends UtilsLang,D extends UtilsDe
 											DMS extends JeeslIoDms<L,D,FSTORAGE,ASET,DS,S>,
 											S extends JeeslIoDmsSection<L,D,S>,
 											FILE extends JeeslIoDmsDocument<L,S,FCONTAINER,ACONTAINER>,
-											VIEW extends JeeslIoDmsView<L,DMS>,
+											VIEW extends JeeslIoDmsView<L,D,DMS>,
 											LAYER extends JeeslIoDmsLayer<VIEW,AITEM>,
 											
 											FSTORAGE extends JeeslFileStorage<L,D,FENGINE>,

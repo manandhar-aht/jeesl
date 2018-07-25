@@ -10,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisibleParent;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslIoDmsLayer<VIEW extends JeeslIoDmsView<?,?>,
+public interface JeeslIoDmsLayer<VIEW extends JeeslIoDmsView<?,?,?>,
 								AI extends JeeslAttributeItem<?,?>>
 					extends Serializable,EjbWithId,EjbRemoveable,EjbPersistable,EjbSaveable,
 							EjbWithPositionVisibleParent

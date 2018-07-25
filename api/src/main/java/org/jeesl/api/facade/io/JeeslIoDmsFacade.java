@@ -22,7 +22,7 @@ public interface JeeslIoDmsFacade <L extends UtilsLang,D extends UtilsDescriptio
 									DS extends JeeslDomainSet<L,D,?>,
 									S extends JeeslIoDmsSection<L,D,S>,
 									FILE extends JeeslIoDmsDocument<L,S,FC,AC>,
-									VIEW extends JeeslIoDmsView<L,DMS>,
+									VIEW extends JeeslIoDmsView<L,D,DMS>,
 									FC extends JeeslFileContainer<?,?>,
 									AC extends JeeslAttributeContainer<?,?>>
 						extends UtilsFacade

@@ -23,7 +23,7 @@ public class IoDmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								STORAGE extends JeeslFileStorage<L,D,?>,
 								SECTION extends JeeslIoDmsSection<L,D,SECTION>,
 								FILE extends JeeslIoDmsDocument<L,SECTION,?,?>,
-								VIEW extends JeeslIoDmsView<L,DMS>,
+								VIEW extends JeeslIoDmsView<L,D,DMS>,
 								LAYER extends JeeslIoDmsLayer<VIEW,?>>
 				extends AbstractFactoryBuilder<L,D>
 {

@@ -40,7 +40,7 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 													DS extends JeeslDomainSet<L,D,?>,
 													S extends JeeslIoDmsSection<L,D,S>,
 													F extends JeeslIoDmsDocument<L,S,FC,AC>,
-													VIEW extends JeeslIoDmsView<L,DMS>,
+													VIEW extends JeeslIoDmsView<L,D,DMS>,
 													LAYER extends JeeslIoDmsLayer<VIEW,AI>,
 													FC extends JeeslFileContainer<?,?>,
 													AI extends JeeslAttributeItem<?,AS>,
@@ -90,11 +90,10 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 		
 	}
 	
-	public void resetAll() {reset(true,true);}
-	public void resetSet() {reset(true,true);}
-	private void reset(boolean rSet, boolean rItem)
+	public void cancelView() {reset(true);}
+	private void reset(boolean rView)
 	{
-
+		if(rView) {dmsView = null;}
 	}
 	
 	private void reloadDms()
@@ -159,6 +158,11 @@ public abstract class AbstractAdminDmsConfigBean <L extends UtilsLang,D extends 
 
 		dmsView = fDms.save(dmsView);
 		reloadDm();
+	}
+	
+	public void selectView()
+	{
+		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(dmsView));}
 	}
 	
 //	public void reorderSets() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fAttribute, fbAttribute.getClassSet(), sets);Collections.sort(sets, comparatorSet);}

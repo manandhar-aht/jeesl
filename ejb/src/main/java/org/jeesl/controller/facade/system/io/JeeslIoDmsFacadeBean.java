@@ -30,7 +30,7 @@ public class JeeslIoDmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 								DS extends JeeslDomainSet<L,D,?>,
 								S extends JeeslIoDmsSection<L,D,S>,
 								F extends JeeslIoDmsDocument<L,S,FC,AC>,
-								VIEW extends JeeslIoDmsView<L,DMS>,
+								VIEW extends JeeslIoDmsView<L,D,DMS>,
 								LAYER extends JeeslIoDmsLayer<VIEW,AI>,
 								FC extends JeeslFileContainer<?,?>,
 								AI extends JeeslAttributeItem<?,AS>,

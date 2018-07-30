@@ -1,31 +1,81 @@
 package org.jeesl.controller.processor.survey;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.jeesl.controller.processor.finance.AmountRounder;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class SurveyScoreProcessor <QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?>, ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,?,?>>
+import net.sf.exlp.util.io.StringUtil;
+
+public class SurveyScoreProcessor <SECTION extends JeeslSurveySection<?,?,?,SECTION,QUESTION>,
+									QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,?,?,?,?,?>,
+									ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,?,?>>
 {
-	public SurveyScoreProcessor()
+	final static Logger logger = LoggerFactory.getLogger(SurveyScoreProcessor.class);
+	
+	private EjbSurveyQuestionFactory<?,?,SECTION,QUESTION,?,?,?,?> efQuestion;
+	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,?,?,?> efAnswer;
+	
+	public SurveyScoreProcessor(EjbSurveyQuestionFactory<?,?,SECTION,QUESTION,?,?,?,?> efQuestion,
+								EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,?,?,?> efAnswer)
 	{
-		
+		this.efQuestion=efQuestion;
+		this.efAnswer=efAnswer;
 	}
 	
 	public double score(Map<QUESTION,ANSWER> answers)
 	{
 		double result = 0;
-		for(QUESTION q : answers.keySet())
+		
+		List<QUESTION> questions = new ArrayList<QUESTION>(answers.keySet());
+		List<SECTION> sections = efQuestion.toSection(questions);
+		
+		logger.info(StringUtil.stars());
+		logger.info("Processing "+sections.size()+" sections with "+questions.size()+" questions");
+		
+		for(SECTION section : sections)
 		{
-			if(q.getCalculateScore()!=null && q.getCalculateScore())
+			double sectionScore = 0;
+			double maxScore = 0;
+			
+			for(QUESTION q : efQuestion.toSectionQuestions(section, questions))
 			{
-				ANSWER a = answers.get(q);
-				if(a.getScore()!=null)
+				if(q.getMaxScore()!=null) {maxScore = maxScore + q.getMaxScore();}
+			}
+			
+			for(ANSWER a : efAnswer.toSectionAnswers(section, answers))
+			{
+				if(a.getQuestion().getCalculateScore()!=null && a.getQuestion().getCalculateScore() && a.getScore()!=null)
 				{
-					result = result+a.getScore();
+					if(a.getScore()!=null)
+					{
+						sectionScore = sectionScore+a.getScore();
+					}
 				}
 			}
+			if(section.getScoreNormalize()!=null)
+			{
+				double x = sectionScore * section.getScoreNormalize() / maxScore;
+				logger.info("Normalizing to "+section.getScoreNormalize()+" max:"+maxScore+" for:"+sectionScore+" normalized:"+AmountRounder.two(x));
+				result = result+x; 
+			}
+			else
+			{
+				logger.info("Score for Section "+sectionScore);
+				result = result+sectionScore;
+			}
+			
 		}
-		return result;
+		
+
+		return AmountRounder.two(result);
 	}
 }

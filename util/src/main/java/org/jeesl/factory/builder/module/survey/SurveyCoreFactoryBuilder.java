@@ -13,6 +13,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionSetFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
 import org.jeesl.factory.txt.module.survey.TxtOptionFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveyAnswerFactory;
@@ -98,6 +99,11 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		return new EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION>(cAnswer);
 	}
 	
+	public EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION> ejbQuestion()
+	{
+		return new EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION>(cQuestion);
+	}
+	
 	public EjbSurveyCorrelationFactory<ANSWER,DATA,CORRELATION> ejbCorrelation()
 	{
 		return new EjbSurveyCorrelationFactory<ANSWER,DATA,CORRELATION>();
@@ -142,9 +148,9 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		return new TxtOptionFactory<L,D,OPTION>(localeCode);
 	}
 	
-	public SurveyScoreProcessor<QUESTION,ANSWER> scoreProcessor()
+	public SurveyScoreProcessor<SECTION,QUESTION,ANSWER> scoreProcessor()
 	{
-		return new SurveyScoreProcessor<QUESTION,ANSWER>();
+		return new SurveyScoreProcessor<SECTION,QUESTION,ANSWER>(ejbQuestion(),answer());
 	}
 	
 	public SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> handler(JeeslFacesMessageBean bMessage, final JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey, JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)

@@ -2,8 +2,10 @@ package org.jeesl.factory.ejb.module.survey;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
@@ -93,6 +95,30 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 		}
 	}
 	
+	public List<QUESTION> toSectionQuestions(SECTION section, List<QUESTION> questions)
+	{
+		List<QUESTION> list = new ArrayList<QUESTION>();
+		
+		for(QUESTION q : questions)
+		{
+			if(q.getSection().equals(section))
+			{
+				list.add(q);
+			}
+		}
+		return list;
+	}
+	
+	public List<SECTION> toSection(List<QUESTION> questions)
+	{
+		Set<SECTION> set = new HashSet<SECTION>();
+		for(QUESTION question : questions)
+		{
+			set.add(question.getSection());
+		}
+		return new ArrayList<SECTION>(set);
+	}
+	
 	public Map<SECTION,List<QUESTION>> loadMap(JeeslSurveyCoreFacade<L,D,?,?,?,?,?,?,?,?,SECTION,QUESTION,QE,?,UNIT,?,?,?,OPTIONS,OPTION,?> fSurvey)
 	{
 		Map<SECTION,List<QUESTION>> map = new HashMap<SECTION,List<QUESTION>>();
@@ -103,4 +129,6 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 		}
 		return map;
 	}
+	
+	
 }

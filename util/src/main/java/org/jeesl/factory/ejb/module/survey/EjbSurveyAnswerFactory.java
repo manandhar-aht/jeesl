@@ -77,6 +77,7 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 		return list;
 	}
 	
+	@Deprecated
 	public static <QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,OPTION,?>,
 					ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,MATRIX,DATA,OPTION>,
 					MATRIX extends JeeslSurveyMatrix<?,?,ANSWER,OPTION>,
@@ -89,6 +90,14 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 		for(ANSWER a : list){map.put(a.getQuestion(),a);}
 		return map;
 	}
+	
+	public  Map<QUESTION,ANSWER> toMapQuestion(List<ANSWER> list)
+	{
+		Map<QUESTION,ANSWER> map = new HashMap<QUESTION,ANSWER>();
+		for(ANSWER a : list){map.put(a.getQuestion(),a);}
+		return map;
+	}
+	
 	public static <L extends UtilsLang, D extends UtilsDescription,
 					QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,OPTION,?>,
 					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,

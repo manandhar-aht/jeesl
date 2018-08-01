@@ -288,17 +288,19 @@
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<h:outputText value="#{cc.attrs.bean.question.position}"/>
 						</p:panelGrid>
-						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg30,auPwg20" rendered="#{cc.attrs.withScore}">
+						<p:panelGrid columns="4" columnClasses="jeeslGrid10,jeeslGrid40,jeeslGrid30,jeeslGrid20" rendered="#{cc.attrs.withScore}">
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.calculateScore}" />
 							<p:outputLabel value="#{msg.jpSurveyQuestionScoreCalculate}"/>
-							
 							<p:outputLabel value="#{msg.jpSurveyQuestionScoreMin}"/>
 							<p:inputText value="#{cc.attrs.bean.question.minScore}"/>
 							
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showScore}" />
 							<p:outputLabel value="#{msg.jpSurveyQuestionShowScore}"/>
 							<p:outputLabel value="#{msg.jpSurveyQuestionScoreMax}"/>
-							<p:inputText value="#{cc.attrs.bean.question.maxScore}"/>	
+							<p:inputText value="#{cc.attrs.bean.question.maxScore}"/>
+							
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.bonusScore}" />
+							<p:outputLabel value="#{msg.jpSurveyQuestionShowScoreBonus}"/>
 						</p:panelGrid>
 						
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40">						

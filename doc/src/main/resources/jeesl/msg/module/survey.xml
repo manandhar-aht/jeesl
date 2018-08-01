@@ -240,6 +240,13 @@
     		<s:lang key="fr" translation="Score"/>
     	</s:langs>
     </s:translation>
+     <s:translation key="jpSurveyQuestionShowScoreBonus">
+    	<s:langs>
+    		<s:lang key="de" translation="Bonus Score"/>
+    		<s:lang key="en" translation="Bonus Score"/>
+    		<s:lang key="fr" translation="Bonus Score"/>
+    	</s:langs>
+    </s:translation>
     <s:translation key="jpSurveyQuestionShowRemark">
     	<s:langs>
     		<s:lang key="de" translation="Remark"/>

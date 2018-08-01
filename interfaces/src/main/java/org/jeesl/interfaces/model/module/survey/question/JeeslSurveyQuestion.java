@@ -67,6 +67,9 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 	Double getMaxScore();
 	void setMaxScore(Double maxScore);
 	
+	Boolean getBonusScore();
+	void setBonusScore(Boolean bonusScore);
+	
 	Boolean getShowBoolean();
 	void setShowBoolean(Boolean showBoolean);
 	

@@ -48,6 +48,9 @@ public interface JeeslSurveyAnswer<L extends UtilsLang, D extends UtilsDescripti
 	Double getScore();
 	void setScore(Double score);
 	
+	Double getScoreBonus();
+	void setScoreBonus(Double scoreBonus);
+	
 	String getRemark();
 	void setRemark(String remark);
 	

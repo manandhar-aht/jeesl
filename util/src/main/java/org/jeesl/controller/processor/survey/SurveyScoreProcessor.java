@@ -10,6 +10,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +58,11 @@ public class SurveyScoreProcessor <SECTION extends JeeslSurveySection<?,?,?,SECT
 				{
 					if(a.getScore()!=null)
 					{
-						sectionScore = sectionScore+a.getScore();
+						sectionScore = sectionScore + a.getScore();
+					}
+					if(BooleanComparator.active(a.getQuestion().getBonusScore()) && a.getScoreBonus()!=null)
+					{
+						sectionScore = sectionScore + a.getScoreBonus();
 					}
 				}
 			}

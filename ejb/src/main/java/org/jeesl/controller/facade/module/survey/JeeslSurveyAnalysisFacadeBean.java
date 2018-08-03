@@ -136,6 +136,9 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 */	
 	@Override public JsonFlatFigures surveyCountRecords(List<SURVEY> surveys)
 	{
+		JsonFlatFigures result = JsonFlatFiguresFactory.build();
+		if(surveys==null || surveys.isEmpty()) {return result;} 
+		 
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
         CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
@@ -152,8 +155,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
         cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
         TypedQuery<Tuple> tQ = em.createQuery(cQ);
         List<Tuple> tuples = tQ.getResultList();
-        
-        JsonFlatFigures result = JsonFlatFiguresFactory.build();
+           
         for(Tuple t : tuples)
         {
 	        	JsonFlatFigure f = JsonFlatFigureFactory.build();

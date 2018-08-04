@@ -167,6 +167,12 @@
         </jxb:schemaBindings>
     </jxb:bindings>
     
+    <jxb:bindings schemaLocation="../xsd/jeesl/io/attribute.xsd" node="/xsd:schema">
+		<jxb:schemaBindings>
+			<jxb:package name="org.jeesl.model.xml.system.io.attribute"/>
+		</jxb:schemaBindings>
+    </jxb:bindings>
+    
 	<jxb:bindings schemaLocation="../xsd/jeesl/io/template.xsd" node="/xsd:schema">
 		<jxb:schemaBindings>
 			<jxb:package name="org.jeesl.model.xml.system.io.template"/>

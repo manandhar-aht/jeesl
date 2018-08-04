@@ -1,7 +1,13 @@
 package org.jeesl.factory.ejb.system.io.attribute;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
+import org.jeesl.interfaces.model.module.attribute.JeeslWithAttributeContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,5 +34,13 @@ public class EjbAttributeContainerFactory<SET extends JeeslAttributeSet<?,?,?,?>
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public <W extends JeeslWithAttributeContainer<CONTAINER>> Map<W,CONTAINER> toMapContainer(List<W> list) {return toMapContainer(list);}
+	public <W extends JeeslWithAttributeContainer<CONTAINER>> Map<W,CONTAINER> toMapContainer(Collection<W> list)
+	{
+		Map<W,CONTAINER> result = new HashMap<W,CONTAINER>();
+		for(W w : list) {result.put(w,w.getAttributeContainer());}
+		return result;
 	}
 }

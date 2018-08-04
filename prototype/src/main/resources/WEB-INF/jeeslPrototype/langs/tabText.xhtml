@@ -6,6 +6,8 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 >
+	<c:set var="locales"  value="#{not empty locales ? locales : appTranslationBean.locales}" />
+
 	<p:tabView var="t" value="#{locales}">  
   		<p:tab title="#{t.code}">
   			<jtp:inputText value="#{value[t.code].lang}"/>

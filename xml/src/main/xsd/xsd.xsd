@@ -21,6 +21,7 @@
 	xmlns:inv ="http://www.jeesl.org/inventory"
 	
 	xmlns:rev		="http://www.jeesl.org/revision"
+	xmlns:jatt		="http://www.jeesl.org/io/attribute"
 	xmlns:template	="http://www.jeesl.org/io/template"
 	xmlns:m 		="http://www.jeesl.org/io/mail"
 	xmlns:text		="http://www.jeesl.org/text"
@@ -62,6 +63,7 @@
     <xsd:import namespace="http://ahtutils.aht-group.com/cloud/facebook" schemaLocation="cloud/facebook.xsd"/>
 	
 	<xsd:import namespace="http://www.jeesl.org" schemaLocation="jeesl/jeesl.xsd"/>
+	<xsd:import namespace="http://www.jeesl.org/io/attribute" schemaLocation="jeesl/io/attribute.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/io/template" schemaLocation="jeesl/io/template.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/io/mail" schemaLocation="jeesl/io/mail.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/job" schemaLocation="jeesl/module/job.xsd"/>

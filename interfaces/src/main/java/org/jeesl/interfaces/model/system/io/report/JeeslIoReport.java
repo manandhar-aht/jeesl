@@ -24,6 +24,8 @@ public interface JeeslIoReport<L extends UtilsLang,D extends UtilsDescription,
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,
 				EjbWithLang<L>,EjbWithDescription<D>
 {	
+	public enum FooterOrientation{left,center,right}
+	
 	CATEGORY getCategory();
 	void setCategory(CATEGORY category);
 	

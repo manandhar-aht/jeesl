@@ -358,6 +358,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Footers }
+     * 
+     */
+    public Footers createFooters() {
+        return new Footers();
+    }
+
+    /**
+     * Create an instance of {@link net.sf.ahtutils.xml.report.Footer }
+     * 
+     */
+    public net.sf.ahtutils.xml.report.Footer createFooter() {
+        return new net.sf.ahtutils.xml.report.Footer();
+    }
+
+    /**
      * Create an instance of {@link Labels }
      * 
      */

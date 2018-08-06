@@ -61,6 +61,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}file"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}hash"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}user"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/report}footers"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}labels"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -81,6 +82,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "file",
     "hash",
     "user",
+    "footers",
     "labels"
 })
 @XmlRootElement(name = "info")
@@ -107,6 +109,8 @@ public class Info
     protected Hash hash;
     @XmlElement(required = true)
     protected User user;
+    @XmlElement(required = true)
+    protected Footers footers;
     @XmlElement(required = true)
     protected Labels labels;
 
@@ -378,6 +382,34 @@ public class Info
 
     public boolean isSetUser() {
         return (this.user!= null);
+    }
+
+    /**
+     * Gets the value of the footers property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Footers }
+     *     
+     */
+    public Footers getFooters() {
+        return footers;
+    }
+
+    /**
+     * Sets the value of the footers property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Footers }
+     *     
+     */
+    public void setFooters(Footers value) {
+        this.footers = value;
+    }
+
+    public boolean isSetFooters() {
+        return (this.footers!= null);
     }
 
     /**

@@ -234,8 +234,22 @@
                 <xsd:element ref="r:file" maxOccurs="1"/>
                 <xsd:element ref="r:hash" maxOccurs="1"/>
                 <xsd:element ref="r:user" maxOccurs="1"/>
+                <xsd:element ref="r:footers" maxOccurs="1"/>
                 <xsd:element ref="r:labels" maxOccurs="1"/>
             </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="footers">
+		<xsd:complexType>
+            <xsd:sequence>
+            	<xsd:element ref="r:footer" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+   <xsd:element name="footer">
+        <xsd:complexType>
+            <xsd:attribute name="orientation" type="xsd:string"/>
+            <xsd:attribute name="value" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="labels">

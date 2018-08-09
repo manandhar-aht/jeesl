@@ -68,15 +68,16 @@ public class AbstractConstraintMessageBean <L extends UtilsLang, D extends Utils
 			StringBuffer sb = new StringBuffer();
 			sb.append("SID").append(sId.toString());
 			sb.append("CID").append(cId.toString());
+			logger.info(sb.toString());
 		}
 		
 		try
 		{
-			show(fId,bConstraint.get(sId, cId));
+			show(fId,bConstraint.get(sId,cId));
 		}
 		catch (UtilsNotFoundException e)
 		{
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			FacesContextMessage.error(fId.toString(), "ERROR", e.getMessage());
 		}
 		

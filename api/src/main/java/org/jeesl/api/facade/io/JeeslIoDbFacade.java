@@ -29,5 +29,7 @@ public interface JeeslIoDbFacade <L extends UtilsLang,D extends UtilsDescription
 	Map<Class<?>, Long> count(List<Class<?>> list);
 	
 	Table connections(String userName);
+	
 	JsonFlatFigures dbConnections(String dbName);
+	JsonFlatFigures dbQueries(String dbName);
 }

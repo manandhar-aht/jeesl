@@ -1,4 +1,4 @@
-package org.jeesl.controller.report.system;
+package org.jeesl.controller.report.system.io.db;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.jeesl.controller.report.AbstractJeeslReport;
@@ -22,7 +22,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.xml.report.Report;
 
-public class DbConnectionsReport <L extends UtilsLang,D extends UtilsDescription,
+public class DbQueriesReport <L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
 									IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
@@ -47,29 +47,27 @@ public class DbConnectionsReport <L extends UtilsLang,D extends UtilsDescription
 								extends AbstractJeeslReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>
 //implements JeeslReportHeader//,JeeslFlatReport,JeeslXlsReport
 {
-	final static Logger logger = LoggerFactory.getLogger(DbConnectionsReport.class);
+	final static Logger logger = LoggerFactory.getLogger(DbQueriesReport.class);
 
 	private JeeslIoDbFacade<L,D,?,?,?,?> fDb;
 	
-	public DbConnectionsReport(String localeCode, JeeslIoDbFacade<L,D,?,?,?,?> fDb, 
+	public DbQueriesReport(String localeCode, JeeslIoDbFacade<L,D,?,?,?,?> fDb, 
 			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport)
 	{
 		super(localeCode,fbReport);
 		this.fDb=fDb;
 		
-		headers.add("Transaction");
+		headers.add("#");
+		headers.add("Rows");
+		headers.add("Calls");
+		headers.add("Total");
+		headers.add("Average");
 		headers.add("Query");
-		headers.add("Change");
-//		headers.add("Waiting");
-		headers.add("State");
-		headers.add("Query");
-
 	}
 	
 	public Report build(String dbName)
 	{
-		flats = fDb.dbConnections(dbName);
+		flats = fDb.dbQueries(dbName);
 		return new Report();
 	}
-	
 }

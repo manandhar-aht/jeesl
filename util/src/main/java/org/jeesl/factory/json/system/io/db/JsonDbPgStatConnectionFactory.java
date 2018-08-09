@@ -5,9 +5,9 @@ import java.util.Date;
 
 import org.jeesl.model.json.JsonFlatFigure;
 
-public class JsonDbConnectionFactory
+public class JsonDbPgStatConnectionFactory
 {
-	public static JsonFlatFigure build(Object[] array)
+	public static JsonFlatFigure build(int number, Object[] array)
 	{
 		Timestamp tsTransaction = null;
 		Timestamp tsQuery = null;
@@ -23,12 +23,13 @@ public class JsonDbConnectionFactory
 		if(array[3]!=null){state = (String)array[3];}
 		if(array[4]!=null){query = (String)array[4];}
         
-		return build(tsTransaction,tsQuery,tsState,waiting,state,query);
+		return build(number,tsTransaction,tsQuery,tsState,waiting,state,query);
 	}
 	
-	public static JsonFlatFigure build(Timestamp tsTransaction, Timestamp tsQuery, Timestamp tsState,Boolean waiting,String state,String query)
+	public static JsonFlatFigure build(int number, Timestamp tsTransaction, Timestamp tsQuery, Timestamp tsState,Boolean waiting,String state,String query)
 	{
 		JsonFlatFigure json = new JsonFlatFigure();
+		json.setC1(number);
 		
 		if(tsTransaction!=null){json.setDate1(new Date(tsTransaction.getTime()));}
 		if(tsQuery!=null){json.setDate2(new Date(tsQuery.getTime()));}

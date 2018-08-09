@@ -11,9 +11,10 @@ import javax.persistence.Query;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.jeesl.factory.builder.io.IoDbFactoryBuilder;
-import org.jeesl.factory.json.system.io.db.JsonDbConnectionFactory;
+import org.jeesl.factory.json.system.io.db.JsonDbPgStatConnectionFactory;
+import org.jeesl.factory.json.system.io.db.JsonDbPgStatQueryFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
-import org.jeesl.factory.sql.system.db.SqlDbConnectionsFactory;
+import org.jeesl.factory.sql.system.db.SqlDbPgStatFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.model.json.JsonFlatFigures;
@@ -119,10 +120,26 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 	{		
 		JsonFlatFigures flats = JsonFlatFiguresFactory.build();
 		
-		for(Object o : em.createNativeQuery(SqlDbConnectionsFactory.build(dbName)).getResultList())
+		int i=1;
+		for(Object o : em.createNativeQuery(SqlDbPgStatFactory.connections(dbName)).getResultList())
 		{
 			Object[] array = (Object[])o;
-			flats.getFigures().add(JsonDbConnectionFactory.build(array));
+			flats.getFigures().add(JsonDbPgStatConnectionFactory.build(i,array));
+			i++;
+		}		
+		return flats;
+	}
+	
+	@Override public JsonFlatFigures dbQueries(String dbName)
+	{		
+		JsonFlatFigures flats = JsonFlatFiguresFactory.build();
+		
+		int i=1;
+		for(Object o : em.createNativeQuery(SqlDbPgStatFactory.queries(dbName)).getResultList())
+		{
+			Object[] array = (Object[])o;
+			flats.getFigures().add(JsonDbPgStatQueryFactory.build(i,array));
+			i++;
 		}		
 		return flats;
 	}

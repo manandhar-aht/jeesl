@@ -1,5 +1,6 @@
 package org.jeesl.controller.processor.survey;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,18 +34,17 @@ public class SurveyScoreProcessor <SECTION extends JeeslSurveySection<?,?,?,SECT
 	}
 	
 	public double score(Map<QUESTION,ANSWER> answers)
-	{
-		double result = 0;
-		
+	{		
 		List<QUESTION> questions = new ArrayList<QUESTION>(answers.keySet());
 		List<SECTION> sections = efQuestion.toSection(questions);
 		
 		logger.info(StringUtil.stars());
 		logger.info("Processing "+sections.size()+" sections with "+questions.size()+" questions");
 		
+		BigDecimal result = new BigDecimal(0);
 		for(SECTION section : sections)
 		{
-			double sectionScore = 0;
+			BigDecimal sectionScore = new BigDecimal(0);
 			double maxScore = 0;
 			
 			for(QUESTION q : efQuestion.toSectionQuestions(section, questions))
@@ -58,29 +58,29 @@ public class SurveyScoreProcessor <SECTION extends JeeslSurveySection<?,?,?,SECT
 				{
 					if(a.getScore()!=null)
 					{
-						sectionScore = sectionScore + a.getScore();
+						sectionScore = sectionScore.add(new BigDecimal(a.getScore()));
 					}
 					if(BooleanComparator.active(a.getQuestion().getBonusScore()) && a.getScoreBonus()!=null)
 					{
-						sectionScore = sectionScore + a.getScoreBonus();
+						sectionScore = sectionScore.add(new BigDecimal(a.getScoreBonus()));
 					}
 				}
 			}
+			
+
 			if(section.getScoreNormalize()!=null)
 			{
-				double x = sectionScore * section.getScoreNormalize() / maxScore;
+				double x = sectionScore.doubleValue() * section.getScoreNormalize() / maxScore;
 				logger.info("Normalizing to "+section.getScoreNormalize()+" max:"+maxScore+" for:"+sectionScore+" normalized:"+AmountRounder.two(x));
-				result = result+x; 
+				result = result.add(new BigDecimal(x));
 			}
 			else
 			{
 				logger.info("Score for Section "+sectionScore);
-				result = result+sectionScore;
+				result = result.add(sectionScore);
 			}
-			
 		}
-		
 
-		return AmountRounder.two(result);
+		return AmountRounder.two(result.doubleValue());
 	}
 }

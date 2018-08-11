@@ -6,11 +6,12 @@ import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
+import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 
 public interface JeeslAttributeData <CRITERIA extends JeeslAttributeCriteria<?,?,?,?>,
 							OPTION extends JeeslAttributeOption<?,?,CRITERIA>,
 							CONTAINER extends JeeslAttributeContainer<?,?>>
-		extends Serializable,EjbSaveable,EjbRemoveable,Cloneable
+		extends Serializable,EjbSaveable,EjbRemoveable,Cloneable,EjbWithParentAttributeResolver
 {
 	public static enum Attributes{container,criteria};
 	

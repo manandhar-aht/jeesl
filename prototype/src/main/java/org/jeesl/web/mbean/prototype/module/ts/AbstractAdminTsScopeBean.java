@@ -16,7 +16,9 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
 import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
+import org.jeesl.interfaces.model.module.ts.JeeslTsScopeType;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.interfaces.model.module.ts.JeeslTsUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -121,6 +123,8 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		scope = efScope.build(null);
 		scope.setName(efLang.createEmpty(localeCodes));
 		scope.setDescription(efDescription.createEmpty(localeCodes));
+		scope.setType(fTs.fByCode(fbTs.getClassScopeType(), JeeslTsScopeType.Code.ts));
+		scope.setUnit(fTs.fByCode(fbTs.getClassUnit(), JeeslTsUnit.Code.event));
 	}
 	
 	public void select() throws UtilsNotFoundException
@@ -135,9 +139,11 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 	public void save() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(scope));
-		scope.setUnit(fTs.find(fbTs.getClassUnit(), scope.getUnit()));
-		scope.setCategory(fTs.find(fbTs.getClassCategory(), scope.getCategory()));
+		
 		if(scope.getType()!=null) {scope.setType(fTs.find(fbTs.getClassScopeType(), scope.getType()));}
+		if(scope.getUnit()!=null) {scope.setUnit(fTs.find(fbTs.getClassUnit(), scope.getUnit()));}
+		scope.setCategory(fTs.find(fbTs.getClassCategory(), scope.getCategory()));
+		
 		scope = fTs.save(scope);
 		reloadScopes();
 		reloadMultiPoints();

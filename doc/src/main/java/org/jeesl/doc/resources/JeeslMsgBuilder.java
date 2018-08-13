@@ -31,6 +31,7 @@ public class JeeslMsgBuilder
 	public static final String jeeslIoPath = "utils"+File.separator+"jeesl"+File.separator+"io"+File.separator;
 	public static final String jeeslAdminPath = "utils"+File.separator+"jeesl"+File.separator+"admin"+File.separator;
 	public static final String jeeslSystemPath = "utils"+File.separator+"jeesl"+File.separator+"system"+File.separator;
+	public static final String jeeslModulePath = "utils"+File.separator+"jeesl"+File.separator+"module"+File.separator;
 	
 	public static final String generic = "jeesl/msg/generic.xml";
 

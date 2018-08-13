@@ -33,7 +33,8 @@ public class SurveyScoreProcessor <SECTION extends JeeslSurveySection<?,?,?,SECT
 		this.efAnswer=efAnswer;
 	}
 	
-	public double score(Map<QUESTION,ANSWER> answers)
+	public double score(Map<QUESTION,ANSWER> answers) {return score(answers,null);}
+	public double score(Map<QUESTION,ANSWER> answers, Map<SECTION,Boolean> mapContext)
 	{		
 		List<QUESTION> questions = new ArrayList<QUESTION>(answers.keySet());
 		List<SECTION> sections = efQuestion.toSection(questions);
@@ -44,40 +45,50 @@ public class SurveyScoreProcessor <SECTION extends JeeslSurveySection<?,?,?,SECT
 		BigDecimal result = new BigDecimal(0);
 		for(SECTION section : sections)
 		{
-			BigDecimal sectionScore = new BigDecimal(0);
-			double maxScore = 0;
+			boolean visible = true;
+			if(mapContext!=null) {visible = mapContext.containsKey(section) && mapContext.get(section);}
 			
-			for(QUESTION q : efQuestion.toSectionQuestions(section, questions))
+			if(visible)
 			{
-				if(q.getMaxScore()!=null) {maxScore = maxScore + q.getMaxScore();}
-			}
-			
-			for(ANSWER a : efAnswer.toSectionAnswers(section, answers))
-			{
-				if(a.getQuestion().getCalculateScore()!=null && a.getQuestion().getCalculateScore() && a.getScore()!=null)
+				BigDecimal sectionScore = new BigDecimal(0);
+				double maxScore = 0;
+				
+				for(QUESTION q : efQuestion.toSectionQuestions(section, questions))
 				{
-					if(a.getScore()!=null)
+					if(q.getMaxScore()!=null) {maxScore = maxScore + q.getMaxScore();}
+				}
+				
+				for(ANSWER a : efAnswer.toSectionAnswers(section,answers))
+				{
+					if(a.getQuestion().getCalculateScore()!=null && a.getQuestion().getCalculateScore() && a.getScore()!=null)
 					{
-						sectionScore = sectionScore.add(new BigDecimal(a.getScore()));
-					}
-					if(BooleanComparator.active(a.getQuestion().getBonusScore()) && a.getScoreBonus()!=null)
-					{
-						sectionScore = sectionScore.add(new BigDecimal(a.getScoreBonus()));
+						if(a.getScore()!=null)
+						{
+							sectionScore = sectionScore.add(new BigDecimal(a.getScore()));
+						}
+						if(BooleanComparator.active(a.getQuestion().getBonusScore()) && a.getScoreBonus()!=null)
+						{
+							sectionScore = sectionScore.add(new BigDecimal(a.getScoreBonus()));
+						}
 					}
 				}
-			}
-			
 
-			if(section.getScoreNormalize()!=null)
-			{
-				double x = sectionScore.doubleValue() * section.getScoreNormalize() / maxScore;
-				logger.info("Normalizing to "+section.getScoreNormalize()+" max:"+maxScore+" for:"+sectionScore+" normalized:"+AmountRounder.two(x));
-				result = result.add(new BigDecimal(x));
-			}
-			else
-			{
-				logger.info("Score for Section "+sectionScore);
-				result = result.add(sectionScore);
+				StringBuffer sb = new StringBuffer();
+				sb.append("Score for Section ");
+				sb.append(section.toString());
+				
+				if(section.getScoreNormalize()!=null)
+				{
+					double x = sectionScore.doubleValue() * section.getScoreNormalize() / maxScore;
+					sb.append(" Normalizing to "+section.getScoreNormalize()+" max:"+maxScore+" for:"+sectionScore+" normalized:"+AmountRounder.two(x));
+					result = result.add(new BigDecimal(x));
+				}
+				else
+				{
+					sb.append(" Sum: ").append(sectionScore);
+					result = result.add(sectionScore);
+				}
+				logger.info(sb.toString());
 			}
 		}
 

@@ -4,6 +4,7 @@ import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
+import org.jeesl.factory.ejb.module.ts.EjbTsDataPointFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsMutliPointFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsScopeFactory;
@@ -109,6 +110,11 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	public EjbTsDataFactory<TS,TRANSACTION,DATA,WS> data()
 	{
 		return new EjbTsDataFactory<TS,TRANSACTION,DATA,WS>(cData);
+	}
+	
+	public EjbTsDataPointFactory<MP,DATA,POINT> ejbDataPoint()
+	{
+		return new EjbTsDataPointFactory<MP,DATA,POINT>(cPoint);
 	}
 	
 	public EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> entityClass()

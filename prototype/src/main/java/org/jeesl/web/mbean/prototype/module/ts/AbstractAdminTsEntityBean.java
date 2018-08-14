@@ -45,7 +45,7 @@ public class AbstractAdminTsEntityBean <L extends UtilsLang, D extends UtilsDesc
 											EC extends JeeslTsEntityClass<L,D,CAT>,
 											INT extends UtilsStatus<INT,L,D>,
 											DATA extends JeeslTsData<TS,TRANSACTION,SAMPLE,WS>,
-											POINT extends JeeslTsDataPoint<DATA>,
+											POINT extends JeeslTsDataPoint<DATA,MP>,
 											SAMPLE extends JeeslTsSample, 
 											USER extends EjbWithId, 
 											WS extends UtilsStatus<WS,L,D>,

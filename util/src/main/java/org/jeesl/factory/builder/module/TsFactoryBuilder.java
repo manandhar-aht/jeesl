@@ -39,7 +39,7 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 								EC extends JeeslTsEntityClass<L,D,CAT>,
 								INT extends UtilsStatus<INT,L,D>,
 								DATA extends JeeslTsData<TS,TRANSACTION,SAMPLE,WS>,
-								POINT extends JeeslTsDataPoint<DATA>,
+								POINT extends JeeslTsDataPoint<DATA,MP>,
 								SAMPLE extends JeeslTsSample,
 								USER extends EjbWithId, 
 								WS extends UtilsStatus<WS,L,D>,
@@ -106,9 +106,9 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 		return new EjbTsTransactionFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cTransaction);
 	}
 	
-	public EjbTsDataFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> data()
+	public EjbTsDataFactory<TS,TRANSACTION,DATA,WS> data()
 	{
-		return new EjbTsDataFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cData);
+		return new EjbTsDataFactory<TS,TRANSACTION,DATA,WS>(cData);
 	}
 	
 	public EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> entityClass()

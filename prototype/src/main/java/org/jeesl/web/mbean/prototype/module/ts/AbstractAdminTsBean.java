@@ -51,7 +51,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 									EC extends JeeslTsEntityClass<L,D,CAT>,
 									INT extends UtilsStatus<INT,L,D>,
 									DATA extends JeeslTsData<TS,TRANSACTION,SAMPLE,WS>,
-									POINT extends JeeslTsDataPoint<DATA>,
+									POINT extends JeeslTsDataPoint<DATA,MP>,
 									SAMPLE extends JeeslTsSample, 
 									USER extends EjbWithId, 
 									WS extends UtilsStatus<WS,L,D>,
@@ -71,7 +71,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 	protected EjbTsScopeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efScope;
 	protected EjbTsClassFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efClass;
 	protected EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efBridge;
-	protected EjbTsDataFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efData;
+	protected EjbTsDataFactory<TS,TRANSACTION,DATA,WS> efData;
 	protected EjbTsTransactionFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF> efTransaction;
 	
 	protected Comparator<SCOPE> comparatorScope;

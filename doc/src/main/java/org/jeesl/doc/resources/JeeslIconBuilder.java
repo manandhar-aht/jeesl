@@ -36,6 +36,7 @@ public class JeeslIconBuilder
 	
 	public void svg() throws UtilsConfigurationException 
 	{
+		build("jeesl/svg/icon/ui","control/arrow/blue",  "left","right","up","down");
 		build("jeesl/svg/icon/ui","control",  "add","cancel");
 		build("jeesl/svg/icon/ui","io/attribute",  "empty","criteriaWithDescription","criteriaWithoutDescription");
 	}

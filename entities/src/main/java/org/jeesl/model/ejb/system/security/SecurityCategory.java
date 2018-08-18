@@ -25,7 +25,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"type","code"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames = {"type","code"}))
 @EjbErNode(name="Category",category="security",subset="security")
 public class SecurityCategory implements Serializable, EjbWithCode,EjbRemoveable,EjbPersistable,
 	JeeslSecurityCategory<Lang,Description>

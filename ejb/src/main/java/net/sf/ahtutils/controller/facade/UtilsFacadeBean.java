@@ -309,14 +309,18 @@ public class UtilsFacadeBean implements UtilsFacade
 	@Override public <T extends Object> List<T> all(Class<T> type){return all(type,0);}
 	@Override public <T extends Object> List<T> all(Class<T> type, int maxResults)
 	{
-		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(type);
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = cB.createQuery(type);
 		Root<T> from = criteriaQuery.from(type);
 		
 		CriteriaQuery<T> select = criteriaQuery.select(from);
 		
 		TypedQuery<T> typedQuery = em.createQuery(select);
 		if(maxResults>0){typedQuery.setMaxResults(maxResults);}
+		
+		if(EjbWithRecord.class.isAssignableFrom(type)){select.orderBy(cB.asc(from.get(EjbWithRecord.attributeRecord)));}
+		else if(EjbWithValidFrom.class.isAssignableFrom(type)){select.orderBy(cB.asc(from.get(EjbWithValidFrom.Attributes.validFrom.toString())));}
+		
 		
 		return typedQuery.getResultList();
 	}
@@ -663,7 +667,6 @@ public class UtilsFacadeBean implements UtilsFacade
 		if(list.size()==0){throw new UtilsNotFoundException("No "+cl.getSimpleName()+" found for Query");}
 		return list.get(0);
 	}
-	
 	
 	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParents(Class<T> c, List<I> parents)
 	{

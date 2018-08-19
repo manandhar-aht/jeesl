@@ -25,9 +25,8 @@
 						<p:dataTable var="ts" value="#{cc.attrs.bean.tsh.tbList}" 
 							selection="#{cc.attrs.bean.tsh.opList}" selectionMode="multiple" rowKey="#{ts.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslTsScopes}"/>
+								<aht:pfDataTableHeader title="#{msg.jeeslTsStation}"/>
 							</f:facet>
-						
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectTimeseries()}" update=":#{cc.id}:sCategory"/>
 							<p:column rendered="true">
 								<ui:remove>
@@ -37,7 +36,6 @@
 								</ui:remove>
 								<jeesl:outputXpath value="#{cc.attrs.bean.mapTsEntity[ts]}" xpath="#{ts.bridge.entityClass.xpath}"/>
 				            </p:column>
-				            
 				       	</p:dataTable>
 					</h:form>
 				</aht:slot>
@@ -47,7 +45,6 @@
 	                        <mc:labels rotation="0"/>
 	                    </mc:axis>
 	                    <mc:axis code="y" min="0" >
-	                    
 	                    </mc:axis>
 	                    <mc:tooltip shared="true"/>
 	                    <mc:series>

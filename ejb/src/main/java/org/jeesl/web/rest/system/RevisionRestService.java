@@ -153,8 +153,9 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		
 		if(logger.isInfoEnabled())
 		{
-			logger.info("Already in DB");
-			logger.info("\t"+cRE.getSimpleName()+" "+inDbRevisionEntity.size());
+			logger.info("Importing Revision Entites");
+			logger.info("\tAlread in DB: "+cRE.getSimpleName()+" "+inDbRevisionEntity.size());
+			logger.info("\tUpdatinf from XML: "+Entity.class.getSimpleName()+" "+entities.getEntity().size());
 		}
 		
 		for(Entity xml : entities.getEntity())

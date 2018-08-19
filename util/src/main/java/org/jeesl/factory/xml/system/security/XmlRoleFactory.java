@@ -100,10 +100,17 @@ public class XmlRoleFactory<L extends UtilsLang, D extends UtilsDescription,
 		return xml;
 	}
 	
+	public static Role label(String label)
+	{
+		Role xml = new Role();
+		xml.setLabel(label);
+		return xml;
+	}
+	
     public static net.sf.ahtutils.xml.security.Role build(String code)
     {
-	    	net.sf.ahtutils.xml.security.Role role = new net.sf.ahtutils.xml.security.Role();
-	    	role.setCode(code);
-	    	return role;
+    	net.sf.ahtutils.xml.security.Role role = new net.sf.ahtutils.xml.security.Role();
+    	role.setCode(code);
+    	return role;
     }
 }

@@ -168,8 +168,6 @@ public class AbstractIconBean implements Serializable
 	public Map<String, String> getIcon12() {return icon.get(12);}
 	public Map<String, String> getIcon16() {return icon.get(16);}
 	
-	
-	
 	protected void jeesl()
 	{
 		mapStatic.put("jeeslAdd", "ui/jeesl/control/add.png");
@@ -190,6 +188,8 @@ public class AbstractIconBean implements Serializable
 		mapStatic.put("jeeslArrowDown", "ui/jeesl/control/arrow/blue/down.png");
 		mapStatic.put("jeeslArrowLeft", "ui/jeesl/control/arrow/blue/left.png");
 		mapStatic.put("jeeslArrowRight", "ui/jeesl/control/arrow/blue/right.png");
+		
+		mapStatic.put("jeeslInvisible", "ui/jeesl/generic/ghost.png");
 	}
 	
 	protected void jeeslDm()

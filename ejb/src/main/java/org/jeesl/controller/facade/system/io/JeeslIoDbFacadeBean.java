@@ -20,7 +20,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.jsoup.helper.StringUtil;
 import org.openfuxml.content.table.Table;
-import org.openfuxml.factory.xml.table.OfxTableFactory;
+import org.openfuxml.factory.xml.table.XmlTableFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,7 +111,7 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 //			debugDataTypes(array);
 		}
 		
-		Table table = OfxTableFactory.build(fileds,data);
+		Table table = XmlTableFactory.build(fileds,data);
 		
 		return table;
 	}

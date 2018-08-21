@@ -1,4 +1,4 @@
-package org.jeesl.doc.ofx;
+package org.jeesl.doc.ofx.cms.factory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,27 +19,22 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.xml.status.Translations;
 
-public class AbstractJeeslOfxFactory<L extends UtilsLang>
+public class AbstractJeeslOfxTableFactory<L extends UtilsLang> extends AbstractJeeslOfxFactory<L>
 {
-	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslOfxFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslOfxTableFactory.class);
 	
-	protected TranslationProvider tp;
 	protected List<String> localeCodes;
 	protected List<String> tableHeaderKeys;
 	
 	protected final List<JsonTranslation> tableHeaders;
 	
 	protected Translations translations;
-//	protected String imagePathPrefix;
 	
-	protected final OfxMultiLangFactory<L> ofxMultiLang;
-	
-	public AbstractJeeslOfxFactory(TranslationProvider tp)
+	public AbstractJeeslOfxTableFactory(TranslationProvider tp)
 	{	
-		this.tp=tp;
+		super(tp);
 		tableHeaderKeys = new ArrayList<String>();
 		tableHeaders = new ArrayList<JsonTranslation>();
-		ofxMultiLang = new OfxMultiLangFactory<L>(tp.getLocaleCodes());
 	}
 	
 	protected <E extends Enum<E>>void addHeaderKey(Class<?> c)

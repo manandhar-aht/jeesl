@@ -168,7 +168,19 @@
 										return dlta;
 									});
 								}
-				</h:outputScript>
+							</h:outputScript>
+						</h:form>
+						<h:form id="fJeeslStatusTable" rendered="#{(cc.attrs.bean.element.type.code eq 'statusTable')}">
+							<p:panel header="#{cc.attrs.bean.element.type.name[localeCode].lang}" styleClass="jeeslPanel">
+								<f:facet name="actions">
+									<aht:icon type="jeeslSave" listener="#{itSrsReportBean.saveElementStatusTable()}" update=":@form" tooltip="#{msg.ttSave}"/>
+								</f:facet>
+								<p:messages for="document" redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
+								<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+									<p:outputLabel value="#{msg.jeeslCmsElementJson}"/>
+									<p:inputText value="#{itSrsReportBean.element.json}"/>
+								</p:panelGrid>
+							</p:panel>
 						</h:form>
 						<composite:insertChildren/>
 					</h:panelGroup>

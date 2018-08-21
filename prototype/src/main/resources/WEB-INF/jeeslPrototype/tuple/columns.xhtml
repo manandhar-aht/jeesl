@@ -12,8 +12,8 @@
     <c:set var="withSum" value="#{not empty withSum ? withSum : true}"/>
     <c:set var="withCount" value="#{not empty withCount ? withCount : false}"/>
 
-    <p:columns var="y" value="#{handler.listY}" columnIndexVar="colIndex" styleClass="jeeslPfTcCenter">
-		<h:outputText rendered="#{withSum}" value="#{handler.map[x][y].sum}" />
-		<h:outputText rendered="#{withCount}" value="#{handler.map[x][y].count}" />
+    <p:columns var="b" value="#{handler.listB}" columnIndexVar="colIndex" styleClass="jeeslPfTcCenter">
+		<h:outputText rendered="#{withSum}" value="#{handler.map[a][b].sum}" />
+		<h:outputText rendered="#{withCount}" value="#{handler.map[a][b].count}" />
 	</p:columns>
 </ui:composition>

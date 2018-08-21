@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
+import org.jeesl.doc.ofx.cms.jeesl.JeeslCmsParagraphFactory;
+import org.jeesl.doc.ofx.cms.jeesl.JeeslCmsStatusTableFactory;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
@@ -40,6 +42,7 @@ public abstract class JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescr
 	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms;
 	
 	private final JeeslCmsParagraphFactory<E,C> ofParagraph;
+	private final JeeslCmsStatusTableFactory<E,C> ofTableStatus;
 	
 	public JeeslCmsRenderer(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
 	{
@@ -47,6 +50,7 @@ public abstract class JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescr
 		this.fCms = fCms;
 		
 		ofParagraph = new JeeslCmsParagraphFactory<E,C>(localeCode);
+		ofTableStatus = new JeeslCmsStatusTableFactory<E,C>(localeCode);
 	}
 	
 	public Sections build(CMS cms) throws OfxAuthoringException
@@ -100,6 +104,7 @@ public abstract class JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescr
 	protected void buildJeesl(List<Serializable> list, E element) throws OfxAuthoringException
 	{
 		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString())) {list.addAll(ofParagraph.build(element).getContent());}
+		else if(element.getType().getCode().equals(JeeslIoCmsElement.Type.statusTable.toString())) {list.add(ofTableStatus.build(element));}
 		else {logger.warn("Unhandled "+element.getType().getCode());}
 	}
 }

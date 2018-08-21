@@ -7,7 +7,7 @@ import java.util.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import org.openfuxml.content.table.Table;
-import org.openfuxml.factory.xml.table.OfxTableFactory;
+import org.openfuxml.factory.xml.table.XmlTableFactory;
 import org.openfuxml.renderer.text.OfxTextRenderer;
 
 public class SqlTableCounter
@@ -96,7 +96,7 @@ public class SqlTableCounter
 
 	public void output() throws Exception
 	{
-		Table t = OfxTableFactory.build(header(), data());
+		Table t = XmlTableFactory.build(header(), data());
 		OfxTextRenderer.table(t, System.out);
 	}
 

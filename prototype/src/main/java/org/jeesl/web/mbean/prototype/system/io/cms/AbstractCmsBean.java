@@ -397,6 +397,12 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		element = fCms.save(element);
 	}
 	
+	public void saveElementStatusTable() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(element));}
+		element = fCms.save(element);
+	}
+	
 	protected void reorderDocuments() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCms, sbhCms.getList());}
 	protected void reorderElements() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCms, elements);}
 }

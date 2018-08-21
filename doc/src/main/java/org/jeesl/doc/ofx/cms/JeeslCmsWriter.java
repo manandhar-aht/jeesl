@@ -1,4 +1,4 @@
-package org.jeesl.doc.ofx;
+package org.jeesl.doc.ofx.cms;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,14 +26,14 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class OfxCmsRenderer<CMS extends JeeslIoCms<?,?,?,?,?>>
+public class JeeslCmsWriter<CMS extends JeeslIoCms<?,?,?,?,?>>
 {	
-	final static Logger logger = LoggerFactory.getLogger(OfxCmsRenderer.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslCmsWriter.class);
 	
 	private final File latexBaseDir;
 	private ConfigurationProvider cp;
 	
-	public OfxCmsRenderer(ConfigurationProvider cp, File latexBaseDir)
+	public JeeslCmsWriter(ConfigurationProvider cp, File latexBaseDir)
 	{
 		this.latexBaseDir=latexBaseDir;
 		this.cp=cp;

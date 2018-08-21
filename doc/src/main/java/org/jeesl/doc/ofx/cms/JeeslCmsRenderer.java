@@ -22,7 +22,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends UtilsDescription,
+public abstract class JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescription,
 								CAT extends UtilsStatus<CAT,L,D>,
 								CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 								V extends JeeslIoCmsVisiblity,
@@ -34,19 +34,19 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 								MT extends UtilsStatus<MT,L,D>,
 								LOC extends UtilsStatus<LOC,L,D>>
 {
-	final static Logger logger = LoggerFactory.getLogger(AbstractOfxCmsFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslCmsRenderer.class);
 	
 	protected final String localeCode;
 	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms;
 	
-	private final OfxParagraphFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> ofParagraph;
+	private final JeeslCmsParagraphFactory<E,C> ofParagraph;
 	
-	public AbstractOfxCmsFactory(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
+	public JeeslCmsRenderer(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
 	{
 		this.localeCode=localeCode;
 		this.fCms = fCms;
 		
-		ofParagraph = new OfxParagraphFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC>(localeCode);
+		ofParagraph = new JeeslCmsParagraphFactory<E,C>(localeCode);
 	}
 	
 	public Sections build(CMS cms) throws OfxAuthoringException
@@ -96,6 +96,7 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 	
 	protected abstract void build(List<Serializable> list, E element) throws OfxAuthoringException;
 	
+	//Here we are handling all types which are available as generic renderer in JEESL 
 	protected void buildJeesl(List<Serializable> list, E element) throws OfxAuthoringException
 	{
 		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString())) {list.addAll(ofParagraph.build(element).getContent());}

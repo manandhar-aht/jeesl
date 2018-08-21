@@ -78,8 +78,6 @@ public class OfxMultiLangFactory<L extends UtilsLang>
 		return paragraphs;
 	}
 	
-	
-	
 	public static Title title(String[] keys, Translations translations, String captionKey) throws OfxAuthoringException
 	{
 		Title title = XmlTitleFactory.build();

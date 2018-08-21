@@ -18,7 +18,8 @@ public interface JeeslIoCmsElement<
 		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPositionParent
 {	
 	public enum Attributes{section}
-	public enum Type{paragraph}
+	
+	public enum Type{paragraph,statusTable}
 	
 	S getSection();
 	void setSection(S section);

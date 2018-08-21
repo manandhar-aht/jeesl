@@ -17,8 +17,8 @@
 	</composite:interface>
 	
 	<composite:implementation>
-	<jp:grid>
-		<f:facet name="#{appSettingsBean.positionSideMenu}"><jp:menuSide code="#{cc.attrs.bean.security.pageCode}"/></f:facet>
+		<jp:grid>
+			<f:facet name="#{appSettingsBean.positionSideMenu}"><jp:menuSide code="#{cc.attrs.bean.security.pageCode}"/></f:facet>
 			<j:row>
         		<j:slot width="4">
         			<h:outputText value="#{cc.attrs.bean.security.view.name[localeCode].lang}"/>

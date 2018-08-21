@@ -1,7 +1,9 @@
 package org.jeesl.doc.ofx;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.model.json.system.translation.JsonTranslation;
 import org.openfuxml.content.ofx.Paragraph;
@@ -69,6 +71,21 @@ public class AbstractJeeslOfxFactory<L extends UtilsLang>
 		json.setCode(code.toString());
 		tableHeaders.add(json);
 	}
+	protected void addHeaderMulti(Map<String,L> multiLang)
+	{
+		JsonTranslation json = new JsonTranslation();
+		
+		Map<String,String> map = new HashMap<String,String>();
+		for(String key : multiLang.keySet())
+		{
+			if(tp.hasLocale(key))
+			{
+				map.put(key,multiLang.get(key).getLang());
+			}
+		}
+		json.setMultiLang(map);
+		tableHeaders.add(json);
+	}
 	
 	protected <E extends Enum<E>>void addHeaderKey(E code)
 	{
@@ -99,9 +116,19 @@ public class AbstractJeeslOfxFactory<L extends UtilsLang>
 		for(JsonTranslation json : tableHeaders)
 		{
 			Cell cell = OfxCellFactory.build();
-			for(String localeCode : tp.getLocaleCodes())
+			if(json.getEntity()!=null)
 			{
-				cell.getContent().add(XmlParagraphFactory.build(localeCode,tp.toTranslation(localeCode,json.getEntity(),json.getCode())));
+				for(String localeCode : tp.getLocaleCodes())
+				{
+					cell.getContent().add(XmlParagraphFactory.build(localeCode,tp.toTranslation(localeCode,json.getEntity(),json.getCode())));
+				}
+			}
+			else if(json.getMultiLang()!=null)
+			{
+				for(String localeCode : json.getMultiLang().keySet())
+				{
+					cell.getContent().add(XmlParagraphFactory.build(localeCode,json.getMultiLang().get(localeCode)));
+				}
 			}
 			row.getCell().add(cell);
 		}

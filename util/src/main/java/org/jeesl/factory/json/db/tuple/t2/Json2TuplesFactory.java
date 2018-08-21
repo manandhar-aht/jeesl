@@ -20,8 +20,8 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 {
 	private final UtilsFacade fUtils;
 	
-	private final Class<A> cA;
-	private final Class<B> cY;
+	private final Class<A> cA; public Class<A> getClassA() {return cA;}
+	private final Class<B> cB; public Class<B> getClassB() {return cB;}
 	
 	private final Set<Long> setId1;
 	private final Set<Long> setId2;
@@ -32,7 +32,7 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 	{
 		this.fUtils=fUtils;
 		this.cA=cA;
-		this.cY=cY;
+		this.cB=cY;
 		
 		setId1 = new HashSet<Long>();
 		setId2 = new HashSet<Long>();
@@ -78,7 +78,7 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 		if(fUtils!=null)
 		{
 			Map<Long,A> map1 = EjbIdFactory.toIdMap(fUtils.find(cA,setId1));
-			Map<Long,B> map2 = EjbIdFactory.toIdMap(fUtils.find(cY,setId2));
+			Map<Long,B> map2 = EjbIdFactory.toIdMap(fUtils.find(cB,setId2));
 			
 			for(Json2Tuple<A,B> t : json.getTuples())
 			{

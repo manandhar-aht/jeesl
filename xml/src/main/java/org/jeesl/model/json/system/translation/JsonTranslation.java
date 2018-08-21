@@ -1,6 +1,7 @@
 package org.jeesl.model.json.system.translation;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,6 +29,15 @@ public class JsonTranslation implements Serializable
 	public String getXpath() {return xpath;}
 	public void setXpath(String xpath) {this.xpath = xpath;}
 	
+	@JsonProperty("multilang")
+	private Map<String,String> multiLang;
+	
+	public Map<String, String> getMultiLang() {
+		return multiLang;
+	}
+	public void setMultiLang(Map<String, String> multiLang) {
+		this.multiLang = multiLang;
+	}
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

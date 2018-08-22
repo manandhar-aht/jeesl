@@ -94,6 +94,7 @@ public class SecurityQuery
 		xml.setFirstName("");
 		xml.setLastName("");
 		xml.setName("");
+		xml.setEmail("");
 		return xml;
 	}
 	

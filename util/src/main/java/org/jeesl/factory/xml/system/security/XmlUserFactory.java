@@ -5,6 +5,7 @@ import org.jeesl.model.xml.jeesl.QuerySecurity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.xml.security.User;
 
 public class XmlUserFactory<USER extends JeeslUser<?>>
@@ -32,6 +33,12 @@ public class XmlUserFactory<USER extends JeeslUser<?>>
 			sb.append(" ");
 			sb.append(user.getLastName());
 			xml.setName(sb.toString().trim());
+		}
+		
+		if(q.isSetEmail() && user instanceof EjbWithEmail)
+		{
+			EjbWithEmail email = (EjbWithEmail)user;
+			xml.setEmail(email.getEmail());
 		}
 		
 		return xml;

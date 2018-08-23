@@ -40,6 +40,8 @@ public class JeeslIconBuilder
 		build("jeesl/svg/icon/ui","control",  "add","cancel");
 		build("jeesl/svg/icon/ui","generic",  "ghost");
 		build("jeesl/svg/icon/ui","io/attribute",  "empty","criteriaWithDescription","criteriaWithoutDescription");
+		
+		build("jeesl/svg/icon/ui","system/io/file",  "doc","pdf","xls");
 	}
 		
 	private void build(String resourceDir, String targetDir, String... items) throws UtilsConfigurationException 
@@ -61,7 +63,7 @@ public class JeeslIconBuilder
 			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			
-			logger.info("Writing to "+fTarget);
+			logger.info("Generating to "+fTarget);
 			Svg2PngTranscoder.transcode(12, is, baos);
 			FileIO.writeFileIfDiffers(baos.toByteArray(), fTarget);
 			
@@ -77,7 +79,6 @@ public class JeeslIconBuilder
 		copy(FilenameUtils.normalize(base.getAbsolutePath()),"control",   "delete","clone","download","filter","move","remove","save","search","upload","refresh","clean");
 		copy(FilenameUtils.normalize(base.getAbsolutePath()),"control/dm",   "circleMinusGrey","circleMinusRed","circleGrey","circleGreen");
 		copy(FilenameUtils.normalize(base.getAbsolutePath()),"security",   "check-mark","documentation","x-mark");
-		copy(FilenameUtils.normalize(base.getAbsolutePath()),"system/io/file",   "pdf","xls");
 	}
 	
 	private void copy(String resourceDir, String targetDir, String... items) throws UtilsConfigurationException 
@@ -92,12 +93,13 @@ public class JeeslIconBuilder
 	{
 		try
 		{
-			InputStream is = mrl.searchIs(resourceDir+"/"+targetDir+"/"+item+".png");
+			String src = resourceDir+"/"+targetDir+"/"+item+".png";
+			InputStream is = mrl.searchIs(src);
 			File fTarget = new File(baseIcon,targetDir+File.separator+item+".png");
 			
 			if(!fTarget.getParentFile().exists()) {throw new UtilsConfigurationException("Directory "+fTarget.getParentFile().getAbsolutePath()+" does not exist");}
 			
-			logger.info("Writing to "+fTarget);
+			logger.info("Copy to "+fTarget);
 			FileIO.writeFileIfDiffers(IOUtils.toByteArray(is), fTarget);
 			
 		}

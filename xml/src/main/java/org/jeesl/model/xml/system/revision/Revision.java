@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 import net.sf.ahtutils.xml.security.User;
 import net.sf.ahtutils.xml.status.Status;
+import net.sf.ahtutils.xml.text.Remark;
 
 
 /**
@@ -26,7 +27,9 @@ import net.sf.ahtutils.xml.status.Status;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}user"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}status"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/text}remark"/&gt;
  *       &lt;/sequence&gt;
+ *       &lt;attribute name="version" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="record" type="{http://www.w3.org/2001/XMLSchema}dateTime" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -38,7 +41,8 @@ import net.sf.ahtutils.xml.status.Status;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "user",
-    "status"
+    "status",
+    "remark"
 })
 @XmlRootElement(name = "revision")
 public class Revision
@@ -50,6 +54,10 @@ public class Revision
     protected User user;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Status status;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/text", required = true)
+    protected Remark remark;
+    @XmlAttribute(name = "version")
+    protected Integer version;
     @XmlAttribute(name = "record")
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar record;
@@ -108,6 +116,66 @@ public class Revision
 
     public boolean isSetStatus() {
         return (this.status!= null);
+    }
+
+    /**
+     * Gets the value of the remark property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Remark }
+     *     
+     */
+    public Remark getRemark() {
+        return remark;
+    }
+
+    /**
+     * Sets the value of the remark property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Remark }
+     *     
+     */
+    public void setRemark(Remark value) {
+        this.remark = value;
+    }
+
+    public boolean isSetRemark() {
+        return (this.remark!= null);
+    }
+
+    /**
+     * Gets the value of the version property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public int getVersion() {
+        return version;
+    }
+
+    /**
+     * Sets the value of the version property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setVersion(int value) {
+        this.version = value;
+    }
+
+    public boolean isSetVersion() {
+        return (this.version!= null);
+    }
+
+    public void unsetVersion() {
+        this.version = null;
     }
 
     /**

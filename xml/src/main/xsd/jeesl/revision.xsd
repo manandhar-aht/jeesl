@@ -65,7 +65,9 @@
         	<xsd:sequence>
                 <xsd:element ref="sec:user" maxOccurs="1"/>
                 <xsd:element ref="us:status" maxOccurs="1"/>
+                <xsd:element ref="ut:remark" maxOccurs="1"/>
             </xsd:sequence>
+            <xsd:attribute name="version" type="xsd:int"/>
             <xsd:attribute name="record" type="xsd:dateTime"/>
         </xsd:complexType>
     </xsd:element>

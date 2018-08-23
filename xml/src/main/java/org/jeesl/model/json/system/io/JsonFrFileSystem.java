@@ -14,7 +14,7 @@ public class JsonFrFileSystem implements Serializable
 	private String baseDir;
 	public String getBaseDir() {return baseDir;}
 	public void setBaseDir(String baseDir) {this.baseDir = baseDir;}
-
+	
 	@JsonProperty("level")
 	private int level;
 	public int getLevel() {return level;}

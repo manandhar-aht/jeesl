@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 import net.sf.ahtutils.xml.security.User;
 import net.sf.ahtutils.xml.status.Status;
-import net.sf.ahtutils.xml.text.Remark;
+import org.jeesl.model.xml.text.Remark;
 
 
 /**
@@ -27,7 +27,7 @@ import net.sf.ahtutils.xml.text.Remark;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}user"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}status"/&gt;
- *         &lt;element ref="{http://ahtutils.aht-group.com/text}remark"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/text}remark"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="version" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="record" type="{http://www.w3.org/2001/XMLSchema}dateTime" /&gt;
@@ -54,7 +54,7 @@ public class Revision
     protected User user;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Status status;
-    @XmlElement(namespace = "http://ahtutils.aht-group.com/text", required = true)
+    @XmlElement(namespace = "http://www.jeesl.org/text", required = true)
     protected Remark remark;
     @XmlAttribute(name = "version")
     protected Integer version;

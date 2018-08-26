@@ -24,7 +24,7 @@
 	</s:translation>
 	<s:translation key="jeeslLastName">
 		<s:langs>
-			<s:lang key="de" translation="Vorname"/>
+			<s:lang key="de" translation="Nachname"/>
 			<s:lang key="fr" translation="Last Name"/>
 			<s:lang key="en" translation="Last Name"/>
 			<s:lang key="kin" translation="Last Name"/>

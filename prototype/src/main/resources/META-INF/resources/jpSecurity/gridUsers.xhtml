@@ -46,20 +46,16 @@
 		                  		<h:graphicImage rendered="#{u.permitLogin}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx"/>
 		                  		<h:graphicImage rendered="#{not u.permitLogin}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx"/>
 		                  	</p:column>
-							<p:column headerText="#{msg.jeeslFirstName}"
-									sortBy="#{u.firstName}"
-									filterBy="#{u.firstName}" filterMatchMode="contains">
+							<p:column headerText="#{msg.jeeslFirstName}" sortBy="#{u.firstName}"
+									filterBy="#{u.firstName}" filterMatchMode="contains" filterStyle="width: 50px;">
 								<h:outputText value="#{u.firstName}" />
 		                    </p:column>
-		                    <p:column headerText="#{msg.jeeslLastName}"
-		                              sortBy="#{u.lastName}"
-		                              filterBy="#{u.lastName}"
-		                              filterMatchMode="contains">
+		                    <p:column headerText="#{msg.jeeslLastName}" sortBy="#{u.lastName}"
+		                              filterBy="#{u.lastName}" filterMatchMode="contains" filterStyle="width: 50px;">
 		                        <h:outputText value="#{u.lastName}" />
 		                    </p:column>
-		                    <p:column headerText="#{msg.jeeslEmail}"
-		                              sortBy="#{u.email}"
-		                              filterBy="#{u.email}" filterMatchMode="contains">
+		                    <p:column headerText="#{msg.jeeslEmail}" sortBy="#{u.email}"
+		                              filterBy="#{u.email}" filterMatchMode="contains" filterStyle="width: 50px;">
 		                        <h:outputText value="#{u.email}" />
 		                    </p:column>
 		                </p:dataTable>

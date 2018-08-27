@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.model.xml.dev.srs.Actors;
+import org.jeesl.model.xml.dev.srs.Frs;
 import org.jeesl.model.xml.dev.srs.Srs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +15,10 @@ public class XmlSrsFactory
 	
 	public enum Chapter {fr}
 	
-    public static Srs build()
-    {
-    	Srs xml = new Srs();
-    	return xml;
-    }
+    public static Srs build() {return new Srs(); }
+    
+    public static Srs build(Frs frs) {Srs xml = build(); xml.setFrs(frs);return xml;}
+    
     
     public static Srs combine(List<Srs> list)
     {

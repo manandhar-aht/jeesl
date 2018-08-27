@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}meta"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}actors"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}releases"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/dev/srs}frs"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/dev/srs}chapter" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -42,6 +43,7 @@ import javax.xml.bind.annotation.XmlType;
     "meta",
     "actors",
     "releases",
+    "frs",
     "chapter"
 })
 @XmlRootElement(name = "srs")
@@ -58,6 +60,8 @@ public class Srs
     protected Actors actors;
     @XmlElement(required = true)
     protected Releases releases;
+    @XmlElement(required = true)
+    protected Frs frs;
     @XmlElement(required = true)
     protected List<Chapter> chapter;
     @XmlAttribute(name = "code")
@@ -173,6 +177,34 @@ public class Srs
 
     public boolean isSetReleases() {
         return (this.releases!= null);
+    }
+
+    /**
+     * Gets the value of the frs property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Frs }
+     *     
+     */
+    public Frs getFrs() {
+        return frs;
+    }
+
+    /**
+     * Sets the value of the frs property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Frs }
+     *     
+     */
+    public void setFrs(Frs value) {
+        this.frs = value;
+    }
+
+    public boolean isSetFrs() {
+        return (this.frs!= null);
     }
 
     /**

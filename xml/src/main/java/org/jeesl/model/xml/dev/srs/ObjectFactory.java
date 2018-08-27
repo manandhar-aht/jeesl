@@ -94,11 +94,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Chapter }
+     * Create an instance of {@link Frs }
      * 
      */
-    public Chapter createChapter() {
-        return new Chapter();
+    public Frs createFrs() {
+        return new Frs();
     }
 
     /**
@@ -107,6 +107,14 @@ public class ObjectFactory {
      */
     public Fr createFr() {
         return new Fr();
+    }
+
+    /**
+     * Create an instance of {@link Chapter }
+     * 
+     */
+    public Chapter createChapter() {
+        return new Chapter();
     }
 
 }

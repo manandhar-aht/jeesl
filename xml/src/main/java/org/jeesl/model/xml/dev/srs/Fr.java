@@ -5,8 +5,10 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.openfuxml.content.ofx.Sections;
 
 
 /**
@@ -18,6 +20,9 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element ref="{http://www.openfuxml.org}sections"/&gt;
+ *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -28,16 +33,48 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
+@XmlType(name = "", propOrder = {
+    "sections"
+})
 @XmlRootElement(name = "fr")
 public class Fr implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
+    @XmlElement(namespace = "http://www.openfuxml.org", required = true)
+    protected Sections sections;
     @XmlAttribute(name = "code")
     protected String code;
     @XmlAttribute(name = "name")
     protected String name;
+
+    /**
+     * Gets the value of the sections property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Sections }
+     *     
+     */
+    public Sections getSections() {
+        return sections;
+    }
+
+    /**
+     * Sets the value of the sections property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Sections }
+     *     
+     */
+    public void setSections(Sections value) {
+        this.sections = value;
+    }
+
+    public boolean isSetSections() {
+        return (this.sections!= null);
+    }
 
     /**
      * Gets the value of the code property.

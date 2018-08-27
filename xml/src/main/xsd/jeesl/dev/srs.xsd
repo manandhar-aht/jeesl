@@ -11,6 +11,7 @@
 	            <xsd:element ref="srs:meta" maxOccurs="1"/>
 	            <xsd:element ref="srs:actors" maxOccurs="1"/>
 	            <xsd:element ref="srs:releases" maxOccurs="1"/>
+	            <xsd:element ref="srs:frs" maxOccurs="1"/>
 	            <xsd:element ref="srs:chapter" maxOccurs="unbounded"/>
 			</xsd:sequence>
 			<xsd:attribute name="code" type="xsd:string"/>
@@ -80,8 +81,18 @@
 		</xsd:complexType>   
     </xsd:element>
     
+    <xsd:element name="frs">
+        <xsd:complexType>
+        	<xsd:sequence>
+            	<xsd:element ref="srs:fr" maxOccurs="unbounded"/>
+			</xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
     <xsd:element name="fr">
         <xsd:complexType>
+        	<xsd:sequence>
+            	<xsd:element ref="ofx:sections" maxOccurs="1"/>
+			</xsd:sequence>
         	<xsd:attribute name="code" type="xsd:string"/>
         	<xsd:attribute name="name" type="xsd:string"/>
         </xsd:complexType>

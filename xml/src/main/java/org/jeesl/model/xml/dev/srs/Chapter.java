@@ -49,8 +49,8 @@ public class Chapter implements Serializable
     private final static long serialVersionUID = 1L;
     @XmlElementRefs({
         @XmlElementRef(name = "chapter", namespace = "http://www.jeesl.org/dev/srs", type = Chapter.class),
-        @XmlElementRef(name = "fr", namespace = "http://www.jeesl.org/dev/srs", type = Fr.class),
-        @XmlElementRef(name = "section", namespace = "http://www.openfuxml.org", type = Section.class)
+        @XmlElementRef(name = "section", namespace = "http://www.openfuxml.org", type = Section.class),
+        @XmlElementRef(name = "fr", namespace = "http://www.jeesl.org/dev/srs", type = Fr.class)
     })
     @XmlMixed
     protected List<Serializable> content;
@@ -77,9 +77,9 @@ public class Chapter implements Serializable
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Section }
      * {@link String }
      * {@link Chapter }
+     * {@link Section }
      * {@link Fr }
      * 
      * 

@@ -23,7 +23,7 @@ public class XmlCategoryFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang
 	private Category q;
 	
 	public XmlCategoryFactory(Category q){this(null,q);}
-	public XmlCategoryFactory(String localeCode,Category q)
+	public XmlCategoryFactory(String localeCode, Category q)
 	{
 		this.localeCode=localeCode;
 		this.q=q;

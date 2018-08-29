@@ -2,7 +2,7 @@ package org.jeesl.factory.sql;
 
 import java.util.List;
 
-import org.jeesl.util.query.sql.UtilsSqlQueryHelper;
+import org.jeesl.util.query.sql.JeeslSqlQuery;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
@@ -43,7 +43,7 @@ public class SqlFactory
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append(item).append(".").append(attribute).append("_id");
-		sb.append(" IN (").append(UtilsSqlQueryHelper.inIdList(ids)).append(")");
+		sb.append(" IN (").append(JeeslSqlQuery.inIdList(ids)).append(")");
 		newLine(newLine,sb);
 		return sb.toString();
 	}

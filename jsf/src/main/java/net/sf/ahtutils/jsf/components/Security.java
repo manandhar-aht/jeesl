@@ -1,4 +1,4 @@
-package org.jeesl.jsf.components;
+package net.sf.ahtutils.jsf.components;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import net.sf.ahtutils.jsf.util.ComponentAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@FacesComponent("org.jeesl.jsf.components.Security")
+@FacesComponent("net.sf.ahtutils.jsf.components.Security")
 public class Security extends UIPanel
 {
 	final static Logger logger = LoggerFactory.getLogger(Security.class);
@@ -40,7 +40,6 @@ public class Security extends UIPanel
 			ValueExpression ve = this.getValueExpression(Properties.handler.toString());
 			if(ve==null){throw new UtilsNotFoundException("");}
 			UtilsJsfSecurityHandler handler = (UtilsJsfSecurityHandler)ve.getValue(context.getELContext());
-			
 			
 			String action = ComponentAttribute.get(Properties.action.toString(),context,this);
 			accessGranted = (handler.allow(action) && accessGrantedAttribute);

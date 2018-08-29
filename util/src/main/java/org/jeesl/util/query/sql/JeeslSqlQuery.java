@@ -1,13 +1,16 @@
 package org.jeesl.util.query.sql;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class UtilsSqlQueryHelper
+public class JeeslSqlQuery
 {	
+	private static final SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static String inIds(EjbWithId ejb)
 	{
@@ -45,5 +48,10 @@ public class UtilsSqlQueryHelper
 		StringBuffer sb = new StringBuffer();
 		sb.append("'").append(ejb.getCode()).append("'");
 		return sb.toString();
+	}
+	
+	public static String date(Date date)
+	{
+		return "'"+dfDate.format(date)+"'";
 	}
 }

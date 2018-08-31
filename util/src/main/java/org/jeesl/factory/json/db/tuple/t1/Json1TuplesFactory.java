@@ -86,6 +86,20 @@ public class Json1TuplesFactory <A extends EjbWithId>
 		return json;
 	}
 	
+	public Json1Tuples<A> buildCount(List<Tuple> tuples)
+	{
+		Json1Tuples<A> json = new Json1Tuples<A>();
+		
+		for(Tuple t : tuples)
+        {
+			Json1Tuple<A> j = jtf.buildCount(t);
+			setId.add(j.getId());
+        	json.getTuples().add(j);
+        }
+		fillEjbs(json);
+		return json;
+	}
+	
 	private void fillEjbs(Json1Tuples<A> json)
 	{
 		if(fUtils!=null)

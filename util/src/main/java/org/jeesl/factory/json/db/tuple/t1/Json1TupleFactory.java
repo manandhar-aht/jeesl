@@ -28,20 +28,6 @@ public class Json1TupleFactory<A extends EjbWithId>
 		return result;
 	}
 		
-	public Json1Tuple<A> build(Tuple tuple)
-	{
-		Json1Tuple<A> json = new Json1Tuple<A>();
-		json.setId((Long)tuple.get(0));		
-    	return json;
-	}
-	
-	public Json1Tuple<A> buildSum(Tuple tuple)
-	{
-		Json1Tuple<A> json = build(tuple);	
-		json.setSum((Double)tuple.get(1));
-    	return json;
-	}
-	
 	public static <T extends EjbWithId> Map<Long,Json1Tuple<T>> toIdMap(List<Json1Tuple<T>> list)
 	{
 		Map<Long,Json1Tuple<T>> map = new HashMap<Long,Json1Tuple<T>>();
@@ -50,5 +36,26 @@ public class Json1TupleFactory<A extends EjbWithId>
 			map.put(t.getId(),t);
 		}
 		return map;
+	}
+	
+	public Json1Tuple<A> build(Tuple tuple)
+	{
+		Json1Tuple<A> json = new Json1Tuple<A>();
+		json.setId((Long)tuple.get(0));		
+    	return json;
+	} 
+	
+	public Json1Tuple<A> buildSum(Tuple tuple)
+	{
+		Json1Tuple<A> json = build(tuple);	
+		json.setSum((Double)tuple.get(1));
+    	return json;
+	}
+	
+	public Json1Tuple<A> buildCount(Tuple tuple)
+	{
+		Json1Tuple<A> json = build(tuple);
+		json.setCount((Long)tuple.get(1));
+    	return json;
 	}
 }

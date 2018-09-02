@@ -7,12 +7,13 @@
     
 	<composite:interface>
 		<composite:attribute name="value"/>
+		<composite:attribute name="level" required="false" default="alert-info"/>
 	</composite:interface>
         
 	<composite:implementation>
-		<h:outputStylesheet library="ahtutilsCss" name="auTwitterBootstrap.css" target="head"/>
+		<h:outputStylesheet library="jeeslCss" name="twitterBootstrap.css" target="head"/>
 		
-		<h:panelGroup layout="block" class="alert alert-info alert-dismissable">
+		<h:panelGroup layout="block" class="alert #{cc.attrs.level} alert-dismissable">
    		  <button type="button" class="close" data-dismiss="alert" area-hidden="true">&#215;</button>
 		  <composite:insertChildren/>
 		</h:panelGroup>

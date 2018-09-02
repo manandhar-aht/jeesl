@@ -38,7 +38,7 @@ public class JeeslIconBuilder
 	{
 		build("jeesl/svg/icon/ui","control/arrow/blue",  "left","right","up","down");
 		build("jeesl/svg/icon/ui","control",  "add","cancel");
-		build("jeesl/svg/icon/ui","generic",  "ghost");
+		build("jeesl/svg/icon/ui","generic",  "ghost","unsaved");
 		build("jeesl/svg/icon/ui","io/attribute",  "empty","criteriaWithDescription","criteriaWithoutDescription");
 		
 		build("jeesl/svg/icon/ui","system/io/file",  "doc","pdf","xls");

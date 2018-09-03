@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
+ 	xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
     xmlns:jtb="http://www.jeesl.org/jsf/twitter/bootstrap"
     xmlns:composite="http://java.sun.com/jsf/composite">
     
@@ -12,13 +13,16 @@
 	</composite:interface>
         
  	<composite:implementation>
-  
+  		
 		<jtb:alert rendered="#{not empty cc.attrs.value}">
-			<c:if test="#{cc.attrs.value.level.code eq 'error'}"><f:attribute name="level" value="alert-danger"/></c:if>
-			<c:if test="#{cc.attrs.value.level.code eq 'warn'}"><f:attribute name="level" value="alert-warning"/></c:if>
-			<c:if test="#{cc.attrs.value.level.code eq 'info'}"><f:attribute name="level" value="alert-info"/></c:if>
-			<strong><h:outputText value="#{cc.attrs.value.level.name[localeCode].lang}"/></strong>
+			<c:if test="#{cc.attrs.value.level.code eq 'error'}"><h:outputText value="(debug) Use alert-danger"/><f:attribute name="styleClass" value="alert-danger"/></c:if>
+			<c:if test="#{cc.attrs.value.level.code eq 'warn'}"><h:outputText value="(debug) Use alert-warning"/><f:attribute name="styleClass" value="alert-warning"/></c:if>
+			<c:if test="#{cc.attrs.value.level.code eq 'info'}"><h:outputText value="(debug) Use alert-info"/><f:attribute name="styleClass" value="alert-info"/></c:if>
+			
+			<jtp:symbolizer value="#{cc.attrs.value.level}"/>
+			<strong><h:outputText value="#{cc.attrs.value.name[localeCode].lang}"/></strong><br/>
 			<h:outputText value="#{cc.attrs.value.description[localeCode].lang}"/>
+			
 		</jtb:alert>
 
    </composite:implementation>

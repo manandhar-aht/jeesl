@@ -72,9 +72,14 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	{
 		super.initConstraint(bTranslation,bMessage,fConstraint);
 		this.bConstraint=bConstraint;
-		sbhCategory = new SbMultiHandler<CONCAT>(fbConstraint.getClassConstraintCategory(),fConstraint.allOrderedPosition(fbConstraint.getClassConstraintCategory()),this);
+		
 		types = fConstraint.allOrderedPosition(fbConstraint.getClassConstraintType());
 		levels = fConstraint.allOrderedPosition(fbConstraint.getClassConstraintLevel());
+		
+		sbhCategory = new SbMultiHandler<CONCAT>(fbConstraint.getClassConstraintCategory(),fConstraint.allOrderedPosition(fbConstraint.getClassConstraintCategory()),this);
+		if(sbhCategory.getHasSome()) {sbhCategory.toggle(sbhCategory.getList().get(0));}
+		
+
 	}
 	
 	@Override public void toggled(Class<?> c) throws UtilsLockingException, UtilsConstraintViolationException

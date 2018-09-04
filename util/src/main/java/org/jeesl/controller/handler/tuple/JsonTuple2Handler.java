@@ -52,12 +52,17 @@ public class JsonTuple2Handler <X extends EjbWithId, Y extends EjbWithId> implem
 		withSum = true;
 		sumDivider = 1;
 	}
-
-	public void init(Json2Tuples<X,Y> tuples)
+	
+	public void clear()
 	{
 		map.clear();
 		listX.clear();
 		listY.clear();
+	}
+
+	public void init(Json2Tuples<X,Y> tuples)
+	{
+		clear();
 	
 		for(Json2Tuple<X,Y> t : tuples.getTuples())
 		{

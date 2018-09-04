@@ -59,8 +59,6 @@ public class AbstractConstraintMessageBean <L extends UtilsLang, D extends Utils
 		FacesContextMessage.error(facesId, constraint.getLevel().getName().get(jeeslLocaleCode).getLang(), constraint.getDescription().get(jeeslLocaleCode).getLang());
 	}
 	
-	
-	
 	@Override public <FID extends Enum<FID>, SID extends Enum<SID>, CID extends Enum<CID>> void show(FID fId, SID sId, CID cId)
 	{
 		if(debugOnInfo)

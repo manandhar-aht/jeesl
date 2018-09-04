@@ -1,0 +1,21 @@
+<xsd:schema targetNamespace="http://www.jeesl.org/io/ssi"
+    xmlns:ssi="http://www.jeesl.org/io/ssi"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="systems">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="ssi:system" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="system">
+        <xsd:complexType>
+            <xsd:sequence>
+                
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

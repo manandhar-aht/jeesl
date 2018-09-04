@@ -16,7 +16,6 @@ public class JeeslLazyListHandler <T extends EjbWithId>
 		
 	}
 	
-	
 	public void paginator(List<T> data, List<T> tmp, int first, int pageSize)
 	{
 		data.clear();

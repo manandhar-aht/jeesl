@@ -85,12 +85,21 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 		mapConstraints.get(keyScope).put(constraint.getCode(),constraint);
 	}
 	
-	@Override
-	public <SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT get(SID sId, CID cId) throws UtilsNotFoundException
+	@Override public <SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT get(SID sId, CID cId) throws UtilsNotFoundException
 	{
 		if(!mapConstraints.containsKey(sId.toString())) {throw new UtilsNotFoundException("Scope "+sId+" not available");}
 		if(!mapConstraints.get(sId.toString()).containsKey(cId.toString())) {throw new UtilsNotFoundException("Contraint "+cId+" not available in Scope "+sId);}
 		return mapConstraints.get(sId.toString()).get(cId.toString());
+	}
+	
+	@Override public <SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT getSilent(SID sId, CID cId)
+	{
+		try {return get(sId,cId);}
+		catch (UtilsNotFoundException e)
+		{
+			logger.error(e.getMessage());
+			return null;
+		}
 	}
 	
 	// ************************************************************************************************

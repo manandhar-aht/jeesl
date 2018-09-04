@@ -185,6 +185,12 @@
         </jxb:schemaBindings>
     </jxb:bindings>
     
+    	<jxb:bindings schemaLocation="../xsd/jeesl/io/ssi.xsd" node="/xsd:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.jeesl.model.xml.system.io.ssi"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
+    
 	<jxb:bindings schemaLocation="../xsd/jeesl/revision.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.jeesl.model.xml.system.revision"/>

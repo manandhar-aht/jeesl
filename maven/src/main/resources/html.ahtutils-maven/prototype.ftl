@@ -335,3 +335,9 @@ ul.aupHeadlineBreadcrumb,
 position: relative;
 z-index: 0;
 }
+
+.alert .constTitle {
+margin-left: 10px;
+font-weight: bold;
+vertical-align: sub;
+}

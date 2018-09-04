@@ -8,6 +8,7 @@ import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.access.Views;
 import net.sf.ahtutils.xml.security.Roles;
 import net.sf.ahtutils.xml.security.Security;
+import net.sf.ahtutils.xml.security.Staffs;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
@@ -115,4 +116,18 @@ public class SecurityXpath
 		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+net.sf.ahtutils.xml.security.Role.class.getSimpleName()+" for code="+code);}
 		return listResult.get(0);
 	}
+	
+	public static Staffs getStaffsForDomain(List<Staffs> staffs, String domainCode) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("/domain[@code='").append(domainCode).append("']/..");
+		
+		JXPathContext context = JXPathContext.newContext(staffs);
+		@SuppressWarnings("unchecked")
+		List<Staffs> listResult = (List<Staffs>)context.selectNodes(sb.toString());
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+Staffs.class.getSimpleName()+" for code="+domainCode);}
+		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+Staffs.class.getSimpleName()+" for code="+domainCode);}
+		return (Staffs)listResult.get(0);
+	}
+	
 }

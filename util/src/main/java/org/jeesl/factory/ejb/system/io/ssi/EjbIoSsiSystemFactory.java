@@ -4,7 +4,6 @@ import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 
 public class EjbIoSsiSystemFactory <SYSTEM extends JeeslIoSsiSystem>
 {
-	
 	private final Class<SYSTEM> cSystem;
 
 	public EjbIoSsiSystemFactory(final Class<SYSTEM> cSystem)

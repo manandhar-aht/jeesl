@@ -21,12 +21,14 @@ public class IoSsiFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(IoSsiFactoryBuilder.class);
 	
 	private final Class<SYSTEM> cSystem; public Class<SYSTEM> getClassSystem(){return cSystem;}
+	private final Class<MAPPING> cMapping; public Class<MAPPING> getClassMapping(){return cMapping;}
 	private final Class<DATA> cData; public Class<DATA> getClassData(){return cData;}
 	
-	public IoSsiFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SYSTEM> cSystem, final Class<DATA> cData)
+	public IoSsiFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SYSTEM> cSystem, final Class<MAPPING> cMapping, final Class<DATA> cData)
 	{
 		super(cL,cD);
 		this.cSystem=cSystem;
+		this.cMapping=cMapping;
 		this.cData=cData;
 	}
 	

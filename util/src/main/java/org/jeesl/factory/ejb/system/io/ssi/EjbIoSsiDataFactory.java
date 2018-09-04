@@ -13,7 +13,7 @@ public class EjbIoSsiDataFactory <MAPPING extends JeeslIoSsiMapping<?,?>,
         this.cData = cData;
 	}
 	
-	public DATA build(MAPPING mapping)
+	public DATA build(MAPPING mapping, String code, Object json)
 	{
 		DATA ejb = null;
 		try

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:j="http://www.jeesl.org/jsf"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+    
+	<composite:interface componentType="org.jeesl.jsf.components.JsonPropertyEditor">
+		<composite:attribute name="value" required="true" type="java.lang.String"/>
+		<composite:attribute name="for" required="true" type="java.lang.String"/>
+	</composite:interface>
+
+	<composite:implementation>
+		<f:event type="postAddToView" listener="#{cc.init}" />
+		<p:panel header="Json Magic" styleClass="auPanelWithGrid">
+			<f:facet name="actions">
+				
+			</f:facet>
+			<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80" >
+				<ui:repeat value="#{cc.propertyNames}" var="propertyDescriptor">
+					<p:outputLabel value="#{propertyDescriptor}"/>
+				</ui:repeat>
+				<ui:repeat value="#{cc.propertyNames}" var="propertyDescriptor">
+					<p:inputText value="#{cc.properties[propertyDescriptor]}">
+						<p:ajax event="change" update="#{cc.attrs.clientId}:preview" listener="#{cc.process}"/>
+					</p:inputText>
+				</ui:repeat>
+			</p:panelGrid>
+			
+		</p:panel>
+		<p:panel rendered="false" header="Json Object Result" styleClass="jeeslPanel" id="preview">
+			<h:outputText value="#{cc.value}"/>
+			<h:outputText value="#{cc.attrs.value}"/>
+		</p:panel>
+	</composite:implementation>
+</html>

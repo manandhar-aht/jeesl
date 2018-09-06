@@ -11,11 +11,13 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class IoSsiFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								SYSTEM extends JeeslIoSsiSystem,
 								MAPPING extends JeeslIoSsiMapping<SYSTEM,?>,
-								DATA extends JeeslIoSsiData<MAPPING>>
+								DATA extends JeeslIoSsiData<MAPPING,LINK>,
+								LINK extends UtilsStatus<LINK,L,D>>
 		extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoSsiFactoryBuilder.class);
@@ -33,5 +35,5 @@ public class IoSsiFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	public EjbIoSsiSystemFactory<SYSTEM> ejbSystem() {return new EjbIoSsiSystemFactory<SYSTEM>(cSystem);}
-	public EjbIoSsiDataFactory<MAPPING,DATA> ejbData() {return new EjbIoSsiDataFactory<MAPPING,DATA>(cData);}
+	public EjbIoSsiDataFactory<MAPPING,DATA,LINK> ejbData() {return new EjbIoSsiDataFactory<MAPPING,DATA,LINK>(cData);}
 }

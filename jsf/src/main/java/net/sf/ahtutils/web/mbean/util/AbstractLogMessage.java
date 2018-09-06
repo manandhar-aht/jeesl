@@ -1,16 +1,18 @@
 package net.sf.ahtutils.web.mbean.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.jeesl.controller.monitor.ProcessingTimeTracker;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -287,10 +289,8 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 		return sb.toString();
 	}
 	
-	public static <T extends EjbWithId> String reloaded(Class<T> c, List<T> list)
-	{
-		return reloaded(c,list,null);
-	}
+	public static <T extends EjbWithId> String reloaded(Class<T> c, List<T> list){return reloaded(c,list,null);}
+	public static <T extends EjbWithId> String reloaded(Class<T> c, Set<T> list){return reloaded(c,new ArrayList<T>(list),null);}
 	
 	public static <T extends EjbWithId> String reloaded(Class<T> c, List<T> list, EjbWithId ejb)
 	{

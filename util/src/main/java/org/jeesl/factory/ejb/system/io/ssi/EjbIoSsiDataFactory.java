@@ -5,10 +5,12 @@ import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.exlp.util.io.JsonUtil;
 
 public class EjbIoSsiDataFactory <MAPPING extends JeeslIoSsiMapping<?,?>,
-									DATA extends JeeslIoSsiData<MAPPING>>
+									DATA extends JeeslIoSsiData<MAPPING,LINK>,
+									LINK extends UtilsStatus<LINK,?,?>>
 {
 	private final Class<DATA> cData;
 
@@ -17,7 +19,7 @@ public class EjbIoSsiDataFactory <MAPPING extends JeeslIoSsiMapping<?,?>,
         this.cData = cData;
 	}
 	
-	public DATA build(MAPPING mapping, String code, Object json)
+	public DATA build(MAPPING mapping, String code, LINK link, Object json)
 	{
 		DATA ejb = null;
 		try
@@ -25,6 +27,7 @@ public class EjbIoSsiDataFactory <MAPPING extends JeeslIoSsiMapping<?,?>,
 			ejb = cData.newInstance();
 			ejb.setMapping(mapping);
 			ejb.setCode(code);
+			ejb.setLink(link);
 			ejb.setJson(JsonUtil.toString(json));
 	       
 		}

@@ -1,6 +1,11 @@
 package org.jeesl.controller.facade.system.io;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -8,6 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.io.JeeslIoSsiFacade;
@@ -21,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -62,5 +69,33 @@ public class JeeslIoSsiFacadeBean<L extends UtilsLang,D extends UtilsDescription
 	       
 		TypedQuery<Tuple> tQ = em.createQuery(cQ);
         return jtf.buildCount(tQ.getResultList());
+	}
+
+	@Override
+	public List<DATA> fIoSsiData(MAPPING mapping) {return this.allForParent(fbSsi.getClassData(), mapping);}
+
+	@Override
+	public DATA fIoSsiData(MAPPING mapping, String code) throws UtilsNotFoundException
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<DATA> cQ = cB.createQuery(fbSsi.getClassData());
+		Root<DATA> data = cQ.from(fbSsi.getClassData());
+		
+		
+		Join<DATA,MAPPING> jMapping = data.join(JeeslIoSsiData.Attributes.mapping.toString());
+		predicates.add(jMapping.in(mapping));
+		
+		Expression<String> eCode = data.get(JeeslIoSsiData.Attributes.code.toString());
+		predicates.add(cB.equal(eCode,code));
+
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(data);
+
+		TypedQuery<DATA> tQ = em.createQuery(cQ);
+		
+		try	{return tQ.getSingleResult();}
+		catch (NoResultException ex){throw new UtilsNotFoundException("Nothing found "+fbSsi.getClassData().getSimpleName()+" for "+mapping.toString()+" for code="+code);}
+		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("Results for "+fbSsi.getClassData().getSimpleName()+" and code="+code+" not unique");}
 	}
 }

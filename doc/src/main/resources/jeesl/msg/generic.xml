@@ -85,4 +85,11 @@
     		<s:lang key="fr" translation="Search"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="jeeslCount">
+		<s:langs>
+    		<s:lang key="de" translation="Anzahl"/>
+    		<s:lang key="en" translation="Count"/>
+    		<s:lang key="fr" translation="Count"/>
+		</s:langs>
+	</s:translation>	
 </s:translations>

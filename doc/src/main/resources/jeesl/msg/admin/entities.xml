@@ -219,12 +219,18 @@
 			<s:lang key="fr" translation="Report Aggregation"/>
 		</s:langs>
 	</s:translation>
-	
-	<s:translation key="SurveyTemplateCategory">
+	<s:translation key="IoReportAggregation">
 		<s:langs>
-			<s:lang key="de" translation="Umfrage Vorlage Kategorie"/>
-			<s:lang key="en" translation="Survey Template Category"/>
-			<s:lang key="fr" translation="Survey Template Category"/>
+			<s:lang key="de" translation="Berichtsaggregierung"/>
+			<s:lang key="en" translation="Report Aggregation"/>
+			<s:lang key="fr" translation="Report Aggregation"/>
+		</s:langs>
+	</s:translation>	
+	<s:translation key="IoSsiLink">
+		<s:langs>
+			<s:lang key="de" translation="SSI Link"/>
+			<s:lang key="en" translation="SSI Link"/>
+			<s:lang key="fr" translation="SSI Link"/>
 		</s:langs>
 	</s:translation>
 	<s:translation key="SurveyTemplateStatus">

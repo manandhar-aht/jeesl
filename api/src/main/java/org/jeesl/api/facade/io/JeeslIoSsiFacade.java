@@ -21,6 +21,6 @@ public interface JeeslIoSsiFacade <L extends UtilsLang,D extends UtilsDescriptio
 			extends UtilsFacade
 {	
 	Json1Tuples<LINK> tpIoSsiLinkForMapping(MAPPING mapping);
-	List<DATA> fIoSsiData(MAPPING mapping);
+	List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links);
 	DATA fIoSsiData(MAPPING mapping, String code) throws UtilsNotFoundException;
 }

@@ -72,7 +72,29 @@ public class JeeslIoSsiFacadeBean<L extends UtilsLang,D extends UtilsDescription
 	}
 
 	@Override
-	public List<DATA> fIoSsiData(MAPPING mapping) {return this.allForParent(fbSsi.getClassData(), mapping);}
+	public List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links)
+	{
+		if(links!=null && links.isEmpty()) {return new ArrayList<DATA>();}
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<DATA> cQ = cB.createQuery(fbSsi.getClassData());
+		Root<DATA> data = cQ.from(fbSsi.getClassData());
+		
+		Join<DATA,MAPPING> jMapping = data.join(JeeslIoSsiData.Attributes.mapping.toString());
+		predicates.add(jMapping.in(mapping));
+		
+		if(links!=null)
+		{
+			Join<DATA,LINK> jLink = data.join(JeeslIoSsiData.Attributes.link.toString());
+			predicates.add(jLink.in(links));
+		}
+
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(data);
+
+		TypedQuery<DATA> tQ = em.createQuery(cQ);
+		return tQ.getResultList();
+	}
 
 	@Override
 	public DATA fIoSsiData(MAPPING mapping, String code) throws UtilsNotFoundException
@@ -81,7 +103,6 @@ public class JeeslIoSsiFacadeBean<L extends UtilsLang,D extends UtilsDescription
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<DATA> cQ = cB.createQuery(fbSsi.getClassData());
 		Root<DATA> data = cQ.from(fbSsi.getClassData());
-		
 		
 		Join<DATA,MAPPING> jMapping = data.join(JeeslIoSsiData.Attributes.mapping.toString());
 		predicates.add(jMapping.in(mapping));

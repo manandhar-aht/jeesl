@@ -27,14 +27,14 @@
 						value="/image/symbolizer/graphic/#{cc.attrs.value.class.name}/#{cc.attrs.height}/#{cc.attrs.value.id}"/>
 		<p:tooltip rendered="#{(empty cc.attrs.listener) and (not empty cc.attrs.tooltip)}" for="image" value="#{cc.attrs.tooltip}" />
 		
-		<p:commandLink rendered="#{not empty cc.attrs.listener}"
-						id="link" 
-					   update="#{cc.attrs.update}"
-					   actionListener="#{cc.listener}"
-					   process="#{cc.attrs.process}" 
-					   onstart="#{cc.attrs.onstart}"
-					   oncomplete="#{cc.attrs.oncomplete}"
-					   immediate="#{cc.attrs.immediate}">
+		<p:commandLink id="link" 
+						rendered="#{not empty cc.attrs.listener}"
+						update="#{cc.attrs.update}"
+						actionListener="#{cc.listener}"
+						process="#{cc.attrs.process}" 
+						onstart="#{cc.attrs.onstart}"
+						oncomplete="#{cc.attrs.oncomplete}"
+						immediate="#{cc.attrs.immediate}">
 				<h:graphicImage id="image2"
 						rendered="#{not cc.attrs.disabled}"
 						height="#{cc.attrs.height}"

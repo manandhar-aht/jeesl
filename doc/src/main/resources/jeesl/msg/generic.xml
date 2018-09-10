@@ -85,4 +85,11 @@
     		<s:lang key="fr" translation="Search"/>
 		</s:langs>
 	</s:translation>
+    <s:translation key="jeeslSelectOptionRight">
+        <s:langs>
+            <s:lang key="de" translation="Bitte wählen Sie eine Option aus Menü rechts."/>
+            <s:lang key="en" translation="Please choose an option from the menu on the right"/>
+            <s:lang key="fr" translation="Veuillez choisir une option dans le menu à droite"/>
+        </s:langs>
+    </s:translation>
 </s:translations>

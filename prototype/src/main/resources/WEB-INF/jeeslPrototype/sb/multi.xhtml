@@ -12,12 +12,19 @@
 >
 	<c:set var="rendered"  value="#{not empty rendered ? rendered : true}" />
 	<c:set var="counter"  value="#{not empty counter ? counter : false}" />
+	<c:set var="headerIcons"  value="#{not empty headerIcons ? headerIcons : false}" />
+	<c:set var="listIcons"  value="#{not empty listIcons ? listIcons : false}" />
 
 	<jp:sbItem orientation="right" childs="#{handler.list}" rendered="#{rendered}">
 		<f:facet name="label">
 			<jtp:symbolizer rendered="#{not empty icon}" value="#{icon}" height="12"/>
 			#{label}
 			<h:outputText rendered="#{counter}" value="(#{fn:length(handler.selected)}/#{fn:length(handler.list)})"/>
+			<ui:fragment rendered="#{headerIcons}">
+				<ui:repeat var="s" value="#{handler.selected}">
+					<jtp:symbolizer value="#{s}" height="12"/>
+				</ui:repeat>
+			</ui:fragment>
 		</f:facet>
 		
 		<f:facet name="top">
@@ -38,6 +45,7 @@
 		
 		<h:commandLink>
 			<ui:insert />
+			<jtp:symbolizer value="#{var}" height="12" rendered="#{listIcons}"/>
 			<aup:sbCheckmark value="#{handler.map[var]}"/>
 			<p:ajax event="click" listener="#{handler.toggle(var)}" update="#{update}" oncomplete="#{oncomplete}"/>
 		</h:commandLink>

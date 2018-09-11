@@ -14,6 +14,13 @@
     		<s:lang key="fr" translation="Scope"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslTsStation">
+        <s:langs>
+            <s:lang key="de" translation="Station"/>
+            <s:lang key="en" translation="Station"/>
+            <s:lang key="fr" translation="Station"/>
+        </s:langs>
+    </s:translation>
 	<s:translation key="jeeslTsUnit">
     	<s:langs>
     		<s:lang key="de" translation="Einheit"/>

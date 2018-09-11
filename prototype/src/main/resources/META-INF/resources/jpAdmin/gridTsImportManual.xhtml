@@ -12,6 +12,7 @@
       xmlns:aupSec="http://ahtutils.sourceforge.net/prototype/security"
       xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
       xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:jp="http://jsf.jeesl.org/prototype"
       xmlns:jeesl="http://www.jeesl.org/jsf">
 	
 	<composite:interface>
@@ -21,7 +22,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sCategories" width="6">
+				<aht:slot id="sCategories" width="5">
 					<h:form id="fCategories">
 						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
@@ -58,60 +59,74 @@
                 </aht:slot>
             </aht:row>
             <aht:row>
-				<aht:slot id="sStations" width="4">
+				<aht:slot id="sStations" width="5">
 					<h:form id="fStations" rendered="#{(not empty cc.attrs.bean.clas) and (not empty cc.attrs.bean.interval)}">
-                        <p:dataTable var="ts" value="#{cc.attrs.bean.tsh.opList}"
-                                     selection="#{cc.attrs.bean.tsh.opList}" selectionMode="multiple" rowKey="#{ts.id}">
+                        <p:dataTable var="s" value="#{cc.attrs.bean.stations}"
+                                     selection="#{cc.attrs.bean.station}" selectionMode="single" rowKey="#{s.id}"
+                                     rows="10"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="10,20,30">
                             <f:facet name="header">
                                 <aht:pfDataTableHeader title="#{msg.jeeslTsStation}"/>
                             </f:facet>
-                            <p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectTimeseries()}" update=":#{cc.id}:fTimeSeries"/>
+                            <p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectStation()}" update=":#{cc.id}:fTimeSeries"/>
                             <p:column rendered="true">
-                                <ui:remove>
-                                    <h:outputText value="[#{ts.id}] "/>
-                                    <h:outputText value="#{cc.attrs.bean.mapTsEntity[ts].id} "/>
-                                    <h:outputText value="#{ts.bridge.entityClass.xpath}"/>
-                                </ui:remove>
-                                <jeesl:outputXpath value="#{cc.attrs.bean.mapTsEntity[ts]}" xpath="#{ts.bridge.entityClass.xpath}"/>
+                                    <h:outputText value="[#{s.code}] "/>
                             </p:column>
                         </p:dataTable>
 					</h:form>
 				</aht:slot>
+                <aht:slot id="sTimeSeries" width="6">
+                <h:form id="fTimeSeries">
+                    <p:dataTable var="d" value="#{cc.attrs.bean.data}" rendered="#{not empty cc.attrs.bean.station}"
+                                 rows="10"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,20,30">
+                        <f:facet name="header">
+                            <aht:pfDataTableHeader title="#{msg.jeeslTsData}"/>
+                        </f:facet>
+                        <p:column rendered="true" headerText="#{msg.jeeslTsTransactionRecord}">
+                            <jp:outputDate value="#{d.record}" withTime="true"/>
+                        </p:column>
+                        <p:column rendered="true" headerText="#{msg.jeeslTsValue}">
+                            <h:outputText value="#{d.value}"/>
+                        </p:column>
+                        <p:column rendered="true" headerText="#{msg.jeeslTsScope}">
+                            <h:outputText value="#{d.timeSeries.scope.name[localeCode].lang}"/>
+                        </p:column>
+                        <p:column rendered="true" headerText="#{msg.jeeslTsInterval}">
+                            <h:outputText value="#{d.timeSeries.interval.name[localeCode].lang}"/>
+                        </p:column>
+                        <p:column rendered="true" headerText="#{msg.jeeslTsClass}">
+                            <h:outputText value="#{d.timeSeries.bridge.entityClass.name[localeCode].lang}"/>
+                        </p:column>
+                        <p:column rendered="true" headerText="#{msg.jeeslTsEntity}">
+                            <jeesl:outputXpath value="#{cc.attrs.bean.map[d.timeSeries.bridge.entityClass][d.timeSeries.bridge.refId]}" xpath="#{d.timeSeries.bridge.entityClass.xpath}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </aht:slot>
 			</aht:row>
-				<aht:slot id="sTimeSeries" width="7">
-					<h:form id="fTimeSeries">
-                        <p:dataTable var="ts" value="#{cc.attrs.bean.tsh.tbList}"
-                                     selection="#{cc.attrs.bean.tsh.opList}" selectionMode="multiple" rowKey="#{ts.id}">
-                            <f:facet name="header">
-                                <aht:pfDataTableHeader title="#{msg.jeeslTsStation}"/>
-                            </f:facet>
-                            <p:column rendered="true">
-                                <ui:remove>
-                                    <h:outputText value="[#{ts.id}] "/>
-                                    <h:outputText value="#{cc.attrs.bean.mapTsEntity[ts].id} "/>
-                                    <h:outputText value="#{ts.bridge.entityClass.xpath}"/>
-                                </ui:remove>
-                                <jeesl:outputXpath value="#{cc.attrs.bean.mapTsEntity[ts]}" xpath="#{ts.bridge.entityClass.xpath}"/>
-                            </p:column>
-                        </p:dataTable>
-					</h:form>
-				</aht:slot>
-				<aht:slot id="sTs" width="4">
-					<p:dataTable var="d" value="#{cc.attrs.bean.timeSeries.data}" rendered="#{not empty cc.attrs.bean.timeSeries}">
-						<f:facet name="header">
-							<aht:pfDataTableHeader title="#{msg.aupTsTimeSerie}"/>
-						</f:facet>
-						<p:column rendered="true" headerText="#{msg.aupDate}">  
-							<h:outputText value="#{d.record}">
-		                	<f:converter converterId="net.sf.ahtutils.jsf.converter.XmlGregorianCalendarConverter" />
-		                	<f:attribute name="pattern" value="dd.MM.yy HH:mm" />
-		                </h:outputText>
-			            </p:column>
-						<p:column rendered="true" headerText="#{msg.jeeslTsValue}">  
-							<h:outputText rendered="#{d.isSetValue()}" value="#{d.value}"/>
-			            </p:column>
-			       	</p:dataTable>
-				</aht:slot>
+            <!--<aht:row>-->
+				<!--<aht:slot id="sTs" width="4">-->
+					<!--<p:dataTable var="d" value="#{cc.attrs.bean.timeSeries.data}" rendered="#{not empty cc.attrs.bean.timeSeries}">-->
+						<!--<f:facet name="header">-->
+							<!--<aht:pfDataTableHeader title="#{msg.aupTsTimeSerie}"/>-->
+						<!--</f:facet>-->
+						<!--<p:column rendered="true" headerText="#{msg.aupDate}">  -->
+							<!--<h:outputText value="#{d.record}">-->
+		                	<!--<f:converter converterId="net.sf.ahtutils.jsf.converter.XmlGregorianCalendarConverter" />-->
+		                	<!--<f:attribute name="pattern" value="dd.MM.yy HH:mm" />-->
+		                <!--</h:outputText>-->
+			            <!--</p:column>-->
+						<!--<p:column rendered="true" headerText="#{msg.jeeslTsValue}">  -->
+							<!--<h:outputText rendered="#{d.isSetValue()}" value="#{d.value}"/>-->
+			            <!--</p:column>-->
+			       	<!--</p:dataTable>-->
+				<!--</aht:slot>-->
+            <!--</aht:row>-->
 	    </aup:grid>
 	</composite:implementation>
 </html>

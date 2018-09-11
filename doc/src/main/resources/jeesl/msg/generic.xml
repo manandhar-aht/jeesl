@@ -92,4 +92,11 @@
             <s:lang key="fr" translation="Veuillez choisir une option dans le menu à droite"/>
         </s:langs>
     </s:translation>
+	<s:translation key="jeeslCount">
+		<s:langs>
+    		<s:lang key="de" translation="Anzahl"/>
+    		<s:lang key="en" translation="Count"/>
+    		<s:lang key="fr" translation="Count"/>
+		</s:langs>
+	</s:translation>
 </s:translations>

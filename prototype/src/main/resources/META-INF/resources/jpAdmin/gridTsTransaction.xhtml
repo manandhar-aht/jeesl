@@ -32,19 +32,19 @@
 								<p:columnToggler datasource="dtTransactions" trigger="toggler" />
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sTransaction" listener="#{cc.attrs.bean.selectTransaction()}"/>
-							<p:column rendered="true" headerText="#{msg.jeeslTsReference}">  
+							<p:column rendered="true" headerText="#{msg.jeeslTsReference}" filterBy="#{t.reference}" filterMatchMode="contains">
 								<h:outputText value="#{t.reference}"/>
 				            </p:column>
-							<p:column rendered="true" headerText="#{msg.jeeslTsTransactionUser}">  
+							<p:column rendered="true" headerText="#{msg.jeeslTsTransactionUser}" filterBy="#{t.user.lastName}" filterMatchMode="contains">
 								<h:outputText value="#{t.user.firstName} #{t.user.lastName}"/>
 				            </p:column>
-			                <p:column rendered="true" headerText="#{msg.jeeslTsTransactionRecord}">  
+			                <p:column rendered="true" headerText="#{msg.jeeslTsTransactionRecord}" filterBy="#{t.record}" filterMatchMode="contains">
 								<jp:outputDate value="#{t.record}" withTime="true"/>
 				            </p:column>
 				       	</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sTransaction" width="7">
+				<aht:slot id="sTransaction" width="5">
 					<h:form id="fTransaction" rendered="#{not empty cc.attrs.bean.transaction}">
 						<p:panel header="#{msg.jeeslTsTransaction}" styleClass="auPanelWithGrid">
 							<f:facet name="actions">
@@ -64,30 +64,33 @@
 								<h:outputText value="#{cc.attrs.bean.transaction.remark}"/>
 							</p:panelGrid>
 						</p:panel>
-					</h:form>
-					<p:dataTable var="d" value="#{cc.attrs.bean.datas}"  rendered="#{not empty cc.attrs.bean.transaction}">
-						<f:facet name="header">
-							<aht:pfDataTableHeader title="#{msg.jeeslTsData}"/>
-						</f:facet>
-		                <p:column rendered="true" headerText="#{msg.jeeslTsTransactionRecord}">  
-							<jp:outputDate value="#{d.record}" withTime="true"/>
-			            </p:column>
-			            <p:column rendered="true" headerText="#{msg.jeeslTsValue}">  
-							<h:outputText value="#{d.value}"/>
-						</p:column>
-						<p:column rendered="true" headerText="#{msg.jeeslTsScope}">  
-							<h:outputText value="#{d.timeSeries.scope.name[localeCode].lang}"/>
-			            </p:column>
-			            <p:column rendered="true" headerText="#{msg.jeeslTsInterval}">  
-							<h:outputText value="#{d.timeSeries.interval.name[localeCode].lang}"/>
-			            </p:column>
-			             <p:column rendered="true" headerText="#{msg.jeeslTsClass}">  
-							<h:outputText value="#{d.timeSeries.bridge.entityClass.name[localeCode].lang}"/>
-			            </p:column>
-			            <p:column rendered="true" headerText="#{msg.jeeslTsEntity}">
-								<jeesl:outputXpath value="#{cc.attrs.bean.map[d.timeSeries.bridge.entityClass][d.timeSeries.bridge.refId]}" xpath="#{d.timeSeries.bridge.entityClass.xpath}"/>
-			            </p:column>
-			       	</p:dataTable>
+
+                        <p:dataTable var="d" value="#{cc.attrs.bean.datas}"  rendered="#{not empty cc.attrs.bean.transaction}">
+                            <f:facet name="header">
+                                <aht:pfDataTableHeader title="#{msg.jeeslTsData}">
+                                    <jeesl:downloadIcon type="reportXls" value="#{cc.attrs.bean.xlsStream()}" tooltip="#{msg.reportXls}" rendered="false"/>
+                                </aht:pfDataTableHeader>
+                            </f:facet>
+                            <p:column rendered="true" headerText="#{msg.jeeslTsTransactionRecord}">
+                                <jp:outputDate value="#{d.record}" withTime="true"/>
+                            </p:column>
+                            <p:column rendered="true" headerText="#{msg.jeeslTsValue}">
+                                <h:outputText value="#{d.value}"/>
+                            </p:column>
+                            <p:column rendered="true" headerText="#{msg.jeeslTsScope}">
+                                <h:outputText value="#{d.timeSeries.scope.name[localeCode].lang}"/>
+                            </p:column>
+                            <p:column rendered="true" headerText="#{msg.jeeslTsInterval}">
+                                <h:outputText value="#{d.timeSeries.interval.name[localeCode].lang}"/>
+                            </p:column>
+                             <p:column rendered="true" headerText="#{msg.jeeslTsClass}">
+                                <h:outputText value="#{d.timeSeries.bridge.entityClass.name[localeCode].lang}"/>
+                            </p:column>
+                            <p:column rendered="true" headerText="#{msg.jeeslTsEntity}">
+                                    <jeesl:outputXpath value="#{cc.attrs.bean.map[d.timeSeries.bridge.entityClass][d.timeSeries.bridge.refId]}" xpath="#{d.timeSeries.bridge.entityClass.xpath}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
 				</aht:slot>
                 <h:form id="fCode">
                     <jpSec:codeConfirmation id="codeConfirmator" update=":#{cc.id}:grid" block=":#{cc.id}:grid" actionListener="#{cc.attrs.bean.deleteTransaction()}" handler="#{cc.attrs.bean.cch}"/>

@@ -91,13 +91,13 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 		{
 			sbhScope.setList(fTs.findScopes(fbTs.getClassScope(), fbTs.getClassCategory(), sbhCategory.getSelected(), uiShowInvisible));
 			Collections.sort(sbhScope.getList(), comparatorScope);
-			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassScope(),sbhScope.getList()));};
+			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassScope(),sbhScope.getList()));}
 			sbhScope.silentCallback();
 		}
 	}
 	
 	@Override
-	public void selectSbSingle(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
+	public void selectSbSingle(EjbWithId item)
 	{
 		if(fbTs.getClassScope().isAssignableFrom(item.getClass()))
 		{
@@ -149,11 +149,9 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 	}
 	
 	DataSet ds;
-
 	public DataSet getDs() {
 		return ds;
 	}
-
 	public void setDs(DataSet ds) {
 		this.ds = ds;
 	}

@@ -56,6 +56,7 @@ public class JeeslGraphicFacadeBean<L extends UtilsLang, D extends UtilsDescript
 		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("Multiple Results for status.id"+statusId);}
 	}
 	
+	@Override public <W extends EjbWithGraphic<G>> G fGraphic(Class<W> c, W w) throws UtilsNotFoundException {return fGraphic(c,w.getId());}
 	@Override public <W extends EjbWithGraphic<G>> G fGraphic(Class<W> c, long id) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();

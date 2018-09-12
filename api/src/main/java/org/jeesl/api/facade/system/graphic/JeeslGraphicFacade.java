@@ -20,7 +20,7 @@ public interface JeeslGraphicFacade <L extends UtilsLang, D extends UtilsDescrip
 			extends UtilsFacade
 {	
 	G fGraphicForStatus(long statusId) throws UtilsNotFoundException;
-//	G fGraphicForClass(long statusId) throws UtilsNotFoundException;
+	<W extends EjbWithGraphic<G>> G fGraphic(Class<W> c, W w) throws UtilsNotFoundException;
 	<W extends EjbWithGraphic<G>> G fGraphic(Class<W> c, long id) throws UtilsNotFoundException; 
 	<T extends EjbWithGraphic<G>> List<T> allWithGraphicFigures(Class<T> c);
 }

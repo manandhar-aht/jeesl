@@ -2,7 +2,9 @@ package org.jeesl.interfaces.model.system.with;
 
 import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
 
-public interface EjbWithGraphic<G extends JeeslGraphic<?,?,G,?,?,?>>
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+
+public interface EjbWithGraphic<G extends JeeslGraphic<?,?,G,?,?,?>> extends EjbWithId
 {
 	G getGraphic();
 	void setGraphic(G graphic) ;

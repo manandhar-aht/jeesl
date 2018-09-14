@@ -56,14 +56,14 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 		}
 	}
 	
-	
 	public void ui4(L4 ejb) {select4(ejb,HierarchicalLocationUpdateParameter.build(false,true,true,true,true));}
 	public void select4(L4 ejb, HierarchicalLocationUpdateParameter hlup)
 	{
-		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString());}
+		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString()+" "+hlup.toString());}
 		this.l4=ejb;
 		store4.setL4(ejb);
 		clearL5List();
+		
 		if(hlup.isFillParent()) {select3(getParent4(l4),hlup.copy().selectChild(false).fireEvent(false));}
 		if(hlup.isFillChilds()) {fillL5List();}
 		if(hlup.isSelectChild()) {selectDefaultL5(hlup.copy().fillParent(false).fireEvent(false));}
@@ -78,9 +78,22 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	@Override protected void clearL4List() {list4.clear();}
 	@Override protected void fillL4List()
 	{
+		if(debugOnInfo) {logger.info("Filling Level-4 List ");}
 		for(L4 ejb : cache4.cacheL4(l3))
 		{
-			if((viewIsGlobal || allow4.contains(ejb) || list3.contains(getParent4(ejb))) && !ignore4.contains(ejb)) {list4.add(ejb);}
+			boolean isAllow4 = allow4.contains(ejb);
+			boolean isContains3 = list3.contains(getParent4(ejb));
+			boolean isNotIgnore = !ignore4.contains(ejb);
+			if(debugOnInfo)
+			{
+				logger.info("\t"+ejb.toString());
+				logger.info("\t\tviewIsGlobal:"+viewIsGlobal);
+				logger.info("\t\tisAllow4:"+isAllow4);
+				logger.info("\t\tisContains3:"+isContains3);
+				logger.info("\t\tisNotIgnore:"+isNotIgnore);
+			}
+			
+			if((viewIsGlobal || isAllow4 || isContains3) && isNotIgnore) {list4.add(ejb);}
 		}
 	}
 	@Override protected void selectDefaultL4(HierarchicalLocationUpdateParameter hlup)

@@ -79,7 +79,23 @@ public class SbLocation2Handler <L1 extends EjbWithId, L2 extends EjbWithId> ext
 	{
 		for(L2 ejb : cache2.cacheL2(l1))
 		{
-			if((viewIsGlobal || allow2.contains(ejb)) && !ignore2.contains(ejb)) {list2.add(ejb);}
+			if(debugOnInfo) {logger.info("Filling Level-2 List");}
+			boolean isAllow2 = allow2.contains(ejb);
+			boolean isContains1 = list1.contains(getParent2(ejb));
+			boolean isNotIgnore2 = !ignore2.contains(ejb);
+			boolean finalL2 = (viewIsGlobal || isAllow2 || isContains1) && isNotIgnore2;
+		
+			if(debugOnInfo)
+			{
+				logger.info("\t"+ejb.toString());
+				logger.info("\t\tviewIsGlobal:"+viewIsGlobal);
+				logger.info("\t\tisAllow2:"+isAllow2);
+				logger.info("\t\tisContains1:"+isContains1);
+				logger.info("\t\tisNotIgnore2:"+isNotIgnore2);
+				logger.info("\t\t\tfinalL2:"+finalL2);
+			}
+			
+			if(finalL2) {list2.add(ejb);}
 		}
 	}
 	@Override protected void selectDefaultL2(HierarchicalLocationUpdateParameter hup)

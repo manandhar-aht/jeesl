@@ -79,8 +79,14 @@ public class SbLocation1Handler <L1 extends EjbWithId>
 		if(debug)
 		{
 			StringBuilder sb = new StringBuilder();
-			sb.append("\tLevel 1: ").append(list1.size()).append(" elements ");
+			sb.append("\tLevel 1 with ").append(list1.size()).append(" elements ");
+			
+			sb.append("Selected1: [");
 			if(l1!=null) {sb.append(l1.getClass().getSimpleName()).append(" ").append(l1.toString());}else {sb.append(": null");}
+			sb.append("]");
+			
+			sb.append(" Allow1: ");
+			for(L1 l : allow1){sb.append(l.toString()+" ");}
 			logger.info(sb.toString());
 		}
 	}

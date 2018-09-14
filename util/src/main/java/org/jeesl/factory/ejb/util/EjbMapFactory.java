@@ -8,9 +8,9 @@ import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbCodeFactory
+public class EjbMapFactory
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbCodeFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbMapFactory.class);
 	   
 	
     public static <T extends EjbWithCode> Map<String,T> toMapCode(Collection<T> list)

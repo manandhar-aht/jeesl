@@ -43,6 +43,7 @@ public class SbTree1Handler <L1 extends EjbWithId>
 		this.callback=callback;
 		this.cache1=cache1;
 		this.store1=store1;
+		
 		list1 = new ArrayList<L1>();
 		
 		allowChild1 = new HashSet<L1>();
@@ -53,11 +54,14 @@ public class SbTree1Handler <L1 extends EjbWithId>
 		xpath1 = "@id";
 	}
 	
+	// Methods to reset the Selections
+	protected void reset1(){reset1(true);}
 	protected void reset1(boolean r1)
 	{
 		if(r1) {l1=null;}
 	}
 	
+	// Adding Allowed elementes, e.g. defined by a Security Context
 	protected void addAllowedChildL1(List<L1> list)
 	{
 		for(L1 p : list)
@@ -70,6 +74,20 @@ public class SbTree1Handler <L1 extends EjbWithId>
 		if(!allowPath1.contains(ejb)) {allowPath1.add(ejb);}
 	}
 	
+	// Default Selection from a Security Context
+	protected void selectSecurity1()
+	{
+		if(debugOnInfo) {logger.info("Checking for Security Level 1 Select");}
+		
+		if(!allowChild1.isEmpty())
+		{
+			L1 ejb = new ArrayList<L1>(allowChild1).get(0);
+			if(debugOnInfo) {logger.info("selectSecurity1 "+ejb.getClass().getSimpleName()+" "+ejb.toString());}
+			cascade1(ejb,TreeUpdateParameter.build(true,true,true,true,true));
+		}
+	}
+	
+	// Selection from UI and cascading of event
 	public void uiSelect1(L1 province) {cascade1(province,TreeUpdateParameter.build(false,true,true,true,true));}
 	protected void cascade1(L1 ejb, TreeUpdateParameter tup)
 	{
@@ -115,10 +133,7 @@ public class SbTree1Handler <L1 extends EjbWithId>
 		return result;
 	}
 	
-	//Methods for Tree-Hierachy
-	protected void resetFrom(int level) {logger.warn(warnMessageOverrideNextLevel);}
-
-	//Methods for next level
+	//Methods need to be implemented in next Level
 	protected void clearL2List() {logger.warn(warnMessageOverrideNextLevel);}
 	protected void fillL2List() {logger.warn(warnMessageOverrideNextLevel);}
 	protected void selectDefaultL2(TreeUpdateParameter hlup) {logger.warn(warnMessageOverrideNextLevel);}

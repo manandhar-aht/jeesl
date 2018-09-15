@@ -23,7 +23,7 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 	
 	protected boolean showLevel2; public boolean isShowLevel2() {return showLevel2;}
 	
-	protected final Set<L2> allow2;
+	protected final Set<L2> allowChild2;
 	protected final Set<L2> ignore2;
 	
 	protected final List<L2> list2; public List<L2> getList2() {return list2;}
@@ -37,7 +37,7 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 		this.cache2=cache2;
 		this.store2=store2;
 		
-		allow2 = new HashSet<L2>();
+		allowChild2 = new HashSet<L2>();
 		ignore2 = new HashSet<L2>();
 		list2 = new ArrayList<L2>();
 		
@@ -45,21 +45,38 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 		xpath2 = "@id";
 	}
 	
-	protected void reset2(boolean r1, boolean r2)
+	// Methods to reset the Selections
+	protected void reset2() {reset2(false,true);}
+	private void reset2(boolean r1, boolean r2)
 	{
 		super.reset1(r1);
 		if(r2) {l2=null;}
 	}
 	
+	// Adding Allowed elementes, e.g. defined by a Security Context
 	protected void addAllowedL2(List<L2> list)
 	{
 		for(L2 ejb : list)
 		{
-			if(!allow2.contains(ejb)) {allow2.add(ejb);}
+			if(!allowChild2.contains(ejb)) {allowChild2.add(ejb);}
 			super.addAllowedPathL1(getParentForL2(ejb));
 		}
 	}
 	
+	// Default Selection from a Security Context
+	protected void selectSecurity2()
+	{
+		if(debugOnInfo) {logger.info("Checking for Security Level 2 Select");}
+		if(!allowChild2.isEmpty())
+		{
+			L2 ejb = new ArrayList<L2>(allowChild2).get(0);
+			if(debugOnInfo) {logger.info("selectSecurity2 "+ejb.getClass().getSimpleName()+" "+ejb.toString());}
+			cascade2(ejb,TreeUpdateParameter.build(true,true,true,true,true));
+		}
+		else {selectSecurity1();}
+	}
+	
+	// Selection from UI and cascading of event
 	public void uiSelect2(L2 ejb) {cascade2(ejb,TreeUpdateParameter.build(false,true,true,true,true));}
 	protected void cascade2(L2 ejb, TreeUpdateParameter tup)
 	{
@@ -74,9 +91,7 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 //		if(hup.isFireEvent()) {fireEvent();}
 	}
 	
-	protected L1 getParentForL2(L2 l2) {logger.warn("getParentForL2 "+SbTree1Handler.warnMessageOverrideImplementation);return null;}
-	
-	//Methods required from previous level (clear,fill,select)
+	//Methods called from previous level and @Overriden here (clear,fill,select)
 	@Override protected void clearL2List() {list2.clear();}
 	@Override protected void fillL2List()
 	{
@@ -86,39 +101,27 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 		{
 			L1 parent = getParentForL2(ejb);
 			boolean isCascade = ejb.equals(l2);
-			boolean isAllow = allow2.contains(ejb);
+			boolean isAllow = allowChild2.contains(ejb);
 			boolean isParentInList = list1.contains(parent);
 			boolean isParentInPath = allowPath1.contains(parent);
 			boolean isNotIgnore = !ignore2.contains(ejb);	
 			if(evaluateToAddChild(ejb,isCascade,isAllow,isParentInList,isParentInPath,isNotIgnore)) {list2.add(ejb);}
 		}
 	}
-	
-	@Override protected void selectDefaultL2(TreeUpdateParameter hup)
+	@Override protected void selectDefaultL2(TreeUpdateParameter tup)
 	{
-		if(debugOnInfo) {logger.info("selectDefaultL2 "+hup.toString());}
-		resetFrom(2);
-		if(!list2.isEmpty()) {cascade2(list2.get(0),hup);}
+		if(debugOnInfo) {logger.info("selectDefaultL2 "+tup.toString());}
+		reset2();
+		if(!list2.isEmpty()) {cascade2(list2.get(0),tup);}
 	}
 	
+	//Methods need to be implemented in next Level
+	protected L1 getParentForL2(L2 l2) {logger.warn("getParentForL2 "+SbTree1Handler.warnMessageOverrideImplementation);return null;}
+	protected void clearL3List() {logger.warn(warnMessageOverrideNextLevel);}
+	protected void fillL3List() {logger.warn(warnMessageOverrideNextLevel);}
+	protected void selectDefaultL3(TreeUpdateParameter tup) {logger.warn(warnMessageOverrideNextLevel);}
 	
-	//Methods for next level
-	protected void clearL3List() {}
-	protected void fillL3List() {}
-	protected void selectDefaultL3(TreeUpdateParameter hlup) {}
-	
-	protected void selectSecurity2()
-	{
-		if(debugOnInfo) {logger.info("Checking for Security Level 2 Select");}
-		
-		if(!allow2.isEmpty())
-		{
-			L2 ejb = new ArrayList<L2>(allow2).get(0);
-			if(debugOnInfo) {logger.info("selectSecurity2 "+ejb.getClass().getSimpleName()+" "+ejb.toString());}
-			cascade2(ejb,TreeUpdateParameter.build(true,true,true,true,true));
-		}
-	}
-	
+	// Debugging
 	public void debug(boolean debug)
 	{
 		if(debug)
@@ -130,19 +133,16 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 			logger.info(sb.toString());
 		}
 	}
-	
 	public void debugAllow2(boolean debug)
 	{
 		if(debug)
 		{
-			logger.info("Allow2: "+allow2.size()+" elements");
-			for(L2 ejb : new ArrayList<L2>(allow2))
+			logger.info("Allow2: "+allowChild2.size()+" elements");
+			for(L2 ejb : new ArrayList<L2>(allowChild2))
 			{
 				logger.info("\t"+ejb.toString());
 			}
 					
 		}
-		
-		
 	}
 }

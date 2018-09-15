@@ -24,6 +24,7 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 	protected boolean showLevel2; public boolean isShowLevel2() {return showLevel2;}
 	
 	protected final Set<L2> allowChild2;
+	protected final Set<L2> allowPath2;
 	protected final Set<L2> ignore2;
 	
 	protected final List<L2> list2; public List<L2> getList2() {return list2;}
@@ -37,9 +38,11 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 		this.cache2=cache2;
 		this.store2=store2;
 		
-		allowChild2 = new HashSet<L2>();
-		ignore2 = new HashSet<L2>();
 		list2 = new ArrayList<L2>();
+		
+		allowChild2 = new HashSet<L2>();
+		allowPath2 = new HashSet<L2>();
+		ignore2 = new HashSet<L2>();
 		
 		showLevel2 = true;
 		xpath2 = "@id";
@@ -53,7 +56,7 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 		if(r2) {l2=null;}
 	}
 	
-	// Adding Allowed elementes, e.g. defined by a Security Context
+	// Adding Allowed elements, e.g. defined by a Security Context
 	protected void addAllowedL2(List<L2> list)
 	{
 		for(L2 ejb : list)
@@ -61,6 +64,10 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 			if(!allowChild2.contains(ejb)) {allowChild2.add(ejb);}
 			super.addAllowedPathL1(getParentForL2(ejb));
 		}
+	}
+	protected void addAllowedPathL2(L2 ejb)
+	{
+		if(!allowPath2.contains(ejb)) {allowPath2.add(ejb);}
 	}
 	
 	// Default Selection from a Security Context
@@ -104,8 +111,9 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 			boolean isAllow = allowChild2.contains(ejb);
 			boolean isParentInList = list1.contains(parent);
 			boolean isParentInPath = allowPath1.contains(parent);
+			boolean isParentsAllowed = allowChild1.contains(parent);
 			boolean isNotIgnore = !ignore2.contains(ejb);	
-			if(evaluateToAddChild(ejb,isCascade,isAllow,isParentInList,isParentInPath,isNotIgnore)) {list2.add(ejb);}
+			if(evaluateToAddChild(ejb,isCascade,isAllow,isParentInList,isParentInPath,isParentsAllowed,isNotIgnore)) {list2.add(ejb);}
 		}
 	}
 	@Override protected void selectDefaultL2(TreeUpdateParameter tup)

@@ -113,13 +113,20 @@ public class SbTree1Handler <L1 extends EjbWithId>
 			boolean isCascade = ejb.equals(l1);
 			boolean isAllow = allowChild1.contains(ejb);
 			boolean isNotIgnore = !ignore1.contains(ejb);
-			if(evaluateToAddChild(ejb,isCascade,isAllow,false,false,isNotIgnore)) {list1.add(ejb);}
+			if(evaluateToAddChild(ejb,isCascade,isAllow,false,false,false,isNotIgnore)) {list1.add(ejb);}
 		}
 	}
 	
-	protected boolean evaluateToAddChild(EjbWithId ejb, boolean isCascade, boolean isAllowed, boolean isParentInList, boolean isParentInPath, boolean isNotIgnore)
+	protected boolean evaluateToAddChild(EjbWithId ejb,
+											boolean isCascade,			// element is used in the cascade
+											boolean isAllowed,			// element is explicitly Allowed
+											boolean isParentInList,		// element.parent is part of parent list
+											boolean isParentInPath,		// element.parent is only a path entry
+											boolean isParentsAllowed,	// element.parents is explicitly allowed
+											boolean isNotIgnore			// element is not on ignore list
+											)
 	{
-		boolean result = (isCascade || viewIsGlobal || isAllowed || (isParentInList && !isParentInPath)) && isNotIgnore;
+		boolean result = (isCascade || viewIsGlobal || isAllowed || (isParentInList && (!isParentInPath || isParentsAllowed))) && isNotIgnore;
 		if(debugOnInfo)
 		{
 			logger.info("\t"+ejb.toString()+" Final:"+result);

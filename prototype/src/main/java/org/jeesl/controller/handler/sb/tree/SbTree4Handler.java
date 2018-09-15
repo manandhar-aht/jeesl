@@ -74,7 +74,7 @@ public class SbTree4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 	protected void selectSecurity4()
 	{
 		if(debugOnInfo) {logger.info("Checking for Security Level 4 Select");}
-		if(!allowChild3.isEmpty())
+		if(!allowChild4.isEmpty())
 		{
 			L4 ejb = new ArrayList<L4>(allowChild4).get(0);
 			if(debugOnInfo) {logger.info("selectSecurity4 "+ejb.getClass().getSimpleName()+" "+ejb.toString());}
@@ -111,7 +111,7 @@ public class SbTree4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 			boolean isAllow = allowChild4.contains(ejb);
 			boolean isParentInList = list3.contains(parent);
 			boolean isParentInPath = allowPath3.contains(parent);
-			boolean isParentsAllowed =  allowChild1.contains(getParentForL2(getParentForL3(getParentForL4(ejb)))) || allowChild2.contains(getParentForL3(getParentForL4(ejb))) || allowChild3.contains(parent);
+			boolean isParentsAllowed = allowChild1.contains(getParentForL2(getParentForL3(parent))) || allowChild2.contains(getParentForL3(parent)) || allowChild3.contains(parent);
 			boolean isNotIgnore = !ignore4.contains(ejb);	
 			if(evaluateToAddChild(ejb,isCascade,isAllow,isParentInList,isParentInPath,isParentsAllowed,isNotIgnore)) {list4.add(ejb);}
 		}

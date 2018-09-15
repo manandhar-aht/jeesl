@@ -111,7 +111,7 @@ public class SbTree3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 			boolean isAllow = allowChild3.contains(ejb);
 			boolean isParentInList = list2.contains(parent);
 			boolean isParentInPath = allowPath2.contains(parent);
-			boolean isParentsAllowed =  allowChild1.contains(getParentForL2(parent)) || allowChild2.contains(parent);
+			boolean isParentsAllowed = allowChild1.contains(getParentForL2(parent)) || allowChild2.contains(parent);
 			boolean isNotIgnore = !ignore3.contains(ejb);	
 			if(evaluateToAddChild(ejb,isCascade,isAllow,isParentInList,isParentInPath,isParentsAllowed,isNotIgnore)) {list3.add(ejb);}
 		}

@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.controller.handler.location.HierarchicalLocationUpdateParameter;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocation1Store;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocationSelected;
+import org.jeesl.controller.handler.tree.TreeUpdateParameter;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTree1Store;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTreeSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +17,8 @@ public class SbLocation1Handler <L1 extends EjbWithId>
 {
 	final static Logger logger = LoggerFactory.getLogger(SbLocation1Handler.class);
 	
-	protected final JeeslLocationSelected callback;
-	private final JeeslLocation1Store<L1> store1;
+	protected final JeeslTreeSelected callback;
+	private final JeeslTree1Store<L1> store1;
 	
 	protected final List<L1> list1; public List<L1> getList1() {return list1;}
 	protected final Set<L1> allow1;
@@ -27,7 +27,7 @@ public class SbLocation1Handler <L1 extends EjbWithId>
 	protected boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 	protected boolean viewIsGlobal;
 	
-	public SbLocation1Handler(JeeslLocationSelected callback, JeeslLocation1Store<L1> store1)
+	public SbLocation1Handler(JeeslTreeSelected callback, JeeslTree1Store<L1> store1)
 	{
 		this.callback=callback;
 		this.store1=store1;
@@ -52,12 +52,12 @@ public class SbLocation1Handler <L1 extends EjbWithId>
 		}
 	}
 	
-	public void ui1(L1 province) {select1(province,HierarchicalLocationUpdateParameter.build(false,true,true,true,true));}
-	public void select1(L1 province, HierarchicalLocationUpdateParameter hlup)
+	public void ui1(L1 province) {select1(province,TreeUpdateParameter.build(false,true,true,true,true));}
+	public void select1(L1 province, TreeUpdateParameter hlup)
 	{
 		if(debugOnInfo) {logger.info("Select "+province.getClass().getSimpleName()+" "+province.toString());}
 		this.l1=province;
-		store1.setL1(province);
+		store1.storeTreeLevel1(province);
 		clearL2List();
 		if(hlup.isFillParent()) {}
 		if(hlup.isFillChilds()) {fillL2List();}
@@ -72,7 +72,7 @@ public class SbLocation1Handler <L1 extends EjbWithId>
 	//Methods for next level
 	protected void clearL2List() {}
 	protected void fillL2List() {}
-	protected void selectDefaultL2(HierarchicalLocationUpdateParameter hlup) {}
+	protected void selectDefaultL2(TreeUpdateParameter hlup) {}
 	
 	public void debug(boolean debug)
 	{

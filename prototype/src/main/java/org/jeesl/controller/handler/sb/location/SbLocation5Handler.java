@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.jeesl.api.bean.location.JeeslLocation5Cache;
-import org.jeesl.controller.handler.location.HierarchicalLocationUpdateParameter;
+import org.jeesl.controller.handler.tree.TreeUpdateParameter;
 import org.jeesl.interfaces.controller.handler.location.JeeslLocation5Store;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocationSelected;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTreeSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ public class SbLocation5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	protected L5 l5; public L5 getL5(){return l5;} public void setL5(L5 l5){this.l5 = l5;}
 	private boolean includeAll5; public void setIncludeAlll5(boolean includeAlll5) {this.includeAll5 = includeAlll5;}
 	
-	public SbLocation5Handler(JeeslLocationSelected callback, JeeslLocation5Cache<L1,L2,L3,L4,L5> cache5, JeeslLocation5Store<L1,L2,L3,L4,L5> store5)
+	public SbLocation5Handler(JeeslTreeSelected callback, JeeslLocation5Cache<L1,L2,L3,L4,L5> cache5, JeeslLocation5Store<L1,L2,L3,L4,L5> store5)
 	{
 		super(callback,cache5,store5);
 		this.cache5=cache5;
@@ -58,8 +58,8 @@ public class SbLocation5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 		}
 	}
 	
-	public void ui5(L5 ejb) {select5(ejb,HierarchicalLocationUpdateParameter.build(false,true,true,true,true));}
-	public void select5(L5 ejb, HierarchicalLocationUpdateParameter hlup)
+	public void ui5(L5 ejb) {select5(ejb,TreeUpdateParameter.build(false,true,true,true,true));}
+	public void select5(L5 ejb, TreeUpdateParameter hlup)
 	{
 		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString());}
 		this.l5=ejb;
@@ -84,7 +84,7 @@ public class SbLocation5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 			if((viewIsGlobal || includeAll5 || allow5.contains(ejb) || list4.contains(getParent5(ejb))) && !ignore5.contains(ejb)) {list5.add(ejb);}
 		}
 	}
-	@Override protected void selectDefaultL5(HierarchicalLocationUpdateParameter hlup)
+	@Override protected void selectDefaultL5(TreeUpdateParameter hlup)
 	{
 		reset(5);
 		if(!list5.isEmpty()) {select5(list5.get(0),hlup.fillParent(false));}
@@ -93,7 +93,7 @@ public class SbLocation5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	//Methods for next level
 	protected void clearL6List() {}
 	protected void fillL6List() {}
-	protected void selectDefaultL6(HierarchicalLocationUpdateParameter hlup) {}
+	protected void selectDefaultL6(TreeUpdateParameter hlup) {}
 	
 	public void debug(boolean debug)
 	{

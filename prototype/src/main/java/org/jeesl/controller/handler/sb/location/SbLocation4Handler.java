@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.jeesl.api.bean.location.JeeslLocation4Cache;
-import org.jeesl.controller.handler.location.HierarchicalLocationUpdateParameter;
+import org.jeesl.controller.handler.tree.TreeUpdateParameter;
 import org.jeesl.interfaces.controller.handler.location.JeeslLocation4Store;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocationSelected;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTreeSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	protected final Set<L4> ignore4;
 	protected L4 l4; public L4 getL4(){return l4;} public void setL4(L4 l4){this.l4 = l4;}
 	
-	public SbLocation4Handler(JeeslLocationSelected callback, JeeslLocation4Cache<L1,L2,L3,L4> cache4, JeeslLocation4Store<L1,L2,L3,L4> store4)
+	public SbLocation4Handler(JeeslTreeSelected callback, JeeslLocation4Cache<L1,L2,L3,L4> cache4, JeeslLocation4Store<L1,L2,L3,L4> store4)
 	{
 		super(callback,cache4,store4);
 		this.cache4=cache4;
@@ -56,8 +56,8 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 		}
 	}
 	
-	public void ui4(L4 ejb) {select4(ejb,HierarchicalLocationUpdateParameter.build(false,true,true,true,true));}
-	public void select4(L4 ejb, HierarchicalLocationUpdateParameter hlup)
+	public void ui4(L4 ejb) {select4(ejb,TreeUpdateParameter.build(false,true,true,true,true));}
+	public void select4(L4 ejb, TreeUpdateParameter hlup)
 	{
 		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString()+" "+hlup.toString());}
 		this.l4=ejb;
@@ -96,7 +96,7 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 			if((viewIsGlobal || isAllow4 || isContains3) && isNotIgnore) {list4.add(ejb);}
 		}
 	}
-	@Override protected void selectDefaultL4(HierarchicalLocationUpdateParameter hlup)
+	@Override protected void selectDefaultL4(TreeUpdateParameter hlup)
 	{
 		reset(4);
 		if(!list4.isEmpty()) {select4(list4.get(0),hlup.fillParent(false));}
@@ -105,7 +105,7 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	//Methods for next level
 	protected void clearL5List() {}
 	protected void fillL5List() {}
-	protected void selectDefaultL5(HierarchicalLocationUpdateParameter hlup) {}
+	protected void selectDefaultL5(TreeUpdateParameter hlup) {}
 	
 	public void debug(boolean debug)
 	{

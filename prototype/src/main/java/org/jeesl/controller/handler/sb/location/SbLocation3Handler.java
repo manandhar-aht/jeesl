@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.jeesl.api.bean.location.JeeslLocation3Cache;
-import org.jeesl.controller.handler.location.HierarchicalLocationUpdateParameter;
+import org.jeesl.controller.handler.tree.TreeUpdateParameter;
 import org.jeesl.interfaces.controller.handler.location.JeeslLocation3Store;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocationSelected;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTreeSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class SbLocation3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	protected final Set<L3> ignore3;
 	protected L3 l3; public L3 getL3(){return l3;} public void setL3(L3 l3){this.l3 = l3;}
 	
-	public SbLocation3Handler(JeeslLocationSelected callback, JeeslLocation3Cache<L1,L2,L3> cache3, JeeslLocation3Store<L1,L2,L3> store3)
+	public SbLocation3Handler(JeeslTreeSelected callback, JeeslLocation3Cache<L1,L2,L3> cache3, JeeslLocation3Store<L1,L2,L3> store3)
 	{
 		super(callback,cache3,store3);
 		this.cache3=cache3;
@@ -56,8 +56,8 @@ public class SbLocation3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 		}
 	}
 	
-	public void ui3(L3 ejb) {select3(ejb,HierarchicalLocationUpdateParameter.build(false,true,true,true,true));}
-	public void select3(L3 ejb, HierarchicalLocationUpdateParameter hup)
+	public void ui3(L3 ejb) {select3(ejb,TreeUpdateParameter.build(false,true,true,true,true));}
+	public void select3(L3 ejb, TreeUpdateParameter hup)
 	{
 		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString()+" "+hup.toString());}
 		this.l3=ejb;
@@ -98,7 +98,7 @@ public class SbLocation3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 			if(finalL3) {list3.add(ejb);}
 		}
 	}
-	@Override protected void selectDefaultL3(HierarchicalLocationUpdateParameter hup)
+	@Override protected void selectDefaultL3(TreeUpdateParameter hup)
 	{
 		if(debugOnInfo) {logger.info("selectDefaultL3 "+hup.toString());}
 		reset(3);
@@ -108,7 +108,7 @@ public class SbLocation3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	//Methods for next level
 	protected void clearL4List() {}
 	protected void fillL4List() {}
-	protected void selectDefaultL4(HierarchicalLocationUpdateParameter hlup) {}
+	protected void selectDefaultL4(TreeUpdateParameter hlup) {}
 	
 	public void debug(boolean debug)
 	{

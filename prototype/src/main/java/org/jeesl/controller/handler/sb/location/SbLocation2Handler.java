@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.api.bean.location.JeeslLocation2Cache;
-import org.jeesl.controller.handler.location.HierarchicalLocationUpdateParameter;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocation2Store;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocationSelected;
+import org.jeesl.api.bean.location.JeeslTree2Cache;
+import org.jeesl.controller.handler.tree.TreeUpdateParameter;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTree2Store;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTreeSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,15 +18,15 @@ public class SbLocation2Handler <L1 extends EjbWithId, L2 extends EjbWithId> ext
 {
 	final static Logger logger = LoggerFactory.getLogger(SbLocation2Handler.class);
 	
-	private final JeeslLocation2Store<L1,L2> store2;
-	private final JeeslLocation2Cache<L1,L2> cache2;
+	private final JeeslTree2Store<L1,L2> store2;
+	private final JeeslTree2Cache<L1,L2> cache2;
 	
 	protected final List<L2> list2; public List<L2> getList2() {return list2;}
 	protected final Set<L2> allow2;
 	protected final Set<L2> ignore2;
 	protected L2 l2; public L2 getL2(){return l2;} public void setL2(L2 district){this.l2 = district;}
 	
-	public SbLocation2Handler(JeeslLocationSelected callback, JeeslLocation2Cache<L1,L2> cache2, JeeslLocation2Store<L1,L2> store2)
+	public SbLocation2Handler(JeeslTreeSelected callback, JeeslTree2Cache<L1,L2> cache2, JeeslTree2Store<L1,L2> store2)
 	{
 		super(callback,store2);
 		this.cache2=cache2;
@@ -56,12 +56,12 @@ public class SbLocation2Handler <L1 extends EjbWithId, L2 extends EjbWithId> ext
 		}
 	}
 	
-	public void ui2(L2 province) {select2(province,HierarchicalLocationUpdateParameter.build(false,true,true,true,true));}
-	public void select2(L2 district, HierarchicalLocationUpdateParameter hup)
+	public void ui2(L2 province) {select2(province,TreeUpdateParameter.build(false,true,true,true,true));}
+	public void select2(L2 district, TreeUpdateParameter hup)
 	{
 		if(debugOnInfo) {logger.info("select2 "+district.getClass().getSimpleName()+" "+district.toString()+" "+hup.toString());}
 		this.l2=district;
-		store2.setL2(district);
+		store2.storeTreeLevel2(district);
 		clearL3List();
 		if(hup.isFillParent()) {select1(getParent2(l2),hup.copy().selectChild(false).fireEvent(false));}
 		if(hup.isFillChilds()) {fillL3List();}
@@ -77,7 +77,7 @@ public class SbLocation2Handler <L1 extends EjbWithId, L2 extends EjbWithId> ext
 	@Override protected void clearL2List() {list2.clear();}
 	@Override protected void fillL2List()
 	{
-		for(L2 ejb : cache2.cacheL2(l1))
+		for(L2 ejb : cache2.getCachedChildsForL1(l1))
 		{
 			if(debugOnInfo) {logger.info("Filling Level-2 List");}
 			boolean isAllow2 = allow2.contains(ejb);
@@ -98,7 +98,7 @@ public class SbLocation2Handler <L1 extends EjbWithId, L2 extends EjbWithId> ext
 			if(finalL2) {list2.add(ejb);}
 		}
 	}
-	@Override protected void selectDefaultL2(HierarchicalLocationUpdateParameter hup)
+	@Override protected void selectDefaultL2(TreeUpdateParameter hup)
 	{
 		if(debugOnInfo) {logger.info("selectDefaultL2 "+hup.toString());}
 		reset(2);
@@ -109,7 +109,7 @@ public class SbLocation2Handler <L1 extends EjbWithId, L2 extends EjbWithId> ext
 	//Methods for next level
 	protected void clearL3List() {}
 	protected void fillL3List() {}
-	protected void selectDefaultL3(HierarchicalLocationUpdateParameter hlup) {}
+	protected void selectDefaultL3(TreeUpdateParameter hlup) {}
 	
 	public void debug(boolean debug)
 	{

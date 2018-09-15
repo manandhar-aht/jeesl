@@ -19,27 +19,30 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<ui:remove>
-			<aup:statusBarItem rendered="#{cc.attrs.withVillage}"
-				label="#{cc.attrs.handler.l5.name}" orientation="right" childs="#{cc.attrs.handler.list5}">
-			<p:commandLink id="clVillage" actionListener="#{cc.attrs.handler.ui5(var)}" ajax="false">
-				<h:outputText value="#{var.name}"/>
+		<jp:sbItem rendered="#{cc.attrs.handler.showLevel5}" orientation="right" childs="#{cc.attrs.handler.list5}">
+			<f:facet name="label">
+				<j:outputXpath value="#{cc.attrs.handler.l5}" xpath="#{cc.attrs.handler.xpath5}" localeCode="#{localeCode}"/>
+			</f:facet>
+			<p:commandLink id="clLevel5" actionListener="#{cc.attrs.handler.uiSelect5(var)}" ajax="false">
+				<j:outputXpath value="#{var}" xpath="#{cc.attrs.handler.xpath5}" localeCode="#{localeCode}"/>
 			</p:commandLink>
-			</aup:statusBarItem>
-			<aup:statusBarItem rendered="#{cc.attrs.withCell}"
-					label="#{cc.attrs.handler.l4.name}" orientation="right" childs="#{cc.attrs.handler.list4}">
-				<p:commandLink id="clCell" actionListener="#{cc.attrs.handler.ui4(var)}" ajax="false">
-					<h:outputText value="#{var.name}"/>
-				</p:commandLink>
-			</aup:statusBarItem>
-			<aup:statusBarItem rendered="#{cc.attrs.withSector}"
-					label="#{cc.attrs.handler.l3.name}" orientation="right" childs="#{cc.attrs.handler.list3}">
-				<p:commandLink id="clSector" actionListener="#{cc.attrs.handler.ui3(var)}" ajax="false">
-					<h:outputText value="#{var.name}"/>
-				</p:commandLink>
-			</aup:statusBarItem>
-		</ui:remove>
-		
+		</jp:sbItem>
+		<jp:sbItem rendered="#{cc.attrs.handler.showLevel4}" orientation="right" childs="#{cc.attrs.handler.list4}">
+			<f:facet name="label">
+				<j:outputXpath value="#{cc.attrs.handler.l4}" xpath="#{cc.attrs.handler.xpath4}" localeCode="#{localeCode}"/>
+			</f:facet>
+			<p:commandLink id="clLevel4" actionListener="#{cc.attrs.handler.uiSelect4(var)}" ajax="false">
+				<j:outputXpath value="#{var}" xpath="#{cc.attrs.handler.xpath4}" localeCode="#{localeCode}"/>
+			</p:commandLink>
+		</jp:sbItem>
+		<jp:sbItem rendered="#{cc.attrs.handler.showLevel3}" orientation="right" childs="#{cc.attrs.handler.list3}">
+			<f:facet name="label">
+				<j:outputXpath value="#{cc.attrs.handler.l3}" xpath="#{cc.attrs.handler.xpath3}" localeCode="#{localeCode}"/>
+			</f:facet>
+			<p:commandLink id="clLevel3" actionListener="#{cc.attrs.handler.uiSelect3(var)}" ajax="false">
+				<j:outputXpath value="#{var}" xpath="#{cc.attrs.handler.xpath3}" localeCode="#{localeCode}"/>
+			</p:commandLink>
+		</jp:sbItem>
 		<jp:sbItem rendered="#{cc.attrs.handler.showLevel2}" orientation="right" childs="#{cc.attrs.handler.list2}">
 			<f:facet name="label">
 				<j:outputXpath value="#{cc.attrs.handler.l2}" xpath="#{cc.attrs.handler.xpath2}" localeCode="#{localeCode}"/>

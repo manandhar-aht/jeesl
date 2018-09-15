@@ -59,15 +59,21 @@ public class SbTree3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 	// Adding Allowed elements, e.g. defined by a Security Context
 	protected void addAllowedL3(List<L3> list)
 	{
+		if(debugOnInfo) {logger.info("Adding "+list.size()+" to AllowChild3");}
 		for(L3 ejb : list)
 		{
-			if(!allowChild3.contains(ejb)) {allowChild3.add(ejb);}
+			if(!allowChild3.contains(ejb))
+			{
+				if(debugOnInfo) {logger.info("\t"+ejb.toString());}
+				allowChild3.add(ejb);
+			}
 			super.addAllowedPathL2(getParentForL3(ejb));
 		}
 	}
 	protected void addAllowedPathL3(L3 ejb)
 	{
 		if(!allowPath3.contains(ejb)) {allowPath3.add(ejb);}
+		super.addAllowedPathL2(getParentForL3(ejb));
 	}
 	
 	// Default Selection from a Security Context
@@ -110,10 +116,13 @@ public class SbTree3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 			boolean isCascade = ejb.equals(l3);
 			boolean isAllow = allowChild3.contains(ejb);
 			boolean isParentInList = list2.contains(parent);
-			boolean isParentInPath = allowPath2.contains(parent);
-			boolean isParentsAllowed = allowChild1.contains(getParentForL2(parent)) || allowChild2.contains(parent);
+			boolean isInPath = allowPath3.contains(ejb);
+			
+			boolean isParentsAllowedChild = allowChild1.contains(getParentForL2(parent)) || allowChild2.contains(parent);
+			boolean isParentsAllowedPath = allowPath1.contains(getParentForL2(parent)) || allowPath1.contains(parent);
+			boolean isParentsAllowed = isParentsAllowedChild;
 			boolean isNotIgnore = !ignore3.contains(ejb);	
-			if(evaluateToAddChild(ejb,isCascade,isAllow,isParentInList,isParentInPath,isParentsAllowed,isNotIgnore)) {list3.add(ejb);}
+			if(evaluateToAddChild(ejb,isCascade,isAllow,isInPath,isParentsAllowed,isNotIgnore)) {list3.add(ejb);}
 		}
 	}
 	@Override protected void selectDefaultL3(TreeUpdateParameter tup)

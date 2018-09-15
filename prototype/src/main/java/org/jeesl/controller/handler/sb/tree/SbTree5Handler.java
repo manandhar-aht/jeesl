@@ -21,7 +21,8 @@ public class SbTree5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 	private final JeeslTree5Store<L1,L2,L3,L4,L5> store5;
 	private final JeeslTree5Cache<L1,L2,L3,L4,L5> cache5;
 	
-	protected boolean showLevel5; public boolean isShowLevel() {return showLevel5;}
+	protected boolean showLevel5; public boolean isShowLevel5() {return showLevel5;} public void setShowLevel5(boolean showLevel5) { this.showLevel5 = showLevel5;}
+	
 	
 	protected final Set<L5> allowChild5;
 	protected final Set<L5> allowPath5;
@@ -68,6 +69,7 @@ public class SbTree5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 	protected void addAllowedPathL5(L5 ejb)
 	{
 		if(!allowPath5.contains(ejb)) {allowPath5.add(ejb);}
+		super.addAllowedPathL4(getParentForL5(ejb));
 	}
 	
 	// Default Selection from a Security Context
@@ -110,10 +112,13 @@ public class SbTree5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 			boolean isCascade = ejb.equals(l5);
 			boolean isAllow = allowChild5.contains(ejb);
 			boolean isParentInList = list4.contains(parent);
-			boolean isParentInPath = allowPath4.contains(parent);
-			boolean isParentsAllowed = allowChild1.contains(getParentForL2(getParentForL3(getParentForL4(parent)))) || allowChild2.contains(getParentForL3(getParentForL4(parent))) || allowChild3.contains(getParentForL4(parent)) || allowChild4.contains(parent);
+			boolean isInPath = allowPath5.contains(ejb);
+			
+			boolean isParentsAllowedChild = allowChild1.contains(getParentForL2(getParentForL3(getParentForL4(parent)))) || allowChild2.contains(getParentForL3(getParentForL4(parent))) || allowChild3.contains(getParentForL4(parent)) || allowChild4.contains(parent);
+			boolean isParentsAllowedPath = allowPath1.contains(getParentForL2(getParentForL3(getParentForL4(parent)))) || allowPath2.contains(getParentForL3(getParentForL4(parent))) || allowPath3.contains(getParentForL4(parent)) || allowPath4.contains(parent);
+			boolean isParentsAllowed = isParentsAllowedChild;
 			boolean isNotIgnore = !ignore5.contains(ejb);	
-			if(evaluateToAddChild(ejb,isCascade,isAllow,isParentInList,isParentInPath,isParentsAllowed,isNotIgnore)) {list5.add(ejb);}
+			if(evaluateToAddChild(ejb,isCascade,isAllow,isInPath,isParentsAllowed,isNotIgnore)) {list5.add(ejb);}
 		}
 	}
 	@Override protected void selectDefaultL5(TreeUpdateParameter tup)

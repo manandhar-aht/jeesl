@@ -50,7 +50,7 @@ public class SbTree3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 	
 	// Methods to reset the Selections
 	protected void reset3() {reset3(false,false,true);}
-	private void reset3(boolean r1, boolean r2, boolean r3)
+	protected void reset3(boolean r1, boolean r2, boolean r3)
 	{
 		super.reset2(r1,r2);
 		if(r3) {l3=null;}
@@ -111,7 +111,7 @@ public class SbTree3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 			boolean isAllow = allowChild3.contains(ejb);
 			boolean isParentInList = list2.contains(parent);
 			boolean isParentInPath = allowPath2.contains(parent);
-			boolean isParentsAllowed = allowChild2.contains(parent) || allowChild1.contains(getParentForL2(parent));
+			boolean isParentsAllowed =  allowChild1.contains(getParentForL2(parent)) || allowChild2.contains(parent);
 			boolean isNotIgnore = !ignore3.contains(ejb);	
 			if(evaluateToAddChild(ejb,isCascade,isAllow,isParentInList,isParentInPath,isParentsAllowed,isNotIgnore)) {list3.add(ejb);}
 		}

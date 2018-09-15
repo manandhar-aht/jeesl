@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.api.bean.location.JeeslLocation3Cache;
+import org.jeesl.api.bean.tree.JeeslTree3Cache;
 import org.jeesl.controller.handler.tree.TreeUpdateParameter;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocation3Store;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTree3Store;
 import org.jeesl.interfaces.controller.handler.tree.JeeslTreeSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +18,15 @@ public class SbLocation3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 {
 	final static Logger logger = LoggerFactory.getLogger(SbLocation3Handler.class);
 	
-	private final JeeslLocation3Store<L1,L2,L3> store3;
-	private final JeeslLocation3Cache<L1,L2,L3> cache3;
+	private final JeeslTree3Store<L1,L2,L3> store3;
+	private final JeeslTree3Cache<L1,L2,L3> cache3;
 	
 	protected final List<L3> list3; public List<L3> getList3() {return list3;}
 	protected final Set<L3> allow3;
 	protected final Set<L3> ignore3;
 	protected L3 l3; public L3 getL3(){return l3;} public void setL3(L3 l3){this.l3 = l3;}
 	
-	public SbLocation3Handler(JeeslTreeSelected callback, JeeslLocation3Cache<L1,L2,L3> cache3, JeeslLocation3Store<L1,L2,L3> store3)
+	public SbLocation3Handler(JeeslTreeSelected callback, JeeslTree3Cache<L1,L2,L3> cache3, JeeslTree3Store<L1,L2,L3> store3)
 	{
 		super(callback,cache3,store3);
 		this.cache3=cache3;
@@ -61,7 +61,7 @@ public class SbLocation3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	{
 		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString()+" "+hup.toString());}
 		this.l3=ejb;
-		store3.setL3(ejb);
+		store3.storeTreeLevel3(ejb);
 		clearL4List();
 		if(hup.isFillParent()) {select2(getParentOf3(l3),hup.copy().selectChild(false).fireEvent(false));}
 		if(hup.isFillChilds()) {fillL4List();}
@@ -77,7 +77,7 @@ public class SbLocation3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	@Override protected void clearL3List() {list3.clear();}
 	@Override protected void fillL3List()
 	{
-		for(L3 ejb : cache3.cacheL3(l2))
+		for(L3 ejb : cache3.getCachedChildsForL2(l2))
 		{
 			if(debugOnInfo) {logger.info("Filling Level-3 List");}
 			

@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.api.bean.location.JeeslLocation5Cache;
+import org.jeesl.api.bean.tree.JeeslTree5Cache;
 import org.jeesl.controller.handler.tree.TreeUpdateParameter;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocation5Store;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTree5Store;
 import org.jeesl.interfaces.controller.handler.tree.JeeslTreeSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +18,8 @@ public class SbLocation5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 {
 	final static Logger logger = LoggerFactory.getLogger(SbLocation5Handler.class);
 	
-	private final JeeslLocation5Store<L1,L2,L3,L4,L5> store5;
-	private final JeeslLocation5Cache<L1,L2,L3,L4,L5> cache5;
+	private final JeeslTree5Store<L1,L2,L3,L4,L5> store5;
+	private final JeeslTree5Cache<L1,L2,L3,L4,L5> cache5;
 	
 	protected final List<L5> list5; public List<L5> getList5() {return list5;}
 	protected final Set<L5> allow5;
@@ -27,7 +27,7 @@ public class SbLocation5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	protected L5 l5; public L5 getL5(){return l5;} public void setL5(L5 l5){this.l5 = l5;}
 	private boolean includeAll5; public void setIncludeAlll5(boolean includeAlll5) {this.includeAll5 = includeAlll5;}
 	
-	public SbLocation5Handler(JeeslTreeSelected callback, JeeslLocation5Cache<L1,L2,L3,L4,L5> cache5, JeeslLocation5Store<L1,L2,L3,L4,L5> store5)
+	public SbLocation5Handler(JeeslTreeSelected callback, JeeslTree5Cache<L1,L2,L3,L4,L5> cache5, JeeslTree5Store<L1,L2,L3,L4,L5> store5)
 	{
 		super(callback,cache5,store5);
 		this.cache5=cache5;
@@ -63,7 +63,7 @@ public class SbLocation5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	{
 		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString());}
 		this.l5=ejb;
-		store5.setL5(ejb);
+		store5.storeTreeLevel5(ejb);
 		clearL6List();
 		if(hlup.isFillParent()) {select4(getParent5(l5),hlup.copy().selectChild(false).fireEvent(false));}
 		if(hlup.isFillChilds()) {fillL6List();}
@@ -79,7 +79,7 @@ public class SbLocation5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	@Override protected void clearL5List() {list5.clear();}
 	@Override protected void fillL5List()
 	{
-		for(L5 ejb : cache5.cacheL5(l4))
+		for(L5 ejb : cache5.getCachedChildsForL4(l4))
 		{
 			if((viewIsGlobal || includeAll5 || allow5.contains(ejb) || list4.contains(getParent5(ejb))) && !ignore5.contains(ejb)) {list5.add(ejb);}
 		}

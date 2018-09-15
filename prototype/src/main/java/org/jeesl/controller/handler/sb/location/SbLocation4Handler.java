@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.api.bean.location.JeeslLocation4Cache;
+import org.jeesl.api.bean.tree.JeeslTree4Cache;
 import org.jeesl.controller.handler.tree.TreeUpdateParameter;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocation4Store;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTree4Store;
 import org.jeesl.interfaces.controller.handler.tree.JeeslTreeSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +18,15 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 {
 	final static Logger logger = LoggerFactory.getLogger(SbLocation4Handler.class);
 	
-	private final JeeslLocation4Store<L1,L2,L3,L4> store4;
-	private final JeeslLocation4Cache<L1,L2,L3,L4> cache4;
+	private final JeeslTree4Store<L1,L2,L3,L4> store4;
+	private final JeeslTree4Cache<L1,L2,L3,L4> cache4;
 	
 	protected final List<L4> list4; public List<L4> getList4() {return list4;}
 	protected final Set<L4> allow4;
 	protected final Set<L4> ignore4;
 	protected L4 l4; public L4 getL4(){return l4;} public void setL4(L4 l4){this.l4 = l4;}
 	
-	public SbLocation4Handler(JeeslTreeSelected callback, JeeslLocation4Cache<L1,L2,L3,L4> cache4, JeeslLocation4Store<L1,L2,L3,L4> store4)
+	public SbLocation4Handler(JeeslTreeSelected callback, JeeslTree4Cache<L1,L2,L3,L4> cache4, JeeslTree4Store<L1,L2,L3,L4> store4)
 	{
 		super(callback,cache4,store4);
 		this.cache4=cache4;
@@ -61,7 +61,7 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	{
 		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString()+" "+hlup.toString());}
 		this.l4=ejb;
-		store4.setL4(ejb);
+		store4.storeTreeLevel4(ejb);
 		clearL5List();
 		
 		if(hlup.isFillParent()) {select3(getParent4(l4),hlup.copy().selectChild(false).fireEvent(false));}
@@ -79,7 +79,7 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	@Override protected void fillL4List()
 	{
 		if(debugOnInfo) {logger.info("Filling Level-4 List ");}
-		for(L4 ejb : cache4.cacheL4(l3))
+		for(L4 ejb : cache4.getCachedChildsForL3(l3))
 		{
 			boolean isAllow4 = allow4.contains(ejb);
 			boolean isContains3 = list3.contains(getParent4(ejb));

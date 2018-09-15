@@ -1,4 +1,4 @@
-package org.jeesl.api.bean.location;
+package org.jeesl.api.bean.tree;
 
 import java.util.List;
 

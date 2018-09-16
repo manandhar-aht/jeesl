@@ -74,6 +74,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final EjbIoCmsContentFactory<LOC,E,C,MT> efContent;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
+	protected final SbSingleHandler<CAT> sbhCategory; public SbSingleHandler<CAT> getSbhCategory() {return sbhCategory;}
 	private final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	private final OpStatusSelectionHandler<LOC> opLocale; public OpStatusSelectionHandler<LOC> getOpLocale() {return opLocale;}
 
@@ -82,7 +83,6 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private List<ET> types; public List<ET> getTypes() {return types;}
 
 	protected CMS cms; public CMS getCms() {return cms;} public void setCms(CMS cms) {this.cms = cms;}
-	protected CAT category;
 	private C content; public C getContent() {return content;} public void setContent(C content) {this.content = content;}
 
 	protected EC elementCategory; public EC getElementCategory() {return elementCategory;} public void setElementCategory(EC elementCategory) {this.elementCategory = elementCategory;}
@@ -105,6 +105,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		efElement = fbCms.ejbElement();
 		efContent = fbCms.ejbContent();
 		
+		sbhCategory = new SbSingleHandler<CAT>(fbCms.getClassCategory(),this);
 		sbhCms = new SbSingleHandler<CMS>(fbCms.getClassCms(),this);
 		sbhLocale = new SbSingleHandler<LOC>(fbCms.getClassLocale(),this);
 		opLocale = new OpStatusSelectionHandler<LOC>(this);
@@ -127,16 +128,10 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 	
-	protected <EN extends Enum<EN>> void initCategory(EN code)
-	{
-		try {category = fCms.fByCode(fbCms.getClassCategory(), code.toString());}
-		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
-	}
-	
 	protected abstract void reloadCmsDocuments();
 	protected void reloadCmsDocumentsForCategory()
 	{
-		sbhCms.setList(fCms.allForCategory(fbCms.getClassCms(),category));
+		sbhCms.setList(fCms.allForCategory(fbCms.getClassCms(),sbhCategory.getSelection()));
 		logger.info(AbstractLogMessage.reloaded(fbCms.getClassCms(), sbhCms.getList()));
 	}
 	
@@ -179,7 +174,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	public void addDocumentForCategory()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbCms.getClassCms()));}
-		cms = efCms.build(category,efS.build());
+		cms = efCms.build(sbhCategory.getSelection(),efS.build());
 		cms.setName(efLang.createEmpty(localeCodes));
 	}
 	

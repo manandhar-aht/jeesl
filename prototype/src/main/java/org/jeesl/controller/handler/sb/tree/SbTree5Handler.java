@@ -21,8 +21,7 @@ public class SbTree5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 	private final JeeslTree5Store<L1,L2,L3,L4,L5> store5;
 	private final JeeslTree5Cache<L1,L2,L3,L4,L5> cache5;
 	
-	protected boolean showLevel5; public boolean isShowLevel5() {return showLevel5;} public void setShowLevel5(boolean showLevel5) { this.showLevel5 = showLevel5;}
-	
+	protected boolean showLevel5; public boolean isShowLevel5() {return showLevel5;} public void setShowLevel5(boolean showLevel5) {this.showLevel5 = showLevel5;}
 	
 	protected final Set<L5> allowChild5;
 	protected final Set<L5> allowPath5;

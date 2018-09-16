@@ -146,5 +146,4 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		selection=null;
 		if(list!=null && !list.isEmpty()){selection = list.get(0);}
 	}
-	
 }

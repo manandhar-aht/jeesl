@@ -3,7 +3,6 @@ package org.jeesl.interfaces.model.system.security.framework;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithActions;
 import org.jeesl.interfaces.model.system.security.with.JeeslSecurityWithCategory;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
@@ -18,13 +17,11 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslSecurityView<L extends UtilsLang,
-								   D extends UtilsDescription,
+public interface JeeslSecurityView<L extends UtilsLang, D extends UtilsDescription,
 								   C extends JeeslSecurityCategory<L,D>,
 								   R extends JeeslSecurityRole<L,D,C,?,U,A,?>,
 								   U extends JeeslSecurityUsecase<L,D,C,R,?,A>,
 								   A extends JeeslSecurityAction<L,D,R,?,U,?>
-					//			   S extends JeeslIoCmsSection<L,S>
 								   >
 			extends Serializable,EjbPersistable,EjbSaveable,EjbRemoveable,
 					EjbWithCode,EjbWithPositionVisible,EjbWithParentAttributeResolver,

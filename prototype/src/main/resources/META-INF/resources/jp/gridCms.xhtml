@@ -114,7 +114,7 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderElements()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectElement()}" update=":#{cc.id}:sSection"/>
 							<p:column rendered="true"><h:outputText value="#{e.position}"/></p:column>
-							<p:column headerText="#{msg.jeeslCmsElementType}"><h:outputText value="#{e.type.name[localeCode].lang}"/></p:column>
+							<p:column><jtp:symbolizer value="#{e.type}"/></p:column>
 							<p:column headerText="#{msg.jeeslCmsElement} ID"><h:outputText value="#{e.id}"/></p:column>
 						</p:dataTable>
 					</h:form>

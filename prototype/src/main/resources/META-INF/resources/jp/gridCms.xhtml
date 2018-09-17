@@ -87,6 +87,7 @@
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelSection()}" update=":#{cc.id}:sSection" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:fTree :#{cc.id}:sSection" rendered="#{not empty cc.attrs.bean.section}" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:sSection" rendered="#{cc.attrs.bean.cms.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+								<aht:icon type="jeeslRefresh" listener="#{cc.attrs.bean.clearSectionCache()}" update=":#{cc.id}:fSection" rendered="#{cc.attrs.bean.cms.id gt 0}" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="6" columnClasses="jeeslGrid10,jeeslGrid10,jeeslGrid10,jeeslGrid10,jeeslGrid10,jeeslGrid60" >
 								<p:outputLabel value="#{msg.jeeslCmsVisible}"/>

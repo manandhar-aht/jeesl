@@ -24,7 +24,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public abstract class JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescription,
+public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 								CAT extends UtilsStatus<CAT,L,D>,
 								CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 								V extends JeeslIoCmsVisiblity,
@@ -33,27 +33,25 @@ public abstract class JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescr
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
-								MT extends UtilsStatus<MT,L,D>,
-								LOC extends UtilsStatus<LOC,L,D>>
+								MT extends UtilsStatus<MT,L,D>
+								>
 {
-	final static Logger logger = LoggerFactory.getLogger(JeeslCmsRenderer.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractCmsRenderer.class);
 	
-	protected final String localeCode;
 	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms;
 	
 	private final JeeslCmsParagraphFactory<E,C> ofParagraph;
 	private final JeeslCmsStatusTableFactory<E,C> ofTableStatus;
 	
-	public JeeslCmsRenderer(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
+	public AbstractCmsRenderer(JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
 	{
-		this.localeCode=localeCode;
 		this.fCms = fCms;
 		
-		ofParagraph = new JeeslCmsParagraphFactory<E,C>(localeCode);
-		ofTableStatus = new JeeslCmsStatusTableFactory<E,C>(localeCode);
+		ofParagraph = new JeeslCmsParagraphFactory<E,C>();
+		ofTableStatus = new JeeslCmsStatusTableFactory<E,C>();
 	}
 	
-	public Sections build(CMS cms) throws OfxAuthoringException
+	public Sections build(String localeCode, CMS cms) throws OfxAuthoringException
 	{
 		logger.info("Rendering "+cms.toString());
 		S root = fCms.load(cms.getRoot(),true);
@@ -63,19 +61,19 @@ public abstract class JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescr
 		{
 			if(section.isVisible())
 			{
-				xml.getContent().add(buildSection(section));
+				xml.getContent().add(buildSection(localeCode, section));
 			}
 		}
 		return xml;
 	}
 	
-	public Section build(S section) throws OfxAuthoringException
+	public Section build(String localeCode, S section) throws OfxAuthoringException
 	{
 		S root = fCms.load(section,true);
-		return buildSection(root);
+		return buildSection(localeCode, root);
 	}
  
-	private Section buildSection(S section) throws OfxAuthoringException
+	private Section buildSection(String localeCode, S section) throws OfxAuthoringException
 	{
 		Section xml = XmlSectionFactory.build();
 		xml.getContent().add(XmlTitleFactory.build(section.getName().get(localeCode).getLang()));
@@ -83,7 +81,7 @@ public abstract class JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescr
 		List<E> elements = fCms.fCmsElements(section);
 		for(E e : elements)
 		{
-			build(xml.getContent(),e);
+			build(localeCode,xml.getContent(),e);
 //			xml.getContent().add(build(e));
 		}
 		
@@ -91,20 +89,20 @@ public abstract class JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescr
 		{
 			if(child.isVisible())
 			{
-				xml.getContent().add(this.build(child));
+				xml.getContent().add(this.build(localeCode,child));
 			}
 		}
 		
 		return xml;
 	}
 	
-	protected abstract void build(List<Serializable> list, E element) throws OfxAuthoringException;
+	protected abstract void build(String localeCode, List<Serializable> list, E element) throws OfxAuthoringException;
 	
 	//Here we are handling all types which are available as generic renderer in JEESL 
-	protected void buildJeesl(List<Serializable> list, E element) throws OfxAuthoringException
+	protected void buildJeesl(String localeCode, List<Serializable> list, E element) throws OfxAuthoringException
 	{
-		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString())) {list.addAll(ofParagraph.build(element).getContent());}
-		else if(element.getType().getCode().equals(JeeslIoCmsElement.Type.statusTable.toString())) {list.add(ofTableStatus.build(element));}
+		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString())) {list.addAll(ofParagraph.build(localeCode,element).getContent());}
+		else if(element.getType().getCode().equals(JeeslIoCmsElement.Type.statusTable.toString())) {list.add(ofTableStatus.build(localeCode,element));}
 		else {logger.warn("Unhandled "+element.getType().getCode());}
 	}
 }

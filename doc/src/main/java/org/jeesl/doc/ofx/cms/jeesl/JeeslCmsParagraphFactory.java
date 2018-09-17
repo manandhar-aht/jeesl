@@ -12,16 +12,14 @@ public class JeeslCmsParagraphFactory<E extends JeeslIoCmsElement<?,?,?,?,C>,
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslCmsParagraphFactory.class);
 	
-	private final String localeCode;
 	private final JeeslMarkupFactory ofxMarkup;
 	
-	public JeeslCmsParagraphFactory(String localeCode)
+	public JeeslCmsParagraphFactory()
 	{
-		this.localeCode=localeCode;
 		ofxMarkup = new JeeslMarkupFactory();
 	}
 	
-	public Section build(E element)
+	public Section build(String localeCode, E element)
 	{
 		logger.info("Building Paragraph ");
 		Section section = XmlSectionFactory.build(localeCode);

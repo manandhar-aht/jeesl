@@ -23,7 +23,7 @@ public class CliSmtpMailSender
 {
 	final static Logger logger = LoggerFactory.getLogger(CliSmtpMailSender.class);
 	
-	private String smtpHost,smtpUser,smtpPassword;
+	private String smtpHost,smtpUser,smtpPassword,smtpHelo;
 	private String smtpFrom,smtpTo;
 	private int smtpPort;
 	
@@ -33,6 +33,7 @@ public class CliSmtpMailSender
 	{
 		this.smtpHost=config.getString(ConfigKey.netSmtpHost);
 		this.smtpPort=config.getInt(ConfigKey.netSmtpPort);
+//		this.smtpHelo=config.getString(ConfigKey.netSmtpHelo);
 		
 		smtpFrom = config.getString("net.smtp.test.from");
 		smtpTo = config.getString("net.smtp.test.to");
@@ -51,6 +52,7 @@ public class CliSmtpMailSender
 		props.put("mail.smtp.host", smtpHost);
 		props.put("mail.smtp.port", smtpPort);
 		props.put("mail.transport.protocol","smtp");
+//		props.put("mail.smtp.localhost",smtpHelo);
          
 		session = Session.getDefaultInstance(props);  
 		session.setDebug(true);

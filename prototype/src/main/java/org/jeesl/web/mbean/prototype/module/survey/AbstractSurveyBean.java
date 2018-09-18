@@ -203,6 +203,6 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 			if(loc.getCode().equals(userLocale)) {sbhLocale.setSelection(loc);}
 		}
 
-		sbhLocale.selectDefault();
+		sbhLocale.setDefault();
 	}
 }

@@ -105,11 +105,11 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 			
 			sbhClass.setList(sbhScope.getSelection().getClasses());
 			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassEntity(),sbhClass.getList()));}
-			sbhClass.selectDefault();sbhClass.silentCallback();
+			sbhClass.setDefault();sbhClass.silentCallback();
 			
 			sbhInterval.setList(sbhScope.getSelection().getIntervals());
 			if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassInterval(),sbhInterval.getList()));}
-			sbhInterval.selectDefault();sbhInterval.silentCallback();
+			sbhInterval.setDefault();sbhInterval.silentCallback();
 		}
 		else if(fbTs.getClassEntity().isAssignableFrom(item.getClass())) {if(sbhClass.isSelected() && sbhInterval.isSelected()) {reloadBridges();}}
 		else if(fbTs.getClassInterval().isAssignableFrom(item.getClass())) {if(sbhClass.isSelected() && sbhInterval.isSelected()) {reloadBridges();}}

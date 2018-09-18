@@ -141,7 +141,7 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	public boolean isSelected(){return selection!=null;}
 	public boolean getTwiceSelected() {return previous.equals(selection);}
 	
-	public void selectDefault()
+	public void setDefault()
 	{
 		selection=null;
 		if(list!=null && !list.isEmpty()){selection = list.get(0);}

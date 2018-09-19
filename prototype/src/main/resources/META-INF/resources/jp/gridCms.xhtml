@@ -87,16 +87,17 @@
 								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelSection()}" update=":#{cc.id}:sSection" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveSection()}" update=":#{cc.id}:fTree :#{cc.id}:sSection" rendered="#{not empty cc.attrs.bean.section}" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.rmSection()}" update=":#{cc.id}:sSection" rendered="#{cc.attrs.bean.cms.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+								<aht:icon type="jeeslRefresh" listener="#{cc.attrs.bean.clearSectionCache()}" update=":#{cc.id}:fSection" rendered="#{cc.attrs.bean.cms.id gt 0}" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
-							<p:panelGrid columns="4" columnClasses="jeeslGrid20,jeeslGrid30,jeeslGrid20,jeeslGrid30" >
+							<p:panelGrid columns="6" columnClasses="jeeslGrid10,jeeslGrid10,jeeslGrid10,jeeslGrid10,jeeslGrid10,jeeslGrid60" >
 								<p:outputLabel value="#{msg.jeeslCmsVisible}"/>
-								<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.visible}"/>
-								
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.visible}"/>	
+								<p:outputLabel value="#{msg.jeeslId}"/>
+								<h:outputText value="#{cc.attrs.bean.section.id}"/>						
 								<p:outputLabel value="#{msg.jeeslCode}"/>
 								<jtp:inputText value="#{cc.attrs.bean.section.code}"/>
-								
 							</p:panelGrid>
-							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80" >
+							<p:panelGrid columns="2" columnClasses="jeeslGrid10,jeeslGrid90" >
 								<p:outputLabel value="#{msg.jeeslCmsSectionHeader}"/>
 								<jtp:inputText value="#{cc.attrs.bean.section.name[cc.attrs.bean.sbhLocale.selection.code].lang}"/>
 							</p:panelGrid>
@@ -114,7 +115,7 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderElements()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectElement()}" update=":#{cc.id}:sSection"/>
 							<p:column rendered="true"><h:outputText value="#{e.position}"/></p:column>
-							<p:column headerText="#{msg.jeeslCmsElementType}"><h:outputText value="#{e.type.name[localeCode].lang}"/></p:column>
+							<p:column><jtp:symbolizer value="#{e.type}"/></p:column>
 							<p:column headerText="#{msg.jeeslCmsElement} ID"><h:outputText value="#{e.id}"/></p:column>
 						</p:dataTable>
 					</h:form>

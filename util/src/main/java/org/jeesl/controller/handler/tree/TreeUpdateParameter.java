@@ -1,11 +1,11 @@
-package org.jeesl.controller.handler.location;
+package org.jeesl.controller.handler.tree;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HierarchicalLocationUpdateParameter implements Cloneable
+public class TreeUpdateParameter implements Cloneable
 {
-	final static Logger logger = LoggerFactory.getLogger(HierarchicalLocationUpdateParameter.class);
+	final static Logger logger = LoggerFactory.getLogger(TreeUpdateParameter.class);
 	
 	private boolean fillParent;
 	public boolean isFillParent() {return fillParent;}
@@ -27,9 +27,9 @@ public class HierarchicalLocationUpdateParameter implements Cloneable
 	public boolean isFireEvent() {return fireEvent;}
 	public void setFireEvent(boolean fireEvent) {this.fireEvent = fireEvent;}
 	
-	public static HierarchicalLocationUpdateParameter build(boolean fillParent, boolean fillChilds, boolean selectChild, boolean callback, boolean fireEvent)
+	public static TreeUpdateParameter build(boolean fillParent, boolean fillChilds, boolean selectChild, boolean callback, boolean fireEvent)
 	{
-		HierarchicalLocationUpdateParameter hlup = new HierarchicalLocationUpdateParameter();
+		TreeUpdateParameter hlup = new TreeUpdateParameter();
 		hlup.setFillParent(fillParent);
 		hlup.setFillChilds(fillChilds);
 		hlup.setSelectChild(selectChild);
@@ -38,9 +38,9 @@ public class HierarchicalLocationUpdateParameter implements Cloneable
 		return hlup;
 	}
 	
-	public HierarchicalLocationUpdateParameter copy()
+	public TreeUpdateParameter copy()
 	{
-		HierarchicalLocationUpdateParameter next = new HierarchicalLocationUpdateParameter();
+		TreeUpdateParameter next = new TreeUpdateParameter();
 		next.setFillParent(this.isFillParent());
 		next.setFillChilds(this.isFillChilds());
 		next.setSelectChild(this.isSelectChild());
@@ -49,19 +49,25 @@ public class HierarchicalLocationUpdateParameter implements Cloneable
 		return next;
 	}
 	
-	public HierarchicalLocationUpdateParameter fillParent(boolean value)
+	public TreeUpdateParameter fillParent(boolean value)
 	{
 		setFillParent(value);
 		return this;
 	}
 	
-	public HierarchicalLocationUpdateParameter selectChild(boolean value)
+	public TreeUpdateParameter selectChild(boolean value)
 	{
 		setSelectChild(value);
 		return this;
 	}
 	
-	public HierarchicalLocationUpdateParameter fireEvent(boolean value)
+	public TreeUpdateParameter callback(boolean value)
+	{
+		setCallback(value);
+		return this;
+	}
+	
+	public TreeUpdateParameter fireEvent(boolean value)
 	{
 		setFireEvent(value);
 		return this;

@@ -92,7 +92,7 @@ public abstract class AbstractDomainQueryBean <L extends UtilsLang, D extends Ut
 		reloadDomains();
 		if(sbhDomain.getHasSome())
 		{
-			sbhDomain.selectDefault();
+			sbhDomain.setDefault();
 			domain = sbhDomain.getSelection();
 			reloadQueries();
 		}

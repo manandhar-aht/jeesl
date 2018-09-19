@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslCmsCacheBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
@@ -45,7 +46,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.exlp.util.io.StringUtil;
 
-public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
+public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 										CAT extends UtilsStatus<CAT,L,D>,
 										CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 										V extends JeeslIoCmsVisiblity,
@@ -60,9 +61,10 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 					implements Serializable,SbToggleBean,SbSingleBean,OpEntityBean
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractCmsBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractCmsEditorBean.class);
 	
 	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms;
+	private JeeslCmsCacheBean<S> bCache;
 	private final IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT> fbCms;
 	
 	private String currentLocaleCode;
@@ -74,6 +76,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private final EjbIoCmsContentFactory<LOC,E,C,MT> efContent;
 	
 	protected final SbSingleHandler<CMS> sbhCms; public SbSingleHandler<CMS> getSbhCms() {return sbhCms;}
+	protected final SbSingleHandler<CAT> sbhCategory; public SbSingleHandler<CAT> getSbhCategory() {return sbhCategory;}
 	private final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	private final OpStatusSelectionHandler<LOC> opLocale; public OpStatusSelectionHandler<LOC> getOpLocale() {return opLocale;}
 
@@ -82,7 +85,6 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private List<ET> types; public List<ET> getTypes() {return types;}
 
 	protected CMS cms; public CMS getCms() {return cms;} public void setCms(CMS cms) {this.cms = cms;}
-	protected CAT category;
 	private C content; public C getContent() {return content;} public void setContent(C content) {this.content = content;}
 
 	protected EC elementCategory; public EC getElementCategory() {return elementCategory;} public void setElementCategory(EC elementCategory) {this.elementCategory = elementCategory;}
@@ -95,7 +97,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT> fbCms)
+	public AbstractCmsEditorBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT> fbCms)
 	{
 		super(fbCms.getClassL(),fbCms.getClassD());
 		this.fbCms=fbCms;
@@ -105,6 +107,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		efElement = fbCms.ejbElement();
 		efContent = fbCms.ejbContent();
 		
+		sbhCategory = new SbSingleHandler<CAT>(fbCms.getClassCategory(),this);
 		sbhCms = new SbSingleHandler<CMS>(fbCms.getClassCms(),this);
 		sbhLocale = new SbSingleHandler<LOC>(fbCms.getClassLocale(),this);
 		opLocale = new OpStatusSelectionHandler<LOC>(this);
@@ -112,9 +115,10 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		types = new ArrayList<ET>();
 	}
 	
-	protected void postConstructCms(JeeslTranslationBean bTranslation, String currentLocaleCode, List<LOC> locales, JeeslFacesMessageBean bMessage, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
+	protected void postConstructCms(JeeslTranslationBean bTranslation, String currentLocaleCode, List<LOC> locales, JeeslFacesMessageBean bMessage, JeeslCmsCacheBean<S> bCache, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
+		this.bCache=bCache;
 		this.currentLocaleCode=currentLocaleCode;
 		this.fCms=fCms;
 		
@@ -127,16 +131,10 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 	
-	protected <EN extends Enum<EN>> void initCategory(EN code)
-	{
-		try {category = fCms.fByCode(fbCms.getClassCategory(), code.toString());}
-		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
-	}
-	
 	protected abstract void reloadCmsDocuments();
 	protected void reloadCmsDocumentsForCategory()
 	{
-		sbhCms.setList(fCms.allForCategory(fbCms.getClassCms(),category));
+		sbhCms.setList(fCms.allForCategory(fbCms.getClassCms(),sbhCategory.getSelection()));
 		logger.info(AbstractLogMessage.reloaded(fbCms.getClassCms(), sbhCms.getList()));
 	}
 	
@@ -179,7 +177,7 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	public void addDocumentForCategory()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbCms.getClassCms()));}
-		cms = efCms.build(category,efS.build());
+		cms = efCms.build(sbhCategory.getSelection(),efS.build());
 		cms.setName(efLang.createEmpty(localeCodes));
 	}
 	
@@ -343,6 +341,11 @@ public abstract class AbstractCmsBean <L extends UtilsLang,D extends UtilsDescri
 	{
 		elements = fCms.allForParent(fbCms.getClassElement(),section);
 		elements = fCms.fCmsElements(section);
+	}
+	
+	public void clearSectionCache()
+	{
+		bCache.clearCache(section);
 	}
 	
 	public void addElement() 

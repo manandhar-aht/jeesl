@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jeesl.api.bean.location.JeeslLocation4Cache;
-import org.jeesl.controller.handler.location.HierarchicalLocationUpdateParameter;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocation4Store;
-import org.jeesl.interfaces.controller.handler.location.JeeslLocationSelected;
+import org.jeesl.api.bean.tree.JeeslTree4Cache;
+import org.jeesl.controller.handler.tree.TreeUpdateParameter;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTree4Store;
+import org.jeesl.interfaces.controller.handler.tree.JeeslTreeSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,15 +18,15 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 {
 	final static Logger logger = LoggerFactory.getLogger(SbLocation4Handler.class);
 	
-	private final JeeslLocation4Store<L1,L2,L3,L4> store4;
-	private final JeeslLocation4Cache<L1,L2,L3,L4> cache4;
+	private final JeeslTree4Store<L1,L2,L3,L4> store4;
+	private final JeeslTree4Cache<L1,L2,L3,L4> cache4;
 	
 	protected final List<L4> list4; public List<L4> getList4() {return list4;}
 	protected final Set<L4> allow4;
 	protected final Set<L4> ignore4;
 	protected L4 l4; public L4 getL4(){return l4;} public void setL4(L4 l4){this.l4 = l4;}
 	
-	public SbLocation4Handler(JeeslLocationSelected callback, JeeslLocation4Cache<L1,L2,L3,L4> cache4, JeeslLocation4Store<L1,L2,L3,L4> store4)
+	public SbLocation4Handler(JeeslTreeSelected callback, JeeslTree4Cache<L1,L2,L3,L4> cache4, JeeslTree4Store<L1,L2,L3,L4> store4)
 	{
 		super(callback,cache4,store4);
 		this.cache4=cache4;
@@ -56,14 +56,14 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 		}
 	}
 	
-	
-	public void ui4(L4 ejb) {select4(ejb,HierarchicalLocationUpdateParameter.build(false,true,true,true,true));}
-	public void select4(L4 ejb, HierarchicalLocationUpdateParameter hlup)
+	public void ui4(L4 ejb) {select4(ejb,TreeUpdateParameter.build(false,true,true,true,true));}
+	public void select4(L4 ejb, TreeUpdateParameter hlup)
 	{
-		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString());}
+		if(debugOnInfo) {logger.info("Select "+ejb.getClass().getSimpleName()+" "+ejb.toString()+" "+hlup.toString());}
 		this.l4=ejb;
-		store4.setL4(ejb);
+		store4.storeTreeLevel4(ejb);
 		clearL5List();
+		
 		if(hlup.isFillParent()) {select3(getParent4(l4),hlup.copy().selectChild(false).fireEvent(false));}
 		if(hlup.isFillChilds()) {fillL5List();}
 		if(hlup.isSelectChild()) {selectDefaultL5(hlup.copy().fillParent(false).fireEvent(false));}
@@ -78,12 +78,25 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	@Override protected void clearL4List() {list4.clear();}
 	@Override protected void fillL4List()
 	{
-		for(L4 ejb : cache4.cacheL4(l3))
+		if(debugOnInfo) {logger.info("Filling Level-4 List ");}
+		for(L4 ejb : cache4.getCachedChildsForL3(l3))
 		{
-			if((viewIsGlobal || allow4.contains(ejb) || list3.contains(getParent4(ejb))) && !ignore4.contains(ejb)) {list4.add(ejb);}
+			boolean isAllow4 = allow4.contains(ejb);
+			boolean isContains3 = list3.contains(getParent4(ejb));
+			boolean isNotIgnore = !ignore4.contains(ejb);
+			if(debugOnInfo)
+			{
+				logger.info("\t"+ejb.toString());
+				logger.info("\t\tviewIsGlobal:"+viewIsGlobal);
+				logger.info("\t\tisAllow4:"+isAllow4);
+				logger.info("\t\tisContains3:"+isContains3);
+				logger.info("\t\tisNotIgnore:"+isNotIgnore);
+			}
+			
+			if((viewIsGlobal || isAllow4 || isContains3) && isNotIgnore) {list4.add(ejb);}
 		}
 	}
-	@Override protected void selectDefaultL4(HierarchicalLocationUpdateParameter hlup)
+	@Override protected void selectDefaultL4(TreeUpdateParameter hlup)
 	{
 		reset(4);
 		if(!list4.isEmpty()) {select4(list4.get(0),hlup.fillParent(false));}
@@ -92,7 +105,7 @@ public class SbLocation4Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 
 	//Methods for next level
 	protected void clearL5List() {}
 	protected void fillL5List() {}
-	protected void selectDefaultL5(HierarchicalLocationUpdateParameter hlup) {}
+	protected void selectDefaultL5(TreeUpdateParameter hlup) {}
 	
 	public void debug(boolean debug)
 	{

@@ -48,6 +48,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.openfuxml</groupId>
+    		<artifactId>ofx-interfaces</artifactId>
+    	</dependency>
+
+		<dependency>
 			<groupId>org.jeesl</groupId>
 			<artifactId>jeesl-xml</artifactId>
 			<scope>provided</scope>

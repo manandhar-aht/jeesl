@@ -83,8 +83,7 @@ public class EjbStaffFactory <R extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
 		return map;
 	}
     
-    public static <
-			R extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
+    public static <R extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
 			USER extends JeeslUser<R>,
 			STAFF extends JeeslStaff<R,USER,D1,D2>,
 			D1 extends EjbWithId, D2 extends EjbWithId>
@@ -98,9 +97,7 @@ public class EjbStaffFactory <R extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
 		return new ArrayList<D1>(set);
 	}
     
-    public static <
-			R extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
-			
+    public static <R extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
 			USER extends JeeslUser<R>,
 			STAFF extends JeeslStaff<R,USER,D1,D2>,
 			D1 extends EjbWithId, D2 extends EjbWithId>

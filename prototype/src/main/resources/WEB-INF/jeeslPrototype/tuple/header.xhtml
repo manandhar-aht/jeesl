@@ -10,9 +10,9 @@
     <c:set var="loc" value="#{not empty loc ? loc : localeCode}"/>
     <c:set var="handler" value="#{handler}"/>
 
-    <p:columns var="y" value="#{handler.listY}" columnIndexVar="colIndex" styleClass="jeeslPfTcCenter">
+    <p:columns var="b" value="#{handler.listB}" columnIndexVar="colIndex" styleClass="jeeslPfTcCenter">
 		<f:facet name="header">
-			<jtp:symbolizer value="#{y}" height="12"/>
+			<jtp:symbolizer value="#{b}" height="12"/>
 		</f:facet>
 	</p:columns>
 </ui:composition>

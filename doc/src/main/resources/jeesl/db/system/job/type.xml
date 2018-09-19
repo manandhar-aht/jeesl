@@ -36,6 +36,18 @@
             <us:description key="fr"></us:description>
         </us:descriptions>
     </us:status>
+        <us:status code="reportDocx" visible="true" position="3">
+        <us:langs>
+            <us:lang key="de" translation="Report DOCX"/>
+            <us:lang key="en" translation="Report DOCX"/>
+            <us:lang key="fr" translation="Report DOCX"/>
+        </us:langs>
+        <us:descriptions>
+            <us:description key="de"></us:description>
+            <us:description key="en"></us:description>
+            <us:description key="fr"></us:description>
+        </us:descriptions>
+    </us:status>
     <us:status code="reportXlsx" visible="true" position="4">
         <us:langs>
             <us:lang key="de" translation="Report XLSX"/>

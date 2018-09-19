@@ -19,6 +19,7 @@ import org.jeesl.api.controller.ImportStrategy;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.op.OpEntitySelectionHandler;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
+import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
 import org.jeesl.factory.mc.ts.McTsViewerFactory;
 import org.jeesl.factory.xml.module.ts.XmlDataFactory;
 import org.jeesl.factory.xml.module.ts.XmlTimeSeriesFactory;
@@ -69,6 +70,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	private List<EjbWithId> entities; public List<EjbWithId> getEntities() {return entities;}
 	private Map<EjbWithId,String> mapLabels; public Map<EjbWithId,String> getMapLabels() {return mapLabels;}
 	private EjbWithId entity; public EjbWithId getEntity() {return entity;} public void setEntity(EjbWithId entity) {this.entity = entity;}
+	private EjbTsDataFactory<TS,TRANSACTION, DATA,WS> efData;
 
 	private CAT category;public CAT getCategory() {return category;}public void setCategory(CAT category) {this.category = category;}
 	private SCOPE scope; public SCOPE getScope() {return scope;} public void setScope(SCOPE scope) {this.scope = scope;}
@@ -79,7 +81,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;} public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
-	private DataSet chartDs; public DataSet getChartDs(){return chartDs;}
+	private final Map<TS,EjbWithId> mapTsEntity; public Map<TS,EjbWithId> getMapTsEntity() {return mapTsEntity;}
 
 	DataSet ds;
 	public DataSet getDs() {
@@ -99,13 +101,14 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	public AbstractAdminTsImportManualBean(final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fbTs) {
 		super(fbTs);
 		tsh = new OpEntitySelectionHandler<TS>(null);
+		mapTsEntity = new HashMap<TS,EjbWithId>();
+		efData = fbTs.data();
 	}
 
 	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs, JeeslFacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver)
 	{
 		super.initTsSuper(langs,fTs,bMessage);
 		this.xlsResolver=xlsResolver;
-
 		cTsData = TsDataComparator.factory(TsDataComparator.Type.date);
 		sources = fTs.all(fbTs.getClassSource());
 	}
@@ -117,7 +120,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		changeCategory();
 	}
 
-	public void changeCategory()
+	private void changeCategory()
 	{
 		scope=null;
 		clas=null;
@@ -128,11 +131,12 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(category));}
 			scopes = fTs.allOrderedPositionVisibleParent(fbTs.getClassScope(), category);
 			if(scopes.size()>0){scope=scopes.get(0);}
+			logger.info(category.toString());
 			changeScope();
 		}
 	}
 
-	public void changeScope()
+	private void changeScope()
 	{
 		clas=null;
 		interval=null;
@@ -146,16 +150,20 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 
 			intervals = scope.getIntervals();
 			if(intervals.size()>0){interval=intervals.get(0);}
+			logger.info(scope.toString());
+			changeClass();
 			changeInterval();
+
 		}
 	}
 
-	public void changeClass()
+	private void changeClass()
 	{
 		if(clas!=null)
 		{
 			clas = fTs.find(fbTs.getClassEntity(), clas);
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(clas));}
+			changeInterval();
 		}
 	}
 
@@ -166,131 +174,69 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 			interval = fTs.find(fbTs.getClassInterval(), interval);
 			if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(interval));}
 			if(intervals.size()>0){interval=intervals.get(0);}
-			tsh.setTbList(fTs.fTimeSeries(scope, interval, clas));
-			logger.info("TbList size after changing Interval: " + tsh.getTbList().size());
+			reloadBridges();
 		}
 	}
-	private List<DATA> data; public List<DATA> getData() { return data; }
+
+	private void reloadBridges()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassTs(),tsh.getTbList()));}
+		tsh.setTbList(fTs.fTimeSeries(scope, interval, clas));
+		logger.info("TbList size: " + tsh.getTbList().size());
+		try
+		{
+			mapTsEntity.clear();
+			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(clas.getCode()).asSubclass(EjbWithId.class);
+			Map<Long,TS> mapBridgeTs = efTs.toMapBridgeTs(tsh.getTbList());
+			for(EjbWithId ejb : fTs.find(c,efTs.toBridgeIds(tsh.getTbList())))
+			{
+				mapTsEntity.put(mapBridgeTs.get(ejb.getId()),ejb);
+			}
+			logger.info("Map size:" + mapBridgeTs.size());
+		}
+		catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private List<DATA> lData; public List<DATA> getlData() { return lData; }
+	private DATA data; public DATA getData() { return data; } public void setData(DATA data) { this.data = data; }
 
 	public void selectStation()
 	{
 		logger.info("Selected: "+tsh.getOpList().size());
-		data = fTs.fData(workspace, tsh.getOpList().get(0));
+		logger.info(AbstractLogMessage.selectEntity(tsh.getOpList().get(0)));
+		lData = fTs.fData(workspace, tsh.getOpList().get(0));
 
 		McTsViewerFactory<TS,DATA> f = new McTsViewerFactory<TS,DATA>();
-		ds=f.build(data);
+		ds=f.build(lData);
 		JaxbUtil.info(ds);
 	}
 
-//	/**
-//	 * Import Excel time series to XML objects.
-//	 * Excel file is stored locally, then loaded into a Apache POI object.
-//	 * Then AHTUtils ExcelImporter system is configured (what information is to be put where) and used to import Excel data linewise to XML object representation.
-//	 * @param event The PrimeFaces FileUpload event that contains the uploaded data and meta information
-//	 * @throws FileNotFoundException
-//	 */
-//	public void uploadData(FileUploadEvent event) throws FileNotFoundException, IOException, ClassNotFoundException, Exception
-//	{
-//		// Store the uploaded data locally (is overwritten without asking for files with the same name)
-//		// and save the filename for use in log messages when saving to database
-//		String filename = event.getFile().getFileName();
-//		File f = new File(importRoot,filename);
-//		FileOutputStream out = new FileOutputStream(f);
-//		IOUtils.copy(event.getFile().getInputstream(), out);
-//
-//		// Create a new TimeSeries
-//		setTimeSeries(XmlTimeSeriesFactory.build());
-//
-//		// Get a new Resolver that gives you the XlsWorkbook by asking the reports.xml registry for the file
-//
-//		// Instantiate and configure the importer
-//		// ATTENTION: Do not use the primary key option here (would cause bad results)
-//		ExcelSimpleSerializableImporter<Data,ImportStrategy> statusImporter = ExcelSimpleSerializableImporter.factory(xlsResolver, "TimeSeries", f.getAbsolutePath());
-//		statusImporter.selectFirstSheet();
-//		statusImporter.setFacade(fTs);
-//		statusImporter.getTempPropertyStore().put("createEntityForUnknown", true);
-//		statusImporter.getTempPropertyStore().put("lookup", false);
-//
-//		Map<Data,ArrayList<String>> data  = statusImporter.execute(true);
-//
-//		if(debugOnInfo){logger.info("Loaded " +data.size() +" time series data entries to be saved in the database.");}
-//		timeSeries.getData().addAll(data.keySet());
-//		Collections.sort(timeSeries.getData(), cTsData);
-//		entity=null;
-//
-//		transaction = efTransaction.build(transactionUser,sources.get(0));
-//		preview();
-//	}
-	
-//	public void random()
-//	{
-//		DateTime dt = new DateTime(new Date());
-//		Random rnd = new Random();
-//
-//		timeSeries = XmlTimeSeriesFactory.build();
-//		for(int i=0;i<5;i++)
-//		{
-//			timeSeries.getData().add(XmlDataFactory.build(dt.plusDays(i).toDate(), rnd.nextInt(10)*rnd.nextDouble()));
-//		}
-//
-//		entity=null;
-//		preview();
-//	}
-	
-	@SuppressWarnings("unchecked")
-	private void preview()
+	public void addData()
 	{
-		entities = new ArrayList<EjbWithId>();
-		mapLabels = new HashMap<EjbWithId,String>();
-		
-		chartDs = XmlMcDataSetFactory.build(timeSeries);
-//		try
-//		{
-//			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(clas.getCode()).asSubclass(EjbWithId.class);
-//
-//			for(EjbWithId e : fTs.all(c))
-//			{
-//				entities.add(e);
-//				JXPathContext ctx = JXPathContext.newContext(e);
-//				mapLabels.put(e, (String)ctx.getValue(clas.getXpath()));
-//			}
-//		}
-//		catch (ClassNotFoundException e) {e.printStackTrace();}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTs.getClassData()));}
+		transaction = fbTs.transaction().build(transactionUser, fTs.all(fbTs.getClassSource()).get(0));
+		transaction.setRecord(new Date());
+		data = efData.build(workspace, tsh.getOpList().get(0),null, null, null);
 	}
-	
-	public void selectEntity()
+
+	private Date date; public Date getDate() { return date; } public void setDate(Date date) { this.date = date; }
+	private double value; public double getValue() { return value; } public void setValue(double value) { this.value = value; }
+
+	public void saveData() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info(AbstractLogMessage.selectEntity(entity));
+		transaction = fTs.save(transaction);
+		data.setTransaction(transaction);
+		data.setRecord(date); data.setValue(value);
+		logger.info(AbstractLogMessage.saveEntity(data));
+		fTs.save(data);
 	}
-	
-	public void importData()
-	{
-		workspace = fTs.find(fbTs.getClassWorkspace(), workspace);
-		logger.info("Import Data to "+ workspace);
-		
-//		try
-//		{
-//			BRIDGE bridge = fTs.fcBridge(fbTs.getClassBridge(), clas, entity);
-//			TS ts = fTs.fcTimeSeries(scope,interval,bridge);
-//			logger.info("Using TS "+ts.toString());
-//
-//			if(transaction.getSource()!=null){transaction.setSource(fTs.find(fbTs.getClassSource(),transaction.getSource()));}
-//			transaction.setRecord(new Date());
-//			transaction = fTs.save(transaction);
-//
-//			List<DATA> datas = new ArrayList<DATA>();
-//			for(Data data : timeSeries.getData())
-//			{
-//				datas.add(efData.build(workspace,ts,transaction,data));
-//			}
-//			fTs.save(datas);
-//
-//			entities=null;
-//			entity=null;
-//			timeSeries=null;
-//			chartDs=null;
-//		}
-//		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
-//		catch (UtilsLockingException e) {e.printStackTrace();}
+
+	public void cancel() {
+		data = null;
+		transaction = null;
 	}
 }

@@ -15,7 +15,7 @@ public interface JeeslTsData <TS extends JeeslTimeSeries<?,?,?>,
 								WS extends UtilsStatus<WS,?,?>>
 		extends EjbWithId,EjbWithRecord,EjbSaveable,Serializable,EjbRemoveable,EjbPersistable
 {
-	public enum Attributes{transaction,timeSeries,workspace,record,value}
+	enum Attributes{transaction,timeSeries,workspace,record,value}
 	
 	TS getTimeSeries();
 	void setTimeSeries(TS timeSeries);

@@ -25,7 +25,7 @@
 					<h:form id="fTree" >
 						<p:panel header="#{msg.jeeslIoDmsTree}" styleClass="jeeslTree" >
 							<f:facet name="actions">
-								<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addSection()}" update=":#{cc.id}:sSection" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
+								<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addSection()}" update=":#{cc.id}:sSection" tooltip="#{msg.ttAdd}" mayDisappear="true"/>
 							</f:facet>
 							<p:tree id="tree1" value="#{cc.attrs.bean.tree}" var="node" 
 									selection="#{cc.attrs.bean.node}" selectionMode="single"

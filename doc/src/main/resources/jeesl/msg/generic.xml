@@ -99,4 +99,11 @@
     		<s:lang key="fr" translation="Count"/>
 		</s:langs>
 	</s:translation>
+    <s:translation key="jeeslValue">
+        <s:langs>
+            <s:lang key="de" translation="Wert"/>
+            <s:lang key="en" translation="Value"/>
+            <s:lang key="fr" translation="Value"/>
+        </s:langs>
+    </s:translation>
 </s:translations>

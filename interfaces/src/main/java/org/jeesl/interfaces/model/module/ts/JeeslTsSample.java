@@ -7,5 +7,5 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 public interface JeeslTsSample 
 		extends EjbWithId,EjbSaveable,EjbWithRecord
 {
-	public enum Attributes{record}
+	enum Attributes{record}
 }

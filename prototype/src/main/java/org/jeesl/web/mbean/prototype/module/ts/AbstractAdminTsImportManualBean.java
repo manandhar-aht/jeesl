@@ -72,7 +72,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	private EjbWithId entity; public EjbWithId getEntity() {return entity;} public void setEntity(EjbWithId entity) {this.entity = entity;}
 	private EjbTsDataFactory<TS,TRANSACTION, DATA,WS> efData;
 
-	private CAT category;public CAT getCategory() {return category;}public void setCategory(CAT category) {this.category = category;}
+	protected CAT category;public CAT getCategory() {return category;}public void setCategory(CAT category) {this.category = category;}
 	private SCOPE scope; public SCOPE getScope() {return scope;} public void setScope(SCOPE scope) {this.scope = scope;}
 	private EC clas; public EC getClas() {return clas;} public void setClas(EC clas) {this.clas = clas;}
 	private INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
@@ -82,6 +82,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;} public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
 	private final Map<TS,EjbWithId> mapTsEntity; public Map<TS,EjbWithId> getMapTsEntity() {return mapTsEntity;}
+
 
 	DataSet ds;
 	public DataSet getDs() {
@@ -120,7 +121,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		changeCategory();
 	}
 
-	private void changeCategory()
+	public void changeCategory()
 	{
 		scope=null;
 		clas=null;
@@ -132,6 +133,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 			scopes = fTs.allOrderedPositionVisibleParent(fbTs.getClassScope(), category);
 			if(scopes.size()>0){scope=scopes.get(0);}
 			logger.info(category.toString());
+
 			changeScope();
 		}
 	}
@@ -224,10 +226,11 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	}
 
 	private Date date; public Date getDate() { return date; } public void setDate(Date date) { this.date = date; }
-	private double value; public double getValue() { return value; } public void setValue(double value) { this.value = value; }
+	private Double value; public Double getValue() { return value; } public void setValue(Double value) { this.value = value; }
 
 	public void saveData() throws UtilsConstraintViolationException, UtilsLockingException
 	{
+//		if(date == null | value == null) { bMessage.errorText();
 		transaction = fTs.save(transaction);
 		data.setTransaction(transaction);
 		data.setRecord(date); data.setValue(value);

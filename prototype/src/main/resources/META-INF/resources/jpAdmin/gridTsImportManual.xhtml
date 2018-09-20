@@ -91,7 +91,7 @@
                                 </h:outputText>
                             </p:column>
                             <p:column rendered="true">
-                                <f:facet name="header">#{msg.aupValue}</f:facet>
+                                <f:facet name="header">#{msg.jeeslValue}</f:facet>
                                 <h:outputText value="#{t.value}"/>
                             </p:column>
                         </p:dataTable>
@@ -107,13 +107,11 @@
 
                             <p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
                                 <p:outputLabel for="popup" value="#{msg.aupDate}"/>
-                                <p:calendar id="popup" value="#{cc.attrs.bean.date}" pattern="dd-MM-yyyy"/>
-                                <p:outputLabel for="value" value="#{msg.aupValue}"/>
-                                <p:inputText id="value" value="#{cc.attrs.bean.value}" autocomplete="off"/>
-                                <p:outputLabel for="value2" value="#{msg.aupValue}" rendered="#{}"/>
-                                <p:inputText id="value2" value="#{cc.attrs.bean.value}" autocomplete="off"/>
+                                <p:calendar id="popup" value="#{cc.attrs.bean.date}" pattern="dd-MM-yyyy" required="true"/>
+                                <p:outputLabel for="value" value="#{msg.jeeslValue}" />
+                                <p:inputText id="value" value="#{cc.attrs.bean.value}" autocomplete="off" required="true"/>
                             </p:panelGrid>
-
+                            <p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
                         </p:panel>
                     </h:form>
                 </aht:slot>

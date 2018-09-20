@@ -25,13 +25,15 @@ public class IoSsiFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 	private final Class<SYSTEM> cSystem; public Class<SYSTEM> getClassSystem(){return cSystem;}
 	private final Class<MAPPING> cMapping; public Class<MAPPING> getClassMapping(){return cMapping;}
 	private final Class<DATA> cData; public Class<DATA> getClassData(){return cData;}
+	private final Class<LINK> cLink; public Class<LINK> getClassLink(){return cLink;}
 	
-	public IoSsiFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SYSTEM> cSystem, final Class<MAPPING> cMapping, final Class<DATA> cData)
+	public IoSsiFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<SYSTEM> cSystem, final Class<MAPPING> cMapping, final Class<DATA> cData, final Class<LINK> cLink)
 	{
 		super(cL,cD);
 		this.cSystem=cSystem;
 		this.cMapping=cMapping;
 		this.cData=cData;
+		this.cLink=cLink;
 	}
 	
 	public EjbIoSsiSystemFactory<SYSTEM> ejbSystem() {return new EjbIoSsiSystemFactory<SYSTEM>(cSystem);}

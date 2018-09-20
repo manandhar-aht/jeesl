@@ -35,5 +35,5 @@ public class EjbIoSsiDataFactory <MAPPING extends JeeslIoSsiMapping<?,?>,
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		catch (JsonProcessingException e) {e.printStackTrace();}
 		return ejb;
-	}    
+	}
 }

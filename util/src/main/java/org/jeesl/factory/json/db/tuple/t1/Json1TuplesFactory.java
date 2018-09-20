@@ -18,17 +18,17 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class Json1TuplesFactory <A extends EjbWithId>
 {
-	private final Class<A> cT;
-	
+	private final Class<A> cA; public Class<A> getClassA() {return cA;}
+
 	private final UtilsFacade fUtils;
 	
 	private final Set<Long> setId;
 	private final Json1TupleFactory<A> jtf;
 	
-	public Json1TuplesFactory(Class<A> cT) {this(null,cT);}
-	public Json1TuplesFactory(UtilsFacade fUtils, Class<A> cT)
+	public Json1TuplesFactory(Class<A> cA) {this(null,cA);}
+	public Json1TuplesFactory(UtilsFacade fUtils, Class<A> cA)
 	{
-		this.cT=cT;
+		this.cA=cA;
 		this.fUtils=fUtils;
 		setId = new HashSet<Long>();
 		jtf = new Json1TupleFactory<A>();
@@ -45,7 +45,7 @@ public class Json1TuplesFactory <A extends EjbWithId>
 	
 	public List<A> toTuple1List(UtilsFacade fUtils)
 	{
-		return fUtils.find(cT,setId);
+		return fUtils.find(cA,setId);
 	}
 	
 	public List<A> toListA(Json1Tuples<A> tuples)
@@ -104,7 +104,7 @@ public class Json1TuplesFactory <A extends EjbWithId>
 	{
 		if(fUtils!=null)
 		{
-			Map<Long,A> map = EjbIdFactory.toIdMap(fUtils.find(cT,setId));
+			Map<Long,A> map = EjbIdFactory.toIdMap(fUtils.find(cA,setId));
 			for(Json1Tuple<A> t : json.getTuples())
 			{
 				t.setEjb(map.get(t.getId()));

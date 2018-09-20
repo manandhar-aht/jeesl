@@ -291,7 +291,6 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 	
 	public static <T extends EjbWithId> String reloaded(Class<T> c, List<T> list){return reloaded(c,list,null);}
 	public static <T extends EjbWithId> String reloaded(Class<T> c, Set<T> list){return reloaded(c,new ArrayList<T>(list),null);}
-	
 	public static <T extends EjbWithId> String reloaded(Class<T> c, List<T> list, EjbWithId ejb)
 	{
 		StringBuffer sb = new StringBuffer();

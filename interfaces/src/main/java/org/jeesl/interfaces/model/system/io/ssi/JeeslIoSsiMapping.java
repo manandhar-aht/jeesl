@@ -11,6 +11,7 @@ public interface JeeslIoSsiMapping <SYSTEM extends JeeslIoSsiSystem,
 		extends EjbWithId,EjbSaveable,EjbRemoveable
 {	
 	
+	
 	public SYSTEM getSystem();
 	public void setSystem(SYSTEM system);
 	

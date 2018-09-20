@@ -59,22 +59,27 @@
             </aht:row>
             <aht:row>
                 <aht:slot id="sStations" width="4">
-                    <h:form id="fStations" rendered="#{not empty cc.attrs.bean.tsh.tbList}">
-                        <p:dataTable var="s" value="#{cc.attrs.bean.tsh.tbList}"
-                                     selection="#{cc.attrs.bean.tsh.opList}" selectionMode="multiple" rowKey="#{s.id}">
+                    <h:form id="fStations">
+                        <p:dataTable var="e" value="#{cc.attrs.bean.entities}"
+                                     selection="#{cc.attrs.bean.entity}" selectionMode="multiple" rowKey="#{e.id}">
                             <f:facet name="header">
-                                <aht:pfDataTableHeader title="#{msg.jeeslTsStation}"/>
+                                <aht:pfDataTableHeader title="#{msg.jeeslTsEntity}"/>
                             </f:facet>
-                            <p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectStation()}" update=":#{cc.id}:fTimeSeries"/>
+                            <p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectEntity()}" update=":#{cc.id}:fTimeSeries"/>
                             <p:column rendered="true">
-                                <jeesl:outputXpath value="#{cc.attrs.bean.mapTsEntity[s]}" xpath="#{s.bridge.entityClass.xpath}"/>
+                            	<h:outputText value="#{e.id}"/>
+                            	<ui:remove>
+                            		Take the xpath from entityClass
+                            		<jeesl:outputXpath value="#{e}" xpath="#{s.bridge.entityClass.xpath}"/>
+                            	</ui:remove>
+                                
                             </p:column>
                         </p:dataTable>
                     </h:form>
                 </aht:slot>
                 <aht:slot id="sTimeSeries" width="4">
                     <h:form id="fTimeSeries">
-                        <p:dataTable var="t" value="#{cc.attrs.bean.lData}" rendered="#{not empty cc.attrs.bean.tsh.opList}"
+                        <p:dataTable var="t" value="#{cc.attrs.bean.lData}"
                                      rows="10"
                                      paginator="true"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

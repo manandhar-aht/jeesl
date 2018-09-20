@@ -18,6 +18,12 @@ public class JeeslMarkupSectionFactory<M extends JeeslIoCmsMarkup<?>>
 	
 	public Section build(M markup)
 	{
+/*
+		logger.info("markup: "+(markup!=null));
+		logger.info("markup.getType(): "+(markup.getType()!=null));
+		logger.info("markup.getType().getCode(): "+(markup.getType().getCode()!=null));
+		logger.info("markup.getContent(): "+(markup.getContent()!=null));
+*/		
 		return ofxMarkup.build(markup.getType().getCode(), markup.getContent());
 	}
 }

@@ -1,41 +1,45 @@
 package org.jeesl.web.mbean.prototype.module.ts;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
+import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.controller.handler.op.OpEntitySelectionHandler;
+import org.jeesl.factory.builder.module.TsFactoryBuilder;
+import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
+import org.jeesl.factory.mc.ts.McTsViewerFactory;
+import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
+import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
+import org.jeesl.interfaces.model.module.ts.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.JeeslTsDataPoint;
+import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
+import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
+import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
+import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.model.xml.module.ts.Data;
+import org.jeesl.model.xml.module.ts.TimeSeries;
+import org.jeesl.util.comparator.xml.ts.TsDataComparator;
+import org.metachart.xml.chart.DataSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.controller.report.UtilsXlsDefinitionResolver;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.report.revert.excel.importers.ExcelSimpleSerializableImporter;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.exlp.util.xml.JaxbUtil;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.jxpath.JXPathContext;
-import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
-import org.jeesl.api.controller.ImportStrategy;
-import org.jeesl.api.facade.module.JeeslTsFacade;
-import org.jeesl.controller.handler.op.OpEntitySelectionHandler;
-import org.jeesl.factory.builder.module.TsFactoryBuilder;
-import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
-import org.jeesl.factory.mc.ts.McTsViewerFactory;
-import org.jeesl.factory.xml.module.ts.XmlDataFactory;
-import org.jeesl.factory.xml.module.ts.XmlTimeSeriesFactory;
-import org.jeesl.factory.xml.system.util.mc.XmlMcDataSetFactory;
-import org.jeesl.interfaces.model.module.ts.*;
-import org.jeesl.model.xml.module.ts.Data;
-import org.jeesl.model.xml.module.ts.TimeSeries;
-import org.jeesl.util.comparator.xml.ts.TsDataComparator;
-import org.joda.time.DateTime;
-import org.metachart.xml.chart.DataSet;
-import org.primefaces.event.FileUploadEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.*;
-import java.util.*;
 
 public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
@@ -67,7 +71,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	private List<WS> workspaces; public List<WS> getWorkspaces() {return workspaces;}
 	private List<SOURCE> sources; public List<SOURCE> getSources() {return sources;}
 
-	private List<EjbWithId> entities; public List<EjbWithId> getEntities() {return entities;}
+	private final List<EjbWithId> entities; public List<EjbWithId> getEntities() {return entities;}
 	private Map<EjbWithId,String> mapLabels; public Map<EjbWithId,String> getMapLabels() {return mapLabels;}
 	private EjbWithId entity; public EjbWithId getEntity() {return entity;} public void setEntity(EjbWithId entity) {this.entity = entity;}
 	private EjbTsDataFactory<TS,TRANSACTION, DATA,WS> efData;
@@ -79,29 +83,22 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	protected WS workspace; public WS getWorkspace() {return workspace;} public void setWorkspace(WS workspace) {this.workspace = workspace;}
 	protected USER transactionUser;
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
-
+	private TS ts;
+	
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;} public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
 	private final Map<TS,EjbWithId> mapTsEntity; public Map<TS,EjbWithId> getMapTsEntity() {return mapTsEntity;}
 
 
-	DataSet ds;
-	public DataSet getDs() {
-		return ds;
-	}
-	public void setDs(DataSet ds) {
-		this.ds = ds;
-	}
+	DataSet ds; public DataSet getDs() {return ds;} public void setDs(DataSet ds) {this.ds = ds;}
 
 	protected UtilsXlsDefinitionResolver xlsResolver;
-	protected File importRoot;
 
 	private Comparator<Data> cTsData;
 
-	protected final OpEntitySelectionHandler<TS> tsh; public OpEntitySelectionHandler<TS> getTsh() {return tsh;}
-
-	public AbstractAdminTsImportManualBean(final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fbTs) {
+	public AbstractAdminTsImportManualBean(final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fbTs)
+	{
 		super(fbTs);
-		tsh = new OpEntitySelectionHandler<TS>(null);
+		entities = new ArrayList<EjbWithId>();
 		mapTsEntity = new HashMap<TS,EjbWithId>();
 		efData = fbTs.data();
 	}
@@ -182,25 +179,15 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 
 	private void reloadBridges()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassTs(),tsh.getTbList()));}
-		tsh.setTbList(fTs.fTimeSeries(scope, interval, clas));
-		logger.info("TbList size: " + tsh.getTbList().size());
+		entities.clear();
 		try
 		{
 			mapTsEntity.clear();
 			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(clas.getCode()).asSubclass(EjbWithId.class);
-			Map<Long,TS> mapBridgeTs = efTs.toMapBridgeTs(tsh.getTbList());
-			for(EjbWithId ejb : fTs.find(c,efTs.toBridgeIds(tsh.getTbList())))
-			{
-				mapTsEntity.put(mapBridgeTs.get(ejb.getId()),ejb);
-			}
-			logger.info("Map size:" + mapBridgeTs.size());
+			entities.addAll(fTs.all(c));
 		}
-		catch (ClassNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		catch (ClassNotFoundException e){e.printStackTrace();}
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(EjbWithId.class,entities));}
 	}
 
 	private List<DATA> lData; public List<DATA> getlData() { return lData; }
@@ -208,9 +195,11 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 
 	public void selectStation()
 	{
-		logger.info("Selected: "+tsh.getOpList().size());
-		logger.info(AbstractLogMessage.selectEntity(tsh.getOpList().get(0)));
-		lData = fTs.fData(workspace, tsh.getOpList().get(0));
+		logger.info("Selected: "+entity.toString());
+		
+		//FIND The Bridge/Timeseries
+		// ts = fTs.fc ..
+//		lData = fTs.fData(workspace, tsh.getOpList().get(0));
 
 		McTsViewerFactory<TS,DATA> f = new McTsViewerFactory<TS,DATA>();
 		ds=f.build(lData);
@@ -222,7 +211,9 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTs.getClassData()));}
 		transaction = fbTs.transaction().build(transactionUser, fTs.all(fbTs.getClassSource()).get(0));
 		transaction.setRecord(new Date());
-		data = efData.build(workspace, tsh.getOpList().get(0),null, null, null);
+		
+		//Tkae the TS
+		data = efData.build(workspace, ts,null, null, null);
 	}
 
 	private Date date; public Date getDate() { return date; } public void setDate(Date date) { this.date = date; }

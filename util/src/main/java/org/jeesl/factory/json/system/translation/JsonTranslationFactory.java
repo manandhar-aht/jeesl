@@ -8,12 +8,18 @@ public class JsonTranslationFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonTranslationFactory.class);
 	
+	public static <E extends Enum<E>> JsonTranslation build(Class<?> c, E attribute, String xpath, String filterBy)
+	{
+		JsonTranslation json = build(c,attribute,xpath);
+		json.setFilterBy(filterBy);
+		return json;
+	}
 	
 	public static <E extends Enum<E>> JsonTranslation build(Class<?> c, E attribute, String xpath)
 	{
 		JsonTranslation json = new JsonTranslation();
 		json.setEntity(c.getSimpleName());
-		json.setCode(attribute.toString());
+		if(attribute!=null) {json.setCode(attribute.toString());}
 		json.setXpath(xpath);
 		return json;
 	}

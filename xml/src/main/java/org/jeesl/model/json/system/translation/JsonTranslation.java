@@ -31,13 +31,14 @@ public class JsonTranslation implements Serializable
 	
 	@JsonProperty("multilang")
 	private Map<String,String> multiLang;
+	public Map<String, String> getMultiLang() {return multiLang;}
+	public void setMultiLang(Map<String, String> multiLang) {this.multiLang = multiLang;}
 	
-	public Map<String, String> getMultiLang() {
-		return multiLang;
-	}
-	public void setMultiLang(Map<String, String> multiLang) {
-		this.multiLang = multiLang;
-	}
+	@JsonProperty("filterBy")
+	private String filterBy;
+	public String getFilterBy() {return filterBy;}
+	public void setFilterBy(String filterBy) {this.filterBy = filterBy;}
+	
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

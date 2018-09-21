@@ -6,8 +6,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public interface JeeslTsBridge <EC extends JeeslTsEntityClass<?,?,?>>
 		extends EjbWithId,EjbWithRefId
 {
-	public enum Attributes{entityClass}
+	enum Attributes{entityClass}
 	
-	public EC getEntityClass();
+	EC getEntityClass();
 	void setEntityClass(EC entityClass);
 }

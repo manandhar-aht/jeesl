@@ -13,6 +13,7 @@ import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.op.OpEntitySelectionHandler;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
+import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.mc.ts.McTsViewerFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
@@ -89,7 +90,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	private final Map<TS,EjbWithId> mapTsEntity; public Map<TS,EjbWithId> getMapTsEntity() {return mapTsEntity;}
 
 
-	DataSet ds; public DataSet getDs() {return ds;} public void setDs(DataSet ds) {this.ds = ds;}
+	private DataSet ds; public DataSet getDs() {return ds;} public void setDs(DataSet ds) {this.ds = ds;}
 
 	protected UtilsXlsDefinitionResolver xlsResolver;
 
@@ -177,6 +178,8 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		}
 	}
 
+	protected BRIDGE bridge; public BRIDGE getBridge() {return bridge;}
+
 	private void reloadBridges()
 	{
 		entities.clear();
@@ -185,25 +188,41 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 			mapTsEntity.clear();
 			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(clas.getCode()).asSubclass(EjbWithId.class);
 			entities.addAll(fTs.all(c));
+
+			if(entities.size() > 0) {bridge = fTs.fcBridge(fbTs.getClassBridge(), clas, entities.get(0));}
 		}
-		catch (ClassNotFoundException e){e.printStackTrace();}
+		catch (ClassNotFoundException e){e.printStackTrace();} catch(UtilsConstraintViolationException e) { e.printStackTrace(); }
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(EjbWithId.class,entities));}
+
 	}
 
 	private List<DATA> lData; public List<DATA> getlData() { return lData; }
 	private DATA data; public DATA getData() { return data; } public void setData(DATA data) { this.data = data; }
 
-	public void selectStation()
+	public void selectEntity() throws UtilsConstraintViolationException
 	{
-		logger.info("Selected: "+entity.toString());
+		logger.info("Selected: "+ entity.toString());
 		
 		//FIND The Bridge/Timeseries
 		// ts = fTs.fc ..
 //		lData = fTs.fData(workspace, tsh.getOpList().get(0));
 
+		ts = fTs.fcTimeSeries(scope, interval,fTs.fcBridge(fbTs.getClassBridge(), clas, entity));
+		lData = fTs.fData(workspace, ts);
+
 		McTsViewerFactory<TS,DATA> f = new McTsViewerFactory<TS,DATA>();
 		ds=f.build(lData);
 		JaxbUtil.info(ds);
+	}
+
+	public void selectData()
+	{
+		logger.info(AbstractLogMessage.selectEntity(data));
+
+		date = data.getRecord();
+		value = data.getValue();
+		transaction = data.getTransaction();
+		logger.info("Existing data found: " + date + " / " + value);
 	}
 
 	public void addData()
@@ -221,8 +240,8 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 
 	public void saveData() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-//		if(date == null | value == null) { bMessage.errorText();
-		transaction = fTs.save(transaction);
+
+		if(EjbIdFactory.isUnSaved(transaction)) {transaction = fTs.save(transaction);}
 		data.setTransaction(transaction);
 		data.setRecord(date); data.setValue(value);
 		logger.info(AbstractLogMessage.saveEntity(data));
@@ -233,4 +252,10 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		data = null;
 		transaction = null;
 	}
+
+	public void reset() {
+		data = null;
+		transaction = null;
+	}
+
 }

@@ -89,7 +89,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	private final Map<TS,EjbWithId> mapTsEntity; public Map<TS,EjbWithId> getMapTsEntity() {return mapTsEntity;}
 
 
-	DataSet ds; public DataSet getDs() {return ds;} public void setDs(DataSet ds) {this.ds = ds;}
+	private DataSet ds; public DataSet getDs() {return ds;} public void setDs(DataSet ds) {this.ds = ds;}
 
 	protected UtilsXlsDefinitionResolver xlsResolver;
 
@@ -177,6 +177,8 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		}
 	}
 
+	protected BRIDGE bridge; public BRIDGE getBridge() {return bridge;}
+
 	private void reloadBridges()
 	{
 		entities.clear();
@@ -185,21 +187,27 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 			mapTsEntity.clear();
 			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(clas.getCode()).asSubclass(EjbWithId.class);
 			entities.addAll(fTs.all(c));
+
+			if(entities.size() > 0) {bridge = fTs.fcBridge(fbTs.getClassBridge(), clas, entities.get(0));}
 		}
-		catch (ClassNotFoundException e){e.printStackTrace();}
+		catch (ClassNotFoundException e){e.printStackTrace();} catch(UtilsConstraintViolationException e) { e.printStackTrace(); }
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(EjbWithId.class,entities));}
+
 	}
 
 	private List<DATA> lData; public List<DATA> getlData() { return lData; }
 	private DATA data; public DATA getData() { return data; } public void setData(DATA data) { this.data = data; }
 
-	public void selectStation()
+	public void selectEntity() throws UtilsConstraintViolationException
 	{
-		logger.info("Selected: "+entity.toString());
+		logger.info("Selected: "+ entity.toString());
 		
 		//FIND The Bridge/Timeseries
 		// ts = fTs.fc ..
 //		lData = fTs.fData(workspace, tsh.getOpList().get(0));
+
+		ts = fTs.fcTimeSeries(scope, interval,bridge);
+		lData = fTs.fData(workspace, ts);
 
 		McTsViewerFactory<TS,DATA> f = new McTsViewerFactory<TS,DATA>();
 		ds=f.build(lData);

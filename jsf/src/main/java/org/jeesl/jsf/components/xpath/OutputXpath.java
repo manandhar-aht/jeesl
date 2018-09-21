@@ -22,7 +22,7 @@ import net.sf.ahtutils.jsf.util.ComponentAttribute;
 public class OutputXpath extends AbstractXpath
 {	
 	final static Logger logger = LoggerFactory.getLogger(OutputXpath.class);
-	private static enum Properties {value,xpath,column,styleClass,localeCode}
+	private enum Properties {value,xpath,column,styleClass,localeCode}
 	
 	private static boolean debugOnInfo = false;
 	
@@ -53,7 +53,7 @@ public class OutputXpath extends AbstractXpath
 		ValueExpression ve = this.getValueExpression(Properties.value.toString());
 		JXPathContext ctx = JXPathContext.newContext(ve.getValue(context.getELContext()));
 		
-		StringBuilder sbValue = new StringBuilder("");
+		StringBuilder sbValue = new StringBuilder();
 
 		try
 		{

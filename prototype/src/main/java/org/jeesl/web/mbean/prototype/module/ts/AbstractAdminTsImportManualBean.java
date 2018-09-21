@@ -13,6 +13,7 @@ import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.op.OpEntitySelectionHandler;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
+import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.mc.ts.McTsViewerFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
@@ -206,12 +207,22 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		// ts = fTs.fc ..
 //		lData = fTs.fData(workspace, tsh.getOpList().get(0));
 
-		ts = fTs.fcTimeSeries(scope, interval,bridge);
+		ts = fTs.fcTimeSeries(scope, interval,fTs.fcBridge(fbTs.getClassBridge(), clas, entity));
 		lData = fTs.fData(workspace, ts);
 
 		McTsViewerFactory<TS,DATA> f = new McTsViewerFactory<TS,DATA>();
 		ds=f.build(lData);
 		JaxbUtil.info(ds);
+	}
+
+	public void selectData()
+	{
+		logger.info(AbstractLogMessage.selectEntity(data));
+
+		date = data.getRecord();
+		value = data.getValue();
+		transaction = data.getTransaction();
+		logger.info("Existing data found: " + date + " / " + value);
 	}
 
 	public void addData()
@@ -229,8 +240,8 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 
 	public void saveData() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-//		if(date == null | value == null) { bMessage.errorText();
-		transaction = fTs.save(transaction);
+
+		if(EjbIdFactory.isUnSaved(transaction)) {transaction = fTs.save(transaction);}
 		data.setTransaction(transaction);
 		data.setRecord(date); data.setValue(value);
 		logger.info(AbstractLogMessage.saveEntity(data));
@@ -241,4 +252,10 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		data = null;
 		transaction = null;
 	}
+
+	public void reset() {
+		data = null;
+		transaction = null;
+	}
+
 }

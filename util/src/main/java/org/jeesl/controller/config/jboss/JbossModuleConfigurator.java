@@ -77,7 +77,7 @@ public class JbossModuleConfigurator
 		File dirMain = new File(dirMysql,"main");
 		File moduleXml = new File(dirMain,"module.xml");
 		
-		logger.info(moduleXml.getAbsolutePath());
+		logger.debug(moduleXml.getAbsolutePath());
 		
 		if(!dirCom.exists()){dirCom.mkdir();}
 		if(!dirMysql.exists()){dirMysql.mkdir();}
@@ -104,7 +104,7 @@ public class JbossModuleConfigurator
 			File fMaria = MavenArtifactResolver.resolve("org.mariadb.jdbc:mariadb-java-client:2.2.5");
 			FileUtils.copyFileToDirectory(fMysql,dirMain);
 			FileUtils.copyFileToDirectory(fMaria,dirMain);
-			logger.info("Copied "+fMysql.getName()+" to "+dirMain.getAbsolutePath());
+			logger.debug("Copied "+fMysql.getName()+" to "+dirMain.getAbsolutePath());
 		}
 		else
 		{

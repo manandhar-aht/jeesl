@@ -101,7 +101,7 @@ public class JbossConfigurator
 	}
 	
 	
-	public void createMysqlDatasource(Configuration config, String context) throws IOException
+	public String createMysqlDatasource(Configuration config, String context) throws IOException
 	{
 		String cfgDbDs = "db."+context+".ds";
 		String cfgDbHost = "db."+context+".host";
@@ -115,16 +115,21 @@ public class JbossConfigurator
 		String pDbUser = config.getString(cfgDbUser);
 		String pDbPwd = config.getString(cfgDbPwd);
 		
-		logger.info(cfgDbPwd+"\t"+pDbDs);
-		logger.info(cfgDbHost+"\t"+pDbHost);
-		logger.info(cfgDbName+"\t"+pDbName);
-		logger.info(cfgDbUser+"\t"+pDbUser);
-		logger.info(cfgDbPwd+"\t"+pDbPwd);
+		logger.debug(cfgDbPwd+"\t"+pDbDs);
+		logger.debug(cfgDbHost+"\t"+pDbHost);
+		logger.debug(cfgDbName+"\t"+pDbName);
+		logger.debug(cfgDbUser+"\t"+pDbUser);
+		logger.debug(cfgDbPwd+"\t"+pDbPwd);
 		
-		if(!this.dsExists(cfgDbDs))
+		boolean dsExists = dsExists(cfgDbDs);
+		if(!dsExists)
 		{
 			createMysqlDatasource(pDbDs,pDbHost,pDbName,"?useSSL=false",pDbUser,pDbPwd);
+			StringBuilder sb = new StringBuilder();
+			sb.append(pDbDs);
+			return sb.toString();
 		}
+		return null;
 	}
 	
 	public void createPostgresDatasource(Configuration config, String context) throws IOException
@@ -141,11 +146,11 @@ public class JbossConfigurator
 		String pDbUser = config.getString(cfgDbUser);
 		String pDbPwd = config.getString(cfgDbPwd);
 		
-		logger.info(cfgDbPwd+"\t"+pDbDs);
-		logger.info(cfgDbHost+"\t"+pDbHost);
-		logger.info(cfgDbName+"\t"+pDbName);
-		logger.info(cfgDbUser+"\t"+pDbUser);
-		logger.info(cfgDbPwd+"\t"+pDbPwd);
+		logger.debug(cfgDbPwd+"\t"+pDbDs);
+		logger.debug(cfgDbHost+"\t"+pDbHost);
+		logger.debug(cfgDbName+"\t"+pDbName);
+		logger.debug(cfgDbUser+"\t"+pDbUser);
+		logger.debug(cfgDbPwd+"\t"+pDbPwd);
 		
 		if(!this.dsExists(cfgDbDs))
 		{

@@ -41,10 +41,7 @@ public class JeeslEap71FacadeLookup implements JeeslFacadeLookup
 		if(moduleName!=null) {sb.append("/").append(moduleName);}
 		sb.append("/").append(facade.getSimpleName()).append("Bean");
 		sb.append("!").append(facade.getName());	
-		logger.info("Looking up: "+sb.toString());
-		
-//		sb = new StringBuilder();
-//		sb.append("ejb:erp/erp-beans/ErpTestFacadeBean!com.aht.erp.interfaces.facade.ErpTestFacade");
+		logger.trace("Looking up: "+sb.toString());
 		
 		return (F) context.lookup(sb.toString());
 	}

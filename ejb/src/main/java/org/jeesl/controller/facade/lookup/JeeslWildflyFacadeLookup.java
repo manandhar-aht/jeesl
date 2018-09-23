@@ -1,4 +1,4 @@
-package org.jeesl.controller.facade;
+package org.jeesl.controller.facade.lookup;
 
 import java.security.Security;
 import java.util.Properties;

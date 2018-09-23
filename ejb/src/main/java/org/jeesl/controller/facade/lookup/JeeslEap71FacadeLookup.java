@@ -17,11 +17,16 @@ public class JeeslEap71FacadeLookup implements JeeslFacadeLookup
 	private Context context;
 	
 	private final String appName;
-//	private String moduleName;
+	private final String moduleName;
 
 	public JeeslEap71FacadeLookup(String appName)
 	{
+		this(appName,null);
+	}
+	public JeeslEap71FacadeLookup(String appName, String moduleName)
+	{
 		this.appName=appName;
+		this.moduleName=moduleName;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -31,10 +36,15 @@ public class JeeslEap71FacadeLookup implements JeeslFacadeLookup
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("ejb:");
-		sb.append("/").append(appName);
+		if(moduleName==null) {sb.append("/");}
+		sb.append(appName);
+		if(moduleName!=null) {sb.append("/").append(moduleName);}
 		sb.append("/").append(facade.getSimpleName()).append("Bean");
 		sb.append("!").append(facade.getName());	
-		logger.debug("Looking up: "+sb.toString());
+		logger.info("Looking up: "+sb.toString());
+		
+//		sb = new StringBuilder();
+//		sb.append("ejb:erp/erp-beans/ErpTestFacadeBean!com.aht.erp.interfaces.facade.ErpTestFacade");
 		
 		return (F) context.lookup(sb.toString());
 	}

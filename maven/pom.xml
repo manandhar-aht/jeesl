@@ -92,10 +92,10 @@
 	    </dependency>
             
 		<dependency>
-                <groupId>org.apache.ant</groupId>
-                <artifactId>ant-compress</artifactId>
-                <version>1.2</version>
-            </dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant-compress</artifactId>
+            <version>1.2</version>
+        </dependency>
             
 		<dependency>
 		    <groupId>org.wildfly.core</groupId>
@@ -109,6 +109,14 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 	    </dependency>
+	    
+	    <!-- DB -->
+	    <dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.46</version>
+			<scope>provided</scope>
+		</dependency>
    
 	</dependencies>
 

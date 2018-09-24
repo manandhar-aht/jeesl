@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.maven.plugin.AbstractMojo;
@@ -57,44 +57,16 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
     	
     	JbossConfigurator jbossConfig = new JbossConfigurator(client);
 	    	
-	    String keys = config.getString("eap.configurations");
-	    getLog().warn("Keys: "+keys);
-	    
-	    String[] keyList = keys.split("-");
-	    try
-	    {
-	    	for(String key : keyList)
-	    	{
-	    		getLog().debug("Key: "+key);
-	    		dbFiles(key,config,jbossModule);
-	    	}
-	    }
-	    catch (IOException e) {throw new MojoExecutionException(e.getMessage());}
+	    String key = config.getString("eap.configurations");
+	    getLog().warn("Keys: "+key);
+	    String[] keys = key.split("-");
 	    
 	    try
 	    {
-	    	List<String> drivers = new ArrayList<String>();
-	    	for(String key : keyList)
-	    	{
-	    		String driver = dbDriver(key,config,jbossConfig);
-	    		if(driver!=null) {drivers.add(driver);}
-	    	}
-	    	getLog().info("Drivers added: "+StringUtils.join(drivers, ", "));
-	    	
+	    	dbFiles(keys,config,jbossModule);
+	    	dbDrivers(keys,config,jbossConfig);
+	    	dbDs(keys,config,jbossConfig);
 	    }
-	    catch (IOException e) {throw new MojoExecutionException(e.getMessage());}
-	    
-	    try
-	    {
-	    	for(String key : keyList)
-		    {
-		    	String ds = dbDs(key,config,jbossConfig);
-		    	if(ds!=null) {getLog().info("Datasource added: "+ds);}
-		    }
-	    }
-	    catch (IOException e) {throw new MojoExecutionException(e.getMessage());}
-	    
-	    try{client.close();}
 	    catch (IOException e) {throw new MojoExecutionException(e.getMessage());}
     }
     
@@ -112,42 +84,59 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
 		return config;
     }
     
-    private void dbFiles(String key, Configuration config, JbossModuleConfigurator jbossModule) throws IOException
+    private void dbFiles(String[] keys, Configuration config, JbossModuleConfigurator jbossModule) throws IOException
     {
-    	String type = config.getString("db."+key+".type");
-    	DbType dbType = DbType.valueOf(type);
-    	switch(dbType)
+    	for(String key : keys)
     	{
-    		case mysql: if(!setFiles.contains(dbType))
-    					{
-    						jbossModule.mysql();
-    						getLog().info("DB: MySQL ... files copied");
-    						setFiles.add(dbType);
-    					}
-    					break;
+    		String type = config.getString("db."+key+".type");
+        	DbType dbType = DbType.valueOf(type);
+        	switch(dbType)
+        	{
+        		case mysql: if(!setFiles.contains(dbType))
+        					{
+        						jbossModule.mysql();
+        						getLog().info("DB: MySQL ... files copied");
+        						setFiles.add(dbType);
+        					}
+        					break;
+        	}
     	}
     }
     
-    private String dbDriver(String key, Configuration config, JbossConfigurator jbossConfig) throws IOException
+    private void dbDrivers(String[] keys, Configuration config, JbossConfigurator jbossConfig) throws IOException
     {
-    	String type = config.getString("db."+key+".type");
-    	DbType dbType = DbType.valueOf(type);
-    	switch(dbType)
+    	List<String> log = new ArrayList<String>();
+    	for(String key : keys)
     	{
-    		case mysql: if(!jbossConfig.driverExists("mysql")) {jbossConfig.createMysqlDriver();return "mysql";}
-    					break;
+    		String type = config.getString("db."+key+".type");
+        	DbType dbType = DbType.valueOf(type);
+        	switch(dbType)
+        	{
+        		case mysql: if(!jbossConfig.driverExists("mysql"))
+        					{
+        						jbossConfig.createMysqlDriver();;
+        						getLog().info("MySQL added");
+        						log.add("mysql");
+        					}
+        					break;
+        	}
     	}
-    	return null;
+    	getLog().info("DB Drivers: "+StringUtils.join(log, ", "));
     }
     
-    private String dbDs(String key, Configuration config, JbossConfigurator jbossConfig) throws IOException
+    private void dbDs(String[] keys, Configuration config, JbossConfigurator jbossConfig) throws IOException
     {
-    	String type = config.getString("db."+key+".type");
-    	DbType dbType = DbType.valueOf(type);
-    	switch(dbType)
+    	for(String key : keys)
     	{
-    		case mysql: String ds = jbossConfig.createMysqlDatasource(config,key); if(ds!=null) {return ds;}
+    		String type = config.getString("db."+key+".type");
+        	DbType dbType = DbType.valueOf(type);
+        	switch(dbType)
+        	{
+        		case mysql: String ds = jbossConfig.createMysqlDatasource(config,key);
+        								if(ds!=null)
+        								{getLog().info("DS: "+ds);}
+        	}
     	}
-    	return null;
+    	
     }
 }

@@ -59,7 +59,6 @@ public class JeeslEap71FacadeLookup implements JeeslFacadeLookup
 //			props.put(Context.SECURITY_CREDENTIALS, password);
 			context =  new InitialContext(props);
 		}
-	   
 	}
 	
 }

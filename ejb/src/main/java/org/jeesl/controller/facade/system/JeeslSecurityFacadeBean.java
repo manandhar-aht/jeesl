@@ -9,8 +9,10 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -19,6 +21,7 @@ import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory.Type;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
@@ -92,6 +95,27 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		if(usecase.getActions()!=null){usecase.getActions().size();}
 //		usecase.getTemplates().size();
 		return usecase;
+	}
+	
+	@Override
+	public <E extends Enum<E>> C fSecurityCategory(Type type, E code)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaQuery<C> cQ = cB.createQuery(fbSecurity.getClassCategory());
+		Root<C> reference = cQ.from(fbSecurity.getClassCategory());
+
+		Expression<String> eType = reference.get(JeeslSecurityCategory.Attributes.type.toString());
+		predicates.add(cB.equal(eType,type.toString()));
+		
+		Expression<String> eCode = reference.get(JeeslSecurityCategory.Attributes.code.toString());
+		predicates.add(cB.equal(eCode,code.toString()));
+
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(reference);
+		
+		TypedQuery<C> tQ = em.createQuery(cQ);
+		return tQ.getSingleResult();
 	}
 	
 	@Override public List<V> allViewsForUser(USER user)

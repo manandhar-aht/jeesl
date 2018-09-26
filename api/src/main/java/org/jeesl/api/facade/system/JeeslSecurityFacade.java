@@ -36,6 +36,8 @@ public interface JeeslSecurityFacade <L extends UtilsLang, D extends UtilsDescri
 	V load(Class<V> cView, V view);
 	U load(Class<U> cUsecase, U usecase);
 	
+	<E extends Enum<E>> C fSecurityCategory(JeeslSecurityCategory.Type type, E code);
+	
 	List<V> allViewsForUser(USER user);
 	
 	List<R> allRolesForUser(USER user);

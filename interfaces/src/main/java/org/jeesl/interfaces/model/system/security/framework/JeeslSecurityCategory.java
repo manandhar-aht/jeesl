@@ -24,6 +24,7 @@ public interface JeeslSecurityCategory<L extends UtilsLang, D extends UtilsDescr
 				EjbWithLang<L>,EjbWithDescription<D>,
 				EjbSaveable
 {
+	public enum Attributes{code,type}
 	public static enum Type {role,view,usecase,action}
 	
 	public Boolean getDocumentation();

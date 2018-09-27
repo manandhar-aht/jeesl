@@ -3,9 +3,10 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:jeesl="http://www.jeesl.org/jsf"
+	xmlns:j="http://www.jeesl.org/jsf"
 	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:composite="http://java.sun.com/jsf/composite">
@@ -25,16 +26,43 @@
 	<p:dialog id="dPerson" widgetVar="#{cc.attrs.widgetVar}" modal="true">
 		<h:form>
 			<aht:slot width="8">
-				<p:dataTable id="dtOpEntity" var="var" value="#{cc.attrs.handler.opList}"
+				<p:dataTable id="dtOpEntity" var="var" value="#{cc.attrs.handler.lazy}" lazy="true"
 					 	selection="#{cc.attrs.handler.op}" selectionMode="single" rowKey="#{var.id}"
 					 	rows="#{cc.attrs.opRows}" rowsPerPageTemplate="#{cc.attrs.rowsPerPageTemplate}" paginator="true" paginatorPosition="bottom" paginatorTemplate="#{cc.attrs.paginatorTemplate}">>
 					<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.addEntity()}" oncomplete="PF('#{cc.attrs.widgetVar}').hide();"/>
-					<p:columns var="column" value="#{cc.attrs.handler.columns}" columnIndexVar="colIndex">
+					
+					<p:column rendered="#{fn:length(cc.attrs.handler.columns) gt 0}">
+						<c:if test="#{not empty cc.attrs.handler.columns[0].filterBy}"><f:attribute name="filterBy" value="#{column0}"/></c:if>
+						<c:if test="#{not empty cc.attrs.handler.columns[0].filterBy}"><f:attribute name="filterMatchMode" value="contains"/></c:if>
+						<c:if test="#{not empty cc.attrs.handler.columns[0].filterBy}"><f:attribute name="filterStyle" value="width: 50px;"/></c:if>
 						<f:facet name="header">
-							<h:outputText value="#{appLabelBean.labels[column.entity][column.code][cc.attrs.localeCode].lang}"/>
+							<h:outputText value="#{appLabelBean.entities[cc.attrs.handler.columns[0].entity][cc.attrs.localeCode].lang}" rendered="#{empty cc.attrs.handler.columns[0].code}"/>
+							<h:outputText value="#{appLabelBean.labels[cc.attrs.handler.columns[0].entity][cc.attrs.handler.columns[0].code][cc.attrs.localeCode].lang}" rendered="#{not empty cc.attrs.handler.columns[0].code}"/>
 						</f:facet>
-						<jeesl:outputXpath value="#{var}" xpath="#{column.xpath}" localeCode="#{localeCode}"/>
-					</p:columns>
+						<j:outputXpath value="#{var}" xpath="#{cc.attrs.handler.columns[0].xpath}" localeCode="#{localeCode}"/>
+					</p:column>
+					<p:column rendered="#{fn:length(cc.attrs.handler.columns) gt 1}">
+						<c:if test="#{not empty cc.attrs.handler.columns[1].filterBy}"><f:attribute name="filterBy" value="#{column1}"/></c:if>
+						<c:if test="#{not empty cc.attrs.handler.columns[1].filterBy}"><f:attribute name="filterMatchMode" value="contains"/></c:if>
+						<c:if test="#{not empty cc.attrs.handler.columns[1].filterBy}"><f:attribute name="filterStyle" value="width: 50px;"/></c:if>
+						<f:facet name="header">
+							<h:outputText value="#{appLabelBean.entities[cc.attrs.handler.columns[1].entity][cc.attrs.localeCode].lang}" rendered="#{empty cc.attrs.handler.columns[1].code}"/>
+							<h:outputText value="#{appLabelBean.labels[cc.attrs.handler.columns[1].entity][cc.attrs.handler.columns[1].code][cc.attrs.localeCode].lang}" rendered="#{not empty cc.attrs.handler.columns[1].code}"/>
+						</f:facet>
+						<j:outputXpath value="#{var}" xpath="#{cc.attrs.handler.columns[1].xpath}" localeCode="#{localeCode}"/>
+					</p:column>
+					<p:column rendered="#{fn:length(cc.attrs.handler.columns) gt 2}">
+						<c:if test="#{not empty cc.attrs.handler.columns[2].filterBy}"><f:attribute name="filterBy" value="#{column2}"/></c:if>
+						<c:if test="#{not empty cc.attrs.handler.columns[2].filterBy}"><f:attribute name="filterMatchMode" value="contains"/></c:if>
+						<c:if test="#{not empty cc.attrs.handler.columns[2].filterBy}"><f:attribute name="filterStyle" value="width: 50px;"/></c:if>
+						<f:facet name="header">
+							<h:outputText value="#{appLabelBean.entities[cc.attrs.handler.columns[2].entity][cc.attrs.localeCode].lang}" rendered="#{empty cc.attrs.handler.columns[2].code}"/>
+							<h:outputText value="#{appLabelBean.labels[cc.attrs.handler.columns[2].entity][cc.attrs.handler.columns[2].code][cc.attrs.localeCode].lang}" rendered="#{not empty cc.attrs.handler.columns[2].code}"/>
+						</f:facet>
+						<j:outputXpath value="#{var}" xpath="#{cc.attrs.handler.columns[2].xpath}" localeCode="#{localeCode}"/>
+					</p:column>
+					
+					
 				</p:dataTable>
 			</aht:slot>
 		</h:form>

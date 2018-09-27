@@ -21,8 +21,8 @@ public class SbTree3Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 	private final JeeslTree3Store<L1,L2,L3> store3;
 	private final JeeslTree3Cache<L1,L2,L3> cache3;
 	
-	protected boolean showLevel3; public boolean isShowLevel3() {return showLevel3;}
-	
+	protected boolean showLevel3; public boolean isShowLevel3() {return showLevel3;} public void setShowLevel3(boolean showLevel3) {this.showLevel3 = showLevel3;}
+
 	protected final Set<L3> allowChild3;
 	protected final Set<L3> allowPath3;
 	protected final Set<L3> ignore3;

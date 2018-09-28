@@ -106,10 +106,10 @@
 	                                <h:outputText value="#{r.name[userBean.localeCode].lang}" />
 	                            </p:column>
 	                            <p:column>
-	                                <h:graphicImage rendered="#{cc.attrs.bean.mapRoles[r.id]}" name="#{iconBean.icon12['aupSecuritySelected']}" library="gfx">
+	                                <h:graphicImage rendered="#{cc.attrs.bean.mapRoles[r.id]}" name="#{appIconBean.icon12['jeeslSecuritySelected']}" library="gfx">
 	                                    <p:ajax update=":#{cc.id}:fRole" event="click" listener="#{cc.attrs.bean.grantRole(r,false)}"/>
 	                                </h:graphicImage>
-	                                <h:graphicImage rendered="#{not cc.attrs.bean.mapRoles[r.id]}" name="#{iconBean.icon12['aupSecurityDeSelected']}" library="gfx">
+	                                <h:graphicImage rendered="#{not cc.attrs.bean.mapRoles[r.id]}" name="#{appIconBean.icon12['jeeslSecurityNotSelected']}" library="gfx">
 	                                    <p:ajax update=":#{cc.id}:fRole" event="click" listener="#{cc.attrs.bean.grantRole(r,true)}"/>
 	                                </h:graphicImage>
 	                            </p:column>

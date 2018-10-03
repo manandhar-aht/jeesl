@@ -1,5 +1,6 @@
 package org.jeesl.api.facade.io;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
@@ -32,6 +33,6 @@ public interface JeeslIoAttributeFacade <L extends UtilsLang, D extends UtilsDes
 	List<SET> fAttributeSets(List<CATEGORY> categories, long refId);
 	List<DATA> fAttributeData(CONTAINER container);
 	DATA fAttributeData(CRITERIA criteria, CONTAINER container) throws UtilsNotFoundException;
-	List<DATA> fAttributeData(CRITERIA criteria, List<CONTAINER> containers);
+	List<DATA> fAttributeData(CRITERIA criteria, Collection<CONTAINER> containers);
 	CONTAINER copy(CONTAINER container) throws UtilsConstraintViolationException, UtilsLockingException;
 }

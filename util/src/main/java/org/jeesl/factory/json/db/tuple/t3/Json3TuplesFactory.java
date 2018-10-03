@@ -74,7 +74,7 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
         	json.getTuples().add(jtf.buildCount(t));
         }
 		return json;
-	}
+	} 
 	
 	protected void clear()
 	{

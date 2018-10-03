@@ -12,6 +12,8 @@ import javax.persistence.Tuple;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.model.json.db.tuple.t1.Json1Tuple;
 import org.jeesl.model.json.db.tuple.t1.Json1Tuples;
+import org.jeesl.model.json.db.tuple.t3.Json3Tuple;
+import org.jeesl.model.json.db.tuple.t3.Json3Tuples;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
@@ -25,13 +27,27 @@ public class Json1TuplesFactory <A extends EjbWithId>
 	private final Set<Long> setId;
 	private final Json1TupleFactory<A> jtf;
 	
+	protected final Map<Long,A> mapA; public Map<Long,A> getMapA() {return mapA;}
+	
+	private Json1Tuples<A> tuples; public Json1Tuples<A> get1Tuples() {return tuples;} public void set1Tuples(Json1Tuples<A> tuples) {this.tuples = tuples;}
+
+	
 	public Json1TuplesFactory(Class<A> cA) {this(null,cA);}
 	public Json1TuplesFactory(UtilsFacade fUtils, Class<A> cA)
 	{
 		this.cA=cA;
 		this.fUtils=fUtils;
 		setId = new HashSet<Long>();
+		mapA = new HashMap<Long,A>();
+		
 		jtf = new Json1TupleFactory<A>();
+	}
+	
+	protected void clear()
+	{
+		setId.clear();
+		
+		mapA.clear();
 	}
 	
 	public List<Json1Tuple<A>> add(List<Json1Tuple<A>> list)
@@ -122,5 +138,18 @@ public class Json1TuplesFactory <A extends EjbWithId>
 		}
 		
 		return map;
+	}
+	
+	public void init(UtilsFacade fUtils, Json1Tuples<A> json)
+	{
+		clear();
+		this.tuples = json;
+		
+		for(Json1Tuple<A> t : json.getTuples())
+		{
+			setId.add(t.getId());
+		}
+		
+		mapA.putAll(EjbIdFactory.toIdMap(fUtils.find(cA, setId)));
 	}
 }

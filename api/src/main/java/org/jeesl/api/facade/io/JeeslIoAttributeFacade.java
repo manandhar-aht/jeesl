@@ -32,5 +32,6 @@ public interface JeeslIoAttributeFacade <L extends UtilsLang, D extends UtilsDes
 	List<SET> fAttributeSets(List<CATEGORY> categories, long refId);
 	List<DATA> fAttributeData(CONTAINER container);
 	DATA fAttributeData(CRITERIA criteria, CONTAINER container) throws UtilsNotFoundException;
+	List<DATA> fAttributeData(CRITERIA criteria, List<CONTAINER> containers);
 	CONTAINER copy(CONTAINER container) throws UtilsConstraintViolationException, UtilsLockingException;
 }

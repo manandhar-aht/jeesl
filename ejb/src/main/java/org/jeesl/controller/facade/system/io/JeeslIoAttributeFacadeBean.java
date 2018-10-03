@@ -134,7 +134,23 @@ public class JeeslIoAttributeFacadeBean<L extends UtilsLang, D extends UtilsDesc
 		List<DATA> datas = fAttributeData(container);
 		for(DATA data : datas) {if(data.getCriteria().equals(criteria)) {return data;}}
 		throw new UtilsNotFoundException("no data for container");
-	}	
+	}
+	
+	@Override
+	public List<DATA> fAttributeData(CRITERIA criteria, List<CONTAINER> containers)
+	{
+		List<DATA> result = new ArrayList<DATA>();
+		for(CONTAINER c : containers)
+		{
+			try {
+				result.add(fAttributeData(criteria,c));
+			} catch (UtilsNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 
 	@Override
 	public CONTAINER copy(CONTAINER container) throws UtilsConstraintViolationException, UtilsLockingException
@@ -146,6 +162,4 @@ public class JeeslIoAttributeFacadeBean<L extends UtilsLang, D extends UtilsDesc
 		}
 		return c;
 	}
-
-	
 }

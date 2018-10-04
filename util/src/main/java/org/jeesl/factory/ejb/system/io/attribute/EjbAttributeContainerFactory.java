@@ -36,7 +36,6 @@ public class EjbAttributeContainerFactory<SET extends JeeslAttributeSet<?,?,?,?>
 		return ejb;
 	}
 	
-	public <W extends JeeslWithAttributeContainer<CONTAINER>> Map<W,CONTAINER> toMapContainer(List<W> list) {return toMapContainer(list);}
 	public <W extends JeeslWithAttributeContainer<CONTAINER>> Map<W,CONTAINER> toMapContainer(Collection<W> list)
 	{
 		Map<W,CONTAINER> result = new HashMap<W,CONTAINER>();

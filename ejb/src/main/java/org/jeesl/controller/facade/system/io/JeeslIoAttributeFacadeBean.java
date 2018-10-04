@@ -1,7 +1,6 @@
 package org.jeesl.controller.facade.system.io;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -138,7 +137,7 @@ public class JeeslIoAttributeFacadeBean<L extends UtilsLang, D extends UtilsDesc
 	}
 	
 	@Override
-	public List<DATA> fAttributeData(CRITERIA criteria, Collection<CONTAINER> containers)
+	public List<DATA> fAttributeData(CRITERIA criteria, List<CONTAINER> containers)
 	{
 		List<DATA> result = new ArrayList<DATA>();
 		for(CONTAINER c : containers)

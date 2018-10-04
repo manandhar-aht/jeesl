@@ -1,7 +1,9 @@
 package org.jeesl.factory.ejb.system.io.attribute;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
@@ -54,5 +56,13 @@ public class EjbAttributeDataFactory<CRITERIA extends JeeslAttributeCriteria<?,?
 		
 		ejb.setValueOptions(list);
 		return ejb;
+	}
+	
+	public Map<CONTAINER,DATA> toMapSingleData(List<DATA> datas)
+	{
+		Map<CONTAINER,DATA> map = new HashMap<CONTAINER,DATA>();
+		for(DATA d : datas) {map.put(d.getContainer(), d);}
+		
+		return map;
 	}
 }

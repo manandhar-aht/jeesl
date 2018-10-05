@@ -64,6 +64,7 @@ public class ReportQuery
 		xml.setPosition(0);
 		xml.setVisible(true);
 		
+		xml.setXmlExample("");
 		xml.setLangs(XmlStatusQuery.langs());
 		xml.setDescriptions(XmlStatusQuery.descriptions());
 		

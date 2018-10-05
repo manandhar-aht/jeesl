@@ -61,10 +61,10 @@
         </xsd:complexType>
     </xsd:element>
     
-    	<xsd:element name="option">
+    <xsd:element name="option">
         <xsd:complexType>
 			<xsd:sequence>
-            		<xsd:element ref="us:parent" maxOccurs="1"/>
+            	<xsd:element ref="us:parent" maxOccurs="1"/>
                 <xsd:element ref="us:langs" maxOccurs="1"/>
                 <xsd:element ref="us:descriptions" maxOccurs="1"/>
                 <xsd:element ref="us:lang" maxOccurs="unbounded"/>

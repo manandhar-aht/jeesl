@@ -11,9 +11,12 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
+import org.jeesl.api.facade.system.JeeslExportRestFacade;
+import org.jeesl.api.rest.JeeslExportRest;
 import org.jeesl.api.rest.system.io.report.JeeslIoReportRestExport;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
+import org.jeesl.controller.report.JeeslReportUpdater;
 import org.jeesl.factory.builder.system.ReportFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
@@ -21,6 +24,7 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
+import org.jeesl.factory.xml.system.io.report.XmlReportsFactory;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
@@ -46,6 +50,8 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
+import net.sf.ahtutils.exception.processing.UtilsProcessingException;
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -125,23 +131,30 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efColumn;
 	private EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efRow;
 	
+	private JeeslReportUpdater<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> reportUpdater;
+
 	private String restUrl; public String getRestUrl() {return restUrl;} public void setRestUrl(String restUrl) {this.restUrl = restUrl;}
+	protected UtilsFacade fRest;
 	
 	protected AbstractAdminIoReportDefinitionBean(final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport)
 	{
 		super(fbReport);
 	}
 	
-	protected void initSuper(String[] langs, JeeslFacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
+	protected void initSuper(String[] langs, JeeslFacesMessageBean bMessage, UtilsFacade fRest,
+												JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
 	{
 		super.initSuperReport(langs,bMessage,fReport);
-
+		this.fRest=fRest;
+		
 		efReport = fbReport.report();
 		efWorkbook = fbReport.workbook();
 		efSheet = fbReport.sheet();
 		efGroup = fbReport.group();
 		efColumn = fbReport.column();
 		efRow = fbReport.row();
+		
+		reportUpdater = fbReport.ejbUpdater(fReport);
 		
 		uiHelper = new UiHelperIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>();
 		categories = fReport.allOrderedPositionVisible(fbReport.getClassCategory());
@@ -556,16 +569,29 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		}
 	}
 	
-	public  void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
+	public  void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException, UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException, UtilsProcessingException
 	{
-		logger.info("Downloading REST");
-		ResteasyClient client = new ResteasyClientBuilder().build();
-//		ResteasyWebTarget restTarget = client.target("http://localhost:8080/jeesl");
-		ResteasyWebTarget restTarget = client.target(restUrl);
-		JeeslIoReportRestExport rest = restTarget.proxy(JeeslIoReportRestExport.class);
+		logger.info("Downloading Report from REST: "+restUrl);
+
 		
-		Reports xml = rest.exportSystemIoReport(report.getCode());
-        JaxbUtil.info(xml);
+		Reports xml = null;
+		if(fRest instanceof JeeslExportRestFacade)
+		{
+			logger.info("Using Facade Connection (JBoss EAP6)");
+			xml = ((JeeslExportRestFacade)fRest).exportIoReport(report.getCode());
+			xml = XmlReportsFactory.build();
+		}
+		else
+		{
+			logger.info("Using Direct Connection (JBoss EAP7)");
+			ResteasyClient client = new ResteasyClientBuilder().build();
+			ResteasyWebTarget restTarget = client.target(restUrl);
+			JeeslIoReportRestExport rest = restTarget.proxy(JeeslIoReportRestExport.class);
+			xml = rest.exportSystemIoReport(report.getCode());
+		}
+
+		JaxbUtil.info(xml);
+		if(!xml.getReport().isEmpty()) {reportUpdater.importSystemIoReport(xml.getReport().get(0));}
         
         reloadReports();
 	}

@@ -110,11 +110,8 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	
 	public void postConstructSecurity(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage)
 	{
-		super.initAdmin(langs,cL,cD,bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fSecurity=fSecurity;
-		
-
-		
 		reloadCategories();
 	}
 	

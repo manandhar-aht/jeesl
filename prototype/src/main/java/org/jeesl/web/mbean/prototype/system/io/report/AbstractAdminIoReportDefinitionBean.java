@@ -142,10 +142,10 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		sbhCategory = new SbMultiHandler<CATEGORY>(fbReport.getClassCategory(),this);
 	}
 	
-	protected void postConstructReportDefinition(String[] langs, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, UtilsFacade fRest,
-												JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
+	protected void postConstructReportDefinition(JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport,
+												UtilsFacade fRest,JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage)
 	{
-		super.initSuperReport(langs,bTranslation,bMessage,fReport);
+		super.initSuperReport(bTranslation,bMessage,fReport);
 		this.fRest=fRest;
 		
 		efReport = fbReport.report();

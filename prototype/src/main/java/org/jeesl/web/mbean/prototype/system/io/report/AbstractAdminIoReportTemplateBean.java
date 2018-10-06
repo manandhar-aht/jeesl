@@ -86,9 +86,9 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		super(fbReport);
 	}
 	
-	protected void postConstructReportTemplate(String[] langs, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
+	protected void postConstructReportTemplate(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
 	{
-		super.initSuperReport(langs,bTranslation,bMessage,fReport);
+		super.initSuperReport(bTranslation,bMessage,fReport);
 		
 		efTemplate = fbReport.template();
 		efCell = fbReport.cell();

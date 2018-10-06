@@ -13,22 +13,24 @@
 	</composite:interface>
         
  	<composite:implementation>
-  		
-		<jtb:alert rendered="#{cc.attrs.value.level.code eq 'error'}" styleClass="alert-danger">
-            <jtp:symbolizer value="#{cc.attrs.value.level}"/>
-            <h:outputText class="constTitle" value="#{cc.attrs.value.name[localeCode].lang}"/><br/>
-            <h:outputText value="#{cc.attrs.value.description[localeCode].lang}"/>
-        </jtb:alert>
-        <jtb:alert rendered="#{cc.attrs.value.level.code eq 'warn'}" styleClass="alert-warning">
-            <jtp:symbolizer value="#{cc.attrs.value.level}"/>
-            <h:outputText class="constTitle" value="#{cc.attrs.value.name[localeCode].lang}"/><br/>
-            <h:outputText value="#{cc.attrs.value.description[localeCode].lang}"/>
-        </jtb:alert>
-        <jtb:alert rendered="#{cc.attrs.value.level.code eq 'info'}">
-            <jtp:symbolizer value="#{cc.attrs.value.level}"/>
-            <h:outputText class="constTitle" value="#{cc.attrs.value.name[localeCode].lang}"/><br/>
-            <h:outputText value="#{cc.attrs.value.description[localeCode].lang}"/>
-        </jtb:alert>
-
+        <ui:fragment>
+            <c:if test="#{not empty cc.attrs.value}">
+                <jtb:alert rendered="#{cc.attrs.value.level.code eq 'error'}" styleClass="alert-danger">
+                    <jtp:symbolizer value="#{cc.attrs.value.level}"/>
+                    <h:outputText class="constTitle" value="#{cc.attrs.value.name[localeCode].lang}"/><br/>
+                    <h:outputText value="#{cc.attrs.value.description[localeCode].lang}"/>
+                </jtb:alert>
+                <jtb:alert rendered="#{cc.attrs.value.level.code eq 'warn'}" styleClass="alert-warning">
+                    <jtp:symbolizer value="#{cc.attrs.value.level}"/>
+                    <h:outputText class="constTitle" value="#{cc.attrs.value.name[localeCode].lang}"/><br/>
+                    <h:outputText value="#{cc.attrs.value.description[localeCode].lang}"/>
+                </jtb:alert>
+                <jtb:alert rendered="#{cc.attrs.value.level.code eq 'info'}">
+                    <jtp:symbolizer value="#{cc.attrs.value.level}"/>
+                    <h:outputText class="constTitle" value="#{cc.attrs.value.name[localeCode].lang}"/><br/>
+                    <h:outputText value="#{cc.attrs.value.description[localeCode].lang}"/>
+                </jtb:alert>
+            </c:if>
+    </ui:fragment>
    </composite:implementation>
 </html>

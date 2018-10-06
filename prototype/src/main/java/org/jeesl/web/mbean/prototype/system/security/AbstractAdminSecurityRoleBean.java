@@ -73,6 +73,13 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 		roles = new ArrayList<R>();
 	}
 	
+	public void addCategory() 
+	{
+		category = efCategory.create("", JeeslSecurityCategory.Type.role.toString());
+		category.setName(efLang.createEmpty(langs));
+		category.setDescription(efDescription.createEmpty(langs));
+	}
+	
 	@Override public void categorySelected() throws UtilsNotFoundException
 	{
 		reloadRoles();
@@ -97,36 +104,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 		logger.info("Reloaded "+roles.size()+" (uiShowInvisible:"+uiShowInvisible+")");
 	}
 	
-	public void selectRole()
-	{
-		logger.trace(AbstractLogMessage.selectEntity(role));
-		role = fSecurity.load(fbSecurity.getClassRole(),role);
-		role = efLang.persistMissingLangs(fSecurity,langs,role);
-		role = efDescription.persistMissingLangs(fSecurity,langs,role);		
-		role = fSecurity.load(fbSecurity.getClassRole(),role);
-		reloadActions();
-		
-		views = role.getViews();
-		actions = role.getActions();
-		usecases = role.getUsecases();
-		
-		Collections.sort(views,comparatorView);
-		Collections.sort(actions,comparatorAction);
-		Collections.sort(usecases,comparatorUsecase);
-		
-		tblView=null;
-		tblAction=null;
-		tblUsecase=null;
-		
-		denyRemove = false;
-		if(role instanceof UtilsStatusFixedCode)
-		{
-			for(String fixed : ((UtilsStatusFixedCode)role).getFixedCodes())
-			{
-				if(fixed.equals(role.getCode())){denyRemove=true;}
-			}
-		}
-	}
+	
 
 	private void reloadActions()
 	{
@@ -166,6 +144,37 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 			roleUpdatePerformed();
 		}
 		catch (UtilsConstraintViolationException e) {bMessage.errorConstraintViolationDuplicateObject();}
+	}
+	
+	public void selectRole()
+	{
+		logger.trace(AbstractLogMessage.selectEntity(role));
+		role = fSecurity.load(fbSecurity.getClassRole(),role);
+		role = efLang.persistMissingLangs(fSecurity,langs,role);
+		role = efDescription.persistMissingLangs(fSecurity,langs,role);		
+		role = fSecurity.load(fbSecurity.getClassRole(),role);
+		reloadActions();
+		
+		views = role.getViews();
+		actions = role.getActions();
+		usecases = role.getUsecases();
+		
+		Collections.sort(views,comparatorView);
+		Collections.sort(actions,comparatorAction);
+		Collections.sort(usecases,comparatorUsecase);
+		
+		tblView=null;
+		tblAction=null;
+		tblUsecase=null;
+		
+		denyRemove = false;
+		if(role instanceof UtilsStatusFixedCode)
+		{
+			for(String fixed : ((UtilsStatusFixedCode)role).getFixedCodes())
+			{
+				if(fixed.equals(role.getCode())){denyRemove=true;}
+			}
+		}
 	}
 	
 	protected void roleUpdatePerformed(){}

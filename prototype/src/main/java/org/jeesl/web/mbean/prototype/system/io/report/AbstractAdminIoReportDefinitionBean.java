@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.system.io.report;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -9,10 +10,10 @@ import java.util.UUID;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.api.facade.system.JeeslExportRestFacade;
-import org.jeesl.api.rest.JeeslExportRest;
 import org.jeesl.api.rest.system.io.report.JeeslIoReportRestExport;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.controller.handler.ui.helper.UiHelperIoReport;
@@ -93,7 +94,6 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoReportDefinitionBean.class);
 
-	private List<CATEGORY> categories; public List<CATEGORY> getCategories() {return categories;}
 	private List<RCAT> revisionCategories; public List<RCAT> getRevisionCategories() {return revisionCategories;}
 	private List<CW> columnWidths; public List<CW> getColumnWidths() {return columnWidths;}
 	private List<RT> rowTypes; public List<RT> getRowTypes() {return rowTypes;}
@@ -116,7 +116,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	private COLUMN column; public COLUMN getColumn() {return column;} public void setColumn(COLUMN column) {this.column = column;}
 	
 	private UiHelperIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> uiHelper; public UiHelperIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> getUiHelper() {return uiHelper;}
-	private SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
+	protected SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	
 	private Comparator<REPORT> comparatorReport;
 	private Comparator<SHEET> comparatorSheet;
@@ -139,12 +139,13 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	protected AbstractAdminIoReportDefinitionBean(final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport)
 	{
 		super(fbReport);
+		sbhCategory = new SbMultiHandler<CATEGORY>(fbReport.getClassCategory(),this);
 	}
 	
-	protected void initSuper(String[] langs, JeeslFacesMessageBean bMessage, UtilsFacade fRest,
+	protected void postConstructReportDefinition(String[] langs, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, UtilsFacade fRest,
 												JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
 	{
-		super.initSuperReport(langs,bMessage,fReport);
+		super.initSuperReport(langs,bTranslation,bMessage,fReport);
 		this.fRest=fRest;
 		
 		efReport = fbReport.report();
@@ -157,7 +158,7 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		reportUpdater = fbReport.ejbUpdater(fReport);
 		
 		uiHelper = new UiHelperIoReport<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>();
-		categories = fReport.allOrderedPositionVisible(fbReport.getClassCategory());
+		
 		revisionCategories = fReport.allOrderedPositionVisible(fbReport.getClassRevisionCategory());
 		
 		comparatorReport = new IoReportComparator<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>().factory(IoReportComparator.Type.position);
@@ -174,9 +175,13 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 		styles = fReport.allOrderedPositionVisible(fbReport.getClassStyle());
 		trafficLightScopes = fReport.allOrderedPositionVisible(fbReport.getClassTrafficLightScope());
 		
-		sbhCategory = new SbMultiHandler<CATEGORY>(fbReport.getClassCategory(),categories,this);
-//		sbhCategory.selectAll();
+		reloadCategories();
 		reloadReports();
+	}
+	
+	protected void reloadCategories()
+	{
+		sbhCategory.setList(fReport.allOrderedPositionVisible(fbReport.getClassCategory()));
 	}
 	
 	public void toggled(Class<?> c)
@@ -208,8 +213,8 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassReport()));}
 		report = efReport.build(null);
-		report.setName(efLang.createEmpty(langs));
-		report.setDescription(efDescription.createEmpty(langs));
+		report.setName(efLang.createEmpty(localeCodes));
+		report.setDescription(efDescription.createEmpty(localeCodes));
 		report.setWorkbook(efWorkbook.build(report));
 		uiHelper.check(report);
 		reset(false,true,true,true,true);
@@ -237,8 +242,8 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(report));}
 		report = fReport.find(fbReport.getClassReport(), report);
-		report = efLang.persistMissingLangs(fReport,langs,report);
-		report = efDescription.persistMissingLangs(fReport,langs,report);
+		report = efLang.persistMissingLangs(fReport,localeCodes,report);
+		report = efDescription.persistMissingLangs(fReport,localeCodes,report);
 		if(report.getWorkbook()==null)
 		{
 			report.setWorkbook(efWorkbook.build(report));
@@ -284,8 +289,8 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassSheet()));}
 		sheet = efSheet.build(report.getWorkbook());
-		sheet.setName(efLang.createEmpty(langs));
-		sheet.setDescription(efDescription.createEmpty(langs));
+		sheet.setName(efLang.createEmpty(localeCodes));
+		sheet.setDescription(efDescription.createEmpty(localeCodes));
 		uiHelper.check(sheet);
 		reset(false,false,true,true,true);
 	}
@@ -358,8 +363,8 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassGroup()));}
 		group = efGroup.build(sheet,groups);
-		group.setName(efLang.createEmpty(langs));
-		group.setDescription(efDescription.createEmpty(langs));
+		group.setName(efLang.createEmpty(localeCodes));
+		group.setDescription(efDescription.createEmpty(localeCodes));
 		reset(false,false,true,false,true);
 		uiHelper.check(group);
 	}
@@ -428,8 +433,8 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassColumn()));}
 		column = efColumn.build(group,columns);
-		column.setName(efLang.createEmpty(langs));
-		column.setDescription(efDescription.createEmpty(langs));
+		column.setName(efLang.createEmpty(localeCodes));
+		column.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	public void selectColumn()
@@ -506,8 +511,8 @@ public class AbstractAdminIoReportDefinitionBean <L extends UtilsLang,D extends 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassRow()));}
 		row = efRow.build(sheet);
-		row.setName(efLang.createEmpty(langs));
-		row.setDescription(efDescription.createEmpty(langs));
+		row.setName(efLang.createEmpty(localeCodes));
+		row.setDescription(efDescription.createEmpty(localeCodes));
 		reset(false,false,false,true,true);
 	}
 	

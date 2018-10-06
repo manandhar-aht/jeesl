@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.factory.builder.system.ReportFactoryBuilder;
@@ -82,9 +83,9 @@ public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends Utils
 		super(fbReport);
 	}
 	
-	protected void initSuper(String[] langs, JeeslFacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
+	protected void postConstructReportStyle(String[] langs, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
 	{
-		super.initSuperReport(langs,bMessage,fReport);
+		super.initSuperReport(langs,bTranslation,bMessage,fReport);
 		
 		efStyle = fbReport.style();
 				
@@ -110,8 +111,8 @@ public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends Utils
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassStyle()));}
 		style = efStyle.build();
-		style.setName(efLang.createEmpty(langs));
-		style.setDescription(efDescription.createEmpty(langs));
+		style.setName(efLang.createEmpty(localeCodes));
+		style.setDescription(efDescription.createEmpty(localeCodes));
 		reset(false);
 	}
 	
@@ -124,8 +125,8 @@ public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends Utils
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(style));}
 		style = fReport.find(fbReport.getClassStyle(), style);
-		style = efLang.persistMissingLangs(fReport,langs,style);
-		style = efDescription.persistMissingLangs(fReport,langs,style);
+		style = efLang.persistMissingLangs(fReport,localeCodes,style);
+		style = efDescription.persistMissingLangs(fReport,localeCodes,style);
 		
 		reloadStyle();
 		reset(false);

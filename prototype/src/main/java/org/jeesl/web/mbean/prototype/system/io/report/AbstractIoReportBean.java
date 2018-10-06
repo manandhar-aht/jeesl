@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.system.io.report;
 
 import java.io.Serializable;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.factory.builder.system.ReportFactoryBuilder;
@@ -63,12 +64,13 @@ public class AbstractIoReportBean <L extends UtilsLang,D extends UtilsDescriptio
 	
 	protected AbstractIoReportBean(ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport)
 	{
+		super(fbReport.getClassL(),fbReport.getClassD());
 		this.fbReport=fbReport;
 	}
 	
-	protected void initSuperReport(String[] langs, JeeslFacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
+	protected void initSuperReport(String[] langs, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
 	{
-		super.initAdmin(langs,fbReport.getClassL(),fbReport.getClassD(),bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fReport=fReport;
 	}
 }

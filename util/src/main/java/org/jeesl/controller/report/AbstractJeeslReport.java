@@ -166,16 +166,16 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 					if(!ioWorkbook.getSheets().isEmpty())
 					{
 						Collections.sort(ioWorkbook.getSheets(), comparatorSheet);
+						xlsFactory = new XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>(localeCode,fbReport,ioWorkbook);
+						
 						ioSheet = fReport.load(ioWorkbook.getSheets().get(0), true);
 						
 						// Only set the toggled visibilities to true on the first time
 						if(mapGroupVisibilityToggle.isEmpty()){for(GROUP g : ioSheet.getGroups()){mapGroupVisibilityToggle.put(g,true);}}
 						
 						calculateSheetSettings();
-						xlsFactory = new XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION>(localeCode,fbReport,
-								ioWorkbook);
 						
-						//Sorting of the report structure (and lazyloading of Template)
+						//Sorting of the report structure (and lazyloading of templates)
 						for(SHEET s : ioWorkbook.getSheets())
 						{
 							Collections.sort(s.getGroups(), comparatorGroup);

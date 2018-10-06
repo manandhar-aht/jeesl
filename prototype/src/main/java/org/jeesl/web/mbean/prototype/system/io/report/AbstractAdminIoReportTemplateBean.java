@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoReportFacade;
 import org.jeesl.factory.builder.system.ReportFactoryBuilder;
@@ -85,9 +86,9 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 		super(fbReport);
 	}
 	
-	protected void initSuper(String[] langs, JeeslFacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
+	protected void postConstructReportTemplate(String[] langs, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoReportFacade<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fReport)
 	{
-		super.initSuperReport(langs,bMessage,fReport);
+		super.initSuperReport(langs,bTranslation,bMessage,fReport);
 		
 		efTemplate = fbReport.template();
 		efCell = fbReport.cell();
@@ -116,8 +117,8 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassTemplate()));}
 		template = efTemplate.build();
-		template.setName(efLang.createEmpty(langs));
-		template.setDescription(efDescription.createEmpty(langs));
+		template.setName(efLang.createEmpty(localeCodes));
+		template.setDescription(efDescription.createEmpty(localeCodes));
 		reset(false,true);
 	}
 	
@@ -133,8 +134,8 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(template));}
 		template = fReport.find(fbReport.getClassTemplate(), template);
-		template = efLang.persistMissingLangs(fReport,langs,template);
-		template = efDescription.persistMissingLangs(fReport,langs,template);
+		template = efLang.persistMissingLangs(fReport,localeCodes,template);
+		template = efDescription.persistMissingLangs(fReport,localeCodes,template);
 		
 		reloadTemplate();
 		reset(false,true);
@@ -169,8 +170,8 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbReport.getClassCell()));}
 		cell = efCell.build(template);
-		cell.setName(efLang.createEmpty(langs));
-		cell.setDescription(efDescription.createEmpty(langs));
+		cell.setName(efLang.createEmpty(localeCodes));
+		cell.setDescription(efDescription.createEmpty(localeCodes));
 		reset(false,false);
 	}
 	

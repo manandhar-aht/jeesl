@@ -46,7 +46,7 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 	final static Logger logger = LoggerFactory.getLogger(AbstractConstraintBean.class);
 	private static final long serialVersionUID = 1L;
 	
-	private JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint;
+//	private JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint;
 	private final ConstraintFactoryBuilder<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fbConstraint;
 	
 	private final Map<String,Map<String,CONSTRAINT>> mapConstraints;
@@ -64,7 +64,7 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 	
 	protected void postConstruct(JeeslSystemConstraintFacade<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fConstraint)
 	{
-		this.fConstraint=fConstraint;
+//		this.fConstraint=fConstraint;
 		
 		int i=0;
 		logger.info("Loading "+fbConstraint.getClassConstraint());

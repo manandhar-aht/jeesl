@@ -14,6 +14,5 @@ public class XmlFileFactory
 		File xml = new File();
 		xml.setValue(fileName);
 		return xml;
-		
 	}
 }

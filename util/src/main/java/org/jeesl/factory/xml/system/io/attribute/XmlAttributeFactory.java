@@ -29,7 +29,7 @@ public class XmlAttributeFactory <L extends UtilsLang, D extends UtilsDescriptio
 	public Attribute build(DATA data)
 	{
 		Attribute xml = build();
-			
+		xml.setCode(data.getCriteria().getCode());
 		if(data.getCriteria().getType().getCode().equals(JeeslAttributeCriteria.Types.selectOne.toString()) && data.getValueOption()!=null) {xml.setOption(xfOption.build(data.getValueOption()));}
 		
 		return xml;

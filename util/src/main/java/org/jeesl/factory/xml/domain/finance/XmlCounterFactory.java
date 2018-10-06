@@ -31,4 +31,20 @@ public class XmlCounterFactory
 	{
 		if(value!=null){figures.getCounter().add(XmlCounterFactory.build(code, value));}
 	}
+	
+	public static <E extends Enum<E>> void plus(Figures figures, E code, Integer value)
+	{
+		if(value!=null)
+		{
+			for(Counter c : figures.getCounter())
+			{
+				if(c.getCode().equals(code.toString()))
+				{
+					c.setCounter(c.getCounter()+value);
+				}
+				return;
+			}
+			add(figures,code,value);
+		}
+	}
 }

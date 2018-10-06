@@ -61,9 +61,9 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 		efMenu = fbSecurity.ejbMenu(fbSecurity.getClassMenu());
 	}
 	
-	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslFacesMessageBean bMessage)
+	public void initSuper(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage)
 	{
-		super.initSecuritySuper(bTranslation.getLangKeys().toArray(new String[0]),fSecurity,bMessage);
+		super.postConstructSecurity(bTranslation.getLangKeys().toArray(new String[0]),fSecurity,bTranslation,bMessage);
 		opViews = fSecurity.all(fbSecurity.getClassView());
 		
 		if(fSecurity.all(fbSecurity.getClassMenu(),1).isEmpty()) {firstInit();}

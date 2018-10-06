@@ -50,10 +50,10 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang, D extends Uti
 		super(fbSecurity);
 	}
 	
-	public void initSuper(JeeslTranslationBean bTranslation, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslFacesMessageBean bMessage)
+	public void initSuper(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage)
 	{
 		categoryType = JeeslSecurityCategory.Type.action;
-		initSecuritySuper(bTranslation.getLangKeys().toArray(new String[0]),fSecurity,bMessage);
+		postConstructSecurity(bTranslation.getLangKeys().toArray(new String[0]),fSecurity,bTranslation,bMessage);
 	}
 	
 	@Override public void categorySelected() throws UtilsNotFoundException

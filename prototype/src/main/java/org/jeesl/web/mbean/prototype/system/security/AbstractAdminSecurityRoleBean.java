@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
@@ -58,10 +59,10 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 		super(fbSecurity);
 	}
 	
-	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslFacesMessageBean bMessage)
+	public void initSuper(String[] langs, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage)
 	{
 		categoryType = JeeslSecurityCategory.Type.role;
-		super.initSecuritySuper(langs,fSecurity,bMessage);
+		super.postConstructSecurity(langs,fSecurity,bTranslation,bMessage);
 		
 		opViews = fSecurity.all(fbSecurity.getClassView());
 		Collections.sort(opViews, comparatorView);

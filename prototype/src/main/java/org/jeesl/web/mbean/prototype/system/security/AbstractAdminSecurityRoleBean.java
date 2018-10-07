@@ -77,8 +77,8 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	public void addCategory() 
 	{
 		category = efCategory.create("", JeeslSecurityCategory.Type.role.toString());
-		category.setName(efLang.createEmpty(langs));
-		category.setDescription(efDescription.createEmpty(langs));
+		category.setName(efLang.createEmpty(localeCodes));
+		category.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	@Override public void categorySelected() throws UtilsNotFoundException
@@ -121,8 +121,8 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	{
 		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassRole()));
 		role = efRole.build(category,"");
-		role.setName(efLang.createEmpty(langs));
-		role.setDescription(efDescription.createEmpty(langs));
+		role.setName(efLang.createEmpty(localeCodes));
+		role.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	public void rmRole() throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
@@ -151,8 +151,8 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	{
 		logger.trace(AbstractLogMessage.selectEntity(role));
 		role = fSecurity.load(fbSecurity.getClassRole(),role);
-		role = efLang.persistMissingLangs(fSecurity,langs,role);
-		role = efDescription.persistMissingLangs(fSecurity,langs,role);		
+		role = efLang.persistMissingLangs(fSecurity,localeCodes,role);
+		role = efDescription.persistMissingLangs(fSecurity,localeCodes,role);		
 		role = fSecurity.load(fbSecurity.getClassRole(),role);
 		reloadActions();
 		

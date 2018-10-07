@@ -409,10 +409,10 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		if(!user.getRoles().contains(role))
 		{
 			logger.info("Role does not exist for user, adding.");
+			role.getUsers().add(user);
 			user.getRoles().add(role);
 		}
-//		if(!role.getUsers().contains(user)){role.getUsers().add(user);}
-		user = em.merge(user);
+		em.merge(user);
 	}
 	
 	private void rmRole(Class<USER> clUser, Class<R> clRole, USER user, R role)

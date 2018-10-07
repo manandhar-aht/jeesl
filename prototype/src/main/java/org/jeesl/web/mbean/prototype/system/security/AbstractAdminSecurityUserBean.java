@@ -188,22 +188,6 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	protected void constraintViolationOnSave() {logger.warn("constraintViolationOnSave, this should be @Overriden");}
 	protected void constraintViolationOnRemove() {}
 	protected void passwordsDoNotMatch() {}
-
-	/*
-	public void addRole(R role) throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		if(debugOnInfo){logger.info("Add Role");}
-		fUtilsSecurity.grantRole(cUser,cRole,user,role,true);
-		reloadUser();
-	}
-
-	public void rmRole(R role) throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		if(debugOnInfo){logger.info("Remove Role");}
-		fUtilsSecurity.grantRole(cUser,cRole,user,role,false);
-		reloadUser();
-	}
-	*/
 	
 	public void grantRole(R role, boolean grant) throws UtilsConstraintViolationException, UtilsLockingException
 	{

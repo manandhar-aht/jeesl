@@ -122,8 +122,8 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	public void selectCategory() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(category));
-		category = efLang.persistMissingLangs(fSecurity,langs,category);
-		category = efDescription.persistMissingLangs(fSecurity,langs,category);
+		category = efLang.persistMissingLangs(fSecurity,localeCodes,category);
+		category = efDescription.persistMissingLangs(fSecurity,localeCodes,category);
 		categorySelected();
 	}
 	protected void categorySelected() throws UtilsNotFoundException {}

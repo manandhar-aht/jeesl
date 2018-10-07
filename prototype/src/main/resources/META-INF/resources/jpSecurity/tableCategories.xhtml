@@ -28,9 +28,9 @@
 			</f:facet>
 			<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCategories()}" update="@form"/>
 			<p:ajax event="rowSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.bean.selectCategory()}"/>  
-         <p:column>  
+         	<p:column>  
 				<h:outputText value="#{c.position}"/>
-         </p:column>
+         	</p:column>
             <p:column headerText="#{msg.jeeslSecurityCategory}">  
 				<h:outputText value="#{c.name[userBean.localeCode].lang}"/>
             </p:column>

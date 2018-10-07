@@ -22,7 +22,7 @@
 			<aht:row>
 				<aht:slot id="sCategories" width="3">
 					<h:form id="fCategories"><jpSec:tableCategories bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategory :#{cc.id}:fRoles :#{cc.id}:sRole" withAdd="true"/></h:form>
-					<h:form id="fCategory"><jpSec:panelCategory bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategories :#{cc.id}:fCategory"/></h:form>
+					<h:form id="fCategory"><jpSec:panelCategory bean="#{cc.attrs.bean}" update=":#{cc.id}:fCategories :#{cc.id}:fCategory" withAdd="true"/></h:form>
 				</aht:slot>
 				<aht:slot id="sViews" width="3">
 					<h:form id="fRoles">

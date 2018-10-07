@@ -84,8 +84,8 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	{
 		logger.info(AbstractLogMessage.selectEntity(usecase));
 		reloadUsecase();
-		usecase = efLang.persistMissingLangs(fSecurity,langs,usecase);
-		usecase = efDescription.persistMissingLangs(fSecurity,langs,usecase);
+		usecase = efLang.persistMissingLangs(fSecurity,localeCodes,usecase);
+		usecase = efDescription.persistMissingLangs(fSecurity,localeCodes,usecase);
 		
 		reloadActions();
 	}
@@ -124,15 +124,15 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	{
 		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassCategory()));
 		category = efCategory.create(null,JeeslSecurityCategory.Type.usecase.toString());
-		category.setName(efLang.createEmpty(langs));
-		category.setDescription(efDescription.createEmpty(langs));
+		category.setName(efLang.createEmpty(localeCodes));
+		category.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	public void addUsecase() throws UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassUsecase()));
 		usecase = efUsecase.build(category,"");
-		usecase.setName(efLang.createEmpty(langs));
-		usecase.setDescription(efDescription.createEmpty(langs));
+		usecase.setName(efLang.createEmpty(localeCodes));
+		usecase.setDescription(efDescription.createEmpty(localeCodes));
 	}
 
 	//Save

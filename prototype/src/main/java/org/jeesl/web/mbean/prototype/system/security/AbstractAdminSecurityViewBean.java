@@ -122,8 +122,8 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	{
 		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassView()));
 		view = efView.build(category,"",views);
-		view.setName(efLang.createEmpty(langs));
-		view.setDescription(efDescription.createEmpty(langs));
+		view.setName(efLang.createEmpty(localeCodes));
+		view.setDescription(efDescription.createEmpty(localeCodes));
 		tsb.booleanToA(view.getRedirect());
 	}
 	
@@ -131,8 +131,8 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	{
 		logger.info(AbstractLogMessage.selectEntity(view));
 		view = fSecurity.load(fbSecurity.getClassView(), view);
-		view = efLang.persistMissingLangs(fSecurity,langs,view);
-		view = efDescription.persistMissingLangs(fSecurity,langs,view);
+		view = efLang.persistMissingLangs(fSecurity,localeCodes,view);
+		view = efDescription.persistMissingLangs(fSecurity,localeCodes,view);
 		reloadView();
 		reloadActions();
 		action=null;
@@ -141,8 +141,8 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	public void selectAction()
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(action));}
-		action = efLang.persistMissingLangs(fSecurity,langs,action);
-		action = efDescription.persistMissingLangs(fSecurity,langs,action);
+		action = efLang.persistMissingLangs(fSecurity,localeCodes,action);
+		action = efDescription.persistMissingLangs(fSecurity,localeCodes,action);
 	}
 	
 	public void saveView() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -210,8 +210,8 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	{
 		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassAction()));
 		action = efAction.build(view,"",actions);
-		action.setName(efLang.createEmpty(langs));
-		action.setDescription(efDescription.createEmpty(langs));
+		action.setName(efLang.createEmpty(localeCodes));
+		action.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	public void rmAction() throws UtilsConstraintViolationException
@@ -235,8 +235,8 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		}
 		else
 		{
-			action = efLang.persistMissingLangs(fSecurity,langs,action);
-			action = efDescription.persistMissingLangs(fSecurity,langs,action);
+			action = efLang.persistMissingLangs(fSecurity,localeCodes,action);
+			action = efDescription.persistMissingLangs(fSecurity,localeCodes,action);
 		}
 	}
 	

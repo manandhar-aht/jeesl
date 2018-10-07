@@ -76,16 +76,16 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang, D extends Uti
 	{
 		logger.info(AbstractLogMessage.selectEntity(template));
 		template = fSecurity.find(fbSecurity.getClassTemplate(), template);
-		template = efLang.persistMissingLangs(fSecurity,langs,template);
-		template = efDescription.persistMissingLangs(fSecurity,langs,template);
+		template = efLang.persistMissingLangs(fSecurity,localeCodes,template);
+		template = efDescription.persistMissingLangs(fSecurity,localeCodes,template);
 	}
 	
 	public void addTemplate() throws UtilsConstraintViolationException
 	{
 		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassTemplate()));
 		template = efTemplate.build(category,"",templates);
-		template.setName(efLang.createEmpty(langs));
-		template.setDescription(efDescription.createEmpty(langs));
+		template.setName(efLang.createEmpty(localeCodes));
+		template.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	public void saveTemplate() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException

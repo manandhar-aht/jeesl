@@ -56,26 +56,6 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
 		jtf = new Json3TupleFactory<A,B,C>();
 	}
 	
-	public Json3Tuples<A,B,C> build3Sum(List<Tuple> tuples)
-	{
-		Json3Tuples<A,B,C> json = new Json3Tuples<A,B,C>();
-		for(Tuple t : tuples)
-        {
-        	json.getTuples().add(jtf.buildSum(t));
-        }
-		return json;
-	}
-	
-	public Json3Tuples<A,B,C> build3Count(List<Tuple> tuples)
-	{
-		Json3Tuples<A,B,C> json = new Json3Tuples<A,B,C>();
-		for(Tuple t : tuples)
-        {
-        	json.getTuples().add(jtf.buildCount(t));
-        }
-		return json;
-	} 
-	
 	protected void clear()
 	{
 		setId1.clear();
@@ -105,4 +85,24 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
 		mapB.putAll(EjbIdFactory.toIdMap(fUtils.find(cB, setId2)));
 		mapC.putAll(EjbIdFactory.toIdMap(fUtils.find(cC, setId3)));
 	}
+	
+	public Json3Tuples<A,B,C> build3Sum(List<Tuple> tuples)
+	{
+		Json3Tuples<A,B,C> json = new Json3Tuples<A,B,C>();
+		for(Tuple t : tuples)
+        {
+        	json.getTuples().add(jtf.buildSum(t));
+        }
+		return json;
+	}
+	
+	public Json3Tuples<A,B,C> build3Count(List<Tuple> tuples)
+	{
+		Json3Tuples<A,B,C> json = new Json3Tuples<A,B,C>();
+		for(Tuple t : tuples)
+        {
+        	json.getTuples().add(jtf.buildCount(t));
+        }
+		return json;
+	} 
 }

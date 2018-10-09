@@ -1,5 +1,6 @@
 package org.jeesl.factory.json.db.tuple.t3;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -79,8 +80,6 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
 			setId3.add(t.getId3());
 		}
 		
-		logger.info("Futils:"+(fUtils!=null));
-		
 		mapA.putAll(EjbIdFactory.toIdMap(fUtils.find(cA, setId1)));
 		mapB.putAll(EjbIdFactory.toIdMap(fUtils.find(cB, setId2)));
 		mapC.putAll(EjbIdFactory.toIdMap(fUtils.find(cC, setId3)));
@@ -104,5 +103,7 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
         	json.getTuples().add(jtf.buildCount(t));
         }
 		return json;
-	} 
+	}
+	
+	public List<A> toListA(){return new ArrayList<A>(mapA.values());}
 }

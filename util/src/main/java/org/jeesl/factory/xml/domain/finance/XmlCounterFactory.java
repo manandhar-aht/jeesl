@@ -41,8 +41,8 @@ public class XmlCounterFactory
 				if(c.getCode().equals(code.toString()))
 				{
 					c.setCounter(c.getCounter()+value);
+					return;
 				}
-				return;
 			}
 			add(figures,code,value);
 		}

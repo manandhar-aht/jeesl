@@ -10,12 +10,18 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.controller.util.poi.PoiRowColNumerator;
 import net.sf.ahtutils.controller.util.poi.PoiSsCellType;
 import net.sf.ahtutils.exception.processing.UtilsProcessingException;
+import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Time;
 import net.sf.exlp.util.DateUtil;
 
 public class XmlTimeFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlTimeFactory.class);
+	
+	public static <E extends Enum<E>> void add(Figures figures, E code, Date value)
+	{
+		if(value!=null){figures.getTime().add(XmlTimeFactory.build(code, value));}
+	}
 	
 	public static <E extends Enum<E>> Time build(E code, Date record){return create(code.toString(),record);}
 	public static Time create(String code, Date record)

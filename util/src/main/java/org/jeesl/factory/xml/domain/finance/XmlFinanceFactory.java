@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.finance.UtilsFinance;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.xml.finance.Counter;
 import net.sf.ahtutils.xml.finance.Figures;
 import net.sf.ahtutils.xml.finance.Finance;
 

@@ -12,20 +12,34 @@ import javax.persistence.Tuple;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.model.json.db.tuple.two.Json2Tuple;
 import org.jeesl.model.json.db.tuple.two.Json2Tuples;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 {
+	final static Logger logger = LoggerFactory.getLogger(Json2TuplesFactory.class);
+	
 	private final UtilsFacade fUtils;
+	private final Json2TupleFactory<A,B> jtf;
 	
 	private final Class<A> cA; public Class<A> getClassA() {return cA;}
 	private final Class<B> cB; public Class<B> getClassB() {return cB;}
 	
 	private final Set<Long> setId1;
 	private final Set<Long> setId2;
-	private final Json2TupleFactory<A,B> jtf;
+	
+	protected final List<A> listA; public List<A> getListA() {return listA;}
+	protected final List<B> listB; public List<B> getListB() {return listB;}
+	
+	protected final Map<A,Map<B,Json2Tuple<A,B>>> map2; public Map<A, Map<B, Json2Tuple<A, B>>> getMap2() {return map2;}
+	protected final Map<Long,A> mapA; public Map<Long,A> getMapA() {return mapA;}
+	protected final Map<Long,B> mapB; public Map<Long,B> getMapB() {return mapB;}
+	
+	private Json2Tuples<A,B> tuples; public Json2Tuples<A,B> get2Tuples() {return tuples;} public void set2Tuples(Json2Tuples<A,B> tuples) {this.tuples = tuples;}
+
 	
 	public Json2TuplesFactory(Class<A> cA, Class<B> cY){this(null,cA,cY);}
 	public Json2TuplesFactory(UtilsFacade fUtils, Class<A> cA, Class<B> cY)
@@ -36,41 +50,55 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 		
 		setId1 = new HashSet<Long>();
 		setId2 = new HashSet<Long>();
+		
+		listA = new ArrayList<A>();
+		listB = new ArrayList<B>();
+		
+		map2 = new HashMap<A,Map<B,Json2Tuple<A,B>>>();
+		mapA = new HashMap<Long,A>();
+		mapB = new HashMap<Long,B>();
+		
 		jtf = new Json2TupleFactory<A,B>();
 	}
 	
-	public Json2Tuples<A,B> buildSum(List<Tuple> tuples)
+	protected void clear()
 	{
-		Json2Tuples<A,B> json = new Json2Tuples<A,B>();
+		setId1.clear();
+		setId2.clear();
 		
-		for(Tuple t : tuples)
-        {
-			Json2Tuple<A,B> j = jtf.buildSum(t);
-			setId1.add(j.getId1());
-			setId2.add(j.getId2());
-        	json.getTuples().add(j);
-        }
+		listA.clear();
+		listB.clear();
 		
-		fillEjbs(json);
-		
-		return json;
+		map2.clear();
+		mapA.clear();
+		mapB.clear();
 	}
 	
-	public Json2Tuples<A,B> buildCount(List<Tuple> tuples)
+	public void init(UtilsFacade fUtils, Json2Tuples<A,B> json)
 	{
-		Json2Tuples<A,B> json = new Json2Tuples<A,B>();
+		clear();
+		this.tuples = json;
 		
-		for(Tuple t : tuples)
-        {
-			Json2Tuple<A,B> j = jtf.buildCount(t);
-			setId1.add(j.getId1());
-			setId2.add(j.getId2());
-        	json.getTuples().add(j);
-        }
+		for(Json2Tuple<A,B> t : tuples.getTuples())
+		{
+			setId1.add(t.getId1());
+			setId2.add(t.getId2());
+		}
 		
-		fillEjbs(json);
+		listA.addAll(fUtils.find(cA, setId1));
+		listB.addAll(fUtils.find(cB, setId2));
 		
-		return json;
+		if(setId1.size()!=listA.size()) {logger.warn("Not all elements of "+cA.getSimpleName()+" can be retrieved.");}
+		if(setId2.size()!=listB.size()) {logger.warn("Not all elements of "+cB.getSimpleName()+" can be retrieved.");}
+		
+		mapA.putAll(EjbIdFactory.toIdMap(listA));
+		mapB.putAll(EjbIdFactory.toIdMap(listB));
+		
+		for(Json2Tuple<A,B> t : tuples.getTuples())
+		{
+			if(!map2.containsKey(t.getEjb1())) {map2.put(t.getEjb1(), new HashMap<B,Json2Tuple<A,B>>());}
+			map2.get(t.getEjb1()).put(t.getEjb2(),t);
+		}
 	}
 	
 	private void fillEjbs(Json2Tuples<A,B> json)
@@ -116,6 +144,16 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 		}
 		return new ArrayList<B>(set);
 	}
+	public List<B> toListB()
+	{
+		Set<B> set = new HashSet<B>();
+		for(Json2Tuple<A,B> t : tuples.getTuples())
+		{
+			if(!set.contains(t.getEjb2())) {set.add(t.getEjb2());}
+		}
+		return new ArrayList<B>(set);
+	}
+	
 	
 	public Map<A,Map<B,Json2Tuple<A,B>>> toMap(Json2Tuples<A,B> tuples)
 	{
@@ -141,5 +179,44 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 		}
 		
 		return map;
+	}
+	
+	public boolean map2Contains(A a, B b)
+	{
+		return map2.containsKey(a) && map2.get(a).containsKey(b);
+	}
+	
+	public Json2Tuples<A,B> buildSum(List<Tuple> tuples)
+	{
+		Json2Tuples<A,B> json = new Json2Tuples<A,B>();
+		
+		for(Tuple t : tuples)
+        {
+			Json2Tuple<A,B> j = jtf.buildSum(t);
+			setId1.add(j.getId1());
+			setId2.add(j.getId2());
+        	json.getTuples().add(j);
+        }
+		
+		fillEjbs(json);
+		
+		return json;
+	}
+	
+	public Json2Tuples<A,B> buildCount(List<Tuple> tuples)
+	{
+		Json2Tuples<A,B> json = new Json2Tuples<A,B>();
+		
+		for(Tuple t : tuples)
+        {
+			Json2Tuple<A,B> j = jtf.buildCount(t);
+			setId1.add(j.getId1());
+			setId2.add(j.getId2());
+        	json.getTuples().add(j);
+        }
+		
+		fillEjbs(json);
+		
+		return json;
 	}
 }

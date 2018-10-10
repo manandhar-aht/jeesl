@@ -22,6 +22,13 @@ public class XmlSignatureFactory
     	return xml;
     }
     
+    public static Signature build(int position)
+    {
+    	Signature xml = build();
+    	xml.setPosition(position);
+    	return xml;
+    }
+    
     public static Signature build(String code, String label)
     {
     	Signature xml = build(code);

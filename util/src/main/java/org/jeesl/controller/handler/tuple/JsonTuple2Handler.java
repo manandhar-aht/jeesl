@@ -31,11 +31,13 @@ public class JsonTuple2Handler <X extends EjbWithId, Y extends EjbWithId> implem
 	private JeeslComparatorProvider<X> cpA; public void setComparatorProviderA(JeeslComparatorProvider<X> cpA) {this.cpA = cpA;}
 	private JeeslComparatorProvider<Y> cpB; public void setComparatorProviderB(JeeslComparatorProvider<Y> cpB) {this.cpB = cpB;}
 	
-	
 	private final Map<X,Map<Y,Json2Tuple<X,Y>>> map; public Map<X,Map<Y,Json2Tuple<X,Y>>> getMap() {return map;}
 	private final List<X> listX; public List<X> getListA() {return listX;}
 	private final List<Y> listY; public List<Y> getListB() {return listY;}
 
+	private int sizeA; public int getSizeA() {return sizeA;}
+	private int sizeB; public int getSizeB() {return sizeB;}
+	
 	private boolean withSum; public boolean isWithSum() {return withSum;} public void setWithSum(boolean withSum) {this.withSum = withSum;}
 
 	private int sumDivider; public void setSumDivider(int sumDivider) {this.sumDivider = sumDivider;}
@@ -80,6 +82,9 @@ public class JsonTuple2Handler <X extends EjbWithId, Y extends EjbWithId> implem
 			Collections.sort(listX, cpA.provide(tf.getClassA()));
 		}
 		if(cpB!=null && cpB.provides(tf.getClassB())) {Collections.sort(listY, cpB.provide(tf.getClassB()));}
+		
+		sizeA = listX.size();
+		sizeB = listY.size();
 	}
 	
 	public boolean contains(X x, Y y)

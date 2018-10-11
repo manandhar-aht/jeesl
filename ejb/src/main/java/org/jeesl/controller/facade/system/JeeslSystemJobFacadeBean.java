@@ -96,8 +96,8 @@ public class JeeslSystemJobFacadeBean<L extends UtilsLang,D extends UtilsDescrip
 	@Override public List<JOB> fJobs(List<CATEGORY> categories, List<TYPE> types, List<STATUS> status, Date from, Date to)
 	{
 		if(categories==null || categories.isEmpty()){return new ArrayList<JOB>();}
-		if(status==null || status.isEmpty()){return new ArrayList<JOB>();}
 		if(types==null || types.isEmpty()){return new ArrayList<JOB>();}
+		if(status==null || status.isEmpty()){return new ArrayList<JOB>();}
 		
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();

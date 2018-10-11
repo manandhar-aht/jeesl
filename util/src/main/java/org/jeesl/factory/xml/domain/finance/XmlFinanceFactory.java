@@ -104,13 +104,13 @@ public class XmlFinanceFactory <L extends UtilsLang, C extends UtilsCurrency<L>>
 	{
 		if(value!=null)
 		{
-			for(Finance c : figures.getFinance())
+			for(Finance f : figures.getFinance())
 			{
-				if(c.getCode().equals(code.toString()))
+				if(f.getCode().equals(code.toString()))
 				{
-					c.setValue(c.getValue()+value);
+					f.setValue(f.getValue()+value);
+					return;
 				}
-				return;
 			}
 			add(figures,code,value);
 		}

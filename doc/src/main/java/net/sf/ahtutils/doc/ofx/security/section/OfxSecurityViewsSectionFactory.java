@@ -252,7 +252,7 @@ public class OfxSecurityViewsSectionFactory extends AbstractUtilsOfxDocumentatio
 					}
 				}
 				
-				Paragraph p = XmlParagraphFactory.build(key);
+				Paragraph p = XmlParagraphFactory.lang(key);
 				p.getContent().add(sb.toString());
 				
 				if(view.getCode().equals("projectGeneral")){logger.info(sb.toString());}

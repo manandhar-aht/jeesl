@@ -24,6 +24,11 @@ public class JsonTranslation implements Serializable
 	public void setCode(String code) {this.code = code;}
 	@JsonIgnore public boolean isSetCode() {return code!=null;}
 	
+	@JsonProperty("label")
+	private String label;
+	public String getLabel() {return label;}
+	public void setLabel(String label) {this.label = label;}
+	
 	@JsonProperty("xpath")
 	private String xpath;
 	public String getXpath() {return xpath;}

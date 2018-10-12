@@ -68,7 +68,7 @@ public class OfxMultiLangFactory<L extends UtilsLang>
 		
 		for(String key : localeCodes)
 		{
-			Paragraph p = XmlParagraphFactory.build(key);
+			Paragraph p = XmlParagraphFactory.lang(key);
 //			p.getContent().add(font);
 			if(status.getName()!=null && status.getName().containsKey(key)) {p.getContent().add(status.getName().get(key).getLang());}
 			else {p.getContent().add("-!-");}
@@ -214,7 +214,7 @@ public class OfxMultiLangFactory<L extends UtilsLang>
 		
 		for(String key : keys)
 		{
-			Paragraph p = XmlParagraphFactory.build(key);
+			Paragraph p = XmlParagraphFactory.lang(key);
 			p.getContent().add(font);
 			String text = "!!!No-Translation!!!";
 			try
@@ -236,7 +236,7 @@ public class OfxMultiLangFactory<L extends UtilsLang>
 		
 		for(String key : keys)
 		{
-			Paragraph p = XmlParagraphFactory.build(key);
+			Paragraph p = XmlParagraphFactory.lang(key);
 			String text = "!!!No-Translation!!!";
 			try
 			{

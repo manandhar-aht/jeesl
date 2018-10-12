@@ -92,7 +92,7 @@ public class OfxSecurityPagesSectionFactory extends AbstractUtilsOfxDocumentatio
 				
 				for(String lang : langs)
 				{
-					Paragraph p = XmlParagraphFactory.build(lang);
+					Paragraph p = XmlParagraphFactory.lang(lang);
 					try
 					{
 						JaxbUtil.trace(action);
@@ -145,7 +145,7 @@ public class OfxSecurityPagesSectionFactory extends AbstractUtilsOfxDocumentatio
 			Container cTopText = XmlContainerFactory.build(fMarginText);
 			for(String lang : langs)
 			{
-				Paragraph pText = XmlParagraphFactory.build(lang);
+				Paragraph pText = XmlParagraphFactory.lang(lang);
 				pText.getContent().add("Restricted to:");
 				cTopText.getContent().add(pText);
 				

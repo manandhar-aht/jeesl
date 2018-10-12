@@ -65,6 +65,12 @@ public class AbstractJeeslOfxTableFactory<L extends UtilsLang> extends AbstractJ
 		json.setMultiLang(map);
 		tableHeaders.add(json);
 	}
+	protected void addHeader(String label)
+	{
+		JsonTranslation json = new JsonTranslation();
+		json.setLabel(label);
+		tableHeaders.add(json);
+	}
 	
 	protected <E extends Enum<E>>void addHeaderKey(E code)
 	{
@@ -108,6 +114,10 @@ public class AbstractJeeslOfxTableFactory<L extends UtilsLang> extends AbstractJ
 				{
 					cell.getContent().add(XmlParagraphFactory.build(localeCode,json.getMultiLang().get(localeCode)));
 				}
+			}
+			else if(json.getLabel()!=null)
+			{
+				cell.getContent().add(XmlParagraphFactory.text(json.getLabel()));
 			}
 			row.getCell().add(cell);
 		}

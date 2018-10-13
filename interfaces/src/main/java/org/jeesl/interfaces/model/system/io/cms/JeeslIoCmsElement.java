@@ -1,8 +1,13 @@
 package org.jeesl.interfaces.model.system.io.cms;
 
+import java.io.Serializable;
 import java.util.Map;
 
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
+import org.jeesl.interfaces.model.system.io.fr.JeeslWithFileRepositoryContainer;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionParent;
@@ -11,11 +16,12 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public interface JeeslIoCmsElement<
 									V extends JeeslIoCmsVisiblity,
 									S extends JeeslIoCmsSection<?,S>,
-									
 									EC extends UtilsStatus<EC,?,?>,
 									ET extends UtilsStatus<ET,?,?>,
-									C extends JeeslIoCmsContent<V,?,?>>
-		extends EjbWithId,EjbSaveable,EjbRemoveable,EjbWithPositionParent
+									C extends JeeslIoCmsContent<V,?,?>,
+									FC extends JeeslFileContainer<?,?>>
+		extends Serializable,EjbWithId,EjbPersistable,EjbSaveable,EjbRemoveable,EjbWithPositionParent,
+				JeeslWithFileRepositoryContainer<FC>
 {	
 	public enum Attributes{section}
 	

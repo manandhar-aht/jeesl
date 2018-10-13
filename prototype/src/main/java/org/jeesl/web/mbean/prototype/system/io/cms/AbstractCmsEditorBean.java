@@ -25,6 +25,7 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
@@ -51,11 +52,12 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 										CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 										V extends JeeslIoCmsVisiblity,
 										S extends JeeslIoCmsSection<L,S>,
-										E extends JeeslIoCmsElement<V,S,EC,ET,C>,
+										E extends JeeslIoCmsElement<V,S,EC,ET,C,FC>,
 										EC extends UtilsStatus<EC,L,D>,
 										ET extends UtilsStatus<ET,L,D>,
 										C extends JeeslIoCmsContent<V,E,MT>,
-										MT extends UtilsStatus<MT,L,D>
+										MT extends UtilsStatus<MT,L,D>,
+										FC extends JeeslFileContainer<?,?>
 										>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean,SbSingleBean,OpEntityBean
@@ -63,9 +65,9 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractCmsEditorBean.class);
 	
-	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms;
+	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms;
 	private JeeslCmsCacheBean<S> bCache;
-	private final IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT> fbCms;
+	private final IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC> fbCms;
 	
 	private String currentLocaleCode;
 	protected String[] cmsLocales; public String[] getCmsLocales() {return cmsLocales;}
@@ -97,7 +99,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsEditorBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT> fbCms)
+	public AbstractCmsEditorBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC> fbCms)
 	{
 		super(fbCms.getClassL(),fbCms.getClassD());
 		this.fbCms=fbCms;
@@ -115,7 +117,9 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 		types = new ArrayList<ET>();
 	}
 	
-	protected void postConstructCms(JeeslTranslationBean bTranslation, String currentLocaleCode, List<LOC> locales, JeeslFacesMessageBean bMessage, JeeslCmsCacheBean<S> bCache, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
+	protected void postConstructCms(JeeslTranslationBean bTranslation, String currentLocaleCode,
+									List<LOC> locales, JeeslFacesMessageBean bMessage, JeeslCmsCacheBean<S> bCache,
+									JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.bCache=bCache;
@@ -365,9 +369,16 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectOneMenuChange(elementCategory));}
 	}
 	
+	//For testing only
+	private String jsonString;
+	public String getJsonString() {return jsonString;}
+	public void setJsonString(String jsonString) {this.jsonString = jsonString;}
+	
 	public void saveElement() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(element));}
+		logger.warn("element: "+element.getJson());
+		logger.warn("jsonString: "+jsonString);
 		element.setType(fCms.find(fbCms.getClassElementType(),element.getType()));
 		element = fCms.save(element);
 		reloadSection();
@@ -396,13 +407,6 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 	public void saveParagraph() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(element)+" "+element.getContent().size());}
-		
-		element = fCms.save(element);
-	}
-	
-	public void saveElementStatusTable() throws UtilsConstraintViolationException, UtilsLockingException
-	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(element));}
 		element = fCms.save(element);
 	}
 	

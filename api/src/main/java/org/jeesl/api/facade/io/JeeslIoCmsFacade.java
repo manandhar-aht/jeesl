@@ -7,6 +7,7 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -18,11 +19,12 @@ public interface JeeslIoCmsFacade <L extends UtilsLang,D extends UtilsDescriptio
 									CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 									V extends JeeslIoCmsVisiblity,
 									S extends JeeslIoCmsSection<L,S>,
-									E extends JeeslIoCmsElement<V,S,EC,ET,C>,
+									E extends JeeslIoCmsElement<V,S,EC,ET,C,FC>,
 									EC extends UtilsStatus<EC,L,D>,
 									ET extends UtilsStatus<ET,L,D>,
 									C extends JeeslIoCmsContent<V,E,MT>,
 									MT extends UtilsStatus<MT,L,D>,
+									FC extends JeeslFileContainer<?,?>,
 									LOC extends UtilsStatus<LOC,L,D>>
 						extends UtilsFacade
 {

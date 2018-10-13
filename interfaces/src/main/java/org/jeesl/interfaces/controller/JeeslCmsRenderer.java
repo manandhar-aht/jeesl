@@ -5,6 +5,7 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.slf4j.Logger;
@@ -19,11 +20,12 @@ public interface JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescriptio
 								CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 								V extends JeeslIoCmsVisiblity,
 								S extends JeeslIoCmsSection<L,S>,
-								E extends JeeslIoCmsElement<V,S,EC,ET,C>,
+								E extends JeeslIoCmsElement<V,S,EC,ET,C,FC>,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
-								MT extends UtilsStatus<MT,L,D>
+								MT extends UtilsStatus<MT,L,D>,
+								FC extends JeeslFileContainer<?,?>
 								>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslCmsRenderer.class);

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbIoCmsContentFactory<LOC extends UtilsStatus<LOC,?,?>,
-									E extends JeeslIoCmsElement<?,?,?,?,C>,
+									E extends JeeslIoCmsElement<?,?,?,?,C,?>,
 									C extends JeeslIoCmsContent<?,E,MT>,
 									MT extends UtilsStatus<MT,?,?>>
 {

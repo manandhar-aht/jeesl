@@ -8,6 +8,7 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.content.ofx.Sections;
 import org.openfuxml.factory.xml.ofx.content.structure.XmlSectionFactory;
@@ -25,19 +26,20 @@ public abstract class AbstractOfxCmsFactory <L extends UtilsLang,D extends Utils
 								CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 								V extends JeeslIoCmsVisiblity,
 								S extends JeeslIoCmsSection<L,S>,
-								E extends JeeslIoCmsElement<V,S,EC,ET,C>,
+								E extends JeeslIoCmsElement<V,S,EC,ET,C,FC>,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
 								MT extends UtilsStatus<MT,L,D>,
+								FC extends JeeslFileContainer<?,?>,
 								LOC extends UtilsStatus<LOC,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractOfxCmsFactory.class);
 	
 	protected final String localeCode;
-	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms;
+	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms;
 	
-	public AbstractOfxCmsFactory(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
+	public AbstractOfxCmsFactory(String localeCode, JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms)
 	{
 		this.localeCode=localeCode;
 		this.fCms = fCms;

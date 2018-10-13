@@ -11,6 +11,7 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.content.ofx.Sections;
 import org.openfuxml.exception.OfxAuthoringException;
@@ -29,21 +30,22 @@ public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDe
 								CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 								V extends JeeslIoCmsVisiblity,
 								S extends JeeslIoCmsSection<L,S>,
-								E extends JeeslIoCmsElement<V,S,EC,ET,C>,
+								E extends JeeslIoCmsElement<V,S,EC,ET,C,FC>,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
-								MT extends UtilsStatus<MT,L,D>
+								MT extends UtilsStatus<MT,L,D>,
+								FC extends JeeslFileContainer<?,?>
 								>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractCmsRenderer.class);
 	
-	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms;
+	protected final JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms;
 	
 	private final JeeslCmsParagraphFactory<E,C> ofParagraph;
 	private final JeeslCmsStatusTableFactory<E,C> ofTableStatus;
 	
-	public AbstractCmsRenderer(JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> fCms)
+	public AbstractCmsRenderer(JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms)
 	{
 		this.fCms = fCms;
 		

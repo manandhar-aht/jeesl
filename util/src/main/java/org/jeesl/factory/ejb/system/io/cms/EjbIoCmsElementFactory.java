@@ -11,7 +11,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class EjbIoCmsElementFactory <L extends UtilsLang,
 								S extends JeeslIoCmsSection<L,S>,
-								E extends JeeslIoCmsElement<?,S,?,?,?>>
+								E extends JeeslIoCmsElement<?,S,?,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoCmsElementFactory.class);
 	

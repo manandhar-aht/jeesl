@@ -7,7 +7,8 @@ import org.openfuxml.factory.xml.table.XmlTableFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JeeslCmsStatusTableFactory<E extends JeeslIoCmsElement<?,?,?,?,C>, C extends JeeslIoCmsContent<?,E,?>>
+public class JeeslCmsStatusTableFactory<E extends JeeslIoCmsElement<?,?,?,?,C,?>,
+										C extends JeeslIoCmsContent<?,E,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslCmsStatusTableFactory.class);
 	

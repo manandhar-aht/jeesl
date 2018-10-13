@@ -21,13 +21,14 @@ public class EjbIoCmsFactory <L extends UtilsLang,D extends UtilsDescription,
 								CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 								V extends JeeslIoCmsVisiblity,
 								S extends JeeslIoCmsSection<L,S>,
-								E extends JeeslIoCmsElement<V,S,EC,ET,C>,
+								E extends JeeslIoCmsElement<V,S,EC,ET,C,?>,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
 								MT extends UtilsStatus<MT,L,D>,
 								LOC extends UtilsStatus<LOC,L,D>>
 {
+	//TODO @tk reduce
 	final static Logger logger = LoggerFactory.getLogger(EjbIoCmsFactory.class);
 	
 	private final Class<CMS> cCms;

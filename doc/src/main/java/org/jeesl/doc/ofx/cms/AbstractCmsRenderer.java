@@ -4,14 +4,18 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
+import org.jeesl.doc.ofx.cms.jeesl.JeeslCmsImageFactory;
 import org.jeesl.doc.ofx.cms.jeesl.JeeslCmsParagraphFactory;
 import org.jeesl.doc.ofx.cms.jeesl.JeeslCmsStatusTableFactory;
+import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.content.ofx.Sections;
 import org.openfuxml.exception.OfxAuthoringException;
@@ -35,7 +39,9 @@ public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDe
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
 								MT extends UtilsStatus<MT,L,D>,
-								FC extends JeeslFileContainer<?,?>
+								FS extends JeeslFileStorage<L,D,?>,
+								FC extends JeeslFileContainer<FS,?>,
+								FM extends JeeslFileMeta<FC,?>
 								>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractCmsRenderer.class);
@@ -44,13 +50,15 @@ public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDe
 	
 	private final JeeslCmsParagraphFactory<E,C> ofParagraph;
 	private final JeeslCmsStatusTableFactory<E,C> ofTableStatus;
+	private final JeeslCmsImageFactory<E,C,FS,FC,FM> ofImage;
 	
-	public AbstractCmsRenderer(JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms)
+	public AbstractCmsRenderer(JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms, JeeslFileRepositoryHandler<FS,FC,FM> frh)
 	{
 		this.fCms = fCms;
 		
 		ofParagraph = new JeeslCmsParagraphFactory<E,C>();
 		ofTableStatus = new JeeslCmsStatusTableFactory<E,C>();
+		ofImage = new JeeslCmsImageFactory<E,C,FS,FC,FM>(frh);
 	}
 	
 	public Sections build(String localeCode, CMS cms) throws OfxAuthoringException
@@ -104,7 +112,9 @@ public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDe
 	protected void buildJeesl(String localeCode, List<Serializable> list, E element) throws OfxAuthoringException
 	{
 		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString())) {list.addAll(ofParagraph.build(localeCode,element).getContent());}
+		else if(element.getType().getCode().equals(JeeslIoCmsElement.Type.image.toString())) {list.add(ofImage.build(localeCode,element));}
 		else if(element.getType().getCode().equals(JeeslIoCmsElement.Type.statusTable.toString())) {list.add(ofTableStatus.build(localeCode,element));}
+		
 		else {logger.warn("Unhandled "+element.getType().getCode());}
 	}
 }

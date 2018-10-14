@@ -21,7 +21,7 @@ public class JeeslCmsParagraphFactory<E extends JeeslIoCmsElement<?,?,?,?,C,?>,
 	
 	public Section build(String localeCode, E element)
 	{
-		logger.info("Building Paragraph ");
+		logger.info("Building Paragraph "+element.toString());
 		Section section = XmlSectionFactory.build(localeCode);
 		
 		if(element.getContent().containsKey(localeCode))

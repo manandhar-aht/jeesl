@@ -1,5 +1,6 @@
 package org.jeesl.controller.handler.fr;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<CONTAINER,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>>
-	implements org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>
+	implements org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler<STORAGE,CONTAINER,META>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractFileRepositoryHandler.class);
@@ -53,7 +54,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	protected final EjbIoFrContainerFactory<STORAGE,CONTAINER> efContainer;
 	protected final EjbIoFrMetaFactory<CONTAINER,META> efMeta;
 	
-	protected final List<META> metas; public List<META> getMetas() {return metas;}
+	protected final List<META> metas; @Override public List<META> getMetas() {return metas;}
 	
 	private String zipName; public String getZipName() {return zipName;} public void setZipName(String zipName) {this.zipName = zipName;}
 	private String zipPrefix; public String getZipPrefix() {return zipPrefix;} public void setZipPrefix(String zipPrefix) {this.zipPrefix = zipPrefix;}
@@ -197,7 +198,13 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		return bos.toByteArray();
 	}
 	
-	public void copyTo(JeeslFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> target) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	@Override public InputStream download(META meta) throws UtilsNotFoundException
+	{
+		logger.info("download "+meta.toString());
+		return new ByteArrayInputStream(fFr.loadFromFileRepository(meta));
+	}
+	
+	public void copyTo(JeeslFileRepositoryHandler<STORAGE,CONTAINER,META> target) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info("Copy To");
 		for(META oldMeta : metas)

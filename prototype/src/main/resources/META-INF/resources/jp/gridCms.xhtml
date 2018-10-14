@@ -117,7 +117,9 @@
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectElement()}" update=":#{cc.id}:sSection"/>
 							<p:column rendered="true"><h:outputText value="#{e.position}"/></p:column>
 							<p:column><jtp:symbolizer value="#{e.type}"/></p:column>
+							<p:column headerText="#{msg.jeeslCmsElementType}"><h:outputText value="#{e.type.name[localeCode].lang}"/></p:column>
 							<p:column headerText="#{msg.jeeslCmsElement} ID"><h:outputText value="#{e.id}"/></p:column>
+							
 						</p:dataTable>
 					</h:form>
 					<h:form id="fElement" rendered="#{not empty cc.attrs.bean.element}">
@@ -142,7 +144,7 @@
 						</p:panel>
 					</h:form>
 					<h:panelGroup id="pgElements" rendered="#{(not empty cc.attrs.bean.element) and (cc.attrs.bean.element.id gt 0)}">
-						<h:form id="fParagrpah" rendered="#{cc.attrs.bean.element.type.code eq 'paragraph'}">
+						<h:form id="fParagrpah" rendered="#{(cc.attrs.bean.element.type.code eq 'paragraph') or (cc.attrs.bean.element.type.code eq 'image')}">
 							<p:panel header="#{msg.jeeslCmsElementParagraph}" styleClass="jeeslPanel jeeslEditor">
 								<f:facet name="actions">
 									<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveParagraph()}" update="@form" tooltip="#{msg.ttSave}"/>
@@ -174,6 +176,7 @@
 								}
 							</h:outputScript>
 						</h:form>
+						<jp:ioFrFiles handler="#{cc.attrs.bean.hFileRepository}" allowDelete="true" rendered="#{(cc.attrs.bean.element.type.code eq 'image')}" componentPrefix="#{cc.id}"/>
 						
 						<composite:insertChildren/>
 					</h:panelGroup>

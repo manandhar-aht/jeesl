@@ -1,6 +1,8 @@
 package org.jeesl.interfaces.controller.handler;
 
+import java.io.InputStream;
 import java.io.Serializable;
+import java.util.List;
 
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
@@ -10,24 +12,21 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslWithFileRepositoryContainer;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public interface JeeslFileRepositoryHandler <L extends UtilsLang, D extends UtilsDescription,
-											STORAGE extends JeeslFileStorage<L,D,ENGINE>,
-											ENGINE extends UtilsStatus<ENGINE,L,D>,
-											CONTAINER extends JeeslFileContainer<STORAGE,META>,
-											META extends JeeslFileMeta<CONTAINER,TYPE>,
-											TYPE extends UtilsStatus<TYPE,L,D>>
+public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,?,?>,
+											CONTAINER extends JeeslFileContainer<STORAGE,?>,
+											META extends JeeslFileMeta<CONTAINER,?>>
 		extends Serializable
 {
 	STORAGE getStorage();
 	CONTAINER getContainer();
+	List<META> getMetas();
 	
 	//Default behaiviour should be transaction=false
 	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException;
 	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException;
 	
-	void copyTo(JeeslFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> target) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException;
+	InputStream download(META meta) throws UtilsNotFoundException;
+	
+	void copyTo(JeeslFileRepositoryHandler<STORAGE,CONTAINER,META> target) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException;
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslCmsCacheBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
+import org.jeesl.api.bean.callback.JeeslFileRepositoryCallback;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
 import org.jeesl.controller.handler.op.OpStatusSelectionHandler;
@@ -19,6 +20,7 @@ import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.bean.op.OpEntityBean;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
+import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
@@ -26,6 +28,8 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
@@ -57,10 +61,12 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 										ET extends UtilsStatus<ET,L,D>,
 										C extends JeeslIoCmsContent<V,E,MT>,
 										MT extends UtilsStatus<MT,L,D>,
-										FC extends JeeslFileContainer<?,?>
+										FS extends JeeslFileStorage<L,D,?>,
+										FC extends JeeslFileContainer<FS,?>,
+										FM extends JeeslFileMeta<FC,?>
 										>
 					extends AbstractAdminBean<L,D>
-					implements Serializable,SbToggleBean,SbSingleBean,OpEntityBean
+					implements Serializable,SbToggleBean,SbSingleBean,OpEntityBean,JeeslFileRepositoryCallback
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractCmsEditorBean.class);
@@ -81,6 +87,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 	protected final SbSingleHandler<CAT> sbhCategory; public SbSingleHandler<CAT> getSbhCategory() {return sbhCategory;}
 	private final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	private final OpStatusSelectionHandler<LOC> opLocale; public OpStatusSelectionHandler<LOC> getOpLocale() {return opLocale;}
+	private JeeslFileRepositoryHandler<FS,FC,FM> hFileRepository; public JeeslFileRepositoryHandler<FS,FC,FM> gethFileRepository() {return hFileRepository;}
 
 	private List<E> elements; public List<E> getElements() {return elements;}
 	private List<EC> elementCategories; public List<EC> getElementCategories() {return elementCategories;}
@@ -119,12 +126,14 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 	
 	protected void postConstructCms(JeeslTranslationBean bTranslation, String currentLocaleCode,
 									List<LOC> locales, JeeslFacesMessageBean bMessage, JeeslCmsCacheBean<S> bCache,
-									JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms)
+									JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms,
+									JeeslFileRepositoryHandler<FS,FC,FM> hFileRepository)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.bCache=bCache;
 		this.currentLocaleCode=currentLocaleCode;
 		this.fCms=fCms;
+		this.hFileRepository=hFileRepository;
 		
 		opLocale.setOpList(locales);
 		
@@ -352,6 +361,8 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 		bCache.clearCache(section);
 	}
 	
+//	****************************************************************************************
+	
 	public void addElement() 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbCms.getClassElement()));}
@@ -361,7 +372,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 	public void selectElement() 
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(element));}
-		selectedElement();
+		elementWasSelected();
 	}
 	
 	public void changeElementCategory()
@@ -382,7 +393,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 		element.setType(fCms.find(fbCms.getClassElementType(),element.getType()));
 		element = fCms.save(element);
 		reloadSection();
-		selectedElement();
+		elementWasSelected();
 	}
 	
 	public void deleteElement() throws UtilsConstraintViolationException, UtilsLockingException
@@ -393,15 +404,33 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 		reloadSection();
 	}
 	
-	protected void selectedElement()
+	protected void elementWasSelected()
 	{
-		if(element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString()))
+		boolean isParagraph = element.getType().getCode().equals(JeeslIoCmsElement.Type.paragraph.toString());
+		boolean isImage = element.getType().getCode().equals(JeeslIoCmsElement.Type.image.toString());
+		
+		if(isParagraph || isImage)
 		{
 			if(!element.getContent().containsKey(sbhLocale.getSelection().getCode()))
 			{
 				element.getContent().put(sbhLocale.getSelection().getCode(), efContent.build(element,sbhLocale.getSelection(), "", markupHtml));
 			}
 		}
+		else if(isImage)
+		{
+			if(hFileRepository!=null)
+			{
+				try {hFileRepository.init(element, false);}
+				catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+				catch (UtilsLockingException e) {e.printStackTrace();}
+			}
+			else {logger.warn("hFileRepository==null");}
+		}
+	}
+	@Override public void fileRepositoryContainerSaved(EjbWithId id) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		element.setFrContainer(hFileRepository.getContainer());
+		element = fCms.save(element);
 	}
 	
 	public void saveParagraph() throws UtilsConstraintViolationException, UtilsLockingException

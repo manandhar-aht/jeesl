@@ -85,7 +85,7 @@ public class XmlAnswerFactory<L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetAnswer() && ejb.getQuestion().getShowText() && ejb.getValueText()!=null){xml.setAnswer(net.sf.ahtutils.factory.xml.text.XmlAnswerFactory.build(ejb.getValueText()));}
 		if(q.isSetRemark() && ejb.getQuestion().getShowRemark() && ejb.getRemark()!=null){xml.setRemark(XmlRemarkFactory.build(ejb.getRemark()));}
 	
-		if(q.isSetOption() && BooleanComparator.active(ejb.getQuestion().getShowSelectOne())){xml.setOption(xfOption.build(ejb.getOption()));}
+		if(q.isSetOption() && BooleanComparator.active(ejb.getQuestion().getShowSelectOne())){if(ejb.getOption()!=null) {xml.setOption(xfOption.build(ejb.getOption()));}}
 		if(q.isSetMatrix() && BooleanComparator.active(ejb.getQuestion().getShowMatrix())){xml.setMatrix(xfMatrix.build(ejb));}
 		
 		return xml;

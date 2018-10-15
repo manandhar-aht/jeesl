@@ -31,6 +31,7 @@ public class FiguresXpath
 		return list.get(0);
 	}
 	
+	public static <E extends Enum<E>> Figures getChild(Figures figures, E code) {return getChild(figures,code.toString());}
 	public static Figures getChild(Figures figures, String code)
 	{
 		if(figures!=null)

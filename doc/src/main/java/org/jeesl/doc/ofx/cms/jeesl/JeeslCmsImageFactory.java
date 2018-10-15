@@ -14,15 +14,20 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.openfuxml.content.media.Image;
+import org.openfuxml.content.ofx.Paragraph;
+import org.openfuxml.content.ofx.Section;
+import org.openfuxml.content.ofx.Title;
 import org.openfuxml.factory.xml.media.XmlImageFactory;
 import org.openfuxml.factory.xml.media.XmlMediaFactory;
 import org.openfuxml.factory.xml.ofx.content.text.XmlTitleFactory;
+import org.openfuxml.xml.xpath.content.SectionXpath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public class JeeslCmsImageFactory<E extends JeeslIoCmsElement<?,?,?,?,C,FC>,
@@ -41,15 +46,25 @@ public class JeeslCmsImageFactory<E extends JeeslIoCmsElement<?,?,?,?,C,FC>,
 		this.frh=frh;
 		ofxMarkup = new JeeslMarkupFactory();
 	}
-
-
 	
 	public Image build(String localeCode, E element)
 	{
 		logger.info("Building Image ");
 		Image xml = XmlImageFactory.centerPercent(element.getId(), 80);
-		xml.setTitle(XmlTitleFactory.build("Test"));
 		
+		if(element.getContent().containsKey(localeCode))
+		{
+			try
+			{
+				C content = element.getContent().get(localeCode);
+				Section section = ofxMarkup.build(content.getMarkup().getCode(),content.getLang());
+				Paragraph p = SectionXpath.getFirstParagraph(section);
+				String s = p.getContent().get(0).toString();
+				logger.info(s);
+				xml.setTitle(XmlTitleFactory.build(s));
+			}
+			catch (ExlpXpathNotFoundException e) {e.printStackTrace();}
+		}
 		xml.setMedia(XmlMediaFactory.build(element.getId()+".png",element.getId()+".png"));
 		
 		try

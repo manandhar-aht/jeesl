@@ -416,7 +416,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 				element.getContent().put(sbhLocale.getSelection().getCode(), efContent.build(element,sbhLocale.getSelection(), "", markupHtml));
 			}
 		}
-		else if(isImage)
+		if(isImage)
 		{
 			if(hFileRepository!=null)
 			{

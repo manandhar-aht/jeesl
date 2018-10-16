@@ -210,7 +210,7 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 			xlsRow.getSheet().addMergedRegion(new CellRangeAddress(
 			xlsRow.getRowNum(), //first row (0-based)
 			xlsRow.getRowNum(), //last row  (0-based)
-			columnNr, //first column (0-based)
+			columnNr, 			//first column (0-based)
 			columnNr+width-1));  //last column  (0-based)
 		}
 		

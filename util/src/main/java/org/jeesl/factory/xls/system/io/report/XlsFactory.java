@@ -139,6 +139,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 		Map<SHEET,Boolean> mapSheetVisibilityToggle = null; 
 		
 	    Workbook wb = new XSSFWorkbook();
+//	    SXSSFWorkbook wb = new SXSSFWorkbook(100);
 	    init(wb);
 	    
 	    JXPathContext context = JXPathContext.newContext(report);
@@ -179,6 +180,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			rowNr.add(3);
 		}
 		wb.write(os);
+//		wb.dispose();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -252,7 +254,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		@SuppressWarnings("unchecked")
 		Iterator<Pointer> iterator = context.iteratePointers(ioSheet.getQueryTable());
-		logger.trace("Beginning iteration");
+		logger.info("Beginning iteration");
 		int i=0;
         while (iterator.hasNext())
         {
@@ -260,9 +262,9 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 //        	logger.info("Row "+i);
         	Row xlsRow = sheet.createRow(rowNr.intValue());
         	
-            Pointer pointerToItem = iterator.next();
-			if (logger.isTraceEnabled()) {logger.info("Got pointer: " +pointerToItem.getValue().getClass());}
-			JXPathContext relativeContext = context.getRelativeContext(pointerToItem);
+            Pointer pointer = iterator.next();
+			if (logger.isTraceEnabled()) {logger.info("Got pointer: " +pointer.getValue().getClass());}
+			JXPathContext relativeContext = context.getRelativeContext(pointer);
 			
 			MutableInt columnNr = new MutableInt(0);
 			for(COLUMN ioColumn : columns)

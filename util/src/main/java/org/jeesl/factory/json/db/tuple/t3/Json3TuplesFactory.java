@@ -1,6 +1,5 @@
 package org.jeesl.factory.json.db.tuple.t3;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +18,6 @@ import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C extends EjbWithId>
-//			extends Json2TuplesFactory<A,B>
 {
 	final static Logger logger = LoggerFactory.getLogger(Json3TuplesFactory.class);
 	
@@ -134,6 +132,4 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
 		mapB.putAll(EjbIdFactory.toIdMap(fUtils.find(cB, setId2)));
 		mapC.putAll(EjbIdFactory.toIdMap(fUtils.find(cC, setId3)));
 	}
-	
-	public List<A> toListA(){return new ArrayList<A>(mapA.values());}
 }

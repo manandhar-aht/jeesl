@@ -18,7 +18,6 @@ import org.jeesl.model.json.db.tuple.two.Json2Tuples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
@@ -29,7 +28,6 @@ public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
 
 	final static Logger logger = LoggerFactory.getLogger(JsonTuple2Handler.class);
 
-	
 	private JeeslComparatorProvider<B> jppB; public void setComparatorProviderB(JeeslComparatorProvider<B> jppB) {this.jppB = jppB;}
 	
 	private final Class<B> cB;
@@ -39,7 +37,7 @@ public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
 	private final Map<A,Map<B,Json2Tuple<A,B>>> map; public Map<A,Map<B,Json2Tuple<A,B>>> getMap() {return map;}
 	
 	
-	public JsonTuple2Handler(UtilsFacade fUtils, Class<A> cX, Class<B> cB)
+	public JsonTuple2Handler(Class<A> cX, Class<B> cB)
 	{
 		super(cX);
 		this.cB=cB;

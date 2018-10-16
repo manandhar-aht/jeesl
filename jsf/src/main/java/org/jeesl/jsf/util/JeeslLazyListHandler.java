@@ -16,19 +16,19 @@ public class JeeslLazyListHandler <T extends EjbWithId>
 		
 	}
 	
-	public void paginator(List<T> data, List<T> tmp, int first, int pageSize)
+	public void paginator(List<T> result, List<T> tmp, int first, int pageSize)
 	{
-		data.clear();
+		result.clear();
 		if(tmp.size() > pageSize)
 		{
 			try
 			{
-				if (first+pageSize < tmp.size()){data.addAll(tmp.subList(first, first + pageSize));}
-				else{data.addAll(tmp.subList(first, tmp.size()-1));}
+				if (first+pageSize < tmp.size()){result.addAll(tmp.subList(first, first + pageSize));}
+				else{result.addAll(tmp.subList(first, tmp.size()-1));}
 			}
-			catch(IndexOutOfBoundsException e){data.addAll(tmp.subList(first, first + (tmp.size() % pageSize)));}
+			catch(IndexOutOfBoundsException e){result.addAll(tmp.subList(first, first + (tmp.size() % pageSize)));}
 		}
-		else {data.addAll(tmp);}
+		else {result.addAll(tmp);}
 	}
 	
 	public Object getRowKey(T t) {return t.getId();}

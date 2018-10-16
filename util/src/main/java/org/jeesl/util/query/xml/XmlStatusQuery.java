@@ -12,6 +12,7 @@ import net.sf.ahtutils.xml.status.Langs;
 import net.sf.ahtutils.xml.status.Level;
 import net.sf.ahtutils.xml.status.Model;
 import net.sf.ahtutils.xml.status.Parent;
+import net.sf.ahtutils.xml.status.Reason;
 import net.sf.ahtutils.xml.status.Result;
 import net.sf.ahtutils.xml.status.Scope;
 import net.sf.ahtutils.xml.status.Scopes;
@@ -127,6 +128,14 @@ public class XmlStatusQuery
 	private static Model modelLabel()
 	{		
 		Model xml = new Model();
+		xml.setCode("");
+		xml.setLabel("");
+		return xml;
+	}
+	
+	public static Reason reasonLabel()
+	{		
+		Reason xml = new Reason();
 		xml.setCode("");
 		xml.setLabel("");
 		return xml;

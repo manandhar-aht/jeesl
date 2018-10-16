@@ -5,12 +5,14 @@ import java.util.Date;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.jxpath.JXPathContext;
+import org.apache.commons.jxpath.JXPathInvalidSyntaxException;
 import org.apache.commons.jxpath.JXPathNotFoundException;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -29,7 +31,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import org.apache.poi.ss.util.CellRangeAddress;
 
 public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 							CATEGORY extends UtilsStatus<CATEGORY,L,D>,
@@ -83,7 +84,12 @@ public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
 	{
 		JeeslReportLayout.Data dt = xfStyle.getDataType(ioColumn);
 		CellStyle style = xfStyle.get(JeeslReportLayout.Style.cell,ioColumn);
-		add(xlsRow, columnNr, context, ioColumn.getQueryCell(), style, dt);
+		try {add(xlsRow, columnNr, context, ioColumn.getQueryCell(), style, dt);}
+		catch (JXPathInvalidSyntaxException e)
+		{
+			logger.error(JXPathInvalidSyntaxException.class.getSimpleName()+" at "+ioColumn.getGroup().getPosition()+" "+ioColumn.getPosition());;
+			throw e;
+		}
 	}
 	public void cell(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, Object object)
 	{

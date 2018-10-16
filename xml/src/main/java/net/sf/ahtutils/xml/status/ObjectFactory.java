@@ -534,6 +534,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Reason }
+     * 
+     */
+    public Reason createReason() {
+        return new Reason();
+    }
+
+    /**
      * Create an instance of {@link Freeze }
      * 
      */

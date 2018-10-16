@@ -146,6 +146,7 @@ public class Json1TuplesFactory <A extends EjbWithId>
 		}
 	}
 	
+	@Deprecated
 	public Map<A,Json1Tuple<A>> toMap(Json1Tuples<A> tuples)
 	{
 		Map<A,Json1Tuple<A>> map = new HashMap<A,Json1Tuple<A>>();
@@ -157,6 +158,4 @@ public class Json1TuplesFactory <A extends EjbWithId>
 		
 		return map;
 	}
-	
-	
 }

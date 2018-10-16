@@ -23,6 +23,7 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
 {
 	final static Logger logger = LoggerFactory.getLogger(Json3TuplesFactory.class);
 	
+	private UtilsFacade fUtils; public UtilsFacade getfUtils() {return fUtils;} public void setfUtils(UtilsFacade fUtils) {this.fUtils = fUtils;}
 	private final Json3TupleFactory<A,B,C> jtf;
 	
 	protected final Class<A> cA;
@@ -67,7 +68,56 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
 		mapB.clear();
 		mapC.clear();
 	}
+		
+	public Json3Tuples<A,B,C> build3Sum(List<Tuple> tuples)
+	{
+		Json3Tuples<A,B,C> json = new Json3Tuples<A,B,C>();
+		for(Tuple t : tuples)
+        {
+        	json.getTuples().add(jtf.buildSum(t));
+        }
+		ejbLoad(json);
+		return json;
+	}
 	
+	public Json3Tuples<A,B,C> build3Count(List<Tuple> tuples)
+	{
+		Json3Tuples<A,B,C> json = new Json3Tuples<A,B,C>();
+		for(Tuple t : tuples)
+        {
+        	json.getTuples().add(jtf.buildCount(t));
+        }
+		ejbLoad(json);
+		return json;
+	}
+	
+	public void ejbLoad(Json3Tuples<A,B,C> json)
+	{
+		clear();
+		if(fUtils!=null)
+		{
+			for(Json3Tuple<A,B,C> t : json.getTuples())
+			{
+				setId1.add(t.getId1());
+				setId2.add(t.getId2());
+				setId3.add(t.getId3());
+			}
+			
+			mapA.putAll(EjbIdFactory.toIdMap(fUtils.find(cA, setId1)));
+			mapB.putAll(EjbIdFactory.toIdMap(fUtils.find(cB, setId2)));
+			mapC.putAll(EjbIdFactory.toIdMap(fUtils.find(cC, setId3)));
+			
+			for(Json3Tuple<A,B,C> t : json.getTuples())
+			{
+				t.setEjb1(mapA.get(t.getId1()));
+				t.setEjb2(mapB.get(t.getId2()));
+				t.setEjb3(mapC.get(t.getId3()));
+			}
+		}
+		this.tuples=json;
+	}
+	
+	@Deprecated
 	public void init(UtilsFacade fUtils, Json3Tuples<A,B,C> json)
 	{
 		clear();
@@ -83,26 +133,6 @@ public class Json3TuplesFactory <A extends EjbWithId, B extends EjbWithId, C ext
 		mapA.putAll(EjbIdFactory.toIdMap(fUtils.find(cA, setId1)));
 		mapB.putAll(EjbIdFactory.toIdMap(fUtils.find(cB, setId2)));
 		mapC.putAll(EjbIdFactory.toIdMap(fUtils.find(cC, setId3)));
-	}
-	
-	public Json3Tuples<A,B,C> build3Sum(List<Tuple> tuples)
-	{
-		Json3Tuples<A,B,C> json = new Json3Tuples<A,B,C>();
-		for(Tuple t : tuples)
-        {
-        	json.getTuples().add(jtf.buildSum(t));
-        }
-		return json;
-	}
-	
-	public Json3Tuples<A,B,C> build3Count(List<Tuple> tuples)
-	{
-		Json3Tuples<A,B,C> json = new Json3Tuples<A,B,C>();
-		for(Tuple t : tuples)
-        {
-        	json.getTuples().add(jtf.buildCount(t));
-        }
-		return json;
 	}
 	
 	public List<A> toListA(){return new ArrayList<A>(mapA.values());}

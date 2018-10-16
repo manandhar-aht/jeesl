@@ -4,12 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jeesl.controller.processor.finance.AmountRounder;
 import org.jeesl.factory.json.db.tuple.JsonTupleFactory;
-import org.jeesl.factory.json.db.tuple.t2.Json2TuplesFactory;
 import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
 import org.jeesl.model.json.db.tuple.JsonTuple;
 import org.jeesl.model.json.db.tuple.two.Json2Tuple;
@@ -20,81 +21,75 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class JsonTuple2Handler <X extends EjbWithId, Y extends EjbWithId> implements Serializable
+public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
+							extends JsonTuple1Handler<A>
+							implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
 	final static Logger logger = LoggerFactory.getLogger(JsonTuple2Handler.class);
-	
-	private final Json2TuplesFactory<X,Y> tf;
-	
-	private JeeslComparatorProvider<X> cpA; public void setComparatorProviderA(JeeslComparatorProvider<X> cpA) {this.cpA = cpA;}
-	private JeeslComparatorProvider<Y> cpB; public void setComparatorProviderB(JeeslComparatorProvider<Y> cpB) {this.cpB = cpB;}
-	
-	private final Map<X,Map<Y,Json2Tuple<X,Y>>> map; public Map<X,Map<Y,Json2Tuple<X,Y>>> getMap() {return map;}
-	private final List<X> listX; public List<X> getListA() {return listX;}
-	private final List<Y> listY; public List<Y> getListB() {return listY;}
 
-	private int sizeA; public int getSizeA() {return sizeA;}
+	
+	private JeeslComparatorProvider<B> jppB; public void setComparatorProviderB(JeeslComparatorProvider<B> jppB) {this.jppB = jppB;}
+	
+	private final Class<B> cB;
+	protected final Set<B> setB;
 	private int sizeB; public int getSizeB() {return sizeB;}
+	private final List<B> listB; public List<B> getListB() {return listB;}
+	private final Map<A,Map<B,Json2Tuple<A,B>>> map; public Map<A,Map<B,Json2Tuple<A,B>>> getMap() {return map;}
 	
-	private boolean withSum; public boolean isWithSum() {return withSum;} public void setWithSum(boolean withSum) {this.withSum = withSum;}
-
-	private int sumDivider; public void setSumDivider(int sumDivider) {this.sumDivider = sumDivider;}
-	public int getDimension() {return 2;}
 	
-	public JsonTuple2Handler(UtilsFacade fUtils, Class<X> cX, Class<Y> cY)
+	public JsonTuple2Handler(UtilsFacade fUtils, Class<A> cX, Class<B> cB)
 	{
-		tf = new Json2TuplesFactory<X,Y>(fUtils,cX,cY);
+		super(cX);
+		this.cB=cB;
 		
-		listX = new ArrayList<X>();
-		listY = new ArrayList<Y>();
-		map = new HashMap<X,Map<Y,Json2Tuple<X,Y>>>();
+		setB = new HashSet<B>();
+		listB = new ArrayList<B>();
+		map = new HashMap<A,Map<B,Json2Tuple<A,B>>>();
 		
-		withSum = true;
-		sumDivider = 1;
+		dimension = 2;
 	}
 	
 	public void clear()
 	{
+		super.clear();
 		map.clear();
-		listX.clear();
-		listY.clear();
+		setB.clear();
+		listB.clear();
 	}
 
-	public void init(Json2Tuples<X,Y> tuples)
+	public void init(Json2Tuples<A,B> tuples)
 	{
 		clear();
 	
-		for(Json2Tuple<X,Y> t : tuples.getTuples())
+		for(Json2Tuple<A,B> t : tuples.getTuples())
 		{
 			if(t.getSum()!=null) {t.setSum(AmountRounder.two(t.getSum()/sumDivider));}
-		}
-		
-		listX.addAll(tf.toListX(tuples));
-		listY.addAll(tf.toListY(tuples));
-		map.putAll(tf.toMap(tuples));
-		
-		
-		if(cpA!=null && cpA.provides(tf.getClassA()))
-		{
 			
-			Collections.sort(listX, cpA.provide(tf.getClassA()));
+			setA.add(t.getEjb1());
+			setB.add(t.getEjb2());
+			
+			if(!map.containsKey(t.getEjb1())) {map.put(t.getEjb1(), new HashMap<B,Json2Tuple<A,B>>());}
+			map.get(t.getEjb1()).put(t.getEjb2(), t);
 		}
-		if(cpB!=null && cpB.provides(tf.getClassB())) {Collections.sort(listY, cpB.provide(tf.getClassB()));}
-		
-		sizeA = listX.size();
-		sizeB = listY.size();
+	
+		initA();
+		initB();
 	}
 	
-	public boolean contains(X x, Y y)
+	protected void initB()
 	{
-		return map.containsKey(x) && map.get(x).containsKey(y);
+		listB.addAll(setB);
+		sizeB = listB.size();
+		if(jppB!=null && jppB.provides(cB)){Collections.sort(listB, jppB.provide(cB));}
 	}
 	
-	public JsonTuple value(X x, Y y)
+	public boolean contains(A a, B b) {return map.containsKey(a) && map.get(a).containsKey(b);}
+	
+	public JsonTuple value(A a, B b)
 	{
-		Json2Tuple<X,Y> j2t = map.get(x).get(y);
-		return JsonTupleFactory.build(j2t);
+		Json2Tuple<A,B> json = map.get(a).get(b);
+		return JsonTupleFactory.build(json);
 	}
 }

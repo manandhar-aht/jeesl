@@ -27,7 +27,8 @@ public class Json1TupleFactory<A extends EjbWithId>
 		}
 		return result;
 	}
-		
+	
+	@Deprecated // Use TupleHandler instead
 	public static <T extends EjbWithId> Map<Long,Json1Tuple<T>> toIdMap(List<Json1Tuple<T>> list)
 	{
 		Map<Long,Json1Tuple<T>> map = new HashMap<Long,Json1Tuple<T>>();

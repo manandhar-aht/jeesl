@@ -6,6 +6,9 @@ public interface JeeslQuery
 	
 	void reset();
 	
+	boolean isTupleLoad();
+	void setTupleLoad(boolean tupleLoad);
+	
 	boolean isDistinct();
 	void setDistinct(boolean distinct);
 

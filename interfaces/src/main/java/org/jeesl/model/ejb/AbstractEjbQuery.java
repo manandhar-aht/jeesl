@@ -22,6 +22,10 @@ public abstract class AbstractEjbQuery implements Serializable,JeeslQuery
 		distinct = false;
 	}
 	
+	private boolean tupleLoad;
+	@Override public boolean isTupleLoad() {return tupleLoad;}
+	@Override public void setTupleLoad(boolean tupleLoad) {this.tupleLoad = tupleLoad;}
+
 	private boolean distinct;
 	@Override public boolean isDistinct() {return distinct;}
 	@Override public void setDistinct(boolean distinct) {this.distinct = distinct;}

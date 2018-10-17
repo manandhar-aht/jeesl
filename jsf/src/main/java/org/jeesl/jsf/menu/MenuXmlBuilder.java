@@ -28,6 +28,7 @@ import net.sf.ahtutils.xml.access.Access;
 import net.sf.ahtutils.xml.security.Security;
 import net.sf.ahtutils.xml.status.Lang;
 import net.sf.ahtutils.xml.xpath.NavigationXpath;
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public class MenuXmlBuilder implements MenuBuilder
@@ -592,7 +593,7 @@ public class MenuXmlBuilder implements MenuBuilder
 	
 	public MenuItem subMenu(Menu menu, String code)
 	{
-		if(logger.isTraceEnabled())
+		if(logger.isInfoEnabled())
 		{
 			logger.info("subMenu "+code);
 			JaxbUtil.info(menu);
@@ -605,22 +606,24 @@ public class MenuXmlBuilder implements MenuBuilder
 		}
 		else
 		{
-			MenuItem myMi = NavigationXpath.getMenuItemSilent(menu, code);
-			if(myMi!=null)
+			try
 			{
-				for(MenuItem miT : myMi.getMenuItem())
+				MenuItem item = NavigationXpath.getMenuItem(menu,code);
+				for(MenuItem sub : item.getMenuItem())
 				{
-					MenuItem mi = XmlMenuItemFactory.build(miT);
-					result.getMenuItem().add(mi);
+					MenuItem i = XmlMenuItemFactory.build(sub);
+					result.getMenuItem().add(i);
 				}
 			}
-			else
+			catch (ExlpXpathNotFoundException e)
 			{
-				logger.error("Nothing found in menu, code="+code);
+				StringBuilder sb = new StringBuilder();
+				sb.append("In the following menu the item");
+				sb.append(" with code=").append(code).append("can not be found.");
+				logger.error(sb.toString()+" The menu xml will be shown:");
 				JaxbUtil.info(menu);
-				throw new UtilsMenuException("No MenuItem for code:"+code);
-			}
-			
+				throw new UtilsMenuException(sb.toString());
+			}		
 		}
 		return result;
 	}

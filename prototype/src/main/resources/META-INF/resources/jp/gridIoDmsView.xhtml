@@ -2,12 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:j="http://www.jeesl.org/jsf"
 	xmlns:jp="http://jsf.jeesl.org/prototype"
 	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
+	
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
@@ -19,7 +21,7 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<aup:grid id="grid">
+		<jp:grid id="grid">
 			<aht:row rendered="#{not empty cc.attrs.bean.dm}">
 				<aht:slot width="6">
 					<h:form id="fTree" >
@@ -49,40 +51,39 @@
 						</p:panel>
 					</h:form>
 					<h:form id="fFiles" rendered="#{not empty cc.attrs.bean.section}">
-						<p:dataTable var="f" value="#{cc.attrs.bean.files}" draggableRows="true"
-										selection="#{cc.attrs.bean.file}" selectionMode="single" rowKey="#{f.id}">
+						<p:dataTable var="d" value="#{cc.attrs.bean.files}" draggableRows="false"
+										selection="#{cc.attrs.bean.file}" selectionMode="single" rowKey="#{d.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslIoDmsDocuments}">
-									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addFile()}" update=":#{cc.id}:sSection" tooltip="#{msg.ttNew}"/>
-								</aht:pfDataTableHeader>
+								<j:dtHeader title="#{msg.jeeslIoDmsDocuments}"/>
 							</f:facet>
-							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderFiles()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectFile()}" update=":#{cc.id}:sSection"/>
 							<p:column >  
-								<h:outputText value="#{f.name[localeCode].lang}"/>
+								<h:outputText value="#{d.name[localeCode].lang}"/>
 							</p:column>
 					   	</p:dataTable>
 					</h:form>
 					<h:form id="fFile">
 						<p:panel id="pView" header="#{msg.jeeslIoDmsDocument}" rendered="#{not empty cc.attrs.bean.file}" styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetFile()}" update=":#{cc.id}:sSection" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
-								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveFile()}" update=":#{cc.id}:sSection"  tooltip="#{msg.ttSave}"/>
-								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteFile()}" update=":#{cc.id}:sSection" rendered="#{cc.attrs.bean.file.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
+								<j:icon type="jeeslCancel" listener="#{cc.attrs.bean.resetFile()}" update=":#{cc.id}:sSection" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
-								<p:outputLabel value="#{msg.jeeslVisible}"/>
-								<p:selectBooleanCheckbox value="#{cc.attrs.bean.file.visible}"/>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid25,jeeslGrid75">
+								<p:outputLabel value="#{msg.jeeslName}"/>
+								<h:outputText value="#{cc.attrs.bean.file.name[localeCode].lang}"/>
+								<ui:remove>
+									<p:outputLabel value="#{msg.jeeslDescription}"/>
+									<h:outputText value="#{cc.attrs.bean.file.description[localeCode].lang}"/>
+								</ui:remove>
+								
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.file}" keys="#{cc.attrs.localeKeys}" />
+							<jp:ioAttributePanel handler="#{cc.attrs.bean.attributeHandler}" withSave="false"
+												 columnClasses="jeeslGrid25,jeeslGrid75"/>
 						</p:panel>
 					</h:form>
-					<h:form id="fAttrbute" rendered="#{(not empty cc.attrs.bean.file) and (cc.attrs.bean.file.id gt 0)}">
-						<jp:ioAttributePanel handler="#{cc.attrs.bean.attributeHandler}" />
-					</h:form>
-					<jp:ioFrFiles id="jeeslFrFiles" handler="#{cc.attrs.bean.fileHandler}" rendered="#{(not empty cc.attrs.bean.file) and (cc.attrs.bean.file.id gt 0)}" componentPrefix="#{cc.id}"/>
+					<jp:ioFrFiles id="jeeslFrFiles" componentPrefix="#{cc.id}" rendered="#{(not empty cc.attrs.bean.file) and (cc.attrs.bean.file.id gt 0)}" 
+									handler="#{cc.attrs.bean.fileHandler}" allowUpload="false"/>
 				</aht:slot>
 			</aht:row>
-	    </aup:grid>
+	    </jp:grid>
 	</composite:implementation>
 </html>

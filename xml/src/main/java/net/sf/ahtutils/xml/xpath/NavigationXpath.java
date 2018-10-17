@@ -2,20 +2,20 @@ package net.sf.ahtutils.xml.xpath;
 
 import java.util.List;
 
-import net.sf.exlp.exception.ExlpXpathNotFoundException;
-import net.sf.exlp.exception.ExlpXpathNotUniqueException;
-
 import org.apache.commons.jxpath.JXPathContext;
 import org.jeesl.model.xml.system.navigation.Menu;
 import org.jeesl.model.xml.system.navigation.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.exlp.exception.ExlpXpathNotFoundException;
+import net.sf.exlp.exception.ExlpXpathNotUniqueException;
+
 public class NavigationXpath
 {
 	final static Logger logger = LoggerFactory.getLogger(NavigationXpath.class);
 	
-	public static MenuItem getMenuItem(Menu menu,String code) throws ExlpXpathNotFoundException, ExlpXpathNotUniqueException
+	public static MenuItem getMenuItem(Menu menu,String code) throws ExlpXpathNotFoundException
 	{
 		JXPathContext context = JXPathContext.newContext(menu);
 		
@@ -24,12 +24,12 @@ public class NavigationXpath
 		
 		@SuppressWarnings("unchecked")
 		List<MenuItem> listResult = (List<MenuItem>)context.selectNodes(sb.toString());
-		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+MenuItem.class.getSimpleName()+" for code="+code);}
-		else if(listResult.size()>1){throw new ExlpXpathNotUniqueException("Multiple "+MenuItem.class.getSimpleName()+" for code="+code);}
+		if(listResult.size()==0){throw new ExlpXpathNotFoundException("No "+MenuItem.class.getSimpleName()+" for code="+code+" and xpath="+sb.toString());}
+		else if(listResult.size()>1){throw new ExlpXpathNotFoundException("Multiple "+MenuItem.class.getSimpleName()+" for code="+code);}
 		return listResult.get(0);
 	}
 	
-	public static MenuItem getMenuItemSilent(Menu menu,String code)
+	public static MenuItem getMenuItemSilent(Menu menu, String code)
 	{
 		JXPathContext context = JXPathContext.newContext(menu);
 		

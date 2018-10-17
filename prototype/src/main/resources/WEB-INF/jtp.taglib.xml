@@ -52,6 +52,10 @@
         <source>jeeslPrototype/input/attribute.xhtml</source>
     </tag>
     <tag>
+        <tag-name>outputAttribute</tag-name>
+        <source>jeeslPrototype/output/attribute.xhtml</source>
+    </tag>
+    <tag>
         <tag-name>reportHeader</tag-name>
         <source>jeeslPrototype/report/header.xhtml</source>
     </tag>

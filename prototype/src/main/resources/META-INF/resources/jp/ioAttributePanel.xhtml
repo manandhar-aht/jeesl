@@ -50,7 +50,7 @@
 			<ui:repeat id="repeatG" value="#{appAttributeBean.mapCriteria[cc.attrs.handler.attributeSet]}"  var="c">	
 				<p:panelGrid columns="#{cc.attrs.withLabel ? 2 : 1}" columnClasses="#{cc.attrs.withLabel ? cc.attrs.columnClasses : 'jeeslGrid100'}">
 					<p:outputLabel value="#{c.name[localeCode].lang}" rendered="#{cc.attrs.withLabel}"/>
-					<jtp:inputAttribute attributeHandler="#{cc.attrs.handler}" criteria="#{c}"/>
+					<jtp:outputAttribute attributeHandler="#{cc.attrs.handler}" criteria="#{c}"/>
 				</p:panelGrid>
 			</ui:repeat>
 		</ui:fragment>

@@ -209,6 +209,7 @@ public class PrototypeDbMenuBean implements Serializable
 	public void userLoggedIn(Map<String, Boolean> allowedViews)
 	{
 		this.clear(localeCode,true);
+		if(debugOnInfo && logger.isInfoEnabled()){logger.info("User Logged In: "+allowedViews.size());}
 		mapViewAllowed = allowedViews;
 	}
 	

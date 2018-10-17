@@ -1,5 +1,6 @@
 package org.jeesl.factory.xml.module.survey;
 
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -41,25 +42,32 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlQuestionFactory.class);
 		
+	private JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
+	
 	private String localeCode;
 	private Question q;
 	
 	private XmlScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> xfScore;
-	
-	
-	//TODO tk: remove this constructor
-	public XmlQuestionFactory(Question q){this(null,q);}
-	
+	private XmlOptionsFactory<L,D,QUESTION,OPTION> xfOptions;
+		
 	public XmlQuestionFactory(QuerySurvey q){this(q.getLocaleCode(),q.getQuestion());}
 	public XmlQuestionFactory(String localeCode, Question q)
 	{
 		this.localeCode=localeCode;
 		this.q=q;
 		if(q.isSetScore()){xfScore = new XmlScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(q.getScore());}
+		if(q.isSetOptions()) {xfOptions = new XmlOptionsFactory<L,D,QUESTION,OPTION>(localeCode,q.getOptions());}
+	}
+	
+	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
+	{
+		this.fSurvey=fSurvey;
 	}
 	
 	public Question build(QUESTION ejb)
 	{
+		if(fSurvey!=null){ejb = fSurvey.load(ejb);}
+		
 		Question xml = new Question();
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetPosition()){xml.setPosition(ejb.getPosition());}
@@ -84,9 +92,12 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 		if(q.isSetShowText()){if(ejb.getShowText()!=null){xml.setShowText(ejb.getShowText());}else{xml.setShowText(false);}}
 		if(q.isSetShowScore()){if(ejb.getShowScore()!=null){xml.setShowScore(ejb.getShowScore());}else{xml.setShowScore(false);}}
 		if(q.isSetShowRemark()){if(ejb.getShowRemark()!=null){xml.setShowRemark(ejb.getShowRemark());}else{xml.setShowRemark(false);}}
-		if(q.isSetShowSelectOne()){if(ejb.getShowSelectOne()!=null){xml.setShowSelectOne(ejb.getShowSelectOne());}else{xml.setShowSelectOne(false);}}
 		
 		if(q.isSetScore()){xml.setScore(xfScore.build(ejb));}
+		
+		if(q.isSetShowSelectOne()){if(ejb.getShowSelectOne()!=null){xml.setShowSelectOne(ejb.getShowSelectOne());}else{xml.setShowSelectOne(false);}}
+		
+		if(q.isSetOptions()){xml.setOptions(xfOptions.build(ejb));}
 		
 		return xml;
 	}

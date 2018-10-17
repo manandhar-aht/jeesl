@@ -28,6 +28,7 @@ import net.sf.ahtutils.xml.text.Remark;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}unit"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}score"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}answer"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/survey}options"/&gt;
  *         &lt;element ref="{http://www.jeesl.org/finance}figures"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
@@ -56,6 +57,7 @@ import net.sf.ahtutils.xml.text.Remark;
     "unit",
     "score",
     "answer",
+    "options",
     "figures"
 })
 @XmlRootElement(name = "question")
@@ -74,6 +76,8 @@ public class Question
     protected Score score;
     @XmlElement(required = true)
     protected Answer answer;
+    @XmlElement(required = true)
+    protected Options options;
     @XmlElement(namespace = "http://www.jeesl.org/finance", required = true)
     protected Figures figures;
     @XmlAttribute(name = "id")
@@ -239,6 +243,34 @@ public class Question
 
     public boolean isSetAnswer() {
         return (this.answer!= null);
+    }
+
+    /**
+     * Gets the value of the options property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Options }
+     *     
+     */
+    public Options getOptions() {
+        return options;
+    }
+
+    /**
+     * Sets the value of the options property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Options }
+     *     
+     */
+    public void setOptions(Options value) {
+        this.options = value;
+    }
+
+    public boolean isSetOptions() {
+        return (this.options!= null);
     }
 
     /**

@@ -64,6 +64,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,
 	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
 	{
 		this.fSurvey=fSurvey;
+		if(xfQuestion!=null) {xfQuestion.lazyLoad(fSurvey);}
 	}
 	
 	public Section build(SECTION ejb)

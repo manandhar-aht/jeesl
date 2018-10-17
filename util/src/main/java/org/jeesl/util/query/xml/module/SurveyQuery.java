@@ -7,6 +7,8 @@ import java.util.Map;
 import org.jeesl.factory.xml.module.survey.XmlAnswerFactory;
 import org.jeesl.factory.xml.module.survey.XmlCorrelationFactory;
 import org.jeesl.factory.xml.module.survey.XmlDataFactory;
+import org.jeesl.factory.xml.module.survey.XmlOptionFactory;
+import org.jeesl.factory.xml.module.survey.XmlOptionsFactory;
 import org.jeesl.factory.xml.module.survey.XmlQuestionFactory;
 import org.jeesl.factory.xml.module.survey.XmlScoreFactory;
 import org.jeesl.factory.xml.module.survey.XmlSurveyFactory;
@@ -25,6 +27,7 @@ import net.sf.ahtutils.xml.survey.Column;
 import net.sf.ahtutils.xml.survey.Data;
 import net.sf.ahtutils.xml.survey.Matrix;
 import net.sf.ahtutils.xml.survey.Option;
+import net.sf.ahtutils.xml.survey.Options;
 import net.sf.ahtutils.xml.survey.Question;
 import net.sf.ahtutils.xml.survey.Row;
 import net.sf.ahtutils.xml.survey.Score;
@@ -116,8 +119,25 @@ public class SurveyQuery
 		
 		Score score = XmlScoreFactory.build();
 		score.setMax(0);
-		
 		xml.setScore(score);
+		
+		xml.setOptions(exOptions());
+		
+		return xml;
+	}
+	
+	private static Options exOptions()
+	{
+		Options xml = XmlOptionsFactory.build();
+		xml.getOption().add(exOption());
+		return xml;
+	}
+	
+	private static Option exOption()
+	{
+		Option xml = XmlOptionFactory.build();
+		xml.setCode("");
+		xml.setLabel("");
 		
 		return xml;
 	}

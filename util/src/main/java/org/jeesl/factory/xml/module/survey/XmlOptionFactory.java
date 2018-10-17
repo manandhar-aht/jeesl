@@ -23,9 +23,11 @@ public class XmlOptionFactory<L extends UtilsLang, D extends UtilsDescription, O
 		this.q=q;
 	}
 	
+	public static Option build() {return new Option();}
+	
 	public Option build(OPTION ejb)
 	{
-		Option xml = new Option();
+		Option xml = build();
 		if(q.isSetId()){xml.setId(ejb.getId());}
 		if(q.isSetCode()) {xml.setCode(ejb.getCode());}
 		if(q.isSetLabel() && localeCode!=null && ejb.getName().containsKey(localeCode)) {xml.setLabel(ejb.getName().get(localeCode).getLang());}

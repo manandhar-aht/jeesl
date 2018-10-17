@@ -50,6 +50,7 @@
                 <xsd:element ref="us:unit" maxOccurs="1"/>
                 <xsd:element ref="survey:score" maxOccurs="1"/>
                 <xsd:element ref="survey:answer" maxOccurs="1"/>
+                <xsd:element ref="survey:options" maxOccurs="1"/>
                 <xsd:element ref="jf:figures" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:long"/>
@@ -141,8 +142,14 @@
 			<xsd:attribute name="label" type="xsd:string"/>
 		</xsd:complexType>
     </xsd:element>
-    
-    	<xsd:element name="option">
+    <xsd:element name="options">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="survey:option" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+    </xsd:element>
+	<xsd:element name="option">
 		<xsd:complexType>
 			<xsd:sequence>
 				

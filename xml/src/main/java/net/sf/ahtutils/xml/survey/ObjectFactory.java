@@ -142,6 +142,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Options }
+     * 
+     */
+    public Options createOptions() {
+        return new Options();
+    }
+
+    /**
      * Create an instance of {@link Surveys }
      * 
      */

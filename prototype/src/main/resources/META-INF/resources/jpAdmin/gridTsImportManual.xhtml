@@ -64,14 +64,11 @@
                     <h:form id="fStations">
                         <p:dataTable var="e" value="#{cc.attrs.bean.entities}"
                                      selection="#{cc.attrs.bean.entity}" selectionMode="single" rowKey="#{e.id}"
-                                     rows="10"
-                                     paginator="true"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="10,20,30">
+                                     rows="10" rowsPerPageTemplate="#{appSettingsBean.rowsPerPageTemplate}" paginator="true" paginatorPosition="#{appSettingsBean.paginatorPosition}" paginatorTemplate="#{appSettingsBean.paginatorTemplate}">
                             <f:facet name="header">
                                 <aht:pfDataTableHeader title="#{msg.jeeslTsEntity}"/>
                             </f:facet>
-                            <p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectEntity()}" update=":#{cc.id}:fTimeSeries"/>
+                            <p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectEntity()}" update=":#{cc.id}:sTimeSeries"/>
                             <p:column rendered="true" filterBy="#{e}" filterMatchMode="contains" filterStyle="width: 100px;">
                                 <jeesl:outputXpath value="#{e}" xpath="#{cc.attrs.bean.bridge.entityClass.xpath}"/>
                             </p:column>
@@ -79,13 +76,10 @@
                     </h:form>
                 </aht:slot>
                 <aht:slot id="sTimeSeries" width="4">
-                    <h:form id="fTimeSeries">
+                    <h:form id="fTimeSeries" rendered="#{not empty cc.attrs.bean.entity}">
                         <p:dataTable var="t" value="#{cc.attrs.bean.datas}"
                                      selection="#{cc.attrs.bean.data}" selectionMode="single" rowKey="#{t.id}"
-                                     rows="10"
-                                     paginator="true"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="10,20,30">
+                                     rows="10" rowsPerPageTemplate="#{appSettingsBean.rowsPerPageTemplate}" paginator="true" paginatorPosition="#{appSettingsBean.paginatorPosition}" paginatorTemplate="#{appSettingsBean.paginatorTemplate}">
                             <f:facet name="header">
                                 <aht:pfDataTableHeader title="#{msg.aupTsTimeSerie}">
                                     <aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addData()}" update=":#{cc.id}:sTs" tooltip="#{msg.ttNew}" rendered="#{cc.attrs.bean.uiAllowAdd}"/>

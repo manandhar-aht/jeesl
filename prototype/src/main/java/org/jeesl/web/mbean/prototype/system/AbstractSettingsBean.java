@@ -22,6 +22,8 @@ public class AbstractSettingsBean implements Serializable,JeeslSettingsBean
 	protected String paginatorTemplate; @Override public String getPaginatorTemplate() {return paginatorTemplate;}
 	protected String rowsPerPageTemplate; @Override public String getRowsPerPageTemplate(){return rowsPerPageTemplate;}
 	
+	protected String filterStyle; public String getFilterStyle() {return filterStyle;}
+
 	public AbstractSettingsBean()
 	{
 		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
@@ -32,6 +34,7 @@ public class AbstractSettingsBean implements Serializable,JeeslSettingsBean
 		paginatorTemplate = "{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}";
 		paginatorPosition = "bottom";
 		rowsPerPageTemplate = "5,20,50,100";
+		filterStyle = "width: 50px;";
 		logger.info(AbstractLogMessage.postConstruct(ptt));
 	}
 	

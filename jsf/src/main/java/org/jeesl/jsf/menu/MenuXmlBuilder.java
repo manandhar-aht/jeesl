@@ -35,6 +35,8 @@ public class MenuXmlBuilder implements MenuBuilder
 {
 	final static Logger logger = LoggerFactory.getLogger(MenuXmlBuilder.class);
 	
+	private final boolean debugOnInfo = false;
+	
 	private boolean oldImplementation;
 	private String lang;
 
@@ -593,7 +595,7 @@ public class MenuXmlBuilder implements MenuBuilder
 	
 	public MenuItem subMenu(Menu menu, String code)
 	{
-		if(logger.isInfoEnabled())
+		if(debugOnInfo)
 		{
 			logger.info("subMenu "+code);
 			JaxbUtil.info(menu);

@@ -41,7 +41,7 @@ public class XmlMcDataSetFactory
 		{
 			Data cd = new Data();
 			cd.setRecord(DateUtil.toXmlGc(data.getRecord()));
-			cd.setY(data.getValue());
+			if(data.getValue()!=null) {cd.setY(data.getValue());}
 			ds.getData().add(cd);
 		}
 		return ds;	

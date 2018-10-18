@@ -95,6 +95,9 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	protected UtilsXlsDefinitionResolver xlsResolver;
 
 	private Comparator<Data> cTsData;
+	
+	private List<DATA> datas; public List<DATA> getDatas() {return datas;}
+	private DATA data; public DATA getData() { return data; } public void setData(DATA data) { this.data = data; }
 
 	public AbstractAdminTsImportManualBean(final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fbTs)
 	{
@@ -153,7 +156,6 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 			logger.info(scope.toString());
 			changeClass();
 			changeInterval();
-
 		}
 	}
 
@@ -193,11 +195,8 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		}
 		catch (ClassNotFoundException e){e.printStackTrace();} catch(UtilsConstraintViolationException e) { e.printStackTrace(); }
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(EjbWithId.class,entities));}
-
 	}
 
-	private List<DATA> lData; public List<DATA> getlData() { return lData; }
-	private DATA data; public DATA getData() { return data; } public void setData(DATA data) { this.data = data; }
 
 	public void selectEntity() throws UtilsConstraintViolationException
 	{
@@ -208,10 +207,15 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 //		lData = fTs.fData(workspace, tsh.getOpList().get(0));
 
 		ts = fTs.fcTimeSeries(scope, interval,fTs.fcBridge(fbTs.getClassBridge(), clas, entity));
-		lData = fTs.fData(workspace, ts);
+		reloadData();
+	}
+	
+	private void reloadData()
+	{
+		datas = fTs.fData(workspace, ts);
 
 		McTsViewerFactory<TS,DATA> f = new McTsViewerFactory<TS,DATA>();
-		ds=f.build(lData);
+		ds=f.build(datas);
 		JaxbUtil.info(ds);
 	}
 
@@ -232,7 +236,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		transaction.setRecord(new Date());
 		
 		//Tkae the TS
-		data = efData.build(workspace, ts,null, null, null);
+		data = efData.build(workspace, ts, null, null, null);
 	}
 
 	private Date date; public Date getDate() { return date; } public void setDate(Date date) { this.date = date; }
@@ -243,17 +247,22 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 
 		if(EjbIdFactory.isUnSaved(transaction)) {transaction = fTs.save(transaction);}
 		data.setTransaction(transaction);
-		data.setRecord(date); data.setValue(value);
+		data.setRecord(date);
+		data.setValue(value);
 		logger.info(AbstractLogMessage.saveEntity(data));
-		fTs.save(data);
+		data = fTs.save(data);
+		logger.info(AbstractLogMessage.savedEntity(data));
+		reloadData();
 	}
 
-	public void cancel() {
+	public void cancel()
+	{
 		data = null;
 		transaction = null;
 	}
 
-	public void reset() {
+	public void reset()
+	{
 		data = null;
 		transaction = null;
 	}

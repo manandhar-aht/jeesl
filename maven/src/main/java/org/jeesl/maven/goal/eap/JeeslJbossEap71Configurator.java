@@ -31,7 +31,7 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
 	@Parameter(defaultValue = "INFO")
     private String log;
 	
-	private enum DbType {mysql}
+	private enum DbType {mysql,postgres}
 	private final Set<DbType> setFiles;
 	
 	public JeeslJbossEap71Configurator()
@@ -99,6 +99,14 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
         						setFiles.add(dbType);
         					}
         					break;
+        		case postgres: if(!setFiles.contains(dbType))
+							{
+								jbossModule.postgres();
+								jbossModule.hibernate();
+								getLog().info("DB: PostGIS files copied");
+								setFiles.add(dbType);
+							}
+				break;
         	}
     	}
     }
@@ -114,11 +122,16 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
         	{
         		case mysql: if(!jbossConfig.driverExists("mysql"))
         					{
-        						jbossConfig.createMysqlDriver();;
-        						getLog().info("MySQL added");
+        						jbossConfig.createMysqlDriver();
         						log.add("mysql");
         					}
         					break;
+        		case postgres: if(!jbossConfig.driverExists("postgres"))
+							{
+								jbossConfig.createPostgresDriver();
+								log.add("postgres");
+							}
+							break;
         	}
     	}
     	getLog().info("DB Drivers: "+StringUtils.join(log, ", "));
@@ -130,12 +143,13 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
     	{
     		String type = config.getString("db."+key+".type");
         	DbType dbType = DbType.valueOf(type);
+        	String ds=null;
         	switch(dbType)
         	{
-        		case mysql: String ds = jbossConfig.createMysqlDatasource(config,key);
-        								if(ds!=null)
-        								{getLog().info("DS: "+ds);}
+        		case mysql: ds = jbossConfig.createMysqlDatasource(config,key); break;						
+        		case postgres: ds = jbossConfig.createPostgresDatasource(config,key);break;
         	}
+        	if(ds!=null) {getLog().info("DS: "+ds);}
     	}
     	
     }

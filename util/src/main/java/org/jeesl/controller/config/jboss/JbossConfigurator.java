@@ -132,7 +132,7 @@ public class JbossConfigurator
 		return null;
 	}
 	
-	public void createPostgresDatasource(Configuration config, String context) throws IOException
+	public String createPostgresDatasource(Configuration config, String context) throws IOException
 	{
 		String cfgDbDs = "db."+context+".ds";
 		String cfgDbHost = "db."+context+".host";
@@ -155,7 +155,11 @@ public class JbossConfigurator
 		if(!this.dsExists(cfgDbDs))
 		{
 			createPostgresDatasource(pDbDs,pDbHost,pDbName,null,pDbUser,pDbPwd);
+			StringBuilder sb = new StringBuilder();
+			sb.append(pDbDs);
+			return sb.toString();
 		}
+		return null;
 	}
 	
 	public void createMysqlDatasource(String name, String host, String db, String jdbcParamter, String username, String password) throws IOException

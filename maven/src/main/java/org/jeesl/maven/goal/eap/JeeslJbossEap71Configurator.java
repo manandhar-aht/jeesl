@@ -45,30 +45,13 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
     	org.apache.log4j.Logger.getRootLogger().setLevel(Level.toLevel(log));
 
     	Configuration config = config();
-    	
-    	String jbossDir = config.getString("eap.dir","/Volumes/ramdisk/jboss");
-		File f = new File(jbossDir);
-		getLog().info("JBoss EAP 7.1 directoy: "+f.getAbsolutePath());
-    	
-		ModelControllerClient client;
-    	JbossModuleConfigurator jbossModule = new JbossModuleConfigurator(JbossModuleConfigurator.Product.eap,"7.1",jbossDir);
-    	try {client = ModelControllerClient.Factory.create(InetAddress.getByName("localhost"), 9990);}
-    	catch (UnknownHostException e) {throw new MojoExecutionException(e.getMessage());}
-    	
-    	JbossConfigurator jbossConfig = new JbossConfigurator(client);
-	    	
-	    String key = config.getString("eap.configurations");
-	    getLog().warn("Keys: "+key);
-	    String[] keys = key.split("-");
+       	
+//		configureEap(config);
+		dbRestore(config);
 	    
-	    try
-	    {
-	    	dbFiles(keys,config,jbossModule);
-	    	dbDrivers(keys,config,jbossConfig);
-	    	dbDs(keys,config,jbossConfig);
-	    }
-	    catch (IOException e) {throw new MojoExecutionException(e.getMessage());}
     }
+    
+    
     
     private Configuration config()
     {
@@ -82,6 +65,41 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
 		
 		Configuration config = ConfigLoader.init();					
 		return config;
+    }
+    
+    private void configureEap(Configuration config) throws MojoExecutionException
+    {
+    	String jbossDir = config.getString("eap.dir","/Volumes/ramdisk/jboss");
+		File f = new File(jbossDir);
+		getLog().info("JBoss EAP 7.1 directoy: "+f.getAbsolutePath());
+    	
+    	ModelControllerClient client;
+    	JbossModuleConfigurator jbossModule = new JbossModuleConfigurator(JbossModuleConfigurator.Product.eap,"7.1",jbossDir);
+    	try {client = ModelControllerClient.Factory.create(InetAddress.getByName("localhost"), 9990);}
+    	catch (UnknownHostException e) {throw new MojoExecutionException(e.getMessage());}
+    	
+    	JbossConfigurator jbossConfig = new JbossConfigurator(client);
+    	
+    	String key = config.getString("eap.configurations");
+	    getLog().warn("Keys: "+key);
+	    String[] keys = key.split("-");
+	    
+	    try
+	    {
+	    	dbFiles(keys,config,jbossModule);
+	    	dbDrivers(keys,config,jbossConfig);
+	    	dbDs(keys,config,jbossConfig);
+	    }
+	    catch (IOException e) {throw new MojoExecutionException(e.getMessage());}
+    }
+    
+    private void dbRestore(Configuration config) throws MojoExecutionException
+    {
+    	String key = config.getString("db.restores");
+	    getLog().info("Starting DB Restore "+key);
+	    String[] keys = key.split("-");
+	    
+	
     }
     
     private void dbFiles(String[] keys, Configuration config, JbossModuleConfigurator jbossModule) throws IOException

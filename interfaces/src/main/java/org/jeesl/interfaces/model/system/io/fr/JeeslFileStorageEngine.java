@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.io.revision;
+package org.jeesl.interfaces.model.system.io.fr;
 
 import java.io.Serializable;
 
@@ -11,12 +11,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
-import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 
-public interface JeeslRevisionAttributeType <S extends UtilsStatus<S,L,D>,
-										L extends UtilsLang, D extends UtilsDescription,
-										G extends JeeslGraphic<L,D,G,?,?,?>>
-		extends Serializable,EjbPersistable,JeeslOptionRestDownload,EjbWithCodeGraphic<G>,UtilsWithSymbol,UtilsStatusFixedCode
-{
-	public enum Code{text}
+public interface JeeslFileStorageEngine <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
+					extends Serializable,EjbPersistable,JeeslOptionRestDownload,EjbWithCodeGraphic<G>,UtilsStatusFixedCode		
+{	
+	public enum Code{fs,oak,gridFS,amazonS3}
 }

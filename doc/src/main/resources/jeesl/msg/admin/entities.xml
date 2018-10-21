@@ -27,7 +27,21 @@
 			<s:lang key="en" translation="Revision Relation"/>
 			<s:lang key="fr" translation="Revision Relation"/>
 		</s:langs>
-	</s:translation>	
+	</s:translation>
+	<s:translation key="IoGraphicType">
+		<s:langs>
+			<s:lang key="de" translation="Graphik Typ"/>
+			<s:lang key="en" translation="Graphic Type"/>
+			<s:lang key="fr" translation="Graphic Type"/>
+		</s:langs>
+	</s:translation>
+	<s:translation key="IoGraphicStyle">
+		<s:langs>
+			<s:lang key="de" translation="Graphik Stil"/>
+			<s:lang key="en" translation="Graphic Style"/>
+			<s:lang key="fr" translation="Graphic Style"/>
+		</s:langs>
+	</s:translation>
 	<s:translation key="IoReportRowType">
 		<s:langs>
 			<s:lang key="de" translation="Zeilentyp"/>

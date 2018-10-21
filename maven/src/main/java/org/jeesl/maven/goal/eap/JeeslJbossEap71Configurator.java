@@ -20,8 +20,11 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.jboss.as.controller.client.ModelControllerClient;
 import org.jeesl.controller.config.jboss.JbossConfigurator;
 import org.jeesl.controller.config.jboss.JbossModuleConfigurator;
+import org.jeesl.controller.db.shell.mysql.MySqlShellCommands;
+import org.jeesl.controller.db.shell.postgres.PostgreSqlShellCommands;
 
 import net.sf.exlp.exception.ExlpConfigurationException;
+import net.sf.exlp.exception.ExlpUnsupportedOsException;
 import net.sf.exlp.util.config.ConfigLoader;
 import net.sf.exlp.util.io.ExlpCentralConfigPointer;
 
@@ -47,11 +50,10 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
     	Configuration config = config();
        	
 //		configureEap(config);
-		dbRestore(config);
-	    
+		try {
+			dbRestore(config);
+		} catch (ExlpUnsupportedOsException e) {throw new MojoExecutionException(e.getMessage());}
     }
-    
-    
     
     private Configuration config()
     {
@@ -93,12 +95,35 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
 	    catch (IOException e) {throw new MojoExecutionException(e.getMessage());}
     }
     
-    private void dbRestore(Configuration config) throws MojoExecutionException
+    private void dbRestore(Configuration config) throws ExlpUnsupportedOsException
     {
-    	String key = config.getString("db.restores");
-	    getLog().info("Starting DB Restore "+key);
-	    String[] keys = key.split("-");
-	    
+	    String[] keys = config.getString("db.restores").split("-");
+	    for(String key : keys)
+    	{
+	    	getLog().info("Starting DB Restore for "+key);
+	    	String pDbName = config.getString("db."+key+".db");
+	    	String pDbUser = config.getString("db."+key+".user");
+	    	String pDbPwd = config.getString("db."+key+".pwd");
+	    	String pDbDump = config.getString("db."+key+".dump");
+        	DbType dbType = DbType.valueOf(config.getString("db."+key+".type"));
+        	switch(dbType)
+        	{
+        		case mysql: System.out.println(MySqlShellCommands.dropDatabase("root",pDbName));
+        					System.out.println(MySqlShellCommands.createDatabase("root",pDbName));
+        					System.out.println(MySqlShellCommands.grantDatabase("root",pDbName,pDbUser,pDbPwd));
+        					System.out.println(MySqlShellCommands.restoreDatabase("root",pDbName,pDbDump));
+        					break;
+        		case postgres:	System.out.println(PostgreSqlShellCommands.createUser("postgres",pDbUser,pDbPwd));
+        						System.out.println(PostgreSqlShellCommands.terminate("postgres",pDbName));
+        						System.out.println(PostgreSqlShellCommands.terminate("postgres","template1"));
+        						System.out.println(PostgreSqlShellCommands.dropDatabase("postgres",pDbName));
+        						System.out.println(PostgreSqlShellCommands.createDatabase("postgres",pDbName,pDbUser));
+        						System.out.println(PostgreSqlShellCommands.postGis("postgres",pDbName));
+        						System.out.println(PostgreSqlShellCommands.restoreDatabase("postgres", pDbName, pDbDump));
+        						
+        					break;
+        	}
+    	}
 	
     }
     

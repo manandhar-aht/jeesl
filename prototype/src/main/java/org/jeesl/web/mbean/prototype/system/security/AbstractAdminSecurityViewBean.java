@@ -117,6 +117,15 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		if(rAction) {action=null;}
 	}
 	
+	//Add
+	public void addCategory() throws UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassCategory()));
+		category = efCategory.create(null,JeeslSecurityCategory.Type.view.toString());
+		category.setName(efLang.createEmpty(localeCodes));
+		category.setDescription(efDescription.createEmpty(localeCodes));
+	}
+	
 	//VIEW
 	public void addView() throws UtilsConstraintViolationException
 	{

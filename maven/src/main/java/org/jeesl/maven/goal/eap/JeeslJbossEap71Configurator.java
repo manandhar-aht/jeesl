@@ -48,11 +48,10 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
     	org.apache.log4j.Logger.getRootLogger().setLevel(Level.toLevel(log));
 
     	Configuration config = config();
-       	
-//		configureEap(config);
 		try {
 			dbRestore(config);
 		} catch (ExlpUnsupportedOsException e) {throw new MojoExecutionException(e.getMessage());}
+		configureEap(config);
     }
     
     private Configuration config()
@@ -105,13 +104,15 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
 	    	String pDbUser = config.getString("db."+key+".user");
 	    	String pDbPwd = config.getString("db."+key+".pwd");
 	    	String pDbDump = config.getString("db."+key+".dump");
+	    	String pDbRootPwd = config.getString("db."+key+".rootpwd");
         	DbType dbType = DbType.valueOf(config.getString("db."+key+".type"));
         	switch(dbType)
         	{
-        		case mysql: System.out.println(MySqlShellCommands.dropDatabase("root",pDbName));
-        					System.out.println(MySqlShellCommands.createDatabase("root",pDbName));
-        					System.out.println(MySqlShellCommands.grantDatabase("root",pDbName,pDbUser,pDbPwd));
-        					System.out.println(MySqlShellCommands.restoreDatabase("root",pDbName,pDbDump));
+        		case mysql: System.out.println(MySqlShellCommands.dropDatabase("root",pDbRootPwd,pDbName));
+        					System.out.println(MySqlShellCommands.createDatabase("root",pDbRootPwd,pDbName));
+        					System.out.println(MySqlShellCommands.grantDatabase("root",pDbRootPwd,pDbName,pDbUser,pDbPwd));
+        					System.out.println(MySqlShellCommands.restoreDatabase("root",pDbRootPwd,pDbName,pDbDump));
+        					
         					break;
         		case postgres:	System.out.println(PostgreSqlShellCommands.createUser("postgres",pDbUser,pDbPwd));
         						System.out.println(PostgreSqlShellCommands.terminate("postgres",pDbName));
@@ -178,6 +179,7 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
         	}
     	}
     	getLog().info("DB Drivers: "+StringUtils.join(log, ", "));
+    
     }
     
     private void dbDs(String[] keys, Configuration config, JbossConfigurator jbossConfig) throws IOException

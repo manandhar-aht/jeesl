@@ -1,6 +1,7 @@
 package org.jeesl.factory.builder.system;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
+import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +26,6 @@ public class StatusFactoryBuilder<L extends UtilsLang, D extends UtilsDescriptio
 		this.cStatus=cStatus;
 	}
 	
-	public EjbLangFactory<L> ejbLang()
-	{
-		return new EjbLangFactory<L>(cL);
-	}
+	public EjbLangFactory<L> ejbLang(){return new EjbLangFactory<L>(cL);}
+	public EjbDescriptionFactory<D> ejbDescription(){return new EjbDescriptionFactory<D>(cD);}
 }

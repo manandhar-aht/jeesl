@@ -46,7 +46,7 @@
 								<h:outputText value="#{s.name[localeCode].lang}"/>
 							</p:column>
 							<p:column headerText="#{msg.jeeslTsUnit}">  
-								<h:outputText value="#{s.unit.symbol}" rendered="#{cc.attrs.bean.scope.type.code eq 'ts'}"/>
+								<h:outputText value="#{s.unit.symbol}" rendered="#{s.type.code eq 'ts'}"/>
 							</p:column>
 							<p:column headerText="#{msg.jeeslType}" styleClass="jeeslPfTcCenter">
 								<jtp:symbolizer value="#{s.type}" height="12"/>
@@ -63,6 +63,7 @@
 								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="jeeslDelete" rendered="#{cc.attrs.bean.scope.id gt 0}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
+							<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslCode}"/>
 								<p:inputText autocomplete="off" value="#{cc.attrs.bean.scope.code}"/>
@@ -78,8 +79,8 @@
 									<p:ajax event="change" listener="#{cc.attrs.bean.changeScopeType()}" update="@form"/>
 								</p:selectOneMenu>
 								
-								<p:outputLabel value="#{msg.jeeslTsUnit}" rendered="#{cc.attrs.bean.scope.type.code eq 'ts'}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.scope.unit}" effect="fade" autoWidth="false" rendered="#{cc.attrs.bean.scope.type.code eq 'ts'}">
+								<p:outputLabel value="#{msg.jeeslTsUnit}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.scope.unit}" effect="fade" autoWidth="false" >
 									<f:selectItems value="#{cc.attrs.bean.units}" var="u" itemLabel="#{u.name[localeCode].lang}" itemValue="#{u}"/>
 								</p:selectOneMenu>
 

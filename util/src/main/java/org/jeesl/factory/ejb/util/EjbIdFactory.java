@@ -152,4 +152,13 @@ public class EjbIdFactory
 		for(T l : list){result.add(l);}
 		return result;
 	}
+	
+	public static <T extends EjbWithId> void updateList(List<T> list, T ejb)
+	{
+		int index = list.indexOf(ejb);
+		if(index>=0)
+		{
+			list.set(index,ejb);
+		}
+	}
 }

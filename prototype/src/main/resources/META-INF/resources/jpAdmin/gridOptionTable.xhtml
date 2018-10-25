@@ -4,8 +4,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://www.jeesl.org/jsf"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdm="http://ahtutils.sourceforge.net/prototype/admin"
@@ -46,6 +47,8 @@
 					          		<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttNew}" rendered="#{cc.attrs.bean.uiAllowAdd}"/>
 					          		<aht:icon type="jeeslUpload" listener="#{cc.attrs.bean.upload()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttUpload}" rendered="#{cc.attrs.bean.supportsUpload}"/>
 					          		<aht:icon type="jeeslDownload" listener="#{cc.attrs.bean.download()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttUpload}" rendered="#{cc.attrs.bean.supportsDownload}"/>
+					          		<j:icon type="jeeslIoAttributeCriteriaWithDescription" listener="#{cc.attrs.bean.toggleDescription()}" update="@form" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{cc.attrs.bean.showDescription}" mayDisappear="true"/>
+									<j:icon type="jeeslIoAttributeCriteriaWithoutDescription" listener="#{cc.attrs.bean.toggleDescription()}" update="@form" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{not cc.attrs.bean.showDescription}" mayDisappear="true"/>
 					          	</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form"/>
@@ -63,7 +66,9 @@
 							</p:column>
 							<p:column>  
 					             <f:facet name="header">#{msg.aupTranslation}</f:facet>  
-					             <h:outputText value="#{s.name[localeCode].lang}" />  
+					             <h:outputText value="#{s.name[localeCode].lang}" />
+					             <h:outputText value="&lt;br/&gt;" escape="false"  rendered="#{cc.attrs.bean.showDescription}"/>
+								<h:outputText value="#{s.description[localeCode].lang}" rendered="#{cc.attrs.bean.showDescription}" styleClass="jeeslItalic"/>
 							</p:column>
 							<p:column rendered="#{cc.attrs.bean.supportsSymbol}">
 								<f:facet name="header">#{msg.aupOptionSymbol}</f:facet>  

@@ -81,6 +81,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	private final JeeslGraphicDbUpdater<G,GT> dbuGraphic;
 	
 	protected boolean allowSvg; public boolean isAllowSvg() {return allowSvg;}
+	private boolean showDescription; public boolean isShowDescription() {return showDescription;}
 	
 	private boolean supportsUpload; public boolean getSupportsUpload(){return supportsUpload;}
 	private boolean supportsDownload; public boolean getSupportsDownload(){return supportsDownload;}
@@ -126,6 +127,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		
 		index=1;
 		
+		showDescription = false;
 		hasDeveloperAction = false;
 		hasAdministratorAction = true;
 		hasTranslatorAction = true;
@@ -175,6 +177,11 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			logger.info("\t"+JeeslOptionRestDownload.class.getSimpleName()+"? "+supportsDownload);
 			logger.info("\t"+JeeslOptionUploadable.class.getSimpleName()+"? "+supportsUpload);
 		}
+	}
+	
+	public void toggleDescription()
+	{
+		showDescription = !showDescription;
 	}
 	
 	public void selectCategory() throws ClassNotFoundException{selectCategory(true);}

@@ -17,7 +17,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.jeesl.factory.builder.system.ReportFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
@@ -138,8 +138,8 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	{
 		Map<SHEET,Boolean> mapSheetVisibilityToggle = null; 
 		
-	    Workbook wb = new XSSFWorkbook();
-//	    SXSSFWorkbook wb = new SXSSFWorkbook(100);
+//	    Workbook wb = new XSSFWorkbook();
+	    SXSSFWorkbook wb = new SXSSFWorkbook(100);
 	    init(wb);
 	    
 	    JXPathContext context = JXPathContext.newContext(report);
@@ -159,7 +159,8 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			MutableInt rowNr = new MutableInt(0);
 			String sheetName = ioSheet.getName().get(localeCode).getLang();
 			Sheet sheet = XlsSheetFactory.getSheet(wb,sheetName);
-						
+			xfColumn.trackWidth(sheet, columns);
+			
 			for(ROW ioRow : rows)
 			{
 //				logger.info(ioRow.getPosition()+" "+ioRow.getName().get(localeCode).getLang());
@@ -180,7 +181,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			rowNr.add(3);
 		}
 		wb.write(os);
-//		wb.dispose();
+		wb.dispose();
 	}
 
 	@SuppressWarnings("unchecked")

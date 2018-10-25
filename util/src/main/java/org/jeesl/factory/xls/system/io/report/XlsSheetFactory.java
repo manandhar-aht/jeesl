@@ -12,8 +12,8 @@ public class XlsSheetFactory
 	public static Sheet getSheet(Workbook wb, String sheetName)
 	{
 		Sheet sheet;
-		if (wb.getSheet(sheetName) == null) {sheet = wb.createSheet(sheetName);}
-		else {sheet = wb.getSheet(sheetName);}	
+		if (wb.getSheet(sheetName) == null){sheet = wb.createSheet(sheetName);}
+		else {sheet = wb.getSheet(sheetName);}
 		return sheet;
 	}
 }

@@ -1,7 +1,10 @@
 package org.jeesl.factory.ejb.system.io.attribute;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.jeesl.factory.ejb.util.EjbPositionFactory;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
@@ -29,13 +32,18 @@ public class EjbAttributeItemFactory<CRITERIA extends JeeslAttributeCriteria<?,?
 			ejb = cItem.newInstance();
 			ejb.setCriteria(criteria);
 			ejb.setItemSet(set);
-			
-			if(list==null) {ejb.setPosition(1);}
-			else {ejb.setPosition(list.size()+1);}
+			EjbPositionFactory.next(ejb, list);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		
 		return ejb;
+	}
+	
+	public Set<CRITERIA> toSetCriteria(List<ITEM> list)
+	{
+		Set<CRITERIA> set = new HashSet<CRITERIA>();
+		for(ITEM i : list) {set.add(i.getCriteria());}
+		return set;
 	}
 }

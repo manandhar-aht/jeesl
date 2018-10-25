@@ -3,6 +3,7 @@ package org.jeesl.factory.xls.system.io.report;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -46,6 +47,27 @@ public class XlsColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 	public XlsColumnFactory()
 	{
 		
+	}
+	
+	public void trackWidth(Sheet sheet, List<COLUMN> columns)
+	{
+		if(sheet instanceof SXSSFSheet)
+		{
+			for(int i=0; i<columns.size(); i++)
+	        {
+				COLUMN ioColumn = columns.get(i);
+				if(ioColumn.getColumWidth()!=null)
+				{
+					switch(JeeslReportLayout.ColumnWidth.valueOf(ioColumn.getColumWidth().getCode()))
+					{
+						case none: break;
+						case auto: ((SXSSFSheet)sheet).trackColumnForAutoSizing(i);break;
+						case min: break;
+						default: break;
+					}
+				}
+	        }
+		}
 	}
 	
 	public void adjustWidth(Sheet sheet, List<COLUMN> columns)

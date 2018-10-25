@@ -41,9 +41,9 @@ public class EjbAttributeDataFactory<CRITERIA extends JeeslAttributeCriteria<?,?
 		return ejb;
 	}
 	
-	public DATA copy(CONTAINER container, DATA data)
+	public DATA copy(CONTAINER toContainer, DATA data)
 	{
-		DATA ejb = build(container, data.getCriteria());
+		DATA ejb = build(toContainer, data.getCriteria());
 		ejb.setValueString(data.getValueString());
 		ejb.setValueBoolean(data.getValueBoolean());
 		ejb.setValueInteger(data.getValueInteger());

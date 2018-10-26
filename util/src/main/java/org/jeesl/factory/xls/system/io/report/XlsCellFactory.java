@@ -73,6 +73,24 @@ public class XlsCellFactory <REPORT extends JeeslIoReport<?,?,?,WORKBOOK>,
 		if(showLabel){XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),ioColumn.getName().get(localeCode).getLang());}
 		else{XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),null);}
 	}
+	public void header(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, String query, JXPathContext context)
+	{
+		boolean showLabel = ioColumn.getShowLabel()!=null && ioColumn.getShowLabel();
+		if(showLabel)
+		{
+//			logger.info(query);
+			JeeslReportLayout.Data dt = xfStyle.getDataType(ioColumn);
+			CellStyle style = xfStyle.get(JeeslReportLayout.Style.header,ioColumn);
+			try {add(xlsRow, columnNr, context, query, style, dt);}
+			catch (JXPathInvalidSyntaxException e)
+			{
+				logger.error(JXPathInvalidSyntaxException.class.getSimpleName()+" at "+ioColumn.getGroup().getPosition()+" "+ioColumn.getPosition());;
+				throw e;
+			}
+		}
+		else{XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),null);}
+	}
+	
 	public void header(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, String label)
 	{
 		XlsCellFactory.build(xlsRow,columnNr,xfStyle.get(JeeslReportLayout.Style.header,ioColumn),label);
@@ -89,6 +107,20 @@ public class XlsCellFactory <REPORT extends JeeslIoReport<?,?,?,WORKBOOK>,
 			throw e;
 		}
 	}
+	public void cell(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, JXPathContext context, String queryCode)
+	{
+		String query = ioColumn.getQueryCell().replaceAll("#", queryCode);
+		
+		JeeslReportLayout.Data dt = xfStyle.getDataType(ioColumn);
+		CellStyle style = xfStyle.get(JeeslReportLayout.Style.cell,ioColumn);
+		try {add(xlsRow, columnNr, context, query, style, dt);}
+		catch (JXPathInvalidSyntaxException e)
+		{
+			logger.error(JXPathInvalidSyntaxException.class.getSimpleName()+" at "+ioColumn.getGroup().getPosition()+" "+ioColumn.getPosition());;
+			throw e;
+		}
+	}
+	
 	public void cell(COLUMN ioColumn, Row xlsRow, MutableInt columnNr, Object object)
 	{
 		CellStyle style = xfStyle.get(JeeslReportLayout.Style.cell,ioColumn);

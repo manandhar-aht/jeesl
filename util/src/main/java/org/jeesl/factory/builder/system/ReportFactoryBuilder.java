@@ -15,10 +15,12 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportStyleFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportTemplateFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportWorkbookFactory;
+import org.jeesl.factory.txt.system.io.report.TxtIoColumnFactory;
+import org.jeesl.factory.txt.system.io.report.TxtIoGroupFactory;
 import org.jeesl.factory.xls.system.io.report.XlsCellFactory;
-import org.jeesl.factory.xls.system.io.report.XlsStyleFactory;
 import org.jeesl.factory.xls.system.io.report.XlsColumnFactory;
 import org.jeesl.factory.xls.system.io.report.XlsRowFactory;
+import org.jeesl.factory.xls.system.io.report.XlsStyleFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -181,5 +183,15 @@ public class ReportFactoryBuilder<L extends UtilsLang,D extends UtilsDescription
 	public XlsStyleFactory<SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xlsStyle(Workbook xlsWorkbook, List<GROUP> ioGroups, List<COLUMN> ioColumns, List<ROW> ioRows)
 	{
 		return new XlsStyleFactory<SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>(this,xlsWorkbook,ioGroups,ioColumns,ioRows);
+	}
+	
+	public TxtIoColumnFactory<COLUMN> tfColumn(String localeCode)
+	{
+		return new TxtIoColumnFactory<COLUMN>(localeCode);
+	}
+	
+	public TxtIoGroupFactory<SHEET,GROUP> tfGroup(String localeCode)
+	{
+		return new TxtIoGroupFactory<SHEET,GROUP>(localeCode);
 	}
 }

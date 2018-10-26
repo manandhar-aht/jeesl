@@ -3,6 +3,7 @@ package org.jeesl.factory.xls.system.io.report;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +25,8 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportRowFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportSheetFactory;
 import org.jeesl.factory.pojo.system.io.report.JeeslTreeFigureFactory;
+import org.jeesl.factory.txt.system.io.report.TxtIoColumnFactory;
+import org.jeesl.factory.txt.system.io.report.TxtIoGroupFactory;
 import org.jeesl.interfaces.controller.report.JeeslReport;
 import org.jeesl.interfaces.controller.report.JeeslReportSelectorTransformation;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
@@ -82,8 +85,9 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	private final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport;
 	private final EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,?,?> efColumn;
 	private final EjbIoReportRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efRow;
-	
 	private EjbIoReportSheetFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> efSheet;
+	private final TxtIoColumnFactory<COLUMN> tfColumn;
+	private final TxtIoGroupFactory<SHEET,GROUP> tfGroup;
 	
     // Excel related objects
     public Font             headerFont;
@@ -94,12 +98,11 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
     // How many results are there for the given query
     public Integer   counter;
 	
-	// Current line while exporting
-	
 	private String localeCode;
         
-    public Hashtable<String, CellStyle> cellStyles = new Hashtable<String, CellStyle>();
-    public Hashtable<String, Integer> errors = new Hashtable<String, Integer>();
+    public Hashtable<String,CellStyle> cellStyles = new Hashtable<String, CellStyle>();
+    public Hashtable<String,Integer> errors = new Hashtable<String, Integer>();
+    
 	
 	public XlsFactory(String localeCode,
 			final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> fbReport,
@@ -111,6 +114,8 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
         efColumn = fbReport.column();
         efSheet = fbReport.sheet();
         efRow = fbReport.row();
+        tfColumn = fbReport.tfColumn(localeCode);
+        tfGroup = fbReport.tfGroup(localeCode);
     }
 	
 	private void init(Workbook wb)
@@ -138,7 +143,6 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	{
 		Map<SHEET,Boolean> mapSheetVisibilityToggle = null; 
 		
-//	    Workbook wb = new XSSFWorkbook();
 	    SXSSFWorkbook wb = new SXSSFWorkbook(100);
 	    init(wb);
 	    
@@ -150,6 +154,8 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			List<GROUP> groups = EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet);
 			List<COLUMN> columns = efColumn.toListVisibleColumns(ioSheet);
 			List<ROW> rows = efRow.toListVisibleRows(ioSheet);
+			
+			Map<GROUP,List<String>> mapDynamicGroups = tfGroup.toContextKeys(ioSheet, context);
 			
 			XlsStyleFactory<SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfStyle = fbReport.xlsStyle(wb,groups,columns,rows);
 			XlsCellFactory<REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell = fbReport.xlsCell(localeCode,xfStyle);
@@ -168,7 +174,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 				{
 					case label: xfRow.label(sheet, rowNr, ioRow); break;
 					case labelValue: xfRow.labelValue(sheet, rowNr, ioRow, context); break;
-					case table: applyTable(jeeslReport,context,sheet,rowNr,ioSheet,ioRow,columns,xfRow,xfCell); break;
+					case table: applyTable(jeeslReport,context,sheet,rowNr,ioSheet,ioRow,columns,mapDynamicGroups,xfRow,xfCell); break;
 					case template: applyTemplate(sheet,rowNr,ioSheet,ioRow,xfCell); break;
 					default: break;
 				}
@@ -185,7 +191,10 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 	}
 
 	@SuppressWarnings("unchecked")
-	private void applyTable(JeeslReport<REPORT> jeeslReport, JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, List<COLUMN> columns, XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xlfRow, XlsCellFactory<REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell)
+	private void applyTable(JeeslReport<REPORT> jeeslReport, JXPathContext context, Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, List<COLUMN> columns,
+							Map<GROUP,List<String>> mapDynamicGroups,
+							XlsRowFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfRow,
+							XlsCellFactory<REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell)
 	{
 		rowNr.add(ioRow.getOffsetRows());
 		JeeslReportSetting.Implementation implementation = JeeslReportSetting.Implementation.valueOf(ioSheet.getImplementation().getCode());
@@ -216,9 +225,9 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 		
 		switch(implementation)
 		{
-			case model: xlfRow.header(sheet,rowNr,ioSheet);break;
-			case flat: xlfRow.header(sheet,rowNr,ioSheet);break;
-			case tree: xlfRow.headerTree(sheet,rowNr,ioSheet,treeHeader,transformation,transformationHeader);break;
+			case model: xfRow.header(sheet,rowNr,ioSheet,mapDynamicGroups,context);break;
+			case flat: xfRow.header(sheet,rowNr,ioSheet,mapDynamicGroups,context);break;
+			case tree: xfRow.headerTree(sheet,rowNr,ioSheet,treeHeader,transformation,transformationHeader);break;
 		}
 		
 		switch(implementation)
@@ -270,8 +279,24 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			MutableInt columnNr = new MutableInt(0);
 			for(COLUMN ioColumn : columns)
 			{
-//				logger.info(ioColumn.getPosition()+" "+columnNr.intValue());
-				xfCell.cell(ioColumn,xlsRow,columnNr,relativeContext);
+				logger.info(tfColumn.position(ioColumn)+" "+columnNr.intValue()+" "+ioColumn.getGroup().getQueryColumns());
+				
+				if(ioColumn.getGroup().getQueryColumns().trim().isEmpty())
+				{
+					xfCell.cell(ioColumn,xlsRow,columnNr,relativeContext);
+				}
+				else
+				{
+					logger.info("Doing Dynamic Queries");
+					
+					@SuppressWarnings({"unchecked"})
+					Iterator<Object> dynamicIterator = context.iterate(ioColumn.getGroup().getQueryColumns().trim());
+					while (dynamicIterator.hasNext())
+			        {
+			        	String s = (String)dynamicIterator.next();
+			        	xfCell.cell(ioColumn,xlsRow,columnNr,relativeContext,s);
+			        }					
+				}
 			}
 			rowNr.add(1);
         }

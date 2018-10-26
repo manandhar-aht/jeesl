@@ -1,5 +1,6 @@
 package org.jeesl.factory.xls.system.io.report;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.jxpath.JXPathContext;
@@ -51,7 +52,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(XlsRowFactory.class);
 		
 	private final String localeCode;
-	private final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,?,ENTITY,ATTRIBUTE,TL,TLS,?,?> fbReport;
+//	private final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,?,ENTITY,ATTRIBUTE,TL,TLS,?,?> fbReport;
 	
 	private final EjbIoReportColumnGroupFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,?,?> efColumnGroup;
 	private final EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,?,?> efColumn;
@@ -62,7 +63,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 			XlsCellFactory<REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell)
 	{
 		this.localeCode = localeCode;
-		this.fbReport=fbReport;
+//		this.fbReport=fbReport;
 		efColumnGroup = fbReport.group();
 		efColumn = fbReport.column();
 		this.xfCell=xfCell;
@@ -121,7 +122,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		rowNr.add(1);
     }
 	
-	public void header(Sheet sheet, MutableInt rowNr, SHEET ioSheet)
+	public void header(Sheet sheet, MutableInt rowNr, SHEET ioSheet, Map<GROUP,List<String>> mapDynamicGroups, JXPathContext context)
     {
 		MutableInt columnNr = new MutableInt(0);
 		Map<GROUP,Integer> mapSize = efColumnGroup.toMapVisibleGroupSize(ioSheet);
@@ -130,10 +131,12 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		for(GROUP g : EjbIoReportColumnGroupFactory.toListVisibleGroups(ioSheet))
 		{
 			xfCell.header(g, groupingRow, columnNr);
-            if(mapSize.get(g)>1)
+			int sizeOfColumns = mapSize.get(g);
+			if(mapDynamicGroups.containsKey(g)) {sizeOfColumns = sizeOfColumns*mapDynamicGroups.get(g).size();}
+            if(sizeOfColumns>1)
             {
-            	sheet.addMergedRegion(new CellRangeAddress(rowNr.intValue(), rowNr.intValue(), columnNr.intValue()-1, columnNr.intValue()+mapSize.get(g)-2));
-            	columnNr.add(mapSize.get(g)-1);
+            	sheet.addMergedRegion(new CellRangeAddress(rowNr.intValue(), rowNr.intValue(), columnNr.intValue()-1, columnNr.intValue()+sizeOfColumns-2));
+            	columnNr.add(sizeOfColumns-1);
             }
 		}
 		rowNr.add(1);
@@ -142,7 +145,19 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 		columnNr.setValue(0);
 		for(COLUMN c : efColumn.toListVisibleColumns(ioSheet))
 		{
-			xfCell.header(c,headerRow,columnNr);
+			if(mapDynamicGroups.containsKey(c.getGroup()))
+			{
+				for(String key : mapDynamicGroups.get(c.getGroup()))
+				{
+					if(c.getQueryHeader().trim().isEmpty()) {xfCell.header(c,headerRow,columnNr);}
+					else
+					{
+						String query = c.getQueryHeader().trim().replaceAll("#", key);
+						xfCell.header(c,headerRow,columnNr,query,context);
+					}
+				}
+			}
+			else {xfCell.header(c,headerRow,columnNr);}
 		}
 		rowNr.add(1);
     }

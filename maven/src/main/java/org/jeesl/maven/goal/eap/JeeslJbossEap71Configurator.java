@@ -104,7 +104,7 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
 	    	String pDbUser = config.getString("db."+key+".user");
 	    	String pDbPwd = config.getString("db."+key+".pwd");
 	    	String pDbDump = config.getString("db."+key+".dump");
-	    	String pDbRootPwd = config.getString("db."+key+".rootpwd");
+	    	String pDbRootPwd = config.getString("db."+key+".rootpwd",null);
         	DbType dbType = DbType.valueOf(config.getString("db."+key+".type"));
         	switch(dbType)
         	{

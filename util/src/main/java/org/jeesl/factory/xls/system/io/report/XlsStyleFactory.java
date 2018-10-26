@@ -32,14 +32,12 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class XlsStyleFactory<
-								IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,?,?>,
-								WORKBOOK extends JeeslReportWorkbook<?,SHEET>,
-								SHEET extends JeeslReportSheet<?,?,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
+								SHEET extends JeeslReportSheet<?,?,?,?,GROUP,ROW>,
 								GROUP extends JeeslReportColumnGroup<?,?,SHEET,COLUMN,STYLE>,
 								COLUMN extends JeeslReportColumn<?,?,GROUP,STYLE,CDT,CW,TLS>,
-								ROW extends JeeslReportRow<?,?,?,?,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+								ROW extends JeeslReportRow<?,?,?,?,?,?,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 								TEMPLATE extends JeeslReportTemplate<?,?,CELL>,
-								CELL extends JeeslReportCell<?,?,?,?,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+								CELL extends JeeslReportCell<?,?,?,?,?,?,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
 								STYLE extends JeeslReportStyle<?,?>,
 								CDT extends UtilsStatus<CDT,?,?>,CW extends UtilsStatus<CW,?,?>,
 								RT extends UtilsStatus<RT,?,?>,
@@ -63,9 +61,9 @@ public class XlsStyleFactory<
 	private CellStyle styleLabelCenter; public CellStyle getStyleLabelCenter() {return styleLabelCenter;}
 	private CellStyle styleLabelLeft; public CellStyle getStyleLabelLeft() {return styleLabelLeft;}
 	private TxtIoColumnFactory<COLUMN> tfColumn;
-	private final EjbIoReportColumnFactory<?,?,?,?,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,?,?> efColumn;
+	private final EjbIoReportColumnFactory<?,?,?,?,?,?,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,?,?> efColumn;
 	
-	public XlsStyleFactory(final ReportFactoryBuilder<?,?,?,?,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,?,ENTITY,ATTRIBUTE,TL,TLS,?,?> fbReport,
+	public XlsStyleFactory(final ReportFactoryBuilder<?,?,?,?,?,?,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,?,ENTITY,ATTRIBUTE,TL,TLS,?,?> fbReport,
 							Workbook xlsWorkbook, List<GROUP> ioGroups, List<COLUMN> ioColumns, List<ROW> ioRows)
 	{
 		efColumn = fbReport.column();

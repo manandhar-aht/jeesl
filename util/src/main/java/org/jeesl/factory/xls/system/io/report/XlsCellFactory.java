@@ -32,32 +32,30 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class XlsCellFactory <L extends UtilsLang,D extends UtilsDescription,
-							CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-							REPORT extends JeeslIoReport<L,D,CATEGORY,WORKBOOK>,
-							IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,L,D>,
+public class XlsCellFactory <REPORT extends JeeslIoReport<?,?,?,WORKBOOK>,
+							IMPLEMENTATION extends UtilsStatus<IMPLEMENTATION,?,?>,
 							WORKBOOK extends JeeslReportWorkbook<REPORT,SHEET>,
-							SHEET extends JeeslReportSheet<L,D,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
-							GROUP extends JeeslReportColumnGroup<L,D,SHEET,COLUMN,STYLE>,
-							COLUMN extends JeeslReportColumn<L,D,GROUP,STYLE,CDT,CW,TLS>,
-							ROW extends JeeslReportRow<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-							TEMPLATE extends JeeslReportTemplate<L,D,CELL>,
-							CELL extends JeeslReportCell<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
-							STYLE extends JeeslReportStyle<L,D>,
-							CDT extends UtilsStatus<CDT,L,D>,CW extends UtilsStatus<CW,L,D>,
-							RT extends UtilsStatus<RT,L,D>,
+							SHEET extends JeeslReportSheet<?,?,IMPLEMENTATION,WORKBOOK,GROUP,ROW>,
+							GROUP extends JeeslReportColumnGroup<?,?,SHEET,COLUMN,STYLE>,
+							COLUMN extends JeeslReportColumn<?,?,GROUP,STYLE,CDT,CW,TLS>,
+							ROW extends JeeslReportRow<?,?,?,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+							TEMPLATE extends JeeslReportTemplate<?,?,CELL>,
+							CELL extends JeeslReportCell<?,?,?,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>,
+							STYLE extends JeeslReportStyle<?,?>,
+							CDT extends UtilsStatus<CDT,?,?>,CW extends UtilsStatus<CW,?,?>,
+							RT extends UtilsStatus<RT,?,?>,
 							ENTITY extends EjbWithId,
 							ATTRIBUTE extends EjbWithId,
-							TL extends JeeslTrafficLight<L,D,TLS>,
-							TLS extends UtilsStatus<TLS,L,D>>
+							TL extends JeeslTrafficLight<?,?,TLS>,
+							TLS extends UtilsStatus<TLS,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XlsCellFactory.class);
 		
 	private String localeCode;
 	
-	private XlsStyleFactory<IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfStyle;
+	private XlsStyleFactory<SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfStyle;
 	
-	public XlsCellFactory(String localeCode, XlsStyleFactory<IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfStyle)
+	public XlsCellFactory(String localeCode, XlsStyleFactory<SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfStyle)
 	{
 		this.localeCode = localeCode;
 		this.xfStyle=xfStyle;

@@ -19,6 +19,7 @@ import net.sf.ahtutils.xml.status.Scopes;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.status.SubType;
 import net.sf.ahtutils.xml.status.Type;
+import net.sf.ahtutils.xml.status.Verification;
 
 public class XmlStatusQuery
 {
@@ -136,6 +137,14 @@ public class XmlStatusQuery
 	public static Reason reasonLabel()
 	{		
 		Reason xml = new Reason();
+		xml.setCode("");
+		xml.setLabel("");
+		return xml;
+	}
+	
+	public static Verification verificationLabel()
+	{		
+		Verification xml = new Verification();
 		xml.setCode("");
 		xml.setLabel("");
 		return xml;

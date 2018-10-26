@@ -534,6 +534,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Verification }
+     * 
+     */
+    public Verification createVerification() {
+        return new Verification();
+    }
+
+    /**
      * Create an instance of {@link Reason }
      * 
      */

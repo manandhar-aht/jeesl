@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.jeesl.model.xml.system.io.attribute.Attribute;
 import org.jeesl.model.xml.system.io.attribute.Attributes;
 
 
@@ -22,6 +23,7 @@ import org.jeesl.model.xml.system.io.attribute.Attributes;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://www.jeesl.org/io/attribute}attributes"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/io/attribute}attribute"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="localeCode" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -33,7 +35,8 @@ import org.jeesl.model.xml.system.io.attribute.Attributes;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "attributes"
+    "attributes",
+    "attribute"
 })
 @XmlRootElement(name = "queryAttribute")
 public class QueryAttribute
@@ -43,6 +46,8 @@ public class QueryAttribute
     private final static long serialVersionUID = 1L;
     @XmlElement(namespace = "http://www.jeesl.org/io/attribute", required = true)
     protected Attributes attributes;
+    @XmlElement(namespace = "http://www.jeesl.org/io/attribute", required = true)
+    protected Attribute attribute;
     @XmlAttribute(name = "localeCode")
     protected String localeCode;
 
@@ -72,6 +77,34 @@ public class QueryAttribute
 
     public boolean isSetAttributes() {
         return (this.attributes!= null);
+    }
+
+    /**
+     * Gets the value of the attribute property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Attribute }
+     *     
+     */
+    public Attribute getAttribute() {
+        return attribute;
+    }
+
+    /**
+     * Sets the value of the attribute property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Attribute }
+     *     
+     */
+    public void setAttribute(Attribute value) {
+        this.attribute = value;
+    }
+
+    public boolean isSetAttribute() {
+        return (this.attribute!= null);
     }
 
     /**

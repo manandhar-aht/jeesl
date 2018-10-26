@@ -4,6 +4,7 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
+import org.jeesl.model.xml.jeesl.QueryAttribute;
 import org.jeesl.model.xml.system.io.attribute.Attribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,16 +20,15 @@ public class XmlAttributeFactory <L extends UtilsLang, D extends UtilsDescriptio
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlAttributeFactory.class);
 	
+	private final String localeCode;
 	private final Attribute q;
 	
 	private final XmlOptionFactory<L,D,OPTION> xfOption;
 	
-	public XmlAttributeFactory(String localeCode)
-	{
-		this(localeCode,null);
-	}
+	public XmlAttributeFactory(QueryAttribute query) {this(query.getLocaleCode(),query.getAttribute());}
 	public XmlAttributeFactory(String localeCode, Attribute q)
 	{
+		this.localeCode=localeCode;
 		this.q=q;
 		xfOption = new XmlOptionFactory<L,D,OPTION>(localeCode);
 	}
@@ -38,8 +38,11 @@ public class XmlAttributeFactory <L extends UtilsLang, D extends UtilsDescriptio
 	public Attribute build(DATA data)
 	{
 		Attribute xml = build();
-		xml.setCode(data.getCriteria().getCode());
+		if(q.isSetCode()) {xml.setCode(data.getCriteria().getCode());}
+		if(q.isSetLabel() && localeCode!=null && data.getCriteria().getName().containsKey(localeCode)) {xml.setLabel(data.getCriteria().getName().get(localeCode).getLang());}
+		
 		if(data.getCriteria().getType().getCode().equals(JeeslAttributeCriteria.Types.selectOne.toString()) && data.getValueOption()!=null) {xml.setOption(xfOption.build(data.getValueOption()));}
+		if(data.getCriteria().getType().getCode().equals(JeeslAttributeCriteria.Types.bool.toString()) && data.getValueBoolean()!=null) {xml.setBool(data.getValueBoolean());}
 		
 		return xml;
 	}
@@ -48,7 +51,7 @@ public class XmlAttributeFactory <L extends UtilsLang, D extends UtilsDescriptio
 	{
 		Attribute xml = build();
 		xml.setCode(item.getCriteria().getCode());
-
+		if(q.isSetLabel() && localeCode!=null && item.getCriteria().getName().containsKey(localeCode)) {xml.setLabel(item.getCriteria().getName().get(localeCode).getLang());}
 		return xml;
 	}
 }

@@ -40,12 +40,11 @@ public class TxtIoGroupFactory<SHEET extends JeeslReportSheet<?,?,?,?,GROUP,?>,
 				while (dynamicIterator.hasNext())
 		        {
 		        	String s = (String)dynamicIterator.next();
-		        	logger.info(s);
+//		        	logger.info(s);
 		        	list.add(s);
 		        }	
 				map.put(g,list);
 			}
-			
 		}
 		return map;
 	}

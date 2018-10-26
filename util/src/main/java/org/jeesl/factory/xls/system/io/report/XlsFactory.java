@@ -3,7 +3,6 @@ package org.jeesl.factory.xls.system.io.report;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -279,7 +278,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			MutableInt columnNr = new MutableInt(0);
 			for(COLUMN ioColumn : columns)
 			{
-				logger.info(tfColumn.position(ioColumn)+" "+columnNr.intValue()+" "+ioColumn.getGroup().getQueryColumns());
+//				logger.info(tfColumn.position(ioColumn)+" "+columnNr.intValue()+" "+ioColumn.getGroup().getQueryColumns());
 				
 				if(ioColumn.getGroup().getQueryColumns().trim().isEmpty())
 				{
@@ -287,8 +286,6 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 				}
 				else
 				{
-					logger.info("Doing Dynamic Queries");
-					
 					@SuppressWarnings({"unchecked"})
 					Iterator<Object> dynamicIterator = context.iterate(ioColumn.getGroup().getQueryColumns().trim());
 					while (dynamicIterator.hasNext())

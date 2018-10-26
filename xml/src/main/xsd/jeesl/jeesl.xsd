@@ -37,6 +37,7 @@
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref="jatt:attributes" maxOccurs="1"/>
+				<xsd:element ref="jatt:attribute" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="localeCode" type="xsd:string"/>
 		</xsd:complexType>

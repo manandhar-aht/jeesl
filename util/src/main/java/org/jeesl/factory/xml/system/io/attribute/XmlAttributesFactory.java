@@ -37,8 +37,6 @@ public class XmlAttributesFactory <L extends UtilsLang, D extends UtilsDescripti
 	
 	public static Attributes build() {return new Attributes();}
 	
-	
-	
 	public <E extends Enum<E>> Attributes build(E code, SET set)
 	{
 		Attributes xml = build();

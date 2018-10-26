@@ -23,6 +23,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://www.jeesl.org/io/attribute}option"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="label" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="bool" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -44,6 +46,10 @@ public class Attribute
     protected Option option;
     @XmlAttribute(name = "code")
     protected String code;
+    @XmlAttribute(name = "label")
+    protected String label;
+    @XmlAttribute(name = "bool")
+    protected Boolean bool;
 
     /**
      * Gets the value of the option property.
@@ -99,6 +105,66 @@ public class Attribute
 
     public boolean isSetCode() {
         return (this.code!= null);
+    }
+
+    /**
+     * Gets the value of the label property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * Sets the value of the label property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLabel(String value) {
+        this.label = value;
+    }
+
+    public boolean isSetLabel() {
+        return (this.label!= null);
+    }
+
+    /**
+     * Gets the value of the bool property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isBool() {
+        return bool;
+    }
+
+    /**
+     * Sets the value of the bool property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setBool(boolean value) {
+        this.bool = value;
+    }
+
+    public boolean isSetBool() {
+        return (this.bool!= null);
+    }
+
+    public void unsetBool() {
+        this.bool = null;
     }
 
 }

@@ -9,7 +9,7 @@ import org.jeesl.model.xml.system.io.attribute.Attributes;
 
 public class XmlAttributeQuery
 {
-	public static enum Key {rAttributeSet}
+	public static enum Key {rAttributeSet,rAttributeData}
 	
 	private static Map<Key,QueryAttribute> mQueries;
 	
@@ -23,6 +23,7 @@ public class XmlAttributeQuery
 			switch(key)
 			{
 				case rAttributeSet: q.setAttributes(rAttributeSet());break;
+				case rAttributeData: q.setAttribute(rAttributeData());break;
 			}
 			mQueries.put(key,q);
 		}
@@ -37,8 +38,16 @@ public class XmlAttributeQuery
 		
 		Attribute xAttribute = new Attribute();
 		xAttribute.setCode("");
+		xAttribute.setLabel("");
 		xml.getAttribute().add(xAttribute);
 		
+		return xml;
+	}
+	
+	private static Attribute rAttributeData()
+	{
+		Attribute xml = new Attribute();
+		xml.setCode("");		
 		return xml;
 	}
 }

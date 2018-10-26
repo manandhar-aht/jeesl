@@ -27,10 +27,24 @@ public class XmlOptionFactory <L extends UtilsLang, D extends UtilsDescription,
 	public Option build(OPTION option)
 	{
 		Option xml = build();
-		
 		xml.setCode(option.getCode());
 		xml.setLabel(option.getName().get(localeCode).getLang());
-		
+		return xml;
+	}
+	
+	public static Option build(boolean value)
+	{
+		Option xml = build();
+		xml.setCode(Boolean.valueOf(value).toString());
+		xml.setLabel(Boolean.valueOf(value).toString());
+		return xml;
+	}
+	
+	public static Option build(String code, String label)
+	{
+		Option xml = build();
+		xml.setCode(code);
+		xml.setLabel(label);
 		return xml;
 	}
 }

@@ -98,9 +98,9 @@ public class IoAttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescr
 		return new XmlAttributesFactory<L,D,CATEGORY,CRITERIA,OPTION,SET,ITEM,DATA>(query);
 	}
 	
-	public XmlAttributeFactory<L,D,CRITERIA,OPTION,ITEM,DATA> xmlAttribute(String localeCode)
+	public XmlAttributeFactory<L,D,CRITERIA,OPTION,ITEM,DATA> xmlAttribute(QueryAttribute query)
 	{
-		return new XmlAttributeFactory<L,D,CRITERIA,OPTION,ITEM,DATA>(localeCode);
+		return new XmlAttributeFactory<L,D,CRITERIA,OPTION,ITEM,DATA>(query);
 	}
 	
 	public AttributeHandler<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> handler(JeeslFacesMessageBean bMessage, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, AttributeBean<CONTAINER> bean)

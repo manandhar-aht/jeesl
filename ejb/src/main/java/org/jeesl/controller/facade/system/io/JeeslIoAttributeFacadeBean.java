@@ -55,6 +55,14 @@ public class JeeslIoAttributeFacadeBean<L extends UtilsLang, D extends UtilsDesc
 	}
 	
 	@Override
+	public SET load(SET set)
+	{
+		set = em.find(fbAttribute.getClassSet(), set.getId());
+		set.getItems().size();
+		return set;
+	}
+	
+	@Override
 	public List<CRITERIA> fAttributeCriteria(List<CATEGORY> categories, long refId)
 	{
 		if(categories==null || categories.isEmpty()){return new ArrayList<CRITERIA>();}

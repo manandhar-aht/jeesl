@@ -12,6 +12,7 @@ import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeItemFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeOptionFactory;
 import org.jeesl.factory.ejb.system.io.attribute.EjbAttributeSetFactory;
 import org.jeesl.factory.xml.system.io.attribute.XmlAttributeFactory;
+import org.jeesl.factory.xml.system.io.attribute.XmlAttributesFactory;
 import org.jeesl.interfaces.bean.AttributeBean;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeContainer;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeCriteria;
@@ -19,6 +20,7 @@ import org.jeesl.interfaces.model.module.attribute.JeeslAttributeData;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeItem;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeOption;
 import org.jeesl.interfaces.model.module.attribute.JeeslAttributeSet;
+import org.jeesl.model.xml.jeesl.QueryAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,9 +93,14 @@ public class IoAttributeFactoryBuilder<L extends UtilsLang, D extends UtilsDescr
 		return new EjbAttributeDataFactory<CRITERIA,OPTION,CONTAINER,DATA>(cData);
 	}
 	
-	public XmlAttributeFactory<L,D,CRITERIA,OPTION,DATA> xmlAttribute(String localeCode)
+	public XmlAttributesFactory<L,D,CATEGORY,CRITERIA,OPTION,SET,ITEM,DATA> xmlAttributes(QueryAttribute query)
 	{
-		return new XmlAttributeFactory<L,D,CRITERIA,OPTION,DATA>(localeCode);
+		return new XmlAttributesFactory<L,D,CATEGORY,CRITERIA,OPTION,SET,ITEM,DATA>(query);
+	}
+	
+	public XmlAttributeFactory<L,D,CRITERIA,OPTION,ITEM,DATA> xmlAttribute(String localeCode)
+	{
+		return new XmlAttributeFactory<L,D,CRITERIA,OPTION,ITEM,DATA>(localeCode);
 	}
 	
 	public AttributeHandler<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> handler(JeeslFacesMessageBean bMessage, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, AttributeBean<CONTAINER> bean)

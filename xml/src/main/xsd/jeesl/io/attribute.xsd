@@ -8,7 +8,9 @@
 	    <xsd:complexType>
             <xsd:sequence>
 	            <xsd:element ref="jatt:attribute" maxOccurs="unbounded"/>
+	            <xsd:element ref="jatt:attributes" maxOccurs="unbounded"/>
 			</xsd:sequence>
+			<xsd:attribute name="code" type="xsd:string"/>
 		</xsd:complexType>    
     </xsd:element>
     <xsd:element name="attribute">

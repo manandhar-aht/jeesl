@@ -1,6 +1,7 @@
 package org.jeesl.interfaces.model.module.attribute;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 
@@ -28,4 +29,7 @@ public interface JeeslAttributeSet <L extends UtilsLang, D extends UtilsDescript
 	
 	Long getRefId();
 	void setRefId(Long refId);
+	
+	List<ITEM> getItems();
+	void setItems(List<ITEM> items);
 }

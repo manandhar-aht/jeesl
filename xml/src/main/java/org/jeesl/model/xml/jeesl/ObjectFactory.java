@@ -46,6 +46,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link QueryAttribute }
+     * 
+     */
+    public QueryAttribute createQueryAttribute() {
+        return new QueryAttribute();
+    }
+
+    /**
      * Create an instance of {@link QueryFinance }
      * 
      */

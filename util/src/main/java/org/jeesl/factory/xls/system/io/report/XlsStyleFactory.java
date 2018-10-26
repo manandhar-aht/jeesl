@@ -64,7 +64,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	private CellStyle styleLabelCenter; public CellStyle getStyleLabelCenter() {return styleLabelCenter;}
 	private CellStyle styleLabelLeft; public CellStyle getStyleLabelLeft() {return styleLabelLeft;}
-	private TxtIoColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> tfColumn;
+	private TxtIoColumnFactory<COLUMN> tfColumn;
 	private final EjbIoReportColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS,?,?> efColumn;
 	
 	public XlsStyleFactory(final ReportFactoryBuilder<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,?,ENTITY,ATTRIBUTE,TL,TLS,?,?> fbReport, Workbook xlsWorkbook, List<GROUP> ioGroups, List<COLUMN> ioColumns, List<ROW> ioRows)
@@ -76,7 +76,7 @@ public class XlsStyleFactory<L extends UtilsLang,D extends UtilsDescription,
 		mapCellDataType = new HashMap<COLUMN,JeeslReportLayout.Data>();
 		mapRowDataType = new HashMap<ROW,JeeslReportLayout.Data>();
 		
-		tfColumn = new TxtIoColumnFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS>("en");
+		tfColumn = new TxtIoColumnFactory<COLUMN>("en");
 		
         Font fontItalicBold = xlsWorkbook.createFont();
         fontItalicBold.setItalic(true);

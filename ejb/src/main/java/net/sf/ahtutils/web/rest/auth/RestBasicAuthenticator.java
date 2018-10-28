@@ -14,6 +14,8 @@ public class RestBasicAuthenticator
 {
 	final static Logger logger = LoggerFactory.getLogger(RestBasicAuthenticator.class);
 
+	public static final String BASIC = "BASIC ";
+	
 	public static UtilsCredential decodeResteasy(HttpRequest request) throws UnauthorizedException
 	{
 		List<String> header = request.getHttpHeaders().getRequestHeader("Authorization");
@@ -34,5 +36,16 @@ public class RestBasicAuthenticator
 	    		else {throw new UnauthorizedException("We only support BASIC authentication");}
 	    	}
 	    	else{throw new UnauthorizedException("No Authorization Header available");}
+	}
+	
+	public static UtilsCredential decode(String authorizationHeader)
+	{
+		String base64 = authorizationHeader.substring("BASIC ".length());
+		logger.info("Base64: "+base64);
+		String token = new String(Base64.decodeBase64(base64));
+    	logger.info("Authorization: "+token);
+    	int index = token.indexOf(":");
+    	
+    	return new UtilsCredential(token.substring(0,index),token.substring(index+1));
 	}
 }

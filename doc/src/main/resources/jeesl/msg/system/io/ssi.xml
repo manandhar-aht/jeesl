@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslIoSsiMappings">
+    	<s:langs>
+    		<s:lang key="de" translation="Mappings"/>
+    		<s:lang key="en" translation="Mappings"/>
+    		<s:lang key="fr" translation="Mappings"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslIoSsiSystem">
+    	<s:langs>
+    		<s:lang key="de" translation="System"/>
+    		<s:lang key="en" translation="System"/>
+    		<s:lang key="fr" translation="System"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslIoSsiJsonClass">
+    	<s:langs>
+    		<s:lang key="de" translation="JSON Klasse"/>
+    		<s:lang key="en" translation="JSON Class"/>
+    		<s:lang key="fr" translation="JSON Class"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslIoSsiMappingClass">
+    	<s:langs>
+    		<s:lang key="de" translation="Mapping Klasse"/>
+    		<s:lang key="en" translation="Mapping Class"/>
+    		<s:lang key="fr" translation="Mapping Class"/>
+    	</s:langs>
+    </s:translation>
+</s:translations>

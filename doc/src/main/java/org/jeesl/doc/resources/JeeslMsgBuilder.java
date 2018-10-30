@@ -70,6 +70,7 @@ public class JeeslMsgBuilder
 	public static final String ioDb = "jeesl/msg/admin/system/io/db.xml";
 	public static final String ioDbStatistic = "jeesl/msg/system/io/db.xml";
 	public static final String ioCms = "jeesl/msg/module/cms.xml";
+	public static final String ioSsi = "jeesl/msg/system/io/ssi.xml";
 	
 	//System
 	public static final String systemReport = "jeesl/msg/system/report.xml";

@@ -68,8 +68,6 @@ public class AbstractAdminIoReportStyleBean <L extends UtilsLang,D extends Utils
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminIoReportStyleBean.class);
 
-	
-	
 	private List<STYLE> styles; public List<STYLE> getStyles() {return styles;}
 	
 	private STYLE style; public STYLE getStyle() {return style;} public void setStyle(STYLE style) {this.style = style;}

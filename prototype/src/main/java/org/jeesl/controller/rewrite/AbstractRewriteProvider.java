@@ -1,6 +1,8 @@
 package org.jeesl.controller.rewrite;
 
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSecurityBean;
@@ -85,9 +87,10 @@ public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends Ut
 		logger.info("Rules created for "+views.size()+" Views");
 		return config;
 	}
-	
-	public static String getUrlMapping(String context, String url)
+/*	
+	private static String getUrlMapping1(String context, String url)
 	{
+
 		int indexStart = url.indexOf(context);
 		int indexParameter = url.indexOf("?");
 		
@@ -96,5 +99,23 @@ public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends Ut
 		
 		String httpPattern = url.substring(indexStart+context.length(), indexEnd);
 		return httpPattern;
+	}
+*/	
+	public static String getUrlMapping(String context, String urlString)
+	{
+		try
+		{
+			URL url = new URL(urlString);
+//			System.out.println(url.getProtocol());
+//			System.out.println(url.getPath());
+			int indexStart = url.getPath().indexOf(context);
+			int indexEnd = url.getPath().length();
+			return url.getPath().substring(indexStart+context.length(), indexEnd);
+		}
+		catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return urlString;
 	}
 }

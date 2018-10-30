@@ -18,6 +18,7 @@
 		<composite:attribute name="handler" required="true"/>
 		<composite:attribute name="bean" required="true"/>
 		<composite:attribute name="update" required="false"/>
+		<composite:attribute name="withPanel" required="false" default="true"/>
 		<composite:attribute name="withSave" required="false" default="true"/>
 		<composite:attribute name="withLabel" required="false" default="true"/>
 		<composite:attribute name="withDescriptionToggle" required="false" default="false"/>
@@ -27,10 +28,10 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<ui:fragment rendered="#{cc.attrs.withSave}">
+		<ui:fragment rendered="#{cc.attrs.withPanel}">
 			<p:panel id="pQuestions" header="#{cc.attrs.handler.attributeSet.name[localeCode].lang}" styleClass="jeeslPanel">
 				<f:facet name="actions">
-					<j:icon type="jeeslSave" listener="#{cc.attrs.handler.save()}" update="@form #{cc.attrs.update}" tooltip="#{msg.jeeslSurveyTtSaveSection}" />
+					<j:icon type="jeeslSave" listener="#{cc.attrs.handler.save()}" update="@form #{cc.attrs.update}" tooltip="#{msg.jeeslSurveyTtSaveSection}" rendered="#{cc.attrs.withSave}"/>
 					<j:icon type="jeeslIoAttributeCriteriaWithDescription" listener="#{cc.attrs.handler.toggleDescription()}" update="@form" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{cc.attrs.withDescriptionToggle and cc.attrs.handler.showDescription}" mayDisappear="true"/>
 					<j:icon type="jeeslIoAttributeCriteriaWithoutDescription" listener="#{cc.attrs.handler.toggleDescription()}" update="@form" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{cc.attrs.withDescriptionToggle and (not cc.attrs.handler.showDescription)}" mayDisappear="true"/>
 				</f:facet>
@@ -38,15 +39,16 @@
 					<p:panelGrid columns="#{cc.attrs.withLabel ? 2 : 1}" columnClasses="#{cc.attrs.withLabel ? cc.attrs.columnClasses : 'jeeslGrid100'}">
 						<ui:fragment rendered="#{cc.attrs.withLabel}">
 							<p:outputLabel value="#{c.name[localeCode].lang}" />
-							<h:outputText value="&lt;br/&gt;" escape="false"  rendered="#{cc.attrs.handler.showDescription}"/>
+							<h:outputText value="&lt;br/&gt;" escape="false" rendered="#{cc.attrs.handler.showDescription}"/>
 							<h:outputText rendered="#{cc.attrs.handler.showDescription}" value="#{c.description[localeCode].lang}" styleClass="jeeslItalic"/>
 						</ui:fragment>
-						<jtp:inputAttribute attributeHandler="#{cc.attrs.handler}" criteria="#{c}"/>
+						<jtp:inputAttribute attributeHandler="#{cc.attrs.handler}" criteria="#{c}" rendered="#{cc.attrs.withSave}"/>
+						<jtp:outputAttribute attributeHandler="#{cc.attrs.handler}" criteria="#{c}" rendered="#{not cc.attrs.withSave}"/>
 					</p:panelGrid>
 				</ui:repeat>
 			</p:panel>
 		</ui:fragment>
-		<ui:fragment rendered="#{not cc.attrs.withSave}">
+		<ui:fragment rendered="#{not cc.attrs.withPanel}">
 			<ui:repeat id="repeatG" value="#{appAttributeBean.mapCriteria[cc.attrs.handler.attributeSet]}"  var="c">	
 				<p:panelGrid columns="#{cc.attrs.withLabel ? 2 : 1}" columnClasses="#{cc.attrs.withLabel ? cc.attrs.columnClasses : 'jeeslGrid100'}">
 					<p:outputLabel value="#{c.name[localeCode].lang}" rendered="#{cc.attrs.withLabel}"/>

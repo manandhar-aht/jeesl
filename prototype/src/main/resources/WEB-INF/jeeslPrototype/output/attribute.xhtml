@@ -19,6 +19,7 @@
 		
 		<jp:outputDate value="#{attributeHandler.data[criteria].valueRecord}" rendered="#{criteria.type.code eq 'date'}"/>
 		
+		<h:outputText value="#{attributeHandler.data[criteria].valueInteger}" rendered="#{criteria.type.code eq 'intNumber'}"/>
 		
 		<h:outputText value="#{attributeHandler.data[criteria].valueOption.name[loc].lang}" rendered="#{criteria.type.code eq 'selectOne'}"/>
 		

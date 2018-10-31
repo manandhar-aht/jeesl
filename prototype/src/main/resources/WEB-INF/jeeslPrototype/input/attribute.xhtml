@@ -16,7 +16,11 @@
 		<p:inputText value="#{attributeHandler.data[criteria].valueString}" rendered="#{criteria.type.code eq 'text'}"/>
 		<jtp:inputRemark value="#{attributeHandler.data[criteria].valueString}" rendered="#{criteria.type.code eq 'remark'}"/>
 		
+		<p:inputText value="#{attributeHandler.data[criteria].valueInteger}" rendered="#{criteria.type.code eq 'intNumber'}"/>
+		
 		<jp:inputCalendar value="#{attributeHandler.data[criteria].valueRecord}" rendered="#{criteria.type.code eq 'date'}"/>
+		
+		
 		
 		<p:selectOneMenu id="sOne" value="#{attributeHandler.data[criteria].valueOption}" effect="fade" rendered="#{criteria.type.code eq 'selectOne'}" autoWidth="false">
 			<c:if test="#{criteria.allowEmpty}"><f:selectItem itemLabel="--"/></c:if>

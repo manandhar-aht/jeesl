@@ -32,7 +32,7 @@ public class TxtIoGroupFactory<SHEET extends JeeslReportSheet<?,?,?,?,GROUP,?>,
 		Map<GROUP,List<String>> map = new HashMap<GROUP,List<String>>();
 		for(GROUP g : EjbIoReportColumnGroupFactory.toListVisibleGroups(sheet))
 		{
-			if(!g.getQueryColumns().trim().isEmpty())
+			if(g.getQueryColumns()!=null && !g.getQueryColumns().trim().isEmpty())
 			{
 				List<String> list = new ArrayList<String>();
 				

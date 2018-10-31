@@ -280,7 +280,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			{
 //				logger.info(tfColumn.position(ioColumn)+" "+columnNr.intValue()+" "+ioColumn.getGroup().getQueryColumns());
 				
-				if(ioColumn.getGroup().getQueryColumns().trim().isEmpty())
+				if(ioColumn.getGroup().getQueryColumns()==null || ioColumn.getGroup().getQueryColumns().trim().isEmpty())
 				{
 					xfCell.cell(ioColumn,xlsRow,columnNr,relativeContext);
 				}

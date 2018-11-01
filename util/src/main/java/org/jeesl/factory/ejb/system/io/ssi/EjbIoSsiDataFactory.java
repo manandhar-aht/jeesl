@@ -28,7 +28,7 @@ public class EjbIoSsiDataFactory <MAPPING extends JeeslIoSsiMapping<?,?>,
 			ejb.setMapping(mapping);
 			ejb.setCode(code);
 			ejb.setLink(link);
-			ejb.setJson(JsonUtil.toString(json));
+			if(json!=null) {ejb.setJson(JsonUtil.toString(json));}
 	       
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

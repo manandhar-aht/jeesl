@@ -1,6 +1,8 @@
 package org.jeesl.web.mbean.prototype.system.constraint;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
@@ -17,6 +19,7 @@ import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintResolution;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraintScope;
 import org.jeesl.interfaces.model.system.constraint.algorithm.JeeslConstraintAlgorithm;
+import org.jeesl.util.comparator.ejb.system.constraint.ContraintScopeComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +29,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D extends UtilsDescription,
@@ -58,11 +62,12 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 	
 	protected SbMultiHandler<CONCAT> sbhCategory; public SbMultiHandler<CONCAT> getSbhCategory() {return sbhCategory;}
 	private final UiTwiceClickHelper ui2; public UiTwiceClickHelper getUi2() {return ui2;}
-
+	private final Comparator<SCOPE> cpScope;
+	
 	public AbstractSystemConstraintDefinitionBean(ConstraintFactoryBuilder<L,D,ALGCAT,ALGO,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION> fbConstraint)
 	{
 		super(fbConstraint);
-		
+		cpScope = new ContraintScopeComparator<SCOPE>().factory(ContraintScopeComparator.Type.position);
 		ui2 = new UiTwiceClickHelper();
 		efScope = new EjbConstraintScopeFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(fbConstraint.getClassL(),fbConstraint.getClassD(),fbConstraint.getClassScope(),fbConstraint.getClassConstraintCategory());
 		efConstraint = new EjbConstraintFactory<L,D,SCOPE,CONCAT,CONSTRAINT,LEVEL,TYPE,RESOLUTION>(fbConstraint.getClassL(),fbConstraint.getClassD(),fbConstraint.getClassConstraint(),fbConstraint.getClassConstraintType());
@@ -162,4 +167,6 @@ public class AbstractSystemConstraintDefinitionBean <L extends UtilsLang, D exte
 		efConstraint.updateLD(fConstraint, constraint, localeCodes);
 		ui2.checkB(constraint);
 	}
+	
+	protected void reorderScopes() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fConstraint, fbConstraint.getClassScope(), scopes);Collections.sort(scopes, cpScope);}
 }

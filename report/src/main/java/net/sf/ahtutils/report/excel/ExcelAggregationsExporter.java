@@ -120,8 +120,6 @@ public class ExcelAggregationsExporter
             column++;
         }
 
-
-
         logger.debug("Wrote " +(column+1) +" headers.");
         logger.debug("Figures begin at column " +financeOffset +" and contain data for " +dataFieldCounter +" sections.");
 

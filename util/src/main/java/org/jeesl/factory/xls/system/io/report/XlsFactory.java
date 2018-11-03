@@ -221,7 +221,7 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 			}
 		}
 		catch (ExlpXpathNotFoundException e) {e.printStackTrace();}
-		
+
 		switch(implementation)
 		{
 			case model: xfRow.header(sheet,rowNr,ioSheet,mapDynamicGroups,context);break;

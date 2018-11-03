@@ -164,7 +164,7 @@ public class XlsRowFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	public void headerTree(Sheet sheet, MutableInt rowNr, SHEET ioSheet, Figures treeHeader, JeeslReportSetting.Transformation transformation, Figures transformationHeader)
     {
-		logger.info("Tranformation:"+transformation+" with:"+transformationHeader.getFigures().size());
+		logger.info("Tranformation:"+transformation);
 		
 		MutableInt columnNr = new MutableInt(0);
 		Map<GROUP,Integer> mapSize = efColumnGroup.toMapVisibleGroupSize(ioSheet);

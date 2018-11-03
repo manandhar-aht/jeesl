@@ -29,6 +29,18 @@
 				<f:attribute name="styleClass" value="aupNbsc aupRight"/>
 				<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
 			</h:outputText>
+			<h:outputText rendered="#{col.queryCell eq 'd5'}" value="#{flat.d5}">
+				<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+				<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+			</h:outputText>
+			<h:outputText rendered="#{col.queryCell eq 'd6'}" value="#{flat.d6}">
+				<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+				<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+			</h:outputText>
+			<h:outputText rendered="#{col.queryCell eq 'd7'}" value="#{flat.d7}">
+				<f:attribute name="styleClass" value="aupNbsc aupRight"/>
+				<f:convertNumber groupingUsed="true" maxFractionDigits="2" minFractionDigits="2"/>
+			</h:outputText>
 		</p:columns>
 		
 		<p:columns var="col" value="#{report.mapGroupColumns[g]}" rendered="#{g.queryColumns eq 'list1'}">

@@ -398,24 +398,24 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		logger.info("grantRole u:"+user.toString()+" r:"+role.toString()+" grant:"+grant);
 		user = em.find(clUser,user.getId());
 		role = em.find(clRole,role.getId());
-		if(grant){addRole(clUser,clRole,user, role);}
-		else{rmRole(clUser,clRole,user, role);}
+		if(grant){addRole(user, role);}
+		else{rmRole(user, role);}
 		em.merge(user);
 	}
 	
-	private void addRole(Class<USER> clUser, Class<R> clRole, USER user, R role)
+	private void addRole(USER user, R role)
 	{
 		logger.info("addRole u:"+user.toString()+" r:"+role.toString());
 		if(!user.getRoles().contains(role))
 		{
 			logger.info("Role does not exist for user, adding.");
-			role.getUsers().add(user);
+//			role.getUsers().add(user);
 			user.getRoles().add(role);
 		}
 		em.merge(user);
 	}
 	
-	private void rmRole(Class<USER> clUser, Class<R> clRole, USER user, R role)
+	private void rmRole(USER user, R role)
 	{
 		if(user.getRoles().contains(role)){user.getRoles().remove(role);}
 		if(role.getUsers().contains(user)){role.getUsers().remove(user);}

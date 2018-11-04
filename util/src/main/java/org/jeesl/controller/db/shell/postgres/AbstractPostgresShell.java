@@ -1,13 +1,13 @@
-package net.sf.ahtutils.db.shell.postgres;
+package org.jeesl.controller.db.shell.postgres;
 
 import java.util.NoSuchElementException;
 
 import org.apache.commons.configuration.Configuration;
 import org.jdom2.Document;
+import org.jeesl.controller.db.shell.AbstractDatabaseShell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.db.shell.AbstractDatabaseShell;
 import net.sf.ahtutils.interfaces.db.UtilsDbShell;
 import net.sf.exlp.exception.ExlpUnsupportedOsException;
 import net.sf.exlp.factory.xml.config.XmlParameterFactory;

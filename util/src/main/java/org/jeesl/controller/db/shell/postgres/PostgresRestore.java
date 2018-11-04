@@ -1,4 +1,4 @@
-package net.sf.ahtutils.db.shell.postgres;
+package org.jeesl.controller.db.shell.postgres;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.io.FilenameUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.filter.Filters;
@@ -178,14 +177,30 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 	public String restoreSequence(String seq) throws ExlpUnsupportedOsException
 	{
 		//http://stackoverflow.com/questions/244243/how-to-reset-postgres-primary-key-sequence-when-it-falls-out-of-sync
-		String table = seq.substring(0,seq.indexOf("_"));
+		
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append(pDbShell.getValue());
 		sb.append(" -h ").append(pDbHost.getValue());
 		sb.append(" -U ").append(pDbUser.getValue());
 		sb.append(" -d ").append(pDbName.getValue());
-		sb.append(" -c \"").append("SELECT setval('"+seq.toLowerCase()+"', (SELECT MAX(id) FROM "+table+"));").append("\"");
+		sb.append(" -c \"");
+		
+		if(seq.contains(","))
+		{	
+			String[] s = seq.split(",");
+			sb.append("SELECT setval('"+s[0]+"', (");
+			sb.append("SELECT max(id) FROM (SELECT MAX(id) as id FROM "+s[1]+" UNION ");
+			sb.append("SELECT MAX(id) as id FROM "+s[2]);
+			sb.append(") as id));");
+		}
+		else
+		{
+			String table = seq.substring(0,seq.indexOf("_"));
+			sb.append("SELECT setval('"+seq.toLowerCase()+"', (SELECT MAX(id) FROM "+table+"));");
+		}
+		
+		sb.append("\"");
 		
 		if(!pwdSet){setPwd(pDbPwd.getValue());}
 		super.addLine(sb.toString());

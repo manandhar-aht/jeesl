@@ -1,4 +1,4 @@
-package net.sf.ahtutils.db.shell.postgres;
+package org.jeesl.controller.db.shell.postgres;
 
 import java.util.Arrays;
 import java.util.List;

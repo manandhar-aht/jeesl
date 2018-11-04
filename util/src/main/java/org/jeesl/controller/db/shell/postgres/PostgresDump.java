@@ -1,4 +1,4 @@
-package net.sf.ahtutils.db.shell.postgres;
+package org.jeesl.controller.db.shell.postgres;
 
 import java.io.File;
 
@@ -61,33 +61,6 @@ public class PostgresDump extends AbstractPostgresShell implements UtilsDbShell
 		sb.append(" --create");
 		sb.append(" --blobs");
 		sb.append(" --format=c");
-		sb.append(" --verbose");
-		sb.append(" --file=").append(pDirDump.getValue()+File.separator+pDbName.getValue()+".sql");
-		sb.append(" ").append(pDbName.getValue());
-		
-		super.addLine(sb.toString());
-		return sb.toString();
-	}
-	
-	/**
-	 *  added extra options to dump wis db for restoring geo*tables+seq correctly 
-	 */
-	private String dumpDatabaseWis()
-	{
-		StringBuffer sb = new StringBuffer();
-		sb.append(pDbShell.getValue());
-		sb.append(" -h ").append(pDbHost.getValue());
-		sb.append(" -U ").append(pDbUser.getValue());
-		sb.append(" --quote-all-identifiers");
-		sb.append(" --blobs");
-		sb.append(" --format=c");
-		sb.append(" --role \"postgres\"");
-		sb.append(" --section=pre-data");
-		sb.append(" --section=data");
-		sb.append(" --section=post-data");
-		sb.append(" --oids");
-		sb.append(" --use-set-session-authorization");
-		sb.append(" --encoding \"UTF8\"");
 		sb.append(" --verbose");
 		sb.append(" --file=").append(pDirDump.getValue()+File.separator+pDbName.getValue()+".sql");
 		sb.append(" ").append(pDbName.getValue());

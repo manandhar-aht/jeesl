@@ -1,4 +1,4 @@
-package net.sf.ahtutils.db.shell.postgres;
+package org.jeesl.controller.db.shell.postgres;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

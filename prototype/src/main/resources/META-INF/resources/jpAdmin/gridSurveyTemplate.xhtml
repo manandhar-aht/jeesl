@@ -249,7 +249,7 @@
 			</aht:slot>
 			<aht:slot id="sQuestion" width="4" >
 				<h:form id="fQuestion" rendered="#{not empty cc.attrs.bean.question}">
-					<p:panel header="#{msg.jeeslSurveyQuestion}" styleClass="jeeslPanel">
+					<p:panel header="#{msg.jeeslSurveyQuestion} #{cc.attrs.bean.question.id}" styleClass="jeeslPanel">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveQuestion()}" update=":#{cc.id}:row1"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmQuestion()}" update=":#{cc.id}:row1"/>

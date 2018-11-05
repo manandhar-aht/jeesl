@@ -33,6 +33,7 @@
 	    		<s:lang key="de" translation="Tabellen"/>
 	    		<s:lang key="en" translation="Tables"/>
 	    		<s:lang key="fr" translation="Tables"/>
+				<s:lang key="id" translation="Jadwal" />
 	    	</s:langs>
     </s:translation>
     	<s:translation key="jeeslStatusSuperior">

@@ -1,4 +1,4 @@
-package org.jeesl.model.json.system.json;
+package org.jeesl.model.json.system.security;
 
 import java.io.Serializable;
 

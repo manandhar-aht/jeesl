@@ -3,7 +3,7 @@ package org.jeesl.factory.json.system.security;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.model.json.system.json.JsonSecurityPage;
+import org.jeesl.model.json.system.security.JsonSecurityPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -16,8 +16,8 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplat
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.model.json.system.json.JsonSecurityPage;
-import org.jeesl.model.json.system.json.JsonSecurityPages;
+import org.jeesl.model.json.system.security.JsonSecurityPage;
+import org.jeesl.model.json.system.security.JsonSecurityPages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

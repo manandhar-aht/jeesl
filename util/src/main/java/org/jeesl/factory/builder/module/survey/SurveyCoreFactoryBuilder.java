@@ -14,7 +14,8 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyOptionSetFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
-import org.jeesl.factory.json.system.survey.JsonSurveyFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveyAnswerFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveyFactory;
 import org.jeesl.factory.txt.module.survey.TxtOptionFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveyAnswerFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveyFactory;
@@ -161,5 +162,10 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	public JsonSurveyFactory<L,D,SURVEY,SS> surveyJson(String localeCode, org.jeesl.model.json.survey.Survey q)
 	{
 		return new JsonSurveyFactory<L,D,SURVEY,SS>(localeCode,q);
+	}
+	
+	public JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jsonAnswer(org.jeesl.model.json.survey.Answer q)
+	{
+		return new JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q);
 	}
 }

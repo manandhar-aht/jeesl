@@ -1,18 +1,18 @@
-package org.jeesl.factory.json.system.survey;
+package org.jeesl.factory.json.module.survey;
 
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.model.json.survey.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JsonOptionFactory<OPTION extends JeeslSurveyOption<?,?>>
+public class JsonSurveyOptionFactory<OPTION extends JeeslSurveyOption<?,?>>
 {
-	final static Logger logger = LoggerFactory.getLogger(JsonOptionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(JsonSurveyOptionFactory.class);
 	
 	private final String localeCode;
 	private final Option q;
 	
-	public JsonOptionFactory(String localeCode, Option q)
+	public JsonSurveyOptionFactory(String localeCode, Option q)
 	{
 		this.localeCode=localeCode;
 		this.q=q;

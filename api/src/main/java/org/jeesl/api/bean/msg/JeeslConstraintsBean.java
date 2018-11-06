@@ -13,6 +13,7 @@ public interface JeeslConstraintsBean <CONSTRAINT extends JeeslConstraint<?,?,?,
 	
 	<SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT get(SID sId, CID cId) throws UtilsNotFoundException;
 	<SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT getSilent(SID sId, CID cId);
+	<CID extends Enum<CID>> CONSTRAINT getSilent(Class<?> cScope, CID cId);
 	void update(CONSTRAINT constraint);
 	void ping();
 }

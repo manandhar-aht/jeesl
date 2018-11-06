@@ -1,4 +1,4 @@
-package org.jeesl.factory.json.system.survey;
+package org.jeesl.factory.json.module.survey;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
@@ -14,7 +14,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.model.json.survey.Template;
+import org.jeesl.model.json.survey.Section;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class JsonTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
+public class JsonSurveySectionFactory<L extends UtilsLang,D extends UtilsDescription,
 				SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 				SS extends UtilsStatus<SS,L,D>,
 				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
@@ -33,40 +33,52 @@ public class JsonTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
 				QE extends UtilsStatus<QE,L,D>,
 				SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,UNIT extends UtilsStatus<UNIT,L,D>,
 				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-				MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-				DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
-				OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-				OPTION extends JeeslSurveyOption<L,D>,CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>>
+				MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
+				OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,OPTION extends JeeslSurveyOption<L,D>,
+				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>>
 {
-	final static Logger logger = LoggerFactory.getLogger(JsonTemplateFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(JsonSurveySectionFactory.class);
+	
+	private final String localeCode;
+	private final Section q;
 	
 	private JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
+	private JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfQuestion;
 	
-	private JsonSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> jfSection;
-	
-	public JsonTemplateFactory(String localeCode, Template q){this(localeCode,q,null);}
-	public JsonTemplateFactory(String localeCode, Template q, JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
+	public JsonSurveySectionFactory(String localeCode, Section q){this(localeCode,q,null);}
+	public JsonSurveySectionFactory(String localeCode, Section q, JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
 	{
+		this.localeCode=localeCode;
+		this.q=q;
 		this.fSurvey=fSurvey;
-		if(!q.getSections().isEmpty()){jfSection = new JsonSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,q.getSections().get(0),fSurvey);}
+		if(!q.getQuestions().isEmpty()){jfQuestion = new JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getQuestions().get(0),fSurvey);}
 	}
 	
-	public Template build(TEMPLATE ejb)
+	public Section build(SECTION ejb)
 	{
-		if(fSurvey!=null){ejb = fSurvey.load(ejb,false,false);}
+		if(fSurvey!=null){ejb = fSurvey.load(ejb);}
+		Section json = build();
 		
-		Template json = build();
+		json.setId(ejb.getId());
+		if(q.isSetCode()){json.setCode(ejb.getCode());}
+		if(q.isSetName()){json.setName(ejb.getName().get(localeCode).getLang());}
 		
-		for(SECTION section : ejb.getSections())
+		for(QUESTION q : ejb.getQuestions())
 		{
-			json.getSections().add(jfSection.build(section));
+			if(q.isVisible())
+			{
+				json.getQuestions().add(jfQuestion.build(q));
+			}
 		}
 		
 		return json;
 	}
 	
-	public static Template build()
+	public static Section build() {return new Section();}
+	public static Section id(long id)
 	{
-		return new Template();
+		Section json = build();
+		json.setId(0);
+		return json;
 	}
 }

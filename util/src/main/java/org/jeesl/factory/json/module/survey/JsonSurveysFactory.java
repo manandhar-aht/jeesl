@@ -1,4 +1,4 @@
-package org.jeesl.factory.json.system.survey;
+package org.jeesl.factory.json.module.survey;
 
 import org.jeesl.model.json.survey.Surveys;
 import org.slf4j.Logger;

@@ -18,19 +18,19 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	public static final long serialVersionUID=1;
 
 	@JsonProperty("id")
-	private long id;
-	public long getId() {return id;}
-	public void setId(long id) {this.id = id;}
+	private Long id;
+	public Long getId() {return id;}
+	public void setId(Long id) {this.id = id;}
 	
 	@JsonProperty("position")
-	private int position;
-	@Override public int getPosition() {return position;}
-	@Override public void setPosition(int position) {this.position = position;}
+	private Integer position;
+	@Override public Integer getPosition() {return position;}
+	@Override public void setPosition(Integer position) {this.position = position;}
 	
 	@JsonProperty("visible")
-	private boolean visible;
-	@Override public boolean isVisible() {return visible;}
-	@Override public void setVisible(boolean visible) {this.visible = visible;}
+	private Boolean visible;
+	@Override public Boolean getVisible() {return visible;}
+	@Override public void setVisible(Boolean visible) {this.visible = visible;}
 	
 	@JsonProperty("code")
 	private String code;
@@ -130,7 +130,7 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	
 	@JsonProperty("options")
 	private List<Option> options;
-	public List<Option> getOptions() {if(options==null){options = new ArrayList<Option>();} return options;}
+	public List<Option> getOptions() {return options;}
 	public void setOptions(List<Option> options) {this.options = options;}
 	@JsonIgnore public boolean isSetOptions() {return (options!=null && !options.isEmpty());}
 	

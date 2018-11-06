@@ -1,4 +1,4 @@
-package org.jeesl.factory.json.system.survey;
+package org.jeesl.factory.json.module.survey;
 
 import org.jeesl.factory.json.system.status.JsonStatusFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;

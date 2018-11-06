@@ -87,19 +87,34 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 	
 	@Override public <SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT get(SID sId, CID cId) throws UtilsNotFoundException
 	{
-		if(!mapConstraints.containsKey(sId.toString())) {throw new UtilsNotFoundException("Scope "+sId+" not available");}
-		if(!mapConstraints.get(sId.toString()).containsKey(cId.toString())) {throw new UtilsNotFoundException("Contraint "+cId+" not available in Scope "+sId);}
-		return mapConstraints.get(sId.toString()).get(cId.toString());
+		return get(sId.toString(),cId.toString());
 	}
 	
 	@Override public <SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT getSilent(SID sId, CID cId)
 	{
-		try {return get(sId,cId);}
+		try {return get(sId.toString(),cId.toString());}
 		catch (UtilsNotFoundException e)
 		{
 			logger.error(e.getMessage());
 			return null;
 		}
+	}
+	
+	@Override public <CID extends Enum<CID>> CONSTRAINT getSilent(Class<?> c, CID cId)
+	{
+		try {return get(c.getSimpleName(),cId.toString());}
+		catch (UtilsNotFoundException e)
+		{
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+	
+	private CONSTRAINT get(String sId, String cId) throws UtilsNotFoundException
+	{
+		if(!mapConstraints.containsKey(sId.toString())) {throw new UtilsNotFoundException("Scope "+sId+" not available");}
+		if(!mapConstraints.get(sId.toString()).containsKey(cId.toString())) {throw new UtilsNotFoundException("Contraint "+cId+" not available in Scope "+sId);}
+		return mapConstraints.get(sId.toString()).get(cId.toString());
 	}
 	
 	// ************************************************************************************************

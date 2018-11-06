@@ -1,10 +1,12 @@
 package org.jeesl.util.query.json;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-import org.jeesl.factory.json.system.survey.JsonOptionFactory;
-import org.jeesl.factory.json.system.survey.JsonQuestionFactory;
-import org.jeesl.factory.json.system.survey.JsonSectionFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveyOptionFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveyQuestionFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveySectionFactory;
+import org.jeesl.model.json.survey.Answer;
 import org.jeesl.model.json.survey.Option;
 import org.jeesl.model.json.survey.Question;
 import org.jeesl.model.json.survey.Section;
@@ -26,7 +28,7 @@ public class JsonSurveyQueryProvider
 	
 	public static Template templateExport()
 	{
-		Option option = JsonOptionFactory.build();
+		Option option = JsonSurveyOptionFactory.build();
 		option.setId(0);
 		option.setPosition(0);
 		option.setCode("");
@@ -36,8 +38,8 @@ public class JsonSurveyQueryProvider
 		option.setRow(true);
 		option.setCell(true);
 		
-		Question question = JsonQuestionFactory.build();
-		question.setId(0);
+		Question question = JsonSurveyQuestionFactory.build();
+		question.setId(0l);
 		question.setVisible(true);
 		question.setPosition(0);
 		question.setCode("");
@@ -56,9 +58,10 @@ public class JsonSurveyQueryProvider
 		question.setShowSelectOne(true);
 		question.setShowSelectMulti(true);
 		question.setShowMatrix(true);
-		question.getOptions().add(option);
 		
-		Section section = JsonSectionFactory.build();
+		question.setOptions(new ArrayList<Option>());question.getOptions().add(option);
+		
+		Section section = JsonSurveySectionFactory.build();
 		section.setId(0);
 		section.setCode("");
 		section.setName("");
@@ -69,5 +72,18 @@ public class JsonSurveyQueryProvider
 		xml.getSections().add(section);
 		
 		return xml;
+	}
+	
+	public static Answer answers()
+	{		
+		Answer json = new Answer();
+		json.setId(Long.valueOf(1));
+		json.setQuestion(JsonSurveyQuestionFactory.id(1));
+		json.setValueBoolean(true);
+		json.setValueDouble(2d);
+		json.setValueNumber(1);
+		json.setValueText("");
+		
+		return json;
 	}
 }

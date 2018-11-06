@@ -2,11 +2,11 @@ package org.jeesl.interfaces.model.survey;
 
 public interface JeeslSimpleSurveyQuestion
 {
-	public int getPosition();
-	public void setPosition(int position);
+	public Integer getPosition();
+	public void setPosition(Integer position);
 	
-	public boolean isVisible();
-	public void setVisible(boolean visible);
+	public Boolean getVisible();
+	public void setVisible(Boolean visible);
 	
 	public String getCode();
 	public void setCode(String code);

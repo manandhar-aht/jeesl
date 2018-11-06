@@ -9,6 +9,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.model.json.survey.Answer;
+import org.jeesl.model.json.survey.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,15 +41,6 @@ public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescript
 		if(q.getQuestion()!=null) {jfQuestion = new JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q.getQuestion());}
 	}
 	
-	public static Answer build(){return new Answer();}
-	
-	public static Answer build(long id)
-	{
-		Answer json = build();
-		json.setId(id);
-		return json;
-	}
-	
 	public Answer build(ANSWER answer)
 	{
 		Answer json = build();
@@ -56,6 +48,17 @@ public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescript
 		if(q.getQuestion()!=null) {json.setQuestion(jfQuestion.build(answer.getQuestion()));}
 		
 		if(q.getValueText()!=null && answer.getValueText()!=null) {json.setValueText(answer.getValueText());}
+		return json;
+	}
+	
+	public static Answer build(){return new Answer();}
+	public static Answer build(Question question){Answer json = build();json.setQuestion(question);return json;}
+	
+	
+	public static Answer build(long id)
+	{
+		Answer json = build();
+		json.setId(id);
 		return json;
 	}
 }

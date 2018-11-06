@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
@@ -14,6 +15,9 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.xml.survey.Answer;
@@ -128,6 +132,27 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 		if(section==null){return defaultResult;}
 		{
 			return answer.getQuestion().getSection().equals(section);
+		}
+	}
+	
+	public void update(JeeslSurveyCoreFacade<?,?,?,?,?,?,?,?,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,?> fSurvey,
+						org.jeesl.model.json.survey.Answer json)
+	{
+		try
+		{
+			ANSWER ejb = fSurvey.find(cAnswer,json.getId());
+			ejb.setValueText(json.getValueText());
+			fSurvey.save(ejb);
+		}
+		catch (UtilsNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UtilsConstraintViolationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UtilsLockingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

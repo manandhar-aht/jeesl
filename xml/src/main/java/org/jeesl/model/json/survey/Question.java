@@ -1,7 +1,6 @@
 package org.jeesl.model.json.survey;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.interfaces.model.survey.JeeslSimpleSurveyQuestion;

@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.Tuple;
 
+import org.apache.commons.collections.keyvalue.MultiKey;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.model.json.db.tuple.two.Json2Tuple;
 import org.jeesl.model.json.db.tuple.two.Json2Tuples;
@@ -214,6 +215,43 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 			setId2.add(j.getId2());
         	json.getTuples().add(j);
         }
+		
+		fillEjbs(json);
+		
+		return json;
+	}
+	
+	// This method is used if a third grouping is added to the query. Then it's counted on the unique id1-id2 combination
+	public Json2Tuples<A,B> countOnIds(List<Tuple> tuples)
+	{
+		Map<MultiKey,Json2Tuple<A,B>> mapTuples = new HashMap<MultiKey,Json2Tuple<A,B>>();
+		Map<MultiKey,Long> mapCount = new HashMap<MultiKey,Long>();
+		
+		for(Tuple t : tuples)
+        {
+			Json2Tuple<A,B> j = jtf.buildCount(t);
+			setId1.add(j.getId1());
+			setId2.add(j.getId2());
+			
+			MultiKey key = new MultiKey(j.getId1(),j.getId2());
+			if(!mapTuples.containsKey(key)) {mapTuples.put(key, j);}
+			if(mapCount.containsKey(key))
+			{
+				mapCount.put(key, 1+mapCount.get(key));
+			}
+			else
+			{
+				mapCount.put(key, 1l);
+			}
+        }
+		
+		Json2Tuples<A,B> json = new Json2Tuples<A,B>();
+		for(MultiKey key : mapTuples.keySet())
+		{
+			Json2Tuple<A,B> t = mapTuples.get(key);
+			t.setCount(mapCount.get(key));
+			json.getTuples().add(t);
+		}
 		
 		fillEjbs(json);
 		

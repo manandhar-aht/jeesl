@@ -112,7 +112,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected PivotSettings pivotSettings; public PivotSettings getPivotSettings() {return pivotSettings;}
 
 	protected JsonFlatFigures flats; public JsonFlatFigures getFlats() {return flats;}
-	protected List<Object> jsonDataList; public List<Object> getJsonDataList() {return jsonDataList;} public void setJsonDataList(List<Object> jsonDataList) {this.jsonDataList = jsonDataList;}
+	protected final List<Object> jsonDataList; public List<Object> getJsonDataList() {return jsonDataList;}
 	protected String jsonStream; public String getJsonStream() {return jsonStream;}
 	
 	private Comparator<SHEET> comparatorSheet;
@@ -142,6 +142,7 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 		showHeaderGroup = true;
 		
 		jobCodeProcessor = new JobCodeProcessor();
+		jsonDataList = new ArrayList<Object>();
 		
 		buildHeaders();
 	}

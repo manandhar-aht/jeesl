@@ -13,6 +13,7 @@ import org.jeesl.controller.processor.finance.AmountRounder;
 import org.jeesl.factory.json.db.tuple.JsonTupleFactory;
 import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
 import org.jeesl.model.json.db.tuple.JsonTuple;
+import org.jeesl.model.json.db.tuple.t3.Json3Tuple;
 import org.jeesl.model.json.db.tuple.two.Json2Tuple;
 import org.jeesl.model.json.db.tuple.two.Json2Tuples;
 import org.slf4j.Logger;
@@ -32,10 +33,11 @@ public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
 	
 	private final Class<B> cB;
 	protected final Set<B> setB;
+	
 	private int sizeB; public int getSizeB() {return sizeB;}
 	private final List<B> listB; public List<B> getListB() {return listB;}
 	private final Map<A,Map<B,Json2Tuple<A,B>>> map; public Map<A,Map<B,Json2Tuple<A,B>>> getMap() {return map;}
-	
+	private final List<Json2Tuple<A,B>> tuples2; public List<Json2Tuple<A,B>> getTuples2() {return tuples2;}
 	
 	public JsonTuple2Handler(Class<A> cX, Class<B> cB)
 	{
@@ -45,6 +47,7 @@ public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
 		setB = new HashSet<B>();
 		listB = new ArrayList<B>();
 		map = new HashMap<A,Map<B,Json2Tuple<A,B>>>();
+		tuples2 = new ArrayList<Json2Tuple<A,B>>();
 		
 		dimension = 2;
 	}
@@ -74,6 +77,7 @@ public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
 	
 		initA();
 		initB();
+		tuples2.addAll(tuples.getTuples());
 	}
 	
 	protected void initB()

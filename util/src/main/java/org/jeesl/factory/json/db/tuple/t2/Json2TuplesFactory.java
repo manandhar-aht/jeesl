@@ -23,7 +23,7 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 {
 	final static Logger logger = LoggerFactory.getLogger(Json2TuplesFactory.class);
 	
-	private final UtilsFacade fUtils;
+	private UtilsFacade fUtils; public UtilsFacade getfUtils() {return fUtils;} public void setfUtils(UtilsFacade fUtils) {this.fUtils = fUtils;}
 	private final Json2TupleFactory<A,B> jtf;
 	
 	private final Class<A> cA; public Class<A> getClassA() {return cA;}
@@ -102,7 +102,7 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 		}
 	}
 	
-	private void fillEjbs(Json2Tuples<A,B> json)
+	private void ejbLoad(Json2Tuples<A,B> json)
 	{
 		if(fUtils!=null)
 		{
@@ -199,7 +199,7 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
         	json.getTuples().add(j);
         }
 		
-		fillEjbs(json);
+		ejbLoad(json);
 		
 		return json;
 	}
@@ -216,7 +216,7 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
         	json.getTuples().add(j);
         }
 		
-		fillEjbs(json);
+		ejbLoad(json);
 		
 		return json;
 	}
@@ -253,7 +253,7 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 			json.getTuples().add(t);
 		}
 		
-		fillEjbs(json);
+		ejbLoad(json);
 		
 		return json;
 	}

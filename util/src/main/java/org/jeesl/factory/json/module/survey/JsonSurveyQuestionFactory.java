@@ -1,5 +1,7 @@
 package org.jeesl.factory.json.module.survey;
 
+import java.util.ArrayList;
+
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
@@ -9,6 +11,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.model.json.survey.Option;
 import org.jeesl.model.json.survey.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,7 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 	
 	private JeeslSurveyCoreFacade<L,D,?,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?> fSurvey;
 	
+	private final String localeCode;
 	private Question q;
 	
 	private JsonSurveyOptionFactory<OPTION> jfOption;
@@ -41,6 +45,7 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 	public JsonSurveyQuestionFactory(String localeCode, Question q){this(localeCode, q,null);}
 	public JsonSurveyQuestionFactory(String localeCode, Question q, JeeslSurveyCoreFacade<L,D,?,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?> fSurvey)
 	{
+		this.localeCode=localeCode;
 		this.q=q;
 		this.fSurvey=fSurvey;
 		if(q.isSetOptions()) {jfOption = new JsonSurveyOptionFactory<OPTION>(localeCode,q.getOptions().get(0));}
@@ -54,8 +59,9 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 		if(q.getVisible()!=null) {json.setVisible(ejb.isVisible());}
 		if(q.getPosition()!=null) {json.setPosition(ejb.getPosition());}
 		if(q.isSetCode()){json.setCode(ejb.getCode());}
-		if(q.isSetTopic()){json.setTopic(ejb.getTopic());}
-		if(q.isSetQuestion()){json.setQuestion(ejb.getQuestion());}
+		if(q.isSetTopic() && ejb.getName().containsKey(localeCode)){json.setTopic(ejb.getName().get(localeCode).getLang());}
+		
+		if(q.isSetQuestion() && ejb.getText().containsKey(localeCode)){json.setQuestion(ejb.getText().get(localeCode).getLang());}
 		if(q.isSetRemark()){json.setRemark(ejb.getRemark());}
 		
 		if(q.isSetCalculateScore()){json.setCalculateScore(ejb.getCalculateScore());}
@@ -75,6 +81,7 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 		if(q.isSetOptions())
 		{
 			ejb = fSurvey.load(ejb);
+			if(!ejb.getOptions().isEmpty()) {json.setOptions(new ArrayList<Option>());}
 			for(OPTION option : ejb.getOptions())
 			{
 				json.getOptions().add(jfOption.build(option));

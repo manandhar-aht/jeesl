@@ -2,6 +2,7 @@ package org.jeesl.model.json.survey;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.jeesl.interfaces.model.survey.JeeslSimpleSurvey;
 import org.jeesl.model.json.system.status.JsonStatus;
@@ -20,11 +21,6 @@ public class Survey implements Serializable,JeeslSimpleSurvey
 	private long id;
 	public long getId() {return id;}
 	public void setId(long id) {this.id = id;}
-
-	@JsonProperty("template")
-	private Template template;
-	public Template getTemplate() {return template;}
-	public void setTemplate(Template template) {this.template = template;}
 	
 	@JsonProperty("label")
 	private String label;
@@ -45,6 +41,17 @@ public class Survey implements Serializable,JeeslSimpleSurvey
 	private JsonStatus status;
 	public JsonStatus getStatus() {return status;}
 	public void setStatus(JsonStatus status) {this.status = status;}
+	
+	@Deprecated
+	@JsonProperty("template")
+	private Template template;
+	public Template getTemplate() {return template;}
+	public void setTemplate(Template template) {this.template = template;}
+	
+	@JsonProperty("templates")
+	private List<Template> templates;
+	public List<Template> getTemplates() {return templates;}
+	public void setTemplates(List<Template> templates) {this.templates = templates;}
 	
 	public String toString()
 	{

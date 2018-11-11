@@ -56,6 +56,7 @@ public class JsonTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
 		if(fSurvey!=null){ejb = fSurvey.load(ejb,false,false);}
 		
 		Template json = build();
+		json.setId(ejb.getId());
 		
 		for(SECTION section : ejb.getSections())
 		{

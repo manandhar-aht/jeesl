@@ -1,5 +1,6 @@
 package org.jeesl.web.rest.module;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
@@ -423,8 +424,20 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 		{
 			SURVEY eSurvey = fSurvey.find(fbCore.getClassSurvey(),id);
 			jSurvey = jfSurvey.build(eSurvey);
-			TEMPLATE ejb = fSurvey.find(fbTemplate.getClassTemplate(),eSurvey.getTemplate());
-			jSurvey.setTemplate(jfTemplate.build(ejb));
+			TEMPLATE eTemplate = fSurvey.find(fbTemplate.getClassTemplate(),eSurvey.getTemplate());
+			
+			org.jeesl.model.json.survey.Template jTemplate = jfTemplate.build(eTemplate);
+			jTemplate.setCode("primary");
+			jSurvey.setTemplate(jTemplate);
+			
+			jSurvey.setTemplates(new ArrayList<org.jeesl.model.json.survey.Template>());
+			jSurvey.getTemplates().add(jTemplate);
+			if(eTemplate.getNested()!=null)
+			{
+				org.jeesl.model.json.survey.Template jNested = jfTemplate.build(eTemplate.getNested());
+				jNested.setCode("nested");
+				jSurvey.getTemplates().add(jNested);
+			}
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 		

@@ -28,8 +28,8 @@ public class AbstractJiraBean <L extends UtilsLang,D extends UtilsDescription,
 	protected String jiraHost;
 	protected String jiraScriptPath;
 	
-	protected Map<String,String> collectorId; @Override public Map<String, String> getCollectorId() {return collectorId;}
-	protected Map<String,Issue> mapIssue;
+	protected final Map<String,String> collectorId; @Override public Map<String, String> getCollectorId() {return collectorId;}
+	protected final Map<String,Issue> mapIssue; public Map<String,Issue> getMapIssue() {return mapIssue;}
 
 	public AbstractJiraBean()
 	{
@@ -50,5 +50,4 @@ public class AbstractJiraBean <L extends UtilsLang,D extends UtilsDescription,
 
 	@Override public String getJiraHost() {return jiraHost;}
 	@Override public String getJiraScriptPath() {return jiraScriptPath;}
-	
 }

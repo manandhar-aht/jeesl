@@ -20,12 +20,16 @@ public class Template implements Serializable,JeeslSimpleSurvey
 	private long id;
 	public long getId() {return id;}
 	public void setId(long id) {this.id = id;}
+	
+	@JsonProperty("code")
+	private String code;
+	public String getCode() {return code;}
+	public void setCode(String code) {this.code = code;}
 
 	@JsonProperty("sections")
 	private List<Section> sections;
 	public List<Section> getSections() {if(sections==null){sections = new ArrayList<Section>();} return sections;}
 	public void setSections(List<Section> sections) {this.sections = sections;}
-	
 	
 	public String toString()
 	{

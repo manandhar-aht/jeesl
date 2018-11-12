@@ -32,10 +32,12 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyAnswerFactory.class);
 	
-	final Class<ANSWER> cAnswer;
-    
-	public EjbSurveyAnswerFactory(final Class<ANSWER> cAnswer)
+	private final Class<QUESTION> cQuestion;
+	private final Class<ANSWER> cAnswer;
+
+	public EjbSurveyAnswerFactory(final Class<QUESTION> cQuestion, final Class<ANSWER> cAnswer)
 	{       
+		this.cQuestion = cQuestion;
         this.cAnswer = cAnswer;
 	}
    	
@@ -47,7 +49,7 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 	}
 	public ANSWER build(QUESTION question, DATA data)
 	{
-		return build(question, data,null,null);
+		return build(question,data,null,null);
 	}
 	
 	public ANSWER build(QUESTION question, DATA data,Boolean valueBoolean,Integer valueNumber)
@@ -136,18 +138,23 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 	}
 	
 	public void update(JeeslSurveyCoreFacade<?,?,?,?,?,?,?,?,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,?> fSurvey,
-						org.jeesl.model.json.survey.Answer json)
+						org.jeesl.model.json.survey.Answer json,
+						DATA data)
 	{
 		try
 		{
-			ANSWER ejb = fSurvey.find(cAnswer,json.getId());
+			ANSWER ejb = null;
+			if(json.getId()!=null && json.getId()>0) {ejb = fSurvey.find(cAnswer,json.getId());}
+			else
+			{	
+				QUESTION question = fSurvey.find(cQuestion,json.getQuestion().getId());
+				ejb = this.build(question, data);
+			}
+			
 			ejb.setValueText(json.getValueText());
 			fSurvey.save(ejb);
 		}
-		catch (UtilsNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UtilsConstraintViolationException e) {
+		catch (UtilsNotFoundException e) {e.printStackTrace();} catch (UtilsConstraintViolationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UtilsLockingException e) {

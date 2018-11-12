@@ -2,6 +2,7 @@ package org.jeesl.web.rest.module;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.api.rest.survey.JeeslSurveyJsonRest;
@@ -464,7 +465,9 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 	public org.jeesl.model.json.survey.Data jsonAnswers(DATA data)
 	{
 		org.jeesl.model.json.survey.Data result = new org.jeesl.model.json.survey.Data();
-		for(ANSWER a : fSurvey.fAnswers(Arrays.asList(data)))
+		List<DATA> list = new ArrayList<DATA>();
+		list.add(data);
+		for(ANSWER a : fSurvey.fAnswers(list))
 		{
 			result.getAnswers().add(jfAnswer.build(a));
 		}

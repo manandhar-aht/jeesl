@@ -124,8 +124,7 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	@JsonProperty("showMatrix")
 	private Boolean showMatrix;
 	@Override public Boolean getShowMatrix() {return showMatrix;}
-	@Override public void setShowMatrix(Boolean showMatrix) {this.showSelectMulti = showMatrix;}
-	@JsonIgnore public boolean isSetShowMatrix() {return showMatrix!=null;}
+	@Override public void setShowMatrix(Boolean showMatrix) {this.showMatrix = showMatrix;}
 	
 	@JsonProperty("options")
 	private List<Option> options;

@@ -23,7 +23,7 @@
 	</composite:interface>
 
 <composite:implementation>
-	<p:dialog id="dPerson" widgetVar="#{cc.attrs.widgetVar}" modal="true">
+	<p:dialog id="dXpath" widgetVar="#{cc.attrs.widgetVar}" modal="true">
 		<h:form>
 			<aht:slot width="8">
 				<p:dataTable id="dtOpEntity" var="var" value="#{cc.attrs.handler.lazy}" lazy="true"
@@ -62,6 +62,16 @@
 						<j:outputXpath value="#{var}" xpath="#{cc.attrs.handler.columns[2].xpath}" localeCode="#{localeCode}"/>
 					</p:column>
 					
+					<p:column rendered="#{fn:length(cc.attrs.handler.columns) gt 3}">
+						<c:if test="#{not empty cc.attrs.handler.columns[3].filterBy}"><f:attribute name="filterBy" value="#{column3}"/></c:if>
+						<c:if test="#{not empty cc.attrs.handler.columns[3].filterBy}"><f:attribute name="filterMatchMode" value="contains"/></c:if>
+						<c:if test="#{not empty cc.attrs.handler.columns[3].filterBy}"><f:attribute name="filterStyle" value="width: 50px;"/></c:if>
+						<f:facet name="header">
+							<h:outputText value="#{appLabelBean.entities[cc.attrs.handler.columns[3].entity][cc.attrs.localeCode].lang}" rendered="#{empty cc.attrs.handler.columns[3].code}"/>
+							<h:outputText value="#{appLabelBean.labels[cc.attrs.handler.columns[3].entity][cc.attrs.handler.columns[3].code][cc.attrs.localeCode].lang}" rendered="#{not empty cc.attrs.handler.columns[3].code}"/>
+						</f:facet>
+						<j:outputXpath value="#{var}" xpath="#{cc.attrs.handler.columns[3].xpath}" localeCode="#{localeCode}"/>
+					</p:column>
 					
 				</p:dataTable>
 			</aht:slot>

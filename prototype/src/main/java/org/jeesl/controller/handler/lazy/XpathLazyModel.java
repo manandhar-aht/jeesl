@@ -101,7 +101,14 @@ public class XpathLazyModel <T extends EjbWithId> extends LazyDataModel<T>
 				if(mapFilter.containsKey(key))
 				{
 					Object value = ctx.getValue(mapFilter.get(key).getXpath());
-					match = StringUtils.containsIgnoreCase(value.toString(), filters.get(key).toString());
+					if(value==null || value.toString().trim().length()==0)
+					{
+						match = false;
+					}
+					else
+					{
+						match = StringUtils.containsIgnoreCase(value.toString(), filters.get(key).toString());
+					}
 				}
 				if(!match){break;}
 			}

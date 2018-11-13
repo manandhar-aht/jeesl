@@ -37,7 +37,6 @@
 				<p:panelGrid columns="3" columnClasses="#{section.columnClasses}">
 					<jtp:label entity="MeisLcfUserEvaluation" code="question"/>
 					<jtp:label entity="MeisLcfUserEvaluation" code="answer"/>
-					<jtp:label entity="MeisLcfUserEvaluation" code="remark"/>
 				</p:panelGrid>
 				<ui:repeat value="#{appSurveyBean.mapQuestion[section]}" id="repeatQuestions" var="q">
 					<p:panelGrid columns="2" columnClasses="#{section.columnClasses}" rendered="#{q.visible}">
@@ -48,7 +47,9 @@
 							</ui:fragment>
 							<h:outputText value="#{q.description[localeCode].lang}" styleClass="jeeslItalic"/>
 						</h:panelGroup>
-						<jtp:surveyAnswer question="#{q}" surveyHandler="#{cc.attrs.handler}"/>
+						<h:panelGroup>
+							<jtp:surveyAnswer question="#{q}" surveyHandler="#{cc.attrs.handler}"/>
+						</h:panelGroup>
 					</p:panelGrid>
 				</ui:repeat>
 			</p:panel>

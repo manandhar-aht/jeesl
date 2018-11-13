@@ -20,13 +20,7 @@
 		</p:selectOneMenu>
 		<h:outputText value="#{surveyHandler.answers[question].option.name[loc].lang}" rendered="#{not surveyHandler.showDataFields}"/>
 	</h:panelGroup>
-			
-	<h:panelGroup rendered="#{question.showRemark}">
-		<p:inputTextarea id="remarkIta" rows="2" styleClass="w100"  value="#{surveyHandler.answers[question].remark}" rendered="#{surveyHandler.showDataFields}"/>
-		<p:watermark for="remarkIta" value="Remark" id="watermark" rendered="#{surveyHandler.showDataFields}"/>
-		<h:outputText value="#{surveyHandler.answers[question].remark}" rendered="#{not surveyHandler.showDataFields}"/>
-	</h:panelGroup>
-			
+		
 	<p:selectBooleanCheckbox rendered="#{question.showBoolean and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueBoolean}" />
 			
 	<p:inputText rendered="#{question.showInteger and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueNumber}"/>
@@ -34,7 +28,6 @@
 			
 	<jtp:inputDate rendered="#{question.showDate and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDate}"/>
 							
-			
 	<p:selectManyMenu showCheckbox="true" rendered="#{question.showSelectMulti and (not question.showMatrix)}"
 						value="#{surveyHandler.districts}" var="o">
           	<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="opt" itemLabel="#{opt.name[localeCode].lang}" itemValue="#{opt.id}" />
@@ -66,4 +59,10 @@
 			</h:selectOneMenu>
 		</p:columns>
 	</p:dataTable>
+	
+	<h:panelGroup rendered="#{question.showRemark}">
+		<p:inputTextarea id="remarkIta" rows="2" styleClass="w100"  value="#{surveyHandler.answers[question].remark}" rendered="#{surveyHandler.showDataFields}"/>
+		<p:watermark for="remarkIta" value="Remark" id="watermark" rendered="#{surveyHandler.showDataFields}"/>
+		<h:outputText value="#{surveyHandler.answers[question].remark}" rendered="#{not surveyHandler.showDataFields}"/>
+	</h:panelGroup>
 </ui:composition>

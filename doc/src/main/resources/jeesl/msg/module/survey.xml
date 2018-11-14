@@ -596,4 +596,19 @@
     		<s:lang key="fr" translation="Remark"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslSurveySectionShowLineBreakQuestion">
+    	<s:langs>
+    		<s:lang key="de" translation="Line Break Question"/>
+    		<s:lang key="en" translation="Line Break Question"/>
+    		<s:lang key="fr" translation="Line Break Question"/>
+    	</s:langs>
+    </s:translation> 
+	<s:translation key="jeeslSurveySectionShowLineBreakRemark">
+    	<s:langs>
+    		<s:lang key="de" translation="Line Break Remark"/>
+    		<s:lang key="en" translation="Line Break Remark"/>
+    		<s:lang key="fr" translation="Line Break Remark"/>
+    	</s:langs>
+    </s:translation>
+    
 </s:translations>

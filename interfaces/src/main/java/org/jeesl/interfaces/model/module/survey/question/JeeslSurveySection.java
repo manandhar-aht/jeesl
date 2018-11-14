@@ -61,4 +61,12 @@ public interface JeeslSurveySection<L extends UtilsLang, D extends UtilsDescript
 	
 	Boolean getShowRemark();
 	void setShowRemark(Boolean showRemark);
+	
+	
+	Boolean getShowLineBreakQuestion();
+	void setShowLineBreakQuestion(Boolean showLineBreakQuestion);
+	
+	Boolean getShowLineBreakRemark();
+	void setShowLineBreakRemark(Boolean showLineBreakRemark);
+
 }

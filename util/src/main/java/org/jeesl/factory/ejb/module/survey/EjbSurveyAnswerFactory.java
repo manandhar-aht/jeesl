@@ -141,14 +141,22 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 	
 	public void update(JeeslSurveyCoreFacade<?,?,?,?,?,?,?,?,?,?,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,?> fSurvey,
 						org.jeesl.model.json.survey.Answer json,
-						DATA data)
+						DATA data,
+						Map<Long,ANSWER> map)
 	{
 		try
 		{
 			ANSWER ejb = null;
-			if(json.getId()!=null && json.getId()>0) {ejb = fSurvey.find(cAnswer,json.getId());}
+			if(map.containsKey(json.getQuestion().getId()))
+			{
+				ejb = map.get(json.getQuestion().getId());
+			}
+			else if(json.getId()!=null && json.getId()>0)
+			{
+				ejb = fSurvey.find(cAnswer,json.getId());
+			}
 			else
-			{	
+			{
 				QUESTION question = fSurvey.find(cQuestion,json.getQuestion().getId());
 				ejb = this.build(question, data);
 			}
@@ -167,9 +175,7 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 			fSurvey.save(ejb);
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
-		catch (UtilsConstraintViolationException e) {e.printStackTrace();} catch (UtilsLockingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+		catch (UtilsLockingException e) {e.printStackTrace();}
 	}
 }

@@ -34,11 +34,13 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 	
 	private final Class<QUESTION> cQuestion;
 	private final Class<ANSWER> cAnswer;
+	private final Class<OPTION> cOption;
 
-	public EjbSurveyAnswerFactory(final Class<QUESTION> cQuestion, final Class<ANSWER> cAnswer)
+	public EjbSurveyAnswerFactory(final Class<QUESTION> cQuestion, final Class<ANSWER> cAnswer, final Class<OPTION> cOption)
 	{       
 		this.cQuestion = cQuestion;
         this.cAnswer = cAnswer;
+        this.cOption = cOption;
 	}
    	
 	public ANSWER build(QUESTION question, DATA data, Answer answer)
@@ -152,12 +154,20 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 			}
 			
 			ejb.setValueText(json.getValueText());
+			ejb.setValueBoolean(json.getValueBoolean());
+			ejb.setValueNumber(json.getValueNumber());
+			ejb.setValueDouble(json.getValueDouble());
+			
+			if(json.getOption()!=null && json.getOption().getId()!=null && json.getOption().getId()>0) 
+			{
+				ejb.setOption(fSurvey.find(cOption,json.getOption().getId()));
+			}
+			else{ejb.setOption(null);}
+			
 			fSurvey.save(ejb);
 		}
-		catch (UtilsNotFoundException e) {e.printStackTrace();} catch (UtilsConstraintViolationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UtilsLockingException e) {
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
+		catch (UtilsConstraintViolationException e) {e.printStackTrace();} catch (UtilsLockingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -39,7 +39,7 @@ public class JsonSurveyOptionFactory<OPTION extends JeeslSurveyOption<?,?>>
 	public static Option id(long id)
 	{
 		Option json = build();
-		json.setId(0);
+		json.setId(id);
 		return json;
 	}
 }

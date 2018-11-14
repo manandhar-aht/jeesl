@@ -97,7 +97,7 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	
 	public EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION> answer()
 	{
-		return new EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION>(cQuestion,cAnswer);
+		return new EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION>(cQuestion,cAnswer,cOption);
 	}
 	
 	public EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION> ejbQuestion()

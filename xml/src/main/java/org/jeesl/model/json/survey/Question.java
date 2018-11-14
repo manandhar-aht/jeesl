@@ -97,6 +97,11 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	@Override public void setShowText(Boolean showText) {this.showText=showText;}
 	@JsonIgnore public boolean isSetShowText() {return showText!=null;}
 	
+	@JsonProperty("showDate")
+	private Boolean showDate;
+	@Override public Boolean getShowDate() {return showDate;}
+	@Override public void setShowDate(Boolean showDate) {this.showDate=showDate;}
+	
 	@JsonProperty("showScore")
 	private Boolean showScore;
 	@Override public Boolean getShowScore() {return showScore;}

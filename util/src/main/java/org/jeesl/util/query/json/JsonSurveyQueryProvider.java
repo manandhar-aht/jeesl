@@ -29,7 +29,7 @@ public class JsonSurveyQueryProvider
 	public static Template templateExport()
 	{
 		Option option = JsonSurveyOptionFactory.build();
-		option.setId(0);
+		option.setId(0l);
 		option.setPosition(0);
 		option.setCode("");
 		option.setLabel("");
@@ -52,6 +52,7 @@ public class JsonSurveyQueryProvider
 		question.setShowBoolean(true);
 		question.setShowInteger(true);
 		question.setShowDouble(true);
+		question.setShowDate(true);
 		question.setShowText(true);
 		question.setShowScore(true);
 		question.setShowRemark(true);
@@ -62,7 +63,7 @@ public class JsonSurveyQueryProvider
 		question.setOptions(new ArrayList<Option>());question.getOptions().add(option);
 		
 		Section section = JsonSurveySectionFactory.build();
-		section.setId(0);
+		section.setId(0l);
 		section.setCode("");
 		section.setName("");
 		section.getQuestions().add(question);

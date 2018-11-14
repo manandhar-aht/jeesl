@@ -78,7 +78,7 @@ public class JsonSurveySectionFactory<L extends UtilsLang,D extends UtilsDescrip
 	public static Section id(long id)
 	{
 		Section json = build();
-		json.setId(0);
+		json.setId(id);
 		return json;
 	}
 }

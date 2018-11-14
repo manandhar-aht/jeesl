@@ -74,6 +74,7 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 		if(q.isSetShowText()){json.setShowText(ejb.getShowText());}
 		if(q.isSetShowScore()){json.setShowScore(ejb.getShowScore());}
 		if(q.isSetShowRemark()){json.setShowRemark(ejb.getShowRemark());}
+		if(q.getShowDate()!=null){json.setShowDate(ejb.getShowDate());}
 		if(q.isSetShowSelectOne()){json.setShowSelectOne(ejb.getShowSelectOne());}
 		if(q.isSetShowSelectMulti()){json.setShowSelectMulti(ejb.getShowSelectMulti());}
 		if(q.getShowMatrix()!=null){json.setShowMatrix(ejb.getShowMatrix());}

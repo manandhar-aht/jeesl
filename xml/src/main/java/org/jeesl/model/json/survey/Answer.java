@@ -1,9 +1,11 @@
 package org.jeesl.model.json.survey;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.jeesl.interfaces.model.survey.JeeslSimpleSurveyAnswer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -53,6 +55,11 @@ public class Answer implements Serializable,JeeslSimpleSurveyAnswer
 	private String remark;
 	@Override public String getRemark() {return remark;}
 	@Override public void setRemark(String remark) {this.remark = remark;}
+	
+	@JsonProperty("option")
+	private Option option;
+	public Option getOption() {return option;}
+	public void setOption(Option option) {this.option = option;}
 	
 	@Override public String toString()
 	{

@@ -14,9 +14,9 @@ public class Option implements Serializable
 	public static final long serialVersionUID=1;
 
 	@JsonProperty("id")
-	private long id;
-	public long getId() {return id;}
-	public void setId(long id) {this.id = id;}
+	private Long id;
+	public Long getId() {return id;}
+	public void setId(Long id) {this.id = id;}
 	
 	@JsonProperty("position")
 	private int position;

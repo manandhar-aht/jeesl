@@ -36,6 +36,9 @@ public interface JeeslSimpleSurveyQuestion
 	Boolean getShowScore();
 	void setShowScore(Boolean showScore);
 	
+	Boolean getShowDate();
+	void setShowDate(Boolean showDate);
+	
 	Boolean getShowRemark();
 	void setShowRemark(Boolean showRemark);
 	

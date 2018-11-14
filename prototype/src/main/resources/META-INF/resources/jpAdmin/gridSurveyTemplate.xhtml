@@ -184,7 +184,6 @@
 							
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<h:outputText value="#{cc.attrs.bean.section.position}"/>
-	
 						</p:panelGrid>
 						
 						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
@@ -202,7 +201,13 @@
 							
 							<p:outputLabel rendered="#{cc.attrs.withScore}" value="#{msg.jeeslSurveySectionScoreNormalize}"/>
 							<p:inputText rendered="#{cc.attrs.withScore}" value="#{cc.attrs.bean.nnb.b}"/>
-
+						</p:panelGrid>
+						
+						<p:panelGrid columns="4" columnClasses="jeeslGrid10,jeeslGrid40,jeeslGrid10,jeeslGrid40">						
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.showCode}" /><p:outputLabel value="#{msg.jeeslSurveySectionShowCode}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.showTopic}"/><p:outputLabel value="#{msg.jeeslSurveySectionShowTopic}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.showQuestion}" /><p:outputLabel value="#{msg.jeeslSurveySectionShowQuestion}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.section.showRemark}" /><p:outputLabel value="#{msg.jeeslSurveySectionShowRemark}"/>
 						</p:panelGrid>
 					</p:panel>
 				</h:form>
@@ -303,7 +308,7 @@
 							<p:outputLabel value="#{msg.jpSurveyQuestionShowScoreBonus}"/>
 						</p:panelGrid>
 						
-						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40">						
+						<p:panelGrid columns="4" columnClasses="jeeslGrid10,jeeslGrid40,jeeslGrid10,jeeslGrid40">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showBoolean}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowBoolean}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showDate}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowDate}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showInteger}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowInteger}"/>

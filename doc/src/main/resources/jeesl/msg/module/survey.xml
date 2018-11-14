@@ -561,10 +561,39 @@
 	    	</s:langs>
     </s:translation>
     <s:translation key="jeeslSurveyAnswerBoolean">
-	    	<s:langs>
-	    		<s:lang key="de" translation="Boolscher Wert"/>
-	    		<s:lang key="en" translation="Boolean Value"/>
-	    		<s:lang key="fr" translation="Boolean Value"/>
-	    	</s:langs>
-    </s:translation> 
+    	<s:langs>
+    		<s:lang key="de" translation="Boolscher Wert"/>
+    		<s:lang key="en" translation="Boolean Value"/>
+    		<s:lang key="fr" translation="Boolean Value"/>
+    	</s:langs>
+    </s:translation>
+    
+    <s:translation key="jeeslSurveySectionShowCode">
+    	<s:langs>
+    		<s:lang key="de" translation="Code"/>
+    		<s:lang key="en" translation="Code"/>
+    		<s:lang key="fr" translation="Code"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSurveySectionShowTopic">
+    	<s:langs>
+    		<s:lang key="de" translation="Topic"/>
+    		<s:lang key="en" translation="Topic"/>
+    		<s:lang key="fr" translation="Topic"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSurveySectionShowQuestion">
+    	<s:langs>
+    		<s:lang key="de" translation="Question"/>
+    		<s:lang key="en" translation="Question"/>
+    		<s:lang key="fr" translation="Question"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSurveySectionShowRemark">
+    	<s:langs>
+    		<s:lang key="de" translation="Remark"/>
+    		<s:lang key="en" translation="Remark"/>
+    		<s:lang key="fr" translation="Remark"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

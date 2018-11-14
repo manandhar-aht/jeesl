@@ -48,4 +48,17 @@ public interface JeeslSurveySection<L extends UtilsLang, D extends UtilsDescript
 	
 	Double getScoreNormalize();
 	void setScoreNormalize(Double scoreNormalize);
+	
+
+	Boolean getShowCode();
+	void setShowCode(Boolean showCode);
+	
+	Boolean getShowTopic();
+	void setShowTopic(Boolean showTopic);
+	
+	Boolean getShowQuestion();
+	void setShowQuestion(Boolean showQuestion);
+	
+	Boolean getShowRemark();
+	void setShowRemark(Boolean showRemark);
 }

@@ -19,10 +19,12 @@ public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,
 		extends Serializable
 {
 	STORAGE getStorage();
+	void setStorage(STORAGE storage);
+	
 	CONTAINER getContainer();
 	List<META> getMetas();
 	
-	//Default behaiviour should be transaction=false
+	//Default behavior should be transaction=false
 	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException;
 	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException;
 	

@@ -59,7 +59,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	private String zipName; public String getZipName() {return zipName;} public void setZipName(String zipName) {this.zipName = zipName;}
 	private String zipPrefix; public String getZipPrefix() {return zipPrefix;} public void setZipPrefix(String zipPrefix) {this.zipPrefix = zipPrefix;}
 
-	private STORAGE storage; @Override public STORAGE getStorage() {return storage;}
+	private STORAGE storage; @Override public STORAGE getStorage() {return storage;} public void setStorage(STORAGE storage) {this.storage=storage;}
 	protected CONTAINER container; @Override public CONTAINER getContainer() {return container;}
 	protected META meta; public META getMeta() {return meta;} public void setMeta(META meta) {this.meta = meta;}
 	protected File xmlFile;
@@ -82,10 +82,12 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	{
 		try
 		{
-			storage = fFr.fByCode(fbFile.getClassStorage(), code);
+			setStorage(fFr.fByCode(fbFile.getClassStorage(), code));
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
+	
+	
 	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException {init(storage,with,withTransaction);}
 	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE initForStorage, W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException
 	{
@@ -157,8 +159,9 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	
 	public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info("Saving: "+xmlFile.getName());
+		logger.info("Saving: "+xmlFile.getName()+" Now calling fFr.saveToFileRepository");
 		meta = fFr.saveToFileRepository(meta,xmlFile.getData().getValue());
+		logger.info("Saved");
 		reload();
 		reset(true);
     }

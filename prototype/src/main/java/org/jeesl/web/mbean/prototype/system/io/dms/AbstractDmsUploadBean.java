@@ -136,6 +136,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 		logger.info(AbstractLogMessage.selectEntity(item));
 		this.dm = (DMS)item;
 		attributeHandler.init(dm.getSet());
+		fileHandler.setStorage(dm.getStorage());
 		reloadTree();
 		reset(true,true);
 	}
@@ -169,43 +170,44 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
     @SuppressWarnings("unchecked")
 	public void onSectionSelect(NodeSelectEvent event)
     {
-    		logger.info("Selected "+event.getTreeNode().toString());
-    		section = (S)event.getTreeNode().getData();
-    		section = efLang.persistMissingLangs(fDms, localeCodes, section);
-    		S db = fDms.load(section,false);
-    		efSection.update(db,section);
-    		reloadFiles();
-    		reset(false,true);
+		logger.info("Selected "+event.getTreeNode().toString());
+		section = (S)event.getTreeNode().getData();
+		section = efLang.persistMissingLangs(fDms, localeCodes, section);
+		S db = fDms.load(section,false);
+		efSection.update(db,section);
+		reloadFiles();
+		reset(false,true);
     }
     
     private void reloadFiles()
     {
-    		files = fDms.allForParent(fbDms.getClassFile(),section);
+    	files = fDms.allForParent(fbDms.getClassFile(),section);
     }
 
     public void addFile() throws UtilsConstraintViolationException, UtilsLockingException
     {
-    		if(debugOnInfo) {logger.info(AbstractLogMessage.addEntity(fbDms.getClassFile()));}
-    		file = efFile.build(section, files);
-    		file.setName(efLang.createEmpty(sbhLocale.getList()));
-    		attributeHandler.prepare(file);
-    		fileHandler.init(dm.getStorage(),file,false);
+		if(debugOnInfo) {logger.info(AbstractLogMessage.addEntity(fbDms.getClassFile()));}
+		file = efFile.build(section, files);
+		file.setName(efLang.createEmpty(sbhLocale.getList()));
+		attributeHandler.prepare(file);
+		fileHandler.init(file,false);
     }
     	
     public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
     {
-    		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(file));}
-    		file = fDms.save(file);
-    		reloadFiles();
-    		attributeHandler.prepare(file);
+		if(debugOnInfo) {logger.info(AbstractLogMessage.saveEntity(file));}
+		file = fDms.save(file);
+		reloadFiles();
+		fileHandler.init(file,false);
+		attributeHandler.prepare(file);
     }
     
     public void selectFile() throws UtilsConstraintViolationException, UtilsLockingException
     {
-    		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity((file)));}
-    		file = efLang.persistMissingLangs(fDms, sbhLocale.getList(), file);
-    		attributeHandler.prepare(file);
-    		fileHandler.init(dm.getStorage(),file,false);
+		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity((file)));}
+		file = efLang.persistMissingLangs(fDms, sbhLocale.getList(), file);
+		attributeHandler.prepare(file);
+		fileHandler.init(file,false);
     }
     
 	@Override

@@ -10,10 +10,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithSize;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
-import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface JeeslFileMeta<D extends UtilsDescription,
@@ -24,8 +22,8 @@ public interface JeeslFileMeta<D extends UtilsDescription,
 //					EjbWithPosition,
 					EjbWithCode,
 //					EjbWithName,
-					EjbWithSize,EjbWithRecord
-//					EjbWithDescription<D>
+					EjbWithSize,EjbWithRecord,
+					EjbWithDescription<D>
 {
 	public enum Attributes{container}
 	

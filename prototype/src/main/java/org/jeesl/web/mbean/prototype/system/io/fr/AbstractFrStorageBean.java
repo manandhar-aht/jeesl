@@ -27,7 +27,7 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
-									META extends JeeslFileMeta<CONTAINER,TYPE>,
+									META extends JeeslFileMeta<D,CONTAINER,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>>
 						extends AbstractAdminBean<L,D>
 						implements Serializable

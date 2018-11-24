@@ -17,7 +17,7 @@ public class DefaultFileRepositoryHandler<L extends UtilsLang, D extends UtilsDe
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
-									META extends JeeslFileMeta<CONTAINER,TYPE>,
+									META extends JeeslFileMeta<D,CONTAINER,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>>
 	extends AbstractFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>
 {

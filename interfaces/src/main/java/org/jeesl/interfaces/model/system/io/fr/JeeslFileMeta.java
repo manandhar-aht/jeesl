@@ -6,15 +6,18 @@ import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithSize;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
+import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface JeeslFileMeta<CONTAINER extends JeeslFileContainer<?,?>,
+public interface JeeslFileMeta<D extends UtilsDescription,
+								CONTAINER extends JeeslFileContainer<?,?>,
 								TYPE extends UtilsStatus<TYPE,?,?>>
 			extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,
 					EjbWithParentAttributeResolver,
@@ -22,6 +25,7 @@ public interface JeeslFileMeta<CONTAINER extends JeeslFileContainer<?,?>,
 					EjbWithCode,
 //					EjbWithName,
 					EjbWithSize,EjbWithRecord
+//					EjbWithDescription<D>
 {
 	public enum Attributes{container}
 	

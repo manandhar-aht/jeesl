@@ -41,7 +41,7 @@ public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDe
 								MT extends UtilsStatus<MT,L,D>,
 								FS extends JeeslFileStorage<L,D,?>,
 								FC extends JeeslFileContainer<FS,?>,
-								FM extends JeeslFileMeta<FC,?>
+								FM extends JeeslFileMeta<D,FC,?>
 								>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractCmsRenderer.class);

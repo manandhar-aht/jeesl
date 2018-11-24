@@ -38,7 +38,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
-									META extends JeeslFileMeta<CONTAINER,TYPE>,
+									META extends JeeslFileMeta<D,CONTAINER,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>>
 	implements org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler<STORAGE,CONTAINER,META>
 {

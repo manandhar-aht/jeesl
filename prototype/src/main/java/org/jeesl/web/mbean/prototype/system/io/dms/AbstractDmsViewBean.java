@@ -60,7 +60,7 @@ public abstract class AbstractDmsViewBean <L extends UtilsLang,D extends UtilsDe
 											FSTORAGE extends JeeslFileStorage<L,D,FENGINE>,
 											FENGINE extends UtilsStatus<FENGINE,L,D>,
 											FCONTAINER extends JeeslFileContainer<FSTORAGE,FMETA>,
-											FMETA extends JeeslFileMeta<FCONTAINER,FTYPE>,
+											FMETA extends JeeslFileMeta<D,FCONTAINER,FTYPE>,
 											FTYPE extends UtilsStatus<FTYPE,L,D>,
 											
 											DS extends JeeslDomainSet<L,D,?>,

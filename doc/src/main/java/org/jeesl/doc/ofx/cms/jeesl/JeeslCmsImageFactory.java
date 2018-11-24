@@ -16,7 +16,6 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.openfuxml.content.media.Image;
 import org.openfuxml.content.ofx.Paragraph;
 import org.openfuxml.content.ofx.Section;
-import org.openfuxml.content.ofx.Title;
 import org.openfuxml.factory.xml.media.XmlImageFactory;
 import org.openfuxml.factory.xml.media.XmlMediaFactory;
 import org.openfuxml.factory.xml.ofx.content.text.XmlTitleFactory;
@@ -34,7 +33,7 @@ public class JeeslCmsImageFactory<E extends JeeslIoCmsElement<?,?,?,?,C,FC>,
 								C extends JeeslIoCmsContent<?,E,?>,
 								FS extends JeeslFileStorage<?,?,?>,
 								FC extends JeeslFileContainer<FS,?>,
-								FM extends JeeslFileMeta<FC,?>>
+								FM extends JeeslFileMeta<?,FC,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslCmsImageFactory.class);
 	

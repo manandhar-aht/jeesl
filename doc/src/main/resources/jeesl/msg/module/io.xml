@@ -56,6 +56,13 @@
     		<s:lang key="fr" translation="Type"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslIoFileDescription">
+    	<s:langs>
+    		<s:lang key="de" translation="Beschreibung"/>
+    		<s:lang key="en" translation="Description"/>
+    		<s:lang key="fr" translation="Description"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslIoReportAggregations">
     	<s:langs>
     		<s:lang key="de" translation="Aggregierungen"/>

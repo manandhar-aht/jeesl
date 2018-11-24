@@ -31,4 +31,6 @@ public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,
 	InputStream download(META meta) throws UtilsNotFoundException;
 	
 	void copyTo(JeeslFileRepositoryHandler<STORAGE,CONTAINER,META> target) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException;
+	
+//	StreamedContent fileStream() throws Exception;
 }

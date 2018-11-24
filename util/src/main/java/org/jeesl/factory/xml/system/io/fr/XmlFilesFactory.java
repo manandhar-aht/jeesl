@@ -23,8 +23,8 @@ public class XmlFilesFactory<CONTAINER extends JeeslFileContainer<?,META>, META 
 		List<String> names = new ArrayList<String>();
 		for(META meta : metas)
 		{
-			xml.getFile().add(XmlFileFactory.build(meta.getName()));
-			names.add(meta.getName());
+			xml.getFile().add(XmlFileFactory.build(meta.getFileName()));
+			names.add(meta.getFileName());
 		}
 		if(!names.isEmpty()) {xml.setName(StringUtils.join(names, ", "));}
 		xml.setElements(metas.size());

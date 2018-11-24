@@ -186,7 +186,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 			{
 				sb.append(zipPrefix).append("/");
 			}
-			sb.append(m.getName());
+			sb.append(m.getFileName());
 			
 			ZipEntry ze = new ZipEntry(sb.toString());
 			zof.putNextEntry(ze);
@@ -212,7 +212,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		logger.info("Copy To");
 		for(META oldMeta : metas)
 		{
-			META newMeta = efMeta.build(target.getContainer(), oldMeta.getName(), oldMeta.getSize(), oldMeta.getRecord());
+			META newMeta = efMeta.build(target.getContainer(), oldMeta.getFileName(), oldMeta.getSize(), oldMeta.getRecord());
 			newMeta.setCategory(oldMeta.getCategory());
 			newMeta.setMd5Hash(oldMeta.getMd5Hash());
 			newMeta.setType(oldMeta.getType());

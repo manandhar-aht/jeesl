@@ -19,7 +19,9 @@ public interface JeeslFileMeta<CONTAINER extends JeeslFileContainer<?,?>,
 			extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,
 					EjbWithParentAttributeResolver,
 //					EjbWithPosition,
-					EjbWithCode,EjbWithName,EjbWithSize,EjbWithRecord
+					EjbWithCode,
+//					EjbWithName,
+					EjbWithSize,EjbWithRecord
 {
 	public enum Attributes{container}
 	
@@ -34,6 +36,9 @@ public interface JeeslFileMeta<CONTAINER extends JeeslFileContainer<?,?>,
 	
 	String getMd5Hash();
 	void setMd5Hash(String md5Hash);
+	
+	String getFileName();
+	void setFileName(String fileName);
 	
 	String getCategory();
 	void setCategory(String category);

@@ -54,7 +54,7 @@
 				</p:column>
 				<p:column>
 					<f:facet name="header"><h:outputText value="#{msg.jeeslIoFileName}"/></f:facet>
-					<h:outputText value="#{meta.name}"/>
+					<h:outputText value="#{meta.fileName}"/>
 				</p:column>
 				<p:column rendered="#{cc.attrs.withCategory}">
 					<f:facet name="header"><h:outputText value="#{cc.attrs.labelCategory}"/></f:facet>
@@ -65,7 +65,7 @@
 		</h:form>
 		<h:form id="fDownload">
 			<p:commandButton rendered="#{not empty cc.attrs.handler.meta}" value="#{msg.jeeslIoFileDownload}" ajax="false" icon="ui-icon-arrowthick-1-s">
-	        		<p:fileDownload value="#{cc.attrs.handler.download}" />
+	        	<p:fileDownload value="#{cc.attrs.handler.download}" />
 			</p:commandButton>
 		</h:form>
 		<p:overlayPanel id="opUpload" widgetVar="wvUpload" appendToBody="false">
@@ -82,7 +82,7 @@
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 							<p:outputLabel value="#{msg.jeeslIoFileName}"/>
-							<h:outputText value="#{cc.attrs.handler.meta.name}"/>
+							<h:outputText value="#{cc.attrs.handler.meta.fileName}"/>
 							<p:outputLabel value="#{msg.jeeslIoFileSize}"/>
 							<h:outputText value="#{j:humanFileSize(cc.attrs.handler.meta.size)}"/>
 							<p:outputLabel value="#{msg.jeeslIoFileRecord}"/>

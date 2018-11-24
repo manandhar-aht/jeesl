@@ -25,7 +25,7 @@ public class EjbIoFrMetaFactory<CONTAINER extends JeeslFileContainer<?,META>, ME
 		return build(container, name, size, record, null);
 	}
 	
-	public META build(CONTAINER container, String name, long size, Date record, List<META> list)
+	public META build(CONTAINER container, String fileName, long size, Date record, List<META> list)
 	{
 		META ejb = null;
 		try
@@ -33,7 +33,7 @@ public class EjbIoFrMetaFactory<CONTAINER extends JeeslFileContainer<?,META>, ME
 			 ejb = cMeta.newInstance();
 			 ejb.setContainer(container);
 			 ejb.setCode(UUID.randomUUID().toString());
-			 ejb.setName(name);
+			 ejb.setFileName(fileName);
 			 ejb.setSize(size);
 			 ejb.setRecord(record);
 			 ejb.setPosition(0);

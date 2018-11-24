@@ -82,11 +82,11 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	{
 		try
 		{
+			if(fFr==null) {throw new UtilsNotFoundException("Facade is null");}
 			setStorage(fFr.fByCode(fbFile.getClassStorage(), code));
 		}
-		catch (UtilsNotFoundException e) {e.printStackTrace();}
+		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 	}
-	
 	
 	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException {init(storage,with,withTransaction);}
 	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE initForStorage, W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException
@@ -219,4 +219,11 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 			fFr.saveToFileRepository(newMeta, fFr.loadFromFileRepository(oldMeta));
 		}
 	}
+	
+	public void reorderMetas() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.warn("NYI until META implements position");
+//		PositionListReorderer.reorder(fFr,metas);
+	}
+
 }

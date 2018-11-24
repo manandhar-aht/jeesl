@@ -19,6 +19,7 @@
 		<composite:attribute name="allowUpload" required="false" default="true"/>
 		<composite:attribute name="allowDelete" required="false" default="false"/>
 		
+		<composite:attribute name="withPosition" required="false" default="false"/>
 		<composite:attribute name="withCategory" required="false" default="false"/>
 		<composite:attribute name="labelCategory" required="false" default="#{msg.jeeslType}"/>
 		<composite:attribute name="mapCategory" required="false" default=""/>
@@ -26,19 +27,24 @@
 	
 	<composite:implementation>
 		<h:form id="fFiles">
-			<p:dataTable id="dtJeeslFiles" var="meta" value="#{cc.attrs.handler.metas}" rowKey="#{meta.id}" selection="#{cc.attrs.handler.meta}" selectionMode="single">
+			<p:dataTable id="dtJeeslFiles" var="meta" value="#{cc.attrs.handler.metas}" rowKey="#{meta.id}"
+						selection="#{cc.attrs.handler.meta}" selectionMode="single" draggableRows="true">
 				<f:facet name="header">
-					<aht:pfDataTableHeader id="dthJeeslFiles" title="#{msg.jeeslIoFiles}">
-						<aht:icon id="iconJeeslFileAdd" type="jeeslAdd"
+					<j:dtHeader id="dthJeeslFiles" title="#{msg.jeeslIoFiles}">
+						<j:icon id="iconJeeslFileAdd" type="jeeslAdd"
 							listener="#{cc.attrs.handler.addFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:opUpload" oncomplete="PF('wvUpload').show();"
 							rendered="#{cc.attrs.allowUpload}"/>
 						<j:downloadIcon type="reportZip" value="#{cc.attrs.handler.zipStream()}" tooltip="#{msg.reportZip}"/>
 						<j:icon type="jeeslDelete" listener="#{cc.attrs.handler.deleteFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fFiles #{cc.attrs.componentPrefix}:#{cc.id}:fDownload"
 								mayDisappear="true" tooltip="#{msg.ttJeeslIoFileDelete}"
 								rendered="#{(cc.attrs.allowDelete) and (not empty cc.attrs.handler.meta) and (cc.attrs.handler.meta.id gt 0)}" />
-					</aht:pfDataTableHeader>
+					</j:dtHeader>
 				</f:facet>
 				<p:ajax event="rowSelect" listener="#{cc.attrs.handler.selectFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fDownload #{cc.attrs.componentPrefix}:#{cc.id}:fFiles" />
+				<p:ajax event="rowReorder" listener="#{cc.attrs.handler.reorderMetas()}" update="@form"/>
+				<p:column rendered="#{cc.attrs.withPosition}">
+					<h:outputText value="#{meta.position}"/>
+				</p:column>
 				<p:column rendered="true" styleClass="jeeslColumnCentered">
 					<jtp:symbolizer value="#{meta.type}"/>
 				</p:column>

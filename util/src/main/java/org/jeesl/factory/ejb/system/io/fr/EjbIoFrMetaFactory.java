@@ -1,6 +1,7 @@
 package org.jeesl.factory.ejb.system.io.fr;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -21,6 +22,11 @@ public class EjbIoFrMetaFactory<CONTAINER extends JeeslFileContainer<?,META>, ME
 	
 	public META build(CONTAINER container, String name, long size, Date record)
 	{
+		return build(container, name, size, record, null);
+	}
+	
+	public META build(CONTAINER container, String name, long size, Date record, List<META> list)
+	{
 		META ejb = null;
 		try
 		{
@@ -30,6 +36,7 @@ public class EjbIoFrMetaFactory<CONTAINER extends JeeslFileContainer<?,META>, ME
 			 ejb.setName(name);
 			 ejb.setSize(size);
 			 ejb.setRecord(record);
+			 ejb.setPosition(0);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

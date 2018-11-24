@@ -194,7 +194,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 		
 		// Instantiate and configure the importer
 		// ATTENTION: Do not use the primary key option here (would cause bad results)
-		ExcelSimpleSerializableImporter<Data,ImportStrategy> statusImporter = ExcelSimpleSerializableImporter.factory(xlsResolver, "TimeSeries", f.getAbsolutePath());
+		ExcelSimpleSerializableImporter<Data,ImportStrategy> statusImporter = ExcelSimpleSerializableImporter.factory(xlsResolver, "TimeSeriesReport", f.getAbsolutePath());
 		statusImporter.selectFirstSheet();
 		statusImporter.setFacade(fTs);
 		statusImporter.getTempPropertyStore().put("createEntityForUnknown", true);
@@ -206,7 +206,10 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 		timeSeries.getData().addAll(data.keySet());
 		Collections.sort(timeSeries.getData(), cTsData);
 		entity=null;
-		
+		// To add the source file use this one
+		// Set the transaction
+		//setTransaction(efTransaction.build(transactionUser,getSources().get(0), excelFile));
+				
 		transaction = efTransaction.build(transactionUser,sources.get(0));
 		preview();
 	}

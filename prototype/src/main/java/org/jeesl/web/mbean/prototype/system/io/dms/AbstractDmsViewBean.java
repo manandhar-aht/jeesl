@@ -50,7 +50,7 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractDmsViewBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
+public abstract class AbstractDmsViewBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											DMS extends JeeslIoDms<L,D,FSTORAGE,ASET,DS,S>,
 											S extends JeeslIoDmsSection<L,D,S>,
 											FILE extends JeeslIoDmsDocument<L,S,FCONTAINER,ACONTAINER>,
@@ -100,7 +100,7 @@ public abstract class AbstractDmsViewBean <L extends UtilsLang,D extends UtilsDe
 
 	public AbstractDmsViewBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,FSTORAGE,S,FILE,VIEW,LAYER> fbDms,
 								final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute,
-								final IoFileRepositoryFactoryBuilder<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fbFr)
+								final IoFileRepositoryFactoryBuilder<L,D,LOC,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fbFr)
 	{
 		super(fbDms);
 		this.fbAttribute=fbAttribute;

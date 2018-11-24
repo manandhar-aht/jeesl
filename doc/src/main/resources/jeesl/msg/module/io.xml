@@ -14,6 +14,13 @@
     		<s:lang key="fr" translation="Template"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslIoFile">
+    	<s:langs>
+    		<s:lang key="de" translation="Datei"/>
+    		<s:lang key="en" translation="File"/>
+    		<s:lang key="fr" translation="File"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslIoFiles">
     	<s:langs>
     		<s:lang key="de" translation="Dateien"/>

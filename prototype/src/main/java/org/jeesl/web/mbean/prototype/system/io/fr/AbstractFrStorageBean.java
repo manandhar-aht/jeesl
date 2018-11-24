@@ -23,7 +23,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescription,
+public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
@@ -36,7 +36,7 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	final static Logger logger = LoggerFactory.getLogger(AbstractFrStorageBean.class);
 	
 	private JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
-	private final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr;
+	private final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr;
 	
 	private final EjbIoFrStorageFactory<STORAGE> efStorage;
 	
@@ -45,7 +45,7 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	
 	private STORAGE storage; public STORAGE getStorage() {return storage;} public void setStorage(STORAGE storage) {this.storage = storage;}
 
-	protected AbstractFrStorageBean(final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr)
+	protected AbstractFrStorageBean(final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr)
 	{
 		super(fbFr.getClassL(),fbFr.getClassD());
 		this.fbFr=fbFr;

@@ -64,9 +64,30 @@
 			</p:dataTable>
 		</h:form>
 		<h:form id="fDownload">
-			<p:commandButton rendered="#{not empty cc.attrs.handler.meta}" value="#{msg.jeeslIoFileDownload}" ajax="false" icon="ui-icon-arrowthick-1-s">
-	        	<p:fileDownload value="#{cc.attrs.handler.download}" />
-			</p:commandButton>
+			
+			<p:panel header="#{msg.jeeslIoFile}" styleClass="jeeslPanel" rendered="#{not empty cc.attrs.handler.meta}">
+				<f:facet name="actions">
+					<j:icon id="iconJeeslFileSave" type="jeeslSave" listener="#{cc.attrs.handler.saveMeta()}" update="#{cc.attrs.componentPrefix}:#{cc.id}"/>
+					<p:commandButton value="#{msg.jeeslIoFileDownload}" ajax="false" icon="ui-icon-arrowthick-1-s">
+			        	<p:fileDownload value="#{cc.attrs.handler.download}" />
+					</p:commandButton> 
+				</f:facet>
+				<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
+					<p:outputLabel value="#{msg.jeeslIoFileType}"/>
+					<ui:fragment>
+						<jtp:symbolizer value="#{cc.attrs.handler.meta.type}" marginRight="5"/>
+						<h:outputText value="#{cc.attrs.handler.meta.type.name[localeCode].lang}"/>
+					</ui:fragment>
+					<p:outputLabel value="#{msg.jeeslIoFileName}"/>
+					<h:outputText value="#{cc.attrs.handler.meta.fileName}"/>
+					<p:outputLabel value="#{msg.jeeslIoFileSize}"/>
+					<h:outputText value="#{j:humanFileSize(cc.attrs.handler.meta.size)}"/>
+					<p:outputLabel value="#{msg.jeeslIoFileRecord}"/>
+					<h:outputText value="#{cc.attrs.handler.meta.record}">
+						<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+					</h:outputText>
+				</p:panelGrid>
+			</p:panel>
 		</h:form>
 		<p:overlayPanel id="opUpload" widgetVar="wvUpload" appendToBody="false">
 			<aht:slot width="7">
@@ -81,6 +102,11 @@
 							<aht:icon id="iconJeeslFileSave" type="jeeslSave" listener="#{cc.attrs.handler.saveFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fFiles" oncomplete="PF('wvUpload').hide();"/> 
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
+							<p:outputLabel value="#{msg.jeeslIoFileType}"/>
+							<ui:fragment>
+								<jtp:symbolizer value="#{cc.attrs.handler.meta.type}" marginRight="5"/>
+								<h:outputText value="#{cc.attrs.handler.meta.type.name[localeCode].lang}"/>
+							</ui:fragment>
 							<p:outputLabel value="#{msg.jeeslIoFileName}"/>
 							<h:outputText value="#{cc.attrs.handler.meta.fileName}"/>
 							<p:outputLabel value="#{msg.jeeslIoFileSize}"/>

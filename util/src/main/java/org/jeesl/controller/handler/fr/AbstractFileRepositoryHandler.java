@@ -34,7 +34,7 @@ import net.sf.exlp.factory.xml.io.XmlDataFactory;
 import net.sf.exlp.factory.xml.io.XmlFileFactory;
 import net.sf.exlp.xml.io.File;
 
-public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
@@ -48,7 +48,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	private boolean debugOnInfo = true;
 
 	protected final JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
-	protected final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
+	protected final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
 	protected final JeeslFileRepositoryCallback callback;
 	
 	protected final EjbIoFrContainerFactory<STORAGE,CONTAINER> efContainer;
@@ -64,8 +64,10 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	protected META meta; public META getMeta() {return meta;} public void setMeta(META meta) {this.meta = meta;}
 	protected File xmlFile;
 	
+	private boolean allowChanges; public boolean isAllowChanges() {return allowChanges;}
+	
 	public AbstractFileRepositoryHandler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
-								IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile,
+								IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile,
 								JeeslFileRepositoryCallback callback)
 	{
 		this.fFr=fFr;

@@ -58,6 +58,35 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 		fSvgFigure = SvgFigureFactory.factory();
 	}
 	
+	@SuppressWarnings("unchecked")
+	protected void symbolizer(JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic , HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+		Image m = getGraphicInfo(request,response);
+		
+	    if(m == null)
+	    {
+	    	response.sendError(HttpServletResponse.SC_NOT_FOUND);
+	    	return;
+	    }
+	    else
+	   	{
+    		try
+    		{
+    			Class<EjbWithGraphic<G>> c = (Class<EjbWithGraphic<G>>)Class.forName(m.getVersion()).asSubclass(EjbWithGraphic.class);
+    			if(EjbWithGraphic.class.isAssignableFrom(c))
+    			{
+    				G g = fGraphic.fGraphic(c,Long.valueOf(m.getId()));
+	            	process(request,response,fGraphic,g,m);
+    			}
+    			else {logger.error("Class "+c.getName()+" not assingable from "+EjbWithGraphic.class.getName());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
+    		}
+    		catch (TranscoderException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
+    		catch (UtilsNotFoundException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
+	   		catch (UtilsProcessingException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
+	   		catch (ClassNotFoundException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
+	   	}
+    }
+	
 	protected void process(HttpServletRequest request, HttpServletResponse response, G graphic, Image image) throws IOException, TranscoderException, UtilsProcessingException
     {
 		byte[] bytes = null;
@@ -67,17 +96,17 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 		
 		if(graphic==null){throw new UtilsProcessingException("graphic is null");}
 		if(graphic.getType()==null){throw new UtilsProcessingException("graphic.type is null");}
-    		if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
+    	if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
 		{
-    			if(debugOnInfo){logger.info("Build SVG: size " + size + " id:" + id);}
-		    	SVGGraphics2D g = fSvgGraphic.build(size,graphic);
-		    	bytes = Svg2SvgTranscoder.transcode(g);
-		    	respond(request,response,bytes,"svg");
+    		if(debugOnInfo){logger.info("Build SVG: size " + size + " id:" + id);}
+		    SVGGraphics2D g = fSvgGraphic.build(size,graphic);
+		    bytes = Svg2SvgTranscoder.transcode(g);
+		    respond(request,response,bytes,"svg");
 		}
-	    	else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.svg.toString()))
-	    	{
-	    		respond(request,response,graphic.getData(),"svg");
-	    	}
+	    else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.svg.toString()))
+	    {
+	    	respond(request,response,graphic.getData(),"svg");
+	    }
 	}
 	
 	protected void process(HttpServletRequest request, HttpServletResponse response, JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic, G graphic, Image image) throws IOException, TranscoderException, UtilsProcessingException
@@ -89,56 +118,30 @@ public class AbstractGraphicSymbolizerServlet<L extends UtilsLang, D extends Uti
 		
 		if(graphic==null){throw new UtilsProcessingException("graphic is null");}
 		if(graphic.getType()==null){throw new UtilsProcessingException("graphic.type is null");}
-	    	if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
+	    if(graphic.getType().getCode().equals(JeeslGraphicType.Code.symbol.toString()))
 		{
-	    		if(debugOnInfo){logger.info("Build SVG: size " + size + " id:" + id);}
-	    		List<F> figures = fGraphic.allForParent(cF,graphic);
+	    	if(debugOnInfo){logger.info("Build SVG: size " + size + " id:" + id);}
+	    	List<F> figures = fGraphic.allForParent(cF,graphic);
 			if(figures.isEmpty())
 			{
-			    	SVGGraphics2D g = fSvgGraphic.build(size,graphic);
-			    	bytes = Svg2SvgTranscoder.transcode(g);
-			    	respond(request,response,bytes,"svg");
+		    	SVGGraphics2D g = fSvgGraphic.build(size,graphic);
+		    	bytes = Svg2SvgTranscoder.transcode(g);
+		    	respond(request,response,bytes,"svg");
 			}
 			else
 			{
 				SVGGraphics2D g = fSvgFigure.build(figures,size);
-			    	bytes = Svg2SvgTranscoder.transcode(g);
-			    	respond(request,response,bytes,"svg");
+		    	bytes = Svg2SvgTranscoder.transcode(g);
+		    	respond(request,response,bytes,"svg");
 			}
 		}
-	    	else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.svg.toString()))
-	    	{
-	    		respond(request,response,graphic.getData(),"svg");
-	    	}
+	    else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.svg.toString()))
+	    {
+	    	respond(request,response,graphic.getData(),"svg");
+	    }
+	    else if(graphic.getType().getCode().equals(JeeslGraphicType.Code.png.toString()))
+	    {
+	    	respond(request,response,graphic.getData(),"png");
+	    }
 	}
-	
-    @SuppressWarnings("unchecked")
-	protected void symbolizer(JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic , HttpServletRequest request, HttpServletResponse response) throws IOException
-    {
-		Image m = getGraphicInfo(request,response);
-		
-	    	if(m == null)
-	    	{
-	    		response.sendError(HttpServletResponse.SC_NOT_FOUND);
-	    		return;
-	    	}
-	    	else
-	    	{
-	    		try
-	    		{
-	    			Class<EjbWithGraphic<G>> c = (Class<EjbWithGraphic<G>>)Class.forName(m.getVersion()).asSubclass(EjbWithGraphic.class);
-	    			if(EjbWithGraphic.class.isAssignableFrom(c))
-	    			{
-	    				G g = fGraphic.fGraphic(c,Long.valueOf(m.getId()));
-		            	process(request,response,fGraphic,g,m);
-	    			}
-	    			else {logger.error("Class "+c.getName()+" not assingable from "+EjbWithGraphic.class.getName());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
-
-	    		}
-	    		catch (TranscoderException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
-	    		catch (UtilsNotFoundException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
-	    		catch (UtilsProcessingException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
-	    		catch (ClassNotFoundException e) {logger.error(e.getMessage());response.sendError(HttpServletResponse.SC_NOT_FOUND);}
-	    	}
-    }
 }

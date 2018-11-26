@@ -15,5 +15,5 @@ public interface JeeslGraphicType <S extends UtilsStatus<S,L,D>,
 									L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
 		extends Serializable,EjbPersistable,JeeslOptionRestDownload,UtilsStatusFixedCode,EjbWithCodeGraphic<G>
 {
-	public static enum Code{svg,symbol}
+	public static enum Code{symbol,svg,png}
 }

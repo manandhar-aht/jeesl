@@ -19,6 +19,12 @@ public class AbstractSettingsBean implements Serializable,JeeslSettingsBean
 	protected String calendarFormat; public String getCalendarFormat(){return calendarFormat;}
 	protected String timeFormat; public String getTimeFormat(){return timeFormat;}
 	
+	protected String patternDate; public String getPatternDate() {return patternDate;}
+	protected String patternHour; public String getPatternHour() {return patternHour;}
+	
+	protected String allowUploadSvg; public String getAllowUploadSvg() {return allowUploadSvg;}
+	protected String allowUploadJesslGraphicType; public String getAllowUploadJesslGraphicType() {return allowUploadJesslGraphicType;}
+	
 	protected String paginatorPosition; public String getPaginatorPosition() {return paginatorPosition;}
 	protected String paginatorTemplate; @Override public String getPaginatorTemplate() {return paginatorTemplate;}
 	protected String rowsPerPageTemplate; @Override public String getRowsPerPageTemplate(){return rowsPerPageTemplate;}
@@ -37,6 +43,10 @@ public class AbstractSettingsBean implements Serializable,JeeslSettingsBean
 		paginatorPosition = "bottom";
 		rowsPerPageTemplate = "5,20,50,100";
 		filterStyle = "width: 50px;";
+		
+		allowUploadSvg = "/(\\.|\\/)(svg)$/";
+		allowUploadJesslGraphicType = "/(\\.|\\/)(svg|png)$/";
+		
 		logger.info(AbstractLogMessage.postConstruct(ptt));
 	}
 	
@@ -45,6 +55,10 @@ public class AbstractSettingsBean implements Serializable,JeeslSettingsBean
 	
 	private void initCalendarPattern()
 	{
+		patternDate = "dd.MM.yyyy";
+		patternHour = "dd.MM.yyyy HH:mm";
+		
+//		Deprecated below
 		datePattern = "dd.MM.yyyy";
 		dateTimePattern = "dd.MM.yyyy HH:mm:ss";
 	}

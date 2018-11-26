@@ -77,8 +77,9 @@
     </xsd:element>
     <xsd:element name="survey">
         <xsd:complexType>
-	        	<xsd:sequence>
-	        		<xsd:element ref="survey:template" maxOccurs="1"/>
+	        <xsd:sequence>
+	        	<xsd:element ref="survey:templates" maxOccurs="1"/>
+	        	<xsd:element ref="survey:template" maxOccurs="1"/>
 				<xsd:element ref="us:status" maxOccurs="1"/>
 				<xsd:element ref="survey:data" maxOccurs="unbounded"/>
 				<xsd:element ref="jf:figures" maxOccurs="1"/>

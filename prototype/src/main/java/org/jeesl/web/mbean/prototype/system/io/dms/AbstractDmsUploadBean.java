@@ -60,7 +60,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 											FSTORAGE extends JeeslFileStorage<L,D,FENGINE>,
 											FENGINE extends UtilsStatus<FENGINE,L,D>,
 											FCONTAINER extends JeeslFileContainer<FSTORAGE,FMETA>,
-											FMETA extends JeeslFileMeta<FCONTAINER,FTYPE>,
+											FMETA extends JeeslFileMeta<D,FCONTAINER,FTYPE>,
 											FTYPE extends UtilsStatus<FTYPE,L,D>,
 											
 											DS extends JeeslDomainSet<L,D,?>,
@@ -100,7 +100,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 
 	public AbstractDmsUploadBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,FSTORAGE,S,FILE,VIEW,LAYER> fbDms,
 								final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute,
-								final IoFileRepositoryFactoryBuilder<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fbFr)
+								final IoFileRepositoryFactoryBuilder<L,D,LOC,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fbFr)
 	{
 		super(fbDms);
 		this.fbAttribute=fbAttribute;

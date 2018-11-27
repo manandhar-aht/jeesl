@@ -15,7 +15,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
 public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,?,?>,
 											CONTAINER extends JeeslFileContainer<STORAGE,?>,
-											META extends JeeslFileMeta<CONTAINER,?>>
+											META extends JeeslFileMeta<?,CONTAINER,?>>
 		extends Serializable
 {
 	STORAGE getStorage();
@@ -31,4 +31,6 @@ public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,
 	InputStream download(META meta) throws UtilsNotFoundException;
 	
 	void copyTo(JeeslFileRepositoryHandler<STORAGE,CONTAINER,META> target) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException;
+	
+//	StreamedContent fileStream() throws Exception;
 }

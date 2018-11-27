@@ -24,11 +24,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.exlp.util.io.HashUtil;
 
-public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription,
+public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
-									META extends JeeslFileMeta<CONTAINER,TYPE>,
+									META extends JeeslFileMeta<D,CONTAINER,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>>
 					extends UtilsFacadeBean
 					implements JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>
@@ -36,10 +36,10 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoFrFacadeBean.class);
 
-	private final IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
+	private final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
 	private final Map<STORAGE,JeeslFileRepositoryStore<META>> mapStorages;
 	
-	public JeeslIoFrFacadeBean(EntityManager em, IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile)
+	public JeeslIoFrFacadeBean(EntityManager em, IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile)
 	{
 		super(em);
 		this.fbFile=fbFile;

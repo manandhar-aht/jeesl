@@ -13,13 +13,32 @@
 		<composite:attribute name="maxdate" required="false" />
 		<composite:attribute name="required" required="false" default="false"/>
         <composite:attribute name="update" required="false" />
+        <composite:attribute name="withDate" required="false" default="true"/>
         <composite:attribute name="withTime" required="false" default="false"/>
+        <composite:attribute name="pattern" required="false" default="#{appSettingsBean.patternDate}"/>
+        
+        <composite:attribute name="stepMinute" required="false" default="5"/>
+        
+        
         <composite:clientBehavior name="change" targets="pCalendar" event="change" />
         <composite:clientBehavior name="dateSelect" targets="pCalendar" event="dateSelect" />
 	</composite:interface>
 
 	<composite:implementation>
-		<c:if test="#{not cc.attrs.withTime}">
+		<c:if test="#{(not cc.attrs.withDate) and (not cc.attrs.withTime)}">
+			<p:calendar styleClass="datePickerContainer" id="pCalendar"
+						value="#{cc.attrs.value}"
+						showOn="button"
+						pattern="#{cc.attrs.pattern}"
+						mindate="#{cc.attrs.mindate}"
+						maxdate="#{cc.attrs.maxdate}"
+						required="#{cc.attrs.required}"
+						stepMinute="#{cc.attrs.stepMinute}">
+	               <p:ajax event="dateSelect" update="#{cc.attrs.update}"/>
+			</p:calendar>
+		</c:if>
+	
+		<c:if test="#{cc.attrs.withDate}">
 			<p:calendar styleClass="datePickerContainer" id="pCalendar"
 						value="#{cc.attrs.value}"
 						showOn="button"

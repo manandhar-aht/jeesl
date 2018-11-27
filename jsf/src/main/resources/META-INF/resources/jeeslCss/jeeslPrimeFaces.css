@@ -135,6 +135,7 @@ div.timeline-frame {background-color: #f1f1f1; margin-left: -14px; margin-top: -
 
 .jeeslCenter {text-align:center}
 .jeeslRight {text-align:right}
+.jeeslRight5 {margin-right: 5px;}
 
 .jeeslPanel .ui-widget-content {background-color: transparent;}
 .jeeslPanel {background-color: #f1f1f1;}

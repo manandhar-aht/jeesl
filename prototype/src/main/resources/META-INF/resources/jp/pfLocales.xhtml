@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+    
+	<composite:interface>
+		<composite:attribute name="localeCode" required="false" default="#{localeCode}"/>
+	</composite:interface>
+
+	<composite:implementation>
+        <h:outputScript>
+			PrimeFaces.locales['de'] = {
+	  			closeText : 'Schließen',
+				prevText : 'Zurück',
+				nextText : 'Vor',
+				currentText : 'Heute',
+				monthNames : [ 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni','Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
+				monthNamesShort : [ 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Out', 'Nov', 'Dez' ],
+				dayNames : [ 'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag' ],
+				dayNamesShort : [ 'Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam' ],
+				dayNamesMin : [ 'So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa' ],
+				weekHeader : 'Semana',
+				firstDay : 1,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : '',
+				timeOnlyTitle : 'Só Horas',
+				timeText : 'Zeit',
+				hourText : 'Stunde',
+				minuteText : 'Minute',
+				secondText : 'Sekunde',
+				ampm : false,
+				month : 'Monat',
+				week : 'Woche',
+				day : 'Tag',
+				allDayText : 'Ganztägig'};
+	</h:outputScript>
+	</composite:implementation>
+</html>

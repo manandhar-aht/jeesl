@@ -17,11 +17,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
+public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 											ENGINE extends UtilsStatus<ENGINE,L,D>,
 											CONTAINER extends JeeslFileContainer<STORAGE,META>,
-											META extends JeeslFileMeta<CONTAINER,TYPE>,
+											META extends JeeslFileMeta<D,CONTAINER,TYPE>,
 											TYPE extends UtilsStatus<TYPE,L,D>>
 				extends AbstractFactoryBuilder<L,D>
 {
@@ -58,8 +58,8 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 		return new EjbIoFrMetaFactory<CONTAINER,META>(cMeta);
 	}
 	
-	public DefaultFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> handler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback)
+	public DefaultFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> handler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback)
 	{
-		return new DefaultFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>(fFr,this,callback);
+		return new DefaultFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE>(fFr,this,callback);
 	}
 }

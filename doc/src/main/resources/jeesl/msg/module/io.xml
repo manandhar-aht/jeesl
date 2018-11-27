@@ -14,6 +14,13 @@
     		<s:lang key="fr" translation="Template"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslIoFile">
+    	<s:langs>
+    		<s:lang key="de" translation="Datei"/>
+    		<s:lang key="en" translation="File"/>
+    		<s:lang key="fr" translation="File"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslIoFiles">
     	<s:langs>
     		<s:lang key="de" translation="Dateien"/>
@@ -47,6 +54,13 @@
     		<s:lang key="de" translation="Typ"/>
     		<s:lang key="en" translation="Type"/>
     		<s:lang key="fr" translation="Type"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslIoFileDescription">
+    	<s:langs>
+    		<s:lang key="de" translation="Beschreibung"/>
+    		<s:lang key="en" translation="Description"/>
+    		<s:lang key="fr" translation="Description"/>
     	</s:langs>
     </s:translation>
 	<s:translation key="jeeslIoReportAggregations">

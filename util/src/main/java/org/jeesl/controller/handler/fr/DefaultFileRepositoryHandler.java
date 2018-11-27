@@ -13,19 +13,19 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class DefaultFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription,
+public class DefaultFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
-									META extends JeeslFileMeta<CONTAINER,TYPE>,
+									META extends JeeslFileMeta<D,CONTAINER,TYPE>,
 									TYPE extends UtilsStatus<TYPE,L,D>>
-	extends AbstractFileRepositoryHandler<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>
+	extends AbstractFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(DefaultFileRepositoryHandler.class);
 
 	public DefaultFileRepositoryHandler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
-								IoFileRepositoryFactoryBuilder<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile,
+								IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile,
 								JeeslFileRepositoryCallback callback)
 	{
 		super(fFr,fbFile,callback);

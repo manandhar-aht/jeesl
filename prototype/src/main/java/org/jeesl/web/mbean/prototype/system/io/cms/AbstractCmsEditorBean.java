@@ -63,7 +63,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 										MT extends UtilsStatus<MT,L,D>,
 										FS extends JeeslFileStorage<L,D,?>,
 										FC extends JeeslFileContainer<FS,?>,
-										FM extends JeeslFileMeta<FC,?>
+										FM extends JeeslFileMeta<D,FC,?>
 										>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean,SbSingleBean,OpEntityBean,JeeslFileRepositoryCallback

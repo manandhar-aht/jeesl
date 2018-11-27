@@ -15,10 +15,12 @@ public class JeeslEap71FacadeLookup implements JeeslFacadeLookup
 	final static Logger logger = LoggerFactory.getLogger(JeeslEap71FacadeLookup.class);
 	
 	private Context context;
-	
+
 	private final String appName;
 	private final String moduleName;
 
+	private int port; public int getPort() {return port;} public void setPort(int port) {this.port = port;}
+	
 	public JeeslEap71FacadeLookup(String appName)
 	{
 		this(appName,null);
@@ -27,6 +29,7 @@ public class JeeslEap71FacadeLookup implements JeeslFacadeLookup
 	{
 		this.appName=appName;
 		this.moduleName=moduleName;
+		port = 8080;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -52,7 +55,7 @@ public class JeeslEap71FacadeLookup implements JeeslFacadeLookup
 		{
 			Properties props = new Properties();
 			props.put(Context.INITIAL_CONTEXT_FACTORY,  "org.wildfly.naming.client.WildFlyInitialContextFactory");
-			props.put(Context.PROVIDER_URL, String.format("%s://%s:%d", "remote+http", "localhost", 8080));
+			props.put(Context.PROVIDER_URL, String.format("%s://%s:%d", "remote+http", "localhost", port));
 			props.put("jboss.naming.client.ejb.context", true);
 //			props.put(Context.SECURITY_PRINCIPAL, username)
 //			props.put(Context.SECURITY_CREDENTIALS, password);

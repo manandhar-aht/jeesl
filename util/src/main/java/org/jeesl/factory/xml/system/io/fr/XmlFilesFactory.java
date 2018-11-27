@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
 import net.sf.exlp.factory.xml.io.XmlFileFactory;
 import net.sf.exlp.xml.io.Files;
 
-public class XmlFilesFactory<CONTAINER extends JeeslFileContainer<?,META>, META extends JeeslFileMeta<CONTAINER,?>>
+public class XmlFilesFactory<CONTAINER extends JeeslFileContainer<?,META>,
+							META extends JeeslFileMeta<?,CONTAINER,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlFilesFactory.class);
 	
@@ -23,8 +24,8 @@ public class XmlFilesFactory<CONTAINER extends JeeslFileContainer<?,META>, META 
 		List<String> names = new ArrayList<String>();
 		for(META meta : metas)
 		{
-			xml.getFile().add(XmlFileFactory.build(meta.getName()));
-			names.add(meta.getName());
+			xml.getFile().add(XmlFileFactory.build(meta.getFileName()));
+			names.add(meta.getFileName());
 		}
 		if(!names.isEmpty()) {xml.setName(StringUtils.join(names, ", "));}
 		xml.setElements(metas.size());

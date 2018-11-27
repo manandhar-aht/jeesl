@@ -26,6 +26,7 @@ import net.sf.ahtutils.xml.status.Status;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/survey}templates"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}template"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}status"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/survey}data" maxOccurs="unbounded"/&gt;
@@ -46,6 +47,7 @@ import net.sf.ahtutils.xml.status.Status;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "templates",
     "template",
     "status",
     "data",
@@ -59,6 +61,8 @@ public class Survey
 {
 
     private final static long serialVersionUID = 1L;
+    @XmlElement(required = true)
+    protected Templates templates;
     @XmlElement(required = true)
     protected Template template;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
@@ -81,6 +85,34 @@ public class Survey
     @XmlAttribute(name = "validTo")
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar validTo;
+
+    /**
+     * Gets the value of the templates property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Templates }
+     *     
+     */
+    public Templates getTemplates() {
+        return templates;
+    }
+
+    /**
+     * Sets the value of the templates property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Templates }
+     *     
+     */
+    public void setTemplates(Templates value) {
+        this.templates = value;
+    }
+
+    public boolean isSetTemplates() {
+        return (this.templates!= null);
+    }
 
     /**
      * Gets the value of the template property.

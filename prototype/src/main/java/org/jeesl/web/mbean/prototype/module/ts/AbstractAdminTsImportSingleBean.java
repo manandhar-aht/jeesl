@@ -210,7 +210,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 		// Set the transaction
 		//setTransaction(efTransaction.build(transactionUser,getSources().get(0), excelFile));
 				
-		transaction = efTransaction.build(transactionUser,sources.get(0));
+		transaction = efTransaction.build(transactionUser,sources.get(0), f.getName());
 		preview();
 	}
 	

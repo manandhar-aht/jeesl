@@ -71,6 +71,11 @@ public class EjbTimeZoneFactory<L extends UtilsLang,
 	public Date startFromUtc(ITEM item, ZONE zone){return TimeZoneProcessor.project(item.getStartDate(),JeeslCalendarTimeZone.tzUtc,zone.getCode());}
 	public Date endFromUtc(ITEM item, ZONE zone){return TimeZoneProcessor.project(item.getEndDate(),JeeslCalendarTimeZone.tzUtc,zone.getCode());}
 
+	public Date toDate(Date date, ZONE zone)
+	{
+		return TimeZoneProcessor.build(date, zone.getCode());
+	}
+	
 	public static boolean supportedCode(String code)
 	{
 		for(String s : TimeZone.getAvailableIDs())

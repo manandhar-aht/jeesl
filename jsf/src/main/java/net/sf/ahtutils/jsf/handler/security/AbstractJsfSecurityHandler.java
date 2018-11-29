@@ -160,6 +160,8 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 //		return true;
 	}
 	
+	public boolean hasRole(R role) {return mapHasRole.containsKey(role) && mapHasRole.get(role);}
+	
 	protected boolean hasDomainRole(Class<R> cRole, Class<U> cUsecase, A action, List<R> staffRoles)
 	{
 		boolean allowDomain = false;

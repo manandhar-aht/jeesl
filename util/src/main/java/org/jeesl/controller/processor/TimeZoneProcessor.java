@@ -35,4 +35,17 @@ public class TimeZoneProcessor
 		
 		return dtDst.toLocalDateTime().toDate();
 	}
+	
+	public static Date build(Date d, String tz)
+	{
+//		logger.info("Date "+d.toString());
+		LocalDateTime ldt = LocalDateTime.fromDateFields(d);
+		DateTime dtSrc = ldt.toDateTime().withZoneRetainFields(DateTimeZone.forID(tz));	
+		
+//		logger.info("ldt "+dtSrc.toString()+" "+dtSrc.toDate().getTime());
+//		logger.info("DT Src "+dtSrc.toString()+" "+dtSrc.toDate().getTime());
+//		logger.info("DT Dst "+dtDst.toString()+" "+dtDst.toDate().getTime());
+		
+		return dtSrc.toLocalDateTime().toDate();
+	}
 }

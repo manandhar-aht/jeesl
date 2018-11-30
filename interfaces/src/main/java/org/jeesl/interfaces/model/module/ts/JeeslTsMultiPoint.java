@@ -28,4 +28,7 @@ public interface JeeslTsMultiPoint <L extends UtilsLang, D extends UtilsDescript
 	
 	UNIT getUnit();
 	void setUnit(UNIT unit);
+	
+	Boolean getVisible();
+	void setVisible(Boolean visible);
 }

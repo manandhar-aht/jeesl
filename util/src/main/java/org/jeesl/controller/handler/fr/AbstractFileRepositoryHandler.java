@@ -71,13 +71,16 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	protected File xmlFile;
 	private String fileName; public String getFileName() {return fileName;} public void setFileName(String fileName) {this.fileName = fileName;}
 	
+	private boolean allowUpload; public boolean isAllowUpload() {return allowUpload;}
 	private boolean allowChanges; public boolean isAllowChanges() {return allowChanges;}
 	private boolean allowChangeName; public boolean isAllowChangeName() {return allowChangeName;}
 	private boolean allowChangeDescription; public boolean isAllowChangeDescription() {return allowChangeDescription;}
 	
 	public AbstractFileRepositoryHandler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
 								IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile,
-								JeeslFileRepositoryCallback callback)
+								JeeslFileRepositoryCallback callback
+								,boolean x
+								)
 	{
 		this.fFr=fFr;
 		this.fbFile=fbFile;
@@ -90,13 +93,14 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		locales = new ArrayList<LOC>();
 		zipName = "zip.zip";
 		
-		allowChanges = false;
+		allowChanges = true;
 		allowChangeName = false;
 		allowChangeDescription = false;
 	}
 	
-	public void allowChanges(boolean name, boolean description)
+	public void allowControls(boolean upload, boolean name, boolean description)
 	{
+		this.allowUpload=upload;
 		allowChangeName = name;
 		allowChangeDescription = description;
 		allowChanges = allowChangeName || allowChangeDescription;

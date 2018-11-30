@@ -116,7 +116,7 @@
 				<h:form id="fConfirm" >
 					<p:panel header="#{msg.jeeslIoFileUpload}" rendered="#{not empty cc.attrs.handler.meta}" styleClass="jeeslPanel" >
 						<f:facet name="actions">
-							<j:icon id="iconJeeslFileSave" type="jeeslSave" rendered="#{cc.attrs.allowUpload and cc.attrs.handler.allowChanges}"
+							<j:icon id="iconJeeslFileSave" type="jeeslSave" rendered="#{cc.attrs.handler.allowUpload}"
 								listener="#{cc.attrs.handler.saveFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fFiles" oncomplete="PF('wvUpload').hide();"/> 
 						</f:facet>
 						<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">

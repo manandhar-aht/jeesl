@@ -18,7 +18,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.jxpath.JXPathContext;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
-import org.jeesl.factory.mc.ts.XmlMcDataSetFactory;
+import org.jeesl.factory.mc.ts.McDataSetFactory;
 import org.jeesl.factory.xml.module.ts.XmlDataFactory;
 import org.jeesl.factory.xml.module.ts.XmlTimeSeriesFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
@@ -235,7 +235,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 		entities = new ArrayList<EjbWithId>();
 		mapLabels = new HashMap<EjbWithId,String>();
 		
-		chartDs = XmlMcDataSetFactory.build(timeSeries);
+		chartDs = McDataSetFactory.build(timeSeries);
 		try
 		{
 			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(clas.getCode()).asSubclass(EjbWithId.class);

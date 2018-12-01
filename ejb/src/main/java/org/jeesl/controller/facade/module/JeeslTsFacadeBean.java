@@ -111,6 +111,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	
 	@Override public boolean isTimeSeriesAllowed(SCOPE scope, INT interval, EC c)
 	{
+		scope = this.find(fbTs.getClassScope(),scope);
 		return scope.getIntervals().contains(interval) && scope.getClasses().contains(c);
 	}
 
@@ -136,7 +137,12 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	{
 		if (!isTimeSeriesAllowed(scope, interval, bridge.getEntityClass()))
 		{
-			throw new UtilsConstraintViolationException("The requested time series combintaion of scope, interval and bridge ist not allowed for " +scope.getCode() +", " +interval.getCode() +", " +bridge.getEntityClass().getCode());
+			StringBuilder sb = new StringBuilder();
+			sb.append("The requested time series combintaion of scope, interval and class ist not allowed. ");
+			sb.append(" scope:"+scope.getCode());
+			sb.append(" interval:"+interval.getCode());
+			sb.append(" class:"+bridge.getEntityClass().getCode());
+			throw new UtilsConstraintViolationException(sb.toString());
 		}
 		try {return fTimeSeries(scope, interval, bridge);}
 		catch (UtilsNotFoundException e)
@@ -181,8 +187,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	}
 	
 	@Override public List<DATA> fData(WS workspace, TS timeSeries){return fData(workspace,timeSeries,null,null);}
-	@Override
-	public List<DATA> fData(WS workspace, TS timeSeries, Date from, Date to)
+	@Override public List<DATA> fData(WS workspace, TS timeSeries, Date from, Date to)
 	{
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
@@ -198,6 +203,28 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(data);
+		cQ.orderBy(cB.asc(eRecord));
+		
+		return em.createQuery(cQ).getResultList();
+	}
+	
+	@Override public List<POINT> fPoints(WS workspace, TS timeSeries, Date from, Date to)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<POINT> cQ = cB.createQuery(fbTs.getClassPoint());
+		Root<POINT> point = cQ.from(fbTs.getClassPoint());
+		
+		Path<DATA> data = point.get(JeeslTsDataPoint.Attributes.data.toString());
+		predicates.add(cB.equal(data.<WS>get(JeeslTsData.Attributes.workspace.toString()), workspace));
+		predicates.add(cB.equal(data.<TS>get(JeeslTsData.Attributes.timeSeries.toString()), timeSeries));
+		
+		Expression<Date> eRecord = data.get(JeeslTsData.Attributes.record.toString());
+		if(from!=null){predicates.add(cB.greaterThanOrEqualTo(eRecord, from));}
+		if(to!=null){predicates.add(cB.lessThan(eRecord,to));}
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(point);
 		cQ.orderBy(cB.asc(eRecord));
 		
 		return em.createQuery(cQ).getResultList();

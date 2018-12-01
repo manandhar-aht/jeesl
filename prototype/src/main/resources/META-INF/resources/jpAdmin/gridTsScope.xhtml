@@ -158,8 +158,8 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderMultiPoints()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectMultiPoint()}" update=":#{cc.id}:fMultiPoints :#{cc.id}:fMultiPoint"/>
 							<p:column rendered="true">
-								<h:graphicImage rendered="#{not m.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
-								<h:outputText rendered="#{m.visible}" value="#{m.position}"/>
+								<h:graphicImage rendered="#{not mp.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+								<h:outputText rendered="#{mp.visible}" value="#{mp.position}"/>
 							</p:column>
 							<p:column headerText="#{msg.jeeslCode}">
 								<h:outputText value="#{mp.code}" />

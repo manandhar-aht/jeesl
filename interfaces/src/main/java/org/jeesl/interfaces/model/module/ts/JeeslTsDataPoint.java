@@ -10,6 +10,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public interface JeeslTsDataPoint <DATA extends JeeslTsData<?,?,?,?>, MP extends JeeslTsMultiPoint<?,?,?,?>>
 		extends EjbWithId,EjbSaveable,Serializable,EjbRemoveable,EjbPersistable
 {
+	public enum Attributes {data}
 	
 	DATA getData();
 	void setData(DATA data);

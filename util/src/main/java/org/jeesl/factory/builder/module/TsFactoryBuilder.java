@@ -1,5 +1,6 @@
 package org.jeesl.factory.builder.module;
 
+import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
@@ -9,6 +10,7 @@ import org.jeesl.factory.ejb.module.ts.EjbTsFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsMutliPointFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsScopeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsTransactionFactory;
+import org.jeesl.factory.mc.ts.McDataSetFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -125,5 +127,10 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	public EjbTsMutliPointFactory<L,D,CAT,SCOPE,ST,UNIT,MP,EC,INT> ejbMultiPoint()
 	{
 		return new EjbTsMutliPointFactory<L,D,CAT,SCOPE,ST,UNIT,MP,EC,INT>(cMp);
+	}
+	
+	public McDataSetFactory<SCOPE,MP,TS,BRIDGE,EC,INT,DATA,POINT,WS> metaChart(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs)
+	{
+		return new McDataSetFactory<SCOPE,MP,TS,BRIDGE,EC,INT,DATA,POINT,WS>(this,fTs);
 	}
 }

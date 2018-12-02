@@ -17,6 +17,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.model.xml.module.ts.TimeSeries;
 import org.metachart.xml.chart.Data;
 import org.metachart.xml.chart.DataSet;
+import org.metachart.xml.chart.Ds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,7 +95,7 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 		return ds;	
 	}
 	
-	public <T extends EjbWithId> DataSet multiPoint(String localeCode, T entity, Date from, Date to) throws UtilsNotFoundException
+	public <T extends EjbWithId> Ds multiPoint(String localeCode, T entity, Date from, Date to) throws UtilsNotFoundException
 	{
 		BRIDGE bridge = fTs.fBridge(fbTs.getClassBridge(),entityClass,entity);
 		TS ts = fTs.fTimeSeries(scope,interval,bridge);
@@ -113,14 +114,14 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 		
 		logger.info("Data: "+datas.size()+" Points: "+points.size());
 		
-		DataSet xml = new DataSet();
+		Ds xml = new Ds();
 		for(MP mp : multiPoints)
 		{
 			if(mp.getVisible() && mapMp.containsKey(mp))
 			{
 				Map<DATA,POINT> mapData = efPoint.toMapDataUnique(mapMp.get(mp));
 				logger.info("MAP-data: "+mapData.size());
-				DataSet ds = new DataSet();
+				Ds ds = new Ds();
 				ds.setLabel(mp.getName().get(localeCode).getLang());
 				for(DATA data : datas)
 				{
@@ -132,9 +133,10 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 					if(p!=null) {d.setY(p.getValue());}
 					ds.getData().add(d);
 				}
-				xml.getDataSet().add(ds);
+				xml.getDs().add(ds);
 			}
 		}
+		
 		
 		return xml;	
 	}

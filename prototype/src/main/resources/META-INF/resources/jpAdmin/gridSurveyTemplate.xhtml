@@ -522,8 +522,8 @@
 						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectCondition()}" update=":#{cc.id}:fConditions :#{cc.id}:fCondition"/>
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderConditions()}" update="@form"/>
 						<p:column>
-							<h:outputText value="#{condition.position}"/>
-							<h:outputText value="#{j:pos2char(condition.position)}"/>
+							<h:outputText value="#{condition.position}" rendered="false"/>
+							<h:outputText value="#{j:posToChar(condition.position)}"/>
 						</p:column>
 						<p:column>
 							<f:facet name="header">#{msg.jeeslSurveyQuestion}</f:facet>

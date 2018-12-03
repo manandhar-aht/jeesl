@@ -9,7 +9,13 @@ public final class HumanFileSize
     
     public static String humanFileSize(Long value)
     {
+    	if(value==null) {return "";}
     	return humanReadableByteCount(value,true);
+    }
+    public static String humanFileSize(Integer value)
+    {
+    	if(value==null) {return "";}
+    	return humanReadableByteCount(value.longValue(),true);
     }
     
     public static String humanReadableByteCount(long bytes, boolean si)

@@ -2,6 +2,7 @@ package org.jeesl.factory.ejb.module.survey;
 
 import java.util.List;
 
+import org.jeesl.factory.ejb.util.EjbPositionFactory;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.slf4j.Logger;
@@ -32,8 +33,7 @@ public class EjbSurveyConditionFactory<QUESTION extends JeeslSurveyQuestion<?,?,
 			ejb.setQuestion(question);
 			ejb.setElement(element);
 			ejb.setTriggerQuestion(triggerQuestion);
-			if(list==null) {ejb.setPosition(1);}
-			else {ejb.setPosition(list.size());}
+			EjbPositionFactory.next(ejb, list);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

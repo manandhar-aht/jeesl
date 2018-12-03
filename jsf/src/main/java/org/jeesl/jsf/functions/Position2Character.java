@@ -9,7 +9,6 @@ public final class Position2Character
     
     public static String toChar(Integer value)
     {
-    	
-        return "A";
+    	return Character.toString((char) (value+64));
     }
 }

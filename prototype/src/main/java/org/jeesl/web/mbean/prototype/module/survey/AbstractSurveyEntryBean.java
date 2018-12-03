@@ -135,7 +135,7 @@ public abstract class AbstractSurveyEntryBean <L extends UtilsLang, D extends Ut
 		{
 			handler.prepare(survey,correlation);
 			handler.reloadAnswers();
-			
+
 			logger.info("Sections: "+bSurvey.getMapSection().get(handler.getTemplate()).size());
 		}
 		

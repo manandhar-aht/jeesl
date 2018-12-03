@@ -81,5 +81,9 @@
 		<function-class>org.jeesl.jsf.functions.HumanFileSize</function-class>
 		<function-signature>java.lang.String humanFileSize(java.lang.Long)</function-signature>
 	</function>
-	
+	<function>
+		<function-name>pos2char</function-name>
+		<function-class>org.jeesl.jsf.functions.Position2Character</function-class>
+		<function-signature>java.lang.String toChar(java.lang.Integer)</function-signature>
+	</function>
 </facelet-taglib> 

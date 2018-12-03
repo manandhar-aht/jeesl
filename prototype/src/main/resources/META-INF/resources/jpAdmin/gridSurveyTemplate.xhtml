@@ -5,6 +5,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://www.jeesl.org/jsf"
 	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
@@ -521,7 +522,8 @@
 						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectCondition()}" update=":#{cc.id}:fConditions :#{cc.id}:fCondition"/>
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderConditions()}" update="@form"/>
 						<p:column>
-							<h:graphicImage rendered="#{condition.negate}" name="12/ui/module/survey/negate.png"  library="jeeslPrototypeGfx"/>
+							<h:outputText value="#{condition.position}"/>
+							<h:outputText value="#{j:pos2char(condition.position)}"/>
 						</p:column>
 						<p:column>
 							<f:facet name="header">#{msg.jeeslSurveyQuestion}</f:facet>
@@ -532,6 +534,7 @@
 						</p:column>
 						<p:column>
 							<f:facet name="header">#{msg.jeeslSurveyCondition}</f:facet>
+							<h:graphicImage rendered="#{condition.negate}" name="12/ui/module/survey/negate.png" library="jeeslPrototypeGfx"/>
 							<h:outputText value="#{condition.option.name[cc.attrs.bean.sbhLocale.selection.code].lang}" />
 						</p:column>
 					</p:dataTable>

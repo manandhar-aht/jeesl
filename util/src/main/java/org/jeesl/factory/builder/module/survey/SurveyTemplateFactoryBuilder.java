@@ -12,6 +12,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateVersionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyValidationAlgorithmFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveyQuestionFactory;
 import org.jeesl.factory.txt.module.survey.TxtSurveyTemplateFactory;
+import org.jeesl.factory.xml.module.survey.XmlTemplateFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
@@ -22,6 +23,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
+import org.jeesl.util.query.xml.module.SurveyQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -69,5 +69,6 @@ public class TestContact extends AbstractAhtUtilsJsfTst
 		sb.append("/>");
 		
 		System.out.println(sb.toString());
+		sc.close();
     }
 }

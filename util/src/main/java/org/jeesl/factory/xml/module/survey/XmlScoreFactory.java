@@ -1,45 +1,20 @@
 package org.jeesl.factory.xml.module.survey;
 
-import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.survey.Score;
 
-public class XmlScoreFactory<L extends UtilsLang,D extends UtilsDescription,
-				SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
-				SS extends UtilsStatus<SS,L,D>,
-				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
-				TEMPLATE extends JeeslSurveyTemplate<L,D,
-				SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,?>,
-				VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
-				TS extends UtilsStatus<TS,L,D>,TC extends UtilsStatus<TC,L,D>,
-				SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
-				QE extends UtilsStatus<QE,L,D>, SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
-				UNIT extends UtilsStatus<UNIT,L,D>,
-				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-				MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-				DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
-				OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-				OPTION extends JeeslSurveyOption<L,D>,
-				CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>>
+public class XmlScoreFactory<
+				SCHEME extends JeeslSurveyScheme<?,?,?,SCORE>,
+				
+				QUESTION extends JeeslSurveyQuestion<?,?,?,?,SCORE,?,?,?,?>,
+				
+				SCORE extends JeeslSurveyScore<?,?,SCHEME,QUESTION>
+				>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlScoreFactory.class);
 	
@@ -51,11 +26,6 @@ public class XmlScoreFactory<L extends UtilsLang,D extends UtilsDescription,
 	public XmlScoreFactory(Score q)
 	{
 		this.q=q;
-}
-	
-	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey,Class<SURVEY> cSurvey,Class<SECTION> cSection,Class<DATA> cData)
-	{
-
 	}
 	
 	public Score build(QUESTION ejb)

@@ -1,15 +1,8 @@
 package org.jeesl.factory.xml.module.survey;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
@@ -25,29 +18,24 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.survey.Question;
 
-public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
-				SS extends UtilsStatus<SS,L,D>,
-				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
-				TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,?>,
-				VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
-				TS extends UtilsStatus<TS,L,D>,TC extends UtilsStatus<TC,L,D>,
-				SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
-				QE extends UtilsStatus<QE,L,D>, SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
-				UNIT extends UtilsStatus<UNIT,L,D>,ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-				MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-				DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
-				OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-				OPTION extends JeeslSurveyOption<L,D>,CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>>
+public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
+								SCHEME extends JeeslSurveyScheme<L,D,?,SCORE>,
+								SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
+								QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+								QE extends UtilsStatus<QE,L,D>,
+								SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
+								UNIT extends UtilsStatus<UNIT,L,D>,
+								OPTIONS extends JeeslSurveyOptionSet<L,D,?,OPTION>,
+								OPTION extends JeeslSurveyOption<L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlQuestionFactory.class);
 		
-	private JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
+	private JeeslSurveyCoreFacade<L,D,?,?,?,SCHEME,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,?,?,?,OPTIONS,OPTION,?> fSurvey;
 	
 	private String localeCode;
 	private Question q;
 	
-	private XmlScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> xfScore;
+	private XmlScoreFactory<SCHEME,QUESTION,SCORE> xfScore;
 	private XmlOptionsFactory<L,D,QUESTION,OPTION> xfOptions;
 		
 	public XmlQuestionFactory(QuerySurvey q){this(q.getLocaleCode(),q.getQuestion());}
@@ -55,11 +43,11 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,S
 	{
 		this.localeCode=localeCode;
 		this.q=q;
-		if(q.isSetScore()){xfScore = new XmlScoreFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(q.getScore());}
+		if(q.isSetScore()){xfScore = new XmlScoreFactory<SCHEME,QUESTION,SCORE>(q.getScore());}
 		if(q.isSetOptions()) {xfOptions = new XmlOptionsFactory<L,D,QUESTION,OPTION>(localeCode,q.getOptions());}
 	}
 	
-	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
+	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,?,?,SCHEME,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,?,?,?,OPTIONS,OPTION,?> fSurvey)
 	{
 		this.fSurvey=fSurvey;
 	}

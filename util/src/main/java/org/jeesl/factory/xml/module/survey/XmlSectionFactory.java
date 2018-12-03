@@ -51,14 +51,14 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,
 	private final String localeCode;
 	private final Section q;
 	
-	private XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> xfQuestion;
+	private XmlQuestionFactory<L,D,SCHEME,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> xfQuestion;
 	
 	public XmlSectionFactory(String localeCode, Section q)
 	{
 		this.localeCode=localeCode;
 		this.q=q;
 		
-		if(q.isSetQuestion()){xfQuestion = new XmlQuestionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,q.getQuestion().get(0));}
+		if(q.isSetQuestion()){xfQuestion = new XmlQuestionFactory<L,D,SCHEME,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION>(localeCode,q.getQuestion().get(0));}
 	}
 	
 	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)

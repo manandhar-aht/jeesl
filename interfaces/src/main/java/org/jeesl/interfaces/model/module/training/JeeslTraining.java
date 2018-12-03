@@ -25,5 +25,5 @@ public interface JeeslTraining<L extends UtilsLang,D extends UtilsDescription,
 				EjbWithCode,EjbWithPositionVisible,
 				EjbWithLang<L>,EjbWithDescription<D>
 {	
-
+	void getX();
 }

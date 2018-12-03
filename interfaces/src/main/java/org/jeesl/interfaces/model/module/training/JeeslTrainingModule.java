@@ -13,13 +13,13 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslTrainingModule<L extends UtilsLang,D extends UtilsDescription,
-MODULE extends JeeslTrainingModule<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
-SESSION extends JeeslTrainingSession<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
-PAGE extends JeeslTrainingPage<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
-TRAINING extends JeeslTraining<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
-DAY extends JeeslTrainingDay<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
-SLOT extends JeeslTrainingSlot<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
-TYPE extends UtilsStatus<TYPE,L,D>
+										MODULE extends JeeslTrainingModule<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
+										SESSION extends JeeslTrainingSession<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
+										PAGE extends JeeslTrainingPage<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
+										TRAINING extends JeeslTraining<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
+										DAY extends JeeslTrainingDay<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
+										SLOT extends JeeslTrainingSlot<L,D,MODULE,SESSION,PAGE,TRAINING,DAY,SLOT,TYPE>,
+										TYPE extends UtilsStatus<TYPE,L,D>
 >
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithPositionVisible,

@@ -92,7 +92,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	public SurveyHandler(JeeslFacesMessageBean bMessage,
 			final JeeslSurveyCoreFacade<?,?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION> fSurvey,
 			JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> bSurvey,
-			final SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> ffSurvey)
+			final SurveyCoreFactoryBuilder<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> ffSurvey)
 	{
 		this.bMessage=bMessage;
 		this.fSurvey=fSurvey;

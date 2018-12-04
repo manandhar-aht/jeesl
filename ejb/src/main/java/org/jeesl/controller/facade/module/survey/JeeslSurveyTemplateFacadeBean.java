@@ -123,6 +123,4 @@ public class JeeslSurveyTemplateFacadeBean <L extends UtilsLang, D extends Utils
 		}
 		else{return list.get(0);}
 	}
-	
-
 }

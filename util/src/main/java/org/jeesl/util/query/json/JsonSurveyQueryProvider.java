@@ -3,15 +3,18 @@ package org.jeesl.util.query.json;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.jeesl.factory.json.module.survey.JsonSurveyConditionFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveyOptionFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveyQuestionFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveySectionFactory;
 import org.jeesl.model.json.survey.Answer;
+import org.jeesl.model.json.survey.Condition;
 import org.jeesl.model.json.survey.Option;
 import org.jeesl.model.json.survey.Question;
 import org.jeesl.model.json.survey.Section;
 import org.jeesl.model.json.survey.Survey;
 import org.jeesl.model.json.survey.Template;
+import org.jeesl.model.json.system.status.JsonType;
 
 public class JsonSurveyQueryProvider
 {
@@ -28,6 +31,20 @@ public class JsonSurveyQueryProvider
 	
 	public static Template templateExport()
 	{
+		Question trigger = JsonSurveyQuestionFactory.build();
+		trigger.setId(0l);
+		
+		Option triggerOption = JsonSurveyOptionFactory.build();
+		triggerOption.setId(0l);
+		
+		JsonType type = new JsonType();
+		
+		Condition condition = JsonSurveyConditionFactory.build();
+		condition.setId(0l);
+		condition.setTrigger(trigger);
+		condition.setOption(triggerOption);
+		condition.setType(type);
+		
 		Option option = JsonSurveyOptionFactory.build();
 		option.setId(0l);
 		option.setPosition(0);
@@ -59,8 +76,10 @@ public class JsonSurveyQueryProvider
 		question.setShowSelectOne(true);
 		question.setShowSelectMulti(true);
 		question.setShowMatrix(true);
-		
 		question.setOptions(new ArrayList<Option>());question.getOptions().add(option);
+		
+		question.setCondition("");
+		question.setConditions(new ArrayList<Condition>());question.getConditions().add(condition);
 		
 		Section section = JsonSurveySectionFactory.build();
 		section.setId(0l);

@@ -29,6 +29,7 @@ import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelati
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
@@ -50,6 +51,7 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 				TC extends UtilsStatus<TC,L,D>,
 				SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+				CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
 				QE extends UtilsStatus<QE,L,D>,
 				SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 				UNIT extends UtilsStatus<UNIT,L,D>,
@@ -164,8 +166,8 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		return new JsonSurveyFactory<L,D,SURVEY,SS>(localeCode,q);
 	}
 	
-	public JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jsonAnswer(org.jeesl.model.json.survey.Answer q)
+	public JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jsonAnswer(org.jeesl.model.json.survey.Answer q)
 	{
-		return new JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q);
+		return new JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q);
 	}
 }

@@ -4,6 +4,7 @@ import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
@@ -20,6 +21,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescription,
 									SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
 									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+									CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
 									QE extends UtilsStatus<QE,L,D>,
 									SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
@@ -33,12 +35,12 @@ public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescript
 	
 	private final Answer q;
 	
-	private JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfQuestion;
+	private JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfQuestion;
 	
 	public JsonSurveyAnswerFactory(Answer q)
 	{
 		this.q=q;
-		if(q.getQuestion()!=null) {jfQuestion = new JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q.getQuestion());}
+		if(q.getQuestion()!=null) {jfQuestion = new JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q.getQuestion());}
 	}
 	
 	public Answer build(ANSWER answer)

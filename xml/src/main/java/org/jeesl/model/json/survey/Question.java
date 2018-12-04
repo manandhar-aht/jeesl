@@ -135,7 +135,18 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	private List<Option> options;
 	public List<Option> getOptions() {return options;}
 	public void setOptions(List<Option> options) {this.options = options;}
-	@JsonIgnore public boolean isSetOptions() {return (options!=null && !options.isEmpty());}
+
+	
+	@JsonProperty("condition")
+	private String condition;
+	public String getCondition() {return condition;}
+	public void setCondition(String condition) {this.condition = condition;}
+	
+	@JsonProperty("conditions")
+	private List<Condition> conditions;
+	public List<Condition> getConditions() {return conditions;}
+	public void setConditions(List<Condition> conditions) {this.conditions = conditions;}
+	
 	
 	@Override public String toString()
 	{

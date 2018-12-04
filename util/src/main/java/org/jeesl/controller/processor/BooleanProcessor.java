@@ -32,7 +32,7 @@ public class BooleanProcessor extends BoolProcessingBaseVisitor
 
 	static List<Boolean> booleanList;
 
-	@SuppressWarnings("unchecked")
+
 	public static Boolean query(String query, List<Boolean> l)
 	{
 		booleanList = l;

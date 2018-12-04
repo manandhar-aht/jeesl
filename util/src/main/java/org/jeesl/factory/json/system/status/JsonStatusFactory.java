@@ -25,10 +25,10 @@ public class JsonStatusFactory<S extends UtilsStatus<S,L,D>,L extends UtilsLang,
 	{
 		JsonStatus json = new JsonStatus();
 	
-//		if(q.isSetId()){xml.setId(ejb.getId());}
+		if(q.getId()!=null){json.setId(ejb.getId());}
 		if(q.isSetCode()){json.setCode(ejb.getCode());}
-		if(q.isSetLabel()){json.setLabel(ejb.getName().get(localeCode).getLang());}
-		if(q.isSetDescription()){json.setDescription(ejb.getDescription().get(localeCode).getLang());}
+		if(q.isSetLabel() && ejb.getName().containsKey(localeCode)){json.setLabel(ejb.getName().get(localeCode).getLang());}
+		if(q.isSetDescription() && ejb.getDescription().containsKey(localeCode)){json.setDescription(ejb.getDescription().get(localeCode).getLang());}
 	
 		return json;
 	}

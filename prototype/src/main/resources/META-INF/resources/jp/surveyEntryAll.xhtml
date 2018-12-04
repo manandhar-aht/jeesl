@@ -27,7 +27,9 @@
 					header="#{section.code}: #{section.name[localeCode].lang}"
 					rendered="#{cc.attrs.handler.showAssessment}">
 				<f:facet name="actions">
-					<j:icon id="btSave" type="jeeslSave" listener="#{cc.attrs.bean.saveData(section)}" update="@form" tooltip="#{msg.jeeslSurveyTtSaveSection}" rendered="#{cc.attrs.handler.showDataSave}"/>
+					<j:icon id="btSave" type="jeeslSave" tooltip="#{msg.jeeslSurveyTtSaveSection}"
+							rendered="#{cc.attrs.handler.showDataSave}"
+							listener="#{cc.attrs.bean.saveData(section)}" update="@form"/>
 					<p:blockUI trigger="btSave:link" block="pQuestions" />
 				</f:facet>
 				<p:panelGrid columns="1" columnClasses="jeeslGrid100">

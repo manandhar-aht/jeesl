@@ -127,9 +127,9 @@ public class SurveyTemplateFactoryBuilder<L extends UtilsLang, D extends UtilsDe
 		return new EjbSurveyConditionFactory<QUESTION,CONDITION,QE>(cCondition);
 	}
 	
-	public TxtSurveyQuestionFactory<L,D,QUESTION,OPTION> txtQuestion()
+	public TxtSurveyQuestionFactory<L,D,QUESTION,OPTION> txtQuestion(String localeCode)
 	{
-		return new TxtSurveyQuestionFactory<L,D,QUESTION,OPTION>();
+		return new TxtSurveyQuestionFactory<L,D,QUESTION,OPTION>(localeCode);
 	}
 	
 	public EjbSurveyValidationAlgorithmFactory<VALGORITHM> ejbAlgorithm()

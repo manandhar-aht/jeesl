@@ -18,6 +18,16 @@ public class Condition implements Serializable
 	private Long id;
 	public Long getId() {return id;}
 	public void setId(Long id) {this.id = id;}
+	
+	@JsonProperty("negate")
+	private boolean negate;
+	public boolean isNegate() {return negate;}
+	public void setNegate(boolean negate) {this.negate = negate;}
+	
+	@JsonProperty("position")
+	private int position;
+	public int getPosition() {return position;}
+	public void setPosition(int position) {this.position = position;}
 
 	@JsonProperty("question")
 	private Question question;

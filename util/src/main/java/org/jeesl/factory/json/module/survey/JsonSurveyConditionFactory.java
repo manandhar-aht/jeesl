@@ -33,6 +33,9 @@ public class JsonSurveyConditionFactory<CONDITION extends JeeslSurveyCondition<?
 		Condition json = build();
 		
 		if(q.getId()!=null) {json.setId(ejb.getId());}
+		json.setNegate(ejb.isNegate());
+		json.setPosition(ejb.getPosition());
+		
 		if(q.getTrigger()!=null)
 		{
 			Question trigger = new Question();

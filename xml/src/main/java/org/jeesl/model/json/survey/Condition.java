@@ -34,7 +34,7 @@ public class Condition implements Serializable
 	public Option getOption() {return option;}
 	public void setOption(Option option) {this.option = option;}
 	
-	@JsonProperty("option")
+	@JsonProperty("type")
 	private JsonType type;
 	public JsonType getType() {return type;}
 	public void setType(JsonType type) {this.type = type;}

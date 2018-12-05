@@ -23,11 +23,11 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
+import org.jeesl.util.query.sql.SqlNativeQueryHelper;
 import org.jeesl.util.query.sql.SqlRevisionQueries;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.controller.util.ParentPredicate;
-import net.sf.ahtutils.db.sql.SqlNativeQueryHelper;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;

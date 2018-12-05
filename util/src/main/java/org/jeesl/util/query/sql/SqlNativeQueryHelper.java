@@ -1,4 +1,4 @@
-package net.sf.ahtutils.db.sql;
+package org.jeesl.util.query.sql;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,8 +6,6 @@ import org.slf4j.LoggerFactory;
 public class SqlNativeQueryHelper
 {
 	final static Logger logger = LoggerFactory.getLogger(SqlNativeQueryHelper.class);
-	
-	
 	
 	public static void debugDataTypes(Object[] array){debugDataTypes(true,null,array);}
 	public static void debugDataTypes(boolean debug, Object[] array){debugDataTypes(debug,null,array);}

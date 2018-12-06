@@ -3,6 +3,7 @@ package org.jeesl.api.bean;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.module.survey.JeeslSurveyCache;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
@@ -41,6 +42,7 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 					OPTION extends JeeslSurveyOption<L,D>,
 					CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 					ATT extends UtilsStatus<ATT,L,D>>
+				extends JeeslSurveyCache<QUESTION>
 {	
 	List<ATT> getToolTypes();
 	List<QE> getElements();

@@ -1,9 +1,11 @@
 package org.jeesl.factory.builder.module.survey;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
+import org.jeesl.api.bean.module.survey.JeeslSurveyCache;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.controller.handler.SurveyHandler;
+import org.jeesl.controller.processor.survey.SurveyConditionalHandler;
 import org.jeesl.controller.processor.survey.SurveyScoreProcessor;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
@@ -41,7 +43,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescription, //LOC extends UtilsStatus<LOC,L,D>, line 144
+public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 				SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 				SS extends UtilsStatus<SS,L,D>,
 				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
@@ -156,10 +158,17 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		return new SurveyScoreProcessor<SECTION,QUESTION,ANSWER>(ejbQuestion(),answer());
 	}
 	
-	public SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> handler(JeeslFacesMessageBean bMessage, final JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey, JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
+	public SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> handler(JeeslFacesMessageBean bMessage, final JeeslSurveyCoreFacade<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey, JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
 	{
 		return new SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION,CORRELATION>(bMessage,fSurvey,bSurvey,this);
 	}
+	
+	public SurveyConditionalHandler<SECTION,QUESTION,CONDITION,ANSWER,OPTION> conditional(JeeslSurveyCache<QUESTION> cache)
+	{
+		return new SurveyConditionalHandler<SECTION,QUESTION,CONDITION,ANSWER,OPTION>(cache);
+	}
+	
+//	public JeeslSurveyCacheFacadeBean<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> cache();
 	
 	public JsonSurveyFactory<L,D,SURVEY,SS> surveyJson(String localeCode, org.jeesl.model.json.survey.Survey q)
 	{

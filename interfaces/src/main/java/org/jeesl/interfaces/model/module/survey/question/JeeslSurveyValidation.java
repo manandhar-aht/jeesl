@@ -8,7 +8,7 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolv
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPositionVisible;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslSurveyValidation<QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?>>
+public interface JeeslSurveyValidation<QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?,?>>
 			extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,
 					EjbWithPositionVisible,EjbWithParentAttributeResolver
 {

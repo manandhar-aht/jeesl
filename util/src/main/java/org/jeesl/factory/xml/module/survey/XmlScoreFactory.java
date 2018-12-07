@@ -11,7 +11,7 @@ import net.sf.ahtutils.xml.survey.Score;
 public class XmlScoreFactory<
 				SCHEME extends JeeslSurveyScheme<?,?,?,SCORE>,
 				
-				QUESTION extends JeeslSurveyQuestion<?,?,?,?,SCORE,?,?,?,?>,
+				QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,SCORE,?,?,?,?>,
 				
 				SCORE extends JeeslSurveyScore<?,?,SCHEME,QUESTION>
 				>

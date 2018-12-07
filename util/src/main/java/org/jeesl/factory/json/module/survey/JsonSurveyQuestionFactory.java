@@ -25,7 +25,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
 										SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
-										QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+										QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 										CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
 										QE extends UtilsStatus<QE,L,D>,
 										SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class JeeslSurveyCacheLoader <TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,SECTION,?,?>,
 									
 									SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
-									QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,?,?,?,OPTION,?>,
+									QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,?,?,?,?,OPTION,?>,
 									CONDITION extends JeeslSurveyCondition<QUESTION,?,OPTION>,
 									
 									ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,?,OPTION>,

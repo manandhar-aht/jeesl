@@ -64,7 +64,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 									TS extends UtilsStatus<TS,L,D>,
 									TC extends UtilsStatus<TC,L,D>,
 									SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 									CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
 									QE extends UtilsStatus<QE,L,D>,
 									SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
@@ -95,36 +95,6 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 
 		efAnswer = fbCore.answer();
 	}
-
-//	@Override public TEMPLATE load(TEMPLATE template,boolean withQuestions, boolean withOptions)
-//	{
-//		template = em.find(fbTemplate.getClassTemplate(),template.getId());
-//		
-//		template.getSchemes().size();
-//		template.getOptionSets().size();
-//		if(withQuestions)
-//		{
-//			for(SECTION section : template.getSections())
-//			{
-//				if(withOptions)
-//				{
-//					for(QUESTION question : section.getQuestions())
-//					{
-//						question.getOptions().size();
-//					}
-//				}
-//				else
-//				{
-//					section.getQuestions().size();
-//				}
-//			}
-//		}
-//		else
-//		{
-//			template.getSections().size();
-//		}
-//		return template;
-//	}
 	
 	@Override public SECTION load(SECTION section)
 	{
@@ -149,6 +119,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		question = em.find(fbTemplate.getClassQuestion(),question.getId());
 		question.getScores().size();
 		question.getOptions().size();
+		question.getConditions().size();
 		return question;
 	}
 	

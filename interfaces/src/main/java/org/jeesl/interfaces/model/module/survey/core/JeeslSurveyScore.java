@@ -10,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public interface JeeslSurveyScore<L extends UtilsLang, D extends UtilsDescription,
 									SCHEME extends JeeslSurveyScheme<L,D,?,?>,
-									QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,?>>
+									QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,?,?>>
 			extends Serializable,EjbSaveable
 {
 	QUESTION getQuestion();

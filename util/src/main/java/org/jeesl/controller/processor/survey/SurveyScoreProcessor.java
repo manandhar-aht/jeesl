@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.exlp.util.io.StringUtil;
 
 public class SurveyScoreProcessor <SECTION extends JeeslSurveySection<?,?,?,SECTION,QUESTION>,
-									QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,?,?,?,?,?>,
+									QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,?,?,?,?,?,?>,
 									ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyScoreProcessor.class);

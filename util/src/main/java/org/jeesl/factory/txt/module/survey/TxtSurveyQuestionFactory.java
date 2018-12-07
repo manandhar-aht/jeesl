@@ -16,7 +16,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class TxtSurveyQuestionFactory <L extends UtilsLang, D extends UtilsDescription,
-										QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,OPTION,?>,
+										QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,OPTION,?>,
 										OPTION extends JeeslSurveyOption<L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(TxtSurveyQuestionFactory.class);

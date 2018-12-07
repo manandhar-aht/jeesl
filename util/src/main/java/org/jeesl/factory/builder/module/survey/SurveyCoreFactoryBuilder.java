@@ -5,7 +5,7 @@ import org.jeesl.api.bean.module.survey.JeeslSurveyCache;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.controller.handler.SurveyHandler;
-import org.jeesl.controller.processor.survey.SurveyConditionalHandler;
+import org.jeesl.controller.handler.module.survey.SurveyConditionalHandler;
 import org.jeesl.controller.processor.survey.SurveyScoreProcessor;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
@@ -52,7 +52,7 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 				TS extends UtilsStatus<TS,L,D>,
 				TC extends UtilsStatus<TC,L,D>,
 				SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 				CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
 				QE extends UtilsStatus<QE,L,D>,
 				SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
@@ -165,7 +165,7 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	
 	public SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,CONDITION,ANSWER,OPTION> conditional(JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION> cache)
 	{
-		return new SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,CONDITION,ANSWER,OPTION>(cache);
+		return new SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,CONDITION,ANSWER,OPTION>(this,cache);
 	}
 	
 //	public JeeslSurveyCacheFacadeBean<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> cache();

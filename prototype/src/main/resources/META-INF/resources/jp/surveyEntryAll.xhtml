@@ -22,7 +22,7 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<ui:repeat id="repeatSections" value="#{appSurveyBean.mapSection[cc.attrs.handler.template]}" var="section">
+		<ui:repeat var="section" value="#{appSurveyBean.mapSection[cc.attrs.handler.template]}" id="repeatSections">
 			<p:panel id="pQuestions" styleClass="jeeslPanel"
 					header="#{section.code}: #{section.name[localeCode].lang}"
 					rendered="#{cc.attrs.handler.showAssessment}">
@@ -40,8 +40,8 @@
 					<jtp:label entity="MeisLcfUserEvaluation" code="question"/>
 					<jtp:label entity="MeisLcfUserEvaluation" code="answer"/>
 				</p:panelGrid>
-				<ui:repeat value="#{appSurveyBean.mapQuestion[section]}" id="repeatQuestions" var="q">
-					<p:panelGrid columns="2" columnClasses="#{section.columnClasses}" rendered="#{q.visible}">
+				<ui:repeat var="q" value="#{appSurveyBean.mapQuestion[section]}" id="repeatQuestions">
+					<p:panelGrid columns="2" columnClasses="#{section.columnClasses}" rendered="#{q.visible and cc.attrs.handler.condition.rendered[q]}">
 						<h:panelGroup>
 							<ui:fragment>
 									<h:outputText value="#{q.code}" styleClass="jeeslBold" rendered="#{section.showCode}"/>

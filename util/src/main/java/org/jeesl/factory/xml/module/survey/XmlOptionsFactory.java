@@ -10,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.xml.survey.Options;
 
 public class XmlOptionsFactory <L extends UtilsLang, D extends UtilsDescription,
-								QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,OPTION,?>,
+								QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,OPTION,?>,
 								OPTION extends JeeslSurveyOption<L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlOptionsFactory.class);

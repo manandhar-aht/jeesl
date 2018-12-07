@@ -9,8 +9,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
+import org.jeesl.api.bean.module.survey.JeeslSurveyCache;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
+import org.jeesl.controller.handler.module.survey.SurveyConditionalHandler;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
@@ -44,7 +46,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 							TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,TC,SECTION,?,?>,
 							TC extends UtilsStatus<TC,?,?>,
 							SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
-							QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,?,?,?,OPTION,?>,
+							QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,?,?,?,?,OPTION,?>,
 							CONDITION extends JeeslSurveyCondition<QUESTION,?,OPTION>,
 							ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,MATRIX,DATA,OPTION>,
 							MATRIX extends JeeslSurveyMatrix<?,?,ANSWER,OPTION>,
@@ -59,6 +61,8 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	private final JeeslFacesMessageBean bMessage;
 	private final JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> bSurvey;
 	
+	private final SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,CONDITION,ANSWER,OPTION> condition; public SurveyConditionalHandler<TEMPLATE, SECTION, QUESTION, CONDITION, ANSWER, OPTION> getCondition() {return condition;}
+
 	private final Class<SECTION> cSection;
 
 	private final JeeslSurveyCoreFacade<?,?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION> fSurvey;
@@ -94,7 +98,8 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	public SurveyHandler(JeeslFacesMessageBean bMessage,
 			final JeeslSurveyCoreFacade<?,?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION> fSurvey,
 			JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> bSurvey,
-			final SurveyCoreFactoryBuilder<?,?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> ffSurvey)
+			
+			final SurveyCoreFactoryBuilder<?,?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> ffSurvey)
 	{
 		this.bMessage=bMessage;
 		this.fSurvey=fSurvey;
@@ -105,6 +110,8 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		
 		showAssessment = false;
 		allowAssessment = true;
+
+		condition = new SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,CONDITION,ANSWER,OPTION>(ffSurvey,bSurvey);
 		
 		answers = new HashMap<QUESTION,ANSWER>();
 		matrix = new Nested3IdMap<MATRIX>();
@@ -127,6 +134,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		matrix.clear();
 		multiOptions.clear();
 		activeSections.clear();
+		condition.clear();
 		
 		showDataSave = false;
 		surveyData = null;
@@ -142,6 +150,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate();
+		condition.init(template);
 		if(bSurvey.getMapSection().containsKey(template)){activeSections.addAll(bSurvey.getMapSection().get(template));}
 		if(SurveyHandler.debugPerformance){logger.warn("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());}
 	}
@@ -154,6 +163,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate().getNested();
+		condition.init(template);
 		activeSections.addAll(bSurvey.getMapSection().get(template));
 	}
 	
@@ -182,6 +192,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 			if(activeSections!=null && !activeSections.isEmpty()){filterSection = new ArrayList<SECTION>(activeSections);}
 			if(SurveyHandler.debugPerformance){logger.warn("fAnswers for "+filterSection.size()+" "+JeeslSurveySection.class.getSimpleName()+": "+tfSection.codes(filterSection));try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 			answers = efAnswer.toMapQuestion(fSurvey.fAnswers(surveyData, true, filterSection));
+			condition.evaluteMap(answers);
 		}
 
 		List<ANSWER> loadMatrix = new ArrayList<ANSWER>();
@@ -327,5 +338,4 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	{
 		return "x";
 	}
-
 }

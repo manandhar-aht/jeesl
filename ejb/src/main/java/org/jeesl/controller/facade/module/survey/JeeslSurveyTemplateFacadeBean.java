@@ -41,7 +41,7 @@ public class JeeslSurveyTemplateFacadeBean <L extends UtilsLang, D extends Utils
 											TS extends UtilsStatus<TS,L,D>,
 											TC extends UtilsStatus<TC,L,D>,
 											SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-											QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+											QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 											CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
 											QE extends UtilsStatus<QE,L,D>,
 											SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,

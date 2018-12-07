@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class EjbSurveyConditionFactory<QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?>,
+public class EjbSurveyConditionFactory<QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?,?>,
 										CONDITION extends JeeslSurveyCondition<QUESTION,QE,?>,
 										QE extends UtilsStatus<QE,?,?>>
 {

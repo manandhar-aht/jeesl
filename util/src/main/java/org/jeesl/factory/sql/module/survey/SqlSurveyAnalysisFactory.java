@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
 public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
-									  QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?>,
+									  QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?,?>,
 									  ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,DATA,?>,
 									  DATA extends JeeslSurveyData<?,?,SURVEY,ANSWER,CORRELATION>,
 									  CORRELATION extends JeeslSurveyCorrelation<?,?,DATA>,

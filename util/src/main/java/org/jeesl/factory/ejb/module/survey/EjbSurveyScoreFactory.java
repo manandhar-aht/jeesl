@@ -5,7 +5,8 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbSurveyScoreFactory<QUESTION extends JeeslSurveyQuestion<?,?,?,?,SCORE,?,?,?,?>, SCORE extends JeeslSurveyScore<?,?,?,?>>
+public class EjbSurveyScoreFactory<QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,SCORE,?,?,?,?>,
+									SCORE extends JeeslSurveyScore<?,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyScoreFactory.class);
 	

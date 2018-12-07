@@ -33,7 +33,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class SurveyAnalysisFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 				TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,?,?,ANALYSIS>,
-				QUESTION extends JeeslSurveyQuestion<L,D,?,QE,SCORE,?,?,OPTION,AQ>,
+				QUESTION extends JeeslSurveyQuestion<L,D,?,?,QE,SCORE,?,?,OPTION,AQ>,
 				QE extends UtilsStatus<QE,L,D>,
 				SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
 				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,

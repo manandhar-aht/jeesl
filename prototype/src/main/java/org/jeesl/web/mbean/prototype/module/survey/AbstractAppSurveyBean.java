@@ -48,7 +48,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 						TS extends UtilsStatus<TS,L,D>,
 						TC extends UtilsStatus<TC,L,D>,
 						SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-						QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+						QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 						CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
 						QE extends UtilsStatus<QE,L,D>,
 						SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
@@ -81,6 +81,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 
 	protected Map<Long,OPTION> mapOptionId; @Override public Map<Long,OPTION> getMapOptionId(){return mapOptionId;}
 	protected Map<QUESTION,List<OPTION>> mapOption; @Override public Map<QUESTION,List<OPTION>> getMapOption() {return mapOption;}
+	protected final Map<QUESTION,List<CONDITION>> mapCondition;
 	protected Map<OPTIONS,List<OPTION>> mapOptionSet;
 
 	protected Map<QUESTION,List<OPTION>> matrixRows; @Override public Map<QUESTION,List<OPTION>> getMatrixRows() {return matrixRows;}
@@ -104,6 +105,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		
 		mapOptionId = new HashMap<Long,OPTION>();
 		mapOption = new HashMap<QUESTION,List<OPTION>>();
+		mapCondition = new HashMap<QUESTION,List<CONDITION>>();
 		mapOptionSet = new HashMap<OPTIONS,List<OPTION>>();
 		matrixRows = new HashMap<QUESTION,List<OPTION>>();
 		
@@ -156,7 +158,6 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		}
 	}
 	
-	
 	@Override public void updateTemplate(TEMPLATE template)
 	{
 		if(!mapSection.containsKey(template)){mapSection.put(template,new ArrayList<SECTION>());}
@@ -193,45 +194,12 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 			q = fSurvey.load(q);
 			if(!mapQuestion.containsKey(q.getSection())){mapQuestion.put(q.getSection(),new ArrayList<QUESTION>());}
 			mapQuestion.get(q.getSection()).add(q);
-			updateOptions(q);
+			updateQuestion(q);
 		}
 		logger.info(ffSurvey.getClassQuestion().getSimpleName()+" loaded in "+AbstractLogMessage.postConstruct(ptt));
 	}
-/*	
-	private void reloadOptions()
-	{
-		ProcessingTimeTracker ptt = new ProcessingTimeTracker(true);
-		mapOption.clear();
-		for(OPTION o : fSurvey.allOrderedPosition(ffSurvey.getOptionClass()))
-		{
-			updateCache(o);
-		}
-		logger.info("Options loaded in "+AbstractLogMessage.postConstruct(ptt));
-	}
+
 	
-	private void updateCache(OPTION o)
-	{
-		mapOptionId.put(o.getId(),o);
-		if(!mapOption.containsKey(o.getQuestion())){mapOption.put(o.getQuestion(),new ArrayList<OPTION>());}
-		mapOption.get(o.getQuestion()).add(o);
-		
-		if(o.getRow())
-		{
-			if(!matrixRows.containsKey(o.getQuestion())){matrixRows.put(o.getQuestion(),new ArrayList<OPTION>());}
-			matrixRows.get(o.getQuestion()).add(o);
-		}
-		if(o.getCol())
-		{
-			if(!matrixCols.containsKey(o.getQuestion())){matrixCols.put(o.getQuestion(),new ArrayList<OPTION>());}
-			matrixCols.get(o.getQuestion()).add(o);
-		}
-		if(o.getCell())
-		{
-			if(!matrixCells.containsKey(o.getQuestion())){matrixCells.put(o.getQuestion(),new ArrayList<OPTION>());}
-			matrixCells.get(o.getQuestion()).add(o);
-		}
-	}
-*/	
 	@Override public void updateSection(SECTION section)
 	{
 		if(!mapQuestion.containsKey(section)){mapQuestion.put(section,new ArrayList<QUESTION>());}
@@ -239,7 +207,13 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		mapQuestion.get(section).addAll(section.getQuestions());
 	}
 	
-	@Override public void updateOptions(QUESTION question)
+	@Override public void updateQuestion(QUESTION question)
+	{
+		updateQuestionOptions(question);
+		updateQuestionCondition(question);
+	}
+	
+	private void updateQuestionOptions(QUESTION question)
 	{
 		if(!mapOption.containsKey(question)){mapOption.put(question,new ArrayList<OPTION>());}
 		mapOption.get(question).clear();
@@ -261,6 +235,13 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		}
 	}
 	
+	private void updateQuestionCondition(QUESTION question)
+	{
+		if(!mapCondition.containsKey(question)){mapCondition.put(question,new ArrayList<CONDITION>());}
+		mapCondition.get(question).clear();
+		mapCondition.get(question).addAll(question.getConditions());
+	}
+	
 	@Override public void updateOptions(OPTIONS set)
 	{
 		for(OPTION o : set.getOptions()){mapOptionId.put(o.getId(),o);}
@@ -270,7 +251,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		for(QUESTION question : fSurvey.allForParent(ffSurvey.getClassQuestion(), JeeslSurveyQuestion.Attributes.optionSet.toString(), set))
 		{
 			question = fSurvey.load(question);
-			updateOptions(question);
+			updateQuestion(question);
 		}
 	}
 	
@@ -298,7 +279,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	
 	@Override public List<CONDITION> getConditions(QUESTION question)
 	{
-		logger.warn("NYI, you will get a NPE");
+		if(mapCondition.containsKey(question)) {return mapCondition.get(question);}
 		return null;
 	}
 }

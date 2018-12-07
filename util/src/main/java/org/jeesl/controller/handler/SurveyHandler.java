@@ -24,6 +24,7 @@ import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelati
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
@@ -44,6 +45,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 							TC extends UtilsStatus<TC,?,?>,
 							SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
 							QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,?,?,?,OPTION,?>,
+							CONDITION extends JeeslSurveyCondition<QUESTION,?,OPTION>,
 							ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,MATRIX,DATA,OPTION>,
 							MATRIX extends JeeslSurveyMatrix<?,?,ANSWER,OPTION>,
 							DATA extends JeeslSurveyData<?,?,SURVEY,ANSWER,CORRELATION>,
@@ -55,7 +57,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	private static final long serialVersionUID = 1L;
 	
 	private final JeeslFacesMessageBean bMessage;
-	private final JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> bSurvey;
+	private final JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> bSurvey;
 	
 	private final Class<SECTION> cSection;
 
@@ -91,7 +93,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	
 	public SurveyHandler(JeeslFacesMessageBean bMessage,
 			final JeeslSurveyCoreFacade<?,?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION> fSurvey,
-			JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> bSurvey,
+			JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> bSurvey,
 			final SurveyCoreFactoryBuilder<?,?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> ffSurvey)
 	{
 		this.bMessage=bMessage;

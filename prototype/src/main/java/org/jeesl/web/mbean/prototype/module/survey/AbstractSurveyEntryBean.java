@@ -88,7 +88,7 @@ public abstract class AbstractSurveyEntryBean <L extends UtilsLang, D extends Ut
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSurveyEntryBean.class);
 
-	private SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> handler; public SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getHandler() {return handler;}
+	private SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,CONDITION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> handler; public SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,CONDITION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getHandler() {return handler;}
 	
 	protected CORRELATION correlation;
 	
@@ -103,7 +103,7 @@ public abstract class AbstractSurveyEntryBean <L extends UtilsLang, D extends Ut
 			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
 			JeeslSurveyCoreFacade<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
 			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fAnalysis,
-			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
+			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
 	{
 		super.initSuperSurvey(new ArrayList<String>(Arrays.asList(localeCodes)),bMessage,fTemplate,fCore,fAnalysis,bSurvey);
 		initPageSettings();

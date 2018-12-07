@@ -15,6 +15,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithRemark;
+import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
@@ -29,7 +30,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 										OPTION extends JeeslSurveyOption<L,D>,
 										AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?>>
 			extends Serializable,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable,
-					EjbWithRendered,
+					EjbWithRendered,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{section,visible,position,optionSet}

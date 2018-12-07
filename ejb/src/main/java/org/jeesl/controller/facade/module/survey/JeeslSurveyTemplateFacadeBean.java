@@ -64,6 +64,36 @@ public class JeeslSurveyTemplateFacadeBean <L extends UtilsLang, D extends Utils
 		eTemplate = fbTemplate.template();
 	}
 	
+	@Override public TEMPLATE load(TEMPLATE template,boolean withQuestions, boolean withOptions)
+	{
+		template = em.find(fbTemplate.getClassTemplate(),template.getId());
+		
+		template.getSchemes().size();
+		template.getOptionSets().size();
+		if(withQuestions)
+		{
+			for(SECTION section : template.getSections())
+			{
+				if(withOptions)
+				{
+					for(QUESTION question : section.getQuestions())
+					{
+						question.getOptions().size();
+					}
+				}
+				else
+				{
+					section.getQuestions().size();
+				}
+			}
+		}
+		else
+		{
+			template.getSections().size();
+		}
+		return template;
+	}
+	
 	@Override public TEMPLATE fcSurveyTemplate(TC category, TS status){return fcSurveyTemplate(category,null,status,null);}
 	@Override public TEMPLATE fcSurveyTemplate(TC category, VERSION version, TS status, VERSION nestedVersion)
 	{

@@ -1,6 +1,7 @@
 package org.jeesl.factory.xml.module.survey;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
@@ -62,12 +63,13 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetStatus()){xfStatus = new XmlStatusFactory<SS,L,D>(q.getStatus());}
 	}
 	
-	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey,Class<SURVEY> cSurvey,Class<SECTION> cSection,Class<DATA> cData)
+	public void lazyLoad(JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
+				JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey,Class<SURVEY> cSurvey,Class<SECTION> cSection,Class<DATA> cData)
 	{
 		this.fSurvey=fSurvey;
 		this.cSurvey=cSurvey;
 		
-		if(q.isSetData()){xfData.lazyLoad(fSurvey,cData);}
+		if(q.isSetData()){xfData.lazyLoad(fSurvey,fTemplate,cData);}
 	}
 	
 	public Survey build(SURVEY ejb)

@@ -62,7 +62,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 						ATT extends UtilsStatus<ATT,L,D>,
 						TOOLCACHETEMPLATE extends JeeslJobTemplate<L,D,?,?,?>>
 					implements Serializable,
-								JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT>
+								JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAppSurveyBean.class);
@@ -280,5 +280,25 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		sb.append("mapSection: ").append(mapSection.size());
 		sb.append(" mapOptionId: ").append(mapOptionId.size());
 		return sb.toString();
+	}
+	
+	@Override
+	public List<SECTION> getSections(TEMPLATE template)
+	{
+		if(mapSection.containsKey(template)) {return mapSection.get(template);}
+		return null;
+	}
+	
+	@Override
+	public List<QUESTION> getQuestions(SECTION section)
+	{
+		if(mapQuestion.containsKey(section)) {return mapQuestion.get(section);}
+		return null;
+	}
+	
+	@Override public List<CONDITION> getConditions(QUESTION question)
+	{
+		logger.warn("NYI, you will get a NPE");
+		return null;
 	}
 }

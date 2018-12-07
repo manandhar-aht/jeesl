@@ -1,64 +1,72 @@
 package org.jeesl.controller.handler.module;
 
+import java.util.List;
+
 import org.jeesl.api.bean.module.survey.JeeslSurveyCache;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurvey;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScheme;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyScore;
+import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
-import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplateVersion;
-import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelation;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-
-public class JeeslSurveyCacheLoader <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
-									SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
-									SS extends UtilsStatus<SS,L,D>,
-									SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
-									VALGORITHM extends JeeslSurveyValidationAlgorithm<L,D>,
-									TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,?>,
-									VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
-									TS extends UtilsStatus<TS,L,D>,
-									TC extends UtilsStatus<TC,L,D>,
-									SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
-									CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-									QE extends UtilsStatus<QE,L,D>,
-									SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
-									UNIT extends UtilsStatus<UNIT,L,D>,
-									ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
-									MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-									DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
-									OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-									OPTION extends JeeslSurveyOption<L,D>,
-									CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>>
-			implements JeeslSurveyCache<QUESTION>
+public class JeeslSurveyCacheLoader <TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,SECTION,?,?>,
+									
+									SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
+									QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,?,?,?,OPTION,?>,
+									CONDITION extends JeeslSurveyCondition<QUESTION,?,OPTION>,
+									
+									ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,?,OPTION>,
+									
+									OPTION extends JeeslSurveyOption<?,?>>
+			implements JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyCacheLoader.class);
 	
-	private final JeeslSurveyCoreFacade<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore;
-	private final SurveyCoreFactoryBuilder<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?> fbCore;
+	private final JeeslSurveyCoreFacade<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,?,?,?,?,?,?,?,OPTION,?> fCore;
+	private final JeeslSurveyTemplateFacade<?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,?,?,?,?,OPTION> fTemplate;
+	
+//	private final SurveyCoreFactoryBuilder<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore;
+	private final SurveyTemplateFactoryBuilder<?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,?,OPTION> fbTemplate;
 	
 	public JeeslSurveyCacheLoader(
-			SurveyCoreFactoryBuilder<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,?> fbCore,
-			JeeslSurveyCoreFacade<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore)
+			SurveyTemplateFactoryBuilder<?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,?,OPTION> fbTemplate,
+//			SurveyCoreFactoryBuilder<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore,
+			JeeslSurveyTemplateFacade<?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,?,?,?,?,OPTION> fTemplate,
+			JeeslSurveyCoreFacade<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,?,?,?,ANSWER,?,?,?,OPTION,?> fCore)
 	{
-		this.fbCore=fbCore;
+		this.fbTemplate=fbTemplate;
+//		this.fbCore=fbCore;
+		
+		this.fTemplate=fTemplate;
 		this.fCore=fCore;
 	}
+	
+	@Override
+	public List<SECTION> getSections(TEMPLATE template)
+	{
+		TEMPLATE t = fTemplate.load(template, false, false);
+		return t.getSections();
+	}
+
+	@Override
+	public List<CONDITION> getConditions(QUESTION question)
+	{
+		return fTemplate.allForParent(fbTemplate.getClassCondition(), question);
+//		return null;
+	}
+
+	@Override
+	public List<QUESTION> getQuestions(SECTION section)
+	{
+		return fTemplate.allForParent(fbTemplate.getClassQuestion(), section);
+	}
+
 
 }

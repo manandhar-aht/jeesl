@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
+import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
 import org.jeesl.controller.monitor.ProcessingTimeTracker;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
@@ -74,7 +75,9 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 	public ProcessingTimeTracker getPtt() {return ptt;}
 	public void setPtt(ProcessingTimeTracker ptt) {this.ptt = ptt;}
 
+	private final JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate;
 	private final JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
+	
 	private final EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION> efTemplate;
 	private final EjbSurveyMatrixFactory<ANSWER,MATRIX,OPTION> efMatrix;
 	private final EjbSurveyOptionFactory<QUESTION,OPTION> efOption;
@@ -96,6 +99,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 	
 	
 	public XlsSurveyDataFactory(String localeCode,
+			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
 			JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey,
 			EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION> efTemplate,
 			EjbSurveyMatrixFactory<ANSWER,MATRIX,OPTION> efMatrix,
@@ -103,6 +107,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 			SurveyCorrelationInfoBuilder<CORRELATION> builder)
 	{
 		this.localeCode = localeCode;
+		this.fTemplate=fTemplate;
 		this.fSurvey = fSurvey;
 		this.efTemplate = efTemplate;
 		this.efMatrix = efMatrix;
@@ -262,7 +267,7 @@ public class XlsSurveyDataFactory <L extends UtilsLang, D extends UtilsDescripti
 				 
 		//Get data for lazy loading
 		TEMPLATE template = survey.getTemplate();
-		if (fSurvey!=null) {template = fSurvey.load(template,false,false);}
+		if (fTemplate!=null) {template = fTemplate.load(template,false,false);}
 		List<SECTION> sections = template.getSections();
 		for (SECTION section : sections)
 		{

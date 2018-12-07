@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.module.survey.correlation.JeeslSurveyCorrelati
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyData;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
@@ -32,6 +33,7 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 					TC extends UtilsStatus<TC,L,D>,
 					SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+					CONDITION extends JeeslSurveyCondition<QUESTION,?,OPTION>,
 					QE extends UtilsStatus<QE,L,D>,
 					SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 					UNIT extends UtilsStatus<UNIT,L,D>,
@@ -42,7 +44,7 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 					OPTION extends JeeslSurveyOption<L,D>,
 					CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 					ATT extends UtilsStatus<ATT,L,D>>
-				extends JeeslSurveyCache<QUESTION>
+				extends JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION>
 {	
 	List<ATT> getToolTypes();
 	List<QE> getElements();

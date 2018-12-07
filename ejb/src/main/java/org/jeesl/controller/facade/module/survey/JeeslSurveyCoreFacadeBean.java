@@ -96,35 +96,35 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		efAnswer = fbCore.answer();
 	}
 
-	@Override public TEMPLATE load(TEMPLATE template,boolean withQuestions, boolean withOptions)
-	{
-		template = em.find(fbTemplate.getClassTemplate(),template.getId());
-		
-		template.getSchemes().size();
-		template.getOptionSets().size();
-		if(withQuestions)
-		{
-			for(SECTION section : template.getSections())
-			{
-				if(withOptions)
-				{
-					for(QUESTION question : section.getQuestions())
-					{
-						question.getOptions().size();
-					}
-				}
-				else
-				{
-					section.getQuestions().size();
-				}
-			}
-		}
-		else
-		{
-			template.getSections().size();
-		}
-		return template;
-	}
+//	@Override public TEMPLATE load(TEMPLATE template,boolean withQuestions, boolean withOptions)
+//	{
+//		template = em.find(fbTemplate.getClassTemplate(),template.getId());
+//		
+//		template.getSchemes().size();
+//		template.getOptionSets().size();
+//		if(withQuestions)
+//		{
+//			for(SECTION section : template.getSections())
+//			{
+//				if(withOptions)
+//				{
+//					for(QUESTION question : section.getQuestions())
+//					{
+//						question.getOptions().size();
+//					}
+//				}
+//				else
+//				{
+//					section.getQuestions().size();
+//				}
+//			}
+//		}
+//		else
+//		{
+//			template.getSections().size();
+//		}
+//		return template;
+//	}
 	
 	@Override public SECTION load(SECTION section)
 	{

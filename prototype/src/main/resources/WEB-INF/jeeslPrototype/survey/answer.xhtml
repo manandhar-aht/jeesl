@@ -17,6 +17,7 @@
 	<h:panelGroup rendered="#{question.showSelectOne and (not question.showMatrix)}">
 		<p:selectOneMenu id="categoryS1" value="#{surveyHandler.answers[question].option}" effect="fade" rendered="#{surveyHandler.showDataFields}">
 			<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="o" itemLabel="#{o.name[loc].lang}" itemValue="#{o}"/>
+			<p:ajax process="@parent" listener="#{surveyHandler.updateAnswer(surveyHandler.answers[question])}" update="@form"/>
 		</p:selectOneMenu>
 		<h:outputText value="#{surveyHandler.answers[question].option.name[loc].lang}" rendered="#{not surveyHandler.showDataFields}"/>
 	</h:panelGroup>

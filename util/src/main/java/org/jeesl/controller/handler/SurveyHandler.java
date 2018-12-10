@@ -92,7 +92,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	private boolean showAssessment; public boolean isShowAssessment() {return showAssessment;}
 	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} //public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
 	
-	public static boolean debugPerformance = false;
+	public static boolean debug = false;
 	public static int debugDelay = 1000;
 	
 	public SurveyHandler(JeeslFacesMessageBean bMessage,
@@ -146,13 +146,13 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		buildControls(survey);
 		
 		showAssessment = true;
-		if(SurveyHandler.debugPerformance){logger.warn("prepare fData()");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		if(SurveyHandler.debug){logger.warn("prepare fData()");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		try {surveyData = fSurvey.fData(correlation);}
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate();
 		condition.init(template);
 		if(bSurvey.getMapSection().containsKey(template)){activeSections.addAll(bSurvey.getMapSection().get(template));}
-		if(SurveyHandler.debugPerformance){logger.warn("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());}
+		if(SurveyHandler.debug){logger.warn("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());}
 	}
 	
 	public void prepareNested(SURVEY survey, CORRELATION correlation)
@@ -185,14 +185,13 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		answers.clear();
 		multiOptions.clear();
 		
-		if(SurveyHandler.debugPerformance){logger.warn("Reloading Answers (dbLookup:"+dbLookup+")");}
+		if(SurveyHandler.debug){logger.warn("Reloading Answers (dbLookup:"+dbLookup+")");}
 		if(dbLookup)
 		{
 			List<SECTION> filterSection = null;
 			if(activeSections!=null && !activeSections.isEmpty()){filterSection = new ArrayList<SECTION>(activeSections);}
-			if(SurveyHandler.debugPerformance){logger.warn("fAnswers for "+filterSection.size()+" "+JeeslSurveySection.class.getSimpleName()+": "+tfSection.codes(filterSection));try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+			if(SurveyHandler.debug){logger.warn("fAnswers for "+filterSection.size()+" "+JeeslSurveySection.class.getSimpleName()+": "+tfSection.codes(filterSection));try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 			answers = efAnswer.toMapQuestion(fSurvey.fAnswers(surveyData, true, filterSection));
-			condition.evaluteMap(answers);
 		}
 
 		List<ANSWER> loadMatrix = new ArrayList<ANSWER>();
@@ -209,13 +208,13 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 							ANSWER a;
 							if(!answers.containsKey(q))
 							{
-								if(SurveyHandler.debugPerformance){logger.warn("Building new Answer for Question"+q.toString());}
+								if(SurveyHandler.debug){logger.warn("Building new Answer for Question"+q.toString());}
 								a = efAnswer.build(q, surveyData);
 							}
 							else
 							{
 								a = answers.get(q);
-								if(SurveyHandler.debugPerformance){logger.warn("Using Answer "+a.getId()+" for Question "+q.toString()+" "+tfAnswer.build(a));}
+								if(SurveyHandler.debug){logger.warn("Using Answer "+a.getId()+" for Question "+q.toString()+" "+tfAnswer.build(a));}
 							}
 							if(BooleanComparator.active(q.getShowMatrix())){loadMatrix.add(a);}
 							answers.put(q,a);
@@ -227,6 +226,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 
 		if(withMatrix){matrixLoader(loadMatrix);}
 		
+		condition.evaluteMap(answers);
 		logger.trace("Answers loaded: " + answers.size());
 	}
 	
@@ -269,7 +269,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	public void save(CORRELATION correlation, SECTION section) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(activeSection!=null) {activeSection=fSurvey.find(cSection,activeSection);}
-		if(SurveyHandler.debugPerformance){logger.warn("save");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		if(SurveyHandler.debug){logger.warn("save");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		logger.info("Saving "+correlation.toString()+ " "+answers.size()+" answers  CORR.saved: "+EjbIdFactory.isSaved(correlation));
 		
 		surveyData.setCorrelation(correlation);
@@ -282,11 +282,11 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 			if(efAnswer.belongsToSection(a, section, true));
 			{
 				answersToSave.add(a);
-				if(SurveyHandler.debugPerformance){logger.warn("\tQueing "+JeeslSurveyAnswer.class.getSimpleName()+" for Save: "+tfAnswer.build(a));}
+				if(SurveyHandler.debug){logger.warn("\tQueing "+JeeslSurveyAnswer.class.getSimpleName()+" for Save: "+tfAnswer.build(a));}
 			}
 			
 		}
-		if(SurveyHandler.debugPerformance){logger.warn("Starting to save "+answersToSave.size()+" "+JeeslSurveyAnswer.class.getSimpleName());try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		if(SurveyHandler.debug){logger.warn("Starting to save "+answersToSave.size()+" "+JeeslSurveyAnswer.class.getSimpleName());try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		fSurvey.save(answersToSave);
 		
 		reloadAnswers(false);
@@ -304,10 +304,10 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 				}
 			}
 		}
-		if(SurveyHandler.debugPerformance){logger.warn("Save Matrix");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		if(SurveyHandler.debug){logger.warn("Save Matrix");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		fSurvey.save(matrixToSave);
 		
-		if(SurveyHandler.debugPerformance){logger.warn("Load Matrix");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		if(SurveyHandler.debug){logger.warn("Load Matrix");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		for(MATRIX m : fSurvey.fCells(new ArrayList<ANSWER>(answers.values())))
 		{
 			matrix.put(m.getAnswer().getQuestion().getId(),m.getRow().getId(),m.getColumn().getId(),m);
@@ -316,9 +316,23 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		if(bMessage!=null){bMessage.growlSuccessSaved();}
 	}
 	
+	public void updateAnswer(ANSWER answer)
+	{
+		if(debug) {logger.info("Updating ... "+answer);}
+		
+		if(answer.getOption()!=null)
+		{
+			if(debug) {logger.info("Settings OPTION with "+answer.getOption().getId());}
+			OPTION o = bSurvey.getMapOptionId().get(answer.getOption().getId());
+			answer.setOption(o);
+			if(debug) {logger.info("Set to "+answer.getOption().toString()+" "+answer.getOption().getCode());}
+		}
+		condition.update(answer);
+	}
+	
 	public void onSectionChange()
 	{
-		if(SurveyHandler.debugPerformance){logger.warn("onSectionChange "+(activeSection!=null));try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+		if(SurveyHandler.debug){logger.warn("onSectionChange "+(activeSection!=null));try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		activeSection = fSurvey.find(cSection,activeSection);
 		activeSections.clear();
 		activeSections.add(activeSection);

@@ -128,13 +128,39 @@ public class SurveyConditionalHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?
 		}
 	}
 	
+	public void update(ANSWER answer)
+	{
+		if(debug) {logger.info("Update "+answer.toString()+" for Question:"+answer.getQuestion());}
+		answers.put(answer.getQuestion(),answer);
+		if(debug)
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.append("Updating "+answer.toString());
+			sb.append(" triggering ");
+			if(triggers.containsKey(answer.getQuestion())) {sb.append(triggers.get(answer.getQuestion()).size());}
+			else {sb.append("0");}
+			logger.info(sb.toString());
+		}	
+		
+		if(triggers.containsKey(answer.getQuestion()))
+		{
+			for(QUESTION q : triggers.get(answer.getQuestion()))
+			{
+				rendered.put(q,evaluate(q));
+			}
+		}	
+	}
+
 	private boolean evaluate(QUESTION question)
 	{
+		if(debug) {logger.info("Evaluation Question: "+question.toString());}
 		List<Boolean> booleans = new ArrayList<Boolean>();
 		for(CONDITION c : conditions.get(question))
 		{
 			ANSWER a = answers.get(c.getTriggerQuestion());
-			boolean x = a.getOption().equals(c.getOption());
+			logger.info("Answer: "+a.toString());
+			logger.info("O==null?"+(a.getOption()!=null));
+			boolean x = a!=null && a.getOption()!=null && a.getOption().equals(c.getOption());
 			booleans.add(x);
 		}
 		
@@ -172,7 +198,6 @@ public class SurveyConditionalHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?
 				sb.append(" [ ").append(StringUtils.join(l, ",")).append(" ]");
 			}
 			logger.info(sb.toString());
-			
 		}
 	}
 }

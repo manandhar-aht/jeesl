@@ -53,7 +53,6 @@ public class SurveyConditionalHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?
 	
 	public SurveyConditionalHandler(SurveyCoreFactoryBuilder<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore,
 									JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION> cache
-			
 									)
 	{
 		this.cache=cache;
@@ -157,10 +156,19 @@ public class SurveyConditionalHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?
 		List<Boolean> booleans = new ArrayList<Boolean>();
 		for(CONDITION c : conditions.get(question))
 		{
-			ANSWER a = answers.get(c.getTriggerQuestion());
-			logger.info("Answer: "+a.toString());
-			logger.info("O==null?"+(a.getOption()!=null));
-			boolean x = a!=null && a.getOption()!=null && a.getOption().equals(c.getOption());
+			boolean x = false;
+			if(answers.containsKey(c.getTriggerQuestion()))
+			{
+				ANSWER a = answers.get(c.getTriggerQuestion());
+				if(debug)
+				{
+					logger.info("Answer: "+a.toString());
+					logger.info("O==null?"+(a.getOption()!=null));
+				}
+				
+				x = a!=null && a.getOption()!=null && a.getOption().equals(c.getOption());
+			}
+			
 			booleans.add(x);
 		}
 		

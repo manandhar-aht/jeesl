@@ -267,19 +267,19 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	public List<SECTION> getSections(TEMPLATE template)
 	{
 		if(mapSection.containsKey(template)) {return mapSection.get(template);}
-		return null;
+		return new ArrayList<SECTION>();
 	}
 	
 	@Override
 	public List<QUESTION> getQuestions(SECTION section)
 	{
 		if(mapQuestion.containsKey(section)) {return mapQuestion.get(section);}
-		return null;
+		return new ArrayList<QUESTION>();
 	}
 	
 	@Override public List<CONDITION> getConditions(QUESTION question)
 	{
 		if(mapCondition.containsKey(question)) {return mapCondition.get(question);}
-		return null;
+		return new ArrayList<CONDITION>();
 	}
 }

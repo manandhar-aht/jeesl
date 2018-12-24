@@ -20,8 +20,8 @@ public class Json1TuplesFactory <A extends EjbWithId>
 {
 	private final Class<A> cA; public Class<A> getClassA() {return cA;}
 
-	private final UtilsFacade fUtils;
-	
+	private UtilsFacade fUtils; public void setfUtils(UtilsFacade fUtils) {this.fUtils = fUtils;}
+
 	private final Set<Long> setId;
 	private final Json1TupleFactory<A> jtf;
 	

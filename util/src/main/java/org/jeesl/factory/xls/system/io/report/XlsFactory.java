@@ -313,7 +313,8 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 		catch (ExlpXpathNotFoundException e) {e.printStackTrace();}
 	}
 	
-	private void applyTreeRow(int level, Figures treeHeader, Sheet sheet, MutableInt rowNr, List<COLUMN> columns, XlsCellFactory<REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell, List<String> parents, Figures f, JeeslReportSetting.Transformation transformation)
+	private void applyTreeRow(int level, Figures treeHeader, Sheet sheet, MutableInt rowNr, List<COLUMN> columns, XlsCellFactory<REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell,
+								List<String> parents, Figures f, JeeslReportSetting.Transformation transformation)
 	{
 		MutableInt columnNr = new MutableInt(0);
 		columnNr.add(level);
@@ -323,16 +324,22 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 		{
 			if(treeColumn)
 			{
+				for(String p : parents)
+				{
+					xfCell.cell(ioColumn,xlsRow,columnNr,p);
+					
+				}
 				xfCell.cell(ioColumn,xlsRow,columnNr.intValue(),f.getLabel());
+				
 				treeColumn=false;
 				List<String> path = new ArrayList<String>(parents);
 				path.add(f.getLabel());
 				rowNr.add(1);
 				for(Figures childs : f.getFigures())
 				{
-					applyTreeRow(level+1,treeHeader,sheet,rowNr,columns,xfCell,path,childs,transformation);
+					applyTreeRow(level,treeHeader,sheet,rowNr,columns,xfCell,path,childs,transformation);
 				}
-				columnNr.add(treeHeader.getFigures().size()-level);
+				columnNr.add(treeHeader.getFigures().size()-level-parents.size());
 			}
 			else
 			{
@@ -343,10 +350,10 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 					{
 						case none: xfCell.cell(ioColumn,xlsRow,columnNr,Double.valueOf(f.getFinance().get(nr-1).getValue()));break;
 						case last: for(Finance f2 : f.getFinance().get(nr-1).getFinance())
-									{
+								   {
 										if(f2.isSetValue()){xfCell.cell(ioColumn,xlsRow,columnNr,f2.getValue());}
 										else{columnNr.add(1);}
-									}break;
+								   }break;
 						
 					}
 					
@@ -354,7 +361,6 @@ public class XlsFactory <L extends UtilsLang,D extends UtilsDescription,
 				else{logger.warn("NYI: "+ioColumn.getQueryCell());}
 			}
 		}
-		
 	}
 	
 	private void applyTemplate(Sheet sheet, MutableInt rowNr, SHEET ioSheet, ROW ioRow, XlsCellFactory<REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,ENTITY,ATTRIBUTE,TL,TLS> xfCell)

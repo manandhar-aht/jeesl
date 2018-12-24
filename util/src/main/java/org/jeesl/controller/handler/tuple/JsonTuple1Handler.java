@@ -26,7 +26,7 @@ public class JsonTuple1Handler <A extends EjbWithId> extends JsonTupleHandler im
 
 	final static Logger logger = LoggerFactory.getLogger(JsonTuple1Handler.class);
 	
-	private JeeslComparatorProvider<A> jppA; public void setComparatorProviderA(JeeslComparatorProvider<A> jppA) {this.jppA = jppA;}
+	private JeeslComparatorProvider<A> jcpA; public void setComparatorProviderA(JeeslComparatorProvider<A> jcpA) {this.jcpA = jcpA;}
 	
 	private final Class<A> cA;
 	protected final Set<A> setA;
@@ -34,7 +34,6 @@ public class JsonTuple1Handler <A extends EjbWithId> extends JsonTupleHandler im
 	private final List<A> listA; public List<A> getListA() {return listA;}
 	private final Map<A,Json1Tuple<A>> map1; public Map<A,Json1Tuple<A>> getMap1() {return map1;}
 
-	
 	public JsonTuple1Handler(Class<A> cA)
 	{
 		this.cA=cA;
@@ -70,10 +69,10 @@ public class JsonTuple1Handler <A extends EjbWithId> extends JsonTupleHandler im
 	{
 		listA.addAll(setA);
 		sizeA = listA.size();
-		if(jppA!=null && jppA.provides(cA)){Collections.sort(listA, jppA.provide(cA));}
+		if(jcpA!=null && jcpA.provides(cA)){Collections.sort(listA, jcpA.provide(cA));}
 	}
 	
-	public boolean contains(A a) {return map1.containsKey(a);}
+	public boolean contains(A a){return map1.containsKey(a);}
 	public JsonTuple value(A a)
 	{
 		Json1Tuple<A> json = map1.get(a);

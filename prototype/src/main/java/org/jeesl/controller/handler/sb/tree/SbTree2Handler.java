@@ -110,7 +110,6 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 			L1 parent = getParentForL2(ejb);
 			boolean isCascade = ejb.equals(l2);
 			boolean isAllow = allowChild2.contains(ejb);
-			boolean isParentInList = list1.contains(parent);
 			boolean isInPath = allowPath2.contains(ejb);
 			boolean isParentsAllowed = allowChild1.contains(parent);
 			boolean isNotIgnore = !ignore2.contains(ejb);	
@@ -150,8 +149,39 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 			for(L2 ejb : new ArrayList<L2>(allowChild2))
 			{
 				logger.info("\t"+ejb.toString());
-			}
-					
+			}		
 		}
+	}
+	
+	public List<L2> listAllowed2()
+	{
+		List<L2> result = new ArrayList<L2>();
+		
+		if(viewIsGlobal)
+		{
+			for(L1 l1 : list1)
+			{
+				result.addAll(cache2.getCachedChildsForL1(l1));
+			}
+		}
+		else
+		{
+			for(L1 l1 : list1)
+			{
+				for(L2 ejb : cache2.getCachedChildsForL1(l1))
+				{
+					L1 parent = getParentForL2(ejb);
+					boolean isCascade = ejb.equals(l2);
+					boolean isAllow = allowChild2.contains(ejb);
+					boolean isInPath = allowPath2.contains(ejb);
+					boolean isParentsAllowed = allowChild1.contains(parent);
+					boolean isNotIgnore = !ignore2.contains(ejb);	
+					if(evaluateToAddChild(ejb,isCascade,isAllow,isInPath,isParentsAllowed,isNotIgnore)) {result.add(ejb);}
+				}
+			}
+		}
+		
+		if(debugOnInfo) {logger.info("Listing all allowed2 "+result.size()+" global:"+viewIsGlobal);}
+		return result;
 	}
 }

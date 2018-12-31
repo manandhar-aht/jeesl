@@ -25,6 +25,7 @@ import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
+import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -606,6 +607,15 @@ public class UtilsFacadeBean implements UtilsFacade
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+type.getSimpleName()+" for nr="+nr);}
 	}
 	
+	public <T extends EjbWithValidFromAndParent, P extends EjbWithId> T fFirstValidFrom(Class<T> c, P parent, Date validFrom) throws UtilsNotFoundException
+	{
+		T prototype = null;
+		try {prototype = c.newInstance();}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		return fFirstValidFrom(c,prototype.resolveParentAttribute(),parent.getId(),validFrom);
+	}
+	
 	public <T extends EjbWithValidFrom> T fFirstValidFrom(Class<T> type, String parentName, long id, Date validFrom) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
@@ -626,7 +636,7 @@ public class UtilsFacadeBean implements UtilsFacade
 		try	{return q.getSingleResult();}
 		catch (NoResultException ex){throw new UtilsNotFoundException("No "+type.getSimpleName()+" for "+parentName+".id="+id+" validFrom="+validFrom);}
 	}
-	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> T oneForParent(Class<T> type, I p1) throws UtilsNotFoundException
+	@Override public <T extends EjbWithParentAttributeResolver, P extends EjbWithId> T oneForParent(Class<T> type, P p1) throws UtilsNotFoundException
 	{
 		T prototype = null;
 		try {prototype = type.newInstance();}

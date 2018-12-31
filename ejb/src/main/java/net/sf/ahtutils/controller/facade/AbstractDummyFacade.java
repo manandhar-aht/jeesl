@@ -11,6 +11,7 @@ import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
+import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -512,5 +513,12 @@ public class AbstractDummyFacade implements UtilsFacade
 	public <T extends EjbWithId> long maxId(Class<T> c) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public <T extends EjbWithValidFromAndParent, P extends EjbWithId> T fFirstValidFrom(Class<T> c, P parent,
+			Date validFrom) throws UtilsNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

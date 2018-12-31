@@ -11,6 +11,7 @@ import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
+import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -129,6 +130,7 @@ public interface UtilsFacade  extends UtilsIdFacade
 	
 	//ValidFrom
 	<T extends EjbWithValidFromUntil> T oneInRange(Class<T> c,Date record) throws UtilsNotFoundException;
+	<T extends EjbWithValidFromAndParent, P extends EjbWithId> T fFirstValidFrom(Class<T> c, P parent, Date validFrom) throws UtilsNotFoundException;
 	<T extends EjbWithValidFrom> T fFirstValidFrom(Class<T> type, String parentName, long id, Date validFrom) throws UtilsNotFoundException;
 	
 	//Timeline

@@ -1,5 +1,6 @@
 package org.jeesl.interfaces.model.module.calendar;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -16,7 +17,8 @@ public interface JeeslCalendarItem <L extends UtilsLang,
 									ITEM extends JeeslCalendarItem<L,D,CALENDAR,ZONE,CT,ITEM,IT>,
 									IT extends UtilsStatus<IT,L,D>
 									>
-		extends EjbWithId,EjbSaveable
+		extends  Serializable,EjbWithId,
+					EjbSaveable
 {
 	public enum Attributes {calendar,startDate,endDate}
 	

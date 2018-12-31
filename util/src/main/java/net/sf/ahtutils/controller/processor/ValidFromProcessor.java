@@ -14,8 +14,9 @@ import org.slf4j.LoggerFactory;
 
 public class ValidFromProcessor <T extends EjbWithValidFrom>
 {
-	private List<T> list;
 	final static Logger logger = LoggerFactory.getLogger(TranslationFactory.class);
+	
+	private List<T> list;
 	
 	public ValidFromProcessor(List<T> list)
 	{

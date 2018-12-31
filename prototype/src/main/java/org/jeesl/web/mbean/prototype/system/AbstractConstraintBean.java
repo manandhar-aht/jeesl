@@ -76,8 +76,6 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 		logger.info("Loaded "+i+" "+fbConstraint.getClassConstraint());
 	}
 	
-	
-	
 	@Override public void update(CONSTRAINT constraint)
 	{
 		String keyScope = constraint.getScope().getCode();

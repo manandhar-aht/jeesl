@@ -438,11 +438,10 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		Class<W> cW = (Class<W>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(EjbWithCodeGraphic.class);
 		X x = cX.newInstance();
 		
-		
 		Container xml;
 		if(fUtils instanceof JeeslExportRestFacade)
 		{
-			logger.info("Using Facade Connection (JBoss EAP6)");
+			logger.info("Using Facade Connection for JBoss EAP6 ("+fUtils.getClass().getSimpleName()+" implements "+JeeslExportRestFacade.class.getSimpleName()+")");
 			xml = ((JeeslExportRestFacade)fUtils).exportJeeslReferenceRest(x.getRestCode());
 		}
 		else

@@ -11,7 +11,6 @@ import org.jeesl.web.mbean.system.AbstractMessageBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -69,16 +68,12 @@ public class AbstractConstraintMessageBean <L extends UtilsLang, D extends Utils
 			logger.info(sb.toString());
 		}
 		
-		try
+		CONSTRAINT c = bConstraint.getSilent(sId,cId);
+		if(c!=null){show(fId,c);}
+		else
 		{
-			show(fId,bConstraint.get(sId,cId));
+			logger.error("Constraint not found");
+			FacesContextMessage.error(fId.toString(), "ERROR", "Constraint not found");
 		}
-		catch (UtilsNotFoundException e)
-		{
-			logger.error(e.getMessage());
-			FacesContextMessage.error(fId.toString(), "ERROR", e.getMessage());
-		}
-		
 	}
-	
 }

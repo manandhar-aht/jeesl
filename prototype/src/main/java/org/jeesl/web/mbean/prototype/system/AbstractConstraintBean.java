@@ -83,9 +83,14 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 		mapConstraints.get(keyScope).put(constraint.getCode(),constraint);
 	}
 	
-	@Override public <SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT get(SID sId, CID cId) throws UtilsNotFoundException
+	@Override public <S extends UtilsStatus<S,?,?>> CONSTRAINT getSilent(Class<?> cScope, S status)
 	{
-		return get(sId.toString(),cId.toString());
+		try {return get(cScope.getSimpleName(),status.getCode());}
+		catch (UtilsNotFoundException e)
+		{
+			logger.error(e.getMessage());
+			return null;
+		}
 	}
 	
 	@Override public <SID extends Enum<SID>, CID extends Enum<CID>> CONSTRAINT getSilent(SID sId, CID cId)

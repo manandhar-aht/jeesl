@@ -1,4 +1,4 @@
-package net.sf.ahtutils.maven;
+package org.jeesl.maven.goal;
 
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
@@ -9,43 +9,29 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
 /**
  * Goal which compiles a set of JasperReports jrxml files to .jasper file. Creates a rtl language and a ltr language version of all reports.
- *
- * @goal compileReports
- * 
- * @phase process-sources
  */
-public class ReportPreCompiler extends AbstractMojo
+@Mojo(name ="compileReports", requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME, defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
+public class JeeslReportPreCompilerGoal extends AbstractMojo
 {
-	/**
-     * Location of the file.
-     * @parameter expression="${project.basedir}/src/main/resources/reports.${project.artifactId}/reports.xml"
-     * @required
-     */
+	@Parameter(defaultValue = "${project.basedir}/src/main/resources/reports.${project.artifactId}/reports.xml", required = true)
     private String configFile;
     
-    /**
-     * Location of the file.
-     * @parameter expression="${project.basedir}/src/main/reports.${project.artifactId}"
-     * @required
-     */
+    @Parameter(defaultValue = "${project.basedir}/src/main/reports.${project.artifactId}", required = true)
     private String source;
     
-    /**
-     * Location of the file.
-     * @parameter expression="${project.build.directory}/classes/reports.${project.artifactId}"
-     * @required
-     */
+    @Parameter(defaultValue = "${project.build.directory}/classes/reports.${project.artifactId}", required = true)
     private String target;
     
-    /**
-     * Location of the file.
-     * @parameter expression="WARN"
-     */
+    @Parameter(defaultValue = "WARN")
     private String log;
 	
     public void execute() throws MojoExecutionException

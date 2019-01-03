@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
+import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,6 +94,18 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <C extends EjbWithCode> void update(String code, List<C> list)
+	{
+		T preferred = null;
+		List<T> list2 = new ArrayList<T>();
+		for(C c : list)
+		{
+			list2.add((T)c);
+			if(c.getCode().equals(code)) {preferred=(T)c;}
+		}
+		update(list2,preferred);
+	}
 	public void update(List<T> list){update(list, null);}
 	public void update(List<T> list, T preferred)
 	{

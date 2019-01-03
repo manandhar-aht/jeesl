@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model.primefaces.exception;
+package org.jeesl.model.pojo.exception;
 
 import java.util.ArrayList;
 import java.util.List;

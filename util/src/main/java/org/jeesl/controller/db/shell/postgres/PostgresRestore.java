@@ -60,12 +60,13 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		buildRestoreDataScript();
 		this.save();
 		
-		txtWriter.clear();
-		scope = UtilsDbShell.Scope.structure;
-		buildRestoreStructureScript();
-		this.save();
+//		txtWriter.clear();
+//		scope = UtilsDbShell.Scope.structure;
+//		buildRestoreStructureScript();
+//		this.save();
 	}
 	
+	@SuppressWarnings("unused")
 	private void buildRestoreStructureScript() throws ExlpUnsupportedOsException
 	{		
 		super.cmdPre();
@@ -122,6 +123,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sb.append(pDbRestore.getValue());
 		sb.append(" --verbose");
 		sb.append(" -h ").append(pDbHost.getValue());
+		sb.append(" -p ").append(pDbPort.getValue());
 		sb.append(" -U ").append(pDbUser.getValue());
 		sb.append(" -d ").append(pDbName.getValue());
 		sb.append(" --no-privileges");
@@ -146,6 +148,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sb.append(pDbRestore.getValue());
 		sb.append(" --verbose");
 		sb.append(" -h ").append(pDbHost.getValue());
+		sb.append(" -p ").append(pDbPort.getValue());
 		sb.append(" -U ").append(pDbSuperUser.getValue());
 		sb.append(" -d ").append(pDbName.getValue());
 		sb.append(" --superuser=").append(pDbSuperUser.getValue());
@@ -182,6 +185,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		StringBuffer sb = new StringBuffer();
 		sb.append(pDbShell.getValue());
 		sb.append(" -h ").append(pDbHost.getValue());
+		sb.append(" -p ").append(pDbPort.getValue());
 		sb.append(" -U ").append(pDbUser.getValue());
 		sb.append(" -d ").append(pDbName.getValue());
 		sb.append(" -c \"");
@@ -212,6 +216,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		StringBuilder sb = new StringBuilder();
 		sb.append(pDbShell.getValue());
 		sb.append(" -h ").append(pDbHost.getValue());
+		sb.append(" -p ").append(pDbPort.getValue());
 		sb.append(" -U ").append(pDbUser.getValue());
 		sb.append(" -d ").append(pDbName.getValue());
 		sb.append(" -c \"").append(seq).append("\"");
@@ -226,6 +231,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		StringBuffer sb = new StringBuffer();
 		sb.append(pDbShell.getValue());
 		sb.append(" -h ").append(pDbHost.getValue());
+		sb.append(" -p ").append(pDbPort.getValue());
 		sb.append(" -U ").append(pDbUser.getValue());
 		sb.append(" -d ").append(pDbName.getValue());
 		sb.append(" -c \"").append("ALTER TABLE ").append(table).append(" ADD PRIMARY KEY (id);").append("\"");
@@ -240,6 +246,7 @@ public class PostgresRestore extends AbstractPostgresShell implements UtilsDbShe
 		sb.append(pDbRestore.getValue());
 		sb.append(" --verbose");
 		sb.append(" -h ").append(pDbHost.getValue());
+		sb.append(" -p ").append(pDbPort.getValue());
 		sb.append(" -U ").append(pDbUser.getValue());
 		sb.append(" -d ").append(pDbName.getValue());
 		sb.append(" --no-privileges");

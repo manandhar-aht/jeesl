@@ -33,7 +33,7 @@ public class AbstractDatabaseShell
 	
 	private Parameter pDirShell;
 	protected Parameter pDbShell,pDbDump,pDbRestore;
-	protected Parameter pDbHost,pDbName,pDbUser,pDbPwd;
+	protected Parameter pDbHost,pDbPort,pDbName,pDbUser,pDbPwd;
 	protected Parameter pDirDump,pDirRestore;
 	
 	protected String dbSchema;
@@ -66,6 +66,11 @@ public class AbstractDatabaseShell
 		try{pDbHost.setValue(config.getString(pDbHost.getKey()));}
 		catch (NoSuchElementException e){pDbHost.setValue("localhost");}
 		configurationParamter.getParameter().add(pDbHost);
+		
+		pDbPort = XmlParameterFactory.build("db."+operation.toString()+".port", "DB Host for "+operation.toString(), false);
+		try{pDbPort.setValue(config.getString(pDbPort.getKey()));}
+		catch (NoSuchElementException e){pDbHost.setValue("5432");}
+		configurationParamter.getParameter().add(pDbPort);
 		
 		pDbName = XmlParameterFactory.build("db."+operation.toString()+".db", "DB Name for "+operation.toString(), true);
 		pDbName.setValue(config.getString(pDbName.getKey()));

@@ -1,13 +1,11 @@
-package net.sf.ahtutils.util.comparator.primitive;
+package org.jeesl.util.comparator.primitive;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.jeesl.AbstractJeeslUtilTest;
-import org.jeesl.util.comparator.primitive.Ranking;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

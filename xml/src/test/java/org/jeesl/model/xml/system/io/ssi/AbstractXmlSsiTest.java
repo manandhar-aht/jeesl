@@ -10,6 +10,6 @@ public abstract class AbstractXmlSsiTest <T extends Object> extends AbstractXmlT
 	
 	public AbstractXmlSsiTest(Class<T> cXml)
 	{
-		super(cXml,"ssi");
+		super(cXml,"system/io/ssi");
 	}
 }

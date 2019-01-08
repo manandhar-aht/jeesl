@@ -3,6 +3,7 @@ package org.jeesl;
 import java.io.File;
 
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,4 +27,9 @@ public class AbstractJeeslPrototypeTest
 			loggerInit.init();
 		}
     }
+	
+	@Test public void log4j()
+	{
+		
+	}
 }

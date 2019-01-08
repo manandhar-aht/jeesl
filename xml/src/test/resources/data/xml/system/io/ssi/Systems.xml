@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<systems xmlns="http://www.jeesl.org/io/ssi">
+    <system id="123" code="myCode" name="myName"/>
+    <system id="123" code="myCode" name="myName"/>
+</systems>

@@ -4,5 +4,5 @@
     <survey:question id="123" position="2" visible="true" code="myCode" topic="myTopic"/>
     <t:answer version="1" key="myKey">myValue</t:answer>
     <t:remark version="1" key="myKey">myValue</t:remark>
-    <survey:option id="123" label="myLabel"/>
+    <survey:option id="123" code="myCode" label="myLabel"/>
 </survey:answer>

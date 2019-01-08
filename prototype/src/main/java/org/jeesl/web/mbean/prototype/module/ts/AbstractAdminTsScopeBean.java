@@ -34,8 +34,7 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminTsScopeBean <L extends UtilsLang,
-											D extends UtilsDescription,
+public class AbstractAdminTsScopeBean <L extends UtilsLang, D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 											CAT extends UtilsStatus<CAT,L,D>,
 											SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
 											ST extends UtilsStatus<ST,L,D>,
@@ -79,7 +78,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang,
 		super(fbTs);
 	}
 	
-	protected void postConstructScope(JeeslTranslationBean bTranslation, JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs, JeeslFacesMessageBean bMessage)
+	protected void postConstructScope(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs, JeeslFacesMessageBean bMessage)
 	{
 		super.initTsSuper(bTranslation.getLangKeys().toArray(new String[bTranslation.getLangKeys().size()]),fTs,bMessage);
 		initLists();

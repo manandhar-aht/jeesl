@@ -28,7 +28,7 @@ import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 											RC extends UtilsStatus<RC,L,D>,
 											RV extends JeeslRevisionView<L,D,RVM>,
 											RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
@@ -44,8 +44,6 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminRevisionEntityBean.class);
 	
-	private enum FM {entity}
-	
 	private JeeslLabelBean<RE> bLabel;
 	
 	private List<RE> links; public List<RE> getLinks() {return links;}
@@ -57,7 +55,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	
 	public AbstractAdminRevisionEntityBean(final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision){super(fbRevision);}
 	
-	protected void initSuper(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, JeeslLabelBean<RE> bLabel)
+	protected void postConstructRevisionEntity(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage, JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fRevision, JeeslLabelBean<RE> bLabel)
 	{
 		String[] langs = bTranslation.getLangKeys().toArray(new String[0]);
 		super.initRevisionSuper(langs,bMessage,fRevision);

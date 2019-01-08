@@ -23,7 +23,7 @@ import net.sf.exlp.util.xml.JaxbUtil;
 import net.sf.exlp.xml.io.Dir;
 
 public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>>
-			implements Serializable,JeeslTranslationBean
+			implements Serializable,JeeslTranslationBean<L,D,LOC>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractTranslationBean.class);
 	private static final long serialVersionUID = 1L;

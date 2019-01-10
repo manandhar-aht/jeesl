@@ -10,7 +10,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbSurveyOptionFactory<QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,OPTION,?>,
+public class EjbSurveyOptionFactory<QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?,OPTION,?>,
 				OPTION extends JeeslSurveyOption<?,?>
 				>
 {

@@ -9,7 +9,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 
 public interface JeeslSurveyCache<TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,SECTION,?,?>,
 					SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
-					QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,?,?,?,?,?,?>,
+					QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,?,?,?,?,?,?,?>,
 					CONDITION extends JeeslSurveyCondition<QUESTION,?,?>
 >
 {	

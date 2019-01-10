@@ -22,7 +22,7 @@ import net.sf.ahtutils.xml.survey.Question;
 
 public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescription,
 				SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
-				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,QE,?,UNIT,OPTIONS,OPTION,?>,
+				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,?,QE,?,UNIT,OPTIONS,OPTION,?>,
 				QE extends UtilsStatus<QE,L,D>,
 				UNIT extends UtilsStatus<UNIT,L,D>,
 				OPTIONS extends JeeslSurveyOptionSet<L,D,?,OPTION>,

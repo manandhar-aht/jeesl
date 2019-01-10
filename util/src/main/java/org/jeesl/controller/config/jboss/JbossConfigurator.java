@@ -119,6 +119,7 @@ public class JbossConfigurator
 		
 		logger.debug(cfgDbPwd+"\t"+pDbDs);
 		logger.debug(cfgDbHost+"\t"+pDbHost);
+		logger.debug(cfgDbHost+"\t"+pDbHost);
 		logger.debug(cfgDbName+"\t"+pDbName);
 		logger.debug(cfgDbUser+"\t"+pDbUser);
 		logger.debug(cfgDbPwd+"\t"+pDbPwd);

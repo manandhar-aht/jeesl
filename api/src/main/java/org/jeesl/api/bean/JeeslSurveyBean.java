@@ -18,6 +18,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidation;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -32,8 +33,9 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 					TS extends UtilsStatus<TS,L,D>,
 					TC extends UtilsStatus<TC,L,D>,
 					SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 					CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
+					VALIDATION extends JeeslSurveyValidation<QUESTION>,
 					QE extends UtilsStatus<QE,L,D>,
 					SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 					UNIT extends UtilsStatus<UNIT,L,D>,

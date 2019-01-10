@@ -21,7 +21,7 @@ import net.sf.ahtutils.xml.survey.Question;
 public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
 								SCHEME extends JeeslSurveyScheme<L,D,?,SCORE>,
 								SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
-								QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+								QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,?,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 								QE extends UtilsStatus<QE,L,D>,
 								SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 								UNIT extends UtilsStatus<UNIT,L,D>,

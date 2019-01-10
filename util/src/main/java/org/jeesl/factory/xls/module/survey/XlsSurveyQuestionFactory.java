@@ -33,7 +33,7 @@ public class XlsSurveyQuestionFactory <L extends UtilsLang, D extends UtilsDescr
 							TS extends UtilsStatus<TS,L,D>,
 							TC extends UtilsStatus<TC,L,D>,
 							SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-							QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+							QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,?,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 							QE extends UtilsStatus<QE,L,D>,
 							SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 							UNIT extends UtilsStatus<UNIT,L,D>,

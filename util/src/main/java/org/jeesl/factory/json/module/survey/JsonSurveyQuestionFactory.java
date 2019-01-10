@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidation;
 import org.jeesl.model.json.survey.Condition;
 import org.jeesl.model.json.survey.Option;
 import org.jeesl.model.json.survey.Question;
@@ -25,8 +26,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
 										SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
-										QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+										QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 										CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
+										VALIDATION extends JeeslSurveyValidation<QUESTION>,
 										QE extends UtilsStatus<QE,L,D>,
 										SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
 										UNIT extends UtilsStatus<UNIT,L,D>,
@@ -39,7 +41,7 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 	final static Logger logger = LoggerFactory.getLogger(JsonSurveyQuestionFactory.class);
 	
 	private JeeslSurveyCoreFacade<L,D,?,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?> fSurvey;
-	private SurveyTemplateFactoryBuilder<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
+	private SurveyTemplateFactoryBuilder<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
 	
 	private final String localeCode;
 	private Question q;
@@ -50,7 +52,7 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 	public JsonSurveyQuestionFactory(Question q){this(null, q,null,null);}
 	public JsonSurveyQuestionFactory(String localeCode, Question q){this(localeCode, q,null,null);}
 	public JsonSurveyQuestionFactory(String localeCode, Question q,
-			SurveyTemplateFactoryBuilder<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
+			SurveyTemplateFactoryBuilder<L,D,?,?,?,?,?,?,?,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate,
 			JeeslSurveyCoreFacade<L,D,?,?,?,?,?,?,?,?,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?> fSurvey)
 	{
 		this.localeCode=localeCode;

@@ -10,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class EjbSurveyAnalysisQuestionFactory<L extends UtilsLang, D extends UtilsDescription,
-				QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,?,?>,
+				QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,?,?,?>,
 				ANALYSIS extends JeeslSurveyAnalysis<L,D,?,?,?,?>,
 				AQ extends JeeslSurveyAnalysisQuestion<L,D,QUESTION,ANALYSIS>>
 {

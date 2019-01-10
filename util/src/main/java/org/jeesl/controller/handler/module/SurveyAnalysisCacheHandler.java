@@ -58,7 +58,7 @@ public class SurveyAnalysisCacheHandler<L extends UtilsLang, D extends UtilsDesc
 										TS extends UtilsStatus<TS,L,D>,
 										TC extends UtilsStatus<TC,L,D>,
 										SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-										QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
+										QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,?,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 										CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
 										QE extends UtilsStatus<QE,L,D>,
 										SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,

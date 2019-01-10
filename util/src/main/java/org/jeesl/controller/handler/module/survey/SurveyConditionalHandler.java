@@ -29,7 +29,7 @@ import net.sf.exlp.util.io.StringUtil;
 
 public class SurveyConditionalHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,SECTION,?,?>,
 							SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
-							QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,?,?,?,?,OPTION,?>,
+							QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,?,?,?,?,?,OPTION,?>,
 							CONDITION extends JeeslSurveyCondition<QUESTION,?,OPTION>,
 							ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,?,OPTION>,
 							OPTION extends JeeslSurveyOption<?,?>>
@@ -51,7 +51,7 @@ public class SurveyConditionalHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?
 	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,?,?,OPTION> efAnswer;
 	private final ConditionEvaluator evaluator;
 	
-	public SurveyConditionalHandler(SurveyCoreFactoryBuilder<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore,
+	public SurveyConditionalHandler(SurveyCoreFactoryBuilder<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore,
 									JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION> cache
 									)
 	{

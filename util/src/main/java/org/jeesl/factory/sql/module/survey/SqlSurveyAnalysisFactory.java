@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
 public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
-									  QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?,?>,
+									  QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?,?,?>,
 									  ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,DATA,?>,
 									  DATA extends JeeslSurveyData<?,?,SURVEY,ANSWER,CORRELATION>,
 									  CORRELATION extends JeeslSurveyCorrelation<?,?,DATA>,
@@ -45,10 +45,10 @@ public class SqlSurveyAnalysisFactory <SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 	private boolean debugOnInfo = true;
 	private final Map<String,String> mapTable;
 	
-	private final SurveyCoreFactoryBuilder<?,?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore;
+	private final SurveyCoreFactoryBuilder<?,?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore;
 	private final SurveyAnalysisFactoryBuilder<?,?,?,QUESTION,?,?,ANSWER,?,DATA,?,CORRELATION,?,?,?,?,?,?,?,TOOL,?,?> fbAnalysis;
 	
-	public SqlSurveyAnalysisFactory(SurveyCoreFactoryBuilder<?,?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore,
+	public SqlSurveyAnalysisFactory(SurveyCoreFactoryBuilder<?,?,?,SURVEY,?,?,?,?,?,?,?,QUESTION,?,?,?,?,?,ANSWER,?,DATA,?,?,CORRELATION,?> fbCore,
 									SurveyAnalysisFactoryBuilder<?,?,?,QUESTION,?,?,ANSWER,?,DATA,?,CORRELATION,DOMAIN,?,?,?,?,?,?,TOOL,?,?> fbAnalysis)
 	{
 		this.fbCore=fbCore;

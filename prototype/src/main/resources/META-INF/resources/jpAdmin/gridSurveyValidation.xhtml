@@ -34,7 +34,7 @@
 						<p:column>
                      		<h:outputText value="#{algorithm.position}" />
 						</p:column>
-						<p:column headerText="#{msg.jeeslSurveyAnalysis}">
+						<p:column headerText="#{msg.jeeslSurveyValidationAlgorithm}">
 							<h:outputText value="#{algorithm.name[localeCode].lang}" />
 						</p:column>
 					</p:dataTable>
@@ -42,7 +42,7 @@
 			</aht:slot>
 			<aht:slot id="sCenter" width="7" >
 				<h:form id="fAlgorithm" rendered="#{not empty cc.attrs.bean.algorithm}">
-					<p:panel header="#{msg.jeeslSurveyValidationAlgorithm}" styleClass="auPanelWithGrid">
+					<p:panel header="#{msg.jeeslSurveyValidationAlgorithm}" styleClass="jeeslPanel">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveAlgorithm()}" update=":#{cc.id}:grid"/>
 							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.deleteAlgorithm()}" update=":#{cc.id}:grid"/>
@@ -52,6 +52,9 @@
 							
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<h:outputText value="#{cc.attrs.bean.algorithm.position}"/>
+							
+							<p:outputLabel value="#{msg.jeeslSurveyValidationAlgorithmCode}"/>
+							<h:outputText value="#{cc.attrs.bean.algorithm.code}"/>
 						</p:panelGrid>
 						<aht:tabTranslationEditor value="#{cc.attrs.bean.algorithm}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 					</p:panel>

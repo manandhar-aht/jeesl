@@ -24,6 +24,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidation;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,8 +42,9 @@ public class JeeslSurveyTemplateFacadeBean <L extends UtilsLang, D extends Utils
 											TS extends UtilsStatus<TS,L,D>,
 											TC extends UtilsStatus<TC,L,D>,
 											SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-											QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
+											QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 											CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
+											VALIDATION extends JeeslSurveyValidation<QUESTION>,
 											QE extends UtilsStatus<QE,L,D>,
 											SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 											UNIT extends UtilsStatus<UNIT,L,D>,
@@ -52,11 +54,11 @@ public class JeeslSurveyTemplateFacadeBean <L extends UtilsLang, D extends Utils
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyTemplateFacadeBean.class);
 	
-	private final SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
+	private final SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate;
 	
 	private final EjbSurveyTemplateFactory<L,D,TEMPLATE,TS,TC,SECTION,QUESTION> eTemplate;
 	
-	public JeeslSurveyTemplateFacadeBean(EntityManager em, SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate)
+	public JeeslSurveyTemplateFacadeBean(EntityManager em, SurveyTemplateFactoryBuilder<L,D,LOC,SCHEME,VALGORITHM,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION> fbTemplate)
 	{
 		super(em);
 		this.fbTemplate=fbTemplate;

@@ -23,7 +23,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.xml.survey.Answer;
 
 public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SECTION,QUESTION>,
-									QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,?,?,?,?,OPTION,?>,
+									QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,?,?,?,?,?,OPTION,?>,
 									ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,MATRIX,DATA,OPTION>,
 									MATRIX extends JeeslSurveyMatrix<?,?,ANSWER,OPTION>,
 									DATA extends JeeslSurveyData<?,?,?,ANSWER,?>,
@@ -86,7 +86,7 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 	}
 	
 	@Deprecated
-	public static <QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,OPTION,?>,
+	public static <QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?,OPTION,?>,
 					ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,MATRIX,DATA,OPTION>,
 					MATRIX extends JeeslSurveyMatrix<?,?,ANSWER,OPTION>,
 					DATA extends JeeslSurveyData<?,?,?,ANSWER,?>,
@@ -107,7 +107,7 @@ public class EjbSurveyAnswerFactory<SECTION extends JeeslSurveySection<?,?,?,SEC
 	}
 	
 	public static <L extends UtilsLang, D extends UtilsDescription,
-					QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,OPTION,?>,
+					QUESTION extends JeeslSurveyQuestion<L,D,?,?,?,?,?,?,?,OPTION,?>,
 					ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
 					MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
 					DATA extends JeeslSurveyData<L,D,?,ANSWER,?>,

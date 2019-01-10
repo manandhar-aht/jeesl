@@ -69,7 +69,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 				TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,?,?,SECTION,OPTIONS,ANALYSIS>,
 				VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,
 				SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
+				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,?,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 				QE extends UtilsStatus<QE,L,D>,
 				SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 				UNIT extends UtilsStatus<UNIT,L,D>,
@@ -101,7 +101,7 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
 	private final SqlSurveyAnalysisFactory<SURVEY,QUESTION,ANSWER,DATA,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL> sqlFactory;
 	
 	public JeeslSurveyAnalysisFacadeBean(EntityManager em,
-			final SurveyCoreFactoryBuilder<L,D,?,SURVEY,SS,SCHEME,?,VERSION,?,?,SECTION,QUESTION,?,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,TOOLT> fbCore,
+			final SurveyCoreFactoryBuilder<L,D,?,SURVEY,SS,SCHEME,?,VERSION,?,?,SECTION,QUESTION,?,?,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,TOOLT> fbCore,
 			final SurveyAnalysisFactoryBuilder<L,D,TEMPLATE,QUESTION,QE,SCORE,ANSWER,MATRIX,DATA,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,TOOLT,TOOLCACHETEMPLATE> fbAnalyis)
 	{
 		super(em);

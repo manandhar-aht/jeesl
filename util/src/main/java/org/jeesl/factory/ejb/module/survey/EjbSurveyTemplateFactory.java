@@ -19,7 +19,7 @@ public class EjbSurveyTemplateFactory<L extends UtilsLang, D extends UtilsDescri
 				TS extends UtilsStatus<TS,L,D>,
 				TC extends UtilsStatus<TC,L,D>,
 				SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,?,?,?,?,?,?>
+				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,?,?,?,?,?,?,?>
 				>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyTemplateFactory.class);

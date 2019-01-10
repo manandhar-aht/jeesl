@@ -24,12 +24,14 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescription,
 										SECTION extends JeeslSurveySection<L,D,?,SECTION,?>,
 										CONDITION extends JeeslSurveyCondition<?,QE,OPTION>,
+										VALIDATION extends JeeslSurveyValidation<?>,
 										QE extends UtilsStatus<QE,L,D>,
 										SCORE extends JeeslSurveyScore<L,D,?,?>,
 										UNIT extends UtilsStatus<UNIT,L,D>,
 										OPTIONS extends JeeslSurveyOptionSet<L,D,?,OPTION>,
 										OPTION extends JeeslSurveyOption<L,D>,
-										AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?>>
+										AQ extends JeeslSurveyAnalysisQuestion<L,D,?,?>
+										>
 			extends Serializable,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithVisible,EjbSaveable,EjbRemoveable,
 					EjbWithRendered,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>

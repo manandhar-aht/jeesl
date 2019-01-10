@@ -21,7 +21,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 public interface JeeslSurveySection<L extends UtilsLang, D extends UtilsDescription,
 									TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,?,SECTION,?,?>,
 									SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
-									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,?,?,?,?,?,?>>
+									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,?,?,?,?,?,?,?,?>>
 			extends Serializable,EjbSaveable,EjbRemoveable
 			,EjbWithCode,EjbWithRemark,EjbWithPosition,EjbWithLevel,EjbWithVisible,EjbWithRendered,
 					EjbWithLang<L>,EjbWithDescription<D>

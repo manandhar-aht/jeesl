@@ -12,7 +12,7 @@ public class MapListQuery
 {
 	final static Logger logger = LoggerFactory.getLogger(MapListQuery.class);
 	
-	public static  <T extends EjbWithId, L extends EjbWithId> int size(Map<T,List<L>> map)
+	public static <T extends EjbWithId, L extends EjbWithId> int size(Map<T,List<L>> map)
 	{	
 		int result = 0;
 		for(List<L> list : map.values()){result = result+list.size();}

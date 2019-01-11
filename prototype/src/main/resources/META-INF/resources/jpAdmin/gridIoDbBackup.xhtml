@@ -4,12 +4,11 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:j="http://www.jeesl.org/jsf"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
-	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
-	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
@@ -18,9 +17,9 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<aup:grid id="grid">
-			<aht:row>
-				<aht:slot id="sCriterias" width="12">
+		<jp:grid id="grid">
+			<j:row>
+				<j:slot id="sCriterias" width="12">
 					<p:dataTable var="d" value="#{cc.attrs.bean.dumps}">
 						<p:columnGroup type="header">
 							<p:row>
@@ -41,11 +40,12 @@
 						<p:column><h:outputText value="#{j:humanFileSize(d.size)}" /></p:column>
 			            <p:column><h:outputText value="#{d.name}"/></p:column>
 			            <p:columns var="h" value="#{cc.attrs.bean.hosts}">
-			            	<h:outputText value="#{cc.attrs.bean.mapFiles[d][h].status.name[localeCode].lang}"/>
+			            	<h:outputText rendered="false" value="#{cc.attrs.bean.mapFiles[d][h].status.name[localeCode].lang}"/>
+			            	<jtp:symbolizer value="#{cc.attrs.bean.mapFiles[d][h].status}"/>
 			            </p:columns>
 			       	</p:dataTable>
-				</aht:slot>
-			</aht:row>
-	    </aup:grid>
+				</j:slot>
+			</j:row>
+	    </jp:grid>
 	</composite:implementation>
 </html>

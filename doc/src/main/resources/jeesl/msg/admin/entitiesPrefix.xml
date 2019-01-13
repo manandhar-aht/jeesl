@@ -185,5 +185,12 @@
 			<s:lang key="fr" translation="Registration Status"/>
 		</s:langs>
 	</s:translation>
+	<s:translation key="LinkType">
+		<s:langs>
+			<s:lang key="de" translation="Link Typ"/>
+			<s:lang key="en" translation="Link Type"/>
+			<s:lang key="fr" translation="Link Type"/>
+		</s:langs>
+	</s:translation>
 	
 </s:translations>

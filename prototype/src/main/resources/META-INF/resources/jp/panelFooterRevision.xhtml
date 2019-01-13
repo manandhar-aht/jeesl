@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+   	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+    
+	<composite:interface componentType="net.sf.ahtutils.jsf.components.GenericListener">
+		<composite:attribute name="revision" required="true"/>
+        <composite:attribute name="tooltip" required="false" default="#{msg.aupTtRevision}"/>
+		<composite:attribute name="rendered"/>
+		<composite:attribute name="updateToggle"/>
+		<composite:attribute name="listener" required="false" method-signature="void listener(javax.faces.event.AjaxBehaviorEvent)"/>
+	</composite:interface>
+        
+	<composite:implementation>
+		<h:panelGroup layout="block" styleClass="meis-revision-footer" rendered="#{cc.attrs.revision.showFooter}">
+			<h:panelGroup layout="block" styleClass="meis-revision-icon">
+				<h:graphicImage id="iconRevision" value="#{iconBean.icon(12,'revision')}">
+					<p:ajax event="click" listener="#{cc.listener}" update="#{cc.attrs.updateToggle}" />
+                </h:graphicImage>
+                <p:tooltip for="iconRevision" value="#{cc.attrs.tooltip}"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="meis-revision-timestamp">
+				<h:outputText value="#{cc.attrs.revision.info.auditRecord}">
+					<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+				</h:outputText>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="meis-revision-user" rendered="#{cc.attrs.revision.info.userId gt 0}">
+				#{cc.attrs.revision.user.firstName} #{cc.attrs.revision.user.lastName}
+			</h:panelGroup>
+		</h:panelGroup>
+	</composite:implementation>
+</html>

@@ -10,7 +10,7 @@ public interface JeeslIoSsiMapping <SYSTEM extends JeeslIoSsiSystem,
 									ENTITY extends JeeslRevisionEntity<?,?,?,?,?>>
 		extends EjbWithId,EjbSaveable,EjbRemoveable
 {	
-	
+	public enum Attributes {entity,json}
 	
 	public SYSTEM getSystem();
 	public void setSystem(SYSTEM system);

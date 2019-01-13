@@ -30,7 +30,7 @@
 								<p:column colspan="1" headerText="#{msg.aupDbDumpDateModified}"/>
 								<p:column colspan="1" headerText="#{msg.aupDbDumpSize}"/>
 								<p:column colspan="1" headerText="#{msg.aupDbDumpName}"/>
-								<p:columns var="h" value="#{cc.attrs.bean.hosts}">
+								<p:columns var="h" value="#{cc.attrs.bean.hosts}" styleClass="jeeslCenter">
 					            	<f:facet name="header"><h:outputText value="#{h.name[localeCode].lang}" /></f:facet>
 								</p:columns>
 							</p:row>

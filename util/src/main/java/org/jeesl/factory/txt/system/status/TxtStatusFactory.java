@@ -53,6 +53,8 @@ public class TxtStatusFactory <S extends UtilsStatus<S,L,D>,L extends UtilsLang,
 		return ejb.getName().get(lang).getLang();
 	}
 	
+	
+	
 	public static <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription>
 	List<String> toCodes(Collection<S> list)
 	{

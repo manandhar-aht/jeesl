@@ -1,7 +1,7 @@
 package org.jeesl.doc.ofx.cms.factory;
 
 import org.jeesl.doc.ofx.OfxMultiLangFactory;
-import org.openfuxml.interfaces.configuration.TranslationProvider;
+import org.openfuxml.interfaces.configuration.OfxTranslationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,11 +11,11 @@ public class AbstractJeeslOfxFactory<L extends UtilsLang>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslOfxFactory.class);
 	
-	protected TranslationProvider tp;
+	protected OfxTranslationProvider tp;
 	
 	protected final OfxMultiLangFactory<L> ofxMultiLang;
 	
-	public AbstractJeeslOfxFactory(TranslationProvider tp)
+	public AbstractJeeslOfxFactory(OfxTranslationProvider tp)
 	{	
 		this.tp=tp;
 

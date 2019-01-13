@@ -15,36 +15,59 @@
 		<composite:attribute name="bean" required="true"/>
 	</composite:interface>
 	
-	<composite:implementation>
-		<jp:grid id="grid">
-			<j:slot width="7">
-				<h:form>
-					<p:dataTable var="m" value="#{cc.attrs.bean.mappings}"
-								 selection="#{cc.attrs.bean.mapping}" selectionMode="single" rowKey="#{m.id}">
-						<f:facet name="header">
-							<j:dtHeader title="#{msg.jeeslIoSsiMappings}">
-								<j:icon type="jeeslAdd" listener="#{cc.attrs.bean.addMapping()}" update=":#{cc.id}:sMapping"/>
-							</j:dtHeader>
-						</f:facet>
-						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectMapping()}" update=":#{cc.id}:grid"/>
-						<p:column>
-							<f:facet name="header"><h:outputText value="#{msg.jeeslIoSsiSystem}"/></f:facet>
-							<h:outputText value="#{m.system.code}"/>
-						</p:column>
-						<p:column>
-							<f:facet name="header"><h:outputText value="#{msg.jeeslIoSsiJsonClass}"/></f:facet>
-							<h:outputText value="#{m.json.name[localeCode].lang}"/>
-						</p:column>
-						<p:column>
-							<f:facet name="header"><h:outputText value="#{msg.jeeslIoSsiMappingClass}"/></f:facet>
-							<h:outputText value="#{m.entity.name[localeCode].lang}"/>
-						</p:column>
-					</p:dataTable>
-				</h:form>
-			</j:slot>
-			<j:slot id="sMapping" width="5">
-			
-			</j:slot>
-	    </jp:grid>
-	</composite:implementation>
+<composite:implementation>
+	<jp:grid id="grid">
+		<j:slot width="6">
+			<h:form>
+				<p:dataTable var="m" value="#{cc.attrs.bean.mappings}"
+							 selection="#{cc.attrs.bean.mapping}" selectionMode="single" rowKey="#{m.id}">
+					<f:facet name="header">
+						<j:dtHeader title="#{msg.jeeslIoSsiMappings}">
+							<j:icon type="jeeslAdd" listener="#{cc.attrs.bean.addMapping()}" update=":#{cc.id}:sMapping"/>
+						</j:dtHeader>
+					</f:facet>
+					<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectMapping()}" update=":#{cc.id}:grid"/>
+					<p:column>
+						<f:facet name="header"><h:outputText value="#{msg.jeeslIoSsiSystem}"/></f:facet>
+						<h:outputText value="#{m.system.code}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header"><h:outputText value="#{msg.jeeslIoSsiJsonClass}"/></f:facet>
+						<h:outputText value="#{m.json.name[localeCode].lang}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header"><h:outputText value="#{msg.jeeslIoSsiMappingClass}"/></f:facet>
+						<h:outputText value="#{m.entity.name[localeCode].lang}"/>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</j:slot>
+		<j:slot id="sMapping" width="6">
+			<h:form id="fMapping" rendered="#{not empty cc.attrs.bean.mapping}">
+				<p:panel id="pView" header="#{msg.jeeslIoTemplate}" styleClass="jeeslPanel">
+					<f:facet name="actions">
+						<j:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelMapping()}" update=":#{cc.id}:grid" tooltip="#{msg.jeeslTtCancel}" mayDisappear="true"/>
+						<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveMapping()}"   update=":#{cc.id}:grid" tooltip="#{msg.ttSave}"/>
+						<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteMapping()}" update=":#{cc.id}:grid" tooltip="#{msg.ttDelete}" rendered="#{cc.attrs.bean.mapping.id gt 0}" mayDisappear="true"/>
+					</f:facet>
+					<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGRid80">
+						
+						<p:outputLabel value="Json.id"/>
+						<h:outputText value="#{cc.attrs.bean.mapping.json.id}"/>
+						
+						<p:outputLabel value="Json.code"/>
+						<h:outputText value="#{cc.attrs.bean.mapping.json.code}"/>
+						
+						<p:outputLabel value="Entity.id"/>
+						<h:outputText value="#{cc.attrs.bean.mapping.entity.id}"/>
+						
+						<p:outputLabel value="Entity.code"/>
+						<h:outputText value="#{cc.attrs.bean.mapping.entity.code}"/>
+					</p:panelGrid>
+					
+				</p:panel>
+			</h:form>
+		</j:slot>
+    </jp:grid>
+</composite:implementation>
 </html>

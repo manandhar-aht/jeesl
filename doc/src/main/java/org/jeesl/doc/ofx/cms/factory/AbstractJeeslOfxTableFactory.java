@@ -12,7 +12,7 @@ import org.openfuxml.content.table.Row;
 import org.openfuxml.factory.xml.ofx.content.structure.XmlParagraphFactory;
 import org.openfuxml.factory.xml.table.OfxCellFactory;
 import org.openfuxml.factory.xml.table.OfxHeadFactory;
-import org.openfuxml.interfaces.configuration.TranslationProvider;
+import org.openfuxml.interfaces.configuration.OfxTranslationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class AbstractJeeslOfxTableFactory<L extends UtilsLang> extends AbstractJ
 	
 	protected Translations translations;
 	
-	public AbstractJeeslOfxTableFactory(TranslationProvider tp)
+	public AbstractJeeslOfxTableFactory(OfxTranslationProvider tp)
 	{	
 		super(tp);
 		tableHeaderKeys = new ArrayList<String>();

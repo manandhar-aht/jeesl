@@ -13,9 +13,9 @@ import net.sf.exlp.interfaces.util.ConfigKey;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 import org.apache.commons.configuration.Configuration;
-import org.jeesl.factory.xml.mail.XmlAttachmentFactory;
-import org.jeesl.factory.xml.mail.XmlHeaderFactory;
-import org.jeesl.factory.xml.mail.XmlMailFactory;
+import org.jeesl.factory.xml.system.io.mail.XmlAttachmentFactory;
+import org.jeesl.factory.xml.system.io.mail.XmlHeaderFactory;
+import org.jeesl.factory.xml.system.io.mail.XmlMailFactory;
 import org.jeesl.mail.JeeslMailTestBootstrap;
 import org.jeesl.mail.XmlMailSender;
 import org.jeesl.mail.freemarker.FreemarkerEngine;

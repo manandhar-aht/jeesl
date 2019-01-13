@@ -1,12 +1,13 @@
-package org.jeesl.factory.xml.mail;
+package org.jeesl.factory.xml.system.io.mail;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
-import org.jeesl.factory.xml.system.io.mail.XmlTextFactory;
+import org.jeesl.model.xml.system.io.mail.EmailAddress;
 import org.jeesl.model.xml.system.io.mail.Header;
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.jeesl.model.xml.system.io.mail.Template;
+import org.jeesl.model.xml.system.io.mail.To;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,5 +69,15 @@ public class XmlMailFactory
     	mail.setHeader(f.build(message));
     	
     	return mail;
+    }
+    
+    public static void overwriteRecipients(Mail mail, EmailAddress address)
+    {
+    	if(mail.isSetHeader())
+    	{
+    		mail.getHeader().setBcc(null);
+    		mail.getHeader().setTo(new To());
+    		mail.getHeader().getTo().getEmailAddress().add(address);
+    	}
     }
 }

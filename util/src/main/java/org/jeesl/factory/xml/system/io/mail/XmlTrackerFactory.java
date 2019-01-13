@@ -1,4 +1,4 @@
-package org.jeesl.factory.xml.mail;
+package org.jeesl.factory.xml.system.io.mail;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

@@ -15,5 +15,5 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 public interface JeeslMailRetention <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
 					extends Serializable,EjbPersistable,JeeslOptionRestDownload,EjbWithCodeGraphic<G>,UtilsStatusFixedCode	
 {	
-	public static enum Code{fully,partially,toDelete};
+	public static enum Code{fully,text,header,delete};
 }

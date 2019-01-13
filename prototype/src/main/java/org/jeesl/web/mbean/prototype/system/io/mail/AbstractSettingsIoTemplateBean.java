@@ -41,7 +41,7 @@ import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D extends UtilsDescription,
+public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 											TYPE extends UtilsStatus<TYPE,L,D>,
 											TEMPLATE extends JeeslIoTemplate<L,D,CATEGORY,SCOPE,DEFINITION,TOKEN>,
@@ -93,7 +93,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		sbhCategory = new SbMultiHandler<CATEGORY>(fbTemplate.getClassCategory(),this);
 	}
 	
-	protected void postConstructTemplate(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate)
+	protected void postConstructTemplate(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fTemplate=fTemplate;
@@ -121,6 +121,9 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 	}
 	
+	/**
+	 * This method can be overwritten, otherwise all categories will be shown
+	 */
 	protected void initPageConfiguration()
 	{
 		sbhCategory.setList(fTemplate.allOrderedPositionVisible(fbTemplate.getClassCategory()));
@@ -146,6 +149,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 	public void addTemplate() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassTemplate()));}
+		reset(true,true);
 		template = efTemplate.build(null);
 		template.setName(efLang.createEmpty(langs));
 		template.setDescription(efDescription.createEmpty(langs));
@@ -160,6 +164,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		template = efLang.persistMissingLangs(fTemplate,langs,template);
 		template = efDescription.persistMissingLangs(fTemplate,langs,template);
 		reloadTemplate();
+		reset(false,true);
 		definition=null;
 		preview=null;
 	}
@@ -191,22 +196,24 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(template));}
 		fTemplate.rm(template);
-		template=null;
+		reset(true,true);
 		bMessage.growlSuccessRemoved();
 		reloadTemplates();
 		updatePerformed();
 	}
 	
-	public void cancelTemplate()
+	public void cancelTemplate(){reset(true,true);}
+	private void reset(boolean rTemplate, boolean rToken)
 	{
-		template = null;
+		if(rTemplate) {template=null;}
+		if(rToken) {token=null;}
 	}
-		
-	//*************************************************************************************
+	
+	
 	public void addToken() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassToken()));}
-		token = efToken.build(template);
+		token = efToken.build(template,tokens);
 		token.setName(efLang.createEmpty(langs));
 		token.setDescription(efDescription.createEmpty(langs));
 	}

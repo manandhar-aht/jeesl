@@ -1,7 +1,11 @@
 package org.jeesl.factory.ejb.system.io.template;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
+import org.jeesl.factory.ejb.util.EjbPositionFactory;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateToken;
@@ -39,7 +43,7 @@ public class EjbIoTemplateTokenFactory<L extends UtilsLang,D extends UtilsDescri
 		
 	public TOKEN build(TEMPLATE template, Entity xml)
 	{
-		TOKEN ejb = build(template);
+		TOKEN ejb = build(template,new ArrayList<TOKEN>());
 		ejb.setCode(xml.getCode());
 		ejb.setPosition(xml.getPosition());
 		try
@@ -51,14 +55,14 @@ public class EjbIoTemplateTokenFactory<L extends UtilsLang,D extends UtilsDescri
 		return ejb;
 	}
     
-	public TOKEN build(TEMPLATE template)
+	public TOKEN build(TEMPLATE template, List<TOKEN> list)
 	{
 		TOKEN ejb = null;
 		try
 		{
 			ejb = cToken.newInstance();
 			ejb.setTemplate(template);
-			ejb.setPosition(1);
+			EjbPositionFactory.next(ejb,list);
 			ejb.setVisible(true);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

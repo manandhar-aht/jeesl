@@ -52,7 +52,7 @@ public class XmlMailSender extends AbstractMailSender
 		mmc.createHeader(mail.getHeader());
 				
 		XmlMimeContentCreator mcc = new XmlMimeContentCreator(msg);
-		mcc.createContent(mail);
+		mcc.buildContent(mail);
 		
 		Transport.send(msg);
 	}

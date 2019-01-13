@@ -9,7 +9,7 @@ import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestExport;
 import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestImport;
 import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestSpooler;
-import org.jeesl.factory.xml.mail.XmlMailFactory;
+import org.jeesl.factory.xml.system.io.mail.XmlMailFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlMailsFactory;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;

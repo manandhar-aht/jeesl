@@ -1,6 +1,6 @@
 package org.jeesl.util.query.xpath.mail;
 
-import org.jeesl.factory.xml.mail.XmlMailFactory;
+import org.jeesl.factory.xml.system.io.mail.XmlMailFactory;
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.jeesl.model.xml.system.io.mail.Mails;
 import org.junit.Assert;

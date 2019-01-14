@@ -35,6 +35,7 @@ public class EjbIoMailFactory <L extends UtilsLang,D extends UtilsDescription,
 			ejb = cMail.newInstance();
 			ejb.setCategory(category);
 			ejb.setStatus(status);
+			ejb.setRetention(retention);
 			ejb.setCounter(0);
 			ejb.setRecordCreation(new Date());
 			if(mail.isSetHeader() && mail.getHeader().isSetTo() && mail.getHeader().getTo().isSetEmailAddress()){ejb.setRecipient(mail.getHeader().getTo().getEmailAddress().get(0).getEmail());}

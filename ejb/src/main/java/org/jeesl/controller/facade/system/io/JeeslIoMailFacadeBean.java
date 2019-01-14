@@ -17,6 +17,7 @@ import org.jeesl.factory.builder.io.IoMailFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.mail.EjbIoMailFactory;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
+import org.jeesl.model.xml.system.io.mail.Mail;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,10 +105,13 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 		return tQ.getResultList();
 	}
 	
-	@Override public void queueMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException
+	@Override public void queueMail(CATEGORY category, RETENTION retention, Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		STATUS status = this.fByCode(fbMail.getClassStatus(), JeeslMailStatus.Status.queue);
-		RETENTION retention = this.fByCode(fbMail.getClassRetention(), JeeslIoMail.Retention.fully);
+		if(retention==null)
+		{
+			retention = this.fByCode(fbMail.getClassRetention(), JeeslIoMail.Retention.fully);	
+		}
 		MAIL ejb = efMail.build(category,status,mail,retention);
 		ejb = this.persist(ejb);
 		logger.info(fbMail.getClassMail().getSimpleName()+" spooled with id="+ejb.getId());

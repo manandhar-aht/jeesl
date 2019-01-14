@@ -24,7 +24,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractSettingsIoMailQueueBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractSettingsIoMailQueueBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 											MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
 											STATUS extends UtilsStatus<STATUS,L,D>,
@@ -60,7 +60,7 @@ public class AbstractSettingsIoMailQueueBean <L extends UtilsLang,D extends Util
 		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,this);
 	}
 	
-	protected void postConstructMailQueue(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
+	protected void postConstructMailQueue(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fMail=fMail;

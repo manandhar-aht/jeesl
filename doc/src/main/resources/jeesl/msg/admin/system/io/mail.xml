@@ -21,6 +21,13 @@
 			<lang key="fr" translation="Status" />
 		</langs>
 	</translation>
+	<translation key="jeeslIoMailRetention">
+		<langs>
+			<lang key="de" translation="Aufbewahrung" />
+			<lang key="en" translation="Retention" />
+			<lang key="fr" translation="Retention" />
+		</langs>
+	</translation>
 	<translation key="jeeslIoMailCreated">
 		<langs>
 			<lang key="de" translation="Erstellt" />

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
+import org.jeesl.model.xml.system.io.mail.Mail;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -23,5 +24,5 @@ public interface JeeslIoMailFacade <L extends UtilsLang,D extends UtilsDescripti
 	List<MAIL> fMails(List<CATEGORY> categories,List<STATUS> stauts, Date from, Date to);
 	List<MAIL> fSpoolMails(int max);
 	
-	void queueMail(CATEGORY category, org.jeesl.model.xml.system.io.mail.Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException;
+	void queueMail(CATEGORY category, RETENTION retention, Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException;
 }

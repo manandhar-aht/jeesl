@@ -57,7 +57,7 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 	
 	protected void spool(Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
-		fMail.queueMail(category,mail);
+		fMail.queueMail(category,null,mail);
 		logger.info("Spooled");
 	}
 	
@@ -73,7 +73,7 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 	{
 		for(Mail mail : mails.getMail())
 		{
-			try {fMail.queueMail(category, mail);}
+			try {fMail.queueMail(category,null,mail);}
 			catch (UtilsConstraintViolationException | UtilsNotFoundException e) {e.printStackTrace();}
 		}
 	}

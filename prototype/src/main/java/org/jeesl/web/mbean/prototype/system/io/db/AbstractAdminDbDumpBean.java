@@ -16,7 +16,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class AbstractAdminDbDumpBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAdminDbDumpBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 										DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
 										FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
 										HOST extends UtilsStatus<HOST,L,D>,

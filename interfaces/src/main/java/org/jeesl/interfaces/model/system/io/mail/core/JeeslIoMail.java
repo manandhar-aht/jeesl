@@ -48,6 +48,9 @@ public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 	int getCounter();
 	void setCounter(int counter);
 	
+	Integer getRetentionDays();
+	void setRetentionDays(Integer retentionDays);
+	
 	String getXml();
 	void setXml(String xml);
 }

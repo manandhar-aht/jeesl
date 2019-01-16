@@ -319,10 +319,14 @@
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showText}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowText}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showRemark}" /><p:outputLabel value="#{msg.jpSurveyQuestionShowRemark}"/>
 						</p:panelGrid>
-						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40" rendered="#{cc.attrs.withOptions}">						
+						<p:panelGrid columns="4" columnClasses="jeeslGrid10,jeeslGrid40,jeeslGrid10,jeeslGrid40" rendered="#{cc.attrs.withOptions}">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectOne}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectOne}"/>
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showSelectMulti}" rendered="#{cc.attrs.withMultiOptions}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowSelectMulti}" rendered="#{cc.attrs.withMultiOptions}"/>
 							<h:outputText rendered="#{not cc.attrs.withMultiOptions}"/><h:outputText rendered="#{not cc.attrs.withMultiOptions}"/>
+						</p:panelGrid>
+						<p:panelGrid columns="4" columnClasses="jeeslGrid10,jeeslGrid40,jeeslGrid10,jeeslGrid40">						
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.mandatory}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionMandatory}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showEmptyOption}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowEmtpyOption}"/>
 						</p:panelGrid>
 						<p:panelGrid columns="4" columnClasses="auPwg10,auPwg40,auPwg10,auPwg40" rendered="#{cc.attrs.withMatrix}">						
 							<p:selectBooleanCheckbox value="#{cc.attrs.bean.question.showMatrix}"/><p:outputLabel value="#{msg.jeeslSurveyQuestionShowMatrix}"/>
@@ -397,7 +401,7 @@
 					<p:panel header="#{msg.jeeslSurveyOption}" styleClass="jeeslPanel" rendered="#{(not empty cc.attrs.bean.question) and (not empty cc.attrs.bean.option)}">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveQuestionOption()}" update=":#{cc.id}:sQuestion"/>
-							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmQuestionOption()}" update=":#{cc.id}:sQuestion"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.delQuestionOption()}" update=":#{cc.id}:sQuestion"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">
@@ -434,7 +438,7 @@
 					<p:panel header="#{msg.jeeslSurveyOption}" styleClass="jeeslPanel" rendered="#{(not empty cc.attrs.bean.optionSet) and (not empty cc.attrs.bean.option)}">
 						<f:facet name="actions">
 							<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveSetOption()}" update=":#{cc.id}:sQuestion"/>
-							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.rmSetOption()}" update=":#{cc.id}:sQuestion"/>
+							<aht:icon type="jeeslDelete" mayDisappear="true" listener="#{cc.attrs.bean.delSetOption()}" update=":#{cc.id}:sQuestion"/>
 						</f:facet>
 						<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
 						<p:panelGrid columns="2" columnClasses="auPwg30,auPwg70">

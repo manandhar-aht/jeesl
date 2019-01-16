@@ -617,5 +617,18 @@
     		<s:lang key="fr" translation="Line Break Remark"/>
     	</s:langs>
     </s:translation>
-    
+	<s:translation key="jeeslSurveyQuestionMandatory">
+	    <s:langs>
+	      <s:lang key="de" translation="Mandatory" />
+	      <s:lang key="en" translation="Mandatory" />
+	      <s:lang key="fr" translation="Mandatory" />
+	    </s:langs>
+	</s:translation>
+	<s:translation key="jeeslSurveyQuestionShowEmtpyOption">
+	    <s:langs>
+	      <s:lang key="de" translation="Show Empty Option" />
+	      <s:lang key="en" translation="Show Empty Option" />
+	      <s:lang key="fr" translation="Show Empty Option" />
+	    </s:langs>
+	</s:translation> 
 </s:translations>

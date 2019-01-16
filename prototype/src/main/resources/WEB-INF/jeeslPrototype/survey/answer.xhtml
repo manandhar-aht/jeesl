@@ -10,12 +10,24 @@
 	<c:set var="loc"  value="#{not empty loc ? loc : localeCode}" />
 		
 	<h:panelGroup rendered="#{question.showText  and (not question.showMatrix)}">
-		<p:inputText  value="#{surveyHandler.answers[question].valueText}" rendered="#{surveyHandler.showDataFields}"/>
+		<p:inputText  value="#{surveyHandler.answers[question].valueText}" rendered="#{surveyHandler.showDataFields}" required="#{question.mandatory}"/>
 		<h:outputText value="#{surveyHandler.answers[question].valueText}" rendered="#{not surveyHandler.showDataFields}"/>
 	</h:panelGroup>
 			
-	<h:panelGroup rendered="#{question.showSelectOne and (not question.showMatrix)}">
-		<p:selectOneMenu id="categoryS1" value="#{surveyHandler.answers[question].option}" effect="fade" rendered="#{surveyHandler.showDataFields}">
+	<h:panelGroup rendered="#{question.showEmptyOption and question.showSelectOne and (not question.showMatrix)}">
+		<p:selectOneMenu id="categoryS1NoSelection" value="#{surveyHandler.answers[question].option}" effect="fade"
+						 rendered="#{surveyHandler.showDataFields}"
+						 required="#{question.mandatory}">
+			<f:selectItem itemLabel="--" noSelectionOption="true"/>
+			<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="o" itemLabel="#{o.name[loc].lang}" itemValue="#{o}"/>
+			<p:ajax process="@parent" listener="#{surveyHandler.updateAnswer(surveyHandler.answers[question])}" update="@form"/>
+		</p:selectOneMenu>
+		<h:outputText value="#{surveyHandler.answers[question].option.name[loc].lang}" rendered="#{not surveyHandler.showDataFields}"/>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{(not question.showEmptyOption) and question.showSelectOne and (not question.showMatrix)}">
+		<p:selectOneMenu id="categoryS1" value="#{surveyHandler.answers[question].option}" effect="fade"
+						 rendered="#{surveyHandler.showDataFields}"
+						 required="#{question.mandatory}">		
 			<f:selectItems value="#{appSurveyBean.mapOption[question]}" var="o" itemLabel="#{o.name[loc].lang}" itemValue="#{o}"/>
 			<p:ajax process="@parent" listener="#{surveyHandler.updateAnswer(surveyHandler.answers[question])}" update="@form"/>
 		</p:selectOneMenu>
@@ -24,10 +36,10 @@
 		
 	<p:selectBooleanCheckbox rendered="#{question.showBoolean and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueBoolean}" />
 			
-	<p:inputText rendered="#{question.showInteger and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueNumber}"/>
-	<p:inputText rendered="#{question.showDouble and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDouble}"/>
+	<p:inputText id="naturalNumber" rendered="#{question.showInteger and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueNumber}" required="#{question.mandatory}"/>
+	<p:inputText id="number" rendered="#{question.showDouble and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDouble}" required="#{question.mandatory}"/>
 			
-	<jtp:inputDate rendered="#{question.showDate and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDate}"/>
+	<jtp:inputDate rendered="#{question.showDate and (not question.showMatrix)}" value="#{surveyHandler.answers[question].valueDate}" required="#{question.mandatory}"/>
 							
 	<p:selectManyMenu showCheckbox="true" rendered="#{question.showSelectMulti and (not question.showMatrix)}"
 						value="#{surveyHandler.districts}" var="o">

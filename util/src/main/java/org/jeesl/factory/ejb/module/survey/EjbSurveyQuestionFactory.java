@@ -66,6 +66,8 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 		ejb.setTopic(topic);
 		ejb.setQuestion(question);
 		ejb.setRemark(remark);
+		ejb.setMandatory(false);
+		ejb.setShowEmptyOption(false);
 		
 		return ejb;
 	}
@@ -129,6 +131,4 @@ public class EjbSurveyQuestionFactory<L extends UtilsLang, D extends UtilsDescri
 		}
 		return map;
 	}
-	
-	
 }

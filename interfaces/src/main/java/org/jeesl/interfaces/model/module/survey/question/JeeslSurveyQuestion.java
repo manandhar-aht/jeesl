@@ -112,4 +112,10 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 	
 	List<CONDITION> getConditions();
 	void setConditions(List<CONDITION> conditions);
+	
+	Boolean getMandatory();
+	void setMandatory(Boolean mandatory);
+	
+	Boolean getShowEmptyOption();
+	void setShowEmptyOption(Boolean showEmptyOption);
 }

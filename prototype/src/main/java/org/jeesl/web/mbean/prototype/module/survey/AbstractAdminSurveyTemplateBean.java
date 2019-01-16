@@ -491,10 +491,10 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		bMessage.growlSuccessSaved();
 	}
 	
-	public void rmQuestionOption() throws UtilsConstraintViolationException, UtilsLockingException
+	public void delQuestionOption() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
-		fCore.rmOption(optionSet,option);
+		fCore.rmOption(question,option);
 		reloadQuestion();
 		bMessage.growlSuccessRemoved();
 	}

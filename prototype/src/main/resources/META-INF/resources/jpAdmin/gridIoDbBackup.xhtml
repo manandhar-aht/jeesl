@@ -39,7 +39,7 @@
 						<p:column><h:outputText value="#{d.record}"><f:convertDateTime pattern="#{cc.attrs.dateTimePattern}" /></h:outputText></p:column>
 						<p:column><h:outputText value="#{j:humanFileSize(d.size)}" /></p:column>
 			            <p:column><h:outputText value="#{d.name}"/></p:column>
-			            <p:columns var="h" value="#{cc.attrs.bean.hosts}">
+			            <p:columns var="h" value="#{cc.attrs.bean.hosts}" styleClass="jeeslCenter">
 			            	<h:outputText rendered="false" value="#{cc.attrs.bean.mapFiles[d][h].status.name[localeCode].lang}"/>
 			            	<jtp:symbolizer value="#{cc.attrs.bean.mapFiles[d][h].status}"/>
 			            </p:columns>

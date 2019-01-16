@@ -80,6 +80,8 @@ public class JsonSurveyQueryProvider
 		
 		question.setCondition("");
 		question.setConditions(new ArrayList<Condition>());question.getConditions().add(condition);
+		question.setMandatory(true);
+		question.setShowEmptyOption(true);
 		
 		Section section = JsonSurveySectionFactory.build();
 		section.setId(0l);

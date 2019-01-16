@@ -147,6 +147,15 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	public List<Condition> getConditions() {return conditions;}
 	public void setConditions(List<Condition> conditions) {this.conditions = conditions;}
 	
+	@JsonProperty("showEmptyOption")
+	private Boolean showEmptyOption;
+	public Boolean getShowEmptyOption() {return showEmptyOption;}
+	public void setShowEmptyOption(Boolean showEmptyOption) {this.showEmptyOption = showEmptyOption;}
+
+	@JsonProperty("mandatory")
+	private Boolean mandatory;
+	public Boolean getMandatory() {return mandatory;}
+	public void setMandatory(Boolean mandatory) {this.mandatory = mandatory;}
 	
 	@Override public String toString()
 	{

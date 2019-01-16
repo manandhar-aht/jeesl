@@ -91,6 +91,9 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 		if(q.isSetShowSelectMulti()){json.setShowSelectMulti(ejb.getShowSelectMulti());}
 		if(q.getShowMatrix()!=null){json.setShowMatrix(ejb.getShowMatrix());}
 		
+		if(q.getMandatory()!=null) {json.setMandatory(ejb.getMandatory());}
+		if(q.getShowEmptyOption()!=null) {json.setShowEmptyOption(ejb.getShowEmptyOption());}
+		
 		if(q.getOptions()!=null && !q.getOptions().isEmpty())
 		{
 			ejb = fSurvey.load(ejb);
